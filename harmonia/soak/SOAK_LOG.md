@@ -14,9 +14,9 @@ Rough edges are the product. Nothing here is worked around silently.
 
 | Metric | Value |
 |---|---|
-| Passes completed | 10 |
+| Passes completed | 11 |
 | Validator failures | 0 |
-| Validator gate exit | 0 all ten passes (now 32 worklog entries, 7 reviews) |
+| Validator gate exit | 0 all eleven passes (now 34 worklog entries, 7 reviews) |
 | Schema fields ambiguous/forced | 2 (`agent`, `soak_findings` — see SOAK-04) |
 | Review round-trips (Elenchus → me → response) | **0** (see SOAK-08 — the untested half) |
 | Worker→worker round-trips (my finding → Aporia repair → my verification) | 2, both closed and independently verified |
@@ -28,13 +28,13 @@ Rough edges are the product. Nothing here is worked around silently.
 | Boundary cases designed + run | 24 (1 gap probe + 6 escape variants + 12 false-cert + 5 hard-region) |
 | Mirror-trap drills run | **4 confirmed** (1, 2, 5, 6) + **1 diagnosed-absent** (3) |
 | Vacuous results caught before publication | 1 (see SOAK-10) |
-| Doctrine items handed off via GATE_ELI5 | 5 (sandbox gap; trap-8 → adopted; z3 contract gap; type-erasure root → adopted; sampling bias) |
+| Doctrine items handed off via GATE_ELI5 | 6 (incl. a **correction against my own P10 entry**) |
 | Own hypotheses killed by own tests | 4 |
 | **Instrument self-audits that changed a finding** | **3** (P4 vacuous zero · P7 misattributed raise · P9 non-deterministic sampling) |
-| Self-corrections against a published pass | 2 — a **3-deep chain**: P4 → P9 (method) → P10 (verdict) |
+| Self-corrections against a published pass | 3 — a **4-deep chain**: P4 → P9 (method) → P10 (verdict) → P11 (scope + my own gate entry) |
 | New trap candidates found | 1 (identifier-case mismatch) — **ADOPTED into ATTACK_PATTERNS as trap 8** |
 | Own prior-pass weaknesses closed | 1 (P5's "trap-8 prevalence unmeasured" → P6 measured it) |
-| Heartbeat successes | 0 of 10 (env-override, SOAK-05 — never blocked a pass) |
+| Heartbeat successes | 0 of 11 (env-override, SOAK-05 — never blocked a pass) |
 | Self-corrections caught before logging | 2 |
 
 ## Soak findings
@@ -438,6 +438,52 @@ reviewer. A lone second worker *can* self-correct given a persistent structured 
 every correction arrived one to six passes late, **which is precisely the latency an active
 reviewer exists to remove.**
 
+### P11 — executing what I had asserted, and the polarity flip
+
+P10 flagged that I had claimed P5/P6 soundness **by reading my own queries rather than
+running them** — the exact move P10 had just refuted in P9. This pass executed them.
+
+| re-audited | result |
+|---|---|
+| **P5** trap-6 (4 figures) | **reproduces exactly** — 332,779 / 123,365 / 0 / 50,835 |
+| **P6** trap-5 (4 figures) | **reproduces exactly** — 798,140 / 0 / 0 / 319,289 |
+| **P9** trap-2 triage | **DRIFTED** — `adelic_level` full max 2,397,920,264 **is** past int32; the sample said 514,178,824 → False |
+
+**Inspection was a 2-of-3 predictor.** The two figures I reasoned were safe *were* safe.
+The one I never thought to check — P9's own triage, written **inside the pass that
+discovered the defect** — was wrong. Had I trusted inspection I'd have kept a false number
+and felt entitled to it.
+
+**Corrected: trap 2's surface is 2 of 3 probed columns, not 1.**
+
+### The polarity result — same defect, opposite sign
+
+Pre-stated with its *mechanism*, not just its direction, then confirmed:
+
+| test shape | dropping a rare extremum | error |
+|---|---|---|
+| divergence (`max` vs `max`) | **creates** apparent divergence | **false POSITIVE** — P4/P10, trap 1 over-reported |
+| threshold (`max > bound`) | **hides** the overflow | **false NEGATIVE** — P9/P11, trap 2 under-reported |
+
+**So "sampling is safe here" cannot be read off the query shape alone.** Unsampled
+aggregates (count, count-distinct, equality counts) are deterministic; anything resting on
+a max or min runs full-table.
+
+**I filed a correction against my own P10 gate entry**, which states the bias one-way
+toward false positives. That's half the story, and a parked item that misleads its future
+reader is worse than no item.
+
+**SOAK-24 (observation) — residual risk concentrates where suspicion didn't point.**
+Inspection isn't worthless; it's applied where you're already suspicious. The failure was
+in the one place I never thought to look.
+
+**SOAK-25 (design) — scope was revised upward three times in three passes.** P9: maxima
+only. P10: verdicts too, inflating. P11: verdicts, sign reversing by polarity. Each
+revision came from a deliberate re-test, not from new evidence arriving. **A worker who
+stopped at either earlier point would have published a scope that was wrong and
+defensible — and nothing in the loop distinguishes "scope established" from "scope not yet
+re-tested."**
+
 ## Repair-verification ledger
 
 | Repair claimed (P28) | Verification | Result |
@@ -481,7 +527,7 @@ so 2^71 sits just under it rather than a generation behind.
 
 ## Verdict so far
 
-Withheld — ten passes in; the shape has been stable for eight, and the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — eleven passes in; the shape has been stable for nine, and the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
