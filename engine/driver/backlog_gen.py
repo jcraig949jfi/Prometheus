@@ -70,9 +70,20 @@ def main() -> int:
         t = triage.get(qid, {})
         bucket = str(t.get("bucket", t.get("triage", ""))).upper()
         boost = 15 if "A" in bucket else (7 if "B" in bucket else 0)
+        # 2026-08-20 (P20/P24): an entry without a real test_spec is not attackable —
+        # attacking it means inventing goalposts mid-shot (CPNT precedent). Gate it at
+        # birth on spec authoring; the SPEC-AUTHOR-BATCH lane converts these deliberately.
+        spec = str(t.get("test_spec", ""))
+        spec_missing = (len(spec) < 30 or "See specific test" in spec
+                        or "Requires data extension" in str(t.get("data_source", "")))
+        gate = "needs authored test_spec (SPEC-AUTHOR-BATCH lane)" if spec_missing else None
+        # Self-grading mitigation (P24/P25): a spec authored by the attacking agent is a
+        # CLAIM — it must clear shadow review before the first attack consumes it.
+        if str(t.get("provenance", {}).get("spec_status", "")) == "AUTHORED-AWAITING-ELENCHUS-REVIEW":
+            gate = "authored spec awaiting shadow review (Elenchus)"
         add(f"CAT-{qid}", f"Catalog attack: {str(q.get('question') or q.get('title') or qid)[:120]}",
             "catalog_537", "trace-vector corpus + kill ledger", 40 + boost,
-            bottleneck="B-004", meta={"bucket": bucket or "?"})
+            gate=gate, bottleneck="B-004", meta={"bucket": bucket or "?"})
 
     # ---- 2. Retry queue batches (725 resolution_limit, 15 batches) — gated on co-sign ----
     for b in range(15):
@@ -116,6 +127,16 @@ def main() -> int:
             "dr_backcorpus_442", "anti_anchors.jsonl + market evidence", 60, bottleneck="B-006")
 
     # ---- 4. Fleet profiling: agents through the ladder (roster from state.json) ----
+    # P26 signature-existence triage (engine/queues/PROF_TRIAGE.jsonl): 0 of 43 agents
+    # expose a direct probe-bindable solve interface. PROF-<agent> threads are gated per
+    # binding class; the runnable population is ARTIFACT-LEVEL (Hephaestus forged tools),
+    # which gets its own ungated cohort thread below.
+    prof_triage = {r.get("agent"): r for r in jsonl(ROOT / "engine/queues/PROF_TRIAGE.jsonl")}
+    _PROF_GATES = {
+        "AT-COST": "LLM-driven agent: probe profiling = API spend (budget gate, kin to R12 live shot)",
+        "VACUOUS-NO-SOLVER": "typed structural zero: agent has no reasoning interface at any level (poller/orchestrator/reporter)",
+        "ARTIFACT-LEVEL": "profile binds to the agent's PRODUCTS, not the agent — covered by PROF-FORGE-COHORT lane",
+    }
     state = json.loads((ROOT / "docs/state.json").read_text(encoding="utf-8", errors="replace"))
     seen = set()
     for a in state.get("agents", []):
@@ -123,9 +144,16 @@ def main() -> int:
         if not name or name in seen:
             continue
         seen.add(name)
+        binding = str(prof_triage.get(name, {}).get("binding", ""))
         add(f"PROF-{re.sub(r'[^A-Za-z0-9]', '', name)[:20]}",
             f"Ladder profile: run {name} artifacts/config through phase0+R4 probes",
-            "fleet_profiling", "germline fitness instrument (3b) + agent-design failure landscape", 50)
+            "fleet_profiling", "germline fitness instrument (3b) + agent-design failure landscape", 50,
+            gate=_PROF_GATES.get(binding))
+    add("PROF-FORGE-COHORT",
+        "Ladder-profile a stratified cohort of Hephaestus forged ReasoningTool classes through "
+        "phase0+R4 (adapter: probe -> question text + candidate set); per-tool failure-shape "
+        "profiles = the germline fitness instrument's actual population",
+        "fleet_profiling", "germline fitness instrument (3b) + foundry 3c population", 70)
 
     # ---- 5. Anti-anchor re-verification (16 registered, rolling) ----
     for a in jsonl(ROOT / "techne/registry/anti_anchors.jsonl"):
@@ -215,6 +243,11 @@ def main() -> int:
             # PARKED added 2026-08-19: a manual park of a GENERATED thread (e.g. CAT-MATH-0260
             # vacuous-parked on missing mirror data) was being clobbered back to QUEUED on regen.
             # Parks carry their gate + reason forward too, else the ELI5 linkage breaks.
+            # REFINEMENT 2026-08-20 (P25): if THIS regeneration computed a gate for the thread,
+            # the fresh gate reflects current source data (e.g. a spec was authored since the
+            # old park) and WINS — old parks only stick to threads the generator left ungated.
+            if ost == "PARKED" and uniq[oid].get("gate"):
+                continue
             uniq[oid]["status"] = ost
             if old_item.get("result"):
                 uniq[oid]["result"] = old_item["result"]

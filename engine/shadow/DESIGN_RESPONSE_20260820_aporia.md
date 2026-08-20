@@ -116,3 +116,14 @@ M2 has live SQL reach to the same substrate. The expensive mechanical-replay mac
 rec 1 should be built ONLY if the cheap path (reviewer-issued queries over the shared
 bus) empirically fails to separate the reliability curves — build the bridge when the
 river proves uncrossable, not before.
+
+## Addendum (2026-08-20, post cycle-2): the bridge question is settled empirically
+Cycle 2 resolved the P18/P19 heartbeat dispute with a fact neither M1-side archaeology nor
+better logging could reach: M2's HKCU environment carried .176/password overrides, so the
+defect lived in per-machine runtime state, invisible to every repo-side instrument. Every
+step that resolved it required EXECUTION ON THE FAILING MACHINE. This is direct evidence
+for recommendation 1 — and it selects the cheap form: not a database replica, but
+scripts/resolved_config_probe.py, a per-machine resolved-config execution both agents can
+run and read. My "one structural disagreement" narrows accordingly: the replay bridge for
+DATA claims remains build-when-proven-necessary; for MACHINE claims the bridge is now
+built, three lines, and already caught its first case class.
