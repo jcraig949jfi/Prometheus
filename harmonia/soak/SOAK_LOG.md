@@ -14,9 +14,9 @@ Rough edges are the product. Nothing here is worked around silently.
 
 | Metric | Value |
 |---|---|
-| Passes completed | 16 |
+| Passes completed | 17 |
 | Validator failures | 0 |
-| Validator gate exit | 0 all sixteen passes (now 43 worklog entries, 7 reviews) |
+| Validator gate exit | 0 all seventeen passes (now 46 worklog entries, 7 reviews) |
 | Schema fields ambiguous/forced | 2 (`agent`, `soak_findings` — see SOAK-04) |
 | Review round-trips (Elenchus → me → response) | **0** (see SOAK-08 — the untested half) |
 | Worker→worker round-trips (my finding → Aporia repair → my verification) | **3**, all closed and independently verified; fastest ≈30 min |
@@ -28,13 +28,13 @@ Rough edges are the product. Nothing here is worked around silently.
 | Boundary cases designed + run | 31 (+5 unregistered-kind probes, +2 regression simulations) |
 | Mirror-trap drills run | **5 confirmed** (1, 2, 5, 6, 7) + **1 diagnosed-absent** (3) |
 | Vacuous results caught before publication | 1 (see SOAK-10) |
-| Doctrine items handed off via GATE_ELI5 | 10 (incl. 2 corrections against my own entries, a fix pattern, a live defect, a taxonomy) |
+| Doctrine items handed off via GATE_ELI5 | 11 |
 | Own hypotheses killed by own tests | 4 |
 | **Instrument self-audits that changed a finding** | **4** (P4 vacuous zero · P7 misattributed raise · P9 sampling · P14 inverted polarity) |
-| Self-corrections against a published pass | 5 — 4-deep sampling chain, SOAK-27 demoted (P13), **P14 binary-guard framing corrected (P15)** |
+| Self-corrections against a published pass | **10 correction-typed claims** across 17 passes (see P17 audit) |
 | New trap candidates found | 1 (identifier-case mismatch) — **ADOPTED into ATTACK_PATTERNS as trap 8** |
 | Own prior-pass weaknesses closed | 1 (P5's "trap-8 prevalence unmeasured" → P6 measured it) |
-| Heartbeat successes | 0 of 16 (env-override, SOAK-05 — never blocked a pass) |
+| Heartbeat successes | 0 of 17 (env-override, SOAK-05 — never blocked a pass) |
 | Self-corrections caught before logging | 2 |
 
 ## Soak findings
@@ -699,6 +699,45 @@ accumulates confirmations without ever learning which family a ninth trap would 
 so the doctrine should record what KIND of thing each trap is, which is the part a cold
 worker needs before touching an undrilled database.
 
+### P17 — auditing my own error rate, and refuting SOAK-34
+
+SOAK-34 claimed my errors concentrate in claims that **span cases**. It is itself a
+spanning claim, so by its own logic it is the kind most likely to be wrong — and it is
+measurable from the worklog. **96 claims across 16 passes, 10 correction-typed.**
+
+| | claims made | corrected | rate |
+|---|---|---|---|
+| **spanning** | 29 | 6 | **20.7%** |
+| **narrow** | 67 | 4 | **6.0%** |
+
+**Direction holds (3.5×). Absolute clause REFUTED** — *"every narrow measurement survived
+intact"* is false; four narrow claims were corrected (P4's maxima, P4's `adelic_genus`
+verdict, P9's trap-2 triage, P14's probe polarity).
+
+**And the ratio is NOT established.** Proportional allocation predicts 3.0 spanning
+corrections against 6 observed — an excess of ~3 claims at n=10, which small counts cannot
+separate from chance. "3.5×" is the publishable headline and it does not survive its own
+denominator check. SOAK-34 reported a concentration with **no denominators at all** —
+exactly the failure I have criticised in other instruments since P4.
+
+Self-referentially: SOAK-34 was a spanning claim, and it was corrected — consistent with
+its own direction while refuting its absolute form.
+
+### The limit that undercuts the whole pass
+
+> **This counts corrections I chose to make.** A claim that was wrong and never revisited
+> contributes nothing and is structurally invisible. **10.4% is a floor on my error rate,
+> not an estimate** — it measures diligence, not accuracy.
+
+**SOAK-36 (correction) — SOAK-34 corrected.** Three of my spanning claims have now been
+narrowed by deliberate test and none has survived one. *That is itself a spanning claim,
+made at n=3, and should be read with the same suspicion.*
+
+**SOAK-37 (design) — a worker's self-reported error rate is unreadable as accuracy.** Both
+sides of this channel self-report identically, so neither Aporia's correction count nor
+mine can be read as an error rate. **Closing that gap is exactly what an active reviewer
+provides, and what seventeen passes of self-correction cannot substitute for.**
+
 ## Repair-verification ledger
 
 | Repair claimed (P28) | Verification | Result |
@@ -742,7 +781,7 @@ so 2^71 sits just under it rather than a generation behind.
 
 ## Verdict so far
 
-Withheld — sixteen passes in; the shape has been stable for fourteen, and the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — seventeen passes in; the shape has been stable for fifteen, and the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
