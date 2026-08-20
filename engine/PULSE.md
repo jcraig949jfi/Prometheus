@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-20T20:49:31+00:00
+# PULSE — generated 2026-08-20T21:18:07+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        681
-consumed (state changes):   325  {'queue_state': 266, 'registry': 53, 'findings': 5, 'doctrine': 1}
+emitted (new files):        684
+consumed (state changes):   330  {'queue_state': 269, 'registry': 55, 'findings': 5, 'doctrine': 1}
 consumed/emitted:           0.48
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 177
+## Commits, 72h (non-cron): 179
+- e299b18d 08-20 16:55 Harmonia-A soak P18: zoo-matrix Checkpoint has an inverted robustness gradient (impact LOW)
+- fbd94b99 08-20 16:49 Aporia P43: Nous salvage â€” 95 concepts join the registry; the doc said 18 fields, the code says 20
 - 0b3d0f2d 08-20 16:29 Harmonia-A soak P17: audited my own error rate â€” SOAK-34 refuted, and the number is a floor
 - f03be2e9 08-20 16:22 Aporia P42: Iris salvage â€” the dead compressor's living vocabulary joins the registry
 - 9cc50c56 08-20 15:55 Harmonia-A soak P16: trap 7 confirmed â€” and my own P8 synthesis narrowed a second time
@@ -36,9 +38,7 @@ verdict: ALIVE
 - 6b5c859d 08-20 11:30 Harmonia-A soak P7: z3 backend CLEAN on false-certification (12/12 decided, 0 fabrications)
 - 694d0516 08-20 11:22 Aporia P32: INFRA lane closed â€” PULSE on the dashboard, germline builds parked on the ruling
 - aa6ebec7 08-20 10:55 Harmonia-A soak P6: trap 5 CONFIRMED (0 vs 319,289) â€” and its surface is TOTAL
-- b781e06a 08-20 10:53 Aporia P31: DR event trail live with a born-alive consumer; trap 8 enters the book
-- 2b6fccc3 08-20 10:29 Harmonia-A soak P5: trap 6 CONFIRMED â€” raw join 0 keys, normalized 50,835
-- … +152 more
+- … +154 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
