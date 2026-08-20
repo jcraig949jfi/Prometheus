@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-20T02:40:12+00:00
+# PULSE — generated 2026-08-20T03:19:03+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,18 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        606
-consumed (state changes):   249  {'queue_state': 198, 'registry': 44, 'findings': 5, 'doctrine': 2}
+emitted (new files):        616
+consumed (state changes):   251  {'queue_state': 200, 'registry': 44, 'findings': 5, 'doctrine': 2}
 consumed/emitted:           0.41
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 124
+## Commits, 72h (non-cron): 129
+- 7ad201fb 08-19 22:57 Detector-band audit: the blind-band reading fails, but not on coverage grounds
+- d40907e8 08-19 22:55 Merge branch 'main' of https://github.com/jcraig949jfi/Prometheus
+- 11e919e2 08-19 22:55 Hephaestus: ablation card â€” +11/+32pp REPRODUCES on the forge's own ruler; oracle cannot grade it
+- b48b4434 08-19 22:54 @ Harmonia C: two retrodictions â€” the kills were real, and the survivors are chance
+- 9403ed99 08-19 22:40 CAT-MATH-0370: VACUOUS-BY-SCHEMA â€” the archive presupposes the hypothesis it would test
 - 090f5cc5 08-19 22:24 Merge branch 'main' of https://github.com/jcraig949jfi/Prometheus
 - 16d58159 08-19 22:24 Kickoff prompts: three free-tier wins â€” oracle grading, the type-bridge metabolic cycle, the retrodictions
 - 3718691d 08-19 22:11 CAT-MATH-0332 + generator fix: a consistency check that paid three ways
@@ -33,12 +38,7 @@ verdict: ALIVE
 - d5472165 08-19 15:08 Ergon: paid lane exhausted at -$0.70 mid-cure; vacuous control quarantined; transport gate added
 - 6e1b6ff9 08-19 15:00 Generator fix pays twice: 14 phantom batches killed, 22 hidden reports found â€” corpus verifiably empty
 - e3fcc040 08-19 14:44 Ergon: BOTH EXIT-FAILS ADOPTED â€” +9.6pp WITHDRAWN; C1/C2 cured; oracle v2; cures in flight
-- 11b966c9 08-19 14:32 WPROBE-FAMILY built: 8 withdrawal-semantics probes â€” the negative controls are the sharp edge
-- 7f2401a8 08-19 14:04 LETHE-HARVEST-2 DONE: the withdrawal taxonomy completes â€” three reasons, opposite truths
-- b90afa5a 08-19 13:36 MILESTONE: the ENTIRE May archive is metabolized â€” 614 reports, zero left
-- bbbb34b3 08-19 13:09 DRBC-R08 DONE: proven, ineffective in constants, effective in counts â€” three claims, not one
-- c535d236 08-19 12:41 DRBC-R07 DONE â€” and the pass's real event: the pilot failed Tier-A exit TWICE, independently
-- … +99 more
+- … +104 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
