@@ -211,10 +211,18 @@ def main() -> int:
     # persistence: a regenerated thread must not erase completed/in-flight state
     for old_item in jsonl(OUT):
         oid, ost = old_item.get("id"), str(old_item.get("status", ""))
-        if oid in uniq and (ost.startswith("DONE") or ost in ("RUNNING", "PARKED-MANUAL")):
+        if oid in uniq and (ost.startswith("DONE") or ost in ("RUNNING", "PARKED-MANUAL", "PARKED")):
+            # PARKED added 2026-08-19: a manual park of a GENERATED thread (e.g. CAT-MATH-0260
+            # vacuous-parked on missing mirror data) was being clobbered back to QUEUED on regen.
+            # Parks carry their gate + reason forward too, else the ELI5 linkage breaks.
             uniq[oid]["status"] = ost
             if old_item.get("result"):
                 uniq[oid]["result"] = old_item["result"]
+            if ost == "PARKED":
+                if old_item.get("gate"):
+                    uniq[oid]["gate"] = old_item["gate"]
+                if old_item.get("parked_reason"):
+                    uniq[oid]["parked_reason"] = old_item["parked_reason"]
     final = sorted(uniq.values(), key=lambda t: (-t["priority"], t["id"]))
     OUT.write_text("\n".join(json.dumps(t, ensure_ascii=False) for t in final) + "\n", encoding="utf-8")
 
