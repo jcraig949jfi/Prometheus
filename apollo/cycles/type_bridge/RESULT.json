@@ -1,0 +1,166 @@
+{
+  "summary": {
+    "A0": {
+      "discovery_rate": "0/5",
+      "n_discovered": 0,
+      "n_seeds": 5,
+      "n_graduating": 0,
+      "first_novel_gens": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "max_acc": [
+        0.583,
+        0.533,
+        0.542,
+        0.583,
+        0.533
+      ],
+      "best_comp_lift": [
+        0.417,
+        0.442,
+        0.4,
+        0.417,
+        0.417
+      ]
+    },
+    "A1": {
+      "discovery_rate": "0/5",
+      "n_discovered": 0,
+      "n_seeds": 5,
+      "n_graduating": 0,
+      "first_novel_gens": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "max_acc": [
+        0.658,
+        0.658,
+        0.608,
+        0.658,
+        0.708
+      ],
+      "best_comp_lift": [
+        0.417,
+        0.417,
+        0.417,
+        0.417,
+        0.417
+      ]
+    },
+    "A2": {
+      "discovery_rate": "0/5",
+      "n_discovered": 0,
+      "n_seeds": 5,
+      "n_graduating": 0,
+      "first_novel_gens": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "max_acc": [
+        0.583,
+        0.583,
+        0.533,
+        0.542,
+        0.583
+      ],
+      "best_comp_lift": [
+        0.417,
+        0.417,
+        0.417,
+        0.417,
+        0.4
+      ]
+    },
+    "A3": {
+      "discovery_rate": "3/5",
+      "n_discovered": 3,
+      "n_seeds": 5,
+      "n_graduating": 3,
+      "first_novel_gens": [
+        null,
+        328,
+        null,
+        159,
+        277
+      ],
+      "max_acc": [
+        0.633,
+        0.708,
+        0.658,
+        0.708,
+        0.733
+      ],
+      "best_comp_lift": [
+        0.417,
+        0.525,
+        0.417,
+        0.417,
+        0.525
+      ]
+    }
+  },
+  "verdicts": {
+    "cycle": "SUCCESS",
+    "C1_expressivity": "SURVIVES \u2014 no discovery without the bridge",
+    "classification": "search_operator \u2014 crossover NECESSARY; kill count stays 5; lane REDIRECTS"
+  },
+  "prereg": "apollo/cycles/type_bridge/PREREGISTRATION.md",
+  "generated": "2026-08-19",
+  "generator": "Apollo (M2)",
+  "replay_vs_june_ab": {
+    "source": "apollo/pivot/recombination_ab_result_2026-06-16.json",
+    "june_control_xover_off": "0/5",
+    "today_A2_xover_off": "0/5",
+    "june_treatment_xover_on": "4/5",
+    "today_A3_xover_on": "3/5",
+    "june_first_gens": [
+      55,
+      18,
+      null,
+      23,
+      23
+    ],
+    "today_A3_first_gens": [
+      null,
+      328,
+      null,
+      159,
+      277
+    ],
+    "june_mean_gens_to_discovery": 30,
+    "today_mean_gens_to_discovery": 255,
+    "slowdown_factor": 8.6,
+    "reading": "capability replays; search efficiency does not. Rate delta is inside n=5 noise; the 8.6x slowdown is not."
+  },
+  "substrate_drift": {
+    "june_ancestor_commit": "ab90ca7d (2026-05-29, nearest committed ancestor to the 06-16 A/B)",
+    "scorers_then": 4,
+    "scorers_now": 10,
+    "guarded_scorers_now": 5,
+    "transformers_then": 10,
+    "transformers_now": 15,
+    "routing_purity_then": false,
+    "routing_purity_now": true,
+    "mechanism": "swap_scorer now draws from 10 scorers instead of 5, half guarded; routing_purity (written for dispatch mode) zeroes ccs for plain+guarded hybrids, which in a non-dispatch run penalises exactly the plain-terminal organisms the cross-tier solver needs."
+  },
+  "classification_call": {
+    "question": "Harmonia C: is the 2026-06-16 recombination result search_operator or part of evolutionary_search?",
+    "ruling": "search_operator",
+    "basis": "A2 (bridge present, crossover OFF) 0/5 over 400 gens vs A3 (crossover ON) 3/5; mutation set identical.",
+    "consequences": [
+      "evolutionary_search kill count stays 5 (does not reset)",
+      "exhaustion threshold crossed 2026-05-24 HOLDS",
+      "Apollo lane REDIRECTS; under R3 exhaustion is a redirect signal, not a kill"
+    ]
+  }
+}

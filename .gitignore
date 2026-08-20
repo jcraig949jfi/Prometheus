@@ -372,6 +372,12 @@ apollo/run_recomb/*
 # `python apollo/scripts/wall_corpus.py --all --gens 150`. The corpus ITSELF — the typed
 # records, the collated JSONL, the manifest — is ~1 MB and IS committed.
 apollo/wall_corpus/runs/
+# 2026-08-19: type-bridge cycle RAW run output — 43 MB of evolve logs/checkpoints across
+# 20 cells. Deterministic (fixed seeds 20260616,1,7,42,101) and reproducible with
+# `python apollo/scripts/type_bridge_cycle.py --all`. The cycle's RESULTS — cells/*.json,
+# RESULT.json, LINEAGE.md, PREREGISTRATION.md — are committed.
+apollo/cycles/type_bridge/runs/
+
 
 # Ergon API probe logs (regenerable; results summarized in roles/Ergon/API_PREFLIGHT_*.md)
 ergon/probe_logs/*.log

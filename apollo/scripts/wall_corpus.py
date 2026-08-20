@@ -57,10 +57,14 @@ def _rebuild_role_lists(be):
     be.PLAIN_SCORERS = [n for n in be.SCORERS if n not in be.GUARDED_SCORERS]
 
 
-def remove_ops(be, names):
+def remove_ops(be, names, scorer_pool=None):
     """EXPRESSIVENESS ablation: the capability is absent from the substrate entirely —
     removed from the registry AND purged from seed pipelines, so no search path and no
-    seed can reach it."""
+    seed can reach it.
+
+    `scorer_pool`: which scorer names the replacement random seeds may draw from. Defaults
+    to the guarded pool (dispatch mode). Non-dispatch callers must pass be.SCORERS so the
+    seeding distribution matches an unablated non-dispatch run."""
     names = set(names)
     for n in names:
         be.REGISTRY.pop(n, None)
@@ -80,7 +84,8 @@ def remove_ops(be, names):
             import random
             k = random.randint(1, 3)
             body = [random.choice(be.TRANSFORMERS) for _ in range(k)]
-            sc = random.choice(be.GUARDED_SCORERS if be.GUARDED_SCORERS else be.SCORERS)
+            pool = scorer_pool or (be.GUARDED_SCORERS if be.GUARDED_SCORERS else be.SCORERS)
+            sc = random.choice(pool)
             o = be.BlackboardOrganism(body + [sc], genome_id=be._new_id())
             o.lineage = ["seed:random"]
             kept.append(o)

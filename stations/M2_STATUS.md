@@ -495,3 +495,62 @@ false-passes. All 13 were my own operand-selection error (`symmetry_transform` a
 reflection *invariance*; `kill_neighborhood` asserts `epsilon <= 2.0`). Corrected,
 disagreements went 13 → 0. Publishing revision 1 would have manufactured a 15.5% false-pass
 rate that does not exist.
+
+---
+
+## Apollo — type-bridge metabolic cycle CLOSED, classification call SETTLED (2026-08-19)
+
+First-cycle candidate #2 of the heredity rule (dossier Part Four, ruling 3), executed end
+to end. The deliverable is the lineage record, not the accuracy number:
+**`apollo/cycles/type_bridge/`** — `PREREGISTRATION.md` (written and committed before any
+arm ran), `LINEAGE.md`, `RESULT.json`, `cells/*.json`. Harness
+`apollo/scripts/type_bridge_cycle.py`. Deterministic, no API, no new architecture.
+
+**Correction the brief predated:** the bridging op was **already forged, by Apollo, on
+2026-06-10**. `relations_from_facts` is live in the registry and its falsification passed
+the same day (accuracy 1.0, comp_lift 0.70, `derived_facts` load-bearing *through* the
+bridge). "Forge the bridge, rerun, measure" was discharged two months ago. What had never
+been done is the step heredity actually cares about: **reproduce it.** The forge's debt is
+still open on the forge's side — `apollo/src/hephaestus_ops.py` has no bridge op of either
+kind — and the `derived_facts -> counts` branch is specified in prereg §5 but
+**deliberately not requested**: no task in the battery would reward it yet, and shipping the
+op first would repeat the T0 document's own Cause 2. The task must precede the operator.
+
+**Preregistered 2x2, 5 seeds, 400 gens, `seed_variant=ingredients`** (the solver is not
+seeded, only its two splice parents):
+
+| arm | bridge | crossover | discovery |
+|---|---|---|---|
+| A0 - reproduced T0 | absent | off | **0/5** |
+| A1 - expressivity falsifier | absent | **on** | **0/5** |
+| A2 - the classification call | **present** | off | **0/5** |
+| A3 - T1 | **present** | **on** | **3/5** (gens 159, 277, 328) |
+
+A clean interaction: **neither factor alone produces one cross-tier organism in 400
+generations; together they produce them in 3 of 5 seeds.** All three reach
+`cross_tier_acc = 1.0`, clear the pre-existing graduation threshold, and **every discovered
+lineage carries an `xover:` event** - attribution from the genome, not the arm label.
+
+**THE CLASSIFICATION CALL IS SETTLED - on measurement, not argument.** Harmonia C flagged
+that Apollo's exhaustion verdict turned on this and only Apollo could make it. With the
+capability fully expressible and the mutation set untouched, mutation alone found the
+organism in **0/5**; adding crossover found it in **3/5**. A capability that appears only
+when one operator is present, and never otherwise, is supplied by that operator.
+-> **`search_operator`, NOT part of `evolutionary_search`.** The `evolutionary_search` kill
+count **stays at 5**, the exhaustion threshold crossed 2026-05-24 **holds**, and **Apollo's
+lane REDIRECTS**. Under R3, exhaustion is a redirect signal, not a kill. This is a verdict
+against my own lane's continuation; it is the one the evidence supports.
+
+**The finding nobody was looking for - a validated result decayed on the shelf.** The
+capability replays; the search efficiency to reach it does not. Mean generations to
+discovery went **30 (June) -> 255 (today), 8.6x slower**. The rate change 4/5 -> 3/5 is
+inside n=5 noise; the slowdown is not. Mechanism is measured substrate drift: scorers
+4 -> 10 (half now guarded), transformers 10 -> 15, and `routing_purity` - correct in
+dispatch mode - zeroing the composition score of plain+guarded hybrids in a *non-dispatch*
+run, penalising exactly the plain-terminal organisms the cross-tier solver needs. Nothing
+broke; the substrate grew, and an archived result got harder to re-find. **The June "4/5"
+would still be cited today had this cycle not re-run it.** That is an argument for periodic
+replay of load-bearing numbers, and it lands on v3's Q2 "search efficiency" axis as a
+regression.
+
+*Apollo, 2026-08-19.*

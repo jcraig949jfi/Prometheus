@@ -1,0 +1,132 @@
+{
+  "arm": "A3",
+  "seed": 101,
+  "role": "T1 / A/B replay",
+  "bridge_present": true,
+  "crossover_frac": 0.3,
+  "discovered": true,
+  "first_novel_gen": 277,
+  "final_novel_count": 2,
+  "n_graduating_cross_tier": 2,
+  "graduating_top3": [
+    {
+      "pipeline": [
+        "parse_rules",
+        "forward_chain",
+        "score_by_derivability__g",
+        "parse_box_items",
+        "score_by_aggregate__g",
+        "parse_names_and_relations",
+        "parse_ordinal",
+        "relations_from_facts",
+        "parse_ordinal",
+        "op_build_ordering",
+        "op_build_ordering",
+        "score_by_derivability",
+        "select_nth__g",
+        "score_by_aggregate__g"
+      ],
+      "acc": 0.683,
+      "cross_tier_acc": 1.0,
+      "comp_lift": 0.683,
+      "n_load_bearing": 4,
+      "lineage": [
+        "seed:COMP_R2",
+        "add_guard:score_by_aggregate__g",
+        "swap_scorer",
+        "xover:23cde16c@(3,0)",
+        "swap_scorer",
+        "xover:180c9a26@(5,0)"
+      ]
+    },
+    {
+      "pipeline": [
+        "parse_rules",
+        "parse_which_extreme",
+        "forward_chain",
+        "score_by_derivability__g",
+        "parse_ordinal",
+        "relations_from_facts",
+        "op_build_ordering",
+        "op_build_ordering",
+        "score_by_max_value",
+        "select_nth__g",
+        "score_by_extreme_number__g",
+        "score_by_derivability__g",
+        "score_by_comparison__g",
+        "score_by_aggregate__g"
+      ],
+      "acc": 0.567,
+      "cross_tier_acc": 1.0,
+      "comp_lift": 0.567,
+      "n_load_bearing": 5,
+      "lineage": [
+        "seed:COMP_R2",
+        "add_guard:score_by_derivability__g",
+        "swap_scorer",
+        "insert_step@1",
+        "xover:24c67ed3@(3,1)",
+        "xover:1d547e08@(4,1)",
+        "add_guard:score_by_comparison__g",
+        "swap_step@4",
+        "add_guard:score_by_aggregate__g",
+        "swap_step@5"
+      ]
+    }
+  ],
+  "first_discovery_record": {
+    "gen": 277,
+    "pipeline": [
+      "parse_rules",
+      "parse_which_extreme",
+      "forward_chain",
+      "score_by_derivability__g",
+      "parse_ordinal",
+      "relations_from_facts",
+      "op_build_ordering",
+      "op_build_ordering",
+      "score_by_max_value",
+      "select_nth__g",
+      "score_by_extreme_number__g",
+      "score_by_derivability__g",
+      "score_by_comparison__g",
+      "score_by_aggregate__g"
+    ],
+    "cross_tier_acc": 1.0,
+    "lineage": [
+      "seed:COMP_R2",
+      "add_guard:score_by_derivability__g",
+      "swap_scorer",
+      "insert_step@1",
+      "xover:24c67ed3@(3,1)",
+      "xover:1d547e08@(4,1)",
+      "add_guard:score_by_comparison__g",
+      "swap_step@4",
+      "add_guard:score_by_aggregate__g",
+      "swap_step@5"
+    ]
+  },
+  "max_acc": 0.733,
+  "best_comp_lift": 0.525,
+  "best_n_load_bearing": 8,
+  "best_ccs": 0.382,
+  "portfolio_per_subset": {
+    "canary": 0.74,
+    "synth": 1.0,
+    "inference": 1.0,
+    "cross_tier": 1.0
+  },
+  "archive_cells": 2581,
+  "wall_clock_s": 78.9,
+  "config": {
+    "gens": 400,
+    "pop_size": 24,
+    "mode": "deterministic",
+    "seed_variant": "ingredients",
+    "dispatch": false,
+    "log_every": 50,
+    "crossover_frac": 0.3,
+    "bridge_op_present": true,
+    "seed": 101
+  }
+}
