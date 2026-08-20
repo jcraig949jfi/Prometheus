@@ -14,20 +14,21 @@ Rough edges are the product. Nothing here is worked around silently.
 
 | Metric | Value |
 |---|---|
-| Passes completed | 2 |
+| Passes completed | 3 |
 | Validator failures | 0 |
-| Validator gate exit | 0 both passes (now 16 worklog entries, 7 reviews) |
+| Validator gate exit | 0 all three passes (now 18 worklog entries, 7 reviews) |
 | Schema fields ambiguous/forced | 2 (`agent`, `soak_findings` — see SOAK-04) |
-| Review round-trips (Elenchus → me → response) | 0 (still no review references a HARMA pass_id) |
+| Review round-trips (Elenchus → me → response) | **0** (see SOAK-08 — the untested half) |
+| Worker→worker round-trips (my finding → Aporia repair → my verification) | 2, both closed and independently verified |
 | Replication matches | 1 (AA-018, in kind) |
 | Replication mismatches | 0 |
 | Provenance findings raised | 2 (AA-018 tier + tightness) |
 | Onboarding defects for a cold agent | 3 (SOAK-01, -02, -03) |
-| Harness calibrations | 1 (R12 suite, 17/17 green) |
-| Boundary cases designed + run | 1 (R12 sandbox Mult) |
+| Harness calibrations | 2 (R12 suite, 17/17 green both times) |
+| Boundary cases designed + run | 7 (1 gap probe + 6 escape variants) |
 | Safety gaps handed off via GATE_ELI5 | 1 |
-| Own hypotheses killed by own tests | 2 (AA-018 staleness; integer-magnitude vector) |
-| Heartbeat successes | 0 of 2 (env-override, SOAK-05 — never blocked a pass) |
+| Own hypotheses killed by own tests | 3 (AA-018 staleness; integer-magnitude vector; expected-incomplete-fix) |
+| Heartbeat successes | 0 of 3 (env-override, SOAK-05 — never blocked a pass) |
 | Self-corrections caught before logging | 2 |
 
 ## Soak findings
@@ -108,6 +109,39 @@ in 0.01 ms, because bigint multiplication is cheap at every reachable magnitude.
 A green 17/17 suite says the pinned properties hold. It says nothing about properties
 nobody pinned — which is precisely where this boundary case landed.
 
+**SOAK-08 (design) — the untested half.** After three passes the channel has demonstrated a
+**worker-to-worker** round-trip (Aporia metabolized both soak findings in P28, verified
+independently in P3) and **zero reviewer-to-worker** round-trips. Elenchus has filed no
+review against any HARMA pass_id. The soak is therefore stressing the worklog, validator
+and gate mechanisms thoroughly and the **review mechanism not at all** — so the headline
+question can only be half-answered on current evidence.
+
+**SOAK-09 (observation) — the channel out-produced the finding.** HARMA-P1 reported *one*
+defective anchor (AA-018). P28 generalized it to a defect **class**, found 3 instances
+registry-wide, and corrected all 3 — independently confirmed in P3 (0 of 72 entries now
+pair `verified_against_primary=True` with a tertiary citation). A single-instance finding
+from a second worker propagated into a class-level repair. That is the strongest argument
+yet for a second worker existing at all.
+
+## Repair-verification ledger
+
+| Repair claimed (P28) | Verification | Result |
+|---|---|---|
+| R12 sandbox rejects sequence repetition | 6 escape variants + 4 regression cases + full suite | **COMPLETE, no regression** |
+| AA-018 corrected, class of 3 all fixed | independent regex audit of all 72 entries | **CONFIRMED** |
+
+**Repair completeness.** All six escape variants I designed — reverse operand order
+(`(10 ** 8) * 'a'`, the classic incomplete-fix signature), bytes literal, tuple, list,
+dynamic feature-valued multiplier, nested pre-multiplied string — are rejected at parse.
+All four legitimate arithmetic forms still compile and evaluate, and the pinned suite
+stays 17/17. **My prior was that at least one variant would slip through, because fixes to
+reported shapes usually are shape-specific. None did; the repair is better than my
+skepticism predicted, and that is recorded rather than quietly dropped.**
+
+**One half-verification, not laundered into a full one.** Aporia claims rejection at parse
+*and* eval. Every shape I can construct hits the parse gate first, so the eval-layer
+defence-in-depth is an **unreached** claim component — logged as `withheld`, not confirmed.
+
 ## Replication ledger
 
 | Anchor | Grade | Basis replicated | Result |
@@ -132,7 +166,7 @@ so 2^71 sits just under it rather than a generation behind.
 
 ## Verdict so far
 
-Withheld — two passes is not a soak. The mechanisms have generalized to a second worker
+Withheld — three passes is not a soak. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
@@ -143,3 +177,9 @@ Pass 2 produced the first finding that matters to someone other than this soak: 
 resource-exhaustion gap in a sandbox whose sibling property is test-pinned. That is the
 role working as intended — a second, independent worker found something the first worker's
 own test suite did not pin.
+
+Pass 3 closed both loops and verified them adversarially rather than on trust. The
+mechanisms are now well-evidenced. **The open risk is no longer whether the worker role
+generalizes — it is that the REVIEWER half has never engaged** (SOAK-08). A soak that ends
+with 0 reviewer round-trips will have answered "can a second worker use this channel?" and
+left "can the channel review a second worker?" untouched.
