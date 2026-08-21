@@ -23,7 +23,8 @@ import math
 from typing import Callable, Dict, FrozenSet, Hashable, List, Sequence, Tuple
 
 __all__ = ["induced_partition", "refines", "entropy", "mutual_information",
-           "variation_of_information", "conditional_entropy", "PartitionError"]
+           "variation_of_information", "conditional_entropy", "is_refinement_chain",
+           "information_profile", "PartitionError"]
 
 Partition = Tuple[FrozenSet[int], ...]
 
@@ -122,3 +123,31 @@ def conditional_entropy(p: Partition, q: Partition, n: int) -> float:
     directions are the two halves of that single number.
     """
     return entropy(p, n) - mutual_information(p, q, n)
+
+
+def is_refinement_chain(chain: Sequence[Partition], n: int) -> bool:
+    """Is each partition coarsened by its successor — `chain[k]` refines `chain[k+1]`?
+
+    Any pipeline induces one automatically: if stage k+1 sees only stage k's output, its fibres
+    are unions of stage k's fibres. A chain that FAILS this test is not a pipeline — some stage
+    is reading something its predecessor did not hand it.
+    """
+    return all(refines(chain[k], chain[k + 1], n) for k in range(len(chain) - 1))
+
+
+def information_profile(chain: Sequence[Partition], truth: Partition,
+                        n: int) -> List[Tuple[float, float]]:
+    """Per-stage `(deficit, excess)` = `(H(T | P_k), H(P_k | T))` along a pipeline.
+
+    On a refinement chain the data-processing inequality (Cover & Thomas, *Elements of
+    Information Theory* 2nd ed., Thm 2.8.1) forces the two columns in OPPOSITE directions:
+
+        deficit is non-DECREASING   — information about the truth can only be lost
+        excess  is non-INCREASING   — surplus distinctions can only be discarded
+
+    So a pipeline can only lose. The question a chain poses is never "did it lose something" but
+    "was what it lost excess (free) or deficit (fatal)", and the first stage where deficit rises
+    above zero is the seam where the chain broke.
+    """
+    return [(conditional_entropy(truth, p, n), conditional_entropy(p, truth, n))
+            for p in chain]

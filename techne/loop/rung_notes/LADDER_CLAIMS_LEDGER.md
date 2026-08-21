@@ -430,3 +430,45 @@ excess figure is meaningless without stating the truth function's granularity.**
 **Kill-battery additions (executable):** sufficiency measurement in bits
 (`sweep.sufficiency`); deficit/excess vs witness-search agreement check; truth-function
 granularity disclosure alongside any excess figure.
+
+## Cycle 024 — composition: claim v14, and a third arrival at "contract, not metric"
+
+**Claim v14 (composition).** *Along any pipeline, deficit is non-decreasing and excess is
+non-increasing.* A pipeline induces a refinement chain (stage k+1 sees only stage k's output, so
+its fibres are unions of stage k's), and the data-processing inequality (Cover & Thomas 2nd ed.,
+Thm 2.8.1) does the rest. Consequences:
+
+- A chain cannot repair an upstream loss. Composition only ever discards.
+- The only question a composition poses is whether what it discarded was excess (free) or
+  deficit (fatal).
+- **Seam location is a measurement, not a hunt:** the first stage where deficit rises above zero
+  is where the chain broke. Measured at 1.918 bits at `degree_only` in the locally-sound chain,
+  whose every stage is sound for its own local target.
+
+**And the instrument is aliased against its own traps.** Under the projection "the chain's
+profile", the sound and shortcut chains are indistinguishable (byte-identical profiles) while
+differing on whether the stages are used at all. Three detectors are required and none is
+redundant:
+
+    profile        catches  locally-sound-but-globally-lossy
+    ablation       catches  shortcut (R9's deletion test, lifted to stages)
+    intervention   catches  interface laundering
+
+**Withdrawn detector, kept renamed.** `discards_nothing` (VI(P_k, P_{k-1}) = 0) was built as the
+laundering signature and fires identically on the SOUND chain's `together`, which is injective on
+the battery. **Injectivity and laundering are indistinguishable to any information measure.** Now
+`is_injective_on`, with the failure in its docstring.
+
+**THIRD ARRIVAL at "the measurement cannot see it; an external declaration must."**
+1. Completeness — no function of a record detects what is absent (v13, cycle 021).
+2. Reference-class choice — a forecaster picking its own class can pick a flattering one (R11).
+3. Interface entitlement — laundering is a CONTRACT violation, not an information-flow property;
+   the bits are present in both chains and only entitlement differs (this cycle).
+
+Three independent arrivals is enough to treat as one phenomenon rather than three coincidences.
+If it is one phenomenon it wants one mechanism, and the immutable-observation constitution is the
+candidate. Flagged to HITL #73 as the fourth independent argument for that proposal.
+
+**Kill-battery additions (executable):** refinement-chain check; per-stage information profile
+with seam location; stage ablation preserving chain type; declared-output corruption
+intervention.

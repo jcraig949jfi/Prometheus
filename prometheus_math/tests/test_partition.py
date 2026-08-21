@@ -213,3 +213,53 @@ def test_VI_decomposes_into_the_two_sweep_directions(a, b):
     p, q = _partition_from_labels(a[:n]), _partition_from_labels(b[:n])
     assert variation_of_information(p, q, n) == pytest.approx(
         conditional_entropy(p, q, n) + conditional_entropy(q, p, n))
+
+
+# ---- cycle 024: chains and the data-processing inequality --------------------------------------
+
+def test_refinement_chain_detection():
+    """A pipeline induces a chain automatically; a stage reading something it was not handed
+    breaks the property. Hand-checked on the two extremes plus a violation."""
+    from prometheus_math.partition import is_refinement_chain
+    singles, pairs, whole = P([0], [1], [2], [3]), P([0, 1], [2, 3]), P([0, 1, 2, 3])
+    assert is_refinement_chain([singles, pairs, whole], 4)
+    assert not is_refinement_chain([whole, pairs, singles], 4)
+    assert not is_refinement_chain([pairs, P([0, 2], [1, 3])], 4)   # incomparable
+
+
+def test_DATA_PROCESSING_INEQUALITY_on_a_hand_built_chain():
+    """Reference: Cover & Thomas, *Elements of Information Theory* 2nd ed., Thm 2.8.1.
+
+    Along a refinement chain, deficit H(T|P) can only rise and excess H(P|T) can only fall.
+    Hand-checked: truth = the two pairs. Singletons see it exactly (deficit 0, excess 1);
+    the pairs partition IS the truth (0, 0); the one-block partition has lost it (deficit 1,
+    excess 0).
+    """
+    from prometheus_math.partition import information_profile
+    singles, pairs, whole = P([0], [1], [2], [3]), P([0, 1], [2, 3]), P([0, 1, 2, 3])
+    prof = information_profile([singles, pairs, whole], pairs, 4)
+    assert prof[0] == pytest.approx((0.0, 1.0))
+    assert prof[1] == pytest.approx((0.0, 0.0))
+    assert prof[2] == pytest.approx((1.0, 0.0))
+    deficits = [d for d, _ in prof]
+    excesses = [e for _, e in prof]
+    assert deficits == sorted(deficits)
+    assert excesses == sorted(excesses, reverse=True)
+
+
+@settings(max_examples=120, deadline=None)
+@given(labels, labels)
+def test_DPI_holds_for_any_chain_built_by_coarsening(a, b):
+    """Property form: build a chain by successively coarsening, and the two columns must move
+    in opposite directions for ANY truth partition."""
+    from prometheus_math.partition import information_profile, is_refinement_chain
+    n = min(len(a), len(b))
+    fine = tuple(frozenset([i]) for i in range(n))
+    mid = _partition_from_labels(a[:n])
+    whole = (frozenset(range(n)),)
+    chain = [fine, mid, whole]
+    assert is_refinement_chain(chain, n)
+    prof = information_profile(chain, _partition_from_labels(b[:n]), n)
+    for k in range(len(prof) - 1):
+        assert prof[k][0] <= prof[k + 1][0] + 1e-9
+        assert prof[k][1] >= prof[k + 1][1] - 1e-9

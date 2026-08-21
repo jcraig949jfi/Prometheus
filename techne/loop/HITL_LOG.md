@@ -396,3 +396,33 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
     (competitor-relative identification v2, abstention channel, immutable-observation
     constitution) have been awaiting a single yes/no since cycle 013. The constitution now has
     three independent arguments and a concrete mechanism requirement that spans sessions.
+
+
+## Cycle 024 (2026-08-21) — composition, the first seam probe
+
+73. **THREE INDEPENDENT ARRIVALS at "you need a contract, not a metric", and I think that is now
+    a finding rather than a coincidence.** (a) Completeness — no function of a record detects
+    what is absent (claim v13, cycle 021). (b) Reference-class choice — a forecaster picking its
+    own class can pick a flattering one (R11, cycle 020). (c) Interface entitlement — laundering
+    is indistinguishable from a lossless transform to any information measure (this cycle).
+    **If these are one phenomenon it should have one mechanism, and the immutable-observation
+    constitution is the obvious candidate.** That would turn the proposal from a principle into
+    the answer to a recurring engineering problem. This is the strongest argument I have for it
+    yet and it is the fourth independent one.
+74. **A detector I built this cycle and withdrew within the hour.** I reasoned a stage that
+    claims to reduce while discarding nothing must be smuggling. Measured: the SOUND chain's
+    `together` reports identically, because it is injective on the battery. Kept the function,
+    renamed `is_injective_on`, failure recorded in its docstring rather than deleted. Recording
+    it here because the pattern (build detector, measure it against the honest circuit, discover
+    it fires on both) has now caught me three times and is cheap insurance every time.
+75. **The composition instrument is blind to two of its own three traps** — shortcut and
+    laundering chains produce profiles byte-identical to the sound chain. Aliasing, against a
+    tool built four hours earlier. Three independent detectors are needed and none is redundant:
+    profile / ablation / intervention, each catching exactly one trap and fooled by the others.
+76. **Seam location is now a measurement.** Deficit's first rise along a chain names the stage
+    where it broke (1.918 bits at `degree_only` in the locally-sound chain). This is the first
+    composition result that is directly reusable on real Prometheus pipelines — the probe
+    assembler, the discovery pipeline, the metabolization chain all have the shape it needs.
+77. **Standing gap unchanged:** R2, R4, R5, R7, R8 unswept; sweep stays closed. And the three
+    doctrine proposals have now been awaiting a yes/no since cycle 013 — item 73 above is the
+    fourth independent argument for one of them.
