@@ -509,3 +509,47 @@ before a target is chosen.
 
 **Kill-battery additions (executable):** non-empty-file zero-row parse check; instrument
 self-ablation (disable the stage the instrument watches and confirm its numbers move).
+
+## Cycle 026 — claim v14's scope statement VINDICATED on live data
+
+Cycle 025 narrowed v14 (composition profiles) to chains whose stages SELECT or REORDER, after
+the instruments proved blind to ergon/probe's render/redact content transforms. Cycle 026 tested
+that narrowing on the selection stages of the same module, on the same day, with the same
+instruments.
+
+**Measured** — live campaign pool (369 records), 24 target tasks, 8,000-token ceiling:
+
+    plain `_order` + tail truncation      deficit 4.5850 bits   1 distinct head / 24   cov 5/369
+    `_order_per_task_stratified` (BC-2)   deficit 0.0000       24 distinct heads       cov 95/369
+    H(task) = 4.5850 bits
+
+Plain ordering's deficit **equals the task entropy exactly** — a packet identical for every task
+has one fibre, so H(T|P) = H(T) identically, and the normalised deficit is 1.000. BC-2 takes it
+to zero and multiplies pool coverage nineteen-fold.
+
+This reproduces Charon's independently-measured constant-packet defect (~0.5% of a 4,581-record
+pool, every task the same window) from a different direction and as a number rather than a
+narrative.
+
+**The scope split is now measured, not asserted:**
+
+    SELECT / REORDER stages   partition measures work        (deficit 4.585 vs 0.000)
+    REWRITE stages            partition measures are blind   (identical with the stage disabled)
+
+**Consequence for the arsenal:** two families of pipeline stage, one family of instrument. The
+correct instrument for a rewrite stage is the pipeline's own predicate re-run on the output —
+not a partition measure, and probably not convertible into one, since it would require
+partitioning a record's internal token space, which has no ground truth. Flagged to HITL #88
+before investing in a second family.
+
+**Limitation recorded:** BC-2 has two halves (source round-robin, timeline bucket interleave) and
+the campaign pool is single-source, so only the second was exercised. The measurement is a lower
+bound on BC-2's effect.
+
+**Track 1 addition:** `normalized_deficit = H(T|P)/H(T)`, since bits are not comparable across
+batteries with different target entropies. Raises on a constant target rather than returning 0 —
+a battery with no target variation cannot test sufficiency, and reporting 0 would claim one it
+never measured.
+
+**Kill-battery additions (executable):** constant-packet detection via deficit-equals-target-
+entropy; per-task head-variation count; pool-coverage ratio under repeated truncated draws.

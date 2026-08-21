@@ -24,7 +24,7 @@ from typing import Callable, Dict, FrozenSet, Hashable, List, Sequence, Tuple
 
 __all__ = ["induced_partition", "refines", "entropy", "mutual_information",
            "variation_of_information", "conditional_entropy", "is_refinement_chain",
-           "information_profile", "PartitionError"]
+           "information_profile", "normalized_deficit", "PartitionError"]
 
 Partition = Tuple[FrozenSet[int], ...]
 
@@ -151,3 +151,22 @@ def information_profile(chain: Sequence[Partition], truth: Partition,
     """
     return [(conditional_entropy(truth, p, n), conditional_entropy(p, truth, n))
             for p in chain]
+
+
+def normalized_deficit(truth: Partition, projection: Partition, n: int) -> float:
+    """`H(T | P) / H(T)` — the FRACTION of the target's information the projection has lost.
+
+    Bits are not comparable across batteries with different target entropies: 4.585 bits of
+    deficit is total loss over 24 equiprobable tasks and a rounding error over a million. This
+    normalises to [0, 1], where 0 is sufficient and 1 is "the projection says nothing at all
+    about the target".
+
+    Undefined when the target is constant (H(T) = 0): there is nothing to lose, and reporting 0
+    would claim a sufficiency the battery never tested. Raises instead.
+    """
+    h_t = entropy(truth, n)
+    if h_t <= 0.0:
+        raise PartitionError(
+            "the target is constant on this battery, so normalized deficit is undefined; "
+            "a battery with no target variation cannot test sufficiency")
+    return conditional_entropy(truth, projection, n) / h_t

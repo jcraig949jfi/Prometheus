@@ -465,3 +465,31 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
     should pick a pipeline whose stages select. The harsher reading, which I do not think is
     right but will not dismiss myself, is that twenty-four cycles of synthetic work produced
     instruments fitted to synthetic shapes.
+
+
+## Cycle 026 (2026-08-21) — scope statement vindicated
+
+84. **HITL #78 STILL UNRULED AND STILL LIVE.** The 100% loader drop in ergon/probe persists:
+    campaign.py writes `key: [rep, uid]`, `load_prepass` filters on a top-level `rep`, and the
+    ledger has grown from 333 to 369 rows while the defect stands. Every one is dropped. The
+    F-prom-retrieved arm ships an empty packet declaring the stratum UNSUPPLIED. **If any
+    campaign has been scored against empty D0 packets those results are void.** Restating until
+    ruled on, per instruction.
+85. **Claim v14's scope statement is vindicated.** The instruments that were blind to
+    render/redact (cycle 025) separate plain ordering from BC-2 stratified ordering decisively:
+    deficit 4.5850 bits (= H(task) exactly, total loss) versus 0.0000, on the live pool. Same
+    module, same day, same instruments. The split is now measured rather than asserted:
+    partition measures read SELECT/REORDER stages and are blind to REWRITE stages.
+86. **Charon's constant-packet finding reproduced on live data**, from a different direction and
+    as a number rather than a narrative: 1 distinct packet head across 24 tasks, 5 records of
+    369 (1.4%) covered, against 95 under BC-2. Charon measured ~0.5% of 4,581; same phenomenon.
+87. **Limitation I could not remove:** BC-2 does round-robin ACROSS sources and bucket-interleave
+    WITHIN each. The campaign pool is single-source, so only the shuffle half was exercised and
+    my numbers are a LOWER bound on what BC-2 delivers. The Theseus and forge corpora are not on
+    this machine — if you want the source-mixing half validated I need a path to them.
+88. **The arsenal needs a second instrument family, and I would like a ruling before building
+    one.** Selection stages: partition measures. Rewrite stages: the pipeline's own predicate,
+    re-run on the output (which is what ergon already does, correctly). I do not think content
+    transforms can be brought inside partition methods — you would have to partition a record's
+    internal token space, which has no ground truth — but building a second family is a real
+    investment and I would rather you rule than have me assume.

@@ -179,3 +179,88 @@ def redaction_profile(records: Sequence[ResidueRecord],
         trace_profile=information_profile(stages, trace_truth, n),
         leak_entropy=entropy(leak_truth, n),
     )
+
+
+# =============================================================================================
+# Cycle 026 — the SELECTION stages, which is what the instruments were actually built for.
+#
+# Cycle 025 pointed the composition instruments at render/redact (intra-record content
+# transforms) and they saw nothing. `select_residue` -> `_order*` -> truncate are inter-record
+# operations, so this is the scope statement's decisive test.
+# =============================================================================================
+
+from ergon.probe.assemble import _order, _order_per_task_stratified  # noqa: E402
+
+
+def truncated_head(chosen: Sequence[ResidueRecord], ceiling: int = 8000) -> Tuple[str, ...]:
+    """The record ids that survive the packet's token ceiling, in order.
+
+    Mirrors `assemble_retrieved`'s truncation: drop from the deterministic tail until the body
+    fits. Reproduced here rather than called because the assembler truncates a rendered body and
+    this audit needs the surviving RECORD SET.
+    """
+    out: List[str] = []
+    total = 0
+    for r in chosen:
+        t = count_tokens(r.render())
+        if total + t > ceiling:
+            break
+        out.append(r.record_id)
+        total += t
+    return tuple(out)
+
+
+@dataclass
+class OrderingReport:
+    """Deficit of the shipped packet with respect to the TARGET TASK it was built for.
+
+    A packet that is identical for every task carries zero information about its task, so its
+    deficit equals the task entropy — the maximum available. That is the constant-packet defect
+    Charon measured, expressed as a number the instruments produce.
+    """
+
+    n_tasks: int
+    task_entropy: float
+    plain_deficit: float
+    stratified_deficit: float
+    plain_distinct_heads: int
+    stratified_distinct_heads: int
+    plain_pool_coverage: int
+    stratified_pool_coverage: int
+    pool_size: int
+
+    @property
+    def plain_is_constant(self) -> bool:
+        return self.plain_distinct_heads == 1
+
+    @property
+    def instruments_transferred(self) -> bool:
+        """The scope test: does the measurement separate the known-bad ordering from the fix?"""
+        return self.plain_deficit > self.stratified_deficit + 1e-9
+
+
+def ordering_profile(pool: Sequence[ResidueRecord], n_tasks: int = 24,
+                     ceiling: int = 8000) -> OrderingReport:
+    """Measure both orderings against the target-task truth function."""
+    uids = [r.uid for r in pool][:n_tasks]
+    plain = {u: truncated_head(_order(list(pool)), ceiling) for u in uids}
+    strat = {u: truncated_head(_order_per_task_stratified(list(pool), target_uid=u), ceiling)
+             for u in uids}
+
+    n = len(uids)
+    task_truth = induced_partition(uids, lambda u: u)
+    plain_part = induced_partition(uids, lambda u: plain[u])
+    strat_part = induced_partition(uids, lambda u: strat[u])
+
+    cov = lambda d: len({rid for h in d.values() for rid in h})
+    return OrderingReport(
+        n_tasks=n,
+        task_entropy=entropy(task_truth, n),
+        plain_deficit=conditional_entropy(task_truth, plain_part, n),
+        stratified_deficit=conditional_entropy(task_truth, strat_part, n),
+        plain_distinct_heads=len(set(plain.values())),
+        stratified_distinct_heads=len(set(strat.values())),
+        plain_pool_coverage=cov(plain),
+        stratified_pool_coverage=cov(strat),
+        pool_size=len(pool),
+    )

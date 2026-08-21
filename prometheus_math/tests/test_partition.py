@@ -263,3 +263,37 @@ def test_DPI_holds_for_any_chain_built_by_coarsening(a, b):
     for k in range(len(prof) - 1):
         assert prof[k][0] <= prof[k + 1][0] + 1e-9
         assert prof[k][1] >= prof[k + 1][1] - 1e-9
+
+
+# ---- cycle 026: normalized deficit --------------------------------------------------------------
+
+def test_normalized_deficit_hand_computed_and_at_both_extremes():
+    """H(T|P)/H(T). Hand-checked over four points with truth = all singletons (H = 2 bits):
+    the one-block projection knows nothing (deficit 2/2 = 1.0); the singleton projection knows
+    everything (0.0); a two-pair projection knows exactly half (1/2 = 0.5)."""
+    from prometheus_math.partition import normalized_deficit
+    truth = P([0], [1], [2], [3])
+    assert normalized_deficit(truth, P([0, 1, 2, 3]), 4) == pytest.approx(1.0)
+    assert normalized_deficit(truth, truth, 4) == pytest.approx(0.0)
+    assert normalized_deficit(truth, P([0, 1], [2, 3]), 4) == pytest.approx(0.5)
+
+
+def test_normalized_deficit_is_undefined_on_a_constant_target():
+    """A battery with no target variation cannot test sufficiency, and reporting 0.0 would claim
+    a sufficiency it never measured — the same error as scoring an empty forecast set."""
+    from prometheus_math.partition import PartitionError, normalized_deficit
+    with pytest.raises(PartitionError):
+        normalized_deficit(P([0, 1, 2, 3]), P([0], [1], [2], [3]), 4)
+
+
+@settings(max_examples=150, deadline=None)
+@given(labels, labels)
+def test_normalized_deficit_stays_in_the_unit_interval(a, b):
+    from prometheus_math.partition import PartitionError, normalized_deficit
+    n = min(len(a), len(b))
+    t, p = _partition_from_labels(a[:n]), _partition_from_labels(b[:n])
+    try:
+        v = normalized_deficit(t, p, n)
+    except PartitionError:
+        return                       # constant target: correctly refused
+    assert -1e-12 <= v <= 1.0 + 1e-12

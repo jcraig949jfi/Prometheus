@@ -159,3 +159,69 @@ def test_the_audit_shim_is_not_a_fix_and_ergon_is_untouched():
     loader is left exactly as it was."""
     assert load_prepass(CAMPAIGN_LEDGER) == []          # unchanged behaviour
     assert len(_audit_load_prepass()) == len(raw_rows())
+
+
+# ---- CYCLE 026: the SELECTION stages — the scope statement's decisive test ------------------------
+
+def test_CYCLE026_the_instruments_DO_transfer_to_selection_and_ordering():
+    """**The scope statement, vindicated on live data.**
+
+    Cycle 025 pointed the instruments at render/redact (intra-record content transforms) and they
+    saw nothing. `_order` + tail truncation is an INTER-record operation, and the instruments see
+    it immediately:
+
+        plain `_order`                       deficit = H(task) exactly — TOTAL loss
+        `_order_per_task_stratified` (BC-2)  deficit = 0.000
+
+    A packet identical for every task carries zero information about its task, so its deficit is
+    the full task entropy. That is the constant-packet defect Charon measured, expressed as a
+    number the instruments produce rather than as a narrative.
+    """
+    from techne.ladder_circuits.real_substrate import ordering_profile
+    r = ordering_profile(_audit_load_prepass())
+    assert r.n_tasks == 24
+    assert r.plain_deficit == pytest.approx(r.task_entropy, abs=1e-9)   # total loss
+    assert r.stratified_deficit == pytest.approx(0.0, abs=1e-9)         # none
+    assert r.instruments_transferred
+
+
+def test_CYCLE026_reproduces_charons_constant_packet_finding_on_live_data():
+    """Charon measured that plain ordering shipped every task the same ~25-record window, about
+    0.5% of a 4,581-record pool. Reproduced here on the live campaign pool: ONE distinct head
+    across 24 tasks, and pool coverage of a handful of records against ~95 under BC-2.
+    """
+    from techne.ladder_circuits.real_substrate import ordering_profile
+    r = ordering_profile(_audit_load_prepass())
+    assert r.plain_is_constant
+    assert r.plain_distinct_heads == 1
+    assert r.stratified_distinct_heads == r.n_tasks
+    assert r.stratified_pool_coverage > 10 * r.plain_pool_coverage
+    assert r.plain_pool_coverage / r.pool_size < 0.05      # a sliver of the pool
+
+
+def test_CYCLE026_normalized_deficit_makes_the_two_orderings_comparable():
+    """Bits are not comparable across batteries; the normalised form is. Plain ordering loses
+    100% of the task signal, BC-2 loses 0%."""
+    from prometheus_math.partition import induced_partition, normalized_deficit
+    from ergon.probe.assemble import _order, _order_per_task_stratified
+    from techne.ladder_circuits.real_substrate import truncated_head
+
+    pool = _audit_load_prepass()
+    uids = [r.uid for r in pool][:24]
+    truth = induced_partition(uids, lambda u: u)
+    plain = induced_partition(uids, lambda u: truncated_head(_order(list(pool))))
+    strat = induced_partition(
+        uids, lambda u: truncated_head(_order_per_task_stratified(list(pool), target_uid=u)))
+
+    assert normalized_deficit(truth, plain, len(uids)) == pytest.approx(1.0)
+    assert normalized_deficit(truth, strat, len(uids)) == pytest.approx(0.0)
+
+
+def test_CYCLE026_single_source_caveat_is_stated_not_hidden():
+    """Honest limitation. BC-2 does two things — round-robin ACROSS sources and bucket-interleave
+    WITHIN each. This pool is single-source (`probe_prepass` only), so the round-robin half is
+    inert and only the seeded bucket shuffle is being exercised. The measured per-task variation
+    is therefore a LOWER bound on what BC-2 delivers on a genuine multi-source D3 pool.
+    """
+    pool = _audit_load_prepass()
+    assert {r.source for r in pool} == {"probe_prepass"}
