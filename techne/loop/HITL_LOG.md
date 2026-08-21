@@ -34,3 +34,16 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
    capacity pressure; the minimal R4 ingredient; the binder-probe challenge).
 8. **Scheduled-wake overlap**: this cycle ran EARLY because your reply arrived; when the
    already-scheduled wake fires it will find 004 done and proceed to 005 (rung R4).
+
+## Cycle 005 (2026-08-21)
+
+9. **PySR is now validated on real PARI data with null adjudication** (exact recovery,
+   ratio 1.7e38). Next natural target: a table where the law is NOT known — e.g. residual
+   structure in EC rank vs (conductor-detrended) invariants we hold. That crosses from
+   instrument validation into actual discovery attempts, so per doctrine it should run with
+   full battery discipline (prime-detrend, replication, seeds). OK to attempt in a later
+   cycle, or hold until you review?
+10. **Trace-vector fields**: cycle-005's R4 finding implies grading batteries should record
+    `work` and `verifier_calls` per attempt. Wiring that into reasoning_phase0/grading_oracle
+    is a small cross-lane change (Harmonia A owns the oracle) — I'll draft it as a proposal
+    file rather than editing their code, unless you say go direct.
