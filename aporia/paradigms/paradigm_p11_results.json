@@ -1,0 +1,35 @@
+{
+ "protocol": "Legendre sieve: inclusion-exclusion over squarefree products vs direct residue count vs pi-identity, integer-exact at three scales, N=100 hand gate",
+ "gate_N100": {
+  "phi": 22,
+  "direct": 22,
+  "identity": 22
+ },
+ "rows": [
+  {
+   "N": 10000,
+   "sieving_primes": 25,
+   "phi_inclusion_exclusion": 1205,
+   "phi_direct": 1205,
+   "pi_identity": 1205,
+   "exact_match": true
+  },
+  {
+   "N": 100000,
+   "sieving_primes": 65,
+   "phi_inclusion_exclusion": 9528,
+   "phi_direct": 9528,
+   "pi_identity": 9528,
+   "exact_match": true
+  },
+  {
+   "N": 1000000,
+   "sieving_primes": 168,
+   "phi_inclusion_exclusion": 78331,
+   "phi_direct": 78331,
+   "pi_identity": 78331,
+   "exact_match": true
+  }
+ ],
+ "verdict": "SIEVE-EXACT"
+}

@@ -1,0 +1,52 @@
+{
+ "protocol": "cross-channel bind to Techne's lean_oracle (cycle 015); 5 claims incl. a mandatory REFUTED and a mandatory ERROR to exercise the three-valued lane",
+ "results": [
+  {
+   "name": "p09_gate_value",
+   "statement": "(5 * 4 * 3) / (3 * 2 * 1) = 10",
+   "proof": "by decide",
+   "expected": "PROVED",
+   "got": "PROVED",
+   "toolchain": "leanprover/lean4:v4.30.0",
+   "ok": true
+  },
+  {
+   "name": "p07_markov_base",
+   "statement": "1^2 + 1^2 + 1^2 = 3 * 1 * 1 * 1",
+   "proof": "by decide",
+   "expected": "PROVED",
+   "got": "PROVED",
+   "toolchain": "leanprover/lean4:v4.30.0",
+   "ok": true
+  },
+  {
+   "name": "inference_not_compute",
+   "statement": "forall n : Nat, n + 0 = n",
+   "proof": "by intro n; rfl",
+   "expected": "PROVED",
+   "got": "PROVED",
+   "toolchain": "leanprover/lean4:v4.30.0",
+   "ok": true
+  },
+  {
+   "name": "teeth_refuted",
+   "statement": "(5 * 4 * 3) / (3 * 2 * 1) = 11",
+   "proof": "by decide",
+   "expected": "REFUTED",
+   "got": "REFUTED",
+   "toolchain": "leanprover/lean4:v4.30.0",
+   "ok": true
+  },
+  {
+   "name": "three_valued_error",
+   "statement": "(5 * 4 * 3) / (3 * 2 * 1) = 10",
+   "proof": "by thisIsNotATactic",
+   "expected": "ERROR",
+   "got": "ERROR",
+   "toolchain": "leanprover/lean4:v4.30.0",
+   "ok": true
+  }
+ ],
+ "verdict": "LANE-BINDS",
+ "synergy_note": "Aporia consumed Techne's forged instrument instead of duplicating it \u2014 the overlap James called intentional, cashed"
+}

@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-21T17:30:41+00:00
+# PULSE — generated 2026-08-21T18:12:21+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        855
-consumed (state changes):   420  {'queue_state': 359, 'registry': 57, 'findings': 3, 'doctrine': 1}
+emitted (new files):        859
+consumed (state changes):   419  {'queue_state': 358, 'registry': 57, 'findings': 3, 'doctrine': 1}
 consumed/emitted:           0.49
 verdict: ALIVE
 ```
 
 ## Commits, 72h (non-cron): 259
+- ca12a99d 08-21 13:40 Techne loop cycle 019: evidence typing, and the finding that types need a checker
+- 01511366 08-21 13:30 Aporia P84: P08+P09 â€” the paradigms the channel already lives get their trees
 - e0a7d291 08-21 13:19 Techne loop cycle 018: external review fold-in â€” aliasing instrument, R10 third verdict, Lean tracer
 - 23142b3a 08-21 13:01 Aporia P83: P06+P07 â€” a flow that canonicalizes, a descent that decides, and the first honest empty assignment
 - 9707a5fb 08-21 12:42 Techne loop cycle 017: canon R10 analogy/transfer + claim v11 (instance-blind parameters)
@@ -38,8 +40,6 @@ verdict: ALIVE
 - 77c19f10 08-21 08:53 Aporia P75: batch 4 opens â€” MATH-0482 authored on gates the data itself derived
 - 286f9d1a 08-21 08:45 Techne loop cycle 012: certified constants x7 with OEIS authorities + rung R7; cheaper-mechanism doctrine drafted
 - 254666b1 08-21 08:28 Harmonia-A soak P49 FINAL: SOAK VERDICT â€” worker half SURVIVED, reviewer half UNPROVEN
-- c80feacd 08-21 08:23 Aporia P74: the mirror is 19.3% duplicate rows at every degree â€” audit routed, doctrine set
-- 3e406f95 08-21 08:09 Techne loop cycle 011: round-4 fold-in â€” R6 provenance diagnosis, retraction necessity, claim v8 (epistemic-rule plasticity)
 - … +234 more
 
 ## Bottleneck hypotheses (confidence)
