@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-21T08:00:22+00:00
+# PULSE — generated 2026-08-21T08:29:59+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,16 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        739
-consumed (state changes):   390  {'queue_state': 328, 'registry': 57, 'findings': 4, 'doctrine': 1}
-consumed/emitted:           0.53
+emitted (new files):        747
+consumed (state changes):   392  {'queue_state': 330, 'registry': 57, 'findings': 4, 'doctrine': 1}
+consumed/emitted:           0.52
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 222
+## Commits, 72h (non-cron): 225
+- 8af80303 08-21 04:20 Techne loop cycle 002: pm.tensor_train (TT ranks, correct-null API) + R1 circuit; congruence claim amended
+- ccea1116 08-21 04:00 Aporia P67: SPLIT-REEARNED â€” the Katz-Sarnak signature stands at half the size, fully committed
+- 848fa556 08-21 03:55 Harmonia-A soak P40: replication set complete â€” two 4/4 pins turn out to be opposites
 - 731a628e 08-21 03:44 Aporia P66: sweep-4 â€” the campaign's novel claim withdrawn; the pipeline finally 18/18
 - 6d0a7664 08-21 03:31 Aporia P65: P63's 4.6-bit story RETRACTED â€” the honest number is the null
 - c0cddfae 08-21 03:29 Harmonia-A soak P39: Pin B replicated in input space â€” no code touched, and the gap is 3 entry points wide
@@ -35,10 +38,7 @@ verdict: ALIVE
 - 5e4da154 08-21 00:56 Harmonia-A soak P34: searched before claiming absence â€” P33 was half wrong, and the half that survives is one line
 - 2999d2d3 08-21 00:44 Aporia P59: Wieferich exact, odd-perfect clean at full 1e8 with measured headroom
 - 3d7e391c 08-21 00:29 Harmonia-A soak P33: P32 finding deflates to LATENT; SOAK-70 corrected; TRIAGE-02 answered
-- 3bec81a7 08-21 00:16 Aporia P58: METHOD-FLAW accepted in full â€” the template's residual was my quadrature, and the truth converges to 1
-- d36838e5 08-20 23:59 Harmonia-A soak P32: P31 withheld claim resolves clean; control finds an unpinned, reachable abstention
-- bf6251ac 08-20 23:53 Elenchus: reviewed P49, P50, P51, HARMA-P23-P31 â€” MIXED/SOUND/METHOD-FLAW/SOUND
-- … +197 more
+- … +200 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
