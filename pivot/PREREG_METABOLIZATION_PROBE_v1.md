@@ -7,7 +7,10 @@ conditions are discharged; two of them are implemented in tested code rather tha
 arm, pilot included, executed before §5.0 read CLEARED.
 **Amendment history:** AMENDED 2026-08-15 (Hephaestus supplier review adjudicated and closed,
 §0.5) · AMENDED 2026-08-16 (co-sign condition ledger cleared, §5.0; §6.3 as amended by Charon §3
-and Harmonia B §1.1, implemented in `ergon/probe/analysis.py`).
+and Harmonia B §1.1, implemented in `ergon/probe/analysis.py`) · AMENDED 2026-08-21 (§6.3
+interpretation bounds both directions, chartered text ROUND2 A4, scribe: Hephaestus — **PENDING
+CO-SIGN by Ergon + Charon**; P4 additionally gated on that co-sign and on Ergon recording the
+free-host pin change).
 **Binding spec:** `pivot/SPEC_METABOLIZATION_PROBE_2026-08-12.md` v2.0-FINAL (FROZEN). This
 document is the binding instrument; where it fixes an open item the spec left to §9, this text
 governs. Where I amend §4.5 thresholds (spec's explicit invitation, meta-synthesis §7.5), the
@@ -660,6 +663,30 @@ The spec invites the co-signers to own this row; here it is, quantified:
   This class is the quantitative form of Aporia's §7.5b residual.
 - **Minimum practical effect (R15): +5pp.** Below it, a result is reported as *statistically
   detectable, practically inert* — a +0.7pp lift on 400 tasks is not a program direction.
+
+**Interpretation bounds, both directions [AMENDMENT 2026-08-21 — chartered text, PENDING
+CO-SIGN].** Adopted verbatim from `pivot/ROUND2_CHARTER_2026-08-20.md` §1-A4 (external review,
+accepted): the §6.3 classes above bound what a *null* licenses but not what a *positive*
+licenses, and both directions must be fixed before Tier B fires.
+
+- **A null verdict means:** the stored residue representation shows no demonstrated
+  transferable carry under this task distribution and this intervention (i.e., under the tested
+  models, tasks, packetization, and context budgets, per the bounded-null wording above). It
+  does **not** mean failure information has no value.
+- **A positive verdict (`✓ strong` or `✓ weak`) means:** this residue intervention causally
+  improves subsequent attempts relative to matched-null residue. It does **not** mean
+  Prometheus learned from failure, and it is several steps from autonomous learning. In
+  particular it licenses no claim about heredity, transfer beyond D0, or any capability of the
+  historical substrate.
+
+*Scribe note (provenance):* text landed by Hephaestus (supplier, conflicted, non-signing) acting
+as scribe for already-adjudicated charter language — no new interpretive content was authored in
+this edit. **Binding upon co-sign by Ergon (driver) and Charon (kill authority)**; until both
+countersign by amendment-commit, campaign phase P4 (Tier B arms) must not fire — this is in
+addition to, not instead of, the `RE_REVIEW_SIGNOFF` exit-review gate. *Separately OWED (Ergon):*
+the 2026-08-21 free-host repoint (nvidia:deepseek-v4-flash, M20 manifest, fresh leveling, no
+pooling with paid rows) is a material (manifest × host) pin change and must be recorded here by
+Ergon's own amendment-commit before P4.
 
 **New matrix row [AMENDMENT] — topic conditioning.** The spec's matrix has no cell for the most
 likely benign-looking outcome: `F-prom ≈ F-null ≈ F-generic`, all **≫ F0**. That is not carry; it

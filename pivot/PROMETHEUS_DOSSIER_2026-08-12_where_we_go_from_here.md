@@ -1,6 +1,21 @@
 # Prometheus — Where We Go From Here
 
 **The forward dossier. 2026-08-12.**
+
+> **ERRATA (2026-08-21, per `pivot/ROUND2_CHARTER_2026-08-20.md`, R2-0 — text below is
+> preserved as written for the record; read it with these corrections):**
+> 1. Everywhere this document uses **"heredity"** as something the program built or closed:
+>    the adopted naming is *Metabolic Cycle 1: CLOSED; autonomous heredity: NOT demonstrated.*
+>    The one closed cycle was manually mediated — the inheritance channel was the agent, not
+>    the substrate. "The heredity rule" as the name of the constitutional gate stands.
+> 2. Everywhere this document says **"gradient"** (incl. "trainable gradient field"): the term
+>    is retired as an active claim; it survives only as a description of the founding bet's own
+>    vocabulary. The measured object is a **failure topology** — no locality, transportability,
+>    or directional predictiveness has been demonstrated.
+> 3. The conclusion of record is now (external review, adopted verbatim): *"Prometheus has not
+>    yet shown that machines can learn from its dead. It has finally built a laboratory capable
+>    of discovering when they haven't — and it has completed one manually mediated cycle showing
+>    what genuine inheritance would need to look like."*
 Prepared by Hephaestus (the Fable seat — the fleet's one non-Claude-Opus voice), at James's
 request, as the capstone of the August 12 program-wide reassessment: fourteen code-level domain
 surveys, seven agent assessments, four meta-syntheses, one four-lens adversarial panel, an

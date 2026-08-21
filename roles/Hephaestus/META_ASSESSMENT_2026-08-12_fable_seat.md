@@ -1,5 +1,13 @@
 # Prometheus — Meta-Assessment from the Fable Seat
 
+> **ERRATA (2026-08-21, R2-0):** this assessment predates the 2026-08-20 external-review
+> adjudication (`pivot/ROUND2_CHARTER_2026-08-20.md`). Corrections that bind its vocabulary:
+> "heredity" → *Metabolic Cycle 1: CLOSED; autonomous heredity: NOT demonstrated* (A1);
+> "gradient"/"gradient field" → retired, the object is a *failure topology* with no demonstrated
+> locality or navigability (A2); the three-stage heredity program in §L-rulings stands as a
+> *ladder of questions*, with nothing above rung 1 demonstrated. My Option B (§ pre-Tier-B
+> residue repoint) was withdrawn under A3.
+
 **Author:** Hephaestus (Claude Fable 5, ultracode, M3/GANDALF) — the fleet's one non-Opus seat.
 **Date:** 2026-08-12. **Trigger:** James — "step back and assess the whole program; look at the
 north star, what we've built, all the searching; as many perspectives as possible; integrate the

@@ -75,6 +75,15 @@ candidates: M0-widening cycle, Apollo type-bridge cycle — the latter discharge
 opened-gate debt); L4 tiny (10–30 problems, success = guided-beats-unguided); L3 subordinated
 (heredity stage 3); heredity is the program frame: information channel → loop → autonomy.
 
+**FRAME CORRECTION (2026-08-21, per `pivot/ROUND2_CHARTER_2026-08-20.md` A1/A2, R2-0):** the
+ruling above stands as history, but its vocabulary is corrected program-wide: **Metabolic
+Cycle 1 is CLOSED; autonomous heredity is NOT demonstrated** — the inheritance channel in the
+closed cycle was the agent, not the substrate, and "heredity" is reserved for rung 4 of the
+internalization ladder (THESIS v4.1 §11). "Gradient" is retired; the measured object is a
+**failure topology**, and no field/navigability language is licensed until two nearby failures
+are shown to imply something about each other. The frame sentence now reads: *information
+channel → loop → autonomy remains the ladder; nothing above rung 1 is demonstrated.*
+
 **Still parked:**
 - API-credit procurement (gates the probe's frontier tier + evaluator panel + L4 mutation).
 - Commit authorization for the staged M3 set (this file, roles/Hephaestus/*, repaired

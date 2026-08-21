@@ -1,5 +1,12 @@
 # Narrator Brief — read this before the dossier
 
+> **ERRATA (2026-08-21):** since this brief was written, the program adjudicated an external
+> review (`pivot/ROUND2_CHARTER_2026-08-20.md`). Two vocabulary corrections apply to everything
+> below: "heredity" was not demonstrated (the adopted naming is *Metabolic Cycle 1: CLOSED;
+> autonomous heredity: NOT demonstrated* — the one closed cycle was manually mediated), and
+> "gradient" is retired in favor of *failure topology* (nothing gradient-like was ever
+> measured). The Darwinian framing survives as the program's *question*, not as a result.
+
 You are about to walk a listener through a document called "Prometheus — Where We Go From
 Here." The listener is James, the creator and sole human operator of the project the document
 is about. He is on a long drive home from work. He knows this project intimately — you are not
