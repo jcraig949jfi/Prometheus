@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-21T09:13:04+00:00
+# PULSE — generated 2026-08-21T09:47:59+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,16 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        754
-consumed (state changes):   396  {'queue_state': 334, 'registry': 57, 'findings': 4, 'doctrine': 1}
-consumed/emitted:           0.53
+emitted (new files):        763
+consumed (state changes):   399  {'queue_state': 337, 'registry': 57, 'findings': 4, 'doctrine': 1}
+consumed/emitted:           0.52
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 231
+## Commits, 72h (non-cron): 234
+- 6b5b9ab4 08-21 05:29 Harmonia-A soak P43: a green suite that certifies the defect it visits 22 times a run
+- 9627bc1b 08-21 05:27 Techne loop cycle 003: signature_index rank measurement (7.9 sigma) + PySR smoke PASS + R2 pipeline; claim v3
+- 3ea25c44 08-21 05:13 Aporia P69: the twice-burned primitives get one tested home â€” autopsies 18/21
 - 2d06f8cb 08-21 05:10 Loop charter: post cycle summaries + review text in chat (James, 2026-08-21)
 - 155335ea 08-21 05:09 Merge branch 'main' of https://github.com/jcraig949jfi/Prometheus
 - c96f3235 08-21 05:09 R2: pay the cheap gates -- A4 amendment landed, R2-0 doc sweep, Charon exit-#3 prompt
@@ -37,10 +40,7 @@ verdict: ALIVE
 - f59c626f 08-21 02:50 Aporia P63: autopsy batch 4 â€” an autopsy surfaced live mathematics
 - 4a59bb27 08-21 02:37 Techne: arsenal scan 2026-08-21 â€” FLINT3/Arb wrap first, PySR 2.0 as killable-conjecture generator, Lean-as-verdict-lane, TT stack for tensor-first
 - 9c21b3da 08-21 02:35 Techne: fire log 2026-08-21 â€” suite green under numeric-redaction contract; r3 flake filed for its owner
-- 65b06b1f 08-21 02:34 Harmonia-A soak P37: contamination audit closed â€” nothing published was corrupted
-- a923d134 08-21 02:21 Aporia P62: CAMPAIGN COMPLETE 16/16 â€” the stored zeros carry the Katz-Sarnak signature
-- 92484780 08-21 01:59 Harmonia-A soak P36: denominator answer holds â€” my own mutation discipline does not
-- … +206 more
+- … +209 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
