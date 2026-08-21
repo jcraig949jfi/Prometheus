@@ -1,0 +1,36 @@
+{
+  "band_read": {
+    "point_estimate": 0.0,
+    "manifest_interval_95": [
+      0.0,
+      0.0
+    ],
+    "point_in_band": false,
+    "interval_wholly_in_band": false,
+    "movable_share": 0.0,
+    "dispersion_term_passes": false,
+    "full_band_passes": false,
+    "leveling_verdict": "NOT-LEVELED"
+  },
+  "ledger": "ergon\\probe\\ledgers\\nearmiss_mix-M30_prepass_NEMOTRON.jsonl",
+  "ledger_sha256": "8dd2ea4074730aafb2c5bcd7a7a046bf24eb0c69106b8566b3e6a29594dcaa2e",
+  "ledger_closed": true,
+  "records": 400,
+  "rep1_records": 200,
+  "manifest": "ergon\\probe\\manifests\\nearmiss_mix-M30_manifest_n200.jsonl",
+  "manifest_sha256": "e6b1e001bf79e3efdb38ac31c8ac62442c8f26573af808386e83363015db598d",
+  "generator_sha256": "ed7cea844625d990aa49f2a0781e46d5f03afcc33a90484519d99705481ebfd3",
+  "cold_accuracy_rep1": 0.0,
+  "movable_share": 0.0,
+  "dispersion_term_passes": false,
+  "n_after_lenient_screen": 200,
+  "transport": {
+    "http_error": 357,
+    "ok": 43
+  },
+  "solver": "nvidia:nemotron-super-49b-v1.5",
+  "model_id": "nvidia/llama-3.3-nemotron-super-49b-v1.5",
+  "ts_utc": "2026-08-20T05:31:31+00:00",
+  "host": "SKULLPORT",
+  "executor": "ergon"
+}

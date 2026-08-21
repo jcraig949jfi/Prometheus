@@ -303,6 +303,15 @@ def prepass(solver: str, depth: int, n: int, seed: int = 20260819,
     }
     (LEDGER_DIR / f"{ledger_name}_screen.json").write_text(json.dumps(screen, indent=2),
                                                            encoding="utf-8")
+    # TRANSPORT GATE (2026-08-21). Two artifacts have now emitted vacuous verdicts from dead
+    # lanes: the M20 free-lane run (400/400 err -> NOT-LEVELED at 0.0) and the nemotron
+    # cold-band (357/400 err -> same). A band read from a dead lane is not a band read.
+    ok_rate = sum(1 for r in rep1 + rep2 if r["status"] == "ok") / max(1, len(rep1) + len(rep2))
+    if ok_rate < 0.95:
+        raise SystemExit(
+            f"TRANSPORT-DEAD: ok-rate {ok_rate:.2f} < 0.95 - no band read, no screen, no "
+            "residue ledger is emitted from a dead lane (R11: discard whole)")
+
     # DECISION-N BAND READ (prereg §3.1, full rule): point estimate on rep-1 of the FULL
     # manifest (HB-R1), manifest-level interval at k=1 (only this rung is being re-measured,
     # per "Bonferroni across whatever rungs you re-measure"), AND the dispersion term.
