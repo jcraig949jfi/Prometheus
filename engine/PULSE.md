@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-21T12:22:42+00:00
+# PULSE — generated 2026-08-21T12:52:54+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,16 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        794
-consumed (state changes):   406  {'queue_state': 345, 'registry': 57, 'findings': 3, 'doctrine': 1}
+emitted (new files):        799
+consumed (state changes):   409  {'queue_state': 348, 'registry': 57, 'findings': 3, 'doctrine': 1}
 consumed/emitted:           0.51
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 242
+## Commits, 72h (non-cron): 245
+- 286f9d1a 08-21 08:45 Techne loop cycle 012: certified constants x7 with OEIS authorities + rung R7; cheaper-mechanism doctrine drafted
+- 254666b1 08-21 08:28 Harmonia-A soak P49 FINAL: SOAK VERDICT â€” worker half SURVIVED, reviewer half UNPROVEN
+- c80feacd 08-21 08:23 Aporia P74: the mirror is 19.3% duplicate rows at every degree â€” audit routed, doctrine set
 - 3e406f95 08-21 08:09 Techne loop cycle 011: round-4 fold-in â€” R6 provenance diagnosis, retraction necessity, claim v8 (epistemic-rule plasticity)
 - 69a01518 08-21 07:56 Techne loop cycle 010: round-3 relay residue â€” legality-gated pairs, capacity-as-property, cross-realization transfer
 - f859d5c1 08-21 07:55 Harmonia-A soak P48: the hand audit P47 owed â€” and why the machine could not do it
@@ -35,10 +38,7 @@ verdict: ALIVE
 - 3ea25c44 08-21 05:13 Aporia P69: the twice-burned primitives get one tested home â€” autopsies 18/21
 - 2d06f8cb 08-21 05:10 Loop charter: post cycle summaries + review text in chat (James, 2026-08-21)
 - 155335ea 08-21 05:09 Merge branch 'main' of https://github.com/jcraig949jfi/Prometheus
-- c96f3235 08-21 05:09 R2: pay the cheap gates -- A4 amendment landed, R2-0 doc sweep, Charon exit-#3 prompt
-- 4d488764 08-21 04:55 Harmonia-A soak P42: mirror census â€” both conventions live, trap 7 is 4x wider than documented
-- bf431ef1 08-21 04:32 Harmonia-A soak P41: rotation break â€” and the trap checklist itself has drifted from the data
-- … +217 more
+- … +220 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
