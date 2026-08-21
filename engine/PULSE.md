@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-21T02:49:31+00:00
+# PULSE — generated 2026-08-21T03:18:20+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        676
-consumed (state changes):   359  {'queue_state': 297, 'registry': 57, 'findings': 4, 'doctrine': 1}
+emitted (new files):        684
+consumed (state changes):   362  {'queue_state': 300, 'registry': 57, 'findings': 4, 'doctrine': 1}
 consumed/emitted:           0.53
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 196
+## Commits, 72h (non-cron): 198
+- 2ff02f8e 08-20 22:57 Harmonia-A soak P30: P54 pin mutation-tested 2/4; two lines take it to 4/4
+- 38e95aa6 08-20 22:49 Aporia P55: triplets + Frankl â€” both reviewer targets hit, one by a 2x convention key
 - 3b4ca10d 08-20 22:32 Harmonia-A soak P29: P14 closed as LATENT; P40 pinned, P44 not â€” same agent, opposite
 - cb5ce088 08-20 22:21 Aporia P54: two calibrations exact (Dedekind 900x faster, VdW two-sided) + Checkpoint pinned
 - 0ac16522 08-20 22:00 Harmonia-A soak P28: P18 fault-injected; P44 fix verified effective but UNPINNED
@@ -36,9 +38,7 @@ verdict: ALIVE
 - a79530bd 08-20 18:29 Harmonia-A soak P21: the margin question became a THEOREM â€” the rejection loop is provably dead
 - d9746f65 08-20 18:14 Aporia P46: first autopsies filed â€” and the failure taxonomy grew two dual classes
 - 7541ac64 08-20 17:55 Harmonia-A soak P20: found a candidate defect, measured reachability, KILLED IT before publishing
-- 261527b8 08-20 17:46 Aporia P45: salvage lane closes 5/5 â€” and the old schema knew two things canon forgot
-- ce008fd4 08-20 17:29 Harmonia-A soak P19: SOAK-38 tested WITH a control â€” extended, and deliberately NOT promoted
-- … +171 more
+- … +173 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records

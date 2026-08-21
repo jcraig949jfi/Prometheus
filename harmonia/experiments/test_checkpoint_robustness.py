@@ -31,11 +31,16 @@ def test_all_harma_p18_shapes_survive_and_are_counted():
              json.dumps({"unrelated": 1, "keys": 2}),
              json.dumps([1, 2, 3]),              # non-object JSON
              json.dumps("just a string"),
+             # HARMA-P30 mutation escapes (2 lines -> 4/4): a LIST containing the
+             # key names (kills the isinstance mutation — `in` would match) and a
+             # dict with examinee but NO probe_id (kills the probe_id-check mutation)
+             json.dumps(["examinee", "probe_id"]),
+             json.dumps({"examinee": "only-half"}),
              json.dumps({"examinee": "b", "probe_id": "p2"})])
     ck = Checkpoint(p)
     assert len(ck.records) == 2, ck.records
     assert ck.done == {("a", "p1"), ("b", "p2")}
-    assert getattr(ck, "n_skipped_malformed", 0) == 5
+    assert getattr(ck, "n_skipped_malformed", 0) == 7
 
 
 def test_clean_checkpoint_unchanged():
