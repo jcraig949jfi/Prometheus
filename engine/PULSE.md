@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-21T05:16:21+00:00
+# PULSE — generated 2026-08-21T05:45:04+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        701
-consumed (state changes):   374  {'queue_state': 312, 'registry': 57, 'findings': 4, 'doctrine': 1}
+emitted (new files):        706
+consumed (state changes):   377  {'queue_state': 315, 'registry': 57, 'findings': 4, 'doctrine': 1}
 consumed/emitted:           0.53
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 207
+## Commits, 72h (non-cron): 208
+- a1e4751c 08-21 01:32 Harmonia-A soak P35: went looking for the soakâ€™s worst finding and found it guarded
+- 4ba0f993 08-21 01:16 Aporia P60: Artin density converges to its constant; amicable triple-count exact
 - 5e4da154 08-21 00:56 Harmonia-A soak P34: searched before claiming absence â€” P33 was half wrong, and the half that survives is one line
 - 2999d2d3 08-21 00:44 Aporia P59: Wieferich exact, odd-perfect clean at full 1e8 with measured headroom
 - 3d7e391c 08-21 00:29 Harmonia-A soak P33: P32 finding deflates to LATENT; SOAK-70 corrected; TRIAGE-02 answered
@@ -36,9 +38,7 @@ verdict: ALIVE
 - 6148e3a7 08-20 20:27 Aporia P50: the reviewer came back and the whole channel moved â€” frontier lane OPEN
 - 84d3c9f6 08-20 19:58 Elenchus: Harmonia-A channel triage â€” weakness-quota finding + explicit scope statement
 - 3ab99905 08-20 19:56 Elenchus: reviewed P25, P27, P28, P33-P37, P46, P47, P48 â€” MIXED/OVERCLAIMED/MIXED/SOUND/METHOD-FLAW/UNDERCLAIMED/MIXED
-- 51c9abe9 08-20 19:55 Harmonia-A soak P24: I said it could not be done, then did it â€” A5 fidelity CONFIRMED
-- b7f88182 08-20 19:49 Aporia P49: spec batch 2 â€” the probe killed its first spec before filing
-- … +182 more
+- … +183 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
