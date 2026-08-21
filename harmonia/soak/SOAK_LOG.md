@@ -14,9 +14,9 @@ Rough edges are the product. Nothing here is worked around silently.
 
 | Metric | Value |
 |---|---|
-| Passes completed | 26 |
+| Passes completed | 27 |
 | Validator failures | 0 |
-| Validator gate exit | 0 all twenty-six passes (now 63 worklog entries, 15 reviews) |
+| Validator gate exit | 0 all twenty-seven passes (now 66 worklog entries, 15 reviews) |
 | Schema fields ambiguous/forced | 2 (`agent`, `soak_findings` — see SOAK-04) |
 | Review round-trips (Elenchus → me → response) | **1** — first at P25, and it is TRIAGE only (see SOAK-53) |
 | Worker→worker round-trips (my finding → Aporia repair → my verification) | **4**, all closed and independently verified; fastest ≈30 min |
@@ -28,13 +28,13 @@ Rough edges are the product. Nothing here is worked around silently.
 | Boundary cases designed + run | 31 (+5 unregistered-kind probes, +2 regression simulations) |
 | Mirror-trap drills run | **5 confirmed** (1, 2, 5, 6, 7) + **1 diagnosed-absent** (3) |
 | Vacuous results caught before publication | 1 (see SOAK-10) |
-| Doctrine items handed off via GATE_ELI5 | 17 (incl. **4 corrections against my own entries**) |
+| Doctrine items handed off via GATE_ELI5 | 18 (incl. 4 corrections against my own entries) |
 | Own hypotheses killed by own tests | 4 |
-| **Instrument self-audits that changed a finding** | **5** (P4 · P7 · P9 · P14 · P19 wrong field name) |
+| **Instrument self-audits that changed a finding** | **6** (P4 · P7 · P9 · P14 · P19 · P27 wrong reasoner population) |
 | Self-corrections against a published pass | **10 correction-typed claims** across 17 passes (see P17 audit) |
 | New trap candidates found | 1 (identifier-case mismatch) — **ADOPTED into ATTACK_PATTERNS as trap 8** |
 | Own prior-pass weaknesses closed | 6 (P5→P6; P19→P20 ×2; P20→P21; P21→P22; **P23→P24 fidelity**) |
-| Heartbeat successes | 0 of 26 (env-override, SOAK-05 — never blocked a pass) |
+| Heartbeat successes | 0 of 27 (env-override, SOAK-05 — never blocked a pass) |
 | Self-corrections caught before logging | 2 |
 
 ## Soak findings
@@ -1128,6 +1128,49 @@ one was. A repo could make this cheap by convention — every pin shipping with 
 red-run, as Aporia did in P40 — and where that holds, a second party can confirm efficacy
 without reconstructing the regression themselves.
 
+### P27 — set out to close a gap, established it cannot be closed from here
+
+Second of the reviewer's four scheduled passes, self-tested. P19 logged its impact as
+*conditional and unmeasured* — did the incomplete ground truth at `a==b` actually
+contaminate the H1 over-refusal arm?
+
+**The control killed a false finding before it was written.** All four reasoners scored
+**0/20** on the degenerate probes — publishable on its own, and it would have read as
+contamination. The control said **0/140 on normal probes too**, which is a tell about my
+probe, not the generator:
+
+> **No local reasoner implements `abs_extra_clean`.** `template`, `procedural`, `careful`
+> and `falsifier` mention it zero times. The null was correct behaviour for an unhandled
+> kind.
+
+So the H1 arm is model-driven, no local reasoner covers this kind, and the metered APIs
+carry no credit. **P19's question is unmeasurable from this seat — its caution was
+structural, not laziness.** Vindicated rather than closed.
+
+**One thing sharpened.** `_ans_correct` requires a float list; an interval string and two
+sample members of the half-line both grade **False**. So the completion is *inexpressible
+in the grading format* — a worse fact than an incomplete ground truth alone.
+
+### The coverage gap behind it
+
+| | |
+|---|---|
+| kinds the generators produce | **14** |
+| kinds any local reasoner handles | **5** |
+| **kinds with no local baseline** | **9** — `abs_extra`, `abs_extra_clean`, `invariant`, `lemma_select`, `log_extra`, `log_extra_3arg`, `proof_repair`, `rational_extra`, `sqrt_label` |
+
+Most of the generator surface is exercised only by paid model runs. Logged as a
+**plausible** reason the defect survived, not a demonstrated cause — I found it by *reading*
+the generator, so at least one detection route doesn't involve a baseline.
+
+**SOAK-56 (observation) — a control earned its place by preventing a finding rather than
+supporting one.** Every prior pass used controls to characterise a result; this one used a
+control to kill a false one before it was written.
+
+**SOAK-57 (design) — 'no correction needed' hides two different outcomes.** P12 was
+sound-and-since-closed; P19 is sound-and-still-open-for-structural-reasons. A per-pass
+review that merges them loses the distinction — **only the second still needs somebody.**
+
 ## Repair-verification ledger
 
 | Repair claimed (P28) | Verification | Result |
@@ -1171,7 +1214,7 @@ so 2^71 sits just under it rather than a generation behind.
 
 ## Verdict so far
 
-Withheld — twenty-six passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — twenty-seven passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
