@@ -1,0 +1,39 @@
+{
+ "protocol": "Delsarte LP (exact Krawtchouks, orthogonality-gated) vs exact exhaustive codes (n<=6) and the constructed Hamming [7,4] witness; closures read from the run",
+ "cases": [
+  {
+   "n": 5,
+   "d": 3,
+   "lp_upper": 4.0,
+   "lower": 4,
+   "lower_kind": "exhaustive-exact",
+   "closes": true
+  },
+  {
+   "n": 6,
+   "d": 3,
+   "lp_upper": 8.0,
+   "lower": 8,
+   "lower_kind": "exhaustive-exact",
+   "closes": true
+  },
+  {
+   "n": 6,
+   "d": 4,
+   "lp_upper": 4.0,
+   "lower": 4,
+   "lower_kind": "exhaustive-exact",
+   "closes": true
+  },
+  {
+   "n": 7,
+   "d": 3,
+   "lp_upper": 16.0,
+   "lower": 16,
+   "lower_kind": "constructed (Hamming [7,4], dmin verified over 120 pairs)",
+   "closes": true
+  }
+ ],
+ "n_closed": 4,
+ "verdict": "RELAXATION-INFORMATIVE"
+}

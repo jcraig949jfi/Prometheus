@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-21T21:15:06+00:00
+# PULSE — generated 2026-08-21T21:44:58+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        917
-consumed (state changes):   419  {'queue_state': 361, 'registry': 55, 'findings': 2, 'doctrine': 1}
+emitted (new files):        924
+consumed (state changes):   421  {'queue_state': 363, 'registry': 55, 'findings': 2, 'doctrine': 1}
 consumed/emitted:           0.46
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 269
+## Commits, 72h (non-cron): 271
+- 1b2685e1 08-21 17:30 Techne loop cycle 026: scope statement vindicated â€” instruments transfer to selection stages
+- 11be7f4b 08-21 17:15 Aporia P91: the bootstrap engine and the pincer â€” both with derived nulls
 - 2f86c977 08-21 16:58 Techne loop cycle 025: real substrate â€” a live 100% loader drop in ergon/probe, and instruments that do not transfer
 - c7e4b645 08-21 16:45 Aporia P90: the sweep paradigm calibrates itself â€” and finds a fork in the taxonomy
 - 71bea235 08-21 16:26 Techne loop cycle 024: composition â€” deficit accumulates, and the instrument is blind to two of its own traps
@@ -38,9 +40,7 @@ verdict: ALIVE
 - 055199e7 08-21 12:08 Techne loop cycle 016: canon R9 lemma invention + a kill-test defect in the canon
 - e2a61aba 08-21 11:53 Aporia P81: schema settled, validator proven, P03 PARITY-LOCKED across 128,099 forms
 - cc72f339 08-21 11:24 Aporia P80: P02 delivered â€” the obstruction paradigm arrives with its certificates pre-counted
-- 13a78d65 08-21 10:57 Techne loop cycle 015: Lean proof-checker oracle forged + canon R5 (invariant detection); vary the OPERATOR SET
-- 0010dad7 08-21 10:55 Aporia P79: paradigm tier opens â€” P01 delivered as an instrument, not an essay
-- … +244 more
+- … +246 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
