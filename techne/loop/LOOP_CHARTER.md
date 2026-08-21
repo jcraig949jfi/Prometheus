@@ -30,6 +30,9 @@ this loop is an INDEPENDENT channel — cite, don't coordinate.
 1. `techne/loop/cycle_NNN.md` — what was done, rung notes pointer, **TLDR ELI5 section**,
    and a **ChatGPT paste block** (self-contained prompt James can cut-paste; fold any
    ChatGPT replies he posts into the next cycle).
+1b. **POST THE SUMMARY IN CHAT** (James, 2026-08-21): the end-of-cycle chat message carries
+   the cycle summary, the ELI5 TLDR, and the ChatGPT block verbatim — the file is the
+   archive, the chat is the review surface. Never end a cycle with only a commit.
 2. Append open questions to `techne/loop/HITL_LOG.md` (do not block on them).
 3. Commit + push (document-as-you-go is doctrine).
 4. `ScheduleWakeup(3600, prompt=continue per this charter, next rung = N+1)`.
