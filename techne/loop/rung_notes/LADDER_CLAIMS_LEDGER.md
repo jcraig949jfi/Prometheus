@@ -130,3 +130,19 @@ verify-without-upstream, un-fail-a-failure amendment refusal (Band G).
 False on a forgotten fact IS a soundness violation on the twin pair — "conservative" and
 "abstaining" are different behaviors, and batteries must offer an explicit abstention
 channel once histories can exceed capacity, or they push honest circuits into lying.
+
+## Cycle 016 — 8th instance, and the first one located INSIDE the canon
+
+**Claim v10 (extension, not replacement of v9):** the competitor-relative law applies to
+*kill tests specified by doctrine*, not only to circuits. Canon v2.0 §3 R9 names a circular-
+lemma trap and specifies a kill test (proof-dependency-graph analysis) that cannot separate a
+circular lemma from a load-bearing one — both are depended upon. Measured against Lean 4.30.0:
+(lemma_true, goal_proved, load_bearing, accepted) = (True, True, True, True) for both.
+
+**Kill-battery additions (executable):** deletion test + bounded-budget equivalence check +
+flipped-equation evasion probe + over-strong-budget phantom-rejection probe (R9).
+
+**Third sighting of the strength dial.** R3 (soundness, -coverage) lexicographic, R6
+recall/phantom-rate, R9 catch-rate/phantom-rejection: in each case the battery has a tunable
+whose two failure directions are a gaming surface and a false-kill rate. Recorded as a pattern,
+not yet as a claim — a fourth sighting would justify promoting it.

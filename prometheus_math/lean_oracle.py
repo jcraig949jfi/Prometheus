@@ -25,7 +25,7 @@ from pathlib import Path
 from typing import List, Optional
 
 __all__ = ["LeanVerdict", "lean_available", "check_lean_source", "check_theorem",
-           "DEFAULT_TOOLCHAIN"]
+           "check_with_lemma", "DEFAULT_TOOLCHAIN"]
 
 DEFAULT_TOOLCHAIN = "leanprover/lean4:v4.30.0"
 
@@ -122,4 +122,34 @@ def check_theorem(
     exists for imports/definitions the statement depends on.
     """
     body = f"{preamble}\ntheorem pm_claim : {statement} := {proof}\n"
+    return check_lean_source(body, toolchain=toolchain, timeout_s=timeout_s)
+
+
+def check_with_lemma(
+    lemma_name: str,
+    lemma_statement: str,
+    lemma_proof: str,
+    goal_statement: str,
+    goal_proof: str,
+    preamble: str = "",
+    toolchain: str = DEFAULT_TOOLCHAIN,
+    timeout_s: int = 300,
+) -> "LeanVerdict":
+    """Check a lemma AND a goal whose proof may invoke it (canon R9 support, cycle 016).
+
+    Emits:
+        <preamble>
+        theorem <lemma_name> : <lemma_statement> := <lemma_proof>
+        theorem pm_goal : <goal_statement> := <goal_proof>
+
+    Both must check for a PROVED verdict, which is the point: an invented lemma that does not
+    itself hold is not a contribution, however useful it would have been.
+    """
+    lines = [
+        preamble,
+        f"theorem {lemma_name} : {lemma_statement} := {lemma_proof}",
+        f"theorem pm_goal : {goal_statement} := {goal_proof}",
+        "",
+    ]
+    body = "\n".join(lines)
     return check_lean_source(body, toolchain=toolchain, timeout_s=timeout_s)

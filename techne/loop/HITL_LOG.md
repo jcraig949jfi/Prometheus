@@ -177,3 +177,23 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
     R7 (as loop-R6), R8 (as loop-R4). Remaining: **R9 lemma invention** (now unblocked by the
     Lean oracle), R10 analogy/transfer, R11 calibrated uncertainty, R12 generative conjecture.
     R12's grader is noted in canon §7 as "built; never run" — worth a look.
+
+## Cycle 016 (2026-08-21)
+
+33. **Possible canon defect, needs your ruling.** Canon v2.0 §3 specifies the R9 kill test as
+    proof-dependency-graph analysis (is the lemma load-bearing?) and names a circular-lemma
+    trap in the same entry. Measured this cycle against Lean: deletion of a circular lemma
+    breaks the proof exactly as deletion of a real one does, so the specified kill test cannot
+    catch the trap the same sentence names. NOT proposing a canon amendment under §8 — flagging
+    it. If you want the amendment, the minimal form is: R9 kill test = dependency analysis
+    AND a bounded-budget equivalence check, artifact = lemma + load_bearing + restatement flags.
+34. **The equivalence-strength dial has no principled setting yet.** Too weak and a flipped
+    equation gets in; too strong (any decision procedure) and honest lemmas are rejected. Same
+    shape as R6 recall/phantom and R3 lexicographic (soundness, −coverage). Three rungs now
+    exhibit this; it may want a name in the doctrine rather than three separate notes.
+35. **Untested gaming route, named for the record:** splitting a goal into two lemmas, neither
+    individually equivalent to it, evades every check built this cycle. I did not build it
+    because I could not build the defence in the same cycle, and building the attack without
+    the defence would leave a false green in the suite.
+36. **Still open from cycle 013:** HITL #9 (PySR against a table with no known closed form)
+    remains unanswered. Not blocking; the Lean track is producing more per cycle right now.
