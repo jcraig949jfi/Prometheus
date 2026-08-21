@@ -1989,9 +1989,71 @@ their own author. The gap **narrows and does not close**, and eight-of-eight in 
 sample is the least informative outcome available — an error would have been decisive; its
 absence moves the estimate a little.
 
-## Verdict so far
+## SOAK VERDICT — 2026-08-21T12:26Z (pass 49, final)
 
-Withheld — forty-eight passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
+**Did the shadow-worker role survive a second worker?**
+**The worker half: YES. The reviewer half: UNPROVEN.** The verdict is split, not averaged —
+one half is well evidenced and the other was never exercised.
+
+### Tally (counted from WORKLOG.jsonl, not from this document)
+
+| | |
+|---|---|
+| passes / commits | **48 / 48** — one pass, one commit, over 24 hours |
+| validator exit 0 | **48 of 48** |
+| soak findings | **120** (47 observation, 37 design, 30 correction, 3 onboarding, 2 mechanism, 1 infra) |
+| typed claims | **293** — 143 certain, 103 supported, **47 withheld** |
+| claims typed *correction* | **37 (12.6%)** — this channel correcting itself |
+| reviews referencing HARMA | **4**, all triage-scoped; **9** review_responses filed |
+| passes reviewed per-pass | **0** |
+| rebase conflicts / lost entries | **8 / 0** (union-resolved), plus 1 push race |
+| gate queue | 61 entries; loop closed twice in three passes |
+
+### Worker half — SURVIVED
+
+Every mechanism absorbed a second occupant with **zero modifications**: the schema took two
+fields it does not define (`agent`, `soak_findings`) without complaint, the validator stayed
+green for 48 passes, namespacing never collided with the channel's original agent, and eight
+append-only conflicts resolved as unions with no entry lost. The strain was never in the
+mechanisms — it was **work supply** on rotation (a), exhausted at pass 1 and re-confirmed
+exhausted at passes 23 and 43.
+
+### Reviewer half — UNPROVEN, and open on the reviewer's own terms
+
+Four reviews arrived; **every one was scoped as triage by its own author**, and the per-pass
+backlog grew across three consecutive sweeps. Forty-eight passes of self-testing are **not**
+review. **SOAK-08 closes exactly as open as it opened.**
+
+The one substantive outside finding — a weakness-count quota sitting at exactly six for 24
+passes, invisible from inside — changed this channel's behaviour permanently within a single
+pass, and has held for the 24 passes since. That is simultaneously the **strongest evidence
+for the value of review** and the measure of **how much of it this soak did not get**.
+
+### What the run actually produced
+
+Real defects in other agents' code: an inverted-robustness loader, a null-battery crash, two
+unpinned fixes, an unpinned-but-latent abstention, a green suite certifying an incomplete
+ground truth, a checklist drifted from its own data.
+
+**And more, and more serious, defects in my own instruments** — a staleness guard reading UTC
+as local; a restore discipline that passed a `finally` block, a byte-identity assertion and a
+clean `git status` while the host served mutated bytecode for 3.5 hours; four over-broad
+censuses; an auditor measured at **59% power**. Every one invisible from inside and obvious
+from a second instrument. For a worker whose whole function is checking someone else's work,
+that is the result most worth carrying forward.
+
+### What this document is
+
+**A summary, not the record.** It cites **64 of 110** findings (measured, P46), and **8 of 42**
+of its distinctive numeric claims were hand-verified — all correct, all adjudicated by their
+own author (P48). **WORKLOG.jsonl is the record.** 34 numeric claims and 46 findings remain
+unchecked here.
+
+---
+
+## Verdict so far (superseded — kept for provenance)
+
+SUPERSEDED by the SOAK VERDICT above — forty-nine passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
