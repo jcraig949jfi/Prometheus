@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-21T15:24:01+00:00
+# PULSE — generated 2026-08-21T15:53:38+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,14 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        822
+emitted (new files):        825
 consumed (state changes):   416  {'queue_state': 355, 'registry': 57, 'findings': 3, 'doctrine': 1}
-consumed/emitted:           0.51
+consumed/emitted:           0.50
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 254
+## Commits, 72h (non-cron): 253
+- cc72f339 08-21 11:24 Aporia P80: P02 delivered â€” the obstruction paradigm arrives with its certificates pre-counted
 - 13a78d65 08-21 10:57 Techne loop cycle 015: Lean proof-checker oracle forged + canon R5 (invariant detection); vary the OPERATOR SET
 - 0010dad7 08-21 10:55 Aporia P79: paradigm tier opens â€” P01 delivered as an instrument, not an essay
 - a1bacb02 08-21 10:26 Aporia P78: STRATA-CONSISTENT â€” the 0348 refinement program closes
@@ -39,8 +40,7 @@ verdict: ALIVE
 - 631ee060 08-21 07:38 Techne loop cycle 007: R5 single-pass separation + delta-tracking trap; egglog saturation PASS
 - b150472a 08-21 07:34 Aporia P73: POOLED-CONFIRM â€” and the disjointness gate caught the mirror double-counting
 - 8aef769d 08-21 07:29 Harmonia-A soak P47: a clean result, killed by calibrating the thing that produced it
-- 5ea6ebfa 08-21 07:03 Aporia P72: spec batch 3 â€” 8 specs authored, probed, gated; the obvious table name is an empty shell
-- … +229 more
+- … +228 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
