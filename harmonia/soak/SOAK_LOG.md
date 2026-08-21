@@ -1829,9 +1829,42 @@ argument (SOAK-104).
 **Not generalised:** one generator. Whether the other generators' tests substitute soundness
 for completeness the same way is the base-rate question, unmeasured, logged withheld.
 
+## Pass 44 — the base-rate check refuted the census built to answer it
+
+P43 left WITHHELD whether soundness-standing-in-for-completeness is a house habit.
+
+**The marker census said 5 of 6 soundness-only** — which would have promoted P43's single
+finding into a house pattern. Four were **false positives**:
+
+| flagged test | why it isn't in scope |
+|---|---|
+| `test_unknown_kind_abstains_exactly` | `ground_truth` is a **namedtuple field name** |
+| `test_accept_correct_sqrt_root` | feeds ground truth **into** `verify()` as input |
+| `test_reject_unrejected_extraneous_sqrt_root` | asserts the **verifier's** verdict |
+| `test_ans_correct_dispatches_new_kinds` | asserts **grader dispatch**, not solution sets |
+
+**Corrected population: 2. Split: 1–1.** `test_log_extra_3arg_ground_truth` builds
+`x(x-a)(x-b)-c`, calls `sp.solve`, filters real roots to `x>b`, and asserts
+`len(in_domain)==1` — a genuine completeness check.
+
+**So: not a house habit — and n=2 cannot establish "isolated" either.** Refusing the habit
+reading does not license its opposite; the honest statement is that evidence for a habit is
+absent.
+
+**The surviving detail is the unexpected one:** the completeness check covers the *cubic
+solved symbolically*, and the omission landed on the *absolute-value* equation — the easier
+case, which is exactly where the degenerate branch hid. Perceived difficulty is a poor
+predictor of where verification is needed.
+
+**Third over-broad census in four passes**, same cause each time — a marker regex standing in
+for a semantic distinction (P41 counted forward slashes in comments; P42 tested syntactic
+prefix before validity and mis-filed the specimen that motivated the distinction; P44 matched
+a field name). All three caught before publication. The catch rate is reassuring; the
+generation rate is the finding (SOAK-108).
+
 ## Verdict so far
 
-Withheld — forty-three passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — forty-four passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
