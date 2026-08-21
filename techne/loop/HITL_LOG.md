@@ -128,3 +128,19 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
 23. **Wake prompts are drifting stale** — the scheduler is replaying the cycle-008 prompt.
     I roll forward each time (008-012 all ran), but if you want the schedule re-based on the
     true cycle number, say so and I will reset it at the next wake.
+
+## Cycle 013 (2026-08-21)
+
+24. **A doctrine draft I asked you to ratify was falsified one cycle later** — v1 of the
+    cheaper-mechanism law had a one-line counterexample. It is rewritten as v2
+    (competitor-relative identification) and the file records the withdrawal explicitly. If
+    you had ratified it on my recommendation, we would have shipped a false law; the delay
+    was luck, not process. Worth considering a rule: no doctrine ratifies until it has
+    survived one external adversarial pass.
+25. **Two doctrine proposals now stand** (both rewritten/new this cycle):
+    competitor-relative identification, and the immutable-observation bottom. The second is
+    the direct fix for the 2,351-promotion class of failure and I recommend it most strongly.
+26. **Prometheus-facing engineering ask** arising from 12.1: our promotion records store the
+    verdict and (sometimes) the evidence, but NOT the predicates invoked, and nothing models
+    negative dependencies. Both are needed before any revalidation obligation can be honoured
+    incrementally at 400M-record scale. This is a schema change and therefore yours to call.

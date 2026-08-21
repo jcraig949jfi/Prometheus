@@ -99,6 +99,17 @@ states what killed its predecessor. Executable evidence lives in `techne/ladder_
   revalidated. Retroactive revalidation is a missing organ we have already been bitten by,
   not a Band-G curiosity.
 
+- **v9 (cycle 013, current):** round 5. (a) The cycle-012 doctrine was FALSIFIED and
+  rewritten: identification is COMPETITOR-RELATIVE (finite observations never uniquely
+  identify a mechanism; the universal danger is observational equivalence on the sampled
+  support). Agreement-region unions are uncomputable, so batteries declare a threat model
+  C<=k and conclude "not separated from C<=k". (b) R8 = CONSTRUCT a task-relevant
+  representation-changing map (instance-derived partitions; precomputed views are R4).
+  (c) Band-G machinery corrected: certification PROVENANCE (predicates invoked, not evidence
+  consumed) + NEGATIVE dependencies (absence-of-record, invalidated by DB growth) +
+  justification-vs-influence propagation + a thin immutable-observation constitution as the
+  regress bottom.
+
 **Standing kill-battery inventory (all executable):** isomorph/fresh-seed (R0); coefficient-
 hull escape + symbolic-parameter probes (R1); trace re-execution, CAS-layer leakage,
 path-separating twins [spec'd], step-count priors (R2); disequality separation, scale probe,
@@ -111,7 +122,9 @@ palette exhaustion, existential-elimination distinctness pressure, deterministic
 (operator plasticity); expectation-over-space experiment metering + worst-case cost
 (epistemic objective); proof-redundancy smearing + correct-endpoint/corrupt-middle (R6);
 budget poisoning + guard-is-not-retraction (negative plasticity); adversarial-corpus
-revalidation + unwarranted-revision refusal (epistemic-rule plasticity).
+revalidation + unwarranted-revision refusal (epistemic-rule plasticity); instance-derived partition + catalogue-cannot-contain +
+goal-incompatible quotients (R8); short-circuit predicate dirtying, DB-growth negative deps,
+verify-without-upstream, un-fail-a-failure amendment refusal (Band G).
 
 **Design finding (cycle 006, from the twins battery):** a bounded circuit's conservative
 False on a forgotten fact IS a soundness violation on the twin pair — "conservative" and

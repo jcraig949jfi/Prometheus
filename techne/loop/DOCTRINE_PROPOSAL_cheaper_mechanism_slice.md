@@ -1,54 +1,81 @@
-# DOCTRINE PROPOSAL — the cheaper-mechanism slice
+# DOCTRINE PROPOSAL — competitor-relative identification
 
-**Status:** PROPOSED by Techne (loop cycles 001–012), not ratified. Drafted because the
-pattern reached FIVE independent instances, each found by building rather than theorising.
-James: this needs your yes/no. It is written to be pasted into a memory file or rejected.
+**Status:** PROPOSED by Techne, **v2 — the v1 form was FALSIFIED by external review the cycle
+after it was drafted** (2026-08-21). Recorded as a correction, not a silent edit: the v1 law
+was overreaching, the reviewer produced a counterexample in one line, and the replacement is
+weaker, defensible, and more useful.
 
-## The law
+## v1 (WITHDRAWN)
 
-> **Every rung of the ladder has a cheaper mechanism that is EXACT on some restricted slice
-> of probe space. A battery certifies a mechanism only if its probe distribution leaves that
-> slice.**
+> ~~Every rung has a cheaper mechanism that is EXACT on some restricted slice of probe space.~~
 
-Corollary (objective-level claims): **the comparison must be over the EXPECTATION across the
-space, not a sampled instance** — a myopic mechanism can beat a principled one on a single
-draw.
+**Counterexample (ChatGPT, round 5):** take the capability `f(0)=1` on probe space `X = {0}`.
+Any mechanism exact on the only nonempty slice *is* the capability. There is no cheaper
+impostor unless "cheaper" is defined externally by implementation cost. The v1 form is not a
+law of computation; it was a generalisation from five straw men I happened to build.
 
-## The five instances (all executable in `techne/ladder_circuits/`)
+## v2 (PROPOSED)
 
-| Rung | Cheaper mechanism | Slice where it is EXACT | Probe that leaves the slice |
+> **A battery identifies a capability only relative to an explicitly enumerated competitor
+> class. Finite observations never uniquely identify a mechanism.**
+
+The universal danger is not an exactness slice but **observational equivalence on the sampled
+support**: for any finite tested set `T = {x₁…xₙ}`, the lookup table `L(xᵢ) = f(xᵢ)` is exact
+on `T` without implementing `f`. That subsumes all five of the instances below and is harder
+to escape than the v1 claim.
+
+## The instances (still executable in `techne/ladder_circuits/`) — now read as *examples*, not proof
+
+| Rung | Cheaper competitor | Agrees on | Probe that separates |
 |---|---|---|---|
-| R0 | exact-AST retrieval | clean (non-paraphrased) probes | fresh-seed isomorphs |
-| R1 | answer-function interpolation | coefficients inside the training hull | 10⁹-scale + exact rationals + symbolic params |
-| R4 | frequency prior over rule names | stable base rates | base-rate inversion + per-episode name randomisation |
-| R5 | delta (gap) tracking | additive post-fork dynamics | a multiplicative event after the fork |
-| R7 | memoryless thrashing | first alternative always works | problems where several plans fail first |
-| (obj.) | myopic progress-greedy | single lucky instances | expectation over the whole hypothesis space |
+| R0 | exact-AST retrieval | clean probes | fresh-seed isomorphs |
+| R1 | answer interpolation | inside the coefficient hull | 10⁹-scale, exact rationals, symbolic params |
+| R4 | frequency prior | stable base rates | base-rate inversion + name randomisation |
+| R5 | delta tracking | additive post-fork dynamics | a multiplicative event after the fork |
+| R7 | memoryless thrashing | first alternative always works | multi-failure problems |
+| (obj.) | myopic progress-greedy | single lucky instances | expectation over the space |
 
-## Why it matters here, specifically
+## Why the weaker form is the more useful one
 
-Prometheus's batteries are its epistemics. Every instance above is a case where a battery
-that looks rigorous certifies the wrong mechanism — not by being weak, but by sampling a
-region where the weak and strong mechanisms agree. This is the same failure family as
-`feedback_greedy_lora_surface_not_reasoning` (format + prior, not reasoning) and
-`feedback_counter_baseline_discriminator` (beat typed-row + counters + rules, not random),
-generalised and given a construction procedure.
+**The union of competitor agreement-regions is not computable** (round 5, 11.2): asking
+whether cheaper program M agrees with target F on region S contains program equivalence, so
+Rice-style obstruction applies; even deciding whether the regions cover X encodes
+halting/equivalence questions. Unrestricted battery design therefore has **no completeness
+certificate**.
+
+What makes it scientific instead of hopeless is declaring a **threat model** `C≤k` —
+mechanisms below a resource/description bound — and then:
+
+1. enumerate the competitor families in `C≤k`;
+2. estimate or prove their agreement regions;
+3. construct probes maximising disagreement;
+4. **conclude only "not separated from `C≤k`"** — never "certified reasoning".
+
+Step 4 is the part that changes how Prometheus should write results.
+
+## The meta-battery (CEGIS discipline)
+
+> **Can a newly proposed cheap mechanism pass the existing suite?**
+
+Every time one does, it becomes a new adversary and the battery grows: candidate →
+counterexample → refine. There is no stopping theorem; what you get is bounded confidence
+against an expanding adversary class, and an audit trail of which competitors have been
+excluded. `techne/ladder_circuits/threat_model.py` implements this loop.
 
 ## How to apply
 
 When claiming a mechanism from a battery result:
-1. Name the cheapest mechanism that could produce the same numbers.
-2. Characterise the slice on which it is exact.
-3. Show the probe distribution has mass OUTSIDE that slice.
-4. For objective/selection claims, report the expectation over the space and the worst case,
-   never a sampled instance.
+1. State the threat model `C≤k` explicitly.
+2. Name each competitor and its agreement region.
+3. Show the probe distribution has mass outside their union *within that class*.
+4. Report the conclusion as **not-separated-from-`C≤k`**, with the class named.
+5. For objective/selection claims, report expectation and worst case, never a sampled instance.
 
-If step 2 cannot be answered, the battery has not been designed — it has been assembled.
+If step 1 cannot be answered, the battery has not been designed — it has been assembled.
 
-## Related proposals queued (same source, awaiting the same yes/no)
+## Companion proposals (same yes/no)
 
-- **Abstention channel** (cycle 006): a battery forcing True/False without an abstention
-  option scores honest capacity-limited circuits as liars; conservative ≠ abstaining.
-- **Evaluator-revision warrant** (cycle 011): evaluator/formula changes require an
-  evaluator-INDEPENDENT warrant, and every version bump owes a retroactive revalidation with
-  dependency-propagated retraction. This is the June formula-fossil incident as doctrine.
+- **Abstention channel** (cycle 006): forcing True/False scores honest capacity-limited
+  circuits as liars; conservative ≠ abstaining.
+- **Immutable-observation constitution** (cycle 013, replacing the earlier
+  evaluator-warrant draft): see `DOCTRINE_PROPOSAL_immutable_observations.md`.
