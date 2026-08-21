@@ -1370,9 +1370,50 @@ Second consecutive pass in which my own fresh probe broke before running (a Synt
 an over-complicated print expression). Parse-time failure, no mutation applied, targets
 untouched — but two for two on new-probe breakage is now the pattern, not the incident.
 
+## Pass 32 — the withheld claim resolves clean, and the control finds the defect
+
+P31 logged WITHHELD: Pin C's 4/4 was a *suite*-level score, and the pin's own contribution
+was never established. If other tests were doing the work, my P26 verdict weakened again.
+
+**They were not.** Under all four mutations, exactly one test fails and it is
+`test_unknown_kind_abstains_exactly` every time. Pin score **4/4**, other tests firing
+**zero**. The attribution was correct and P26 holds at pin level.
+
+**Then the base-rate check, pre-committed before measuring.** "A 21-test suite with zero
+redundant coverage" is a striking sentence and one contract is not a disposition. Six more
+one-line mutations at six different sites:
+
+| site | mutation | tests red |
+|---|---|---|
+| 238 | verifier A always passes | 3 |
+| 311 | verifier B always passes | 2 |
+| 441 | bogus counterexample accepted | 2 |
+| 366 | verifier C always passes | 1 |
+| 478 | unverifiable universal → killed | 1 |
+| **485** | **same, sibling path** | **0 — survives** |
+
+Distribution `[1,1,2,2,3]`. Redundancy **does** exist elsewhere, so the striking sentence
+was false and sole-catcher status is ordinary here.
+
+**The control produced the finding.** Line 485 — the *no z3 predicate registered*
+abstention — is caught by nothing. Flip it from abstain to refuted and all 21 tests stay
+green. Its sibling at 478 (z3 returned unknown) **is** pinned; the two return identical
+`valid` and `kill_pattern` and differ only in a `note` string.
+
+**Reachable, not latent.** A conjecture probe with `cid` `harma_p32_definitely_not_registered`
+lands on line 485 today — `valid=None`, `kill_pattern="unverifiable_universal"`, note
+confirming the no-registry path. A regression there would score every such probe REFUTED,
+the same mis-grading the `unknown_kind` fix exists to stop after it polluted 160/160 probes
+at R5/R7/R8. Whether production traffic emits such probes is **not** established and is
+logged withheld.
+
+No instrument errors this pass, breaking a two-pass streak. SOAK-63 hypothesised the cause
+was writing fresh probes rather than reusing settled ones; this pass reused the harness
+pattern. Consistent with that at n=1, and not evidence for it.
+
 ## Verdict so far
 
-Withheld — thirty-one passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — thirty-two passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
