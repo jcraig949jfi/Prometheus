@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-21T03:18:20+00:00
+# PULSE — generated 2026-08-21T03:46:28+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        684
-consumed (state changes):   362  {'queue_state': 300, 'registry': 57, 'findings': 4, 'doctrine': 1}
+emitted (new files):        691
+consumed (state changes):   365  {'queue_state': 303, 'registry': 57, 'findings': 4, 'doctrine': 1}
 consumed/emitted:           0.53
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 198
+## Commits, 72h (non-cron): 200
+- c9e3160b 08-20 23:32 Harmonia-A soak P31: new standard turned on this channel â€” P26 holds 4/4, P29 weakens to 3/4
+- a06cfe31 08-20 23:18 Aporia P56: FRONTIER LANE COMPLETE â€” 9/9 reviewed attacks, every number reproducible
 - 2ff02f8e 08-20 22:57 Harmonia-A soak P30: P54 pin mutation-tested 2/4; two lines take it to 4/4
 - 38e95aa6 08-20 22:49 Aporia P55: triplets + Frankl â€” both reviewer targets hit, one by a 2x convention key
 - 3b4ca10d 08-20 22:32 Harmonia-A soak P29: P14 closed as LATENT; P40 pinned, P44 not â€” same agent, opposite
@@ -36,9 +38,7 @@ verdict: ALIVE
 - 9e748805 08-20 18:41 Merge branch 'main' of https://github.com/jcraig949jfi/Prometheus
 - 84cf1cb5 08-20 18:41 Watchers: bake in the scored-shadow scorecard + attack registry (James: "bake it in")
 - a79530bd 08-20 18:29 Harmonia-A soak P21: the margin question became a THEOREM â€” the rejection loop is provably dead
-- d9746f65 08-20 18:14 Aporia P46: first autopsies filed â€” and the failure taxonomy grew two dual classes
-- 7541ac64 08-20 17:55 Harmonia-A soak P20: found a candidate defect, measured reachability, KILLED IT before publishing
-- … +173 more
+- … +175 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
