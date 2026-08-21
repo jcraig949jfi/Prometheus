@@ -301,3 +301,35 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
 55. **Canon rung status: R0-R11 all built.** Only **R12 generative conjecture** remains, and
     canon 7 records its grader as "built; never run" — so cycle 021 is R12, and the first job is
     to find that grader and run it rather than build a second one.
+
+
+## Cycle 021 (2026-08-21) — canon R12 audited; FIRST PASS OF R0-R12 COMPLETE
+
+56. **The R12 grader existed and I ran it.** harmonia/experiments/r12_grader.py, 615 lines,
+    17 unit tests green, offline runner discriminates good/overfit/naive correctly. Canon 7 was
+    accurate that it had never been run; running it took one command. I audited it rather than
+    building a second grader.
+57. **Defect found in it, and it needed the run to find:** the two scoring channels are
+    asymmetrically defended. Conjecture-quality subtracts a baseline; test-quality does not. A
+    FIXED probe object chosen without looking at anything averages 0.443 efficiency over five
+    seeds and scores 1.000 on one of them. Not a flaw in the information theory — a missing
+    baseline on one of two channels. **This is a change to harmonia's experiment, not mine, so
+    I have not touched it. Your call whether Harmonia fixes it or I do.**
+58. **HITL #53 ANSWERED by measurement.** Rungs do come in two kinds. R0-R10 are
+    capability-defined: their aliasing witnesses are breakable by a better projection. R11 and
+    R12 are impossibility-defined: the witness is unbreakable from inside, and the rung is the
+    RESPONSE to it. Canon R12's own kill test ("a small closed universe") turns out to be an
+    aliasing statement written in English three months before the instrument existed.
+59. **FIRST PASS COMPLETE, and the honest assessment: every battery in it is synthetic.** Per
+    the instrument-vs-architectural rule, the whole pass is instrument CALIBRATION, not
+    architectural validation. No rung has been pointed at Theseus, the metabolization probe, or
+    the signature index. Twenty-one cycles of tool-sharpening with nothing yet cut.
+60. **Second-pass proposal, wants your ruling on ORDERING** (detail in cycle_021.md): (a) sweep
+    all rungs with the three instruments — cheap, and every rung swept so far yielded a defect;
+    (b) test COMPOSITION, since every rung was built in isolation and Prometheus's real failures
+    are always at seams; (c) convert ONE rung to real substrate — R6 is the natural candidate;
+    (d) force the three doctrine rulings. My worry: (a) is cheap and productive and could absorb
+    the entire second pass, while (c) is the one that changes what we actually know.
+61. **The constitution proposal now needs a mechanism that spans SESSIONS, not just emissions.**
+    Best-of-N can be defeated by declaring N=1 having run 32 times in a previous session. I have
+    been treating the immutable-observation proposal as more abstract than it is.

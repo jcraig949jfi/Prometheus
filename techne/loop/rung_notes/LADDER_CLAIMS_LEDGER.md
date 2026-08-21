@@ -303,3 +303,47 @@ does not distinguish. Flagged to HITL (#53), no amendment proposed.
 **Kill-battery additions (executable):** hedging-ties-on-calibration probe; refutation-beyond-
 budget check (kills a memoriser without needing fresh instances); selective-reporting
 completeness audit against a declared ledger; fiber-synthesised misleading streak.
+
+## Cycle 021 — R12 audited, and rungs are of two kinds (HITL #53 answered)
+
+**Not a new claim; two resolutions and one confirmation.**
+
+**Resolution 1: rungs come in two kinds.** R0-R10 are CAPABILITY-DEFINED — their aliasing
+witnesses are breakable by a projection that reads more of the instance, and each rung's repair
+was exactly that. R11 and R12 are IMPOSSIBILITY-DEFINED — the witness is unbreakable from inside
+the situation, and the rung is the RESPONSE to it (calibration at R11; widen-the-universe at
+R12). Canon v2.0 does not draw this distinction. Flagged to HITL, no amendment proposed under
+vocabulary law 8.
+
+**Resolution 2: canon R12's kill test IS an aliasing statement.** "A small closed universe"
+formally reads "the projection is not sufficient for the target". Measured: `True`, `x <= 7` and
+`s <= 14` all accept 64/64 on the 0..7 tuples universe and 256 / 128 / 120 of 256 on 0..15. The
+canon wrote this in English in May; the instrument to state it formally arrived at cycle 018.
+
+**Confirmation: claim v13 at its sharpest.** R12 generates its own candidate list, so best-of-N
+is available to it. Mean score inflation over five seeds: +0.042 (N=2), +0.098 (4), +0.129 (8),
++0.173 (16), +0.188 (32), against honest means near 0.2. Nothing false in the emission; the
+omission is the discarded attempts. **New limit found:** declaring N is insufficient, because a
+generator can declare N=1 having run 32 times in a prior session. The pre-declared ledger must
+span sessions, which makes the immutable-observation constitution a concrete engineering
+requirement rather than a principle.
+
+**Grader defect recorded against harmonia (not fixed by me):** conjecture-quality is
+baseline-penalised, test-quality is not. A fixed probe chosen without reasoning averages 0.443
+efficiency over five seeds and scores 1.000 on one. The undefended channel is where a gaming
+system parks.
+
+**Kill-battery additions (executable):** no-reasoning floor measurement per scoring channel;
+closed-universe twin extension comparison; best-of-N inflation sweep.
+
+---
+
+# FIRST PASS COMPLETE — canon R0 through R12
+
+Every rung has circuits, a kill test, traps and a green suite. Durable claims from the pass:
+competitor-relative identification (v2), evaluator aliasing (v11-prime, with its factorization
+precondition and its R11 counterexample), evidence typing with an external checker (v12), and
+un-detectability of omission (v13).
+
+**Standing caveat on the whole pass:** every battery in it is synthetic. This was instrument
+CALIBRATION, not architectural validation. Second-pass priorities are in cycle_021.md.
