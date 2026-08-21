@@ -197,3 +197,27 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
     the defence would leave a false green in the suite.
 36. **Still open from cycle 013:** HITL #9 (PySR against a table with no known closed form)
     remains unanswered. Not blocking; the Lean track is producing more per cycle right now.
+
+## Cycle 017 (2026-08-21)
+
+37. **Strength-dial pattern promoted to a claim (v11), on its fourth sighting.** "A battery
+    parameter that does not read the instance cannot separate instances that differ." R10 gave
+    the proof-shaped version: a feature-sensitive transfer circuit is a function of the world
+    PAIR, so it is constant across techniques on that pair, while ground truth is not. No
+    setting works. R6 horizon / R9 tactic budget / R3 capacity are the same defect. If you
+    disagree with the promotion, it is one line to demote in LADDER_CLAIMS_LEDGER.md.
+38. **Open weakness I could not close this cycle:** the R10 assumption sets are hand-authored
+    per technique. A circuit that declares its own assumptions can declare exactly the ones that
+    hold in the target. Mechanical extraction is plausible with the cycle-015 Lean oracle (axiom
+    dependencies, or typeclass instances — Field vs CharZero vs Fintype). That would make the
+    trace instrument adversarially sound rather than trusted, and it is the most valuable
+    single follow-up on the board.
+39. **A rung may be untestable where its conclusion is open.** R10 needs to RUN the conclusion
+    in the target world to avoid phantom breaks. Where that conclusion is an open problem in the
+    target, only the (unsound) trace remains. Question for you: is "candidate break, unverified"
+    a legitimate third verdict, or does the rung simply not apply there? This is the abstention
+    channel argument again, now at R10 — it is the third rung to want one.
+40. **Still open:** HITL #9 (PySR against an unknown-law table), and the three doctrine
+    proposals awaiting a single yes/no (competitor-relative identification v2, abstention
+    channel, immutable-observation bottom). The abstention channel has now been independently
+    demanded by R3, R6 and R10.
