@@ -178,3 +178,39 @@ a second rung where the artifact requirement forces two instruments; that would 
 **Kill-battery additions (executable):** parameter-shifted near-analogy (q=5 breaks, q=3
 transfers), technique-name randomisation, harmless-assumption-failure probe, dial sweep with
 the structural constancy check (R10).
+
+## Cycle 018 — claim v11 REWRITTEN as evaluator aliasing (external review, round 6)
+
+**v11 (cycle 017, superseded):** ~~a battery parameter that does not read the instance cannot
+separate instances that differ.~~ Misnamed the phenomenon — it pointed at dials, and the R9
+deletion-only checker has no parameter at all yet fails identically.
+
+**v11' (current).** *Evaluator aliasing / observational non-identifiability.* Let an evaluator
+family `E_theta` observe only a projection `pi(x)`. Then `pi(x1) = pi(x2)` implies
+`E_theta(x1) = E_theta(x2)` for all theta; if `Y(x1) != Y(x2)`, no theta is correct on both.
+This is an impossibility proof against the whole family rather than a statement about tuning,
+and it is a specialisation of the competitor-relative law: the aliased pair is observationally
+equivalent TO THAT EVALUATOR.
+
+**Refinement required in practice:** where family members differ in how much they observe, `pi`
+must be the FINEST projection any member can see; a witness under the finest kills every member,
+each seeing a coarsening of it.
+
+**Battery-design rule (executable, `techne/ladder_circuits/aliasing.py`):** find two probes in
+the same equivalence class under everything the evaluator can see, with different correct
+verdicts. `find_aliasing_witness` searches; `family_cannot_be_correct` is the theorem;
+`verify_family_incapacity` is the measurement that must agree with it.
+
+**Retrofits (all executed, all producing witnesses):** R6 search horizon; R9 deletion test;
+R10 world features. **R3 capacity width is NOT retrofitted — listed as unverified, not counted.**
+
+**Strongest witness to date (R10, cycle 018):** at fixed q = 7 the technique `x^2 - a
+irreducible` flips verdict with `a` alone (3^2 = 2 mod 7). The projection is the ENTIRE
+(source, target) world pair — complete world knowledge — and it still aliases.
+
+**Second cycle-018 result, recorded separately.** The R10 artifact requirement was too weak: a
+BREAKS claim was supported by any populated witness field, and `UnknownCollapser` filled it with
+a restatement of the assumption violation, manufacturing a refutation of the twin-prime
+conjecture. Repair built: `is_supported_strict` demands `conclusion_status == REFUTED` — a
+witness must witness the CONCLUSION. Generalises the R6 witness requirement: it is not enough to
+demand a witness, one must demand that it witnesses the claim being made.

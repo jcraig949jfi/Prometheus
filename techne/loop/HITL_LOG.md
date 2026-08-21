@@ -221,3 +221,26 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
     proposals awaiting a single yes/no (competitor-relative identification v2, abstention
     channel, immutable-observation bottom). The abstention channel has now been independently
     demanded by R3, R6 and R10.
+
+## Cycle 018 (2026-08-21) — external review fold-in, R11 slides to 019
+
+41. **HITL #38 CLOSED.** Mechanical assumption extraction from Lean is built and tested:
+    constant-closure traversal of the elaborated proof term, CLASS/INSTANCE/CTOR
+    classification, and `check_frozen_term` for necessity without re-search. An R10 circuit's
+    declared assumptions can now be audited against what its proof actually depends on.
+42. **Gap found in my own checker, now under test:** `sorry` is a Lean WARNING, not an error, so
+    `check_lean_source` classified a sorry-contaminated proof as PROVED. Anything that has used
+    the Lean verdict lane since cycle 015 should be re-read with this in mind — in practice only
+    the R9 circuits, whose proofs contain no `sorry`, but the exposure was real. The axiom lane
+    (`sorryAx`) catches it and is now the mandatory companion to a PROVED verdict.
+43. **Claim v11 was misnamed and is rewritten** as evaluator aliasing / observational
+    non-identifiability. My "instance-blind parameter" framing pointed at dials; the R9
+    deletion-only checker has no parameter at all and dies to the same argument. The reviewer's
+    version is provable where mine was measured. Retrofitted to R6, R9, R10. **R3 is NOT
+    retrofitted and is marked unverified in the ledger rather than counted as a fourth.**
+44. **Abstention channel now demanded by a third rung.** R10's (BROKEN, UNKNOWN) state is not a
+    convenience — without it the circuit manufactures a refutation of the twin-prime conjecture,
+    and my cycle-017 artifact check applauded it. R3, R6 and R10 all want the same thing. This
+    is the proposal I would most like a ruling on.
+45. **Scheduling note:** R11 slides to cycle 019. Folding in review that corrects the rung I
+    just built outranks moving to the next rung.

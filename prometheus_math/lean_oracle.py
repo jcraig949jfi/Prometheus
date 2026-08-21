@@ -25,7 +25,8 @@ from pathlib import Path
 from typing import List, Optional
 
 __all__ = ["LeanVerdict", "lean_available", "check_lean_source", "check_theorem",
-           "check_with_lemma", "DEFAULT_TOOLCHAIN"]
+           "check_with_lemma", "DeclDependencies", "dependency_closure",
+           "check_frozen_term", "traced_classes", "DEFAULT_TOOLCHAIN"]
 
 DEFAULT_TOOLCHAIN = "leanprover/lean4:v4.30.0"
 
@@ -153,3 +154,124 @@ def check_with_lemma(
     ]
     body = "\n".join(lines)
     return check_lean_source(body, toolchain=toolchain, timeout_s=timeout_s)
+
+
+# =============================================================================================
+# Assumption tracing (cycle 018). External review of the canon R10 work argued that
+# `#print axioms` is too COARSE to serve as an assumption tracer: it reports kernel axioms
+# (typically just `propext`, `Quot.sound`, `Classical.choice`) and is blind to the typeclass
+# instances that carry the mathematically interesting hypotheses — Field vs CharZero vs
+# Fintype. Verified on this toolchain: a theorem whose proof goes through a custom class
+# reports `[propext, Quot.sound]` and nothing else.
+#
+# So the tracer traverses the ELABORATED proof term's transitive constant closure instead, and
+# classifies what it finds. `#print axioms` is retained as an independent audit lane, where it
+# IS valuable: it detects `sorryAx` and other axiomatic contamination.
+# =============================================================================================
+
+#: Lean metaprogram prelude: transitive constant closure of a declaration, with each dependency
+#: classified as a class, an instance of a class, or a plain constant.
+_DEP_PRELUDE = """import Lean
+open Lean
+
+private def pmExprConsts (e : Expr) : List Name :=
+  (e.foldConsts (EMPTY_NAMESET) (fun n s => s.insert n)).toList
+
+private partial def pmDeps (env : Environment) (n : Name) (seen : NameSet) : NameSet :=
+  if seen.contains n then seen
+  else
+    let seen := seen.insert n
+    match env.find? n with
+    | none => seen
+    | some ci =>
+      let cs := pmExprConsts ci.type ++ (match ci.value? with
+                                         | some v => pmExprConsts v
+                                         | none => [])
+      cs.foldl (fun s m => pmDeps env m s) seen
+
+private def pmReport (declName : Name) : CoreM Unit := do
+  let env <- getEnv
+  for d in (pmDeps env declName (EMPTY_NAMESET)).toList do
+    if !d.isInternal then
+      let kind :=
+        if isClass env d then "CLASS"
+        else match env.find? d with
+             | none => "CONST"
+             | some (.ctorInfo _) => "CTOR"
+             | some ci =>
+               match ci.type.getForallBody.getAppFn with
+               | .const c _ => if isClass env c then s!"INSTANCE:{c}" else "CONST"
+               | _ => "CONST"
+      IO.println s!"PMDEP\t{kind}\t{d}"
+""".replace("EMPTY_NAMESET", "∅ : NameSet")
+
+
+@dataclass(frozen=True)
+class DeclDependencies:
+    """Layer 1 (kernel closure) and layer 2 (structural assumptions) of the tracer.
+
+    Layer 3 — NECESSITY — is deliberately not automated here. Ablating an assumption and asking
+    Lean to prove the goal again reintroduces the non-unique-proof problem from canon R9: the
+    search may find a different proof and wrongly report the assumption unused. Necessity must
+    be tested against a FROZEN proof term, which is what `check_frozen_term` is for.
+    """
+
+    declaration: str
+    constants: tuple
+    classes: tuple
+    instances: tuple          # (instance name, class name) pairs
+    axioms: tuple
+    diagnostics: str = ""
+
+
+def dependency_closure(source: str, declaration: str,
+                       toolchain: str = DEFAULT_TOOLCHAIN,
+                       timeout_s: int = 300) -> DeclDependencies:
+    """Transitive constant dependencies of `declaration`, classified.
+
+    `source` must NOT carry its own `import` lines: the prelude imports `Lean` and Lean requires
+    imports first. Returns empty tuples with the diagnostics attached if the source fails.
+    """
+    body = (_DEP_PRELUDE + "\n" + source + "\n"
+            + f"#eval pmReport `{declaration}\n"
+            + f"#print axioms {declaration}\n")
+    verdict = check_lean_source(body, toolchain=toolchain, timeout_s=timeout_s)
+    consts, classes, instances, axioms = [], [], [], []
+    for line in verdict.diagnostics.splitlines():
+        if line.startswith("PMDEP\t"):
+            _tag, kind, name = line.split("\t", 2)
+            if kind == "CLASS":
+                classes.append(name)
+            elif kind.startswith("INSTANCE:"):
+                instances.append((name, kind.split(":", 1)[1]))
+            consts.append(name)
+        elif "depends on axioms:" in line:
+            inside = line.split("[", 1)[-1].rstrip("]")
+            axioms.extend(a.strip() for a in inside.split(",") if a.strip())
+    return DeclDependencies(declaration, tuple(sorted(consts)), tuple(sorted(classes)),
+                            tuple(sorted(instances)), tuple(sorted(axioms)),
+                            verdict.diagnostics if not consts else "")
+
+
+def check_frozen_term(preamble: str, statement: str, proof_term: str,
+                      toolchain: str = DEFAULT_TOOLCHAIN,
+                      timeout_s: int = 300) -> "LeanVerdict":
+    """Layer 3: does THIS EXACT proof term still elaborate against a modified context?
+
+    The point is what it does NOT do — it never asks Lean to search for a replacement proof.
+    Ablate an assumption from `preamble`, re-check the frozen term, and a failure is evidence
+    that the assumption was load-bearing FOR THIS PROOF. Success under ablation means the term
+    never needed it.
+    """
+    body = f"{preamble}\ntheorem pm_frozen : {statement} := {proof_term}\n"
+    return check_lean_source(body, toolchain=toolchain, timeout_s=timeout_s)
+
+
+def traced_classes(source: str, declaration: str, **kw) -> frozenset:
+    """The MECHANICAL assumption set: typeclasses in the proof term's dependency closure.
+
+    This is the answer to the open weakness recorded as HITL #38 — an R10 circuit that declares
+    its own assumptions can declare exactly the ones that hold in the target. A declared set can
+    now be AUDITED against what the proof actually depends on.
+    """
+    return frozenset(dependency_closure(source, declaration, **kw).classes)

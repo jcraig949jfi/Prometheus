@@ -32,6 +32,7 @@ Circuits:
 """
 from __future__ import annotations
 
+import dataclasses
 import math
 from dataclasses import dataclass, field
 from typing import Callable, Dict, List, Optional, Sequence, Tuple
@@ -109,6 +110,9 @@ ASSUMPTION_PROBES: Dict[str, Callable[[World], bool]] = {
     "unit group has order 2": lambda w: w.unit_group_order == 2,
     "unit group is finite": lambda w: math.isfinite(w.unit_group_order),
     "infinite constant field": lambda w: math.isinf(w.constant_field_size),
+    #: The dual, and the assumption behind every Weil-bound / character-sum argument: those
+    #: proofs need the constant field to be FINITE, which is exactly what ℤ does not supply.
+    "finite constant field": lambda w: w.q > 0,
     "euclidean size function": lambda w: True,      # holds on BOTH sides — the analogy's core
     "residue fields are finite": lambda w: True,    # likewise
 }
@@ -200,15 +204,24 @@ TECHNIQUES: Tuple[Technique, ...] = (
 
 @dataclass
 class TransferVerdict:
-    """THE ARTIFACT: the role-mapping table, the verdict, and — when it breaks — the assumption
-    NAMED, with the counterexample that shows the conclusion really does fail."""
+    """THE ARTIFACT: the role-mapping table, the assumption NAMED when one breaks, the witness,
+    and — added cycle 018 on external review — **two orthogonal status fields**.
+
+    `assumption_status` ∈ {PRESERVED, BROKEN} and `conclusion_status` ∈ {SURVIVES, REFUTED,
+    UNKNOWN} are independent, because a broken assumption does not entail a false conclusion
+    (see `test_AN_ASSUMPTION_CAN_FAIL_HARMLESSLY`). Collapsing them loses exactly the
+    distinction the rung is for, so `verdict` is DERIVED from the pair and (BROKEN, UNKNOWN)
+    derives to UNVERIFIED rather than to BREAKS.
+    """
 
     technique: str
     target: str
-    verdict: str                                   # "TRANSFERS" | "BREAKS"
+    verdict: str                                   # "TRANSFERS" | "BREAKS" | "UNVERIFIED"
     broken_assumption: Optional[str] = None
     witness: Optional[str] = None
     mapping: Tuple[RoleRow, ...] = ()
+    assumption_status: str = "PRESERVED"           # "PRESERVED" | "BROKEN"
+    conclusion_status: str = "SURVIVES"            # "SURVIVES" | "REFUTED" | "UNKNOWN"
 
     @property
     def is_supported(self) -> bool:
@@ -216,27 +229,76 @@ class TransferVerdict:
         return self.verdict != "BREAKS" or (
             self.broken_assumption is not None and self.witness is not None)
 
+    @property
+    def is_supported_strict(self) -> bool:
+        """CYCLE 018 REPAIR. `is_supported` asks only whether the witness FIELD is populated,
+        and `UnknownCollapser` walks straight through it by filling that field with a
+        restatement of the assumption violation. A witness must witness the **conclusion**.
 
-def ground_truth(tech: Technique, tgt: World) -> bool:
-    """Does the conclusion actually hold in the target world? Computed."""
+        Mechanically: a BREAKS claim requires `conclusion_status == "REFUTED"`, which is
+        exactly the claim that something was actually found to fail.
+        """
+        return self.verdict != "BREAKS" or (
+            self.broken_assumption is not None and self.witness is not None
+            and self.conclusion_status == "REFUTED")
+
+
+def derive_verdict(assumption_status: str, conclusion_status: str) -> str:
+    """The only sanctioned collapse of the two fields into one label.
+
+    (·, REFUTED)  -> BREAKS       the analogy demonstrably fails here
+    (·, SURVIVES) -> TRANSFERS    the conclusion holds, whatever the assumptions did
+    (·, UNKNOWN)  -> UNVERIFIED   not enough reality-bits for a verdict — NOT a refutation
+    """
+    if conclusion_status == "REFUTED":
+        return "BREAKS"
+    if conclusion_status == "SURVIVES":
+        return "TRANSFERS"
+    return "UNVERIFIED"
+
+
+def ground_truth(tech: Technique, tgt: World) -> Optional[bool]:
+    """Does the conclusion actually hold in the target world? Computed, or None when open."""
     return tech.probe(tgt)[0]
 
 
 @dataclass
 class AssumptionTracingTransfer:
     """The honest circuit. TWO instruments: assumption tracing supplies the NAME, running the
-    conclusion supplies the VERDICT and the witness. It claims a break only when both agree."""
+    conclusion supplies the VERDICT and the witness. It claims a break only when both agree,
+    and abstains when the conclusion is open in the target."""
 
     def transfer(self, tech: Technique, tgt: World) -> TransferVerdict:
         mapping = role_map(tech.home, tgt)
         failed = [a for a in tech.assumptions if not ASSUMPTION_PROBES[a](tgt)]
         holds, witness = tech.probe(tgt)
-        if holds:
-            # Even if an assumption failed, the conclusion survived: NOT a break.
-            return TransferVerdict(tech.name, tgt.name, "TRANSFERS", mapping=mapping)
-        return TransferVerdict(tech.name, tgt.name, "BREAKS",
-                               broken_assumption=failed[0] if failed else None,
-                               witness=witness, mapping=mapping)
+        a_status = "BROKEN" if failed else "PRESERVED"
+        c_status = {True: "SURVIVES", False: "REFUTED", None: "UNKNOWN"}[holds]
+        return TransferVerdict(
+            tech.name, tgt.name, derive_verdict(a_status, c_status),
+            broken_assumption=failed[0] if (failed and c_status == "REFUTED") else None,
+            witness=witness if c_status == "REFUTED" else None,
+            mapping=mapping, assumption_status=a_status, conclusion_status=c_status)
+
+
+@dataclass
+class UnknownCollapser:
+    """TRAP 5 (external review, round 6): identical to the honest circuit except that it reads
+    (BROKEN, UNKNOWN) as a refutation.
+
+    This is the loop's oldest lesson in a new place — **absence of certification is not the
+    opposite verdict** — and it is the trap most likely to be committed in good faith, because
+    a witnessed assumption violation feels like evidence against the conclusion. It is not: the
+    F_3 Frobenius case is a witnessed assumption violation whose conclusion holds.
+    """
+
+    def transfer(self, tech: Technique, tgt: World) -> TransferVerdict:
+        v = AssumptionTracingTransfer().transfer(tech, tgt)
+        if v.assumption_status == "BROKEN" and v.conclusion_status == "UNKNOWN":
+            failed = [a for a in tech.assumptions if not ASSUMPTION_PROBES[a](tgt)]
+            return dataclasses.replace(v, verdict="BREAKS", broken_assumption=failed[0],
+                                       witness=f"assumption {failed[0]} violated in {tgt.name}")
+        return v
 
 
 @dataclass
@@ -334,8 +396,8 @@ class MemorizedVerdicts:
 def verdict_only_score(results: Sequence[Tuple[Technique, World, TransferVerdict]]
                        ) -> Dict[str, float]:
     """The NAIVE scoring: TRANSFERS/BREAKS only, ignoring the artifact the canon demands."""
-    breaks = [(t, w, v) for t, w, v in results if not ground_truth(t, w)]
-    keeps = [(t, w, v) for t, w, v in results if ground_truth(t, w)]
+    breaks = [(t, w, v) for t, w, v in results if ground_truth(t, w) is False]
+    keeps = [(t, w, v) for t, w, v in results if ground_truth(t, w) is True]
     return {
         "catch_rate": sum(1 for _t, _w, v in breaks if v.verdict == "BREAKS") / len(breaks)
         if breaks else 0.0,
@@ -349,8 +411,11 @@ def score(results: Sequence[Tuple[Technique, World, TransferVerdict]]) -> Dict[s
     named assumption is one the technique actually uses AND genuinely fails in the target, and
     a witness is attached. `misnamed` is a failure mode with no analogue at R6: the verdict can
     be right while the artifact is wrong."""
-    breaks = [(t, w, v) for t, w, v in results if not ground_truth(t, w)]
-    keeps = [(t, w, v) for t, w, v in results if ground_truth(t, w)]
+    # Entries whose ground truth is None (open in the target) are scored by NEITHER rate —
+    # they belong to the UNVERIFIED lane and counting them as breaks would bake the
+    # UnknownCollapser's error into the scorer itself.
+    breaks = [(t, w, v) for t, w, v in results if ground_truth(t, w) is False]
+    keeps = [(t, w, v) for t, w, v in results if ground_truth(t, w) is True]
     caught = 0
     misnamed = 0
     for t, w, v in breaks:
@@ -368,6 +433,8 @@ def score(results: Sequence[Tuple[Technique, World, TransferVerdict]]) -> Dict[s
         if keeps else 0.0,
         "misnamed": float(misnamed),
         "unsupported": float(sum(1 for _t, _w, v in results if not v.is_supported)),
+        "unsupported_strict": float(sum(1 for _t, _w, v in results
+                                        if not v.is_supported_strict)),
     }
 
 
@@ -379,3 +446,91 @@ BATTERY: Tuple[Tuple[Technique, World], ...] = tuple(
 def run(circuit, battery: Sequence[Tuple[Technique, World]] = BATTERY
         ) -> List[Tuple[Technique, World, TransferVerdict]]:
     return [(t, w, circuit.transfer(t, w)) for t, w in battery]
+
+
+# ============================================================================================
+# Cycle 018 additions, from external review (round 6).
+#
+# Two extensions the reviewer asked for, and one they designed:
+#   (a) a near-analogy whose break is a RESIDUE-CLASS property buried inside the technique,
+#       so that no amount of world knowledge determines the verdict;
+#   (b) techniques whose conclusion is OPEN in the target world, forcing the UNKNOWN state.
+# ============================================================================================
+
+def _is_nonsquare(a: int, w: World) -> bool:
+    """Is `a` a nonsquare in the world's constant field? Computed."""
+    if w.q == 0:                                   # ℚ: a is a square iff it is a perfect square
+        r = math.isqrt(abs(a))
+        return not (a >= 0 and r * r == a)
+    return (a % w.q) not in {(s * s) % w.q for s in range(w.q)}
+
+
+for _a in range(2, 12):
+    ASSUMPTION_PROBES[f"{_a} is a nonsquare in the constant field"] = (
+        lambda w, a=_a: _is_nonsquare(a, w))
+
+
+def _p_quadratic_irreducible(a: int) -> Probe:
+    """Conclusion: x^2 - a is irreducible over the constant field.
+
+    Computed by sympy factorisation — an INDEPENDENT code path from the residue test used for
+    the assumption, so the two instruments agree by mathematics rather than by construction.
+    """
+    def probe(w: World) -> Tuple[Optional[bool], Optional[str]]:
+        poly = (sp.Poly(x ** 2 - a, x) if w.q == 0
+                else sp.Poly(x ** 2 - a, x, modulus=w.q))
+        if poly.is_irreducible:
+            return True, None
+        root = next((r for r in range(w.q) if (r * r - a) % w.q == 0), None) if w.q else None
+        return False, (f"x^2 - {a} factors in {w.name}"
+                       + (f": {root}^2 = {a} mod {w.q}" if root is not None else ""))
+    return probe
+
+
+def nonsquare_technique(a: int) -> Technique:
+    """THE SHARPER NEAR-ANALOGY (external review, round 6).
+
+    Everything visible about the two worlds is held fixed — same domain kind F_q[t], odd
+    characteristic, field of constants, PID, identical polynomial machinery — and the verdict
+    turns on whether `a` is a quadratic residue in F_q. Varying `a` at FIXED q gives two
+    instances with byte-identical world features and opposite verdicts, so a circuit is forced
+    to run technique -> its own assumption -> a target-world test. Nothing about the worlds
+    alone can supply the answer.
+    """
+    return Technique(f"nonsquare_{a}", W_Z,
+                     (f"{a} is a nonsquare in the constant field",),
+                     _p_quadratic_irreducible(a))
+
+
+#: Fixed q = 7, varying a. 2 is a square mod 7 (3^2 = 2); 3 and 5 are not.
+QR_BATTERY: Tuple[Tuple[Technique, World], ...] = tuple(
+    (nonsquare_technique(a), W_F7) for a in (2, 3, 5))
+
+
+# --------------------------------------------------------------------------------------------
+# Open conclusions: the (BROKEN, UNKNOWN) state.
+
+def _p_open_in_Z(name: str) -> Probe:
+    """A conclusion that is settled in F_q[t] and OPEN over ℤ. The probe returns None — the
+    circuit has no reality-bits here and must say so."""
+    def probe(w: World) -> Tuple[Optional[bool], Optional[str]]:
+        if w.q > 0:
+            return True, None                      # settled on the function-field side
+        return None, f"{name} is open over ℤ; no probe available"
+    return probe
+
+
+#: Both of these are OPEN over ℤ — that half is not in doubt and is all the UNKNOWN verdict
+#: rests on. The function-field half is cited for context and is TIER-2 pending verification
+#: against primary sources (per the upstream-attribution rule):
+#:   - Artin's primitive-root conjecture for function fields: Bilharz (1937), Math. Ann.,
+#:     conditional on the Riemann hypothesis for curves (later established by Weil).
+#:   - Twin primes over F_q[T]: Sawin & Shusterman, Annals of Mathematics (2022).
+OPEN_TECHNIQUES: Tuple[Technique, ...] = (
+    Technique("artin_primitive_root", W_F5, ("finite constant field",),
+              _p_open_in_Z("Artin's primitive-root conjecture")),
+    Technique("twin_prime_counting", W_F5, ("finite constant field",),
+              _p_open_in_Z("the twin-prime conjecture")),
+)
+
+OPEN_BATTERY: Tuple[Tuple[Technique, World], ...] = tuple((t, W_Z) for t in OPEN_TECHNIQUES)
