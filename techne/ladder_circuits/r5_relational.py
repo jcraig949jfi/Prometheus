@@ -65,6 +65,36 @@ class RelationalExecutor:
         return s0, s1, not self.violations
 
 
+@dataclass
+class GuardedProductState:
+    """Their toy, exactly (round 3 restated): a_{k+1} = a_k + 1; b advances by 2 ONLY WHEN
+    a_k == b_k. The admissible next step depends on a RELATION between components, not on
+    either state alone — so the object is genuinely S x S with guards over relations, and
+    run(A); run(B); diff cannot reproduce it (B's transition needs A's contemporaneous value).
+    Sharper than cycle-008's arithmetic coupling because the coupling sits in the GUARD."""
+
+    a: int
+    b: int
+
+    def step(self, n: int = 1) -> "GuardedProductState":
+        for _ in range(n):
+            advance_b = (self.a == self.b)
+            self.a = self.a + 1
+            if advance_b:
+                self.b = self.b + 2
+        return self
+
+
+def independent_b_run(b0: int, n: int, a_snapshot: int) -> int:
+    """Branch B run in isolation with a FIXED snapshot of A (the only thing a sequential
+    strategy has). Whatever snapshot it picks, the guard fires on the wrong steps."""
+    b = b0
+    for _ in range(n):
+        if a_snapshot == b:
+            b += 2
+    return b
+
+
 def endpoint_checker(s0: State, s1: State, step: Callable[[State], State], n: int,
                      invariant: Callable[[State, State], bool]) -> bool:
     """Run-twice-and-compare-endpoints: the strategy the transient-violation probe kills."""

@@ -17,8 +17,15 @@ REUSABLE subprogram survives held-out substitutions.
   its rule set, and applies g to inputs never seen in training. The vocabulary changed:
   len(rules) grows, and the new rule is INTENSIONAL (a composition), not a lookup table.
 
-Plasticity scale (theirs): fixed rules -> parameterized compositions -> cached macros ->
-induced operators -> revisable abstractions.
+Plasticity scale (theirs): fixed -> composable -> macro-able -> inducible -> REVISABLE.
+
+Cycle 009 additions from the restated round 3:
+- SYMBOLIC held-out abstraction (stronger than held-out integers): train on 2a->2a+1,
+  2b->2b+1, 2c->2c+1 and test on a novel SYMBOL z. A cache over ground terms cannot answer;
+  a synthesized rule 2X -> 2X+1 is a pattern over an unbound variable and does.
+- REVISABILITY (negative plasticity): mutate the environment so an installed macro becomes
+  harmful. invent -> evaluate -> revise/delete. An add-only system provably degrades; the
+  test measures that degradation rather than asserting it.
 """
 from __future__ import annotations
 
@@ -68,4 +75,76 @@ class OperatorSynthesizer:
         return g(x) if g is not None else None
 
     def vocabulary(self) -> List[str]:
+        return sorted(self.rules)
+
+
+# --------------------------------------------------------------------------- cycle 009
+
+import sympy as _sp
+
+
+@dataclass
+class SymbolicRuleSynthesizer:
+    """Induces a PATTERN over an unbound variable from ground instances: 2t -> 2t+1.
+
+    The distinction from TraceCache is the object learned: a substitution rule (lhs/rhs with
+    a free pattern variable) versus a table of ground pairs. Only the former applies to a
+    symbol never seen."""
+
+    pattern_var: _sp.Symbol = field(default_factory=lambda: _sp.Wild("t"))
+    lhs: Optional[_sp.Expr] = None
+    rhs: Optional[_sp.Expr] = None
+    support: int = 0
+    install_threshold: int = 3
+
+    def observe(self, before: _sp.Expr, after: _sp.Expr) -> None:
+        """Anti-unify the ground pair against the hypothesised shape (2t, 2t+1).
+
+        NOTE (learned RED->GREEN): sympy's Wild SOLVES rather than matches — `(3*a).match(2*t)`
+        succeeds with t = 3a/2. Structural anti-unification must therefore split the leading
+        coefficient explicitly; a bare .match() would have installed a rule from evidence that
+        does not support it, which is the fake-synthesis failure this module exists to catch."""
+        coeff, rest = before.as_coeff_Mul()
+        if coeff != 2:
+            return
+        if after != 2 * rest + 1:
+            return
+        self.support += 1
+        if self.support >= self.install_threshold and self.lhs is None:
+            t = self.pattern_var
+            self.lhs, self.rhs = 2 * t, 2 * t + 1
+
+    def apply(self, expr: _sp.Expr) -> Optional[_sp.Expr]:
+        if self.lhs is None:
+            return None
+        m = expr.match(self.lhs)
+        return None if m is None else self.rhs.subs(m)
+
+
+@dataclass
+class RevisableOperators:
+    """invent -> evaluate -> revise/delete. Tracks each installed operator's live utility and
+    RETRACTS it when the environment turns it harmful. `add_only=True` reproduces the
+    degradation of a system that can install but never retract."""
+
+    rules: Dict[str, Rule] = field(default_factory=dict)
+    utility: Dict[str, int] = field(default_factory=dict)
+    add_only: bool = False
+    retract_threshold: int = -2
+    retracted: List[str] = field(default_factory=list)
+
+    def install(self, name: str, rule: Rule) -> None:
+        self.rules[name] = rule
+        self.utility[name] = 0
+
+    def evaluate(self, name: str, helped: bool) -> None:
+        """One outcome observation for an installed operator."""
+        if name not in self.rules:
+            return
+        self.utility[name] += 1 if helped else -1
+        if not self.add_only and self.utility[name] <= self.retract_threshold:
+            del self.rules[name]
+            self.retracted.append(name)
+
+    def available(self) -> List[str]:
         return sorted(self.rules)

@@ -51,6 +51,23 @@ states what killed its predecessor. Executable evidence lives in `techne/ladder_
   battery extended beyond binders: existential elimination with reuse/palette/aux_1
   pathologies all caught; SkolemID shows freshness = inexhaustible namespace, not RNG.
 
+- **v7 (cycle 009, current):** external round 3 (restated) adds a SEVENTH coordinate —
+  **epistemic objective**. Coordinates 1-6 assume the objective is SUPPLIED. Band G asks
+  "what should I try to learn next?", and two actions with identical immediate progress can
+  differ enormously in expected uncertainty reduction ΔU(a|H). Executable: identical unit-cost
+  experiment pool, only the objective differs — info-greedy is optimal on EVERY instance
+  (ceil log2|H|); myopic progress-greedy is O(|H|) in expectation with worst case |H|-1.
+  Their two-ceiling prediction recorded: operator plasticity is the Band-S ceiling; epistemic
+  objective the Band-G one, and the latter is the more dangerous for research behaviour
+  ("I have many operations but don't know which unknown is worth attacking").
+  **Methodological finding from building it:** the separation is in EXPECTATION — the myopic
+  arm sometimes WINS per instance (truth=0 resolves in one step). A battery sampling one
+  instance per system can certify the wrong selector. Fourth instance of the cheaper-mechanism
+  law, and the first where the cheaper mechanism can beat the better one on a single draw.
+  Also this cycle: R5's guarded product state (their exact toy — chasing behaviour no snapshot
+  reproduces), symbolic held-out abstraction (novel SYMBOL, not novel integer), and
+  revisability/negative plasticity (add-only system's degradation measured, not asserted).
+
 **Standing kill-battery inventory (all executable):** isomorph/fresh-seed (R0); coefficient-
 hull escape + symbolic-parameter probes (R1); trace re-execution, CAS-layer leakage,
 path-separating twins [spec'd], step-count priors (R2); disequality separation, scale probe,
@@ -60,7 +77,8 @@ base-rate inversion, **nonlocal-discriminator + depth-escape + rule-name randomi
 (R5); coupled-dynamics inexecutability + transient-violation relational probes (R5-rel);
 palette exhaustion, existential-elimination distinctness pressure, deterministic-freshness
 (fresh-gen/Skolem); held-out-substitution fake-synthesis kill + corrupted-trace audit
-(operator plasticity).
+(operator plasticity); expectation-over-space experiment metering + worst-case cost
+(epistemic objective).
 
 **Design finding (cycle 006, from the twins battery):** a bounded circuit's conservative
 False on a forgotten fact IS a soundness violation on the twin pair — "conservative" and

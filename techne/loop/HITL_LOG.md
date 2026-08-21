@@ -78,3 +78,16 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
 16. **R5 in Canon**: round 3 argues Canon's R5 ("holds branches") is only a rung in its
     relational form. Canon vocabulary law says rung semantics change only by James-ratified
     amendment — flagging, not editing: proposed amendment text can be drafted on request.
+
+## Cycle 009 (2026-08-21)
+
+17. **Epistemic objective is the sharpest external finding so far** and it points straight
+    at Prometheus: our falsification batteries score whether kills happened, never whether
+    the experiments chosen were the INFORMATIVE ones. A substrate that kills efficiently but
+    chooses experiments myopically looks healthy on every current metric. Recommend this as
+    a candidate doctrine memory AND as a question for the metabolization probe's design
+    (does the residue help choose the next experiment, or only grade the last one?).
+18. **Doctrine memory draft ready on request** (HITL #13, now 4 instances): "a battery
+    certifies a mechanism only if its probe distribution leaves every known cheaper
+    mechanism's exactness slice — and for objective-level claims, only if it measures
+    EXPECTATION over the space, since myopic strategies can win single draws."
