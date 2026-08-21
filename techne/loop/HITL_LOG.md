@@ -426,3 +426,42 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
 77. **Standing gap unchanged:** R2, R4, R5, R7, R8 unswept; sweep stays closed. And the three
     doctrine proposals have now been awaiting a yes/no since cycle 013 — item 73 above is the
     fourth independent argument for one of them.
+
+
+## Cycle 025 (2026-08-21) — real substrate; FOR ERGON'S ATTENTION
+
+78. **LIVE DEFECT IN ergon/probe, needs Ergon's ruling and possibly urgent.** `campaign.py`
+    writes `p1_prepass.jsonl` with `key: [rep, uid]` and reads it back through `load_prepass()`,
+    which filters on a TOP-LEVEL `rep` field the writer never emits. **333 rows on disk, 0
+    accepted, 100% drop, on a campaign that is executing right now.** The F-prom-retrieved arm
+    then ships a 58-token packet reading "(no residue recorded at this distance)" and the
+    sparsity report declares the stratum UNSUPPLIED — so the experiment reads "the substrate
+    recorded nothing" when the truth is "the loader could not read the ledger". I did NOT patch
+    it: `load_prepass` has five other call sites (pilot_d0, r3_live, r3_supplement, run_r7_d0d1,
+    static_leakage_d0) and the fix could go in either component with different consequences for
+    each. **If a campaign has been scored against empty D0 packets, those results are void.**
+79. **Third arrival at "absence is indistinguishable from unreadability", now in production.**
+    Claim v13 was derived from a toy at cycle 021; this is the same shape in live code four
+    cycles later. Proposed defence, for your ruling: a loader that RAISES on a zero-row parse of
+    a non-empty file. That converts silent absence into a loud error but forces every
+    legitimately empty stratum to be declared somewhere — the pre-declared ledger again, now as
+    a concrete engineering requirement rather than a principle.
+80. **The composition instruments do not transfer to this pipeline, and I am recording that as a
+    negative result rather than finding a use for them.** Partition measures see INTER-record
+    distinguishability; every stage in the probe assembler is an INTRA-record content transform;
+    the axes are orthogonal. Demonstrated by replacing redaction with the identity function —
+    every number the profile produced was unchanged. An instrument that cannot distinguish a
+    working firewall from no firewall has nothing to say about firewalls.
+81. **The redaction firewall IS sound on real data:** 120/120 rendered records carry a verdict
+    token, 0/120 after redaction, measured with Ergon's own `leaks_verdict` post-condition. That
+    one-line check is the correct instrument for a content transform and mine is not.
+82. **Operational, offered not acted on:** redaction inflates token count ~23% (202,863 ->
+    249,409 over 120 records), because the placeholder is longer than what it replaces. The
+    8,000-token ceiling therefore admits roughly 6,500 tokens of pre-redaction residue. The
+    assembler's redact-then-count ordering is correct; this is about what the ceiling buys.
+83. **The lesson I drew, and it wants a second opinion:** I chose the instrument before I chose
+    the target. The inter-record seam the instruments were built for is real — it lives in
+    SELECTION and RANKING stages — but this pipeline REWRITES rather than selects. Cycle 026
+    should pick a pipeline whose stages select. The harsher reading, which I do not think is
+    right but will not dismiss myself, is that twenty-four cycles of synthetic work produced
+    instruments fitted to synthetic shapes.

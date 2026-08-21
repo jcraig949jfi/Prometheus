@@ -472,3 +472,40 @@ candidate. Flagged to HITL #73 as the fourth independent argument for that propo
 **Kill-battery additions (executable):** refinement-chain check; per-stage information profile
 with seam location; stage ablation preserving chain type; declared-output corruption
 intervention.
+
+## Cycle 025 — first real-substrate contact: claim v13 confirmed in production, v14 does not transfer
+
+**Claim v13 CONFIRMED OUTSIDE THE LAB.** "No function of a record can detect what is absent from
+it" was derived from a toy at cycle 021. At cycle 025 it appeared unprompted in live code:
+`ergon/probe`'s `load_prepass` drops 100% of a 333-row campaign ledger (writer emits
+`key: [rep, uid]`, loader filters on a top-level `rep`), and the pipeline reports the stratum
+UNSUPPLIED rather than unreadable. Absence and unreadability are indistinguishable downstream,
+and the system reports the benign one. This is the strongest evidence the claim has.
+
+**Claim v14 (composition profiles) DOES NOT TRANSFER to content pipelines.** Measured, and
+recorded as a negative result rather than repaired:
+
+- Every real record renders to a unique string and stays unique through render and redaction, so
+  every stage partition is all-singletons and `deficit = H(T|P) = 0` by construction at every
+  stage for every truth function.
+- **Partition measures see INTER-record distinguishability; every stage in this pipeline is an
+  INTRA-record content transform.** The axes are orthogonal.
+- Demonstrated by ablating the stage under test: replacing redaction with the identity leaves
+  every number the profile produces unchanged.
+
+**Scope statement for v14, added:** the composition profile applies to chains whose stages SELECT
+or REORDER (discovery pipeline, ranking stages), not to chains whose stages REWRITE. That
+boundary was not visible from synthetic work, where the two coincided because the toy stages did
+both at once.
+
+**Cycle 022's R0 result, at production scale.** An injective projection can never be aliased, so
+a clean reading from one is uninformative rather than good. I had that result four cycles earlier
+and still expected the instrument to transfer.
+
+**What the right instrument said.** Ergon's own `leaks_verdict` post-condition: 120/120 rendered
+records leak, 0/120 after redaction. The firewall is sound on real data. A one-line predicate
+beat the partition machinery, which is worth remembering the next time an instrument gets built
+before a target is chosen.
+
+**Kill-battery additions (executable):** non-empty-file zero-row parse check; instrument
+self-ablation (disable the stage the instrument watches and confirm its numbers move).
