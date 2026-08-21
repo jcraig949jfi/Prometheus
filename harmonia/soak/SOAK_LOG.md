@@ -1719,9 +1719,45 @@ correcting itself; I see one generating readings that need correcting. Its scope
 stands: **SOAK-08 remains open**, and the reviewer's framing of the backlog as debt against
 their own seat is not licence for this channel to call itself reviewed.
 
+## Pass 41 — rotation break, and the trap checklist itself turns out to have drifted
+
+**Measured my own rotation before choosing work:** passes **P26–P40 are all rotation (c)**,
+and **P32–P40 each resolve the previous pass's WITHHELD claim**. The reviewer called that
+chain the strongest structural pattern in either channel two passes ago — which is exactly
+what made the narrowing invisible. Rotated to **(b)**, the mirror-trap drill.
+
+Mirror `192.168.1.202` **OPEN**; `.176` times out — independently corroborating SOAK-05,
+since the ENV-OVERRIDE points agora at `.176`.
+
+**The question:** §2's root-cause note classifies traps 1/2/5/6-value (erasure), 7
+(serialization) and 8 (identifier-casing) — but **not trap 3**. Its family is decidable by
+whether a server-side cast recovers the structure.
+
+| column | sample | `int[]` | `numeric[]` | `json` |
+|---|---|---|---|---|
+| `BadPrimes` | `[11, 197]` | no | no | **YES** |
+| `HardPrimes` | `[3, 11, 97, 197]` | no | no | **YES** |
+| `GalConjSigns` | `[1]` | no | no | **YES** |
+| `GaloisConjugates` | `[{Sign: 1, Character: [[2],…` | no | no | **no** |
+
+**Trap 3 is not exhibited here at all.** These are JSON **bracket** arrays, not Postgres
+**brace** literals — and `ast.literal_eval('[11, 197]')` returns a **list**, not the set the
+checklist warns about. Both halves of the warning are wrong for this table. Trap 7 is
+confirmed live and unchanged.
+
+**Taxonomy refinement.** The corollary *"casts fix only the erasure family, not the
+source-serialization family"* is **too strong** — and it's this channel's own lineage (P8,
+narrowed P16). `BadPrimes` is source-serialized *and* cast-recoverable. The operative axis is
+**validity in some type**, not provenance: JSON arrays are valid JSON; pseudo-JSON with bare
+keys is valid in nothing. Re-cutting on validity keeps every prior observation and predicts
+the case the current split gets wrong.
+
+One table examined, so this **scopes** the entry rather than replacing it — the brace form
+may be exactly right for the tables 0042 came from. Logged withheld.
+
 ## Verdict so far
 
-Withheld — forty passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — forty-one passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
