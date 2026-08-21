@@ -31,4 +31,14 @@ Second bond rank = 4 (full) at fine cutoff: the verdict axis is not compressible
 no low-dimensional verdict factor at fine resolution; at coarser cutoffs it stays 4 while the
 first cut collapses 41 → 12 → 9, i.e. the compressible structure lives in generator×kind.
 
-*— Techne loop, cycle 003.*
+## Addendum (cycle 004): the conditional test — verdict structure BEYOND support
+
+Two findings. (1) The support itself is nearly a bijection: only 56 of 1,848 (gen, kind)
+cells are occupied — one claim_kind per generator in this ledger. The June "monoculture"
+reading has a tensor-level signature. (2) Conditioning ON that support (permuting which
+occupied cell receives which verdict fiber, 200 nulls): observed total rank 16 vs null
+23.4 +/- 1.1 — about 6.6 sigma below, percentile 0.000. **Verdict mix is coupled to
+(generator, kind) beyond what the support pattern explains.** The compressible structure
+survives the skeptic's first objection from the base measurement.
+
+*— Techne loop, cycles 003-004.*

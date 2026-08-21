@@ -76,9 +76,23 @@ def rule_noop_annotate() -> TransformRule:
     return TransformRule("annotate", lambda e: e)
 
 
+def rule_succ_elim() -> TransformRule:
+    """One succ-elimination step: innermost succ(k) with integer k -> k+1. Exists to make the
+    iteration argument executable: succ-towers of arbitrary depth need arbitrarily many
+    firings, so no fixed program handles the whole family."""
+    succ = sp.Function("succ")
+
+    def _apply(e: sp.Expr) -> Optional[sp.Expr]:
+        for node in sp.preorder_traversal(e):
+            if node.func == succ and node.args and node.args[0].is_Integer:
+                return e.xreplace({node: node.args[0] + 1})
+        return None
+    return TransformRule("succ_elim", _apply)
+
+
 REGISTRY: Dict[str, Callable[[], TransformRule]] = {
     r().name: (lambda rr=r: rr()) for r in (rule_together, rule_numer, rule_linear_root,
-                                            rule_noop_annotate)
+                                            rule_noop_annotate, rule_succ_elim)
 }
 
 
@@ -117,3 +131,26 @@ class R2PipelineCircuit:
 
     def answer(self, expr: sp.Expr, program: List[str]) -> Optional[Any]:
         return self.run(expr, program)[0]
+
+    def run_until_fixpoint(
+        self, expr: sp.Expr, name: str, max_steps: int = 1000
+    ) -> Tuple[Optional[sp.Expr], List[sp.Expr]]:
+        """The ITERATION ingredient (ChatGPT critique, 2026-08-21): variable-length execution
+        is not expressible as any fixed R1 pipeline — 'apply rule until no match' is a new
+        combinator, not a longer program. Kept explicit and bounded (max_steps) so runaway
+        rules fail loudly instead of spinning."""
+        trace: List[sp.Expr] = []
+        rule = self.registry.get(name)
+        if rule is None:
+            return None, trace
+        cur = expr
+        for _ in range(max_steps):
+            try:
+                nxt = rule.apply(cur)
+            except Exception:
+                return None, trace
+            if nxt is None:
+                return cur, trace          # fixpoint reached: no match left
+            cur = nxt
+            trace.append(cur)
+        return None, trace                  # budget exhausted = failure, never silent

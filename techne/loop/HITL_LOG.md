@@ -25,3 +25,12 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
    MEASUREMENT (ranks of the real 3,311-class tensor + null percentile, interpreted) is a
    half-cycle of work — want it as its own artifact next cycle, or fold into the tensor
    charter's Walk-1 doc?
+
+## Cycle 004 (2026-08-21)
+
+7. **ChatGPT feedback folded in** — state-topology coordinate adopted as claim v4; their
+   separation family implemented and confirmed executable same-cycle. The cycle-004 ChatGPT
+   block reports back and asks three next questions (scoring rule for sound-vs-liar under
+   capacity pressure; the minimal R4 ingredient; the binder-probe challenge).
+8. **Scheduled-wake overlap**: this cycle ran EARLY because your reply arrived; when the
+   already-scheduled wake fires it will find 004 done and proceed to 005 (rung R4).

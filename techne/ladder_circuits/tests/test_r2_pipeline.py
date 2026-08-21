@@ -109,3 +109,40 @@ def test_trap8_every_trace_step_is_the_claimed_rule_application():
 def test_trap8b_trace_length_matches_program():
     ans, trace = circuit().run(3 / (x + 1) + 4 / (x - 1), PROG)
     assert len(trace) == len(PROG)
+
+
+# ---- the iteration boundary (ChatGPT critique fold-in, cycle 004) ---------------------------
+
+def _succ_tower(n: int):
+    succ = sp.Function("succ")
+    e = sp.Integer(0)
+    for _ in range(n):
+        e = succ(e)
+    return e
+
+
+def test_iteration_no_fixed_program_covers_the_succ_family():
+    """A fixed 3-step program of succ_elim handles depth <= 3 and FAILS at depth 5 — the
+    concrete form of 'variable-length execution is not a longer pipeline'."""
+    c = circuit()
+    assert c.answer(_succ_tower(3), ["succ_elim"] * 3) == 3
+    assert c.answer(_succ_tower(5), ["succ_elim"] * 3) is None or \
+        c.answer(_succ_tower(5), ["succ_elim"] * 3) != 5
+
+
+def test_iteration_fixpoint_combinator_covers_any_depth():
+    """run_until_fixpoint handles every depth with ONE rule — iteration is a genuinely new
+    combinator (state topology: sequential), not more of the same."""
+    c = circuit()
+    for n in (1, 4, 17, 60):
+        ans, trace = c.run_until_fixpoint(_succ_tower(n), "succ_elim")
+        assert ans == n
+        assert len(trace) == n
+
+
+def test_iteration_budget_exhaustion_fails_loudly():
+    """max_steps too small -> None, never a silent partial answer."""
+    c = circuit()
+    ans, trace = c.run_until_fixpoint(_succ_tower(10), "succ_elim", max_steps=4)
+    assert ans is None
+    assert len(trace) == 4
