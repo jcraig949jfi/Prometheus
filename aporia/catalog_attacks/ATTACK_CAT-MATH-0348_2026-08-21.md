@@ -133,3 +133,28 @@ Three of four samples clear their pre-stated significance bars, all four agree i
 direction. Scope statement unchanged: one statistic, approximate unfolding, stored-data
 characterization — but within that scope the split is now replicated on an independent
 sample and is no longer hostage to any single fetch.
+
+---
+
+## P78 adjudication — CONDUCTOR-STRATIFIED analysis (refinement program complete)
+
+`attack_0348_strata.py`, committed before first run (d520e6e5), seed 20260878. All four
+committed samples pooled with conductor tags (2,400 sd / 12,000 ns): labels parsed for
+the DESC and middle samples (20/20 refetch cross-check exact), ASC heads refetched
+under the identical deterministic query and gated on elementwise u1 agreement (max
+drift 5.0e-07 — storage rounding, mirror unmutated).
+
+Result: **STRATA-CONSISTENT.** Two conductor bands are adequately populated (the
+samples concentrate in q ∈ [1e2, 1e4]; other bands VACUOUS with counts in the results
+file). Both bands positive and individually significant: 1e2–1e3 diff +0.0726
+(p=0.0245), 1e3–1e4 diff +0.0511 (p=0.0010). Zero significant reversals.
+
+**The 0348 refinement program is complete.** Final standing of the claim: the
+symplectic-vs-unitary first-zero split in the mirror's stored degree-1 data is
+directionally stable across four disjoint samples (3/4 individually significant),
+robust to duplicate-row removal, and holds within conductor bands — i.e., it is not
+explained by conductor composition at decade resolution. Scope as always: one
+statistic, approximate unfolding, characterization of stored data — the Katz-Sarnak
+philosophy predicts exactly this signature, and the stored data exhibits it.
+Remaining open refinements: none named. Any further work on 0348 is new scope
+(finer bands, higher degrees, other statistics) and starts its own thread.

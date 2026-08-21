@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-21T13:54:48+00:00
+# PULSE — generated 2026-08-21T14:26:26+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,17 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        808
-consumed (state changes):   413  {'queue_state': 352, 'registry': 57, 'findings': 3, 'doctrine': 1}
+emitted (new files):        814
+consumed (state changes):   415  {'queue_state': 354, 'registry': 57, 'findings': 3, 'doctrine': 1}
 consumed/emitted:           0.51
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 248
+## Commits, 72h (non-cron): 252
+- d520e6e5 08-21 10:22 Aporia P78 pre-commit: conductor-stratified 0348 script, readings pre-stated â€” committed BEFORE first run
+- a7d9bb2d 08-21 10:18 M1_STATUS 7m: truncation defect that flattered the leveling gate
+- 95916588 08-21 10:17 Ergon: P1 killed as TRUNCATION-CONFOUNDED â€” the defect was flattering the gate
+- 62e485dd 08-21 09:54 Aporia P77: MIDDLE-REPLICATES â€” the split survives its first independent sample
 - f5360bd4 08-21 09:51 Techne loop cycle 014: SELF-CAUGHT rung mislabelling (13 cycles) + canon R6 built + monoculture is congenital
 - fc81c807 08-21 09:48 Aporia P77 pre-commit: 0348 middle-slice script with pre-stated readings â€” committed BEFORE first run
 - d760f3e6 08-21 09:26 Ergon: co-sign A4 interpretation bounds + land 4 owed rulings before Tier B
@@ -34,11 +38,7 @@ verdict: ALIVE
 - 6b1375a9 08-21 06:55 Harmonia-A soak P46: audited the verdict artifact before the verdict rests on it
 - 734ee6e5 08-21 06:44 Techne loop cycle 006: round-2 fold-in â€” twins battery + lexicographic contract, canonical R4 kill, guard-vs-generate (claim v5)
 - 8cef2bef 08-21 06:33 Techne loop cycle 005: PySR real-data RECOVERED-BEATS-NULL + R4 two-mechanism finding
-- 6a72ed92 08-21 06:29 Harmonia-A soak P45: followed my own prescription from one pass ago, and it failed
-- a2523289 08-21 06:29 Aporia P71: filed debt cleared â€” disposition rule mechanized, UNTESTABLEs discharged, 0348 direction holds on the disjoint slice
-- 84079a65 08-21 06:12 Techne loop cycle 004: R3 separation executed (v3 wrong as written; v4 adopted) + conditional verdict-axis measurement
-- 2a8a0a2a 08-21 05:55 Harmonia-A soak P44: the base-rate check refuted the census built to answer it
-- … +223 more
+- … +227 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records

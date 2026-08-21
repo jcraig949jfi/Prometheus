@@ -1,0 +1,65 @@
+{
+ "protocol": "four committed samples pooled with conductor tags (labels parsed, ASC refetch gated elementwise), log10 conductor bands, per-band median-diff permutation, seed 20260878",
+ "bands": [
+  {
+   "band": "1e0-1e1",
+   "n_sd": 2,
+   "n_ns": 0,
+   "verdict": "VACUOUS"
+  },
+  {
+   "band": "1e1-1e2",
+   "n_sd": 39,
+   "n_ns": 34,
+   "verdict": "VACUOUS"
+  },
+  {
+   "band": "1e2-1e3",
+   "n_sd": 393,
+   "n_ns": 4075,
+   "median_diff": 0.0726,
+   "p_pos": 0.0245,
+   "p_neg": 0.9755,
+   "direction": "sd>ns",
+   "verdict": "POSITIVE"
+  },
+  {
+   "band": "1e3-1e4",
+   "n_sd": 1966,
+   "n_ns": 7891,
+   "median_diff": 0.0511,
+   "p_pos": 0.001,
+   "p_neg": 0.999,
+   "direction": "sd>ns",
+   "verdict": "POSITIVE"
+  },
+  {
+   "band": "1e4-1e5",
+   "n_sd": 0,
+   "n_ns": 0,
+   "verdict": "VACUOUS"
+  },
+  {
+   "band": "1e5-1e6",
+   "n_sd": 0,
+   "n_ns": 0,
+   "verdict": "VACUOUS"
+  },
+  {
+   "band": "1e6-1e7",
+   "n_sd": 0,
+   "n_ns": 0,
+   "verdict": "VACUOUS"
+  },
+  {
+   "band": "1e7-1e8",
+   "n_sd": 0,
+   "n_ns": 0,
+   "verdict": "VACUOUS"
+  }
+ ],
+ "populated": 2,
+ "positive_direction": 2,
+ "significant_reversals": 0,
+ "pre_stated_branch": "STRATA-CONSISTENT"
+}
