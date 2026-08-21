@@ -1792,9 +1792,46 @@ an inventory.
 **Not claimed:** the 29 brace values matched trap 3's *shape* by regex; castability untested.
 Row sample is five per table — the table denominator is complete, the row denominator is not.
 
+## Pass 43 — a green suite that certifies the defect it visits
+
+**Rotation (a) tried first, and reported exhausted on fresh evidence** rather than on
+SOAK-03's authority: zero commits have touched the anti-anchor registry since P23, checked
+with P29's corrected UTC idiom so "unchanged" is trustworthy. Rotated to **(c)**, against a
+self-test this channel had never run (2494 passed, 0 failed, own runner).
+
+**My pre-stated reading was wrong in the worse direction.** I expected the tests never
+reached `a==b`. They reach it constantly:
+
+| | |
+|---|---|
+| probes inside the suite's own checked window | 240 |
+| with `a == b` (degenerate) | **22 (9.2%)** — matching P19's structural ~1/9 |
+
+Specimen `a=3, b=3`, recorded `gt=[3]`. Other **exact** solutions: `2`, `1`, `-7`, `5/2` —
+at `a==b` the equation reduces to `a-x = a-x`, true for every `x ≤ a`.
+
+And the suite's two assertions on that probe:
+
+- `len(gt) == 1` → **True**
+- `|x-a| == b-x` at that root → **True**
+- probe verdict → **PASSES**
+
+**The green suite actively certifies the incomplete ground truth.** There is no bug in the
+test — both assertions are true. The gap is what they don't constrain: *"the recorded root
+IS a solution"* is **soundness**, and nothing pins that it is **THE** solution set. A single
+completeness assertion fails immediately on `x=2`.
+
+**P19's finding is worse than filed** — not untested, but *test-endorsed*. That makes this
+the first pass in seven where measurement **strengthened** a claim instead of deflating it,
+and what distinguishes it is that P19 was itself a measurement rather than a mechanism
+argument (SOAK-104).
+
+**Not generalised:** one generator. Whether the other generators' tests substitute soundness
+for completeness the same way is the base-rate question, unmeasured, logged withheld.
+
 ## Verdict so far
 
-Withheld — forty-two passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — forty-three passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
