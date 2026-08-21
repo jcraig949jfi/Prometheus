@@ -154,6 +154,39 @@ margin for one partial re-run                             ~$6
 The free NVIDIA lane covers the second family's side of Tier B at $0. **Nothing further runs
 on the paid lane until it is topped up; the withdrawal of the +9.6pp stands regardless.**
 
+## 7l. FREE-TIER DECISIVE CAMPAIGN ARMED — 30-min channel-probing loop (Ergon, 2026-08-21)
+
+Per James's ruling: run the decisive sequence on the free lane, looping every 30 minutes —
+probe the channel, push calls if open, sleep the cycle if closed. Implemented and armed:
+
+- **`ergon/probe/campaign.py`** + `ergon/run_campaign.cmd`, scheduled as
+  **`PrometheusCampaign`** (schtasks, every 30 min, host SKULLPORT). Single-instance lock
+  (long-output batches outlive the interval); channel probe = one tiny call, retries=0;
+  quota-stop on first 429/402; every phase behind the >=95% transport-ok gate; append-only
+  ledgers with (arm x uid x rep) resume keys; artifacts atomic-write.
+- **Pin: `nvidia:deepseek-v4-flash` (free host) x rung M20 x manifest n=620 seed 20260821.**
+  This is a NEW (manifest x host) leveling — the paid M30 LEVELED verdict does NOT transfer
+  (+14pp host delta measured). P1 re-levels from scratch; NOT-LEVELED on this pin ends the
+  campaign as a result, not an error.
+- Phase order: P1 prepass 620x2 + band read -> P2 controls (F0/F-answer 200 pairs, F-cheat
+  400 pairs; transport-gated) -> P3 corrected pilot (5 arms x 150, .body/.body renderer,
+  oracle v2) -> **HOLD** -> P4 decisive arms (6 arms x post-screen N) -> P5 drift re-read
+  (200; >7pp vs P1 => HOST-DRIFTED, campaign void per HB's rule).
+- **P4 stays gated on the exit re-review**: it will not fire until
+  `ergon/probe/ledgers/campaign/RE_REVIEW_SIGNOFF` exists (Charon + Harmonia B re-review of
+  the C1/C2 cures, oracle v2, and the P2/P3 free-lane evidence). The campaign will collect
+  P1-P3 and then hold, logging `holding` each cycle.
+- **F-generic floor ruling (R12, recorded):** projected prom packets (15-60 tokens) sit
+  below Charon's generic-pool preamble floor; UNDER-FLOOR falls back to the pool's smallest
+  unit (~30 tokens), with per-arm token means logged per BC-7 so the size relationship is a
+  measured number. Caveat travels with the specificity margin.
+- **Timeline is self-measuring.** Total calls ~5.3k (P1 1,240 + P2 800 + P3 750 + P4 ~2.2k
+  + P5 200). The free lane's real daily throughput is unknown (~40/day nemotron vs several
+  hundred/day deepseek-free before its wall); the campaign log records exactly what the
+  lane gives per day. Weeks, not days — hence the drift re-read.
+- Suite green (152 passed) after wiring; first manual firing launched 2026-08-21 ~03:15
+  local, in progress at write time.
+
 ## 7j. TIER-A-EXIT-FAIL ×2 ADOPTED — **the +9.6pp is WITHDRAWN**; cures running (Ergon, 2026-08-19)
 
 **Both exit reviews failed the pilot, and they are right.** Charon (`b3c57ffc`): the deployed

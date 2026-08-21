@@ -1,0 +1,372 @@
+"""Free-tier decisive campaign — quota-gated drip orchestrator (James, 2026-08-21).
+
+Every 30 minutes (schtasks): probe the channel with one tiny call; if open, push work until
+the first 429/402 or the batch cap; if closed, sleep the cycle. All state on disk, all
+finalization atomic, every phase transport-gated. The campaign measures its own daily quota
+(ok-calls per firing land in the log), so the timeline estimate updates itself.
+
+HOST PINNING, stated up front: this campaign is pinned to nvidia:deepseek-v4-flash — the
+FREE host. The paid-host leveling (M30 @ 0.500) does NOT transfer across the measured +14pp
+host delta; the free host's own measured centre is M20 (0.500, n=40, clean run, 2026-08-18).
+Per the C2 precedent and HB's band-is-(manifest x host) ruling, phase P1's pre-pass IS the
+cold-band check for this (manifest x host) pair. No row from this campaign may ever be
+pooled with a paid-host row.
+
+PHASES (dependencies enforced by file existence):
+  P1  prepass    manifest 620 @ M20-free, 2 cold reps (1,240 calls) -> band read (full rule:
+                 point in [0.35,0.60] AND movable >= 0.30) + screen + rep-1 residue ledger.
+                 NOT-LEVELED here ends the campaign (that itself is a result for this host).
+  P2  controls   R3 live on this host: F0/F-answer paired (A, D), cheat at N=400 pairs (B),
+                 leakage with diagnostics + guess-instruction (C). ~1,300 calls.
+  P3  pilot      corrected pilot, 5 arms x 150 sampled post-screen tasks (~750 calls) — the
+                 exit-review C3 evidence, with oracle v2 and .body/.body symmetric arms.
+  --  HOLD       P4 does not start until ergon/probe/ledgers/campaign/RE_REVIEW_SIGNOFF
+                 exists (Charon + Harmonia B re-review of the cures; the drip's calendar
+                 time is the review window).
+  P4  arms       Tier B decisive: 6 arms x full post-screen N (~450) ~= 2,700 calls.
+  P5  drift      end-of-campaign band re-read (200 calls); >7pp vs P1 => HOST-DRIFTED and
+                 the campaign is declared void rather than analysed (HB ruling). A mid-
+                 campaign read fires automatically between P3 and P4.
+
+Schedule:  schtasks /create /tn PrometheusCampaign /tr F:\\Prometheus\\ergon\\run_campaign.cmd /sc MINUTE /mo 30
+Remove:    schtasks /delete /tn PrometheusCampaign /f
+"""
+import json
+import math
+import os
+import pathlib
+import random
+import re
+import sys
+import time
+from collections import Counter
+from datetime import datetime, timezone
+
+ROOT = pathlib.Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT))
+from ergon.probe.solver import call
+from ergon.probe.extract import extract_numeric
+from ergon.probe.assemble import assemble_retrieved, load_prepass, select_residue
+from ergon.probe.f_null import build_f_null
+from ergon.probe.task_gen_v3 import generate, is_prime, manifest_sha256, generator_sha256
+
+SOLVER = "nvidia:deepseek-v4-flash"     # FREE host pin — never pooled with paid rows
+RUNG, MANIFEST_N, SEED = "M20", 620, 20260821
+BAND, MOVABLE_FLOOR = (0.35, 0.60), 0.30
+MAX_TOK, TIMEOUT = 8192, 420
+BATCH_CAP = 400                          # per firing; the 429 stop is the real limiter
+CALL_SPACING_S = 2.0
+DIR = ROOT / "ergon/probe/ledgers/campaign"
+HOLD_FILE = DIR / "RE_REVIEW_SIGNOFF"
+
+
+def now():
+    return datetime.now(timezone.utc).isoformat(timespec="seconds")
+
+
+def log(**kw):
+    kw["ts_utc"] = now()
+    with (DIR / "campaign_log.jsonl").open("a", encoding="utf-8") as fh:
+        fh.write(json.dumps(kw) + "\n")
+
+
+def atomic(path, obj):
+    tmp = path.with_suffix(path.suffix + ".tmp")
+    tmp.write_text(json.dumps(obj, indent=2), encoding="utf-8")
+    os.replace(tmp, path)
+
+
+# ------------------------------------------------------------------ manifest (deterministic)
+
+def manifest():
+    mpath = DIR / f"campaign_manifest_{RUNG}_n{MANIFEST_N}.jsonl"
+    if not mpath.exists():
+        rows = generate(RUNG, MANIFEST_N, SEED)
+        for i, r in enumerate(rows):
+            r["uid"] = f"camp-{RUNG}-{i:05d}"
+        with mpath.open("w", encoding="utf-8") as fh:
+            for r in rows:
+                fh.write(json.dumps(r, ensure_ascii=False) + "\n")
+        atomic(DIR / "manifest_meta.json",
+               {"n": len(rows), "rung": RUNG, "seed": SEED, "solver_pin": SOLVER,
+                "manifest_sha256": manifest_sha256(rows),
+                "generator_sha256": generator_sha256(), "ts_utc": now()})
+    return [json.loads(l) for l in mpath.read_text(encoding="utf-8").splitlines()]
+
+
+# ------------------------------------------------------------------ generic drip machinery
+
+def done_keys(led):
+    if not led.exists():
+        return set()
+    return {tuple(r["key"]) for r in (json.loads(l) for l in led.read_text(encoding="utf-8").splitlines())
+            if r["status"] == "ok"}
+
+
+def push_jobs(led_path, jobs, budget):
+    """Send jobs until 429/402, exhaustion, or budget. Returns (sent, ok, walled)."""
+    sent = ok = 0
+    walled = False
+    with led_path.open("a", encoding="utf-8") as fh:
+        for key, prompt in jobs:
+            if sent >= budget:
+                break
+            res = call(SOLVER, prompt, max_tokens=MAX_TOK, timeout=TIMEOUT, retries=0)
+            sent += 1
+            rec = {"key": list(key), "status": res.status, "error_type": res.error_type,
+                   "latency_s": res.latency_s, "prompt_tokens": res.prompt_tokens,
+                   "completion_tokens": res.completion_tokens,
+                   "extracted_int": extract_numeric(res.text if res.status == "ok" else None).value,
+                   "attempt_text": (res.text or "").strip()[:4000],
+                   "solver": SOLVER, "derives_from_gold": False,
+                   "ts_utc": res.ts_utc, "host": res.host, "executor": res.executor}
+            fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
+            if res.status == "ok":
+                ok += 1
+            elif res.error_type in ("HTTP429", "HTTP402"):
+                walled = True
+                break
+            time.sleep(CALL_SPACING_S)
+    return sent, ok, walled
+
+
+def best(led_path):
+    """Latest ok row per key."""
+    out = {}
+    if led_path.exists():
+        for r in (json.loads(l) for l in led_path.read_text(encoding="utf-8").splitlines()):
+            if r["status"] == "ok":
+                out[tuple(r["key"])] = r
+    return out
+
+
+# ------------------------------------------------------------------ P1: prepass + band read
+
+def p1(rows, gold, budget):
+    led = DIR / "p1_prepass.jsonl"
+    out = DIR / "p1_bandread.json"
+    if out.exists():
+        return json.loads(out.read_text(encoding="utf-8")), 0
+    have = done_keys(led)
+    jobs = [((rep, r["uid"]), r["prompt"]) for rep in (1, 2) for r in rows
+            if (rep, r["uid"]) not in have]
+    if jobs:
+        sent, ok, walled = push_jobs(led, jobs, budget)
+        log(phase="P1", sent=sent, ok=ok, walled=walled,
+            coverage=f"{len(done_keys(led))}/{2 * len(rows)}")
+        if done_keys(led) != {(rep, r["uid"]) for rep in (1, 2) for r in rows}:
+            return None, sent
+    b = best(led)
+    n = len(rows)
+    succ = [b.get((1, r["uid"])) is not None
+            and b[(1, r["uid"])]["extracted_int"] == gold[r["uid"]] for r in rows]
+    acc = sum(succ) / n
+    disc = sum(1 for r in rows
+               if (b[(1, r["uid"])]["extracted_int"] == gold[r["uid"]])
+               != (b[(2, r["uid"])]["extracted_int"] == gold[r["uid"]]))
+    movable = disc / n
+    lenient = [r["uid"] for r in rows
+               if b[(1, r["uid"])]["extracted_int"] == gold[r["uid"]]
+               and b[(2, r["uid"])]["extracted_int"] == gold[r["uid"]]]
+    z = 1.959964
+    se = math.sqrt(max(acc * (1 - acc), 1e-12) / n)
+    read = {"phase": "P1", "solver_pin": SOLVER, "rung": RUNG, "n": n,
+            "point_estimate": round(acc, 4),
+            "manifest_interval_95": [round(max(0, acc - z * se), 4),
+                                     round(min(1, acc + z * se), 4)],
+            "movable_share": round(movable, 4),
+            "full_band_passes": BAND[0] <= acc <= BAND[1] and movable >= MOVABLE_FLOOR,
+            "leveling_verdict": ("LEVELED" if (BAND[0] <= acc <= BAND[1]
+                                               and movable >= MOVABLE_FLOOR) else "NOT-LEVELED"),
+            "screen_excluded": sorted(lenient),
+            "n_post_screen": n - len(lenient), "ts_utc": now()}
+    atomic(out, read)
+    log(phase="P1", finalized=read["leveling_verdict"])
+    return read, 0
+
+
+# ------------------------------------------------------------------ arm builders (shared)
+
+def oracle_text(row, rep1_ok):
+    comps = [x for x in row["items"] if not is_prime(x)]
+    hard = [c for c in comps if all(c % k for k in range(2, 1000))]
+    elem = hard[0] if hard else (comps[0] if comps else None)
+    if elem is None:
+        return "Ground-truth diagnosis: no deceptive composite in this set. Ordinary care suffices."
+    why = ("it is a product of two large primes, so no small-divisor test finds a factor"
+           if hard else "it has a small factor findable by trial division")
+    if rep1_ok:
+        return ("Ground-truth diagnosis of the prior attempt: it judged this set correctly, "
+                f"including the hardest element, {elem} — composite although {why}. "
+                "The same care suffices. The count of primes is withheld.")
+    return ("Ground-truth diagnosis of the prior attempt: it misjudged this set. The hardest "
+            f"element is {elem}, which is COMPOSITE although a weak test may pass it — {why}. "
+            "A deterministic Miller-Rabin test over the first twelve prime bases is decisive. "
+            "The count of primes is withheld.")
+
+
+_ALNUM = re.compile(r"[A-Za-z0-9]")
+
+
+class Arms:
+    def __init__(self, rows, gold):
+        self.rows_by_uid = {r["uid"]: r for r in rows}
+        self.gold = gold
+        self.pool = load_prepass(DIR / "p1_prepass.jsonl")
+        self.tau = {"p1_prepass": 10 ** 9}
+        b = best(DIR / "p1_prepass.jsonl")
+        self.rep1_ok = {u: (b.get((1, u)) or {}).get("extracted_int") == gold[u] for u in gold}
+
+    def prom_body(self, uid):
+        recs = select_residue(self.pool, stratum="D0", target_uid=uid)
+        return assemble_retrieved(task_uid=uid, stratum="D0", records=recs, tau=self.tau).body
+
+    def null_body(self, uid):
+        fn = build_f_null(task_uid=uid, stratum="D0",
+                          prom_records=select_residue(self.pool, stratum="D0", target_uid=uid),
+                          prom_packet_text=self.prom_body(uid), pool=self.pool,
+                          tau=self.tau, seed=SEED)
+        body = fn.packet.body if hasattr(fn, "packet") else fn.body
+        assert not body.lstrip().startswith("{"), "header asymmetry (Charon C1)"
+        return body
+
+    def prompt(self, arm, uid):
+        base = self.rows_by_uid[uid]["prompt"]
+        if arm == "F0":
+            return base
+        if arm == "F-prom-retrieved":
+            return "A prior attempt record:\n" + self.prom_body(uid) + "\n\n" + base
+        if arm == "F-null":
+            return "A prior attempt record:\n" + self.null_body(uid) + "\n\n" + base
+        if arm == "F-generic":
+            # Charon's clean-room generic-advice pool. Projected prom packets are tiny
+            # (15-60 tokens) -- below the pool's preamble floor -- so exact matching returns
+            # UNDER-FLOOR. Ruling (R12, recorded): F-generic ships the pool's SMALLEST unit
+            # (~30 tokens, same order as the projection); per-arm token means are logged per
+            # BC-7 so the size relationship is a number, not an assumption.
+            from ergon.probe.f_generic import render_f_generic, units
+            from ergon.probe.assemble import count_tokens
+            target = max(40, count_tokens(self.prom_body(uid)))
+            pkt = render_f_generic(target)
+            text = getattr(pkt, "text", "") or ""
+            if not text:
+                text = min((u.text for u in units()), key=len)
+            return text + "\n\n" + base
+        if arm == "F-oracle":
+            return oracle_text(self.rows_by_uid[uid], self.rep1_ok[uid]) + "\n\n" + base
+        if arm == "F-answer":
+            return f"Prior context: the correct count is {self.gold[uid]}.\n\n" + base
+        if arm == "F-cheat":
+            return base + "\n\nPrior attempt record:\n" + _ALNUM.sub("x", self.prom_body(uid))
+        raise ValueError(arm)
+
+
+def run_arm_phase(name, arm_task_pairs, arms, budget, led_name):
+    led = DIR / f"{led_name}.jsonl"
+    have = done_keys(led)
+    jobs = [((arm, uid), arms.prompt(arm, uid)) for arm, uid in arm_task_pairs
+            if (arm, uid) not in have]
+    if not jobs:
+        return True, 0
+    sent, ok, walled = push_jobs(led, jobs, budget)
+    log(phase=name, sent=sent, ok=ok, walled=walled,
+        coverage=f"{len(done_keys(led))}/{len(arm_task_pairs)}")
+    return len(done_keys(led)) >= len(arm_task_pairs), sent
+
+
+# ------------------------------------------------------------------ orchestrator
+
+def main():
+    DIR.mkdir(parents=True, exist_ok=True)
+    # single-instance lock: long-output batches routinely outlive the 30-min firing
+    # interval; an overlapping firing would double-spend quota. Stale (>6h) locks are
+    # assumed dead (crash without cleanup) and taken over.
+    lock = DIR / "campaign.lock"
+    if lock.exists():
+        age_h = (time.time() - lock.stat().st_mtime) / 3600
+        if age_h < 6:
+            log(event="skipped_locked", lock_age_h=round(age_h, 2))
+            print("another firing is still running -- skipped")
+            return
+        log(event="stale_lock_removed", lock_age_h=round(age_h, 2))
+    lock.write_text(str(os.getpid()), encoding="utf-8")
+    try:
+        _campaign()
+    finally:
+        lock.unlink(missing_ok=True)
+
+
+def _campaign():
+    # channel probe — one tiny call, no retries
+    probe = call(SOLVER, "Say OK.", max_tokens=64, timeout=120, retries=0)
+    if probe.status != "ok":
+        log(event="channel_closed", error=probe.error_type)
+        print("channel closed:", probe.error_type)
+        return
+    log(event="channel_open", latency_s=probe.latency_s)
+
+    rows = manifest()
+    gold = {r["uid"]: r["gold_int"] for r in rows}
+    budget = BATCH_CAP
+
+    # P1 — prepass + band read (also the C2 cold-band check for this host)
+    read, spent = p1(rows, gold, budget)
+    budget -= spent
+    if read is None or budget <= 0:
+        return
+    if read["leveling_verdict"] != "LEVELED":
+        log(event="campaign_end", reason="P1 NOT-LEVELED on the free host — a real result "
+            "for this (manifest x host) pin; do not proceed")
+        print("P1 NOT-LEVELED — campaign ends (result, not error)")
+        return
+
+    post = [r for r in rows if r["uid"] not in set(read["screen_excluded"])]
+    arms = Arms(rows, gold)
+    rng = random.Random(SEED)
+
+    # P2 — controls: A/D pairs (200), B cheat pairs (400), C leakage (100)
+    ctl = rng.sample(post, min(200, len(post)))
+    b_tasks = (post + post)[:400]
+    p2_pairs = ([("F0", r["uid"]) for r in ctl] + [("F-answer", r["uid"]) for r in ctl]
+                + [("F0", r["uid"]) for r in b_tasks] + [("F-cheat", r["uid"]) for r in b_tasks])
+    done2, spent = run_arm_phase("P2", p2_pairs, arms, budget, "p2_controls")
+    budget -= spent
+    if not done2 or budget <= 0:
+        return
+
+    # P3 — corrected pilot: 5 arms x 150
+    pilot_tasks = rng.sample(post, min(150, len(post)))
+    p3_pairs = [(a, r["uid"]) for a in ("F0", "F-null", "F-prom-retrieved", "F-oracle", "F-answer")
+                for r in pilot_tasks]
+    done3, spent = run_arm_phase("P3", p3_pairs, arms, budget, "p3_pilot")
+    budget -= spent
+    if not done3 or budget <= 0:
+        return
+
+    # HOLD — the decisive arms wait for the exit re-review sign-off
+    if not HOLD_FILE.exists():
+        log(event="holding", reason="P4 gated on re-review sign-off "
+            f"(create {HOLD_FILE.name} to release)")
+        print("HOLDING before P4 — awaiting re-review sign-off")
+        return
+
+    # P4 — decisive arms: 6 arms x full post-screen N
+    p4_pairs = [(a, r["uid"]) for a in ("F0", "F-null", "F-generic", "F-prom-retrieved",
+                                        "F-oracle", "F-answer") for r in post]
+    done4, spent = run_arm_phase("P4", p4_pairs, arms, budget, "p4_arms")
+    budget -= spent
+    if not done4 or budget <= 0:
+        return
+
+    # P5 — end-of-campaign drift re-read
+    drift_tasks = rng.sample(rows, 200)
+    p5_pairs = [("F0", r["uid"]) for r in drift_tasks]
+    done5, spent = run_arm_phase("P5", p5_pairs, arms, budget, "p5_drift")
+    if done5:
+        log(event="campaign_complete",
+            note="run r10_recompute + drift check; verdict belongs to Charon (spec 4.1)")
+        print("CAMPAIGN COMPLETE — hand off to R10 + adjudication")
+
+
+if __name__ == "__main__":
+    main()
