@@ -1521,9 +1521,56 @@ executable code, borrowing its credibility, one assertion away from being useful
 caught — not that predicates are protected. A corruption to a different true statement, or a
 narrowed domain, is untested.
 
+## Pass 36 — the denominator answer holds; my own mutation discipline does not
+
+P35's falsifier, and the assumption load-bearing under **four** passes (P32–P35), all of
+which concluded "coverage loss, benign."
+
+**Answered, in the safe direction.** `grading_oracle`:
+`if vres.get("valid") is not None: n_verifiable += 1`, and
+`verified_rate = n_verified / n_verifiable`. Abstentions are **excluded**. Separately
+`pass_rate = n_correct / n` runs off the ground-truth evaluator and never calls `verify`,
+so abstentions cannot move it. And `n_verifiable` is **published** beside the rate — the
+component already satisfies the denominator discipline this soak flagged at P16.
+
+**Precision cost quantified.** R6, perfect reasoner: n=160, n_verifiable=**132**.
+
+| cid removed from registry | n_verifiable | denominator loss |
+|---|---|---|
+| `n2_plus_n_even` | 92 | **−40 (30%)** |
+| other four | 132 | 0 |
+
+Only one cid routes through the z3 registry; the rest verify via `_pred_breaks`.
+
+---
+
+### The pass's real finding: byte-identical restore does not restore the machine
+
+The first run of that table showed **0% loss on all five removals**. A uniform null — the
+third time this soak that shape has saved a pass. Refusing it three times led here:
+
+`CONJ` reported `('n2_plus_n_even', False)` **in memory** while the file on disk read
+`True`, with `git status` clean and `rp0.__file__` correct. Cause: **stale bytecode**.
+Python validates a `.pyc` against the source's *mtime and size only*. My P35 mutation
+(`True`→`False` with one compensating space) was the **same byte length**, and the restore
+landed in the **same second** — so the stale `.pyc` validated and every Python process on
+this host imported the mutated module for **~3.5 hours**.
+
+My restore discipline — finally-block restore, assert byte-identical, confirm `git` clean —
+**passed all three checks while the machine was wrong.** Every measurement in the first half
+of this pass was contaminated by it.
+
+Machine repaired and verified: predicate `proved`, `stated_truth` True, `CONJ` True,
+domain-skip guard present, checkpoint guard present. A genuine second bug surfaced en route
+— a bare `import z3_backend` alongside `harmonia.experiments.z3_backend` yields **two module
+objects with separate registries** — found, fixed, and *not* the cause.
+
+**Not claimed:** how many of P28–P34 were contaminated the same way. Only same-size,
+same-second edits are at risk; I did not retroactively audit them.
+
 ## Verdict so far
 
-Withheld — thirty-five passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — thirty-six passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
