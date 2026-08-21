@@ -1895,9 +1895,43 @@ P45 built a syntax-tree census for it. Reading the two functions settles it in a
 **measure the population before building the instrument** — a classifier over a population of
 two still runs, still emits a number, and still looks like measurement.
 
+## Pass 46 — auditing this document, before the verdict rests on it
+
+This soak twice found a document drifted from the data it describes (ATTACK_PATTERNS, P41
+and P42), both filed against another agent's file. The same check had never been pointed at
+**this** log — which the final pass is about to cite as its evidence.
+
+Population measured first, per my own SOAK-110: 110 findings, 64 cited, 102 numeric claims,
+45 passes. Large enough to warrant the instrument, unlike P44/P45.
+
+**Accurate on everything checked mechanically:**
+
+| check | result |
+|---|---|
+| verdict line pass count | claims forty-five; worklog holds **45** ✓ |
+| SOAK-08 status | stated open; 4 HARMA reviews, all triage-scoped ✓ |
+| stale "never engaged" wording | absent (corrected P33) ✓ |
+
+**One structural gap — and it's the most-cited finding of the soak.** `SOAK-05` is the
+**only** id in the 1–111 range with no structured `soak_findings` entry. It appears 5 times
+in worklog prose, as a named entry in the log's `## Soak findings` section, and in roughly
+**forty commit messages** — but a reader rebuilding the findings list from the machine-readable
+field gets a hole exactly where the standing infrastructure defect belongs. Citation
+frequency creates a false sense of registration. **Back-filled this pass** as
+`SOAK-05-BACKFILL`, explicitly labelled; numbering left untouched, since the worklog is
+append-only.
+
+**My own audit produced a false finding of the class it was hunting.** "27 of 45 passes
+undocumented" came from searching only for `## Pass N`; P1–P27 are documented under
+`## Soak findings` with `**SOAK-nn (kind).**` entries — a format change at P28. One grep
+settled it, and it would have been the largest defect this soak found in its own artifact.
+
+**Coverage, which bears directly on the verdict: SOAK_LOG cites 64 of 110 findings.** It is a
+**summary, not the record** — the worklog is. The final pass must say which it is citing.
+
 ## Verdict so far
 
-Withheld — forty-five passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — forty-six passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
