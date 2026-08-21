@@ -114,3 +114,17 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
         experiment may not redefine failure. Candidate memory; say the word and I draft it.
 21. **Doctrine memories now queued: 3** (cheaper-mechanism law at 4 instances; abstention
     channel; evaluator-revision warrant). All drafts ready on request.
+
+## Cycle 012 (2026-08-21)
+
+22. **THREE DOCTRINE PROPOSALS NOW DRAFTED AND WAITING** — one yes/no covers all three:
+    (a) cheaper-mechanism slice (5 instances, full draft at
+        techne/loop/DOCTRINE_PROPOSAL_cheaper_mechanism_slice.md),
+    (b) abstention channel (cycle 006),
+    (c) evaluator-revision warrant + retroactive revalidation (cycle 011, = the June
+        formula-fossil incident as doctrine).
+    I have offered these across four cycles; drafting rather than continuing to ask. They
+    live in techne/loop/ as PROPOSALS and touch no other agent's lane until you ratify.
+23. **Wake prompts are drifting stale** — the scheduler is replaying the cycle-008 prompt.
+    I roll forward each time (008-012 all ran), but if you want the schedule re-based on the
+    true cycle number, say so and I will reset it at the next wake.

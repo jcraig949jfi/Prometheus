@@ -25,7 +25,8 @@ from typing import Union
 import mpmath
 from flint import arb, ctx
 
-__all__ = ["CertifiedValue", "certified_const", "certified_zeta", "KNOWN_CONSTANTS"]
+__all__ = ["CertifiedValue", "certified_const", "certified_zeta", "KNOWN_CONSTANTS",
+           "CONSTANT_AUTHORITIES"]
 
 _GUARD_BITS = 16
 _LOG2_10 = math.log2(10)
@@ -155,10 +156,26 @@ class CertifiedValue:
         return f"CertifiedValue({self.mid_str[:24]}… ± {float(self.radius):.3e} @ {self.dps}dps)"
 
 
-#: name -> zero-arg Arb constructor. Extend here; tests sample from this registry.
+#: name -> zero-arg Arb constructor. Extend here; tests sample from this registry, so a new
+#: entry is automatically covered by every property test (containment, monotone radius,
+#: composition). Each carries its OEIS decimal-expansion A-number as the authority the
+#: acceptance suite checks against.
 KNOWN_CONSTANTS = {
-    "pi": lambda: arb.pi(),
-    "e": lambda: arb.const_e(),
+    "pi": lambda: arb.pi(),                     # OEIS A000796
+    "e": lambda: arb.const_e(),                 # OEIS A001113
+    "catalan": lambda: arb.const_catalan(),     # OEIS A006752
+    "euler_gamma": lambda: arb.const_euler(),   # OEIS A001620
+    "log2": lambda: arb.const_log2(),           # OEIS A002162
+    "glaisher": lambda: arb.const_glaisher(),   # OEIS A074962
+    "khinchin": lambda: arb.const_khinchin(),   # OEIS A002210
+}
+
+#: Authority pointers, kept ON the module (provenance doctrine: the reference travels with
+#: the value, not in a commit message).
+CONSTANT_AUTHORITIES = {
+    "pi": "OEIS A000796", "e": "OEIS A001113", "catalan": "OEIS A006752",
+    "euler_gamma": "OEIS A001620", "log2": "OEIS A002162",
+    "glaisher": "OEIS A074962", "khinchin": "OEIS A002210",
 }
 
 

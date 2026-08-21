@@ -183,3 +183,66 @@ def test_composition_certified_beats_float_at_boundary():
     diff = certified_zeta(2, dps=40) - (certified_const("pi", dps=40) ** 2) / 6
     assert diff.contains(0)
     assert diff.decisively_nonzero() is False
+
+
+# ------------------------------------------------------------------ authority (cycle 012)
+
+def test_catalan_against_oeis_a006752():
+    """Catalan's constant G = 0.915965594177219015054603514932384110774...
+
+    Reference: OEIS A006752 (decimal expansion of Catalan's constant), 39 digits >> the
+    ball's 20 dps so the reference's own truncation is far below the radius.
+    """
+    with mpmath.workdps(50):
+        ref = mpmath.mpf("0.915965594177219015054603514932384110774")
+    v = certified_const("catalan", dps=20)
+    assert v.contains(ref)
+    assert v.radius < 1e-19
+
+
+def test_euler_gamma_against_oeis_a001620():
+    """Euler-Mascheroni gamma = 0.577215664901532860606512090082402431042...
+
+    Reference: OEIS A001620 (decimal expansion of Euler's constant).
+    """
+    with mpmath.workdps(50):
+        ref = mpmath.mpf("0.577215664901532860606512090082402431042")
+    v = certified_const("euler_gamma", dps=20)
+    assert v.contains(ref)
+    assert v.radius < 1e-19
+
+
+def test_log2_against_oeis_a002162():
+    """log 2 = 0.693147180559945309417232121458176568075...
+
+    Reference: OEIS A002162 (decimal expansion of log 2).
+    """
+    with mpmath.workdps(50):
+        ref = mpmath.mpf("0.693147180559945309417232121458176568075")
+    v = certified_const("log2", dps=20)
+    assert v.contains(ref)
+    assert v.radius < 1e-19
+
+
+def test_every_registered_constant_is_cross_checked_against_mpmath():
+    """Second-tool authority for the whole registry at once: mpmath computes each constant by
+    an independent implementation, and every certified ball must contain it. A new registry
+    entry is therefore covered the moment it is added."""
+    second_tool = {
+        "pi": lambda: mpmath.pi, "e": lambda: mpmath.e,
+        "catalan": lambda: mpmath.catalan, "euler_gamma": lambda: mpmath.euler,
+        "log2": lambda: mpmath.log(2), "glaisher": lambda: mpmath.glaisher,
+        "khinchin": lambda: mpmath.khinchin,
+    }
+    assert set(second_tool) == set(KNOWN_CONSTANTS), "registry and cross-check must not drift"
+    for name, get in second_tool.items():
+        with mpmath.workdps(45):
+            ref = get()
+        assert certified_const(name, dps=30).contains(ref), name
+
+
+def test_every_constant_carries_its_authority_pointer():
+    """Provenance doctrine: the reference travels with the value."""
+    from prometheus_math.certified import CONSTANT_AUTHORITIES
+    assert set(CONSTANT_AUTHORITIES) == set(KNOWN_CONSTANTS)
+    assert all(a.startswith("OEIS A") for a in CONSTANT_AUTHORITIES.values())
