@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-21T19:12:07+00:00
+# PULSE — generated 2026-08-21T19:41:43+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        879
-consumed (state changes):   420  {'queue_state': 359, 'registry': 57, 'findings': 3, 'doctrine': 1}
-consumed/emitted:           0.48
+emitted (new files):        890
+consumed (state changes):   422  {'queue_state': 361, 'registry': 57, 'findings': 3, 'doctrine': 1}
+consumed/emitted:           0.47
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 263
+## Commits, 72h (non-cron): 265
+- bd46fb07 08-21 15:21 Techne loop cycle 022: second pass opens â€” R3 claim narrowed, aliasing found half-blind
+- 7b350412 08-21 15:12 Aporia P87: P14 arrives with brakes, P15 with a certificate that knows when to decline
 - b08fa6db 08-21 14:48 Techne loop cycle 021: canon R12 grader RUN and audited â€” first pass of R0-R12 complete
 - 9948b7b3 08-21 14:42 Aporia P86: halfway â€” kernel-certified pins, emergent canonical height, a detector for lying shadows
 - bbbc0025 08-21 14:30 Ergon: dry-run the campaign state machine â€” three defects found, all fixed
@@ -38,9 +40,7 @@ verdict: ALIVE
 - 95916588 08-21 10:17 Ergon: P1 killed as TRUNCATION-CONFOUNDED â€” the defect was flattering the gate
 - 62e485dd 08-21 09:54 Aporia P77: MIDDLE-REPLICATES â€” the split survives its first independent sample
 - f5360bd4 08-21 09:51 Techne loop cycle 014: SELF-CAUGHT rung mislabelling (13 cycles) + canon R6 built + monoculture is congenital
-- fc81c807 08-21 09:48 Aporia P77 pre-commit: 0348 middle-slice script with pre-stated readings â€” committed BEFORE first run
-- d760f3e6 08-21 09:26 Ergon: co-sign A4 interpretation bounds + land 4 owed rulings before Tier B
-- … +238 more
+- … +240 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
