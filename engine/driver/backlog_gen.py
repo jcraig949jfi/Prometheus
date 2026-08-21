@@ -255,6 +255,20 @@ def main() -> int:
             # old park) and WINS — old parks only stick to threads the generator left ungated.
             if ost == "PARKED" and uniq[oid].get("gate"):
                 continue
+            # REFINEMENT 2026-08-20 (P50): the REVERSE transition. If the OLD park's gate is
+            # one the GENERATOR itself computes (review gate, spec gate, PROF gates, freshness
+            # gates) and this regeneration computed NO gate, the gating condition has RESOLVED
+            # (e.g. Elenchus disposed of a spec) — take the fresh QUEUED state. Manual parks
+            # (gate strings outside the generator vocabulary) still persist.
+            _GEN_GATE_PREFIXES = ("authored spec awaiting shadow review",
+                                  "needs authored test_spec",
+                                  "LLM-driven agent: probe profiling",
+                                  "typed structural zero:",
+                                  "profile binds to the agent's PRODUCTS",
+                                  "verified 20")
+            if (ost == "PARKED" and not uniq[oid].get("gate")
+                    and str(old_item.get("gate", "")).startswith(_GEN_GATE_PREFIXES)):
+                continue
             uniq[oid]["status"] = ost
             if old_item.get("result"):
                 uniq[oid]["result"] = old_item["result"]

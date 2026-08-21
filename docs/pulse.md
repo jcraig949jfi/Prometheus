@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-20T23:47:29+00:00
+# PULSE — generated 2026-08-21T00:27:01+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -9,12 +9,16 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ```
 window: 3d
 emitted (new files):        698
-consumed (state changes):   346  {'queue_state': 282, 'registry': 58, 'findings': 5, 'doctrine': 1}
+consumed (state changes):   349  {'queue_state': 285, 'registry': 58, 'findings': 5, 'doctrine': 1}
 consumed/emitted:           0.50
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 188
+## Commits, 72h (non-cron): 192
+- 84d3c9f6 08-20 19:58 Elenchus: Harmonia-A channel triage â€” weakness-quota finding + explicit scope statement
+- 3ab99905 08-20 19:56 Elenchus: reviewed P25, P27, P28, P33-P37, P46, P47, P48 â€” MIXED/OVERCLAIMED/MIXED/SOUND/METHOD-FLAW/UNDERCLAIMED/MIXED
+- 51c9abe9 08-20 19:55 Harmonia-A soak P24: I said it could not be done, then did it â€” A5 fidelity CONFIRMED
+- b7f88182 08-20 19:49 Aporia P49: spec batch 2 â€” the probe killed its first spec before filing
 - b4314092 08-20 19:30 Harmonia-A soak P23: re-tested the soak's OLDEST claim; calibrated the A5 tier
 - a23beaca 08-20 19:12 Aporia P48: the value question answered with an instrument â€” 61% consumed, and the split matters more than the rate
 - aa6fe6b7 08-20 18:55 Harmonia-A soak P22: the proof was right; the precondition I shipped with it was WRONG
@@ -36,11 +40,7 @@ verdict: ALIVE
 - 1ca61ac4 08-20 15:30 Harmonia-A soak P15: P40 fix verified complete â€” and the defect was LATENT, not live
 - 5edfe890 08-20 15:25 Aporia P40: HARMA-P14's crash closed with a red-verified pin
 - 8a8d0d5f 08-20 14:57 Aporia P39: the Letellier-Nam candidate is real â€” Saxl anchor enriched with a conflation guard
-- 17011ddd 08-20 14:55 Harmonia-A soak P14: middle case found a real defect â€” null_marginal_pairing crashes
-- 7d77ce62 08-20 14:29 Harmonia-A soak P13: SOAK-27 DEMOTED â€” my own pattern claim failed to extend to a 3rd suite
-- 195c9256 08-20 14:23 Aporia P38: greenness made meaningful again â€” pins, gates, and a tier the queue refuted
-- 0ab4b24a 08-20 13:55 Harmonia-A soak P12: verifier_lens fix has LANDED but is UNPINNED â€” a regression stays green
-- … +163 more
+- … +167 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records

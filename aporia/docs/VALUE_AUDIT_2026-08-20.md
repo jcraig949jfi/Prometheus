@@ -10,7 +10,7 @@ it) / PROSPECTIVE (named consumer, not yet reading) / INERT (no consumer named o
 
 ## Per-artifact verdicts (36 artifacts, grouped; evidence in parentheses)
 
-CONSUMED — 22:
+CONSUMED — 23 (ELENCHUS CORRECTION P50: my headline said 22 but my own per-row counts sum to 23; denominator 37):
 - agents/alethelia/{alethelia,test_alethelia}.py — executed every pass since P29; caught
   DEC-001; grew zombie_running on the DEC-002 miss; reads DR ledger. (2)
 - aporia/catalog_attacks/ATTACK_PATTERNS.md — cross-agent: HARMA drills executed its trap
@@ -63,7 +63,8 @@ INERT — 2:
   it. (Repairable in one edit; left honest for this audit.)
 - aporia/docs/ (this class generally): LAD/R12-era docs predate the window; not counted.
 
-## The number: 22/36 CONSUMED (61%) — at the HIGH boundary, with a hard caveat
+## The number: 23/37 CONSUMED (62.2%) — at the HIGH boundary, with a hard caveat
+(Corrected P50 per Elenchus review: the original 22/36 failed its own per-row sum — the memory-arithmetic class AGAIN, in the audit ABOUT auditing. Band unaffected.)
 The rate technically hits the HIGH reading, but the caveat matters more than the number:
 almost all consumption is INTERNAL — the loop and the soak channel feeding each other
 (validators, gates, monitors, drills, repairs). That is real value by the thesis's own
@@ -92,3 +93,7 @@ domain_constraints_detected: [internal-vs-frontier-consumption-split, review-gat
 operations_used: [files-touched-census, per-artifact-evidence-classification, pre-stated-rate-bands, honest-caveat-over-headline]
 kill_pattern: none | repair_available: Elenchus sweep (prompt delivered to James P47-era) + stance-blind catalog entry (one edit)
 residue: consumption rate without the internal/frontier split is a vanity metric — always report both
+
+
+## P50 addendum: Aletheia row correction
+The P46-referenced Aletheia consumer-drift finding was REFUTED by Elenchus (the Metis analyst at agents/metis/src/metis.py consumes the knowledge graph by execution). The audit's classification logic is unaffected (Aletheia's ledger row was not among the 37 audited artifacts), but the same grep-scope error class lived in both places and is recorded here for symmetry.
