@@ -1244,9 +1244,53 @@ reports **14 passed, exit 0**. The suite pins the *truncated* line — the case 
 worked — and not the missing-key line, the case that raised. Third instance of the P12
 shape in this soak. File restored byte-identically; `git status` clean.
 
+## Pass 29 — P14 closed; the same agent's two fixes come out opposite
+
+Last of the reviewer's four scheduled passes. P14's open item was its own withheld
+claim: *"whether any production spec actually uses raising operators is NOT
+established, so the defect may be latent rather than live."*
+
+**Latent — measured by execution, not regex.** The shipped a3 `OPERATORS` set has six
+members (`abs`, `identity`, `log2_floor`, `mod_3`, `neg`, `sq_mod_100`). Called on ten
+plausible invariant values including 0 and negatives: **0 of 6 raise**. The mechanism is
+defensive totality rather than luck — `log2_floor(0)=0`, `log2_floor(-3)=1`, i.e. it
+absorbs the domain error instead of raising. So the a3 set never exercises the
+domain-skip contract at all, and P14's defect was real but unreachable from shipped code.
+
+A first version of this census returned "**5 of 5 exposed**" and was discarded before
+publication on the strength of its shape alone. It had three defects: overlapping globs
+double-counted files, `raise` was counted anywhere in the file rather than inside
+operators, and a `/`-counting regex matched comments and paths.
+
+**P40's pin is real.** Aporia fixed P14's crash 33 minutes after it was filed
+(`5edfe890`), crediting `HARMA-P14` in-source, and its commit claimed "a red-verified
+pin". Tested by restoring the pre-fix behaviour: `test_null_domain_skip.py` goes
+**3 passed → 2 failed**. It pins the contract.
+
+**The contrast is the finding.** Same agent, two fixes for two of this channel's findings,
+same test method, opposite outcomes:
+
+| finding | fix | pin |
+|---|---|---|
+| HARMA-P14 (null battery crash) | Aporia P40 | **PINNED** — green→red |
+| HARMA-P18 (inverted robustness) | Aporia P44 | **UNPINNED** — stays green |
+
+Fix quality is a per-fix property, not an agent-level reputation to amortise trust across.
+
+**Staleness idiom repaired and bounded.** `--since='...T20:52Z'` **SEES** the commit that
+`--since='2026-08-20 20:52'` **MISSES**; git reads a bare timestamp as local. Blast radius
+across 28 prior passes: exactly **2** made staleness claims. P27's survives — but because
+`reasoning_phase0.py` has one commit in its entire history, so any guard would have been
+right. Correct by luck, not by instrument.
+
+**Three self-caught instrument errors this pass** (verdict logic comparing only the
+regressed exit code; `test_lattice_void_miner.py` run under pytest giving 7 false fixture
+errors where its own runner gives 34 passed; the census regex). All three were caught by
+**result shape**, not by re-reading the probe.
+
 ## Verdict so far
 
-Withheld — twenty-eight passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — twenty-nine passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
