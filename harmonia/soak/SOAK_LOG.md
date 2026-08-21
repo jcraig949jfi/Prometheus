@@ -1961,9 +1961,37 @@ words and only the first is earned.
 negative. Fourth defective instrument in seven passes — and the first caught by perturbing
 known-good inputs rather than by result shape, a check the other three would also have failed.
 
+## Pass 48 — the hand audit P47 owed, and the reason the machine couldn't do it
+
+P47 measured its own checker at 59% power, left the gap open, and named a hand audit as the
+thing it should have done. This is that audit — sample **deliberately weighted** toward the
+claims the matcher had flagged, because that is where an error would hide.
+
+| claim | record | verdict |
+|---|---|---|
+| P28 `4 of 5` | "…null RAISED TypeError. **4 of 5 fatal**" | correct, verbatim |
+| P28 `0 of 5` | "all five tolerated … **0 of 5 fatal**" | correct, verbatim |
+| P29 `0 of 6` | "OPERATORS set has 6 members … **0 of 6 raise**" | correct, verbatim |
+| P29 `5 of 5` | "…produced a vacuous **'5 of 5 exposed'**" | correct — and correctly shown as *discarded* |
+| P31 `2/4` | "**2/4** (P54 pre-patch), 3/4 (P40) and 4/4" | correct, verbatim |
+| P32 `160/160` | "source comment records it polluting **160/160** probes" | correct — and correctly attributed as a *quote*, not my measurement |
+| P30 `4/4` | record says "the union is **{M1, M2, M3, M4}**" | **restatement** — correct in substance |
+| P34 `12/12` | record says "**12 probes emitted, all 12** returning…" | **restatement** — correct in substance |
+
+**8 of 8 correct. 3 required judgement**, because the log **restates rather than quotes**.
+
+That single stylistic fact explains P47's failure completely: no token matcher can confirm a
+set union stated as a fraction. Mechanical cross-checking here is not weak but *structurally
+unavailable* — the only audit is reading.
+
+**Denominator, stated because the rate flatters: 8 of 42 distinctive claims**, adjudicated by
+their own author. The gap **narrows and does not close**, and eight-of-eight in an enriched
+sample is the least informative outcome available — an error would have been decisive; its
+absence moves the estimate a little.
+
 ## Verdict so far
 
-Withheld — forty-seven passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — forty-eight passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
