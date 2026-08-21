@@ -34,13 +34,33 @@ states what killed its predecessor. Executable evidence lives in `techne/ladder_
   battery slice (R0 retrieval/clean, R4 prior/stable-rates, R5 delta/additive) — batteries
   must be built to leave the slice.
 
+- **v6 (cycle 008, current):** two amendments from external round 3, both executed.
+  (a) **R5 DEMOTED unless relational**: independent counterfactual evaluation decomposes
+  into branch-generation + R4 + comparison. R5 stands only as coupled execution (the pair
+  IS the state; run-twice cannot even execute) or relational invariants R(s0_k,s1_k)
+  maintained through the run — the transient-violation probe kills endpoint comparison.
+  State is a RELATION over executions: the genuinely new object. Cycle-007's single-pass
+  result survives as a resource theorem, not a rung definition.
+  (b) **Sixth coordinate: OPERATOR PLASTICITY** — fixed rules → parameterized compositions
+  → cached macros → induced operators → revisable abstractions. Coordinates 1-5 describe a
+  fixed transition algebra; Bands S/G require R_t → R_{t+1} (the machine modifies the
+  language of its later reasoning). Fake-synthesis kill executed: trace cache dies on
+  held-out substitutions; the induced operator survives; the vocabulary measurably grows.
+  Convergence note: this is our gen-30-wall / menu-growth doctrine arriving independently —
+  treated as a warning to test (hence the kill), not as confirmation. Generative-resources
+  battery extended beyond binders: existential elimination with reuse/palette/aux_1
+  pathologies all caught; SkolemID shows freshness = inexhaustible namespace, not RNG.
+
 **Standing kill-battery inventory (all executable):** isomorph/fresh-seed (R0); coefficient-
 hull escape + symbolic-parameter probes (R1); trace re-execution, CAS-layer leakage,
 path-separating twins [spec'd], step-count priors (R2); disequality separation, scale probe,
 **indistinguishable-state twins + lexicographic (soundness, −coverage) contract** (R3);
 base-rate inversion, **nonlocal-discriminator + depth-escape + rule-name randomization**
 (R4); single-pass memory metering + mid-stream queries + **non-additive post-fork dynamics**
-(R5); palette exhaustion (fresh-gen).
+(R5); coupled-dynamics inexecutability + transient-violation relational probes (R5-rel);
+palette exhaustion, existential-elimination distinctness pressure, deterministic-freshness
+(fresh-gen/Skolem); held-out-substitution fake-synthesis kill + corrupted-trace audit
+(operator plasticity).
 
 **Design finding (cycle 006, from the twins battery):** a bounded circuit's conservative
 False on a forgotten fact IS a soundness violation on the twin pair — "conservative" and

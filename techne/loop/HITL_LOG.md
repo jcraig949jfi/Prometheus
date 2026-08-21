@@ -67,3 +67,14 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
 14. **Stash hygiene**: another agent's stashes (2) sit on main; my pull briefly popped one.
     Preserved untouched, but whoever owns "WIP README before sigma_kernel pull" and "agent
     work products in flight" should land or drop them.
+
+## Cycle 008 (2026-08-21)
+
+15. **Operator plasticity = menu growth**: the external reviewer independently arrived at
+    the gen-30-wall doctrine (menus must grow) as the ladder's missing coordinate. This is
+    now the strongest bridge between the ladder study and Apollo/Hephaestus charters —
+    their forge IS the plasticity axis. Recommend surfacing the crosswalk to both agents'
+    next sessions (their charters, our tests).
+16. **R5 in Canon**: round 3 argues Canon's R5 ("holds branches") is only a rung in its
+    relational form. Canon vocabulary law says rung semantics change only by James-ratified
+    amendment — flagging, not editing: proposed amendment text can be drafted on request.
