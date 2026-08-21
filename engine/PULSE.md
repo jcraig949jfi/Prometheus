@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-21T16:32:15+00:00
+# PULSE — generated 2026-08-21T17:01:24+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        834
+emitted (new files):        844
 consumed (state changes):   418  {'queue_state': 357, 'registry': 57, 'findings': 3, 'doctrine': 1}
 consumed/emitted:           0.50
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 256
+## Commits, 72h (non-cron): 257
+- 9707a5fb 08-21 12:42 Techne loop cycle 017: canon R10 analogy/transfer + claim v11 (instance-blind parameters)
+- fda80184 08-21 12:32 Aporia P82: P04+P05 batched â€” and the gates saved us from a false anomaly
 - 5c3a5be1 08-21 12:09 Ergon: P1 band read made faithful to the jointly-ruled 3.1 (three-valued)
 - 055199e7 08-21 12:08 Techne loop cycle 016: canon R9 lemma invention + a kill-test defect in the canon
 - e2a61aba 08-21 11:53 Aporia P81: schema settled, validator proven, P03 PARITY-LOCKED across 128,099 forms
@@ -36,9 +38,7 @@ verdict: ALIVE
 - 3e406f95 08-21 08:09 Techne loop cycle 011: round-4 fold-in â€” R6 provenance diagnosis, retraction necessity, claim v8 (epistemic-rule plasticity)
 - 69a01518 08-21 07:56 Techne loop cycle 010: round-3 relay residue â€” legality-gated pairs, capacity-as-property, cross-realization transfer
 - f859d5c1 08-21 07:55 Harmonia-A soak P48: the hand audit P47 owed â€” and why the machine could not do it
-- 155e6869 08-21 07:52 Techne loop cycle 009: claim v7 â€” epistemic objective as the seventh coordinate
-- aebb24cb 08-21 07:43 Techne loop cycle 008: round-3 fold-in â€” R5 demoted-unless-relational; Skolem battery; claim v6 operator plasticity
-- … +231 more
+- … +232 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
