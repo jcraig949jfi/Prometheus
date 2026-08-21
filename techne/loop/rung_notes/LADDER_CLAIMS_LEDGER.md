@@ -27,12 +27,20 @@ states what killed its predecessor. Executable evidence lives in `techne/ladder_
   completes α-renaming; a bounded palette is adversarially exhaustible (the capacity
   phenomenon recurring one level up). Credit: ChatGPT r2 item C; build: fresh_generation.py.
 
+- **v5 addendum (cycle 007, R5):** state topology gains PARALLEL composition — live
+  co-resident branches, separated from run-twice-and-diff ONLY under single-pass input +
+  metered memory (replay buffer = smuggled blackboard, the v3 kill recurring one rung up).
+  Recurring law, third instance: every rung has a cheaper mechanism exact on a restricted
+  battery slice (R0 retrieval/clean, R4 prior/stable-rates, R5 delta/additive) — batteries
+  must be built to leave the slice.
+
 **Standing kill-battery inventory (all executable):** isomorph/fresh-seed (R0); coefficient-
 hull escape + symbolic-parameter probes (R1); trace re-execution, CAS-layer leakage,
 path-separating twins [spec'd], step-count priors (R2); disequality separation, scale probe,
 **indistinguishable-state twins + lexicographic (soundness, −coverage) contract** (R3);
 base-rate inversion, **nonlocal-discriminator + depth-escape + rule-name randomization**
-(R4); palette exhaustion (fresh-gen).
+(R4); single-pass memory metering + mid-stream queries + **non-additive post-fork dynamics**
+(R5); palette exhaustion (fresh-gen).
 
 **Design finding (cycle 006, from the twins battery):** a bounded circuit's conservative
 False on a forgotten fact IS a soundness violation on the twin pair — "conservative" and

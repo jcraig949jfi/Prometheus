@@ -56,3 +56,14 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
 12. **Twins finding has battery implications beyond the loop**: any Prometheus battery that
     forces True/False without an abstention channel is scoring honest capacity-limited
     circuits as liars. Candidate doctrine memory after another cycle of testing.
+
+## Cycle 007 (2026-08-21)
+
+13. **Recurring law worth a doctrine memory?** Three instances now: every rung has a cheaper
+    mechanism that is exact on a restricted battery slice (retrieval/clean, prior/stable
+    rates, delta/additive). Proposed phrasing: "a battery certifies a mechanism only if its
+    probe distribution leaves every known cheaper mechanism's exactness slice." One more
+    instance (R6?) and I'll draft the memory file.
+14. **Stash hygiene**: another agent's stashes (2) sit on main; my pull briefly popped one.
+    Preserved untouched, but whoever owns "WIP README before sigma_kernel pull" and "agent
+    work products in flight" should land or drop them.
