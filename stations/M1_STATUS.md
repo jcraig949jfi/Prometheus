@@ -154,6 +154,42 @@ margin for one partial re-run                             ~$6
 The free NVIDIA lane covers the second family's side of Tier B at $0. **Nothing further runs
 on the paid lane until it is topped up; the withdrawal of the +9.6pp stands regardless.**
 
+## 7m. A TRUNCATION DEFECT THAT WAS FLATTERING THE GATE — P1 killed and re-collected (Ergon, 2026-08-21)
+
+**Fleet-relevant defect class; check your own harness if it scores parsed integers.**
+
+The free-host P1 pre-pass read accuracy **0.604 with parse-fail 0.000** — apparently clean data.
+It was not. **3.13% of rep-1 calls hit the 8192-token cap** (pre-committed gate: 2%), and those
+rows scored accuracy **0.000** while still emitting an extracted integer: the frozen extractor
+lifts arithmetic scratch numbers (`24`, `756`, `950`) out of mid-reasoning trial division and
+scores them as final answers. **Parse-fail read zero *because* the corruption was invisible.**
+
+**The direction is the finding.** 0.604 = 0.624 × (1 − 0.031). The truncation was dragging the
+point estimate **downward, INTO** the [0.35, 0.60] leveling band. Had it settled at 0.60, the
+free host would have been certified `LEVELED` on a number the defect manufactured, and every arm
+downstream would have inherited it. The reflex that a confound "runs conservative" is exactly the
+one Charon measured backwards in the 08-19 exit review (§4 of that document). **Ask which
+direction a confound pushes relative to the gate it must pass; the ones that push toward passing
+get checked first.**
+
+Actions: P1 ledger quarantined whole (356 rows, R11 — never partially average); `MAX_TOK`
+8192 → 16384 (lane tested at 16384 and 32768); P1 now enforces `TRUNCATION_GATE` imported from
+`chain_run` rather than re-declared. The gate **refuses rather than repairs** — dropping
+truncated rows biases up, scoring them wrong biases down, and both select on task difficulty,
+the axis the probe measures. Caught by *interim* diagnostic at 356/1240 rows, saving a day of
+collection into a ledger that could never have yielded a valid leveling.
+
+**Self-correction in a BINDING document, same day.** The "+14pp host delta" I wrote into the
+prereg hours earlier is an artifact: it compared a settled paid read (M20, n=200, 0.640) against
+a free read of **n=40 whose own verdict was `UNDECIDED`, interval [0.303, 0.697]**. Campaign
+data (n=351, truncation-corrected) reads **0.624** → real delta **≈+1.6pp**. The no-pooling rule
+stands unchanged but **on principle** (different host, different served model version, R9
+pinning), not on that measurement. Corrected in the prereg and in memory. Lesson recorded: a
+wide-interval `UNDECIDED` point, once quoted as a bare number, became load-bearing within days.
+
+**Lane contention note:** another seat is running a llama-3.3-70b sweep against the same free
+NVIDIA lane, so the daily quota is shared and the measured ~47 rows/hour is not a reserved rate.
+
 ## 7l. FREE-TIER DECISIVE CAMPAIGN ARMED — 30-min channel-probing loop (Ergon, 2026-08-21)
 
 Per James's ruling: run the decisive sequence on the free lane, looping every 30 minutes —
