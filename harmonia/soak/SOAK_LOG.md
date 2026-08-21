@@ -1450,9 +1450,48 @@ Also logged: the pass procedure reads REVIEWS at setup and re-reads STEERING bef
 but never re-reads REVIEWS — which structurally guarantees any review landing mid-pass is
 answered a pass late. TRIAGE-02 was, for exactly that reason.
 
+## Pass 34 — searched before claiming absence, and the claim was half wrong
+
+P33 asserted the generator's `CONJ` list and the verifier's cid registry are "uncoupled
+literals, nothing enforcing agreement." P25 had already named *inference of absence* as
+this channel's thinnest method, in HARMA-P12. So: search first.
+
+**A check does exist.** `test_verifier_z3.py::test_registry_decides_the_five_cids` asserts
+`d is not None, f"{cid} missing from registry"` for each cid. P33's claim was wrong.
+
+**But the coupling is still unenforced, and that half is mutation-verified.** The check
+iterates a *hardcoded* five-entry dict, not `rp0.CONJ`. Adding a sixth unregistered
+conjecture:
+
+| suite | baseline | with 6th cid |
+|---|---|---|
+| `test_verifier_z3.py` | 15 passed | 15 passed — unchanged |
+| `test_verifier_lens.py` | 21 passed | 21 passed — unchanged |
+
+**Suites turning red: NONE.**
+
+**The mechanism, refined.** P33 didn't distinguish the two cases:
+
+- **TRUE** unregistered conjecture → 12/12 probes on **line 485**, `unverifiable_universal`
+- **FALSE** unregistered conjecture → 12/12 on **line 443**, `unverifiable_counterexample`
+- wrong claimed answer → `valid=False`, `unparsable_conjecture_claim` — **fails closed**
+
+**Severity downgraded, on measurement.** P32 called it reachable; P33 called it insurance
+against mis-grading. Correct answers abstain honestly and wrong answers fail closed, so the
+real cost is **silent loss of verification coverage**, not wrong verdicts. Three passes of
+individually careful work still drifted upward in alarm until something forced a severity
+measurement instead of a mechanism argument (SOAK-78).
+
+**Fix demonstrated, not prescribed.** Derive the loop from `rp0.CONJ`: green on the current
+tree (all 5 registered), fires on **both** unregistered variants. It checks *presence*, not
+*correctness* — a cid registered with a wrong predicate still passes, logged withheld.
+
+Instrument error: I listed `test_reasoning_phase0.py` in the suite set; it does not exist.
+The exit 4 was file-not-found — my invocation, per the pre-committed reading.
+
 ## Verdict so far
 
-Withheld — thirty-three passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — thirty-four passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
