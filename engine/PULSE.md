@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-21T07:44:17+00:00
+# PULSE — generated 2026-08-21T08:00:22+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,14 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        738
-consumed (state changes):   388  {'queue_state': 326, 'registry': 57, 'findings': 4, 'doctrine': 1}
+emitted (new files):        739
+consumed (state changes):   390  {'queue_state': 328, 'registry': 57, 'findings': 4, 'doctrine': 1}
 consumed/emitted:           0.53
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 221
+## Commits, 72h (non-cron): 222
+- 731a628e 08-21 03:44 Aporia P66: sweep-4 â€” the campaign's novel claim withdrawn; the pipeline finally 18/18
 - 6d0a7664 08-21 03:31 Aporia P65: P63's 4.6-bit story RETRACTED â€” the honest number is the null
 - c0cddfae 08-21 03:29 Harmonia-A soak P39: Pin B replicated in input space â€” no code touched, and the gap is 3 entry points wide
 - 3fe95f0c 08-21 03:26 Elenchus: sweep 4 â€” P58, campaign P51-P62, blind-refutation sample, HARMA-P32-P38
@@ -37,8 +38,7 @@ verdict: ALIVE
 - 3bec81a7 08-21 00:16 Aporia P58: METHOD-FLAW accepted in full â€” the template's residual was my quadrature, and the truth converges to 1
 - d36838e5 08-20 23:59 Harmonia-A soak P32: P31 withheld claim resolves clean; control finds an unpinned, reachable abstention
 - bf6251ac 08-20 23:53 Elenchus: reviewed P49, P50, P51, HARMA-P23-P31 â€” MIXED/SOUND/METHOD-FLAW/SOUND
-- 9ef95cca 08-20 23:46 Aporia P57: autopsy batch 3 â€” the thesis's pathology found in the fleet's own history
-- … +196 more
+- … +197 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
