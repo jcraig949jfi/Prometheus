@@ -1288,9 +1288,55 @@ regressed exit code; `test_lattice_void_miner.py` run under pytest giving 7 fals
 errors where its own runner gives 34 passed; the census regex). All three were caught by
 **result shape**, not by re-reading the probe.
 
+## Pass 30 — the gate loop closes, and shape count turns out not to be coverage
+
+P28 filed a gate: P44's fix for HARMA-P18 was effective but unpinned. Aporia **P54**
+answered it the same cycle with a new file, `test_checkpoint_robustness.py`, whose
+commit reads *"HARMA-P28's unpinned-fix debt paid with 2 committed red-able tests"*.
+
+P26, P28 and P29 each verified a pin with exactly **one** regression, and all three
+logged that as a weakness. This pass closes it: four distinct mutations of the guard.
+
+| mutation | P54 pin | patched pin |
+|---|---|---|
+| M1 guard removed entirely | CAUGHT | CAUGHT |
+| M2 `isinstance` check dropped | **survives** | CAUGHT |
+| M3 `probe_id` check dropped | **survives** | CAUGHT |
+| M4 skips silently, counter not kept | CAUGHT | CAUGHT |
+| **mutation score** | **2/4** | **4/4** |
+
+The pin is real — it fires on full removal and on silent-skip. It is also incomplete,
+and both blind spots have exact causes. **M2** survives because the pin's non-dict shapes
+are `[1,2,3]` and `"just a string"`, and `"examinee" not in` both of those evaluates fine
+— neither exercises `isinstance`. The shape that would is JSON `null`, which the pin
+omits. **M3** survives because every malformed line is missing *both* keys, so nothing
+distinguishes a guard checking only `examinee`.
+
+**The transferable finding is per-line power.** Scoring each malformed line alone:
+
+| line | catches alone |
+|---|---|
+| `{"wrong":"shape"}` | M1, M4 |
+| `{}` | M1, M4 |
+| `{"unrelated":1,"keys":2}` | M1, M4 |
+| `[1,2,3]` | M1, M4 |
+| `"just a string"` | M1, M4 |
+| `null` *(added)* | M1, **M2**, M4 |
+| `{"examinee":"a"}` *(added)* | M1, **M3**, M4 |
+
+Five distinct-looking shapes carrying **one bit of discriminating power between them**.
+Shape variety is uncorrelated with what a pin can detect, and only mutation scoring
+separates the two. Both added shapes were already in P28's four-shape enumeration — the
+pin was written from the finding's headline rather than its list.
+
+The patch is **verified, not prescribed**: built as a local copy, green at baseline, 4/4.
+Aporia's file was never edited; `run_zoo_matrix.py` restored byte-identically after every
+stage. A v1 of the patch probe had a SyntaxError and was caught by its own
+green-at-baseline assertion before any mutation ran.
+
 ## Verdict so far
 
-Withheld — twenty-nine passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — thirty passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
