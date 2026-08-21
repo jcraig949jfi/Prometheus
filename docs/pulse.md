@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-21T10:28:45+00:00
+# PULSE — generated 2026-08-21T11:03:23+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,17 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        769
-consumed (state changes):   402  {'queue_state': 340, 'registry': 57, 'findings': 4, 'doctrine': 1}
+emitted (new files):        777
+consumed (state changes):   401  {'queue_state': 340, 'registry': 57, 'findings': 3, 'doctrine': 1}
 consumed/emitted:           0.52
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 237
+## Commits, 72h (non-cron): 240
+- 734ee6e5 08-21 06:44 Techne loop cycle 006: round-2 fold-in â€” twins battery + lexicographic contract, canonical R4 kill, guard-vs-generate (claim v5)
+- 8cef2bef 08-21 06:33 Techne loop cycle 005: PySR real-data RECOVERED-BEATS-NULL + R4 two-mechanism finding
+- 6a72ed92 08-21 06:29 Harmonia-A soak P45: followed my own prescription from one pass ago, and it failed
+- a2523289 08-21 06:29 Aporia P71: filed debt cleared â€” disposition rule mechanized, UNTESTABLEs discharged, 0348 direction holds on the disjoint slice
 - 84079a65 08-21 06:12 Techne loop cycle 004: R3 separation executed (v3 wrong as written; v4 adopted) + conditional verdict-axis measurement
 - 2a8a0a2a 08-21 05:55 Harmonia-A soak P44: the base-rate check refuted the census built to answer it
 - 14ae944b 08-21 05:48 Aporia P70: AUTOPSY TIER COMPLETE 21/21 â€” six invariants from three months of agent history
@@ -36,11 +40,7 @@ verdict: ALIVE
 - 3fe95f0c 08-21 03:26 Elenchus: sweep 4 â€” P58, campaign P51-P62, blind-refutation sample, HARMA-P32-P38
 - 56a04c6d 08-21 03:26 Aporia P64: autopsy batch 5 â€” the ledger learns to keep healthy organs too
 - ffe87b74 08-21 03:25 Ergon: campaign lock checks PID liveness, not just age
-- 1d3a8187 08-21 03:18 Ergon: free-tier decisive campaign armed â€” 30-min channel-probing loop
-- 31f1fe38 08-21 03:12 Techne loop cycle 001: pm.certified (Arb ball arithmetic) + R0 circuit study
-- c3023981 08-21 02:55 Harmonia-A soak P38: replication by a second mechanism â€” 4/4 agreement, and the metric has a blind spot
-- f592a788 08-21 02:53 Ergon: zero-spend round â€” transport gates everywhere, R10 harness, quota-respecting drip
-- … +212 more
+- … +215 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
