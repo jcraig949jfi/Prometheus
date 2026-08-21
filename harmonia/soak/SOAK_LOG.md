@@ -1334,9 +1334,45 @@ Aporia's file was never edited; `run_zoo_matrix.py` restored byte-identically af
 stage. A v1 of the patch probe had a SyntaxError and was caught by its own
 green-at-baseline assertion before any mutation ran.
 
+## Pass 31 — the new standard's first casualties are this channel's own verdicts
+
+P30 established that verifying a pin with one regression is inadequate. P26 and P29 each
+did exactly that and published **"PINNED"** at certain strength. Self-dissent first: the
+standard gets turned on this channel's own back catalogue before anything new.
+
+**The adopted patch, verified in its SHIPPED form.** Aporia took up the P30 gate within a
+pass — but substituted `json.dumps(["examinee","probe_id"])` where I had verified
+`json.dumps(None)`. A different shape is a different test, so it was re-scored rather than
+assumed: **4/4**. The substitution kills the isinstance mutation by a mechanism mine did
+not use (`"examinee" not in ["examinee","probe_id"]` is False, so the guard declines to
+skip and the list then fails on subscripting).
+
+| pin | blessed by | mutation score |
+|---|---|---|
+| P38 `unknown_kind` | my P26 | **4/4** — verdict holds |
+| P40 domain-skip | my P29 | **3/4** — verdict weakened |
+| P54 checkpoint (shipped) | my P30 gate | **4/4** |
+
+**P40's pin tests half its declared contract.** `spec.transform_errors` defaults to
+`(ValueError, OverflowError)`; every operator in the pin — `keep_only(k)` — raises only
+`ValueError`. Narrow the guard to `except ValueError` and the pin stays green while any
+OverflowError-raising spec crashes the null battery. That is the *same failure class as
+the P14 defect the pin exists to prevent*. One added case (an operator raising
+OverflowError, `n_dropped == [50,50]`, `perm_rates` non-empty) closes it: P40's pin catches
+{N1,N2,N4}, the added case catches {N1,N2,N3}, **union 4/4**. Additive, not a replacement —
+the head-to-head reads "3/4 vs 3/4" and would mislead.
+
+**Standard-inflation refuted.** Pre-registered as a reading against my own last pass:
+measured scores span **2/4, 3/4, 4/4**, so the metric discriminates rather than passing
+everything.
+
+Second consecutive pass in which my own fresh probe broke before running (a SyntaxError in
+an over-complicated print expression). Parse-time failure, no mutation applied, targets
+untouched — but two for two on new-probe breakage is now the pattern, not the incident.
+
 ## Verdict so far
 
-Withheld — thirty passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — thirty-one passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
