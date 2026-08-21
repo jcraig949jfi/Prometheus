@@ -553,3 +553,45 @@ never measured.
 
 **Kill-battery additions (executable):** constant-packet detection via deficit-equals-target-
 entropy; per-task head-variation count; pool-coverage ratio under repeated truncated draws.
+
+## Cycle 027 — claim v14 NARROWED AGAIN: a third stage type, and this one inverts
+
+v14 (cycle 024) asserted that along any pipeline deficit is non-decreasing and excess
+non-increasing, by the data-processing inequality. Cycle 025 narrowed it to stages that SELECT or
+REORDER after finding it blind to REWRITE stages. Cycle 027 finds a third category where it is
+neither blind nor applicable but **inverted**.
+
+**Measured** — discovery pipeline kill-path battery (F1/F6/F9/F11), 34 real reciprocal
+polynomials with high-precision Mahler measures, Lehmer's among them:
+
+    deficit  1.8295 -> 0.8698 -> 0.0000 -> 0.0000 -> 0.0000     H(terminal) = 1.8295 bits
+    forward is_refinement_chain  = False
+    reversed is_refinement_chain = True
+
+A falsification battery ADDS a verdict bit per check and discards nothing, so the state refines
+forward. Deficit DECREASES — what a working battery should do, and what v14 asserts cannot
+happen. `is_refinement_chain` reports False on a healthy battery.
+
+**v14, current statement.** The profile's monotonicity holds for DESTROYING chains only. Its
+direction must be established before it is read, and `chain_direction` (DESTROYING /
+ACCUMULATING / NEITHER) is the precondition.
+
+**Stage-type taxonomy, all three measured on live code:**
+
+    transform / rewrite    instruments BLIND      cycle 025, ergon render/redact
+    select / reorder       instruments WORK       cycle 026, ergon _order vs BC-2
+    filter / accumulate    instruments INVERTED   cycle 027, discovery battery
+
+**Blind is safe; inverted is not.** An empty reading is obviously useless; a confident wrong one
+is not. This is the first stage type where the instruments would have produced a false verdict
+rather than no verdict.
+
+**Second finding — R11 reappears inside a real falsification battery.** Per-check resolution:
+F1 = 0.9597 bits, F6 = 0.9082, F9 = 0.0000, F11 = 0.0000. Two of four members never fire on the
+candidates measured, and the terminal verdict is settled after F6. A member that never fires is
+observationally identical to an absent member and both are perfectly "sound" — canon R11's
+hedging forecaster, in production. Caveat recorded: 34 candidates in a narrow band is a small
+sample, and a non-firing check may be guarding a rare failure mode.
+
+**Kill-battery additions (executable):** chain-direction precondition check; per-member
+resolution measurement for a battery (advertised size vs measured discriminating size).

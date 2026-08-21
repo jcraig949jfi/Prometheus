@@ -297,3 +297,26 @@ def test_normalized_deficit_stays_in_the_unit_interval(a, b):
     except PartitionError:
         return                       # constant target: correctly refused
     assert -1e-12 <= v <= 1.0 + 1e-12
+
+
+# ---- cycle 027: chain direction -------------------------------------------------------------
+
+def test_chain_direction_names_all_three_cases():
+    """Hand-checked over four points. Coarsening forward is a transform pipeline; refining
+    forward is an accumulating battery; incomparable stages admit no chain argument at all."""
+    from prometheus_math.partition import chain_direction
+    singles, pairs, whole = P([0], [1], [2], [3]), P([0, 1], [2, 3]), P([0, 1, 2, 3])
+    assert chain_direction([singles, pairs, whole], 4) == "DESTROYING"
+    assert chain_direction([whole, pairs, singles], 4) == "ACCUMULATING"
+    assert chain_direction([pairs, P([0, 2], [1, 3])], 4) == "NEITHER"
+
+
+def test_chain_direction_is_the_precondition_for_reading_a_profile():
+    """The composition test that matters: on an ACCUMULATING chain, deficit DECREASES, so
+    cycle 024's non-decreasing assertion is false by design rather than by defect."""
+    from prometheus_math.partition import chain_direction, information_profile
+    singles, pairs, whole = P([0], [1], [2], [3]), P([0, 1], [2, 3]), P([0, 1, 2, 3])
+    chain = [whole, pairs, singles]
+    assert chain_direction(chain, 4) == "ACCUMULATING"
+    deficits = [d for d, _e in information_profile(chain, singles, 4)]
+    assert deficits == sorted(deficits, reverse=True)      # decreasing, not increasing

@@ -493,3 +493,33 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
     transforms can be brought inside partition methods — you would have to partition a record's
     internal token space, which has no ground truth — but building a second family is a real
     investment and I would rather you rule than have me assume.
+
+
+## Cycle 027 (2026-08-21) — third real-substrate audit
+
+89. **HITL #78 IS GETTING WORSE, NOT STALE. 400 rows on disk, 0 accepted, 100% drop.** It was
+    330 when I found it (cycle 025), 369 last cycle, 400 now. The campaign keeps writing and
+    `load_prepass` keeps discarding everything. Still unruled, still unpatched by me. **Anything
+    scored against D0 packets during this window is scored against empty packets.**
+90. **A THIRD stage-type category, and this one is dangerous.** Cycle 025: instruments BLIND on
+    rewrite stages. Cycle 026: instruments WORK on select/reorder. Cycle 027: instruments
+    **INVERTED** on filter/accumulate. A falsification battery adds a verdict bit per check and
+    discards nothing, so it REFINES forward while cycle 024's profile assumes coarsening.
+    Measured: deficit DECREASES 1.8295 -> 0.8698 -> 0.0000, and `is_refinement_chain` returns
+    False on a perfectly healthy battery. Blind is safe; inverted is not.
+91. **FOR WHOEVER OWNS THE DISCOVERY PIPELINE: two of the four kill-path checks carry zero bits
+    on the candidates I measured.** F1 = 0.9597 bits, F6 = 0.9082, **F9 = 0.0000, F11 = 0.0000**.
+    F9 and F11 returned the same verdict for all 34 real candidates, and the terminal verdict is
+    fully determined after F6. This is canon R11's hedging forecaster inside a real battery — a
+    member that never fires is observationally identical to an absent one. **Caveat stated
+    plainly: 34 candidates in a narrow band is a small sample and a non-firing check may be
+    guarding a rare failure mode.** But if it holds on a larger candidate set, every claim that
+    "survived the four-member battery" survived a two-member battery.
+92. **Question I could not answer and would like ruled on:** how should battery strength be
+    reported when members do not fire? Advertised strength 4, measured strength 2. R11's
+    resolution/reliability pair is the closest instrument I have and it does not obviously
+    transfer, because a rare-failure-mode guard legitimately has zero resolution until it fires.
+93. **Three stage types found in three cycles, one per cycle, each by accident.** That rate
+    suggests the taxonomy is incomplete rather than converging. I do not have a principled
+    enumeration of how a stage can relate its input information to its output — "loses",
+    "reorders", "adds" is a list, not a derivation.

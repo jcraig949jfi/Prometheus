@@ -24,7 +24,7 @@ from typing import Callable, Dict, FrozenSet, Hashable, List, Sequence, Tuple
 
 __all__ = ["induced_partition", "refines", "entropy", "mutual_information",
            "variation_of_information", "conditional_entropy", "is_refinement_chain",
-           "information_profile", "normalized_deficit", "PartitionError"]
+           "information_profile", "normalized_deficit", "chain_direction", "PartitionError"]
 
 Partition = Tuple[FrozenSet[int], ...]
 
@@ -170,3 +170,22 @@ def normalized_deficit(truth: Partition, projection: Partition, n: int) -> float
             "the target is constant on this battery, so normalized deficit is undefined; "
             "a battery with no target variation cannot test sufficiency")
     return conditional_entropy(truth, projection, n) / h_t
+
+
+def chain_direction(chain: Sequence[Partition], n: int) -> str:
+    """Which way does a pipeline's information flow — "DESTROYING", "ACCUMULATING", "NEITHER"?
+
+    Cycle 024 built `information_profile` for TRANSFORM pipelines, where stage k+1 sees only
+    stage k's output; those coarsen forward, deficit rises and excess falls. Cycle 027 measured a
+    falsification battery, where each stage ADDS a verdict bit and discards nothing; those refine
+    forward and every monotonicity runs backwards.
+
+    Reading a profile without checking the direction first is how a healthy accumulating chain
+    gets flagged as broken, so this exists to be called before the profile is interpreted.
+    "NEITHER" means consecutive stages are incomparable and no chain argument is available at all.
+    """
+    if is_refinement_chain(chain, n):
+        return "DESTROYING"
+    if is_refinement_chain(list(reversed(chain)), n):
+        return "ACCUMULATING"
+    return "NEITHER"
