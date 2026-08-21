@@ -711,8 +711,16 @@ before any arm data exists.
   Consequences, binding: (a) the paid-host `M30 LEVELED` verdict does **not** transfer — the
   campaign re-levels from scratch at P1, and `NOT-LEVELED` on this pin ends the campaign as a
   *result*, not an error; (b) **no pooling of free-host rows with paid-host rows, ever**, in any
-  statistic — the measured host delta is +14pp, larger than the +8pp effect the probe is powered
-  for; (c) every verdict pins host + model_id (R9), and the campaign's P5 drift re-read voids the
+  statistic. **[CORRECTED same day — the +14pp figure I cited here hours earlier was an
+  artifact.]** It compared a settled paid read (M20, n=200, 0.640) against a free read of
+  **n=40 whose own verdict was `UNDECIDED` with interval [0.303, 0.697]** (`axis_nearmiss_
+  M20-M80_n40.txt`) — a point estimate that was never entitled to carry a delta. The campaign's
+  own free-host M20 rep-1 data (n=351, truncation-corrected) reads **0.624**, putting the real
+  host delta at **≈+1.6pp**, not +14pp. The no-pooling rule **stands unchanged**, but it stands
+  on principle — different host, different served model version, R9 pinning — and not on a
+  delta measurement that does not exist. I record the correction rather than quietly restating
+  the rule: the erroneous number is also in `memory/project_probe_lanes_and_burn.md`, corrected
+  there the same day; (c) every verdict pins host + model_id (R9), and the campaign's P5 drift re-read voids the
   run as `HOST-DRIFTED` if F0 moves >7pp from P1 (Harmonia B's rule).
 
 - **C4 ruled (Charon: "Ergon's call under R12 but must be *stated*, not assumed").** Tier A does

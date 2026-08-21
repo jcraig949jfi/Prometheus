@@ -49,11 +49,18 @@ from ergon.probe.extract import extract_numeric
 from ergon.probe.assemble import assemble_retrieved, load_prepass, select_residue
 from ergon.probe.f_null import build_f_null
 from ergon.probe.task_gen_v3 import generate, is_prime, manifest_sha256, generator_sha256
+from ergon.probe.chain_run import TRUNCATION_GATE
 
 SOLVER = "nvidia:deepseek-v4-flash"     # FREE host pin — never pooled with paid rows
 RUNG, MANIFEST_N, SEED = "M20", 620, 20260821
 BAND, MOVABLE_FLOOR = (0.35, 0.60), 0.30
-MAX_TOK, TIMEOUT = 8192, 420
+# MAX_TOK raised 8192 -> 16384 on 2026-08-21 after the confounded first P1: at 8192 the
+# free host truncated 3.13% of rep-1 calls (>2% gate) and — worse — truncated rows scored
+# accuracy 0.000 while parse-fail read 0.000, because the frozen extractor lifts arithmetic
+# scratch numbers (24, 756, 950) out of mid-reasoning trial division and scores them as
+# answers. Silent corruption, not visible missing data. Observed acc 0.604 = 0.624 x (1-.031):
+# the truncation was dragging the point INTO the band. Lane accepts 16384 and 32768 (tested).
+MAX_TOK, TIMEOUT = 16384, 420
 BATCH_CAP = 400                          # per firing; the 429 stop is the real limiter
 CALL_SPACING_S = 2.0
 DIR = ROOT / "ergon/probe/ledgers/campaign"
@@ -172,6 +179,23 @@ def p1(rows, gold, budget):
             return None, sent
     b = best(led)
     n = len(rows)
+    # pre-committed truncation gate (chain_run TRUNCATION_GATE = 0.02). A truncated row is
+    # NOT missing data here: it parses to a scratch number and scores wrong, so truncation
+    # biases the point estimate downward — toward the band. Refuse rather than repair: any
+    # row-level fix (drop / score-wrong) selects on task difficulty, which is the axis the
+    # probe measures.
+    rep1 = [b[(1, r["uid"])] for r in rows if b.get((1, r["uid"]))]
+    trunc_rate = (sum(1 for x in rep1 if (x.get("completion_tokens") or 0) >= MAX_TOK)
+                  / max(1, len(rep1)))
+    if trunc_rate > TRUNCATION_GATE:
+        atomic(DIR / "p1_bandread.TRUNCATION-CONFOUNDED.json",
+               {"verdict": "TRUNCATION-CONFOUNDED", "truncation_rate": round(trunc_rate, 4),
+                "gate": TRUNCATION_GATE, "max_tokens": MAX_TOK, "n_rep1": len(rep1),
+                "note": "no leveling may be chosen from this read (chain_run rule); "
+                        "raise MAX_TOK or re-rung, then re-collect from scratch (R11)",
+                "ts_utc": now()})
+        log(phase="P1", verdict="TRUNCATION-CONFOUNDED", trunc_rate=round(trunc_rate, 4))
+        return None, 0
     succ = [b.get((1, r["uid"])) is not None
             and b[(1, r["uid"])]["extracted_int"] == gold[r["uid"]] for r in rows]
     acc = sum(succ) / n
