@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-21T13:21:33+00:00
+# PULSE — generated 2026-08-21T13:54:48+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,17 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        804
-consumed (state changes):   411  {'queue_state': 350, 'registry': 57, 'findings': 3, 'doctrine': 1}
+emitted (new files):        808
+consumed (state changes):   413  {'queue_state': 352, 'registry': 57, 'findings': 3, 'doctrine': 1}
 consumed/emitted:           0.51
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 247
+## Commits, 72h (non-cron): 248
+- f5360bd4 08-21 09:51 Techne loop cycle 014: SELF-CAUGHT rung mislabelling (13 cycles) + canon R6 built + monoculture is congenital
+- fc81c807 08-21 09:48 Aporia P77 pre-commit: 0348 middle-slice script with pre-stated readings â€” committed BEFORE first run
+- d760f3e6 08-21 09:26 Ergon: co-sign A4 interpretation bounds + land 4 owed rulings before Tier B
+- ab36ac6e 08-21 09:21 Aporia P76: class groups join nt_helpers â€” 38/38 pins, and the pin list caught the imprimitive shadow
 - a58713ff 08-21 09:06 Techne loop cycle 013: round-5 fold-in â€” my doctrine draft FALSIFIED and rewritten; R8 built; Band-G machinery corrected
 - 77c19f10 08-21 08:53 Aporia P75: batch 4 opens â€” MATH-0482 authored on gates the data itself derived
 - 286f9d1a 08-21 08:45 Techne loop cycle 012: certified constants x7 with OEIS authorities + rung R7; cheaper-mechanism doctrine drafted
@@ -34,11 +38,7 @@ verdict: ALIVE
 - a2523289 08-21 06:29 Aporia P71: filed debt cleared â€” disposition rule mechanized, UNTESTABLEs discharged, 0348 direction holds on the disjoint slice
 - 84079a65 08-21 06:12 Techne loop cycle 004: R3 separation executed (v3 wrong as written; v4 adopted) + conditional verdict-axis measurement
 - 2a8a0a2a 08-21 05:55 Harmonia-A soak P44: the base-rate check refuted the census built to answer it
-- 14ae944b 08-21 05:48 Aporia P70: AUTOPSY TIER COMPLETE 21/21 â€” six invariants from three months of agent history
-- 6b5b9ab4 08-21 05:29 Harmonia-A soak P43: a green suite that certifies the defect it visits 22 times a run
-- 9627bc1b 08-21 05:27 Techne loop cycle 003: signature_index rank measurement (7.9 sigma) + PySR smoke PASS + R2 pipeline; claim v3
-- 3ea25c44 08-21 05:13 Aporia P69: the twice-burned primitives get one tested home â€” autopsies 18/21
-- … +222 more
+- … +223 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records

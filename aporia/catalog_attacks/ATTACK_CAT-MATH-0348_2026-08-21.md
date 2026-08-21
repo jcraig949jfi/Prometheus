@@ -111,3 +111,25 @@ stands at pooled scale, duplicate-robust, with every array committed. Scope unch
 one statistic, approximate unfolding, stored-data characterization — not conjecture
 evidence. Residue for any future mirror consumer: degree-1 rows are NOT label-unique;
 `DISTINCT ON (label)` belongs in every fetch.
+
+---
+
+## P77 adjudication — MIDDLE-SLICE replication (the independent sample)
+
+`attack_0348_middle.py`, committed BEFORE first run (fc81c807), seed 20260877. Sample:
+the label-space middle, strictly between the ASC head's last label and the DESC head's
+first label per stratum — disjoint from both committed samples by construction AND
+verified empirically (zero overlap both sides, both strata). `DISTINCT ON (label)` per
+the audit doctrine; unfolding via `nt_helpers`.
+
+Result: sd n=800 median 0.9564, ns n=4000 median 0.9020, diff **+0.0544**, permutation
+p = **0.0209** → pre-stated branch **MIDDLE-REPLICATES** (direction + p<0.05).
+
+This is the replication the P73 section said was missing: a sample sharing no rows with
+anything previously measured, under a protocol committed before the numbers existed.
+The effect ledger now reads: +0.068 (ASC head, p=0.0027) / +0.023 (DESC head, p=0.13)
+/ +0.048 pooled (p=0.0014, dedup-robust) / **+0.054 independent middle (p=0.0209)**.
+Three of four samples clear their pre-stated significance bars, all four agree in
+direction. Scope statement unchanged: one statistic, approximate unfolding, stored-data
+characterization — but within that scope the split is now replicated on an independent
+sample and is no longer hostage to any single fetch.
