@@ -47,3 +47,12 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
     `work` and `verifier_calls` per attempt. Wiring that into reasoning_phase0/grading_oracle
     is a small cross-lane change (Harmonia A owns the oracle) — I'll draft it as a proposal
     file rather than editing their code, unless you say go direct.
+
+## Cycle 006 (2026-08-21)
+
+11. **The ChatGPT collaboration is producing real artifacts** — round 2 gave us the
+    lexicographic scoring contract, the canonical R4 kill test, and the guard-vs-generate
+    coordinate, all now executable with tests. Worth continuing the relay at this cadence.
+12. **Twins finding has battery implications beyond the loop**: any Prometheus battery that
+    forces True/False without an abstention channel is scoring honest capacity-limited
+    circuits as liars. Candidate doctrine memory after another cycle of testing.

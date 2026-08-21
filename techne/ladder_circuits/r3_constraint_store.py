@@ -88,3 +88,32 @@ def adversarial_query(circuit_width: int, n: int, policy: str) -> Event:
     circuit provably evicted. FIFO evicts early facts -> query x1; LIFO evicts late -> x_n."""
     assert n > circuit_width
     return ("query_cancel", "x1" if policy == "fifo" else f"x{n}")
+
+
+# --------------------------------------------------------------------------- cycle 006 fold-in
+
+def lexicographic_score(answers, gold, abstain=None):
+    """ChatGPT round-2 scoring contract: (soundness_violations, -coverage), minimized
+    LEXICOGRAPHICALLY. No penalty constants: one fabricated fact disqualifies a liar from
+    competing on coverage at all — (0, -0.20) < (1, -0.99), always.
+
+    `answers[i]` is True/False/abstain; gold[i] is True/False. A soundness violation is a
+    non-abstaining WRONG answer; coverage is the fraction answered (rightly or not is the
+    soundness axis's business)."""
+    violations = sum(1 for a, g in zip(answers, gold) if a is not abstain and a != g)
+    coverage = sum(1 for a in answers if a is not abstain) / max(len(answers), 1)
+    return (violations, -coverage)
+
+
+def indistinguishable_twins(width: int, policy: str = "fifo"):
+    """The round-2 kill battery: two histories that leave IDENTICAL bounded state S, but the
+    queried proposition differs. H_T declares xq!=0 early (then floods the window); H_F never
+    declares it (same flood). Any deterministic circuit answering from S alone is wrong on
+    one twin; abstention is sound on both.
+
+    Returns (events_T, events_F, query) with n = width+1 declarations in H_T so xq is
+    provably evicted under FIFO."""
+    flood = [("declare_nonzero", f"f{i}") for i in range(1, width + 1)]
+    h_t = [("declare_nonzero", "xq")] + flood
+    h_f = list(flood)
+    return h_t, h_f, ("query_cancel", "xq")
