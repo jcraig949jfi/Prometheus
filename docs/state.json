@@ -1,6 +1,6 @@
 {
   "schema_version": 3,
-  "generated_at": "2026-08-20T23:44:44.025540+00:00",
+  "generated_at": "2026-08-21T03:44:42.933610+00:00",
   "redis_host": "192.168.1.176:6379",
   "heartbeat_timeout_sec": 300,
   "ideas_in_flight": [
@@ -25,7 +25,7 @@
       "lifecycle": "shelved",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 7656208,
+      "heartbeat_age_sec": 7670607,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-24T05:01:15.568994-04:00",
       "key_metrics": {
@@ -64,7 +64,7 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 7111191,
+      "heartbeat_age_sec": 7125590,
       "current_op": "forging Gene Regulatory Networks + Causal Inference + Nash Equilibrium",
       "last_status_update": "2026-05-28T01:38:15.244017-04:00",
       "key_metrics": {
@@ -120,13 +120,13 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "ALIVE",
-      "heartbeat_age_sec": 29,
-      "current_op": "idle (last cycle 56011517 ok)",
-      "last_status_update": "2026-08-20T19:44:14.919434-04:00",
+      "heartbeat_age_sec": 12,
+      "current_op": "idle (last cycle b90767ee ok)",
+      "last_status_update": "2026-08-20T23:44:30.793055-04:00",
       "key_metrics": {
-        "cycles_today": 50,
+        "cycles_today": 51,
         "last_cycle_ok": true,
-        "last_cycle_duration_sec": 65.36
+        "last_cycle_duration_sec": 68.52
       },
       "data_source": "postgres_fallback"
     },
@@ -140,7 +140,7 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 8155741,
+      "heartbeat_age_sec": 8170140,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-18T10:15:42.578880-04:00",
       "key_metrics": {
@@ -169,11 +169,28 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 933,
+      "heartbeat_age_sec": 13544,
       "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-08-20T19:29:10.342133-04:00",
+      "last_status_update": "2026-08-20T19:58:58.309449-04:00",
       "key_metrics": {
-        "sweep": "catchup-P25-P48"
+        "head": "84d3c9f6",
+        "sweep": "catchup-P25-P48 COMPLETE (priorities 1-5)",
+        "decoys": "NOT PLANTED - DEC-003 names Elenchus as detector, DEC-006 assigns plant to Charon",
+        "headline": "P46 Aletheia CONSUMER-DRIFT refuted by its own falsifier; 2 of 11 specs rejected on executed false-alarm criteria",
+        "verdicts": {
+          "MIXED": 4,
+          "SOUND": 1,
+          "METHOD-FLAW": 1,
+          "OVERCLAIMED": 1,
+          "UNDERCLAIMED": 1
+        },
+        "unreviewed": "HARMA-P1..P24 per-pass, Aporia P26/P29-P32/P38-P45/P49",
+        "reviews_filed": 8,
+        "spec_dispositions": {
+          "sound": 4,
+          "rejected": 2,
+          "correction-needed": 5
+        }
       },
       "data_source": "postgres_fallback"
     },
@@ -203,7 +220,7 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 7454242,
+      "heartbeat_age_sec": 7468641,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-26T13:07:21.655030-04:00",
       "key_metrics": {
@@ -257,7 +274,7 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 7112613,
+      "heartbeat_age_sec": 7127012,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-30T12:01:10.112939-04:00",
       "key_metrics": {
@@ -322,7 +339,7 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 7111201,
+      "heartbeat_age_sec": 7125600,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-30T12:24:42.200937-04:00",
       "key_metrics": {
@@ -375,7 +392,7 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 7113850,
+      "heartbeat_age_sec": 7128249,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-30T11:40:33.613935-04:00",
       "key_metrics": {
@@ -406,7 +423,7 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 7112034,
+      "heartbeat_age_sec": 7126433,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-30T12:10:49.063103-04:00",
       "key_metrics": {
@@ -436,7 +453,7 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 7112508,
+      "heartbeat_age_sec": 7126907,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-30T12:02:55.446284-04:00",
       "key_metrics": {
@@ -503,7 +520,7 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 6612732,
+      "heartbeat_age_sec": 6627131,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-06-05T06:52:31.746588-04:00",
       "key_metrics": {
@@ -544,7 +561,7 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 7428204,
+      "heartbeat_age_sec": 7442603,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-26T20:21:19.122826-04:00",
       "key_metrics": {
@@ -586,7 +603,7 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 7112035,
+      "heartbeat_age_sec": 7126434,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-30T12:10:48.713186-04:00",
       "key_metrics": {
@@ -617,7 +634,7 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 7113003,
+      "heartbeat_age_sec": 7127401,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-30T11:54:40.974677-04:00",
       "key_metrics": {
@@ -654,7 +671,7 @@
       "lifecycle": "shelved",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 7656231,
+      "heartbeat_age_sec": 7670630,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-24T05:00:52.067590-04:00",
       "key_metrics": {
@@ -702,7 +719,7 @@
       "lifecycle": "shelved",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 7656700,
+      "heartbeat_age_sec": 7671099,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-24T04:53:03.105014-04:00",
       "key_metrics": {
@@ -746,7 +763,7 @@
       "lifecycle": "shelved",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 7656791,
+      "heartbeat_age_sec": 7671190,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-24T04:51:32.912336-04:00",
       "key_metrics": {
@@ -785,7 +802,7 @@
       "lifecycle": "shelved",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 7656324,
+      "heartbeat_age_sec": 7670723,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-24T04:59:19.856520-04:00",
       "key_metrics": {
@@ -823,7 +840,7 @@
       "lifecycle": "shelved",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 7656231,
+      "heartbeat_age_sec": 7670630,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-24T05:00:52.043882-04:00",
       "key_metrics": {
@@ -858,7 +875,7 @@
       "lifecycle": "shelved",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 7656468,
+      "heartbeat_age_sec": 7670866,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-24T04:56:55.967806-04:00",
       "key_metrics": {
@@ -909,7 +926,7 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 7111189,
+      "heartbeat_age_sec": 7125588,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-30T12:24:54.737152-04:00",
       "key_metrics": {
@@ -963,7 +980,7 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 7112479,
+      "heartbeat_age_sec": 7126878,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-30T12:03:24.259462-04:00",
       "key_metrics": {
@@ -1012,7 +1029,7 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 7112205,
+      "heartbeat_age_sec": 7126604,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-30T12:07:58.184229-04:00",
       "key_metrics": {
@@ -1054,7 +1071,7 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 7111965,
+      "heartbeat_age_sec": 7126364,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-30T12:11:58.427343-04:00",
       "key_metrics": {
@@ -1096,7 +1113,7 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 7111670,
+      "heartbeat_age_sec": 7126069,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-30T12:16:53.429474-04:00",
       "key_metrics": {
@@ -1145,7 +1162,7 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 7111429,
+      "heartbeat_age_sec": 7125828,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-30T12:20:54.437905-04:00",
       "key_metrics": {
@@ -1193,7 +1210,7 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 7111189,
+      "heartbeat_age_sec": 7125588,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-30T12:24:54.613885-04:00",
       "key_metrics": {
@@ -1231,7 +1248,7 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 7112719,
+      "heartbeat_age_sec": 7127118,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-30T11:59:24.161566-04:00",
       "key_metrics": {
@@ -1273,7 +1290,7 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 7112960,
+      "heartbeat_age_sec": 7127359,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-30T11:55:23.901164-04:00",
       "key_metrics": {
@@ -1313,7 +1330,7 @@
       "lifecycle": "active",
       "invoke_on_demand": true,
       "status": "DEAD",
-      "heartbeat_age_sec": 8105024,
+      "heartbeat_age_sec": 8119423,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-19T00:20:59.542580-04:00",
       "key_metrics": {
@@ -1383,16 +1400,16 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 2873,
-      "current_op": "machine=M4 cpu=13.6% mem=68.3% (21.78/31.86GB) disk=[C:\\ 18.3% (778.1GB free); E:\\ 11.5% (843.4GB free)] uptime=209h",
-      "last_status_update": "2026-08-20T18:56:50.247455-04:00",
+      "heartbeat_age_sec": 2868,
+      "current_op": "machine=M4 cpu=21.9% mem=69.3% (22.07/31.86GB) disk=[C:\\ 18.3% (778.2GB free); E:\\ 11.5% (843.4GB free)] uptime=213h",
+      "last_status_update": "2026-08-20T22:56:54.564905-04:00",
       "key_metrics": {
-        "cpu_pct": 13.6,
-        "mem_pct": 68.3,
-        "mem_free_gb": 10.09,
-        "uptime_hours": 209,
+        "cpu_pct": 21.9,
+        "mem_pct": 69.3,
+        "mem_free_gb": 9.79,
+        "uptime_hours": 213,
         "disk_root_pct": 18.3,
-        "disk_root_free_gb": 778.1
+        "disk_root_free_gb": 778.2
       },
       "data_source": "postgres_fallback"
     },
@@ -1473,160 +1490,226 @@
     {
       "agent": "Apollo",
       "kind": "dead",
-      "detail": "no heartbeat for 7656208s"
+      "detail": "no heartbeat for 7670607s"
     },
     {
       "agent": "Hephaestus",
       "kind": "dead",
-      "detail": "no heartbeat for 7111191s"
+      "detail": "no heartbeat for 7125590s"
     },
     {
       "agent": "Aporia",
       "kind": "dead",
-      "detail": "no heartbeat for 8155741s"
+      "detail": "no heartbeat for 8170140s"
     },
     {
       "agent": "Elenchus",
       "kind": "dead",
-      "detail": "no heartbeat for 933s"
+      "detail": "no heartbeat for 13544s"
     },
     {
       "agent": "Ergon",
       "kind": "dead",
-      "detail": "no heartbeat for 7454242s"
+      "detail": "no heartbeat for 7468641s"
     },
     {
       "agent": "Clio",
       "kind": "dead",
-      "detail": "no heartbeat for 7112613s"
+      "detail": "no heartbeat for 7127012s"
     },
     {
       "agent": "Pythia",
       "kind": "dead",
-      "detail": "no heartbeat for 7111201s"
+      "detail": "no heartbeat for 7125600s"
     },
     {
       "agent": "Hypatia",
       "kind": "dead",
-      "detail": "no heartbeat for 7113850s"
+      "detail": "no heartbeat for 7128249s"
     },
     {
       "agent": "Atalanta",
       "kind": "dead",
-      "detail": "no heartbeat for 7112034s"
+      "detail": "no heartbeat for 7126433s"
     },
     {
       "agent": "Polyhymnia",
       "kind": "dead",
-      "detail": "no heartbeat for 7112508s"
+      "detail": "no heartbeat for 7126907s"
     },
     {
       "agent": "Theseus",
       "kind": "dead",
-      "detail": "no heartbeat for 6612732s"
+      "detail": "no heartbeat for 6627131s"
     },
     {
       "agent": "Penelope",
       "kind": "dead",
-      "detail": "no heartbeat for 7428204s"
+      "detail": "no heartbeat for 7442603s"
     },
     {
       "agent": "Pheme",
       "kind": "dead",
-      "detail": "no heartbeat for 7112035s"
+      "detail": "no heartbeat for 7126434s"
     },
     {
       "agent": "Talos",
       "kind": "dead",
-      "detail": "no heartbeat for 7113003s"
+      "detail": "no heartbeat for 7127401s"
     },
     {
       "agent": "Harmonia_Loop",
       "kind": "dead",
-      "detail": "no heartbeat for 7656231s"
+      "detail": "no heartbeat for 7670630s"
     },
     {
       "agent": "Argos",
       "kind": "dead",
-      "detail": "no heartbeat for 7656700s"
+      "detail": "no heartbeat for 7671099s"
     },
     {
       "agent": "Iris",
       "kind": "dead",
-      "detail": "no heartbeat for 7656791s"
+      "detail": "no heartbeat for 7671190s"
     },
     {
       "agent": "Phylax",
       "kind": "dead",
-      "detail": "no heartbeat for 7656324s"
+      "detail": "no heartbeat for 7670723s"
     },
     {
       "agent": "Sophia",
       "kind": "dead",
-      "detail": "no heartbeat for 7656231s"
+      "detail": "no heartbeat for 7670630s"
     },
     {
       "agent": "Telos",
       "kind": "dead",
-      "detail": "no heartbeat for 7656468s"
+      "detail": "no heartbeat for 7670866s"
     },
     {
       "agent": "Charon_Loop",
       "kind": "dead",
-      "detail": "no heartbeat for 7111189s"
+      "detail": "no heartbeat for 7125588s"
     },
     {
       "agent": "Stygian",
       "kind": "dead",
-      "detail": "no heartbeat for 7112479s"
+      "detail": "no heartbeat for 7126878s"
     },
     {
       "agent": "Lethe",
       "kind": "dead",
-      "detail": "no heartbeat for 7112205s"
+      "detail": "no heartbeat for 7126604s"
     },
     {
       "agent": "Acheron",
       "kind": "dead",
-      "detail": "no heartbeat for 7111965s"
+      "detail": "no heartbeat for 7126364s"
     },
     {
       "agent": "Moros",
       "kind": "dead",
-      "detail": "no heartbeat for 7111670s"
+      "detail": "no heartbeat for 7126069s"
     },
     {
       "agent": "Hecate",
       "kind": "dead",
-      "detail": "no heartbeat for 7111429s"
+      "detail": "no heartbeat for 7125828s"
     },
     {
       "agent": "Nephele",
       "kind": "dead",
-      "detail": "no heartbeat for 7111189s"
+      "detail": "no heartbeat for 7125588s"
     },
     {
       "agent": "Erebos",
       "kind": "dead",
-      "detail": "no heartbeat for 7112719s"
+      "detail": "no heartbeat for 7127118s"
     },
     {
       "agent": "Pollux",
       "kind": "dead",
-      "detail": "no heartbeat for 7112960s"
+      "detail": "no heartbeat for 7127359s"
     },
     {
       "agent": "Calliope",
       "kind": "dead",
-      "detail": "no heartbeat for 8105024s"
+      "detail": "no heartbeat for 8119423s"
     },
     {
       "agent": "HealthCheck-M4",
       "kind": "dead",
-      "detail": "no heartbeat for 2873s"
+      "detail": "no heartbeat for 2868s"
     }
   ],
   "intelligence_outputs": [
+    {
+      "cycle_id": "6405437d-c6a8-4c37-a038-93ad52ff79a0",
+      "stage": "pronoia_cycle_started",
+      "success": true,
+      "output_path": null,
+      "output_summary": "Pronoia hourly cycle (interval=240min)",
+      "error": null,
+      "started_at": "2026-08-12T07:43:07.469949-04:00",
+      "finished_at": "2026-08-20T23:44:41.690183-04:00",
+      "duration_sec": 748894.25
+    },
+    {
+      "cycle_id": "b90767ee-743b-49a0-94c5-b6185fda713e",
+      "stage": "pronoia_cycle_complete",
+      "success": true,
+      "output_path": null,
+      "output_summary": "cycle b90767ee done in 68.5s \u2014 monitor=True metis=True push=True email=True",
+      "error": null,
+      "started_at": "2026-08-20T19:44:41.687021-04:00",
+      "finished_at": "2026-08-20T19:45:50.203021-04:00",
+      "duration_sec": 68.516
+    },
+    {
+      "cycle_id": "b90767ee-743b-49a0-94c5-b6185fda713e",
+      "stage": "pronoia_email_dispatched",
+      "success": true,
+      "output_path": null,
+      "output_summary": "send_brief_email.py ok (2.4s) \u2014 2026-08-20T19:45:50-0400 [send_brief_email] INFO sent 'Prometheus Portfolio \u2014 2026-08-20 23:45 UTC' to jcraig949b@gmail.com (body=8174/12271 md/html chars) (2.0",
+      "error": null,
+      "started_at": "2026-08-20T19:45:47.765476-04:00",
+      "finished_at": "2026-08-20T19:45:50.171476-04:00",
+      "duration_sec": 2.406
+    },
+    {
+      "cycle_id": "b90767ee-743b-49a0-94c5-b6185fda713e",
+      "stage": "pronoia_dashboard_pushed",
+      "success": true,
+      "output_path": null,
+      "output_summary": "git push ok (59.2s)",
+      "error": null,
+      "started_at": "2026-08-20T19:44:48.495810-04:00",
+      "finished_at": "2026-08-20T19:45:47.729810-04:00",
+      "duration_sec": 59.234
+    },
+    {
+      "cycle_id": "b90767ee-743b-49a0-94c5-b6185fda713e",
+      "stage": "pronoia_brief_generated",
+      "success": true,
+      "output_path": "docs/portfolio_brief.md",
+      "output_summary": "metis_portfolio.py ok (3.2s) \u2014 2026-08-20T19:44:48-0400 [metis_portfolio] INFO wrote C:\\Prometheus\\docs\\portfolio_brief.md; manual_status touched=True (2.9s)",
+      "error": null,
+      "started_at": "2026-08-20T19:44:45.273058-04:00",
+      "finished_at": "2026-08-20T19:44:48.461058-04:00",
+      "duration_sec": 3.188
+    },
+    {
+      "cycle_id": "b90767ee-743b-49a0-94c5-b6185fda713e",
+      "stage": "pronoia_portfolio_refresh",
+      "success": true,
+      "output_path": "docs/state.json",
+      "output_summary": "portfolio_monitor.py ok (3.5s) \u2014 2026-08-20T19:44:45-0400 [portfolio_monitor] INFO wrote C:\\Prometheus\\pivot\\portfolio_STATUS.md, C:\\Prometheus\\docs\\state.json",
+      "error": null,
+      "started_at": "2026-08-20T19:44:41.730225-04:00",
+      "finished_at": "2026-08-20T19:44:45.214225-04:00",
+      "duration_sec": 3.484
+    },
     {
       "cycle_id": "b90767ee-743b-49a0-94c5-b6185fda713e",
       "stage": "pronoia_cycle_started",
@@ -2110,72 +2193,6 @@
       "started_at": "2026-08-19T23:44:44.141376-04:00",
       "finished_at": "2026-08-19T23:44:46.657376-04:00",
       "duration_sec": 2.516
-    },
-    {
-      "cycle_id": "5fdff25c-af56-4f38-a662-8fb18d49d49b",
-      "stage": "pronoia_portfolio_refresh",
-      "success": true,
-      "output_path": "docs/state.json",
-      "output_summary": "portfolio_monitor.py ok (2.2s) \u2014 2026-08-19T23:44:43-0400 [portfolio_monitor] INFO wrote C:\\Prometheus\\pivot\\portfolio_STATUS.md, C:\\Prometheus\\docs\\state.json",
-      "error": null,
-      "started_at": "2026-08-19T23:44:41.735320-04:00",
-      "finished_at": "2026-08-19T23:44:43.954320-04:00",
-      "duration_sec": 2.219
-    },
-    {
-      "cycle_id": "5fdff25c-af56-4f38-a662-8fb18d49d49b",
-      "stage": "portfolio_monitor_run",
-      "success": true,
-      "output_path": "docs\\state.json",
-      "output_summary": "wrote C:\\Prometheus\\pivot\\portfolio_STATUS.md, C:\\Prometheus\\docs\\state.json | agents=43 mode=redis",
-      "error": null,
-      "started_at": "2026-08-19T23:44:41.952968-04:00",
-      "finished_at": "2026-08-19T23:44:43.887192-04:00",
-      "duration_sec": 1.934224
-    },
-    {
-      "cycle_id": "5fdff25c-af56-4f38-a662-8fb18d49d49b",
-      "stage": "pronoia_cycle_started",
-      "success": true,
-      "output_path": null,
-      "output_summary": "Pronoia hourly cycle (interval=240min)",
-      "error": null,
-      "started_at": "2026-08-12T07:43:07.469949-04:00",
-      "finished_at": "2026-08-19T23:44:41.683302-04:00",
-      "duration_sec": 662494.2
-    },
-    {
-      "cycle_id": "6efeba1c-62da-48c4-924a-1c817080aa1f",
-      "stage": "machine_health_m4",
-      "success": true,
-      "output_path": null,
-      "output_summary": "machine=M4 cpu=10.7% mem=64.3% (20.48/31.86GB) disk=[C:\\ 18.3% (778.8GB free); E:\\ 11.5% (843.4GB free)] uptime=189h",
-      "error": null,
-      "started_at": "2026-08-19T22:56:49.429470-04:00",
-      "finished_at": "2026-08-19T22:56:50.828216-04:00",
-      "duration_sec": 1.398746
-    },
-    {
-      "cycle_id": "94f6861f-6130-4ed5-a687-753910554cea",
-      "stage": "machine_health_m4",
-      "success": true,
-      "output_path": null,
-      "output_summary": "machine=M4 cpu=14.9% mem=64.1% (20.41/31.86GB) disk=[C:\\ 18.3% (778.8GB free); E:\\ 11.5% (843.4GB free)] uptime=188h",
-      "error": null,
-      "started_at": "2026-08-19T21:56:49.409427-04:00",
-      "finished_at": "2026-08-19T21:56:50.802691-04:00",
-      "duration_sec": 1.393264
-    },
-    {
-      "cycle_id": "b69d39a5-ba6a-4af9-8421-716235954bfe",
-      "stage": "machine_health_m4",
-      "success": true,
-      "output_path": null,
-      "output_summary": "machine=M4 cpu=11.2% mem=63.9% (20.37/31.86GB) disk=[C:\\ 18.3% (778.8GB free); E:\\ 11.5% (843.4GB free)] uptime=187h",
-      "error": null,
-      "started_at": "2026-08-19T20:56:49.360050-04:00",
-      "finished_at": "2026-08-19T20:56:50.740883-04:00",
-      "duration_sec": 1.380833
     }
   ],
   "deep_research": {

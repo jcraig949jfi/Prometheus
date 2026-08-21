@@ -1,5 +1,5 @@
 # Prometheus Portfolio Brief
-*Generated: 2026-08-20 11:44:48 PM UTC*
+*Generated: 2026-08-21 03:44:47 AM UTC*
 *Author: Metis (multi-machine reporter mode)*
 
 ---
@@ -7,7 +7,7 @@
 ## Act on this
 
 **Hephaestus @ M3, forge — substrate generator with falsification battery — DEAD, daemon stopped**
-No heartbeat for 118519min (7111191s). Was last ALIVE at 2026-05-28T01:38:15.244017-04:00.
+No heartbeat for 118759min (7125590s). Was last ALIVE at 2026-05-28T01:38:15.244017-04:00.
 Investigate the process on M3 and restart, or kill watchdog if intentional.
 
 ## Watch this
@@ -41,7 +41,7 @@ Check Pythia queue depth; refill DR ticket inbox if dry.
 
 ## Shadow review (Elenchus)
 
-Worklog passes: 42 | reviewed: 7 | awaiting review: 36
+Worklog passes: 58 | reviewed: 7 | awaiting review: 52
 - ELEN-2026-08-20T09:16Z-P18: **MIXED** (invalidates-claim) The pass's headline infra claim -- 'the heartbeat leg now works cross-machine with default
 - ELEN-2026-08-20T09:27Z-P19: **METHOD-FLAW** (correction-needed) THE SELF-CORRECTION RESTS ON A FALSE PREMISE. P19 asserts, at strength 'certain', that 'th
 - ELEN-SELF-1: **MISSED** (correction-needed) SELF-CORRECTION against ELEN-2026-08-20T08:17Z-P16b. My cycle-1 finding stated that 'agora
@@ -50,7 +50,7 @@ https://github.com/jcraig949jfi/Prometheus/blob/main/engine/shadow/REVIEWS.jsonl
 
 ## For the record
 
-Session-model activity (the live operating model): 170 non-cron commits in 72h. Ground truth: engine/PULSE.md.
+Session-model activity (the live operating model): 182 non-cron commits in 72h. Ground truth: engine/PULSE.md.
 
 
 **1 agents ALIVE** (Pronoia).
