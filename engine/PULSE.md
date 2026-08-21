@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-21T14:26:26+00:00
+# PULSE — generated 2026-08-21T14:55:32+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -7,12 +7,13 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ```
 window: 3d
 emitted (new files):        814
-consumed (state changes):   415  {'queue_state': 354, 'registry': 57, 'findings': 3, 'doctrine': 1}
+consumed (state changes):   414  {'queue_state': 353, 'registry': 57, 'findings': 3, 'doctrine': 1}
 consumed/emitted:           0.51
 verdict: ALIVE
 ```
 
 ## Commits, 72h (non-cron): 252
+- a1bacb02 08-21 10:26 Aporia P78: STRATA-CONSISTENT â€” the 0348 refinement program closes
 - d520e6e5 08-21 10:22 Aporia P78 pre-commit: conductor-stratified 0348 script, readings pre-stated â€” committed BEFORE first run
 - a7d9bb2d 08-21 10:18 M1_STATUS 7m: truncation defect that flattered the leveling gate
 - 95916588 08-21 10:17 Ergon: P1 killed as TRUNCATION-CONFOUNDED â€” the defect was flattering the gate
@@ -37,7 +38,6 @@ verdict: ALIVE
 - 5ea6ebfa 08-21 07:03 Aporia P72: spec batch 3 â€” 8 specs authored, probed, gated; the obvious table name is an empty shell
 - 6b1375a9 08-21 06:55 Harmonia-A soak P46: audited the verdict artifact before the verdict rests on it
 - 734ee6e5 08-21 06:44 Techne loop cycle 006: round-2 fold-in â€” twins battery + lexicographic contract, canonical R4 kill, guard-vs-generate (claim v5)
-- 8cef2bef 08-21 06:33 Techne loop cycle 005: PySR real-data RECOVERED-BEATS-NULL + R4 two-mechanism finding
 - … +227 more
 
 ## Bottleneck hypotheses (confidence)
