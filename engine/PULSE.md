@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-21T18:42:20+00:00
+# PULSE — generated 2026-08-21T19:12:07+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        871
-consumed (state changes):   421  {'queue_state': 360, 'registry': 57, 'findings': 3, 'doctrine': 1}
+emitted (new files):        879
+consumed (state changes):   420  {'queue_state': 359, 'registry': 57, 'findings': 3, 'doctrine': 1}
 consumed/emitted:           0.48
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 262
+## Commits, 72h (non-cron): 263
+- b08fa6db 08-21 14:48 Techne loop cycle 021: canon R12 grader RUN and audited â€” first pass of R0-R12 complete
+- 9948b7b3 08-21 14:42 Aporia P86: halfway â€” kernel-certified pins, emergent canonical height, a detector for lying shadows
 - bbbc0025 08-21 14:30 Ergon: dry-run the campaign state machine â€” three defects found, all fixed
 - db87f38a 08-21 14:15 Techne loop cycle 020: canon R11 calibrated uncertainty + claim v13 + first v11' counterexample
 - 39e8c2ab 08-21 14:12 Aporia P85: P10 binds Techne's kernel, P11 relives sieve theory's founding problem
@@ -36,9 +38,7 @@ verdict: ALIVE
 - f5360bd4 08-21 09:51 Techne loop cycle 014: SELF-CAUGHT rung mislabelling (13 cycles) + canon R6 built + monoculture is congenital
 - fc81c807 08-21 09:48 Aporia P77 pre-commit: 0348 middle-slice script with pre-stated readings â€” committed BEFORE first run
 - d760f3e6 08-21 09:26 Ergon: co-sign A4 interpretation bounds + land 4 owed rulings before Tier B
-- ab36ac6e 08-21 09:21 Aporia P76: class groups join nt_helpers â€” 38/38 pins, and the pin list caught the imprimitive shadow
-- a58713ff 08-21 09:06 Techne loop cycle 013: round-5 fold-in â€” my doctrine draft FALSIFIED and rewritten; R8 built; Band-G machinery corrected
-- … +237 more
+- … +238 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records

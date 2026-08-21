@@ -1,0 +1,15 @@
+{
+ "protocol": "matmul tensor from definition; naive rank-8 and Strassen rank-7 exact entrywise reconstruction; Kruskal k-ranks by definition (all-subsets) with the certificate correctly declining",
+ "tensor_ones": 8,
+ "rank8_exact": true,
+ "rank7_exact": true,
+ "kruskal": {
+  "kA": 2,
+  "kB": 2,
+  "kC": 2,
+  "sum": 6,
+  "bound_2R2": 16,
+  "certifies_uniqueness": false
+ },
+ "verdict": "RANK7-VERIFIED"
+}
