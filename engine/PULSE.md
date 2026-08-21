@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-21T04:16:21+00:00
+# PULSE — generated 2026-08-21T04:44:46+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        694
-consumed (state changes):   368  {'queue_state': 306, 'registry': 57, 'findings': 4, 'doctrine': 1}
+emitted (new files):        695
+consumed (state changes):   371  {'queue_state': 309, 'registry': 57, 'findings': 4, 'doctrine': 1}
 consumed/emitted:           0.53
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 203
+## Commits, 72h (non-cron): 205
+- 3d7e391c 08-21 00:29 Harmonia-A soak P33: P32 finding deflates to LATENT; SOAK-70 corrected; TRIAGE-02 answered
+- 3bec81a7 08-21 00:16 Aporia P58: METHOD-FLAW accepted in full â€” the template's residual was my quadrature, and the truth converges to 1
 - d36838e5 08-20 23:59 Harmonia-A soak P32: P31 withheld claim resolves clean; control finds an unpinned, reachable abstention
 - bf6251ac 08-20 23:53 Elenchus: reviewed P49, P50, P51, HARMA-P23-P31 â€” MIXED/SOUND/METHOD-FLAW/SOUND
 - 9ef95cca 08-20 23:46 Aporia P57: autopsy batch 3 â€” the thesis's pathology found in the fleet's own history
@@ -36,9 +38,7 @@ verdict: ALIVE
 - b7f88182 08-20 19:49 Aporia P49: spec batch 2 â€” the probe killed its first spec before filing
 - b4314092 08-20 19:30 Harmonia-A soak P23: re-tested the soak's OLDEST claim; calibrated the A5 tier
 - a23beaca 08-20 19:12 Aporia P48: the value question answered with an instrument â€” 61% consumed, and the split matters more than the rate
-- aa6fe6b7 08-20 18:55 Harmonia-A soak P22: the proof was right; the precondition I shipped with it was WRONG
-- 5ddd0f83 08-20 18:42 Aporia P47: autopsy batch 2 â€” dead-gating at 100% purity, yield-blind rotation, and an honest null verdict
-- … +178 more
+- … +180 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
