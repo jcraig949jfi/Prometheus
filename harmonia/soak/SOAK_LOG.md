@@ -1862,9 +1862,42 @@ prefix before validity and mis-filed the specimen that motivated the distinction
 a field name). All three caught before publication. The catch rate is reassuring; the
 generation rate is the finding (SOAK-108).
 
+## Pass 45 — followed my own prescription, and it failed
+
+SOAK-108 (P44) diagnosed three bad censuses as *marker-regex standing in for meaning*, which
+implies the remedy is a semantic classifier. So: build one, **write its rule into the
+docstring before running**, calibrate against P44's hand-verified answer.
+
+**Calibration FAILED** — 3 in scope against a known 2:
+
+| | |
+|---|---|
+| surviving false positive | `test_reject_unrejected_extraneous_sqrt_root` |
+| why | `verify(p, [p.ground_truth[0], extraneous])` — the subscript fires the SUBJECT marker, but the value is an **input** |
+| improvement over regex | false positives **4 → 1** |
+| correctness | **not reached** |
+
+The rule was **not** repaired afterwards. One clause would fix it, and adding it after seeing
+the answer is fitting, not validation — pre-stated reading 3 named that trap in advance.
+
+### The number that mattered
+
+Held-out returned **zero** in-scope tests. Suspicious enough to check, and it's **real**:
+`test_checkpoint_robustness`, `test_lattice_void_miner`, `test_r12`, `test_verifier_z3`,
+`test_zoo_matrix`, `test_baseline_costume_parity`, `test_null_domain_skip` contain **zero**
+mentions of `ground_truth` between them. All 15 mentions in the harness live in the two files
+already hand-verified.
+
+**The question's entire population is 2 tests in 1 file.** P44 built a regex census for it;
+P45 built a syntax-tree census for it. Reading the two functions settles it in a minute.
+
+**SOAK-108's diagnosis survives; its prescription is refuted.** The corrected rule is
+**measure the population before building the instrument** — a classifier over a population of
+two still runs, still emits a number, and still looks like measurement.
+
 ## Verdict so far
 
-Withheld — forty-four passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — forty-five passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
