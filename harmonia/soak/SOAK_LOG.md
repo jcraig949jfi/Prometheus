@@ -14,11 +14,11 @@ Rough edges are the product. Nothing here is worked around silently.
 
 | Metric | Value |
 |---|---|
-| Passes completed | 24 |
+| Passes completed | 25 |
 | Validator failures | 0 |
-| Validator gate exit | 0 all twenty-four passes (now 60 worklog entries, 7 reviews) |
+| Validator gate exit | 0 all twenty-five passes (now 61 worklog entries, 15 reviews) |
 | Schema fields ambiguous/forced | 2 (`agent`, `soak_findings` — see SOAK-04) |
-| Review round-trips (Elenchus → me → response) | **0** (see SOAK-08 — the untested half) |
+| Review round-trips (Elenchus → me → response) | **1** — first at P25, and it is TRIAGE only (see SOAK-53) |
 | Worker→worker round-trips (my finding → Aporia repair → my verification) | **3**, all closed and independently verified; fastest ≈30 min |
 | Replication matches | 1 (AA-018, in kind) |
 | Replication mismatches | 0 |
@@ -34,7 +34,7 @@ Rough edges are the product. Nothing here is worked around silently.
 | Self-corrections against a published pass | **10 correction-typed claims** across 17 passes (see P17 audit) |
 | New trap candidates found | 1 (identifier-case mismatch) — **ADOPTED into ATTACK_PATTERNS as trap 8** |
 | Own prior-pass weaknesses closed | 6 (P5→P6; P19→P20 ×2; P20→P21; P21→P22; **P23→P24 fidelity**) |
-| Heartbeat successes | 0 of 24 (env-override, SOAK-05 — never blocked a pass) |
+| Heartbeat successes | 0 of 25 (env-override, SOAK-05 — never blocked a pass) |
 | Self-corrections caught before logging | 2 |
 
 ## Soak findings
@@ -1037,6 +1037,54 @@ opened the paper.** AA-007 verifies clean against arXiv v1, but the citation nam
 2025 publication I did not check — so even a confirmed-verbatim anchor carries a version
 gap no field currently expresses.
 
+### P25 — first reviewer contact, and it found what 24 passes of self-audit could not
+
+`ELEN-HARMA-TRIAGE-01` — the first review ever filed against this channel. I **verified its
+central count before accepting it**, on the same standard I apply to Aporia:
+
+| | |
+|---|---|
+| HARMA weakness-count distribution | **`Counter({6: 24})`** — exactly six, all 24 passes |
+| distinct strings | 144 of 144 (genuine writing, not a template) |
+| Aporia channel, same window | {1:1, 2:4, 3:25, 4:6} — varies naturally |
+
+**Finding 1 is exactly right and is FIXED IN THIS RECORD, not deferred.** A count that never
+varies carries no information; a quota either pads a pass that had four or truncates one
+that had nine. **This pass's list has four entries because I found four.**
+
+**Finding 2 (UNDERCLAIM)** — Elenchus reads the channel's 7-of-24 self-refutation rate as
+the shadow channel working. Recorded as a *tension*, not a compliment: my own P17 concluded
+a self-reported correction rate measures diligence, not accuracy, and is uninterpretable
+from inside. Both hold — and that is precisely why an outside reading is worth more than
+mine.
+
+**Finding 3 (SCOPE)** — the review states it is **triage**, that no HARMA pass_id should be
+treated as reviewed, and that per-pass review starts next cycle with P14, P18, P19, P12.
+
+> **SOAK-08 is NOT closed.** Twenty-four passes of flagging a gap creates an appetite to
+> declare it shut on first contact. The reviewer explicitly forbids that reading, and I am
+> recording their scope rather than my preferred one.
+
+### A5 fidelity — second entry, second type
+
+AA-006 checked against the fetched source: front-matter convention **verbatim**, Entry 8
+titled *Tensor Concentration Inequalities* attributed **(KL)**, Conjecture 16 inside Entry 8
+under Kevin Lucca. **A5 now confirmed on 2 of 2 entries across two verification types** — a
+mathematical quote (P24) and a front-matter attribution (here). One nuance reported though
+harmless: AA-006's quote stops at "union of the entry authors", truncating the source's
+trailing "in it" without an ellipsis.
+
+**SOAK-52 (correction) — the clearest instance of a defect structurally undetectable by
+self-audit.** Every weakness entry was genuine and freshly written, which is *why* it was
+invisible: the defect was not in any entry but in the **constancy of the count**, a property
+no single pass exhibits. An outside reader found it from a distribution I never thought to
+compute about myself.
+
+**SOAK-53 (observation) — what first contact actually closed.** Not SOAK-08. It closed a
+narrower question the soak could not answer alone: **does the review mechanism work at all
+for a second worker?** It does, end to end — and its first finding was one self-audit had
+missed for the entire soak.
+
 ## Repair-verification ledger
 
 | Repair claimed (P28) | Verification | Result |
@@ -1080,7 +1128,7 @@ so 2^71 sits just under it rather than a generation behind.
 
 ## Verdict so far
 
-Withheld — twenty-four passes in; all six suites calibrated; the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — twenty-five passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
