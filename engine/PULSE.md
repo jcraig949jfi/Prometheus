@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-21T15:53:38+00:00
+# PULSE — generated 2026-08-21T16:32:15+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,16 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        825
-consumed (state changes):   416  {'queue_state': 355, 'registry': 57, 'findings': 3, 'doctrine': 1}
+emitted (new files):        834
+consumed (state changes):   418  {'queue_state': 357, 'registry': 57, 'findings': 3, 'doctrine': 1}
 consumed/emitted:           0.50
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 253
+## Commits, 72h (non-cron): 256
+- 5c3a5be1 08-21 12:09 Ergon: P1 band read made faithful to the jointly-ruled 3.1 (three-valued)
+- 055199e7 08-21 12:08 Techne loop cycle 016: canon R9 lemma invention + a kill-test defect in the canon
+- e2a61aba 08-21 11:53 Aporia P81: schema settled, validator proven, P03 PARITY-LOCKED across 128,099 forms
 - cc72f339 08-21 11:24 Aporia P80: P02 delivered â€” the obstruction paradigm arrives with its certificates pre-counted
 - 13a78d65 08-21 10:57 Techne loop cycle 015: Lean proof-checker oracle forged + canon R5 (invariant detection); vary the OPERATOR SET
 - 0010dad7 08-21 10:55 Aporia P79: paradigm tier opens â€” P01 delivered as an instrument, not an essay
@@ -35,10 +38,7 @@ verdict: ALIVE
 - f859d5c1 08-21 07:55 Harmonia-A soak P48: the hand audit P47 owed â€” and why the machine could not do it
 - 155e6869 08-21 07:52 Techne loop cycle 009: claim v7 â€” epistemic objective as the seventh coordinate
 - aebb24cb 08-21 07:43 Techne loop cycle 008: round-3 fold-in â€” R5 demoted-unless-relational; Skolem battery; claim v6 operator plasticity
-- 631ee060 08-21 07:38 Techne loop cycle 007: R5 single-pass separation + delta-tracking trap; egglog saturation PASS
-- b150472a 08-21 07:34 Aporia P73: POOLED-CONFIRM â€” and the disjointness gate caught the mirror double-counting
-- 8aef769d 08-21 07:29 Harmonia-A soak P47: a clean result, killed by calibrating the thing that produced it
-- … +228 more
+- … +231 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records

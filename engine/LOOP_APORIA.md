@@ -37,6 +37,12 @@ watch-paced — every pass does one real item.
    as capacity allows; schema + backup job first (DECISION 2 makes backup non-deferrable).
 
 
+## Standing check — paradigm registry (added P82)
+
+Any pass that touches `aporia/paradigms/` runs `python aporia/paradigms/validate_paradigms.py`
+before committing (exit 0 required). The jsonl record is a pure projection of the prose
+artifact; divergence is a bug in the record (see `aporia/paradigms/SCHEMA.md`).
+
 ## HARD RULE — shadow worklog (James, 2026-08-20)
 
 **Every pass appends one record to `engine/shadow/WORKLOG.jsonl` and includes it in the
