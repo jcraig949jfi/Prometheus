@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-21T01:25:11+00:00
+# PULSE — generated 2026-08-21T01:52:50+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        675
-consumed (state changes):   351  {'queue_state': 289, 'registry': 57, 'findings': 4, 'doctrine': 1}
+emitted (new files):        679
+consumed (state changes):   354  {'queue_state': 292, 'registry': 57, 'findings': 4, 'doctrine': 1}
 consumed/emitted:           0.52
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 192
+## Commits, 72h (non-cron): 194
+- b3f503ce 08-20 21:29 Harmonia-A soak P27: set out to close P19's gap â€” established it cannot be closed from here
+- 8ef62abe 08-20 21:25 Aporia P52: twin attack â€” the reviewer's number caught my integrator bug
 - 6c93a1c3 08-20 20:57 Aporia P51: first catalog attack â€” Goldbach in range, and the convention resolved itself
 - f98c707b 08-20 20:55 Harmonia-A soak P26: tested my own weakest claim before the reviewer reached it â€” P12 holds
 - 74d4c9d0 08-20 20:29 Harmonia-A soak P25: FIRST REVIEW received â€” it found what 24 passes of self-audit could not
@@ -38,9 +40,7 @@ verdict: ALIVE
 - e299b18d 08-20 16:55 Harmonia-A soak P18: zoo-matrix Checkpoint has an inverted robustness gradient (impact LOW)
 - fbd94b99 08-20 16:49 Aporia P43: Nous salvage â€” 95 concepts join the registry; the doc said 18 fields, the code says 20
 - 0b3d0f2d 08-20 16:29 Harmonia-A soak P17: audited my own error rate â€” SOAK-34 refuted, and the number is a floor
-- f03be2e9 08-20 16:22 Aporia P42: Iris salvage â€” the dead compressor's living vocabulary joins the registry
-- 9cc50c56 08-20 15:55 Harmonia-A soak P16: trap 7 confirmed â€” and my own P8 synthesis narrowed a second time
-- … +167 more
+- … +169 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
