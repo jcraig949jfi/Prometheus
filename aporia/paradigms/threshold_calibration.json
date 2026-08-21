@@ -1,0 +1,30 @@
+{
+ "protocol": "2000 simulations per case, iid draws via inverse transform from the DERIVED target CDFs, seed 20260893",
+ "P04_wigner_n999": {
+  "quantiles": {
+   "0.9": 0.038433113217573374,
+   "0.95": 0.042612779785383456,
+   "0.99": 0.051929809234437116
+  },
+  "observed": 0.0432,
+  "restated_gate": "GUE-CONSISTENT if KS < q95 (was heuristic 0.08)",
+  "observed_within": false,
+  "caveat": "real spacings are DEPENDENT; iid null is approximate - the gate is descriptive, not a test at stated size"
+ },
+ "P16_semicircle_n167": {
+  "quantiles": {
+   "0.9": 0.09296802410842875,
+   "0.95": 0.10300127275937872,
+   "0.99": 0.12411200406835239
+  },
+  "observed": [
+   0.0418,
+   0.0524
+  ],
+  "restated_gate": "CONFIRMS if KS < q95 (was heuristic 0.15)",
+  "observed_within": true,
+  "caveat": "traces at distinct primes are near-independent for non-CM forms; iid null is a good approximation here"
+ },
+ "P08_3SE_note": "the 3SE Monte Carlo gate is already variance-derived (SE from the sample); no debt",
+ "P21_cliffs_note": "P21 r2/stability cliffs are calibrated ON the anchor corpus by design (the paradigm's own mechanism); restating them as variance-derived would need a noise model for OEIS sequences - typed as out of scope, the anchor-sweep IS their calibration"
+}
