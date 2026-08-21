@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-21T11:34:55+00:00
+# PULSE — generated 2026-08-21T12:22:42+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,20 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        776
-consumed (state changes):   404  {'queue_state': 343, 'registry': 57, 'findings': 3, 'doctrine': 1}
-consumed/emitted:           0.52
+emitted (new files):        794
+consumed (state changes):   406  {'queue_state': 345, 'registry': 57, 'findings': 3, 'doctrine': 1}
+consumed/emitted:           0.51
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 239
+## Commits, 72h (non-cron): 242
+- 3e406f95 08-21 08:09 Techne loop cycle 011: round-4 fold-in â€” R6 provenance diagnosis, retraction necessity, claim v8 (epistemic-rule plasticity)
+- 69a01518 08-21 07:56 Techne loop cycle 010: round-3 relay residue â€” legality-gated pairs, capacity-as-property, cross-realization transfer
+- f859d5c1 08-21 07:55 Harmonia-A soak P48: the hand audit P47 owed â€” and why the machine could not do it
+- 155e6869 08-21 07:52 Techne loop cycle 009: claim v7 â€” epistemic objective as the seventh coordinate
+- aebb24cb 08-21 07:43 Techne loop cycle 008: round-3 fold-in â€” R5 demoted-unless-relational; Skolem battery; claim v6 operator plasticity
+- 631ee060 08-21 07:38 Techne loop cycle 007: R5 single-pass separation + delta-tracking trap; egglog saturation PASS
+- b150472a 08-21 07:34 Aporia P73: POOLED-CONFIRM â€” and the disjointness gate caught the mirror double-counting
 - 8aef769d 08-21 07:29 Harmonia-A soak P47: a clean result, killed by calibrating the thing that produced it
 - 5ea6ebfa 08-21 07:03 Aporia P72: spec batch 3 â€” 8 specs authored, probed, gated; the obvious table name is an empty shell
 - 6b1375a9 08-21 06:55 Harmonia-A soak P46: audited the verdict artifact before the verdict rests on it
@@ -31,14 +38,7 @@ verdict: ALIVE
 - c96f3235 08-21 05:09 R2: pay the cheap gates -- A4 amendment landed, R2-0 doc sweep, Charon exit-#3 prompt
 - 4d488764 08-21 04:55 Harmonia-A soak P42: mirror census â€” both conventions live, trap 7 is 4x wider than documented
 - bf431ef1 08-21 04:32 Harmonia-A soak P41: rotation break â€” and the trap checklist itself has drifted from the data
-- e9c4c42c 08-21 04:30 Aporia P68: AUTHORED PIPELINE COMPLETE 18/18 â€” and the landmine class struck twice
-- 8af80303 08-21 04:20 Techne loop cycle 002: pm.tensor_train (TT ranks, correct-null API) + R1 circuit; congruence claim amended
-- ccea1116 08-21 04:00 Aporia P67: SPLIT-REEARNED â€” the Katz-Sarnak signature stands at half the size, fully committed
-- 848fa556 08-21 03:55 Harmonia-A soak P40: replication set complete â€” two 4/4 pins turn out to be opposites
-- 731a628e 08-21 03:44 Aporia P66: sweep-4 â€” the campaign's novel claim withdrawn; the pipeline finally 18/18
-- 6d0a7664 08-21 03:31 Aporia P65: P63's 4.6-bit story RETRACTED â€” the honest number is the null
-- c0cddfae 08-21 03:29 Harmonia-A soak P39: Pin B replicated in input space â€” no code touched, and the gap is 3 entry points wide
-- … +214 more
+- … +217 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
