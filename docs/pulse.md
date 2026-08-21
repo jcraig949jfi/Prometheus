@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-21T18:12:21+00:00
+# PULSE — generated 2026-08-21T18:42:20+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,16 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        859
-consumed (state changes):   419  {'queue_state': 358, 'registry': 57, 'findings': 3, 'doctrine': 1}
-consumed/emitted:           0.49
+emitted (new files):        871
+consumed (state changes):   421  {'queue_state': 360, 'registry': 57, 'findings': 3, 'doctrine': 1}
+consumed/emitted:           0.48
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 259
+## Commits, 72h (non-cron): 262
+- bbbc0025 08-21 14:30 Ergon: dry-run the campaign state machine â€” three defects found, all fixed
+- db87f38a 08-21 14:15 Techne loop cycle 020: canon R11 calibrated uncertainty + claim v13 + first v11' counterexample
+- 39e8c2ab 08-21 14:12 Aporia P85: P10 binds Techne's kernel, P11 relives sieve theory's founding problem
 - ca12a99d 08-21 13:40 Techne loop cycle 019: evidence typing, and the finding that types need a checker
 - 01511366 08-21 13:30 Aporia P84: P08+P09 â€” the paradigms the channel already lives get their trees
 - e0a7d291 08-21 13:19 Techne loop cycle 018: external review fold-in â€” aliasing instrument, R10 third verdict, Lean tracer
@@ -37,10 +40,7 @@ verdict: ALIVE
 - d760f3e6 08-21 09:26 Ergon: co-sign A4 interpretation bounds + land 4 owed rulings before Tier B
 - ab36ac6e 08-21 09:21 Aporia P76: class groups join nt_helpers â€” 38/38 pins, and the pin list caught the imprimitive shadow
 - a58713ff 08-21 09:06 Techne loop cycle 013: round-5 fold-in â€” my doctrine draft FALSIFIED and rewritten; R8 built; Band-G machinery corrected
-- 77c19f10 08-21 08:53 Aporia P75: batch 4 opens â€” MATH-0482 authored on gates the data itself derived
-- 286f9d1a 08-21 08:45 Techne loop cycle 012: certified constants x7 with OEIS authorities + rung R7; cheaper-mechanism doctrine drafted
-- 254666b1 08-21 08:28 Harmonia-A soak P49 FINAL: SOAK VERDICT â€” worker half SURVIVED, reviewer half UNPROVEN
-- … +234 more
+- … +237 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records

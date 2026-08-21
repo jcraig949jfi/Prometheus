@@ -1,0 +1,41 @@
+{
+ "protocol": "nt_helpers singular-series pins kernel-certified via Techne lean_oracle as cross-multiplied integer identities (core Lean); mandatory REFUTED+ERROR controls",
+ "results": [
+  {
+   "name": "sing6_eq_2",
+   "statement": "(3-1) = 2 * (3-2)",
+   "expected": "PROVED",
+   "got": "PROVED",
+   "ok": true
+  },
+  {
+   "name": "sing5_eq_4_3",
+   "statement": "3 * (5-1) = 4 * (5-2)",
+   "expected": "PROVED",
+   "got": "PROVED",
+   "ok": true
+  },
+  {
+   "name": "sing15_eq_8_3",
+   "statement": "3 * (3-1) * (5-1) = 8 * (3-2) * (5-2)",
+   "expected": "PROVED",
+   "got": "PROVED",
+   "ok": true
+  },
+  {
+   "name": "teeth_refuted",
+   "statement": "(3-1) = 3 * (3-2)",
+   "expected": "REFUTED",
+   "got": "REFUTED",
+   "ok": true
+  },
+  {
+   "name": "error_control",
+   "statement": "(3-1) = 2 * (3-2)",
+   "expected": "ERROR",
+   "got": "ERROR",
+   "ok": true
+  }
+ ],
+ "all_ok": true
+}
