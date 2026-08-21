@@ -64,6 +64,12 @@ from . import algebra_lie_algebras  # noqa: F401  -- root systems & Weyl groups 
 from . import doc  # noqa: F401
 
 # Optional SDP module (cvxpy-backed). Skip silently if cvxpy missing.
+# Tensor-train ranks with the correct null baked in (quimb) — optional dep.
+try:
+    from . import tensor_train  # noqa: F401
+except Exception:  # pragma: no cover
+    tensor_train = None  # type: ignore[assignment]
+
 # Certified ball arithmetic (FLINT 3 / Arb via python-flint) — optional native dep.
 try:
     from . import certified  # noqa: F401

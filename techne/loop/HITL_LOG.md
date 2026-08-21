@@ -15,3 +15,13 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
    proactively?
 4. **PySR install**: Julia backend will pull ~1 GB on first run. Fine on F:? (Assuming yes;
    will use a pinned venv.)
+
+## Cycle 002 (2026-08-21)
+
+5. **egglog spike**: propose adding the `egglog` Python package (e-graphs / equality
+   saturation) at cycle 003-004 for R2+ circuit substrates. Cheap install, real leverage on
+   rule composition. Will proceed unless you object.
+6. **signature_index occupancy ranks**: the loader + rank instrument now exist. The actual
+   MEASUREMENT (ranks of the real 3,311-class tensor + null percentile, interpreted) is a
+   half-cycle of work — want it as its own artifact next cycle, or fold into the tensor
+   charter's Walk-1 doc?
