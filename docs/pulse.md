@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-21T22:45:49+00:00
+# PULSE — generated 2026-08-21T23:34:45+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        937
-consumed (state changes):   421  {'queue_state': 363, 'registry': 55, 'findings': 2, 'doctrine': 1}
-consumed/emitted:           0.45
+emitted (new files):        466
+consumed (state changes):   411  {'queue_state': 361, 'registry': 47, 'findings': 2, 'doctrine': 1}
+consumed/emitted:           0.88
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 275
+## Commits, 72h (non-cron): 271
+- 93be4656 08-21 19:16 Techne loop cycle 029: structural-constancy probe â€” and it caught its own author
+- 6980f933 08-21 18:45 Aporia P94: the dependent null inverts the story â€” and turns a gate into a measurement
 - f481f22a 08-21 18:36 Techne loop cycle 028: the sample-size objection removed â€” and it was the wrong objection
 - cd0efd84 08-21 18:14 Aporia P93 correction: the P93 record shipped without its evidence field â€” the validator caught it, my pipeline muted it
 - 17a7ba55 08-21 18:13 Aporia P93: TIER CLOSED â€” and paying the threshold debt sharpened a result
@@ -38,9 +40,7 @@ verdict: ALIVE
 - 39e8c2ab 08-21 14:12 Aporia P85: P10 binds Techne's kernel, P11 relives sieve theory's founding problem
 - ca12a99d 08-21 13:40 Techne loop cycle 019: evidence typing, and the finding that types need a checker
 - 01511366 08-21 13:30 Aporia P84: P08+P09 â€” the paradigms the channel already lives get their trees
-- e0a7d291 08-21 13:19 Techne loop cycle 018: external review fold-in â€” aliasing instrument, R10 third verdict, Lean tracer
-- 23142b3a 08-21 13:01 Aporia P83: P06+P07 â€” a flow that canonicalizes, a descent that decides, and the first honest empty assignment
-- … +250 more
+- … +246 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records

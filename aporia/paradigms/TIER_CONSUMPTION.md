@@ -5,9 +5,22 @@ what READS these trees. Source of truth for routings: paradigm_trees.jsonl
 (this document's inversion is generated from it; every id validated against
 triage.jsonl — phantom-refs doctrine).
 
-## Completion census
+## Completion census — CORRECTED P95
 
-25/25 effective paradigms (P01-P26; P20 removed by prior ruling). Every
+**The P92/P93 '25/25 COMPLETE' claim was WRONG.** The census was measured
+against the taxonomy's 'canonical count is P01-P26' line — which the SAME
+document supersedes further down: the 2026-05-08 (later) section adds five
+TENSOR-SPECIFIC paradigms P27-P31 per James's directive. The honest state:
+**25/30 effective** (P01-P19, P21-P26 delivered; P27-P31 — Slice Rank,
+Asymptotic Spectrum, Border Apolarity, Tensor Networks, Secant Varieties —
+remain, all tensor-native). The error is the read-the-whole-artifact lesson
+(P65's rule) striking the tier's own closing document; recorded as a typed
+correction in WORKLOG P95. A silver lining is structural: the tensor
+paradigms are exactly where the GEOMETRY-AWAITS-TENSOR-TARGETS family
+pointed — the tier's remaining fifth is the half the empty-primary trees
+were waiting for.
+
+Delivered so far (25): Every
 worked example EXECUTED against local substrate with in-script pre-stated
 readings. Per-paradigm verdicts:
 

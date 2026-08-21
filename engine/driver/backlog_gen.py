@@ -170,6 +170,8 @@ def main() -> int:
     # ---- 6. Attack-paradigm grounding (30 paradigms from taxonomy) ----
     tax = (ROOT / "aporia/docs/attack_angle_taxonomy.md").read_text(encoding="utf-8", errors="replace")
     for pid in sorted(set(re.findall(r"\bP(\d{2})\b", tax)))[:31]:
+        if pid == "20":
+            continue    # P20 REMOVED by ruling (taxonomy: 'P20 still removed; slot open') — a P20 thread is a phantom
         add(f"PARADIGM-P{pid}", f"Paradigm P{pid}: worked example + decision tree + code skeleton (substrate type C refinement)",
             "paradigm_taxonomy", "Learner corpus type C + catalog assignment", 35)
 
