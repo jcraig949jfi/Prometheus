@@ -109,3 +109,40 @@ def artin_constant(limit: int = 10_000_000) -> float:
     """A = prod_p (1 - 1/(p(p-1))), truncated at `limit` (attack_0067 convention)."""
     pp = sieve_primes(limit).astype(np.float64)
     return float(np.exp(np.sum(np.log1p(-1.0 / (pp * (pp - 1.0))))))
+
+
+# ------------------------------------------------- class groups (batch-4 additions)
+
+def reduced_forms(D: int) -> list[tuple[int, int, int]]:
+    """All reduced positive-definite binary quadratic forms (a,b,c) of
+    discriminant D < 0 (b^2 - 4ac = D): |b| <= a <= c, with b >= 0 when
+    |b| == a or a == c. PRIMITIVE forms only (gcd(a,b,c)=1) — the form class
+    number counts primitive classes; without the gcd filter h(-12) would count
+    the imprimitive (2,2,2) and read 2 instead of 1. Added P76 for MATH-0482
+    tranche B — class-group orders are COMPUTED, never remembered.
+    """
+    if D >= 0 or D % 4 not in (0, 1):
+        raise ValueError(f"D must be negative and 0 or 1 mod 4, got {D}")
+    forms = []
+    a = 1
+    while 4 * a * a <= -D * 4 // 3 + 4:            # a <= sqrt(|D|/3) guard, integer-safe
+        if a * a * 3 > -D:
+            break
+        for b in range(-a, a + 1):
+            if (b * b - D) % (4 * a):
+                continue
+            c = (b * b - D) // (4 * a)
+            if c < a:
+                continue
+            if (abs(b) == a or a == c) and b < 0:  # canonical representative only
+                continue
+            if math.gcd(math.gcd(a, abs(b)), c) != 1:   # primitive classes only
+                continue
+            forms.append((a, b, c))
+        a += 1
+    return forms
+
+
+def class_number(D: int) -> int:
+    """h(D) = number of reduced forms of discriminant D < 0."""
+    return len(reduced_forms(D))

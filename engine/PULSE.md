@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-21T12:52:54+00:00
+# PULSE — generated 2026-08-21T13:21:33+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        799
-consumed (state changes):   409  {'queue_state': 348, 'registry': 57, 'findings': 3, 'doctrine': 1}
+emitted (new files):        804
+consumed (state changes):   411  {'queue_state': 350, 'registry': 57, 'findings': 3, 'doctrine': 1}
 consumed/emitted:           0.51
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 245
+## Commits, 72h (non-cron): 247
+- a58713ff 08-21 09:06 Techne loop cycle 013: round-5 fold-in â€” my doctrine draft FALSIFIED and rewritten; R8 built; Band-G machinery corrected
+- 77c19f10 08-21 08:53 Aporia P75: batch 4 opens â€” MATH-0482 authored on gates the data itself derived
 - 286f9d1a 08-21 08:45 Techne loop cycle 012: certified constants x7 with OEIS authorities + rung R7; cheaper-mechanism doctrine drafted
 - 254666b1 08-21 08:28 Harmonia-A soak P49 FINAL: SOAK VERDICT â€” worker half SURVIVED, reviewer half UNPROVEN
 - c80feacd 08-21 08:23 Aporia P74: the mirror is 19.3% duplicate rows at every degree â€” audit routed, doctrine set
@@ -36,9 +38,7 @@ verdict: ALIVE
 - 6b5b9ab4 08-21 05:29 Harmonia-A soak P43: a green suite that certifies the defect it visits 22 times a run
 - 9627bc1b 08-21 05:27 Techne loop cycle 003: signature_index rank measurement (7.9 sigma) + PySR smoke PASS + R2 pipeline; claim v3
 - 3ea25c44 08-21 05:13 Aporia P69: the twice-burned primitives get one tested home â€” autopsies 18/21
-- 2d06f8cb 08-21 05:10 Loop charter: post cycle summaries + review text in chat (James, 2026-08-21)
-- 155335ea 08-21 05:09 Merge branch 'main' of https://github.com/jcraig949jfi/Prometheus
-- … +220 more
+- … +222 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records

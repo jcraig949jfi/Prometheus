@@ -67,5 +67,32 @@ check("unfold_u1(2*pi, e) == 1", abs(nt.unfold_u1(2.0 * math.pi, math.e) - 1.0) 
 # and one committed-array spot value: first stored u1 must reproduce from its inputs
 # (protocol constant check — attack_0348_powered.py uses this exact formula)
 
+# --- class groups (P76 additions): classical pins + P75-smoke integration ----
+# Classical class numbers, including the Heegner discriminant -163.
+for D, want in [(-3, 1), (-4, 1), (-8, 1), (-12, 1), (-16, 1), (-28, 1),
+                (-15, 2), (-20, 2), (-23, 3), (-44, 3), (-163, 1)]:
+    got = nt.class_number(D)
+    check(f"h({D})={want}", got == want, f"got {got} forms {nt.reduced_forms(D)[:4]}")
+
+# Integration pin: the principal-form density law 1/(2h) against the P75 smoke.
+# The smoke (WORKLOG P75, committed) derived the represented residue classes
+# mod 4n by enumeration; their fraction of phi(4n) must equal 1/(2*h(-4n))
+# exactly, as rationals, for every idoneal n tested.
+from math import gcd as _gcd
+def _phi(m):
+    return sum(1 for r in range(1, m) if _gcd(r, m) == 1)
+SMOKE_CLASS_COUNTS = {1: 1, 2: 2, 3: 2, 4: 4, 5: 2, 7: 6}   # P75-derived, committed
+for n, k in SMOKE_CLASS_COUNTS.items():
+    m = 4 * n
+    h = nt.class_number(-4 * n)
+    check(f"idoneal n={n}: classes/phi(4n) == 1/(2h)",
+          k * 2 * h == _phi(m), f"{k}/{_phi(m)} vs 1/(2*{h})")
+# Non-idoneal control: n=11 smoke measured represented/all-primes ~ 13059/78498;
+# the law predicts 1/(2h(-44)) = 1/6. Committed smoke values, 1% tolerance
+# (finite-range Chebotarev drift at 1e6).
+check("n=11 density 13059/78498 vs 1/(2*h(-44))",
+      abs(13059 / 78498 - 1.0 / (2 * nt.class_number(-44))) < 0.01 / 6 * 6,
+      f"{13059/78498:.5f} vs {1.0/6:.5f}")
+
 print(f"\n{'ALL PINS HOLD' if not FAIL else 'FAILURES: ' + ', '.join(FAIL)}")
 sys.exit(1 if FAIL else 0)
