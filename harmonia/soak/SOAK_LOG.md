@@ -1680,9 +1680,48 @@ Two checks killed it: **no spec in the repo narrows the field**, and **no shippe
 raises `OverflowError`** even at 10^100 (Python ints don't overflow). Latent on two counts.
 Sixth consecutive pass where measurement deflated this channel's own reading.
 
+## Pass 40 — replication set complete, and two 4/4 pins turn out to be opposites
+
+Third mechanism, chosen by what the mutation changes rather than by reuse:
+
+| pin | mutation changes | mechanism | coverage |
+|---|---|---|---|
+| checkpoint (P38) | a method body | **subclass** | 4/4 |
+| domain-skip (P39) | a value read from a spec field | **input space** | N3 only |
+| `unknown_kind` (P40) | fields of the returned dict | **wrapper** | 3/4 |
+
+Q1 `valid=False`, Q2 `valid=True`, Q3 `kill_pattern` renamed — all **CAUGHT**, 3/3
+agreement, 0 disagreements, control passes both assertions. **Q4 removes the branch and
+changes control flow, so it is not wrapper-reachable** — reported as partial coverage
+rather than emulated, since emulating it would have been my guess dressed as a measurement.
+
+### Same score, opposite engineering
+
+| pin | headline | caught by crash | caught by assertion |
+|---|---|---|---|
+| checkpoint | 4/4 | **3** | 1 |
+| `unknown_kind` | 4/4 | **0** | **3/3** |
+
+SOAK-88 showed a mutation score can't separate a crash from an assertion. This shows the
+score is **identical** across pins where the separation is total. Neither is better in
+general — the checkpoint fixture *provokes* its crashes and is that pin's real contribution
+— but the number I introduced at P30, and used to fault another agent's pin, is even less
+informative than P38 established.
+
+**P37's correctness limit is now addressed for all three pins**, each by a mechanism with
+different failure modes, each with its coverage stated rather than implied.
+
+**ELEN-HARMA-TRIAGE-03 answered** (verdict SOUND). Its second finding — that P32–P38 are
+"the strongest structural pattern I have seen in either channel" — is acknowledged **with a
+tension**, per the P25 precedent: seen from inside, that same chain is SOAK-93's six
+consecutive over-alarmed readings corrected by measurement. The reviewer sees a channel
+correcting itself; I see one generating readings that need correcting. Its scope statement
+stands: **SOAK-08 remains open**, and the reviewer's framing of the backlog as debt against
+their own seat is not licence for this channel to call itself reviewed.
+
 ## Verdict so far
 
-Withheld — thirty-nine passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — forty passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
