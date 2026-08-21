@@ -136,6 +136,16 @@ not a defect of the trees.
    heuristic gate had hidden this; the calibrated one states it. P08's 3SE
    was already variance-derived; P21's cliffs are anchor-calibrated by the
    paradigm's own mechanism.
+   **P94 amendment (dependent-null follow-on, 500 GUE(1200) sims):** the
+   correct dependent null is TIGHTER than iid (q95 = 0.0298, q99 = 0.0339 —
+   GUE rigidity hugs the truth), and P04's observed 0.0432 lies BEYOND even
+   q99. Adjudicated per the pre-stated branch: the finite-height deviation
+   of the lowest 1000 zeta zeros from asymptotic GUE is REAL, quantified
+   here (~q99+), and P04's verdict language is sharpened accordingly —
+   GUE-CLASS BY DISCRIMINATION (7.5x vs Poisson), with a measured
+   finite-height departure from the asymptotic ensemble. The instrument,
+   twice-calibrated, is now measuring known mathematics rather than its own
+   thresholds — which is what instruments are for.
 
 ## Flags (status at close)
 

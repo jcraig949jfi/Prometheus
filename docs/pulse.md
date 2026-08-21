@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-21T22:13:31+00:00
+# PULSE — generated 2026-08-21T22:45:49+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,16 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        933
-consumed (state changes):   419  {'queue_state': 361, 'registry': 55, 'findings': 2, 'doctrine': 1}
+emitted (new files):        937
+consumed (state changes):   421  {'queue_state': 363, 'registry': 55, 'findings': 2, 'doctrine': 1}
 consumed/emitted:           0.45
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 272
+## Commits, 72h (non-cron): 275
+- f481f22a 08-21 18:36 Techne loop cycle 028: the sample-size objection removed â€” and it was the wrong objection
+- cd0efd84 08-21 18:14 Aporia P93 correction: the P93 record shipped without its evidence field â€” the validator caught it, my pipeline muted it
+- 17a7ba55 08-21 18:13 Aporia P93: TIER CLOSED â€” and paying the threshold debt sharpened a result
 - f538cf9e 08-21 18:04 Techne loop cycle 027: a falsification battery is a chain running the other way
 - 70459647 08-21 17:56 Ergon: pre-file the P1 band escalation BEFORE the number lands
 - 2d1a4e1b 08-21 17:44 Aporia P92: TIER COMPLETE 25/25 â€” a rediscovered kill and four theorems by pincer
@@ -37,10 +40,7 @@ verdict: ALIVE
 - 01511366 08-21 13:30 Aporia P84: P08+P09 â€” the paradigms the channel already lives get their trees
 - e0a7d291 08-21 13:19 Techne loop cycle 018: external review fold-in â€” aliasing instrument, R10 third verdict, Lean tracer
 - 23142b3a 08-21 13:01 Aporia P83: P06+P07 â€” a flow that canonicalizes, a descent that decides, and the first honest empty assignment
-- 9707a5fb 08-21 12:42 Techne loop cycle 017: canon R10 analogy/transfer + claim v11 (instance-blind parameters)
-- fda80184 08-21 12:32 Aporia P82: P04+P05 batched â€” and the gates saved us from a false anomaly
-- 5c3a5be1 08-21 12:09 Ergon: P1 band read made faithful to the jointly-ruled 3.1 (three-valued)
-- … +247 more
+- … +250 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records

@@ -26,5 +26,17 @@
   "caveat": "traces at distinct primes are near-independent for non-CM forms; iid null is a good approximation here"
  },
  "P08_3SE_note": "the 3SE Monte Carlo gate is already variance-derived (SE from the sample); no debt",
- "P21_cliffs_note": "P21 r2/stability cliffs are calibrated ON the anchor corpus by design (the paradigm's own mechanism); restating them as variance-derived would need a noise model for OEIS sequences - typed as out of scope, the anchor-sweep IS their calibration"
+ "P21_cliffs_note": "P21 r2/stability cliffs are calibrated ON the anchor corpus by design (the paradigm's own mechanism); restating them as variance-derived would need a noise model for OEIS sequences - typed as out of scope, the anchor-sweep IS their calibration",
+ "P04_dependent_null_followon": {
+  "protocol": "500 sims of GUE(1200) central 1000 bulk eigenvalues, semicircle-unfolded (endpoint-gated counting fn), spacings mean-renormalized, KS vs the SURMISE with P04's instrument, seed 20260894",
+  "quantiles": {
+   "0.5": 0.020797974077171683,
+   "0.9": 0.027678232351157312,
+   "0.95": 0.029827454054148692,
+   "0.99": 0.03393440675888834
+  },
+  "observed": 0.0432,
+  "verdict": "BEYOND",
+  "note": "the null now carries spacing dependence AND surmise-vs-true-GUE bias \u2014 observed exceeds even the dependent null; finite-height deviations of low zeta zeros carry the explanatory weight"
+ }
 }
