@@ -560,3 +560,40 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
     testing — perturb the member's input space and check whether ANY input flips it — which is
     what I did by hand for F9. This restates an existing memory (a structural zero needs its own
     pre-committed vacuous reading) as an executable check rather than a habit.
+
+
+## Cycle 029 (2026-08-21) — structural-constancy probe built and swept
+
+ 99. **HITL #78: 491 rows, 0 accepted, 100% drop.** 330 -> 369 -> 400 -> 446 -> 491 across five
+     cycles. Still unruled, still unpatched by me.
+100. **HITL #98 DISCHARGED — the standing rule is now a tool.** `prometheus_math.battery`
+     gained a two-tier structural-constancy probe: an AST check for whether a member reads its
+     own arguments (proof it cannot fire) and a hostile-input mutation search (proof it can),
+     with an honest UNSETTLED between them. `can_fire` returns None for UNSETTLED — unknown,
+     never silently fine.
+101. **GOOD NEWS, and it is a real search rather than an assumption: F9 is the only
+     structurally-constant member in the repo's kill batteries.** Twelve members swept across
+     `discovery_pipeline`, `lehmer_brute_force` and my own R6 circuits. The substrate does not
+     have a systemic dead-check problem; it has the one instance already reported at cycle 028.
+102. **F11 refines rather than contradicts cycle 028.** Under a hostile probe space it reads
+     VARIES; over well-formed candidates it still measures 0.000 bits. Natural sampling measures
+     REALIZED discrimination, mutation testing measures CAPABILITY, and both are true. **A
+     constancy verdict must always be reported with its input space.**
+103. **The probe caught its own author, and I nearly published my own bug as a finding.** The
+     first sweep reported two `lehmer_brute_force` members as UNSETTLED. They are not — I passed
+     full coefficient lists to functions requiring length-8 HALF coefficients, all 90 calls
+     raised, and the probe mapped every exception to one sentinel, making "everything errored"
+     indistinguishable from "nothing ever varied". Fixed with `n_evaluated` and an
+     `INVALID_PROBE` status. Recording it because the near-miss is the argument for the fix.
+104. **Third arrival of the reference-class problem, and I would like a ruling on whether to
+     treat it as one thing.** It has now surfaced at R11 (a forecaster picking its own reference
+     class), at battery strength (F6: 0.908 bits narrow band, 0.229 wide), and here (F11
+     constant on well-formed input, varies under hostile). Each time the answer depends on a
+     domain nobody declared. **The candidate fix is the same each time: declare the input space
+     as part of the specification**, which is the pre-declared-ledger mechanism again in a
+     third costume.
+105. **Known gap, stated before the results rather than after:** parameter-independence is
+     SUFFICIENT for verdict-constancy, not NECESSARY. My own EagerFalsifier and CredulousAsserter
+     are constant by construction but read their argument for a non-verdict purpose, so they land
+     in UNSETTLED. Closing it needs dataflow tracing from parameter to returned verdict. Worth
+     building or not — your call (HITL #106).

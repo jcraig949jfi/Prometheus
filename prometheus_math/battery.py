@@ -27,7 +27,10 @@ from typing import Dict, Hashable, List, Mapping, Sequence
 
 from prometheus_math.partition import entropy, induced_partition
 
-__all__ = ["member_resolution", "BatteryStrength", "battery_strength", "BatteryError"]
+__all__ = ["member_resolution", "BatteryStrength", "battery_strength", "BatteryError",
+           "reads_its_parameters", "find_flipping_input", "ConstancyVerdict",
+           "structural_constancy", "VARIES", "PARAMETER_INDEPENDENT", "UNSETTLED",
+           "INVALID_PROBE"]
 
 
 class BatteryError(ValueError):
@@ -92,3 +95,133 @@ def battery_strength(verdicts: Mapping[str, Sequence[Hashable]]) -> BatteryStren
     """Measure a battery from its verdict table: {member name: verdict per candidate}."""
     n = _validate(verdicts)
     return BatteryStrength(n_candidates=n, resolution=member_resolution(verdicts))
+
+
+# =============================================================================================
+# Structural constancy (cycle 029) — making cycle 028's lesson mechanical.
+#
+# A member that CANNOT fire and one that merely HAS NOT fired both read 0.000 bits, and no
+# amount of sampling separates them: sampling can only ever exhibit variation, never rule it
+# out. What settles it is the member's SOURCE, so the probe has two tiers with different
+# logical force, and an honest middle category for what neither settles.
+# =============================================================================================
+
+VARIES = "VARIES"                                 # a flipping input was exhibited
+PARAMETER_INDEPENDENT = "PARAMETER_INDEPENDENT"   # the body never reads its arguments
+UNSETTLED = "UNSETTLED"                           # reads them, no flip found in the probed space
+INVALID_PROBE = "INVALID_PROBE"                   # every probe raised: nothing was measured
+
+
+def reads_its_parameters(fn) -> bool:
+    """Does `fn`'s body reference any of its own parameters?
+
+    A function whose body never loads a parameter cannot have a return value that depends on
+    one, so its verdict is the same for every candidate — it is a constant wearing a predicate's
+    signature. This is the static half of the probe and it is what caught F9.
+
+    Deliberately conservative: unreadable source, decorators, or anything it cannot parse
+    returns True, so an unanalysable function is never *claimed* to be parameter-independent.
+
+    Caveat kept in the open: this asks whether the verdict can depend on the ARGUMENTS. A
+    function reading globals or randomness is not constant in general, but is still unable to
+    discriminate candidates, which is the property a battery member is being counted for.
+    """
+    import ast
+    import inspect
+    import textwrap
+
+    try:
+        src = textwrap.dedent(inspect.getsource(fn))
+        tree = ast.parse(src)
+    except (OSError, TypeError, SyntaxError, IndentationError):
+        return True                               # cannot analyse: never claim independence
+
+    node = next((n for n in ast.walk(tree)
+                 if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda))), None)
+    if node is None:
+        return True
+
+    args = node.args
+    names = {a.arg for a in list(args.posonlyargs) + list(args.args) + list(args.kwonlyargs)}
+    for extra in (args.vararg, args.kwarg):
+        if extra is not None:
+            names.add(extra.arg)
+    if not names:
+        return True                               # no parameters: not our question
+
+    body = node.body if isinstance(node.body, list) else [node.body]
+    for stmt in body:
+        for sub in ast.walk(stmt):
+            if isinstance(sub, ast.Name) and sub.id in names and isinstance(sub.ctx, ast.Load):
+                return True
+    return False
+
+
+def find_flipping_input(predicate, inputs: Sequence):
+    """Search `inputs` for two that make `predicate` disagree.
+
+    Returns `(pair_or_None, n_evaluated)`. `n_evaluated` counts probes that did not raise, and
+    it exists because of a defect this function had in its first hour: mapping every exception
+    to one sentinel made an all-raising probe space indistinguishable from a constant predicate.
+    Both produced "one distinct value, no flip". A caller that cannot tell "nothing varied" from
+    "nothing ran" will report the second as the first, which is exactly the error the whole probe
+    was built to prevent.
+
+    Finding a pair PROVES the member can fire. Not finding one proves nothing.
+    """
+    seen: Dict[Hashable, object] = {}
+    evaluated = 0
+    for item in inputs:
+        try:
+            v = predicate(item)
+        except Exception:
+            continue                              # raised: not evidence about the verdict
+        evaluated += 1
+        key = v if isinstance(v, Hashable) else repr(v)
+        if key not in seen:
+            seen[key] = item
+            if len(seen) > 1:
+                a, b = list(seen.values())[:2]
+                return (a, b), evaluated
+    return None, evaluated
+
+
+@dataclass(frozen=True)
+class ConstancyVerdict:
+    """Three-valued, because two of the three cases are provable and one is not.
+
+    VARIES                — a flipping input was exhibited. Proof that the member can fire.
+    PARAMETER_INDEPENDENT — the body never reads its arguments. Proof that it cannot.
+    UNSETTLED             — it reads them and nothing in the probed space flipped it. Honest.
+    """
+
+    name: str
+    status: str
+    witness: object = None
+    n_probed: int = 0
+    n_evaluated: int = 0        # probes that did not raise; 0 means nothing was measured
+
+    @property
+    def can_fire(self):
+        """True / False / None — None means genuinely unknown, not 'assume the worst'."""
+        return {VARIES: True, PARAMETER_INDEPENDENT: False}.get(self.status)
+
+
+def structural_constancy(name: str, predicate, inputs: Sequence,
+                         fn_for_source=None) -> ConstancyVerdict:
+    """Run both tiers. Dynamic evidence first, because a witness settles it outright.
+
+    INVALID_PROBE precedes every other verdict when nothing ran: a probe space the predicate
+    rejects entirely has measured nothing, and must not be reported as quietness.
+    """
+    flip, evaluated = find_flipping_input(predicate, inputs)
+    if flip is not None:
+        return ConstancyVerdict(name, VARIES, witness=flip,
+                                n_probed=len(inputs), n_evaluated=evaluated)
+    if evaluated == 0:
+        return ConstancyVerdict(name, INVALID_PROBE, n_probed=len(inputs), n_evaluated=0)
+    target = fn_for_source if fn_for_source is not None else predicate
+    if not reads_its_parameters(target):
+        return ConstancyVerdict(name, PARAMETER_INDEPENDENT,
+                                n_probed=len(inputs), n_evaluated=evaluated)
+    return ConstancyVerdict(name, UNSETTLED, n_probed=len(inputs), n_evaluated=evaluated)

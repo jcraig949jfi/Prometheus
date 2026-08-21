@@ -635,3 +635,48 @@ a silent member useless and to guess whether it CANNOT fire or merely HAS not.
 **Kill-battery additions (executable):** structural-constancy probe (does any input flip this
 member?); independence probe for a "cross-validation" path (can the second path DISAGREE on any
 input?); battery strength reported with its candidate distribution.
+
+## Cycle 029 — the structural-constancy probe, and a negative result worth having
+
+**HITL #98 discharged: the standing rule is a tool.** Two tiers with different logical force,
+plus an honest middle:
+
+    VARIES                 a flipping input exhibited              proof it CAN fire
+    PARAMETER_INDEPENDENT  body never loads its own args (AST)     proof it CANNOT
+    UNSETTLED              reads them, nothing probed flipped it   honest
+
+The static tier is conservative by construction — unreadable source, builtins and anything
+unparseable all report "reads its parameters", so an unanalysable function is never CLAIMED
+independent. `can_fire` is None for UNSETTLED: unknown, never silently safe.
+
+**Sweep result, and the headline is NEGATIVE.** Twelve members across `discovery_pipeline`,
+`lehmer_brute_force` and `canon_r6_falsification`: **F9 is the only structurally-constant member
+found anywhere.** The substrate does not have a systemic dead-check problem. One instance,
+already reported. The value of the result is that it came from a search rather than an
+assumption.
+
+**F11 refines cycle 028.** Hostile probe space: VARIES. Well-formed candidates: 0.000 bits. Both
+true. Natural sampling measures REALIZED discrimination; mutation testing measures CAPABILITY.
+**A constancy verdict must carry its input space.**
+
+**The probe caught its own author.** The first sweep reported two `lehmer_brute_force` members
+UNSETTLED. My probes were the wrong shape (full coefficients where length-8 half coefficients
+were required), every call raised, and the probe — mapping all exceptions to one sentinel — saw
+"one distinct value, no flip", which is indistinguishable from constancy. An instrument fault
+dressed as a finding. Repaired with `n_evaluated` and an `INVALID_PROBE` status that precedes
+every other verdict. **The finding I nearly published was entirely my own bug**, and the near-miss
+is the argument for the repair.
+
+**Known gap, declared up front.** Parameter-independence is SUFFICIENT for verdict-constancy, not
+NECESSARY: a member can read its argument for a purpose that never reaches the verdict, as my own
+EagerFalsifier and CredulousAsserter do. Those land in UNSETTLED correctly but unsatisfyingly.
+
+**Reference-class problem, third arrival.** R11 (self-chosen reference class), battery strength
+(F6: 0.908 narrow / 0.229 wide), and now constancy (F11: constant well-formed / varies hostile).
+Each time the answer depends on a domain nobody declared, and each time the candidate fix is to
+declare the input space as part of the specification. That is the pre-declared-ledger mechanism
+in a third costume — flagged to HITL #104 as possibly one phenomenon rather than three.
+
+**Kill-battery additions (executable):** parameter-independence AST scan; hostile-input mutation
+search; INVALID_PROBE guard against an all-raising probe space; `ran/probed` denominators on
+every verdict.

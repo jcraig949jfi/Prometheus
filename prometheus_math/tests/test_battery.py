@@ -143,3 +143,79 @@ def test_composes_with_the_real_discovery_battery_audit():
     assert s.advertised == 4
     assert s.discriminating == 2
     assert s.silent_members == ["F11", "F9"]
+
+
+# ---- cycle 029: the structural-constancy probe -------------------------------------------------
+
+def test_reads_its_parameters_static_tier():
+    """Authority by construction: a function ignoring its argument is provably unable to
+    discriminate; one that branches on it is not."""
+    from prometheus_math.battery import reads_its_parameters
+
+    def ignores(x): return True
+    def uses(x): return x > 0
+    def uses_in_branch(x):
+        if x:
+            return True
+        return True                        # constant in VALUE, but reads the parameter
+
+    assert reads_its_parameters(ignores) is False
+    assert reads_its_parameters(uses) is True
+    assert reads_its_parameters(uses_in_branch) is True     # sufficient, not necessary
+
+
+def test_reads_its_parameters_is_conservative_when_it_cannot_parse():
+    """An unanalysable callable must never be CLAIMED parameter-independent."""
+    from prometheus_math.battery import reads_its_parameters
+    assert reads_its_parameters(len) is True               # builtin: no source
+    assert reads_its_parameters(object()) is True          # not even a function
+
+
+def test_the_three_verdicts():
+    from prometheus_math.battery import (
+        PARAMETER_INDEPENDENT, UNSETTLED, VARIES, structural_constancy,
+    )
+
+    def varies(n): return n > 2
+    def ignores(n): return True
+    def quiet(n): return n > 10 ** 9                       # reads n, never flips on 0..5
+
+    probes = list(range(6))
+    assert structural_constancy("v", varies, probes).status == VARIES
+    assert structural_constancy("i", ignores, probes).status == PARAMETER_INDEPENDENT
+    assert structural_constancy("q", quiet, probes).status == UNSETTLED
+    assert structural_constancy("v", varies, probes).can_fire is True
+    assert structural_constancy("i", ignores, probes).can_fire is False
+    assert structural_constancy("q", quiet, probes).can_fire is None    # unknown, not False
+
+
+def test_AN_ALL_RAISING_PROBE_SPACE_IS_NOT_CONSTANCY():
+    """**The defect this probe had in its first hour, now a test.**
+
+    Mapping every exception to one sentinel made an all-raising probe space produce "one
+    distinct value, no flip" — indistinguishable from a constant predicate. I hit it for real:
+    the cycle-029 sweep passed full coefficient lists to functions requiring length-8 half
+    coefficients, every call raised, and the sweep reported UNSETTLED. An instrument fault
+    dressed as a finding about the code.
+    """
+    from prometheus_math.battery import INVALID_PROBE, structural_constancy
+
+    def picky(n):
+        raise ValueError("wrong shape")
+
+    v = structural_constancy("picky", picky, list(range(20)))
+    assert v.status == INVALID_PROBE
+    assert v.n_probed == 20 and v.n_evaluated == 0
+    assert v.can_fire is None
+
+
+def test_n_evaluated_reports_how_much_of_the_probe_space_actually_ran():
+    from prometheus_math.battery import structural_constancy
+
+    def half_picky(n):
+        if n % 2:
+            raise ValueError
+        return n > 2
+
+    v = structural_constancy("half", half_picky, list(range(10)))
+    assert v.n_probed == 10 and 0 < v.n_evaluated < 10
