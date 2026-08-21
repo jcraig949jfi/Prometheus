@@ -208,14 +208,69 @@ def p1(rows, gold, budget):
                and b[(2, r["uid"])]["extracted_int"] == gold[r["uid"]]]
     z = 1.959964
     se = math.sqrt(max(acc * (1 - acc), 1e-12) / n)
+    mlo, mhi = max(0.0, acc - z * se), min(1.0, acc + z * se)
+    # Wilson reported beside the manifest interval as the conservative bound (§3.1 ruling 3)
+    den = 1 + z * z / n
+    wc = (acc + z * z / (2 * n)) / den
+    wh = z * math.sqrt(acc * (1 - acc) / n + z * z / (4 * n * n)) / den
+    # HB-R1: at ONE family the lenient screen is a diagnostic, not a contamination screen, so the
+    # band is read on the raw manifest here; both numbers are reported always. At Tier B (>=2
+    # families) the band is read post-screen.
+    post = [r for r in rows if r["uid"] not in set(lenient)]
+    acc_post = (sum(1 for r in post
+                    if b[(1, r["uid"])]["extracted_int"] == gold[r["uid"]]) / len(post)
+                if post else float("nan"))
+    # §3.1 ruling 1 — THREE-VALUED. Point rule is standing; when the manifest-level interval
+    # straddles a band edge the level is UNDECIDED and re-measured at the decision-n rather than
+    # failed outright; UNDECIDED resolves CONSERVATIVELY INTO FAILURE if it survives
+    # re-measurement (Charon's terminal rule). n_decidable = the n at which this point estimate
+    # would stop straddling — reported so the verdict is honest about whether this n could ever
+    # have decided it.
+    straddles = (mlo < BAND[0] < mhi) or (mlo < BAND[1] < mhi)
+    edge = BAND[0] if abs(acc - BAND[0]) < abs(acc - BAND[1]) else BAND[1]
+    margin = abs(acc - edge)
+    n_decidable = (math.ceil((z / margin) ** 2 * acc * (1 - acc))
+                   if margin > 1e-9 else None)
+    point_in = BAND[0] <= acc <= BAND[1]
+    if not point_in:
+        verdict = "NOT-LEVELED"
+    elif movable < MOVABLE_FLOOR:
+        verdict = "NOT-LEVELED-DISPERSION"          # HB-R2 dispersion term
+    elif straddles:
+        # this n IS the decision-n only if it could resolve the straddle; say which.
+        # Charon's terminal rule fires only once the straddle has SURVIVED a re-measurement
+        # that was capable of resolving it. A straddle at an n too small to decide is not a
+        # surviving straddle — it is an underpowered read, and calling it failure would let
+        # manifest size masquerade as a result about the host.
+        verdict = ("UNDECIDED-RESOLVES-TO-FAILURE"
+                   if (n_decidable is not None and n >= n_decidable)
+                   else "UNDECIDED-UNDERPOWERED")
+    else:
+        verdict = "LEVELED"
     read = {"phase": "P1", "solver_pin": SOLVER, "rung": RUNG, "n": n,
             "point_estimate": round(acc, 4),
-            "manifest_interval_95": [round(max(0, acc - z * se), 4),
-                                     round(min(1, acc + z * se), 4)],
+            "point_estimate_post_screen": (round(acc_post, 4) if post else None),
+            "band_read_on": "raw manifest (HB-R1: one family, screen is diagnostic only)",
+            "manifest_interval_95": [round(mlo, 4), round(mhi, 4)],
+            "wilson_interval_95": [round(max(0, wc - wh), 4), round(min(1, wc + wh), 4)],
+            "interval_straddles_band_edge": straddles,
+            "nearest_edge": edge, "margin_to_edge": round(margin, 4),
+            "n_required_for_decidability": n_decidable,
             "movable_share": round(movable, 4),
-            "full_band_passes": BAND[0] <= acc <= BAND[1] and movable >= MOVABLE_FLOOR,
-            "leveling_verdict": ("LEVELED" if (BAND[0] <= acc <= BAND[1]
-                                               and movable >= MOVABLE_FLOOR) else "NOT-LEVELED"),
+            "full_band_passes": point_in and movable >= MOVABLE_FLOOR and not straddles,
+            "leveling_verdict": verdict,
+            "next_step_if_not_leveled":
+                ("Two distinct routes, and they are NOT interchangeable. (a) UNDECIDED-"
+                 "UNDERPOWERED means this read could not decide the straddle at this n: under "
+                 "the manifest-level estimand the live noise is SOLVER STOCHASTICITY, so the "
+                 "resolving move is MORE REPS on the frozen manifest, not more items -- adding "
+                 "items changes the estimand and breaks the (manifest x host) pin. (b) A point "
+                 "genuinely outside the band routes to the next pre-declared rung "
+                 "(M20 -> M30 -> M40 -> M60 -> M80), each with its own cold-band read then its "
+                 "own decision-n re-measurement. This campaign STOPS at any non-LEVELED read "
+                 "and escalates rather than auto-advancing: sweep-until-in-band inflates "
+                 "false-accept 3.9x (HB-R2 measurement), so the advance is the kill authority's "
+                 "call, not the runner's."),
             "screen_excluded": sorted(lenient),
             "n_post_screen": n - len(lenient), "ts_utc": now()}
     atomic(out, read)
