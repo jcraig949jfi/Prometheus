@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-21T20:13:27+00:00
+# PULSE — generated 2026-08-21T20:45:35+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        898
-consumed (state changes):   419  {'queue_state': 360, 'registry': 56, 'findings': 2, 'doctrine': 1}
-consumed/emitted:           0.47
+emitted (new files):        907
+consumed (state changes):   421  {'queue_state': 362, 'registry': 56, 'findings': 2, 'doctrine': 1}
+consumed/emitted:           0.46
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 266
+## Commits, 72h (non-cron): 268
+- 71bea235 08-21 16:26 Techne loop cycle 024: composition â€” deficit accumulates, and the instrument is blind to two of its own traps
+- d6fde1fb 08-21 16:13 Aporia P89: P18+P19 â€” coherence counted, and the transport primitive gets its definition page
 - 2cee06f1 08-21 15:53 Techne loop cycle 023: sweep directions unified in bits; two self-corrections
 - 664a1cc9 08-21 15:41 Aporia P88: P16+P17 â€” the decline leg reproduces the mirror's own CM flags, blind
 - bd46fb07 08-21 15:21 Techne loop cycle 022: second pass opens â€” R3 claim narrowed, aliasing found half-blind
@@ -36,9 +38,7 @@ verdict: ALIVE
 - 0010dad7 08-21 10:55 Aporia P79: paradigm tier opens â€” P01 delivered as an instrument, not an essay
 - a1bacb02 08-21 10:26 Aporia P78: STRATA-CONSISTENT â€” the 0348 refinement program closes
 - d520e6e5 08-21 10:22 Aporia P78 pre-commit: conductor-stratified 0348 script, readings pre-stated â€” committed BEFORE first run
-- a7d9bb2d 08-21 10:18 M1_STATUS 7m: truncation defect that flattered the leveling gate
-- 95916588 08-21 10:17 Ergon: P1 killed as TRUNCATION-CONFOUNDED â€” the defect was flattering the gate
-- … +241 more
+- … +243 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records

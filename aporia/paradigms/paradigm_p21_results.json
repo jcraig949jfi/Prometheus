@@ -1,0 +1,169 @@
+{
+ "protocol": "curated 10-anchor OEIS corpus (known growth classes incl. an expected-ABSTAIN anchor) swept by a derived 3-fit growth battery with abstention; noise + stub decline legs; seed 20260891",
+ "results": [
+  {
+   "id": "A000217",
+   "want": "POLY",
+   "got": "POLY",
+   "ok": true,
+   "diag": {
+    "poly_slope": 2.036,
+    "r2_poly": 0.99999,
+    "exp_slope": -0.0012,
+    "r2_exp": 1.0,
+    "b_half_ratio": 0.262,
+    "superexp_r2": 0.98337,
+    "superexp_slope": -0.03
+   }
+  },
+  {
+   "id": "A000290",
+   "want": "POLY",
+   "got": "POLY",
+   "ok": true,
+   "diag": {
+    "poly_slope": 2.084,
+    "r2_poly": 0.99993,
+    "exp_slope": -0.0032,
+    "r2_exp": 1.0,
+    "b_half_ratio": 0.22,
+    "superexp_r2": 0.99146,
+    "superexp_slope": -0.041
+   }
+  },
+  {
+   "id": "A000578",
+   "want": "POLY",
+   "got": "POLY",
+   "ok": true,
+   "diag": {
+    "poly_slope": 3.221,
+    "r2_poly": 0.99945,
+    "exp_slope": -0.0132,
+    "r2_exp": 0.99992,
+    "b_half_ratio": 0.101,
+    "superexp_r2": 0.97266,
+    "superexp_slope": -0.157
+   }
+  },
+  {
+   "id": "A000040",
+   "want": "ABSTAIN",
+   "got": "ABSTAIN",
+   "ok": true,
+   "diag": {
+    "poly_slope": 1.28,
+    "r2_poly": 0.99797,
+    "exp_slope": -0.0023,
+    "r2_exp": 0.99806,
+    "b_half_ratio": -0.334,
+    "superexp_r2": 0.20871,
+    "superexp_slope": -0.013
+   }
+  },
+  {
+   "id": "A000045",
+   "want": "EXP",
+   "got": "EXP",
+   "ok": true,
+   "diag": {
+    "poly_slope": 6.885,
+    "r2_poly": 0.87503,
+    "exp_slope": 0.4855,
+    "r2_exp": 0.99991,
+    "b_half_ratio": 0.965,
+    "superexp_r2": 0.1178,
+    "superexp_slope": 0.034
+   }
+  },
+  {
+   "id": "A000079",
+   "want": "EXP",
+   "got": "EXP",
+   "ok": true,
+   "diag": {
+    "poly_slope": 7.545,
+    "r2_poly": 0.84068,
+    "exp_slope": 0.6931,
+    "r2_exp": 1.0,
+    "b_half_ratio": 1.0,
+    "superexp_r2": 0.00085,
+    "superexp_slope": -0.0
+   }
+  },
+  {
+   "id": "A000108",
+   "want": "EXP",
+   "got": "EXP",
+   "ok": true,
+   "diag": {
+    "poly_slope": 11.987,
+    "r2_poly": 0.80754,
+    "exp_slope": 1.3998,
+    "r2_exp": 0.99999,
+    "b_half_ratio": 0.974,
+    "superexp_r2": 0.77598,
+    "superexp_slope": 0.276
+   }
+  },
+  {
+   "id": "A000142",
+   "want": "SUPEREXP",
+   "got": "SUPEREXP",
+   "ok": true,
+   "diag": {
+    "poly_slope": 16.579,
+    "r2_poly": 0.75266,
+    "exp_slope": 3.0894,
+    "r2_exp": 0.9986,
+    "b_half_ratio": 1.531,
+    "superexp_r2": 1.0,
+    "superexp_slope": 1.0
+   }
+  },
+  {
+   "id": "A002110",
+   "want": "SUPEREXP",
+   "got": "SUPEREXP",
+   "ok": true,
+   "diag": {
+    "poly_slope": 20.078,
+    "r2_poly": 0.76159,
+    "exp_slope": 4.2224,
+    "r2_exp": 0.99837,
+    "b_half_ratio": 1.558,
+    "superexp_r2": 0.98786,
+    "superexp_slope": 1.293
+   }
+  },
+  {
+   "id": "A000041",
+   "want": "ABSTAIN",
+   "got": "ABSTAIN",
+   "ok": true,
+   "diag": {
+    "poly_slope": 5.652,
+    "r2_poly": 0.98727,
+    "exp_slope": 0.1229,
+    "r2_exp": 0.99995,
+    "b_half_ratio": 0.697,
+    "superexp_r2": 0.92671,
+    "superexp_slope": -0.044
+   }
+  },
+  {
+   "id": "decline-noise",
+   "want": "ABSTAIN",
+   "got": "ABSTAIN",
+   "ok": true
+  },
+  {
+   "id": "decline-stub",
+   "want": "ABSTAIN",
+   "got": "ABSTAIN",
+   "ok": true
+  }
+ ],
+ "verdict": "SWEEP-CALIBRATES",
+ "numbering_fork_note": "frontier_review_synthesis.md assigns P21 differently (Higher-Order Fourier) under an unreconciled scheme; taxonomy canonical (backlog generates from it); fork routed via worklog"
+}
