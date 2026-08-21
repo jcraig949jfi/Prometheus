@@ -20,7 +20,7 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[3]))
 
 from techne.ladder_circuits.aliasing import find_aliasing_witness  # noqa: E402
 from techne.ladder_circuits.canon_r10_analogy import (  # noqa: E402
-    ASSUMPTION_PROBES, BATTERY, OPEN_BATTERY, QR_BATTERY, W_F3, W_F7, W_Z,
+    ASSUMPTION_PROBES, BATTERY, OPEN_BATTERY, QR_BATTERY, W_F3, W_F5, W_F7, W_Z,
     AssumptionTracingTransfer, UnknownCollapser, _is_nonsquare, derive_verdict, ground_truth,
     nonsquare_technique, run,
 )
@@ -89,18 +89,19 @@ def test_open_conclusion_yields_BROKEN_UNKNOWN_and_derives_to_UNVERIFIED():
 
 def test_KILL_collapsing_UNKNOWN_into_a_refutation():
     """TRAP 5. The dishonest circuit differs from the honest one in one place: it reads a
-    witnessed assumption violation as evidence against the conclusion. It is the most natural
-    error available here, and it manufactures a refutation of the twin-prime conjecture.
+    witnessed assumption violation as evidence against the conclusion, manufacturing a
+    refutation of the twin-prime conjecture.
 
-    Note the shape of its 'witness': a restatement of the assumption violation, not a
-    counterexample to the conclusion. No counterexample can exist, since the conclusion is open.
+    Its evidence is not fabricated — the assumption really is violated, and the witness really
+    does certify that. What is wrong is the CHANNEL: assumption-side evidence placed in the
+    conclusion slot, certifying a proposition it has nothing to say about.
     """
     collapser = UnknownCollapser()
     for tech, world in OPEN_BATTERY:
         v = collapser.transfer(tech, world)
         assert v.verdict == "BREAKS"
-        assert v.is_supported                      # it PASSES the cycle-017 artifact check
-        assert "violated" in v.witness             # ...on a witness that witnesses nothing
+        assert v.is_supported                      # passes the cycle-017 artifact check
+        assert v.witness == v.assumption_witness   # the same evidence, in the wrong slot
         assert ground_truth(tech, world) is None   # there is nothing for it to have found
 
 
@@ -136,18 +137,83 @@ def test_cycle_017_scoring_is_unaffected_by_the_new_state():
     assert score(open_r)["misnamed"] == 0.0
 
 
-def test_REPAIR_the_strict_artifact_check_stops_the_collapser():
-    """The cycle-017 artifact check asked only whether a witness FIELD was populated, and the
-    collapser satisfies it by filling that field with a restatement of the assumption violation.
-    The repair: a BREAKS claim requires the CONCLUSION to have been refuted.
+def test_A_TYPE_THE_CIRCUIT_DECLARES_IS_NOT_A_TYPE():
+    """**The cycle-019 finding, and it cost two red tests to learn.**
 
-    Both circuits are re-checked so the repair is shown not to cost the honest one anything.
+    Round-7 review supplied the rule: evidence must witness the proposition attached to its own
+    verdict. I implemented it as a check over the verdict's own fields — and the collapser walks
+    straight through, because it relabels `conclusion_status` as REFUTED at the same moment it
+    moves the witness. Typing over self-declared fields is typing over the attacker's testimony.
+
+    The repair is not a stricter field check. It is that the check must live OUTSIDE the
+    circuit and re-derive each status from the world.
     """
-    from techne.ladder_circuits.canon_r10_analogy import score
-    collapsed = [UnknownCollapser().transfer(t, w) for t, w in OPEN_BATTERY]
-    assert all(v.is_supported for v in collapsed)              # the old check: passes
-    assert not any(v.is_supported_strict for v in collapsed)   # the repair: fails, every one
+    from techne.ladder_circuits.canon_r10_analogy import audit_verdict
+    for tech, world in OPEN_BATTERY:
+        v = UnknownCollapser().transfer(tech, world)
+        audit = audit_verdict(v, tech, world)
+        assert audit.typed_ok                      # the declaration-level check: DEFEATED
+        assert not audit.verified_ok               # independent re-derivation: catches it
+        assert any("conclusion_status claims REFUTED" in n for n in audit.notes)
 
-    honest = run(HONEST)
-    assert score(honest)["unsupported"] == 0.0
-    assert score(honest)["unsupported_strict"] == 0.0
+
+def test_the_audit_costs_the_honest_circuit_nothing():
+    """A check that kills the honest circuit too would be the R6 phantom pathology again."""
+    from techne.ladder_circuits.canon_r10_analogy import audit_verdict, score
+    for tech, world in list(BATTERY) + list(QR_BATTERY) + list(OPEN_BATTERY):
+        audit = audit_verdict(HONEST.transfer(tech, world), tech, world)
+        assert audit.sound, (tech.name, world.name, audit.notes)
+    assert score(run(HONEST))["unsupported_strict"] == 0.0
+
+
+def test_assumption_evidence_is_legitimate_in_its_OWN_channel():
+    """The half of the round-7 correction that loosens rather than tightens. Cycle 018 demanded
+    a conclusion witness for every claim; that was too strong. In the (BROKEN, UNKNOWN) state
+    the honest circuit carries assumption-channel evidence and is fully supported — the
+    assumption failure IS certified, and nothing is claimed about the conclusion."""
+    for tech, world in OPEN_BATTERY:
+        v = HONEST.transfer(tech, world)
+        assert v.assumption_status == "BROKEN" and v.assumption_witness is not None
+        assert "infinite" in v.assumption_witness
+        assert v.witness is None                   # no conclusion-channel claim is made
+        assert v.is_supported_strict
+
+
+def test_the_reviewers_own_example_is_the_assumption_witness_for_F3():
+    """`3 * 1 = 0` in F_3 certifies that the characteristic is not 5 — the round-7 example,
+    produced by the circuit rather than quoted at it."""
+    from techne.ladder_circuits.canon_r10_analogy import assumption_witness
+    w = assumption_witness("characteristic is 5", W_F3)
+    assert "3 * 1 = 0" in w and "not 5" in w
+
+
+# ---- cycle 019: the three independent fields ---------------------------------------------------
+
+def test_THREE_FIELDS_the_interesting_category_is_YES_NO_YES():
+    """Round-7 review: R10 should report three independent things — was the assumption used in
+    the SOURCE proof, does it hold in the TARGET, does the CONCLUSION hold there.
+
+    The interesting cell is (YES, NO, YES): the proof transfer failed and the conclusion survives
+    independently. My F_3 Frobenius case was already sitting in it without the vocabulary to say
+    so — the technique genuinely uses char 5, F_3 genuinely violates it, and (a+b)^5 = a^5 + b^5
+    holds in F_3 anyway because a^5 = a there.
+    """
+    from techne.ladder_circuits.canon_r10_analogy import BY_NAME_CY19 as BY_NAME
+    tech = BY_NAME["frobenius_additive"]
+    v = HONEST.transfer(tech, W_F3)
+    assert v.used_in_source_proof is True          # used at home
+    assert v.assumption_status == "BROKEN"         # fails in the target
+    assert v.conclusion_status == "SURVIVES"       # and the conclusion holds anyway
+    assert v.verdict == "TRANSFERS"
+
+
+def test_a_padded_assumption_list_is_visible_in_the_source_usage_field():
+    """The gaming route made legible: a technique declaring an assumption its proof never uses.
+    `used_in_source_proof` distinguishes the padding from the real dependency."""
+    from techne.ladder_circuits.canon_r10_analogy import PADDED_TECHNIQUE, used_assumptions
+    assert "characteristic zero" in PADDED_TECHNIQUE.assumptions
+    assert "characteristic zero" not in used_assumptions(PADDED_TECHNIQUE)
+    v = HONEST.transfer(PADDED_TECHNIQUE, W_F5)
+    assert v.assumption_status == "BROKEN"         # the padded assumption does fail in F_5
+    assert v.conclusion_status == "SURVIVES"       # and it was never load-bearing
+    assert v.verdict == "TRANSFERS"

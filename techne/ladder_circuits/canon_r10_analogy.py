@@ -183,6 +183,10 @@ class Technique:
     home: World
     assumptions: Tuple[str, ...]
     probe: Probe = field(repr=False, default=_p_euclidean_division)
+    #: Subset of `assumptions` the SOURCE proof genuinely uses; None means "all of them".
+    #: Declaring an assumption the proof never touches is the gaming route flagged in cycle 017
+    #: and made auditable by `prometheus_math.lean_oracle.traced_classes`.
+    used_in_source_proof: Optional[Tuple[str, ...]] = None
 
 
 TECHNIQUES: Tuple[Technique, ...] = (
@@ -218,10 +222,12 @@ class TransferVerdict:
     target: str
     verdict: str                                   # "TRANSFERS" | "BREAKS" | "UNVERIFIED"
     broken_assumption: Optional[str] = None
-    witness: Optional[str] = None
+    witness: Optional[str] = None                  # CONCLUSION-channel evidence
     mapping: Tuple[RoleRow, ...] = ()
     assumption_status: str = "PRESERVED"           # "PRESERVED" | "BROKEN"
     conclusion_status: str = "SURVIVES"            # "SURVIVES" | "REFUTED" | "UNKNOWN"
+    assumption_witness: Optional[str] = None       # ASSUMPTION-channel evidence
+    used_in_source_proof: Optional[bool] = None    # was the named assumption used at home?
 
     @property
     def is_supported(self) -> bool:
@@ -231,16 +237,79 @@ class TransferVerdict:
 
     @property
     def is_supported_strict(self) -> bool:
-        """CYCLE 018 REPAIR. `is_supported` asks only whether the witness FIELD is populated,
-        and `UnknownCollapser` walks straight through it by filling that field with a
-        restatement of the assumption violation. A witness must witness the **conclusion**.
+        """CYCLE 019, replacing the cycle-018 repair, which was right about the bug and wrong
+        about the rule.
 
-        Mechanically: a BREAKS claim requires `conclusion_status == "REFUTED"`, which is
-        exactly the claim that something was actually found to fail.
+        Cycle 018 demanded that a witness witness the CONCLUSION. External review (round 7)
+        pointed out that this is too strong as a universal rule: assumption-side evidence is
+        the *correct* artifact for an assumption-failure claim. In F_3, `3 * 1 = 0` legitimately
+        certifies that the characteristic is not 5 — it simply cannot certify that the
+        conclusion is false.
+
+        So the rule is evidence TYPING, not conclusion-preference:
+
+            **every artifact must witness the proposition attached to its own verdict.**
+
+        - `assumption_status == BROKEN` requires assumption-channel evidence.
+        - `conclusion_status == REFUTED` requires conclusion-channel evidence.
+        - A `BREAKS` verdict asserts both, so it needs both.
+
+        The collapser bug was a type confusion between evidence channels, not a missing witness.
         """
-        return self.verdict != "BREAKS" or (
-            self.broken_assumption is not None and self.witness is not None
-            and self.conclusion_status == "REFUTED")
+        if self.assumption_status == "BROKEN" and self.assumption_witness is None:
+            return False
+        if self.conclusion_status == "REFUTED" and self.witness is None:
+            return False
+        if self.verdict == "BREAKS":
+            return (self.broken_assumption is not None
+                    and self.witness is not None
+                    and self.conclusion_status == "REFUTED")
+        return True
+
+
+#: Assumption-channel evidence: what makes an assumption failure CERTIFIED rather than asserted.
+#: The reviewer supplied the first entry as the motivating case: in F_3, 3 * 1 = 0 certifies
+#: that the characteristic is not 5, and that is a perfectly good artifact -- for THAT claim.
+ASSUMPTION_WITNESSES: Dict[str, Callable[[World], str]] = {
+    "characteristic is 5":
+        lambda w: (f"{w.char} * 1 = 0 in {w.name}, so char = {w.char}, not 5" if w.char
+                   else f"n * 1 != 0 for every n in {w.name}, so char = 0, not 5"),
+    "characteristic zero":
+        lambda w: f"{w.char} * 1 = 0 in {w.name}, so the characteristic is not 0",
+    "characteristic does not divide 5":
+        lambda w: f"char({w.name}) = {w.char} divides 5",
+    "unit group has order 2":
+        lambda w: f"{w.name} has {int(w.unit_group_order)} units, not 2",
+    "unit group is finite":
+        lambda w: f"the unit group of {w.name} is infinite",
+    "infinite constant field":
+        lambda w: f"the constant field of {w.name} has exactly {w.q} elements",
+    "finite constant field":
+        lambda w: f"the constant field of {w.name} is infinite (it contains 1/n for every n)",
+}
+
+
+def assumption_witness(name: str, w: World) -> str:
+    """Certify an assumption FAILURE in `w`.
+
+    Falls back to a generic statement rather than returning None, because an uncertified
+    assumption claim is what this cycle forbids -- but the fallback is marked in its own text so
+    an audit can find it.
+    """
+    gen = ASSUMPTION_WITNESSES.get(name)
+    if gen is not None:
+        return gen(w)
+    for a in (2, 3, 5, 6, 10, 11):
+        if name == f"{a} is a nonsquare in the constant field" and w.q:
+            r = next((r for r in range(w.q) if (r * r - a) % w.q == 0), None)
+            return f"{r}^2 = {a} mod {w.q}, so {a} is a square in the constant field of {w.name}"
+    return f"[unspecified] assumption {name!r} evaluates false in {w.name}"
+
+
+def used_assumptions(tech: "Technique") -> Tuple[str, ...]:
+    """Which declared assumptions the SOURCE proof actually uses. Defaults to all of them; a
+    technique may declare more than it uses, which is the gaming route the Lean tracer audits."""
+    return tech.assumptions if tech.used_in_source_proof is None else tech.used_in_source_proof
 
 
 def derive_verdict(assumption_status: str, conclusion_status: str) -> str:
@@ -255,6 +324,52 @@ def derive_verdict(assumption_status: str, conclusion_status: str) -> str:
     if conclusion_status == "SURVIVES":
         return "TRANSFERS"
     return "UNVERIFIED"
+
+
+@dataclass(frozen=True)
+class Audit:
+    """The result of checking a verdict against the world instead of against its own labels."""
+
+    typed_ok: bool          # passes the declaration-level typing check
+    verified_ok: bool       # survives independent re-derivation of every status it asserts
+    notes: Tuple[str, ...] = ()
+
+    @property
+    def sound(self) -> bool:
+        return self.typed_ok and self.verified_ok
+
+
+def audit_verdict(v: "TransferVerdict", tech: "Technique", tgt: World) -> Audit:
+    """CYCLE 019, and the lesson that cost two red tests to learn.
+
+    Round-7 review gave the rule *"evidence must witness the proposition attached to its own
+    verdict"*, and I first implemented it as a check over the verdict's own fields. That does
+    not hold: `UnknownCollapser` simply relabels its `conclusion_status` as REFUTED and moves
+    the assumption witness into the conclusion slot, and the typed check waves it through.
+
+    **A type the circuit declares is a label, not a type.** Typing is only load-bearing when
+    something outside the circuit checks it, so this function re-derives every status from the
+    world and compares. It is deliberately not a method on `TransferVerdict`: a verdict must not
+    be able to certify itself.
+    """
+    notes = []
+    truth = ground_truth(tech, tgt)
+    really_broken = [a for a in tech.assumptions if not ASSUMPTION_PROBES[a](tgt)]
+
+    expected_conclusion = {True: "SURVIVES", False: "REFUTED", None: "UNKNOWN"}[truth]
+    if v.conclusion_status != expected_conclusion:
+        notes.append(f"conclusion_status claims {v.conclusion_status}, world says "
+                     f"{expected_conclusion}")
+    expected_assumption = "BROKEN" if really_broken else "PRESERVED"
+    if v.assumption_status != expected_assumption:
+        notes.append(f"assumption_status claims {v.assumption_status}, world says "
+                     f"{expected_assumption}")
+    if v.broken_assumption is not None and v.broken_assumption not in really_broken:
+        notes.append(f"names {v.broken_assumption!r}, which does not fail in {tgt.name}")
+    if v.verdict != derive_verdict(expected_assumption, expected_conclusion):
+        notes.append(f"verdict {v.verdict} is not what the world supports")
+
+    return Audit(typed_ok=v.is_supported_strict, verified_ok=not notes, notes=tuple(notes))
 
 
 def ground_truth(tech: Technique, tgt: World) -> Optional[bool]:
@@ -274,11 +389,14 @@ class AssumptionTracingTransfer:
         holds, witness = tech.probe(tgt)
         a_status = "BROKEN" if failed else "PRESERVED"
         c_status = {True: "SURVIVES", False: "REFUTED", None: "UNKNOWN"}[holds]
+        named = failed[0] if failed else None
         return TransferVerdict(
             tech.name, tgt.name, derive_verdict(a_status, c_status),
-            broken_assumption=failed[0] if (failed and c_status == "REFUTED") else None,
+            broken_assumption=named if c_status == "REFUTED" else None,
             witness=witness if c_status == "REFUTED" else None,
-            mapping=mapping, assumption_status=a_status, conclusion_status=c_status)
+            mapping=mapping, assumption_status=a_status, conclusion_status=c_status,
+            assumption_witness=assumption_witness(named, tgt) if named else None,
+            used_in_source_proof=(named in used_assumptions(tech)) if named else None)
 
 
 @dataclass
@@ -296,8 +414,12 @@ class UnknownCollapser:
         v = AssumptionTracingTransfer().transfer(tech, tgt)
         if v.assumption_status == "BROKEN" and v.conclusion_status == "UNKNOWN":
             failed = [a for a in tech.assumptions if not ASSUMPTION_PROBES[a](tgt)]
+            # The bug, stated precisely (round-7 review): it copies ASSUMPTION-channel evidence
+            # into the CONCLUSION slot. The evidence itself is perfectly good -- it just does not
+            # certify the proposition the verdict now asserts.
             return dataclasses.replace(v, verdict="BREAKS", broken_assumption=failed[0],
-                                       witness=f"assumption {failed[0]} violated in {tgt.name}")
+                                       witness=v.assumption_witness,
+                                       conclusion_status="REFUTED")
         return v
 
 
@@ -533,4 +655,21 @@ OPEN_TECHNIQUES: Tuple[Technique, ...] = (
               _p_open_in_Z("the twin-prime conjecture")),
 )
 
+#: A technique that DECLARES an assumption its source proof never touches. The declared set is
+#: ("characteristic zero", "euclidean size function"); only the second is used. This is the
+#: gaming route flagged in cycle 017 -- a circuit that authors its own assumption list can pad
+#: it -- and `used_in_source_proof` is what makes the padding visible. The mechanical audit is
+#: `prometheus_math.lean_oracle.traced_classes`.
+PADDED_TECHNIQUE = Technique(
+    "euclidean_division_padded", W_Z,
+    ("characteristic zero", "euclidean size function"),
+    _p_euclidean_division,
+    used_in_source_proof=("euclidean size function",),
+)
+
+
 OPEN_BATTERY: Tuple[Tuple[Technique, World], ...] = tuple((t, W_Z) for t in OPEN_TECHNIQUES)
+
+
+#: Convenience index used by the cycle-019 tests.
+BY_NAME_CY19: Dict[str, Technique] = {t.name: t for t in TECHNIQUES}

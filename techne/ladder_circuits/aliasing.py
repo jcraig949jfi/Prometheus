@@ -18,11 +18,22 @@ hyperparameter result. It also yields a battery-design rule that is executable:
 `find_aliasing_witness` does exactly that search, and `verify_family_incapacity` confirms the
 theorem empirically by sweeping the family — theorem and measurement, as the loop requires.
 
-**One refinement the formulation needs.** When family members differ in *how much* they observe
-(a horizon-h searcher sees more as h grows), `π` must be the **finest** projection any member
-can see. A witness under the finest projection kills every member, since each member's view is
-a coarsening of it. `finest_projection_note` in each retrofit records which projection was used
-and why it is the finest.
+**Two preconditions the formulation needs** (the second corrects an overclaim I made in
+cycle 018).
+
+1. **Factorization.** When family members differ in *how much* they observe (a horizon-h
+   searcher sees more as h grows), `π` must be a projection every member's view FACTORS
+   THROUGH: `π_i = f_i ∘ π`. Only then is each member's view a coarsening, and only then does
+   a witness under `π` bind the whole family. Two *incomparable* observation sets may admit no
+   useful common projection except the full input — which destroys the argument. In that case
+   partition the family into observation classes and prove incapacity class by class.
+   `verify_factorization` checks the precondition instead of assuming it.
+
+2. **What the witness proves.** A witness shows that any deterministic evaluator factoring
+   through `π` is wrong on **at least one member of the pair** — NOT on both. Cycle 018's
+   write-up said "every member errs on each witness", which is loose: a member returning the
+   correct answer for `x₁` is thereby wrong on `x₂`, and vice versa. The code always tested the
+   correct disjunction; the prose did not.
 
 Retrofitted this cycle to canon R6, R9 and R10 (see `tests/test_aliasing.py`). R3's capacity
 width is claimed in the ledger as a fourth instance but is **not** retrofitted here; it is
@@ -36,7 +47,8 @@ from typing import Any, Callable, Dict, Hashable, Iterable, List, Optional, Sequ
 
 __all__ = [
     "AliasingWitness", "find_aliasing_witness", "all_aliasing_witnesses",
-    "family_cannot_be_correct", "verify_family_incapacity",
+    "family_cannot_be_correct", "verify_family_incapacity", "verify_factorization",
+    "fiber_search",
 ]
 
 
@@ -109,8 +121,10 @@ def verify_family_incapacity(
     """THE MEASUREMENT that must agree with the theorem.
 
     For each member θ of `family`, evaluate both halves of the witness and confirm that θ errs
-    on at least one. Returns per-member outcomes plus `all_members_err`, which the theorem says
-    must be True whenever the witness is genuine.
+    on AT LEAST ONE — never necessarily both, since a member answering `left` correctly is
+    thereby wrong on `right`. `all_members_err` is the theorem's actual prediction;
+    `all_members_aliased` checks the premise that each member really did return one answer for
+    both, which is what "factors through π" buys.
     """
     outcomes: Dict[Any, Dict[str, Any]] = {}
     for theta in family:
@@ -126,3 +140,60 @@ def verify_family_incapacity(
         "all_members_err": all(o["errs"] for o in outcomes.values()),
         "all_members_aliased": all(o["agreed_as_predicted"] for o in outcomes.values()),
     }
+
+
+def verify_factorization(
+    instances: Sequence[Any],
+    coarse: Callable[[Any], Hashable],
+    fine: Callable[[Any], Hashable],
+) -> bool:
+    """Does `coarse` factor through `fine` on these instances — i.e. `coarse = f ∘ fine`?
+
+    Checked as: `fine(x) == fine(y)` implies `coarse(x) == coarse(y)`. This is the precondition
+    for treating `fine` as the family's finest projection. Empirical over `instances`, so a True
+    result is evidence on this battery rather than a proof of the functional identity.
+    """
+    for a, b in combinations(instances, 2):
+        if fine(a) == fine(b) and coarse(a) != coarse(b):
+            return False
+    return True
+
+
+def fiber_search(
+    seed: Any,
+    mutate: Callable[[Any], Iterable[Any]],
+    projection: Callable[[Any], Hashable],
+    truth: Callable[[Any], Any],
+    max_steps: int = 500,
+) -> Optional[AliasingWitness]:
+    """Synthesise an aliasing witness instead of finding one in a battery you already have.
+
+    The move (external review, round 7): stay inside ONE fiber of `π` and vary until the truth
+    flips. Mutations that leave the fiber are discarded, so the search is constrained to an
+    evaluator-equivalence class rather than wandering the whole input space — strictly better
+    than random adversarial search, because every candidate is already indistinguishable to the
+    evaluator and only the truth is in question.
+
+        find x₁ ≠ x₂ with π(x₁) = π(x₂) and T(x₁) ≠ T(x₂)
+
+    For R10 this is exactly "fix the world pair, mutate only the technique". No general
+    termination guarantee — emptiness of the target set inherits the undecidability already
+    recorded for agreement regions — but it is complete on bounded domains, and it turns the
+    instrument from an audit into an attack.
+
+    Returns the first witness found, or None if `max_steps` candidates stayed inside the fiber
+    without the truth ever flipping.
+    """
+    fiber_value = projection(seed)
+    seed_truth = truth(seed)
+    steps = 0
+    for candidate in mutate(seed):
+        if steps >= max_steps:
+            break
+        steps += 1
+        if projection(candidate) != fiber_value:
+            continue                       # left the fiber: the evaluator could tell them apart
+        if truth(candidate) != seed_truth:
+            return AliasingWitness(seed, candidate, fiber_value, seed_truth, truth(candidate),
+                                   note=f"synthesised by fiber search in {steps} steps")
+    return None

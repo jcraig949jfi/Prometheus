@@ -189,3 +189,68 @@ def test_R9_adding_the_circularity_check_removes_the_aliasing():
 
     assert find_aliasing_witness([honest, circular], projection,
                                  lambda p: full.judge(GOAL_A, p).accepted) is None
+
+
+# ---- cycle 019: synthesis, and the factorization precondition ---------------------------------
+
+def test_FIBER_SEARCH_synthesises_a_witness_instead_of_finding_one():
+    """Round-7 review: the instrument was a diagnostic because it searched a battery I had
+    already built. Fiber search makes it an attack — fix the world pair (one fiber of π) and
+    mutate only the technique parameter until the truth flips.
+
+    Seeded at a = 3 over F_7 (a nonsquare, so the technique transfers), the search walks a and
+    finds a = 2, where 3² = 2 mod 7 makes it break. Nothing about the worlds changed.
+    """
+    from techne.ladder_circuits.aliasing import fiber_search
+    from techne.ladder_circuits.canon_r10_analogy import (
+        W_F7, ground_truth, nonsquare_technique,
+    )
+    seed = (nonsquare_technique(3), W_F7)
+    mutate = lambda tw: ((nonsquare_technique(a), tw[1]) for a in range(2, 40))
+    projection = lambda tw: (tw[0].home.name, tw[1].name)       # complete world knowledge
+    w = fiber_search(seed, mutate, projection, lambda tw: ground_truth(*tw))
+    assert w is not None
+    assert w.left[0].name == "nonsquare_3" and w.right[0].name == "nonsquare_2"
+    assert (w.left_truth, w.right_truth) == (True, False)
+    assert "fiber search" in w.note
+
+
+def test_fiber_search_discards_candidates_that_leave_the_fiber():
+    """A mutation that changes the world is useless here: the evaluator CAN see it, so the pair
+    proves nothing about the family. Mutating q only, the search finds nothing."""
+    from techne.ladder_circuits.aliasing import fiber_search
+    from techne.ladder_circuits.canon_r10_analogy import (
+        W_F3, W_F5, W_F7, ground_truth, nonsquare_technique,
+    )
+    seed = (nonsquare_technique(3), W_F7)
+    mutate = lambda tw: ((tw[0], w) for w in (W_F3, W_F5, W_F7))
+    projection = lambda tw: (tw[0].home.name, tw[1].name)
+    assert fiber_search(seed, mutate, projection, lambda tw: ground_truth(*tw)) is None
+
+
+def test_FACTORIZATION_PRECONDITION_holds_for_the_R6_horizon_family():
+    """The precondition the cycle-018 write-up assumed without checking: every member's view
+    must factor through π. A horizon-5 searcher's view is determined by the horizon-10 view, so
+    a witness under the finer projection binds the coarser member."""
+    from techne.ladder_circuits.aliasing import verify_factorization
+    from techne.ladder_circuits.canon_r6_falsification import (
+        euler_prime_conjecture, late_failure_conjecture, true_conjecture_square,
+        true_conjecture_sum,
+    )
+    conjs = [euler_prime_conjecture(), true_conjecture_sum(), true_conjecture_square(),
+             late_failure_conjecture(7), late_failure_conjecture(12)]
+    fine = lambda c: tuple(c[1](n) for n in range(11))
+    coarse = lambda c: tuple(c[1](n) for n in range(6))
+    assert verify_factorization(conjs, coarse, fine)
+    assert not verify_factorization(conjs, fine, coarse)      # and not the other way round
+
+
+def test_INCOMPARABLE_OBSERVATIONS_break_the_finest_projection_argument():
+    """The failure mode the precondition exists to catch. Two members observing incomparable
+    features have no common projection short of the full input, so no single witness binds both
+    and incapacity must be argued per observation class."""
+    from techne.ladder_circuits.aliasing import verify_factorization
+    instances = [(0, 0), (0, 1), (1, 0), (1, 1)]
+    first, second = lambda p: p[0], lambda p: p[1]
+    assert not verify_factorization(instances, first, second)
+    assert not verify_factorization(instances, second, first)

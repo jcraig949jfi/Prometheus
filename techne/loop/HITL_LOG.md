@@ -244,3 +244,31 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
     is the proposal I would most like a ruling on.
 45. **Scheduling note:** R11 slides to cycle 019. Folding in review that corrects the rung I
     just built outranks moving to the next rung.
+
+
+## Cycle 019 (2026-08-21) — external review fold-in (round 7), R11 now slides to 020
+
+46. **I shipped a wrong repair and it lasted one cycle.** Cycle 018's "a witness must witness
+    the conclusion" was too strong: assumption-side evidence is the correct artifact for an
+    assumption-failure claim. Corrected to evidence TYPING. Recording it because the pattern
+    matters more than the instance — the repair was built, tested green, documented, pushed, and
+    wrong, and only external review caught it. My own tests could not have, because they encoded
+    my own misunderstanding.
+47. **New claim v12: types need a checker.** Implementing the typing over the verdict's own
+    fields was defeated immediately — the collapser relabels its `conclusion_status` at the same
+    moment it moves the witness. Any check that reads the circuit's self-declared fields is
+    reading the attacker's testimony. `audit_verdict` re-derives every status from the world and
+    is deliberately not a method on the verdict class.
+48. **A limit of the audit that I could not close, and it points at your constitution
+    proposal.** The audit works by querying the world. In the (BROKEN, UNKNOWN) state the world
+    cannot be queried by definition, so a circuit could lie about an UNKNOWN and never be caught.
+    The only check I can see is against an external immutable REGISTRY of what is known open —
+    which would make the immutable-observation proposal load-bearing rather than merely
+    principled. **This is now the second independent argument for that proposal.**
+49. **Two of my own write-ups were loose and are corrected:** the "finest projection" argument
+    needs a factorization precondition (incomparable observation sets admit no common projection
+    short of the full input), and "every member errs on each witness" should be "wrong on at
+    least one member of the pair". The code was correct in both cases; the prose was not.
+50. **Scheduling, and a limit I am imposing on myself:** two consecutive cycles have folded in
+    review rather than building a rung. That is the right call each time — a wrong repair
+    outranks a new rung — but R11 goes first in cycle 020 regardless of what arrives.

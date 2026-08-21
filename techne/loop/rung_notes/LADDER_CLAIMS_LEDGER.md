@@ -214,3 +214,45 @@ a restatement of the assumption violation, manufacturing a refutation of the twi
 conjecture. Repair built: `is_supported_strict` demands `conclusion_status == REFUTED` — a
 witness must witness the CONCLUSION. Generalises the R6 witness requirement: it is not enough to
 demand a witness, one must demand that it witnesses the claim being made.
+
+## Cycle 019 — claim v12: evidence has a type, AND types need a checker
+
+**v12.** *Every artifact must witness the proposition attached to its own verdict — and the
+type must be checked by something outside the circuit, because a type the circuit declares is
+a label.*
+
+The first half is external review (round 7), correcting cycle 018's over-strong "a witness must
+witness the conclusion". Assumption-side evidence is the correct artifact for an assumption
+claim: in F_3, `3 * 1 = 0` certifies that the characteristic is not 5. It cannot certify that
+the conclusion is false. So `(BROKEN, UNKNOWN)` is fully supported carrying assumption-channel
+evidence alone, and `(BROKEN, REFUTED)` needs both channels.
+
+The second half is this cycle, learned from two red tests. Implementing the typing as a check
+over the verdict's own fields was defeated at once: `UnknownCollapser` relabels its
+`conclusion_status` as REFUTED at the same moment it moves the witness across, and the typed
+check reads the label. **Typing over self-declared fields is typing over the attacker's
+testimony.** `audit_verdict` re-derives every asserted status from the world and is deliberately
+not a method on `TransferVerdict` — a verdict must not be able to certify itself.
+
+**Measured.** Collapser: `typed_ok = True`, `verified_ok = False`, note *"conclusion_status
+claims REFUTED, world says UNKNOWN"*. Honest circuit: sound on all three batteries, so the audit
+costs it nothing (not the R6 phantom pathology in disguise).
+
+**Known limit, recorded rather than papered over.** The audit works by querying the world. In
+the `(BROKEN, UNKNOWN)` state the world cannot be queried, so an UNKNOWN claim is checkable only
+against an external immutable registry of what is known open. That is a second independent
+argument for the immutable-observation constitution proposal.
+
+**Prior failures now readable as type confusions:** the R6 unwitnessed falsity claim (verdict
+asserted, no witness of any channel); the R9 circular lemma (dependency evidence offered for a
+contribution claim); the R10 collapser (assumption evidence in the conclusion slot).
+
+**Corrections to v11-prime, both mine.** (a) The finest-projection argument requires that every
+member's view FACTOR THROUGH the projection; incomparable observation sets admit no common
+projection short of the full input, and incapacity must then be argued per observation class
+(`verify_factorization`). (b) A witness shows any evaluator factoring through pi is wrong on AT
+LEAST ONE member of the pair, not on both.
+
+**Kill-battery additions (executable):** external audit vs self-declared status; fiber search
+for witness SYNTHESIS (`fiber_search`, seeded at a=3 over F_7 and landing on a=2 where
+3^2 = 2 mod 7); factorization precondition check; padded-assumption-list detection.
