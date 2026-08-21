@@ -144,3 +144,20 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
     verdict and (sometimes) the evidence, but NOT the predicates invoked, and nothing models
     negative dependencies. Both are needed before any revalidation obligation can be honoured
     incrementally at 400M-record scale. This is a schema change and therefore yours to call.
+
+## Cycle 014 (2026-08-21)
+
+27. **I mislabelled every rung from R2 up, for thirteen cycles.** Built against the
+    superseded v0.1 table while citing Canon v2.0. Crosswalk filed; no canon edit requested;
+    no files renamed (audit trail). The work stands, the labels did not. Worth noting the
+    irony for the record: this is the fossil failure the loop has been writing doctrine
+    about. It also argues for HITL #24's proposed rule — nothing ratifies until an external
+    pass has hit it.
+28. **Canon R5 (invariant detection) is still unbuilt** and canon R6 is now built. Next
+    cycles should finish the canon rungs actually missing rather than continue up the
+    v0.1 numbering. Proposed order: R5 invariant detection, then R9 lemma invention (needs a
+    Lean oracle per canon §7 — ties to the arsenal's Lean spike, still unstarted).
+29. **Substrate finding, Track 1:** zero of 56 generators ever emitted a second claim_kind
+    across all insertion-order epochs. The monoculture is not drift — it is congenital. If
+    generator diversity is ever tackled, this says the lever is at generator DESIGN, not at
+    tuning or selection pressure over time.
