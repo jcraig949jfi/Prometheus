@@ -91,3 +91,11 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
     certifies a mechanism only if its probe distribution leaves every known cheaper
     mechanism's exactness slice — and for objective-level claims, only if it measures
     EXPECTATION over the space, since myopic strategies can win single draws."
+
+## Cycle 010 (2026-08-21)
+
+19. **Relay hygiene**: the last paste repeated round-3 content already folded in at 008/009.
+    Three items were new (legality-gated pairs, capacity-as-property, cross-realization).
+    If you are pasting from different points in the ChatGPT thread, no harm — I diff against
+    what is already built and only construct the residue. If it was meant to be a NEW round,
+    the round-4 questions from cycle_008.md are still outstanding on their side.

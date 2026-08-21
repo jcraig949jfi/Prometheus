@@ -68,6 +68,19 @@ states what killed its predecessor. Executable evidence lives in `techne/ladder_
   reproduces), symbolic held-out abstraction (novel SYMBOL, not novel integer), and
   revisability/negative plasticity (add-only system's degradation measured, not asserted).
 
+- **v7 addendum (cycle 010, third relay of round 3):** most content was already built; the
+  residue sharpened three things. (a) **Legality-gated pairs**: the relation gates
+  ADMISSIBILITY, not just values — one world perturbed and the joint transition becomes
+  illegal, the pair STUCK. Strictly stronger than a value-changing guard: "run twice and
+  diff" cannot even be posed, since there is no second run, only a blocked joint execution.
+  (b) **Capacity theorem as a property**: for ANY finite palette a Γ exhausting it exists
+  (Hypothesis-swept over arbitrary palettes); unbounded namespaces unaffected.
+  (c) **Cross-realization transfer** — the macro-cache killer symbolic held-out cannot do:
+  same higher-level operator, DIFFERENT internal primitives (ints → mod-7 → polynomials).
+  A cache carries the realization and is silently wrong in the new domain; a schema carries
+  the operator and instantiates. Schema ORDER matters (double∘succ ≠ succ∘double), so
+  "knows these primitives are useful" is not enough.
+
 **Standing kill-battery inventory (all executable):** isomorph/fresh-seed (R0); coefficient-
 hull escape + symbolic-parameter probes (R1); trace re-execution, CAS-layer leakage,
 path-separating twins [spec'd], step-count priors (R2); disequality separation, scale probe,

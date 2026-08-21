@@ -95,6 +95,36 @@ def independent_b_run(b0: int, n: int, a_snapshot: int) -> int:
     return b
 
 
+@dataclass
+class LegalityGatedPair:
+    """Their SHARPEST R5 form: the paired transition is LEGAL only while the relation holds.
+
+    Rule: (a,b),(a’,b’) -> (a+1,b),(a’+1,b’) admissible only while b == b’.
+    A perturbation alters b in ONE world; from then on the synchronized step is ILLEGAL and
+    the pair is STUCK. This is stronger than a guard that merely changes a VALUE (cycle 009):
+    here the relation gates admissibility itself, so "run twice and diff" cannot even be
+    posed — there is no second run to diff against, only a blocked joint execution.
+    """
+
+    w0: Tuple[int, int]
+    w1: Tuple[int, int]
+    stuck_at: Optional[int] = None
+
+    def legal(self) -> bool:
+        return self.w0[1] == self.w1[1]
+
+    def step(self, n: int = 1, perturb_at: Optional[int] = None, delta: int = 1) -> "LegalityGatedPair":
+        for k in range(n):
+            if perturb_at is not None and k == perturb_at:
+                self.w1 = (self.w1[0], self.w1[1] + delta)   # one world only
+            if not self.legal():
+                self.stuck_at = k if self.stuck_at is None else self.stuck_at
+                return self                                   # blocked, not silently continued
+            self.w0 = (self.w0[0] + 1, self.w0[1])
+            self.w1 = (self.w1[0] + 1, self.w1[1])
+        return self
+
+
 def endpoint_checker(s0: State, s1: State, step: Callable[[State], State], n: int,
                      invariant: Callable[[State, State], bool]) -> bool:
     """Run-twice-and-compare-endpoints: the strategy the transient-violation probe kills."""

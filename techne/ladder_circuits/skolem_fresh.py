@@ -104,3 +104,9 @@ def exhaustion_context(palette: List[str], extra: int = 0) -> Context:
     """Γ_n: every palette name already occurs (plus `extra` more symbols), one existential."""
     syms = set(palette) | {f"a{i}" for i in range(extra)}
     return Context(symbols=syms, existentials=["P"])
+
+
+def exhausting_context_for(palette: List[str]) -> Context:
+    """The capacity THEOREM constructively: for ANY finite palette there is a context that
+    exhausts it. |fresh namespace| < infinity  =>  exists Gamma exhausting it."""
+    return Context(symbols=set(palette), existentials=["P"])

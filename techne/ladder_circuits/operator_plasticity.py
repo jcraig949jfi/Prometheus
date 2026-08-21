@@ -148,3 +148,54 @@ class RevisableOperators:
 
     def available(self) -> List[str]:
         return sorted(self.rules)
+
+
+# --------------------------------------------------------------------------- cycle 010
+
+@dataclass
+class Domain:
+    """A carrier plus its OWN realizations of the primitives. Same operator names, different
+    code — this is what separates an abstraction from a cached macro."""
+
+    name: str
+    double: Rule
+    succ: Rule
+
+
+@dataclass
+class CachedMacro:
+    """Caches the macro as a CONCRETE FUNCTION captured from the training domain. Correct
+    forever on that domain; silently WRONG on another whose primitives differ, because it
+    kept the realization rather than the schema."""
+
+    concrete: Optional[Rule] = None
+
+    def learn(self, dom: "Domain") -> None:
+        d, s = dom.double, dom.succ
+        self.concrete = lambda x: s(d(x))
+
+    def apply(self, dom: "Domain", x):
+        return None if self.concrete is None else self.concrete(x)
+
+
+@dataclass
+class AbstractOperator:
+    """Stores the SCHEMA — an ordered list of primitive NAMES — and instantiates it against
+    whatever domain it is handed. Same higher-level operator, different internal realization.
+
+    ChatGPT round 3 (restated): 'kill mere macro caching by changing the domain so the useful
+    abstraction requires different internal realizations but the same higher-level operator.'
+    """
+
+    schema: Optional[Tuple[str, ...]] = None
+
+    def learn(self, schema: Tuple[str, ...]) -> None:
+        self.schema = schema
+
+    def apply(self, dom: "Domain", x):
+        if self.schema is None:
+            return None
+        prims = {"double": dom.double, "succ": dom.succ}
+        for step in self.schema:
+            x = prims[step](x)
+        return x
