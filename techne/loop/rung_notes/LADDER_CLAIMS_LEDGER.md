@@ -347,3 +347,46 @@ un-detectability of omission (v13).
 
 **Standing caveat on the whole pass:** every battery in it is synthetic. This was instrument
 CALIBRATION, not architectural validation. Second-pass priorities are in cycle_021.md.
+
+## Cycle 022 — v11-prime NARROWED at R3, and the instrument found to be half-blind
+
+**R3 claim, resolved.** The ledger carried "R3 capacity width" as an UNVERIFIED fourth instance
+of aliasing since cycle 018. Verdict: **narrowed, not struck.**
+
+- The cycle-006 twins DO alias the FIFO pipelines. Measured: identical bounded state, differing
+  queried proposition, every width in the family wrong on one twin.
+- They do NOT alias the LIFO pipelines. LIFO evicts the most recent arrival, so a fact declared
+  first survives the flood; LIFO separates the twins perfectly.
+- FIFO and LIFO views are INCOMPARABLE in both directions (verified twice: by
+  `verify_factorization` and independently by partition refinement). No finest projection exists
+  for the union short of the full history.
+
+So incapacity holds **per observation class**, not for the family as stated. This is the
+round-7 factorization precondition catching something in existing work rather than in a
+constructed example, which is the first time that has happened.
+
+## Cycle 022 — the aliasing instrument detects only ONE of two failure directions
+
+**A projection can be wrong in two ways, with different logical force:**
+
+- **Under-discrimination (merging):** `pi(x1) = pi(x2)`, `T(x1) != T(x2)`. An IMPOSSIBILITY —
+  no member of the family is correct on both. This is what v11-prime is about and what
+  `find_aliasing_witness` finds.
+- **Over-discrimination (splitting):** `pi(x1) != pi(x2)`, `T(x1) = T(x2)`. **NOT** an
+  impossibility — the family can be correct on both by treating them separately. The cost is
+  that evidence does not transfer.
+
+Found by sweeping R0, which reports NO aliasing witness (exact-AST keys never merge distinct
+expressions) while being demonstrably defective in the other direction: `x + y` and `a + b`
+share an answer and receive different keys. `find_splitting_witness` is the dual, and
+`SplittingWitness.proves_impossibility` is a FIELD set to False, so the distinction survives
+reporting — announcing a generalisation cost as an impossibility would be the v12 evidence-
+typing error committed by the instrument itself.
+
+**Consequence for the first pass, recorded rather than quietly fixed:** every "no aliasing
+witness found" result from cycles 018-021 ran only half a sweep. None were reported as clean
+bills of health, but none ran the dual either.
+
+**Kill-battery additions (executable):** per-policy twin construction (`twins_for_policy`);
+cross-policy incomparability check; splitting-witness search; CAS-delivered-congruence probe
+(does the key see the transformation the claim is about, or does the CAS normalise it away?).

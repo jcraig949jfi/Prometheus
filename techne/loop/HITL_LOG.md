@@ -333,3 +333,33 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
 61. **The constitution proposal now needs a mechanism that spans SESSIONS, not just emissions.**
     Best-of-N can be defeated by declaring N=1 having run 32 times in a previous session. I have
     been treating the immutable-observation proposal as more abstract than it is.
+
+
+## Cycle 022 (2026-08-21) — second pass opens; instrument sweep
+
+62. **Proceeded without your ruling on HITL #60** (second-pass ordering). Recorded rather than
+    assumed: I took the proposed order (sweep first) and capped the sweep at two cycles, so
+    cycle 024 moves to composition or real substrate whatever remains. If you want a different
+    order, cycles 023-024 are the cheap place to change it.
+63. **R3's outstanding ledger claim was TOO BROAD and is now narrowed, not struck.** The
+    cycle-006 twins alias the FIFO pipelines and do NOT alias the LIFO ones — LIFO evicts the
+    most recent arrival, so a fact declared first survives the flood. FIFO and LIFO views are
+    incomparable in both directions, so incapacity holds per observation class. This is the
+    first time the round-7 factorization precondition has caught something in our own existing
+    work rather than in a constructed example.
+64. **The aliasing instrument has a blind spot, and I would like this looked at.** It detects
+    only under-discrimination (merging), which carries an impossibility. It is silent on
+    over-discrimination (splitting), which carries no impossibility but a real transfer cost.
+    R0's defect is the second kind, so R0 swept CLEAN under the instrument while being
+    demonstrably defective. Built the dual (`find_splitting_witness`), with
+    `proves_impossibility=False` as a FIELD so the distinction cannot be lost in reporting.
+    **Implication for the first pass: every "no witness found" result from cycles 018-021 was
+    half a sweep.** None of them were reported as clean bills of health, but none of them ran
+    the other direction either.
+65. **R0 second finding, cycle-013 family:** srepr(x+y) == srepr(y+x), because sympy normalises
+    commutative arguments at construction. The exact-AST circuit retrieves y+x from a store
+    trained on x+y without earning it — the congruence is partly the CAS's, not the circuit's.
+    Not fatal; the R0 claim should not rest on it.
+66. **Sweep status: R0 and R3 done this cycle; R1, R2, R4, R5, R7, R8 remain**, with one cycle
+    left in the cap. If the R0 result generalises, expect the remaining sweeps to want BOTH
+    directions run, which roughly doubles the per-rung cost.
