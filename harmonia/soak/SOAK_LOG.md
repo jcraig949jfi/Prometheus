@@ -1568,9 +1568,45 @@ objects with separate registries** — found, fixed, and *not* the cause.
 **Not claimed:** how many of P28–P34 were contaminated the same way. Only same-size,
 same-second edits are at risk; I did not retroactively audit them.
 
+## Pass 37 — contamination audit closed: nothing published was corrupted
+
+P36 left WITHHELD how many of P28–P35 the stale-bytecode hazard had reached. If any, this
+channel owed retractions, not caveats.
+
+**The static audit failed and was discarded.** Extracting mutation payloads by byte length
+flagged 13 "at-risk pairs" — at `len=35`, `len=40`, `len=41` — which are **file paths and
+labels**, not payloads. The tell: it flagged scripts I knew used length-*changing*
+mutations and cleared ones I knew did not. Fifth time this soak a result was killed by its
+shape rather than by review of the probe.
+
+**Replaced inference with re-execution**, all under `PYTHONDONTWRITEBYTECODE=1` — the
+remedy from my own P36 gate — so the hazard could not apply during the audit:
+
+| finding | published | reproduced |
+|---|---|---|
+| P30 adopted checkpoint pin | 4/4 | **4/4** |
+| P31 Pin B (P40 domain-skip) | 3/4, N3 survives | **3/4, N3 survives** |
+| P31 Pin C (P38 unknown_kind) | 4/4 | **4/4** |
+| P32 pin-vs-suite attribution | PIN 4/4, 0 others | **PIN 4/4, 0 others** |
+| P32 redundancy census | `[1,1,2,2,3]`, 485 survives | **`[1,1,2,2,3]`, 485 survives** |
+| P35 three-copies | copy1/2 unguarded, copy3 guarded | **identical** |
+
+**Nothing requires retraction.** Machine state after the sequence: `CONJ` True,
+`stated_truth` True, z3 verdict `proved`, repo clean.
+
+**Why the blast radius was narrow:** the stale module was `reasoning_phase0`, whose `CONJ`
+affects only generator-produced probes, while the pin findings depend on `verifier_lens`,
+`run_zoo_matrix` and `lattice_void_miner` — whose mutations changed file length and so
+forced correct recompiles. **That is luck, not design**, and it does not retire P36's
+correction: a discipline that passes its own three checks while the host runs corrupted
+code is unsound whether or not it happened to miss anything.
+
+**Named limit:** reproduction confirms non-contamination, *not* correctness. A probe with a
+logic error reproduces that error faithfully and this audit could not tell the difference.
+
 ## Verdict so far
 
-Withheld — thirty-six passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — thirty-seven passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
