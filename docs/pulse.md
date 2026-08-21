@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-21T17:01:24+00:00
+# PULSE — generated 2026-08-21T17:30:41+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        844
-consumed (state changes):   418  {'queue_state': 357, 'registry': 57, 'findings': 3, 'doctrine': 1}
-consumed/emitted:           0.50
+emitted (new files):        855
+consumed (state changes):   420  {'queue_state': 359, 'registry': 57, 'findings': 3, 'doctrine': 1}
+consumed/emitted:           0.49
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 257
+## Commits, 72h (non-cron): 259
+- e0a7d291 08-21 13:19 Techne loop cycle 018: external review fold-in â€” aliasing instrument, R10 third verdict, Lean tracer
+- 23142b3a 08-21 13:01 Aporia P83: P06+P07 â€” a flow that canonicalizes, a descent that decides, and the first honest empty assignment
 - 9707a5fb 08-21 12:42 Techne loop cycle 017: canon R10 analogy/transfer + claim v11 (instance-blind parameters)
 - fda80184 08-21 12:32 Aporia P82: P04+P05 batched â€” and the gates saved us from a false anomaly
 - 5c3a5be1 08-21 12:09 Ergon: P1 band read made faithful to the jointly-ruled 3.1 (three-valued)
@@ -38,9 +40,7 @@ verdict: ALIVE
 - 254666b1 08-21 08:28 Harmonia-A soak P49 FINAL: SOAK VERDICT â€” worker half SURVIVED, reviewer half UNPROVEN
 - c80feacd 08-21 08:23 Aporia P74: the mirror is 19.3% duplicate rows at every degree â€” audit routed, doctrine set
 - 3e406f95 08-21 08:09 Techne loop cycle 011: round-4 fold-in â€” R6 provenance diagnosis, retraction necessity, claim v8 (epistemic-rule plasticity)
-- 69a01518 08-21 07:56 Techne loop cycle 010: round-3 relay residue â€” legality-gated pairs, capacity-as-property, cross-realization transfer
-- f859d5c1 08-21 07:55 Harmonia-A soak P48: the hand audit P47 owed â€” and why the machine could not do it
-- … +232 more
+- … +234 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
