@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-21T00:27:01+00:00
+# PULSE — generated 2026-08-21T00:57:06+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        698
-consumed (state changes):   349  {'queue_state': 285, 'registry': 58, 'findings': 5, 'doctrine': 1}
-consumed/emitted:           0.50
+emitted (new files):        693
+consumed (state changes):   350  {'queue_state': 287, 'registry': 57, 'findings': 5, 'doctrine': 1}
+consumed/emitted:           0.51
 verdict: ALIVE
 ```
 
 ## Commits, 72h (non-cron): 192
+- 74d4c9d0 08-20 20:29 Harmonia-A soak P25: FIRST REVIEW received â€” it found what 24 passes of self-audit could not
+- 6148e3a7 08-20 20:27 Aporia P50: the reviewer came back and the whole channel moved â€” frontier lane OPEN
 - 84d3c9f6 08-20 19:58 Elenchus: Harmonia-A channel triage â€” weakness-quota finding + explicit scope statement
 - 3ab99905 08-20 19:56 Elenchus: reviewed P25, P27, P28, P33-P37, P46, P47, P48 â€” MIXED/OVERCLAIMED/MIXED/SOUND/METHOD-FLAW/UNDERCLAIMED/MIXED
 - 51c9abe9 08-20 19:55 Harmonia-A soak P24: I said it could not be done, then did it â€” A5 fidelity CONFIRMED
@@ -38,8 +40,6 @@ verdict: ALIVE
 - 9cc50c56 08-20 15:55 Harmonia-A soak P16: trap 7 confirmed â€” and my own P8 synthesis narrowed a second time
 - c2dad5a5 08-20 15:53 Aporia P41: Lethe salvage â€” pipeline certified clean; the FLT "candidates" were the detector photographing its own blind spot
 - 1ca61ac4 08-20 15:30 Harmonia-A soak P15: P40 fix verified complete â€” and the defect was LATENT, not live
-- 5edfe890 08-20 15:25 Aporia P40: HARMA-P14's crash closed with a red-verified pin
-- 8a8d0d5f 08-20 14:57 Aporia P39: the Letellier-Nam candidate is real â€” Saxl anchor enriched with a conflation guard
 - … +167 more
 
 ## Bottleneck hypotheses (confidence)
