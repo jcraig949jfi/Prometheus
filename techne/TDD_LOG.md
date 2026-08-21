@@ -3202,3 +3202,4 @@ work. Benchmark is necessary, not sufficient.
   May-era Walk-Z/PRM heads) currently emits >=2 scores per candidate. Flagged
   to Aporia/Ergon. The one-line call is specified (spec §3) and the round-trip
   is test-proven, so integration is mechanical the moment a live site exists.
+2026-08-21 | pm.certified (CertifiedValue, certified_const, certified_zeta) | A:4 P:5 E:1(6 edges) C:2 | loop cycle 001

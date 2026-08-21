@@ -64,6 +64,12 @@ from . import algebra_lie_algebras  # noqa: F401  -- root systems & Weyl groups 
 from . import doc  # noqa: F401
 
 # Optional SDP module (cvxpy-backed). Skip silently if cvxpy missing.
+# Certified ball arithmetic (FLINT 3 / Arb via python-flint) — optional native dep.
+try:
+    from . import certified  # noqa: F401
+except Exception:  # pragma: no cover
+    certified = None  # type: ignore[assignment]
+
 try:
     from . import optimization_sdp  # noqa: F401
     _HAS_OPT_SDP = True
