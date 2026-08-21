@@ -1755,9 +1755,46 @@ the case the current split gets wrong.
 One table examined, so this **scopes** the entry rather than replacing it — the brace form
 may be exactly right for the tables 0042 came from. Logged withheld.
 
+## Pass 42 — mirror census: both conventions live, and trap 7 is four times wider than documented
+
+P41 left WITHHELD whether trap 3's brace form exists anywhere. That decides SCOPE vs REWRITE.
+Redesigned the sampler after P41's timeout — one `select * limit 5` per **table**, classified
+client-side. Classifier calibrated on four known values before any query.
+
+**Denominator: 6/6 base tables, 1412 string values, 5 rows each.**
+
+| serialization form | values | tables |
+|---|---|---|
+| bracket array (JSON-style) | 365 | 5 |
+| **brace array (trap 3 as written)** | **29** | **1** |
+| brace object (quoted keys) | 21 | 1 |
+
+**Resolves to SCOPE, not rewrite** — trap 3's brace form is real, in one table, alongside a
+bracket form an order of magnitude more common. **MIXED**: no default parse is safe, which is
+worse for a consumer than a single wrong convention.
+
+### Classifier flaw, caught before publication
+
+The prefix test ran **before** the bare-key test, so `GaloisConjugates` (`[{Sign: 1,…`) filed
+as a valid-looking bracket array — erasing the very distinction P41 established, using the
+specimen that motivated it. Re-split by actual JSON validity:
+
+| bracket-led values | count | |
+|---|---|---|
+| parse as JSON | **302 (82.7%)** | cast-recoverable |
+| do **not** parse | **63 (17.3%)** | recovered by no cast |
+
+**Trap 7's footprint is four tables, not one:** `lfunc_lfunctions` 25, `g2c_curves` 23,
+`artin_reps` 10, `ec_curvedata` 5 — where ATTACK_PATTERNS names a single column. A documented
+instance gets recorded as *the* instance, and the format doesn't distinguish an example from
+an inventory.
+
+**Not claimed:** the 29 brace values matched trap 3's *shape* by regex; castability untested.
+Row sample is five per table — the table denominator is complete, the row denominator is not.
+
 ## Verdict so far
 
-Withheld — forty-one passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — forty-two passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
