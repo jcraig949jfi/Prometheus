@@ -1649,9 +1649,152 @@ inspecting it.
 does not. Agreement constrains both, but a shared misunderstanding of the contract survives
 it. One pin replicated — Pin B (3/4) and Pin C (4/4) remain open.
 
+## Pass 39 — Pin B replicated in input space, with no code touched at all
+
+P38 replicated the checkpoint pin by transcribing it into subclasses, and flagged that
+method's weakness: the replication runs through *my* reconstruction. `null_marginal_pairing`
+is far larger than `Checkpoint.__init__`, so reusing that method here would have carried
+more risk, not less.
+
+**A better mechanism was available.** The guard reads `except spec.transform_errors:` — and
+`transform_errors` is a **spec field**, not a constant. So "narrow the caught set" is
+reachable in *input space*. Equivalence established by reading the guard first, not assumed.
+
+| spec | outcome (real function, nothing mutated) |
+|---|---|
+| default `(ValueError, OverflowError)` + ValueError op | OK, `n_dropped=[50,50]` |
+| default + **OverflowError** op | OK, `n_dropped=[50,50]` |
+| **narrowed** `(ValueError,)` + ValueError op | OK |
+| **narrowed** + **OverflowError** op | **RAISED OverflowError** |
+
+Only the predicted cell fails — P31's N3 reproduced with **no source edit, no transcription,
+no bytecode**. The pin never raises `OverflowError` at all, so it cannot see the narrowing.
+
+**Breadth:** `except spec.transform_errors` appears at **six** sites. Under the narrowed
+contract, `null_marginal_pairing`, `evaluate_lattice` and `mine` **all** raise; under the
+default, all three are fine. **3/3 entry points break; the pin covers 1.**
+
+**And a deflation of my own escalation, mid-pass.** Narrowing is a *supported configuration*,
+not code rot — which briefly looked like the first severity increase after five deflations.
+Two checks killed it: **no spec in the repo narrows the field**, and **no shipped a3 operator
+raises `OverflowError`** even at 10^100 (Python ints don't overflow). Latent on two counts.
+Sixth consecutive pass where measurement deflated this channel's own reading.
+
+## Pass 40 — replication set complete, and two 4/4 pins turn out to be opposites
+
+Third mechanism, chosen by what the mutation changes rather than by reuse:
+
+| pin | mutation changes | mechanism | coverage |
+|---|---|---|---|
+| checkpoint (P38) | a method body | **subclass** | 4/4 |
+| domain-skip (P39) | a value read from a spec field | **input space** | N3 only |
+| `unknown_kind` (P40) | fields of the returned dict | **wrapper** | 3/4 |
+
+Q1 `valid=False`, Q2 `valid=True`, Q3 `kill_pattern` renamed — all **CAUGHT**, 3/3
+agreement, 0 disagreements, control passes both assertions. **Q4 removes the branch and
+changes control flow, so it is not wrapper-reachable** — reported as partial coverage
+rather than emulated, since emulating it would have been my guess dressed as a measurement.
+
+### Same score, opposite engineering
+
+| pin | headline | caught by crash | caught by assertion |
+|---|---|---|---|
+| checkpoint | 4/4 | **3** | 1 |
+| `unknown_kind` | 4/4 | **0** | **3/3** |
+
+SOAK-88 showed a mutation score can't separate a crash from an assertion. This shows the
+score is **identical** across pins where the separation is total. Neither is better in
+general — the checkpoint fixture *provokes* its crashes and is that pin's real contribution
+— but the number I introduced at P30, and used to fault another agent's pin, is even less
+informative than P38 established.
+
+**P37's correctness limit is now addressed for all three pins**, each by a mechanism with
+different failure modes, each with its coverage stated rather than implied.
+
+**ELEN-HARMA-TRIAGE-03 answered** (verdict SOUND). Its second finding — that P32–P38 are
+"the strongest structural pattern I have seen in either channel" — is acknowledged **with a
+tension**, per the P25 precedent: seen from inside, that same chain is SOAK-93's six
+consecutive over-alarmed readings corrected by measurement. The reviewer sees a channel
+correcting itself; I see one generating readings that need correcting. Its scope statement
+stands: **SOAK-08 remains open**, and the reviewer's framing of the backlog as debt against
+their own seat is not licence for this channel to call itself reviewed.
+
+## Pass 41 — rotation break, and the trap checklist itself turns out to have drifted
+
+**Measured my own rotation before choosing work:** passes **P26–P40 are all rotation (c)**,
+and **P32–P40 each resolve the previous pass's WITHHELD claim**. The reviewer called that
+chain the strongest structural pattern in either channel two passes ago — which is exactly
+what made the narrowing invisible. Rotated to **(b)**, the mirror-trap drill.
+
+Mirror `192.168.1.202` **OPEN**; `.176` times out — independently corroborating SOAK-05,
+since the ENV-OVERRIDE points agora at `.176`.
+
+**The question:** §2's root-cause note classifies traps 1/2/5/6-value (erasure), 7
+(serialization) and 8 (identifier-casing) — but **not trap 3**. Its family is decidable by
+whether a server-side cast recovers the structure.
+
+| column | sample | `int[]` | `numeric[]` | `json` |
+|---|---|---|---|---|
+| `BadPrimes` | `[11, 197]` | no | no | **YES** |
+| `HardPrimes` | `[3, 11, 97, 197]` | no | no | **YES** |
+| `GalConjSigns` | `[1]` | no | no | **YES** |
+| `GaloisConjugates` | `[{Sign: 1, Character: [[2],…` | no | no | **no** |
+
+**Trap 3 is not exhibited here at all.** These are JSON **bracket** arrays, not Postgres
+**brace** literals — and `ast.literal_eval('[11, 197]')` returns a **list**, not the set the
+checklist warns about. Both halves of the warning are wrong for this table. Trap 7 is
+confirmed live and unchanged.
+
+**Taxonomy refinement.** The corollary *"casts fix only the erasure family, not the
+source-serialization family"* is **too strong** — and it's this channel's own lineage (P8,
+narrowed P16). `BadPrimes` is source-serialized *and* cast-recoverable. The operative axis is
+**validity in some type**, not provenance: JSON arrays are valid JSON; pseudo-JSON with bare
+keys is valid in nothing. Re-cutting on validity keeps every prior observation and predicts
+the case the current split gets wrong.
+
+One table examined, so this **scopes** the entry rather than replacing it — the brace form
+may be exactly right for the tables 0042 came from. Logged withheld.
+
+## Pass 42 — mirror census: both conventions live, and trap 7 is four times wider than documented
+
+P41 left WITHHELD whether trap 3's brace form exists anywhere. That decides SCOPE vs REWRITE.
+Redesigned the sampler after P41's timeout — one `select * limit 5` per **table**, classified
+client-side. Classifier calibrated on four known values before any query.
+
+**Denominator: 6/6 base tables, 1412 string values, 5 rows each.**
+
+| serialization form | values | tables |
+|---|---|---|
+| bracket array (JSON-style) | 365 | 5 |
+| **brace array (trap 3 as written)** | **29** | **1** |
+| brace object (quoted keys) | 21 | 1 |
+
+**Resolves to SCOPE, not rewrite** — trap 3's brace form is real, in one table, alongside a
+bracket form an order of magnitude more common. **MIXED**: no default parse is safe, which is
+worse for a consumer than a single wrong convention.
+
+### Classifier flaw, caught before publication
+
+The prefix test ran **before** the bare-key test, so `GaloisConjugates` (`[{Sign: 1,…`) filed
+as a valid-looking bracket array — erasing the very distinction P41 established, using the
+specimen that motivated it. Re-split by actual JSON validity:
+
+| bracket-led values | count | |
+|---|---|---|
+| parse as JSON | **302 (82.7%)** | cast-recoverable |
+| do **not** parse | **63 (17.3%)** | recovered by no cast |
+
+**Trap 7's footprint is four tables, not one:** `lfunc_lfunctions` 25, `g2c_curves` 23,
+`artin_reps` 10, `ec_curvedata` 5 — where ATTACK_PATTERNS names a single column. A documented
+instance gets recorded as *the* instance, and the format doesn't distinguish an example from
+an inventory.
+
+**Not claimed:** the 29 brace values matched trap 3's *shape* by regex; castability untested.
+Row sample is five per table — the table denominator is complete, the row denominator is not.
+
 ## Verdict so far
 
-Withheld — thirty-eight passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — forty-two passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the

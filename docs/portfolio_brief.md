@@ -1,5 +1,5 @@
 # Prometheus Portfolio Brief
-*Generated: 2026-08-21 03:44:47 AM UTC*
+*Generated: 2026-08-21 07:44:49 AM UTC*
 *Author: Metis (multi-machine reporter mode)*
 
 ---
@@ -7,7 +7,7 @@
 ## Act on this
 
 **Hephaestus @ M3, forge — substrate generator with falsification battery — DEAD, daemon stopped**
-No heartbeat for 118759min (7125590s). Was last ALIVE at 2026-05-28T01:38:15.244017-04:00.
+No heartbeat for 118999min (7139992s). Was last ALIVE at 2026-05-28T01:38:15.244017-04:00.
 Investigate the process on M3 and restart, or kill watchdog if intentional.
 
 ## Watch this
@@ -16,9 +16,9 @@ Investigate the process on M3 and restart, or kill watchdog if intentional.
 DR pipeline idle. Either Pythia's queue is empty or upstream intent (Aporia tickets) hasn't been refilled.
 Check Pythia queue depth; refill DR ticket inbox if dry.
 
-## Parked threads — yours to unstick (661 parked, 2 decisions pending)
+## Parked threads — yours to unstick (652 parked, 2 decisions pending)
 
-- **507 thread(s) gated on:** needs authored test_spec (SPEC-AUTHOR-BATCH lane) — e.g. CAT-MATH-0476
+- **500 thread(s) gated on:** needs authored test_spec (SPEC-AUTHOR-BATCH lane) — e.g. CAT-MATH-0476
   About 490 catalog problems were classified in May with a default label and never given an actual test recipe (what data, what computation, what counts as pass/fail). The loop will not attack a problem while inventing its goalposts mid-shot — instead a dedicated spec-authoring lane writes proper recipes in batches of 10 (each recipe verified against data that actually exists locally), and the attack passes then consume them. This is menu-growth: the backlog feeds itself instead of exhausting.
 - **45 thread(s) gated on:** verified 2026-08-19 (<30d) — rolling re-verification resumes on age-out — e.g. AA-VERIFY-AA-028
   (no ELI5 for this gate yet — the loop owes one next pass)
@@ -28,11 +28,11 @@ Check Pythia queue depth; refill DR ticket inbox if dry.
   We built an experiment to re-test 725 old failed results that the archive itself flagged as killed-only-because-the-sample-was-too-small. Before it runs, Charon (our independent skeptic) must approve the design and hide fake test cases in the data so the experiment can't fool itself — one Charon session unlocks all 15 of these threads.
 - **12 thread(s) gated on:** typed structural zero: agent has no reasoning interface at any level (poller/orchestrator/ — e.g. PROF-CharonLoop
   (no ELI5 for this gate yet — the loop owes one next pass)
-- **11 thread(s) gated on:** authored spec awaiting shadow review (Elenchus) — e.g. CAT-MATH-0057
-  (no ELI5 for this gate yet — the loop owes one next pass)
 - **11 thread(s) gated on:** GPU slot + strategy-group harness check — e.g. SB-SWEEP-S00
   These scan 68,770 'sleeping beauty' number sequences — highly structured but connected to nothing — to find which detection strategy wakes them up. Each scan waits for a free GPU and a quick check that the scanning code for that strategy still runs.
 - **10 thread(s) gated on:** verified 2026-08-18 (<30d) — rolling re-verification resumes on age-out — e.g. AA-VERIFY-AA-017
+  (no ELI5 for this gate yet — the loop owes one next pass)
+- **9 thread(s) gated on:** authored spec awaiting shadow review (Elenchus) — e.g. CAT-MATH-0060
   (no ELI5 for this gate yet — the loop owes one next pass)
 - **DECISION pending:** Ratify the PROMETHEUS-0 constitution (10 articles)
   PROMETHEUS-0 is the planned master organism that births and prunes specialized child agents; its 10-article constitution defines what it may never do without you (spawn freely, change its own rules, spend money, touch the outside world). Signing it is the first of three gates before that experiment can start.
@@ -41,16 +41,16 @@ Check Pythia queue depth; refill DR ticket inbox if dry.
 
 ## Shadow review (Elenchus)
 
-Worklog passes: 58 | reviewed: 7 | awaiting review: 52
-- ELEN-2026-08-20T09:16Z-P18: **MIXED** (invalidates-claim) The pass's headline infra claim -- 'the heartbeat leg now works cross-machine with default
-- ELEN-2026-08-20T09:27Z-P19: **METHOD-FLAW** (correction-needed) THE SELF-CORRECTION RESTS ON A FALSE PREMISE. P19 asserts, at strength 'certain', that 'th
-- ELEN-SELF-1: **MISSED** (correction-needed) SELF-CORRECTION against ELEN-2026-08-20T08:17Z-P16b. My cycle-1 finding stated that 'agora
+Worklog passes: 74 | reviewed: 15 | awaiting review: 60
+- ELEN-2026-08-20T23:11Z-P48: **MIXED** (correction-needed) The headline number does not reconcile with its own per-row counts. The audit reports 'CON
+- ELEN-2026-08-20-AA-VERIFY-P33-P37: **SOUND** (note) The attestation channel survives adversarial spot-checking. I fetched the four highest-ris
+- ELEN-HARMA-TRIAGE-01: **MIXED** (note) self_identified_weaknesses is being filled to a QUOTA of exactly six on the Harmonia-A cha
 Logs: engine/shadow/WORKLOG.jsonl | Reviews: engine/shadow/REVIEWS.jsonl
 https://github.com/jcraig949jfi/Prometheus/blob/main/engine/shadow/REVIEWS.jsonl
 
 ## For the record
 
-Session-model activity (the live operating model): 182 non-cron commits in 72h. Ground truth: engine/PULSE.md.
+Session-model activity (the live operating model): 196 non-cron commits in 72h. Ground truth: engine/PULSE.md.
 
 
 **1 agents ALIVE** (Pronoia).

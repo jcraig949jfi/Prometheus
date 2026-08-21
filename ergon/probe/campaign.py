@@ -276,6 +276,19 @@ def run_arm_phase(name, arm_task_pairs, arms, budget, led_name):
 
 # ------------------------------------------------------------------ orchestrator
 
+def _pid_alive(pid):
+    """Windows PID liveness. NEVER use os.kill(pid, 0) here -- on Windows that
+    TERMINATES the target. The 6h age cap in the caller guards against PID reuse."""
+    import ctypes
+    h = ctypes.windll.kernel32.OpenProcess(0x1000, 0, pid)  # QUERY_LIMITED_INFORMATION
+    if not h:
+        return False
+    code = ctypes.c_ulong()
+    ok = ctypes.windll.kernel32.GetExitCodeProcess(h, ctypes.byref(code))
+    ctypes.windll.kernel32.CloseHandle(h)
+    return bool(ok) and code.value == 259  # STILL_ACTIVE
+
+
 def main():
     DIR.mkdir(parents=True, exist_ok=True)
     # single-instance lock: long-output batches routinely outlive the 30-min firing
@@ -284,11 +297,13 @@ def main():
     lock = DIR / "campaign.lock"
     if lock.exists():
         age_h = (time.time() - lock.stat().st_mtime) / 3600
-        if age_h < 6:
-            log(event="skipped_locked", lock_age_h=round(age_h, 2))
+        pid = lock.read_text(encoding="utf-8").strip()
+        holder_alive = pid.isdigit() and _pid_alive(int(pid)) and age_h < 6
+        if holder_alive:
+            log(event="skipped_locked", holder_pid=int(pid), lock_age_h=round(age_h, 2))
             print("another firing is still running -- skipped")
             return
-        log(event="stale_lock_removed", lock_age_h=round(age_h, 2))
+        log(event="stale_lock_removed", holder_pid=pid, lock_age_h=round(age_h, 2))
     lock.write_text(str(os.getpid()), encoding="utf-8")
     try:
         _campaign()

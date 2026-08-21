@@ -3203,3 +3203,4 @@ work. Benchmark is necessary, not sufficient.
   to Aporia/Ergon. The one-line call is specified (spec §3) and the round-trip
   is test-proven, so integration is mechanical the moment a live site exists.
 2026-08-21 | pm.certified (CertifiedValue, certified_const, certified_zeta) | A:4 P:5 E:1(6 edges) C:2 | loop cycle 001
+2026-08-21 | pm.tensor_train (tt_ranks, tt_rank_null_test, signature_occupancy_tensor) | A:4(incl numpy 2nd-tool) P:4 E:1(6 edges) C:2(real ledger) | loop cycle 002
