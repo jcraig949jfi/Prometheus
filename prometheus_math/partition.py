@@ -23,7 +23,7 @@ import math
 from typing import Callable, Dict, FrozenSet, Hashable, List, Sequence, Tuple
 
 __all__ = ["induced_partition", "refines", "entropy", "mutual_information",
-           "variation_of_information", "PartitionError"]
+           "variation_of_information", "conditional_entropy", "PartitionError"]
 
 Partition = Tuple[FrozenSet[int], ...]
 
@@ -106,3 +106,19 @@ def variation_of_information(p: Partition, q: Partition, n: int) -> float:
     becomes a checkable statement rather than a claim.
     """
     return entropy(p, n) + entropy(q, n) - 2.0 * mutual_information(p, q, n)
+
+
+def conditional_entropy(p: Partition, q: Partition, n: int) -> float:
+    """H(P | Q) in bits — what P still distinguishes once Q is known.
+
+    Zero exactly when Q refines P, which is the identity that makes the sweep's two directions
+    one measurement (cycle 023):
+
+        H(T | P) > 0  <=>  P does not refine T  <=>  an ALIASING witness exists
+        H(P | T) > 0  <=>  T does not refine P  <=>  a SPLITTING witness exists
+        VI(P, T) = H(T | P) + H(P | T)
+
+    So a projection is exactly sufficient AND exactly necessary iff VI = 0, and the two failure
+    directions are the two halves of that single number.
+    """
+    return entropy(p, n) - mutual_information(p, q, n)

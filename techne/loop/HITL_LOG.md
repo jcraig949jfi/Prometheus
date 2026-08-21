@@ -363,3 +363,36 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
 66. **Sweep status: R0 and R3 done this cycle; R1, R2, R4, R5, R7, R8 remain**, with one cycle
     left in the cap. If the R0 result generalises, expect the remaining sweeps to want BOTH
     directions run, which roughly doubles the per-rung cost.
+
+
+## Cycle 023 (2026-08-21) — sweep closes on the cap
+
+67. **I corrected my own cycle-020 claim.** I reported empirical calibration as a genuine
+    counterexample to aliasing and guessed it was EXACTLY sufficient. Measured: deficit 0.000
+    (the counterexample stands) but excess 1.200 bits — four forecasters with different records
+    all score ECE 0.0000. Sufficient but excessive. The surplus is what predictive calibration
+    needs, so it is the good news rather than a defect.
+68. **I also corrected my cycle-022 framing.** I called over-discrimination a cost. R9 carries
+    0.689 excess bits because it separates decorative from circular lemmas — a distinction the
+    boolean verdict does not need and a human fixing the circuit does. Excess measures
+    finer-than-the-truth-function-requires, so a COARSE truth function makes deliberate
+    diagnostic detail look like waste. Property of the measurement, not the circuit.
+69. **A worry about the aliasing instrument's SCOPE, and I would like this attacked.** Exact-
+    syntax circuits (R0, R1) are never aliased and always excessive — they cannot merge distinct
+    inputs, so no impossibility is available against them. Which means the instrument used alone
+    would have pronounced the two LOWEST rungs defect-free, and its apparent success at
+    R3/R6/R9/R10/R11/R12 may be an artefact of those rungs having lossy projections BY
+    CONSTRUCTION. If so its scope is narrower than I have been claiming since cycle 018.
+70. **The one perfect reading in the ladder is at the one place canon says not to trust it.**
+    R12 in-universe is the only projection measuring EXACTLY SUFFICIENT (VI = 0), and it is
+    exactly the closed-universe situation canon R12 warns against. Recorded as a trap: a perfect
+    sufficiency reading is a prompt to ask whether the target was the one you wanted.
+71. **CAP HONOURED, and five rungs are a known gap.** Swept: R0, R1, R3, R6, R9, R10, R11, R12.
+    **Unswept: R2, R4, R5, R7, R8.** I took depth over coverage as instructed and would make the
+    same call again — the two corrections above came from running things properly rather than
+    quickly. Cycle 024 goes to COMPOSITION regardless, first target being a two-rung chain where
+    the upstream rung's measured excess bits are what the downstream rung needs (R1 -> R2).
+72. **Still open and now stale enough to mention again:** the three doctrine proposals
+    (competitor-relative identification v2, abstention channel, immutable-observation
+    constitution) have been awaiting a single yes/no since cycle 013. The constitution now has
+    three independent arguments and a concrete mechanism requirement that spans sessions.

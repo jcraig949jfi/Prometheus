@@ -176,3 +176,40 @@ def test_composes_with_induced_partition_over_a_real_rung_projection():
     assert len(fine) == 6 and len(coarse) == 3
     assert variation_of_information(fine, coarse, len(exprs)) == pytest.approx(
         entropy(fine, 6) - entropy(coarse, 6))
+
+
+# ---- cycle 023: conditional entropy and the sweep-direction identity ---------------------------
+
+def test_conditional_entropy_hand_computed():
+    """H(P|Q) = H(P) - I(P,Q). Singletons given two pairs over four points:
+    H(P) = 2, I = H(Q) = 1, so H(P|Q) = 1 — the one bit of "which member of the pair"."""
+    from prometheus_math.partition import conditional_entropy
+    fine, coarse = P([0], [1], [2], [3]), P([0, 1], [2, 3])
+    assert conditional_entropy(fine, coarse, 4) == pytest.approx(1.0)
+    assert conditional_entropy(coarse, fine, 4) == pytest.approx(0.0)   # fine refines coarse
+
+
+@settings(max_examples=250, deadline=None)
+@given(labels, labels)
+def test_THE_IDENTITY_conditional_entropy_vanishes_exactly_on_refinement(a, b):
+    """**The identity the cycle-023 sweep rests on.** H(P|Q) = 0 if and only if Q refines P.
+
+    This is what makes the two sweep directions one measurement: aliasing is H(T|P) > 0 and
+    splitting is H(P|T) > 0, and VI is their sum.
+    """
+    from prometheus_math.partition import conditional_entropy
+    n = min(len(a), len(b))
+    p, q = _partition_from_labels(a[:n]), _partition_from_labels(b[:n])
+    assert (conditional_entropy(p, q, n) < 1e-12) == refines(q, p, n)
+    assert (conditional_entropy(q, p, n) < 1e-12) == refines(p, q, n)
+
+
+@settings(max_examples=200, deadline=None)
+@given(labels, labels)
+def test_VI_decomposes_into_the_two_sweep_directions(a, b):
+    """VI(P, Q) = H(P|Q) + H(Q|P), exactly. Excess plus deficit."""
+    from prometheus_math.partition import conditional_entropy
+    n = min(len(a), len(b))
+    p, q = _partition_from_labels(a[:n]), _partition_from_labels(b[:n])
+    assert variation_of_information(p, q, n) == pytest.approx(
+        conditional_entropy(p, q, n) + conditional_entropy(q, p, n))

@@ -390,3 +390,43 @@ bills of health, but none ran the dual either.
 **Kill-battery additions (executable):** per-policy twin construction (`twins_for_policy`);
 cross-policy incomparability check; splitting-witness search; CAS-delivered-congruence probe
 (does the key see the transformation the claim is about, or does the CAS normalise it away?).
+
+## Cycle 023 — the two sweep directions unified, and two self-corrections
+
+**The unification.** With P = fibres of the projection and T = fibres of the truth:
+
+    deficit = H(T | P)   ALIASING   -> an impossibility
+    excess  = H(P | T)   SPLITTING  -> a cost, in bits
+    VI(P,T) = deficit + excess,  zero iff the projection is sufficient AND necessary
+
+`H(P|Q) = 0` exactly when Q refines P, so **deficit > 0 iff an aliasing witness exists** and
+**excess > 0 iff a splitting witness exists**. Verified under Hypothesis (250 examples) and
+independently against the witness search on real rung data. This answers the measurement
+question cycle 022 left open: pair counts scale with the battery, bits do not.
+
+**Self-correction 1 (cycle 020).** Empirical calibration is SUFFICIENT BUT EXCESSIVE, not
+exactly sufficient. Deficit 0.000 — the counterexample to v11-prime stands — but excess 1.200
+bits: honest, hedging, memorising and mimicking forecasters all score ECE 0.0000 on four
+different records. The surplus is what predictive calibration needs.
+
+**Self-correction 2 (cycle 022).** Splitting is not automatically a cost. R9's checker carries
+0.689 excess bits separating decorative from circular lemmas; R10's carries 0.324 separating
+(BROKEN, SURVIVES) from (PRESERVED, SURVIVES). Both are deliberate diagnostic detail. Excess
+measures finer-than-the-truth-function-requires, so a coarse truth function inflates it. **An
+excess figure is meaningless without stating the truth function's granularity.**
+
+**Two patterns, both flagged rather than claimed.**
+(a) Exact-syntax circuits (R0, R1) are never aliased and always excessive. No impossibility is
+    available against a projection that never merges anything — so the aliasing instrument used
+    alone would pronounce the two lowest rungs defect-free, and its scope may be narrower than
+    claimed since cycle 018. Flagged to HITL #69.
+(b) R12 in-universe is the ONLY exactly-sufficient projection in the ladder (VI = 0), and it is
+    precisely the closed-universe situation canon warns against. A perfect sufficiency reading
+    is a prompt, not a result.
+
+**Sweep coverage (cap honoured, two cycles).** Swept: R0, R1, R3, R6, R9, R10, R11, R12.
+**Unswept: R2, R4, R5, R7, R8** — a known gap, carried explicitly.
+
+**Kill-battery additions (executable):** sufficiency measurement in bits
+(`sweep.sufficiency`); deficit/excess vs witness-search agreement check; truth-function
+granularity disclosure alongside any excess figure.

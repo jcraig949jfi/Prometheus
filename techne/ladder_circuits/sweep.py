@@ -32,7 +32,8 @@ from techne.ladder_circuits.aliasing import (
 )
 
 __all__ = ["SplittingWitness", "find_splitting_witness", "all_splitting_witnesses",
-           "SweepReport", "sweep_projection", "twins_for_policy"]
+           "SweepReport", "sweep_projection", "twins_for_policy",
+           "SufficiencyReport", "sufficiency"]
 
 
 @dataclass(frozen=True)
@@ -140,3 +141,73 @@ def twins_for_policy(width: int, policy: str = "fifo"):
         h_t = flood + [("declare_nonzero", "xq")]
     h_f = list(flood)
     return h_t, h_f, ("query_cancel", "xq")
+
+
+# --------------------------------------------------------------------------------------------
+# Cycle 023: the two directions as ONE measurement.
+
+@dataclass(frozen=True)
+class SufficiencyReport:
+    """Both sweep directions, in bits, from a single partition comparison.
+
+    `deficit_bits` = H(T | P): truth distinctions the evaluator cannot make. Positive exactly
+    when an aliasing witness exists — an IMPOSSIBILITY.
+    `excess_bits`  = H(P | T): distinctions the evaluator makes that the truth does not need.
+    Positive exactly when a splitting witness exists — a transfer cost, NOT an impossibility.
+    `vi` = deficit + excess, and is zero exactly when the projection is both sufficient and
+    necessary.
+
+    This answers the measurement question cycle 022 could not: over-discrimination has no
+    impossibility attached, so counting witness pairs was arbitrary (it scales with the
+    battery). Bits do not.
+    """
+
+    rung: str
+    n_instances: int
+    deficit_bits: float
+    excess_bits: float
+    truth_entropy_bits: float
+
+    @property
+    def vi(self) -> float:
+        return self.deficit_bits + self.excess_bits
+
+    @property
+    def sufficient(self) -> bool:
+        """Can any evaluator on this projection be correct? Yes iff no truth bits are lost."""
+        return self.deficit_bits < 1e-12
+
+    @property
+    def necessary(self) -> bool:
+        """Does the projection distinguish only what it must?"""
+        return self.excess_bits < 1e-12
+
+    @property
+    def verdict(self) -> str:
+        if not self.sufficient and not self.necessary:
+            return "ALIASED AND EXCESSIVE"
+        if not self.sufficient:
+            return "ALIASED — no member of the family is correct on every instance"
+        if not self.necessary:
+            return "SUFFICIENT BUT EXCESSIVE — correct is reachable; evidence does not transfer"
+        return "EXACTLY SUFFICIENT on this instance set (evidence, not proof)"
+
+
+def sufficiency(rung: str, instances: Sequence[Any],
+                projection: Callable[[Any], Hashable],
+                truth: Callable[[Any], Hashable]) -> SufficiencyReport:
+    """Measure both directions in bits. Companion to `sweep_projection`, which returns the
+    witnesses; the two must agree, and a test asserts that they do on real rung data."""
+    from prometheus_math.partition import conditional_entropy, entropy, induced_partition
+
+    items = list(instances)
+    n = len(items)
+    p = induced_partition(items, projection)
+    t = induced_partition(items, truth)
+    return SufficiencyReport(
+        rung=rung,
+        n_instances=n,
+        deficit_bits=conditional_entropy(t, p, n),
+        excess_bits=conditional_entropy(p, t, n),
+        truth_entropy_bits=entropy(t, n),
+    )
