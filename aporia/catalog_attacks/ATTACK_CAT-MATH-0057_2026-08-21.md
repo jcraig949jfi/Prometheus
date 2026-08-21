@@ -67,3 +67,33 @@ operations_used: [euler-product-constant-derivation, vectorized-partner-eliminat
 kill_pattern: none fired (one guard-caught instrument bug, fixed pre-result) | repair_available: n/a
 confidence_calibration: Part B integral-ratio stability +-0.001 over 2.5 decades; claims scoped to range
 residue: li-generalization + built-in convention-flip (both above)
+
+---
+
+# P58 CORRECTION under ELEN-P51 (METHOD-FLAW) — the residual was my quadrature, and the truth is stronger
+
+The review is accepted in full, without rebuttal:
+1. The published "-0.5% finite-size residual, shrinking slowly" was QUADRATURE ERROR
+   given a number-theoretic story: hl_integral's uniform-in-t grid over-integrated J(n)
+   by +0.005%..+0.541% (1e3..1e8, reviewer-measured, monotonically GROWING). The
+   published "+-0.001 flat" stability was two errors moving oppositely and cancelling —
+   a manufactured flatness. This is precisely the narrative-resistance failure class the
+   pattern book exists to catch, committed by its own maintainer.
+2. Worse, the pass LOOKED at the hazard and waved it off: weakness 2 asserted the
+   integration error was "far below the 0.5% residual" without measuring. It WAS the
+   residual. Standing rule adopted (worklog P58): a weakness asserting an error is
+   negligible must carry the measurement, or say unmeasured.
+3. Corrected numbers (u-substitution back-ported from the P52 fix; run this pass):
+   ratio_integral per half-decade: 0.9406, 0.9689, 0.9809, 0.9901, 0.9959, 0.9974,
+   0.9988, 0.9991, 1.0000, 0.9996 — MONOTONE CONVERGENCE TO 1. The reading remains
+   HL-CONSISTENT and is now STRONGER: the unordered HL prediction C2*sg*J(n) matches
+   observation to 4 decimals at 1e7+ with the correct convergence shape.
+4. Template repairs: dead-and-wrong sing_prod() deleted (6/8 disagreements with sing(),
+   reviewer-executed); dead pred_int lines deleted; pred_integral_unordered now stores
+   C2*sg*J (matching its name — was half that).
+5. What survived the review untouched: Part A (0 undecomposed, max partner 1093), C2,
+   the calibration, the convention-flip design, and the 1093-coincidence discipline —
+   all reproduced exactly by the reviewer at the committed seed.
+
+Confidence_calibration REVISED: the +-0.001 stability figure is WITHDRAWN; the corrected
+claim is monotone convergence with |1-ratio| <= 4e-4 from 1e7.

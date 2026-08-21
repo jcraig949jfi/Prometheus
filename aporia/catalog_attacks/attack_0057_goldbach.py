@@ -77,21 +77,6 @@ def r_count(n):
     ps = primes[primes <= n // 2]
     return int(np.count_nonzero(S[n - ps]))
 
-def sing_prod(n):
-    prod = 1.0
-    m = n
-    d = 3
-    while d * d <= m:
-        if m % d == 0:
-            if d > 2:
-                prod *= (d - 1) / (d - 2)
-            while m % d == 0:
-                m //= d
-        d += 2
-    m0 = m if m % 2 else m // (m & -m)
-    # remove factor 2 first properly:
-    return prod, m
-
 def sing(n):
     prod = 1.0
     m = n
@@ -108,12 +93,15 @@ def sing(n):
         prod *= (m - 1) / (m - 2)
     return prod
 
-def hl_integral(n, steps=2000):
-    # J(n) = int_2^{n-2} dt/(ln t ln(n-t)), symmetric; integrate 2..n/2 and double
-    a, b = 2.0, n / 2.0
-    xs = np.linspace(a, b, steps)
-    ys = 1.0 / (np.log(xs) * np.log(n - xs))
-    return 2.0 * float(np.trapezoid(ys, xs))
+def hl_integral(n, steps=20000):
+    # J(n) = int_2^{n-2} dt/(ln t ln(n-t)); symmetric: integrate 2..n/2, double.
+    # u-substitution t = e^u (ELEN-P51 back-port of the P52 fix): the uniform-in-t
+    # grid over-integrated J by +0.005%..+0.541% (1e3..1e8, reviewer-measured),
+    # manufacturing the artifact's "flat 0.995" out of two cancelling errors.
+    us = np.linspace(np.log(2.0), np.log(n / 2.0), steps)
+    ts = np.exp(us)
+    ys = ts / (np.log(ts) * np.log(n - ts))
+    return 2.0 * float(np.trapezoid(ys, us))
 
 t0 = time.time()
 rows = []
@@ -121,9 +109,6 @@ for n in sample:
     obs = r_count(n)
     sg = sing(n)
     pred_shape = C2 * sg * n / math.log(n) ** 2      # unordered convention: C2 (not 2C2)
-    pred_int = 0.5 * 2.0 * C2 * sg * hl_integral(n) / 2.0
-    # unordered integral prediction: (1/2) * 2C2 * sg * J(n)/... keep clean:
-    pred_int = C2 * sg * hl_integral(n) / 2.0 * 2.0 / 2.0  # = C2*sg*J(n)/1... simplify below
     rows.append({"n": n, "obs": obs, "sing": round(sg, 6),
                  "pred_shape": pred_shape, "J": hl_integral(n)})
 print(f"Part B: {len(rows)} samples in {time.time()-t0:.1f}s")
@@ -131,7 +116,9 @@ print(f"Part B: {len(rows)} samples in {time.time()-t0:.1f}s")
 # ratios under both conventions (factor ambiguity resolved empirically)
 for row in rows:
     row["ratio_shape"] = row["obs"] / (row["pred_shape"]) if row["pred_shape"] else None
-    row["pred_integral_unordered"] = C2 * row["sing"] * row["J"] / 2.0
+    # unordered HL prediction r(n) ~ C2*sg*J(n) (field matches its name now — the
+    # old /2 made the stored value half the prediction; ELEN-P51 finding 4)
+    row["pred_integral_unordered"] = C2 * row["sing"] * row["J"]
     row["ratio_integral"] = row["obs"] / row["pred_integral_unordered"]
 
 # calibration cross-check with brute force
