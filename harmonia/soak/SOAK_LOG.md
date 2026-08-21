@@ -1929,9 +1929,41 @@ settled it, and it would have been the largest defect this soak found in its own
 **Coverage, which bears directly on the verdict: SOAK_LOG cites 64 of 110 findings.** It is a
 **summary, not the record** — the worklog is. The final pass must say which it is citing.
 
+## Pass 47 — a clean result, killed by calibrating the thing that produced it
+
+P46 left WITHHELD that the log's ~102 numeric claims were never verified. The log is the
+verdict's evidence artifact, so this was the last gap before the verdict.
+
+**The naive audit returned 115 of 115 corroborated — 100.0%.** It was not published.
+
+**Calibration of the auditor** (perturb every corroborated token, count detections):
+
+| | |
+|---|---|
+| perturbed values tested | 115 |
+| would be **flagged** | 68 (**59.1%**) |
+| would **slip through** | 47 (**40.9%**) |
+
+Four in ten wrong numbers pass undetected. The slipping examples say why: `08`, `00`, `17`,
+`20`, `21` are **fragments of the pass_id timestamp** and of commit hashes — not claims, and
+they match trivially against any record. Separately, a filter meant to skip trivially common
+small integers **emptied an entire section**: P30's figures are `2/4` and `4/4`, all inside
+the excluded range, so it contributed **zero** tokens to a table of non-zeros.
+
+**So P46's gap is NOT closed.** The numeric claims remain **unverified**, and the 100% figure
+is uninformative. The verdict must say so.
+
+**What is not claimed:** nothing here is evidence the log's numbers are *wrong*. It is
+evidence my check could not have found an error. "Unverified" and "unreliable" are different
+words and only the first is earned.
+
+**Method:** report a corroboration rate only alongside a measured power to detect the
+negative. Fourth defective instrument in seven passes — and the first caught by perturbing
+known-good inputs rather than by result shape, a check the other three would also have failed.
+
 ## Verdict so far
 
-Withheld — forty-six passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — forty-seven passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
