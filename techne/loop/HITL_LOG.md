@@ -523,3 +523,40 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
     suggests the taxonomy is incomplete rather than converging. I do not have a principled
     enumeration of how a stage can relate its input information to its output — "loses",
     "reorders", "adds" is a list, not a derivation.
+
+
+## Cycle 028 (2026-08-21) — HITL #91 resolved, and it was structural
+
+94. **HITL #78: 446 rows, 0 accepted, 100% drop.** 330 -> 369 -> 400 -> 446 across four cycles.
+    Still unruled, still unpatched by me. Anything scored against D0 packets in this window is
+    scored against empty packets.
+95. **HITL #91 RESOLVED, and the sample-size caveat I recorded was answering the wrong
+    objection.** Widened the candidate set to n = 81 (degrees 2-8, coefficients to ±5, 37
+    reciprocal and 44 NON-reciprocal, M from 1.0000 to 9.6071 rather than one band). F9 and F11
+    stay at exactly 0.0000 bits. But READING THE SOURCE settled it harder and showed the two
+    zeros have different causes:
+      * **F9 cannot fire on anything.** `_f9_simpler_explanation` is `return True` with no
+        computation on its input; it returns True for the empty list. Structural, not statistical.
+        Its docstring is honest — it exists "for post-rejection record-keeping".
+      * **F11's cross-validation is vacuous by a theorem.** It compares M(coeffs) with
+        M(reversed(coeffs)), and reversal maps roots α -> 1/α while swapping leading/trailing
+        coefficients, so M is invariant. Verified on 40 random non-reciprocal polynomials: zero
+        disagreements. Its surviving branch (vs the caller's REPORTED M) fires correctly but
+        tests bookkeeping, not candidates.
+96. **FOR WHOEVER OWNS THE DISCOVERY PIPELINE — the count is wrong, not the code.** Neither check
+    is fraudulent; one is a record-keeper, one a caller-consistency assertion. But the kill path
+    is quoted as a four-member battery and measures as a two-member discriminating test.
+    **Anything that "survived the four-member battery" survived two.** F11's docstring claim of
+    "two independent paths" is also false as written, which is a documentation defect with
+    epistemic consequences.
+97. **A finding I did not expect and which worries me more than the zeros: F6 measured 0.9082
+    bits on the narrow band and 0.2285 on the wide one.** A battery's strength is not a property
+    of the battery — it is a function of the candidate distribution. Every "survived the battery"
+    claim is implicitly relative to the distribution it was tested on, and I do not have a
+    standard way to report that. It may collapse into R11's reference-class problem (HITL #54).
+98. **General lesson, offered for ruling as a possible standing rule:** when a measurement reads
+    zero, READ THE SOURCE before collecting more data. A structural zero and a sampling zero look
+    identical and only one is fixable by sampling. The mechanical version would be mutation
+    testing — perturb the member's input space and check whether ANY input flips it — which is
+    what I did by hand for F9. This restates an existing memory (a structural zero needs its own
+    pre-committed vacuous reading) as an executable check rather than a habit.

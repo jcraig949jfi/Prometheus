@@ -124,3 +124,88 @@ def test_the_pipeline_is_untouched():
     import prometheus_math.discovery_pipeline as dp
     assert callable(dp.DiscoveryPipeline.process_candidate)
     assert len(CHECKS) == 4
+
+
+# ---- CYCLE 028: removing the sample-size objection to my own cycle-027 finding ------------------
+
+def test_CYCLE028_the_wider_sample_does_not_move_F9_or_F11():
+    """Cycle 027 measured F9 and F11 at zero over 34 reciprocal candidates in a narrow band and
+    recorded the caveat that this was a small sample. Widened to n = 81 — degrees 2-8,
+    coefficients to ±5, 37 reciprocal and 44 NON-reciprocal, M spanning 1.0 to 9.6 rather than
+    one band — and both stay at exactly 0.0000 bits.
+    """
+    from prometheus_math.battery import battery_strength
+    from techne.ladder_circuits.battery_chain import wide_candidates
+
+    cands = wide_candidates()
+    assert len(cands) > 70
+    assert max(m for _c, m in cands) > 5.0                       # genuinely wider than one band
+    assert sum(1 for c, _m in cands if list(c) != list(c)[::-1]) > 30   # non-reciprocal present
+
+    verdicts = {}
+    for name, fn in CHECKS:
+        col = []
+        for coeffs, m in cands:
+            try:
+                col.append(bool(fn(list(coeffs), m)[0]))
+            except Exception:
+                col.append(None)
+        verdicts[name] = col
+
+    s = battery_strength(verdicts)
+    assert s.advertised == 4 and s.discriminating == 2
+    assert s.silent_members == ["F11", "F9"]
+    assert s.resolution["F9"] == pytest.approx(0.0)
+    assert s.resolution["F11"] == pytest.approx(0.0)
+
+
+def test_CYCLE028_F9s_ZERO_IS_STRUCTURAL_not_a_sampling_artefact():
+    """**Reading the source settled this harder than any amount of sampling could.**
+
+    `_f9_simpler_explanation` is `return True, "..."` with no computation on `coeffs` at all.
+    It returns True for the empty list. No candidate set, at any size, can make it fire — so its
+    zero is a property of the function, not of my battery.
+
+    Its own docstring is honest about this: the band gate upstream already excludes cyclotomic,
+    and the check exists "for post-rejection record-keeping". It is not pretending to be a
+    filter. It is simply counted as one.
+    """
+    from techne.ladder_circuits.battery_chain import f9_is_structurally_constant
+    assert f9_is_structurally_constant()
+    from prometheus_math.discovery_pipeline import _f9_simpler_explanation
+    assert _f9_simpler_explanation([])[0] is True                # even on no polynomial at all
+
+
+def test_CYCLE028_F11s_CROSS_VALIDATION_PATH_IS_VACUOUS_BY_A_THEOREM():
+    """**The sharper half.** F11's docstring says it re-computes M "via two independent paths".
+    The second path is `M(reversed(coeffs))` — and reversal maps every root α to 1/α while
+    swapping the leading and trailing coefficient, leaving `|a|·∏max(1,|α|)` unchanged. So
+    `M(p) = M(reverse(p))` for EVERY polynomial and the two paths compute the same number.
+
+    Verified on 40 random NON-reciprocal integer polynomials, where the reversal really is a
+    different polynomial: zero disagreements.
+    """
+    from techne.ladder_circuits.battery_chain import f11_reciprocal_path_is_vacuous
+    assert f11_reciprocal_path_is_vacuous(n_probes=40)
+
+
+def test_CYCLE028_F11s_SURVIVING_BRANCH_TESTS_THE_CALLER_NOT_THE_CANDIDATE():
+    """F11 is not inert — its third comparison, against the caller's reported M, fires correctly.
+    But no property of a polynomial can trigger it; only an inconsistent `m_value` handed in from
+    outside. As a discriminator over CANDIDATES it contributes zero by construction, while
+    remaining a real assertion about bookkeeping.
+    """
+    from techne.ladder_circuits.battery_chain import f11_drift_branch_fires
+    assert f11_drift_branch_fires()
+
+
+def test_CYCLE028_the_two_zeros_have_DIFFERENT_causes():
+    """The distinction worth carrying: F9 cannot fire on anything, ever. F11 can fire, but only
+    on caller error, never on a candidate. Both read 0.000 bits over candidates and they are not
+    the same finding — which is exactly why 'measure more samples' was the wrong instinct and
+    reading the source was the right one."""
+    from techne.ladder_circuits.battery_chain import (
+        f11_drift_branch_fires, f9_is_structurally_constant,
+    )
+    assert f9_is_structurally_constant()          # F9: no input can make it fire
+    assert f11_drift_branch_fires()               # F11: some input CAN, just not a candidate

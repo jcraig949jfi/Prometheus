@@ -63,7 +63,9 @@ from prometheus_math.partition import (
 )
 
 __all__ = ["CHECKS", "real_candidates", "verdict_chain", "BatteryChainReport",
-           "analyse_battery_chain", "check_resolution"]
+           "analyse_battery_chain", "check_resolution", "wide_candidates",
+           "f9_is_structurally_constant", "f11_reciprocal_path_is_vacuous",
+           "f11_drift_branch_fires"]
 
 x = sp.Symbol("x")
 
@@ -194,3 +196,99 @@ def check_resolution(candidates: Optional[Sequence[Tuple[Sequence[int], float]]]
                 return None
         out[name] = entropy(induced_partition(list(range(n)), verdict), n)
     return out
+
+
+# =============================================================================================
+# Cycle 028 — removing the sample-size objection to cycle 027's own finding.
+#
+# Cycle 027 measured F9 and F11 at 0.0000 bits over 34 candidates and recorded the honest
+# caveat that 34 in a narrow band is a small sample. Widening the sample was the instruction.
+# Reading the source turned out to settle it faster and harder than more sampling could:
+# BOTH zeros are STRUCTURAL, for two different reasons, and neither is a sampling artefact.
+# =============================================================================================
+
+def wide_candidates(seed: int = 11) -> List[Tuple[Tuple[int, ...], float]]:
+    """A substantially wider real candidate set: degrees 2-8, coefficients to +-5, reciprocal
+    AND non-reciprocal, spanning M from 1.0 to ~9.6 rather than one narrow band.
+
+    Measured n = 81 at seed 11, against cycle 027's 34.
+    """
+    import random
+
+    from prometheus_math._lehmer_brute_force_path_b import mahler_measure_high_precision as MM
+
+    rng = random.Random(seed)
+    out: List[Tuple[Tuple[int, ...], float]] = []
+    for d in (4, 6, 8):                                  # reciprocal
+        for _ in range(14):
+            half = [rng.choice([-2, -1, 0, 1, 2]) for _ in range(d // 2)]
+            mid = [rng.choice([-2, -1, 0, 1, 2])] if d % 2 else []
+            coeffs = [1] + half + mid + half[::-1] + [1]
+            try:
+                out.append((tuple(coeffs), float(MM(sp.Poly(coeffs, x)))))
+            except Exception:
+                continue
+    for _ in range(45):                                  # non-reciprocal, wider coefficients
+        d = rng.randint(2, 7)
+        coeffs = [rng.choice([-5, -3, -2, -1, 1, 2, 3, 5]) for _ in range(d + 1)]
+        if coeffs == coeffs[::-1]:
+            continue
+        try:
+            out.append((tuple(coeffs), float(MM(sp.Poly(coeffs, x)))))
+        except Exception:
+            continue
+    return out
+
+
+def f9_is_structurally_constant(probes: Optional[Sequence[Sequence[int]]] = None) -> bool:
+    """Does F9 return True for EVERY input, including degenerate ones?
+
+    `_f9_simpler_explanation` is `return True, "F9: M > 1.001 rules out cyclotomic"` with no
+    computation on `coeffs` at all. Its own docstring says the band gate upstream already
+    excludes cyclotomic and that the check exists "for post-rejection record-keeping". So its
+    zero is structural: no candidate set, at any size, can make it fire.
+    """
+    hostile = probes if probes is not None else (
+        [1, -1, 1], [1, 0, 0, 0, 0, -1], [5, 3, -7, 2], [1], [], [10 ** 6, -10 ** 6],
+        [1, 2, 3, 4, 5, 6, 7, 8, 9],
+    )
+    return all(_f9_simpler_explanation(list(p))[0] for p in hostile)
+
+
+def f11_reciprocal_path_is_vacuous(n_probes: int = 40, seed: int = 7) -> bool:
+    """Is F11's "independent" second computation actually independent?
+
+    F11 computes `M(coeffs)` and `M(reversed(coeffs))` and calls agreement a cross-validation.
+    But reversal maps each root alpha to 1/alpha and swaps the leading and trailing coefficient,
+    which leaves `|a| * prod max(1, |alpha|)` unchanged — so `M(p) = M(reverse(p))` for EVERY
+    polynomial, reciprocal or not. The two paths compute the same number by a theorem.
+
+    Verified here on random NON-reciprocal integer polynomials, where the reversal is a genuinely
+    different polynomial and the measures still agree.
+    """
+    import random
+
+    from techne.lib.mahler_measure import mahler_measure as mm
+
+    rng = random.Random(seed)
+    checked = 0
+    while checked < n_probes:
+        d = rng.randint(2, 7)
+        coeffs = [rng.choice([-5, -3, -2, -1, 1, 2, 3, 5]) for _ in range(d + 1)]
+        if coeffs == coeffs[::-1]:
+            continue
+        checked += 1
+        if abs(float(mm(coeffs)) - float(mm(coeffs[::-1]))) > 1e-6:
+            return False
+    return True
+
+
+def f11_drift_branch_fires() -> bool:
+    """The one branch of F11 that CAN fire: disagreement with the caller's reported M.
+
+    It is a real check — but of the CALLER'S bookkeeping, not of the candidate. No property of
+    a polynomial can trigger it; only an inconsistent `m_value` handed in from outside.
+    """
+    ok_consistent, _ = _f11_cross_validation([1, -1, 1], 1.0)
+    ok_drifted, _ = _f11_cross_validation([1, -1, 1], 9.9)
+    return ok_consistent and not ok_drifted

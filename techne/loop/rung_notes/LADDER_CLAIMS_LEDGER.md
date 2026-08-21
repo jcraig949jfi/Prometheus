@@ -595,3 +595,43 @@ sample, and a non-firing check may be guarding a rare failure mode.
 
 **Kill-battery additions (executable):** chain-direction precondition check; per-member
 resolution measurement for a battery (advertised size vs measured discriminating size).
+
+## Cycle 028 — a structural zero is not a sampling zero
+
+**Cycle 027 reported F9 and F11 at 0.0000 bits over 34 candidates with a sample-size caveat.
+Cycle 028 removed the caveat and found the caveat was answering the wrong objection.**
+
+Widened sample: n = 81 (vs 34), degrees 2-8, coefficients to ±5, 37 reciprocal and 44
+NON-reciprocal, M spanning 1.0000-9.6071 rather than one narrow band. F9 and F11 stay at exactly
+0.0000. But the source settles it harder, and the two zeros have DIFFERENT causes:
+
+- **F9 is structurally constant.** `return True` with no computation on the input; True even for
+  the empty list. No candidate set at any size can make it fire.
+- **F11's cross-validation path is vacuous by a theorem.** M(p) = M(reverse(p)) for every
+  polynomial, since reversal maps roots α -> 1/α and swaps the leading and trailing coefficient.
+  Verified on 40 random non-reciprocal polynomials: zero disagreements. Its surviving branch
+  tests the CALLER's reported M — real, but no property of a candidate can trigger it.
+
+**Measured battery strength:** F1 0.9599 bits, F6 0.2285, F9 0.0000, F11 0.0000 — four advertised
+members, two discriminating. Neither silent member is fraudulent (one record-keeper, one
+bookkeeping assertion); the COUNT is what overstates. Anything that "survived the four-member
+battery" survived a two-member test.
+
+**Unexpected second result, and more troubling than the zeros.** F6 measured 0.9082 bits on the
+narrow band and 0.2285 on the wide one. **A battery's strength is not a property of the battery;
+it is a function of the candidate distribution.** Every "survived the battery" claim is
+implicitly relative to the distribution it was tested on. This may be R11's reference-class
+problem wearing new clothes.
+
+**Proposed standing rule (HITL #98, awaiting ruling).** When a measurement reads zero, read the
+source before collecting more data: a structural zero and a sampling zero are indistinguishable
+by sampling and only one is fixable by it. Mechanical form: mutation-test the member's input
+space and check whether ANY input flips it. This makes an existing memory
+(`feedback_verify_signature_exists_before_controls`) executable rather than habitual.
+
+**Track 1:** `prometheus_math.battery` — advertised vs discriminating size, refusing both to call
+a silent member useless and to guess whether it CANNOT fire or merely HAS not.
+
+**Kill-battery additions (executable):** structural-constancy probe (does any input flip this
+member?); independence probe for a "cross-validation" path (can the second path DISAGREE on any
+input?); battery strength reported with its candidate distribution.
