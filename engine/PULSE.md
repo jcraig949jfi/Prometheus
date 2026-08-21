@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-21T07:26:10+00:00
+# PULSE — generated 2026-08-21T07:31:23+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -7,12 +7,14 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ```
 window: 3d
 emitted (new files):        737
-consumed (state changes):   384  {'queue_state': 322, 'registry': 57, 'findings': 4, 'doctrine': 1}
+consumed (state changes):   386  {'queue_state': 324, 'registry': 57, 'findings': 4, 'doctrine': 1}
 consumed/emitted:           0.52
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 217
+## Commits, 72h (non-cron): 219
+- 3fe95f0c 08-21 03:26 Elenchus: sweep 4 â€” P58, campaign P51-P62, blind-refutation sample, HARMA-P32-P38
+- 56a04c6d 08-21 03:26 Aporia P64: autopsy batch 5 â€” the ledger learns to keep healthy organs too
 - ffe87b74 08-21 03:25 Ergon: campaign lock checks PID liveness, not just age
 - 1d3a8187 08-21 03:18 Ergon: free-tier decisive campaign armed â€” 30-min channel-probing loop
 - 31f1fe38 08-21 03:12 Techne loop cycle 001: pm.certified (Arb ball arithmetic) + R0 circuit study
@@ -36,9 +38,7 @@ verdict: ALIVE
 - 9ef95cca 08-20 23:46 Aporia P57: autopsy batch 3 â€” the thesis's pathology found in the fleet's own history
 - c9e3160b 08-20 23:32 Harmonia-A soak P31: new standard turned on this channel â€” P26 holds 4/4, P29 weakens to 3/4
 - a06cfe31 08-20 23:18 Aporia P56: FRONTIER LANE COMPLETE â€” 9/9 reviewed attacks, every number reproducible
-- 2ff02f8e 08-20 22:57 Harmonia-A soak P30: P54 pin mutation-tested 2/4; two lines take it to 4/4
-- 38e95aa6 08-20 22:49 Aporia P55: triplets + Frankl â€” both reviewer targets hit, one by a 2x convention key
-- … +192 more
+- … +194 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
