@@ -680,3 +680,49 @@ in a third costume — flagged to HITL #104 as possibly one phenomenon rather th
 **Kill-battery additions (executable):** parameter-independence AST scan; hostile-input mutation
 search; INVALID_PROBE guard against an all-raising probe space; `ran/probed` denominators on
 every verdict.
+
+## Cycle 030 — claim v15: one core, two kinds of domain-relativity
+
+**The reference-class problem arrived three independent times (R11's self-chosen class, battery
+strength varying with candidate distribution, constancy varying with probe space). The question
+was one phenomenon or three. The answer is neither.**
+
+**Shared core (real).** Each is a property `Phi(O, D)` of an object AND a domain, stated as though
+it were a property of the object alone, with the speaker choosing `D`. Same fix in all three:
+make `D` part of the claim, refuse a claim without one.
+
+**The split (measured), and it is claim v15.**
+
+- **EXISTENTIAL claims are MONOTONE.** A witness stays a witness, so a positive existential holds
+  on every superset of the domain it was found in. F11: UNSETTLED on well-formed input, VARIES
+  once hostile input is added, VARIES on every superset. Only the NEGATIVE is domain-relative.
+- **AGGREGATE claims are NON-MONOTONE in BOTH directions.** F6 over real candidates: 0.0000 bits
+  on a subset excluding every firing case, **0.3651** after adding them (increase), **0.2285** on
+  the full set (decrease). A superset value cannot be inferred in either direction, only
+  re-measured.
+
+> A witnessed existential may eventually be stated absolutely. An aggregate never may.
+
+**Self-correction recorded.** My first pass exhibited only decreases, which would have left the
+reading "monotone downward, therefore still well-behaved" open. The increase had to be
+constructed deliberately. **To claim non-monotonicity, exhibit a move in both directions** — one
+direction is consistent with a bound.
+
+**Mechanism: `prometheus_math.relative_claim`.** Named, content-addressed domains; claims that
+carry theirs. A claim without a domain is refused rather than defaulted (every one of the three
+arrivals was an undeclared default read as universal); a positive existential without a witness is
+refused (it cannot travel, so it is an aggregate in disguise); `entails_on` is true only for a
+witnessed positive existential on a superset; aggregates never entail, not even on their own
+domain.
+
+**Constitution bearing, stated without inflation.** The declared-domain mechanism shares the SHAPE
+the immutable-observation constitution needs but is not the same mechanism — the constitution
+governs what the RECORD says, this governs what a CLAIM means. Four arguments for the
+constitution, plus one adjacent requirement.
+
+**Open (HITL #112):** is the split exhaustive? A UNIVERSAL claim is the obvious third — monotone
+DOWNWARD, breakable by widening and never establishable by it — which would make the taxonomy
+three-with-a-symmetry. Flagged rather than assumed.
+
+**Kill-battery additions (executable):** undeclared-domain refusal; witnessless-existential
+refusal; aggregate-entailment refusal; both-directions requirement for a non-monotonicity claim.

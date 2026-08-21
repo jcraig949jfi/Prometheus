@@ -597,3 +597,38 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      are constant by construction but read their argument for a non-verdict purpose, so they land
      in UNSETTLED. Closing it needs dataflow tracing from parameter to returned verdict. Worth
      building or not — your call (HITL #106).
+
+
+## Cycle 030 (2026-08-21) — reference-class problem: one core, two kinds
+
+107. **HITL #78: 530 rows, 0 accepted, 100% drop.** 330 -> 369 -> 400 -> 446 -> 491 -> 530 across
+     six cycles. Still unruled, still unpatched by me.
+108. **HITL #104 ANSWERED, and the answer is neither of the two options I offered you.** The
+     three arrivals share a real core — each is a property of an object AND an undeclared domain
+     — but they split on how they behave when the domain grows, and the split is testable:
+       * EXISTENTIAL claims are MONOTONE. A witness stays a witness (F11: UNSETTLED -> VARIES ->
+         VARIES on every superset). Only the negative is domain-relative.
+       * AGGREGATE claims are NON-MONOTONE in BOTH directions. Measured on F6: 0.0000 bits on a
+         subset excluding every firing case, 0.3651 after adding them, 0.2285 on the full set —
+         up then down.
+     So a witnessed existential may eventually be stated absolutely; an aggregate never may.
+109. **I nearly published a weaker version of this.** My first pass exhibited only DECREASES,
+     which would have left open the reading "monotone downward, therefore still well-behaved". I
+     had to construct the increase deliberately. **New standing habit worth ruling on: to claim
+     non-monotonicity, exhibit a move in BOTH directions** — one direction is consistent with a
+     bound.
+110. **Mechanism built: `prometheus_math.relative_claim`.** A claim without a domain is REFUSED
+     rather than defaulted; a positive existential without a witness is refused; aggregates never
+     entail on any domain including their own. Content-addressed domain digests so two parties
+     quoting the same number can confirm they mean the same input set.
+111. **On the constitution — I am NOT inflating the count.** The declared-domain mechanism shares
+     the SHAPE the immutable-observation constitution needs (an external checkable statement fixed
+     before the claim is quoted) but is not the same mechanism: the constitution's job is that the
+     record of predictions and outcomes cannot be rewritten, and a domain digest constrains what a
+     claim MEANS, not what the record SAYS. **Four arguments for the constitution, plus one
+     adjacent requirement sharing its shape.** Still your call; still not ratified.
+112. **Open, and I would rather build it than trip over it: is the existential/aggregate split
+     exhaustive?** A UNIVERSAL claim ("for all x in D") is the obvious third — monotone DOWNWARD,
+     breakable by widening and never establishable by it. That would make the taxonomy
+     three-with-a-symmetry. I have said "that feels exhaustive" twice this month and been wrong
+     once, so I am flagging rather than assuming.
