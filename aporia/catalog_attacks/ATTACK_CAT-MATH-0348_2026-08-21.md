@@ -63,3 +63,28 @@ History, in full, because the history is the point:
 
 Scope unchanged: one statistic, approximate unfolding, conductors in the stored range,
 a characterization of the mirror's data — never GRH.
+
+---
+
+## P71 addendum — disjoint-slice replication (the P67 residue, executed)
+
+Protocol: `attack_0348_disjoint.py` — identical statistic on the far end of the label
+ordering (`ORDER BY label DESC`), provably disjoint from the test of record's ASC head
+(COUNT guard: sd stratum 3,897 >= 2x800; ns stratum 7,708,495 >= 2x4000), labels stored
+so disjointness is checkable from the artifact. Unfolding imported from `nt_helpers`
+(P69 shared module). Seed 20260871. Readings pre-stated before first run.
+
+Result: sd n=800 median 0.9332, ns n=4000 median 0.9100, diff **+0.0233**, permutation
+p = **0.1317** → pre-stated verdict **DIRECTION-ONLY-UNDERPOWERED**: the direction
+replicates on a disjoint slice; significance does not at this n.
+
+Scope reading, stated plainly: across three progressively stricter samples the effect
+has run ~0.13 (withdrawn, irreproducible) → +0.0682 (committed test of record,
+p=0.0027) → +0.0233 (disjoint slice, p=0.13). Three samples under three selection
+rules do not make a trend line, but the honest summary of the evidence now is: a
+directionally stable, sample-dependent effect whose committed significant instance
+remains the ASC-head test of record. The P67 claim is NOT amended by this run (its
+pre-stated branches covered replication of ITS numbers, which stand); the residue this
+run creates is a POOLED test (ASC+DESC, 1600 sd vs 8000 ns) with readings pre-stated
+BEFORE running: POOLED-CONFIRM (direction + p<0.01) / POOLED-MARGINAL (p in
+[0.01,0.05]) / POOLED-GONE (p>=0.05) — filed, not run, so today's p does not steer it.

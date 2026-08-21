@@ -103,6 +103,33 @@ def validate_reviews(recs, worklog_pass_ids):
     return errs
 
 
+def check_dispositions(rv, wl):
+    """P66 rule mechanized (filed that pass as 'a cheap next item'): dispositions
+    are a FIELD, read on every record regardless of verdict. A review carrying a
+    non-empty spec_dispositions block must have its review_id echoed by at least
+    one worklog review_responses entry — the ELEN-P50 block sat unapplied for two
+    sweeps precisely because ingestion keyed on the record verdict. Warn-level so
+    legacy records don't hard-fail; a warn here means: apply the block THIS pass.
+    """
+    echoed = set()
+    for _, w in wl:
+        for resp in w.get("review_responses") or []:
+            if isinstance(resp, dict) and resp.get("review_id"):
+                echoed.add(resp["review_id"])
+    warns = []
+    for _, r in rv:
+        sd = r.get("spec_dispositions")
+        if not isinstance(sd, dict):
+            continue
+        spec_ids = [k for k in sd if k != "_note"]
+        if spec_ids and r.get("review_id") not in echoed:
+            warns.append(
+                f"REVIEWS {r.get('review_id')}: spec_dispositions for "
+                f"{spec_ids} never echoed in any worklog review_responses "
+                f"— apply the block this pass (dispositions are a FIELD)")
+    return warns
+
+
 def main():
     wl, errs = load(WORKLOG)
     rv, e2 = load(REVIEWS)
@@ -111,6 +138,8 @@ def main():
     errs += wl_errs
     for w in wl_warns:
         print("WARN (legacy):", w)
+    for w in check_dispositions(rv, wl):
+        print("WARN (disposition):", w)
     errs += validate_reviews(rv, {r.get("pass_id") for _, r in wl})
     if errs:
         for e in errs:

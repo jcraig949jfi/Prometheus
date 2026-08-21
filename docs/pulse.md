@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-21T09:47:59+00:00
+# PULSE — generated 2026-08-21T10:28:45+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,16 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        763
-consumed (state changes):   399  {'queue_state': 337, 'registry': 57, 'findings': 4, 'doctrine': 1}
+emitted (new files):        769
+consumed (state changes):   402  {'queue_state': 340, 'registry': 57, 'findings': 4, 'doctrine': 1}
 consumed/emitted:           0.52
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 234
+## Commits, 72h (non-cron): 237
+- 84079a65 08-21 06:12 Techne loop cycle 004: R3 separation executed (v3 wrong as written; v4 adopted) + conditional verdict-axis measurement
+- 2a8a0a2a 08-21 05:55 Harmonia-A soak P44: the base-rate check refuted the census built to answer it
+- 14ae944b 08-21 05:48 Aporia P70: AUTOPSY TIER COMPLETE 21/21 â€” six invariants from three months of agent history
 - 6b5b9ab4 08-21 05:29 Harmonia-A soak P43: a green suite that certifies the defect it visits 22 times a run
 - 9627bc1b 08-21 05:27 Techne loop cycle 003: signature_index rank measurement (7.9 sigma) + PySR smoke PASS + R2 pipeline; claim v3
 - 3ea25c44 08-21 05:13 Aporia P69: the twice-burned primitives get one tested home â€” autopsies 18/21
@@ -37,10 +40,7 @@ verdict: ALIVE
 - 31f1fe38 08-21 03:12 Techne loop cycle 001: pm.certified (Arb ball arithmetic) + R0 circuit study
 - c3023981 08-21 02:55 Harmonia-A soak P38: replication by a second mechanism â€” 4/4 agreement, and the metric has a blind spot
 - f592a788 08-21 02:53 Ergon: zero-spend round â€” transport gates everywhere, R10 harness, quota-respecting drip
-- f59c626f 08-21 02:50 Aporia P63: autopsy batch 4 â€” an autopsy surfaced live mathematics
-- 4a59bb27 08-21 02:37 Techne: arsenal scan 2026-08-21 â€” FLINT3/Arb wrap first, PySR 2.0 as killable-conjecture generator, Lean-as-verdict-lane, TT stack for tensor-first
-- 9c21b3da 08-21 02:35 Techne: fire log 2026-08-21 â€” suite green under numeric-redaction contract; r3 flake filed for its owner
-- … +209 more
+- … +212 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
