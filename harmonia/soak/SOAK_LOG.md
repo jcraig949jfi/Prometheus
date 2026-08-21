@@ -1212,9 +1212,41 @@ A staleness hypothesis was formed (a 2025 paper titled "Improved verification li
 suggested the number was superseded) and **killed** — the improved limit *is* ≈2^71.02,
 so 2^71 sits just under it rather than a generation behind.
 
+## Pass 28 — P18 fault-injected; a fix found, verified, and found unpinned
+
+Target: my own **HARMA-P18**, third of the reviewer's four scheduled passes. P18 rated the
+inverted-robustness defect LOW impact by *reading* `record()`, and named that as the pass's
+weakest claim. Both of its stated gaps were injectable rather than arguable.
+
+**The impact question, answered by injection.** Cutting a serialized record at every byte
+offset: of 65 prefixes exactly one parses as valid JSON (the complete string), missing no
+keys. Repeated across five record shapes — flat, nested, nested-with-trailing-keys,
+unicode/escape, numeric-ish — **proper prefixes parsing as valid JSON: 0 in every case**.
+This is structural, not a sample: `json.dumps` of a dict ends in `}`, so a mid-write kill
+can never *manufacture* the fatal shape. Two concurrent writers produced 400 clean lines,
+0 corrupt. P18's LOW rating is confirmed — for a stronger reason than it gave.
+
+**P18 understated its own severity.** It named the missing-key `KeyError`. Differentially,
+the pre-fix loader is fatal on **4 of 5** shapes: missing `probe_id`, missing `examinee`,
+non-dict, and `null` — the last two raising `TypeError` and never mentioned.
+
+**The defect was already fixed, and my staleness guard hid it.** Aporia P44 (`8728e7e5`,
+17:18 -0400 = 21:18Z) un-inverted the gradient. My check ran
+`git log --since='2026-08-20 20:52'`, taking the timestamp from a pass_id ending in `Z`;
+git reads `--since` as **local** time, so 20:52 EDT = 00:52Z on 08-21 — *after* the fix,
+which was therefore correctly excluded. It reported "unchanged". The commit surfaced only
+because an unrelated grep for schema drift printed its title. That is a near-miss, not a
+catch, and the **seventh instrument bug of this soak** — in the guard P23 taught me to build.
+
+**The fix works; nothing guards it.** By execution, not reading: post-fix, 0 of 5 shapes
+fatal, skips counted. But with the guard block stripped out, `pytest test_zoo_matrix.py -q`
+reports **14 passed, exit 0**. The suite pins the *truncated* line — the case that always
+worked — and not the missing-key line, the case that raised. Third instance of the P12
+shape in this soak. File restored byte-identically; `git status` clean.
+
 ## Verdict so far
 
-Withheld — twenty-seven passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — twenty-eight passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
