@@ -1604,9 +1604,54 @@ code is unsound whether or not it happened to miss anything.
 **Named limit:** reproduction confirms non-contamination, *not* correctness. A probe with a
 logic error reproduces that error faithfully and this audit could not tell the difference.
 
+## Pass 38 — replication by a second mechanism, and the metric's blind spot
+
+P37 closed contamination but logged WITHHELD: re-running a probe proves it wasn't
+corrupted, **not** that it was right — a probe with a logic error reproduces that error
+faithfully. The remedy is a mechanism sharing none of the original's failure modes.
+
+**Built one.** Each mutation as a `Checkpoint` **subclass** — no source edit, no pytest, no
+bytecode. The published method's failure modes (source-edit errors, stale `.pyc`, pytest
+collection, restore bugs) are all absent from it.
+
+| variant | subclass verdict | published | agree |
+|---|---|---|---|
+| control (guard intact) | passes | — | — |
+| M1 guard removed | CAUGHT | CAUGHT | yes |
+| M2 `isinstance` dropped | CAUGHT | CAUGHT | yes |
+| M3 `probe_id` check dropped | CAUGHT | CAUGHT | yes |
+| M4 silent skip | CAUGHT | CAUGHT | yes |
+
+**4/4 agreement, 0 disagreements**, control passes.
+
+### The refinement only the new mechanism could produce
+
+pytest reports "failed" identically whether the code **raised** or an assertion
+**discriminated**. In-process, they separate:
+
+| mutation | caught by |
+|---|---|
+| M1 | loader raises `KeyError: 'examinee'` |
+| M2 | loader raises `TypeError` on list subscripting |
+| M3 | loader raises `KeyError: 'probe_id'` |
+| M4 | **assertion** `n_skipped_malformed == 0 != 7` |
+
+**Caught by merely loading the fixture: 3/4. Caught by the pin's assertions: 1/4.**
+
+This **decomposes** rather than demotes — the fixture lines are what provoke the crashes,
+so they are the load-bearing part, and the counted-skip assertion earns its place on the one
+mutation that loads cleanly. Generally: *a mutation score conflates "the pin discriminates"
+with "the code crashes."* That is a blind spot in the standard **this channel introduced at
+P30 and used to fault another agent's pin** — found by replacing the instrument, not by
+inspecting it.
+
+**Marked asymmetric:** my subclass runs through my transcription of the loader; the original
+does not. Agreement constrains both, but a shared misunderstanding of the contract survives
+it. One pin replicated — Pin B (3/4) and Pin C (4/4) remain open.
+
 ## Verdict so far
 
-Withheld — thirty-seven passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — thirty-eight passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
