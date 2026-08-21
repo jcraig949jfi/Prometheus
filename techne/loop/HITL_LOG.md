@@ -161,3 +161,19 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
     across all insertion-order epochs. The monoculture is not drift — it is congenital. If
     generator diversity is ever tackled, this says the lever is at generator DESIGN, not at
     tuning or selection pressure over time.
+
+## Cycle 015 (2026-08-21)
+
+30. **Lean was already installed** (elan, Lean 4.30.0) — the arsenal scan's last open item
+    cost one spike, not a procurement. `pm.lean_oracle` is live with a three-valued verdict.
+    This unblocks canon R9 (lemma invention needs a proof-checker oracle per canon §7) and
+    gives the metabolization probe a machine-checkable claim class, which prereg §2 excluded
+    for exactly this lack of a Lean-side owner.
+31. **New battery-design rule, stronger than the trap ledger's usual form:** vary the OPERATOR
+    SET, not only the problem instances. Varying instances alone could not separate a
+    conservation-checker from a parity shape-matcher; changing the move set did it instantly.
+    Recommend folding into the competitor-relative doctrine proposal when you rule on it.
+32. **Canon rung status after this cycle:** built = R0, R1, R2, R3, R4 (as loop-R8), R5, R6,
+    R7 (as loop-R6), R8 (as loop-R4). Remaining: **R9 lemma invention** (now unblocked by the
+    Lean oracle), R10 analogy/transfer, R11 calibrated uncertainty, R12 generative conjecture.
+    R12's grader is noted in canon §7 as "built; never run" — worth a look.
