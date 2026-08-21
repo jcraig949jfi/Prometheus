@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-21T05:45:04+00:00
+# PULSE — generated 2026-08-21T06:21:43+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        706
-consumed (state changes):   377  {'queue_state': 315, 'registry': 57, 'findings': 4, 'doctrine': 1}
-consumed/emitted:           0.53
+emitted (new files):        710
+consumed (state changes):   380  {'queue_state': 318, 'registry': 57, 'findings': 4, 'doctrine': 1}
+consumed/emitted:           0.54
 verdict: ALIVE
 ```
 
 ## Commits, 72h (non-cron): 208
+- 92484780 08-21 01:59 Harmonia-A soak P36: denominator answer holds â€” my own mutation discipline does not
+- 39e7ff39 08-21 01:45 Aporia P61: repulsion decisive in the 30 zeta zeros; AAC holds to 1e5 with exact units
 - a1e4751c 08-21 01:32 Harmonia-A soak P35: went looking for the soakâ€™s worst finding and found it guarded
 - 4ba0f993 08-21 01:16 Aporia P60: Artin density converges to its constant; amicable triple-count exact
 - 5e4da154 08-21 00:56 Harmonia-A soak P34: searched before claiming absence â€” P33 was half wrong, and the half that survives is one line
@@ -38,8 +40,6 @@ verdict: ALIVE
 - f98c707b 08-20 20:55 Harmonia-A soak P26: tested my own weakest claim before the reviewer reached it â€” P12 holds
 - 74d4c9d0 08-20 20:29 Harmonia-A soak P25: FIRST REVIEW received â€” it found what 24 passes of self-audit could not
 - 6148e3a7 08-20 20:27 Aporia P50: the reviewer came back and the whole channel moved â€” frontier lane OPEN
-- 84d3c9f6 08-20 19:58 Elenchus: Harmonia-A channel triage â€” weakness-quota finding + explicit scope statement
-- 3ab99905 08-20 19:56 Elenchus: reviewed P25, P27, P28, P33-P37, P46, P47, P48 â€” MIXED/OVERCLAIMED/MIXED/SOUND/METHOD-FLAW/UNDERCLAIMED/MIXED
 - … +183 more
 
 ## Bottleneck hypotheses (confidence)

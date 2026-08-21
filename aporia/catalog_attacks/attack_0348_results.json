@@ -1,0 +1,33 @@
+{
+ "cardinality": {
+  "rows_sampled": 6000,
+  "rows_parsed": 6000,
+  "zeros_per_row": {
+   "min": 206,
+   "median": 347.0,
+   "max": 358
+  },
+  "conductor_range": [
+   55.0,
+   6461.0
+  ],
+  "n_self_dual": 6,
+  "n_non_self_dual": 5994
+ },
+ "median_u1_self_dual": 0.5191528474633439,
+ "median_u1_non_self_dual": 0.8243935129503205,
+ "median_diff": -0.3052406654869766,
+ "n_perm": 10000,
+ "p_perm": 0.8794,
+ "unfolding": "u1 = gamma1 * log(q) / (2*pi), stated approximation",
+ "powered_test": {
+  "n_self_dual": 800,
+  "n_non_self_dual": 4000,
+  "median_u1_self_dual": 0.9601868758104564,
+  "median_u1_non_self_dual": 0.8376505389495239,
+  "median_diff": 0.12253633686093246,
+  "p_perm": 0.0001,
+  "seed": 20260863,
+  "note": "first sample was stratum-unpowered (6 self-dual of 6000) \u2014 cardinality doctrine applied at stratum level, targeted refetch"
+ }
+}
