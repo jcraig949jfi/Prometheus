@@ -1,0 +1,51 @@
+{
+ "protocol": "three-leg obstruction census: g2c local/global 2x2 (impossible-cell assert), EC sha integer-sqrt check on all non-null values, g2c has_square_sha distribution with witnesses",
+ "results": {
+  "local_global_census": {
+   "cells": {
+    "local=False global=0": 3371,
+    "local=True global=-1": 718,
+    "local=True global=0": 1051,
+    "local=True global=1": 61018
+   },
+   "obstructed_count": 1051,
+   "undecided_count": 718,
+   "impossible_cell": 0,
+   "encoding": "globally_solvable int: -1 unknown / 0 no / 1 yes"
+  },
+  "ec_cassels_square": {
+   "n_nonnull": 3824372,
+   "n_distinct": 39,
+   "non_square_values": [],
+   "verdict": "ALL-SQUARE"
+  },
+  "g2c_poonen_stoll": {
+   "distribution": {
+    "False": 2284,
+    "True": 63874
+   },
+   "sample_witnesses": [
+    {
+     "label": "100293.a.902637.1",
+     "analytic_sha": "2"
+    },
+    {
+     "label": "100800.b.705600.1",
+     "analytic_sha": "2"
+    },
+    {
+     "label": "10098.a.272646.1",
+     "analytic_sha": "2"
+    },
+    {
+     "label": "101015.a.505075.1",
+     "analytic_sha": "2"
+    },
+    {
+     "label": "101127.a.101127.1",
+     "analytic_sha": "2"
+    }
+   ]
+  }
+ }
+}
