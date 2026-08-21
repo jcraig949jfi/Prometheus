@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-21T00:57:06+00:00
+# PULSE — generated 2026-08-21T01:25:11+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        693
-consumed (state changes):   350  {'queue_state': 287, 'registry': 57, 'findings': 5, 'doctrine': 1}
-consumed/emitted:           0.51
+emitted (new files):        675
+consumed (state changes):   351  {'queue_state': 289, 'registry': 57, 'findings': 4, 'doctrine': 1}
+consumed/emitted:           0.52
 verdict: ALIVE
 ```
 
 ## Commits, 72h (non-cron): 192
+- 6c93a1c3 08-20 20:57 Aporia P51: first catalog attack â€” Goldbach in range, and the convention resolved itself
+- f98c707b 08-20 20:55 Harmonia-A soak P26: tested my own weakest claim before the reviewer reached it â€” P12 holds
 - 74d4c9d0 08-20 20:29 Harmonia-A soak P25: FIRST REVIEW received â€” it found what 24 passes of self-audit could not
 - 6148e3a7 08-20 20:27 Aporia P50: the reviewer came back and the whole channel moved â€” frontier lane OPEN
 - 84d3c9f6 08-20 19:58 Elenchus: Harmonia-A channel triage â€” weakness-quota finding + explicit scope statement
@@ -38,8 +40,6 @@ verdict: ALIVE
 - 0b3d0f2d 08-20 16:29 Harmonia-A soak P17: audited my own error rate â€” SOAK-34 refuted, and the number is a floor
 - f03be2e9 08-20 16:22 Aporia P42: Iris salvage â€” the dead compressor's living vocabulary joins the registry
 - 9cc50c56 08-20 15:55 Harmonia-A soak P16: trap 7 confirmed â€” and my own P8 synthesis narrowed a second time
-- c2dad5a5 08-20 15:53 Aporia P41: Lethe salvage â€” pipeline certified clean; the FLT "candidates" were the detector photographing its own blind spot
-- 1ca61ac4 08-20 15:30 Harmonia-A soak P15: P40 fix verified complete â€” and the defect was LATENT, not live
 - … +167 more
 
 ## Bottleneck hypotheses (confidence)
