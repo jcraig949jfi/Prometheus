@@ -1411,9 +1411,48 @@ No instrument errors this pass, breaking a two-pass streak. SOAK-63 hypothesised
 was writing fresh probes rather than reusing settled ones; this pass reused the harness
 pattern. Consistent with that at n=1, and not evidence for it.
 
+## Pass 33 — the previous pass's finding deflates, and this log fails as memory
+
+P32 left one claim WITHHELD: is the unpinned abstention at `verifier_lens.py:485` reached
+by *production traffic*, or only by the probe I hand-built? Measured on the real generator:
+
+| | share of 160 R6 probes |
+|---|---|
+| resolve `valid=True`, no kill | 136 (85.0%) |
+| line 478 — **pinned** abstention | 24 (15.0%) |
+| line 485 — **unpinned** abstention | **0 (0.0%)** |
+
+**LATENT.** All five emittable `cid`s have registry entries; `decide_conjecture` returns
+`None` for none of them, and that return is the only route to 485. `sum_two_squares` is
+*registered but undecided*, which is why 15% lands on the pinned sibling.
+
+**This corrects my own SOAK-70.** I called the sibling-path pinning asymmetry a defect,
+implying oversight. The pinned path carries 15% of traffic and the unpinned one carries
+zero — the pinning tracks the traffic. What survives is narrower and still true: line
+coverage cannot distinguish an *executed* line from an *asserted* one, and the generator's
+`CONJ` list and the verifier's registry are **uncoupled literals**, so one added conjecture
+without a matching entry makes 485 hot immediately. The pin is insurance against that
+coupling gap, not mitigation of a live risk, and a correction was filed to the gate queue
+because the P32 entry — true as written — is easy to read as production exposure.
+
+**The uncomfortable finding is about this document.** HARMA-P19 recorded that `Probe`
+exposes `ground_truth`, not `answer`. I wrote that entry. Fourteen passes later I used
+`p.answer` and was corrected by an `AttributeError`, not by the record. Thirty-three passes
+of documentation did not prevent a repeat of a documented mistake.
+
+**SOAK-08 correction, on the reviewer's own terms.** ELEN-HARMA-TRIAGE-02 states again that
+its scope is *triage*, and that P12/P14/P18/P19 remain unreviewed per-pass "though the
+channel reports movement on them." That distinction is load-bearing and this log will not
+blur it: what happened on those four (P26→P12, P29→P14, P28→P18, P27→P19) was **self**-testing,
+which is not review and cannot substitute for it. **SOAK-08 remains open.**
+
+Also logged: the pass procedure reads REVIEWS at setup and re-reads STEERING before push,
+but never re-reads REVIEWS — which structurally guarantees any review landing mid-pass is
+answered a pass late. TRIAGE-02 was, for exactly that reason.
+
 ## Verdict so far
 
-Withheld — thirty-two passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — thirty-three passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
@@ -1428,6 +1467,7 @@ own test suite did not pin.
 Pass 3 closed both loops and verified them adversarially rather than on trust. Pass 4
 drilled the first live mirror trap and, more usefully, caught its own vacuous result
 before publishing it. The mechanisms are now well-evidenced. **The open risk is no longer whether the worker role
-generalizes — it is that the REVIEWER half has never engaged** (SOAK-08). A soak that ends
+generalizes — the reviewer half HAS now engaged, twice, but by its own explicit scope
+statement only as TRIAGE** (SOAK-08 remains open; self-testing is not review). A soak that ends
 with 0 reviewer round-trips will have answered "can a second worker use this channel?" and
 left "can the channel review a second worker?" untouched.
