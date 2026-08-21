@@ -14,12 +14,12 @@ Rough edges are the product. Nothing here is worked around silently.
 
 | Metric | Value |
 |---|---|
-| Passes completed | 25 |
+| Passes completed | 26 |
 | Validator failures | 0 |
-| Validator gate exit | 0 all twenty-five passes (now 61 worklog entries, 15 reviews) |
+| Validator gate exit | 0 all twenty-six passes (now 63 worklog entries, 15 reviews) |
 | Schema fields ambiguous/forced | 2 (`agent`, `soak_findings` — see SOAK-04) |
 | Review round-trips (Elenchus → me → response) | **1** — first at P25, and it is TRIAGE only (see SOAK-53) |
-| Worker→worker round-trips (my finding → Aporia repair → my verification) | **3**, all closed and independently verified; fastest ≈30 min |
+| Worker→worker round-trips (my finding → Aporia repair → my verification) | **4**, all closed and independently verified; fastest ≈30 min |
 | Replication matches | 1 (AA-018, in kind) |
 | Replication mismatches | 0 |
 | Provenance findings raised | 2 (AA-018 tier + tightness) |
@@ -34,7 +34,7 @@ Rough edges are the product. Nothing here is worked around silently.
 | Self-corrections against a published pass | **10 correction-typed claims** across 17 passes (see P17 audit) |
 | New trap candidates found | 1 (identifier-case mismatch) — **ADOPTED into ATTACK_PATTERNS as trap 8** |
 | Own prior-pass weaknesses closed | 6 (P5→P6; P19→P20 ×2; P20→P21; P21→P22; **P23→P24 fidelity**) |
-| Heartbeat successes | 0 of 25 (env-override, SOAK-05 — never blocked a pass) |
+| Heartbeat successes | 0 of 26 (env-override, SOAK-05 — never blocked a pass) |
 | Self-corrections caught before logging | 2 |
 
 ## Soak findings
@@ -1085,6 +1085,49 @@ narrower question the soak could not answer alone: **does the review mechanism w
 for a second worker?** It does, end to end — and its first finding was one self-audit had
 missed for the entire soak.
 
+### P26 — testing my own weakest claim before the reviewer reached it
+
+P25 named **P12** as the thinnest thing this channel has published — I *inferred* the
+absence of a pinning test rather than searching for one — and the reviewer scheduled P12
+for next cycle. Waiting would have left a possibly-wrong claim in the log another cycle.
+
+**Searched properly.** A pin exists: `test_unknown_kind_abstains_exactly`. The decisive
+question is *when*:
+
+| | |
+|---|---|
+| added by | Aporia **P38** (`195c9256`) — **after** P12 |
+| present at P12's own commit `0ab4b24a`? | **no** (grep count 0) |
+| its own comment | *"Pinned per HARMA-P12"* |
+
+**So P12 was sound when made, and is now closed.** Merging "sound when made" with "true
+now" would have produced false humility one way or false vindication the other — the P23
+distinction, applied where it cut against me either direction.
+
+**Existence is not efficacy**, and that is the whole substance of P12: a test existed and
+could not fail on the case that mattered. Accepting a *new* test by reading its assertion
+would repeat that error one level up. So I simulated the regression:
+
+| | pinned test |
+|---|---|
+| real behaviour (abstains) | **passes** |
+| regressed to `valid=False` | **FAILS — pin fires** |
+| old guard `valid in (False, None)` | passes **both** — blindness re-confirmed |
+
+Coverage checked, not assumed: all six unregistered kinds route through one dispatch-miss
+path, so pinning one synthetic name exercises the code the others reach. Suite green.
+
+**SOAK-54 (observation) — fourth worker-to-worker closure, and the first where the fix
+credits the finding in its own source comment.** `"Pinned per HARMA-P12"` makes the guard's
+provenance legible to anyone who opens the file later — a property neither the worklog nor
+the gate queue provides, since both live away from the code they describe.
+
+**SOAK-55 (design) — verifying a pin requires the act the pin exists to perform: break the
+thing and watch.** Reading a new assertion is exactly as uninformative as reading the old
+one was. A repo could make this cheap by convention — every pin shipping with a recorded
+red-run, as Aporia did in P40 — and where that holds, a second party can confirm efficacy
+without reconstructing the regression themselves.
+
 ## Repair-verification ledger
 
 | Repair claimed (P28) | Verification | Result |
@@ -1128,7 +1171,7 @@ so 2^71 sits just under it rather than a generation behind.
 
 ## Verdict so far
 
-Withheld — twenty-five passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — twenty-six passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
