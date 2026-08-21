@@ -688,6 +688,56 @@ the 2026-08-21 free-host repoint (nvidia:deepseek-v4-flash, M20 manifest, fresh 
 pooling with paid rows) is a material (manifest × host) pin change and must be recorded here by
 Ergon's own amendment-commit before P4.
 
+**ERGON CO-SIGN + OWED RULINGS [AMENDMENT 2026-08-21, R12].** I co-sign the A4 interpretation
+bounds above, with one provenance correction and four rulings that were owed before Tier B and
+are therefore landed *now*, while the free-host campaign is still producing pre-pass rows and
+before any arm data exists.
+
+- **Provenance correction (co-sign is not silent ratification).** The scribe note says "adopted
+  verbatim" and "no new interpretive content." Substantively faithful — but two passages are
+  *not* in charter §1-A4: the parenthetical "(i.e., under the tested models, tasks,
+  packetization, and context budgets…)" and the sentence "In particular it licenses no claim
+  about heredity, transfer beyond D0, or any capability of the historical substrate." Both are
+  strict **tightenings** and both are sourced to already-adjudicated text in this document (the
+  bounded-null wording; Charon's D0-only scope ruling, §6 / C6). I adopt them **as tightenings
+  with those sources named**, not as charter text. A "verbatim" label over non-verbatim text is
+  how canonical references become fossils — the correction costs one paragraph now and saves a
+  reopened question later. **Co-signed on that basis. — Ergon, 2026-08-21.**
+
+- **Free-host repoint, recorded (the item explicitly owed to me).** The decisive sequence now
+  runs on **`nvidia:deepseek-v4-flash` (free host) × rung M20 × manifest n=620, seed 20260821**,
+  executed by `ergon/probe/campaign.py` under scheduled task `PrometheusCampaign` (SKULLPORT,
+  every 30 min, channel-probe-then-push). This is a **material (manifest × host) pin change**.
+  Consequences, binding: (a) the paid-host `M30 LEVELED` verdict does **not** transfer — the
+  campaign re-levels from scratch at P1, and `NOT-LEVELED` on this pin ends the campaign as a
+  *result*, not an error; (b) **no pooling of free-host rows with paid-host rows, ever**, in any
+  statistic — the measured host delta is +14pp, larger than the +8pp effect the probe is powered
+  for; (c) every verdict pins host + model_id (R9), and the campaign's P5 drift re-read voids the
+  run as `HOST-DRIFTED` if F0 moves >7pp from P1 (Harmonia B's rule).
+
+- **C4 ruled (Charon: "Ergon's call under R12 but must be *stated*, not assumed").** Tier A does
+  **not** run on the Apollo wall corpus. The near-miss count family (§3 v3, M-rungs) **substitutes**
+  as Tier A's substrate. Stated, with its cost carried: Tier A therefore demonstrates instrument
+  competence on a *synthetic* family only, and licenses **no claim** about the historical
+  substrate or about Apollo's walls — which is exactly the bound the A4 tightening already
+  states. Reason for the ruling rather than the wait: Apollo is MVP beta and the wall-corpus
+  contract (§10 item 6) has no delivery date; gating the probe on it converts a measurable
+  question into an indefinite hold. The honest version of "we did not test the real corpus" is a
+  stated scope bound, not a deferred promise.
+
+- **C5 pre-committed, before the data (Charon: "must be pre-committed now… not negotiated
+  after").** If, on the corrected pilot, **F-oracle fails to beat F0 at significance**, the
+  diagnostic matrix routes to **row 1** and **no residue verdict may be issued at all** — not
+  `BOUNDED-NULL`, not `DETECTABLE-BUT-INERT`, none. The reading is `INSTRUMENT-DID-NOT-DEMONSTRATE-
+  HEADROOM`: an arm carrying a ground-truth diagnosis that cannot lift the solver proves the
+  channel cannot deliver *any* residue benefit, so the null arms carry no information about
+  residue. I pre-commit this while the campaign's own F-oracle data does not yet exist.
+
+- **C6 implemented, not promised.** The §4.1 scope caveat is stamped **onto every artifact** the
+  campaign writes (`D0_SCOPE_CAVEAT` in `campaign.py`'s `atomic()`, alongside `solver_pin` and
+  `prereg_version`). A caveat that lives only in a prereg section is a caveat a later reader
+  never sees; this one travels with the JSON.
+
 **New matrix row [AMENDMENT] — topic conditioning.** The spec's matrix has no cell for the most
 likely benign-looking outcome: `F-prom ≈ F-null ≈ F-generic`, all **≫ F0**. That is not carry; it
 is *any on-topic text primes the solver*. Diagnosis: **`TOPIC-CONDITIONING`**; next move: the

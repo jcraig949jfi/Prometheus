@@ -70,7 +70,21 @@ def log(**kw):
         fh.write(json.dumps(kw) + "\n")
 
 
+# Charon exit-review C6: the §4.1 scope caveat travels ON the artifact, not in a doc a
+# later reader may never open. Every result object this campaign writes carries it.
+D0_SCOPE_CAVEAT = (
+    "SCOPE (prereg §4.1, C6): this is a D0 result on self-generated first-cycle residue "
+    "(the pre-pass of §4.2). It is NOT a corpus result — it says nothing about the native "
+    "residue Prometheus accumulated (D2/D3). A D0 win with a D3 null is not a success for "
+    "the accumulated corpus. D0 levels are never compared across strata. Pinned to "
+    "(manifest × host); does not transfer across hosts."
+)
+
+
 def atomic(path, obj):
+    if isinstance(obj, dict):
+        obj = {**obj, "scope_caveat": D0_SCOPE_CAVEAT, "solver_pin": SOLVER,
+               "prereg_version": "v1+amendments-2026-08-21"}
     tmp = path.with_suffix(path.suffix + ".tmp")
     tmp.write_text(json.dumps(obj, indent=2), encoding="utf-8")
     os.replace(tmp, path)
