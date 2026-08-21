@@ -1649,9 +1649,40 @@ inspecting it.
 does not. Agreement constrains both, but a shared misunderstanding of the contract survives
 it. One pin replicated — Pin B (3/4) and Pin C (4/4) remain open.
 
+## Pass 39 — Pin B replicated in input space, with no code touched at all
+
+P38 replicated the checkpoint pin by transcribing it into subclasses, and flagged that
+method's weakness: the replication runs through *my* reconstruction. `null_marginal_pairing`
+is far larger than `Checkpoint.__init__`, so reusing that method here would have carried
+more risk, not less.
+
+**A better mechanism was available.** The guard reads `except spec.transform_errors:` — and
+`transform_errors` is a **spec field**, not a constant. So "narrow the caught set" is
+reachable in *input space*. Equivalence established by reading the guard first, not assumed.
+
+| spec | outcome (real function, nothing mutated) |
+|---|---|
+| default `(ValueError, OverflowError)` + ValueError op | OK, `n_dropped=[50,50]` |
+| default + **OverflowError** op | OK, `n_dropped=[50,50]` |
+| **narrowed** `(ValueError,)` + ValueError op | OK |
+| **narrowed** + **OverflowError** op | **RAISED OverflowError** |
+
+Only the predicted cell fails — P31's N3 reproduced with **no source edit, no transcription,
+no bytecode**. The pin never raises `OverflowError` at all, so it cannot see the narrowing.
+
+**Breadth:** `except spec.transform_errors` appears at **six** sites. Under the narrowed
+contract, `null_marginal_pairing`, `evaluate_lattice` and `mine` **all** raise; under the
+default, all three are fine. **3/3 entry points break; the pin covers 1.**
+
+**And a deflation of my own escalation, mid-pass.** Narrowing is a *supported configuration*,
+not code rot — which briefly looked like the first severity increase after five deflations.
+Two checks killed it: **no spec in the repo narrows the field**, and **no shipped a3 operator
+raises `OverflowError`** even at 10^100 (Python ints don't overflow). Latent on two counts.
+Sixth consecutive pass where measurement deflated this channel's own reading.
+
 ## Verdict so far
 
-Withheld — thirty-eight passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — thirty-nine passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
