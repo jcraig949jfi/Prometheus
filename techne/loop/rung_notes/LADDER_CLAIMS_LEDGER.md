@@ -256,3 +256,50 @@ LEAST ONE member of the pair, not on both.
 **Kill-battery additions (executable):** external audit vs self-declared status; fiber search
 for witness SYNTHESIS (`fiber_search`, seeded at a=3 over F_7 and landing on a=2 where
 3^2 = 2 mod 7); factorization precondition check; padded-assumption-list detection.
+
+## Cycle 020 — claim v13, and the first counterexample to v11-prime
+
+**Claim v13.** *No function of a record can detect what is absent from it.* Completeness is
+therefore not establishable by any audit of the evidence, however external — it requires an
+independent, pre-declared ledger of what was supposed to be there.
+
+**Evidence (R11 selective reporter).** Forecast honestly, then decline to report the claims you
+got wrong. Measured on the R11 battery: Brier 0.125 -> 0.0375, skill 0.500 -> 0.844,
+`verify_refutations` clean, nothing falsified. Every number computable from the published record
+improves. Completeness falls to 10/12 and is visible ONLY against the declared claim list.
+
+**Relation to v12.** v12 says evidence must be typed and checked from outside the circuit. v13
+is an escalation: some properties are not functions of the evidence at all, so no external audit
+of the evidence suffices. This is the third independent argument for the immutable-observation
+constitution (after circular legitimisation, cycle 013, and the un-auditable UNKNOWN, cycle 019)
+and the first that demands a specific MECHANISM — a pre-declared ledger — rather than a rule.
+
+**Caveat recorded against my own trap:** the selective reporter's reliability degrades
+(0.0 -> 0.0375) under this particular drop rule, because dropping only confident-and-wrong
+claims leaves survivors systematically under-forecast. Not a defence; a balanced drop rule would
+not pay it.
+
+## Cycle 020 — v11-prime: first genuine COUNTEREXAMPLE, and the rule it exposes
+
+Two forecasters with byte-identical records on the R11 battery (one replays the other) are
+aliased under the projection "the record". With the target being EMPIRICAL calibration on that
+record, **no aliasing witness can exist** — the target is a function of the projection.
+
+The general rule is cleaner than v11-prime itself:
+
+> **Aliasing is escaped exactly when the projection is SUFFICIENT FOR THE TARGET.**
+
+Empirical calibration is the rare case where sufficiency holds by definition. Change the target
+to calibration on the next battery and the witness reappears on the same pair (ECE 0.500 vs
+0.250 on SHIFTED_BATTERY). So v11-prime stands for every target anyone actually wants, and the
+counterexample sharpens rather than overturns it.
+
+**Second cycle-020 result, recorded as a framing rather than a claim.** At R11 the aliasing
+witness is unbreakable from inside the situation, and the rung is the RESPONSE to it, not a
+repair of it. R6, R9 and R10 all treated their witnesses as defects to design away. This
+suggests rungs of two kinds — capability-defined and impossibility-defined — which canon v2.0
+does not distinguish. Flagged to HITL (#53), no amendment proposed.
+
+**Kill-battery additions (executable):** hedging-ties-on-calibration probe; refutation-beyond-
+budget check (kills a memoriser without needing fresh instances); selective-reporting
+completeness audit against a declared ledger; fiber-synthesised misleading streak.

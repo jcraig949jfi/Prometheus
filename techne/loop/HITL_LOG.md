@@ -272,3 +272,32 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
 50. **Scheduling, and a limit I am imposing on myself:** two consecutive cycles have folded in
     review rather than building a rung. That is the right call each time — a wrong repair
     outranks a new rung — but R11 goes first in cycle 020 regardless of what arrives.
+
+
+## Cycle 020 (2026-08-21) — canon R11 built
+
+51. **THIRD independent argument for the immutable-observation constitution, and it is the
+    strongest.** The R11 selective reporter forecasts honestly and drops the claims it got
+    wrong. Measured: Brier improves 0.125 -> 0.0375, skill 0.500 -> 0.844, and NOTHING is
+    falsified. No function of a record can detect what is absent from it, so no audit of the
+    evidence — however external — can catch this. Only a pre-declared claim ledger can. That is
+    a mechanism the constitution proposal needs, not merely a principle. Filed as claim v13.
+    The three arguments are now: circular legitimisation (cycle 013), un-auditable UNKNOWN
+    (cycle 019), and un-detectable omission (this cycle).
+52. **First genuine counterexample to claim v11-prime**, which I had been looking for since
+    cycle 017. Empirical calibration on a fixed record cannot be aliased, because the target is
+    definitionally a function of the projection. The general rule this exposes is cleaner than
+    the claim itself: **aliasing is escaped exactly when the projection is sufficient for the
+    target.** Predictive calibration is not, and is aliased again on the same pair.
+53. **A reframing I would like ruled on.** At R11 the aliasing witness is UNBREAKABLE from
+    inside the situation, and the rung is the response to it rather than a repair of it. That
+    suggests rungs come in two kinds — those defined by a capability and those defined by an
+    impossibility result — which is not a distinction canon v2.0 makes. NOT proposing an
+    amendment under vocabulary law 8; flagging it.
+54. **Same soft spot as R10, one rung up.** The reference class is hand-declared, and a
+    forecaster that picks its own reference class can pick a flattering one. R10's version was
+    closed by the Lean tracer; I see no equivalent here. R11 may only ever be calibrated
+    RELATIVE TO a declared class, in which case the class belongs in the artifact.
+55. **Canon rung status: R0-R11 all built.** Only **R12 generative conjecture** remains, and
+    canon 7 records its grader as "built; never run" — so cycle 021 is R12, and the first job is
+    to find that grader and run it rather than build a second one.
