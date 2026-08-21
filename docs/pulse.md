@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-21T20:45:35+00:00
+# PULSE — generated 2026-08-21T21:15:06+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        907
-consumed (state changes):   421  {'queue_state': 362, 'registry': 56, 'findings': 2, 'doctrine': 1}
+emitted (new files):        917
+consumed (state changes):   419  {'queue_state': 361, 'registry': 55, 'findings': 2, 'doctrine': 1}
 consumed/emitted:           0.46
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 268
+## Commits, 72h (non-cron): 269
+- 2f86c977 08-21 16:58 Techne loop cycle 025: real substrate â€” a live 100% loader drop in ergon/probe, and instruments that do not transfer
+- c7e4b645 08-21 16:45 Aporia P90: the sweep paradigm calibrates itself â€” and finds a fork in the taxonomy
 - 71bea235 08-21 16:26 Techne loop cycle 024: composition â€” deficit accumulates, and the instrument is blind to two of its own traps
 - d6fde1fb 08-21 16:13 Aporia P89: P18+P19 â€” coherence counted, and the transport primitive gets its definition page
 - 2cee06f1 08-21 15:53 Techne loop cycle 023: sweep directions unified in bits; two self-corrections
@@ -38,9 +40,7 @@ verdict: ALIVE
 - cc72f339 08-21 11:24 Aporia P80: P02 delivered â€” the obstruction paradigm arrives with its certificates pre-counted
 - 13a78d65 08-21 10:57 Techne loop cycle 015: Lean proof-checker oracle forged + canon R5 (invariant detection); vary the OPERATOR SET
 - 0010dad7 08-21 10:55 Aporia P79: paradigm tier opens â€” P01 delivered as an instrument, not an essay
-- a1bacb02 08-21 10:26 Aporia P78: STRATA-CONSISTENT â€” the 0348 refinement program closes
-- d520e6e5 08-21 10:22 Aporia P78 pre-commit: conductor-stratified 0348 script, readings pre-stated â€” committed BEFORE first run
-- … +243 more
+- … +244 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records

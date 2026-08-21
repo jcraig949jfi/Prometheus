@@ -1,0 +1,56 @@
+{
+ "protocol": "recursive Strassen vs naive-block recursion on random integer matrices (exact equality gate), exact count law 7^k, exponent vs derived log2(7), decline leg deriving exponent 3, seed 20260892",
+ "rows": [
+  {
+   "k": 1,
+   "n": 2,
+   "muls_7": 7,
+   "muls_8": 8,
+   "exp_7": 2.807354922,
+   "exp_8": 3.0
+  },
+  {
+   "k": 2,
+   "n": 4,
+   "muls_7": 49,
+   "muls_8": 64,
+   "exp_7": 2.807354922,
+   "exp_8": 3.0
+  },
+  {
+   "k": 3,
+   "n": 8,
+   "muls_7": 343,
+   "muls_8": 512,
+   "exp_7": 2.807354922,
+   "exp_8": 3.0
+  },
+  {
+   "k": 4,
+   "n": 16,
+   "muls_7": 2401,
+   "muls_8": 4096,
+   "exp_7": 2.807354922,
+   "exp_8": 3.0
+  },
+  {
+   "k": 5,
+   "n": 32,
+   "muls_7": 16807,
+   "muls_8": 32768,
+   "exp_7": 2.807354922,
+   "exp_8": 3.0
+  },
+  {
+   "k": 6,
+   "n": 64,
+   "muls_7": 117649,
+   "muls_8": 262144,
+   "exp_7": 2.807354922,
+   "exp_8": 3.0
+  }
+ ],
+ "derived_log2_7": 2.807354922057604,
+ "verdict": "COMPRESSION-BOOTSTRAPS",
+ "meta_note": "MIP*=RE-scale bootstrapping (protocol self-simulation to RE) is proof-engineering beyond a pass; the executable engine \u2014 strict per-level saving compounding to a new exponent \u2014 is what this demonstrates"
+}
