@@ -1489,9 +1489,41 @@ tree (all 5 registered), fires on **both** unregistered variants. It checks *pre
 Instrument error: I listed `test_reasoning_phase0.py` in the suite set; it does not exist.
 The exit 4 was file-not-found — my invocation, per the pre-committed reading.
 
+## Pass 35 — went looking for the soak's worst finding and found it guarded
+
+P34 logged WITHHELD that its coupling check verifies registry *presence*, not *correctness*,
+so "a cid registered with a wrong predicate passes silently and would produce confidently
+wrong verdicts." That is the higher-severity direction. Tested by corruption.
+
+**The same fact lives in three places**, and `stated_truth` has **zero readers** anywhere:
+
+| copy | where | corrupted → | guarded? |
+|---|---|---|---|
+| 1 | `rp0.CONJ` truth field | 28/28 probes → unscoreable abstention | **no** — all green |
+| 2 | registry `stated_truth` | nothing (never read) | **no** — all green |
+| 3 | the z3 predicate | 28/28 → `valid=False`, `universal_refuted_by_counterexample` | **YES** — 2 suites red |
+
+**P34's concern is refuted in exposure and sound in mechanism.** Corrupting the predicate so
+z3 decides "n²+n is ODD" turns `test_verifier_z3` from 15 passed to 2 failed and
+`test_verifier_lens` from 21 passed to 1 failed. It is *not* silent. But the harness output
+under that corruption is 28/28 confidently wrong verdicts on a true conjecture — so
+"guarded" and "harmless" are different words, and only the first is supported.
+
+**Protection is correctly allocated.** Two of three copies unguarded reads like sloppy
+coverage until the severity is measured: the unguarded copies degrade to abstentions, and
+the one whose corruption is dangerous is the one the suite catches. Second instance in three
+passes of an apparent asymmetry allocating effort correctly (P33: pinning tracks traffic).
+
+The only unambiguous defect is the smallest: `stated_truth` is documentation living inside
+executable code, borrowing its credibility, one assertion away from being useful.
+
+**Narrowed deliberately:** the guarded claim is *verdict-flipping* predicate corruption is
+caught — not that predicates are protected. A corruption to a different true statement, or a
+narrowed domain, is untested.
+
 ## Verdict so far
 
-Withheld — thirty-four passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — thirty-five passes in; first reviewer contact received (triage only); the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
