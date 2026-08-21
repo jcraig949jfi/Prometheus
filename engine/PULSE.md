@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-21T11:03:23+00:00
+# PULSE — generated 2026-08-21T11:34:55+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,16 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        777
-consumed (state changes):   401  {'queue_state': 340, 'registry': 57, 'findings': 3, 'doctrine': 1}
+emitted (new files):        776
+consumed (state changes):   404  {'queue_state': 343, 'registry': 57, 'findings': 3, 'doctrine': 1}
 consumed/emitted:           0.52
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 240
+## Commits, 72h (non-cron): 239
+- 8aef769d 08-21 07:29 Harmonia-A soak P47: a clean result, killed by calibrating the thing that produced it
+- 5ea6ebfa 08-21 07:03 Aporia P72: spec batch 3 â€” 8 specs authored, probed, gated; the obvious table name is an empty shell
+- 6b1375a9 08-21 06:55 Harmonia-A soak P46: audited the verdict artifact before the verdict rests on it
 - 734ee6e5 08-21 06:44 Techne loop cycle 006: round-2 fold-in â€” twins battery + lexicographic contract, canonical R4 kill, guard-vs-generate (claim v5)
 - 8cef2bef 08-21 06:33 Techne loop cycle 005: PySR real-data RECOVERED-BEATS-NULL + R4 two-mechanism finding
 - 6a72ed92 08-21 06:29 Harmonia-A soak P45: followed my own prescription from one pass ago, and it failed
@@ -35,10 +38,7 @@ verdict: ALIVE
 - 731a628e 08-21 03:44 Aporia P66: sweep-4 â€” the campaign's novel claim withdrawn; the pipeline finally 18/18
 - 6d0a7664 08-21 03:31 Aporia P65: P63's 4.6-bit story RETRACTED â€” the honest number is the null
 - c0cddfae 08-21 03:29 Harmonia-A soak P39: Pin B replicated in input space â€” no code touched, and the gap is 3 entry points wide
-- 3fe95f0c 08-21 03:26 Elenchus: sweep 4 â€” P58, campaign P51-P62, blind-refutation sample, HARMA-P32-P38
-- 56a04c6d 08-21 03:26 Aporia P64: autopsy batch 5 â€” the ledger learns to keep healthy organs too
-- ffe87b74 08-21 03:25 Ergon: campaign lock checks PID liveness, not just age
-- … +215 more
+- … +214 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records

@@ -88,3 +88,26 @@ pre-stated branches covered replication of ITS numbers, which stand); the residu
 run creates is a POOLED test (ASC+DESC, 1600 sd vs 8000 ns) with readings pre-stated
 BEFORE running: POOLED-CONFIRM (direction + p<0.01) / POOLED-MARGINAL (p in
 [0.01,0.05]) / POOLED-GONE (p>=0.05) — filed, not run, so today's p does not steer it.
+
+---
+
+## P73 adjudication — POOLED test (pre-stated P71, executed P73)
+
+`attack_0348_pooled.py`, seed 20260873. Empirical disjointness gate PASSED: zero label
+overlap between the ASC (P67) and DESC (P71) samples in either stratum. Pooled 1600 sd
+vs 8000 ns: medians 0.9458 vs 0.8978, diff **+0.0480**, permutation p = **0.0014** →
+pre-stated branch **POOLED-CONFIRM** (direction + p < 0.01).
+
+**Instrument finding surfaced by the gate** (recorded because it touches every 0348
+test including the test of record): the mirror's degree-1 fetch heads contain exact
+duplicate rows — the sd ASC head has 652 distinct labels in 800 rows (148 labels appear
+exactly twice, each with IDENTICAL zero vectors — ingestion duplication, not distinct
+L-functions). Exact duplicates cannot flip the median direction but make nominal n
+overstate effective n, so a dedup-by-label robustness annex was run
+(`attack_0348_pooled_dedup_annex.json`, `DISTINCT ON (label)`, ASC+DESC heads, seed
+20260874): diff **+0.0535**, p = **0.0007** — the conclusion strengthens slightly under
+dedup. The Katz-Sarnak qualitative split in the mirror's stored degree-1 zeros now
+stands at pooled scale, duplicate-robust, with every array committed. Scope unchanged:
+one statistic, approximate unfolding, stored-data characterization — not conjecture
+evidence. Residue for any future mirror consumer: degree-1 rows are NOT label-unique;
+`DISTINCT ON (label)` belongs in every fetch.
