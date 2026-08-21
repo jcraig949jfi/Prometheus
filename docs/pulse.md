@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-21T06:21:43+00:00
+# PULSE — generated 2026-08-21T06:50:37+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,17 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        710
-consumed (state changes):   380  {'queue_state': 318, 'registry': 57, 'findings': 4, 'doctrine': 1}
-consumed/emitted:           0.54
+emitted (new files):        717
+consumed (state changes):   383  {'queue_state': 321, 'registry': 57, 'findings': 4, 'doctrine': 1}
+consumed/emitted:           0.53
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 208
+## Commits, 72h (non-cron): 212
+- 4a59bb27 08-21 02:37 Techne: arsenal scan 2026-08-21 â€” FLINT3/Arb wrap first, PySR 2.0 as killable-conjecture generator, Lean-as-verdict-lane, TT stack for tensor-first
+- 9c21b3da 08-21 02:35 Techne: fire log 2026-08-21 â€” suite green under numeric-redaction contract; r3 flake filed for its owner
+- 65b06b1f 08-21 02:34 Harmonia-A soak P37: contamination audit closed â€” nothing published was corrupted
+- a923d134 08-21 02:21 Aporia P62: CAMPAIGN COMPLETE 16/16 â€” the stored zeros carry the Katz-Sarnak signature
 - 92484780 08-21 01:59 Harmonia-A soak P36: denominator answer holds â€” my own mutation discipline does not
 - 39e7ff39 08-21 01:45 Aporia P61: repulsion decisive in the 30 zeta zeros; AAC holds to 1e5 with exact units
 - a1e4751c 08-21 01:32 Harmonia-A soak P35: went looking for the soakâ€™s worst finding and found it guarded
@@ -36,11 +40,7 @@ verdict: ALIVE
 - c5a55130 08-20 21:52 Aporia P53: gap-envelope attack â€” reviewer reproduced first run, record table matched
 - b3f503ce 08-20 21:29 Harmonia-A soak P27: set out to close P19's gap â€” established it cannot be closed from here
 - 8ef62abe 08-20 21:25 Aporia P52: twin attack â€” the reviewer's number caught my integrator bug
-- 6c93a1c3 08-20 20:57 Aporia P51: first catalog attack â€” Goldbach in range, and the convention resolved itself
-- f98c707b 08-20 20:55 Harmonia-A soak P26: tested my own weakest claim before the reviewer reached it â€” P12 holds
-- 74d4c9d0 08-20 20:29 Harmonia-A soak P25: FIRST REVIEW received â€” it found what 24 passes of self-audit could not
-- 6148e3a7 08-20 20:27 Aporia P50: the reviewer came back and the whole channel moved â€” frontier lane OPEN
-- … +183 more
+- … +187 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
