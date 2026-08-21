@@ -199,3 +199,52 @@ class AbstractOperator:
         for step in self.schema:
             x = prims[step](x)
         return x
+
+
+@dataclass
+class BudgetedSelector:
+    """Round 4, item 2: add-only plasticity PROVABLY poisons selection.
+
+    Construction: installed operators are considered BEFORE primitives, and only B candidates
+    may be evaluated per task. Let stale macros accumulate (each was useful once, all now
+    invalid). Once n_stale >= B, the useful primitive is never reached and accuracy -> 0.
+
+    This settles the guard question: adding a guarded replacement while the unguarded macro
+    REMAINS ACTIVE does not fix poisoning -- it is still selected first and still consumes
+    budget. The real power is modifying the ACTIVE SET: R_next SUBSET R_now must be possible,
+    not merely R_next SUPERSET R_now.
+    """
+
+    budget: int
+    macros: List[Tuple[str, Rule]] = field(default_factory=list)
+    primitive: Optional[Rule] = None
+    can_retract: bool = False
+
+    def install_macro(self, name: str, rule: Rule) -> None:
+        self.macros.append((name, rule))
+
+    def retract(self, name: str) -> bool:
+        """Remove from the ACTIVE set. Only a system with negative plasticity can do this."""
+        if not self.can_retract:
+            return False
+        before = len(self.macros)
+        self.macros = [(n, r) for n, r in self.macros if n != name]
+        return len(self.macros) != before
+
+    def solve(self, x: int, gold: int) -> Tuple[bool, int]:
+        """(solved, candidates_evaluated). Macros first, then the primitive, until budget."""
+        evaluated = 0
+        for _name, rule in self.macros:
+            if evaluated >= self.budget:
+                return False, evaluated
+            evaluated += 1
+            try:
+                if rule(x) == gold:
+                    return True, evaluated
+            except Exception:
+                pass
+        if evaluated < self.budget and self.primitive is not None:
+            evaluated += 1
+            if self.primitive(x) == gold:
+                return True, evaluated
+        return False, evaluated

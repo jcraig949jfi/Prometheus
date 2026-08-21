@@ -81,6 +81,24 @@ states what killed its predecessor. Executable evidence lives in `techne/ladder_
   the operator and instantiates. Schema ORDER matters (double∘succ ≠ succ∘double), so
   "knows these primitives are useful" is not enough.
 
+- **v8 (cycle 011, current):** external round 4 adds coordinate 8, **epistemic-rule
+  plasticity, constrained**: E_t -> E_{t+1} WITH retroactive revalidation and an
+  evaluator-INDEPENDENT warrant. Executable: a corpus of 100 claims certified by a sampling
+  evaluator contains an adversarial identity agreeing at every sampled point; after a
+  warranted revision to symbolic normalization the plastic corpus retracts it AND its
+  dependent (98 trusted), the fixed-evaluator corpus reports 100 forever, and a
+  prospective-only revision leaves history contaminated until revalidation runs. The
+  constitutional gate refuses the terminal cheat (revising failure to mean success).
+  Also this cycle: R6 = provenance-sensitive diagnosis (non-unique proofs make
+  rederive-and-diff SMEAR; and a corrupted derivation can have a legitimate endpoint, so the
+  endpoint checker is not merely uninformative but wrong about the answer); and retraction
+  proven necessary (add-only vocabularies poison a budgeted selector; guarding is not
+  retraction; R_{t+1} SUBSET R_t must be possible).
+  **PROMETHEUS CONNECTION:** coordinate 8 is the June-2026 formula-fossil finding in general
+  form -- "2,351 promotions" were claims certified under a superseded gate that nothing
+  revalidated. Retroactive revalidation is a missing organ we have already been bitten by,
+  not a Band-G curiosity.
+
 **Standing kill-battery inventory (all executable):** isomorph/fresh-seed (R0); coefficient-
 hull escape + symbolic-parameter probes (R1); trace re-execution, CAS-layer leakage,
 path-separating twins [spec'd], step-count priors (R2); disequality separation, scale probe,
@@ -91,7 +109,9 @@ base-rate inversion, **nonlocal-discriminator + depth-escape + rule-name randomi
 palette exhaustion, existential-elimination distinctness pressure, deterministic-freshness
 (fresh-gen/Skolem); held-out-substitution fake-synthesis kill + corrupted-trace audit
 (operator plasticity); expectation-over-space experiment metering + worst-case cost
-(epistemic objective).
+(epistemic objective); proof-redundancy smearing + correct-endpoint/corrupt-middle (R6);
+budget poisoning + guard-is-not-retraction (negative plasticity); adversarial-corpus
+revalidation + unwarranted-revision refusal (epistemic-rule plasticity).
 
 **Design finding (cycle 006, from the twins battery):** a bounded circuit's conservative
 False on a forgotten fact IS a soundness violation on the twin pair — "conservative" and

@@ -99,3 +99,18 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
     If you are pasting from different points in the ChatGPT thread, no harm — I diff against
     what is already built and only construct the residue. If it was meant to be a NEW round,
     the round-4 questions from cycle_008.md are still outstanding on their side.
+
+## Cycle 011 (2026-08-21)
+
+20. **STRONG RECOMMENDATION — coordinate 8 is our own June finding generalized.** The
+    external reviewer's Band-G killer (evaluator revision + RETROACTIVE revalidation) is
+    exactly the formula-fossil failure I audited in June: 2,351 promotions certified under a
+    superseded gate, never revalidated, max training_weight 0.33-0.52 against a 0.6 bar.
+    Their construction is now an executable test suite. Two concrete asks:
+    (a) should the substrate carry a `revalidate()` obligation -- i.e. every evaluator/formula
+        version bump triggers a corpus re-judgement and dependency-propagated retraction?
+    (b) the constitutional constraint (evaluator revisions need evaluator-INDEPENDENT
+        warrant) is a doctrine-grade rule. It is the formal statement of why a failed
+        experiment may not redefine failure. Candidate memory; say the word and I draft it.
+21. **Doctrine memories now queued: 3** (cheaper-mechanism law at 4 instances; abstention
+    channel; evaluator-revision warrant). All drafts ready on request.
