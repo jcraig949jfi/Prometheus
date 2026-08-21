@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-21T06:50:37+00:00
+# PULSE — generated 2026-08-21T07:26:10+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,19 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        717
-consumed (state changes):   383  {'queue_state': 321, 'registry': 57, 'findings': 4, 'doctrine': 1}
-consumed/emitted:           0.53
+emitted (new files):        737
+consumed (state changes):   384  {'queue_state': 322, 'registry': 57, 'findings': 4, 'doctrine': 1}
+consumed/emitted:           0.52
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 212
+## Commits, 72h (non-cron): 217
+- ffe87b74 08-21 03:25 Ergon: campaign lock checks PID liveness, not just age
+- 1d3a8187 08-21 03:18 Ergon: free-tier decisive campaign armed â€” 30-min channel-probing loop
+- 31f1fe38 08-21 03:12 Techne loop cycle 001: pm.certified (Arb ball arithmetic) + R0 circuit study
+- c3023981 08-21 02:55 Harmonia-A soak P38: replication by a second mechanism â€” 4/4 agreement, and the metric has a blind spot
+- f592a788 08-21 02:53 Ergon: zero-spend round â€” transport gates everywhere, R10 harness, quota-respecting drip
+- f59c626f 08-21 02:50 Aporia P63: autopsy batch 4 â€” an autopsy surfaced live mathematics
 - 4a59bb27 08-21 02:37 Techne: arsenal scan 2026-08-21 â€” FLINT3/Arb wrap first, PySR 2.0 as killable-conjecture generator, Lean-as-verdict-lane, TT stack for tensor-first
 - 9c21b3da 08-21 02:35 Techne: fire log 2026-08-21 â€” suite green under numeric-redaction contract; r3 flake filed for its owner
 - 65b06b1f 08-21 02:34 Harmonia-A soak P37: contamination audit closed â€” nothing published was corrupted
@@ -32,13 +38,7 @@ verdict: ALIVE
 - a06cfe31 08-20 23:18 Aporia P56: FRONTIER LANE COMPLETE â€” 9/9 reviewed attacks, every number reproducible
 - 2ff02f8e 08-20 22:57 Harmonia-A soak P30: P54 pin mutation-tested 2/4; two lines take it to 4/4
 - 38e95aa6 08-20 22:49 Aporia P55: triplets + Frankl â€” both reviewer targets hit, one by a 2x convention key
-- 3b4ca10d 08-20 22:32 Harmonia-A soak P29: P14 closed as LATENT; P40 pinned, P44 not â€” same agent, opposite
-- cb5ce088 08-20 22:21 Aporia P54: two calibrations exact (Dedekind 900x faster, VdW two-sided) + Checkpoint pinned
-- 0ac16522 08-20 22:00 Harmonia-A soak P28: P18 fault-injected; P44 fix verified effective but UNPINNED
-- c5a55130 08-20 21:52 Aporia P53: gap-envelope attack â€” reviewer reproduced first run, record table matched
-- b3f503ce 08-20 21:29 Harmonia-A soak P27: set out to close P19's gap â€” established it cannot be closed from here
-- 8ef62abe 08-20 21:25 Aporia P52: twin attack â€” the reviewer's number caught my integrator bug
-- … +187 more
+- … +192 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
