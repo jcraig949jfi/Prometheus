@@ -25,12 +25,46 @@ import sys
 from collections import Counter, defaultdict
 
 
-def load(path):
+def normalize(r, gold):
+    """Accept either ledger shape without importing the driver's code.
+
+    The pilot ledgers carry flat `arm`/`uid`/`correct`; the campaign ledgers carry
+    `key: [arm, uid]` and `extracted_int` with NO stored correctness flag. Deriving `correct`
+    here from the manifest's gold — rather than trusting a boolean the driver wrote — is
+    strictly better for R10's purpose: it removes one more thing this script has to take on
+    the driver's word.
+    """
+    out = dict(r)
+    if "arm" not in out and isinstance(out.get("key"), (list, tuple)) and len(out["key"]) == 2:
+        out["arm"], out["uid"] = out["key"][0], out["key"][1]
+    if "extracted" not in out and "extracted_int" in out:
+        out["extracted"] = out["extracted_int"]
+    if gold is not None:
+        if out["uid"] not in gold:
+            sys.exit(f"REFUSED: ledger uid {out['uid']!r} absent from the manifest")
+        out["correct"] = (out.get("extracted") is not None
+                          and out["extracted"] == gold[out["uid"]])
+    elif "correct" not in out:
+        sys.exit("REFUSED: ledger has no `correct` field and no --manifest was given, so "
+                 "correctness cannot be independently derived. Pass --manifest.")
+    return out
+
+
+def load(path, manifest=None):
     rows = [json.loads(l) for l in pathlib.Path(path).read_text(encoding="utf-8").splitlines()
             if l.strip()]
+    gold = None
+    if manifest:
+        gold = {m["uid"]: m["gold_int"] for m in
+                (json.loads(l) for l in
+                 pathlib.Path(manifest).read_text(encoding="utf-8").splitlines() if l.strip())}
+    rows = [normalize(r, gold) for r in rows]
     bad = [r for r in rows if r.get("synthetic")]
     if bad:
         sys.exit(f"REFUSED: {len(bad)} synthetic rows in a results ledger")
+    if any(isinstance(r.get("arm"), int) for r in rows):
+        sys.exit("REFUSED: this looks like a PRE-PASS ledger (key = [rep, uid]), not an arms "
+                 "ledger. R10 recomputes the arm contrast; point it at the arms ledger.")
     seen = Counter((r["arm"], r["uid"]) for r in rows)
     dupes = {k: v for k, v in seen.items() if v > 1}
     if dupes:
@@ -70,9 +104,12 @@ def main():
     ap.add_argument("ledger")
     ap.add_argument("--prom", default="F-prom-retrieved")
     ap.add_argument("--null", default="F-null")
+    ap.add_argument("--manifest", default=None,
+                    help="manifest JSONL; when given, `correct` is re-derived here from gold "
+                         "instead of trusting the driver's stored flag (preferred)")
     args = ap.parse_args()
 
-    rows = load(args.ledger)
+    rows = load(args.ledger, args.manifest)
     arms = sorted({r["arm"] for r in rows})
     by = {(r["arm"], r["uid"]): r for r in rows}
     uids = sorted({r["uid"] for r in rows})

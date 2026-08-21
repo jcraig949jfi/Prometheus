@@ -355,16 +355,31 @@ class Arms:
 
 
 def run_arm_phase(name, arm_task_pairs, arms, budget, led_name):
+    """Ledger keys are (arm, uid) and are UNIQUE by construction: one row per arm per task.
+    A caller that hands the same pair twice would burn a free-lane call to overwrite a row it
+    already has, and would plant duplicate task-arm rows that R10 refuses outright. So the
+    work set is de-duplicated here (order-preserving) and completion is judged against the
+    unique set — the raw list length is not a coverage denominator."""
     led = DIR / f"{led_name}.jsonl"
+    want, seen = [], set()
+    for arm, uid in arm_task_pairs:
+        if (arm, uid) not in seen:
+            seen.add((arm, uid))
+            want.append((arm, uid))
+    dropped = len(arm_task_pairs) - len(want)
+    if dropped:
+        log(phase=name, deduplicated=dropped,
+            note="duplicate (arm,uid) pairs removed before dispatch — each would have been a "
+                 "wasted call and a duplicate ledger row")
     have = done_keys(led)
-    jobs = [((arm, uid), arms.prompt(arm, uid)) for arm, uid in arm_task_pairs
-            if (arm, uid) not in have]
+    jobs = [((arm, uid), arms.prompt(arm, uid)) for arm, uid in want if (arm, uid) not in have]
     if not jobs:
-        return True, 0
+        return len(have & seen) >= len(want), 0
     sent, ok, walled = push_jobs(led, jobs, budget)
+    have = done_keys(led)
     log(phase=name, sent=sent, ok=ok, walled=walled,
-        coverage=f"{len(done_keys(led))}/{len(arm_task_pairs)}")
-    return len(done_keys(led)) >= len(arm_task_pairs), sent
+        coverage=f"{len(have & seen)}/{len(want)}")
+    return len(have & seen) >= len(want), sent
 
 
 # ------------------------------------------------------------------ orchestrator
@@ -423,9 +438,16 @@ def _campaign():
     if read is None or budget <= 0:
         return
     if read["leveling_verdict"] != "LEVELED":
-        log(event="campaign_end", reason="P1 NOT-LEVELED on the free host — a real result "
-            "for this (manifest x host) pin; do not proceed")
-        print("P1 NOT-LEVELED — campaign ends (result, not error)")
+        v = read["leveling_verdict"]
+        log(event="campaign_end", verdict=v,
+            n_required_for_decidability=read.get("n_required_for_decidability"),
+            reason=("P1 did not level on this (manifest x host) pin. This is a RESULT, not an "
+                    "error. UNDECIDED-UNDERPOWERED means the manifest could not decide the "
+                    "straddle and the resolving move is more reps, not more items; a point "
+                    "outside the band routes to the next pre-declared rung. Either advance is "
+                    "the kill authority's call — see next_step_if_not_leveled."))
+        print(f"P1 {v} — campaign stops and escalates (result, not error); "
+              f"n_required_for_decidability={read.get('n_required_for_decidability')}")
         return
 
     post = [r for r in rows if r["uid"] not in set(read["screen_excluded"])]
@@ -433,10 +455,16 @@ def _campaign():
     rng = random.Random(SEED)
 
     # P2 — controls: A/D pairs (200), B cheat pairs (400), C leakage (100)
+    # Controls A/D (F0 vs F-answer) and B (F0 vs F-cheat) share their F0 leg: one row per
+    # (arm, task) serves both comparisons, so F0 is requested ONCE over the union. The earlier
+    # construction doubled the task list and asked for F0 twice, which cost ~470 free-lane calls
+    # to produce rows it already had.
     ctl = rng.sample(post, min(200, len(post)))
-    b_tasks = (post + post)[:400]
-    p2_pairs = ([("F0", r["uid"]) for r in ctl] + [("F-answer", r["uid"]) for r in ctl]
-                + [("F0", r["uid"]) for r in b_tasks] + [("F-cheat", r["uid"]) for r in b_tasks])
+    b_tasks = post[:400]
+    f0_union = {r["uid"] for r in ctl} | {r["uid"] for r in b_tasks}
+    p2_pairs = ([("F0", u) for u in sorted(f0_union)]
+                + [("F-answer", r["uid"]) for r in ctl]
+                + [("F-cheat", r["uid"]) for r in b_tasks])
     done2, spent = run_arm_phase("P2", p2_pairs, arms, budget, "p2_controls")
     budget -= spent
     if not done2 or budget <= 0:
