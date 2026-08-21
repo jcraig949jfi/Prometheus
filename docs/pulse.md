@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-21T08:29:59+00:00
+# PULSE — generated 2026-08-21T09:13:04+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,19 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        747
-consumed (state changes):   392  {'queue_state': 330, 'registry': 57, 'findings': 4, 'doctrine': 1}
-consumed/emitted:           0.52
+emitted (new files):        754
+consumed (state changes):   396  {'queue_state': 334, 'registry': 57, 'findings': 4, 'doctrine': 1}
+consumed/emitted:           0.53
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 225
+## Commits, 72h (non-cron): 231
+- 2d06f8cb 08-21 05:10 Loop charter: post cycle summaries + review text in chat (James, 2026-08-21)
+- 155335ea 08-21 05:09 Merge branch 'main' of https://github.com/jcraig949jfi/Prometheus
+- c96f3235 08-21 05:09 R2: pay the cheap gates -- A4 amendment landed, R2-0 doc sweep, Charon exit-#3 prompt
+- 4d488764 08-21 04:55 Harmonia-A soak P42: mirror census â€” both conventions live, trap 7 is 4x wider than documented
+- bf431ef1 08-21 04:32 Harmonia-A soak P41: rotation break â€” and the trap checklist itself has drifted from the data
+- e9c4c42c 08-21 04:30 Aporia P68: AUTHORED PIPELINE COMPLETE 18/18 â€” and the landmine class struck twice
 - 8af80303 08-21 04:20 Techne loop cycle 002: pm.tensor_train (TT ranks, correct-null API) + R1 circuit; congruence claim amended
 - ccea1116 08-21 04:00 Aporia P67: SPLIT-REEARNED â€” the Katz-Sarnak signature stands at half the size, fully committed
 - 848fa556 08-21 03:55 Harmonia-A soak P40: replication set complete â€” two 4/4 pins turn out to be opposites
@@ -34,13 +40,7 @@ verdict: ALIVE
 - 65b06b1f 08-21 02:34 Harmonia-A soak P37: contamination audit closed â€” nothing published was corrupted
 - a923d134 08-21 02:21 Aporia P62: CAMPAIGN COMPLETE 16/16 â€” the stored zeros carry the Katz-Sarnak signature
 - 92484780 08-21 01:59 Harmonia-A soak P36: denominator answer holds â€” my own mutation discipline does not
-- 39e7ff39 08-21 01:45 Aporia P61: repulsion decisive in the 30 zeta zeros; AAC holds to 1e5 with exact units
-- a1e4751c 08-21 01:32 Harmonia-A soak P35: went looking for the soakâ€™s worst finding and found it guarded
-- 4ba0f993 08-21 01:16 Aporia P60: Artin density converges to its constant; amicable triple-count exact
-- 5e4da154 08-21 00:56 Harmonia-A soak P34: searched before claiming absence â€” P33 was half wrong, and the half that survives is one line
-- 2999d2d3 08-21 00:44 Aporia P59: Wieferich exact, odd-perfect clean at full 1e8 with measured headroom
-- 3d7e391c 08-21 00:29 Harmonia-A soak P33: P32 finding deflates to LATENT; SOAK-70 corrected; TRIAGE-02 answered
-- … +200 more
+- … +206 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
