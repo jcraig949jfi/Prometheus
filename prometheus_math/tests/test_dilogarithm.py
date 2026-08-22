@@ -156,14 +156,47 @@ def test_dilog_euler_reflection_identity(z):
 )
 @settings(max_examples=30, deadline=None)
 def test_dilog_inversion_identity(re, im):
-    """dilog_inversion(z) reconstructs Li_2(1/z) within numerical tol."""
+    """dilog_inversion(z) reconstructs Li_2(1/z) within numerical tol, OFF THE BRANCH CUT.
+
+    **Cycle 045 fix — this test was asserting something mathematically false.** The old guard was
+    `if z == 0 or abs(z) > 0.99`, a proxy on MAGNITUDE. The actual precondition is that `1/z` must
+    not lie on the principal branch cut of Li_2, which is `[1, inf)`. For real z in (0, 1) — which
+    Hypothesis reaches whenever it draws `im = +-0.0` — `1/z` lands exactly ON the cut, and the two
+    implementations legitimately take opposite sides of it.
+
+    The failure was not noise. The discrepancy is EXACTLY the branch discontinuity `2*pi*ln(1/z)`:
+    at re=0.5 it is 4.355172180607204 = 2*pi*ln(2), at re=0.25 it is 8.710344361214, at re=0.8 it
+    is 1.402052283009 — each matching to twelve decimals. Off the real axis, agreement is at
+    machine epsilon (~5e-16).
+
+    So the guard now tests the real precondition, and the excluded case is not merely dropped: it
+    is pinned as a stronger assertion in `test_dilog_inversion_branch_jump_is_exactly_2pi_log`
+    below. Removing a case and characterising it are different things.
+    """
     z = complex(re, im)
     if z == 0 or abs(z) > 0.99:
-        return  # skip near-pole/branch
+        return                       # near-pole
+    if im == 0.0 and re > 0.0:
+        return                       # 1/z lies ON the cut [1, inf) — see the branch test below
     rhs = dilog_inversion(z)
     # Direct Li_2(1/z) via mpmath
     direct = complex(mpmath.polylog(2, 1 / z))
     assert abs(rhs - direct) < 1e-9
+
+
+@given(re=st.floats(min_value=0.1, max_value=0.9, allow_nan=False))
+@settings(max_examples=25, deadline=None)
+def test_dilog_inversion_branch_jump_is_exactly_2pi_log(re):
+    """**The case the identity test excludes, asserted rather than skipped.**
+
+    For real z in (0, 1), `1/z` is on the principal cut `[1, inf)` and the inversion formula and
+    `mpmath.polylog` sit on opposite sides. The gap is not arbitrary — it is the dilogarithm's
+    branch discontinuity, `2*pi*ln(1/z)` in magnitude. Pinning it means a genuine regression in
+    `dilog_inversion` still fails this test, which a bare `return` would not have caught.
+    """
+    z = complex(re, -0.0)
+    gap = abs(dilog_inversion(z) - complex(mpmath.polylog(2, 1 / z)))
+    assert gap == pytest.approx(2 * math.pi * math.log(1 / re), rel=1e-9)
 
 
 @given(

@@ -1257,3 +1257,73 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      interchangeable loses the "worse than chance" signal. All-singletons refuses at 0/0 **and the
      test proves it is not confused with a genuine zero**, which returns 0.0 and does not raise.
      The property-test guard computes the ACTUAL precondition, applying cycle 043's lesson.
+
+
+## Cycle 045 (2026-08-22) — the full arc completed, on my own arsenal
+
+233. **HITL #78: unchanged.** `phases: ['P1']`, no P3/P4, no bandread. Latent, uncontaminated,
+     standing detector green in 0.22 s. Not reopened — one line, per the closure.
+234. **80% BUDGET ALLOCATED AND JUSTIFIED IN WRITING BEFORE THE WORK** (#231 was unruled, so I
+     decided rather than blocked). Rejected: Lane A/B (methodology on my own modules — NOT real
+     substrate; in the 80% it would be the instrument-eating-itself failure mode wearing the regime
+     change as a costume), the Measurement migration (instrument maintenance), the cycle-044
+     extractor (no decision changes on any outcome).
+235. **CHOSEN: the 30 failing tests in `prometheus_math` — and they had been red since cycle 041
+     while I spent three cycles auditing another role's loader.** Real substrate, I own it,
+     postcondition measurable.
+236. **Classification pre-registered before the list was inspected**, with TEST-BUG ordered ABOVE
+     the DEFECT rules so a wrong test must be ruled out before claiming a product defect. n = 30,
+     matching the stable prior exactly. **ARTIFACT-DEPENDENCY 26 / TEST-BUG 1 / DEFECT-LOGIC 1 /
+     ARTIFACT-ENVIRONMENT 2.** All three predictions held.
+237. **FIX 1 — a test asserting continuity ACROSS A BRANCH CUT.** The discrepancy was EXACTLY the
+     dilogarithm's branch discontinuity `2*pi*ln(1/z)` to twelve decimals (re=0.5 -> 4.355172180607,
+     re=0.25 -> 8.710344361214, re=0.8 -> 1.402052283009), with off-axis agreement ~5e-16. The guard
+     was `abs(z) > 0.99` — a PROXY — when the precondition is that `1/z` not lie on `[1, inf)`.
+     Fixed on the actual condition, and **the excluded case is PINNED as an exact identity, not
+     dropped.** Postcondition 27+1F -> 28 passing.
+238. **FIX 2 — an import broken by a file move, invisible to everything static.**
+     `lehmer_brute_force.py:1056` put the REPO ROOT on `sys.path` and imported a worker that lives
+     in `scripts/`. Inside a function, multiprocessing path only. Postcondition 19+1F -> 20 passing.
+239. **FOUND, NOT FIXED, AND STATED: all 48 hyperbolic knots carry `hyperbolic_volume = 0.0`**
+     (`_LAST_LOAD_SOURCE = "curated-only"`). **A hyperbolic knot with volume 0.0 is mathematically
+     impossible.** Origin environmental (KnotInfo absent); manifestation is the conflation this loop
+     has chased all month, in code I own. **Deferred because `hyperbolic_volume` has 44 non-test
+     references** — a typed change across all of them needs its own prereg and C_site measurement.
+240. **RESULT: 30 red -> 28 red, nothing silenced.** The pre-registered self-guard held: no test was
+     marked skip or xfail, and the number reported is the FIXED count, never the SILENCED count.
+241. **SECOND-ORDER FINDING — 26 of 30 reds are missing optional dependencies, so the arsenal's
+     suite has NOT been a working regression detector for as long as they have existed.** Two real
+     defects were hiding in that noise.
+242. **JAMES — where is the line on installing dependencies?** Installing chipfiring, GUDHI,
+     shapely and a MIP backend would clear 26 reds and reveal whatever they mask. It is cheap and
+     high-value, but it is arguably repo infrastructure, which HITL #147 says not to build unasked.
+     I have NOT installed anything. Your call.
+243. **JAMES — was deferring the knot fix right?** Shipping mathematically impossible values may be
+     severe enough to pre-empt everything else. I judged the 44-call-site blast radius too large to
+     smuggle into a cycle about something else, but I would like that judgement checked.
+244. **I HIT THE SAME GUARD-ON-A-PROXY ERROR TWICE — cycle 043 and cycle 045 — having written it
+     into the traps ledger in between.** A lesson recorded and not generalised is worth
+     approximately nothing. I do not know what would make a trap actually transfer rather than be
+     re-learned per instance, and I would like a view on it.
+245. **Track 1: `prometheus_math.rand_index`** (Rand 1971, JASA 66(336):846-850), 12 tests, RED
+     first, four categories. **All-singletons is DEFINED here (RI = 1) while `adjusted_rand` and
+     `fowlkes_mallows` both refuse at 0/0** — the family does not share a domain, pinned in one
+     test. Hubert & Arabie's motivation is demonstrated, not asserted: on a below-chance pairing RI
+     stays above 0.5 while ARI goes negative.
+
+246. **POSTCONDITION CORRECTION — 30 red -> 29, not the 28 I predicted.** Before: 30 failed /
+     3441 passed. After: 29 failed / 3455 passed. Both fixes HELD; a THIRD previously-unseen
+     failure appeared (`test_sigma_env_learning::test_property_seed_reproducibility`).
+     **I checked whether I caused it rather than assuming**: passes in isolation 2/2; the only
+     contamination path my changes created is the lehmer fix inserting `scripts/` into `sys.path`
+     process-wide, so I ran that test file together with the lehmer file IN ONE PROCESS — 42
+     passed; and it is an explicitly stochastic REINFORCE test. Order/state-dependent flake.
+     **I cannot prove it was flaking before this cycle without an expensive bisect and do not
+     claim it.**
+247. **The flake SHARPENS #241 rather than denting it.** I only saw it because I was watching the
+     count. A suite frozen at 30 red hides intermittent tests exactly as it hides regressions —
+     the number never moves, so nothing draws the eye. Two real defects and one flake were all
+     invisible in the same noise.
+248. **A trap I set for myself and nearly walked into: I predicted the postcondition (28) and had
+     written it into the cycle doc before measuring.** Defence added: measure, diff the before/after
+     lists BY NAME, and explain any discrepancy before publishing.

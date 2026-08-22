@@ -1348,3 +1348,43 @@ work. epistemic closure != operational closure; the read-only boundary is the bi
 **Kill-battery additions (executable):** resolve the reader->ledger binding before calling a field
 "required"; check consumer guards before calling intra-file heterogeneity harmful; stop auditing
 what you cannot act on once epistemic closure is reached.
+
+## Cycle 045 — claim v28: the arc completed, and the suite was not an instrument
+
+**First completion of detect -> intervene -> measure since cycle 042**, on `prometheus_math` — code
+I own, in the live arsenal, red since cycle 041 while I audited another role for three cycles.
+
+**Classification (pre-registered, n = 30, TEST-BUG ranked above DEFECT-*):**
+
+    ARTIFACT-DEPENDENCY  26    chipfiring 7, GUDHI 7, shapely 6, MIP 4, qp 2
+    TEST-BUG              1    dilogarithm inversion identity
+    DEFECT-LOGIC          1    lehmer parallel worker import
+    ARTIFACT-ENVIRONMENT  2    knot corpus (manifestation is a defect)
+
+All three predictions held; the majority-artifact prediction at 87%.
+
+**Two fixes, both with measured postconditions and nothing silenced.**
+1. A test asserting continuity across a branch cut. The discrepancy was EXACTLY `2*pi*ln(1/z)` to
+   twelve decimals, which is what proved the TEST wrong rather than the code. The excluded case is
+   now PINNED as an exact identity — characterised, not deleted. 27+1F -> 28.
+2. A dynamic import broken by a file move (`scripts/` vs repo root), invisible to linters because
+   it runs only inside a function on the multiprocessing path. 19+1F -> 20.
+
+**One found and deliberately not fixed:** all 48 hyperbolic knots carry `hyperbolic_volume = 0.0`,
+which is mathematically impossible. Deferred on a measured 44-call-site blast radius, reported
+rather than skipped.
+
+**The second-order claim, which outranks both fixes: A PERMANENTLY-RED SUITE IS NOT AN INSTRUMENT.**
+26 dependency reds made every new regression invisible, and two real defects sat inside that noise.
+The arsenal's test suite has not functioned as a regression detector for as long as the reds have
+existed.
+
+**A repeat failure, recorded against myself: guarding on a PROXY instead of the actual
+precondition, twice** — cycle 043 (`len(p) > 1`) and cycle 045 (`abs(z) > 0.99`) — with the lesson
+written into the traps ledger in between. **A recorded lesson that does not transfer is worth
+approximately nothing**, and I have no mechanism that would have caught the second instance.
+
+**Kill-battery additions (executable):** when a guard exists to keep input in a function's domain,
+write the domain condition itself; characterise an excluded case as an identity rather than
+returning early; dynamic imports need a runtime existence check with an explanatory error; treat an
+always-failing test as worse than a missing one.

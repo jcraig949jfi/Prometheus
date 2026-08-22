@@ -1050,9 +1050,21 @@ def run_brute_force(
         # The standalone worker module lives outside prometheus_math.
         import sys
 
+        # Cycle 045 fix: the worker lives in `scripts/`, not at the repo root. This block put
+        # the REPO ROOT on sys.path and then imported a module one directory below it, so the
+        # import raised ModuleNotFoundError every time. It is inside a function and only on the
+        # multiprocessing path, so nothing static caught it and the failure sat in the suite.
+        # Both locations are tried, root first, so a future move back does not re-break it.
         repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        if repo_root not in sys.path:
-            sys.path.insert(0, repo_root)
+        for candidate in (repo_root, os.path.join(repo_root, "scripts")):
+            if os.path.isfile(os.path.join(candidate, "_lehmer_brute_force_worker.py")):
+                if candidate not in sys.path:
+                    sys.path.insert(0, candidate)
+                break
+        else:
+            raise ModuleNotFoundError(
+                "_lehmer_brute_force_worker.py was not found at the repo root or in scripts/; "
+                "the parallel Lehmer path cannot start its workers")
         from _lehmer_brute_force_worker import process_shard_worker
 
         with mp.Pool(num_workers) as pool:
