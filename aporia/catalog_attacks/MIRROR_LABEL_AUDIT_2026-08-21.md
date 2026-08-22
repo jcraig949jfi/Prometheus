@@ -94,3 +94,50 @@ rows and silently discards the rest. The doctrine is amended:
 Confirmed over every labeled duplicate row in the table (9,302,241 of them).
 NOT established for the 46,439 NULL-label rows, which no label-keyed census
 can reach; a hash-keyed census would close that and is filed as residue.
+
+---
+
+## THE UNLABELED POPULATION (P104) — they are real objects, not copies
+
+The 46,439 NULL-label rows are the one population no label-keyed scan can
+reach. Censused by CONTENT instead (md5 of `positive_zeros`, with per-group
+raw-text verification against md5 collision). Pre-stated branches were
+committed in-script before the run.
+
+**Verdict: UNLABELED-DISTINCT.** These rows are **not** ingestion copies.
+
+- **45,092 distinct zero-vector contents across 46,439 rows — 97.1% unique.**
+  43,745 contents appear once; 1,347 appear exactly twice
+  (43,745 + 2·1,347 = 46,439, exact).
+- **Zero raw-text conflicts** across all 1,347 multi-row groups: every group's
+  rows carry byte-identical text, so the doubles are genuine duplicate
+  objects, not hash collisions.
+- **Internal redundancy 2.90%** (1,347 excess rows) — an entirely different
+  regime from the labeled population's **19.14%**. Whatever produced the
+  labeled duplication did not produce these.
+- Every one of the 46,439 rows HAS zero data (`positive_zeros IS NULL`: 0),
+  so they are not empty placeholders.
+- Degree spread: degree 2 dominates at 26,104 (56.2%), then degree 4 (1,273),
+  followed by a long HIGH-degree tail (48, 96, 104, 112, 120, 128 …). That
+  profile is consistent with objects whose labeling conventions are unsettled
+  or that were computed outside the labeling scheme — not with junk.
+
+### DOCTRINE, amended a second time
+
+P103 amended the `DISTINCT ON (label)` advice to add `WHERE label IS NOT NULL`
+so the exclusion is explicit. That remains correct about the collapse hazard,
+but this census establishes its cost: **the filter discards 46,439 real,
+mostly-unique L-function records.** Final form of the advice:
+
+> For label-identified work: `DISTINCT ON (label) … WHERE label IS NOT NULL`.
+> For work requiring COMPLETENESS: that filter is lossy. Take an id-keyed
+> path, or dedupe by content hash (`md5(positive_zeros::text)`), which is
+> the only key that works across both populations. Counts quoted from this
+> table should state which population they cover — the two have different
+> duplication regimes (19.14% vs 2.90%) and cannot be pooled naively.
+
+### Residue closed
+
+The audit can now speak for the whole table: labeled rows (PURE-DUP,
+9,302,241 rows, 0 conflicts) and unlabeled rows (DISTINCT, 46,439 rows,
+0 conflicts). No population remains unexamined.

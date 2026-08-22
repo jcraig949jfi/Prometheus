@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-22T03:58:15+00:00
+# PULSE — generated 2026-08-22T04:58:27+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        503
-consumed (state changes):   406  {'registry': 48, 'queue_state': 355, 'findings': 3}
-consumed/emitted:           0.81
+emitted (new files):        501
+consumed (state changes):   399  {'queue_state': 350, 'registry': 46, 'findings': 3}
+consumed/emitted:           0.80
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 284
+## Commits, 72h (non-cron): 283
+- 26949637 08-22 00:18 Techne cycle 040: the denominator â€” ten of forty, 25%, it is a habit
+- a31f84da 08-21 23:58 Aporia P103: census complete â€” PURE-DUP confirmed, and an off-by-one rewrote the headline
 - d74f1a33 08-21 23:46 Ergon: halted firings spend zero calls instead of ~48/day
 - 90be1476 08-21 23:43 Techne loop cycle 039: the bug class made unrepresentable â€” and it was seven, not four
 - 82ad6678 08-21 23:10 Techne loop cycle 038: domain-sourced anti-cases â€” one of my nine passes was flattery
@@ -36,9 +38,7 @@ verdict: ALIVE
 - 2e707768 08-21 19:49 Techne loop cycle 030: the reference-class problem is one core with two kinds
 - 7637d281 08-21 19:34 Aporia P95: the completion claim was wrong â€” corrected at the source, and the tensor fifth opens
 - 93be4656 08-21 19:16 Techne loop cycle 029: structural-constancy probe â€” and it caught its own author
-- 6980f933 08-21 18:45 Aporia P94: the dependent null inverts the story â€” and turns a gate into a measurement
-- f481f22a 08-21 18:36 Techne loop cycle 028: the sample-size objection removed â€” and it was the wrong objection
-- … +259 more
+- … +258 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
