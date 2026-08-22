@@ -793,3 +793,38 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
 143. **Round-10 review arrived mid-cycle and is next**, including a much better-specified version
      of the instrument contract I was about to build: POSITIVE / NEGATIVE / INVALID fixtures plus
      a sensitivity witness, with promotion refused unless all execute.
+
+
+## Cycle 036 (2026-08-21) — round-10 fold-in: the instrument contract
+
+144. **HITL #135 ANSWERED by the reviewer, and I accept it: R0 is vacuous as a reasoning
+     circuit.** Pi_R0 = Pi_sympy, zero endogenous invariance — a memo table over the substrate's
+     canonical form. **Keep the rung as a calibrated floor, but rename the capability to
+     "retrieval under inherited canonicalization"**, and restructure its battery into two
+     explicit columns: BORROWED invariance (must survive every transformation preprocessing
+     already collapses) and UNEARNED invariance (must fail every transformation preprocessing
+     preserves). That makes R0 a clean zero-point. **HITL #134 is now a concrete request rather
+     than a flag — and it is still yours to make, since I do not edit the thing a finding is
+     about.**
+145. **HITL #136 ANSWERED — I had recorded "no method" and there is one, with a limit.**
+     BOUNDARY attribution works where components have explicit interfaces (cycle 034's layer
+     ladder). CAUSAL contribution under entanglement is counterfactual and **often not uniquely
+     defined**: synergistic components each contribute 0 alone and 1 together, with no canonical
+     owner. So report **dependence, not ownership** — "this invariance disappears when C is
+     removed", never a percentage, unless a convention like Shapley is explicitly chosen and
+     named as a convention. **Doctrine adopted: never credit downstream machinery for invariance
+     already present at its input.**
+146. **The instrument contract is BUILT and all four historical failures map to a slot.**
+     POSITIVE / NEGATIVE / INVALID / SENSITIVITY, submission refused without all four. 029
+     all-raising space -> INVALID; 032 unfalsifiable chain -> NEGATIVE absent; 033 unordered
+     values -> INVALID; 034 "raw" control -> NEGATIVE. The sensitivity witness is the measurement
+     analogue of an aliasing witness.
+147. **IT IS CONVENTION, NOT ENFORCEMENT, AND I WANT A RULING ON WHETHER TO BUILD THE GATE.** A
+     new module can still skip registration silently. Real enforcement needs a CI gate that
+     enumerates measurement modules and refuses promotion for any without an executed contract —
+     repo infrastructure rather than a library, so I have not built it unasked.
+148. **The contract has its own anti-case and it passes cleanly.** An instrument that memorises
+     the four fixtures and is blind everywhere else certifies. Necessary, not sufficient — canon
+     R0's lookup-table trap one level up. Defence built: fixtures are FACTORIES and `draws > 1`
+     redraws them; a one-draw memoriser fails on redraw. **A clean report on frozen fixtures
+     means only that those four inputs were handled.**

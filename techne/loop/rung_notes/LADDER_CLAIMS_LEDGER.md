@@ -919,3 +919,55 @@ it reads the generator state, which is information beyond the predecessor.
 
 **Kill-battery additions (executable):** four-way partition-motion classification; two-coordinate
 stage descriptor; function-of-predecessor derivation check; determinism precondition probe.
+
+## Cycle 036 — claim v18: no instrument is admissible until it kills a constructed anti-case
+
+**The habit becomes a mechanism.** Four cycles running, an instrument shipped blind in the
+direction it was pointed (029 constancy probe, 032 unfalsifiable chain, 033 unordered-value
+classifier, 034 the "raw" control), three found by accident. `prometheus_math.instrument_contract`
+requires four fixtures and refuses submission without them:
+
+    POSITIVE     must trigger the claimed signal
+    NEGATIVE     the answer-you-do-not-want case — must refuse, report zero, or flip class
+    INVALID      out-of-domain — NEITHER class, only an error or explicit UNSETTLED
+    SENSITIVITY  a pair differing ONLY in the measured property, with M(x) != M(x')
+
+The sensitivity witness is the measurement analogue of an aliasing witness: without one the
+instrument has never shown it responds to its advertised target rather than to something merely
+correlated with it on the cases tried.
+
+**All four historical failures map to a slot**, checked in the suite: 029 -> INVALID,
+032 -> NEGATIVE (absent), 033 -> INVALID, 034 -> NEGATIVE.
+
+**The contract's own anti-case passes.** An instrument memorising the four fixtures and blind
+elsewhere certifies cleanly — demonstrated, not conceded. Necessary and NOT sufficient: canon R0's
+lookup-table trap one level up. Defence: fixture FACTORIES plus `draws > 1`. A clean report on
+frozen fixtures means only that those inputs were handled.
+
+**Honest status: convention, not enforcement.** Nothing forces a new module to register. Real
+enforcement is a CI gate over measurement modules (HITL #147).
+
+## Cycle 036 — attribution doctrine (HITL #136 closed)
+
+**BOUNDARY attribution** works where components have explicit interfaces: intervene at each
+boundary, measure marginal contribution. **CAUSAL contribution** under entanglement is
+counterfactual and often not uniquely defined — synergistic components each contribute 0 alone
+and 1 together, with no canonical owner.
+
+    Report DEPENDENCE, not ownership: "this invariance disappears when C is removed."
+    Never "C contributed 37%" unless a convention (e.g. Shapley) is explicitly named as one.
+
+**Doctrine, general across tokenisers, parsers, canonicalisers, embeddings and theorem
+preprocessors:** *never credit downstream machinery for invariance already present at its input.*
+
+## Cycle 036 — R0 reclassified (HITL #135 answered)
+
+R0 is **vacuous as a reasoning circuit** — `Pi_R0 = Pi_sympy`, zero endogenous invariance, a memo
+table over the substrate's canonical form. It is worth keeping as a **calibrated floor** under a
+renamed capability, "retrieval under inherited canonicalization", with a two-column battery:
+BORROWED invariance must survive, UNEARNED invariance must fail. Not edited; the change is
+James's to make.
+
+**Kill-battery additions (executable):** four-fixture instrument certification; fixture-factory
+redraw against memorisation; retroactive mapping of historical instrument failures to contract
+slots.
