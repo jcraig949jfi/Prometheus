@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-22T15:55:01+00:00
+# PULSE — generated 2026-08-22T16:22:38+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,17 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        616
-consumed (state changes):   317  {'queue_state': 289, 'registry': 26, 'findings': 2}
-consumed/emitted:           0.51
+emitted (new files):        620
+consumed (state changes):   313  {'queue_state': 286, 'registry': 25, 'findings': 2}
+consumed/emitted:           0.50
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 304
+## Commits, 72h (non-cron): 305
+- ece24a24 08-22 12:08 Merge branch 'main' of https://github.com/jcraig949jfi/Prometheus
+- 106c0bd5 08-22 12:08 ATK-014 + correction of record: H(kill_pattern|cell) is 3.119 bits, not "~2 bits"
+- 42b72409 08-22 11:55 Aporia P125: W pass 2/3 â€” windowing helps slightly; my threshold is ~3x the actual resolution
+- ad1a4c63 08-22 11:47 ATK-013 registered: writer/reader schema seam, confirmed by execution
 - 6ea76aa0 08-22 11:28 Aporia P124: Campaign W pass 1/3 â€” instrument built; the ORACLE problem stated before measurement
 - a277a9bf 08-22 11:00 Aporia P123: allocation â€” SB blocked on missing data; CAMPAIGN W opens; my own X-5 recommendation corrected
 - 94af80ac 08-22 10:31 Aporia P122: CAMPAIGN X-5 TERMINAL â€” PARK (N4). The development effect did not transfer.
@@ -34,11 +38,7 @@ verdict: ALIVE
 - 257acefa 08-22 06:25 Aporia P113: CAMPAIGN X-2 TERMINAL â€” PARK (E4); the gate was never resolvable
 - 9ed726a4 08-22 06:21 M1_STATUS 7p: the accumulated corpus is 132M rows with ~2 bits of signature
 - 42ae7455 08-22 06:21 Ergon: full scan complete â€” 132M failure rows, ~2 bits of signature
-- 95497b2e 08-22 06:17 Techne cycle 046: a sentinel that was also a measurement â€” 48 impossible knot volumes removed
-- 02e54d7c 08-22 06:00 Techne cycle 046: PRE-REGISTRATION for the knot-volume conflation, before measuring C_site
-- 7620649b 08-22 05:58 Aporia P112: X-2 pass 2/3 â€” ground truth was not unique; hubness found; GATE PASSED 0.952 by one pair
-- dbe66d52 08-22 05:33 Techne cycle 045: full arc completed on my own arsenal â€” two real defects fixed
-- … +279 more
+- … +280 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records

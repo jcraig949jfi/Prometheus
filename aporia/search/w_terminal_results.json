@@ -1,0 +1,94 @@
+{
+ "frozen_pairs": 1000,
+ "reserve_not_opened": 1000,
+ "pool": 26531,
+ "real_op_pairs": 800,
+ "recorded_target_absent_from_answer_set": 0,
+ "frozen_mean_V": 2.59,
+ "adjusted_chance": 0.000976,
+ "G_pos_threshold": 0.002929,
+ "per_draw_granularity": 0.00125,
+ "G_pos": {
+  "fixed": {
+   "mean": 0.001563,
+   "min": 0.0,
+   "max": 0.005
+  },
+  "win": {
+   "mean": 0.001125,
+   "min": 0.0,
+   "max": 0.00375
+  },
+  "HOLDS": true
+ },
+ "arms": {
+  "combined": {
+   "fixed": "68/800",
+   "fixed_rate": 0.085,
+   "fixed_wilson": [
+    0.0676,
+    0.1064
+   ],
+   "windowed": "73/800",
+   "windowed_rate": 0.0912,
+   "windowed_wilson": [
+    0.0732,
+    0.1132
+   ],
+   "W": 0.0063,
+   "b_windowed_only": 7,
+   "c_fixed_only": 2,
+   "n": 800,
+   "se_paired": 0.00374,
+   "ci95_paired": [
+    -0.0011,
+    0.0136
+   ],
+   "discordance": 0.0112,
+   "shift_fixed": "32/200",
+   "shift_windowed": "32/200"
+  },
+  "v2_only": {
+   "fixed": "66/800",
+   "fixed_rate": 0.0825,
+   "fixed_wilson": [
+    0.0654,
+    0.1036
+   ],
+   "windowed": "66/800",
+   "windowed_rate": 0.0825,
+   "windowed_wilson": [
+    0.0654,
+    0.1036
+   ],
+   "W": 0.0,
+   "b_windowed_only": 4,
+   "c_fixed_only": 4,
+   "n": 800,
+   "se_paired": 0.00354,
+   "ci95_paired": [
+    -0.0069,
+    0.0069
+   ],
+   "discordance": 0.01,
+   "shift_fixed": "28/200",
+   "shift_windowed": "27/200"
+  }
+ },
+ "discordance_transfer": {
+  "dev": 0.0225,
+  "frozen": 0.0112,
+  "matched": false,
+  "frozen_MDE_from_observed": 0.0075
+ },
+ "W_measured": true,
+ "branch_fired": "W3",
+ "TERMINAL": "KILL",
+ "MDE_used": 0.0306,
+ "COUNTERFACTUAL_not_binding": {
+  "threshold_as_2x_measured_MDE": 0.015,
+  "branch": "W3",
+  "terminal": "KILL",
+  "note": "reported for the record only; the preregistered threshold governs and was applied"
+ }
+}
