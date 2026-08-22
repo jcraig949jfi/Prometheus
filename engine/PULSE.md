@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-22T10:52:40+00:00
+# PULSE — generated 2026-08-22T11:18:27+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,19 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        558
-consumed (state changes):   355  {'queue_state': 317, 'registry': 35, 'findings': 3}
-consumed/emitted:           0.64
+emitted (new files):        570
+consumed (state changes):   352  {'queue_state': 315, 'registry': 34, 'findings': 3}
+consumed/emitted:           0.62
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 297
+## Commits, 72h (non-cron): 302
+- e1813d9f 08-22 07:17 M1_STATUS 7q: P1 final â€” the band and the screen want opposite rungs
+- 8771f27e 08-22 07:16 Ergon: P1 FINAL â€” UNDECIDED-UNDERPOWERED, and it breaks my own recommendation
+- c8374458 08-22 07:13 Techne cycle 047: a four-role function was silently wrong â€” and the drift was a habit, not a structure
+- 4564e4ca 08-22 06:59 Ergon: circuit-break the drip on the REAL workload, not a cheap probe
+- 9c1f5c26 08-22 06:56 Techne cycle 047: PRE-REGISTRATION for the mahler_measure cross-role authority check
+- 5c790f19 08-22 06:52 Aporia P114: campaign selection â€” Y rejected as unresolvable, X-3 opens at 1/3
 - 257acefa 08-22 06:25 Aporia P113: CAMPAIGN X-2 TERMINAL â€” PARK (E4); the gate was never resolvable
 - 9ed726a4 08-22 06:21 M1_STATUS 7p: the accumulated corpus is 132M rows with ~2 bits of signature
 - 42ae7455 08-22 06:21 Ergon: full scan complete â€” 132M failure rows, ~2 bits of signature
@@ -32,13 +38,7 @@ verdict: ALIVE
 - 055ac4a2 08-22 03:58 Techne cycle 044: P0 frozen as feasibility failure; P1 pre-registered; #78 closed to read-only
 - bcb362d4 08-22 07:49 arsenal: capability matrix updated
 - 07cf39bf 08-22 03:32 Aporia P107: Campaign B complete in one pass â€” the 500 voids were empty stubs, not a coverage gap
-- 79254ad8 08-22 03:09 Techne cycle 043: the class test was UNDERPOWERED â€” not a null, and the flaw was mine
-- 05cb2d70 08-22 03:03 Aporia P106: external review metabolized â€” my diagnosis was wrong and the verb lattice is dead
-- 03989da8 08-22 03:03 Ergon: corpus characterization for R2-6 â€” counts, not a design
-- 04ecd2d8 08-22 03:02 Techne cycle 043: PRE-REGISTRATION for the schema-drift class sweep, before measuring
-- d4b29900 08-22 02:58 Techne cycle 042: round-13 fold-in â€” de facto contract, and seam triangulation as doctrine
-- 250650ba 08-22 02:50 Aporia: external consult prompt â€” loop targets and round-robin design
-- … +272 more
+- … +277 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records

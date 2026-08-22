@@ -1,0 +1,114 @@
+{
+ "development_pairs": 250,
+ "frozen_pairs_untouched": 500,
+ "pool_size": 22095,
+ "recorded_target_absent_from_answer_set": 0,
+ "hubness": {
+  "k": 10,
+  "mean": 10.0,
+  "std": 13.534,
+  "max": 216,
+  "skewness": 3.545,
+  "confirmed": true
+ },
+ "answer_set_size": {
+  "diff": {
+   "n": 50,
+   "mean": 2.96,
+   "median": 1.0,
+   "max": 52,
+   "frac_gt_1": 0.22
+  },
+  "partsum": {
+   "n": 50,
+   "mean": 1.48,
+   "median": 1.0,
+   "max": 6,
+   "frac_gt_1": 0.16
+  },
+  "binomial": {
+   "n": 50,
+   "mean": 1.1,
+   "median": 1.0,
+   "max": 2,
+   "frac_gt_1": 0.1
+  },
+  "moebius": {
+   "n": 50,
+   "mean": 1.62,
+   "median": 1.0,
+   "max": 10,
+   "frac_gt_1": 0.2
+  },
+  "shift": {
+   "n": 50,
+   "mean": 3.62,
+   "median": 1.0,
+   "max": 13,
+   "frac_gt_1": 0.46
+  }
+ },
+ "uncorrected": {
+  "strict_count": "216/250",
+  "strict": 0.864,
+  "any_valid_count": "240/250",
+  "any_valid": 0.96,
+  "n": 250,
+  "by_op_strict": {
+   "diff": "47/50",
+   "partsum": "46/50",
+   "binomial": "49/50",
+   "moebius": "43/50",
+   "shift": "31/50"
+  },
+  "by_op_any_valid": {
+   "diff": "50/50",
+   "partsum": "49/50",
+   "binomial": "49/50",
+   "moebius": "45/50",
+   "shift": "47/50"
+  },
+  "four_real_any_valid": "193/200",
+  "shift_any_valid": "47/50"
+ },
+ "L2_measured": false,
+ "local_scaled": {
+  "strict_count": "217/250",
+  "strict": 0.868,
+  "any_valid_count": "241/250",
+  "any_valid": 0.964,
+  "n": 250,
+  "by_op_strict": {
+   "diff": "47/50",
+   "partsum": "46/50",
+   "binomial": "49/50",
+   "moebius": "43/50",
+   "shift": "32/50"
+  },
+  "by_op_any_valid": {
+   "diff": "50/50",
+   "partsum": "49/50",
+   "binomial": "49/50",
+   "moebius": "45/50",
+   "shift": "48/50"
+  },
+  "four_real_any_valid": "193/200",
+  "shift_any_valid": "48/50"
+ },
+ "variant_used": "local_scaled",
+ "K0_preview": {
+  "variant": "local_scaled",
+  "any_valid": "241/250",
+  "rate": 0.964,
+  "wilson_95": [
+   0.933,
+   0.9809
+  ],
+  "wald_95": [
+   0.9409,
+   0.9871
+  ],
+  "K0_threshold": 0.9,
+  "ci_method_disclosure": "Wilson used; the preregistration did not name a method"
+ }
+}
