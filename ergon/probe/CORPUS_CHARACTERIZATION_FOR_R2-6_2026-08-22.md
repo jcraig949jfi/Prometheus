@@ -164,6 +164,59 @@ cosmetic, and that is the next thing worth measuring.
 Scan still running (54/165); final numbers land in
 `ergon/probe/ledgers/corpus_scan/full_scan.json`.
 
+## 3d. FULL SCAN COMPLETE (165/165) — the corpus is enormous and its failure signature is nearly empty
+
+**132,312,039 REJECTED records · 43 cells · 131,649 distinct kill_patterns.** The sample was
+0.004% of this. Final: `ergon/probe/ledgers/corpus_scan/full_scan.json`.
+
+Aggregate figures (H = 7.105 bits, top-5 share 23.2%, mean pairwise Jaccard 0.046, 690/903 cell
+pairs with zero vocabulary overlap) hide the finding. **It only appears per cell:**
+
+```
+f3/invariant_equality       14,540,241 recs (11.0%)     4 patterns   2.0 bits
+f4/invariant_equality       14,149,699 recs (10.7%)     4 patterns   2.0 bits
+d3/kill_neighborhood        13,846,528 recs (10.5%)   366 patterns   8.5 bits
+a3/functional_identity      12,658,395 recs ( 9.6%)   143 patterns   7.2 bits
+a1/invariant_equality       10,097,274 recs ( 7.6%)     4 patterns   2.0 bits
+f2/invariant_equality        9,618,301 recs ( 7.3%)     4 patterns   2.0 bits
+h2/kill_neighborhood         8,914,669 recs ( 6.7%)     1 pattern    0.0 bits
+h1/kill_neighborhood         7,851,320 recs ( 5.9%)     1 pattern    0.0 bits
+a2/statistical_correlation   7,833,494 recs ( 5.9%)     2 patterns   1.0 bits
+f1/invariant_equality        4,855,411 recs ( 3.7%)     4 patterns   2.0 bits
+```
+
+- **27 of 43 cells — 89,949,006 records, 68.0% of the corpus — have a total residue vocabulary
+  of ≤8 patterns (≤3 bits).**
+- **16.8M records (12.6%) sit in cells with exactly ONE pattern: 0.0 bits. The kill_pattern
+  field is a constant there.**
+- The 131,649-pattern richness lives almost entirely in two mid-sized cells
+  (`d3/kill_neighborhood`, `a3/functional_identity`).
+
+**This is [[feedback-residue-must-be-navigable-not-logged]] settled at corpus scale.** A year of
+accumulation produced 132 million failure rows whose designated failure signature is, for two
+thirds of them, a ≤3-bit label — and for an eighth of them, no information at all.
+
+**Two honest limits, both of which matter.**
+1. `kill_pattern` is **one field**. `canonical_claim_text` and `claim_payload` are 100%
+   populated, `method` 97.8%, `step_trace` 17.2%. The record is not 2 bits; the *designated
+   signature* is. That distinction is the actionable part, not a hedge.
+2. 132M rejections across 43 cells implies **heavy duplication**. I have not measured distinct
+   canonical claims, and the "records" figure should not be read as 132M distinct failures.
+
+**Consequence for the null (§3b/§3c), now settled:** `a1` and `f1` have **identical** projected
+vocabularies — Jaccard **1.0000**, 4 patterns each, zero unique to either. So the a1↔f1 lineage
+break I offered in §3c is **cosmetic at the signature level**; both cells emit the same 4 labels.
+Retrieval on `kill_pattern` cannot distinguish them, which means it also cannot leak much — but
+only because it carries almost nothing to leak.
+
+**Consequence that outruns R2-6 and lands on R2-5 (mine).** R2-5 asks: verdict vs
+located-description vs mechanistic trace as the residue representation, ordered after Tier B.
+This scan largely pre-answers its first arm: **verdict-level residue is provably ≤3 bits for 68%
+of the corpus**, so a D2/D3 built on `kill_pattern` is retrieving a near-constant. If D2/D3 is
+to measure anything, the residue representation has to be built from `canonical_claim_text` /
+`claim_payload`, which are fully populated and were never designated as the residue. I am
+recording that as a finding, not acting on it — R2-5's ordering is charter text.
+
 ### The finding that outruns the null question  **[SUPERSEDED BY §3c — WITHDRAWN]**
 
 If failure modes never recur across generators — 0.0000 cross-cell, and 79% of cell pairs
