@@ -1,0 +1,100 @@
+{
+ "development_pairs": 125,
+ "pool_size": 20358,
+ "gate": 0.95,
+ "v1_dim": 33,
+ "v2_dim": 125,
+ "deficit1_source_exclusion": {
+  "V1_L1_top1_source_in_pool": 0.72,
+  "V1_L1_top1_source_excluded": 0.752,
+  "delta": 0.032,
+  "n": 125,
+  "meaning": "the delta is the benchmark bug's contribution, isolated with the representation held fixed"
+ },
+ "grid_2x2": {
+  "V1_euclid": {
+   "L1_top1": 0.752,
+   "top1_count": 94,
+   "n": 125,
+   "by_op": {
+    "diff": "20/25",
+    "partsum": "21/25",
+    "binomial": "21/25",
+    "moebius": "22/25",
+    "shift": "10/25"
+   },
+   "misses_by_op": {
+    "diff": 5,
+    "partsum": 4,
+    "binomial": 4,
+    "moebius": 3,
+    "shift": 15
+   }
+  },
+  "V1_whitened": {
+   "L1_top1": 0.736,
+   "top1_count": 92,
+   "n": 125,
+   "by_op": {
+    "diff": "19/25",
+    "partsum": "21/25",
+    "binomial": "20/25",
+    "moebius": "22/25",
+    "shift": "10/25"
+   },
+   "misses_by_op": {
+    "diff": 6,
+    "partsum": 4,
+    "binomial": 5,
+    "moebius": 3,
+    "shift": 15
+   }
+  },
+  "V2_euclid": {
+   "L1_top1": 0.904,
+   "top1_count": 113,
+   "n": 125,
+   "by_op": {
+    "diff": "23/25",
+    "partsum": "23/25",
+    "binomial": "25/25",
+    "moebius": "23/25",
+    "shift": "19/25"
+   },
+   "misses_by_op": {
+    "diff": 2,
+    "partsum": 2,
+    "moebius": 2,
+    "shift": 6
+   }
+  },
+  "V2_whitened": {
+   "L1_top1": 0.912,
+   "top1_count": 114,
+   "n": 125,
+   "by_op": {
+    "diff": "24/25",
+    "partsum": "23/25",
+    "binomial": "25/25",
+    "moebius": "23/25",
+    "shift": "19/25"
+   },
+   "misses_by_op": {
+    "diff": 1,
+    "partsum": 2,
+    "moebius": 2,
+    "shift": 6
+   }
+  }
+ },
+ "attribution": {
+  "feature_gain_V1_to_V2_euclid": 0.152,
+  "metric_gain_euclid_to_whitened_V1": -0.016,
+  "combined": 0.16
+ },
+ "best_cell": "V2_whitened",
+ "best_L1_top1": 0.912,
+ "GATE_PASSED": false,
+ "L2_measured": false,
+ "note": "No L2 measurement is computed anywhere in this script, gate passed or not, so nothing could have been tuned toward it."
+}
