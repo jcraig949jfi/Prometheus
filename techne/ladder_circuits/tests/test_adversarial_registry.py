@@ -19,6 +19,9 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[3]))
 
 from prometheus_math.adversarial_fixtures import InvariantSpec, search_for_violation  # noqa: E402
 from prometheus_math.partition import PartitionError, refinement_multiplicity, refines  # noqa: E402
+from prometheus_math.measurement import (  # noqa: E402
+    MeasurementError, OUT_OF_DOMAIN,
+)
 from techne.ladder_circuits.adversarial_registry import build_invariants, hunt_all  # noqa: E402
 
 
@@ -47,9 +50,14 @@ def test_THE_HAND_WRITTEN_FIXTURE_WAS_TOO_EASY_FOR_refinement_multiplicity():
     proj = (frozenset([0, 1]),)
     truth = (frozenset([0]), frozenset([1]))
     assert not refines(proj, truth, 2)
-    with pytest.raises(PartitionError) as exc:
-        refinement_multiplicity(proj, truth, 2)
-    assert "presupposes" in str(exc.value)
+    # Cycle 041 migrated this measure to the Measurement form: the refusal is now RETURNED, not
+    # raised. Same refusal, same reason, different carrier — asserted both ways so the migration
+    # cannot silently drop it.
+    m = refinement_multiplicity(proj, truth, 2)
+    assert m.status == OUT_OF_DOMAIN
+    assert "presupposes" in m.reason
+    with pytest.raises(MeasurementError):
+        _ = m.value                       # and the value is still unreachable
 
 
 def test_it_is_the_FOURTH_instance_of_one_bug_class():
@@ -74,16 +82,16 @@ def test_it_is_the_FOURTH_instance_of_one_bug_class():
         find_aliasing_witness([1], lambda n: n, lambda n: n)
     with pytest.raises(OutOfDomain):
         fiber_search(1, lambda s: [], lambda n: n, lambda n: n)
-    with pytest.raises(PartitionError):
-        refinement_multiplicity((frozenset([0, 1]),), (frozenset([0]), frozenset([1])), 2)
+    assert refinement_multiplicity((frozenset([0, 1]),),
+                                   (frozenset([0]), frozenset([1])), 2).status == OUT_OF_DOMAIN
 
 
 def test_the_repaired_measure_still_works_on_its_honest_case():
     """A fix that broke the honest case would be worse than the defect."""
     shattered = tuple(frozenset([i]) for i in range(4))
     whole = (frozenset(range(4)),)
-    assert refinement_multiplicity(shattered, whole, 4) == 4
-    assert refinement_multiplicity(whole, whole, 4) == 1
+    assert refinement_multiplicity(shattered, whole, 4).value == 4
+    assert refinement_multiplicity(whole, whole, 4).value == 1
 
 
 # ---- the generator ------------------------------------------------------------------------------

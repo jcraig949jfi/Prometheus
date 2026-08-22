@@ -33,6 +33,12 @@ P = lambda *blocks: tuple(frozenset(b) for b in blocks)
 
 # ---- ITEM 1: merge/split do not exhaust representation adequacy ---------------------------------
 
+def _mult_value(proj, truth, n):
+    """Cycle 041: refinement_multiplicity returns a Measurement now. `probe_monotonicity` needs a
+    bare number, so the unwrap is explicit and local rather than hidden in the measure."""
+    return refinement_multiplicity(proj, truth, n).value
+
+
 def test_A_PERFECT_PROJECTION_CAN_DESTROY_EVERYTHING_A_LATER_TASK_NEEDS():
     """**Round 8's correction to my cycle-022 duality, on real integers.**
 
@@ -88,8 +94,8 @@ def test_A_SHATTERED_RARE_CORNER_LOOKS_CHEAP_IN_BITS():
 
     assert conditional_entropy(rare_shattered, truth, n) == pytest.approx(0.3322, abs=1e-3)
     assert conditional_entropy(common_shattered, truth, n) == pytest.approx(0.7851, abs=1e-3)
-    assert refinement_multiplicity(rare_shattered, truth, n) == 10
-    assert refinement_multiplicity(common_shattered, truth, n) == 11
+    assert refinement_multiplicity(rare_shattered, truth, n).value == 10
+    assert refinement_multiplicity(common_shattered, truth, n).value == 11
 
 
 def test_the_two_measures_are_different_KINDS_under_my_own_2x2():
@@ -113,7 +119,7 @@ def test_the_two_measures_are_different_KINDS_under_my_own_2x2():
     for n_b in (4, 20, 80, 300):
         proj, truth, n = build(40, n_b)
         excesses.append(conditional_entropy(proj, truth, n))
-        mults.append(refinement_multiplicity(proj, truth, n))
+        mults.append(refinement_multiplicity(proj, truth, n).value)
 
     assert excesses == sorted(excesses, reverse=True)      # strictly DOWN on this chain
     assert excesses[0] > 1.8 and excesses[-1] < 0.3
@@ -123,7 +129,7 @@ def test_the_two_measures_are_different_KINDS_under_my_own_2x2():
     chain = [Domain(f"d{k}", tuple(range(m))) for k, m in enumerate((10, 20, 40, 80))]
     up_excess = lambda d: round(conditional_entropy(
         tuple(frozenset([i]) for i in d.members), (frozenset(d.members),), len(d)), 9)
-    up_mult = lambda d: refinement_multiplicity(
+    up_mult = lambda d: _mult_value(
         tuple(frozenset([i]) for i in d.members), (frozenset(d.members),), len(d))
     assert probe_monotonicity(up_excess, chain) == EXISTENTIAL   # this chain only goes up...
     assert probe_monotonicity(up_mult, chain) == EXISTENTIAL

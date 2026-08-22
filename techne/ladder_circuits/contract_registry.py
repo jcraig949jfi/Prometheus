@@ -97,7 +97,11 @@ def build_registry() -> List[Tuple[str, Callable, InstrumentContract]]:
     # 3. refinement_multiplicity — detects worst-case fragmentation
     def _mult(spec):
         proj, truth, n = spec
-        return refinement_multiplicity(proj, truth, n)
+        # Cycle 041: the contract's is_signal/is_no_signal predicates receive the raw verdict, so
+        # the Measurement is unwrapped HERE and the OUT_OF_DOMAIN case is handed on as itself.
+        # Unwrapping with `.value_or(0)` would have put the cycle-038 bug back by hand.
+        m = refinement_multiplicity(proj, truth, n)
+        return m.value if m.is_applicable else m
 
     def _shattered():
         k = _R.randrange(3, 6)

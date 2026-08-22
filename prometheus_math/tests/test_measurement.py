@@ -163,9 +163,12 @@ def test_the_bug_class_now_stands_at_seven_and_all_seven_refuse():
         find_aliasing_witness([1], lambda n: n, lambda n: n)                        # 2
     with pytest.raises(OutOfDomain):
         fiber_search(1, lambda s: [], lambda n: n, lambda n: n)                     # 3
-    with pytest.raises(PartitionError):
-        refinement_multiplicity((frozenset([0, 1]),),
-                                (frozenset([0]), frozenset([1])), 2)                # 4
+    # 4 — MIGRATED in cycle 041: this one now refuses by returning OUT_OF_DOMAIN rather than by
+    # raising. It is the first site to actually use the type this module defines, picked because
+    # its refusal fired 96 times from production callers in one suite run — more than the other
+    # nine sites combined.
+    assert refinement_multiplicity((frozenset([0, 1]),),
+                                   (frozenset([0]), frozenset([1])), 2).status == OUT_OF_DOMAIN
     with pytest.raises(CalibrationError):
         _ = murphy_decomposition([0.2, 0.8], [1, 1]).skill                          # 5
     with pytest.raises(OutOfDomain):

@@ -63,6 +63,14 @@ def is_measure_like(fn: Callable) -> bool:
         return False
     text = ann if isinstance(ann, str) else getattr(ann, "__name__", str(ann))
     text = str(text)
+    if "Measurement" in text:
+        # **A migrated measure is still a measure.** Without this line the cycle-041 migration
+        # made functions vanish from this audit's population: the return annotation stops being
+        # `int` and no longer matches, so the site leaves the denominator instead of leaving the
+        # CONFLATES bucket. The rate would then improve because the population shrank, which is
+        # the shape of confound that flatters a gate rather than passing it. Found by converting
+        # one function and watching `test_THE_DENOMINATOR_IS_FORTY` fail.
+        return True
     if any(s in text for s in _SCALAR):
         return True
     return "Optional" in text
@@ -126,6 +134,11 @@ def classify(fn: Callable, name: str, module: str) -> AuditRow:
         deg = fn(*deg_args)
     except Exception as exc:
         return AuditRow(module, name, REFUSES, type(exc).__name__)
+
+    # A migrated measure refuses by RETURNING `OUT_OF_DOMAIN`, not by raising. Reading that as an
+    # answer would score the repaired form worse than the broken one it replaced.
+    if getattr(deg, "status", None) == "OUT_OF_DOMAIN":
+        return AuditRow(module, name, REFUSES, f"Measurement({deg.reason[:60]})")
 
     try:
         mini = fn(*min_args)

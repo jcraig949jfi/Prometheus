@@ -62,12 +62,15 @@ def build_invariants() -> List[InvariantSpec]:
         lab_p, lab_t = pair
         n = len(lab_p)
         p, t = _blocks(lab_p), _blocks(lab_t)
-        try:
-            m = refinement_multiplicity(p, t, n)
-        except PartitionError:
+        # Cycle 041: migrated to the Measurement form. The refusal is now a RETURNED status
+        # rather than an exception, so the invariant reads as a status comparison instead of a
+        # try/except — which is the point of the type. This call site alone reached the refusal
+        # 92 times in one suite run, which is why it was picked first.
+        m = refinement_multiplicity(p, t, n)
+        if not m.is_applicable:
             return not refines(p, t, n)      # refusal is correct EXACTLY when it does not refine
         worst = max(sum(1 for d in p if d <= c) for c in t)
-        return refines(p, t, n) and m >= 1 and m == worst
+        return refines(p, t, n) and m.value >= 1 and m.value == worst
 
     specs.append(InvariantSpec(
         "partition.refinement_multiplicity",

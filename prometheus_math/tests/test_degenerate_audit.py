@@ -67,10 +67,21 @@ def test_THE_DENOMINATOR_IS_FORTY():
 
 def test_UNPROBED_IS_REPORTED_NOT_DROPPED():
     """A rate over only the probeable functions would flatter the result exactly the way cycle
-    038's hand-written fixtures did. Six could not be probed generically and are counted."""
+    038's hand-written fixtures did, so the unprobeable ones are counted.
+
+    **Cycle 041 correction: counting them was not enough.** This bucket held six, and one of them
+    (`verify_family_incapacity`) was a live instance of the very bug class the audit exists to
+    find — it answered `all_members_err=True` on an empty family. Two of the six carried the
+    audit's own tell-tale detail string, "answered on degenerate input", which is already half
+    the evidence of a conflation and was shelved anyway.
+
+    The bucket is now five, because hand-checking it moved one entry into REFUSES. UNPROBED is a
+    QUEUE OF WORK, not a footnote, and the assertion is written as an inequality so that finding
+    more of them is not a test failure.
+    """
     rows = audit_modules()
     counts = collections.Counter(r.verdict for r in rows)
-    assert counts[UNPROBED] == 6
+    assert counts[UNPROBED] <= 6
     assert sum(counts.values()) == 40
 
 

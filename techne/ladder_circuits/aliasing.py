@@ -143,7 +143,24 @@ def verify_family_incapacity(
     thereby wrong on `right`. `all_members_err` is the theorem's actual prediction;
     `all_members_aliased` checks the premise that each member really did return one answer for
     both, which is what "factors through π" buys.
+
+    **ELEVENTH INSTANCE of the answering-outside-your-domain class, cycle 041 — and the first one
+    PREDICTED rather than stumbled on.** An empty family returned
+    `all_members_err=True, all_members_aliased=True`: every member of a family with no members
+    errs, vacuously, and the caller reads that as the theorem confirmed. Two `all()` calls over an
+    empty mapping, which is the same VACUOUS_QUANTIFIER idiom as `is_refinement_chain`.
+
+    It was found by asking the mechanism classifier which functions carry the idiom and checking
+    the four it named. It also sat in cycle 040's UNPROBED bucket, which that cycle reported as a
+    virtue of the audit; the bucket was concealing a live instance, so UNPROBED needs hand-checks
+    rather than a count.
     """
+    family = list(family)
+    if not family:
+        raise OutOfDomain(
+            "an empty family cannot demonstrate incapacity: `all_members_err` would be True "
+            "because there are no members to err, and this module's whole argument is that "
+            "absence of a counterexample is not evidence of impossibility")
     outcomes: Dict[Any, Dict[str, Any]] = {}
     for theta in family:
         left, right = evaluate(theta, witness.left), evaluate(theta, witness.right)

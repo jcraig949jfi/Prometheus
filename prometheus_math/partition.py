@@ -20,6 +20,8 @@ let "close" fail to compose across a chain of evaluators.
 from __future__ import annotations
 
 import math
+from prometheus_math.measurement import (Measurement, no_signal as _no_signal,
+                                        out_of_domain as _out_of_domain, signal as _signal)
 from typing import Callable, Dict, FrozenSet, Hashable, List, Sequence, Tuple
 
 __all__ = ["induced_partition", "refines", "entropy", "mutual_information",
@@ -203,7 +205,7 @@ def chain_direction(chain: Sequence[Partition], n: int) -> str:
     return "NEITHER"
 
 
-def refinement_multiplicity(projection: Partition, truth: Partition, n: int) -> int:
+def refinement_multiplicity(projection: Partition, truth: Partition, n: int) -> 'Measurement':
     """WORST-CASE fragmentation: the largest number of projection cells inside one truth cell.
 
     External review, round 8, on why `H(P | T)` alone is not enough: **the excess bits are
@@ -221,7 +223,7 @@ def refinement_multiplicity(projection: Partition, truth: Partition, n: int) -> 
     _validate(projection, n, "projection")
     _validate(truth, n, "truth")
     if not refines(projection, truth, n):
-        raise PartitionError(
+        return _out_of_domain(
             "refinement_multiplicity presupposes that the projection REFINES the truth; this "
             "projection merges truth distinctions instead, so there is no fragmentation to "
             "measure. Returning 0 here would read as 'perfectly efficient' when the projection "
@@ -232,7 +234,7 @@ def refinement_multiplicity(projection: Partition, truth: Partition, n: int) -> 
     for cell in truth:
         inside = sum(1 for d in projection if d <= cell)
         worst = max(worst, inside)
-    return worst
+    return _signal(worst) if worst > 1 else _no_signal(worst)
 
 
 def within_class_loss(projection: Partition, target: Partition, n: int) -> float:

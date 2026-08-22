@@ -1124,3 +1124,54 @@ the question.
 **Kill-battery additions (executable):** enumerator self-test on three planted measures
 (conflater / refuser / distinguisher) before trusting any count from it; UNPROBED-is-counted
 assertion; the ten-of-forty tally as one test.
+
+## Cycle 041 — claim v23: v22 NARROWED. Priced, re-counted, and the regime changed.
+
+**v22 said "the class is a HABIT, 10/40, 25%". Three parts of that are now withdrawn or
+narrowed, none of them by me.**
+
+**1. "Habit" is withdrawn (round-11 review).** There is no external corpus of comparable
+functions — scalar-reducing measures that conflate degenerate input with a legitimate verdict —
+so there was no baseline for 25% to be high against. Standing claim:
+**11/40 in this corpus; external prevalence unknown.** The class is a LOCALLY RECURRENT DEFECT
+CLASS, not a statistical claim about authorship. The migration case never rested on the
+comparison: it rests on local expected loss, and eleven observed escapes are enough.
+
+**2. One rate becomes three numbers (round-11 review).**
+
+    ROOTS               10      independent originating defects — propensity to CREATE
+    EXPOSED SITES       11      interfaces contaminated — how much of the system lies
+    PROPAGATION FACTOR  1.10    sites / roots
+
+The factor is the informative one. Near 1 means repeated CREATION; a factor of five would have
+meant two roots leaking through ten wrappers and a diagnosis of failure to CONTAIN across seams,
+which needs a different fix. Only `chain_direction` is inherited. **The idiom clustering therefore
+describes HOW the error is made and does not reduce HOW OFTEN — v22's "the recount relocates the
+claim" overstated it.**
+
+**3. "Reading scored zero for ten" is narrowed.** Measured: `P(found | INCIDENTAL reading) = 0/11`.
+Never measured: `P(found | TARGETED review with the bug as the question)`. Only
+"incidental review has shown no sensitivity" is supported. Lane A/B pre-registered.
+
+**NEW — the migration is priced.** Converting `refinement_multiplicity` (96 of 108 production
+refusals, so the slice was chosen by liveness rather than taste) cost **13 edits: 11 tests + 2
+production call sites**, all made. Gradual migration is now a costed decision rather than a
+preference.
+
+**NEW — instance 11, predicted.** Idiom-presence flagged four unaudited functions; all four were
+checked BY CALLING them; `verify_family_incapacity` answered `all_members_err=True` on an empty
+family, inside the module arguing that absence of a counterexample proves nothing. One in four.
+
+**NEW — a confound in the flattering direction, caught.** Migrating a measure changed its return
+annotation and removed it from the audit's denominator. The rate would have improved because the
+population shrank.
+
+**REGIME CHANGE (round-11 review, accepted).** Cycles 037-041 fail the gate "each ~5 cycles must
+find a real-substrate defect, improve a live experiment, or validate/falsify a capability on real
+data". Everything found was in code written for the loop. Cycles 042-046: **~80% real-substrate /
+20% instrument repair**, beginning with HITL #78 measured for blast radius rather than restated.
+
+**Kill-battery additions (executable):** probe-off/probe-on control on identical scope before any
+claim of non-invasiveness; planted-idiom anti-cases before trusting a classifier count;
+as-written source pulled from before the repair commit when the question is about mistakes;
+`provenance()` reporting roots/sites/propagation rather than a single rate.

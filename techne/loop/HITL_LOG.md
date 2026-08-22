@@ -973,3 +973,65 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      For all I know a quarter of any codebase's reducing functions mishandle the empty case and
      nobody measures it. Without a baseline from code I did not write, "habit" may be me
      pathologising an ordinary rate. Honest statement today: 10/40 here, unknown elsewhere.
+
+
+## Cycle 041 (2026-08-22) — the migration priced, and a regime change accepted
+
+178. **HITL #78: 859 rows, 0 accepted, 100% drop, FIFTEEN cycles unruled.** Up from 821.
+179. **THE MIGRATION COST IS A NUMBER: 13 edits for ONE function** (11 tests + 2 production call
+     sites), and it was the most-used of the eleven sites. All thirteen were made. This is what
+     makes gradual migration honest rather than lazy — the other two live-from-production sites
+     are deferred WITH the cost as the stated reason.
+180. **The slice was picked by LIVENESS, not taste.** Attributing every refusal in the suite to
+     its nearest caller frame: `refinement_multiplicity` had 99 refusals, 96 from PRODUCTION —
+     96 of the 108 production refusals across all ten sites. Two sites (`skill`,
+     `uniform_adversary`) are never CALLED at all by the entire suite; cycle 039 repaired two
+     functions nothing invokes.
+181. **A migration can improve the metric by shrinking the population — caught.** Converting a
+     measure changed its return annotation, so it LEFT cycle 040's denominator instead of leaving
+     the CONFLATES bucket. The rate would have improved because the population shrank. Confound in
+     the flattering direction; `is_measure_like` now recognises `Measurement`.
+182. **INSTANCE 11, and it was PREDICTED rather than stumbled on.** `verify_family_incapacity`
+     returned `all_members_err=True` for an EMPTY family — vacuously, inside the module whose whole
+     argument is that absence of a counterexample is not evidence of impossibility. Found by
+     asking which functions carry the idiom and calling all four candidates. One in four real.
+183. **Cycle 040's UNPROBED bucket was CONCEALING it.** I reported "UNPROBED=6, reported never
+     dropped" as a virtue. It was counted and never checked, and two of the six carried the audit's
+     own tell-tale string "answered on degenerate input". UNPROBED is a queue of work, not a
+     footnote. I also hand-checked `information_profile` and DECLINED to count it — inflating is as
+     dishonest as missing.
+184. **THREE of my own instruments were defective this cycle and their anti-cases caught it.**
+     The liveness probe used `inspect.stack()` and a 40-second suite did not finish in fifteen
+     minutes. I wrote "non-invasive, no test outcome can shift" in its docstring and then measured
+     it against a probe-off control: 376 passed vs 372 passed / 4 failed. The mechanism classifier
+     reported ARITHMETIC_IDENTITY for a function that RAISES on empty input, matching the index
+     literal in `xs[0]`.
+185. **ROUND-11 CORRECTION ACCEPTED — "habit" WITHDRAWN.** No external corpus exists for this
+     class, so there was no baseline to be high against. The claim is now **11/40 in this corpus,
+     external prevalence unknown**, a LOCALLY RECURRENT DEFECT CLASS. Migration is justified by
+     local expected loss, which it always was.
+186. **ROUND-11 CORRECTION ACCEPTED — "reading does not work" WITHDRAWN.** Measured:
+     P(found | INCIDENTAL reading) = 0/11. Never measured: P(found | TARGETED review with the bug
+     as the question). Supported claim is only "incidental review has shown no sensitivity". The
+     Lane A/B experiment is pre-registered in `rung_notes/LANE_AB_READING_EXPERIMENT.md` with
+     predictions committed BEFORE running, including the discriminating case (does a reviewer who
+     spots a root also carry it into the wrapper?).
+187. **ROUND-11 CORRECTION ACCEPTED — three numbers, not one rate.** ROOTS 10 / EXPOSED SITES 11 /
+     PROPAGATION FACTOR 1.10. That factor settles the diagnosis as repeated CREATION rather than
+     failure to CONTAIN. Clustering rescues nothing and I should not have implied it did.
+188. **REGIME CHANGE ACCEPTED, effective cycle 042.** The loop had become an instrument-making
+     organism feeding on its own instruments, and cycle 041 is the clearest instance: probe ->
+     defect in probe -> control for probe -> defect in classifier, total external yield one
+     function in one synthetic module. Cycles 037-041 FAIL the gate. **Cycles 042-046 run ~80%
+     real-substrate / 20% instrument repair.** The 20% queue is Lane A/B, then the two remaining
+     live migrations. Nothing joins it without displacing something.
+189. **JAMES — cycle 042 goes back to HITL #78 read-only, and I want the shape of it checked.**
+     I am forbidden to patch ergon, so I can only observe. A read-only audit that produces another
+     unruled finding would be the recursion in a new costume. What makes 042 a real test rather
+     than another diagnosis? My plan is to ask what a DOWNSTREAM CONSUMER actually receives from a
+     100%-drop loader — i.e. measure the defect's blast radius on live data rather than restating
+     its existence.
+190. **Track 1: `prometheus_math.normalized_vi`** (Meila 2007, J. Mult. Anal. 98(5):873-895), four
+     categories, 12 tests, RED first. The n=1 edge REFUSES — log2(1)=0, so 0.0 would say
+     "identical" and nan would propagate. **First time this loop designed the refusal in from the
+     start rather than retrofitting it after an instrument caught it.**
