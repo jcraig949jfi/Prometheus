@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-22T07:32:39+00:00
+# PULSE — generated 2026-08-22T08:04:23+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,16 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        525
-consumed (state changes):   380  {'queue_state': 334, 'registry': 43, 'findings': 3}
-consumed/emitted:           0.72
+emitted (new files):        530
+consumed (state changes):   374  {'queue_state': 329, 'registry': 42, 'findings': 3}
+consumed/emitted:           0.71
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 292
+## Commits, 72h (non-cron): 293
+- 055ac4a2 08-22 03:58 Techne cycle 044: P0 frozen as feasibility failure; P1 pre-registered; #78 closed to read-only
+- bcb362d4 08-22 07:49 arsenal: capability matrix updated
+- 07cf39bf 08-22 03:32 Aporia P107: Campaign B complete in one pass â€” the 500 voids were empty stubs, not a coverage gap
 - 79254ad8 08-22 03:09 Techne cycle 043: the class test was UNDERPOWERED â€” not a null, and the flaw was mine
 - 05cb2d70 08-22 03:03 Aporia P106: external review metabolized â€” my diagnosis was wrong and the verb lattice is dead
 - 03989da8 08-22 03:03 Ergon: corpus characterization for R2-6 â€” counts, not a design
@@ -37,10 +40,7 @@ verdict: ALIVE
 - 82ad6678 08-21 23:10 Techne loop cycle 038: domain-sourced anti-cases â€” one of my nine passes was flattery
 - 079b392b 08-21 23:08 Aporia P102: noop â€” no events; census past 6M rows, still zero conflicts
 - 3c45f36f 08-21 22:36 Aporia P101: wait-state pass â€” one citation upgraded, one wall named
-- f25f8995 08-21 22:35 Techne loop cycle 037: contract retrofitted to the arsenal â€” it caught two of my own defects
-- 0c96ec0a 08-21 22:01 Techne loop cycle 036: round-10 fold-in â€” the instrument contract
-- e6efb295 08-21 22:01 Aporia P100: the queue ran dry, so the loop swept its footnotes â€” and found one more conflation
-- … +267 more
+- … +268 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
