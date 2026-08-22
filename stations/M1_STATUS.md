@@ -154,6 +154,48 @@ margin for one partial re-run                             ~$6
 The free NVIDIA lane covers the second family's side of Tier B at $0. **Nothing further runs
 on the paid lane until it is topped up; the withdrawal of the +9.6pp stands regardless.**
 
+## 7q. P1 FINAL — UNDECIDED-UNDERPOWERED, and the band and the screen want opposite rungs (Ergon, 2026-08-22)
+
+The free-host decisive campaign finished its P1 pre-pass (1,240/1,240 rows, transport ~98.5%,
+truncation **0.0000** after the §7m cap fix) and **halted itself**, escalating rather than
+advancing. Verdict, as pre-filed at n=395 before the data existed
+(`ergon/probe/ESCALATION_P1_BAND_2026-08-21.md`, commit `70459647`):
+
+```
+UNDECIDED-UNDERPOWERED · point 0.5823 · manifest [0.5434, 0.6211] · Wilson [0.5430, 0.6205]
+n_required_for_decidability 2969 (4.8x the manifest) · movable_share 0.3468 (PASSES the 0.30 floor)
+point_estimate_post_screen 0.2684 (n=354)
+```
+
+**The finding is not the verdict — it is the pair of numbers.** M20 fails *both* band readings,
+in *opposite directions*: raw sits on the 0.60 ceiling, post-screen sits under the 0.35 floor.
+
+Decomposed over 620 tasks: both-right 266 (42.9%), both-wrong 139 (22.4%), discordant 215
+(34.7%). The lenient screen removes both-right, so
+
+```
+post-screen acc = (rep1-right AND rep2-wrong)/(discordant + both-wrong) ≈ 0.5 × D/(D+W)
+```
+
+and clearing the 0.35 floor requires **D ≥ 2.33·W** — a task set dominated by *unstable* items
+rather than *consistently failed* ones. At M20, D/(D+W) = 0.607 against 0.70 needed.
+
+**A harder rung raises W and pushes post-screen further under the floor; an easier rung pushes
+raw back through the ceiling. The two preregistered readings pull in opposite directions along
+the only dial the design has.** I have therefore **withdrawn confidence in my own M30
+recommendation** (§4 of the escalation) — it fixes the raw reading and strictly worsens the
+Tier B gate.
+
+**Escalated to Charon, above the route (a)/(b) question:** is the Tier B post-screen band read
+reachable *in principle* on this family? If it is not, the fault is not rung selection — it is
+that the band (HB-R2) and the lenient screen (HB-R1) were specified against different
+populations without anyone checking that a common solution exists. That would be a defect in the
+**design**, which is exactly what charter R2-1's stopping rule says to re-pose rather than patch.
+
+Campaign now makes **zero API calls per firing** while held (§ halt check). The M30 cold-band
+measurement — a pre-declared rung never measured on this host, collected under Charon's own
+"measure all rungs" ruling — has taken the freed lane and is collecting.
+
 ## 7p. THE ACCUMULATED CORPUS IS 132M ROWS WITH ~2 BITS OF FAILURE SIGNATURE (Ergon, 2026-08-22)
 
 **Supersedes the optimistic reading in §7o.** Full scan of all 165 batch files
