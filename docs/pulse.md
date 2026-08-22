@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-22T04:58:27+00:00
+# PULSE — generated 2026-08-22T07:03:41+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,26 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        501
-consumed (state changes):   399  {'queue_state': 350, 'registry': 46, 'findings': 3}
-consumed/emitted:           0.80
+emitted (new files):        521
+consumed (state changes):   383  {'registry': 44, 'queue_state': 336, 'findings': 3}
+consumed/emitted:           0.74
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 283
+## Commits, 72h (non-cron): 291
+- 03989da8 08-22 03:03 Ergon: corpus characterization for R2-6 â€” counts, not a design
+- 04ecd2d8 08-22 03:02 Techne cycle 043: PRE-REGISTRATION for the schema-drift class sweep, before measuring
+- d4b29900 08-22 02:58 Techne cycle 042: round-13 fold-in â€” de facto contract, and seam triangulation as doctrine
+- 250650ba 08-22 02:50 Aporia: external consult prompt â€” loop targets and round-robin design
+- fec491da 08-22 02:38 Techne cycle 042 CORRECTION: Y4 was 1 of 8, not 1 of 6 â€” and it sharpens the fix
+- 4e2f7212 08-22 02:34 Techne cycle 042: HITL #78 root cause found â€” two readers, one file, one right
+- e5b965a7 08-22 02:31 M1_STATUS 7o: the native residue is not sparse â€” wrong-population statistic
+- 0fd3273b 08-22 02:24 Techne cycle 042: PRE-REGISTRATION for HITL #78 blast radius, committed before measuring
+- 060eaf56 08-22 02:22 Ergon: measure M30 on the free host â€” executing a ruling, not making one
+- 1553af35 08-22 02:00 Ergon: durable ledger appends + drip single-instance lock
+- 39ec0289 08-22 01:54 Techne cycle 041: the migration priced at 13 edits/function, and a regime change
+- 6b883e54 08-22 01:38 Ergon: unblock the second-family drip â€” throttled for a wall that never came
+- d5fbba89 08-22 00:58 Aporia P104: the "junk" population is 46,439 real records the published filter deletes
 - 26949637 08-22 00:18 Techne cycle 040: the denominator â€” ten of forty, 25%, it is a habit
 - a31f84da 08-21 23:58 Aporia P103: census complete â€” PURE-DUP confirmed, and an off-by-one rewrote the headline
 - d74f1a33 08-21 23:46 Ergon: halted firings spend zero calls instead of ~48/day
@@ -27,20 +40,7 @@ verdict: ALIVE
 - e6efb295 08-21 22:01 Aporia P100: the queue ran dry, so the loop swept its footnotes â€” and found one more conflation
 - 2878718e 08-21 21:57 Techne loop cycle 035: round-9 fold-in â€” drop the premise, keep the 2x2; stage taxonomy derived
 - 607ccc66 08-21 21:53 M1_STATUS 7n: free-lane capacity understated 25x â€” fleet planning fact
-- 32265fd6 08-21 21:51 Ergon: fix a stale delta inside my own escalation before it fossilizes
-- b956a74a 08-21 21:51 Ergon: rep-1 complete at n=620 â€” the pre-filed prediction held
-- 154fea62 08-21 21:36 Techne loop cycle 034: preprocessing attribution â€” R0's congruence is borrowed, R1/R2's is not
-- faa63239 08-21 21:34 Aporia P99: the Hintikka attribution pinned in layers â€” verified where fetchable, pending where walled
-- 45e4a40d 08-21 21:05 Aporia P98: the tier consolidated â€” sixteen catches, six classes, one door
-- 1fe9e387 08-21 21:05 Techne loop cycle 033: the cycle-031 soft spot resolves â€” relational claims fit, via arity
-- 7df11e9e 08-21 20:58 Techne loop cycle 032: round-8 fold-in â€” two published claims narrowed, one superseded
-- c355b4a2 08-21 20:36 Aporia P97: TIER TRUE-COMPLETE 30/30 â€” and even gates need gates
-- f7dc9a79 08-21 20:22 Techne loop cycle 031: the claim kinds are a 2x2 derivation, not a list
-- 0a6d2b31 08-21 20:05 Aporia P96: the instruments begin composing â€” one artifact now certifies three paradigms
-- 2e707768 08-21 19:49 Techne loop cycle 030: the reference-class problem is one core with two kinds
-- 7637d281 08-21 19:34 Aporia P95: the completion claim was wrong â€” corrected at the source, and the tensor fifth opens
-- 93be4656 08-21 19:16 Techne loop cycle 029: structural-constancy probe â€” and it caught its own author
-- … +258 more
+- … +266 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records

@@ -37,6 +37,39 @@ watch-paced — every pass does one real item.
    as capacity allows; schema + backup job first (DECISION 2 makes backup non-deferrable).
 
 
+## CAMPAIGN DISCIPLINE (adopted P106 from external review 2026-08-22)
+
+The loop's defect was never "verification instruments only confirm" — the record falsifies
+that. It is that **the adjudicator is strong and the search policy does not learn**: priorities
+are assigned at thread-mint time and no outcome in 105 passes changed a proposal distribution.
+These rules exist to fix that, and they override the old top-unblocked-by-priority rule.
+
+- **At most TWO live threads.** Nothing else is live. A third idea is written down, not started.
+- **Checkpoint-bounded microcampaigns, not round-robin.** Stay on one thread up to THREE
+  consecutive passes or until its predefined checkpoint, whichever comes first. Shape:
+  (1) instrument + preregistration, (2) primary experiment, (3) falsification / replication /
+  mechanism chase.
+- **Terminal states are ADVANCE / REDESIGN / PARK / KILL.** There is no fifth state called
+  "interesting, continue exploring." Every campaign emits exactly one at its checkpoint.
+- **Continuation requires one of:** a preregistered branch discriminated; hypothesis space
+  materially narrowed; a reusable capability produced *with a named waiting consumer*; an
+  anomaly surviving a stronger null; or the result changing what runs next. "Built useful
+  infrastructure" does NOT qualify without a consumer already waiting — that loophole produced
+  30 paradigm trees with no ingestion path.
+- **Instant kill:** positive control fails; a blind test leaks labels; the null cannot
+  distinguish the effect at useful power; a required dictionary would itself be a research
+  program to build; the result is invariant under a control that should destroy it.
+- **A KILL is a successful terminal state**, recorded as such.
+- **Unreviewed results do not create policy momentum.** They may trigger replication, stronger
+  nulls, and mechanism work; they may NOT spawn descendants, new paradigms, ontology changes,
+  or backlog reprioritization until reviewed. Compute ahead, do not commit architectural state.
+- **Loop self-instrumentation, reported in PULSE:** decision yield DY₂₀ (fraction of the last
+  20 passes causing ADVANCE/DEMOTE/KILL/material BRANCH), open-thread debt (threads without a
+  terminal checkpoint), restart tax (fraction of a pass spent reconstructing state). The
+  over-interleaving signature is **debt rising while decision yield falls**.
+- **Tooling is installed on measured demand only** — never because a research system "ought to"
+  have it.
+
 ## Standing check — paradigm registry (added P82)
 
 Any pass that touches `aporia/paradigms/` runs `python aporia/paradigms/validate_paradigms.py`

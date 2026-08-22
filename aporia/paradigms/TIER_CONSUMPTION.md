@@ -111,6 +111,14 @@ Process faults:
     shipped missing a required field; validators run standalone with
     explicit exit checks.
 
+Endogenous-validation faults (added P106, external review):
+17. ENDOGENOUS-ONTOLOGY-VALIDATION: a self-built ontology citing reuse of its
+    own artifacts as external evidence for the ontology's meaningfulness. The
+    instruments are each individually sound; the vacuous step is the inference
+    from their co-occurrence. Same shape as the Hecate mutual-information
+    tautology one level up — instruments there, ontology here. Killed the verb-
+    lattice program before it started.
+
 ## Per-row inversion (triage catalog; 37 rows routed)
 
 - MATH-0026: P01, P02, P07, P12
@@ -183,7 +191,11 @@ inherit the verification obligation at first use.
 - P14 -> diagnostic duty; P21 -> battery-calibration duty; P25 -> the
   falsification battery as infrastructure.
 - The Strassen triples serve THREE trees (P15 decomposition, P23 saving,
-  P28 restriction certificate) — instruments composing across lenses.
+  P28 restriction certificate). **DEMOTED P106** by external review: this shows the
+  ontology can REUSE its own verified artifact across its own lenses — an internal
+  economy fact. It is NOT evidence that verb composition predicts anything outside the
+  ontology, and citing it as such is ENDOGENOUS-ONTOLOGY-VALIDATION (new catch class,
+  §catch ledger). The proposed 'verb lattice' program built on it is KILLED.
 
 ## Consolidated doctrine (seven lessons, final form)
 
