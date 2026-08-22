@@ -87,7 +87,7 @@ _SPECS: dict[str, ProviderSpec] = {
         name="anthropic", kind="anthropic",
         base_url="https://api.anthropic.com/v1",
         key_name="CLAUDE", default_model="",
-        notes="DEAD 2026-08-22 on M1: HTTP 400 credit balance too low -- the key is VALID and unfunded. The earlier 401-on-/models reading was a header bug in list_models (Bearer instead of x-api-key), NOT a revoked key; the 2026-08-12 low-credit reading was right all along. Use claude_cli for Claude access.",
+        notes="DEAD 2026-08-22 on M1: HTTP 400 credit balance too low -- the key M1 holds is VALID and unfunded. The earlier 401-on-/models reading was a header bug in list_models (Bearer instead of x-api-key), NOT a revoked key; the 2026-08-12 low-credit reading was right all along. NOTE: two Anthropic accounts exist, so this funding state is account-scoped -- re-measure per machine rather than inheriting it. Use claude_cli for Claude access (separate subscription auth, separate billing).",
     ),
     "claude_cli": ProviderSpec(
         name="claude_cli", kind="cli",
