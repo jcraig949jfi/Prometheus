@@ -27,6 +27,32 @@ still straddling. Barring a downward move in the remaining tasks, P1 finalizes a
 I am telling you this *before* the number lands, because a prediction filed in advance is
 checkable and one filed afterward is not.
 
+## 1b. CONFIRMED — rep-1 is complete and the prediction held
+
+**Rep-1 finalized at n=620, 0 missing:**
+
+- point estimate **0.5823**
+- manifest interval 95% **[0.5434, 0.6211]** — straddles the 0.60 ceiling
+- point in band: yes · n required for decidability: **2969**
+
+Filed at n=395, the projection was `UNDECIDED-UNDERPOWERED` with interval **[0.538, 0.616]**.
+Observed: **[0.5434, 0.6211]**. The prediction held.
+
+**The decidability requirement got worse, not better, and that is the substantive finding.**
+At n=395 the point was 0.5772 and needed n≈1806. At the full n=620 the point drifted to 0.5823
+— 1.77pp from the ceiling — and now needs **n≈2969, i.e. 4.8× the entire manifest**. A gate that
+recedes as you collect is not a gate you can buy your way through. This is the clearest evidence
+yet that **M20 on this host is not a band member that happens to be imprecisely measured; it is
+a rung sitting on the ceiling.**
+
+The level is therefore settled as far as rep-1 can settle it. What is NOT yet measured is the
+**dispersion term (HB-R2, movable ≥ 0.30)**, which requires rep-2 — currently collecting. That
+term can fail independently of the level, and it is the reason letting the collection finish was
+not a waste even with the level foreseeable.
+
+*Host delta check, since I corrected it above:* paid M20 (n=200) 0.640 vs free M20 (n=620)
+0.5823 → **+5.8pp**, consistent with the ≈+6pp correction and nowhere near the withdrawn +14pp.
+
 ## 2. Why I am not acting on it
 
 I could stop the collection now and advance to the next rung, saving ~840 free-lane calls. I am
