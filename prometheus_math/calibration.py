@@ -112,7 +112,18 @@ class MurphyPartition:
         reliability alone is never the R11 verdict.
         """
         if self.uncertainty == 0.0:
-            return 0.0
+            raise CalibrationError(
+                "skill is undefined on a degenerate battery (every outcome identical, so the "
+                "base-rate forecaster is already perfect and there is nothing to be better "
+                "than). Returning 0.0 here would read as 'no skill' — the fifth instance of the "
+                "answering-outside-your-domain bug class, found cycle 039. Use "
+                "`skill_or(default)` to opt in to a value explicitly.")
+        return (self.resolution - self.reliability) / self.uncertainty
+
+    def skill_or(self, default: float) -> float:
+        """Explicit opt-in to a default when skill is undefined. Fine — the caller said so."""
+        if self.uncertainty == 0.0:
+            return default
         return (self.resolution - self.reliability) / self.uncertainty
 
 

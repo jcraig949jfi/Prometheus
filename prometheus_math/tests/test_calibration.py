@@ -125,12 +125,21 @@ def test_calibration_edges():
     with pytest.raises(CalibrationError):
         expected_calibration_error([0.5], [1], bins=0)
 
+    # CYCLE 039: these two assertions USED TO READ `skill == 0.0`, and that was the bug being
+    # encoded by its own test — 0.0 meant "no skill" and "skill undefined" at once. On a
+    # degenerate battery the base-rate forecaster is already perfect, so there is nothing to be
+    # better than and skill has no value. It now refuses; a caller wanting a number opts in.
     single = murphy_decomposition([0.7], [1])
-    assert single.uncertainty == 0.0 and single.skill == 0.0
+    assert single.uncertainty == 0.0
+    with pytest.raises(CalibrationError):
+        _ = single.skill
+    assert single.skill_or(0.0) == 0.0
     assert single.brier == pytest.approx(0.09)
 
     degenerate = murphy_decomposition([0.2, 0.8], [1, 1])
-    assert degenerate.uncertainty == 0.0 and degenerate.skill == 0.0
+    assert degenerate.uncertainty == 0.0
+    with pytest.raises(CalibrationError):
+        _ = degenerate.skill
 
     assert expected_calibration_error([1.0, 1.0], [1, 1]) == pytest.approx(0.0)
 

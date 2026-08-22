@@ -896,3 +896,40 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      components, because it is a minimisation rather than a sum of parts. Murphy works because
      Brier is algebraically a sum of three terms. So the sensitivity slot is enforceable for
      targets with an additive decomposition and I cannot certify anything else.
+
+
+## Cycle 039 (2026-08-21) — the bug class made unrepresentable
+
+161. **HITL #78: 790 rows, 0 accepted, 100% drop, THIRTEEN cycles unruled.**
+162. **I predicted a fifth instance of the bug class and found THREE. It now stands at SEVEN
+     across FOUR modules** — a measure answering on input outside its own domain:
+     structural_constancy (029), find_aliasing_witness (037), fiber_search (037),
+     refinement_multiplicity (038), murphy.skill (039), verify_factorization (039),
+     uniform_adversary.schema_survived (039). Every one found by a DIFFERENT instrument, none by
+     reading the code.
+163. **Two of the three are worth your attention specifically.** `murphy.skill` returned 0.0 on a
+     degenerate battery **and its own test asserted that** — the bug defended by the test written
+     to guard it, which is cycle 018's lesson again. And `uniform_adversary` is the worst-placed
+     of all seven: **that module's docstring warns against concluding sufficiency from a failure
+     to enumerate, and its own report property did exactly that**, calling a schema SURVIVING when
+     it had never run.
+164. **HITL #158 BUILT.** `prometheus_math.measurement`: SIGNAL / NO_SIGNAL / OUT_OF_DOMAIN, with
+     `.value` raising on OUT_OF_DOMAIN, `__bool__` raising always (every route — bool, not, and,
+     or, implicit if), and OUT_OF_DOMAIN refusing construction without a reason. Each guarantee
+     traces to a specific past bug. `value_or(default)` preserves explicit opt-in.
+165. **HITL #151 SUPERSEDED FOR THIS BUG CLASS ONLY — and I want that scope on the record.** The
+     type makes the eighth instance unwritable, which beats a registry that would only remind me
+     to look. But cycle 038's mis-stated invariant has no type that forbids it, so **the registry
+     question stands for bug classes that are not type-shaped.**
+166. **What the type does NOT buy, tested rather than conceded:** a measure can still return
+     SIGNAL where OUT_OF_DOMAIN was right — a judgement about the domain, which no type checks.
+     `mistyped_domain_is_still_possible()` builds that measure and returns True.
+167. **HONEST SCOPE — I did not do the migration.** The seven sites refuse by RAISING, not by
+     returning `Measurement`; converting signatures would break every caller across 441 tests.
+     `measured()` adapts a bare measure without touching its signature, so the repairs are
+     expressible today and migration can be gradual. Calling this cycle a "retrofit" would
+     overstate it.
+168. **The rate is what worries me, not the count.** Seven instances of one bug in four modules,
+     all mine, all written in the last three weeks. Either something about how I write measures
+     generates this, or the empty/degenerate case is simply where all bugs live and seven is
+     unremarkable for forty-odd measures. I cannot tell which from inside.

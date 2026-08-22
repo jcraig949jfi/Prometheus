@@ -171,6 +171,12 @@ def verify_factorization(
     for treating `fine` as the family's finest projection. Empirical over `instances`, so a True
     result is evidence on this battery rather than a proof of the functional identity.
     """
+    if len(instances) < 2:
+        raise OutOfDomain(
+            f"factorization needs at least two instances to compare; got {len(instances)}. "
+            "Returning True here would report 'the coarse view factors through the fine one' "
+            "when nothing was checked (sixth instance of the answering-outside-your-domain bug "
+            "class, cycle 039)")
     for a, b in combinations(instances, 2):
         if fine(a) == fine(b) and coarse(a) != coarse(b):
             return False
@@ -270,6 +276,17 @@ class UniformAdversaryReport:
 
     @property
     def schema_survived(self) -> bool:
+        """Raises on an empty parameter set.
+
+        SEVENTH instance of the bug class, and the worst-placed of the seven: this module's own
+        docstring warns against concluding sufficiency from a failure to enumerate, and this
+        property did exactly that — reporting a schema as SURVIVING when it had never run.
+        """
+        if self.n_parameters == 0:
+            raise ValueError(
+                "no parameters were tried, so the schema neither survived nor failed. Reporting "
+                "True here is the very fallacy this module exists to close: concluding a family "
+                "is unthreatened from a failure to test it")
         return not self.failures
 
     @property

@@ -1047,3 +1047,37 @@ because Brier is algebraically a sum of three terms; nothing guarantees that sha
 
 **Kill-battery additions (executable):** invariant-driven domain search; generator POSITIVE
 control (a planted broken instrument it must find); raising-invariant-as-violation guard.
+
+## Cycle 039 — claim v21: the answering-outside-your-domain class, at seven, now unrepresentable
+
+**Predicted a fifth instance; found three.** The class stands at SEVEN across FOUR modules:
+structural_constancy (029), find_aliasing_witness (037), fiber_search (037),
+refinement_multiplicity (038), murphy.skill (039), verify_factorization (039),
+uniform_adversary.schema_survived (039). Every one found by a different instrument; none by
+reading the code.
+
+**Two are notable beyond the count.** `murphy.skill` returned 0.0 on a degenerate battery AND ITS
+OWN TEST ASSERTED THAT — the bug defended by its guard. `uniform_adversary.schema_survived`
+reported a never-run schema as surviving, in the module whose docstring warns against exactly that
+inference.
+
+**The type (`prometheus_math.measurement`).** SIGNAL / NO_SIGNAL / OUT_OF_DOMAIN. Three
+guarantees, each traced to a past bug: `.value` raises on OUT_OF_DOMAIN; `__bool__` raises always,
+on every boolean route; OUT_OF_DOMAIN without a reason refuses construction. `value_or(default)`
+keeps explicit opt-in available.
+
+**Buys:** the conflation is INEXPRESSIBLE — the two meanings live in different constructors and
+the third refuses to be read as a value.
+**Does not buy:** correctness. A measure can still return SIGNAL where OUT_OF_DOMAIN was right.
+`mistyped_domain_is_still_possible()` builds that measure and returns True — tested, not conceded.
+The type converts a silent-by-default failure into one requiring an explicit wrong decision.
+
+**Registry (HITL #151) superseded FOR THIS CLASS ONLY.** The type prevents where a registry would
+only remind. But cycle 038's mis-stated invariant is not type-shaped, so the registry question
+remains open in general.
+
+**Scope, stated:** the seven sites refuse by raising, not by returning `Measurement`. `measured()`
+adapts without breaking signatures; the migration has NOT been done.
+
+**Kill-battery additions (executable):** every-boolean-route leak test for a result type;
+mistyped-domain anti-case; the seven-site refusal tally as one executable test.
