@@ -84,3 +84,41 @@ it was a literature query with an explicit instruction to falsify, followed by a
 verification of the counterexample. **Cost: one Deep Research token and two arXiv fetches.**
 
 **Annotation 2026-08-18 (AA-019):** the claim that certificate-checking 'fails SAFE (silence)' acquired a measured exception: in July 2026 a Collatz disproof was verified by BOTH Lean and Nanoda, then invalidated — it exploited verifier bugs, and cross-verifier agreement failed because both shared the exploitable class. Certificate-checking fails safe ONLY when the kernel is sound. Operational consequence for our Lean-gated lanes: pin kernel/toolchain versions in provenance and re-check on kernel patches; two buggy verifiers agreeing is not independence.
+
+---
+
+## Citations pinned (VERIFY-SCANDAL, Aporia P99, 2026-08-21)
+
+Per `feedback_verify_upstream_attributions`, the Hintikka attribution is now
+pinned to primary sources at the level the open web permits:
+
+**VERIFIED (fetched this pass):**
+- Hintikka, Jaakko. *Logic, Language-Games and Information: Kantian Themes in
+  the Philosophy of Logic*. Oxford: Clarendon Press, 1973. x+291pp; based on
+  the John Locke Lectures, Oxford, 1964. [archive.org/details/
+  logiclanguagegam0000hint — title/publisher/year from catalog metadata.]
+  This is the standard home of the surface-information framework the
+  scandal-of-deduction discussion rests on.
+- Stanford Encyclopedia of Philosophy, "Logic and Information": "A
+  quantitative attempt at specifying the information yield of deductions was
+  undertaken by Jaakko Hintikka with his theory of *surface information* and
+  *depth information* (Hintikka 1970, 1973)." — independent scholarly
+  corroboration of the attribution and the 1970+1973 dating.
+
+**PENDING (walled or unfetched; marked per the citation rule):**
+- The exact 1970 item (widely "Surface Information and Depth Information,"
+  in *Information and Inference*, eds. Hintikka & Suppes, Reidel 1970) —
+  SEP confirms a 1970 work exists in this role; the exact title/venue is
+  UNVERIFIED-PENDING-FETCH (PhilPapers and Springer returned 403/redirect
+  walls this pass).
+- The phrase "scandal of deduction" itself: universally attributed to
+  Hintikka in the secondary literature (e.g., D'Agostino & Floridi, "The
+  enduring scandal of deduction," *Synthese* 2009 — title known, content
+  walled), but no page fetched this pass QUOTES the phrase from the 1973
+  book directly. The phrase-coinage locus therefore stands at
+  secondary-source level: SOLID attribution, page-level pin pending a
+  library-grade source.
+
+Verification method: 7 fetches (SEP x2, Wikipedia, archive.org, Springer/DOI
+x3 walled). The finding's argumentative content is unchanged; its scholarly
+footing is now explicit about which layer each citation rests on.

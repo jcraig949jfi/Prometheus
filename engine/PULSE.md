@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-22T01:05:36+00:00
+# PULSE — generated 2026-08-22T01:34:32+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,14 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        485
-consumed (state changes):   410  {'queue_state': 362, 'registry': 45, 'findings': 2, 'doctrine': 1}
-consumed/emitted:           0.85
+emitted (new files):        484
+consumed (state changes):   408  {'queue_state': 360, 'registry': 45, 'findings': 2, 'doctrine': 1}
+consumed/emitted:           0.84
 verdict: ALIVE
 ```
 
 ## Commits, 72h (non-cron): 274
+- 45e4a40d 08-21 21:05 Aporia P98: the tier consolidated â€” sixteen catches, six classes, one door
 - 1fe9e387 08-21 21:05 Techne loop cycle 033: the cycle-031 soft spot resolves â€” relational claims fit, via arity
 - 7df11e9e 08-21 20:58 Techne loop cycle 032: round-8 fold-in â€” two published claims narrowed, one superseded
 - c355b4a2 08-21 20:36 Aporia P97: TIER TRUE-COMPLETE 30/30 â€” and even gates need gates
@@ -37,7 +38,6 @@ verdict: ALIVE
 - 2cee06f1 08-21 15:53 Techne loop cycle 023: sweep directions unified in bits; two self-corrections
 - 664a1cc9 08-21 15:41 Aporia P88: P16+P17 â€” the decline leg reproduces the mirror's own CM flags, blind
 - bd46fb07 08-21 15:21 Techne loop cycle 022: second pass opens â€” R3 claim narrowed, aliasing found half-blind
-- 7b350412 08-21 15:12 Aporia P87: P14 arrives with brakes, P15 with a certificate that knows when to decline
 - … +249 more
 
 ## Bottleneck hypotheses (confidence)
