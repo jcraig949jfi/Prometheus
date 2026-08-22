@@ -60,7 +60,14 @@ def mahler_measure(coefficients: list) -> float:
     coeffs = coeffs[nonzero[0]:]
 
     if len(coeffs) == 1:
-        return abs(float(coeffs[0]))
+        # Cycle 047: MODULUS FIRST, THEN CAST. `float(complex)` discards the imaginary part,
+        # so the old `abs(float(coeffs[0]))` returned 3.0 for the constant 3+4j (correct: 5.0)
+        # and **0.0 for the constant 1j** — a zero measure for a non-zero polynomial, and 0.0 is
+        # precisely the value the zero-polynomial guard above exists to make unreachable. The
+        # degree>=1 branch below already used `abs(coeffs[0])` correctly, so one function
+        # disagreed with itself about the same coefficient. Input is cast to complex128 on entry,
+        # so complex coefficients are in-domain by construction, not an abuse of the API.
+        return float(abs(coeffs[0]))
 
     roots = np.roots(coeffs)
     leading = abs(coeffs[0])

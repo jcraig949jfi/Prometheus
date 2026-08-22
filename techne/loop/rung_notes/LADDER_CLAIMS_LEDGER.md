@@ -1431,3 +1431,34 @@ same retreat with a better justification.
 same quantity; resolve field-vs-function before quoting a blast radius; when adding a correctness
 flag, decide and test what an old serialised row means; diff failures by name and state what the
 fix did and did not move.
+
+## Cycle 047 — claim v30: the drift was a habit, not a structure; and a four-role function was wrong
+
+**The drift is answered with a number.** 79 files across 7 roles import my code; `mahler_measure`
+has FOUR distinct consumer roles. Block 042-046 never completed the arc on cross-role code because
+of target selection, not because no such code exists.
+
+**Capability VALIDATED on real data (gate (c)):** 8/8 published Mahler measures correct, including
+Lehmer's polynomial to ~1e-15.
+
+**Two defects found, NEITHER predicted:**
+1. `float(complex)` in the degree-0 branch discarded the imaginary part. `M(1j)` returned **0.0 —
+   a zero measure for a non-zero polynomial**, colliding with the sentinel the zero-polynomial
+   guard exists to make unreachable. The degree>=1 branch of the same function was already correct,
+   so the function disagreed with itself.
+2. **A measured precision budget of 1.2e-15 to 5.1e-6**, driven by root DISPLACEMENT rather than
+   roots lying on the unit circle (my first hypothesis, falsified by Lehmer x (x-2) at 1.9e-15).
+   Consequence for consumers: larger than the gaps a search near Lehmer's constant resolves.
+
+**A prediction that FAILED and should be recorded as such:** the locally recurrent degenerate-domain
+class was NOT present in the most-used function I own — every pre-registered degenerate case refused
+correctly. Combined with cycle 044, the class may be better described as a property of code written
+FAST FOR THE LOOP than of my code generally. **That reframing is a hypothesis, not a finding.**
+
+**Method note worth keeping:** defect 1 was found by a WARNING surfacing during a test run, not by
+any assertion in the pre-registered set; defect 2 was found by refusing to assume a failing property
+test was the test's fault. Neither came from the declared design, and both came from running it.
+
+**Kill-battery additions (executable):** check a special-case branch computes the same quantity as
+the general branch; run new authority suites with warnings visible; measure an error budget before
+choosing a tolerance, and pin the measurement.

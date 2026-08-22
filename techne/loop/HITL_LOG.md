@@ -1376,3 +1376,48 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      inequality, which `rand_index` does not**, so `1 - RI` is not a safe distance. **`n = 1` is
      DEFINED at 0 here while `normalized_vi`, `adjusted_rand` and `fowlkes_mallows` all refuse** —
      third cycle running that this family has not shared a domain.
+
+
+## Cycle 047 (2026-08-22) — the drift answered; a four-role function was silently wrong
+
+260. **HITL #78 latent, unchanged, not reopened. Arsenal red 29** (26 dependency artifacts;
+     **#242 still unruled, nothing installed**).
+261. **THE 042-046 DRIFT WAS NOT STRUCTURAL — it was a target-selection habit.** Repo-wide scoping
+     (12,543 files, 40 non-mine directories, no claim attached): **79 files across 7 roles import
+     my code** — charon 41, ergon 19, aporia 7, scripts 4, sigma_kernel 4, harmonia 3, theseus 1.
+     Top callable I own by distinct consumer-role count: **`mahler_measure` at FOUR roles.**
+262. **PREDICTION 1 HELD 8/8: the mathematics is correct.** Lehmer's polynomial to
+     1.1762808182599187 against published 1.176280818259917, plus golden ratio, Kronecker linear
+     cases, three cyclotomics and a product.
+263. **PREDICTION 2 FAILED — and that is a real result.** Every pre-registered degenerate case
+     (empty, all-zero, single zero, float zero) **refused correctly**. The locally recurrent defect
+     class was NOT present in the most-used function I own. Evidence the class is not everywhere,
+     which sharpens cycle 044's retirement of the class hypothesis.
+264. **DEFECT 1 (unpredicted, found by a ComplexWarning WHILE THE SUITE RAN):** the degree-0 branch
+     computed `abs(float(coeffs[0]))`, and `float(complex)` discards the imaginary part.
+     **`M(3+4j)` returned 3.0 (correct 5.0); `M(1j)` returned 0.0 (correct 1.0).** The second is
+     severe — **a zero measure for a NON-ZERO polynomial, and 0.0 is exactly the value the
+     zero-polynomial guard exists to make unreachable.** The degree>=1 branch of the SAME FUNCTION
+     used `abs(coeffs[0])` correctly, so it disagreed with itself about one coefficient. Fixed.
+265. **DEFECT 2 — A PRECISION BUDGET NOBODY HAD MEASURED.** My own multiplicativity property test
+     failed under Hypothesis; **I did not assume it was my test.** mpmath at 50 dps refereed: the
+     implementation matches `M(f)` to **1.4e-10**, and the whole discrepancy is in the product,
+     where `np.roots` displaces a root by 1.9e-6 and mpmath's own `polyroots` fails to converge.
+     Measured budget: **1.2e-15 to 5.1e-6 depending on conditioning.** My first hypothesis (roots
+     on the unit circle) was WRONG — Lehmer x (x-2) has them and is fine at 1.9e-15; the driver is
+     root DISPLACEMENT.
+266. **JAMES — THIS ONE HAS A CONSUMER CONSEQUENCE.** Lehmer's constant is 1.17628... and searches
+     for a smaller Mahler measure work at fine resolution. **A 5e-6 error is LARGER than the gaps
+     such a search resolves**, so a candidate could be mis-ranked. I have NOT checked whether any
+     of the four consuming roles actually operates at that resolution. Should cycle 048 trace that,
+     or is documenting the limit enough?
+267. **Tolerance was set to the MEASURED budget, not loosened to green.** The characterisation is
+     pinned in its own test (well-conditioned products asserted at 1e-13, the known bad case
+     bracketed), so a future loosening has to argue with data.
+268. **POSTCONDITION BY NAME-DIFF: 28 -> 29.** The single new failure was **my own new test**, now
+     green after measuring. Nothing else moved.
+269. **Track 1: `prometheus_math.polynomial_length`** (Mahler 1960, Mathematika 7:98-100), 20
+     tests, RED first, four categories. **Its zero-polynomial case REFUSES deliberately** rather
+     than returning the arithmetically-defensible 0.0 — a screen whose domain is wider than the
+     thing it screens passes inputs the expensive step then rejects. Composition is **Mahler's
+     two-sided bound M <= L <= 2^deg * M** against the function validated the same day.
