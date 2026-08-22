@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-22T16:22:38+00:00
+# PULSE — generated 2026-08-22T16:48:13+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,14 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        620
-consumed (state changes):   313  {'queue_state': 286, 'registry': 25, 'findings': 2}
+emitted (new files):        621
+consumed (state changes):   310  {'queue_state': 283, 'registry': 25, 'findings': 2}
 consumed/emitted:           0.50
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 305
+## Commits, 72h (non-cron): 304
+- dee67462 08-22 12:22 Aporia P126: CAMPAIGN W TERMINAL â€” W3 KILL. The X-line closes on a measurement.
 - ece24a24 08-22 12:08 Merge branch 'main' of https://github.com/jcraig949jfi/Prometheus
 - 106c0bd5 08-22 12:08 ATK-014 + correction of record: H(kill_pattern|cell) is 3.119 bits, not "~2 bits"
 - 42b72409 08-22 11:55 Aporia P125: W pass 2/3 â€” windowing helps slightly; my threshold is ~3x the actual resolution
@@ -39,8 +40,7 @@ verdict: ALIVE
 - 5c790f19 08-22 06:52 Aporia P114: campaign selection â€” Y rejected as unresolvable, X-3 opens at 1/3
 - 257acefa 08-22 06:25 Aporia P113: CAMPAIGN X-2 TERMINAL â€” PARK (E4); the gate was never resolvable
 - 9ed726a4 08-22 06:21 M1_STATUS 7p: the accumulated corpus is 132M rows with ~2 bits of signature
-- 42ae7455 08-22 06:21 Ergon: full scan complete â€” 132M failure rows, ~2 bits of signature
-- … +280 more
+- … +279 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
