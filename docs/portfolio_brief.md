@@ -1,5 +1,5 @@
 # Prometheus Portfolio Brief
-*Generated: 2026-08-22 08:14:46 AM UTC*
+*Generated: 2026-08-22 12:14:44 PM UTC*
 *Author: Metis (multi-machine reporter mode)*
 
 ---
@@ -7,7 +7,7 @@
 ## Act on this
 
 **Hephaestus @ M3, forge — substrate generator with falsification battery — DEAD, daemon stopped**
-No heartbeat for 120469min (7228189s). Was last ALIVE at 2026-05-28T01:38:15.244017-04:00.
+No heartbeat for 120709min (7242587s). Was last ALIVE at 2026-05-28T01:38:15.244017-04:00.
 Investigate the process on M3 and restart, or kill watchdog if intentional.
 
 ## Watch this
@@ -41,7 +41,7 @@ Check Pythia queue depth; refill DR ticket inbox if dry.
 
 ## Shadow review (Elenchus)
 
-Worklog passes: 139 | reviewed: 23 | awaiting review: 118
+Worklog passes: 143 | reviewed: 23 | awaiting review: 122
 - ELEN-CAMPAIGN-P51-P62: **MIXED** (invalidates-claim) The campaign's headline novel result -- the Katz-Sarnak symplectic split at p=1e-4 -- is N
 - ELEN-BLIND-REFUTATION-01: **MIXED** (note) BLIND-REFUTATION SAMPLE, 10 claims, seed 20260821. Result: 7 SURVIVE, 1 REFUTED, 2 UNTESTA
 - ELEN-HARMA-TRIAGE-03: **SOUND** (note) The weakness-quota fix from sweep 3 is still holding seven passes later, and has settled r
@@ -50,7 +50,7 @@ https://github.com/jcraig949jfi/Prometheus/blob/main/engine/shadow/REVIEWS.jsonl
 
 ## For the record
 
-Session-model activity (the live operating model): 274 non-cron commits in 72h. Ground truth: engine/PULSE.md.
+Session-model activity (the live operating model): 280 non-cron commits in 72h. Ground truth: engine/PULSE.md.
 
 
 **1 agents ALIVE** (Pronoia).
