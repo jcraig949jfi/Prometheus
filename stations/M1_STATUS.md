@@ -170,6 +170,14 @@ has never been attempted, partly because the residue was assumed too sparse to c
 - `step_trace` **16.9%** among REJECTED — genuinely sparse, and the honest limit.
 - `kill_vector` **0.0%** — the prereg is right about this one.
 
+**Qualification added the same day, against my own claim above.** "Populated" is not
+"informative", and stopping at a fill rate would have repeated the very error this section
+names. Measured: `kill_pattern` carries **785 distinct values, entropy 5.99 bits** (ceiling
+9.62) — genuinely informative — but **the top 5 patterns cover 48.6% of all rejections**, and
+**67% of REJECTED records carry no invariant keys in their payload at all**. Any "the corpus
+has rich residue" claim must carry those two numbers too. Full characterization for Charon's
+R2-6 in `ergon/probe/CORPUS_CHARACTERIZATION_FOR_R2-6_2026-08-22.md`.
+
 Also: `theseus/orchestration/signature_index.sqlite` holds **3,311 signature classes, 1,268 of
 them KILL, across 43 distinct generators and 26 claim kinds** — compressed shape-classes over
 millions of instances, not traces.
