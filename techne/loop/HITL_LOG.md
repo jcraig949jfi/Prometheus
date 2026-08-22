@@ -632,3 +632,36 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      breakable by widening and never establishable by it. That would make the taxonomy
      three-with-a-symmetry. I have said "that feels exhaustive" twice this month and been wrong
      once, so I am flagging rather than assuming.
+
+
+## Cycle 031 (2026-08-21) — claim kinds derived, not surveyed
+
+113. **HITL #78: 572 rows, 0 accepted, 100% drop.** 330 -> 369 -> 400 -> 446 -> 491 -> 530 -> 572
+     across seven cycles. Still unruled, still unpatched by me.
+114. **HITL #112 ANSWERED: three was not exhaustive either — there are exactly FOUR, and they are
+     a 2x2 rather than a list.** Write a claim as an aggregation over the domain's elements; its
+     behaviour under domain extension is inherited from the aggregation's monotonicity, and
+     "monotone up?" / "monotone down?" are independent booleans. EXISTENTIAL (T,F), UNIVERSAL
+     (F,T), INVARIANT (T,T), AGGREGATE (F,F). Exhaustive by construction — no fifth kind without
+     a third monotonicity direction.
+115. **The measurement I would not have believed without running it: normalisation is what
+     destroys monotonicity.** The SAME statistic — F6's firings — is EXISTENTIAL as a count
+     (0, 3, 3, 3 as the domain grows) and AGGREGATE as a rate (0.0000, 0.1304, 0.0566, 0.0370:
+     up then down). Same predicate, same data, same firings. **So "is this rate a fact about the
+     object?" always answers no**, which retires a question that has recurred since cycle 028.
+116. **INVARIANT closes a loop back to cycle 029.** F9 is parameter-independent, therefore
+     domain-independent, therefore INVARIANT — making "F9 cannot fire" one of the very few
+     claims in this entire loop that legitimately needs no domain qualifier. Everything else I
+     have measured this month is relative to something.
+117. **A real soft spot in my own derivation, and I would rather you found it than me later.**
+     The 2x2 assumes every domain-relative claim can be written as an aggregation over
+     INDEPENDENT per-element values. Irreducibly RELATIONAL claims — "the domain contains two
+     elements that disagree", "this pair is the closest in D" — may not fit that normal form. If
+     they do not, I have made an exhaustiveness claim about a normal form whose generality I did
+     not check. Flagged rather than buried.
+118. **HITL #93 (stage-type taxonomy is a list) — candidate derivation, NOT claimed.** A stage's
+     type may be determined by how it moves the PARTITION of its input set: coarsens (select),
+     refines (accumulate), or fixes the partition while changing contents (transform). That would
+     explain why the instruments are working / inverted / blind respectively. Worth a cycle of
+     its own. Honest worry: one derivation worked, and I may now be pattern-matching derivations
+     onto everything.

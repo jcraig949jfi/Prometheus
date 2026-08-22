@@ -183,3 +183,127 @@ def test_composes_with_the_real_F6_aggregate_result():
     d_mid = Domain("quiet+firing", tuple(quiet_idx + firing))
     claim = RelativeClaim("F6_resolution", narrow_v, d_narrow, AGGREGATE)
     assert not claim.entails_on(d_mid)                 # and the value really did change
+
+
+# ---- cycle 031: the derivation, and the two kinds cycle 030 missed --------------------------
+
+def test_THE_2x2_IS_EXHAUSTIVE_BY_CONSTRUCTION():
+    """**Answers HITL #112, and the answer is that three was not exhaustive either.**
+
+    "Monotone up?" and "monotone down?" are two independent booleans, so a claim's behaviour
+    under domain extension has exactly four possibilities. The taxonomy cannot acquire a fifth
+    member without someone finding a third monotonicity direction.
+    """
+    from prometheus_math.relative_claim import (
+        INVARIANT, KIND_TABLE, UNIVERSAL, kind_from_monotonicity,
+    )
+
+    assert kind_from_monotonicity(True, False) == EXISTENTIAL
+    assert kind_from_monotonicity(False, True) == UNIVERSAL
+    assert kind_from_monotonicity(True, True) == INVARIANT
+    assert kind_from_monotonicity(False, False) == AGGREGATE
+    assert len(KIND_TABLE) == 4
+    assert set(KIND_TABLE) == {(True, False), (False, True), (True, True), (False, False)}
+
+
+def test_a_holding_universal_travels_DOWNWARD_and_a_failed_one_travels_UP():
+    """The duality: a universal's positive is inherited by subsets, and its NEGATION is an
+    existential (of a counterexample) inherited by supersets."""
+    from prometheus_math.relative_claim import UNIVERSAL
+
+    big = Domain("big", (1, 2, 3, 4))
+    small = Domain("small", (1, 2))
+    holds = RelativeClaim("all_positive", True, big, UNIVERSAL)
+    assert holds.is_downward_closed and not holds.is_upward_closed
+    assert holds.entails_on(small)
+    assert not holds.entails_on(Domain("bigger", (1, 2, 3, 4, -9)))
+
+    fails = RelativeClaim("all_positive", False, small, UNIVERSAL, witness=-5)
+    assert fails.is_upward_closed and not fails.is_downward_closed
+    assert fails.entails_on(Domain("sup", (1, 2, -5, 7)))
+
+
+def test_a_failed_universal_without_its_counterexample_is_refused():
+    """Symmetric to the witnessless positive existential: the negation of a universal IS an
+    existential, so it travels only with its witness."""
+    from prometheus_math.relative_claim import UNIVERSAL
+    d = Domain("d", (1, 2))
+    with pytest.raises(ClaimError):
+        RelativeClaim("all_positive", False, d, UNIVERSAL)
+    RelativeClaim("all_positive", True, d, UNIVERSAL)
+
+
+def test_an_invariant_travels_everywhere_and_states_absolutely():
+    """The fourth cell, which cycle 030 had no name for: a claim that never depended on a
+    domain. F9's "cannot fire" is one — parameter-independence makes it domain-independent."""
+    from prometheus_math.relative_claim import INVARIANT
+    d = Domain("d", (1, 2))
+    c = RelativeClaim("F9_can_fire", False, d, INVARIANT)
+    assert c.is_upward_closed and c.is_downward_closed
+    assert c.entails_on(Domain("anything", ("x",)))
+    assert "independent of domain" in c.state_absolutely()
+
+
+def test_probe_monotonicity_classifies_all_four_from_one_chain():
+    from prometheus_math.relative_claim import INVARIANT, UNIVERSAL, probe_monotonicity
+    chain = [Domain(f"d{k}", tuple(range(n))) for k, n in enumerate((2, 4, 6, 8))]
+    assert probe_monotonicity(lambda d: len(d), chain) == EXISTENTIAL
+    assert probe_monotonicity(lambda d: -len(d), chain) == UNIVERSAL
+    assert probe_monotonicity(lambda d: 1, chain) == INVARIANT
+    # sizes 2,4,6,8 -> 2,1,0,2 : down, down, then up. Neither direction holds.
+    assert probe_monotonicity(lambda d: len(d) % 3, chain) == AGGREGATE
+
+
+def test_probe_monotonicity_refuses_a_non_increasing_chain():
+    from prometheus_math.relative_claim import probe_monotonicity
+    bad = [Domain("big", (1, 2, 3)), Domain("small", (1,))]
+    with pytest.raises(ClaimError):
+        probe_monotonicity(lambda d: len(d), bad)
+    with pytest.raises(ClaimError):
+        probe_monotonicity(lambda d: len(d), [Domain("only", (1,))])
+
+
+def test_COMPOSITION_normalisation_is_what_destroys_monotonicity():
+    """**The load-bearing measurement, on real substrate.** The SAME statistic — F6's firings —
+    is EXISTENTIAL as a count and AGGREGATE as a rate. Same predicate, same data, same firings;
+    dividing by |D| changes the kind.
+
+    So a claim's kind is a property of its aggregation operator, not of its subject matter, and
+    "is this rate a fact about the object?" always answers no.
+    """
+    from prometheus_math.relative_claim import probe_monotonicity
+    from techne.ladder_circuits.battery_chain import CHECKS, wide_candidates
+
+    wide = wide_candidates()
+    f6 = dict(CHECKS)["F6"]
+    col = []
+    for c, m in wide:
+        try:
+            col.append(bool(f6(list(c), m)[0]))
+        except Exception:
+            col.append(None)
+    firing = [i for i, v in enumerate(col) if v is False]
+    quiet = [i for i in range(len(wide)) if i not in firing]
+    seq = [quiet[:20], quiet[:20] + firing, quiet[:20] + firing + quiet[20:50],
+           list(range(len(wide)))]
+    chain = [Domain(f"d{k}", tuple(idxs)) for k, idxs in enumerate(seq)]
+
+    count = lambda d: sum(1 for i in d.members if col[i] is False)
+    rate = lambda d: count(d) / len(d)
+    assert probe_monotonicity(count, chain) == EXISTENTIAL
+    assert probe_monotonicity(rate, chain) == AGGREGATE
+
+
+def test_COMPOSITION_kronecker_is_a_holding_universal_on_real_polynomials():
+    """M >= 1 for every integer polynomial, measured on the real candidate sets. It travels
+    downward: holding on the wide set entails holding on any subset of it."""
+    from prometheus_math.relative_claim import UNIVERSAL
+    from techne.ladder_circuits.battery_chain import wide_candidates
+
+    wide = wide_candidates()
+    assert all(m >= 1.0 - 1e-9 for _c, m in wide)
+    d_wide = Domain("wide", tuple(c for c, _m in wide))
+    d_part = Domain("part", tuple(c for c, _m in wide[:20]))
+    claim = RelativeClaim("kronecker_M_ge_1", True, d_wide, UNIVERSAL)
+    assert claim.is_downward_closed
+    assert claim.entails_on(d_part)

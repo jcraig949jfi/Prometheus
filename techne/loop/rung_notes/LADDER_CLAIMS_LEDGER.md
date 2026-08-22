@@ -726,3 +726,47 @@ three-with-a-symmetry. Flagged rather than assumed.
 
 **Kill-battery additions (executable):** undeclared-domain refusal; witnessless-existential
 refusal; aggregate-entailment refusal; both-directions requirement for a non-monotonicity claim.
+
+## Cycle 031 — claim v16: the kinds are a 2x2, derived
+
+**HITL #112 asked whether cycle 030's two kinds were exhaustive and offered UNIVERSAL as the
+third. Three was not exhaustive either.**
+
+**Claim v16.** A domain-relative claim written as `Phi(O, D) = A({phi(O, x) : x in D})` inherits
+its behaviour under domain extension entirely from `A`'s monotonicity under multiset extension.
+"Monotone up?" and "monotone down?" are independent booleans, so there are exactly four kinds:
+
+    up  down   kind          aggregations
+    T   F      EXISTENTIAL   any / max / count / sum of non-negatives
+    F   T      UNIVERSAL     all / min-as-a-requirement
+    T   T      INVARIANT     an A that ignores the multiset
+    F   F      AGGREGATE     mean / rate / entropy / variance — anything NORMALISED
+
+Exhaustive by construction rather than by survey: no fifth kind without a third monotonicity
+direction.
+
+**The load-bearing measurement.** The same statistic changes kind depending only on whether it is
+divided by |D|. F6's firings over a real nested chain: COUNT 0, 3, 3, 3 (monotone up,
+EXISTENTIAL); RATE 0.0000, 0.1304, 0.0566, 0.0370 (up then down, AGGREGATE). Same predicate,
+same data, same firings. **A claim's kind is a property of its aggregation operator, not of its
+subject matter** — and "is this rate a fact about the object?" always answers no.
+
+**The duality, tested on real substrate.** A holding UNIVERSAL travels downward to subsets; its
+negation is an existential (a counterexample) and travels upward. Kronecker's M >= 1 holds across
+81 real polynomials and travels down; canon R6's "every refutation carries a witness" fails for
+EagerFalsifier, and the counterexample found on a 1-conjecture subset survives to the
+6-conjecture superset. The module now refuses a failed universal without its counterexample,
+symmetric to refusing a positive existential without its witness.
+
+**INVARIANT closes the cycle-029 loop.** F9 is parameter-independent, therefore domain-independent,
+therefore INVARIANT — "F9 cannot fire" is one of the very few claims in this loop that
+legitimately needs no domain qualifier.
+
+**Declared soft spot (HITL #117).** The derivation assumes every domain-relative claim can be
+written as an aggregation over INDEPENDENT per-element values. Irreducibly relational claims may
+not fit that normal form, in which case the 2x2 classifies a subclass rather than everything.
+Recorded as a limit on the exhaustiveness claim, not as a footnote.
+
+**Kill-battery additions (executable):** `kind_from_monotonicity` (the 2x2 as code);
+`probe_monotonicity` over a nested chain, refusing a non-increasing chain; count-versus-rate
+comparison as the normalisation probe.

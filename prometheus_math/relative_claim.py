@@ -1,4 +1,6 @@
-"""Claims that carry their domain — and the two kinds that behave differently. (Cycle 030.)
+"""Claims that carry their domain — and the FOUR kinds, derived rather than surveyed.
+
+(Cycle 030 built two of them; cycle 031 derived all four and found the missing pair.)
 
 Three independent arrivals of the same complaint prompted this:
 
@@ -24,8 +26,15 @@ way when `D` grows:
   adding them, 0.2285 on the full set. Widening moved it **up and then down**. Every aggregate
   value is domain-relative in both directions, permanently.
 
-So a witnessed existential may eventually be stated absolutely; an aggregate never may. This
-module encodes that difference rather than treating all three arrivals as one thing.
+So a witnessed existential may eventually be stated absolutely; an aggregate never may.
+
+**Cycle 031 replaced that two-item list with a derivation.** Write a domain-relative claim as an
+aggregation over the domain's elements, `Phi(O, D) = A({phi(O, x) : x in D})`. Its behaviour
+under domain extension is inherited entirely from `A`'s monotonicity under multiset extension,
+and "monotone up?" and "monotone down?" are two independent booleans — so there are exactly four
+kinds, and the taxonomy cannot grow without someone finding a third monotonicity direction. The
+two cycle-030 kinds were the off-diagonal; UNIVERSAL and INVARIANT are the two I had missed. See
+the derivation block at the foot of this module.
 
 **What it deliberately refuses:** a claim constructed without a domain. Not defaulted to "all
 inputs", not defaulted to the sample in hand — refused, because every one of the three arrivals
@@ -38,10 +47,13 @@ import json
 from dataclasses import dataclass, field
 from typing import Any, Iterable, Optional, Sequence, Tuple
 
-__all__ = ["Domain", "RelativeClaim", "EXISTENTIAL", "AGGREGATE", "ClaimError"]
+__all__ = ["Domain", "RelativeClaim", "EXISTENTIAL", "UNIVERSAL", "INVARIANT", "AGGREGATE",
+           "ClaimError", "kind_from_monotonicity", "probe_monotonicity", "KIND_TABLE"]
 
-EXISTENTIAL = "EXISTENTIAL"
-AGGREGATE = "AGGREGATE"
+EXISTENTIAL = "EXISTENTIAL"      # monotone UP:   once witnessed, holds on every superset
+UNIVERSAL = "UNIVERSAL"          # monotone DOWN: holds on every subset; broken by widening
+INVARIANT = "INVARIANT"          # monotone BOTH: independent of the domain entirely
+AGGREGATE = "AGGREGATE"          # monotone NEITHER: normalised, so it moves both ways
 
 
 class ClaimError(ValueError):
@@ -100,7 +112,7 @@ class RelativeClaim:
     witness: Optional[Any] = None
 
     def __post_init__(self) -> None:
-        if self.kind not in (EXISTENTIAL, AGGREGATE):
+        if self.kind not in (EXISTENTIAL, UNIVERSAL, INVARIANT, AGGREGATE):
             raise ClaimError(f"unknown claim kind {self.kind!r}")
         if not isinstance(self.domain, Domain):
             raise ClaimError(
@@ -111,23 +123,52 @@ class RelativeClaim:
             raise ClaimError(
                 f"a positive existential ({self.property_name!r}) needs its witness; without one "
                 "it cannot travel to a superset and is just an aggregate in disguise")
+        if self.kind == UNIVERSAL and not bool(self.value) and self.witness is None:
+            raise ClaimError(
+                f"a FAILED universal ({self.property_name!r}) needs its counterexample; the "
+                "negation of a universal is an existential, and it travels only with its witness")
 
     @property
     def is_upward_closed(self) -> bool:
-        """Does this claim survive domain growth? Only a witnessed positive existential does."""
-        return self.kind == EXISTENTIAL and bool(self.value) and self.witness is not None
+        """Survives domain GROWTH. An invariant, a witnessed positive existential, or a failed
+        universal (whose counterexample is itself a witness)."""
+        if self.kind == INVARIANT:
+            return True
+        if self.kind == EXISTENTIAL:
+            return bool(self.value) and self.witness is not None
+        if self.kind == UNIVERSAL:
+            return (not bool(self.value)) and self.witness is not None
+        return False
+
+    @property
+    def is_downward_closed(self) -> bool:
+        """Survives domain SHRINKAGE. An invariant, or a holding universal — every subset of a
+        set on which P holds everywhere also has P holding everywhere."""
+        if self.kind == INVARIANT:
+            return True
+        if self.kind == UNIVERSAL:
+            return bool(self.value)
+        return False
 
     def entails_on(self, other: Domain) -> bool:
         """Does this claim, as measured, already hold on `other` without re-measuring?
 
-        Witnessed positive existential: yes, on any superset — the witness is still in there.
-        Negative existential: no. "No witness in D" says nothing about D ∪ anything.
-        Aggregate: never. Measured non-monotone in both directions, so a superset value cannot
-        be inferred at all, only re-measured.
+        The four cases fall straight out of the 2x2:
+
+            INVARIANT             any domain — the claim never depended on one
+            EXISTENTIAL positive  any SUPERSET — the witness is still in there
+            EXISTENTIAL negative  nothing. "No witness in D" says nothing about D union anything
+            UNIVERSAL positive    any SUBSET — holding everywhere is inherited downward
+            UNIVERSAL negative    any SUPERSET — the counterexample is still in there
+            AGGREGATE             nothing, ever, not even its own domain: re-measure
         """
-        if not self.is_upward_closed:
-            return False
-        return other.contains_all_of(self.domain)
+        if self.kind == INVARIANT:
+            return True
+        if self.is_upward_closed and other.contains_all_of(self.domain):
+            return True
+        if self.is_downward_closed and self.domain.contains_all_of(other):
+            return True
+        return False
 
     def state_absolutely(self) -> str:
         """Render the claim without a domain qualifier — permitted only when it is upward-closed.
@@ -135,6 +176,8 @@ class RelativeClaim:
         Raises otherwise, which is the whole point: an aggregate quoted absolutely is the defect
         that showed up three separate times.
         """
+        if self.kind == INVARIANT:
+            return f"{self.property_name} = {self.value!r} (independent of domain)"
         if not self.is_upward_closed:
             raise ClaimError(
                 f"{self.property_name!r} is {self.kind} and cannot be stated absolutely; it holds "
@@ -145,3 +188,71 @@ class RelativeClaim:
     def render(self) -> str:
         return (f"{self.property_name} = {self.value!r} on domain {self.domain.name!r} "
                 f"(n={len(self.domain)}, digest={self.domain.digest}, kind={self.kind})")
+
+
+# =============================================================================================
+# The derivation (cycle 031) — the kinds are not a list, they are the cells of a 2x2.
+#
+# Write a domain-relative claim as an aggregation over the domain's elements:
+#
+#     Phi(O, D) = A({ phi(O, x) : x in D })
+#
+# Its behaviour under domain extension is inherited entirely from A's monotonicity under
+# MULTISET EXTENSION, and there are exactly four possibilities because "monotone up?" and
+# "monotone down?" are two independent booleans:
+#
+#     up   down   kind          example aggregations
+#     ---------------------------------------------------------------------------
+#     T    F      EXISTENTIAL   any / max / count / sum of non-negatives
+#     F    T      UNIVERSAL     all / min-as-a-requirement
+#     T    T      INVARIANT     an A that ignores the multiset (a constant)
+#     F    F      AGGREGATE     mean / rate / entropy / variance — anything NORMALISED
+#
+# The classification is exhaustive by construction rather than by survey, which is what
+# HITL #112 asked for.
+#
+# **The load-bearing observation is that normalisation is what destroys monotonicity**, and it
+# is measurable on one statistic rather than argued. Cycle 031, F6 over real candidates:
+#
+#     domain size    COUNT of firings    RATE of firings
+#             20                    0             0.0000
+#             23                    3   up        0.1304   up
+#             53                    3   same      0.0566   DOWN
+#             81                    3   same      0.0370   DOWN
+#
+# Same predicate, same data, same firings. The count is monotone up; dividing it by |D| makes
+# it move both ways. So a claim's kind is a property of its AGGREGATION OPERATOR, not of its
+# subject matter — and "is this rate a fact about the object?" always answers no.
+# =============================================================================================
+
+KIND_TABLE = {
+    (True, False): EXISTENTIAL,
+    (False, True): UNIVERSAL,
+    (True, True): INVARIANT,
+    (False, False): AGGREGATE,
+}
+
+
+def kind_from_monotonicity(monotone_up: bool, monotone_down: bool) -> str:
+    """The 2x2, as code. Every combination of the two booleans maps to a kind, so the taxonomy
+    cannot acquire a fifth member without someone finding a third monotonicity direction."""
+    return KIND_TABLE[(bool(monotone_up), bool(monotone_down))]
+
+
+def probe_monotonicity(measure, chain: Sequence[Domain]) -> str:
+    """Classify a claim EMPIRICALLY by running it along a chain of nested growing domains.
+
+    `chain` must be increasing; `measure(domain) -> comparable value`. Returns the kind implied
+    by the observed monotonicity. Evidence, not proof — a chain that happens not to exhibit a
+    decrease will classify a genuinely non-monotone measure as monotone, which is the same
+    sampling limit the constancy probe has. Use it to CLASSIFY, then keep the chain on record.
+    """
+    if len(chain) < 2:
+        raise ClaimError("classifying monotonicity needs at least two nested domains")
+    for a, b in zip(chain, chain[1:]):
+        if not b.contains_all_of(a):
+            raise ClaimError(f"domain chain is not increasing at {a.name!r} -> {b.name!r}")
+    values = [measure(d) for d in chain]
+    up = all(b >= a for a, b in zip(values, values[1:]))
+    down = all(b <= a for a, b in zip(values, values[1:]))
+    return kind_from_monotonicity(up, down)
