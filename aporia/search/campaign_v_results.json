@@ -1,0 +1,88 @@
+{
+ "new_operators": [
+  "inverse_binomial",
+  "second_diff",
+  "stirling2",
+  "bisect_even",
+  "bisect_odd",
+  "aerate",
+  "runmax"
+ ],
+ "S0": {
+  "inverse_binomial": {
+   "tested": 5,
+   "passed": 5,
+   "PASS": true
+  },
+  "second_diff": {
+   "tested": 5,
+   "passed": 5,
+   "PASS": true
+  },
+  "stirling2": {
+   "tested": 5,
+   "passed": 5,
+   "PASS": true
+  },
+  "bisect_even": {
+   "tested": 5,
+   "passed": 5,
+   "PASS": true
+  },
+  "bisect_odd": {
+   "tested": 5,
+   "passed": 5,
+   "PASS": true
+  },
+  "aerate": {
+   "tested": 5,
+   "passed": 5,
+   "PASS": true
+  },
+  "runmax": {
+   "tested": 5,
+   "passed": 5,
+   "PASS": true
+  }
+ },
+ "operators_active": [
+  "inverse_binomial",
+  "second_diff",
+  "stirling2",
+  "bisect_even",
+  "bisect_odd",
+  "aerate",
+  "runmax"
+ ],
+ "neglected_population": 28830,
+ "raw_hits": 6603,
+ "clean_after_audit": 5188,
+ "N_new": 334,
+ "per_operator_new": {
+  "inverse_binomial": 51,
+  "bisect_even": 94,
+  "runmax": 152,
+  "bisect_odd": 45,
+  "aerate": 3,
+  "second_diff": 7
+ },
+ "branch": "V1",
+ "TERMINAL": "KEEP",
+ "partition": {
+  "points": 200,
+  "coverage": {
+   "V3": 10,
+   "V2": 40,
+   "V1": 150
+  }
+ },
+ "census_not_sample": true,
+ "thresholds": "materiality judgements; census has no sampling error",
+ "consolidated_records": 1090,
+ "consolidated_targets": 544,
+ "supersedes": [
+  "sb_candidate_relations.jsonl",
+  "sb_candidates_formula_survivors.jsonl",
+  "sb_candidates_corrected_population.jsonl"
+ ]
+}

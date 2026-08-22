@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-22T19:06:48+00:00
+# PULSE — generated 2026-08-22T19:32:22+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,14 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        636
-consumed (state changes):   293  {'queue_state': 271, 'registry': 21, 'findings': 1}
+emitted (new files):        638
+consumed (state changes):   292  {'queue_state': 270, 'registry': 21, 'findings': 1}
 consumed/emitted:           0.46
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 303
+## Commits, 72h (non-cron): 302
+- cfe01488 08-22 15:06 Aporia P132: CAMPAIGN U (one pass) â€” U3 SURVIVES. Population correction does not destroy S/T.
 - 8795e36b 08-22 14:41 Aporia P131: CAMPAIGN T (one pass) â€” ADVANCE. The candidate set survives the formula audit.
 - 7fa2825e 08-22 14:15 Aporia P130: CAMPAIGN S TERMINAL â€” ADVANCE. 259 verified relations, honestly named.
 - 9ccb46c9 08-22 13:50 Aporia P129: Campaign S pass 2/3 â€” sweep COMPLETE; 301 sleeping beauties carry verified non-trivial relations
@@ -37,8 +38,7 @@ verdict: ALIVE
 - aa06e865 08-22 07:18 Aporia P115: X-3 pass 2/3 â€” dev any-valid 0.964, but strict FELL; K3 chance corrected
 - e1813d9f 08-22 07:17 M1_STATUS 7q: P1 final â€” the band and the screen want opposite rungs
 - 8771f27e 08-22 07:16 Ergon: P1 FINAL â€” UNDECIDED-UNDERPOWERED, and it breaks my own recommendation
-- c8374458 08-22 07:13 Techne cycle 047: a four-role function was silently wrong â€” and the drift was a habit, not a structure
-- … +278 more
+- … +277 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
