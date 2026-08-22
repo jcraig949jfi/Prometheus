@@ -763,3 +763,33 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
 136. **Open, and I do not know how to do it:** the layered attribution works where preprocessing
      is a cleanly separable function. Where preprocessing is entangled with the computation, I
      have no way to attribute at all. Every rung consumes some library, so this will recur.
+
+
+## Cycle 035 (2026-08-21) — round-9 fold-in
+
+137. **HITL #78: 699 rows, 0 accepted, 100% drop, TEN cycles unruled.**
+138. **Cycle 033's "repair is arity" is SUPERSEDED — I was defending a premise the result never
+     needed.** The 2x2 classifies by the extension relation alone; no aggregation normal form is
+     required. Demonstrated on induced-subgraph connectivity, which has no fixed-arity form and
+     classifies cleanly as AGGREGATE (moves UP on one chain, DOWN on another). **The four
+     monotonicity classes stand and are stronger without the premise.**
+139. **My cycle-033 precondition (P1) is WRONG and is retired.** It said "phi must not read |D|".
+     Counterexamples: `sum 1 / |D|` reads |D| and is INVARIANT; `|D| - count_P(D)` reads |D| and
+     is EXISTENTIAL. Reading |D| is neither necessary nor sufficient for non-monotonicity. It was
+     a syntactic proxy for a semantic property.
+140. **The stage taxonomy has FOUR motions, not three, and needs TWO coordinates.** INCOMPARABLE
+     is real on live data: R10's assumption_status and conclusion_status partitions over the
+     battery are [6,8] and [5,9] with neither refining the other. Also a correction to cycle 026:
+     pure reordering is bijective and PRESERVING; truncation is what coarsens.
+141. **A DERIVATION rather than a list, and it explains an old puzzle.** A DETERMINISTIC stage
+     that is a pure function of its predecessor's output can only COARSEN or PRESERVE —
+     refinement and incomparability are impossible. So a stage measuring REFINEMENT has PROVED it
+     read beyond its predecessor. That is exactly why cycle 024's transform pipeline coarsened and
+     cycle 027's battery refined: the battery reads the ORIGINAL candidate at every check.
+142. **The discipline caught me on my own derivation.** An `f` returning `random()` measured
+     REFINEMENT, apparently violating it. It does not — `random()` is not a function of its input,
+     it reads the generator state, which IS information beyond the predecessor. Instance, not
+     counterexample. Missing precondition: determinism.
+143. **Round-10 review arrived mid-cycle and is next**, including a much better-specified version
+     of the instrument contract I was about to build: POSITIVE / NEGATIVE / INVALID fixtures plus
+     a sensitivity witness, with promotion refused unless all execute.

@@ -877,3 +877,45 @@ merge at L3, correctly — they are alpha-equivalent, so a renaming quotient sho
 **Kill-battery additions (executable):** layered invariance attribution; control-normalisation
 self-test applied before any comparison; per-rung "does this circuit add any congruence above the
 CAS?" probe.
+
+## Cycle 035 — claim v16 keeps its cells and loses its premise; stage taxonomy derived
+
+**v16 REVISED.** The four monotonicity classes stand. **The aggregation normal form is dropped** —
+the classification needs only the extension relation, `D subset D'`, and the two booleans
+"can the value move up / down". Cycle 033's arity repair is superseded: it defended a premise the
+result never required.
+
+Demonstrated on the case that breaks every normal form — induced-subgraph connectivity has no
+fixed-arity aggregation form and classifies cleanly: UP on chain (0,2)->(0,1,2), DOWN on
+(0)->(0,1)->(0,1,2)->(0,1,2,4), therefore AGGREGATE.
+
+**Precondition (P1) RETIRED.** "phi must not read |D|" is a syntactic proxy and is false in both
+directions: `sum 1 / |D|` reads |D| and is INVARIANT; `|D| - count_P(D)` reads |D| and is
+EXISTENTIAL. Replacement shape (not yet built): a restricted aggregation DSL with certified
+monotonicity signatures propagated compositionally, reporting PROVED / COUNTEREXAMPLE / UNSETTLED
+and never turning failure-to-prove into non-monotonicity.
+
+## Cycle 035 — claim v17: stage type is (partition motion, content transformation)
+
+**Four motions, not three:** `Q<P` COARSENING, `Q>P` REFINEMENT, `Q=P` PRESERVING, `Q||P`
+INCOMPARABLE. The fourth is real on live data — R10's assumption_status and conclusion_status
+partitions over the battery are [6,8] and [5,9] and neither refines the other.
+
+**Two coordinates, not one label.** Identity, reorder, redact and hash all read PRESERVING;
+partition theory cannot separate them, which is cycle 025's blind spot located rather than
+rediscovered. Correction to cycle 026: pure reordering is bijective and PRESERVING; truncation
+coarsens.
+
+**THE DERIVATION.** A DETERMINISTIC stage that is a pure function of its predecessor's output can
+only COARSEN or PRESERVE — instances agreeing on the predecessor agree here, so the new partition
+is a union of old blocks. **Refinement and incomparability are impossible, not unlikely.** Hence a
+stage measuring REFINEMENT has PROVED it read beyond its predecessor, which explains the cycle
+024 / 027 split rather than recording it: the transform pipeline saw only the previous output,
+the battery reads the original candidate at every check.
+
+**Precondition found by pointing the discipline at the derivation:** determinism. An `f` returning
+`random()` measures REFINEMENT and is not a counterexample — it is not a function of its input,
+it reads the generator state, which is information beyond the predecessor.
+
+**Kill-battery additions (executable):** four-way partition-motion classification; two-coordinate
+stage descriptor; function-of-predecessor derivation check; determinism precondition probe.
