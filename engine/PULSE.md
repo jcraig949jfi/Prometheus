@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-22T01:34:32+00:00
+# PULSE — generated 2026-08-22T02:01:50+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,19 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        484
-consumed (state changes):   408  {'queue_state': 360, 'registry': 45, 'findings': 2, 'doctrine': 1}
+emitted (new files):        490
+consumed (state changes):   411  {'findings': 3, 'queue_state': 362, 'registry': 45, 'doctrine': 1}
 consumed/emitted:           0.84
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 274
+## Commits, 72h (non-cron): 280
+- 2878718e 08-21 21:57 Techne loop cycle 035: round-9 fold-in â€” drop the premise, keep the 2x2; stage taxonomy derived
+- 607ccc66 08-21 21:53 M1_STATUS 7n: free-lane capacity understated 25x â€” fleet planning fact
+- 32265fd6 08-21 21:51 Ergon: fix a stale delta inside my own escalation before it fossilizes
+- b956a74a 08-21 21:51 Ergon: rep-1 complete at n=620 â€” the pre-filed prediction held
+- 154fea62 08-21 21:36 Techne loop cycle 034: preprocessing attribution â€” R0's congruence is borrowed, R1/R2's is not
+- faa63239 08-21 21:34 Aporia P99: the Hintikka attribution pinned in layers â€” verified where fetchable, pending where walled
 - 45e4a40d 08-21 21:05 Aporia P98: the tier consolidated â€” sixteen catches, six classes, one door
 - 1fe9e387 08-21 21:05 Techne loop cycle 033: the cycle-031 soft spot resolves â€” relational claims fit, via arity
 - 7df11e9e 08-21 20:58 Techne loop cycle 032: round-8 fold-in â€” two published claims narrowed, one superseded
@@ -32,13 +38,7 @@ verdict: ALIVE
 - 1b2685e1 08-21 17:30 Techne loop cycle 026: scope statement vindicated â€” instruments transfer to selection stages
 - 11be7f4b 08-21 17:15 Aporia P91: the bootstrap engine and the pincer â€” both with derived nulls
 - 2f86c977 08-21 16:58 Techne loop cycle 025: real substrate â€” a live 100% loader drop in ergon/probe, and instruments that do not transfer
-- c7e4b645 08-21 16:45 Aporia P90: the sweep paradigm calibrates itself â€” and finds a fork in the taxonomy
-- 71bea235 08-21 16:26 Techne loop cycle 024: composition â€” deficit accumulates, and the instrument is blind to two of its own traps
-- d6fde1fb 08-21 16:13 Aporia P89: P18+P19 â€” coherence counted, and the transport primitive gets its definition page
-- 2cee06f1 08-21 15:53 Techne loop cycle 023: sweep directions unified in bits; two self-corrections
-- 664a1cc9 08-21 15:41 Aporia P88: P16+P17 â€” the decline leg reproduces the mirror's own CM flags, blind
-- bd46fb07 08-21 15:21 Techne loop cycle 022: second pass opens â€” R3 claim narrowed, aliasing found half-blind
-- … +249 more
+- … +255 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records

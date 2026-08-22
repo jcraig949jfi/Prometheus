@@ -75,3 +75,20 @@ Both identities are settled history; the content is leg B — the kill
 REDISCOVERED by a search that did not know the answer and could have
 reported zero or many (it reported exactly one, correct) — and the tree's
 Q3, which prices kills by what rested on the belief.
+
+---
+
+## Attribution pins (P100, layered per the citation rule)
+
+- **k=5**: Lander, L. J.; Parkin, T. R., "Counterexample to Euler's conjecture
+  on sums of like powers", *Bull. Amer. Math. Soc.* 72(6):1079 (1966) — the
+  famously terse announcement. Citation string quoted from Wikipedia's
+  reference list (tertiary-quoted layer; primary PDF unfetched).
+- **k=4**: the 95800 quadruple was found by **Roger E. Frye** (1988),
+  "Finding 95800^4 + 217519^4 + 414560^4 = 422481^4 on the Connection
+  Machine", *Proc. Supercomputing 88*, Vol. II, pp. 106-116 — tertiary-quoted.
+  CORRECTION to this artifact's original "(Elkies/Frye 1988)": the SMALLEST
+  quadruple is Frye's machine search; Elkies (Math. Comp., 1988) supplied the
+  elliptic-curve method and the FIRST k=4 counterexample — a different,
+  larger quadruple. The conflation is fixed; Elkies's exact citation remains
+  at secondary level pending its own fetch.
