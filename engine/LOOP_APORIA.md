@@ -37,6 +37,24 @@ watch-paced — every pass does one real item.
    as capacity allows; schema + backup job first (DECISION 2 makes backup non-deferrable).
 
 
+## A VERDICT RULE IS AN INSTRUMENT (adopted P121 from two wrong rules in one script)
+
+**Automated verdict rules need the same scrutiny as the measurements they judge.** In one X-5
+audit script, two of three rules produced confident labels that were the opposite of the truth:
+one compared a suspect operator against a comparator that was equally affected, so an
+equally-affected second case masked the finding instead of confirming it; the other compared
+single draws against a threshold designed for a mean, where one hit already exceeded the line,
+and reported a passing gate as unreliable.
+
+- **State what the rule would output under the null** before running it. If the null output is
+  the same as the finding output, the rule discriminates nothing.
+- **Check the comparator can actually discriminate.** "X is worse than the others" fails when
+  one of the others has the same defect.
+- **Check granularity against the threshold** — the same rule as GATE DESIGN, applied to the
+  judgement layer: a per-draw test against a mean-calibrated threshold is not a test.
+- Report the measurement even when the rule's label is withdrawn; the numbers usually survive
+  the rule that misread them.
+
 ## BRANCH CONDITIONS MUST PARTITION (adopted P116 from four consecutive defects)
 
 **Before the pass that reads them runs, verify that the preregistered branches map every

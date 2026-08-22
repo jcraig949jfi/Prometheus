@@ -1,0 +1,134 @@
+{
+ "A1_raw_block_length": {
+  "20": {
+   "k_kept": 95,
+   "L1_any_valid": "337/400",
+   "L1_rate": 0.8425,
+   "L1_wilson": [
+    0.8036,
+    0.8749
+   ],
+   "L1_by_op": {
+    "diff": "71/80",
+    "partsum": "76/80",
+    "binomial": "61/80",
+    "moebius": "63/80",
+    "shift": "66/80"
+   },
+   "L2_learned": "119/320",
+   "L2_learned_rate": 0.3719,
+   "L2_raw": "55/320",
+   "L2_raw_rate": 0.1719,
+   "D": 0.2,
+   "discordance": 0.225
+  },
+  "22": {
+   "k_kept": 96,
+   "L1_any_valid": "332/400",
+   "L1_rate": 0.83,
+   "L1_wilson": [
+    0.7901,
+    0.8636
+   ],
+   "L1_by_op": {
+    "diff": "72/80",
+    "partsum": "76/80",
+    "binomial": "61/80",
+    "moebius": "56/80",
+    "shift": "67/80"
+   },
+   "L2_learned": "123/320",
+   "L2_learned_rate": 0.3844,
+   "L2_raw": "54/320",
+   "L2_raw_rate": 0.1688,
+   "D": 0.2156,
+   "discordance": 0.2406
+  },
+  "23": {
+   "k_kept": 98,
+   "L1_any_valid": "337/400",
+   "L1_rate": 0.8425,
+   "L1_wilson": [
+    0.8036,
+    0.8749
+   ],
+   "L1_by_op": {
+    "diff": "73/80",
+    "partsum": "76/80",
+    "binomial": "63/80",
+    "moebius": "58/80",
+    "shift": "67/80"
+   },
+   "L2_learned": "123/320",
+   "L2_learned_rate": 0.3844,
+   "L2_raw": "55/320",
+   "L2_raw_rate": 0.1719,
+   "D": 0.2125,
+   "discordance": 0.2375
+  }
+ },
+ "A1_verdict": "PLATEAU",
+ "A1_note": "RAW_K stays 20 regardless of which length scored best; this characterises sensitivity",
+ "A2_v2_length_artifact": {
+  "diff": {
+   "n": 80,
+   "gap_full_target": 1.3101,
+   "gap_length_matched_target": 0.1951,
+   "reduction": 1.1151,
+   "reduction_frac": 0.8511
+  },
+  "partsum": {
+   "n": 80,
+   "gap_full_target": 1906.7234,
+   "gap_length_matched_target": 1906.5135,
+   "reduction": 0.2098,
+   "reduction_frac": 0.0001
+  },
+  "binomial": {
+   "n": 80,
+   "gap_full_target": 734.1297,
+   "gap_length_matched_target": 0.006,
+   "reduction": 734.1237,
+   "reduction_frac": 1.0
+  },
+  "moebius": {
+   "n": 80,
+   "gap_full_target": 1951.0567,
+   "gap_length_matched_target": 0.6092,
+   "reduction": 1950.4475,
+   "reduction_frac": 0.9997
+  },
+  "shift": {
+   "n": 80,
+   "gap_full_target": 1.304,
+   "gap_length_matched_target": 0.6896,
+   "reduction": 0.6144,
+   "reduction_frac": 0.4712
+  }
+ },
+ "A2_verdict": "NO SECOND ARTIFACT",
+ "A3_gpos_stability": {
+  "n_derangements": 100,
+  "mean_V": 1.9438,
+  "adjusted_chance": 0.000768,
+  "threshold_3x": 0.002304,
+  "learned": {
+   "mean": 0.00166,
+   "min": 0.0,
+   "max": 0.00937,
+   "p90": 0.00313,
+   "frac_over_threshold": 0.45,
+   "true_rate": 0.3719
+  },
+  "raw": {
+   "mean": 0.00125,
+   "min": 0.0,
+   "max": 0.00625,
+   "p90": 0.00313,
+   "frac_over_threshold": 0.37,
+   "true_rate": 0.1719
+  },
+  "verdict": "G-POS UNRELIABLE"
+ },
+ "frozen_quantities_computed": false
+}
