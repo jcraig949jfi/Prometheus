@@ -176,6 +176,27 @@ applies-to: claim classes this attack must be run against before the claim is be
 - **applies-to:** every producer/consumer pair crossing a file boundary; **mandatory gate
   before any campaign advances past P1.**
 
+### ATK-014 confirmatory estimator (an instrument that cannot disagree with its hypothesis)
+- **class:** vacuous-metric / self-reference
+- **signature:** a statistic whose computation silently discards exactly the evidence that
+  would refute the hypothesis it tests, so it is correct *only when the hypothesis is true*
+  and biased toward the hypothesis whenever it is false. Presents as a strong confirmation.
+- **probe:** EXECUTABLE — `python attacks/probes/atk014_confirmatory_estimator.py`
+  (exit 1 = defect present). It runs the committed scanner unmodified over a synthetic corpus
+  with known ground truth. General method (Techne's rule, HITL #129/#133): **before trusting an
+  instrument, construct the input on which it MUST report the answer you do not want.**
+- **kills:** `ergon/probe/corpus_scan_full.py` — the `cond` loop builds each cell's conditional
+  distribution as patterns *exclusive* to that cell, dropping every cross-cell pattern. Measured
+  2026-08-22: on a corpus where 66.7% of records carry a crossing pattern, ground truth
+  H(kill_pattern | cell) = 0.9183 bits, **estimator reports 0.0000** — i.e. "the cell fully
+  determines the failure mode," the maximally strong form of the claim, manufactured by the data
+  that refutes it. The committed 3.119 is arithmetically fine *only because* crossing is
+  currently 0 — and Ergon's own §3c ruling says that 0 is a tautology of the raw prefixed form
+  (`kill_pattern` embeds `generator_id`). The proposed remedy (measure the prefix-stripped form)
+  is precisely the condition that detonates this bug.
+- **applies-to:** every entropy/diversity/coverage statistic in the program; any instrument whose
+  filter mentions the quantity under test.
+
 ---
 
 ## Claim × attack coverage matrix
