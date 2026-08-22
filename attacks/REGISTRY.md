@@ -157,6 +157,25 @@ applies-to: claim classes this attack must be run against before the claim is be
 - **kills:** external review 2026-08-20 — two renames adopted program-wide.
 - **applies-to:** every conclusion paragraph, including this file's.
 
+### ATK-013 writer/reader schema seam (silent absence)
+- **class:** measurement-confound (presents as provenance)
+- **signature:** a producer and its consumer disagree about a field's shape, so the consumer
+  reads zero rows from a non-empty ledger — and the downstream report inverts the meaning:
+  *"the substrate recorded nothing"* when the truth is *"the loader could not read it."*
+  Absence is indistinguishable from unreadability to every metric computed downstream.
+- **probe:** EXECUTABLE — `PYTHONPATH=. python attacks/probes/atk013_prepass_loader_seam.py`
+  (exit 1 = defect present). Generalization: for any ledger, assert
+  `rows_on_disk > 0 ⟹ rows_accepted > 0`, and have loaders **raise** on a zero-row parse of a
+  non-empty file rather than returning `[]`.
+- **kills:** `ergon/probe/assemble.py:load_prepass` filters a top-level `rep`;
+  `campaign.py` writes `key: [rep, uid]`. Confirmed by execution 2026-08-22: 356 rows on disk,
+  356 rep-1 by the writer's schema, **0 accepted**. Found by Techne (HITL #78) from outside
+  Ergon's lane, restated across 17 cycles before root cause; realized blast radius **zero**
+  (the campaign halted at P1, so P3 never built the arms) — but Tier B is a campaign that
+  reaches P3.
+- **applies-to:** every producer/consumer pair crossing a file boundary; **mandatory gate
+  before any campaign advances past P1.**
+
 ---
 
 ## Claim × attack coverage matrix
