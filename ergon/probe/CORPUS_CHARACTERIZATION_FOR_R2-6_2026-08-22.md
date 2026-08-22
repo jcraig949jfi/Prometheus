@@ -117,7 +117,54 @@ arm-identifying) yet pattern-disjoint (so it does not leak the failure mode) can
 that handful of high-Jaccard cell pairs. Identifying that those pairs exist is characterization
 and is mine; **choosing them as the comparator is design and is yours.**
 
-### The finding that outruns the null question
+### 3c. FALSIFIED BY THE FULL SCAN — read this before §3b's conclusion
+
+I said §3b's claim was too big for a 6-batch sample and launched the full 165-file scan. **It
+falsified the claim, and the sample was the problem.** Partial results at **54/165 files,
+42.5 million REJECTED records** (my sample saw 4,704 — about 0.01% of the corpus):
+
+- distinct raw `kill_pattern` values: **93,175** (sample: 785)
+- distinct cells: **31** (sample: 14)
+- projected patterns crossing a cell: **4** — and those 4 cover
+  **10.21% of all rejected records (4,334,674 of 42.5M)**
+
+The crossing pairs `a1/invariant_equality` with `f1/invariant_equality`, on exactly the
+vocabulary that dominates the corpus:
+
+```
+relation_equal_violated          1,485,458 recs   a1 + f1
+relation_abs_diff_le_3_violated  1,144,184 recs   a1 + f1
+relation_divides_violated          976,929 recs   a1 + f1
+relation_equal_mod_2_violated      728,103 recs   a1 + f1
+```
+
+**So cross-generator failure-mode recurrence DOES exist, on a tenth of the corpus mass.** §3b's
+"0.0000 cross-cell" and its inference that there is "little cross-generator transfer for D2/D3
+to measure" are **withdrawn.**
+
+**Why the sample lied.** I took the *first 3,000 lines of each of 6 files* — a contiguous
+window, not a stratified draw. Batch files are written in generator-run order, so a
+head-of-file window sees a handful of generators. My sample never contained `f1` at all: it
+missed the very generator that produces the overlap. This is precisely the sampling-window
+antipattern already recorded in program memory, committed by the person who recorded it.
+
+**Also note:** the full scan's *raw*-pattern crossing count of 0 is near-tautological and should
+not be quoted — `kill_pattern` embeds the generator id as a prefix (`a1_…`), so a raw pattern
+cannot cross a cell by construction. Only the **projected** figure above is meaningful. I built
+the scan tracking the raw form and had to derive the projected form post-hoc from saved state;
+the number to cite is 4 patterns / 10.21% of records, not 0.
+
+**What this does to §3b's dilemma — it opens the door §3b said was shut.** A null that is
+vocabulary-matched *and* failure-mode-matched yet drawn from a **different generator lineage**
+is exactly what the a1↔f1 overlap provides, across 4.3M records. That is the shape R2-6 needs:
+matched on what the residue *says*, broken on where it *came from*. Whether it is fair remains
+yours to rule — a1 and f1 may be near-duplicate generators, in which case the lineage break is
+cosmetic, and that is the next thing worth measuring.
+
+Scan still running (54/165); final numbers land in
+`ergon/probe/ledgers/corpus_scan/full_scan.json`.
+
+### The finding that outruns the null question  **[SUPERSEDED BY §3c — WITHDRAWN]**
 
 If failure modes never recur across generators — 0.0000 cross-cell, and 79% of cell pairs
 sharing no vocabulary — then there is **little cross-generator transfer in this corpus for
