@@ -215,5 +215,51 @@ class TestMessageShaping(unittest.TestCase):
         self.assertEqual(client._messages("ignored", "ignored", given), given)
 
 
+class TestListModelsAuthHeaders(unittest.TestCase):
+    """Discovery must use each provider's own auth header.
+
+    Regression: list_models() sent `Authorization: Bearer` to Anthropic, which
+    always 401s even for a valid key. Because the anthropic spec has no
+    default_model, health() resolved through discovery and reported the
+    provider DEAD with "key invalid or revoked" -- a header bug misread as a
+    credential fact.
+    """
+
+    def setUp(self):
+        self._real_get = client.requests.get
+        self.seen = {}
+
+        class _Resp:
+            status_code = 200
+            def raise_for_status(self): pass
+            def json(self): return {"data": [{"id": "m1"}]}
+
+        def _fake_get(url, headers=None, timeout=None):
+            self.seen["url"] = url
+            self.seen["headers"] = headers or {}
+            return _Resp()
+
+        client.requests.get = _fake_get
+        self._saved_key = client._key_for
+        client._key_for = lambda spec: "TESTKEY"
+
+    def tearDown(self):
+        client.requests.get = self._real_get
+        client._key_for = self._saved_key
+
+    def test_anthropic_uses_x_api_key_not_bearer(self):
+        client.list_models("anthropic")
+        h = self.seen["headers"]
+        self.assertEqual(h.get("x-api-key"), "TESTKEY")
+        self.assertIn("anthropic-version", h)
+        self.assertNotIn("Authorization", h)
+
+    def test_openai_compatible_still_uses_bearer(self):
+        client.list_models("groq")
+        h = self.seen["headers"]
+        self.assertEqual(h.get("Authorization"), "Bearer TESTKEY")
+        self.assertNotIn("x-api-key", h)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

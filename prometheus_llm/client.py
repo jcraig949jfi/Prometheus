@@ -266,7 +266,14 @@ def list_models(provider: str, timeout: int = 60) -> list[dict]:
                 for m in r.json().get("models", [])]
     headers = {}
     key = _key_for(spec)
-    if key:
+    if spec.kind == "anthropic":
+        # Anthropic authenticates with x-api-key, NOT Authorization: Bearer.
+        # Sending Bearer here returns 401 for a perfectly valid key, which
+        # reads as "key revoked" when it is really a header bug.
+        if key:
+            headers["x-api-key"] = key
+        headers["anthropic-version"] = "2023-06-01"
+    elif key:
         headers["Authorization"] = "Bearer " + key
     r = requests.get(spec.base_url + "/models", headers=headers,
                      timeout=timeout)

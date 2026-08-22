@@ -126,6 +126,24 @@ OPENROUTER, GROQ, CEREBRAS, NVIDIA, TAVILY, SERPER, S2, GITHUB, GOOGLE_AI.
 A second key loader is deliberately NOT built here — CLAUDE.md makes `keys.py`
 the single path for key loading.
 
+**Applied on M1 2026-08-22, confirmed working.** M1 holds **four** `.env` files,
+not two. The two extra were deliberately left OUT of `_ENV_FILES`:
+
+* `googleAI/.env` — only `GEMINI_API_KEY`, which the repo-root `.env` already
+  defines and wins on by ordering. Adds zero names.
+* `archive/bitfrost-core/.../.env` — only `GITHUB_MODELS_KEY`, archived, and it
+  has no `_KEY_NAMES` entry.
+
+So `_ENV_FILES` is byte-identical on M1 and M2 — no machine-specific path is
+needed, which is the outcome worth preserving. If a future machine needs an
+extra path, add it here rather than silently diverging.
+
+On M1 the change took `get_key()` from **6 resolvable keys to 15**. Note that
+`NVIDIA` was already declared in `_KEY_NAMES` before the change but its key
+lives in `agents/eos/.env`, so `get_key("NVIDIA")` was **failing silently** —
+a declared-but-unresolvable name is worse than a missing one, because callers
+read the declaration as availability.
+
 ## Env overrides
 
 ```
