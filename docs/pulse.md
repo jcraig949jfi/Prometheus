@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-22T00:36:51+00:00
+# PULSE — generated 2026-08-22T01:05:36+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,16 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        477
-consumed (state changes):   408  {'queue_state': 360, 'registry': 45, 'findings': 2, 'doctrine': 1}
-consumed/emitted:           0.86
+emitted (new files):        485
+consumed (state changes):   410  {'queue_state': 362, 'registry': 45, 'findings': 2, 'doctrine': 1}
+consumed/emitted:           0.85
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 272
+## Commits, 72h (non-cron): 274
+- 1fe9e387 08-21 21:05 Techne loop cycle 033: the cycle-031 soft spot resolves â€” relational claims fit, via arity
+- 7df11e9e 08-21 20:58 Techne loop cycle 032: round-8 fold-in â€” two published claims narrowed, one superseded
+- c355b4a2 08-21 20:36 Aporia P97: TIER TRUE-COMPLETE 30/30 â€” and even gates need gates
 - f7dc9a79 08-21 20:22 Techne loop cycle 031: the claim kinds are a 2x2 derivation, not a list
 - 0a6d2b31 08-21 20:05 Aporia P96: the instruments begin composing â€” one artifact now certifies three paradigms
 - 2e707768 08-21 19:49 Techne loop cycle 030: the reference-class problem is one core with two kinds
@@ -37,10 +40,7 @@ verdict: ALIVE
 - 664a1cc9 08-21 15:41 Aporia P88: P16+P17 â€” the decline leg reproduces the mirror's own CM flags, blind
 - bd46fb07 08-21 15:21 Techne loop cycle 022: second pass opens â€” R3 claim narrowed, aliasing found half-blind
 - 7b350412 08-21 15:12 Aporia P87: P14 arrives with brakes, P15 with a certificate that knows when to decline
-- b08fa6db 08-21 14:48 Techne loop cycle 021: canon R12 grader RUN and audited â€” first pass of R0-R12 complete
-- 9948b7b3 08-21 14:42 Aporia P86: halfway â€” kernel-certified pins, emergent canonical height, a detector for lying shadows
-- bbbc0025 08-21 14:30 Ergon: dry-run the campaign state machine â€” three defects found, all fixed
-- … +247 more
+- … +249 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
