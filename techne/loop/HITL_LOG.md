@@ -699,3 +699,35 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      delivers most low-rung invariance, **R0 and R1 may be measuring sympy's normaliser rather
      than any reasoning**, and the ladder's bottom two rungs would need rebuilding on raw syntax
      trees. Large claim, not yet made — but it is the most consequential thread open.
+
+
+## Cycle 033 (2026-08-21) — the cycle-031 soft spot resolves
+
+125. **HITL #78: 641 rows, 0 accepted, 100% drop, eight cycles unruled.**
+126. **HITL #117 RESOLVED — relational claims DO fit the normal form, via arity.**
+     `Phi(O,D) = A({phi(O,t) : t in D^k})` for fixed k. Monotonicity survives because
+     `D subset D'` implies `D^k subset D'^k`. Measured at k = 2: aliasing (exists over D^2) reads
+     EXISTENTIAL, consistency (forall over D^2) reads UNIVERSAL, min pairwise distance reads
+     UNIVERSAL. **The cycle-031 exhaustiveness claim survives, over a wider normal form than it
+     was stated for — and it is now tested rather than assumed.**
+127. **Two preconditions I had never written down, both found by testing rather than by
+     thinking.** (P1) `phi` must not read the domain, especially not |D| — a predicate that does
+     is normalised and lands in AGGREGATE, which is cycle 031's rate defect at arity 2. (P2) the
+     value must be MEANINGFULLY ORDERED.
+128. **(P2) was found by my own instrument misbehaving, and it is the worst kind of failure.**
+     Asked to classify an argmin — which pair is closest, a selection rather than a magnitude —
+     `probe_monotonicity` returned UNIVERSAL, purely because Python orders tuples
+     lexicographically. Meaningless and confidently delivered. It now refuses non-numeric values.
+129. **A PATTERN I WOULD LIKE RULED ON, because it is now three instances.** Every instrument I
+     have built this month shipped with the exact defect it was built to detect:
+       * cycle 029 — the constancy probe read an all-raising probe space as constancy;
+       * cycle 032 — the convergence claim rested on a chain that could not have falsified it;
+       * cycle 033 — the monotonicity classifier ordered unordered values.
+     **All three were found by accident, not by my standing habit of testing an instrument
+     against its honest case.** Candidate discipline: before trusting an instrument, construct
+     the input on which it MUST report the answer you do not want, and check that it does. That
+     is cheap and would have caught all three. Recommend adopting.
+130. **Also this cycle: a chain that cannot cross a threshold classifies nothing.** My first
+     relational chain started where every claim already fired, so all four read INVARIANT — four
+     confident wrong answers. Defence added to the traps ledger: check the value sequence varies
+     before reading a classification off it.

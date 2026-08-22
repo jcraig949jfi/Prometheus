@@ -307,3 +307,97 @@ def test_COMPOSITION_kronecker_is_a_holding_universal_on_real_polynomials():
     claim = RelativeClaim("kronecker_M_ge_1", True, d_wide, UNIVERSAL)
     assert claim.is_downward_closed
     assert claim.entails_on(d_part)
+
+
+# ---- cycle 033: the normal form generalises to ARITY, and two preconditions ------------------
+
+import itertools as _it
+
+
+def _pairs(d):
+    return list(_it.combinations(sorted(d.members), 2))
+
+
+def test_RELATIONAL_CLAIMS_FIT_THE_NORMAL_FORM_AT_ARITY_2():
+    """**Resolves the soft spot I declared at cycle 031 (HITL #117).**
+
+    The derivation assumed aggregation over independent PER-ELEMENT values, and relational
+    claims — "the domain contains two elements that disagree", exactly what
+    `find_aliasing_witness` computes — did not obviously fit. They do: the repair is arity.
+
+        Phi(O, D) = A({ phi(O, t) : t in D^k })
+
+    Monotonicity survives untouched because D subset D' implies D^k subset D'^k. Measured at
+    k = 2 over a chain built to CROSS the thresholds (my first chain fired everything at step
+    one and read INVARIANT across the board, which measured nothing).
+    """
+    from prometheus_math.relative_claim import UNIVERSAL, probe_monotonicity
+
+    pi, truth = lambda v: v % 5, lambda v: v % 2
+    seq = [(0, 1, 2), (0, 1, 2, 5), (0, 1, 2, 5, 20), (0, 1, 2, 5, 20, 21, 22)]
+    chain = [Domain(f"d{k}", t) for k, t in enumerate(seq)]
+
+    alias = lambda d: 1 if any(pi(a) == pi(b) and truth(a) != truth(b)
+                               for a, b in _pairs(d)) else 0
+    consistent = lambda d: 1 if all(not (pi(a) == pi(b) and truth(a) != truth(b))
+                                    for a, b in _pairs(d)) else 0
+
+    assert [alias(d) for d in chain] == [0, 1, 1, 1]
+    assert [consistent(d) for d in chain] == [1, 0, 0, 0]
+    assert probe_monotonicity(alias, chain) == EXISTENTIAL
+    assert probe_monotonicity(consistent, chain) == UNIVERSAL
+
+
+def test_min_over_pairs_is_a_holding_universal():
+    """A min over D^2 can only fall as the domain grows — monotone down, UNIVERSAL."""
+    from prometheus_math.relative_claim import UNIVERSAL, probe_monotonicity
+    seq = [(0, 10, 20), (0, 5, 10, 20), (0, 1, 5, 10, 20)]
+    chain = [Domain(f"m{k}", t) for k, t in enumerate(seq)]
+    mindist = lambda d: min(abs(a - b) for a, b in _pairs(d))
+    assert [mindist(d) for d in chain] == [10, 5, 1]
+    assert probe_monotonicity(mindist, chain) == UNIVERSAL
+
+
+def test_P1_a_predicate_that_READS_the_domain_size_is_AGGREGATE():
+    """Precondition 1, and it is cycle 031's rate defect reappearing at arity 2. "At least half
+    of D is even" reads |D|, so it is normalised, so it moves both ways."""
+    from prometheus_math.relative_claim import probe_monotonicity
+    seq = [(0, 2), (0, 2, 1, 3), (0, 2, 1, 3, 5, 7), (0, 2, 1, 3, 5, 7, 4, 6)]
+    chain = [Domain(f"e{k}", t) for k, t in enumerate(seq)]
+    half = lambda d: 1 if sum(1 for v in d.members if v % 2 == 0) >= len(d) / 2 else 0
+    assert [half(d) for d in chain] == [1, 1, 0, 1]
+    assert probe_monotonicity(half, chain) == AGGREGATE
+
+
+def test_P2_AN_UNORDERED_VALUE_IS_NOW_REFUSED_RATHER_THAN_CLASSIFIED():
+    """**Precondition 2, found by my own instrument misbehaving.**
+
+    Asked to classify an ARGMIN — which pair is closest, a selection rather than a magnitude —
+    `probe_monotonicity` returned UNIVERSAL. Not because the claim is universal, but because
+    Python orders tuples lexicographically and the comparisons went through silently. The
+    verdict was meaningless.
+
+    It now refuses. Booleanise the selection first and it classifies honestly.
+    """
+    from prometheus_math.relative_claim import probe_monotonicity
+
+    seq = [(0, 10, 20), (0, 5, 10, 20), (0, 1, 5, 10, 20)]
+    chain = [Domain(f"a{k}", t) for k, t in enumerate(seq)]
+    argmin = lambda d: min(_pairs(d), key=lambda t: (abs(t[0] - t[1]), t))
+
+    with pytest.raises(ClaimError) as exc:
+        probe_monotonicity(argmin, chain)
+    assert "meaningfully ordered" in str(exc.value)
+
+    booleanised = lambda d: 1 if argmin(d) == (0, 1) else 0
+    assert [booleanised(d) for d in chain] == [0, 0, 1]
+    assert probe_monotonicity(booleanised, chain) == EXISTENTIAL
+
+
+def test_P2_still_accepts_bools_and_numbers():
+    """The guard must not break the ordinary cases it exists to protect."""
+    from prometheus_math.relative_claim import INVARIANT, probe_monotonicity
+    chain = [Domain(f"d{k}", tuple(range(m))) for k, m in enumerate((2, 4, 8))]
+    assert probe_monotonicity(lambda d: len(d), chain) == EXISTENTIAL      # int
+    assert probe_monotonicity(lambda d: len(d) / 2.0, chain) == EXISTENTIAL  # float
+    assert probe_monotonicity(lambda d: True, chain) == INVARIANT          # bool

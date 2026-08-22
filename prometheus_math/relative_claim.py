@@ -211,6 +211,40 @@ class RelativeClaim:
 # The classification is exhaustive by construction rather than by survey, which is what
 # HITL #112 asked for.
 #
+# ---------------------------------------------------------------------------------------------
+# CYCLE 033 — the normal form generalises to finite ARITY, and two preconditions were missing.
+#
+# Cycle 031 declared a soft spot (HITL #117): the derivation assumed every domain-relative claim
+# is an aggregation over INDEPENDENT PER-ELEMENT values, and irreducibly RELATIONAL claims —
+# "the domain contains two elements that disagree", which is exactly what `find_aliasing_witness`
+# computes — did not obviously fit.
+#
+# **They fit. The repair is arity.**
+#
+#     Phi(O, D) = A({ phi(O, t) : t in D^k })      for some fixed k
+#
+# Monotonicity survives untouched, because D subset D' implies D^k subset D'^k. Measured at
+# k = 2 over a threshold-crossing chain:
+#
+#     aliasing        (exists over D^2)   values 0,1,1,1     -> EXISTENTIAL
+#     consistency     (forall over D^2)   values 1,0,0,0     -> UNIVERSAL
+#     min pairwise distance (min over D^2) values 10,5,1     -> UNIVERSAL
+#
+# So the 2x2 stands and the exhaustiveness claim survives, over a wider normal form than the one
+# it was stated for. But testing it surfaced two preconditions that were never written down:
+#
+#   (P1) `phi` MUST NOT READ THE DOMAIN, and in particular not |D|. A predicate that does is
+#        normalised, and lands in AGGREGATE — the cycle-031 rate defect, now at arity 2.
+#        Measured: "at least half of D is even" reads 1,1,0,1 over a nested chain.
+#
+#   (P2) THE VALUE MUST BE MEANINGFULLY ORDERED. "Monotone" is undefined otherwise, and the
+#        empirical classifier will not notice: asked to classify an ARGMIN (which pair is
+#        closest — a selection, not a magnitude) it returned UNIVERSAL, purely because Python
+#        orders tuples lexicographically. The verdict was meaningless. `probe_monotonicity` now
+#        refuses non-numeric values rather than producing one. Booleanise the selection first
+#        ("is (0,1) the closest pair?") and it classifies honestly — EXISTENTIAL, measured.
+# ---------------------------------------------------------------------------------------------
+#
 # **The load-bearing observation is that normalisation is what destroys monotonicity**, and it
 # is measurable on one statistic rather than argued. Cycle 031, F6 over real candidates:
 #
@@ -242,8 +276,10 @@ def kind_from_monotonicity(monotone_up: bool, monotone_down: bool) -> str:
 def probe_monotonicity(measure, chain: Sequence[Domain]) -> str:
     """Classify a claim EMPIRICALLY by running it along a chain of nested growing domains.
 
-    `chain` must be increasing; `measure(domain) -> comparable value`. Returns the kind implied
-    by the observed monotonicity. Evidence, not proof — a chain that happens not to exhibit a
+    `chain` must be increasing and `measure(domain)` must return a NUMBER — see (P2) in the
+    derivation block: an unordered value makes "monotone" meaningless, and this function used to
+    return a confident kind for one. Returns the kind implied by the observed monotonicity.
+    Evidence, not proof — a chain that happens not to exhibit a
     decrease will classify a genuinely non-monotone measure as monotone, which is the same
     sampling limit the constancy probe has. Use it to CLASSIFY, then keep the chain on record.
     """
@@ -253,6 +289,16 @@ def probe_monotonicity(measure, chain: Sequence[Domain]) -> str:
         if not b.contains_all_of(a):
             raise ClaimError(f"domain chain is not increasing at {a.name!r} -> {b.name!r}")
     values = [measure(d) for d in chain]
+    for v in values:
+        if isinstance(v, bool):
+            continue
+        if not isinstance(v, (int, float)) or isinstance(v, complex):
+            raise ClaimError(
+                f"cannot classify a claim whose value is {type(v).__name__}: 'monotone' needs a "
+                "meaningfully ordered value. Python will happily order tuples and strings "
+                "lexicographically and this function would return a kind that means nothing "
+                "(measured: an argmin-valued claim classified as UNIVERSAL on tuple ordering "
+                "alone). Booleanise the selection, or map it to a magnitude, first")
     up = all(b >= a for a, b in zip(values, values[1:]))
     down = all(b <= a for a, b in zip(values, values[1:]))
     return kind_from_monotonicity(up, down)

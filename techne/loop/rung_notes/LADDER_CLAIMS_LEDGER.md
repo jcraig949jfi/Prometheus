@@ -801,3 +801,41 @@ may be measuring sympy's normaliser rather than any reasoning.**
 
 **Kill-battery additions (executable):** second-target within-class loss; worst-case refinement
 multiplicity; uniform adversary schema check; CAS-delivered-invariance probe.
+
+## Cycle 033 — claim v16 SURVIVES, over a wider normal form, with two preconditions
+
+**The soft spot declared at cycle 031 (HITL #117) is resolved.** The 2x2 derivation assumed
+aggregation over independent PER-ELEMENT values; irreducibly RELATIONAL claims — "the domain
+contains two elements that disagree", exactly what `find_aliasing_witness` computes — did not
+obviously fit.
+
+**They fit. The repair is arity:**
+
+    Phi(O, D) = A({ phi(O, t) : t in D^k })      for fixed k
+
+Monotonicity survives untouched, since `D subset D'` implies `D^k subset D'^k`. Measured at k = 2
+over a threshold-crossing chain: aliasing (exists over D^2) 0,1,1,1 EXISTENTIAL; consistency
+(forall over D^2) 1,0,0,0 UNIVERSAL; min pairwise distance 10,5,1 UNIVERSAL.
+
+**v16 therefore stands, over a wider normal form than it was stated for, and is now tested rather
+than assumed.**
+
+**Two preconditions, previously unstated:**
+
+- **(P1)** `phi` must not read the domain, in particular not |D|. A predicate that does is
+  normalised and lands in AGGREGATE — cycle 031's rate defect at arity 2. Measured: "at least
+  half of D is even" reads 1,1,0,1.
+- **(P2)** The value must be meaningfully ordered. `probe_monotonicity` classified an ARGMIN as
+  UNIVERSAL purely on Python's lexicographic tuple ordering — meaningless and confidently
+  delivered. It now refuses non-numeric values; booleanised, the same claim reads EXISTENTIAL.
+
+**Methodological finding, three instances (HITL #129).** Every instrument built this month shipped
+with the exact defect it was built to detect — the constancy probe read an all-raising space as
+constancy (029), the convergence claim rested on an unfalsifiable chain (032), the monotonicity
+classifier ordered unordered values (033). All three were found by ACCIDENT. Candidate discipline:
+before trusting an instrument, construct the input on which it must report the answer you do not
+want, and check that it does.
+
+**Kill-battery additions (executable):** arity-2 relational classification over a
+threshold-crossing chain; |D|-reading predicate probe; non-numeric value refusal; value-sequence
+variation check before reading a classification.
