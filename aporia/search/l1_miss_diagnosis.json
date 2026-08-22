@@ -1,0 +1,174 @@
+{
+ "frozen_L1_misses": 16,
+ "source_ranked_above_target": {
+  "count": 10,
+  "rate": 0.625
+ },
+ "rank1_was_the_source_itself": {
+  "count": 7,
+  "rate": 0.4375
+ },
+ "rank1_was_an_unrelated_distractor": {
+  "count": 8,
+  "rate": 0.5
+ },
+ "misses_by_op": {
+  "diff": 3,
+  "partsum": 2,
+  "binomial": 1,
+  "moebius": 1,
+  "shift": 9
+ },
+ "source_beat_target_by_op": {
+  "moebius": 1,
+  "shift": 9
+ },
+ "detail": [
+  {
+   "op": "diff",
+   "target_rank": 2,
+   "source_rank": 12606,
+   "source_beat_target": false,
+   "rank1_is_source": false,
+   "rank1_is_benchmark_seq": true,
+   "rank1_is_distractor": false
+  },
+  {
+   "op": "diff",
+   "target_rank": 2,
+   "source_rank": 13178,
+   "source_beat_target": false,
+   "rank1_is_source": false,
+   "rank1_is_benchmark_seq": false,
+   "rank1_is_distractor": true
+  },
+  {
+   "op": "diff",
+   "target_rank": 12,
+   "source_rank": 3272,
+   "source_beat_target": false,
+   "rank1_is_source": false,
+   "rank1_is_benchmark_seq": false,
+   "rank1_is_distractor": true
+  },
+  {
+   "op": "partsum",
+   "target_rank": 2,
+   "source_rank": 10285,
+   "source_beat_target": false,
+   "rank1_is_source": false,
+   "rank1_is_benchmark_seq": false,
+   "rank1_is_distractor": true
+  },
+  {
+   "op": "partsum",
+   "target_rank": 220,
+   "source_rank": 1838,
+   "source_beat_target": false,
+   "rank1_is_source": false,
+   "rank1_is_benchmark_seq": false,
+   "rank1_is_distractor": true
+  },
+  {
+   "op": "binomial",
+   "target_rank": 2,
+   "source_rank": 11470,
+   "source_beat_target": false,
+   "rank1_is_source": false,
+   "rank1_is_benchmark_seq": false,
+   "rank1_is_distractor": true
+  },
+  {
+   "op": "moebius",
+   "target_rank": 530,
+   "source_rank": 6,
+   "source_beat_target": true,
+   "rank1_is_source": false,
+   "rank1_is_benchmark_seq": false,
+   "rank1_is_distractor": true
+  },
+  {
+   "op": "shift",
+   "target_rank": 32,
+   "source_rank": 4,
+   "source_beat_target": true,
+   "rank1_is_source": false,
+   "rank1_is_benchmark_seq": false,
+   "rank1_is_distractor": true
+  },
+  {
+   "op": "shift",
+   "target_rank": 14163,
+   "source_rank": 1,
+   "source_beat_target": true,
+   "rank1_is_source": true,
+   "rank1_is_benchmark_seq": true,
+   "rank1_is_distractor": false
+  },
+  {
+   "op": "shift",
+   "target_rank": 3,
+   "source_rank": 1,
+   "source_beat_target": true,
+   "rank1_is_source": true,
+   "rank1_is_benchmark_seq": true,
+   "rank1_is_distractor": false
+  },
+  {
+   "op": "shift",
+   "target_rank": 1151,
+   "source_rank": 1,
+   "source_beat_target": true,
+   "rank1_is_source": true,
+   "rank1_is_benchmark_seq": true,
+   "rank1_is_distractor": false
+  },
+  {
+   "op": "shift",
+   "target_rank": 2,
+   "source_rank": 1,
+   "source_beat_target": true,
+   "rank1_is_source": true,
+   "rank1_is_benchmark_seq": true,
+   "rank1_is_distractor": false
+  },
+  {
+   "op": "shift",
+   "target_rank": 1262,
+   "source_rank": 1,
+   "source_beat_target": true,
+   "rank1_is_source": true,
+   "rank1_is_benchmark_seq": true,
+   "rank1_is_distractor": false
+  },
+  {
+   "op": "shift",
+   "target_rank": 11,
+   "source_rank": 1,
+   "source_beat_target": true,
+   "rank1_is_source": true,
+   "rank1_is_benchmark_seq": true,
+   "rank1_is_distractor": false
+  },
+  {
+   "op": "shift",
+   "target_rank": 162,
+   "source_rank": 1,
+   "source_beat_target": true,
+   "rank1_is_source": true,
+   "rank1_is_benchmark_seq": true,
+   "rank1_is_distractor": false
+  },
+  {
+   "op": "shift",
+   "target_rank": 879,
+   "source_rank": 731,
+   "source_beat_target": true,
+   "rank1_is_source": false,
+   "rank1_is_benchmark_seq": false,
+   "rank1_is_distractor": true
+  }
+ ],
+ "interpretation_rule": "misses where the SOURCE outranks the target are a benchmark-construction artifact (the query is derived from an object that is itself in the pool); misses where an UNRELATED DISTRACTOR takes rank 1 are genuine representational collisions. These require different fixes and must not be pooled.",
+ "note": "Diagnostic only. Run AFTER the terminal state was computed and written. Changes no verdict."
+}

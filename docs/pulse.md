@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-22T08:37:31+00:00
+# PULSE — generated 2026-08-22T09:04:28+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,16 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        541
-consumed (state changes):   371  {'queue_state': 327, 'registry': 41, 'findings': 3}
-consumed/emitted:           0.69
+emitted (new files):        547
+consumed (state changes):   367  {'queue_state': 325, 'registry': 39, 'findings': 3}
+consumed/emitted:           0.67
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 295
+## Commits, 72h (non-cron): 297
+- e53c685a 08-22 04:53 Techne cycle 045: budget allocated to the arsenal's own red tests; classification pre-registered
+- 8d9ad8cb 08-22 04:49 Ergon: full scan FALSIFIES my own headline claim â€” sampling window did it
+- 8646d8e7 08-22 04:38 Aporia P109: Campaign X pass 2/3 â€” signature retrieval on development only
 - ce3157a7 08-22 04:34 Ergon: full-corpus scan â€” a 6-batch sample should not carry this claim
 - 66a5e646 08-22 04:33 Ergon: ran the null-viability measurement â€” both obvious nulls fail
 - 581d6444 08-22 04:04 Techne cycle 044: class hypothesis RETIRED on a powered test; #78 closed to read-only
@@ -37,10 +40,7 @@ verdict: ALIVE
 - 39ec0289 08-22 01:54 Techne cycle 041: the migration priced at 13 edits/function, and a regime change
 - 6b883e54 08-22 01:38 Ergon: unblock the second-family drip â€” throttled for a wall that never came
 - d5fbba89 08-22 00:58 Aporia P104: the "junk" population is 46,439 real records the published filter deletes
-- 26949637 08-22 00:18 Techne cycle 040: the denominator â€” ten of forty, 25%, it is a habit
-- a31f84da 08-21 23:58 Aporia P103: census complete â€” PURE-DUP confirmed, and an off-by-one rewrote the headline
-- d74f1a33 08-21 23:46 Ergon: halted firings spend zero calls instead of ~48/day
-- … +270 more
+- … +272 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records

@@ -81,3 +81,17 @@ shuffled signature, and growth/magnitude-only signature.
 **Campaign X, pass 1 of 3 — checkpoint at pass 3.** No terminal state is due yet. Pass 2 runs
 retrieval on development only; pass 3 touches the frozen split once and emits
 ADVANCE / REDESIGN / PARK / KILL.
+
+---
+
+## CAMPAIGN X TERMINAL (pass 3, 2026-08-22): **REDESIGN**
+
+Frozen split touched once, 50 positives. **D2 fired exactly** — operator-agnostic retrieval
+4/50 top-10, raw-term baseline 4/50 top-10, and the signature worse on median rank (1,383 vs 598).
+D5 (KILL) did **not** fire. The confound rule pre-committed in `RETRIEVAL_dev_2026-08-22.md` fired
+**CONFOUNDED** at frozen L1 top-1 = 0.680, so no kill was permitted.
+
+Full adjudication, the disclosed threshold weakness, and the L1 miss mechanism (8 of 16 misses are
+a source-in-pool benchmark artifact, 8 of 50 are genuine collisions) are in
+`CAMPAIGN_X_TERMINAL_2026-08-22.md`. The benchmark stands; the representation does not.
+The operator-agnostic substrate claim is **untested, not refuted**.
