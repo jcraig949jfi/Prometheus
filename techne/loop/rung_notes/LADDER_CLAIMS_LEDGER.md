@@ -1175,3 +1175,49 @@ data". Everything found was in code written for the loop. Cycles 042-046: **~80%
 claim of non-invasiveness; planted-idiom anti-cases before trusting a classifier count;
 as-written source pulled from before the repair commit when the question is about mistakes;
 `provenance()` reporting roots/sites/propagation rather than a single rate.
+
+## Cycle 042 — claim v24: HITL #78 has a ROOT CAUSE and a MEASURED blast radius on live data
+
+**First claim in this ledger about the running system rather than about the loop's own code.**
+
+**Root cause.** `load_prepass` filters `int(d.get("rep", -1)) != 1`; live rows carry
+`key: [rep, uid]` and have no flat `rep`/`uid`. Default `-1` fails on all 962 rows. `best()` in
+the same package reads `tuple(r["key"])` and is correct. **Two readers of one file, disagreeing
+about its schema, for sixteen cycles.** Data intact: 625 rep-1 / 337 rep-2.
+
+**Method.** Predictions PRE-REGISTERED and committed (`0fd3273b`) before measurement, with the
+NULL outcome specified in advance and prior knowledge disclosed rather than pretended away.
+
+    Y4 consumer reach    predicted >=1 of 6    measured 1 of 6 (campaign.py:312)
+    Y1 selection volume  predicted 0 vs >0     measured 0 vs 1 per uid
+    Y2 packet tokens     predicted delta > 0   measured 58 vs 678-2662, mean ~2,070 tokens/task
+    Y3 tau coverage      predicted {} vs non   measured {} vs {'p1_prepass': 624}
+
+All four held. Five of six call sites read a different ledger where the two loaders AGREE exactly
+(200 = 200) — that is legitimate filtering, and checking it was what kept this from being an
+escalation about a file nothing reads.
+
+**The finding inside the finding.** The empty pool emits *"no residue exists at this distance for
+this task"* and *"NOT-RUN-FOR-LACK-OF-RESIDUE"*. **The sparsity report — the component whose whole
+purpose is honest accounting of what the substrate did not record — asserts a loader schema
+mismatch as an absence of data.** The answering-outside-your-domain class at PIPELINE SCALE in
+PRODUCTION. Cycles 029-041 found eleven instances in code written for the loop; this is the first
+found outside it, and it is the strongest evidence to date that the class generalises beyond me.
+
+**Live impact, caught pre-emptively.** `Arms.pool` feeds `F-prom-retrieved` and `F-null`. With
+`pool=[]` the residue arm ships boilerplate saying there is no residue — a null contrast presented
+as a treatment. The campaign is live but the append-only phase log shows only P1; P3 constructs
+`Arms`. No results contaminated.
+
+**Not acted on.** Ergon is not mine. Finding made actionable without a diff; mechanism pinned in
+7 tests that should go RED when the seam is repaired.
+
+**Corrections folded in (round 12):** `C_site=1 = 13 edits` is one observation, not a per-function
+migration cost — better unit is edits per production call edge (13/2 = 6.5), and a distribution
+needs 3-5 sites. Prevalence (11/40, dead code INCLUDED) and live exposure are two populations, not
+a denominator choice.
+
+**Kill-battery additions (executable):** resolve consumer paths before escalating a loader defect;
+diff a total-drop loader against the other reader of the same file before suspecting the data;
+"not retrieved" and "does not exist" must be different strings; prefer a present append-only
+record over an inference from absent files.

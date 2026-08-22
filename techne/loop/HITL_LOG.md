@@ -1035,3 +1035,72 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      categories, 12 tests, RED first. The n=1 edge REFUSES — log2(1)=0, so 0.0 would say
      "identical" and nan would propagate. **First time this loop designed the refusal in from the
      start rather than retrofitting it after an instrument caught it.**
+
+
+## Cycle 042 (2026-08-22) — HITL #78 RESOLVED TO ROOT CAUSE. First real-substrate cycle.
+
+191. **HITL #78 IS NO LONGER A DIAGNOSIS. ROOT CAUSE, one line:**
+     `ergon/probe/assemble.py:load_prepass` filters on `int(d.get("rep", -1)) != 1`. **The live
+     ledger rows have NO `rep` field and NO `uid` field** — they carry `key: [rep, uid]` as a
+     two-element list. The default `-1` fails on every row; all 962 silently skipped.
+     **Same file, same package, two readers, one right:** `campaign.py:best()` reads
+     `tuple(r["key"])` correctly; `load_prepass()` reads flat fields that were never written.
+     Field-level writer/reader mismatch at a seam. The data is fine: `key[0]` is 625 rep-1 /
+     337 rep-2.
+192. **JAMES — THIS IS THE ONE TO RULE ON, AND IT IS NOW CHEAP TO RULE ON.** Sixteen cycles of
+     escalation, and the fix is two fields. I did not patch ergon and will not. The finding is
+     actionable without a diff: `load_prepass` needs `rep`/`uid` lifted out of `key`, exactly as
+     `best()` already does it.
+193. **BLAST RADIUS CONFIRMED against a PRE-REGISTERED decision rule** committed as `0fd3273b`
+     BEFORE any measurement, with the NULL outcome specified in advance. All four predictions held:
+     Y4 consumer reach >=1 of 6 -> **1 of 6** (`campaign.py:312`); Y1 selection 0 vs 1/uid;
+     Y2 packet **58 tokens vs 678-2662, mean delta ~2,070 tokens/task**; Y3 tau `{}` vs
+     `{'p1_prepass': 624}`.
+194. **Five of six call sites were NOT affected** — they read `nearmiss_mix-M30_prepass.jsonl`,
+     where shipping loader and audit shim AGREE exactly (200 = 200): legitimate rep-2 filtering,
+     not this defect. I came close to escalating a loader defect without checking which file the
+     consumers read.
+195. **THE CONSEQUENCE THAT EARNS SIXTEEN CYCLES.** The empty pool does not fail or warn. It emits
+     `"no residue exists at this distance for this task"` and
+     `"NOT-RUN-FOR-LACK-OF-RESIDUE (no eligible records)"`. **"No residue EXISTS" and "the loader
+     rejected every row" are conflated into one message — asserted by the SPARSITY REPORT**, whose
+     entire purpose is honest accounting of what the substrate did not record. The
+     answering-outside-your-domain class **at pipeline scale, in production**, and the first
+     instance the loop has found OUTSIDE its own code.
+196. **LIVE EXPERIMENT IMPACT.** `campaign.py` builds `Arms.pool` from this loader for
+     `F-prom-retrieved` and `F-null`. With `pool=[]`, the arm testing *whether prior-attempt
+     residue helps* ships 58 tokens of boilerplate saying there IS no prior attempt — a null
+     contrast presented as a treatment.
+197. **TIMING: CAUGHT BEFORE THE DAMAGE.** Campaign is LIVE (lock pid 9820, `phase=P1 sent=400
+     ok=400 coverage=697/1240`). P3 constructs `Arms`. `campaign_log.jsonl` is an APPEND-ONLY
+     phase log and contains exactly one phase record — P1. No results contaminated. The directory
+     already holds `p1_prepass.TRUNCATION-CONFOUNDED-8192.jsonl`, a quarantined earlier run, so a
+     second wasted campaign was the live risk.
+198. **Evidence-type caveat I caught on myself mid-write.** I first argued "P3/P4 never ran" from
+     ABSENT output files — the absence-is-not-evidence error this cycle is about. The version I
+     rely on is the append-only phase log, which is a present record. It still assumes the log is
+     written for every phase and never fails, which I have NOT verified.
+199. **ROUND-12 CORRECTION ACCEPTED — "13 edits/function" WITHDRAWN as an estimate.** It is one
+     observation from a deliberately high-liveness site: `C_site=1 = 13`, not `C_migration ~ 13N`.
+     Better unit: **edits per production call edge = 13/2 = 6.5**. From cycle 043 each migrated
+     site records (callee edit, direct callers, tests, transitive type fallout); a distribution
+     needs 3-5 sites and I have one.
+200. **ROUND-12 CORRECTION ACCEPTED — prevalence and exposure are TWO POPULATIONS.** Repository
+     prevalence stays **11/40 WITH dead code included**; removing it would rewrite a historical
+     audit because the code happens not to execute today. Live exposure is a separate number over
+     functions actually reached in production, and 96/108 approximates the event version. The two
+     repaired-but-never-called functions are evidence about how the code was WRITTEN and near-zero
+     evidence about current blast radius.
+201. **Constraint honoured: no new general-purpose instrument.** The replay used functions that
+     already existed. The mechanism is pinned in 7 tests against a synthetic row in the live
+     writer's schema, so evidence does not depend on a file the campaign is actively rewriting.
+     **Those tests SHOULD go red when ergon fixes the seam — delete the file when they do.**
+202. **JAMES — the uncomfortable question the regime change surfaces.** This cycle produced a root
+     cause and a pre-emptive catch, which is what was asked for. But I still cannot ACT on it.
+     Sixteen cycles suggests the bottleneck is not detection. Is a finding I am structurally
+     unable to fix "improving the organism", or a better-dressed diagnosis? If the latter, the
+     read-only constraint on ergon may be the thing to revisit, not the loop.
+203. **Track 1 (the 20%): `prometheus_math.normalized_mi`** (Strehl & Ghosh 2002, JMLR 3:583-617),
+     `NMI = I/sqrt(H(X)H(Y))`, 12 tests, RED first, four categories. Edge: EITHER side zero-entropy
+     REFUSES because the ratio is 0/0, and **the error names WHICH side**. A property test asserts
+     `NMI != 1 - normalized_vi` in general, to stop a future caller substituting one for the other.
