@@ -1312,3 +1312,39 @@ UNVALIDATED rather than as a working screen.
 require an independent positive before treating a discriminator as validated; compute the actual
 precondition in a property-test guard rather than a proxy for it; state the reachable population
 size before choosing the sampled one.
+
+## Cycle 044 — claim v27: the schema-drift CLASS is RETIRED, and #78 is an isolated incident
+
+**Retired on a powered test, per a rule fixed in advance.** P1
+(`P1_CONTRACT_VIOLATION_PREREG.md`, committed `b36050c0`) ran over **n = 150 executable
+(reader, ledger) pairs across 66 ledgers and 90 readers** — feasibility established BEFORE
+sampling and without inspecting outcomes, which is cycle 043's paid-for lesson applied.
+
+    necessity arm      ran cleanly      ZERO adversary-B instances, ZERO independent positives
+    sufficiency arm    INVALID          134/150 flagged (89%) — my extractor, pre-declared
+                                        as a confound in Prediction 2, and it landed
+
+**Verdict: CLASS HYPOTHESIS RETIRED.** Field presence is recorded as
+**unvalidated-and-abandoned**, n_positive = 1 and no independent second. #78 is an isolated
+incident. Three cycles were spent on a class the evidence does not support.
+
+**What the abstraction move bought, kept for the record.** `key:[rep,uid]` is a NESTING violation,
+not an absence, so the right class was producer/consumer CONTRACT violation (type, nesting,
+nullability, enum, encoding) rather than missing-field. That was the correct generalisation and it
+still found nothing.
+
+**Valid extractor-independent by-product:** 12 of 66 ledgers carry more than one key-signature,
+mostly benign record polymorphism. The one that looked dangerous — 20 of 500 rows in a LIVE charon
+experiment lacking `acc_post` — **is correctly guarded** at `analyze.py:51`. A negative finding on
+live code, and worth as much as a positive would have been.
+
+**DOCTRINE ADDED — pre-registration lifecycle.** A feasibility failure may TERMINATE a
+pre-registration but must not MUTATE it; freeze it and write a new one. Enumerate the eligible
+population and verify measurability BEFORE sampling, without inspecting the discriminator.
+
+**HITL #78 status:** ROOT-CAUSED / UNREPAIRED / CURRENTLY UNCONTAMINATED, closed to read-only
+work. epistemic closure != operational closure; the read-only boundary is the binding limit.
+
+**Kill-battery additions (executable):** resolve the reader->ledger binding before calling a field
+"required"; check consumer guards before calling intra-file heterogeneity harmful; stop auditing
+what you cannot act on once epistemic closure is reached.

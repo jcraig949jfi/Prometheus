@@ -1204,3 +1204,56 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      it.** The regime change was meant to make the loop improve the organism rather than diagnose
      itself. Two cycles in, the binding constraint looks like the read-only rule rather than
      detection capability. If that reading is right, the thing to change is the constraint.
+
+
+## Cycle 044 (2026-08-22) — #78 closed to read-only; the class hypothesis RETIRED
+
+222. **HITL #78 CLOSED TO READ-ONLY INVESTIGATION.** Marked
+     **ROOT-CAUSED / UNREPAIRED / CURRENTLY UNCONTAMINATED** in
+     `rung_notes/HITL78_STATUS_CLOSED_READONLY.md`. 1035 rows / 0 accepted (was 998), still P1,
+     eighteen cycles. **epistemic closure != operational closure**: detection has done everything
+     it can, and the READ-ONLY BOUNDARY is now the binding limit, not capability. I am no longer
+     spending cycles asking "is it still broken?"
+223. **Reactivation conditions, and one is urgent.** Reopen only if (1) the writer changes,
+     (2) **a P3/P4 record appears in `campaign_log.jsonl` or `p1_bandread.json` appears — this
+     converts a latent defect into ACTIVE CONTAMINATION of the arm the campaign exists to
+     measure**, or (3) patch authority becomes available. The seven pinned tests are the standing
+     detector for (1) at 0.2 s.
+224. **DOCTRINE: a feasibility failure may TERMINATE a pre-registration but must not MUTATE it.**
+     P0 (cycle 043) stands exactly as written at UNDERPOWERED and does not retroactively become a
+     result. P1 is a NEW pre-registration (`b36050c0`). Silently widening P0 after seeing which
+     cases exist would be outcome-conditioned redesign.
+225. **NEW STANDING PREREG STEP:** enumerate the eligible population and VERIFY MEASURABILITY
+     BEFORE SAMPLING, without inspecting the discriminator or the outcome. P1 feasibility: 615
+     non-empty .jsonl under role dirs, 289 JSONL-parsing readers, 107 unresolved literals
+     reported, **n = 150 executable (reader, ledger) pairs over 66 ledgers and 90 readers**.
+226. **The abstraction moved up and it was right.** `key:[rep,uid]` is a NESTING violation, not an
+     absence. Class under test became **producer/consumer contract violation**; field presence
+     demoted to a **candidate signature with n_positive = 1**.
+227. **The sufficiency arm was INVALID, exactly as pre-declared.** 134/150 pairs flagged — 89%,
+     which is my extractor collecting every `.get("x")` in a FILE rather than fields applied to
+     records from THAT ledger. Prediction 2 declared the confound in advance and it landed. **Half
+     the experiment did not run and I am not reporting it as a refutation.**
+228. **The necessity arm ran cleanly and came back EMPTY.** Zero adversary-B instances and zero
+     independent positives across 150 pairs.
+229. **VALID by-product, extractor-independent: 12 of 66 ledgers carry >1 key-signature** — mostly
+     benign record polymorphism. **The dangerous-looking one is correctly handled:**
+     `charon/ceiling_v0/runs/b2_base20/records.jsonl` (500 rows, 3 signatures, 20 rows lacking
+     `acc_post`) is guarded at `analyze.py:51` by `if r.get("acc_post") is not None`; the two
+     unguarded readers index records returned directly from `substrate_arm()`, never the
+     heterogeneous file. **Where I checked, this codebase handles polymorphic ledgers correctly.**
+230. **VERDICT PER THE PRE-REGISTERED RULE: CLASS HYPOTHESIS RETIRED.** #78 looks like an ISOLATED
+     INCIDENT. Three cycles spent on a class the evidence does not support; the 80% real-substrate
+     budget moves off schema drift entirely.
+231. **JAMES — the 80% budget is now UNALLOCATED and I need a target.** The new gate is *real
+     substrate + actionable intervention*, or where read-only by design, *real substrate +
+     predeclared decision consequence*. **The constraint that I cannot patch any other role
+     eliminates most of the repo from the first form.** What target lets the loop complete
+     detect -> intervene -> measure postcondition? This is now the binding question for the
+     regime change, and I cannot answer it without you.
+232. **Track 1: `prometheus_math.fowlkes_mallows`** (Fowlkes & Mallows 1983, JASA 78(383):553-569),
+     13 tests, RED first, four categories. Completes the family as the NON-chance-corrected member.
+     On a constructed below-chance pairing **ARI < 0 while FM >= 0** — treating them as
+     interchangeable loses the "worse than chance" signal. All-singletons refuses at 0/0 **and the
+     test proves it is not confused with a genuine zero**, which returns 0.0 and does not raise.
+     The property-test guard computes the ACTUAL precondition, applying cycle 043's lesson.
