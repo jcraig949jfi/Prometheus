@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-22T14:31:30+00:00
+# PULSE — generated 2026-08-22T15:00:31+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,14 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        604
-consumed (state changes):   329  {'queue_state': 298, 'registry': 29, 'findings': 2}
+emitted (new files):        607
+consumed (state changes):   325  {'queue_state': 295, 'registry': 28, 'findings': 2}
 consumed/emitted:           0.54
 verdict: ALIVE
 ```
 
 ## Commits, 72h (non-cron): 304
+- 94af80ac 08-22 10:31 Aporia P122: CAMPAIGN X-5 TERMINAL â€” PARK (N4). The development effect did not transfer.
 - 37f7ed95 08-22 10:05 Aporia P121: X-5 pass 2/3 â€” a second artifact found, and two of my own verdict rules were wrong
 - 96b2a6b6 08-22 09:37 Aporia P120: X-5 pass 1/3 â€” B-DIAG verdict BUG; binomial 3/80 -> 63/80 after the fix
 - 6dc7cabc 08-22 09:08 Aporia P119: CAMPAIGN X-4 TERMINAL â€” PARK (M0). The preregistration parked a positive, as written.
@@ -39,7 +40,6 @@ verdict: ALIVE
 - dbe66d52 08-22 05:33 Techne cycle 045: full arc completed on my own arsenal â€” two real defects fixed
 - 277f10cf 08-22 05:31 Aporia P111: Campaign X-2 pass 1/3 â€” ENTRY GATE FAILED 0.912, no L2 measured
 - 28bac82c 08-22 05:05 Aporia P110: CAMPAIGN X TERMINAL â€” REDESIGN (frozen split touched once)
-- e53c685a 08-22 04:53 Techne cycle 045: budget allocated to the arsenal's own red tests; classification pre-registered
 - … +279 more
 
 ## Bottleneck hypotheses (confidence)
