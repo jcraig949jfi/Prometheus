@@ -112,6 +112,28 @@ class KnotTraceFieldEntry:
     nf_discriminant: Optional[int]         # LMFDB nf.discriminant.disc or None
     nf_class_number: Optional[int]         # nf.class_number or None
     source: str                            # "MR" / "Snap" / "Goerner" etc.
+    hyperbolic_volume_known: bool = True   # False => the 0.0 above is NOT a measurement
+
+    # ------------------------------------------------------------------
+    # Cycle 046. `hyperbolic_volume` carried a conflation that shipped an
+    # IMPOSSIBLE value: a hyperbolic knot has volume > 0 by Mostow rigidity
+    # (the smallest is the figure-eight's 2.029883..., Cao-Meyerhoff 2001),
+    # yet with KnotInfo unavailable the curated fallback filled 0.0 and the
+    # corpus returned 48 "hyperbolic" knots every one of which claimed it.
+    #
+    # The mechanism was visible in one line of the loader:
+    #
+    #     pool = [e for e in pool
+    #             if e.hyperbolic_volume > 0.0 or e.trace_field_class != 0]
+    #
+    # 0.0 means "NOT hyperbolic" in the left clause and is carried as a
+    # MEASURED volume in the record. The defensive `or` admitted entries as
+    # hyperbolic while their volume field still said the opposite.
+    #
+    # This flag does not invent data. It separates "the volume is zero" from
+    # "the volume is unknown because the source was absent", which is the only
+    # honest thing available without KnotInfo. The two authority tests
+    # correctly REMAIN RED, because the real volumes are still missing.
 
     @property
     def trace_field_degree(self) -> int:
@@ -947,6 +969,7 @@ def _entry_to_dict(e: KnotTraceFieldEntry) -> dict:
         "determinant": e.determinant,
         "three_genus": e.three_genus,
         "hyperbolic_volume": e.hyperbolic_volume,
+        "hyperbolic_volume_known": e.hyperbolic_volume_known,
         "alexander_coeffs": list(e.alexander_coeffs),
         "trace_field_min_poly": list(e.trace_field_min_poly),
         "trace_field_signature": list(e.trace_field_signature),
@@ -967,6 +990,12 @@ def _dict_to_entry(d: dict) -> KnotTraceFieldEntry:
         determinant=int(d.get("determinant", 1)),
         three_genus=int(d.get("three_genus", 0)),
         hyperbolic_volume=float(d.get("hyperbolic_volume", 0.0)),
+        # A cache written before cycle 046 has no flag. Absent flag + zero
+        # volume means the value was invented, so default accordingly rather
+        # than letting an old cache resurrect the conflation.
+        hyperbolic_volume_known=bool(
+            d.get("hyperbolic_volume_known",
+                  float(d.get("hyperbolic_volume", 0.0)) > 0.0)),
         alexander_coeffs=tuple(int(x) for x in d.get("alexander_coeffs", ())),
         trace_field_min_poly=tuple(int(x) for x in d.get("trace_field_min_poly", ())),
         trace_field_signature=(int(sig[0]), int(sig[1])),
@@ -1133,6 +1162,7 @@ def load_knot_trace_field_corpus(
                 three_genus = int(ki.get("three_genus") or 0)
                 vol = ki.get("hyperbolic_volume")
                 hyp_vol = float(vol) if vol is not None else 0.0
+                vol_known = vol is not None
             else:
                 alex_coeffs = tuple()
                 crossings = 0
@@ -1140,6 +1170,7 @@ def load_knot_trace_field_corpus(
                 determinant = 1
                 three_genus = 0
                 hyp_vol = 0.0
+                vol_known = False          # invented, not measured
 
             # Pad / truncate the Alexander polynomial coefficient vector.
             if len(alex_coeffs) > alexander_pad_to:
@@ -1156,6 +1187,7 @@ def load_knot_trace_field_corpus(
                 determinant=determinant,
                 three_genus=three_genus,
                 hyperbolic_volume=hyp_vol,
+                hyperbolic_volume_known=vol_known,
                 alexander_coeffs=tuple(int(c) for c in alex_coeffs),
                 trace_field_min_poly=tuple(int(c) for c in min_poly),
                 trace_field_signature=(int(sig_pair[0]), int(sig_pair[1])),
@@ -1255,3 +1287,18 @@ __all__ = [
     "write_cache",
     "read_cache",
 ]
+
+
+def corpus_volumes_are_measured(corpus) -> bool:
+    """True iff every entry's `hyperbolic_volume` came from a source rather than a fallback.
+
+    **Cycle 046.** A caller doing volume-dependent work needs one call that answers "is this
+    corpus usable for that?", because the alternative is inspecting 48 entries and getting it
+    wrong once. Under `curated-only` this returns False and the corpus should not be trained on,
+    benchmarked against, or reported from without saying so.
+
+    Deliberately NOT named `has_volumes` or returning a count: the question is whether the numbers
+    are measurements, and a count would invite reading "48 volumes present" off a corpus whose
+    volumes are all invented zeros.
+    """
+    return all(getattr(e, "hyperbolic_volume_known", True) for e in corpus)

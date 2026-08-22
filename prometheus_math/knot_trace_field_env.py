@@ -306,6 +306,9 @@ class KnotTraceFieldEnv:
                 TRACE_FIELD_CLASSES[self._current.trace_field_class],
             "trace_field_degree": self._current.trace_field_degree,
             "hyperbolic_volume": self._current.hyperbolic_volume,
+            # Cycle 046: never report the volume without saying whether it is a
+            # measurement. 0.0 with known=False means "no source", not "zero".
+            "hyperbolic_volume_known": self._current.hyperbolic_volume_known,
             "split": self.split,
             "true_class": int(self._current.trace_field_class),
         }
@@ -394,6 +397,9 @@ class KnotTraceFieldEnv:
             "eval_success": ev.success,
             "split": self.split,
             "hyperbolic_volume": self._current.hyperbolic_volume,
+            # Cycle 046: never report the volume without saying whether it is a
+            # measurement. 0.0 with known=False means "no source", not "zero".
+            "hyperbolic_volume_known": self._current.hyperbolic_volume_known,
             "elapsed_seconds": float(elapsed_seconds),
             "oracle_calls": int(oracle_calls),
         }
@@ -445,6 +451,12 @@ class KnotTraceFieldEnv:
 
         det = max(1, int(e.determinant))
         log_det = math.log10(det)
+        # Cycle 046: when the volume is unknown this is 0.0 by construction, and a
+        # feature vector cannot carry "unknown". The value is kept so the vector
+        # keeps its declared width, but the fact is no longer SILENT: the flag
+        # rides in the observation dicts above, and
+        # `corpus_volumes_are_measured()` lets a caller refuse the corpus outright
+        # rather than train on invented zeros.
         vol = float(e.hyperbolic_volume)
         vol_per_pi = vol / math.pi if math.isfinite(vol) else 0.0
 

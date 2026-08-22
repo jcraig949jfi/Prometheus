@@ -1388,3 +1388,46 @@ approximately nothing**, and I have no mechanism that would have caught the seco
 write the domain condition itself; characterise an excluded case as an identity rather than
 returning early; dynamic imports need a runtime existence check with an explanatory error; treat an
 always-failing test as worse than a missing one.
+
+## Cycle 046 — claim v29: a sentinel that was also a measurement; and the block verdict
+
+**The defect, exactly.** `0.0` served as the sentinel for "not hyperbolic" in the corpus filter AND
+as a measured volume in the records that filter admitted. 48 hyperbolic knots shipped a
+mathematically impossible value (hyperbolic => volume > 0, Mostow rigidity; smallest 2.029883...,
+Cao-Meyerhoff 2001). **A value used as a sentinel cannot also be a legitimate measurement of the
+same quantity** — added to the kill battery.
+
+**C_site, measured, correcting cycle 045:** callee edit ~40 lines / direct FIELD readers 3 / tests 1
+/ transitive type fallout 0. Cycle 045 quoted 44 and deferred; ~41 of those were a same-named
+FUNCTION. **An inflated cost estimate presented as prudence is worse than the defect it defers.**
+
+**Fix:** `hyperbolic_volume_known` flag, additive, no type change, cache round-trip defaults an
+unflagged zero to UNKNOWN. 0 entries now claim a measured zero. **No volumes were invented, so the
+two authority tests correctly REMAIN RED** — pre-registered in advance so it could not be
+reframed.
+
+**Postcondition by name-diff: 29 -> 28, and the fix did not cause it.** The recovered test is the
+cycle-045 flake, which independently confirms that diagnosis.
+
+### BLOCK VERDICT 042-046 — PASSED 4 of 5, with a structural drift
+
+    042 PASS (a)   #78 root-caused on live data, 4/4 pre-registered predictions held
+    043 FAIL       underpowered, n=1, no testable result
+    044 PASS (c)   class hypothesis retired on n=150 (necessity arm only)
+    045 PASS (a)   two real defects fixed, postconditions measured
+    046 PASS (a)   impossible values removed from a live corpus
+
+**THE DRIFT, which outranks the scorecard.** The first half of the block found defects in a live
+system I am forbidden to fix; the second half found defects in my own tree, which I can. Both are
+real; they are not equivalent. **The block never completed detect -> intervene -> measure on code
+another role depends on.** "Real substrate + actionable intervention" has resolved in practice to
+"my substrate".
+
+**Next block:** target arsenal functions with demonstrated cross-role consumers — owned (so
+intervention is permitted) and imported by others (so the defect matters). Flagged as possibly the
+same retreat with a better justification.
+
+**Kill-battery additions (executable):** a sentinel value cannot double as a measurement of the
+same quantity; resolve field-vs-function before quoting a blast radius; when adding a correctness
+flag, decide and test what an old serialised row means; diff failures by name and state what the
+fix did and did not move.

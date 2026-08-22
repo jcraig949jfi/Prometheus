@@ -1327,3 +1327,52 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
 248. **A trap I set for myself and nearly walked into: I predicted the postcondition (28) and had
      written it into the cycle doc before measuring.** Defence added: measure, diff the before/after
      lists BY NAME, and explain any discrepancy before publishing.
+
+
+## Cycle 046 (2026-08-22) — impossible values removed; BLOCK 042-046 CLOSES
+
+249. **HITL #78: latent, unchanged.** `phases: ['P1','P1']`, no P3/P4, detector green in 0.33 s.
+250. **HITL #242 UNRULED, so nothing was installed** and the dependency track stayed blocked. Took
+     the knot-volume track instead, as instructed.
+251. **THE DEFECT, in one line of the loader:**
+     `pool = [e for e in pool if e.hyperbolic_volume > 0.0 or e.trace_field_class != 0]` —
+     **0.0 means "NOT hyperbolic" in the left clause and is carried as a MEASURED volume in the
+     record.** The defensive `or` admitted 48 entries as hyperbolic while their volume field said
+     the opposite. A hyperbolic knot has volume > 0 by Mostow rigidity.
+252. **C_site MEASURED, AND IT CORRECTS ME.** Cycle 045 deferred on "44 non-test references"; the
+     pre-registration flagged the number as suspect before measuring, and it was wrong. Real
+     figures: **callee edit ~40 lines / direct FIELD readers 3 / tests 1 / transitive type fallout
+     0.** The other ~41 were a SAME-NAMED FUNCTION (`pm.topology.hyperbolic_volume`), docstrings,
+     and module internals. **The deferral rested on a measurement conflating a field with a
+     function — a worse error than the one I deferred, because an inflated cost looked like
+     prudence.**
+253. **FIX, no data invented.** `hyperbolic_volume_known: bool = True`, additive and defaulted, set
+     False wherever the fallback invents 0.0; cache round-trip preserves it and **an old cache row
+     without the flag rehydrates as UNKNOWN** rather than resurrecting the claim. Result: 0 entries
+     claim a measured zero, 48 explicitly unknown. Five pinning tests.
+254. **POSTCONDITION BY NAME-DIFF: 29 -> 28, and the knot fix did NOT cause it.** The one test that
+     went green is the FLAKE identified in cycle 045 — independent confirmation of that diagnosis,
+     since nothing this cycle touched it. **The two knot authority tests are STILL RED, exactly as
+     pre-registered.** Making them green would have meant fabricating a measurement.
+255. **BLOCK VERDICT 042-046: PASSED 4 of 5.** 042 PASS(a), 043 FAIL (underpowered), 044 PASS(c),
+     045 PASS(a), 046 PASS(a).
+256. **JAMES — THE DRIFT IS THE REAL FINDING OF THE BLOCK.** 80/20 was honoured by time, but the
+     first half found defects in a live system I am FORBIDDEN to fix, and the second half found
+     defects in MY OWN TREE, which I can. Cycles 045-046 completed detect -> intervene -> measure
+     on code whose only consumers are me. **The block never once completed the full arc on
+     something another role depends on.** "Real substrate + actionable intervention" has quietly
+     resolved to "MY substrate", and those are different bars.
+257. **PROPOSAL FOR THE NEXT BLOCK:** target `prometheus_math` functions with DEMONSTRATED
+     CROSS-ROLE CONSUMERS — I own them so intervention is permitted, other roles import them so the
+     defect matters beyond my tree. First move: enumerate repo-wide which arsenal functions other
+     roles actually call, feasibility verified before sampling, ranked by consumer count. Scoping,
+     well under a cycle. **I am not confident this is a fix rather than the same retreat with a
+     better justification, and would like that challenged.**
+258. **STILL BLOCKING ON #242.** 26 of the 28 remaining reds are missing optional dependencies.
+     Until it is ruled, the arsenal's suite is a broken regression detector and every cycle spent
+     on it is half-blind.
+259. **Track 1: `prometheus_math.mirkin_metric`** (Mirkin 1996 ch.5 / Mirkin & Chernyi 1970), 13
+     tests, RED first, four categories — the METRIC of the pair-counting family. **Has the triangle
+     inequality, which `rand_index` does not**, so `1 - RI` is not a safe distance. **`n = 1` is
+     DEFINED at 0 here while `normalized_vi`, `adjusted_rand` and `fowlkes_mallows` all refuse** —
+     third cycle running that this family has not shared a domain.
