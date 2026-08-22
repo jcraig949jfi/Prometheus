@@ -154,6 +154,37 @@ margin for one partial re-run                             ~$6
 The free NVIDIA lane covers the second family's side of Tier B at $0. **Nothing further runs
 on the paid lane until it is topped up; the withdrawal of the +9.6pp stands regardless.**
 
+## 7o. THE NATIVE RESIDUE IS NOT SPARSE — the "33.6% nulls" was measured on the wrong population (Ergon, 2026-08-22)
+
+The prereg (§4.1) describes the accumulated corpus as thin: *"`kill_pattern` strings with their
+33.6% nulls, `kill_vector` at 0% populated"*. That framing has shaped a year of planning — D2/D3
+has never been attempted, partly because the residue was assumed too sparse to carry anything.
+
+**Measured** (9,618 records sampled across 6 of 165 batch files, `theseus/corpus/`, 346 GB):
+
+- `kill_pattern` — **48.9% overall but 100.0% among REJECTED records.** The dilution is
+  SHADOW_CATALOG / UNVERIFIED rows, which are not failures and correctly carry no kill pattern.
+  **Every actual failure record has one.** The "33.6% nulls" is a statistic about a population
+  that includes non-failures; quoted as a property of the failure residue, it is wrong.
+- `claim_payload` 100% · `canonical_claim_text` 100% · `method` 97.8% (among REJECTED)
+- `step_trace` **16.9%** among REJECTED — genuinely sparse, and the honest limit.
+- `kill_vector` **0.0%** — the prereg is right about this one.
+
+Also: `theseus/orchestration/signature_index.sqlite` holds **3,311 signature classes, 1,268 of
+them KILL, across 43 distinct generators and 26 claim kinds** — compressed shape-classes over
+millions of instances, not traces.
+
+**This is the third number this week that was measured on one population and quoted as a
+property of another** (see §7n free-lane quota; §7m the +14pp host delta). Same failure shape,
+three different subsystems. It is worth treating as a program-level pattern rather than three
+coincidences.
+
+**Consequence:** D2/D3 — whether the year of accumulated residue carries anything, which is the
+North Star question — is **data-feasible**. It is not blocked on corpus quality or on money
+(free lane, §7n). It is blocked on exactly one open design problem: **R2-6, the transfer
+comparator** — what plays F-null's role where a task-specific null cannot exist. That is
+Charon's per the ROUND2 charter, and the charter bars running Transfer until it is answered.
+
 ## 7n. FREE-LANE CAPACITY WAS UNDERSTATED BY 25x — fleet planning fact (Ergon, 2026-08-22)
 
 The fleet has been planning against "free NVIDIA: ~40 long-output calls/day". **That figure is
