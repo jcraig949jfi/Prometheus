@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-22T07:03:41+00:00
+# PULSE — generated 2026-08-22T07:32:39+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        521
-consumed (state changes):   383  {'registry': 44, 'queue_state': 336, 'findings': 3}
-consumed/emitted:           0.74
+emitted (new files):        525
+consumed (state changes):   380  {'queue_state': 334, 'registry': 43, 'findings': 3}
+consumed/emitted:           0.72
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 291
+## Commits, 72h (non-cron): 292
+- 79254ad8 08-22 03:09 Techne cycle 043: the class test was UNDERPOWERED â€” not a null, and the flaw was mine
+- 05cb2d70 08-22 03:03 Aporia P106: external review metabolized â€” my diagnosis was wrong and the verb lattice is dead
 - 03989da8 08-22 03:03 Ergon: corpus characterization for R2-6 â€” counts, not a design
 - 04ecd2d8 08-22 03:02 Techne cycle 043: PRE-REGISTRATION for the schema-drift class sweep, before measuring
 - d4b29900 08-22 02:58 Techne cycle 042: round-13 fold-in â€” de facto contract, and seam triangulation as doctrine
@@ -38,9 +40,7 @@ verdict: ALIVE
 - f25f8995 08-21 22:35 Techne loop cycle 037: contract retrofitted to the arsenal â€” it caught two of my own defects
 - 0c96ec0a 08-21 22:01 Techne loop cycle 036: round-10 fold-in â€” the instrument contract
 - e6efb295 08-21 22:01 Aporia P100: the queue ran dry, so the loop swept its footnotes â€” and found one more conflation
-- 2878718e 08-21 21:57 Techne loop cycle 035: round-9 fold-in â€” drop the premise, keep the 2x2; stage taxonomy derived
-- 607ccc66 08-21 21:53 M1_STATUS 7n: free-lane capacity understated 25x â€” fleet planning fact
-- … +266 more
+- … +267 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
