@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-22T02:01:50+00:00
+# PULSE — generated 2026-08-22T02:36:13+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,16 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        490
-consumed (state changes):   411  {'findings': 3, 'queue_state': 362, 'registry': 45, 'doctrine': 1}
-consumed/emitted:           0.84
+emitted (new files):        496
+consumed (state changes):   412  {'registry': 47, 'queue_state': 361, 'findings': 3, 'doctrine': 1}
+consumed/emitted:           0.83
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 280
+## Commits, 72h (non-cron): 282
+- f25f8995 08-21 22:35 Techne loop cycle 037: contract retrofitted to the arsenal â€” it caught two of my own defects
+- 0c96ec0a 08-21 22:01 Techne loop cycle 036: round-10 fold-in â€” the instrument contract
+- e6efb295 08-21 22:01 Aporia P100: the queue ran dry, so the loop swept its footnotes â€” and found one more conflation
 - 2878718e 08-21 21:57 Techne loop cycle 035: round-9 fold-in â€” drop the premise, keep the 2x2; stage taxonomy derived
 - 607ccc66 08-21 21:53 M1_STATUS 7n: free-lane capacity understated 25x â€” fleet planning fact
 - 32265fd6 08-21 21:51 Ergon: fix a stale delta inside my own escalation before it fossilizes
@@ -37,10 +40,7 @@ verdict: ALIVE
 - f538cf9e 08-21 18:04 Techne loop cycle 027: a falsification battery is a chain running the other way
 - 70459647 08-21 17:56 Ergon: pre-file the P1 band escalation BEFORE the number lands
 - 2d1a4e1b 08-21 17:44 Aporia P92: TIER COMPLETE 25/25 â€” a rediscovered kill and four theorems by pincer
-- 1b2685e1 08-21 17:30 Techne loop cycle 026: scope statement vindicated â€” instruments transfer to selection stages
-- 11be7f4b 08-21 17:15 Aporia P91: the bootstrap engine and the pincer â€” both with derived nulls
-- 2f86c977 08-21 16:58 Techne loop cycle 025: real substrate â€” a live 100% loader drop in ergon/probe, and instruments that do not transfer
-- … +255 more
+- … +257 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records

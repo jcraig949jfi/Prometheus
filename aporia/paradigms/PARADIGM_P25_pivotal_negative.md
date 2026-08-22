@@ -81,14 +81,21 @@ Q3, which prices kills by what rested on the belief.
 ## Attribution pins (P100, layered per the citation rule)
 
 - **k=5**: Lander, L. J.; Parkin, T. R., "Counterexample to Euler's conjecture
-  on sums of like powers", *Bull. Amer. Math. Soc.* 72(6):1079 (1966) — the
-  famously terse announcement. Citation string quoted from Wikipedia's
-  reference list (tertiary-quoted layer; primary PDF unfetched).
+  on sums of like powers", *Bull. Amer. Math. Soc.* 72(6):1079, November 1966
+  — the famously terse announcement. **UPGRADED P101 to publisher-record
+  level**: title, authors, volume, issue, page and month confirmed from the
+  Project Euclid landing page (bams/1183528522). The one-page text itself is
+  download-gated, so the equation is verified in our arithmetic (P25 leg A)
+  rather than read from the paper — the two layers are separate and both
+  stated.
 - **k=4**: the 95800 quadruple was found by **Roger E. Frye** (1988),
   "Finding 95800^4 + 217519^4 + 414560^4 = 422481^4 on the Connection
   Machine", *Proc. Supercomputing 88*, Vol. II, pp. 106-116 — tertiary-quoted.
   CORRECTION to this artifact's original "(Elkies/Frye 1988)": the SMALLEST
   quadruple is Frye's machine search; Elkies (Math. Comp., 1988) supplied the
   elliptic-curve method and the FIRST k=4 counterexample — a different,
-  larger quadruple. The conflation is fixed; Elkies's exact citation remains
-  at secondary level pending its own fetch.
+  larger quadruple. The conflation is fixed; **Elkies's exact citation stays
+  PENDING** — ams.org returns 403 to this toolchain (attempted P101) and the
+  biographical sources carry the fact without the reference. One library or
+  authenticated-AMS access closes it; nothing here rests on it beyond
+  attribution of method-vs-finder, which the Frye pin already settles.
