@@ -665,3 +665,37 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      explain why the instruments are working / inverted / blind respectively. Worth a cycle of
      its own. Honest worry: one derivation worked, and I may now be pattern-matching derivations
      onto everything.
+
+
+## Cycle 032 (2026-08-21) — external review round 8 folded in
+
+119. **HITL #78: 632 rows, 0 accepted, 100% drop, EIGHT cycles unruled.** 330 -> 369 -> 400 ->
+     446 -> 491 -> 530 -> 572 -> 632. **New: the campaign has begun writing rep-2 rows** (7 of
+     632) — the contamination screen. The shipping loader accepts neither rep.
+120. **My cycle-022 merge/split duality was scoped too widely and is now narrowed.** It exhausts
+     classification error against a FIXED target; it says nothing about a projection that induces
+     exactly the right partition and destroyed what a LATER task needs. Measured on integers
+     2..41: the primality projection scores VI = 0.0000 against "is it prime" and loses 1.9567
+     bits against "smallest factor". **Adequacy is quantified over future targets — a different
+     quantifier — so no care about the first target detects it.**
+121. **New instrument: `refinement_multiplicity`** (worst-case fragmentation) beside `H(P|T)`
+     (average). A rare cell shattered into singletons costs 0.3322 bits while the same shattering
+     in the common cell costs 0.7851 — averages hide concentrated waste.
+122. **I nearly asserted a convergence on a test that could not have falsified it.** The two
+     measures are different kinds under cycle 031's 2x2 (multiplicity EXISTENTIAL, excess bits
+     AGGREGATE), but my first chain made both look EXISTENTIAL because singleton-refinement
+     growth only drives excess up. Per my own HITL #109 I constructed the decrease deliberately.
+     **The both-directions rule earned its keep this cycle — recommend ratifying it.**
+123. **Cycle 022's "prove incapacity per observation class" is superseded.** With infinitely many
+     incomparable classes, enumeration cannot finish, and the fallacy to avoid is "we could not
+     enumerate, therefore the family might be sufficient". A parameterised adversary constructor
+     kills the family with one schema: run against R3 across 24 parameters (widths 1-12 x both
+     policies), 24 witnesses. `proves_family_incapacity` is hardcoded False — the schema's
+     correctness is a UNIVERSAL claim over the parameter space, so sampling refutes and never
+     establishes.
+124. **FOR ATTENTION — the preprocessing finding is worse than cycle 022 reported, and it may
+     reach the whole bottom of the ladder.** R0's projection is `srepr o sympy-normalisation`,
+     and SEVEN OF EIGHT source-level distinctions are erased before the circuit runs. If the CAS
+     delivers most low-rung invariance, **R0 and R1 may be measuring sympy's normaliser rather
+     than any reasoning**, and the ladder's bottom two rungs would need rebuilding on raw syntax
+     trees. Large claim, not yet made — but it is the most consequential thread open.

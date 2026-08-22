@@ -48,7 +48,7 @@ from typing import Any, Callable, Dict, Hashable, Iterable, List, Optional, Sequ
 __all__ = [
     "AliasingWitness", "find_aliasing_witness", "all_aliasing_witnesses",
     "family_cannot_be_correct", "verify_family_incapacity", "verify_factorization",
-    "fiber_search",
+    "fiber_search", "UniformAdversaryReport", "uniform_adversary",
 ]
 
 
@@ -197,3 +197,89 @@ def fiber_search(
             return AliasingWitness(seed, candidate, fiber_value, seed_truth, truth(candidate),
                                    note=f"synthesised by fiber search in {steps} steps")
     return None
+
+
+# =============================================================================================
+# Uniform adversaries (cycle 032, external review round 8).
+#
+# Cycle 022 found that FIFO and LIFO observation classes are incomparable, and concluded that
+# incapacity must be proved per observation class. Round 8 pointed out the failure mode that
+# invites: with infinitely many incomparable classes — E_n = "observe the first n symbols", or
+# worse E_S = "observe x restricted to S" for every finite S — per-class enumeration cannot
+# finish, and it is tempting to conclude "we could not enumerate, so the family might be
+# sufficient."
+#
+# **Enumeration is one proof technique, not the only one.** A UNIFORM ADVERSARY CONSTRUCTOR
+# kills an infinite family with a single schema:
+#
+#     for every parameter S,  construct (x_S, y_S)  with  pi_S(x_S) = pi_S(y_S)  and
+#     T(x_S) != T(y_S)
+#
+# The proof hierarchy, weakest evidence last:
+#
+#     single shared projection      one witness kills the family
+#     finite observation classes    one witness per class
+#     parameterised constructor     one schema kills infinitely many classes
+#     none of the above             no family-wide result — and say so, rather than implying
+#                                   sufficiency from a failure to enumerate
+# =============================================================================================
+
+
+@dataclass(frozen=True)
+class UniformAdversaryReport:
+    """Result of checking an adversary SCHEMA across sampled parameters.
+
+    **This is refutation-capable and never a proof.** "The constructor works for every parameter"
+    is a UNIVERSAL claim over the parameter space (cycle 031's taxonomy), so it is monotone
+    DOWNWARD: sampling can break it by finding one parameter where the construction fails, and
+    can never establish it. A clean run means the schema survived the parameters tried.
+
+    What it does buy: if the schema is correct, ONE argument covers infinitely many observation
+    classes, and the "could not enumerate, therefore possibly sufficient" fallacy is closed.
+    """
+
+    family: str
+    n_parameters: int
+    failures: Tuple[Any, ...]
+    witnesses: Tuple[Any, ...] = ()
+
+    @property
+    def schema_survived(self) -> bool:
+        return not self.failures
+
+    @property
+    def proves_family_incapacity(self) -> bool:
+        """Always False. Kept as an attribute so no caller can quietly upgrade the verdict."""
+        return False
+
+    def report(self) -> str:  # pragma: no cover - reporting only
+        state = "survived" if self.schema_survived else f"FAILED on {self.failures[:3]}"
+        return (f"{self.family}: adversary schema {state} across {self.n_parameters} sampled "
+                f"parameters (refutation-capable; not a proof of family incapacity)")
+
+
+def uniform_adversary(family: str, parameters: Sequence[Any],
+                      construct: Callable[[Any], Tuple[Any, Any]],
+                      projection_for: Callable[[Any], Callable[[Any], Hashable]],
+                      truth: Callable[[Any], Any]) -> UniformAdversaryReport:
+    """Check one adversary SCHEMA against many parameters of an evaluator family.
+
+    `construct(param) -> (x, y)` must build a pair that the parameter's own projection cannot
+    separate and whose truths differ. A parameter where that fails is recorded as a failure of
+    the SCHEMA, not as evidence that the family is sound there.
+    """
+    failures, witnesses = [], []
+    for param in parameters:
+        try:
+            x, y = construct(param)
+            pi = projection_for(param)
+            aliased = pi(x) == pi(y)
+            differs = truth(x) != truth(y)
+        except Exception:
+            failures.append(param)
+            continue
+        if aliased and differs:
+            witnesses.append((param, x, y))
+        else:
+            failures.append(param)
+    return UniformAdversaryReport(family, len(parameters), tuple(failures), tuple(witnesses))

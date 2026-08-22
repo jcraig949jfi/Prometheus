@@ -37,11 +37,16 @@ def test_FINDING_A_the_shipping_loader_drops_one_hundred_percent_of_a_live_ledge
     TOP-LEVEL `rep` field the writer never emits. Every record is dropped.
     """
     on_disk, shipping, audit = loader_drop_rate()
+    rows = raw_rows()
+    rep1 = [r for r in rows if isinstance(r.get("key"), list) and r["key"][0] == 1]
     assert on_disk > 300                       # a substantial live ledger
     assert shipping == 0                       # ...and the loader accepts none of it
-    assert audit == on_disk                    # while the key-aware reader accepts all of it
-    assert not any("rep" in row for row in raw_rows())
-    assert all(row["key"][0] == 1 for row in raw_rows() if isinstance(row.get("key"), list))
+    assert audit == len(rep1)                  # while the key-aware reader accepts every rep-1 row
+    assert not any("rep" in row for row in rows)          # no top-level rep field exists
+    # As of cycle 032 the campaign has begun writing rep-2 rows (the contamination screen), so
+    # the shim's prereg-mandated rep-1 filter now does real work. The drop rate is unaffected:
+    # the shipping loader accepts neither rep.
+    assert len(rep1) < on_disk or len(rep1) == on_disk
 
 
 def test_FINDING_A_consequence_the_arm_ships_an_empty_packet_reporting_UNSUPPLIED():
@@ -158,7 +163,8 @@ def test_the_audit_shim_is_not_a_fix_and_ergon_is_untouched():
     """Guard on this cycle's own contract: the shim reads, it does not write, and the shipping
     loader is left exactly as it was."""
     assert load_prepass(CAMPAIGN_LEDGER) == []          # unchanged behaviour
-    assert len(_audit_load_prepass()) == len(raw_rows())
+    rep1 = [r for r in raw_rows() if isinstance(r.get("key"), list) and r["key"][0] == 1]
+    assert len(_audit_load_prepass()) == len(rep1)
 
 
 # ---- CYCLE 026: the SELECTION stages — the scope statement's decisive test ------------------------

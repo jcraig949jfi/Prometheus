@@ -770,3 +770,34 @@ Recorded as a limit on the exhaustiveness claim, not as a footnote.
 **Kill-battery additions (executable):** `kind_from_monotonicity` (the 2x2 as code);
 `probe_monotonicity` over a nested chain, refusing a non-increasing chain; count-versus-rate
 comparison as the normalisation probe.
+
+## Cycle 032 — round-8 fold-in: two published claims narrowed, one superseded
+
+**Merge/split duality (cycle 022) — SCOPED.** It exhausts CLASSIFICATION ERROR against a fixed
+target. It does NOT exhaust REPRESENTATION ADEQUACY: a projection can induce exactly the truth
+partition (VI = 0) and have destroyed everything a later task needs. Measured on integers 2..41 —
+the primality projection is perfect for "is it prime" and loses 1.9567 bits against "smallest
+factor". Adequacy is quantified over FUTURE targets, a different quantifier.
+
+**New measure alongside the old.** `H(P|T)` is distribution-dependent, so a shattered rare corner
+looks cheap (0.3322 bits for a 10-of-100 cell, against 0.7851 for the same shattering in the
+90-cell). `refinement_multiplicity` reports worst-case fragmentation. Under cycle 031's 2x2 they
+are different KINDS — multiplicity is max-of-counts (EXISTENTIAL), excess bits are normalised
+(AGGREGATE) — verified in both directions only after a first chain made both look monotone.
+
+**Per-class incapacity (cycle 022) — SUPERSEDED.** With infinitely many incomparable observation
+classes, enumeration cannot finish, and "we could not enumerate, therefore possibly sufficient" is
+a fallacy. A parameterised adversary constructor kills the family with one schema. Run against R3:
+24 parameters (widths 1-12 x both eviction policies), 24 witnesses, schema survived.
+`proves_family_incapacity` is hardcoded False — the schema's correctness is a UNIVERSAL claim over
+the parameter space, monotone downward, so sampling refutes and never establishes.
+
+**Preprocessing credit (cycle 022) — WORSE THAN REPORTED.** R0's projection is
+`srepr o sympy-normalisation`. Seven of eight source-level distinctions are erased before the
+circuit runs: commutativity, associativity with constant folding, power collapsing, rational
+normalisation, sqrt evaluation, cancellation. Only `x*(y+1)` vs `x*y+x` survives for the circuit
+to distinguish. **Open and consequential: if the CAS delivers most low-rung invariance, R0 and R1
+may be measuring sympy's normaliser rather than any reasoning.**
+
+**Kill-battery additions (executable):** second-target within-class loss; worst-case refinement
+multiplicity; uniform adversary schema check; CAS-delivered-invariance probe.

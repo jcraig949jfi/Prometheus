@@ -24,7 +24,8 @@ from typing import Callable, Dict, FrozenSet, Hashable, List, Sequence, Tuple
 
 __all__ = ["induced_partition", "refines", "entropy", "mutual_information",
            "variation_of_information", "conditional_entropy", "is_refinement_chain",
-           "information_profile", "normalized_deficit", "chain_direction", "PartitionError"]
+           "information_profile", "normalized_deficit", "chain_direction",
+           "refinement_multiplicity", "within_class_loss", "PartitionError"]
 
 Partition = Tuple[FrozenSet[int], ...]
 
@@ -189,3 +190,45 @@ def chain_direction(chain: Sequence[Partition], n: int) -> str:
     if is_refinement_chain(list(reversed(chain)), n):
         return "ACCUMULATING"
     return "NEITHER"
+
+
+def refinement_multiplicity(projection: Partition, truth: Partition, n: int) -> int:
+    """WORST-CASE fragmentation: the largest number of projection cells inside one truth cell.
+
+    External review, round 8, on why `H(P | T)` alone is not enough: **the excess bits are
+    distribution-dependent, so a massive refinement in a rare corner looks cheap.** A projection
+    that shatters one rare truth class into a hundred pieces and leaves the common classes intact
+    barely moves the average, and this number reports it immediately.
+
+    Bits tell you average fragmentation; multiplicity tells you worst-case. Keep both.
+
+    Note where this sits in the cycle-031 2x2: it is a MAX OF COUNTS, so it is monotone up under
+    domain growth — an EXISTENTIAL-kind claim — whereas `H(P | T)` is normalised and therefore
+    AGGREGATE. The reviewer's "keep both" is exactly "keep one monotone measure and one
+    normalised one", which is a pleasing convergence between two independent lines.
+    """
+    _validate(projection, n, "projection")
+    _validate(truth, n, "truth")
+    worst = 0
+    for cell in truth:
+        inside = sum(1 for d in projection if d <= cell)
+        worst = max(worst, inside)
+    return worst
+
+
+def within_class_loss(projection: Partition, target: Partition, n: int) -> float:
+    """`H(target | projection)` — but named for the use round 8 identified.
+
+    Merge/split exhaust CLASSIFICATION ERROR against a fixed target. They do not exhaust
+    REPRESENTATION ADEQUACY, because a projection can induce exactly the truth partition —
+    no merge, no split, VI zero — and still have destroyed everything a LATER task needs.
+
+    Measured on the integers 2..41: the primality projection is perfect for "is it prime"
+    (VI = 0.0000) and loses 1.9567 bits against "what is the smallest factor". Same projection,
+    same inputs, a different question.
+
+    So the merge/split theorem is scoped to a FIXED target, and adequacy is quantified over
+    future targets — a different quantifier, which is why no amount of care about the first
+    target detects it.
+    """
+    return conditional_entropy(target, projection, n)
