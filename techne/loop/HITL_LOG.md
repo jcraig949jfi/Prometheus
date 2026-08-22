@@ -933,3 +933,43 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      all mine, all written in the last three weeks. Either something about how I write measures
      generates this, or the empty/degenerate case is simply where all bugs live and seven is
      unremarkable for forty-odd measures. I cannot tell which from inside.
+
+
+## Cycle 040 (2026-08-22) — the denominator: ten of forty
+
+169. **HITL #78: 821 rows, 0 accepted, 100% drop, FOURTEEN cycles unruled.**
+170. **HITL #168 SETTLED BY MEASUREMENT. TEN instances among FORTY measure-like functions — 25%.**
+     Not a tail, a habit. The denominator comes from a MECHANICAL criterion (takes an argument,
+     reduces to a scalar verdict) applied uniformly across eleven modules, so it is auditable
+     rather than curated — cycle 038's lesson about choosing your own fixtures.
+171. **Three new instances.** (8) `is_refinement_chain([])` returned True — "this IS a refinement
+     chain" and "nothing was given" were the same answer. (9) `chain_direction([])` returned
+     DESTROYING — downstream of 8 and it **inherited the defect verbatim**. (10)
+     `find_splitting_witness` returned None for "nothing to compare".
+172. **Instance 10 is the one I want on the record.** **Cycle 037 fixed exactly this conflation in
+     `find_aliasing_witness` and left its dual, one file away, untouched.** The propagation failure
+     happening inside the cycle that was repairing it. Duals are now a named entry in the traps
+     ledger: after any repair, look at the twin first.
+173. **HITL #167 CONSEQUENTLY SETTLED — the `Measurement` migration stops being optional.** I
+     called it optional last cycle on the grounds that offering the type was enough. A 25% rate
+     among functions written in three weeks says the next batch contains more, and offering is not
+     using.
+174. **A caveat I am putting in writing rather than letting the number stand alone.** Twenty-six
+     REFUSES is not a clean bill of health: seven of those refusals were installed during cycles
+     029-039 in response to this same class, three more this cycle. The audit measures the code as
+     it STANDS, not as it was WRITTEN. As-written the rate was 10/40, and every repair was
+     reactive.
+175. **UNPROBED = 6, reported and not dropped.** A rate over only the probeable functions would
+     flatter the result exactly the way cycle 038's hand-written fixtures did. Three of the six
+     CONFLATES were also artefacts of my crude generic arguments (notably `reads_its_parameters`,
+     whose `inspect.getsource` reach limit cycle 037 already documented) — separated by hand and
+     reported as artefacts rather than counted as instances.
+176. **Zero for ten on reading.** Not one of the ten was found by reading the code; every one
+     surfaced from an instrument pointed elsewhere. I cannot tell from the record whether that
+     means reading does not work for this class, or that I never read WITH THIS BUG IN MIND. Those
+     imply different remedies — use tools, versus read with a checklist — and I would like your
+     call, because I keep choosing the first without having established it.
+177. **Open question I am not able to settle: is 25% actually high?** I have no comparison class.
+     For all I know a quarter of any codebase's reducing functions mishandle the empty case and
+     nobody measures it. Without a baseline from code I did not write, "habit" may be me
+     pathologising an ordinary rate. Honest statement today: 10/40 here, unknown elsewhere.

@@ -1081,3 +1081,46 @@ adapts without breaking signatures; the migration has NOT been done.
 
 **Kill-battery additions (executable):** every-boolean-route leak test for a result type;
 mistyped-domain anti-case; the seven-site refusal tally as one executable test.
+
+## Cycle 040 — claim v22: the class is a HABIT, measured. Ten of forty.
+
+**Claim.** The answering-outside-your-domain class stands at TEN instances among FORTY
+measure-like functions in my modules — **25%**. Measured, not estimated.
+
+**How the denominator was got, since a curated one would be worthless.** MECHANICAL criterion:
+a function is measure-like iff it takes at least one argument and reduces to a scalar verdict
+(bool / int / float / str / Optional thereof). Applied uniformly across eleven modules; disagree
+with it in one place rather than per function. Forty qualified. Each was called with a degenerate
+argument and a minimal legitimate one, and classified by comparing the two answers.
+
+    REFUSES        26
+    DISTINGUISHES   2
+    CONFLATES       6   -> 3 real instances, 3 artefacts of crude generic argument construction
+    UNPROBED        6   -> reported, never dropped
+
+**Instances 8, 9, 10.** `is_refinement_chain([]) -> True`; `chain_direction([]) -> DESTROYING`
+(downstream of 8, **inherited the defect verbatim**); `find_splitting_witness -> None` on fewer
+than two instances. All three now raise.
+
+**The finding inside the finding.** Instance 10 is the DUAL of `find_aliasing_witness`, which
+cycle 037 repaired — same conflation, one file away, left untouched by the very cycle that was
+fixing it. The class does not just recur; it recurs across pairs I have already touched.
+
+**Consequence — HITL #167 flipped.** Last cycle I called the `Measurement` migration optional
+because the type existed. A 25% as-written rate says otherwise: offering a type is not using it.
+The migration is now load-bearing rather than available.
+
+**What the number does NOT say, stated so it cannot be quoted without it:**
+- 26 REFUSES includes ten reactive repairs from cycles 029-040. As-stands != as-written.
+- No external baseline exists. "Habit" presumes 25% is above some normal rate I have never
+  measured on code I did not write. The defensible claim is "10/40 here, unknown elsewhere".
+- Ten sites may be fewer than ten roots: instance 9 is a wrapper that copied instance 8. Counting
+  per root rather than per site could move this back toward a tail.
+
+**Method result worth more than the count: reading scored ZERO for TEN.** Every instance surfaced
+from an instrument pointed at something else. Confounded, though — I never read with this bug as
+the question.
+
+**Kill-battery additions (executable):** enumerator self-test on three planted measures
+(conflater / refuser / distinguisher) before trusting any count from it; UNPROBED-is-counted
+assertion; the ten-of-forty tally as one test.

@@ -133,6 +133,12 @@ def is_refinement_chain(chain: Sequence[Partition], n: int) -> bool:
     are unions of stage k's fibres. A chain that FAILS this test is not a pipeline — some stage
     is reading something its predecessor did not hand it.
     """
+    if len(chain) < 2:
+        raise PartitionError(
+            f"a chain needs at least two partitions to be one; got {len(chain)}. Returning True "
+            "here reports 'this IS a refinement chain' when nothing was compared — eighth "
+            "instance of the answering-outside-your-domain class, found cycle 040 by a "
+            "degenerate-input audit rather than by use.")
     return all(refines(chain[k], chain[k + 1], n) for k in range(len(chain) - 1))
 
 
@@ -185,6 +191,11 @@ def chain_direction(chain: Sequence[Partition], n: int) -> str:
     gets flagged as broken, so this exists to be called before the profile is interpreted.
     "NEITHER" means consecutive stages are incomparable and no chain argument is available at all.
     """
+    if len(chain) < 2:
+        raise PartitionError(
+            f"cannot name a direction for a chain of {len(chain)}: 'DESTROYING' would describe "
+            "a chain that does not exist (ninth instance, cycle 040 — downstream of "
+            "is_refinement_chain, and it inherited the defect verbatim)")
     if is_refinement_chain(chain, n):
         return "DESTROYING"
     if is_refinement_chain(list(reversed(chain)), n):

@@ -61,7 +61,19 @@ def find_splitting_witness(
     truth: Callable[[Any], Any],
     note: str = "",
 ) -> Optional[SplittingWitness]:
-    """Dual of `find_aliasing_witness`: equal truths, different projections."""
+    """Dual of `find_aliasing_witness`: equal truths, different projections.
+
+    Raises `OutOfDomain` on fewer than two instances. **Cycle 037 fixed exactly this conflation
+    in `find_aliasing_witness` and left its dual untouched, one file away** — the propagation
+    failure happening inside the cycle that was repairing it. Found at cycle 040 by a
+    degenerate-input audit, as the tenth instance of the class.
+    """
+    if len(instances) < 2:
+        from techne.ladder_circuits.aliasing import OutOfDomain
+        raise OutOfDomain(
+            f"splitting needs at least two instances to compare; got {len(instances)}. "
+            "Returning None would report 'the projection splits nothing' when nothing was "
+            "compared")
     for a, b in combinations(instances, 2):
         if projection(a) != projection(b) and truth(a) == truth(b):
             return SplittingWitness(a, b, projection(a), projection(b), truth(a), note)
