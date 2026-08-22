@@ -1,0 +1,69 @@
+{
+ "frozen_positives": 125,
+ "pool_size": 20360,
+ "chance_top10": 0.000491,
+ "recorded_target_absent_from_answer_set": 0,
+ "answer_set_size": {
+  "diff": {
+   "n": 25,
+   "mean": 2.44,
+   "median": 1.0,
+   "max": 32,
+   "frac_gt_1": 0.24
+  },
+  "partsum": {
+   "n": 25,
+   "mean": 1.12,
+   "median": 1.0,
+   "max": 2,
+   "frac_gt_1": 0.12
+  },
+  "binomial": {
+   "n": 25,
+   "mean": 1.32,
+   "median": 1.0,
+   "max": 3,
+   "frac_gt_1": 0.24
+  },
+  "moebius": {
+   "n": 25,
+   "mean": 1.72,
+   "median": 1.0,
+   "max": 7,
+   "frac_gt_1": 0.32
+  },
+  "shift": {
+   "n": 25,
+   "mean": 5.24,
+   "median": 1.0,
+   "max": 32,
+   "frac_gt_1": 0.44
+  }
+ },
+ "STEP1_frozen_gate": {
+  "strict": "108/125",
+  "strict_rate": 0.864,
+  "any_valid": "118/125",
+  "any_valid_rate": 0.944,
+  "by_op_strict": {
+   "diff": "22/25",
+   "partsum": "23/25",
+   "binomial": "25/25",
+   "moebius": "21/25",
+   "shift": "17/25"
+  },
+  "by_op_any_valid": {
+   "diff": "24/25",
+   "partsum": "23/25",
+   "binomial": "25/25",
+   "moebius": "24/25",
+   "shift": "22/25"
+  }
+ },
+ "GATE": 0.95,
+ "GATE_PASSED": false,
+ "L2_measured": false,
+ "branch_fired": "E4",
+ "TERMINAL": "PARK",
+ "reason": "the one-pair development margin did not generalise to the frozen split; no L2 quantity was computed anywhere in this pass, and a third rebuild is not being spent"
+}

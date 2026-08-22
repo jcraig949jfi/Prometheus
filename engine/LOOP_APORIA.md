@@ -37,6 +37,25 @@ watch-paced — every pass does one real item.
    as capacity allows; schema + backup job first (DECISION 2 makes backup non-deferrable).
 
 
+## GATE DESIGN — a gate on gates (adopted P113 from Campaign X-2's own failure)
+
+**A threshold whose distance from the measured value is smaller than that measurement's
+standard error is not a gate.** Campaign X-2 set an entry gate at 0.95 on a 125-pair benchmark,
+cleared it at 119/125 = 0.9520 on development, failed it at 118/125 = 0.9440 on frozen, and
+spent two passes moving a number across a line that sat 0.006 away while the binomial SE was
+0.0195. Both readings were noise; the pass and the failure carried equal information.
+
+- **Compute the standard error BEFORE choosing the threshold**, and place the threshold at
+  least ~2 SE from any value the instrument is likely to produce. For a 0.95 criterion:
+  SE 0.01 needs ~475 trials, SE 0.005 needs ~1,900.
+- **Report the interval beside the verdict**, always. A gate verdict without its CI is a
+  point estimate pretending to be a decision.
+- **Never move a gate after seeing the number.** An unresolvable gate is fixed by adding
+  power, not by relocating the line to where the data landed.
+- Applies to every numeric branch condition, not only entry gates — including the D/E-style
+  preregistered branches, whose qualitative wording twice forced thresholds to be invented at
+  adjudication time.
+
 ## CAMPAIGN DISCIPLINE (adopted P106 from external review 2026-08-22)
 
 The loop's defect was never "verification instruments only confirm" — the record falsifies

@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-22T09:58:35+00:00
+# PULSE — generated 2026-08-22T10:25:27+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,18 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        550
-consumed (state changes):   361  {'queue_state': 321, 'registry': 37, 'findings': 3}
-consumed/emitted:           0.66
+emitted (new files):        557
+consumed (state changes):   358  {'queue_state': 319, 'registry': 36, 'findings': 3}
+consumed/emitted:           0.64
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 295
+## Commits, 72h (non-cron): 298
+- 9ed726a4 08-22 06:21 M1_STATUS 7p: the accumulated corpus is 132M rows with ~2 bits of signature
+- 42ae7455 08-22 06:21 Ergon: full scan complete â€” 132M failure rows, ~2 bits of signature
+- 95497b2e 08-22 06:17 Techne cycle 046: a sentinel that was also a measurement â€” 48 impossible knot volumes removed
+- 02e54d7c 08-22 06:00 Techne cycle 046: PRE-REGISTRATION for the knot-volume conflation, before measuring C_site
+- 7620649b 08-22 05:58 Aporia P112: X-2 pass 2/3 â€” ground truth was not unique; hubness found; GATE PASSED 0.952 by one pair
 - dbe66d52 08-22 05:33 Techne cycle 045: full arc completed on my own arsenal â€” two real defects fixed
 - 277f10cf 08-22 05:31 Aporia P111: Campaign X-2 pass 1/3 â€” ENTRY GATE FAILED 0.912, no L2 measured
 - 28bac82c 08-22 05:05 Aporia P110: CAMPAIGN X TERMINAL â€” REDESIGN (frozen split touched once)
@@ -35,12 +40,7 @@ verdict: ALIVE
 - d4b29900 08-22 02:58 Techne cycle 042: round-13 fold-in â€” de facto contract, and seam triangulation as doctrine
 - 250650ba 08-22 02:50 Aporia: external consult prompt â€” loop targets and round-robin design
 - fec491da 08-22 02:38 Techne cycle 042 CORRECTION: Y4 was 1 of 8, not 1 of 6 â€” and it sharpens the fix
-- 4e2f7212 08-22 02:34 Techne cycle 042: HITL #78 root cause found â€” two readers, one file, one right
-- e5b965a7 08-22 02:31 M1_STATUS 7o: the native residue is not sparse â€” wrong-population statistic
-- 0fd3273b 08-22 02:24 Techne cycle 042: PRE-REGISTRATION for HITL #78 blast radius, committed before measuring
-- 060eaf56 08-22 02:22 Ergon: measure M30 on the free host â€” executing a ruling, not making one
-- 1553af35 08-22 02:00 Ergon: durable ledger appends + drip single-instance lock
-- … +270 more
+- … +273 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
