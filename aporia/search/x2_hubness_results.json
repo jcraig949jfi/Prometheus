@@ -1,0 +1,124 @@
+{
+ "k": 10,
+ "k_occurrence": {
+  "mean": 10.0,
+  "std": 14.042,
+  "max": 235,
+  "skewness": 3.783,
+  "n_over_10x_fair_share": 43
+ },
+ "hubness_confirmed": true,
+ "uncorrected": {
+  "strict": "114/125",
+  "strict_rate": 0.912,
+  "any_valid": "118/125",
+  "any_valid_rate": 0.944,
+  "by_op_any_valid": {
+   "diff": "24/25",
+   "partsum": "23/25",
+   "binomial": "25/25",
+   "moebius": "23/25",
+   "shift": "23/25"
+  },
+  "residual_misses": [
+   {
+    "op": "diff",
+    "rank1": "D004031",
+    "recorded": "S000011",
+    "answer_set": 2
+   },
+   {
+    "op": "partsum",
+    "rank1": "D017288",
+    "recorded": "S000092",
+    "answer_set": 2
+   },
+   {
+    "op": "partsum",
+    "rank1": "D017288",
+    "recorded": "S000104",
+    "answer_set": 2
+   },
+   {
+    "op": "moebius",
+    "rank1": "D011471",
+    "recorded": "S000232",
+    "answer_set": 3
+   },
+   {
+    "op": "moebius",
+    "rank1": "D003785",
+    "recorded": "S000236",
+    "answer_set": 2
+   },
+   {
+    "op": "shift",
+    "rank1": "D003611",
+    "recorded": "S000324",
+    "answer_set": 7
+   },
+   {
+    "op": "shift",
+    "rank1": "D016811",
+    "recorded": "S000331",
+    "answer_set": 7
+   }
+  ]
+ },
+ "GATE": 0.95,
+ "local_scaled": {
+  "strict": "115/125",
+  "strict_rate": 0.92,
+  "any_valid": "119/125",
+  "any_valid_rate": 0.952,
+  "by_op_any_valid": {
+   "diff": "23/25",
+   "partsum": "23/25",
+   "binomial": "25/25",
+   "moebius": "24/25",
+   "shift": "24/25"
+  },
+  "residual_misses": [
+   {
+    "op": "diff",
+    "rank1": "D004499",
+    "recorded": "S000007",
+    "answer_set": 1
+   },
+   {
+    "op": "diff",
+    "rank1": "D003027",
+    "recorded": "S000011",
+    "answer_set": 2
+   },
+   {
+    "op": "partsum",
+    "rank1": "D017288",
+    "recorded": "S000092",
+    "answer_set": 2
+   },
+   {
+    "op": "partsum",
+    "rank1": "D017288",
+    "recorded": "S000104",
+    "answer_set": 2
+   },
+   {
+    "op": "moebius",
+    "rank1": "D003785",
+    "recorded": "S000236",
+    "answer_set": 2
+   },
+   {
+    "op": "shift",
+    "rank1": "D016811",
+    "recorded": "S000331",
+    "answer_set": 7
+   }
+  ]
+ },
+ "best_any_valid": 0.952,
+ "best_variant": "local_scaled",
+ "GATE_PASSED": true,
+ "L2_measured": false
+}

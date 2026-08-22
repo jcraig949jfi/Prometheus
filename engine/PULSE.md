@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-22T09:31:46+00:00
+# PULSE — generated 2026-08-22T09:58:35+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        541
-consumed (state changes):   364  {'queue_state': 323, 'registry': 38, 'findings': 3}
-consumed/emitted:           0.67
+emitted (new files):        550
+consumed (state changes):   361  {'queue_state': 321, 'registry': 37, 'findings': 3}
+consumed/emitted:           0.66
 verdict: ALIVE
 ```
 
 ## Commits, 72h (non-cron): 295
+- dbe66d52 08-22 05:33 Techne cycle 045: full arc completed on my own arsenal â€” two real defects fixed
+- 277f10cf 08-22 05:31 Aporia P111: Campaign X-2 pass 1/3 â€” ENTRY GATE FAILED 0.912, no L2 measured
 - 28bac82c 08-22 05:05 Aporia P110: CAMPAIGN X TERMINAL â€” REDESIGN (frozen split touched once)
 - e53c685a 08-22 04:53 Techne cycle 045: budget allocated to the arsenal's own red tests; classification pre-registered
 - 8d9ad8cb 08-22 04:49 Ergon: full scan FALSIFIES my own headline claim â€” sampling window did it
@@ -36,8 +38,6 @@ verdict: ALIVE
 - 0fd3273b 08-22 02:24 Techne cycle 042: PRE-REGISTRATION for HITL #78 blast radius, committed before measuring
 - 060eaf56 08-22 02:22 Ergon: measure M30 on the free host â€” executing a ruling, not making one
 - 1553af35 08-22 02:00 Ergon: durable ledger appends + drip single-instance lock
-- 39ec0289 08-22 01:54 Techne cycle 041: the migration priced at 13 edits/function, and a regime change
-- 6b883e54 08-22 01:38 Ergon: unblock the second-family drip â€” throttled for a wall that never came
 - … +270 more
 
 ## Bottleneck hypotheses (confidence)
