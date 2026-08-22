@@ -98,9 +98,12 @@ at it. Reasoning:
   easy" — that is a rung selection problem wearing a sample-size costume. Buying precision to
   certify a point 2pp from the ceiling would be spending heavily to scrape past a gate the rung
   is failing on its merits.
-- M30 is the rung that measured **0.500 — dead centre — on the paid host**, and the free host now
-  measures ≈1.6pp below paid (see §5). A free-host M30 near 0.48–0.50 would be decidable at
-  **n≈97**, comfortably inside the existing manifest size.
+- M30 is the rung that measured **0.500 — dead centre — on the paid host**. Applying the delta
+  this campaign actually measured (**+5.8pp**, §1b — *not* the ≈1.6pp I wrote in an earlier draft
+  of this file, which came from the truncation-confounded read, and not the withdrawn +14pp),
+  free-host M30 projects to **≈0.442**. That is comfortably inside the band and decidable at
+  **n≈112**, well within the existing manifest size. The projection is a projection: M30 gets its
+  own cold-band read on this host before anything is claimed.
 - Route (a) also carries the unsettled §4.2 question above; route (b) does not.
 
 **Cost of route (b):** M30 needs its own cold-band read on this host before its decision-n
