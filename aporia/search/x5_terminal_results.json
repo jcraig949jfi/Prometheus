@@ -1,0 +1,79 @@
+{
+ "frozenB_pairs": 800,
+ "pool_size": 25305,
+ "real_op_pairs": 640,
+ "recorded_target_absent_from_answer_set": 0,
+ "frozenB_mean_V": 2.6734,
+ "adjusted_chance": 0.001056,
+ "G_pos_threshold": 0.003169,
+ "per_draw_granularity": 0.001563,
+ "G_pos": {
+  "learned_mean": 0.001719,
+  "learned_min": 0.0,
+  "learned_max": 0.004687,
+  "raw_mean": 0.001172,
+  "raw_min": 0.0,
+  "raw_max": 0.004687,
+  "HOLDS": true
+ },
+ "representation": {
+  "RAW_K": 20,
+  "k_kept": 95,
+  "overlap_artifact_fixed": false
+ },
+ "L2": {
+  "learned": "95/640",
+  "learned_rate": 0.1484,
+  "learned_wilson": [
+   0.123,
+   0.1781
+  ],
+  "raw": "90/640",
+  "raw_rate": 0.1406,
+  "raw_wilson": [
+   0.1158,
+   0.1697
+  ],
+  "shift_control_learned": "29/160",
+  "shift_control_raw": "9/160"
+ },
+ "D": {
+  "value": 0.0078,
+  "b_learned_only": 31,
+  "c_raw_only": 26,
+  "n": 640,
+  "se_paired": 0.01179,
+  "ci95_paired": [
+   -0.0153,
+   0.0309
+  ],
+  "discordance": 0.0891,
+  "MDE": 0.0367
+ },
+ "G_null": {
+  "evaluated": true,
+  "strict": "608/800",
+  "any_valid": "697/800",
+  "any_valid_rate": 0.8712,
+  "wilson_95": [
+   0.8463,
+   0.8927
+  ],
+  "threshold": 0.9,
+  "MET": false,
+  "by_op_any_valid": {
+   "diff": "153/160",
+   "partsum": "156/160",
+   "binomial": "121/160",
+   "moebius": "125/160",
+   "shift": "142/160"
+  }
+ },
+ "L2_measured": true,
+ "branch_fired": "N4",
+ "TERMINAL": "PARK",
+ "pass1_predictions": {
+  "predicted_G_null_would_likely_fail": true,
+  "dev_D_for_transfer_check": 0.1906
+ }
+}
