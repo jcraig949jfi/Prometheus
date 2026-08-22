@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-22T20:59:08+00:00
+# PULSE — generated 2026-08-22T21:29:16+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -7,12 +7,13 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ```
 window: 3d
 emitted (new files):        645
-consumed (state changes):   291  {'queue_state': 269, 'registry': 21, 'findings': 1}
+consumed (state changes):   290  {'queue_state': 268, 'registry': 21, 'findings': 1}
 consumed/emitted:           0.45
 verdict: ALIVE
 ```
 
 ## Commits, 72h (non-cron): 303
+- a3909031 08-22 16:59 Aporia P136: CAMPAIGN R pass 1 â€” TERMINAL REDESIGN. R4 is a probe set without solvers.
 - eca2351e 08-22 16:33 Aporia P135: allocation â€” CAMPAIGN R opens on the reasoning ladder; 44 PROF rows rest on a category error
 - f8b48404 08-22 16:01 Aporia P134: CAMPAIGN F â€” F3 MOSTLY-ATOMIC. 220 atomic candidates. The OEIS line CLOSES.
 - 19fac8f6 08-22 15:32 Aporia P133: CAMPAIGN V (one pass) â€” V1 KEEP, and a triviality split the audit chain cannot see
@@ -37,7 +38,6 @@ verdict: ALIVE
 - 28a9506a 08-22 08:13 Techne cycle 048: the precision worry does not bite â€” and I overstated it in 047
 - 9e86b937 08-22 08:11 Aporia P117: campaign selection â€” X-4 opens; branches PROVED to partition; rebuild tax ended
 - 3e150bd3 08-22 07:45 Aporia P116: CAMPAIGN X-3 TERMINAL â€” REDESIGN; first earned L2 in three campaigns
-- e6da78d9 08-22 07:45 Techne cycle 048: PRE-REGISTRATION â€” does the 5.1e-6 Mahler precision limit bite a consumer?
 - … +278 more
 
 ## Bottleneck hypotheses (confidence)
