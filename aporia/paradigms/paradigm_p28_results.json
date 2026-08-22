@@ -1,0 +1,56 @@
+{
+ "protocol": "constructed+entrywise-verified restrictions (padding, Strassen-as-maps reusing P15, rotation), flattening-rank monotonicity admission, nnz decline leg, diagonal-power multiplicativity, seed 20260896",
+ "pairs": [
+  {
+   "pair": "<2> <= <3>",
+   "flat_S": [
+    3,
+    3,
+    3
+   ],
+   "flat_T": [
+    2,
+    2,
+    2
+   ],
+   "monotone": true,
+   "nnz_S": 3,
+   "nnz_T": 2
+  },
+  {
+   "pair": "M<2> <= <7>",
+   "flat_S": [
+    7,
+    7,
+    7
+   ],
+   "flat_T": [
+    4,
+    4,
+    4
+   ],
+   "monotone": true,
+   "nnz_S": 7,
+   "nnz_T": 8
+  },
+  {
+   "pair": "rot(<2>) <= <2>",
+   "flat_S": [
+    2,
+    2,
+    2
+   ],
+   "flat_T": [
+    2,
+    2,
+    2
+   ],
+   "monotone": true,
+   "nnz_S": 2,
+   "nnz_T": 8
+  }
+ ],
+ "nnz_rejected": true,
+ "multiplicativity": true,
+ "verdict": "SPECTRUM-ADMITS"
+}

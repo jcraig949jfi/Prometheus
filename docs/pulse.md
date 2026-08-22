@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-21T23:34:45+00:00
+# PULSE — generated 2026-08-22T00:05:10+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        466
-consumed (state changes):   411  {'queue_state': 361, 'registry': 47, 'findings': 2, 'doctrine': 1}
-consumed/emitted:           0.88
+emitted (new files):        471
+consumed (state changes):   408  {'queue_state': 360, 'registry': 45, 'findings': 2, 'doctrine': 1}
+consumed/emitted:           0.87
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 271
+## Commits, 72h (non-cron): 272
+- 2e707768 08-21 19:49 Techne loop cycle 030: the reference-class problem is one core with two kinds
+- 7637d281 08-21 19:34 Aporia P95: the completion claim was wrong â€” corrected at the source, and the tensor fifth opens
 - 93be4656 08-21 19:16 Techne loop cycle 029: structural-constancy probe â€” and it caught its own author
 - 6980f933 08-21 18:45 Aporia P94: the dependent null inverts the story â€” and turns a gate into a measurement
 - f481f22a 08-21 18:36 Techne loop cycle 028: the sample-size objection removed â€” and it was the wrong objection
@@ -38,9 +40,7 @@ verdict: ALIVE
 - bbbc0025 08-21 14:30 Ergon: dry-run the campaign state machine â€” three defects found, all fixed
 - db87f38a 08-21 14:15 Techne loop cycle 020: canon R11 calibrated uncertainty + claim v13 + first v11' counterexample
 - 39e8c2ab 08-21 14:12 Aporia P85: P10 binds Techne's kernel, P11 relives sieve theory's founding problem
-- ca12a99d 08-21 13:40 Techne loop cycle 019: evidence typing, and the finding that types need a checker
-- 01511366 08-21 13:30 Aporia P84: P08+P09 â€” the paradigms the channel already lives get their trees
-- … +246 more
+- … +247 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records

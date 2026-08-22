@@ -1,0 +1,79 @@
+{
+ "protocol": "binary-form apolarity in exact/np arithmetic: Hankel catalecticants from definition, power-sum anchors, the x*y^2 border-rank-2 family (log-log slope gate) vs exact-rank-3 via the annihilator's double root",
+ "anchors": [
+  {
+   "form": "x^3+y^3",
+   "cat_ranks": [
+    2,
+    2
+   ],
+   "expect": 2,
+   "ok": true
+  },
+  {
+   "form": "x^4+y^4",
+   "cat_ranks": [
+    2,
+    2,
+    2
+   ],
+   "expect": 2,
+   "ok": true
+  },
+  {
+   "form": "x^5+y^5",
+   "cat_ranks": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "expect": 2,
+   "ok": true
+  },
+  {
+   "form": "x^6+y^6",
+   "cat_ranks": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "expect": 2,
+   "ok": true
+  }
+ ],
+ "xy2_mid_rank": 2,
+ "eps_errors": [
+  [
+   0.01,
+   0.01
+  ],
+  [
+   0.001,
+   0.001
+  ],
+  [
+   0.0001,
+   0.0001
+  ],
+  [
+   1e-05,
+   1e-05
+  ],
+  [
+   1e-06,
+   1e-06
+  ]
+ ],
+ "loglog_slope": 1.0,
+ "annihilator_deg2": [
+  [
+   2,
+   0
+  ]
+ ],
+ "verdict": "APOLARITY-SHADOW-RUNS",
+ "structural_gap": "border apolarity PROPER (multigraded Hilbert schemes, B-invariant ideal enumeration, M<3> bounds) needs Macaulay2-class machinery \u2014 probed ABSENT (which M2: empty); the pure-python shadow is classical binary apolarity, which is what runs here"
+}
