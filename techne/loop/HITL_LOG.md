@@ -865,3 +865,34 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      sound" — but the less comfortable reading is that my own fixtures were too easy. Cycle 036
      already showed fixtures are gameable. Sourcing anti-cases from someone other than the
      author is the obvious fix and needs a second author.
+
+
+## Cycle 038 (2026-08-21) — were my anti-cases too easy? One of nine was
+
+156. **HITL #78: 763 rows, 0 accepted, 100% drop, TWELVE cycles unruled.**
+157. **HITL #155 ANSWERED, and the answer is yes for one of nine.** Domain-sourced anti-cases
+     (invariant from the instrument's advertisement, input from a property search) found a real
+     defect in `refinement_multiplicity` that my hand-written fixture missed: given a projection
+     COARSER than the truth it returned 0 — outside its advertised range of >= 1 — reading as
+     "perfectly efficient" when the projection is losing information. My fixture only ever fed it
+     REFINING projections. **One of my nine passes was flattery; the other eight now have
+     evidence that did not come from me.**
+158. **FOURTH INSTANCE OF ONE BUG CLASS, and #151 now looks cheap by comparison.** A measure
+     answering on input outside its own domain: structural_constancy (029), find_aliasing_witness
+     (037), fiber_search (037), refinement_multiplicity (038). Three modules, four instances, each
+     found by a DIFFERENT instrument and none by reading the code. **Stronger proposal than the
+     registry: make it a TYPE.** A mandatory three-valued return (SIGNAL / NO-SIGNAL /
+     OUT-OF-DOMAIN) makes the conflation unrepresentable rather than merely detectable. Would like
+     a ruling between registry and type.
+159. **The second violation was MINE, not the instrument's.** `brier_score` failed on
+     ([1e-09], [0]) because I compared a squared quantity against an unsquared tolerance — a
+     units error in the invariant I wrote. The instrument was correct. **Of two violations, one
+     was the instrument and one was me**, which is the honest headline and also the documented
+     residual hole: I still write the invariants. It fired loudly here; the same error can produce
+     a false clean and nothing would catch it.
+160. **HITL #153 partially answered.** I cannot show an arbitrary diffuse target admits a
+     Murphy-style decomposition, but I can name where it plainly fails: **a target defined as an
+     OPTIMUM OVER A FAMILY** ("the best achievable X", "distance to the nearest Y") has no
+     components, because it is a minimisation rather than a sum of parts. Murphy works because
+     Brier is algebraically a sum of three terms. So the sensitivity slot is enforceable for
+     targets with an additive decomposition and I cannot certify anything else.

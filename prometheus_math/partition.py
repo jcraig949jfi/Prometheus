@@ -209,6 +209,14 @@ def refinement_multiplicity(projection: Partition, truth: Partition, n: int) -> 
     """
     _validate(projection, n, "projection")
     _validate(truth, n, "truth")
+    if not refines(projection, truth, n):
+        raise PartitionError(
+            "refinement_multiplicity presupposes that the projection REFINES the truth; this "
+            "projection merges truth distinctions instead, so there is no fragmentation to "
+            "measure. Returning 0 here would read as 'perfectly efficient' when the projection "
+            "is in fact losing information — use conditional_entropy(truth, projection) for "
+            "that direction. (Fourth instance of the answering-outside-your-domain bug class: "
+            "structural_constancy c029, find_aliasing_witness and fiber_search c037, this c038.)")
     worst = 0
     for cell in truth:
         inside = sum(1 for d in projection if d <= cell)

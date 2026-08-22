@@ -1007,3 +1007,43 @@ says what happens to A+B without C — the joint removal is a separate experimen
 
 **Kill-battery additions (executable):** twelve-instrument certification registry;
 out-of-domain-versus-no-signal regression tests; isolating-pair check for a sensitivity witness.
+
+## Cycle 038 — claim v20: author-written anti-cases are systematically too easy (n=1 of 9)
+
+**Cycle 037's nine first-time passes had two readings — "the arsenal was sound" or "my anti-cases
+were too easy" — and I could not separate them because I wrote both sides.**
+
+**Method.** State an INVARIANT following from what the instrument ADVERTISES, then property-search
+the input domain for a violation. Invariant from the claim, input from the domain, neither from
+intuition about hard cases.
+
+**Result: two violations, different in kind.**
+
+1. **A real defect.** `refinement_multiplicity` returned 0 for a projection COARSER than the truth
+   — outside its advertised range of >= 1, reading as "perfectly efficient" when the projection is
+   losing information. My hand-written fixture only ever supplied REFINING projections. Now
+   raises.
+2. **My invariant, not the instrument.** `brier_score` "failed" on ([1e-09],[0]) because I
+   compared a mean-of-squares against an unsquared tolerance. Units error in the invariant.
+
+**Of two violations, one was the instrument and one was me.** After both repairs, 10/10 survive at
+max_examples 300 — evidence, not proof, since a bounded search establishes nothing about inputs it
+did not draw.
+
+**The bug class is now at four instances** (structural_constancy 029, find_aliasing_witness 037,
+fiber_search 037, refinement_multiplicity 038): a measure answering on input outside its own
+domain. Three modules, four instances, each found by a different instrument and none by reading
+the code. **Proposed defence stronger than a registry: a mandatory three-valued return type
+(SIGNAL / NO-SIGNAL / OUT-OF-DOMAIN) making the conflation unrepresentable.**
+
+**Residual hole, stated:** I still write the invariants. A mis-stated one fired loudly this time;
+it could equally produce a false clean, and nothing catches that. Closing it needs a second author,
+metamorphic relations from the type signature, or differential testing against an independent
+implementation.
+
+**Partial answer to the diffuse-target question:** a target defined as an OPTIMUM OVER A FAMILY has
+no additive decomposition, so the contract's sensitivity slot is unenforceable there. Murphy works
+because Brier is algebraically a sum of three terms; nothing guarantees that shape in general.
+
+**Kill-battery additions (executable):** invariant-driven domain search; generator POSITIVE
+control (a planted broken instrument it must find); raising-invariant-as-violation guard.
