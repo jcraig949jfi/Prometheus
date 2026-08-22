@@ -53,6 +53,68 @@ not a waste even with the level foreseeable.
 *Host delta check, since I corrected it above:* paid M20 (n=200) 0.640 vs free M20 (n=620)
 0.5823 → **+5.8pp**, consistent with the ≈+6pp correction and nowhere near the withdrawn +14pp.
 
+## 1c. FINAL — P1 band read, and a problem with MY OWN §4 recommendation
+
+`ergon/probe/ledgers/campaign/p1_bandread.json`, all 1,240 rows collected:
+
+```
+leveling_verdict              UNDECIDED-UNDERPOWERED     (as pre-filed)
+point_estimate                0.5823
+manifest_interval_95          [0.5434, 0.6211]           straddles the 0.60 ceiling
+wilson_interval_95            [0.5430, 0.6205]
+n_required_for_decidability   2969                       (4.8x this manifest)
+movable_share                 0.3468                     PASSES the HB-R2 floor of 0.30
+point_estimate_post_screen    0.2684   (n = 354)
+```
+
+The dispersion term **passes** — 0.3468 against a 0.30 floor — so this is not a
+`NOT-LEVELED-DISPERSION`. M20 fails only on decidability. Good news, and it makes the next part
+worse.
+
+### The post-screen reading fails on the FLOOR, and my M30 recommendation makes it worse
+
+HB-R1: at one family the screen is diagnostic only, so the band above is read raw. **At Tier B
+(≥2 families) the band is read post-screen.** That number is **0.2684 — below the 0.35 floor.**
+So M20 fails *both* readings, in *opposite directions*: raw sits at the ceiling, post-screen
+sits under the floor.
+
+Decomposing (620 tasks): both-right **266 (42.9%)**, both-wrong **139 (22.4%)**, discordant
+**215 (34.7%)**. The lenient screen removes both-right, so
+
+```
+post-screen acc = (rep1-right AND rep2-wrong) / (discordant + both-wrong)
+                = 95 / (215 + 139) = 0.2684
+```
+
+Roughly **half** the discordant items have rep-1 as the correct one (95/215 = 44%), so
+
+```
+post-screen acc  ≈  0.5 × D/(D+W)
+```
+
+and reaching the 0.35 floor requires **D ≥ 2.33·W** — the task set must be dominated by
+*unstable* items rather than by *consistently failed* ones. At M20, D/(D+W) = 0.607; we need
+0.70.
+
+**This is a difficulty-axis trap, and it breaks §4.** A harder rung raises both-wrong (W), which
+*lowers* post-screen accuracy. **M30 would move the raw point down off the ceiling and push the
+post-screen point further under the floor.** An easier rung helps post-screen (less W) and pushes
+raw back through the ceiling. **The two readings pull in opposite directions along the only dial
+we have.**
+
+So I am withdrawing the confidence in §4, though not the reasoning that produced it: advancing to
+M30 remains the right move *for the raw reading*, and I no longer claim it is the right move
+overall, because it makes the Tier B gate strictly worse. **No rung may satisfy both readings**,
+and if that is true the problem is not rung selection at all — it is that the leveling band and
+the lenient screen were specified against different populations without checking that a common
+solution exists.
+
+**What I would want ruled, in addition to route (a)/(b):** whether the post-screen band read at
+Tier B is reachable *in principle* on this family. That is a question about the interaction of
+two preregistered rules, not about a number, and it is above my authority. If it is not
+reachable, the honest move is re-posing the experiment rather than hunting rungs — which is the
+charter's own R2-1 stopping logic applied to a defect in the design rather than in the plumbing.
+
 ## 2. Why I am not acting on it
 
 I could stop the collection now and advance to the next rung, saving ~840 free-lane calls. I am
@@ -88,7 +150,7 @@ distinction is the substance of this escalation:
   (M20 → M30 → M40 → M60 → M80), each with its own cold-band read and then its own decision-n
   re-measurement.
 
-## 4. My recommendation as driver (yours to accept or refuse)
+## 4. My recommendation as driver  **[CONFIDENCE WITHDRAWN — see §1c]**
 
 **Route (b), advancing to M30**, and I would not use route (a) here even though the label points
 at it. Reasoning:
