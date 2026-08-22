@@ -97,6 +97,8 @@ def drip(solver):
                    "derives_from_gold": False,
                    "ts_utc": res.ts_utc, "host": res.host, "executor": res.executor}
             fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
+            fh.flush()
+            os.fsync(fh.fileno())
             if res.status == "ok":
                 ok += 1
             elif res.error_type in ("HTTP429", "HTTP402"):
@@ -147,7 +149,38 @@ def finalize(solver, led_path, out_path):
     return "FINALIZED: " + band_read["leveling_verdict"]
 
 
+def _pid_alive(pid):
+    """Windows PID liveness. NEVER os.kill(pid, 0) here -- that terminates on Windows."""
+    import ctypes
+    h = ctypes.windll.kernel32.OpenProcess(0x1000, 0, pid)
+    if not h:
+        return False
+    code = ctypes.c_ulong()
+    ok = ctypes.windll.kernel32.GetExitCodeProcess(h, ctypes.byref(code))
+    ctypes.windll.kernel32.CloseHandle(h)
+    return bool(ok) and code.value == 259
+
+
 def main():
+    DRIP_DIR.mkdir(parents=True, exist_ok=True)
+    # With BATCH_PER_CANDIDATE at 80 and ~78s/call, one firing can run for hours -- longer
+    # than the 3h schedule. Without a lock, firings overlap and double-spend the very quota
+    # the drip exists to conserve. Stale locks (dead holder, or >6h) are taken over.
+    lock = DRIP_DIR / "drip.lock"
+    if lock.exists():
+        age_h = (time.time() - lock.stat().st_mtime) / 3600
+        pid = lock.read_text(encoding="utf-8").strip()
+        if age_h < 6 and pid.isdigit() and _pid_alive(int(pid)):
+            print("another drip firing is still running -- skipped")
+            return
+    lock.write_text(str(os.getpid()), encoding="utf-8")
+    try:
+        _drip_all()
+    finally:
+        lock.unlink(missing_ok=True)
+
+
+def _drip_all():
     DRIP_DIR.mkdir(parents=True, exist_ok=True)
     log = DRIP_DIR / "drip_log.jsonl"
     for solver in CANDIDATES:

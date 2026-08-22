@@ -142,6 +142,10 @@ def push_jobs(led_path, jobs, budget):
                    "solver": SOLVER, "derives_from_gold": False,
                    "ts_utc": res.ts_utc, "host": res.host, "executor": res.executor}
             fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
+            fh.flush()
+            os.fsync(fh.fileno())   # a killed firing must not lose rows that each cost
+            #                          ~60s of free-lane latency; Python's 8KB buffer
+            #                          silently drops ~10 of them on taskkill.
             if res.status == "ok":
                 ok += 1
             elif res.error_type in ("HTTP429", "HTTP402"):
