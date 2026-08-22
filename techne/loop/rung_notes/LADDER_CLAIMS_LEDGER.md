@@ -1278,3 +1278,37 @@ the running system rather than from the loop's own instruments.
 **Kill-battery additions (executable):** enumerate interface implementations repo-wide before any
 ownership claim; measure a known-good pair as control; downgrade to *de facto* unless a written
 schema adjudicates; report the absence of a schema as part of the finding.
+
+## Cycle 043 — claim v26: the class hypothesis is UNTESTED, and the discriminator is UNVALIDATED
+
+**No claim is made about whether the #78 schema drift generalises.** The pre-registered sweep
+(`SCHEMA_DRIFT_SWEEP_PREREG.md`, committed `04ecd2d8`) produced one measurable test pair and three
+unmeasurable ones. The NULL condition was technically met and is **not claimed**: a null on n=1 is
+an absence dressed as a result.
+
+**Verdict: UNDERPOWERED. Neither supported nor refuted.**
+
+**Design flaw, mine, named:** a sample size was declared without first verifying the population was
+measurable. Two of four test pairs have no data on disk; a third is a different storage medium.
+**Pre-registration now requires a measurability check before n is fixed.**
+
+**Population flaw, also mine:** the `assemble.py` shared-loader family was chosen because it is the
+exact analogue of #78 — narrow by construction. Reachable population, scoped afterwards and
+reported as scope: 893 JSONL files repo-wide, 564 under role directories.
+
+**What survives — the discriminator's DIRECTION, not its validation.** Prediction 3 held on the
+control: drop rate alone does not separate the class; field presence does.
+
+    p1_prepass.jsonl        1001 -> 0     100%   rep/uid ABSENT    signature match
+    nearmiss_mix-M30        400  -> 200    50%   rep/uid present   legitimate
+    probe_prepass.jsonl     252  -> 126    50%   rep/uid present   legitimate
+
+An instrument keyed on drop rate would have flagged two healthy ledgers. **But the control
+contains the single true positive that motivated the discriminator, so it is validated on one
+positive and no independent one — the cycle-038 flattery problem in a new location.** Recorded as
+UNVALIDATED rather than as a working screen.
+
+**Kill-battery additions (executable):** verify measurability before fixing a pre-registered n;
+require an independent positive before treating a discriminator as validated; compute the actual
+precondition in a property-test guard rather than a proxy for it; state the reachable population
+size before choosing the sampled one.

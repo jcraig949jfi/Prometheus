@@ -1149,3 +1149,58 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      REPO-WIDE; measure a known-good pair as control; name the outlier only if a third conforming
      implementation exists; say *de facto* unless a written schema adjudicates; report the
      schema's absence when there is none.
+
+
+## Cycle 043 (2026-08-22) — the class test was underpowered, and the flaw was in my pre-registration
+
+211. **HITL #78: 998 rows, 0 accepted, 100% drop, SEVENTEEN cycles unruled.** Seam NOT repaired —
+     the seven pinned tests built to go RED on repair are all still green. Campaign still in P1
+     (one phase record, no `p1_bandread.json`), so `Arms` was never constructed and **no results
+     are contaminated**. Root-caused since cycle 042: writer-side, two fields.
+212. **THE CLASS QUESTION IS UNANSWERED, NOT ANSWERED NULL.** Pre-registered and committed
+     (`04ecd2d8`) before measuring. My decision rule for NULL was technically satisfied, and **I am
+     not claiming it**: three of four test pairs were unmeasurable and a null on n=1 is an absence
+     dressed as a result — the exact error this cycle's subject matter is about.
+213. **The flaw is mine and it is specific: I declared a sample size without first checking the
+     population was measurable.** `load_theseus_rejected` and `load_wall_oracles` have no data on
+     disk at all; `load_signature_classes` is sqlite, not JSONL. One minute of checking beforehand
+     would have caught it. **Pre-registration needs one more step: verify measurability before
+     fixing n.**
+214. **The population was also too narrow.** I chose the `assemble.py` shared-loader family because
+     it was the exact analogue of #78. Scoping afterwards (reported as scope, not as a test):
+     **893 JSONL files repo-wide, 564 under the role directories.** A powered sweep is available;
+     I picked a population of four.
+215. **WHAT DID WORK — the control, and it is worth keeping.** Prediction 3 held: **drop rate alone
+     does NOT separate the class; FIELD PRESENCE does.** `p1_prepass.jsonl` 1001->0 with `rep`/`uid`
+     ABSENT matched the signature; `nearmiss_mix-M30` (400->200) and `probe_prepass` (252->126) both
+     drop 50% with the fields PRESENT and are legitimate. **An instrument keyed on drop rate would
+     have flagged two healthy ledgers.**
+216. **The one measurable test pair is clean, verified against the loader's ACTUAL filters rather
+     than the ones I guessed.** `load_forge_scraps` x `agents/hephaestus/ledger.jsonl`: 6661 rows,
+     `status` present in all (6276 scrap / 385 forged), `reason` present in all and never null among
+     scraps, 6276 - 2861 transport failures = **3415 kept, matching the loader exactly**.
+217. **JAMES — a methodological question I cannot settle alone.** When a pre-registration turns out
+     to be UNEXECUTABLE rather than merely wrong, what is the correct move? Amending mid-cycle is
+     what pre-registration exists to forbid; burning a cycle on n=1 to honour a bad design also
+     seems wrong. I chose to honour it and report UNDERPOWERED. I would like that ruled on, because
+     it will recur.
+218. **A flattery problem I have NOT solved, flagged against myself.** Field presence separated the
+     control perfectly — but the control contains the single true positive that inspired it. The
+     discriminator has been validated on exactly one true positive and no independent one. That is
+     the cycle-038 problem in a new place, and I am not treating it as validated.
+219. **Hypothesis caught a defect in my own test guard (Track 1).** I guarded property tests on
+     `len(p) > 1 and len(t) > 1` — a PROXY — when the real condition is `max - expected != 0`. Two
+     all-singleton partitions pass the proxy and are degenerate; `a=[0,1,2]` found it immediately.
+     The implementation was right to refuse; **the guard was measuring the wrong thing**, which is
+     the same error shape as guarding a measure on the wrong domain predicate.
+220. **Track 1: `prometheus_math.adjusted_rand`** (Hubert & Arabie 1985, J. Classification
+     2(1):193-218), 12 tests, RED first, four categories. Completes a deliberately-disagreeing trio
+     with `normalized_vi` (041) and `normalized_mi` (042). **ARI CAN GO NEGATIVE** — constructed
+     explicitly, because clamping to 0 erases "no better than chance" vs "actively anti-correlated".
+     The notorious **0/0 refuses**: when both partitions are one block or both all singletons,
+     `max == expected`, and returning 1.0 is seductive precisely BECAUSE the partitions really are
+     identical — still wrong, since the number would come from dividing by zero.
+221. **JAMES — seventeen cycles on #78, root-caused, and I am structurally forbidden from fixing
+     it.** The regime change was meant to make the loop improve the organism rather than diagnose
+     itself. Two cycles in, the binding constraint looks like the read-only rule rather than
+     detection capability. If that reading is right, the thing to change is the constraint.
