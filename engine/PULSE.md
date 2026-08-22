@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-22T12:42:02+00:00
+# PULSE — generated 2026-08-22T13:08:00+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,14 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        587
-consumed (state changes):   343  {'queue_state': 308, 'registry': 32, 'findings': 3}
+emitted (new files):        592
+consumed (state changes):   341  {'queue_state': 306, 'registry': 32, 'findings': 3}
 consumed/emitted:           0.58
 verdict: ALIVE
 ```
 
 ## Commits, 72h (non-cron): 304
+- 8da49249 08-22 08:42 Aporia P118: X-4 pass 2/3 â€” learned metric DOUBLES L2 and DESTROYS L1
 - 28a9506a 08-22 08:13 Techne cycle 048: the precision worry does not bite â€” and I overstated it in 047
 - 9e86b937 08-22 08:11 Aporia P117: campaign selection â€” X-4 opens; branches PROVED to partition; rebuild tax ended
 - 3e150bd3 08-22 07:45 Aporia P116: CAMPAIGN X-3 TERMINAL â€” REDESIGN; first earned L2 in three campaigns
@@ -37,7 +38,6 @@ verdict: ALIVE
 - 8d9ad8cb 08-22 04:49 Ergon: full scan FALSIFIES my own headline claim â€” sampling window did it
 - 8646d8e7 08-22 04:38 Aporia P109: Campaign X pass 2/3 â€” signature retrieval on development only
 - ce3157a7 08-22 04:34 Ergon: full-corpus scan â€” a 6-batch sample should not carry this claim
-- 66a5e646 08-22 04:33 Ergon: ran the null-viability measurement â€” both obvious nulls fail
 - … +279 more
 
 ## Bottleneck hypotheses (confidence)

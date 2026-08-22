@@ -1,0 +1,82 @@
+{
+ "frozenA_pairs": 800,
+ "frozenB_reserved_not_opened": 800,
+ "pool_size": 25305,
+ "learned_dims": 100,
+ "hubness_skew_learned": 1.305,
+ "local_scaling_applied": true,
+ "recorded_target_absent_from_answer_set": 0,
+ "frozenA_mean_V_four_real_ops": 2.0891,
+ "answer_set_size": {
+  "diff": {
+   "n": 160,
+   "mean": 2.325,
+   "max": 75,
+   "frac_gt_1": 0.25
+  },
+  "partsum": {
+   "n": 160,
+   "mean": 1.262,
+   "max": 5,
+   "frac_gt_1": 0.2062
+  },
+  "binomial": {
+   "n": 160,
+   "mean": 1.312,
+   "max": 14,
+   "frac_gt_1": 0.1562
+  },
+  "moebius": {
+   "n": 160,
+   "mean": 3.456,
+   "max": 85,
+   "frac_gt_1": 0.3187
+  },
+  "shift": {
+   "n": 160,
+   "mean": 7.463,
+   "max": 75,
+   "frac_gt_1": 0.55
+  }
+ },
+ "K0": {
+  "strict": "495/800",
+  "strict_rate": 0.6188,
+  "any_valid": "568/800",
+  "any_valid_rate": 0.71,
+  "wilson_95": [
+   0.6776,
+   0.7404
+  ],
+  "threshold": 0.9,
+  "PASSED": false,
+  "by_op_strict": {
+   "diff": "137/160",
+   "partsum": "145/160",
+   "binomial": "8/160",
+   "moebius": "104/160",
+   "shift": "101/160"
+  },
+  "by_op_any_valid": {
+   "diff": "151/160",
+   "partsum": "152/160",
+   "binomial": "8/160",
+   "moebius": "125/160",
+   "shift": "132/160"
+  }
+ },
+ "pass2_prediction": {
+  "predicted_K0_would_fail": true,
+  "actual_K0_failed": true,
+  "prediction_correct": true,
+  "dev_any_valid_for_reference": 0.68,
+  "dev_wilson_for_reference": [
+   0.6328,
+   0.7238
+  ]
+ },
+ "L2_measured": false,
+ "branch_fired": "M0",
+ "TERMINAL": "PARK",
+ "reason": "K0 interval gate failed on frozen-A; the preregistration forbids computing any L2 quantity, and it was applied unamended"
+}
