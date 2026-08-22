@@ -60,12 +60,20 @@ def done_keys(led_path):
             if r["status"] == "ok"}
 
 
+# A cheap probe measured the WRONG WORKLOAD. nemotron-v1.5 answers a 256-token call fine and
+# then fails 93% of the real 16k-token calls with HTTP504 — so the probe waved through a
+# candidate that burned six hours to collect one row. Same error class as every other one this
+# week: measure one thing, license another. The fix is not a better probe; it is a circuit
+# breaker on the ACTUAL work, which cannot be fooled because it is the work.
+MIN_ATTEMPTS_BEFORE_BREAK = 8     # give a candidate a fair sample before judging it
+BREAK_OK_RATE = 0.5               # below this, the lane is not serving this model right now
+
+
 def probe(solver):
-    """One cheap call before committing a batch. gpt-oss-120b fails EVERY call on this lane
-    and takes 300s+ to do it, so a 12-call batch burned an hour of the firing to collect
-    nothing — starving the candidates that do work. Probing costs one short call and is
-    self-healing: a candidate that recovers resumes on the next firing with no edit here.
-    This is a TRANSPORT check, not a results check; it never looks at what a candidate scored.
+    """Kept as a liveness check only — it proves the endpoint answers at all, and costs one
+    short call. It deliberately does NOT license the batch: see the circuit breaker in drip(),
+    which judges the real workload. A candidate that fails here is certainly down; one that
+    passes here may still be unusable, which is exactly what happened.
     """
     r = call(solver, "What is 17 times 23? Answer with just the number.",
              max_tokens=256, timeout=120)
@@ -103,6 +111,12 @@ def drip(solver):
                 ok += 1
             elif res.error_type in ("HTTP429", "HTTP402"):
                 # quota wall: stop immediately, save the rest of today's batch for the lane
+                break
+            # circuit breaker on the real workload: abandon a degraded candidate after a fair
+            # sample rather than grinding 420s timeouts for hours and starving its siblings.
+            if sent >= MIN_ATTEMPTS_BEFORE_BREAK and (ok / sent) < BREAK_OK_RATE:
+                print(f"  {solver}: abandoning this firing — {ok}/{sent} ok on the real "
+                      f"workload (floor {BREAK_OK_RATE:.0%}); will retry next firing")
                 break
             time.sleep(3)
     if not (DRIP_DIR / f"{_slug(solver)}.jsonl").exists():
