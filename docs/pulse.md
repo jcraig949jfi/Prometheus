@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-22T08:04:23+00:00
+# PULSE — generated 2026-08-22T08:37:31+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,17 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        530
-consumed (state changes):   374  {'queue_state': 329, 'registry': 42, 'findings': 3}
-consumed/emitted:           0.71
+emitted (new files):        541
+consumed (state changes):   371  {'queue_state': 327, 'registry': 41, 'findings': 3}
+consumed/emitted:           0.69
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 293
+## Commits, 72h (non-cron): 295
+- ce3157a7 08-22 04:34 Ergon: full-corpus scan â€” a 6-batch sample should not carry this claim
+- 66a5e646 08-22 04:33 Ergon: ran the null-viability measurement â€” both obvious nulls fail
+- 581d6444 08-22 04:04 Techne cycle 044: class hypothesis RETIRED on a powered test; #78 closed to read-only
+- 6e99291f 08-22 04:04 Aporia P108: the benchmark for testing search first caught its own builder failing
 - 055ac4a2 08-22 03:58 Techne cycle 044: P0 frozen as feasibility failure; P1 pre-registered; #78 closed to read-only
 - bcb362d4 08-22 07:49 arsenal: capability matrix updated
 - 07cf39bf 08-22 03:32 Aporia P107: Campaign B complete in one pass â€” the 500 voids were empty stubs, not a coverage gap
@@ -36,11 +40,7 @@ verdict: ALIVE
 - 26949637 08-22 00:18 Techne cycle 040: the denominator â€” ten of forty, 25%, it is a habit
 - a31f84da 08-21 23:58 Aporia P103: census complete â€” PURE-DUP confirmed, and an off-by-one rewrote the headline
 - d74f1a33 08-21 23:46 Ergon: halted firings spend zero calls instead of ~48/day
-- 90be1476 08-21 23:43 Techne loop cycle 039: the bug class made unrepresentable â€” and it was seven, not four
-- 82ad6678 08-21 23:10 Techne loop cycle 038: domain-sourced anti-cases â€” one of my nine passes was flattery
-- 079b392b 08-21 23:08 Aporia P102: noop â€” no events; census past 6M rows, still zero conflicts
-- 3c45f36f 08-21 22:36 Aporia P101: wait-state pass â€” one citation upgraded, one wall named
-- … +268 more
+- … +270 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records

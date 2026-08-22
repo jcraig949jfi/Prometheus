@@ -1,0 +1,56 @@
+{
+ "matched_negative_false_retrieval": {
+  "signature": {
+   "n": 74,
+   "decoy_ranked_above_target": 21,
+   "rate": 0.2838
+  },
+  "raw_terms": {
+   "n": 74,
+   "decoy_ranked_above_target": 28,
+   "rate": 0.3784
+  },
+  "chance": 0.5
+ },
+ "L2_nontrivial_only": {
+  "n": 60,
+  "top1": 0.0,
+  "top10": 0.1,
+  "top100": 0.2,
+  "mrr": 0.035,
+  "median_rank": 2502.0,
+  "chance_top10_in_pool": 0.000491
+ },
+ "L2_shift_control": {
+  "n": 15,
+  "top10": 0.8,
+  "median_rank": 3.0
+ },
+ "L1_miss_anatomy": {
+  "total_misses": 19,
+  "by_op": {
+   "diff": {
+    "n": 2,
+    "median_rank_when_missed": 6791.0
+   },
+   "partsum": {
+    "n": 2,
+    "median_rank_when_missed": 6482.0
+   },
+   "binomial": {
+    "n": 3,
+    "median_rank_when_missed": 110.0
+   },
+   "moebius": {
+    "n": 3,
+    "median_rank_when_missed": 3.0
+   },
+   "shift": {
+    "n": 9,
+    "median_rank_when_missed": 7.0
+   }
+  },
+  "meaning": "every L1 miss is a signature COLLISION: the query is exactly equal to the target over >=20 terms and a distractor still ranks closer"
+ },
+ "note": "DEVELOPMENT ONLY. Frozen split untouched. No D-branch adjudicated."
+}
