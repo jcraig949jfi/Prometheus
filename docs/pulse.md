@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-22T18:41:35+00:00
+# PULSE — generated 2026-08-22T19:06:48+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,14 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        633
-consumed (state changes):   295  {'queue_state': 273, 'registry': 21, 'findings': 1}
-consumed/emitted:           0.47
+emitted (new files):        636
+consumed (state changes):   293  {'queue_state': 271, 'registry': 21, 'findings': 1}
+consumed/emitted:           0.46
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 304
+## Commits, 72h (non-cron): 303
+- 8795e36b 08-22 14:41 Aporia P131: CAMPAIGN T (one pass) â€” ADVANCE. The candidate set survives the formula audit.
 - 7fa2825e 08-22 14:15 Aporia P130: CAMPAIGN S TERMINAL â€” ADVANCE. 259 verified relations, honestly named.
 - 9ccb46c9 08-22 13:50 Aporia P129: Campaign S pass 2/3 â€” sweep COMPLETE; 301 sleeping beauties carry verified non-trivial relations
 - 4934374b 08-22 13:24 Aporia P128: CAMPAIGN S opens â€” my own falsifier fired; the SB blocker was mine, not James's
@@ -39,8 +40,7 @@ verdict: ALIVE
 - e1813d9f 08-22 07:17 M1_STATUS 7q: P1 final â€” the band and the screen want opposite rungs
 - 8771f27e 08-22 07:16 Ergon: P1 FINAL â€” UNDECIDED-UNDERPOWERED, and it breaks my own recommendation
 - c8374458 08-22 07:13 Techne cycle 047: a four-role function was silently wrong â€” and the drift was a habit, not a structure
-- 4564e4ca 08-22 06:59 Ergon: circuit-break the drip on the REAL workload, not a cheap probe
-- … +279 more
+- … +278 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
