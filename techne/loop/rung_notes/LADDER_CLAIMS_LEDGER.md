@@ -1221,3 +1221,28 @@ a denominator choice.
 diff a total-drop loader against the other reader of the same file before suspecting the data;
 "not retrieved" and "does not exist" must be different strings; prefer a present append-only
 record over an inference from absent files.
+
+## Cycle 042 — claim v24 CORRECTED, same cycle
+
+**Y₄ was published as "1 of 6". It is 1 of 8.** A repo-wide scan found two consumers a
+directory-scoped grep (`ergon techne engine`) had missed: `charon/probe/run_r7_d1d2_build2.py` and
+`harmonia/probe/c_static_leakage_probe.py`. Choosing the search window chose the answer.
+
+Direction of the pre-registered prediction (≥1) still holds; both missed consumers read a third
+ledger, `probe_prepass.jsonl` — raw=252, shipped=126, drop 50%, flat `rep` fields, zero rows with
+`key` — and are unaffected.
+
+**The correction strengthens the claim rather than weakening it.** Three ledgers, one loader:
+
+    probe_prepass.jsonl              flat rep          loads correctly (50% = rep-2 filter)
+    nearmiss_mix-M30_prepass.jsonl   flat rep          loads correctly (50% = rep-2 filter)
+    p1_prepass.jsonl                 key:[rep,uid]     100% DROP
+
+Two of three producers emit the expected schema. **The campaign writer is the outlier, so the fix
+belongs on the WRITER side**, aligning it with two already-correct producers. A two-file
+measurement could not distinguish reader-wrong from writer-wrong; a three-file one can. The
+published version named the seam but not which side of it to repair.
+
+**Kill-battery addition (executable):** a loader-defect claim must enumerate consumers REPO-WIDE,
+and must measure at least one UNAFFECTED producer of the same loader before naming which side of a
+seam is wrong.

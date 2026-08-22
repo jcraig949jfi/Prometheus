@@ -25,16 +25,19 @@ The data is entirely present and loadable: `key[0]` distribution across the live
 
 ```
                         PREDICTED                  MEASURED                          HELD
-Y4  consumer reach      >= 1 of 6                  1 of 6  (campaign.py:312)          yes
+Y4  consumer reach      >= 1 of 6 (see below)      1 of 8  (campaign.py:312)          yes*
 Y1  selection volume    as-running 0, cf > 0       0  vs  1 per uid                   yes
 Y2  packet tokens       delta >= 1 rec, > 0 tok    58  vs  678-2662                   yes
                                                    mean delta ~ 2,070 tokens/task
 Y3  tau coverage        {} vs non-empty            {}  vs  {'p1_prepass': 624}        yes
 ```
 
-Five of the six `load_prepass` call sites read `nearmiss_mix-M30_prepass.jsonl`, where the drop is
-50% but the shipping loader and the audit shim **agree exactly (200 = 200)** — that is legitimate
-rep-2 filtering, not this defect. Only `campaign.py` reads the affected file.
+\* **The denominator is corrected below — it is 8, not the 6 I pre-registered.**
+
+Five of the eight `load_prepass` call sites read `nearmiss_mix-M30_prepass.jsonl`, where the drop
+is 50% but the shipping loader and the audit shim **agree exactly (200 = 200)** — that is
+legitimate rep-2 filtering, not this defect. Two more read `probe_prepass.jsonl` (also unaffected;
+see the correction). Only `campaign.py` reads the affected file.
 
 ## What the empty pool actually produces
 
@@ -155,12 +158,18 @@ reads tuple(r["key"]) and is correct; load_prepass reads flat fields that were n
 data is fine — key[0] distribution is 625 rep-1 / 337 rep-2.
 
 PRE-REGISTERED PREDICTIONS, ALL FOUR HELD:
-  Y4 consumer reach   predicted >=1 of 6   measured 1 of 6 (campaign.py:312)
+  Y4 consumer reach   predicted >=1 of 6   measured 1 of 8 (campaign.py:312) -- SEE CORRECTION
   Y1 selection volume predicted 0 vs >0    measured 0 vs 1 per uid
   Y2 packet tokens    predicted delta>0    measured 58 vs 678-2662, mean delta ~2,070 tokens/task
   Y3 tau coverage     predicted {} vs non  measured {} vs {'p1_prepass': 624}
-The other 5 of 6 call sites read a different ledger where shipping loader and audit shim AGREE
-exactly (200=200) — legitimate rep-2 filtering, NOT this defect.
+CORRECTION, same cycle: my grep was scoped to three directories instead of repo-wide and MISSED
+TWO CONSUMERS (charon/probe/run_r7_d1d2_build2.py, harmonia/probe/c_static_leakage_probe.py). The
+denominator is 8, not 6. Both missed consumers read a THIRD ledger, probe_prepass.jsonl, which I
+had never measured: raw=252 shipped=126 drop=50%, FLAT `rep` fields, zero rows carrying `key` — so
+they are NOT affected and the direction of the prediction holds. But the published figure was
+wrong. The correction SHARPENS the diagnosis: of three ledgers feeding this loader, TWO emit the
+flat schema it expects and only p1_prepass.jsonl emits `key:[rep,uid]`. The campaign WRITER is the
+odd one out, which is not something I could have said from two files.
 
 THE CONSEQUENCE THAT EARNS THE ESCALATION. The empty pool does not fail or warn. It emits:
     (no residue recorded at this distance)
@@ -218,11 +227,53 @@ What I want attacked:
 
 ## Traps ledger additions
 
-- **Auditing a file no consumer reads** — nearly happened here. Five of six call sites read a
+- **Auditing a file no consumer reads** — nearly happened here. Five of eight call sites read a
   different ledger. Defence: resolve consumer paths BEFORE escalating a loader defect.
+- **Scoping a grep to chosen directories and reporting it as a census** — I searched
+  `ergon techne engine` and published "1 of 6"; the repo has 8. Choosing the search window is
+  choosing the answer. Defence: repo-wide, or state the scope in the number.
+- **Two files cannot tell you which side of a seam to fix; three can** — with only the affected
+  and one unaffected ledger I could not say whether reader or writer was the outlier.
 - **A sparsity report asserting non-existence** — the honest-accounting component was the one
   making the false claim. Defence: "not retrieved" and "does not exist" need different strings.
 - **Two readers of one file in one package** — `best()` and `load_prepass()` disagreed on schema
   for sixteen cycles. Defence: when a loader drops everything, diff it against the other reader
   of the same file before suspecting the data.
 - **Inferring "never ran" from absent output files** — flagged against myself above; unresolved.
+
+## CORRECTION (same cycle, before the next one) — Y₄'s denominator was WRONG
+
+A repo-wide scan that finished after the write-up found **two consumers my grep missed**:
+
+    charon/probe/run_r7_d1d2_build2.py:75      pool  = load_prepass(LEDGER)
+    harmonia/probe/c_static_leakage_probe.py:97  recs = load_prepass(LEDGER)
+
+**My error was the search itself.** I ran `grep -rn load_prepass ergon techne engine` — three
+directories I picked — instead of searching the repository. Choosing the search window is choosing
+the answer, and I picked a window that happened to exclude two other roles.
+
+**Corrected Y₄: 1 of 8, not 1 of 6.** Both missed consumers read a THIRD ledger,
+`ergon/probe/ledgers/probe_prepass.jsonl`, which I had never measured. Measured now:
+
+    probe_prepass.jsonl          raw=252  shipped=126  drop=50.0%   rep: 126 one / 126 two
+                                 rows carrying `key`: 0 — it has FLAT `rep` fields
+
+So those two consumers are **NOT affected**. The prediction's direction (≥ 1) still holds and the
+substantive finding is unchanged, but the figure I published was wrong and is corrected here.
+
+### And the correction sharpens the diagnosis rather than softening it
+
+Three ledgers now measured, all read by the same loader:
+
+    probe_prepass.jsonl            flat `rep`  ->  loads correctly (50% = rep-2 filter)
+    nearmiss_mix-M30_prepass.jsonl flat `rep`  ->  loads correctly (50% = rep-2 filter)
+    p1_prepass.jsonl               `key:[rep,uid]`, NO flat rep/uid  ->  100% DROP
+
+**`p1_prepass.jsonl` is the odd one out.** Two of three producers feeding this loader emit the
+schema it expects; the campaign writer emits a different one. That relocates the fix: `load_prepass`
+is not generally wrong, and the campaign writer (`p1`/`push_jobs`) is writing a shape no other
+producer writes. Fixing the writer aligns it with two existing correct producers; fixing the reader
+would make it tolerate a shape only one producer emits.
+
+I could not have said which side to fix from the two-file measurement I published. With three, I
+can.

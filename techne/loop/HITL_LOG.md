@@ -1104,3 +1104,24 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      `NMI = I/sqrt(H(X)H(Y))`, 12 tests, RED first, four categories. Edge: EITHER side zero-entropy
      REFUSES because the ratio is 0/0, and **the error names WHICH side**. A property test asserts
      `NMI != 1 - normalized_vi` in general, to stop a future caller substituting one for the other.
+
+
+## Cycle 042 CORRECTION (same cycle, before 043)
+
+204. **Y₄'S DENOMINATOR WAS WRONG: 1 of 8, not 1 of 6.** A repo-wide scan finishing after the
+     write-up found two consumers I missed — `charon/probe/run_r7_d1d2_build2.py:75` and
+     `harmonia/probe/c_static_leakage_probe.py:97`. **My error was the search:** I grepped
+     `ergon techne engine`, three directories I chose, instead of the repository. Choosing the
+     search window is choosing the answer.
+205. **The substantive finding is UNCHANGED and the prediction's direction still holds.** Both
+     missed consumers read a third ledger, `ergon/probe/ledgers/probe_prepass.jsonl`, never
+     previously measured: raw=252, shipped=126, **drop 50%**, rep distribution 126 one / 126 two,
+     and **zero rows carrying `key`** — it has flat `rep` fields. They are not affected.
+206. **THE CORRECTION SHARPENS THE DIAGNOSIS — and this is the part worth your attention.** Three
+     ledgers now measured against the same loader: `probe_prepass.jsonl` (flat `rep`, loads),
+     `nearmiss_mix-M30_prepass.jsonl` (flat `rep`, loads), `p1_prepass.jsonl` (`key:[rep,uid]`,
+     100% drop). **Two of three producers emit the schema the loader expects; the campaign writer
+     is the odd one out.** That relocates the fix to the WRITER (`p1`/`push_jobs`), aligning it
+     with two existing correct producers — rather than to the reader, which would then have to
+     tolerate a shape only one producer emits. **I could not have said which side to fix from the
+     two files I published; with three I can.**
