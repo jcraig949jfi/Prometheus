@@ -30,7 +30,13 @@ from ergon.probe.extract import extract_numeric
 
 CANDIDATES = ("nvidia:nemotron-super-49b-v1.5", "nvidia:nemotron-super-49b-v1",
               "nvidia:gpt-oss-120b")
-BATCH_PER_CANDIDATE = 12          # 3 firings/day x 12 = 36/day, under the ~40 quota
+# Was 12, sized to stay under a presumed ~40/day 429 wall. MEASURED 2026-08-22: across all
+# three candidates the drip has logged ZERO 429s and zero 402s — the wall it was throttling
+# for never appeared, while the real constraint (HTTP504 timeouts, 83-96% on two candidates)
+# went unaddressed. The 429-stop below is already a safe self-limiter, so let the batch probe
+# for the real wall instead of assuming one: worst case it stops on the first 429, exactly as
+# designed. deepseek-v4-flash on this same lane served 1,058 calls in a day.
+BATCH_PER_CANDIDATE = 80
 MAX_TOK, TIMEOUT = 8192, 420
 BAND, MOVABLE_FLOOR = (0.35, 0.60), 0.30
 MAN = ROOT / "ergon/probe/manifests/nearmiss_mix-M30_manifest_n200.jsonl"
@@ -54,11 +60,26 @@ def done_keys(led_path):
             if r["status"] == "ok"}
 
 
+def probe(solver):
+    """One cheap call before committing a batch. gpt-oss-120b fails EVERY call on this lane
+    and takes 300s+ to do it, so a 12-call batch burned an hour of the firing to collect
+    nothing — starving the candidates that do work. Probing costs one short call and is
+    self-healing: a candidate that recovers resumes on the next firing with no edit here.
+    This is a TRANSPORT check, not a results check; it never looks at what a candidate scored.
+    """
+    r = call(solver, "What is 17 times 23? Answer with just the number.",
+             max_tokens=256, timeout=120)
+    return r.status == "ok", r.error_type
+
+
 def drip(solver):
     led_path = DRIP_DIR / f"{_slug(solver)}.jsonl"
     out_path = DRIP_DIR / f"{_slug(solver)}_bandread.json"
     if out_path.exists():
         return "complete"
+    ok, err = probe(solver)
+    if not ok:
+        return f"skipped-transport-down ({err})"
     have = done_keys(led_path)
     todo = [(rep, r) for rep, r in WORK if (rep, r["uid"]) not in have][:BATCH_PER_CANDIDATE]
     if not todo:
