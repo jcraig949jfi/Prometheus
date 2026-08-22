@@ -1,0 +1,62 @@
+{
+ "S0": {
+  "checked": 40,
+  "recovered": 40,
+  "PASS": true
+ },
+ "sweep": {
+  "sources_scanned": 230694,
+  "sources_total": 230694,
+  "fraction_complete": 1.0,
+  "elapsed_s": 4.3,
+  "sb": {
+   "arm": "sleeping_beauties",
+   "raw_hit_records": 2431,
+   "distinct_targets_hit": 433,
+   "K_nonshift": 301,
+   "K_shift_only": 132,
+   "K_shift_any": 176,
+   "per_operator_distinct_targets": {
+    "binomial": 70,
+    "diff": 99,
+    "moebius": 36,
+    "partsum": 129,
+    "shift": 176
+   }
+  },
+  "control": {
+   "arm": "matched_control",
+   "raw_hit_records": 6162,
+   "distinct_targets_hit": 1611,
+   "K_nonshift": 1316,
+   "K_shift_only": 295,
+   "K_shift_any": 445,
+   "per_operator_distinct_targets": {
+    "binomial": 244,
+    "diff": 488,
+    "moebius": 169,
+    "partsum": 623,
+    "shift": 445
+   }
+  }
+ },
+ "D": {
+  "R_sb": "433/31189",
+  "R_sb_rate": 0.013883,
+  "R_ctl": "1611/31189",
+  "R_ctl_rate": 0.051653,
+  "D": -0.03777,
+  "pooled_rate": 0.032768,
+  "SE_diff": 0.001426,
+  "ci95": [
+   -0.040564,
+   -0.034976
+  ],
+  "MEASURED_MDE_2SE": 0.002851,
+  "preregistered_threshold_T": 0.005702,
+  "note": "T = 2 x measured MDE, computed here per the preregistration; not inherited"
+ },
+ "ledger": "aporia/search/sb_hits_ledger.jsonl (every hit as a checkable pair)",
+ "scan_run": true,
+ "adjudicated": false
+}
