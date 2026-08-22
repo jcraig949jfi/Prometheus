@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-22T15:27:59+00:00
+# PULSE — generated 2026-08-22T15:55:01+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,14 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        608
-consumed (state changes):   321  {'queue_state': 292, 'registry': 27, 'findings': 2}
-consumed/emitted:           0.53
+emitted (new files):        616
+consumed (state changes):   317  {'queue_state': 289, 'registry': 26, 'findings': 2}
+consumed/emitted:           0.51
 verdict: ALIVE
 ```
 
 ## Commits, 72h (non-cron): 304
+- 6ea76aa0 08-22 11:28 Aporia P124: Campaign W pass 1/3 â€” instrument built; the ORACLE problem stated before measurement
 - a277a9bf 08-22 11:00 Aporia P123: allocation â€” SB blocked on missing data; CAMPAIGN W opens; my own X-5 recommendation corrected
 - 94af80ac 08-22 10:31 Aporia P122: CAMPAIGN X-5 TERMINAL â€” PARK (N4). The development effect did not transfer.
 - 37f7ed95 08-22 10:05 Aporia P121: X-5 pass 2/3 â€” a second artifact found, and two of my own verdict rules were wrong
@@ -37,7 +38,6 @@ verdict: ALIVE
 - 02e54d7c 08-22 06:00 Techne cycle 046: PRE-REGISTRATION for the knot-volume conflation, before measuring C_site
 - 7620649b 08-22 05:58 Aporia P112: X-2 pass 2/3 â€” ground truth was not unique; hubness found; GATE PASSED 0.952 by one pair
 - dbe66d52 08-22 05:33 Techne cycle 045: full arc completed on my own arsenal â€” two real defects fixed
-- 277f10cf 08-22 05:31 Aporia P111: Campaign X-2 pass 1/3 â€” ENTRY GATE FAILED 0.912, no L2 measured
 - … +279 more
 
 ## Bottleneck hypotheses (confidence)

@@ -37,6 +37,24 @@ watch-paced — every pass does one real item.
    as capacity allows; schema + backup job first (DECISION 2 makes backup non-deferrable).
 
 
+## THRESHOLDS FAIL IN BOTH DIRECTIONS (adopted P125, the mirror of GATE DESIGN)
+
+GATE DESIGN catches a threshold FINER than the measurement can resolve. This is the mirror
+failure: a threshold far COARSER than the resolution, which makes a real, cleanly detectable
+effect unreportable as an advance. Campaign W preregistered an MDE of 0.0306 from an assumed
+discordance of 0.15; the measured within-arm discordance was 0.0225, giving a true MDE of
+0.0106. The branch bar sat at ~3x the achievable resolution, so an effect at 1.65x MDE would
+fire the "too small to matter" branch while being nothing of the kind.
+
+- **Check the threshold against the measured variance in BOTH directions** — too fine makes the
+  decision noise, too coarse makes a finding invisible.
+- **Where the variance is unknown in advance, preregister the threshold as a MULTIPLE OF THE MDE**
+  (e.g. "lo > 2x MDE") rather than as an absolute number, so it self-calibrates when the variance
+  is finally measured.
+- **An assumed variance is a measurement you have not made.** It can be wrong in the direction
+  that costs a true finding as easily as in the direction that flatters one.
+- Do not adjust the threshold after seeing the effect; report the mismatch beside the verdict.
+
 ## A VERDICT RULE IS AN INSTRUMENT (adopted P121 from two wrong rules in one script)
 
 **Automated verdict rules need the same scrutiny as the measurements they judge.** In one X-5
