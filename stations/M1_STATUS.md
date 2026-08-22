@@ -154,6 +154,40 @@ margin for one partial re-run                             ~$6
 The free NVIDIA lane covers the second family's side of Tier B at $0. **Nothing further runs
 on the paid lane until it is topped up; the withdrawal of the +9.6pp stands regardless.**
 
+## 7p. THE ACCUMULATED CORPUS IS 132M ROWS WITH ~2 BITS OF FAILURE SIGNATURE (Ergon, 2026-08-22)
+
+**Supersedes the optimistic reading in §7o.** Full scan of all 165 batch files
+(`ergon/probe/corpus_scan_full.py`, 346 GB): **132,312,039 REJECTED records, 43 cells,
+131,649 distinct `kill_pattern` values.**
+
+Aggregate entropy looks fine (7.105 bits). **Per cell it collapses:**
+
+- **27 of 43 cells — 89,949,006 records, 68.0% of the corpus — have a TOTAL vocabulary of
+  ≤8 patterns (≤3 bits).**
+- **16.8M records (12.6%) are in cells with exactly ONE pattern: 0.0 bits — the designated
+  failure signature is a constant.**
+- ~53M records (the `f1`–`f4` + `a1` invariant-equality family) have **4 patterns each**, and
+  `a1` vs `f1` are **Jaccard 1.0000** — identical vocabularies, nothing unique to either.
+- Essentially all apparent richness is two mid-sized cells (`d3`, `a3`).
+
+A year of accumulation produced 132 million failure rows whose designated signature is, for two
+thirds of them, a ≤3-bit label. **That is the "navigable vs merely logged" question settled at
+corpus scale**, and it is a bigger result than anything the D0 probe can produce.
+
+**Two limits that must travel with the number:** `kill_pattern` is one field —
+`canonical_claim_text` and `claim_payload` are **100%** populated (`step_trace` only 17.2%), so
+the *record* is not 2 bits, the *designated signature* is; and 132M rejections from 43 cells
+implies heavy duplication that I have **not** measured, so this is not 132M distinct failures.
+
+**Actionable:** any retrieval or D2/D3 design keyed on `kill_pattern` retrieves a near-constant
+for most of the corpus. Residue representation has to be built from claim text/payload. This
+largely pre-answers the verdict-level arm of **R2-5**.
+
+**Provenance warning for anyone citing this:** a 6-batch × first-3000-lines sample of the SAME
+corpus gave the opposite answer (785 patterns; zero cross-generator recurrence), because a
+contiguous head-of-file window sees few generators and missed `f1` entirely. The sampling window
+was the whole error. Full-scan numbers only.
+
 ## 7o. THE NATIVE RESIDUE IS NOT SPARSE — the "33.6% nulls" was measured on the wrong population (Ergon, 2026-08-22)
 
 The prereg (§4.1) describes the accumulated corpus as thin: *"`kill_pattern` strings with their
