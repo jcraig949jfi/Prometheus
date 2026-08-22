@@ -1246,3 +1246,35 @@ published version named the seam but not which side of it to repair.
 **Kill-battery addition (executable):** a loader-defect claim must enumerate consumers REPO-WIDE,
 and must measure at least one UNAFFECTED producer of the same loader before naming which side of a
 seam is wrong.
+
+## Cycle 042 — claim v25: seam triangulation, and the contract is DE FACTO
+
+**Two facts, held apart deliberately.** (1) Y₄'s denominator was wrong — a scope-of-enumeration
+failure, and the repo-wide denominator is itself evidence, not bookkeeping. (2) Independently, the
+pre-registered direction survived. Stating them together reads as mitigation, and "the conclusion
+held anyway" is how a bad denominator survives review.
+
+**Remediation claim, at its defensible strength.** Three producers, one consumer:
+
+    probe_prepass.jsonl              flat rep          conforms
+    nearmiss_mix-M30_prepass.jsonl   flat rep          conforms
+    p1_prepass.jsonl                 key:[rep,uid]     deviates, 100% drop
+
+Two producers plus the consumer agree; one deviates. **The campaign writer violates the DE FACTO
+producer contract.** Not canonical: a repo-wide search found NO field-level schema specification
+for these ledgers. The "prereg §4.2" cited in `load_prepass` governs the rep-1-only POLICY, not the
+wire format, and is not in the repo; `ResidueRecord` is the in-memory shape only.
+
+**The precondition, which outranks the instance.** Three producers across three roles write to one
+shared consumer with no written field-level contract. A seam whose fields are unspecified will
+drift. #78 is the first drift, not a one-off, and closing the class needs a schema rather than a
+patch.
+
+**NEW DOCTRINE — seam triangulation.** *A two-party mismatch identifies a seam; a third
+independent conforming implementation localizes responsibility.* Full statement and application
+rule in `rung_notes/SEAM_TRIANGULATION.md`. This is the first doctrine in this ledger derived from
+the running system rather than from the loop's own instruments.
+
+**Kill-battery additions (executable):** enumerate interface implementations repo-wide before any
+ownership claim; measure a known-good pair as control; downgrade to *de facto* unless a written
+schema adjudicates; report the absence of a schema as part of the finding.

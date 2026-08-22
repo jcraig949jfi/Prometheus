@@ -1125,3 +1125,27 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      with two existing correct producers — rather than to the reader, which would then have to
      tolerate a shape only one producer emits. **I could not have said which side to fix from the
      two files I published; with three I can.**
+
+207. **ROUND-13 FOLD-IN — the two facts are separated, and the first is not softened by the
+     second.** (a) Y₄ was wrong: a scope-of-enumeration failure, and the repo-wide denominator is
+     part of the evidence rather than bookkeeping around it. (b) Independently, the pre-registered
+     direction survived. My first correction stated these together, which read as mitigation.
+     "The conclusion held anyway" is precisely how a bad denominator survives review.
+208. **"Writer is wrong" DOWNGRADED to DE FACTO — and I verified it rather than hedging.** A
+     repo-wide search found **no field-level schema specification for these ledgers anywhere in
+     the repo**. `load_prepass`'s docstring cites "prereg §4.2, review C1", but that governs the
+     rep-1-only POLICY, not the wire format, and the cited document is not in the repository.
+     `ResidueRecord` defines the in-memory shape only. Flat `rep` is therefore the OBSERVED
+     contract — strong triangulation, not authority.
+209. **JAMES — the absence is the finding underneath the defect.** Three producers, across three
+     roles (ergon, charon, harmonia), write to one shared consumer, and **no field-level contract
+     is written down anywhere**. A seam whose fields are unspecified will drift; the only question
+     is which producer drifts first. #78 is the first drift, not a one-off. If you want the class
+     closed rather than the instance, the ask is a written ledger schema — and that is a decision
+     I cannot make for ergon.
+210. **NEW DOCTRINE, reusable: seam triangulation.** *A two-party mismatch identifies a seam; a
+     third independent conforming implementation localizes responsibility for it.* Written up in
+     `techne/loop/rung_notes/SEAM_TRIANGULATION.md`. Application rule: enumerate implementations
+     REPO-WIDE; measure a known-good pair as control; name the outlier only if a third conforming
+     implementation exists; say *de facto* unless a written schema adjudicates; report the
+     schema's absence when there is none.

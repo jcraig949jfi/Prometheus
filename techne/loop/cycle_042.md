@@ -258,8 +258,19 @@ the answer, and I picked a window that happened to exclude two other roles.
     probe_prepass.jsonl          raw=252  shipped=126  drop=50.0%   rep: 126 one / 126 two
                                  rows carrying `key`: 0 — it has FLAT `rep` fields
 
-So those two consumers are **NOT affected**. The prediction's direction (≥ 1) still holds and the
-substantive finding is unchanged, but the figure I published was wrong and is corrected here.
+So those two consumers are **NOT affected**.
+
+**Two separate facts, and the second must not be allowed to soften the first.**
+
+1. **Y₄ was wrong. That is a scope-of-enumeration failure, and the repo-wide denominator is
+   itself part of the evidence** — not bookkeeping around it. A loader-defect claim whose consumer
+   census was assembled from three hand-picked directories was not a census.
+2. Independently: the pre-registered direction (≥ 1) survived, and the substantive finding is
+   unchanged.
+
+The second does not excuse the first. I stated them together in the first version of this
+correction, which read as mitigation; they are separated here because "the conclusion held anyway"
+is exactly how a bad denominator survives review.
 
 ### And the correction sharpens the diagnosis rather than softening it
 
@@ -277,3 +288,31 @@ would make it tolerate a shape only one producer emits.
 
 I could not have said which side to fix from the two-file measurement I published. With three, I
 can.
+
+### But it is a DE FACTO contract, not a canonical one — and I checked
+
+**A repo-wide search found no field-level schema specification for these ledgers anywhere in the
+repository.** `load_prepass`'s docstring cites "prereg §4.2, review C1", but that governs the
+**rep-1-only policy**, not the wire format, and the cited document is not in the repo. The
+`ResidueRecord` dataclass defines the **in-memory** shape, not the on-disk one.
+
+So flat `rep` is the **observed contract** — what two of three producers and the sole consumer
+actually do — and that is triangulation, not authority. The defensible statement is:
+
+> Three implementations, two conforming. The deviating one is the cheapest to change and the one
+> that would align with existing practice. **No document adjudicates it.**
+
+**And the absence is the finding underneath the defect.** Three producers across three roles write
+to one consumer with no field-level contract written down. A seam whose fields are unspecified
+will drift; the only question is which producer drifts first. That is a precondition, not an
+incidental gap.
+
+### The reusable part
+
+> **A two-party mismatch identifies a seam. A third independent conforming implementation
+> localizes responsibility for it.**
+
+Written up as doctrine in `rung_notes/SEAM_TRIANGULATION.md`, with the application rule:
+enumerate repo-wide, measure a known-good control, name the outlier only if a third conforming
+implementation exists, say *de facto* unless a written schema adjudicates, and report the schema's
+absence when there isn't one.
