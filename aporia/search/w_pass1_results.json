@@ -1,0 +1,103 @@
+{
+ "splits": {
+  "dev": 500,
+  "frozen": 1000,
+  "reserve": 1000
+ },
+ "exact_terms_dev": {
+  "diff": {
+   "n": 100,
+   "min": 20,
+   "median": 38.0,
+   "mean": 36.22,
+   "max": 44
+  },
+  "partsum": {
+   "n": 100,
+   "min": 20,
+   "median": 40.5,
+   "mean": 37.19,
+   "max": 45
+  },
+  "binomial": {
+   "n": 100,
+   "min": 20,
+   "median": 24.0,
+   "mean": 23.59,
+   "max": 24
+  },
+  "moebius": {
+   "n": 100,
+   "min": 20,
+   "median": 37.0,
+   "mean": 32.15,
+   "max": 40
+  },
+  "shift": {
+   "n": 100,
+   "min": 20,
+   "median": 32.0,
+   "mean": 33.38,
+   "max": 44
+  }
+ },
+ "exact_terms_all": {
+  "n": 500,
+  "min": 20,
+  "median": 31.0,
+  "mean": 32.51,
+  "max": 45,
+  "frac_below_45": 0.942,
+  "frac_below_20": 0.0
+ },
+ "window_convention": "target and source both featurised over the pair guaranteed overlap E; diff consumes E+1 source terms and the one-term difference is disclosed rather than special-cased",
+ "MIN_WINDOW": 12,
+ "ORACLE_DISCLOSURE": {
+  "exact_terms_is_oracle": true,
+  "reason": "exact_terms is computed by comparing op(src) against tgt, so a single-sequence query at deployment has no way to know it",
+  "consequence_W3": "DECISIVE \u2014 if the oracle window buys nothing, no deployable windowing can, and the X-line negative is robust",
+  "consequence_W1": "NOT DECISIVE \u2014 establishes only an upper bound; licenses designing a deployable variant, never the claim that windowing works",
+  "deployable_variant_named_not_tested": "per-candidate length matching over min(len(A), len(B)); uses lengths only"
+ },
+ "partition": {
+  "points": 5151,
+  "unmapped": 0,
+  "coverage": {
+   "W5": 1275,
+   "W3": 408,
+   "W4": 2193,
+   "W2": 329,
+   "W1": 946
+  },
+  "MDE": 0.0306
+ },
+ "shape_sanity": {
+  "finite": true,
+  "dims_vary_with_window": [
+   145,
+   146,
+   148,
+   149,
+   150,
+   151,
+   152,
+   153,
+   154,
+   156,
+   158,
+   159,
+   161,
+   162,
+   163,
+   164,
+   165,
+   166,
+   167,
+   168,
+   169
+  ]
+ },
+ "primary_experiment_run": false,
+ "frozen_touched": false,
+ "reserve_touched": false
+}

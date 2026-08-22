@@ -1,0 +1,82 @@
+{
+ "pool": 26531,
+ "dev_pairs": 500,
+ "real_op_pairs": 400,
+ "sanity": {
+  "pairs_checked": 500,
+  "bucket_ok": 500,
+  "below_min_window": 0,
+  "window_gt_E": 0,
+  "v2_dim_constant": true,
+  "v2_dim": [
+   125
+  ]
+ },
+ "v2_calls_over_pool": 132655,
+ "raw_only_arm": {
+  "W": 0.0,
+  "reason": "raw@20 sits inside every pair guaranteed overlap (0% of pairs have exact_terms < 20), so windowing cannot change it; structurally zero, not computed"
+ },
+ "arms": {
+  "combined": {
+   "fixed": "39/400",
+   "fixed_rate": 0.0975,
+   "fixed_wilson": [
+    0.0721,
+    0.1305
+   ],
+   "windowed": "46/400",
+   "windowed_rate": 0.115,
+   "windowed_wilson": [
+    0.0873,
+    0.15
+   ],
+   "W": 0.0175,
+   "b_windowed_only": 8,
+   "c_fixed_only": 1,
+   "n": 400,
+   "se_paired": 0.00745,
+   "ci95_paired": [
+    0.0029,
+    0.0321
+   ],
+   "discordance": 0.0225,
+   "shift_control_fixed": "17/100",
+   "shift_control_windowed": "15/100"
+  },
+  "v2_only": {
+   "fixed": "38/400",
+   "fixed_rate": 0.095,
+   "fixed_wilson": [
+    0.07,
+    0.1277
+   ],
+   "windowed": "43/400",
+   "windowed_rate": 0.1075,
+   "windowed_wilson": [
+    0.0808,
+    0.1417
+   ],
+   "W": 0.0125,
+   "b_windowed_only": 7,
+   "c_fixed_only": 2,
+   "n": 400,
+   "se_paired": 0.00747,
+   "ci95_paired": [
+    -0.0021,
+    0.0271
+   ],
+   "discordance": 0.0225,
+   "shift_control_fixed": "11/100",
+   "shift_control_windowed": "12/100"
+  }
+ },
+ "MDE": {
+  "preregistered_P123": 0.0306,
+  "preregistered_assumed_discordance": 0.15,
+  "observed_within_arm_discordance": 0.0225,
+  "restated_MDE_at_frozen_n800": 0.0106,
+  "note": "frozen carries 800 four-real-operator pairs; the P123 figure assumed a discordance never measured for a within-arm window comparison"
+ },
+ "primary_experiment_on_frozen": false
+}
