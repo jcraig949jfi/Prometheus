@@ -1,0 +1,75 @@
+{
+ "per_operator": {
+  "diff": {
+   "n": 80,
+   "img_len_min": 26,
+   "img_len_max": 44,
+   "img_len_mean": 38.61,
+   "pairs_with_padding": 0,
+   "mean_padded_positions": 0.0,
+   "mean_raw_norm_image": 32.445,
+   "mean_raw_norm_target": 32.445,
+   "image_to_target_norm_ratio": 1.0,
+   "nonfinite_features": 0,
+   "mean_projected_norm": 78.418
+  },
+  "partsum": {
+   "n": 80,
+   "img_len_min": 25,
+   "img_len_max": 45,
+   "img_len_mean": 40.36,
+   "pairs_with_padding": 0,
+   "mean_padded_positions": 0.0,
+   "mean_raw_norm_image": 38.881,
+   "mean_raw_norm_target": 38.878,
+   "image_to_target_norm_ratio": 1.0001,
+   "nonfinite_features": 0,
+   "mean_projected_norm": 70.306
+  },
+  "binomial": {
+   "n": 80,
+   "img_len_min": 23,
+   "img_len_max": 24,
+   "img_len_mean": 23.89,
+   "pairs_with_padding": 80,
+   "mean_padded_positions": 1.11,
+   "mean_raw_norm_image": 69.946,
+   "mean_raw_norm_target": 75.026,
+   "image_to_target_norm_ratio": 0.9323,
+   "nonfinite_features": 0,
+   "mean_projected_norm": 439.021
+  },
+  "moebius": {
+   "n": 80,
+   "img_len_min": 25,
+   "img_len_max": 40,
+   "img_len_mean": 38.04,
+   "pairs_with_padding": 0,
+   "mean_padded_positions": 0.0,
+   "mean_raw_norm_image": 24.111,
+   "mean_raw_norm_target": 24.038,
+   "image_to_target_norm_ratio": 1.003,
+   "nonfinite_features": 0,
+   "mean_projected_norm": 189.338
+  },
+  "shift": {
+   "n": 80,
+   "img_len_min": 25,
+   "img_len_max": 44,
+   "img_len_mean": 42.51,
+   "pairs_with_padding": 0,
+   "mean_padded_positions": 0.0,
+   "mean_raw_norm_image": 19.343,
+   "mean_raw_norm_target": 19.348,
+   "image_to_target_norm_ratio": 0.9998,
+   "nonfinite_features": 0,
+   "mean_projected_norm": 82.125
+  }
+ },
+ "operators_with_padded_raw_block": [
+  "binomial"
+ ],
+ "verdict": "BUG",
+ "verdict_reasoning": "binomial is the ONLY operator whose images are shorter than the 25-term raw block, so its queries are zero-padded in exactly the high-magnitude positions where pool candidates carry real values; the failure is therefore in the comparison and not in the learned metric",
+ "frozen_quantities_computed": false
+}

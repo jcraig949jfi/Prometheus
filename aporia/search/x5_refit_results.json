@@ -1,0 +1,63 @@
+{
+ "raw_block_terms": 20,
+ "fix": "raw block cut from 25 to 20 terms; minimum image length is 23 so no operator is padded",
+ "features": 145,
+ "k_rule_unchanged": "lambda > 1.0",
+ "k_kept": 95,
+ "hubness": {
+  "learned_skew": 1.317,
+  "learned_corrected": true,
+  "raw_skew": 0.656,
+  "raw_corrected": false
+ },
+ "L1_dev": {
+  "strict": "309/400",
+  "strict_rate": 0.7725,
+  "any_valid": "338/400",
+  "any_valid_rate": 0.845,
+  "wilson_95": [
+   0.8063,
+   0.8772
+  ],
+  "by_op_strict": {
+   "diff": "67/80",
+   "partsum": "72/80",
+   "binomial": "63/80",
+   "moebius": "53/80",
+   "shift": "54/80"
+  },
+  "by_op_any_valid": {
+   "diff": "72/80",
+   "partsum": "77/80",
+   "binomial": "63/80",
+   "moebius": "61/80",
+   "shift": "65/80"
+  }
+ },
+ "L2_dev": {
+  "learned": "116/320",
+  "learned_rate": 0.3625,
+  "raw": "55/320",
+  "raw_rate": 0.1719,
+  "D": 0.1906,
+  "b": 65,
+  "c": 4,
+  "ci95_paired": [
+   0.1442,
+   0.237
+  ],
+  "discordance": 0.2156
+ },
+ "MDE_frozenB_n640": 0.0367,
+ "MDE_x4_stub_superseded": 0.0375,
+ "G_pos_permutation": {
+  "n_derangements": 20,
+  "learned_mean": 0.00203,
+  "learned_min": 0.0,
+  "learned_max": 0.00937,
+  "raw_mean": 0.00094,
+  "raw_min": 0.0,
+  "raw_max": 0.00313
+ },
+ "frozen_quantities_computed": false
+}

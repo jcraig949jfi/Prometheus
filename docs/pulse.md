@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-22T13:08:00+00:00
+# PULSE — generated 2026-08-22T13:37:32+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,14 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        592
-consumed (state changes):   341  {'queue_state': 306, 'registry': 32, 'findings': 3}
-consumed/emitted:           0.58
+emitted (new files):        594
+consumed (state changes):   337  {'queue_state': 304, 'registry': 31, 'findings': 2}
+consumed/emitted:           0.57
 verdict: ALIVE
 ```
 
 ## Commits, 72h (non-cron): 304
+- 6dc7cabc 08-22 09:08 Aporia P119: CAMPAIGN X-4 TERMINAL â€” PARK (M0). The preregistration parked a positive, as written.
 - 8da49249 08-22 08:42 Aporia P118: X-4 pass 2/3 â€” learned metric DOUBLES L2 and DESTROYS L1
 - 28a9506a 08-22 08:13 Techne cycle 048: the precision worry does not bite â€” and I overstated it in 047
 - 9e86b937 08-22 08:11 Aporia P117: campaign selection â€” X-4 opens; branches PROVED to partition; rebuild tax ended
@@ -39,7 +40,6 @@ verdict: ALIVE
 - e53c685a 08-22 04:53 Techne cycle 045: budget allocated to the arsenal's own red tests; classification pre-registered
 - 8d9ad8cb 08-22 04:49 Ergon: full scan FALSIFIES my own headline claim â€” sampling window did it
 - 8646d8e7 08-22 04:38 Aporia P109: Campaign X pass 2/3 â€” signature retrieval on development only
-- ce3157a7 08-22 04:34 Ergon: full-corpus scan â€” a 6-batch sample should not carry this claim
 - … +279 more
 
 ## Bottleneck hypotheses (confidence)
