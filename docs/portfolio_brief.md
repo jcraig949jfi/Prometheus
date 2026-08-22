@@ -1,5 +1,5 @@
 # Prometheus Portfolio Brief
-*Generated: 2026-08-21 08:14:45 PM UTC*
+*Generated: 2026-08-22 12:14:44 AM UTC*
 *Author: Metis (multi-machine reporter mode)*
 
 ---
@@ -7,7 +7,7 @@
 ## Act on this
 
 **Hephaestus @ M3, forge — substrate generator with falsification battery — DEAD, daemon stopped**
-No heartbeat for 119749min (7184988s). Was last ALIVE at 2026-05-28T01:38:15.244017-04:00.
+No heartbeat for 119989min (7199387s). Was last ALIVE at 2026-05-28T01:38:15.244017-04:00.
 Investigate the process on M3 and restart, or kill watchdog if intentional.
 
 ## Watch this
@@ -18,7 +18,7 @@ Check Pythia queue depth; refill DR ticket inbox if dry.
 
 ## Parked threads — yours to unstick (644 parked, 2 decisions pending)
 
-- **493 thread(s) gated on:** needs authored test_spec (SPEC-AUTHOR-BATCH lane) — e.g. CAT-MATH-0482
+- **492 thread(s) gated on:** needs authored test_spec (SPEC-AUTHOR-BATCH lane) — e.g. CAT-MATH-0070
   About 490 catalog problems were classified in May with a default label and never given an actual test recipe (what data, what computation, what counts as pass/fail). The loop will not attack a problem while inventing its goalposts mid-shot — instead a dedicated spec-authoring lane writes proper recipes in batches of 10 (each recipe verified against data that actually exists locally), and the attack passes then consume them. This is menu-growth: the backlog feeds itself instead of exhausting.
 - **45 thread(s) gated on:** verified 2026-08-19 (<30d) — rolling re-verification resumes on age-out — e.g. AA-VERIFY-AA-028
   (no ELI5 for this gate yet — the loop owes one next pass)
@@ -32,7 +32,7 @@ Check Pythia queue depth; refill DR ticket inbox if dry.
   These scan 68,770 'sleeping beauty' number sequences — highly structured but connected to nothing — to find which detection strategy wakes them up. Each scan waits for a free GPU and a quick check that the scanning code for that strategy still runs.
 - **10 thread(s) gated on:** verified 2026-08-18 (<30d) — rolling re-verification resumes on age-out — e.g. AA-VERIFY-AA-017
   (no ELI5 for this gate yet — the loop owes one next pass)
-- **8 thread(s) gated on:** authored spec awaiting shadow review (Elenchus) — e.g. CAT-MATH-0193
+- **9 thread(s) gated on:** authored spec awaiting shadow review (Elenchus) — e.g. CAT-MATH-0193
   (no ELI5 for this gate yet — the loop owes one next pass)
 - **DECISION pending:** Ratify the PROMETHEUS-0 constitution (10 articles)
   PROMETHEUS-0 is the planned master organism that births and prunes specialized child agents; its 10-article constitution defines what it may never do without you (spawn freely, change its own rules, spend money, touch the outside world). Signing it is the first of three gates before that experiment can start.
@@ -41,7 +41,7 @@ Check Pythia queue depth; refill DR ticket inbox if dry.
 
 ## Shadow review (Elenchus)
 
-Worklog passes: 107 | reviewed: 23 | awaiting review: 86
+Worklog passes: 125 | reviewed: 23 | awaiting review: 104
 - ELEN-CAMPAIGN-P51-P62: **MIXED** (invalidates-claim) The campaign's headline novel result -- the Katz-Sarnak symplectic split at p=1e-4 -- is N
 - ELEN-BLIND-REFUTATION-01: **MIXED** (note) BLIND-REFUTATION SAMPLE, 10 claims, seed 20260821. Result: 7 SURVIVE, 1 REFUTED, 2 UNTESTA
 - ELEN-HARMA-TRIAGE-03: **SOUND** (note) The weakness-quota fix from sweep 3 is still holding seven passes later, and has settled r
@@ -50,7 +50,7 @@ https://github.com/jcraig949jfi/Prometheus/blob/main/engine/shadow/REVIEWS.jsonl
 
 ## For the record
 
-Session-model activity (the live operating model): 227 non-cron commits in 72h. Ground truth: engine/PULSE.md.
+Session-model activity (the live operating model): 256 non-cron commits in 72h. Ground truth: engine/PULSE.md.
 
 
 **1 agents ALIVE** (Pronoia).
