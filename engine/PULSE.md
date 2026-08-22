@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-22T02:36:13+00:00
+# PULSE — generated 2026-08-22T03:58:15+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,18 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        496
-consumed (state changes):   412  {'registry': 47, 'queue_state': 361, 'findings': 3, 'doctrine': 1}
-consumed/emitted:           0.83
+emitted (new files):        503
+consumed (state changes):   406  {'registry': 48, 'queue_state': 355, 'findings': 3}
+consumed/emitted:           0.81
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 282
+## Commits, 72h (non-cron): 284
+- d74f1a33 08-21 23:46 Ergon: halted firings spend zero calls instead of ~48/day
+- 90be1476 08-21 23:43 Techne loop cycle 039: the bug class made unrepresentable â€” and it was seven, not four
+- 82ad6678 08-21 23:10 Techne loop cycle 038: domain-sourced anti-cases â€” one of my nine passes was flattery
+- 079b392b 08-21 23:08 Aporia P102: noop â€” no events; census past 6M rows, still zero conflicts
+- 3c45f36f 08-21 22:36 Aporia P101: wait-state pass â€” one citation upgraded, one wall named
 - f25f8995 08-21 22:35 Techne loop cycle 037: contract retrofitted to the arsenal â€” it caught two of my own defects
 - 0c96ec0a 08-21 22:01 Techne loop cycle 036: round-10 fold-in â€” the instrument contract
 - e6efb295 08-21 22:01 Aporia P100: the queue ran dry, so the loop swept its footnotes â€” and found one more conflation
@@ -33,12 +38,7 @@ verdict: ALIVE
 - 93be4656 08-21 19:16 Techne loop cycle 029: structural-constancy probe â€” and it caught its own author
 - 6980f933 08-21 18:45 Aporia P94: the dependent null inverts the story â€” and turns a gate into a measurement
 - f481f22a 08-21 18:36 Techne loop cycle 028: the sample-size objection removed â€” and it was the wrong objection
-- cd0efd84 08-21 18:14 Aporia P93 correction: the P93 record shipped without its evidence field â€” the validator caught it, my pipeline muted it
-- 17a7ba55 08-21 18:13 Aporia P93: TIER CLOSED â€” and paying the threshold debt sharpened a result
-- f538cf9e 08-21 18:04 Techne loop cycle 027: a falsification battery is a chain running the other way
-- 70459647 08-21 17:56 Ergon: pre-file the P1 band escalation BEFORE the number lands
-- 2d1a4e1b 08-21 17:44 Aporia P92: TIER COMPLETE 25/25 â€” a rediscovered kill and four theorems by pincer
-- … +257 more
+- … +259 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records

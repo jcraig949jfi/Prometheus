@@ -40,3 +40,57 @@ duplication), with the caveat that TABLESAMPLE is page-clustered, not uniform-ra
 Duplication is mirror-side ingestion (row-level exact copies), not LMFDB semantics —
 labels are unique upstream. A re-ingest or a `DELETE ... USING` dedup would fix the
 table; until someone owns that, the DISTINCT ON doctrine stands.
+
+---
+
+## FINAL ADJUDICATION (P103, census complete after ~50,448s of streaming)
+
+**Verdict: PURE-DUP — CONFIRMED, with a scope limit and a corrected headline.**
+
+### The conflict census, complete
+
+Streamed **9,302,241 rows** across **4,650,771 duplicated labels**; **CONFLICT
+labels: 0**. Not one duplicated label anywhere in the table carries differing
+zero vectors. The pre-stated PURE-DUP branch fires: the duplication is
+ingestion-level row copying, not a data conflict. Multiplicity distribution:
+
+- 2 copies: 4,650,414 labels
+- 3 copies: 15 labels
+- 4 copies: 342 labels
+
+(Check: 4,650,414·2 + 15·3 + 342·4 = 9,302,241 = rows streamed, exact.) The
+4-copy class being ~23× larger than the 3-copy class points at a doubled
+double-ingest rather than random repetition — an ops signature, recorded.
+
+### Correction to this note's own headline (P74)
+
+The original "4,697,909 duplicate rows (19.3%)" **conflated two different
+things**, caught by chasing a one-label discrepancy between the census phases:
+
+- **46,439 rows carry NULL labels.** `GROUP BY label` collapses all NULLs into
+  a single group (hence phase 1 counting one extra "duplicated label"), while
+  the census's `JOIN t.label = d.label` cannot match NULL to NULL — so those
+  rows were **excluded from the conflict scan and remain unexamined**.
+- **True redundancy among labeled rows: 4,651,470 excess rows = 19.14%** of
+  the 24,304,937 labeled rows. Verified two independent ways: (labeled −
+  distinct labels) and (streamed rows − duplicated labels) agree exactly.
+- 4,651,470 + 46,439 = 4,697,909, which is where the original figure came
+  from. The corrected split is redundancy 4,651,470 / unlabeled 46,439.
+
+### NEW HAZARD in this note's own doctrine
+
+`DISTINCT ON (label)` — published here as standing doctrine — has a trap for
+the NULL-label rows: SQL treats all NULLs as **one** group, so a
+`DISTINCT ON (label)` fetch returns **exactly one** of the 46,439 unlabeled
+rows and silently discards the rest. The doctrine is amended:
+
+> Use `DISTINCT ON (label)` for label-identified work, and **add
+> `WHERE label IS NOT NULL`** so the exclusion is explicit. If unlabeled rows
+> are in scope, dedupe them by a different key (id, or the zero-vector hash)
+> — they cannot be label-deduplicated at all.
+
+### Scope of the PURE-DUP verdict
+
+Confirmed over every labeled duplicate row in the table (9,302,241 of them).
+NOT established for the 46,439 NULL-label rows, which no label-keyed census
+can reach; a hash-keyed census would close that and is filed as residue.
