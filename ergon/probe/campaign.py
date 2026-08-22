@@ -420,6 +420,23 @@ def main():
 
 
 def _campaign():
+    # Nothing to do? Then do not spend a call finding that out. Once P1 has finalized
+    # non-LEVELED the campaign is halted pending a ruling, and once P1-P3 are complete
+    # without a sign-off it is halted pending the re-review — in both states every further
+    # firing can only re-probe a channel it will not use. At a 30-min schedule that is ~48
+    # free-lane calls a day burned to re-learn a fact already on disk.
+    br = DIR / "p1_bandread.json"
+    if br.exists():
+        v = json.loads(br.read_text(encoding="utf-8")).get("leveling_verdict")
+        if v != "LEVELED":
+            print(f"halted: P1 {v} — awaiting a ruling on next_step_if_not_leveled; no calls made")
+            return
+        if (DIR / "p3_pilot.jsonl").exists() and not HOLD_FILE.exists():
+            done3 = done_keys(DIR / "p3_pilot.jsonl")
+            if done3 and len(done3) >= 5 * 150:
+                print("halted: P1-P3 complete, awaiting RE_REVIEW_SIGNOFF; no calls made")
+                return
+
     # channel probe — one tiny call, no retries
     probe = call(SOLVER, "Say OK.", max_tokens=64, timeout=120, retries=0)
     if probe.status != "ok":
