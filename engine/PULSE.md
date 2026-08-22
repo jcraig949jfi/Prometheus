@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-22T20:00:29+00:00
+# PULSE — generated 2026-08-22T20:33:08+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,14 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        641
-consumed (state changes):   291  {'queue_state': 269, 'registry': 21, 'findings': 1}
+emitted (new files):        644
+consumed (state changes):   290  {'queue_state': 268, 'registry': 21, 'findings': 1}
 consumed/emitted:           0.45
 verdict: ALIVE
 ```
 
 ## Commits, 72h (non-cron): 302
+- f8b48404 08-22 16:01 Aporia P134: CAMPAIGN F â€” F3 MOSTLY-ATOMIC. 220 atomic candidates. The OEIS line CLOSES.
 - 19fac8f6 08-22 15:32 Aporia P133: CAMPAIGN V (one pass) â€” V1 KEEP, and a triviality split the audit chain cannot see
 - cfe01488 08-22 15:06 Aporia P132: CAMPAIGN U (one pass) â€” U3 SURVIVES. Population correction does not destroy S/T.
 - 8795e36b 08-22 14:41 Aporia P131: CAMPAIGN T (one pass) â€” ADVANCE. The candidate set survives the formula audit.
@@ -37,7 +38,6 @@ verdict: ALIVE
 - 3e150bd3 08-22 07:45 Aporia P116: CAMPAIGN X-3 TERMINAL â€” REDESIGN; first earned L2 in three campaigns
 - e6da78d9 08-22 07:45 Techne cycle 048: PRE-REGISTRATION â€” does the 5.1e-6 Mahler precision limit bite a consumer?
 - aa06e865 08-22 07:18 Aporia P115: X-3 pass 2/3 â€” dev any-valid 0.964, but strict FELL; K3 chance corrected
-- e1813d9f 08-22 07:17 M1_STATUS 7q: P1 final â€” the band and the screen want opposite rungs
 - … +277 more
 
 ## Bottleneck hypotheses (confidence)
