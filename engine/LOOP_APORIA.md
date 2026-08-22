@@ -37,6 +37,22 @@ watch-paced — every pass does one real item.
    as capacity allows; schema + backup job first (DECISION 2 makes backup non-deferrable).
 
 
+## BRANCH CONDITIONS MUST PARTITION (adopted P116 from four consecutive defects)
+
+**Before the pass that reads them runs, verify that the preregistered branches map every
+reachable reading to exactly one terminal state.** Four failures across three campaigns:
+D1-D5 were written qualitatively and forced numeric cuts to be invented at adjudication;
+D4's cut was one of those; K3 carried a chance denominator that was arithmetically wrong for
+the scoring rule in use; and K1-K3 failed to partition, leaving the region actually observed
+(D below the REDESIGN floor with L2 far above chance) uncovered, so a terminal state was
+reached by default rather than by a fired branch.
+
+- **Enumerate the outcome space and check coverage** — including the "no effect but well above
+  chance" region, which is where X-3 landed and which three campaigns of branch-writing missed.
+- **Every branch numeric, every threshold power-derived**, and every denominator checked against
+  the scoring rule actually in use, not the one imagined when the branch was written.
+- **A terminal state reached by default is reported as such**, never presented as a fired branch.
+
 ## GATE DESIGN — a gate on gates (adopted P113 from Campaign X-2's own failure)
 
 **A threshold whose distance from the measured value is smaller than that measurement's

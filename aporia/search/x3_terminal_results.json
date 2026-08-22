@@ -1,0 +1,358 @@
+{
+ "frozen_positives": 500,
+ "pool_size": 22095,
+ "recorded_target_absent_from_answer_set": 0,
+ "frozen_mean_V_four_real_ops": 1.7375,
+ "chance_top10_unadjusted": 0.000453,
+ "chance_top10_answer_set_adjusted": 0.000786,
+ "answer_set_size": {
+  "diff": {
+   "n": 100,
+   "mean": 1.22,
+   "max": 3,
+   "frac_gt_1": 0.18
+  },
+  "partsum": {
+   "n": 100,
+   "mean": 1.21,
+   "max": 6,
+   "frac_gt_1": 0.13
+  },
+  "binomial": {
+   "n": 100,
+   "mean": 1.05,
+   "max": 2,
+   "frac_gt_1": 0.05
+  },
+  "moebius": {
+   "n": 100,
+   "mean": 3.47,
+   "max": 43,
+   "frac_gt_1": 0.29
+  },
+  "shift": {
+   "n": 100,
+   "mean": 3.48,
+   "max": 52,
+   "frac_gt_1": 0.44
+  }
+ },
+ "STEP2_K0": {
+  "strict": "447/500",
+  "strict_rate": 0.894,
+  "any_valid": "474/500",
+  "any_valid_rate": 0.948,
+  "wilson_95": [
+   0.9249,
+   0.9643
+  ],
+  "threshold": 0.9,
+  "PASSED": true,
+  "by_op_strict": {
+   "diff": "95/100",
+   "partsum": "95/100",
+   "binomial": "100/100",
+   "moebius": "79/100",
+   "shift": "78/100"
+  },
+  "by_op_any_valid": {
+   "diff": "97/100",
+   "partsum": "95/100",
+   "binomial": "100/100",
+   "moebius": "91/100",
+   "shift": "91/100"
+  }
+ },
+ "STEP3_L2_top10_any_valid": {
+  "V2": {
+   "four_real_ops": {
+    "count": "49/400",
+    "rate": 0.1225,
+    "wilson_95": [
+     0.0939,
+     0.1583
+    ]
+   },
+   "shift_control": {
+    "count": "13/100",
+    "rate": 0.13,
+    "wilson_95": [
+     0.0776,
+     0.2098
+    ]
+   },
+   "by_op": {
+    "diff": {
+     "count": "6/100",
+     "rate": 0.06,
+     "wilson_95": [
+      0.0278,
+      0.1248
+     ]
+    },
+    "partsum": {
+     "count": "8/100",
+     "rate": 0.08,
+     "wilson_95": [
+      0.0411,
+      0.15
+     ]
+    },
+    "binomial": {
+     "count": "6/100",
+     "rate": 0.06,
+     "wilson_95": [
+      0.0278,
+      0.1248
+     ]
+    },
+    "moebius": {
+     "count": "29/100",
+     "rate": 0.29,
+     "wilson_95": [
+      0.2101,
+      0.3854
+     ]
+    }
+   }
+  },
+  "V1": {
+   "four_real_ops": {
+    "count": "39/400",
+    "rate": 0.0975,
+    "wilson_95": [
+     0.0721,
+     0.1305
+    ]
+   },
+   "shift_control": {
+    "count": "70/100",
+    "rate": 0.7,
+    "wilson_95": [
+     0.6041,
+     0.7811
+    ]
+   },
+   "by_op": {
+    "diff": {
+     "count": "6/100",
+     "rate": 0.06,
+     "wilson_95": [
+      0.0278,
+      0.1248
+     ]
+    },
+    "partsum": {
+     "count": "3/100",
+     "rate": 0.03,
+     "wilson_95": [
+      0.0103,
+      0.0845
+     ]
+    },
+    "binomial": {
+     "count": "8/100",
+     "rate": 0.08,
+     "wilson_95": [
+      0.0411,
+      0.15
+     ]
+    },
+    "moebius": {
+     "count": "22/100",
+     "rate": 0.22,
+     "wilson_95": [
+      0.15,
+      0.3107
+     ]
+    }
+   }
+  },
+  "B_raw": {
+   "four_real_ops": {
+    "count": "50/400",
+    "rate": 0.125,
+    "wilson_95": [
+     0.0961,
+     0.161
+    ]
+   },
+   "shift_control": {
+    "count": "8/100",
+    "rate": 0.08,
+    "wilson_95": [
+     0.0411,
+     0.15
+    ]
+   },
+   "by_op": {
+    "diff": {
+     "count": "3/100",
+     "rate": 0.03,
+     "wilson_95": [
+      0.0103,
+      0.0845
+     ]
+    },
+    "partsum": {
+     "count": "8/100",
+     "rate": 0.08,
+     "wilson_95": [
+      0.0411,
+      0.15
+     ]
+    },
+    "binomial": {
+     "count": "1/100",
+     "rate": 0.01,
+     "wilson_95": [
+      0.0018,
+      0.0545
+     ]
+    },
+    "moebius": {
+     "count": "38/100",
+     "rate": 0.38,
+     "wilson_95": [
+      0.291,
+      0.4779
+     ]
+    }
+   }
+  },
+  "B_shuffled": {
+   "four_real_ops": {
+    "count": "1/400",
+    "rate": 0.0025,
+    "wilson_95": [
+     0.0004,
+     0.014
+    ]
+   },
+   "shift_control": {
+    "count": "0/100",
+    "rate": 0.0,
+    "wilson_95": [
+     0.0,
+     0.037
+    ]
+   },
+   "by_op": {
+    "diff": {
+     "count": "0/100",
+     "rate": 0.0,
+     "wilson_95": [
+      0.0,
+      0.037
+     ]
+    },
+    "partsum": {
+     "count": "0/100",
+     "rate": 0.0,
+     "wilson_95": [
+      0.0,
+      0.037
+     ]
+    },
+    "binomial": {
+     "count": "0/100",
+     "rate": 0.0,
+     "wilson_95": [
+      0.0,
+      0.037
+     ]
+    },
+    "moebius": {
+     "count": "1/100",
+     "rate": 0.01,
+     "wilson_95": [
+      0.0018,
+      0.0545
+     ]
+    }
+   }
+  },
+  "B_growthmag": {
+   "four_real_ops": {
+    "count": "33/400",
+    "rate": 0.0825,
+    "wilson_95": [
+     0.0593,
+     0.1136
+    ]
+   },
+   "shift_control": {
+    "count": "7/100",
+    "rate": 0.07,
+    "wilson_95": [
+     0.0343,
+     0.1375
+    ]
+   },
+   "by_op": {
+    "diff": {
+     "count": "5/100",
+     "rate": 0.05,
+     "wilson_95": [
+      0.0215,
+      0.1118
+     ]
+    },
+    "partsum": {
+     "count": "8/100",
+     "rate": 0.08,
+     "wilson_95": [
+      0.0411,
+      0.15
+     ]
+    },
+    "binomial": {
+     "count": "2/100",
+     "rate": 0.02,
+     "wilson_95": [
+      0.0055,
+      0.07
+     ]
+    },
+    "moebius": {
+     "count": "18/100",
+     "rate": 0.18,
+     "wilson_95": [
+      0.117,
+      0.2667
+     ]
+    }
+   }
+  }
+ },
+ "L2_measured": true,
+ "D": {
+  "value": -0.0025,
+  "b_V2_only": 22,
+  "c_raw_only": 23,
+  "n": 400,
+  "se_independent_preregistered": 0.0154,
+  "ci95_independent": [
+   -0.0327,
+   0.0277
+  ],
+  "se_paired_mcnemar": 0.0168,
+  "ci95_paired": [
+   -0.0354,
+   0.0304
+  ],
+  "disclosure": "thresholds were set on the independent form; the paired form is correct and narrower, and is reported but does NOT move the branches"
+ },
+ "matched_negative_false_retrieval": {
+  "count": "164/496",
+  "rate": 0.3306,
+  "chance": 0.5
+ },
+ "branches": {
+  "K1_advance": false,
+  "K2_redesign": false,
+  "K3_kill": false
+ },
+ "TERMINAL": "REDESIGN",
+ "branch_fired": "K2-default"
+}

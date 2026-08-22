@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-22T11:18:27+00:00
+# PULSE — generated 2026-08-22T11:45:46+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        570
-consumed (state changes):   352  {'queue_state': 315, 'registry': 34, 'findings': 3}
-consumed/emitted:           0.62
+emitted (new files):        574
+consumed (state changes):   349  {'queue_state': 313, 'registry': 33, 'findings': 3}
+consumed/emitted:           0.61
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 302
+## Commits, 72h (non-cron): 303
+- e6da78d9 08-22 07:45 Techne cycle 048: PRE-REGISTRATION â€” does the 5.1e-6 Mahler precision limit bite a consumer?
+- aa06e865 08-22 07:18 Aporia P115: X-3 pass 2/3 â€” dev any-valid 0.964, but strict FELL; K3 chance corrected
 - e1813d9f 08-22 07:17 M1_STATUS 7q: P1 final â€” the band and the screen want opposite rungs
 - 8771f27e 08-22 07:16 Ergon: P1 FINAL â€” UNDECIDED-UNDERPOWERED, and it breaks my own recommendation
 - c8374458 08-22 07:13 Techne cycle 047: a four-role function was silently wrong â€” and the drift was a habit, not a structure
@@ -36,9 +38,7 @@ verdict: ALIVE
 - 581d6444 08-22 04:04 Techne cycle 044: class hypothesis RETIRED on a powered test; #78 closed to read-only
 - 6e99291f 08-22 04:04 Aporia P108: the benchmark for testing search first caught its own builder failing
 - 055ac4a2 08-22 03:58 Techne cycle 044: P0 frozen as feasibility failure; P1 pre-registered; #78 closed to read-only
-- bcb362d4 08-22 07:49 arsenal: capability matrix updated
-- 07cf39bf 08-22 03:32 Aporia P107: Campaign B complete in one pass â€” the 500 voids were empty stubs, not a coverage gap
-- … +277 more
+- … +278 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
