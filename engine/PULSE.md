@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-22T17:50:05+00:00
+# PULSE — generated 2026-08-22T18:15:23+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,14 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        625
-consumed (state changes):   301  {'queue_state': 277, 'registry': 23, 'findings': 1}
-consumed/emitted:           0.48
+emitted (new files):        629
+consumed (state changes):   298  {'queue_state': 275, 'registry': 22, 'findings': 1}
+consumed/emitted:           0.47
 verdict: ALIVE
 ```
 
 ## Commits, 72h (non-cron): 304
+- 9ccb46c9 08-22 13:50 Aporia P129: Campaign S pass 2/3 â€” sweep COMPLETE; 301 sleeping beauties carry verified non-trivial relations
 - 4934374b 08-22 13:24 Aporia P128: CAMPAIGN S opens â€” my own falsifier fired; the SB blocker was mine, not James's
 - c1441abb 08-22 12:48 Aporia P127: allocation â€” OPEN NOTHING. All three best moves are blocked on James, none on capability.
 - dee67462 08-22 12:22 Aporia P126: CAMPAIGN W TERMINAL â€” W3 KILL. The X-line closes on a measurement.
@@ -37,7 +38,6 @@ verdict: ALIVE
 - c8374458 08-22 07:13 Techne cycle 047: a four-role function was silently wrong â€” and the drift was a habit, not a structure
 - 4564e4ca 08-22 06:59 Ergon: circuit-break the drip on the REAL workload, not a cheap probe
 - 9c1f5c26 08-22 06:56 Techne cycle 047: PRE-REGISTRATION for the mahler_measure cross-role authority check
-- 5c790f19 08-22 06:52 Aporia P114: campaign selection â€” Y rejected as unresolvable, X-3 opens at 1/3
 - … +279 more
 
 ## Bottleneck hypotheses (confidence)

@@ -1,0 +1,36 @@
+{
+ "ledger_total": 8593,
+ "sb_hits": 2431,
+ "sb_nonshift_records": 679,
+ "K_nonshift_distinct_targets": 301,
+ "K_shift_only": 132,
+ "verification": {
+  "sampled": 80,
+  "exact_match": 80,
+  "failures": 0,
+  "failure_rate": 0.0,
+  "failing_pairs": []
+ },
+ "triviality_audit": {
+  "sampled": 120,
+  "genuine_unstated": 109,
+  "already_named": 10,
+  "trivial_duplicate": 1,
+  "frac_genuine_unstated": 0.9083,
+  "targets_whose_title_names_an_A_number": 32,
+  "xref_extraction_gap_rate": 0.2667
+ },
+ "primary_branch": "S1",
+ "estimated_genuine_unstated_targets": 273,
+ "D_branch": {
+  "FIRED": false,
+  "decision": "DECLINED",
+  "reason": "pass 2 established the control is selected on the very quantity being measured (connectedness in OEIS is largely conferred BY someone documenting a relation); no control breaking that selection relation is buildable from the data on hand, so D is reported descriptively and no D-branch is fired",
+  "descriptive_D": -0.03777,
+  "descriptive_CI": [
+   -0.040564,
+   -0.034976
+  ]
+ },
+ "TERMINAL": "ADVANCE"
+}
