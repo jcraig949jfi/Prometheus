@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-22T12:11:57+00:00
+# PULSE — generated 2026-08-22T12:42:02+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        577
-consumed (state changes):   345  {'queue_state': 310, 'registry': 32, 'findings': 3}
-consumed/emitted:           0.60
+emitted (new files):        587
+consumed (state changes):   343  {'queue_state': 308, 'registry': 32, 'findings': 3}
+consumed/emitted:           0.58
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 303
+## Commits, 72h (non-cron): 304
+- 28a9506a 08-22 08:13 Techne cycle 048: the precision worry does not bite â€” and I overstated it in 047
+- 9e86b937 08-22 08:11 Aporia P117: campaign selection â€” X-4 opens; branches PROVED to partition; rebuild tax ended
 - 3e150bd3 08-22 07:45 Aporia P116: CAMPAIGN X-3 TERMINAL â€” REDESIGN; first earned L2 in three campaigns
 - e6da78d9 08-22 07:45 Techne cycle 048: PRE-REGISTRATION â€” does the 5.1e-6 Mahler precision limit bite a consumer?
 - aa06e865 08-22 07:18 Aporia P115: X-3 pass 2/3 â€” dev any-valid 0.964, but strict FELL; K3 chance corrected
@@ -36,9 +38,7 @@ verdict: ALIVE
 - 8646d8e7 08-22 04:38 Aporia P109: Campaign X pass 2/3 â€” signature retrieval on development only
 - ce3157a7 08-22 04:34 Ergon: full-corpus scan â€” a 6-batch sample should not carry this claim
 - 66a5e646 08-22 04:33 Ergon: ran the null-viability measurement â€” both obvious nulls fail
-- 581d6444 08-22 04:04 Techne cycle 044: class hypothesis RETIRED on a powered test; #78 closed to read-only
-- 6e99291f 08-22 04:04 Aporia P108: the benchmark for testing search first caught its own builder failing
-- … +278 more
+- … +279 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
