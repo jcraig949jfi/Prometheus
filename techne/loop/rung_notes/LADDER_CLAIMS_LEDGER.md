@@ -1462,3 +1462,29 @@ test was the test's fault. Neither came from the declared design, and both came 
 **Kill-battery additions (executable):** check a special-case branch computes the same quantity as
 the general branch; run new authority suites with warnings visible; measure an error budget before
 choosing a tolerance, and pin the measurement.
+
+## Cycle 048 — claim v31: the precision worry is CLOSED, and cycle 047 overstated it
+
+**HITL #78's realised blast radius is ZERO.** The reactivation condition fired; the campaign had
+ended at P1 (`UNDECIDED-UNDERPOWERED`, n_required 2969) without ever constructing `Arms`. The
+defect is real, still unrepaired, and never touched a result.
+
+**The 5.1e-6 precision limit DOES NOT BITE.** Measured over all 8,625 catalog entries: max
+|recomputed - stored| = **4.481e-10**, zero entries exceeding `lookup_by_M`'s `tol=1e-6`. The
+in-band slice's near-ties (20/20 within budget) do not bite either, because the values are STORED
+LITERALS and my function appears only in a verification path.
+
+**Cycle 047's inference is WITHDRAWN.** "A 5e-6 error could mis-rank a candidate" generalised a
+SYNTHETIC worst case to real usage without measuring the population that occurs. The measurement
+stands; the inference did not. **Paired with cycle 045's inflated cost (44 vs 3), this is the
+second time one unrepresentative measurement became a claim about live behaviour.**
+
+**Unsought finding, another role's experiment:** the band `1.001 < M < 1.18` contains 21 distinct
+polynomials sharing ONE measure (Lehmer x cyclotomics), spread 2.1e-14, sorted by a float key whose
+order is rounding noise. Logged as HITL #274; not mine to patch.
+
+**Kill-battery additions (executable):** before inferring an operational risk from a measured
+extreme, measure the same quantity on the population that actually occurs; a reactivation condition
+must name the earliest event that implies the harm and no earlier; a float sort key that can be
+mathematically equal across entries must be compared at a stated tolerance or abandoned for the
+exact key.

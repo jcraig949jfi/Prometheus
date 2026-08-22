@@ -1421,3 +1421,52 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      than returning the arithmetically-defensible 0.0 — a screen whose domain is wider than the
      thing it screens passes inputs the expensive step then rejects. Composition is **Mahler's
      two-sided bound M <= L <= 2^deg * M** against the function validated the same day.
+
+
+## Cycle 048 (2026-08-22) — two worries closed by measurement, one of them mine
+
+270. **HITL #78 REACTIVATION FIRED AND THE DEFECT NEVER BIT.** `p1_bandread.json` appeared.
+     **The campaign ENDED at P1** — `campaign_end`, `UNDECIDED-UNDERPOWERED`, coverage 1240/1240,
+     `n_required_for_decidability` 2969. **P3 constructs `Arms`; P3 never ran.** The
+     `F-prom-retrieved` arm was never built. **REALISED BLAST RADIUS: ZERO.** Loader still broken
+     (1248 rows, 0 accepted) and still latent for a future campaign reaching P3.
+271. **My own detector was OVER-BROAD.** I wrote the trigger as "P3/P4 record OR `p1_bandread.json`
+     appears", but bandread is P1's OWN output — it fires at the END of P1, not the start of P3.
+     Safe direction, but imprecise. **A reactivation condition should name the earliest event that
+     implies the harm, and no earlier.**
+272. **THE PRECISION WORRY DOES NOT BITE — HITL #266 ANSWERED, documenting is enough.** Recomputed
+     **all 8,625 catalog entries**: max |recomputed - stored| = **4.481e-10**, and **zero** entries
+     exceed `lookup_by_M`'s default `tol=1e-6`. Four orders of headroom on the one path where a
+     consumer's correctness depends on it.
+273. **THE CORRECTION I OWE CYCLE 047.** I wrote that a 5e-6 error "could mis-rank a candidate".
+     **That was speculation stated with too much force.** The 5.1e-6 came from a SYNTHETIC product
+     of two Hypothesis-drawn polynomials; the real catalog runs at 4.481e-10. Cycle 045 overstated
+     a COST (44 vs 3); cycle 047 overstated a RISK. **Both were one unrepresentative measurement
+     generalised to real usage. That is now twice, and I do not have a rule that would have caught
+     both.**
+274. **JAMES — A FINDING IN APORIA'S LIVE EXPERIMENT, NOT MINE TO PATCH.** The band
+     `1.001 < M < 1.18` in `aporia/experiments/reasoning_steering/stage0b` selects **21 entries and
+     every one has Lehmer's measure** — 21 genuinely distinct polynomials (degrees 10-28: Lehmer x
+     Phi_1, Phi_2, Phi_3, Lehmer-extensions) whose measures are identical because M is
+     multiplicative and cyclotomics have M=1. Stored measures span **2.1e-14**. `corpus.py` sorts
+     by `(mahler_measure, coeffs)` "so the slice is reproducible": it IS reproducible (frozen
+     literals) but **the order is decided by rounding in the 14th-16th decimal**, and the `coeffs`
+     tiebreaker only fires on EXACT ties so it almost never runs. **Anything sorting that slice by
+     measure is sorting by noise.** Whether the effective sample is 21 states or 1 object wearing
+     21 hats is a question for whoever owns that experiment.
+275. **I fixed my own assertion, not my measured budget.** `BUDGET < default/100` with both equal
+     to 1e-8 — strict inequality on equal numbers, my arithmetic slip. Loosening a budget set from
+     a measurement to satisfy a mis-stated inequality would be moving a goalpost.
+276. **POSTCONDITION 29 -> 30 by name-diff.** The new failure
+     (`test_extract_anti_anchor_claims_v0_1`) is **not mine** — passes in isolation, whole file
+     12/12, and 40 passed when run in one process directly after both my new files. Second
+     order-dependent flake in four cycles. **I cannot prove it predates this cycle without a
+     bisect and do not claim it.**
+277. **A near-miss worth recording: I almost diffed against an INCOMPLETE background run** whose
+     output file held partial results, which would have reported "29 -> 0 failures". Caught because
+     the number was absurd, not because I had a guard.
+278. **Track 1: `prometheus_math.house`** (Everest & Ward 1999 ch.1), 23 tests, RED first, four
+     categories. **Lehmer's polynomial is SALEM so house = M exactly** — one test is an authority
+     check on both quantities. **A non-zero CONSTANT refuses** (no roots at all, while M and L are
+     defined and equal |c|) while **a MONOMIAL correctly returns 0.0** — which is exactly why the
+     constant must refuse rather than return zero, or the two would be indistinguishable.
