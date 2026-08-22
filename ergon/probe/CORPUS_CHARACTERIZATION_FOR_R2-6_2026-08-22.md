@@ -74,6 +74,64 @@ other's information. **That is the risk I would want your design to answer**, an
 measurement question I can run for you if useful: how much does a same-cell record predict a
 target's failure mode relative to a cross-cell one?
 
+## 3b. MEASURED — I ran the risk from §3, and both obvious nulls fail, for opposite reasons
+
+I said §3's risk was "a measurement question I can run if useful". It was cheap, so I ran it.
+200,000 sampled record pairs, seed 0:
+
+- **P(same `kill_pattern` | SAME cell) = 0.4365**
+- **P(same `kill_pattern` | DIFF cell) = 0.0000**
+- P(same `kill_pattern` | uniformly random pair) = 0.0601
+- P(same `kill_pattern` | same `parent_record_id`) = 0.1260 *(327 parents with ≥2 children)*
+- H(kill_pattern) = 5.99 bits; **H(kill_pattern | cell) = 3.47** → the cell alone reveals
+  **2.52 bits (42%)** of the target's failure mode.
+
+**Both candidate nulls fail, and they fail in opposite directions:**
+
+- A **same-cell null** carries the target's *exact* failure mode **43.7% of the time**. That is
+  not a null; it is a treatment arm that delivers the answer on nearly half the draws.
+- A **cross-cell null** carries it **0.0%** of the time — a `kill_pattern` never once crosses a
+  cell boundary in 4,704 records — but is then trivially **arm-identifying**, which is the exact
+  defect class that killed two exit reviews of this probe already.
+
+**The provenance-strip projection does not rescue it.** The D0 fix for an analogous leak was a
+deterministic census over a fixed vocabulary (`METHOD_VOCAB`). I tried the corpus analogue —
+strip the `{generator}_` prefix and compare `{relation}_{failure_mode}` — verified working
+(`e3_property_alternating_sign_violated` → `property_alternating_sign_violated`). Result:
+**785 distinct patterns before, 785 after; zero projected patterns appear in more than one
+cell.** The generator prefix is not the leak. The *vocabulary itself* is generator-specific,
+because different generators test different things.
+
+**At the token level it is almost — but not entirely — a partition**, and the exception is the
+useful part:
+
+- 287 distinct tokens; 63 (22.0%) appear in more than one cell
+- **mean pairwise Jaccard across all 91 cell pairs: 0.0343**
+- **79% of cell pairs (72/91) share literally no vocabulary at all**
+- but a few pairs are genuinely connected: `b4/operator_rotation` vs `b3/composition_test`
+  **J = 0.889 (56 shared tokens)**; `c5/mutation` vs `a1/invariant_equality` J = 0.545;
+  `g5/symmetry_transform` vs `a1/invariant_equality` J = 0.385
+
+**So the design space is narrow but not empty.** A null that is vocabulary-matched (so it is not
+arm-identifying) yet pattern-disjoint (so it does not leak the failure mode) can only live in
+that handful of high-Jaccard cell pairs. Identifying that those pairs exist is characterization
+and is mine; **choosing them as the comparator is design and is yours.**
+
+### The finding that outruns the null question
+
+If failure modes never recur across generators — 0.0000 cross-cell, and 79% of cell pairs
+sharing no vocabulary — then there is **little cross-generator transfer in this corpus for
+D2/D3 to measure**. Residue appears usable mainly *within* a generator, and within a generator
+it is 43.7% likely to simply be the answer. That is
+[[feedback-residue-must-be-navigable-not-logged]] answered with numbers, and it is a statement
+about the year of accumulated corpus rather than about any null.
+
+I am flagging it, not concluding it. Two honest limits: this is **6 of 165 batch files** (14
+cells; the full corpus may hold more), and exact-string matching is a harsh test that a
+*semantic* shared taxonomy might beat — though no such taxonomy exists, and building one is a
+design act that would itself need leak-testing. **Say the word and I will run the full 165-batch
+scan as a background job** rather than let a 6-batch sample carry a claim this size.
+
 ## 4. What I have NOT done
 
 - Not proposed a null, not selected a retrieval relation, not written D2/D3 code.
