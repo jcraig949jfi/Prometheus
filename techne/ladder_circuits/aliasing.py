@@ -48,7 +48,7 @@ from typing import Any, Callable, Dict, Hashable, Iterable, List, Optional, Sequ
 __all__ = [
     "AliasingWitness", "find_aliasing_witness", "all_aliasing_witnesses",
     "family_cannot_be_correct", "verify_family_incapacity", "verify_factorization",
-    "fiber_search", "UniformAdversaryReport", "uniform_adversary",
+    "fiber_search", "UniformAdversaryReport", "uniform_adversary", "OutOfDomain",
 ]
 
 
@@ -73,6 +73,16 @@ class AliasingWitness:
                 f"{self.right!r} (truth {self.right_truth!r})")
 
 
+class OutOfDomain(ValueError):
+    """The search was not run because the input could not support it.
+
+    Distinct from "searched and found nothing" — a distinction this module SHIPPED WITHOUT for
+    ten cycles, and which the cycle-036 instrument contract caught on its first pass over the
+    arsenal. It is the same defect cycle 029 fixed in `structural_constancy` (an all-raising
+    probe space reading as constancy); the lesson was fixed there and never propagated here.
+    """
+
+
 def find_aliasing_witness(
     instances: Sequence[Any],
     projection: Callable[[Any], Hashable],
@@ -85,7 +95,15 @@ def find_aliasing_witness(
     witness proves that no member — at any parameter setting — is correct on both instances.
     Returns None when the projection is sufficient to separate every pair in `instances`, which
     is evidence of adequacy on this battery only, never a proof of it.
+
+    Raises `OutOfDomain` when there are fewer than two instances: with nothing to compare, "no
+    witness" would be a statement about the input rather than about the projection.
     """
+    if len(instances) < 2:
+        raise OutOfDomain(
+            f"aliasing needs at least two instances to compare; got {len(instances)}. "
+            "Returning None here would report 'the projection separates everything' when "
+            "nothing was compared")
     for a, b in combinations(instances, 2):
         if projection(a) == projection(b) and truth(a) != truth(b):
             return AliasingWitness(a, b, projection(a), truth(a), truth(b), note)
@@ -187,15 +205,22 @@ def fiber_search(
     fiber_value = projection(seed)
     seed_truth = truth(seed)
     steps = 0
+    in_fiber = 0
     for candidate in mutate(seed):
         if steps >= max_steps:
             break
         steps += 1
         if projection(candidate) != fiber_value:
             continue                       # left the fiber: the evaluator could tell them apart
+        in_fiber += 1
         if truth(candidate) != seed_truth:
             return AliasingWitness(seed, candidate, fiber_value, seed_truth, truth(candidate),
                                    note=f"synthesised by fiber search in {steps} steps")
+    if in_fiber == 0:
+        raise OutOfDomain(
+            f"no candidate stayed inside the fiber ({steps} mutations tried). Returning None "
+            "would report 'the truth never varies in this fiber' when the fiber was never "
+            "sampled — the same conflation the contract caught in find_aliasing_witness")
     return None
 
 

@@ -828,3 +828,40 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      R0's lookup-table trap one level up. Defence built: fixtures are FACTORIES and `draws > 1`
      redraws them; a one-draw memoriser fails on redraw. **A clean report on frozen fixtures
      means only that those four inputs were handled.**
+
+
+## Cycle 037 (2026-08-21) — contract retrofitted to the whole arsenal
+
+149. **HITL #78: 717 rows, 0 accepted, 100% drop, ELEVEN cycles unruled.**
+150. **THE CONTRACT CAUGHT TWO REAL DEFECTS IN MY OWN SHIPPED MODULES, and this is the
+     justification for building it.** `find_aliasing_witness` and `fiber_search` both returned
+     `None` for "searched and found nothing" AND for "there was nothing to search" — no-signal
+     conflated with out-of-domain. **It is exactly the defect cycle 029 fixed in
+     `structural_constancy`, which I fixed there and never propagated next door.** The habit
+     would not have caught it because I was not looking at those functions. Both now raise
+     `OutOfDomain`; a test guards that the honest no-signal path still works.
+151. **A PROPAGATION FAILURE, not a design failure, and I have no mechanism for it.** Nothing
+     makes "this class of bug" searchable across modules. A bug-class registry is the obvious
+     answer and the obvious bureaucracy-that-decays. Would like a ruling on whether it is worth
+     the weight.
+152. **Third refusal was a REACH LIMIT, previously undocumented:** `structural_constancy` reads
+     its target's SOURCE, so it degrades to UNSETTLED wherever `inspect.getsource` fails —
+     inline lambdas, exec'd strings, REPL definitions. Honest behaviour, but the docstring never
+     said the instrument is unusable in dynamic contexts.
+153. **ROUND-10 DIFFUSE-TARGET QUESTION ANSWERED, NEGATIVELY.** Sensitivity is NOT constructible
+     for a diffuse target and the contract cannot tell. `brier_score` certified on a pair that
+     moves reliability (0.0000 -> 0.0100) AND resolution (0.0000 -> 0.2500) — holding calibration
+     alone is impossible for an aggregate. **A SENSITIVITY pass on a diffuse target means only
+     "these inputs differ somehow".** Repair, already in the literature: decompose first.
+     `murphy_reliability` holds resolution fixed at 0.0000 and moves reliability 0.4225 -> 0.0000
+     — genuine isolation, which is what Murphy 1973 is FOR. **Now a stated precondition of the
+     contract rather than a silent hole.**
+154. **Open, no answer: does "report dependence, not ownership" COMPOSE?** If A depends on C and
+     B depends on C, nothing says what happens to A+B without C. Removals do not compose; the
+     joint removal is a separate experiment and there are 2^k of them. Shapley composes and is a
+     convention. I did not invent a middle under time pressure.
+155. **A discomfort worth recording: I wrote both the instruments and their anti-cases.** Nine of
+     twelve passed first time, which I read as "the contract has teeth and the arsenal was mostly
+     sound" — but the less comfortable reading is that my own fixtures were too easy. Cycle 036
+     already showed fixtures are gameable. Sourcing anti-cases from someone other than the
+     author is the obvious fix and needs a second author.

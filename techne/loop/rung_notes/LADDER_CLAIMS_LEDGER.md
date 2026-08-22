@@ -971,3 +971,39 @@ James's to make.
 **Kill-battery additions (executable):** four-fixture instrument certification; fixture-factory
 redraw against memorisation; retroactive mapping of historical instrument failures to contract
 slots.
+
+## Cycle 037 — the contract retrofitted: 12 instruments, 3 refusals, 2 real defects
+
+**Claim v18 (no instrument admissible without a killed anti-case) applied to the whole arsenal.**
+Twelve instruments, generative fixtures, `draws = 4`. Three refused on the first pass.
+
+**Two were real defects in shipped, trusted code.** `find_aliasing_witness` and `fiber_search`
+returned `None` both for "searched and found nothing" and for "there was nothing to search" —
+no-signal conflated with out-of-domain. **Identical to the defect cycle 029 fixed in
+`structural_constancy` and never propagated.** Both now raise `OutOfDomain`.
+
+**One was a reach limit:** `structural_constancy` reads its target's source, so it degrades to
+UNSETTLED wherever source is unavailable. Honest, and previously unstated.
+
+## Cycle 037 — claim v19: sensitivity is testable only for SHARP targets
+
+**Round 10's diffuse-target question, answered negatively and measured.** `brier_score` certified
+SENSITIVITY on a pair that does not isolate its target: decomposed, the pair moves reliability
+(0.0000 -> 0.0100) AND resolution (0.0000 -> 0.2500). Holding calibration alone is impossible for
+an aggregate score, so the witness changes two things and the contract accepts it.
+
+> A SENSITIVITY pass on a diffuse target means only "these inputs differ somehow", not "this
+> instrument responds to its advertised target".
+
+**Repair, already made in the literature:** decompose the diffuse target into components that
+each admit an isolating pair, then certify the components. `murphy_reliability` holds resolution
+fixed at 0.0000 while moving reliability 0.4225 -> 0.0000 — genuine isolation, which is what
+Murphy's 1973 partition is FOR. **The decomposition is a PRECONDITION of certification, not an
+optional refinement**, and this is now stated rather than silently assumed.
+
+**Open (HITL #154):** dependence does not compose. If A depends on C and B depends on C, nothing
+says what happens to A+B without C — the joint removal is a separate experiment and there are
+2^k of them. Shapley composes and is a convention. No middle found.
+
+**Kill-battery additions (executable):** twelve-instrument certification registry;
+out-of-domain-versus-no-signal regression tests; isolating-pair check for a sensitivity witness.
