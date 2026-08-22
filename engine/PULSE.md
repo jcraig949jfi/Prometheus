@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-22T10:25:27+00:00
+# PULSE — generated 2026-08-22T10:52:40+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,14 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        557
-consumed (state changes):   358  {'queue_state': 319, 'registry': 36, 'findings': 3}
+emitted (new files):        558
+consumed (state changes):   355  {'queue_state': 317, 'registry': 35, 'findings': 3}
 consumed/emitted:           0.64
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 298
+## Commits, 72h (non-cron): 297
+- 257acefa 08-22 06:25 Aporia P113: CAMPAIGN X-2 TERMINAL â€” PARK (E4); the gate was never resolvable
 - 9ed726a4 08-22 06:21 M1_STATUS 7p: the accumulated corpus is 132M rows with ~2 bits of signature
 - 42ae7455 08-22 06:21 Ergon: full scan complete â€” 132M failure rows, ~2 bits of signature
 - 95497b2e 08-22 06:17 Techne cycle 046: a sentinel that was also a measurement â€” 48 impossible knot volumes removed
@@ -37,8 +38,7 @@ verdict: ALIVE
 - 04ecd2d8 08-22 03:02 Techne cycle 043: PRE-REGISTRATION for the schema-drift class sweep, before measuring
 - d4b29900 08-22 02:58 Techne cycle 042: round-13 fold-in â€” de facto contract, and seam triangulation as doctrine
 - 250650ba 08-22 02:50 Aporia: external consult prompt â€” loop targets and round-robin design
-- fec491da 08-22 02:38 Techne cycle 042 CORRECTION: Y4 was 1 of 8, not 1 of 6 â€” and it sharpens the fix
-- … +273 more
+- … +272 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
