@@ -1,0 +1,91 @@
+{
+ "protocol": "Terracini dimensions of Veronese secants: tangent blocks by finite-difference of the parametrization (two-route derivative), integer points, sv-gated ranks; non-defective sweep + the d=4 r=5 Clebsch exception with derived deficit 1, seed 20260898",
+ "sweep": [
+  {
+   "d": 3,
+   "r": 1,
+   "ambient": 10,
+   "expected": 3,
+   "measured": 3,
+   "ok": true
+  },
+  {
+   "d": 3,
+   "r": 2,
+   "ambient": 10,
+   "expected": 6,
+   "measured": 6,
+   "ok": true
+  },
+  {
+   "d": 3,
+   "r": 3,
+   "ambient": 10,
+   "expected": 9,
+   "measured": 9,
+   "ok": true
+  },
+  {
+   "d": 4,
+   "r": 1,
+   "ambient": 15,
+   "expected": 3,
+   "measured": 3,
+   "ok": true
+  },
+  {
+   "d": 4,
+   "r": 2,
+   "ambient": 15,
+   "expected": 6,
+   "measured": 6,
+   "ok": true
+  },
+  {
+   "d": 4,
+   "r": 3,
+   "ambient": 15,
+   "expected": 9,
+   "measured": 9,
+   "ok": true
+  },
+  {
+   "d": 4,
+   "r": 4,
+   "ambient": 15,
+   "expected": 12,
+   "measured": 12,
+   "ok": true
+  },
+  {
+   "d": 5,
+   "r": 3,
+   "ambient": 21,
+   "expected": 9,
+   "measured": 9,
+   "ok": true
+  },
+  {
+   "d": 5,
+   "r": 6,
+   "ambient": 21,
+   "expected": 18,
+   "measured": 18,
+   "ok": true
+  }
+ ],
+ "defective_case": {
+  "d": 4,
+  "r": 5,
+  "measured": [
+   14,
+   14,
+   14,
+   14,
+   14
+  ],
+  "naive_expected": 15,
+  "deficit": 1
+ },
+ "verdict": "TERRACINI-MEASURES"
+}

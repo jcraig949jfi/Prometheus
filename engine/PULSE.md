@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-22T00:05:10+00:00
+# PULSE — generated 2026-08-22T00:36:51+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        471
+emitted (new files):        477
 consumed (state changes):   408  {'queue_state': 360, 'registry': 45, 'findings': 2, 'doctrine': 1}
-consumed/emitted:           0.87
+consumed/emitted:           0.86
 verdict: ALIVE
 ```
 
 ## Commits, 72h (non-cron): 272
+- f7dc9a79 08-21 20:22 Techne loop cycle 031: the claim kinds are a 2x2 derivation, not a list
+- 0a6d2b31 08-21 20:05 Aporia P96: the instruments begin composing â€” one artifact now certifies three paradigms
 - 2e707768 08-21 19:49 Techne loop cycle 030: the reference-class problem is one core with two kinds
 - 7637d281 08-21 19:34 Aporia P95: the completion claim was wrong â€” corrected at the source, and the tensor fifth opens
 - 93be4656 08-21 19:16 Techne loop cycle 029: structural-constancy probe â€” and it caught its own author
@@ -36,8 +38,6 @@ verdict: ALIVE
 - b08fa6db 08-21 14:48 Techne loop cycle 021: canon R12 grader RUN and audited â€” first pass of R0-R12 complete
 - 9948b7b3 08-21 14:42 Aporia P86: halfway â€” kernel-certified pins, emergent canonical height, a detector for lying shadows
 - bbbc0025 08-21 14:30 Ergon: dry-run the campaign state machine â€” three defects found, all fixed
-- db87f38a 08-21 14:15 Techne loop cycle 020: canon R11 calibrated uncertainty + claim v13 + first v11' counterexample
-- 39e8c2ab 08-21 14:12 Aporia P85: P10 binds Techne's kernel, P11 relives sieve theory's founding problem
 - … +247 more
 
 ## Bottleneck hypotheses (confidence)

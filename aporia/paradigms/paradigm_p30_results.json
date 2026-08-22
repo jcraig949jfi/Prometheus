@@ -1,0 +1,41 @@
+{
+ "protocol": "Techne tensor_train bind (cross-channel #2): derived-rank TT round-trips; matrix-chain DP gated on brute force with the order-cost contrast; truncation trade with the structure-vs-random contrast, seed 20260897",
+ "tt_rank1": [
+  1,
+  1,
+  1
+ ],
+ "tt_diag": [
+  2,
+  2,
+  2
+ ],
+ "chain_gate_trials": 20,
+ "len10_optimal": 33085,
+ "len10_left_to_right": 95040,
+ "truncation_curve": [
+  [
+   1.0,
+   0.927189860694575
+  ],
+  [
+   0.5,
+   0.8543692235364039
+  ],
+  [
+   0.1,
+   0.2562640397093146
+  ],
+  [
+   0.001,
+   0.030530947280837585
+  ],
+  [
+   1e-12,
+   2.633076466719803e-15
+  ]
+ ],
+ "structured_error": 4.240514078547446e-16,
+ "verdict": "NETWORK-CONTRACTS",
+ "synergy_note": "second cross-channel instrument bind (after lean_oracle): Aporia consumes Techne's TT engine; opt_einsum probed absent, the derived DP stood in"
+}
