@@ -839,3 +839,41 @@ want, and check that it does.
 **Kill-battery additions (executable):** arity-2 relational classification over a
 threshold-crossing chain; |D|-reading predicate probe; non-numeric value refusal; value-sequence
 variation check before reading a classification.
+
+## Cycle 034 — preprocessing attribution: R0's congruence is borrowed, R1/R2's is not
+
+**HITL #124 asked whether the ladder's bottom rungs measure a normaliser rather than reasoning.
+Answer: R0 does, R1 and R2 do not.**
+
+**First, the question had to be corrected.** HITL #129's discipline was applied to the
+raw-syntax control before using it, and the control failed 6 of 6: `ast.parse` merges
+parentheses, whitespace, comments, numeric literal spelling, radix and string quoting.
+**There is no raw — every keyer is a preprocessing map.** So "what fraction of the invariance is
+the circuit's" is unanswerable as posed, and the correct output is an ATTRIBUTION ACROSS LAYERS.
+
+**The ladder and the attribution** (15-pair battery):
+
+    L0  source text    no normalisation — the only true floor
+    L1  python-ast     lexical                       4 invariances
+    L2  sympy-srepr    algebraic                     7 invariances
+    L3  circuit key    variable renaming             3 invariances
+                       nothing erases                1 (x*(y+1) vs x*y+x)
+
+**Per rung:**
+
+- **R0 contributes ZERO.** `ast_key` IS `sympy.srepr`; the projection is exactly L2. Trained on
+  `x+y` it retrieves `y+x` and abstains on `a+b`. Canon R0 is exact recall that ABSTAINS on
+  isomorphs; with sympy's key it retrieves algebraic isomorphs, so it sits slightly ABOVE its
+  rung on borrowed strength.
+- **R0's kill test still stands.** Renaming is the one isomorphism sympy does not collapse, and
+  renaming is exactly what the fresh-seed test uses. The DOCSTRING is what is wrong — "identity
+  congruence" should read "sympy normal form". Not edited, per the standing instruction.
+- **R1 and R2 contribute genuinely.** `2*x+4` and `3*x+6` have different sympy keys and the same
+  R1 answer; scaling a rational leaves its root fixed and sympy does not know that.
+
+**A prediction of mine failed and is recorded:** I expected `x+y` vs `x+z` never to merge. They
+merge at L3, correctly — they are alpha-equivalent, so a renaming quotient should identify them.
+
+**Kill-battery additions (executable):** layered invariance attribution; control-normalisation
+self-test applied before any comparison; per-rung "does this circuit add any congruence above the
+CAS?" probe.

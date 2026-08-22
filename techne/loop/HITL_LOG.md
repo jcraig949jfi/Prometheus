@@ -731,3 +731,35 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      relational chain started where every claim already fired, so all four read INVARIANT — four
      confident wrong answers. Defence added to the traps ledger: check the value sequence varies
      before reading a classification off it.
+
+
+## Cycle 034 (2026-08-21) — the preprocessing thread closes, narrowly
+
+131. **HITL #78: 684 rows, 0 accepted, 100% drop, NINE cycles unruled.**
+132. **HITL #124 RESOLVED, and more narrowly than the question assumed. R0 does measure a
+     normaliser; R1 and R2 do not.** R0's keyer IS `sympy.srepr` — its projection is exactly the
+     CAS's normal form and it contributes nothing of its own. R1 identifies `2*x+4` with `3*x+6`
+     (different sympy keys, same answer) and R2 knows that scaling a rational fixes its root;
+     both are genuine many-to-one work the CAS does not do. **No rebuild on raw syntax is called
+     for — there is no raw syntax.**
+133. **HITL #129 (the new discipline) EARNED ITS KEEP IMMEDIATELY, and I recommend ratifying it.**
+     Applied to the raw-syntax control before using it: the control failed 6/6. `ast.parse` merges
+     parentheses, whitespace, comments, numeric literal spelling, radix and string quoting.
+     **There is no raw baseline**, so the assigned question ("what fraction of the invariance is
+     the circuit's?") was unanswerable as posed and would have produced a confident wrong number.
+     Third cycle running that an instrument shipped blind in the direction it was pointed — first
+     time the habit caught it BEFORE the measurement instead of after.
+134. **What I am asking for on R0, rather than doing: a docstring correction, not a rewrite.**
+     R0 advertises an "identity congruence" and implements "sympy normal form". Its kill test is
+     still sound — renaming is the one isomorphism sympy does not collapse and renaming is
+     exactly what the fresh-seed test uses — so the rung's original result stands. But I did not
+     touch R0, per the standing instruction not to make a finding go away by editing the thing
+     it is about.
+135. **The harsher reading of R0, which I do not endorse but will not dismiss myself.** If R0 has
+     no congruence of its own at all, it is not a circuit in any meaningful sense — it is a
+     dictionary keyed by sympy's normal form, and the rung would be vacuous rather than merely
+     mislabelled. I think "mislabelled" is right because the retrieval/abstention behaviour is
+     real and testable, but that is a judgement and it should be yours.
+136. **Open, and I do not know how to do it:** the layered attribution works where preprocessing
+     is a cleanly separable function. Where preprocessing is entangled with the computation, I
+     have no way to attribute at all. Every rung consumes some library, so this will recur.
