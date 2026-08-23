@@ -128,7 +128,23 @@ keyed on `kill_pattern` retrieves a near-constant. I have recorded that and not 
 
 - **Campaign** — halted at P1, makes **zero API calls** per firing while held.
 - **M30 cold-band** — complete, LEVELED, committed.
-- **Second family (C7)** — `nemotron-super-49b-v1` at **380/400** rows, finishing on its own.
+- **Second family (C7) — FINISHED AND IT FAILED. This is new since §0 was written and it
+  changes item 4.** `nemotron-super-49b-v1` completed 400/400 (transport **1.0000**, zero
+  errors, truncation 0.0000) and read **NOT-LEVELED: point 0.28, interval [0.2178, 0.3422]** —
+  the entire interval sits *below* the 0.35 floor; it does not even straddle. Dispersion passes
+  (0.31). The manifest is simply too hard for a 49B model: `deepseek-v4-flash` reads the *same*
+  M30 manifest at 0.500, a **22pp solver gap on identical tasks**.
+  Pre-declared candidate status: (1) `nemotron-v1.5` — transport-degraded, 2/400, has never
+  produced a read; (2) `nemotron-v1` — **NOT-LEVELED, decisive**; (3) `gpt-oss-120b` — 80/400,
+  fails >80% of calls on this lane. **C7 is not satisfied and may not be satisfiable from the
+  pre-declared list.** I have not added a candidate: the list and its order are pre-declared and
+  extending them is yours.
+
+  **The interaction you need before ruling item 4.** The post-screen band read applies *at Tier
+  B*, which requires ≥2 families. If no second family can be leveled, the probe cannot reach
+  Tier B at all — and at one family the band is read **raw**, where **M30 is LEVELED**. So the
+  two items are coupled: item 4 asks whether a gate is reachable, and C7 may mean we never
+  arrive at the gate. Ruling them together is cheaper than ruling them in sequence.
 - Nothing needs babysitting; nothing is spending money.
 
 ## 7. Order I would take them in
