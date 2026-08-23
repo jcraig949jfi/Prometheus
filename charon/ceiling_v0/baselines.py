@@ -184,9 +184,16 @@ class DataDrivenProposer:
 
     mode = "datadriven"
 
-    def __init__(self, uni: Universe, rng: random.Random):
+    def __init__(self, uni: Universe, rng: random.Random, sig_tags: int = 0):
         self.uni, self.rng = uni, rng
         self.obs: Dict[Tuple[str, Tuple[str, ...]], str] = {}
+        # CANDIDATE-BURDEN KNOB (iteration 27). A candidate is admitted when its
+        # two words agree on `sig_tags` tags; 0 means all of them, the original
+        # behaviour. Requiring FEWER tags is weaker evidence, so the pool floods
+        # with plausible-but-often-false candidates. This manipulates proposal
+        # burden DOWNSTREAM of the arena, leaving the hidden algebra untouched,
+        # which is what makes it a causal test rather than another family sweep.
+        self.sig_tags = sig_tags or len(uni.tags)
 
     def observe(self, inter: Interaction) -> None:
         for i in range(len(inter.word) + 1):
@@ -194,7 +201,7 @@ class DataDrivenProposer:
 
     def _sig(self, w: Tuple[str, ...]) -> Optional[Tuple[str, ...]]:
         out = []
-        for t in self.uni.tags:
+        for t in self.uni.tags[:self.sig_tags]:
             v = self.obs.get((t, w))
             if v is None:
                 return None
@@ -241,8 +248,8 @@ class RelevanceProposer(DataDrivenProposer):
 
     def __init__(self, uni: Universe, rng: random.Random,
                  len_lo: int = 8, len_hi: int = 12, n_probe_words: int = 120,
-                 ranking: str = "compression"):
-        super().__init__(uni, rng)
+                 ranking: str = "compression", sig_tags: int = 0):
+        super().__init__(uni, rng, sig_tags=sig_tags)
         self.ranking = ranking
         self.synthetic = [
             [rng.choice(uni.actions) for _ in range(rng.randint(len_lo, len_hi))]
@@ -297,7 +304,8 @@ class RelevanceProposer(DataDrivenProposer):
 
 def substrate_arm(uni: Universe, evalset: EvalSet, seed: int, cfg: ArmConfig,
                   rounds: int, proposer_mode: str = "random",
-                  inject_wrong: int = 0) -> Tuple[List[Dict], ArtifactStore]:
+                  inject_wrong: int = 0,
+                  sig_tags: int = 0) -> Tuple[List[Dict], ArtifactStore]:
     """The relevance proposer scores against synthetic words drawn from the query
     length range, which is arm-visible because the task statement discloses it.
     That range is read off the eval set rather than hardcoded, so the arm stays
@@ -309,10 +317,12 @@ def substrate_arm(uni: Universe, evalset: EvalSet, seed: int, cfg: ArmConfig,
         rank = proposer_mode.split(":", 1)[1] if ":" in proposer_mode else "compression"
         prop = RelevanceProposer(uni, rng, ranking=rank,
                                  len_lo=getattr(evalset, "len_lo", 8),
-                                 len_hi=getattr(evalset, "len_hi", 12))
+                                 len_hi=getattr(evalset, "len_hi", 12),
+                                 sig_tags=sig_tags)
+    elif proposer_mode == "datadriven":
+        prop = DataDrivenProposer(uni, rng, sig_tags=sig_tags)
     else:
-        prop = {"random": RandomProposer,
-                "datadriven": DataDrivenProposer}[proposer_mode](uni, rng)
+        prop = RandomProposer(uni, rng)
     arm = f"P3c-{proposer_mode}"
 
     if inject_wrong:

@@ -1123,3 +1123,78 @@ iter 26  vary the predictor's input by a different mechanism before believing it
 ```
 
 **Guards green. Still uncommitted — asked sixteen times.**
+
+---
+
+## Iteration 27 — 2026-08-23 — tree committed; candidate burden is causal
+
+**Structure taken from external review**: commit and reproduce, run exactly one
+causal candidate-burden experiment that does not alter arena algebra,
+pre-register a binary decision, then redirect toward the model lane.
+
+**1. The tree is committed.** `charon/ceiling_v0` was untracked for eleven
+iterations, which is why the working-tree loss at iteration 10 was unrecoverable.
+24 files now tracked at `c578d044`. Local commit only, no push. This closes the
+standing epistemic threat: the audit trail is the strongest thing this experiment
+has and it was being gambled every iteration.
+
+**2. Candidate burden manipulated downstream of the arena.** New `sig_tags` knob:
+a candidate pair enters the proposal pool when its two words agree on that many
+tags. All four is the original behaviour; fewer is weaker evidence, so the pool
+floods with plausible-but-often-false candidates. Universe, sensor, algebra,
+budget and verifier are byte-identical across conditions; only the admission
+criterion changes. Both arms receive the same pool.
+
+```
+sig_tags  pool size  P3c acc  P3d acc      gap     SE   P3c rules  P3d rules
+       4         78    0.364    0.647   +0.284  0.042        46.5       24.1
+       3         87    0.346    0.560   +0.214  0.050        40.8       23.5
+       2        167    0.285    0.414   +0.129  0.039        26.3       17.6
+```
+
+**Monotone shrink; change of -0.155 against 2*SE_diff of 0.114 (~2.7 SE).**
+Neither falsifier fires. **Doubling the candidate pool roughly halves P3d's
+advantage, with the hidden algebra untouched.**
+
+This is the first causal evidence in the experiment about the LEARNER machinery
+rather than about arena structure. Every previous account was a correlation across
+families; this one intervenes on one variable and holds the rest fixed.
+
+**Framing, taken from the review and adopted.** The result is reported as
+phenomenon plus boundary, not as a law:
+
+- **Tier A, findings.** P3d beats P3c substantially in F_T; rules and memo are
+  complementary; frequently-used rules causally matter; foreign rules confer
+  nothing; normalisation is sound given true rules; coverage nearly determines
+  accuracy; the advantage grows with probing in the tested regime.
+- **Tier B, boundary.** The advantage is strongly environment-dependent and no
+  tested scalar predicts it across orthogonal structural interventions. **Five
+  accounts refuted.** This is itself a finding: the gap depends on interactions
+  among structural properties, not on one obvious scalar. It does NOT establish
+  that no simple determinant exists — only that none of the tested ones
+  generalises across mechanisms.
+- **Tier C, mechanism.** Partially open. Candidate burden is now causally
+  implicated but not shown sufficient.
+
+**The conceptual point worth elevating over any account.** F_MT with 6 actions is
+nearly maximally compressible by the oracle (ceiling 0.870) yet yields almost no
+advantage. **Structure existing and a bounded procedure being able to exploit it
+economically are different quantities.** A world can be rich in compressible
+structure and still be hard for a bounded learner because the search economics of
+acquiring that structure are hostile. Today's result is consistent with that: a
+pure search-economics manipulation moved the gap by half while the structure stayed
+identical.
+
+**Sharpened method rule, replacing the iteration-26 phrasing.** Mechanism claims
+require ORTHOGONAL intervention. Predictive replication along the generating axis
+may strengthen an empirical relationship but cannot promote it to an explanatory
+account.
+
+**Binary decision, recorded before the run and now in force.** The prediction
+survived, so exactly ONE confirmatory experiment is permitted: attempt the REVERSE
+— reduce candidate burden in the 6-action arena where the gap collapsed to +0.023,
+and see whether the advantage returns. If it does not, mechanism search in
+ceiling_v0 terminates and mechanism is reported unresolved. Either way, mechanism
+work stops after that and effort redirects to the model lane.
+
+**Guards green.**
