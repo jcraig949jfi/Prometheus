@@ -115,6 +115,49 @@ two preregistered rules, not about a number, and it is above my authority. If it
 reachable, the honest move is re-posing the experiment rather than hunting rungs — which is the
 charter's own R2-1 stopping logic applied to a defect in the design rather than in the plumbing.
 
+## 1d. M30 MEASURED ON THIS HOST — LEVELED. And one of my §1c predictions failed.
+
+`ergon/probe/ledgers/coldband_m30_free/bandread.json` (n=200 × 2 reps, transport 0.9756,
+truncation 0.0000):
+
+```
+M30 free host   point 0.5000   manifest [0.4307, 0.5693]   straddles: FALSE
+                n_required_for_decidability 97   movable_share 0.3950   -> LEVELED
+comparator: paid-host M30 = 0.5000 (n=200)
+```
+
+**M30 levels cleanly on the raw reading**, dead centre of the band, decidable at n≈97 — a
+quarter of the manifest we already have. Note also that free-host M30 (0.5000) equals paid-host
+M30 (0.5000) **exactly**: the host delta at this rung is **zero**, a third independent strike
+against the withdrawn +14pp figure.
+
+**Where I was wrong.** §1c argued a harder rung would push post-screen *further under* the floor.
+Measured:
+
+```
+                  raw      post-screen   D/(D+W)
+M20  (n=620)     0.5823      0.2684        0.607
+M30  (n=200)     0.5000      0.3007        0.552
+```
+
+The ratio `D/(D+W)` did worsen as I argued (0.607 → 0.552). **But post-screen accuracy went UP,
+not down** (0.2684 → 0.3007), because the share of discordant items whose rep-1 was the correct
+one is not the 50% my formula assumed — it was 44% at M20 and 54% at M30. At these sample sizes
+that term swamps the structural one. **My mechanism was real; my directional prediction was
+wrong, and the noise term dominates it.** Recording that plainly: the structural argument should
+not be leaned on for direction, only for the existence of the tension.
+
+**What survives, and it is the load-bearing part:** *both* rungs clear or fail the raw reading
+differently, and **neither meets the post-screen floor** — 0.2684 and 0.3007 against 0.35. M30
+gives a clean `LEVELED` at Tier A and still would not level at Tier B. So the §1c question stands
+undamaged and is now backed by two rungs instead of a formula:
+
+> **Is the Tier B post-screen band read reachable in principle on this family?**
+
+If it is not, no rung choice fixes it, and the defect is in the design — the band (HB-R2) and
+the lenient screen (HB-R1) specified against different populations without checking a common
+solution exists.
+
 ## 2. Why I am not acting on it
 
 I could stop the collection now and advance to the next rung, saving ~840 free-lane calls. I am
