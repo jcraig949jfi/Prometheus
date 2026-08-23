@@ -1613,3 +1613,17 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      which is cross-role SCIENCE. Handed off with the circuit and the argument; Harmonia decides.
      **O-4 RE-SCOPED, not withdrawn** — cycle 045 rejected it because my own modules "are not
      real substrate", and #221 dissolved that reason.
+
+304. **THE "ARSENAL RED" COUNT HAS ALWAYS COVERED HALF THE ARSENAL — SIXTH WRONG-POPULATION
+     INSTANCE, MINE.** A background regression run over `techne/tests` (which tests
+     `techne/lib`) returned **10 failed / 216 passed / 1 skipped**, and every one of the
+     visible failures is the **#242 dependency class** — `RuntimeError` from an absent SAT
+     solver, `ModuleNotFoundError` for chipfiring. **None are in `mahler_measure`, `house` or
+     `polynomial_length`**, so cycle 051's fix caused no regression there either.
+     `arsenal_red.py`'s `SCOPE` held `prometheus_math` alone, so cycle 051's baseline of 38 was
+     a half-arsenal figure quoted as a whole-arsenal one. Scope corrected to both paths; the
+     38 is explicitly marked non-comparable and the next run re-baselines.
+305. **JAMES — THIS STRENGTHENS #242 RATHER THAN CHANGING IT.** The dependency drought spans
+     **two scopes, not one**, and the second was invisible because nobody was counting it. The
+     ask is unchanged and so is the argument against it (my egglog dangle), but the size of
+     what a ruling would clear is larger than I told you.

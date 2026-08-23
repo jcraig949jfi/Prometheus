@@ -21,7 +21,17 @@ import subprocess
 import sys
 
 # The scope, stated once, so it stops being folklore.
-SCOPE = ["prometheus_math"]
+#
+# CYCLE 051 CORRECTION: this list held `prometheus_math` alone, and every cycle that
+# reported an "arsenal red" count was quoting a number measured over HALF the arsenal as a
+# property of the whole of it. `techne/tests` covers `techne/lib` -- mahler_measure,
+# sat_solver, tropical_rank and the rest -- and carried 10 reds nobody was counting. Sixth
+# instance of the wrong-population error in this loop.
+#
+# Both paths are listed so the count means what it says. The cycle-051 baseline of 38 is
+# therefore a `prometheus_math`-only figure and is NOT comparable to anything this script
+# emits from here on; the first run under the corrected scope re-baselines, and says so.
+SCOPE = ["prometheus_math", "techne/tests"]
 PYTEST_ARGS = ["-q", "--continue-on-collection-errors", "-p", "no:cacheprovider"]
 
 
