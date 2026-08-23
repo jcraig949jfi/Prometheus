@@ -1563,3 +1563,53 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      (4,306 collected vs ~3,576). New baseline, not a delta.
 294. **#242 STILL UNRULED.** Most of the 38 remain dependency artifacts. My cycle-049 egglog
      dangle still stands against my own ask.
+
+
+## Cycle 051 (2026-08-23) — #266 closed; the fix corrected two earlier cycles' diagnosis
+
+295. **HITL #266 CLOSED BY BUILD, not by documentation.** Exactly-repeated roots now go through
+     an exact squarefree decomposition. Tests: authority 3 / property 3 / edge 2 / composition
+     3, RED first. **85 passed across five suites.**
+296. **MY OWN PREREG MIS-STATED THE MECHANISM, and a test I wrote expecting failure told me.**
+     `eps^(1/m)` displacement is **necessary but not sufficient**: `(x-2)^12` survives a **six
+     percent** root displacement with M exact to 1e-9, because off the unit circle the copies
+     scatter symmetrically and their product `a_0/a_n` is preserved. The error needs the
+     repeated root **ON** the circle, where `max(1,|alpha|)` clips inside copies and keeps
+     outside ones. **I used "repeated root" as a proxy for "ill-conditioned M" — fifth proxy
+     failure.** It also means the defect is worst exactly where Lehmer work lives.
+297. **THE SAME DEFECT WAS IN THREE FUNCTIONS; COMPOSITION TESTS FOUND TWO.** `is_cyclotomic`
+     returned **False** for a polynomial whose measure is exactly 1 — **fixing only the measure
+     would have left two functions in ONE MODULE contradicting each other**, and my fix would
+     have created that. `house` is a **max** over root moduli, so nothing cancels: it is wrong
+     even off the circle, where M is fine.
+298. **JAMES — CYCLE 047 NAMED A BUG AN INHERENT LIMIT, AND CYCLE 048 REASONED FROM THE LABEL.**
+     047's *"documented ill-conditioned case"* was `f=[1,0,-1,1,-3,1,1]`, `g=[1,-1]`. **f(1)=0**,
+     so f carries `(x-1)` and g **is** `(x-1)`: the product has a **double root at z=1**. It was
+     this bug all along; 048's whole 5.1e-6 analysis was analysing it without recognising it.
+     Error is now **0**; the bracket is **tightened** to `rel < 1e-13`, never loosened (#267).
+     **Open question I cannot answer alone: how many other "inherent limits" in this arsenal are
+     unrecognised bugs?**
+299. **DISPATCH IS AN EXACT GATE, NOT A SCREEN.** `deg gcd(f, f') > 0` decides squarefreeness
+     outright — after five proxy failures I am not shipping a sixth. **0.13 ms/entry, 1.1 s for
+     all 8,625 catalog entries, and ZERO entries carry a repeated root.**
+300. **PREDICTIONS 4 OF 5 HELD, AND THE MISS WAS THE ONE MARKED `low`.** P5 (>=1 non-squarefree
+     catalog entry, `low`) FALSIFIED at zero of 8,625. **Calibration ledger now 13/18 = 0.722:
+     high 3/4, mod-high 2/2, moderate 5/7, low-mod 3/3, `low` 0/2.** `low` is 0-for-2 while
+     every other band is >= 0.71 — **first hint the confidence field carries signal.** n=2.
+301. **MY KILL-TEST MEASUREMENT ANSWERED A DIFFERENT QUESTION AND I NEARLY REPORTED IT.** It
+     compared the new path against the **stored literals** rather than the old path, giving
+     "22 moved, max 4.481e-10" — cycle 048's pre-existing recompute-vs-stored gap, unrelated to
+     this change. P5 settles it: zero non-squarefree entries means old and new take an identical
+     path. **Caught by cross-checking two predictions against each other, not by the script.**
+     Second time a measurement has answered the wrong question; both times another prediction
+     caught it, which is luck wearing the shape of process.
+302. **JAMES — NOT FIXED, AND I WANT IT VISIBLE: `mahler_measure_batch` STILL RETURNS 1.000146**
+     for the polynomial the scalar path now gets exactly right. The scalar and batch APIs of one
+     module disagree. Batch exists for speed (companion-matrix stack), so designing that path in
+     the last minutes of a cycle is how cycle 045's rule gets broken. **Filed as the next build.**
+303. **OMISSIONS CLOSED IN WRITING** (`rung_notes/OMISSION_DISPOSITIONS_2026-08-23.md`).
+     **O-2** closed as a recorded deviation. **O-3 WITHDRAWN** — I can now edit `harmonia/` under
+     #221 and am not going to: a permanent baseline lane changes what the oracle **measures**,
+     which is cross-role SCIENCE. Handed off with the circuit and the argument; Harmonia decides.
+     **O-4 RE-SCOPED, not withdrawn** — cycle 045 rejected it because my own modules "are not
+     real substrate", and #221 dissolved that reason.
