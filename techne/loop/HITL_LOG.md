@@ -1470,3 +1470,54 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      check on both quantities. **A non-zero CONSTANT refuses** (no roots at all, while M and L are
      defined and equal |c|) while **a MONOMIAL correctly returns 0.0** — which is exactly why the
      constant must refuse rather than return zero, or the two would be indistinguishable.
+
+
+## Cycle 049 (2026-08-23) — the read-only constraint lifted, and a retrospective audit of 001-048
+
+279. **JAMES RULED #221: "you can act."** Recorded as doctrine in
+     `memory/feedback_techne_may_patch_other_roles.md`. First exercise of it closed HITL #78
+     after eighteen cycles.
+280. **#78 IS FIXED (`c6736671`) — AND THE FIX I SPENT EIGHTEEN CYCLES ASKING FOR WOULD HAVE
+     BEEN HARMFUL ON ITS OWN.** Three defects sat behind the 100% drop, not one: (1) rep/uid
+     read flat while `campaign.py` writes them inside `key`; (2) count-family prose routed by
+     a **filename prefix**, and the campaign ledger carries no `ledger_id`, so fixing (1)
+     alone would have shipped raw count-family prose into `F-prom-retrieved` — the exact
+     channel `method_projection` exists to withhold (measured 45% vs 25% answer leakage);
+     (3) the gold screen sat **downstream of the rep filter**, so it inspected none of the
+     1,604 KEY-form rows. **The broken loader was accidentally acting as the firewall.**
+     Postcondition: 0 -> 625 accepted, 0 raw prose, FLAT ledgers bit-for-bit unchanged,
+     `ergon/probe/tests` 163 passed. Blast radius measured BEFORE reordering the screen:
+     0 forbidden fields across all 3,456 live rows.
+281. **THE EIGHTEEN-CYCLE CLAIM WAS A WRONG-POPULATION ERROR — MINE.** "The loader throws away
+     every row" is false. Five FLAT-form ledgers (1,852 rows) load correctly; only the two
+     KEY-form files drop to zero. I measured one file and quoted it as a property of the
+     consumer. **Fourth instance of `feedback_wrong_population_statistics`, committed by the
+     role that files that trap against everyone else.** Memory updated.
+282. **HITL #209 DISCHARGED:** the prepass wire contract is now written down in
+     `_prepass_identity`'s docstring, and both forms are pinned by 8 tests
+     (`test_prepass_wire_contract.py`) so the next producer cannot drift silently.
+283. **RETROSPECTIVE PREDICTION 1 FALSIFIED: 4 O-PROMISEs, not >= 5.** Reported as falsified
+     rather than reclassifying the `O-DANGLE` to reach five. **O-1 Band H (H1, H2) never built
+     and never withdrawn** — canon §6 calls it *"James's thesis, formalized and falsifiable"*,
+     and the charter allowed theory to substitute for building, so non-measurability did not
+     block it. **O-2** the second pass restarted at R3, not R0. **O-3** the R0 baseline lane
+     (HITL #2) was never wired into `grading_oracle.py` and, the actual fault, **never
+     withdrawn** when the read-only rule made it impossible — silence is not a withdrawal.
+     **O-4** the Lane A/B reading experiment was pre-registered at 041, queued at 045, never run.
+284. **JAMES — THIS WEAKENS MY OWN #242 ASK AND YOU SHOULD HAVE IT BEFORE YOU RULE.** `egglog`
+     was installed at cycle 003 on a stated leverage claim ("real leverage on rule
+     composition"). It is referenced by **exactly one file in the repo** — a demo — and by no
+     circuit, no test, no module. **The last dependency I took on a leverage argument was never
+     consumed.** I still think the four deps are worth installing to clear 26 reds, but my
+     track record is one-for-one against me, and a vetting protocol does not fix that failure
+     mode — it is a *usage* failure, not a *supply-chain* failure.
+285. **THE PROXY TRAP, FOURTH INSTANCE — AND ONE WAS IN ANOTHER ROLE'S CODE.** I nearly filed
+     "tensor_train violates Standing Order #1" from a grep of **top-level imports**; it wraps
+     quimb via a lazy import. Cycles 043, 045, this near-miss, and ergon's `ledger_id`-prefix
+     gate. **The fourth being someone else's code is the useful part: this trap is not
+     idiosyncratic to me.** The prereg's self-guard (every finding must diff against a
+     checkable artifact) is the only reason the findings doc has no false entry in it.
+286. **JAMES — AN OMISSION THE AUDIT COULD NOT CHECK.** **No cycle records the command that
+     produced its "arsenal red" count.** 48 cycles report 28/29/30 with no reproduction line,
+     so prediction 3 required re-deriving the scope from scratch. Standing fix adopted: every
+     reported count ships its command.
