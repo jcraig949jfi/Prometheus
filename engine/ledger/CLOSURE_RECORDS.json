@@ -1,0 +1,150 @@
+{
+ "schema_version": 1,
+ "purpose": "Minimum scientific memory: what each closed campaign ESTABLISHED, KILLED, and left UNRESOLVED, in a form a proposal function can read. NOT an ontology. Built CYCLE 138-C'.",
+ "frozen_note": "Records describe campaigns already terminal. Editing a record after its campaign closed is a falsification, not an update.",
+ "records": [
+  {
+   "id": "B", "pass": "P107", "terminal": "ADVANCE",
+   "question": "Are the catalogued voids in the failure lattice routable, or is the routing claim confirmed-by-assertion?",
+   "objects": "void rows in the failure lattice", "mechanism": "mechanical audit of routing/executability fields",
+   "assumptions_tested": ["voids are navigable", "voids name available tools"],
+   "established": ["531 rows: 47 routed, 484 unrouted of which 475 NOT executable, 40 executable overall, 489 with no data binding", "2 rows name an absent tool"],
+   "killed": ["the claim that the void catalogue is navigable as-is"],
+   "surviving": ["voids may be routable AFTER data binding exists"],
+   "unresolved": ["whether binding data to voids changes executability at scale"],
+   "instruments": ["void_audit.py"], "scope": "the failure lattice only"
+  },
+  {
+   "id": "X", "pass": "P110", "terminal": "REDESIGN",
+   "question": "Can a hand-designed behavioral signature retrieve op(A) from A among distractors?",
+   "objects": "OEIS integer sequences", "mechanism": "hand-designed 33-feature behavioral signature", "representation": "aggregate statistics (quantiles, entropies, histograms, moments)",
+   "assumptions_tested": ["aggregate behavioral features carry relational information", "L1 identity resolution is achievable"],
+   "established": ["signature adds nothing over raw terms: D2 fired exactly, 4/50 vs 4/50 top-10", "signature WORSE on median rank (1383 vs 598)"],
+   "killed": ["33-feature aggregate signature as a retrieval key", "the assumption that aggregate statistics suffice for identity"],
+   "surviving": ["higher-resolution representations untested", "relations may still be recoverable by other means"],
+   "unresolved": ["whether L2 failure was representational or instrumental — L1 collision rate 0.32 confounded it"],
+   "instruments": ["blinded benchmark builder", "growth_battery"], "scope": "5 exactly-verifiable operators, hash-prefix-aligned pairs"
+  },
+  {
+   "id": "X-2", "pass": "P113", "terminal": "PARK",
+   "question": "Does a higher-resolution representation pass an L1 entry gate and then beat raw terms?",
+   "objects": "OEIS integer sequences", "mechanism": "order-sensitive 125-feature signature + ZCA whitening", "representation": "order-sensitive features",
+   "assumptions_tested": ["order-blindness was the deficit", "whitening fixes the metric"],
+   "established": ["order-sensitive features worth +0.152 L1; ZCA whitening worth -0.016", "the deficit was FEATURES, not the metric"],
+   "killed": ["ZCA whitening as the fix", "the redundant-block argument for whitening"],
+   "surviving": ["order-sensitive features do help identity resolution"],
+   "unresolved": ["whether the representation beats raw terms at L2 — never measured, gate was unresolvable"],
+   "instruments": ["x2_entry_gate.py", "hubness/local-scaling"], "scope": "same benchmark family"
+  },
+  {
+   "id": "X-3", "pass": "P116", "terminal": "REDESIGN",
+   "question": "Does the 125-feature signature beat raw terms at operator-agnostic retrieval, on a benchmark powered to decide it?",
+   "objects": "OEIS integer sequences", "mechanism": "125-feature order-sensitive signature", "representation": "hand-designed",
+   "assumptions_tested": ["a hand-designed representation can beat a 20-term log-magnitude vector"],
+   "established": ["relations ARE recoverable from term vectors alone: 0.1225 vs adjusted chance 0.000786 = 156x, shuffled control 1/400", "D = -0.0025, paired CI [-0.0354, 0.0304], excludes 0.05 but NOT 0.03", "order-sensitive features do NOT hurt L2 on real operators (V2 0.1225 > V1 0.0975) but are catastrophic on positional transforms (V1 70/100 vs V2 13/100 on shift)"],
+   "killed": ["hand-designed behavioral signatures as an improvement over raw terms, at effect sizes >= 0.05"],
+   "surviving": ["raw 20-term log-magnitude vectors carry real relational signal", "effects between 0.03 and 0.05 not excluded", "LEARNED representations untested"],
+   "unresolved": ["whether a learned representation beats raw terms"],
+   "instruments": ["x3 benchmark", "answer-set-adjusted chance", "paired McNemar"], "scope": "5 operators, exact >=20-term agreement"
+  },
+  {
+   "id": "X-4", "pass": "P119", "terminal": "PARK",
+   "question": "Does a metric LEARNED from data beat raw terms?",
+   "objects": "OEIS integer sequences", "mechanism": "closed-form generalised-eigen metric learning", "representation": "learned linear metric on raw-25 + V2 features",
+   "assumptions_tested": ["a learned linear metric beats hand design"],
+   "established": ["development D = +0.2281 with permutation null 1/320 in BOTH arms — the learned space is genuinely relational, not coarsened", "frozen L1 0.7100, gate failed, no L2 read"],
+   "killed": ["the entry gate as specified — a gate built to make NULLS interpretable must not veto POSITIVES"],
+   "surviving": ["the learned metric's development effect, untested on held-out data"],
+   "unresolved": ["whether the learned metric's advantage survives held-out evaluation"],
+   "instruments": ["closed-form metric learning", "permutation null"], "scope": "linear metrics only"
+  },
+  {
+   "id": "X-5", "pass": "P122", "terminal": "PARK",
+   "question": "Does the learned metric's advantage transfer to held-out data?",
+   "objects": "OEIS integer sequences", "mechanism": "closed-form learned linear metric", "representation": "learned",
+   "assumptions_tested": ["development advantage transfers"],
+   "established": ["it does NOT transfer: dev D +0.1906 -> frozen D +0.0078, CI [-0.0153, 0.0309], factor of 24 collapse", "a development effect validated by a permutation null can still fail to generalise"],
+   "killed": ["closed-form linear metric learning as an improvement over raw terms"],
+   "surviving": ["non-linear / learned-embedding approaches untested"],
+   "unresolved": ["whether ANY learned representation beats raw terms"],
+   "instruments": ["direction-conditional gates"], "scope": "linear metric learning on these features"
+  },
+  {
+   "id": "W", "pass": "P126", "terminal": "KILL",
+   "question": "Does the overlap artifact — features computed over 45 terms when the relation is guaranteed only over exact_terms — explain the X-line nulls?",
+   "objects": "OEIS integer sequences", "mechanism": "oracle-windowed feature computation", "representation": "window-corrected",
+   "assumptions_tested": ["the fixed 45-term window caused the nulls"],
+   "established": ["it does NOT: W = +0.0063, paired CI [-0.0011, 0.0136], with an ORACLE window", "94.2% of pairs have exact_terms < 45, so the artifact is real and costs nothing"],
+   "killed": ["the overlap-window explanation for the X-line nulls", "per-candidate length matching, BY DOMINATION — it is strictly weaker than the oracle, and the oracle bought nothing"],
+   "surviving": ["nothing in the X-line representation family remains untested at this effect size"],
+   "unresolved": [],
+   "instruments": ["oracle-window bucketing"], "scope": "windowing at 4-bucket granularity"
+  },
+  {
+   "id": "S", "pass": "P130", "terminal": "ADVANCE",
+   "question": "Do OEIS sequences that nothing references have findable exact relations?",
+   "objects": "zero-connectivity OEIS sequences", "mechanism": "exact operator sweep with prefix-hash lookup",
+   "assumptions_tested": ["neglected sequences are neglected for mathematical reasons"],
+   "established": ["301 distinct neglected targets carry a verified exact relation under a non-trivial operator", "the sweep is exact and complete: 230,694 sources x 5 operators in 4 seconds", "23.9% of 'unreferenced' targets name an A-number in their own title — zero-connectivity means NO EXTRACTED XREF, not unreferenced"],
+   "killed": ["the assumption that exact search over the neglected set finds nothing"],
+   "surviving": ["whether any found relation is unknown to mathematics"],
+   "unresolved": ["novelty of any candidate — undecidable by this loop"],
+   "instruments": ["sb_scan.py", "prefix-hash optimisation", "per-operator S0 control"], "scope": "5 operators, >=20-term exactness"
+  },
+  {
+   "id": "T", "pass": "P131", "terminal": "ADVANCE",
+   "question": "Are the candidate relations already stated in OEIS formula fields?",
+   "objects": "220 candidate relations", "mechanism": "formula-field audit",
+   "assumptions_tested": ["the candidates are rediscoveries"],
+   "established": ["only 11/259 stated in a formula field (F=0.0425); on the informative subset where a formula exists, 11/183 = 0.0601 — same branch"],
+   "killed": ["the cheapest rediscovery objection"],
+   "surviving": ["comment and example fields unchecked (not on disk)"],
+   "unresolved": ["whether comments state them"],
+   "instruments": ["campaign_t_audit.py"], "scope": "titles + formulas only"
+  },
+  {
+   "id": "U", "pass": "P132", "terminal": "SURVIVES",
+   "question": "Does correcting the contaminated neglected-population definition destroy the S/T result?",
+   "objects": "neglected population", "mechanism": "all-source connectivity rebuild",
+   "assumptions_tested": ["the population was contaminated enough to matter"],
+   "established": ["population shrinks only 7.6% (31,189 -> 28,830); 203/248 strict survivors remain, R=0.8185", "S's 23.9% figure was measured on HIT TARGETS, a biased subset — whole-population contamination is 7.6%"],
+   "killed": ["the contamination explanation for the S/T result"],
+   "surviving": ["the candidate set"],
+   "unresolved": [],
+   "instruments": ["all-source connectivity (crossrefs + titles + formulas + programs, in/out)"], "scope": "April dumps"
+  },
+  {
+   "id": "V", "pass": "P133", "terminal": "KEEP",
+   "question": "Does widening the operator family materially extend the candidate set?",
+   "objects": "neglected sequences", "mechanism": "7 additional exactly-verifiable operators",
+   "assumptions_tested": ["more operators yield proportionally more candidates"],
+   "established": ["N_new = 334, but 294 arrive via TRIVIAL-CLASS operators (runmax 152, bisections 139, aerate 3) leaving 58 substantive", "stirling2 passed its control and found ZERO — a clean negative", "the audit chain tests whether a relation is WRITTEN DOWN, not whether the OPERATOR is trivial — different axes"],
+   "killed": ["the assumption that passing the audit chain equals equal evidential standard"],
+   "surviving": ["inverse_binomial and second_diff as productive non-trivial operators"],
+   "unresolved": ["whether further operator families would be trivial-class too"],
+   "instruments": ["per-operator S0 gating"], "scope": "12 operators total"
+  },
+  {
+   "id": "F", "pass": "P134", "terminal": "MOSTLY-ATOMIC",
+   "question": "Do the candidate relations factor through a third corpus sequence?",
+   "objects": "268 non-trivial candidate targets", "mechanism": "two-step factorisation search over 12 operators",
+   "assumptions_tested": ["candidates are compositions of simpler known relations"],
+   "established": ["only 48/268 factor (P=0.1791); 220 atomic", "margin is SIX TARGETS from the F2 boundary"],
+   "killed": ["the composition explanation for most candidates"],
+   "surviving": ["three-step chains and out-of-family operators untested"],
+   "unresolved": ["novelty — still undecidable by machine"],
+   "instruments": ["factorisation search"], "scope": "two steps, 12 operators"
+  },
+  {
+   "id": "R", "pass": "P136", "terminal": "REDESIGN",
+   "question": "Does the R4 representation-shift rung behave as an ordered rung or an orthogonal axis?",
+   "objects": "reasoning-ladder probes", "mechanism": "wiring R4 into the phase0 suite",
+   "assumptions_tested": ["R4 is composable with the existing suite"],
+   "established": ["it is NOT: R4 kinds (complement/rebase/recurrence) are DISJOINT from phase0 kinds; stayed_in_surface is not in TRACE_FIELDS; grade() has no R4 branch", "the wiring runs without error and measures nothing — 240/240 graded, only answer_correct non-NaN", "ROOT CAUSE: R4 is a probe set WITHOUT SOLVERS"],
+   "killed": ["R4 wiring as a research campaign for this loop — it is a build owned by Harmonia"],
+   "surviving": ["the ladder question itself, if solvers existed"],
+   "unresolved": ["whether R4 is an ordered rung — never measured"],
+   "instruments": [], "scope": "phase0 suite as it stands"
+  }
+ ]
+}

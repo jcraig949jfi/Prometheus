@@ -237,3 +237,53 @@ is purely mechanical). Fable's limited pool is reserved for the divergence seats
 Hephaestus meta-analysis role on M3 — and for occasional high-stakes passes (spec audits,
 verdict adjudications, constitution review). The gateway's cheapest-sufficient principle
 applies to our own sessions, not just to children. Model provenance stays stamped per commit.
+
+---
+
+## P138 — A GATE MUST BE SHOWN REACHABLE BEFORE ITS NULL IS READ
+
+CYCLE 138-C' preregistered a similarity cut of Jaccard >= 0.14. The maximum **attainable**
+similarity over the whole proposal x closure grid was 0.1364. The gate could not fire on any
+input. It returned zero, and zero was the answer that flattered the conclusion.
+
+P125 already said thresholds fail in both directions. This is the sharper operational form:
+
+> **Before reading a null, compute the maximum value the statistic can take on the actual data
+> and confirm the threshold sits inside that range.** A threshold outside the attainable range
+> is not a strict test; it is a non-measurement wearing a test's clothes. Report the reading as
+> VACUOUS, not as a null, unless the verdict can be shown to survive on grounds independent of
+> the cut.
+
+The external reviews predicted exactly this failure class one cycle earlier — V1, V3, D1 and D5
+were judged unfalsifiable as written — and the instrument shipped with the same defect anyway.
+Recognising the pattern in prose did not prevent committing it in code. The check has to be
+**executed**, not understood.
+
+## P138 — THE COUNTERFACTUAL-CONSEQUENCE TEST
+
+For any claimed capability, state in advance **what decision would go differently**, and then
+verify the decision was **eligible** to go differently.
+
+CYCLE 138-C' is the worked example. The one substantively correct suppression the closure gate
+found — PROF-Harmonia against campaign R — sat at priority 10 against a top-20 eligibility floor
+of 68. Even a perfectly working gate suppressing it would have changed no allocation. A
+capability that fires only where firing has no consequence has not been demonstrated.
+
+Corollaries adopted from the CYCLE 139-R review round:
+
+- **A consumption test may not have the producing thread as its own consumer.** Self-consumption
+  measures nothing.
+- **A grading metric must be preregistered and MECHANICAL, not interpretive.** An interpretive
+  metric is a threshold supplied at adjudication time, which is the P114 failure renamed.
+
+## P138 — THE LOOP'S INHERITANCE HORIZON IS ONE CAMPAIGN
+
+Measured over the WORKLOG: of passes 100-137, **24 of 37** cite prior work, but **1 of 37** cites
+anything below P100, and nearly all citations reach back only 1-3 passes.
+
+Within a campaign, inheritance is real and load-bearing (X-2 built on X's burned split, X-3 on
+X-2's unresolvable gate, W on X-5's overlap artifact). Across campaigns it is near zero. What
+resembles accumulated memory is **campaign-local continuity that resets at every terminal state**.
+
+Practical consequence: do not claim that a pass "builds on" the loop's history without naming the
+specific prior pass and the specific finding. The measurement says that claim is usually false.

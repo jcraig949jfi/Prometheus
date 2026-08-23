@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-22T21:29:16+00:00
+# PULSE — generated 2026-08-23T06:13:46+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,21 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        645
-consumed (state changes):   290  {'queue_state': 268, 'registry': 21, 'findings': 1}
-consumed/emitted:           0.45
+emitted (new files):        656
+consumed (state changes):   267  {'queue_state': 241, 'registry': 25, 'findings': 1}
+consumed/emitted:           0.41
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 303
+## Commits, 72h (non-cron): 296
+- 1cae6520 08-23 02:05 Merge prometheus_llm: one model API for the program
+- be55d5ee 08-23 01:33 iteration 29: model pipeline restored and validated offline
+- faf3ff13 08-23 01:28 iteration 28: confirmatory test void; mechanism closed as unresolved
+- e16ca9bc 08-23 01:20 Ergon: commit the probe ledgers â€” I nearly destroyed them by leaving them untracked
+- abe9d887 08-23 01:18 Ergon: M30 is LEVELED on the free host; kickoff prompt for Charon's rulings
+- c7c51724 08-23 01:14 iteration 27: candidate burden is causal; tree committed
+- 76254a24 08-23 01:12 Cognitive Ceiling v0: deterministic half, restored and audited
+- 94239f53 08-22 17:29 Aporia P137: allocation â€” OPEN NOTHING. Research capacity is gated on the reviewer seat.
 - a3909031 08-22 16:59 Aporia P136: CAMPAIGN R pass 1 â€” TERMINAL REDESIGN. R4 is a probe set without solvers.
 - eca2351e 08-22 16:33 Aporia P135: allocation â€” CAMPAIGN R opens on the reasoning ladder; 44 PROF rows rest on a category error
 - f8b48404 08-22 16:01 Aporia P134: CAMPAIGN F â€” F3 MOSTLY-ATOMIC. 220 atomic candidates. The OEIS line CLOSES.
@@ -24,21 +32,13 @@ verdict: ALIVE
 - 4934374b 08-22 13:24 Aporia P128: CAMPAIGN S opens â€” my own falsifier fired; the SB blocker was mine, not James's
 - c1441abb 08-22 12:48 Aporia P127: allocation â€” OPEN NOTHING. All three best moves are blocked on James, none on capability.
 - dee67462 08-22 12:22 Aporia P126: CAMPAIGN W TERMINAL â€” W3 KILL. The X-line closes on a measurement.
+- 391f811c 08-22 12:11 M2 reply: anthropic is State 1, and both machines share one credential
 - ece24a24 08-22 12:08 Merge branch 'main' of https://github.com/jcraig949jfi/Prometheus
 - 106c0bd5 08-22 12:08 ATK-014 + correction of record: H(kill_pattern|cell) is 3.119 bits, not "~2 bits"
 - 42b72409 08-22 11:55 Aporia P125: W pass 2/3 â€” windowing helps slightly; my threshold is ~3x the actual resolution
 - ad1a4c63 08-22 11:47 ATK-013 registered: writer/reader schema seam, confirmed by execution
-- 6ea76aa0 08-22 11:28 Aporia P124: Campaign W pass 1/3 â€” instrument built; the ORACLE problem stated before measurement
-- a277a9bf 08-22 11:00 Aporia P123: allocation â€” SB blocked on missing data; CAMPAIGN W opens; my own X-5 recommendation corrected
-- 94af80ac 08-22 10:31 Aporia P122: CAMPAIGN X-5 TERMINAL â€” PARK (N4). The development effect did not transfer.
-- 37f7ed95 08-22 10:05 Aporia P121: X-5 pass 2/3 â€” a second artifact found, and two of my own verdict rules were wrong
-- 96b2a6b6 08-22 09:37 Aporia P120: X-5 pass 1/3 â€” B-DIAG verdict BUG; binomial 3/80 -> 63/80 after the fix
-- 6dc7cabc 08-22 09:08 Aporia P119: CAMPAIGN X-4 TERMINAL â€” PARK (M0). The preregistration parked a positive, as written.
-- 8da49249 08-22 08:42 Aporia P118: X-4 pass 2/3 â€” learned metric DOUBLES L2 and DESTROYS L1
-- 28a9506a 08-22 08:13 Techne cycle 048: the precision worry does not bite â€” and I overstated it in 047
-- 9e86b937 08-22 08:11 Aporia P117: campaign selection â€” X-4 opens; branches PROVED to partition; rebuild tax ended
-- 3e150bd3 08-22 07:45 Aporia P116: CAMPAIGN X-3 TERMINAL â€” REDESIGN; first earned L2 in three campaigns
-- … +278 more
+- 4ed62aa9 08-22 11:38 Scope the anthropic finding to one account; two accounts exist
+- … +271 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
