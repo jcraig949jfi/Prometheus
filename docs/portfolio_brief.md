@@ -1,5 +1,5 @@
 # Prometheus Portfolio Brief
-*Generated: 2026-08-23 04:44:51 AM UTC*
+*Generated: 2026-08-23 08:44:53 AM UTC*
 *Author: Metis (multi-machine reporter mode)*
 
 ---
@@ -7,7 +7,7 @@
 ## Act on this
 
 **Hephaestus @ M3, forge — substrate generator with falsification battery — DEAD, daemon stopped**
-No heartbeat for 121699min (7301993s). Was last ALIVE at 2026-05-28T01:38:15.244017-04:00.
+No heartbeat for 121939min (7316395s). Was last ALIVE at 2026-05-28T01:38:15.244017-04:00.
 Investigate the process on M3 and restart, or kill watchdog if intentional.
 
 ## Watch this
@@ -50,7 +50,7 @@ https://github.com/jcraig949jfi/Prometheus/blob/main/engine/shadow/REVIEWS.jsonl
 
 ## For the record
 
-Session-model activity (the live operating model): 284 non-cron commits in 72h. Ground truth: engine/PULSE.md.
+Session-model activity (the live operating model): 282 non-cron commits in 72h. Ground truth: engine/PULSE.md.
 
 
 **1 agents ALIVE** (Pronoia).
