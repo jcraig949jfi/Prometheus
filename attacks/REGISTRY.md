@@ -173,8 +173,14 @@ applies-to: claim classes this attack must be run against before the claim is be
   Ergon's lane, restated across 17 cycles before root cause; realized blast radius **zero**
   (the campaign halted at P1, so P3 never built the arms) — but Tier B is a campaign that
   reaches P3.
+- **kills (2):** 2026-08-23, Charon --- `drip_coldband.py` computes its truncation gate from
+  `completion_tokens`, a field its own writer never emits, so `truncation_rate` is identically
+  `0.0000`: a gate that cannot fail. Proxy rate 4.75% against a 2% gate, at the same 8192 cap
+  that confounded P1. Consequence is ATK-014-shaped (vacuous metric); root cause is this seam.
+  Detail: `charon/probe/ADDENDUM_2026-08-23_drip_truncation.md`.
 - **applies-to:** every producer/consumer pair crossing a file boundary; **mandatory gate
-  before any campaign advances past P1.**
+  before any campaign advances past P1.** Generalization extends to METRICS, not only loaders:
+  a gate whose input field is absent must RAISE, never return a passing value.
 
 ### ATK-015 verdict without rows (aggregate committed, ledger untracked)
 - **class:** provenance
