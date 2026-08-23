@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-23T06:13:46+00:00
+# PULSE — generated 2026-08-23T07:32:00+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,25 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        656
-consumed (state changes):   267  {'queue_state': 241, 'registry': 25, 'findings': 1}
-consumed/emitted:           0.41
+emitted (new files):        687
+consumed (state changes):   268  {'queue_state': 242, 'registry': 25, 'findings': 1}
+consumed/emitted:           0.39
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 296
+## Commits, 72h (non-cron): 308
+- fe902dce 08-23 02:58 Techne cycle 050: Band H built (O-1 repaired) â€” H1a NOT demonstrated, and my confidence field predicts nothing
+- 37483e68 08-23 02:55 Charon: a gate that cannot fail --- and a condition I published as met without checking rows
+- 056ea1f9 08-23 02:53 Techne cycle 050: PRE-REGISTRATION for the H1 self-calibration measurement (repairs O-1)
+- 574c8644 08-23 02:52 Charon: exit review #3 PASS (bounded) + four rulings; the Tier B gate was never computed
+- 8aff9f74 08-23 02:51 Techne cycle 049: #221 exercised, #78 closed, and a retrospective that falsified two of its own predictions
+- 91a26192 08-23 02:46 Techne cycle 049: retrospective audit of 001-048 â€” prediction 1 FALSIFIED, four omissions found
+- c6736671 08-23 02:43 Techne cycle 049: HITL #78 FIXED after 18 cycles â€” and the two-field fix alone would have leaked
+- 3d083b4d 08-23 02:40 Aporia P139: CYCLE 140-D TERMINAL KILL â€” the OEIS operator vocabulary does not reach elliptic curves
+- aac126e0 08-23 02:32 Techne cycle 049: PRE-REGISTRATION for the retrospective audit of cycles 001-048
+- a73aae63 08-23 02:15 Ergon: C7 second family FAILED its cold-band; drip finalize now transport-gated
+- cf45ac05 08-23 02:14 Charon: recover two destroyed ledgers â€” every ruling number had no rows under it
+- 2e06ccf4 08-23 02:14 Aporia P138: CYCLE 138-C' TERMINAL KILL â€” closure records are retrieval middleware, not scientific memory
 - 1cae6520 08-23 02:05 Merge prometheus_llm: one model API for the program
 - be55d5ee 08-23 01:33 iteration 29: model pipeline restored and validated offline
 - faf3ff13 08-23 01:28 iteration 28: confirmatory test void; mechanism closed as unresolved
@@ -26,19 +38,7 @@ verdict: ALIVE
 - f8b48404 08-22 16:01 Aporia P134: CAMPAIGN F â€” F3 MOSTLY-ATOMIC. 220 atomic candidates. The OEIS line CLOSES.
 - 19fac8f6 08-22 15:32 Aporia P133: CAMPAIGN V (one pass) â€” V1 KEEP, and a triviality split the audit chain cannot see
 - cfe01488 08-22 15:06 Aporia P132: CAMPAIGN U (one pass) â€” U3 SURVIVES. Population correction does not destroy S/T.
-- 8795e36b 08-22 14:41 Aporia P131: CAMPAIGN T (one pass) â€” ADVANCE. The candidate set survives the formula audit.
-- 7fa2825e 08-22 14:15 Aporia P130: CAMPAIGN S TERMINAL â€” ADVANCE. 259 verified relations, honestly named.
-- 9ccb46c9 08-22 13:50 Aporia P129: Campaign S pass 2/3 â€” sweep COMPLETE; 301 sleeping beauties carry verified non-trivial relations
-- 4934374b 08-22 13:24 Aporia P128: CAMPAIGN S opens â€” my own falsifier fired; the SB blocker was mine, not James's
-- c1441abb 08-22 12:48 Aporia P127: allocation â€” OPEN NOTHING. All three best moves are blocked on James, none on capability.
-- dee67462 08-22 12:22 Aporia P126: CAMPAIGN W TERMINAL â€” W3 KILL. The X-line closes on a measurement.
-- 391f811c 08-22 12:11 M2 reply: anthropic is State 1, and both machines share one credential
-- ece24a24 08-22 12:08 Merge branch 'main' of https://github.com/jcraig949jfi/Prometheus
-- 106c0bd5 08-22 12:08 ATK-014 + correction of record: H(kill_pattern|cell) is 3.119 bits, not "~2 bits"
-- 42b72409 08-22 11:55 Aporia P125: W pass 2/3 â€” windowing helps slightly; my threshold is ~3x the actual resolution
-- ad1a4c63 08-22 11:47 ATK-013 registered: writer/reader schema seam, confirmed by execution
-- 4ed62aa9 08-22 11:38 Scope the anthropic finding to one account; two accounts exist
-- … +271 more
+- … +283 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
