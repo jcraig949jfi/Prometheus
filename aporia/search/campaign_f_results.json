@@ -1,0 +1,124 @@
+{
+ "consolidated_records": 1090,
+ "core_records": 568,
+ "core_targets": 268,
+ "factoring_targets": 48,
+ "atomic_targets": 220,
+ "P": 0.1791,
+ "branch": "F3",
+ "TERMINAL": "MOSTLY-ATOMIC",
+ "partition": {
+  "points": 1001,
+  "coverage": {
+   "F3": 200,
+   "F2": 400,
+   "F1": 401
+  }
+ },
+ "census_not_sample": true,
+ "scope": "FACTORISATION test, not a novelty test \u2014 a composition can still be unnoticed",
+ "trivial_operators_excluded": [
+  "aerate",
+  "bisect_even",
+  "bisect_odd",
+  "runmax",
+  "shift"
+ ],
+ "example_chains": [
+  {
+   "source": "A001313",
+   "source_name": "Number of ways of making change for n cents using coins of 1, 2, 5, 10, 20, 50 cents.",
+   "target": "A001305",
+   "target_name": "Expansion of 1/((1-x)^2*(1-x^2)*(1-x^5)*(1-x^10)*(1-x^20)).",
+   "operator": "partsum",
+   "offset": 0,
+   "exact_terms": 45,
+   "claim": "partsum(A001313) agrees with A001305 exactly over 45 terms",
+   "provenance": "Campaign S sweep P129, re-verified P130 (80/80 independent sample); target has no extracted OEIS xref (April dump)",
+   "status": "CANDIDATE - verified exact; not in either title, formula or program text; target neglected under the CORRECTED all-source definition",
+   "checked_fields": "OEIS name + formula (comments and examples still unchecked)",
+   "population": "corrected (crossrefs + titles + formulas + programs, inbound and outbound)",
+   "factors_via": {
+    "op1": "partsum",
+    "intermediate": "A000064",
+    "op2": "runmax"
+   }
+  },
+  {
+   "source": "A057537",
+   "source_name": "Number of ways of making change for n Euro-cents using the Euro currency.",
+   "target": "A001305",
+   "target_name": "Expansion of 1/((1-x)^2*(1-x^2)*(1-x^5)*(1-x^10)*(1-x^20)).",
+   "operator": "partsum",
+   "offset": 0,
+   "exact_terms": 45,
+   "claim": "partsum(A057537) agrees with A001305 exactly over 45 terms",
+   "provenance": "Campaign S sweep P129, re-verified P130 (80/80 independent sample); target has no extracted OEIS xref (April dump)",
+   "status": "CANDIDATE - verified exact; not in either title, formula or program text; target neglected under the CORRECTED all-source definition",
+   "checked_fields": "OEIS name + formula (comments and examples still unchecked)",
+   "population": "corrected (crossrefs + titles + formulas + programs, inbound and outbound)",
+   "factors_via": {
+    "op1": "partsum",
+    "intermediate": "A000064",
+    "op2": "runmax"
+   }
+  },
+  {
+   "source": "A339094",
+   "source_name": "Number of (unordered) ways of making change for n US Dollars using the current US denominations of $1, $2, $5, $10, $20, $50 and $100 bills.",
+   "target": "A001305",
+   "target_name": "Expansion of 1/((1-x)^2*(1-x^2)*(1-x^5)*(1-x^10)*(1-x^20)).",
+   "operator": "partsum",
+   "offset": 0,
+   "exact_terms": 45,
+   "claim": "partsum(A339094) agrees with A001305 exactly over 45 terms",
+   "provenance": "Campaign S sweep P129, re-verified P130 (80/80 independent sample); target has no extracted OEIS xref (April dump)",
+   "status": "CANDIDATE - verified exact; not in either title, formula or program text; target neglected under the CORRECTED all-source definition",
+   "checked_fields": "OEIS name + formula (comments and examples still unchecked)",
+   "population": "corrected (crossrefs + titles + formulas + programs, inbound and outbound)",
+   "factors_via": {
+    "op1": "partsum",
+    "intermediate": "A000064",
+    "op2": "runmax"
+   }
+  },
+  {
+   "source": "A358206",
+   "source_name": "Number of ways of making change for n cents using coins of 1, 2, 4, 10 and 20 cents.",
+   "target": "A001307",
+   "target_name": "Expansion of 1/(1-x)^2/(1-x^2)/(1-x^4)/(1-x^10)/(1-x^20).",
+   "operator": "partsum",
+   "offset": 0,
+   "exact_terms": 45,
+   "claim": "partsum(A358206) agrees with A001307 exactly over 45 terms",
+   "provenance": "Campaign S sweep P129, re-verified P130 (80/80 independent sample); target has no extracted OEIS xref (April dump)",
+   "status": "CANDIDATE - verified exact; not in either title, formula or program text; target neglected under the CORRECTED all-source definition",
+   "checked_fields": "OEIS name + formula (comments and examples still unchecked)",
+   "population": "corrected (crossrefs + titles + formulas + programs, inbound and outbound)",
+   "factors_via": {
+    "op1": "runmax",
+    "intermediate": "A001310",
+    "op2": "partsum"
+   }
+  },
+  {
+   "source": "A025798",
+   "source_name": "Expansion of g.f. 1/((1 - x^2)*(1 - x^3)*(1 - x^9)).",
+   "target": "A029003",
+   "target_name": "Expansion of 1/((1-x)*(1-x^2)*(1-x^3)*(1-x^9)).",
+   "operator": "partsum",
+   "offset": 0,
+   "exact_terms": 45,
+   "claim": "partsum(A025798) agrees with A029003 exactly over 45 terms",
+   "provenance": "Campaign S sweep P129, re-verified P130 (80/80 independent sample); target has no extracted OEIS xref (April dump)",
+   "status": "CANDIDATE - verified exact; not in either title, formula or program text; target neglected under the CORRECTED all-source definition",
+   "checked_fields": "OEIS name + formula (comments and examples still unchecked)",
+   "population": "corrected (crossrefs + titles + formulas + programs, inbound and outbound)",
+   "factors_via": {
+    "op1": "partsum",
+    "intermediate": "A339279",
+    "op2": "runmax"
+   }
+  }
+ ]
+}

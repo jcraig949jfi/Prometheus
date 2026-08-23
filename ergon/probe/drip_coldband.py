@@ -127,8 +127,28 @@ def drip(solver):
     return f"progress {len(have)}/{len(WORK)} (+{ok}/{sent} this batch)"
 
 
+TRANSPORT_FLOOR = 0.95
+
+
 def finalize(solver, led_path, out_path):
     recs = [json.loads(l) for l in led_path.read_text(encoding="utf-8").splitlines()]
+    # Transport gate. This path emitted a NOT-LEVELED verdict with no transport check at
+    # all: a dead lane scores every row wrong and produces a confident 0.0 that flows
+    # straight into a band verdict. The nemotron-v1 read happened to be 400/400 clean and
+    # I verified it by hand — which is exactly the check that must not depend on someone
+    # remembering to run it.
+    ok_rate = sum(1 for r in recs if r["status"] == "ok") / max(1, len(recs))
+    if ok_rate < TRANSPORT_FLOOR:
+        band_read = {"solver": solver, "leveling_verdict": "INVALID-TRANSPORT",
+                     "transport_ok_rate": round(ok_rate, 4), "floor": TRANSPORT_FLOOR,
+                     "attempts": len(recs),
+                     "note": "refused: a dead lane scores every row wrong and emits a "
+                             "confident 0.0 (R11 — discard whole, never partially average)",
+                     "ts_utc": datetime.now(timezone.utc).isoformat(timespec="seconds")}
+        tmp = out_path.with_suffix(".json.tmp")
+        tmp.write_text(json.dumps(band_read, indent=2), encoding="utf-8")
+        os.replace(tmp, out_path)
+        return "REFUSED: INVALID-TRANSPORT (%.1f%% ok)" % (100 * ok_rate)
     best = {}
     for r in recs:              # last ok attempt per (rep, uid)
         if r["status"] == "ok":
@@ -155,6 +175,10 @@ def finalize(solver, led_path, out_path):
         "leveling_verdict": ("LEVELED" if (BAND[0] <= acc <= BAND[1]
                                            and movable >= MOVABLE_FLOOR) else "NOT-LEVELED"),
         "collected_by": "drip (quota-respecting; batches of %d)" % BATCH_PER_CANDIDATE,
+        "transport_ok_rate": round(ok_rate, 4),
+        "truncation_rate": round(sum(1 for r in recs if r["status"] == "ok"
+                                     and (r.get("completion_tokens") or 0) >= MAX_TOK)
+                                 / max(1, sum(1 for r in recs if r["status"] == "ok")), 4),
         "ts_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
     }
     tmp = out_path.with_suffix(".json.tmp")

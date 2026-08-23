@@ -1,0 +1,26 @@
+{
+ "candidate_records": 633,
+ "distinct_targets": 259,
+ "formula_lines_scanned": 523463,
+ "sequences_with_formulas": 351,
+ "stated_records": 11,
+ "stated_targets": 11,
+ "F_fraction_of_targets_stated_in_formulas": 0.0425,
+ "surviving_targets": 248,
+ "surviving_records": 622,
+ "branch": "T3",
+ "TERMINAL": "ADVANCE",
+ "partition": {
+  "points": 1001,
+  "unmapped": 0,
+  "coverage": {
+   "T3": 300,
+   "T2": 500,
+   "T1": 201
+  }
+ },
+ "census_not_sample": true,
+ "granularity": 0.0039,
+ "detection_bias": "generous toward T1: any formula naming the partner counts as stated, so F is an UPPER bound on statedness and biases against the set surviving",
+ "still_unchecked": "OEIS comment and example fields are not on disk"
+}

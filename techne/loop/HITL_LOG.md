@@ -1470,3 +1470,160 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      check on both quantities. **A non-zero CONSTANT refuses** (no roots at all, while M and L are
      defined and equal |c|) while **a MONOMIAL correctly returns 0.0** — which is exactly why the
      constant must refuse rather than return zero, or the two would be indistinguishable.
+
+
+## Cycle 049 (2026-08-23) — the read-only constraint lifted, and a retrospective audit of 001-048
+
+279. **JAMES RULED #221: "you can act."** Recorded as doctrine in
+     `memory/feedback_techne_may_patch_other_roles.md`. First exercise of it closed HITL #78
+     after eighteen cycles.
+280. **#78 IS FIXED (`c6736671`) — AND THE FIX I SPENT EIGHTEEN CYCLES ASKING FOR WOULD HAVE
+     BEEN HARMFUL ON ITS OWN.** Three defects sat behind the 100% drop, not one: (1) rep/uid
+     read flat while `campaign.py` writes them inside `key`; (2) count-family prose routed by
+     a **filename prefix**, and the campaign ledger carries no `ledger_id`, so fixing (1)
+     alone would have shipped raw count-family prose into `F-prom-retrieved` — the exact
+     channel `method_projection` exists to withhold (measured 45% vs 25% answer leakage);
+     (3) the gold screen sat **downstream of the rep filter**, so it inspected none of the
+     1,604 KEY-form rows. **The broken loader was accidentally acting as the firewall.**
+     Postcondition: 0 -> 625 accepted, 0 raw prose, FLAT ledgers bit-for-bit unchanged,
+     `ergon/probe/tests` 163 passed. Blast radius measured BEFORE reordering the screen:
+     0 forbidden fields across all 3,456 live rows.
+281. **THE EIGHTEEN-CYCLE CLAIM WAS A WRONG-POPULATION ERROR — MINE.** "The loader throws away
+     every row" is false. Five FLAT-form ledgers (1,852 rows) load correctly; only the two
+     KEY-form files drop to zero. I measured one file and quoted it as a property of the
+     consumer. **Fourth instance of `feedback_wrong_population_statistics`, committed by the
+     role that files that trap against everyone else.** Memory updated.
+282. **HITL #209 DISCHARGED:** the prepass wire contract is now written down in
+     `_prepass_identity`'s docstring, and both forms are pinned by 8 tests
+     (`test_prepass_wire_contract.py`) so the next producer cannot drift silently.
+283. **RETROSPECTIVE PREDICTION 1 FALSIFIED: 4 O-PROMISEs, not >= 5.** Reported as falsified
+     rather than reclassifying the `O-DANGLE` to reach five. **O-1 Band H (H1, H2) never built
+     and never withdrawn** — canon §6 calls it *"James's thesis, formalized and falsifiable"*,
+     and the charter allowed theory to substitute for building, so non-measurability did not
+     block it. **O-2** the second pass restarted at R3, not R0. **O-3** the R0 baseline lane
+     (HITL #2) was never wired into `grading_oracle.py` and, the actual fault, **never
+     withdrawn** when the read-only rule made it impossible — silence is not a withdrawal.
+     **O-4** the Lane A/B reading experiment was pre-registered at 041, queued at 045, never run.
+284. **JAMES — THIS WEAKENS MY OWN #242 ASK AND YOU SHOULD HAVE IT BEFORE YOU RULE.** `egglog`
+     was installed at cycle 003 on a stated leverage claim ("real leverage on rule
+     composition"). It is referenced by **exactly one file in the repo** — a demo — and by no
+     circuit, no test, no module. **The last dependency I took on a leverage argument was never
+     consumed.** I still think the four deps are worth installing to clear 26 reds, but my
+     track record is one-for-one against me, and a vetting protocol does not fix that failure
+     mode — it is a *usage* failure, not a *supply-chain* failure.
+285. **THE PROXY TRAP, FOURTH INSTANCE — AND ONE WAS IN ANOTHER ROLE'S CODE.** I nearly filed
+     "tensor_train violates Standing Order #1" from a grep of **top-level imports**; it wraps
+     quimb via a lazy import. Cycles 043, 045, this near-miss, and ergon's `ledger_id`-prefix
+     gate. **The fourth being someone else's code is the useful part: this trap is not
+     idiosyncratic to me.** The prereg's self-guard (every finding must diff against a
+     checkable artifact) is the only reason the findings doc has no false entry in it.
+286. **JAMES — AN OMISSION THE AUDIT COULD NOT CHECK.** **No cycle records the command that
+     produced its "arsenal red" count.** 48 cycles report 28/29/30 with no reproduction line,
+     so prediction 3 required re-deriving the scope from scratch. Standing fix adopted: every
+     reported count ships its command.
+
+
+## Cycle 050 (2026-08-23) — Band H built (O-1 repaired); H1a NOT demonstrated
+
+287. **O-1 REPAIRED: Band H is built, not described.** H1a measured on the only reasoner whose
+     complete pre-registered record I own — this loop. H1b (other reasoners) explicitly OUT of
+     scope and still hypothesis; canon puts it behind the unrun model zoo.
+288. **H1a VERDICT: NOT DEMONSTRATED, and it failed at the SECOND gate.** The prereg's kill test
+     was instrument grounds (no confidence axis -> no calibration possible). **That gate passed**
+     — six preregs carry an ordinal confidence on every prediction. It fails at the next one:
+     `high` = 0.67 and `moderate` = 0.67, **9 of the 13 rows at the same rate.** My stated
+     confidence adds no discriminating information over the counter-baseline. **It is a field I
+     fill in, not a model I hold.** Baseline recorded: `p_held = 9/13 = 0.692`, flat.
+289. **MY OWN P3 WAS FALSIFIED BY A WRONG-POPULATION ERROR — FIFTH INSTANCE, INSIDE THE CYCLE
+     ABOUT KNOWING MY OWN MISTAKES.** I predicted no confidence field existed anywhere; my two
+     most recent preregs (049, 050) had **dropped** the field the six before them carried, and I
+     generalised from those two to the corpus. Recency weighted as if it were the population.
+290. **BUILD-DEBT NAMED AND CHEAP:** restore the confidence field on every prediction (my last
+     two regressed on it), accumulate rows, re-run the curve. The instrument now exists.
+291. **JAMES — HITL #266 IS REOPENED, AND CYCLE 048'S VERDICT IS OVERTURNED.**
+     `MAHLER_CROSS_ROLE` prediction 3 — *"the product rule M(fg)=M(f)M(g) holds"*, confidence
+     **HIGH** — has **no recorded outcome in cycle 047**, and it is **FALSE**.
+     `test_property_MULTIPLICATIVITY` is RED on `f = [1,1,-1,-1] = (x+1)^2(x-1)`: all roots on
+     the unit circle so `M = 1` exactly, but `M(f*f)` computes to **1.000146** against a
+     tolerance of `rel=1e-5`. **Mechanism measured: `np.roots` displaces an m-fold root by
+     `eps^(1/m)`, not `eps`** — `eps^(1/4) = 1.22e-4` vs observed 1.46e-4.
+     Cycle 048 closed #266 as "does not bite" from all 8,625 catalog entries at max error
+     4.481e-10 — **but the catalog is Salem/Lehmer-type with SIMPLE ROOTS.** `lookup_by_M(M,
+     tol=1e-6)` returns `[]` — an absence read as "not in the catalog" — and a repeated root
+     produces 1.5e-4. **Cycle 048's own ChatGPT block asked whether that verdict was too strong
+     for polynomials outside the table. It was, and this is the counterexample. I raised the
+     right question and did not run it.**
+292. **NOT PATCHED THIS CYCLE, DELIBERATELY.** The honest fix is squarefree decomposition before
+     root-finding — a real build that does not get smuggled into a cycle about something else
+     (cycle 045's own rule, applied to me). Queued as the next Track 1 item.
+293. **ARSENAL-RED BASELINE, WITH ITS COMMAND** (cycle 049's standing fix, exercised):
+     `python -m pytest prometheus_math -q --continue-on-collection-errors -p no:cacheprovider`
+     -> **38 failed, 4131 passed, 137 skipped, 5 xfailed, 3 errors, 19:20.**
+     **NOT compared to cycle 048's "30"** — that scope was never recorded and this one is wider
+     (4,306 collected vs ~3,576). New baseline, not a delta.
+294. **#242 STILL UNRULED.** Most of the 38 remain dependency artifacts. My cycle-049 egglog
+     dangle still stands against my own ask.
+
+
+## Cycle 051 (2026-08-23) — #266 closed; the fix corrected two earlier cycles' diagnosis
+
+295. **HITL #266 CLOSED BY BUILD, not by documentation.** Exactly-repeated roots now go through
+     an exact squarefree decomposition. Tests: authority 3 / property 3 / edge 2 / composition
+     3, RED first. **85 passed across five suites.**
+296. **MY OWN PREREG MIS-STATED THE MECHANISM, and a test I wrote expecting failure told me.**
+     `eps^(1/m)` displacement is **necessary but not sufficient**: `(x-2)^12` survives a **six
+     percent** root displacement with M exact to 1e-9, because off the unit circle the copies
+     scatter symmetrically and their product `a_0/a_n` is preserved. The error needs the
+     repeated root **ON** the circle, where `max(1,|alpha|)` clips inside copies and keeps
+     outside ones. **I used "repeated root" as a proxy for "ill-conditioned M" — fifth proxy
+     failure.** It also means the defect is worst exactly where Lehmer work lives.
+297. **THE SAME DEFECT WAS IN THREE FUNCTIONS; COMPOSITION TESTS FOUND TWO.** `is_cyclotomic`
+     returned **False** for a polynomial whose measure is exactly 1 — **fixing only the measure
+     would have left two functions in ONE MODULE contradicting each other**, and my fix would
+     have created that. `house` is a **max** over root moduli, so nothing cancels: it is wrong
+     even off the circle, where M is fine.
+298. **JAMES — CYCLE 047 NAMED A BUG AN INHERENT LIMIT, AND CYCLE 048 REASONED FROM THE LABEL.**
+     047's *"documented ill-conditioned case"* was `f=[1,0,-1,1,-3,1,1]`, `g=[1,-1]`. **f(1)=0**,
+     so f carries `(x-1)` and g **is** `(x-1)`: the product has a **double root at z=1**. It was
+     this bug all along; 048's whole 5.1e-6 analysis was analysing it without recognising it.
+     Error is now **0**; the bracket is **tightened** to `rel < 1e-13`, never loosened (#267).
+     **Open question I cannot answer alone: how many other "inherent limits" in this arsenal are
+     unrecognised bugs?**
+299. **DISPATCH IS AN EXACT GATE, NOT A SCREEN.** `deg gcd(f, f') > 0` decides squarefreeness
+     outright — after five proxy failures I am not shipping a sixth. **0.13 ms/entry, 1.1 s for
+     all 8,625 catalog entries, and ZERO entries carry a repeated root.**
+300. **PREDICTIONS 4 OF 5 HELD, AND THE MISS WAS THE ONE MARKED `low`.** P5 (>=1 non-squarefree
+     catalog entry, `low`) FALSIFIED at zero of 8,625. **Calibration ledger now 13/18 = 0.722:
+     high 3/4, mod-high 2/2, moderate 5/7, low-mod 3/3, `low` 0/2.** `low` is 0-for-2 while
+     every other band is >= 0.71 — **first hint the confidence field carries signal.** n=2.
+301. **MY KILL-TEST MEASUREMENT ANSWERED A DIFFERENT QUESTION AND I NEARLY REPORTED IT.** It
+     compared the new path against the **stored literals** rather than the old path, giving
+     "22 moved, max 4.481e-10" — cycle 048's pre-existing recompute-vs-stored gap, unrelated to
+     this change. P5 settles it: zero non-squarefree entries means old and new take an identical
+     path. **Caught by cross-checking two predictions against each other, not by the script.**
+     Second time a measurement has answered the wrong question; both times another prediction
+     caught it, which is luck wearing the shape of process.
+302. **JAMES — NOT FIXED, AND I WANT IT VISIBLE: `mahler_measure_batch` STILL RETURNS 1.000146**
+     for the polynomial the scalar path now gets exactly right. The scalar and batch APIs of one
+     module disagree. Batch exists for speed (companion-matrix stack), so designing that path in
+     the last minutes of a cycle is how cycle 045's rule gets broken. **Filed as the next build.**
+303. **OMISSIONS CLOSED IN WRITING** (`rung_notes/OMISSION_DISPOSITIONS_2026-08-23.md`).
+     **O-2** closed as a recorded deviation. **O-3 WITHDRAWN** — I can now edit `harmonia/` under
+     #221 and am not going to: a permanent baseline lane changes what the oracle **measures**,
+     which is cross-role SCIENCE. Handed off with the circuit and the argument; Harmonia decides.
+     **O-4 RE-SCOPED, not withdrawn** — cycle 045 rejected it because my own modules "are not
+     real substrate", and #221 dissolved that reason.
+
+304. **THE "ARSENAL RED" COUNT HAS ALWAYS COVERED HALF THE ARSENAL — SIXTH WRONG-POPULATION
+     INSTANCE, MINE.** A background regression run over `techne/tests` (which tests
+     `techne/lib`) returned **10 failed / 216 passed / 1 skipped**, and every one of the
+     visible failures is the **#242 dependency class** — `RuntimeError` from an absent SAT
+     solver, `ModuleNotFoundError` for chipfiring. **None are in `mahler_measure`, `house` or
+     `polynomial_length`**, so cycle 051's fix caused no regression there either.
+     `arsenal_red.py`'s `SCOPE` held `prometheus_math` alone, so cycle 051's baseline of 38 was
+     a half-arsenal figure quoted as a whole-arsenal one. Scope corrected to both paths; the
+     38 is explicitly marked non-comparable and the next run re-baselines.
+305. **JAMES — THIS STRENGTHENS #242 RATHER THAN CHANGING IT.** The dependency drought spans
+     **two scopes, not one**, and the second was invisible because nobody was counting it. The
+     ask is unchanged and so is the argument against it (my egglog dangle), but the size of
+     what a ruling would clear is larger than I told you.

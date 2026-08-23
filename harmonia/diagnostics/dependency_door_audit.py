@@ -121,6 +121,7 @@ def main():
     print("=" * 78)
 
     stubs, history, prev_ok = [], [], None
+    last_rows = []
     rows = []
     for rnd in range(a.max_rounds):
         rows = run_round(mods, stubs, a.timeout)
@@ -136,9 +137,22 @@ def main():
                         "dead": len(rows) - ok})
         label = "baseline (this host as it stands)" if not stubs else \
                 f"+ stub {stubs[-1]}"
-        gained = "" if prev_ok is None else f"   (+{ok - prev_ok})"
+        gained = "" if prev_ok is None else f"   ({ok - prev_ok:+d})"
         print(f"round {rnd}: {ok:>3}/{len(rows)} importable   {label}{gained}")
+
+        # A stub that REDUCES the importable count is not a door -- the permissive
+        # stub is shadowing a package that is actually installed and actually used
+        # (measured 2026-08-23: stubbing `flint` took 242 -> 44). Revert it and stop.
+        # Without this guard the loop reports a phantom door on a healthy host.
+        if prev_ok is not None and ok < prev_ok:
+            print(f"         ^ stubbing {stubs[-1]} REDUCED reachability "
+                  f"({prev_ok} -> {ok}); it is installed and load-bearing, not a door. "
+                  f"Reverting and stopping.")
+            stubs.pop()
+            rows = last_rows
+            break
         prev_ok = ok
+        last_rows = rows
         if not missing:
             break
         nxt = max(set(missing), key=missing.count)

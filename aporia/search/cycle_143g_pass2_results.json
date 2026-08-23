@@ -1,0 +1,100 @@
+{
+ "cycle": "143-G pass 2",
+ "pass1_verdict_withdrawn": true,
+ "pass1_defect": "D2 reported 0 of 0 checked \u2014 nf_fields.subfields holds polynomial coefficients, not labels, so the only convolution-shaped control never ran; and pass 1 headline shape 1*a_M=a_K1*a_K2 has no known instances",
+ "object_class": "number fields, degree 2 and 4, index=1",
+ "representation": "Dedekind zeta coefficients a_K(n)",
+ "native_verb": "Dirichlet convolution",
+ "n_terms": 200,
+ "disc_max": 3000,
+ "quad_disc_max_for_sweep": 400,
+ "n_fields": 2035,
+ "n_quadratics": 1820,
+ "n_quartics": 215,
+ "controls": {
+  "C1_quadratic": true,
+  "C1_n": 1820,
+  "C1_bad": 0,
+  "C2_conv_inverse": true,
+  "C2_n": 150,
+  "C2_bad": 0,
+  "C3_subfield_resolution": true,
+  "C3_v4_total": 13,
+  "C3_unresolved": 0,
+  "C4_brauer_reproduction": false,
+  "C4_reproduced": 5,
+  "C4_resolved": 13
+ },
+ "controls_passing": 3,
+ "PART1_diagnostic": {
+  "v4_brauer_relations_reproduced": 5,
+  "signature_exists_in_archive": true,
+  "examples": {
+   "4.0.1936.1": [
+    "2.0.4.1",
+    "2.2.44.1",
+    "2.0.11.1"
+   ],
+   "4.0.256.1": [
+    "2.0.4.1",
+    "2.0.8.1",
+    "2.2.8.1"
+   ],
+   "4.0.144.1": [
+    "2.0.3.1",
+    "2.0.4.1",
+    "2.2.12.1"
+   ],
+   "4.0.1600.1": [
+    "2.0.40.1",
+    "2.0.8.1",
+    "2.2.5.1"
+   ],
+   "4.0.2304.1": [
+    "2.2.12.1",
+    "2.0.24.1",
+    "2.0.8.1"
+   ],
+   "4.0.2304.2": [
+    "2.0.4.1",
+    "2.0.24.1",
+    "2.2.24.1"
+   ],
+   "4.0.2704.1": [
+    "2.0.4.1",
+    "2.0.52.1",
+    "2.2.13.1"
+   ],
+   "4.0.576.1": [
+    "2.0.3.1",
+    "2.0.8.1",
+    "2.2.24.1"
+   ],
+   "4.0.576.2": [
+    "2.0.3.1",
+    "2.2.8.1",
+    "2.0.24.1"
+   ],
+   "4.0.784.1": [
+    "2.0.4.1",
+    "2.2.28.1",
+    "2.0.7.1"
+   ]
+  },
+  "status": "MEASUREMENT confirming known mathematics; not the verdict"
+ },
+ "triples_total": 2332880,
+ "attainable_triples": 2332880,
+ "relations_total": 5,
+ "explained": 5,
+ "H_unexplained": 0,
+ "headline_hits": [],
+ "branches": {
+  "B1_VACUOUS": true,
+  "B2_ADVANCE": false,
+  "B3_KILL": false
+ },
+ "branch_fired": "B1_VACUOUS",
+ "VERDICT": "VACUOUS",
+ "what_dies_on_null": "unexplained V4-shaped convolution relations among degree 2 and 4 fields of bounded discriminant; NOT the verbs thesis, NOT 142-F"
+}

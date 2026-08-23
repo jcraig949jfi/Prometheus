@@ -215,33 +215,76 @@ def _jsonl_lines(path: pathlib.Path) -> Iterator[tuple[int, dict[str, Any]]]:
                 continue
 
 
-def load_prepass(path: pathlib.Path, *, ledger_id: str = "probe_prepass") -> list[ResidueRecord]:
+_PREPASS_FORBIDDEN = ("gold", "gold_bool", "correct", "grader_output")
+
+
+def _prepass_identity(d: dict) -> tuple[int, Optional[str]]:
+    """(rep, uid) from either pre-pass wire form.
+
+    THE CONTRACT (written down 2026-08-23, previously de facto only — HITL #209):
+
+      FLAT form   {"uid": str, "rep": int, ...}      written by the probe/nearmiss producers
+      KEY  form   {"key": [rep, uid], ...}           written by campaign.py::_send
+
+    `campaign.py::best()` has always read the KEY form; this loader read only FLAT, so every
+    KEY-form row was dropped as `rep == -1` (HITL #78: 1,248 rows -> 0 accepted). FLAT wins
+    when present so the five live FLAT ledgers are bit-for-bit unaffected.
+    """
+    if "rep" in d:
+        rep, uid = d.get("rep"), d.get("uid")
+    else:
+        key = d.get("key")
+        rep, uid = (key[0], key[1]) if isinstance(key, (list, tuple)) and len(key) >= 2             else (None, d.get("uid"))
+    try:
+        rep = int(rep)
+    except (TypeError, ValueError):
+        rep = -1
+    return rep, (str(uid) if uid is not None else None)
+
+
+def load_prepass(path: pathlib.Path, *, ledger_id: str = "probe_prepass",
+                 withhold_prose: Optional[bool] = None) -> list[ResidueRecord]:
     """D0/D1 source. REP-1 ONLY, enforced mechanically (prereg §4.2, review C1).
 
     The pre-pass ledger does not exist until the pre-pass runs; an absent file yields an empty
     pool, and the caller's census then reports the stratum as unsupplied rather than inventing
     residue for it.
+
+    Accepts both wire forms — see `_prepass_identity` for the contract.
+
+    `withhold_prose` selects the count-family prose policy explicitly:
+      None   infer from the `ledger_id` prefix (legacy behaviour, preserved for live callers)
+      True   always render the method projection
+      False  always ship the trace
+    The prefix inference is a PROXY for "is this count-family prose", and the campaign ledger
+    carries no `ledger_id` at all — so a caller that knows the family must state it rather
+    than rely on a filename.
     """
     if not path.exists():
         return []
     out: list[ResidueRecord] = []
     for seq, d in _jsonl_lines(path):
-        if int(d.get("rep", -1)) != 1:
+        rep, uid = _prepass_identity(d)
+        # The gold screen runs on EVERY row, before any filter. It previously sat downstream
+        # of the rep filter, so it never inspected a rep-2 row — nor any KEY-form row at all.
+        for forbidden in _PREPASS_FORBIDDEN:
+            if forbidden in d:
+                raise FirewallViolation(
+                    f"pre-pass record {uid!r} carries {forbidden!r}; "
+                    "gold/correctness must not enter the residue record (prereg §4.2)"
+                )
+        if rep != 1:
             continue  # rep-2 exists for the contamination screen only; never packet-eligible
         if bool(d.get("derives_from_gold", False)):
             continue  # type-based exclusion, belt-and-braces before the firewall sees it
-        for forbidden in ("gold", "gold_bool", "correct", "grader_output"):
-            if forbidden in d:
-                raise FirewallViolation(
-                    f"pre-pass record {d.get('uid')!r} carries {forbidden!r}; "
-                    "gold/correctness must not enter the residue record (prereg §4.2)"
-                )
         trace = str(d.get("attempt_text") or d.get("trace") or "").strip()
         null_fields = tuple(f for f in ("attempt_text", "diagnosis") if not d.get(f))
         # Count-family pre-pass residue renders as a METHOD PROJECTION (see extract.py):
         # the prose channel is a measured answer oracle (45% vs 25% chance) and cannot be
         # cleaned by redaction, so the packet ships the method census only.
-        if str(d.get("ledger_id", ledger_id)).startswith("nearmiss"):
+        project = (str(d.get("ledger_id", ledger_id)).startswith("nearmiss")
+                   if withhold_prose is None else bool(withhold_prose))
+        if project:
             from .extract import method_projection
             body = method_projection(trace)
         else:
@@ -253,9 +296,9 @@ def load_prepass(path: pathlib.Path, *, ledger_id: str = "probe_prepass") -> lis
                 ledger_id=str(d.get("ledger_id", ledger_id)),
                 seq=int(d.get("seq", seq)),
                 source="probe_prepass",
-                record_id=str(d.get("record_id") or d.get("uid") or seq),
+                record_id=str(d.get("record_id") or uid or seq),
                 body=body,
-                uid=d.get("uid"),
+                uid=uid,
                 domain=d.get("domain"),
                 rep=1,
                 mechanism_tags=DOMAIN_MECHANISM_TAGS.get(str(d.get("domain")), ()),

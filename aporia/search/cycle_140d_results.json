@@ -1,0 +1,282 @@
+{
+ "cycle": "140-D",
+ "question": "does the exactly-verifiable OEIS operator vocabulary produce any NON-TRIVIAL exact relation among LMFDB elliptic-curve counting sequences?",
+ "objects": "elliptic curves over Q, LMFDB ec_curvedata, 3824372 rows",
+ "index": "conductor N = 1..10000",
+ "sequences": [
+  "r_curves",
+  "r_classes",
+  "r_rank0",
+  "r_rank1",
+  "r_rank2p",
+  "r_cm",
+  "r_semistab",
+  "r_torstriv",
+  "r_torsnont",
+  "c_curves",
+  "c_classes",
+  "c_rank0",
+  "c_rank1",
+  "c_rank2p",
+  "c_cm",
+  "c_semistab",
+  "c_torstriv",
+  "c_torsnont"
+ ],
+ "nondeg_survivors": [],
+ "degeneracy_census": {
+  "r_curves": {
+   "zero_frac_first20": 0.7,
+   "distinct_first20": 5,
+   "nondeg": false
+  },
+  "r_classes": {
+   "zero_frac_first20": 0.7,
+   "distinct_first20": 2,
+   "nondeg": false
+  },
+  "r_rank0": {
+   "zero_frac_first20": 0.7,
+   "distinct_first20": 5,
+   "nondeg": false
+  },
+  "r_rank1": {
+   "zero_frac_first20": 1.0,
+   "distinct_first20": 1,
+   "nondeg": false
+  },
+  "r_rank2p": {
+   "zero_frac_first20": 1.0,
+   "distinct_first20": 1,
+   "nondeg": false
+  },
+  "r_cm": {
+   "zero_frac_first20": 1.0,
+   "distinct_first20": 1,
+   "nondeg": false
+  },
+  "r_semistab": {
+   "zero_frac_first20": 0.75,
+   "distinct_first20": 5,
+   "nondeg": false
+  },
+  "r_torstriv": {
+   "zero_frac_first20": 0.9,
+   "distinct_first20": 2,
+   "nondeg": false
+  },
+  "r_torsnont": {
+   "zero_frac_first20": 0.7,
+   "distinct_first20": 5,
+   "nondeg": false
+  },
+  "c_curves": {
+   "zero_frac_first20": 0.5,
+   "distinct_first20": 7,
+   "nondeg": false
+  },
+  "c_classes": {
+   "zero_frac_first20": 0.5,
+   "distinct_first20": 7,
+   "nondeg": false
+  },
+  "c_rank0": {
+   "zero_frac_first20": 0.5,
+   "distinct_first20": 7,
+   "nondeg": false
+  },
+  "c_rank1": {
+   "zero_frac_first20": 1.0,
+   "distinct_first20": 1,
+   "nondeg": false
+  },
+  "c_rank2p": {
+   "zero_frac_first20": 1.0,
+   "distinct_first20": 1,
+   "nondeg": false
+  },
+  "c_cm": {
+   "zero_frac_first20": 1.0,
+   "distinct_first20": 1,
+   "nondeg": false
+  },
+  "c_semistab": {
+   "zero_frac_first20": 0.5,
+   "distinct_first20": 6,
+   "nondeg": false
+  },
+  "c_torstriv": {
+   "zero_frac_first20": 0.5,
+   "distinct_first20": 3,
+   "nondeg": false
+  },
+  "c_torsnont": {
+   "zero_frac_first20": 0.5,
+   "distinct_first20": 7,
+   "nondeg": false
+  }
+ },
+ "exclusions_by_construction": [
+  [
+   "diff",
+   "c_classes",
+   "r_classes"
+  ],
+  [
+   "diff",
+   "c_cm",
+   "r_cm"
+  ],
+  [
+   "diff",
+   "c_curves",
+   "r_curves"
+  ],
+  [
+   "diff",
+   "c_rank0",
+   "r_rank0"
+  ],
+  [
+   "diff",
+   "c_rank1",
+   "r_rank1"
+  ],
+  [
+   "diff",
+   "c_rank2p",
+   "r_rank2p"
+  ],
+  [
+   "diff",
+   "c_semistab",
+   "r_semistab"
+  ],
+  [
+   "diff",
+   "c_torsnont",
+   "r_torsnont"
+  ],
+  [
+   "diff",
+   "c_torstriv",
+   "r_torstriv"
+  ],
+  [
+   "partsum",
+   "r_classes",
+   "c_classes"
+  ],
+  [
+   "partsum",
+   "r_cm",
+   "c_cm"
+  ],
+  [
+   "partsum",
+   "r_curves",
+   "c_curves"
+  ],
+  [
+   "partsum",
+   "r_rank0",
+   "c_rank0"
+  ],
+  [
+   "partsum",
+   "r_rank1",
+   "c_rank1"
+  ],
+  [
+   "partsum",
+   "r_rank2p",
+   "c_rank2p"
+  ],
+  [
+   "partsum",
+   "r_semistab",
+   "c_semistab"
+  ],
+  [
+   "partsum",
+   "r_torsnont",
+   "c_torsnont"
+  ],
+  [
+   "partsum",
+   "r_torstriv",
+   "c_torstriv"
+  ]
+ ],
+ "positive_controls": [
+  {
+   "source": "r_curves",
+   "target": "c_curves",
+   "overlap": 10000,
+   "pass": true
+  },
+  {
+   "source": "r_classes",
+   "target": "c_classes",
+   "overlap": 10000,
+   "pass": true
+  },
+  {
+   "source": "r_rank0",
+   "target": "c_rank0",
+   "overlap": 10000,
+   "pass": true
+  },
+  {
+   "source": "r_rank1",
+   "target": "c_rank1",
+   "overlap": 10000,
+   "pass": true
+  },
+  {
+   "source": "r_rank2p",
+   "target": "c_rank2p",
+   "overlap": 10000,
+   "pass": true
+  },
+  {
+   "source": "r_cm",
+   "target": "c_cm",
+   "overlap": 10000,
+   "pass": true
+  },
+  {
+   "source": "r_semistab",
+   "target": "c_semistab",
+   "overlap": 10000,
+   "pass": true
+  },
+  {
+   "source": "r_torstriv",
+   "target": "c_torstriv",
+   "overlap": 10000,
+   "pass": true
+  },
+  {
+   "source": "r_torsnont",
+   "target": "c_torsnont",
+   "overlap": 10000,
+   "pass": true
+  }
+ ],
+ "controls_firing": 9,
+ "attainable_triples": 0,
+ "gate_inside_attainable_range": false,
+ "headline_nontrivial_hits": [],
+ "H": 0,
+ "trivial_class_hits": [],
+ "branches": {
+  "B1_VACUOUS": true,
+  "B2_ADVANCE": false,
+  "B3_KILL": false
+ },
+ "branch_fired": "B1_VACUOUS",
+ "vacuity_cause": "0 of 18 sequences passed nondeg() as a source, because the first 20 terms of a conductor-indexed sequence are dominated by zeros: the smallest conductor of an elliptic curve over Q is 11, so terms 1-10 are structurally zero. The instrument was aimed at an index window where the objects do not exist.",
+ "VERDICT": "VACUOUS",
+ "what_dies_on_null": "this operator family applied to LMFDB COUNTING SEQUENCES; NOT the verbs thesis and NOT the 220 OEIS relations, which are separately verified"
+}

@@ -1,0 +1,294 @@
+{
+  "invariant": "treatment identity computationally unavailable after semantic content is removed",
+  "reviewer": "Charon (kill authority, M1)",
+  "seed": 20260823,
+  "n_permutations_refit": 10,
+  "n_tasks_subsampled": 240,
+  "states": {
+    "live": {
+      "residue_pool_records": 625,
+      "arm_token_means": {
+        "F0": {
+          "mean_tokens": 35.0,
+          "sd": 0.0
+        },
+        "F-null": {
+          "mean_tokens": 96.8,
+          "sd": 3.6
+        },
+        "F-generic": {
+          "mean_tokens": 94.7,
+          "sd": 6.0
+        },
+        "F-prom-retrieved": {
+          "mean_tokens": 96.8,
+          "sd": 3.7
+        },
+        "F-oracle": {
+          "mean_tokens": 83.0,
+          "sd": 10.2
+        },
+        "F-answer": {
+          "mean_tokens": 42.0,
+          "sd": 0.0
+        }
+      },
+      "pairs": {
+        "STRICT": {
+          "F0|F-null": {
+            "observed": 1.0,
+            "separable_exactly": true,
+            "perm_null_mean": 0.5,
+            "perm_null_95_hi": null,
+            "z": null,
+            "beats_null": true
+          },
+          "F0|F-generic": {
+            "observed": 1.0,
+            "separable_exactly": true,
+            "perm_null_mean": 0.5,
+            "perm_null_95_hi": null,
+            "z": null,
+            "beats_null": true
+          },
+          "F0|F-prom-retrieved": {
+            "observed": 1.0,
+            "separable_exactly": true,
+            "perm_null_mean": 0.5,
+            "perm_null_95_hi": null,
+            "z": null,
+            "beats_null": true
+          },
+          "F0|F-oracle": {
+            "observed": 1.0,
+            "separable_exactly": true,
+            "perm_null_mean": 0.5,
+            "perm_null_95_hi": null,
+            "z": null,
+            "beats_null": true
+          },
+          "F0|F-answer": {
+            "observed": 1.0,
+            "separable_exactly": true,
+            "perm_null_mean": 0.5,
+            "perm_null_95_hi": null,
+            "z": null,
+            "beats_null": true
+          },
+          "F-null|F-generic": {
+            "observed": 1.0,
+            "separable_exactly": true,
+            "perm_null_mean": 0.5,
+            "perm_null_95_hi": null,
+            "z": null,
+            "beats_null": true
+          },
+          "F-null|F-prom-retrieved": {
+            "observed": 0.5,
+            "separable_exactly": false,
+            "perm_null_mean": 0.4829,
+            "perm_null_95_hi": 0.5383,
+            "z": 0.6,
+            "beats_null": false
+          },
+          "F-null|F-oracle": {
+            "observed": 1.0,
+            "separable_exactly": true,
+            "perm_null_mean": 0.5,
+            "perm_null_95_hi": null,
+            "z": null,
+            "beats_null": true
+          },
+          "F-null|F-answer": {
+            "observed": 1.0,
+            "separable_exactly": true,
+            "perm_null_mean": 0.5,
+            "perm_null_95_hi": null,
+            "z": null,
+            "beats_null": true
+          },
+          "F-generic|F-prom-retrieved": {
+            "observed": 1.0,
+            "separable_exactly": true,
+            "perm_null_mean": 0.5,
+            "perm_null_95_hi": null,
+            "z": null,
+            "beats_null": true
+          },
+          "F-generic|F-oracle": {
+            "observed": 1.0,
+            "separable_exactly": true,
+            "perm_null_mean": 0.5,
+            "perm_null_95_hi": null,
+            "z": null,
+            "beats_null": true
+          },
+          "F-generic|F-answer": {
+            "observed": 1.0,
+            "separable_exactly": true,
+            "perm_null_mean": 0.5,
+            "perm_null_95_hi": null,
+            "z": null,
+            "beats_null": true
+          },
+          "F-prom-retrieved|F-oracle": {
+            "observed": 1.0,
+            "separable_exactly": true,
+            "perm_null_mean": 0.5,
+            "perm_null_95_hi": null,
+            "z": null,
+            "beats_null": true
+          },
+          "F-prom-retrieved|F-answer": {
+            "observed": 1.0,
+            "separable_exactly": true,
+            "perm_null_mean": 0.5,
+            "perm_null_95_hi": null,
+            "z": null,
+            "beats_null": true
+          },
+          "F-oracle|F-answer": {
+            "observed": 1.0,
+            "separable_exactly": true,
+            "perm_null_mean": 0.5,
+            "perm_null_95_hi": null,
+            "z": null,
+            "beats_null": true
+          }
+        },
+        "SHAPE": {
+          "F0|F-null": {
+            "observed": 1.0,
+            "separable_exactly": true,
+            "perm_null_mean": 0.5,
+            "perm_null_95_hi": null,
+            "z": null,
+            "beats_null": true
+          },
+          "F0|F-generic": {
+            "observed": 1.0,
+            "separable_exactly": true,
+            "perm_null_mean": 0.5,
+            "perm_null_95_hi": null,
+            "z": null,
+            "beats_null": true
+          },
+          "F0|F-prom-retrieved": {
+            "observed": 1.0,
+            "separable_exactly": true,
+            "perm_null_mean": 0.5,
+            "perm_null_95_hi": null,
+            "z": null,
+            "beats_null": true
+          },
+          "F0|F-oracle": {
+            "observed": 1.0,
+            "separable_exactly": true,
+            "perm_null_mean": 0.5,
+            "perm_null_95_hi": null,
+            "z": null,
+            "beats_null": true
+          },
+          "F0|F-answer": {
+            "observed": 1.0,
+            "separable_exactly": true,
+            "perm_null_mean": 0.5,
+            "perm_null_95_hi": null,
+            "z": null,
+            "beats_null": true
+          },
+          "F-null|F-generic": {
+            "observed": 1.0,
+            "separable_exactly": true,
+            "perm_null_mean": 0.5,
+            "perm_null_95_hi": null,
+            "z": null,
+            "beats_null": true
+          },
+          "F-null|F-prom-retrieved": {
+            "observed": 0.4979,
+            "separable_exactly": false,
+            "perm_null_mean": 0.4912,
+            "perm_null_95_hi": 0.531,
+            "z": 0.33,
+            "beats_null": false
+          },
+          "F-null|F-oracle": {
+            "observed": 1.0,
+            "separable_exactly": true,
+            "perm_null_mean": 0.5,
+            "perm_null_95_hi": null,
+            "z": null,
+            "beats_null": true
+          },
+          "F-null|F-answer": {
+            "observed": 1.0,
+            "separable_exactly": true,
+            "perm_null_mean": 0.5,
+            "perm_null_95_hi": null,
+            "z": null,
+            "beats_null": true
+          },
+          "F-generic|F-prom-retrieved": {
+            "observed": 1.0,
+            "separable_exactly": true,
+            "perm_null_mean": 0.5,
+            "perm_null_95_hi": null,
+            "z": null,
+            "beats_null": true
+          },
+          "F-generic|F-oracle": {
+            "observed": 1.0,
+            "separable_exactly": true,
+            "perm_null_mean": 0.5,
+            "perm_null_95_hi": null,
+            "z": null,
+            "beats_null": true
+          },
+          "F-generic|F-answer": {
+            "observed": 1.0,
+            "separable_exactly": true,
+            "perm_null_mean": 0.5,
+            "perm_null_95_hi": null,
+            "z": null,
+            "beats_null": true
+          },
+          "F-prom-retrieved|F-oracle": {
+            "observed": 1.0,
+            "separable_exactly": true,
+            "perm_null_mean": 0.5,
+            "perm_null_95_hi": null,
+            "z": null,
+            "beats_null": true
+          },
+          "F-prom-retrieved|F-answer": {
+            "observed": 1.0,
+            "separable_exactly": true,
+            "perm_null_mean": 0.5,
+            "perm_null_95_hi": null,
+            "z": null,
+            "beats_null": true
+          },
+          "F-oracle|F-answer": {
+            "observed": 1.0,
+            "separable_exactly": true,
+            "perm_null_mean": 0.5,
+            "perm_null_95_hi": null,
+            "z": null,
+            "beats_null": true
+          }
+        }
+      },
+      "byte_identical_pairs": [],
+      "positive_control": {
+        "observed": 1.0,
+        "separable_exactly": true,
+        "perm_null_mean": 0.5,
+        "perm_null_95_hi": null,
+        "z": null,
+        "beats_null": true,
+        "leak_planted": "one trailing space on arm B only"
+      }
+    }
+  }
+}

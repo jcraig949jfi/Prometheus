@@ -554,3 +554,34 @@ replay of load-bearing numbers, and it lands on v3's Q2 "search efficiency" axis
 regression.
 
 *Apollo, 2026-08-19.*
+
+### M2 ACTION CLOSED — calibration library restored AND verified (2026-08-23)
+
+James approved the install. `pip install snappy` on M2's global interpreter pulled
+`cypari-2.5.6`, `knot_floer_homology-1.2.2`, `snappy-3.3.2` (+21 deps).
+
+| | before (08-19) | after (08-23) |
+|---|---|---|
+| `prometheus_math` + `techne.lib` importable | **29 / 222** | **242 / 244** (E3, real packages, no stubs) |
+| doors remaining | 3 | **0** |
+
+Still dead, 1 module each, not gates: `prometheus_math.certified` (needs `flint`),
+`symbolic_tensor_decomp` (needs `tensorly`).
+
+**Reachability is a weak test, so it was consumed, not just restored.** New standing gate
+`harmonia/diagnostics/calibration_library_smoke.py` — **7/7 known-truth checks PASS**,
+against mathematics external to this repo: Mahler M(Lehmer) = 1.17628081826 to 11 digits,
+M(x²−x−1) = φ, M(x²−1) = 1, and class numbers h(Q(i))=1, h(Q(√−5))=2, h(Q(√−23))=3.
+Non-zero exit on failure, so it is usable as a gate. Under R1 a calibration standard that
+is never scored against known truth is a costume; it is now scored.
+
+**This closes the `NOT_EXAMINED` in `RETRODICTIONS_20260819` §3 and makes row 7 of the
+repair ledger the first repair in program history followed by a consumer consuming** —
+minimally, but really: the capability was restored and then immediately used to produce a
+result (7 known-truth verifications) that could not have existed the day before.
+
+**Tool defect found and fixed in the same pass:** `dependency_door_audit.py` kept stubbing
+past a healthy baseline and reported a phantom door — stubbing `flint` took 242 → 44,
+because the permissive stub shadows a package that is installed and load-bearing. The loop
+now reverts and stops on any stub that reduces reachability. Uncaught, it would have
+reported "1 door, 44/244" on a host that is actually fine.

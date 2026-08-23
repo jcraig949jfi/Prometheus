@@ -61,6 +61,22 @@ def house(coefficients: Sequence) -> float:
             "does return 0.0), and returning |c| would import the Mahler measure's convention. "
             "Use mahler_measure or polynomial_length, both of which are defined on constants.")
 
+    # Cycle 051: exactly-repeated roots go through an exact decomposition first.
+    # `np.roots` displaces an m-fold root by eps^(1/m), and house is a MAX over root
+    # moduli, so unlike the Mahler measure's product -- where the displaced copies scatter
+    # symmetrically and cancel -- nothing here cancels. Measured: house((x-2)^3) came back
+    # 2.0000188 against an exact 2. The root SET is the union of the squarefree factors'
+    # roots, so multiplicity is irrelevant to a maximum and the factors can be taken
+    # one at a time. Wrap, don't rewrite: the decomposition is techne's.
+    from techne.lib.mahler_measure import squarefree_factors
+
+    decomposition = squarefree_factors(coefficients)
+    if decomposition is not None:
+        _, factors = decomposition
+        moduli = [float(np.max(np.abs(np.roots(g)))) for g, _ in factors if len(g) > 1]
+        if moduli:
+            return max(moduli)
+
     roots = np.roots(coeffs)
     if len(roots) == 0:  # pragma: no cover - defensive; np.roots returns deg-many roots
         raise ValueError("no roots were produced for a polynomial of degree >= 1")

@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-22T15:55:01+00:00
+# PULSE — generated 2026-08-23T09:01:53+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,39 +8,39 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        616
-consumed (state changes):   317  {'queue_state': 289, 'registry': 26, 'findings': 2}
-consumed/emitted:           0.51
+emitted (new files):        692
+consumed (state changes):   268  {'queue_state': 242, 'registry': 25, 'findings': 1}
+consumed/emitted:           0.39
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 304
-- 6ea76aa0 08-22 11:28 Aporia P124: Campaign W pass 1/3 â€” instrument built; the ORACLE problem stated before measurement
-- a277a9bf 08-22 11:00 Aporia P123: allocation â€” SB blocked on missing data; CAMPAIGN W opens; my own X-5 recommendation corrected
-- 94af80ac 08-22 10:31 Aporia P122: CAMPAIGN X-5 TERMINAL â€” PARK (N4). The development effect did not transfer.
-- 37f7ed95 08-22 10:05 Aporia P121: X-5 pass 2/3 â€” a second artifact found, and two of my own verdict rules were wrong
-- 96b2a6b6 08-22 09:37 Aporia P120: X-5 pass 1/3 â€” B-DIAG verdict BUG; binomial 3/80 -> 63/80 after the fix
-- 6dc7cabc 08-22 09:08 Aporia P119: CAMPAIGN X-4 TERMINAL â€” PARK (M0). The preregistration parked a positive, as written.
-- 8da49249 08-22 08:42 Aporia P118: X-4 pass 2/3 â€” learned metric DOUBLES L2 and DESTROYS L1
-- 28a9506a 08-22 08:13 Techne cycle 048: the precision worry does not bite â€” and I overstated it in 047
-- 9e86b937 08-22 08:11 Aporia P117: campaign selection â€” X-4 opens; branches PROVED to partition; rebuild tax ended
-- 3e150bd3 08-22 07:45 Aporia P116: CAMPAIGN X-3 TERMINAL â€” REDESIGN; first earned L2 in three campaigns
-- e6da78d9 08-22 07:45 Techne cycle 048: PRE-REGISTRATION â€” does the 5.1e-6 Mahler precision limit bite a consumer?
-- aa06e865 08-22 07:18 Aporia P115: X-3 pass 2/3 â€” dev any-valid 0.964, but strict FELL; K3 chance corrected
-- e1813d9f 08-22 07:17 M1_STATUS 7q: P1 final â€” the band and the screen want opposite rungs
-- 8771f27e 08-22 07:16 Ergon: P1 FINAL â€” UNDECIDED-UNDERPOWERED, and it breaks my own recommendation
-- c8374458 08-22 07:13 Techne cycle 047: a four-role function was silently wrong â€” and the drift was a habit, not a structure
-- 4564e4ca 08-22 06:59 Ergon: circuit-break the drip on the REAL workload, not a cheap probe
-- 9c1f5c26 08-22 06:56 Techne cycle 047: PRE-REGISTRATION for the mahler_measure cross-role authority check
-- 5c790f19 08-22 06:52 Aporia P114: campaign selection â€” Y rejected as unresolvable, X-3 opens at 1/3
-- 257acefa 08-22 06:25 Aporia P113: CAMPAIGN X-2 TERMINAL â€” PARK (E4); the gate was never resolvable
-- 9ed726a4 08-22 06:21 M1_STATUS 7p: the accumulated corpus is 132M rows with ~2 bits of signature
-- 42ae7455 08-22 06:21 Ergon: full scan complete â€” 132M failure rows, ~2 bits of signature
-- 95497b2e 08-22 06:17 Techne cycle 046: a sentinel that was also a measurement â€” 48 impossible knot volumes removed
-- 02e54d7c 08-22 06:00 Techne cycle 046: PRE-REGISTRATION for the knot-volume conflation, before measuring C_site
-- 7620649b 08-22 05:58 Aporia P112: X-2 pass 2/3 â€” ground truth was not unique; hubness found; GATE PASSED 0.952 by one pair
-- dbe66d52 08-22 05:33 Techne cycle 045: full arc completed on my own arsenal â€” two real defects fixed
-- … +279 more
+## Commits, 72h (non-cron): 311
+- eba9bf29 08-23 04:29 Techne: arsenal_red scope corrected -- the count has always covered half the arsenal
+- 03be71b4 08-23 04:21 Techne cycle 051: #266 closed by build -- and the fix corrected two earlier cycles' diagnosis of it
+- e7364043 08-23 04:19 prometheus_math/techne: exactly-repeated roots go through an exact squarefree decomposition
+- cbc85634 08-23 04:12 Aporia P141: CYCLE 142-F â€” KILL on binary verbs, and the vocabulary question is SETTLED
+- c5ccb4f4 08-23 04:00 Techne cycle 051: PRE-REGISTRATION for the squarefree mahler_measure fix (closes reopened #266)
+- eb93079d 08-23 03:32 Aporia P140: CYCLE 141-E TERMINAL KILL â€” the vocabulary does not reach elliptic curves in either representation (+ restores P139, lost to a failed autostash)
+- fe902dce 08-23 02:58 Techne cycle 050: Band H built (O-1 repaired) â€” H1a NOT demonstrated, and my confidence field predicts nothing
+- 37483e68 08-23 02:55 Charon: a gate that cannot fail --- and a condition I published as met without checking rows
+- 056ea1f9 08-23 02:53 Techne cycle 050: PRE-REGISTRATION for the H1 self-calibration measurement (repairs O-1)
+- 574c8644 08-23 02:52 Charon: exit review #3 PASS (bounded) + four rulings; the Tier B gate was never computed
+- 8aff9f74 08-23 02:51 Techne cycle 049: #221 exercised, #78 closed, and a retrospective that falsified two of its own predictions
+- 91a26192 08-23 02:46 Techne cycle 049: retrospective audit of 001-048 â€” prediction 1 FALSIFIED, four omissions found
+- c6736671 08-23 02:43 Techne cycle 049: HITL #78 FIXED after 18 cycles â€” and the two-field fix alone would have leaked
+- 3d083b4d 08-23 02:40 Aporia P139: CYCLE 140-D TERMINAL KILL â€” the OEIS operator vocabulary does not reach elliptic curves
+- aac126e0 08-23 02:32 Techne cycle 049: PRE-REGISTRATION for the retrospective audit of cycles 001-048
+- a73aae63 08-23 02:15 Ergon: C7 second family FAILED its cold-band; drip finalize now transport-gated
+- cf45ac05 08-23 02:14 Charon: recover two destroyed ledgers â€” every ruling number had no rows under it
+- 2e06ccf4 08-23 02:14 Aporia P138: CYCLE 138-C' TERMINAL KILL â€” closure records are retrieval middleware, not scientific memory
+- 1cae6520 08-23 02:05 Merge prometheus_llm: one model API for the program
+- be55d5ee 08-23 01:33 iteration 29: model pipeline restored and validated offline
+- faf3ff13 08-23 01:28 iteration 28: confirmatory test void; mechanism closed as unresolved
+- e16ca9bc 08-23 01:20 Ergon: commit the probe ledgers â€” I nearly destroyed them by leaving them untracked
+- abe9d887 08-23 01:18 Ergon: M30 is LEVELED on the free host; kickoff prompt for Charon's rulings
+- c7c51724 08-23 01:14 iteration 27: candidate burden is causal; tree committed
+- 76254a24 08-23 01:12 Cognitive Ceiling v0: deterministic half, restored and audited
+- … +286 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records

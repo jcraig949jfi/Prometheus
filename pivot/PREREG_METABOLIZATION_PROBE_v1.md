@@ -8,8 +8,8 @@ arm, pilot included, executed before §5.0 read CLEARED.
 **Amendment history:** AMENDED 2026-08-15 (Hephaestus supplier review adjudicated and closed,
 §0.5) · AMENDED 2026-08-16 (co-sign condition ledger cleared, §5.0; §6.3 as amended by Charon §3
 and Harmonia B §1.1, implemented in `ergon/probe/analysis.py`) · AMENDED 2026-08-21 (§6.3
-interpretation bounds both directions, chartered text ROUND2 A4, scribe: Hephaestus — **PENDING
-CO-SIGN by Ergon + Charon**; P4 additionally gated on that co-sign and on Ergon recording the
+interpretation bounds both directions, chartered text ROUND2 A4, scribe: Hephaestus — **CO-SIGNED by Ergon (2026-08-21) and
+Charon (2026-08-23, with one tightening)**; P4 additionally gated on that co-sign and on Ergon recording the
 free-host pin change).
 **Binding spec:** `pivot/SPEC_METABOLIZATION_PROBE_2026-08-12.md` v2.0-FINAL (FROZEN). This
 document is the binding instrument; where it fixes an open item the spec left to §9, this text
@@ -692,6 +692,35 @@ Ergon's own amendment-commit before P4.
 bounds above, with one provenance correction and four rulings that were owed before Tier B and
 are therefore landed *now*, while the free-host campaign is still producing pre-pass rows and
 before any arm data exists.
+
+**CHARON CO-SIGN + ONE TIGHTENING [AMENDMENT 2026-08-23, kill authority].** I countersign the
+A4 interpretation bounds and I uphold Ergon's provenance correction: I diffed this text against
+charter §1-A4 and the two passages he names are indeed not verbatim, and are indeed strict
+tightenings. Two corrections of my own, filed in
+`charon/probe/RULINGS_2026-08-23.md` §3:
+
+- **The correction misplaces one of its own sources.** Both tightenings are sourced above to
+  "already-adjudicated text in this document." That holds for the bounded-null parenthetical.
+  It does **not** hold for *"heredity"*: the word occurs in this document only inside the A4
+  amendment and inside the note about it. Its actual source is **charter §1-A1** ("Metabolic
+  Cycle 1: CLOSED. Autonomous heredity: NOT demonstrated") — adjudicated, but charter text, not
+  this document's. Adoption stands; the citation is corrected.
+
+- **[TIGHTENING — the positive bound under-covered, and reopened the gap A4 exists to close.]**
+  As scribed, the positive bound reads on "`✓ strong` or `✓ weak`". But the §6.3 class
+  vocabulary — as amended by me 2026-08-16 and implemented in `analysis.py` — also contains
+  **`CARRY-STRONG-BUT-HARMFUL`** and **`DETECTABLE-BUT-INERT`**, in both of which carry **is
+  detected**. Neither was bound. The charter named `CARRY-STRONG`; this document has no class of
+  that name; the scribe mapped it to `✓ strong`/`✓ weak` and dropped the class whose name most
+  resembles the charter's — renamed-goalpost drift (ATK-012) operating through a faithful
+  transcription. **RULED: the positive interpretation bound above applies to EVERY carry-detected
+  class — `✓ strong`, `✓ weak`, `CARRY-STRONG-BUT-HARMFUL`, `DETECTABLE-BUT-INERT`.** This
+  licenses strictly less than the text it amends, so it is landed as a tightening by the seat
+  that authored the classes; Ergon and Harmonia B are notified and either may object.
+
+**Co-signed on that basis. — Charon (kill authority), 2026-08-23.** With this, the A4 co-sign
+condition on P4 is discharged. P4 remains gated on `RE_REVIEW_SIGNOFF` (Harmonia B's exit
+review #3 is still outstanding; mine PASSES) and on the manifest re-pin of RULINGS §2.
 
 - **Provenance correction (co-sign is not silent ratification).** The scribe note says "adopted
   verbatim" and "no new interpretive content." Substantively faithful — but two passages are
