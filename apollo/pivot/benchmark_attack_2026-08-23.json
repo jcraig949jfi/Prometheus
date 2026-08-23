@@ -1,0 +1,158 @@
+{
+  "n_tasks": 120,
+  "best_single_heuristic": {
+    "label": "mentioned last in prompt",
+    "overall": 0.35,
+    "per_subset": {
+      "canary": 0.26,
+      "synth": 0.367,
+      "inference": 0.5,
+      "cross_tier": 0.4
+    }
+  },
+  "all_heuristics": [
+    {
+      "label": "mentioned last in prompt",
+      "overall": 0.35,
+      "per_subset": {
+        "canary": 0.26,
+        "synth": 0.367,
+        "inference": 0.5,
+        "cross_tier": 0.4
+      }
+    },
+    {
+      "label": "always answer yes",
+      "overall": 0.35,
+      "per_subset": {
+        "canary": 0.4,
+        "synth": 0.3,
+        "inference": 0.25,
+        "cross_tier": 0.4
+      }
+    },
+    {
+      "label": "longest candidate",
+      "overall": 0.342,
+      "per_subset": {
+        "canary": 0.22,
+        "synth": 0.4,
+        "inference": 0.5,
+        "cross_tier": 0.4
+      }
+    },
+    {
+      "label": "shortest candidate",
+      "overall": 0.333,
+      "per_subset": {
+        "canary": 0.42,
+        "synth": 0.2,
+        "inference": 0.25,
+        "cross_tier": 0.4
+      }
+    },
+    {
+      "label": "max lexical overlap w/ prompt",
+      "overall": 0.317,
+      "per_subset": {
+        "canary": 0.28,
+        "synth": 0.3,
+        "inference": 0.35,
+        "cross_tier": 0.4
+      }
+    },
+    {
+      "label": "leading number occurs in prompt",
+      "overall": 0.317,
+      "per_subset": {
+        "canary": 0.32,
+        "synth": 0.3,
+        "inference": 0.25,
+        "cross_tier": 0.4
+      }
+    },
+    {
+      "label": "largest leading number",
+      "overall": 0.317,
+      "per_subset": {
+        "canary": 0.38,
+        "synth": 0.2,
+        "inference": 0.25,
+        "cross_tier": 0.4
+      }
+    },
+    {
+      "label": "mentioned first in prompt",
+      "overall": 0.292,
+      "per_subset": {
+        "canary": 0.26,
+        "synth": 0.3,
+        "inference": 0.65,
+        "cross_tier": 0.0
+      }
+    },
+    {
+      "label": "first candidate",
+      "overall": 0.292,
+      "per_subset": {
+        "canary": 0.26,
+        "synth": 0.3,
+        "inference": 0.25,
+        "cross_tier": 0.4
+      }
+    },
+    {
+      "label": "last candidate",
+      "overall": 0.275,
+      "per_subset": {
+        "canary": 0.24,
+        "synth": 0.3,
+        "inference": 0.45,
+        "cross_tier": 0.15
+      }
+    },
+    {
+      "label": "rarest-token candidate",
+      "overall": 0.25,
+      "per_subset": {
+        "canary": 0.3,
+        "synth": 0.267,
+        "inference": 0.1,
+        "cross_tier": 0.25
+      }
+    },
+    {
+      "label": "alphabetically first",
+      "overall": 0.2,
+      "per_subset": {
+        "canary": 0.04,
+        "synth": 0.333,
+        "inference": 0.3,
+        "cross_tier": 0.3
+      }
+    },
+    {
+      "label": "least mentioned in prompt",
+      "overall": 0.158,
+      "per_subset": {
+        "canary": 0.26,
+        "synth": 0.2,
+        "inference": 0.0,
+        "cross_tier": 0.0
+      }
+    }
+  ],
+  "trivial_portfolio_oracle": 0.925,
+  "apollo_max_acc": 0.833,
+  "apollo_portfolio_coverage": 0.833,
+  "generated": "2026-08-23",
+  "generator": "Apollo (M2)",
+  "per_subset_best_trivial": {
+    "canary": 0.42,
+    "synth": 0.4,
+    "inference": 0.65,
+    "cross_tier": 0.4
+  },
+  "tuned_trivial_router": 0.45,
+  "reading": "Apollo's SINGLE-ORGANISM claim survives (0.833 vs 0.350 best single trivial rule, 0.45 per-subset-tuned trivial router). Apollo's PORTFOLIO-COVERAGE claim does not: an oracle over 13 one-line heuristics covers 0.925 vs Apollo's 0.833, and both are oracles requiring a router, so the comparison is like-for-like."
+}
