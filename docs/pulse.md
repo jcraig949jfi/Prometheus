@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-23T07:32:00+00:00
+# PULSE — generated 2026-08-23T08:11:49+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        687
-consumed (state changes):   268  {'queue_state': 242, 'registry': 25, 'findings': 1}
+emitted (new files):        688
+consumed (state changes):   269  {'queue_state': 243, 'registry': 25, 'findings': 1}
 consumed/emitted:           0.39
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 308
+## Commits, 72h (non-cron): 309
+- c5ccb4f4 08-23 04:00 Techne cycle 051: PRE-REGISTRATION for the squarefree mahler_measure fix (closes reopened #266)
+- eb93079d 08-23 03:32 Aporia P140: CYCLE 141-E TERMINAL KILL â€” the vocabulary does not reach elliptic curves in either representation (+ restores P139, lost to a failed autostash)
 - fe902dce 08-23 02:58 Techne cycle 050: Band H built (O-1 repaired) â€” H1a NOT demonstrated, and my confidence field predicts nothing
 - 37483e68 08-23 02:55 Charon: a gate that cannot fail --- and a condition I published as met without checking rows
 - 056ea1f9 08-23 02:53 Techne cycle 050: PRE-REGISTRATION for the H1 self-calibration measurement (repairs O-1)
@@ -38,9 +40,7 @@ verdict: ALIVE
 - a3909031 08-22 16:59 Aporia P136: CAMPAIGN R pass 1 â€” TERMINAL REDESIGN. R4 is a probe set without solvers.
 - eca2351e 08-22 16:33 Aporia P135: allocation â€” CAMPAIGN R opens on the reasoning ladder; 44 PROF rows rest on a category error
 - f8b48404 08-22 16:01 Aporia P134: CAMPAIGN F â€” F3 MOSTLY-ATOMIC. 220 atomic candidates. The OEIS line CLOSES.
-- 19fac8f6 08-22 15:32 Aporia P133: CAMPAIGN V (one pass) â€” V1 KEEP, and a triviality split the audit chain cannot see
-- cfe01488 08-22 15:06 Aporia P132: CAMPAIGN U (one pass) â€” U3 SURVIVES. Population correction does not destroy S/T.
-- … +283 more
+- … +284 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
