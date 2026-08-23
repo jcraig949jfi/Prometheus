@@ -107,6 +107,25 @@ and it needs one working lane window.
 
 ---
 
+## Mechanism — CLOSED AS UNRESOLVED (iteration 28)
+
+| intervention | result | status |
+|---|---|---|
+| enlarge candidate pool (sig_tags 4→2, F_T) | gap +0.284 → +0.129, pool 78 → 167 | **causal, 2.7 SE** |
+| shrink candidate pool (sig_depth 1, F_MT-6) | pool 122 → 0, gap → 0.000 | **VOID — lever degenerate** |
+
+Enlarging the pool causally halves P3d's advantage with the hidden algebra held
+identical. That is the only causal statement about the learner machinery this
+experiment supports. The reverse test was void: the burden-reducing lever
+collapsed the pool to zero, and the F_T control confirms this — its advantage was
+destroyed too (+0.284 → +0.000), which a valid graded reducer would not have done.
+
+Per the pre-registered stopping rule, mechanism search is now CLOSED and reported
+UNRESOLVED. Five scalar accounts were refuted; one causal factor is implicated but
+not shown sufficient.
+
+---
+
 ## What is NOT in this table
 
 Sweeps from iterations 15, 17, 19 and 21 used 5-12 seeds and have not been

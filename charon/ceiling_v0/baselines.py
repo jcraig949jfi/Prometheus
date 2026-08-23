@@ -184,7 +184,8 @@ class DataDrivenProposer:
 
     mode = "datadriven"
 
-    def __init__(self, uni: Universe, rng: random.Random, sig_tags: int = 0):
+    def __init__(self, uni: Universe, rng: random.Random, sig_tags: int = 0,
+                 sig_depth: int = 0):
         self.uni, self.rng = uni, rng
         self.obs: Dict[Tuple[str, Tuple[str, ...]], str] = {}
         # CANDIDATE-BURDEN KNOB (iteration 27). A candidate is admitted when its
@@ -194,6 +195,13 @@ class DataDrivenProposer:
         # burden DOWNSTREAM of the arena, leaving the hidden algebra untouched,
         # which is what makes it a causal test rather than another family sweep.
         self.sig_tags = sig_tags or len(uni.tags)
+        # BURDEN REDUCER (iteration 28). sig_tags cannot exceed the tag count, so
+        # tightening admission beyond "agrees on all tags" needs another lever.
+        # sig_depth=1 additionally requires agreement on every observed one-step
+        # continuation, which is strictly stronger evidence and therefore admits
+        # a SMALLER, purer pool. No arena change, no extra interactions -- it
+        # reuses observations already paid for, exactly like the base proposer.
+        self.sig_depth = sig_depth
 
     def observe(self, inter: Interaction) -> None:
         for i in range(len(inter.word) + 1):
@@ -206,6 +214,13 @@ class DataDrivenProposer:
             if v is None:
                 return None
             out.append(v)
+        for _ in range(self.sig_depth):
+            for t in self.uni.tags[:self.sig_tags]:
+                for a in self.uni.actions:
+                    v = self.obs.get((t, w + (a,)))
+                    if v is None:
+                        return None          # unobserved continuation -> reject
+                    out.append(v)
         return tuple(out)
 
     def propose(self, store: ArtifactStore, n: int):
@@ -248,8 +263,9 @@ class RelevanceProposer(DataDrivenProposer):
 
     def __init__(self, uni: Universe, rng: random.Random,
                  len_lo: int = 8, len_hi: int = 12, n_probe_words: int = 120,
-                 ranking: str = "compression", sig_tags: int = 0):
-        super().__init__(uni, rng, sig_tags=sig_tags)
+                 ranking: str = "compression", sig_tags: int = 0,
+                 sig_depth: int = 0):
+        super().__init__(uni, rng, sig_tags=sig_tags, sig_depth=sig_depth)
         self.ranking = ranking
         self.synthetic = [
             [rng.choice(uni.actions) for _ in range(rng.randint(len_lo, len_hi))]
@@ -305,7 +321,8 @@ class RelevanceProposer(DataDrivenProposer):
 def substrate_arm(uni: Universe, evalset: EvalSet, seed: int, cfg: ArmConfig,
                   rounds: int, proposer_mode: str = "random",
                   inject_wrong: int = 0,
-                  sig_tags: int = 0) -> Tuple[List[Dict], ArtifactStore]:
+                  sig_tags: int = 0,
+                  sig_depth: int = 0) -> Tuple[List[Dict], ArtifactStore]:
     """The relevance proposer scores against synthetic words drawn from the query
     length range, which is arm-visible because the task statement discloses it.
     That range is read off the eval set rather than hardcoded, so the arm stays
@@ -318,9 +335,10 @@ def substrate_arm(uni: Universe, evalset: EvalSet, seed: int, cfg: ArmConfig,
         prop = RelevanceProposer(uni, rng, ranking=rank,
                                  len_lo=getattr(evalset, "len_lo", 8),
                                  len_hi=getattr(evalset, "len_hi", 12),
-                                 sig_tags=sig_tags)
+                                 sig_tags=sig_tags, sig_depth=sig_depth)
     elif proposer_mode == "datadriven":
-        prop = DataDrivenProposer(uni, rng, sig_tags=sig_tags)
+        prop = DataDrivenProposer(uni, rng, sig_tags=sig_tags,
+                                  sig_depth=sig_depth)
     else:
         prop = RandomProposer(uni, rng)
     arm = f"P3c-{proposer_mode}"

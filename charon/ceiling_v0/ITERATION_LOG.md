@@ -1198,3 +1198,72 @@ ceiling_v0 terminates and mechanism is reported unresolved. Either way, mechanis
 work stops after that and effort redirects to the model lane.
 
 **Guards green.**
+
+---
+
+## Iteration 28 — 2026-08-23 — confirmatory test VOID; mechanism search closed as
+## unresolved per the pre-registered stopping rule
+
+**Lane:** openrouter 402, nvidia timeout. Nineteen iterations without a usable lane.
+
+**The one permitted experiment.** Iteration 27 showed causally that ENLARGING the
+candidate pool halves P3d's advantage with the algebra untouched. The binary
+decision recorded before that run allowed exactly one confirmatory test: the
+reverse direction, in the arena where the advantage had collapsed.
+
+**Design.** `sig_depth=1` admits a candidate only if its two words agree on all
+tags AND on every observed one-step continuation — strictly stronger evidence,
+therefore a smaller purer pool. Orthogonal to iteration 27's intervention: that
+loosened admission in a 4-action arena, this tightens it in a 6-action arena, in
+the opposite direction, in the regime where the effect was absent.
+
+```
+arena                sig_depth  pool    P3c    P3d      gap     SE
+F_MT 6 actions               0   122  0.276  0.299   +0.023  0.009
+F_MT 6 actions               1     0  0.275  0.275   +0.000  0.000
+F_T 4 actions (control)      0   124  0.364  0.647   +0.284  0.042
+F_T 4 actions (control)      1     1  0.249  0.249   +0.000  0.005
+```
+
+**The test is void, and the control is what proves it.** Requiring agreement on
+every observed continuation is so strict that essentially no candidate qualifies
+at this observation density: the pool went to ZERO, both arms acquired nothing,
+both scored fallback. F_T's advantage was destroyed as well, +0.284 -> +0.000. A
+valid graded burden-reducer would have preserved it. The lever annihilated the
+pool rather than shrinking it.
+
+**Honouring the stopping rule anyway.** F1 fired by the letter of the
+pre-registration, so mechanism search in ceiling_v0 is **CLOSED** and mechanism is
+reported **UNRESOLVED**. That phrasing is deliberate: the question was not
+answered, and burden was NOT refuted. I could repair the lever with a partial
+depth and re-run, and I am choosing not to, because the stopping rule exists
+precisely to prevent an indefinite account-per-iteration treadmill and its value
+comes from being honoured when inconvenient.
+
+**Final position on the three tiers.**
+
+- **Tier A, findings — durable.** P3d beats P3c in F_T by +0.284 (SE 0.042); rules
+  and memo are complementary (0.254 / 0.254 alone, 0.364 together); frequently-used
+  rules causally matter (deleting 9 most-used costs 0.088 vs 0.042 random vs 0.000
+  least-used); a foreign-universe store fires on 13% of queries but confers nothing;
+  normalisation is sound given true rules (0 violations in 3000 words); accuracy =
+  coverage + (1-coverage)*fallback with residuals under one point; the advantage
+  grows with probing in the tested regime.
+- **Tier B, boundary — also a finding.** The advantage is strongly
+  environment-dependent and no tested scalar predicts it across orthogonal
+  structural interventions. Five accounts refuted. This does not establish that no
+  simple determinant exists, only that none of the tested ones generalises.
+- **Tier C, mechanism — CLOSED, UNRESOLVED.** One causal factor implicated
+  (candidate-pool burden: doubling the pool halves the advantage) but not shown
+  sufficient. The confirmatory test was void.
+
+**The conceptual result that outlives the failed accounts.** Oracle ceiling and
+exploitable structure are different quantities. F_MT-6 is nearly maximally
+compressible (0.870) and yields +0.023. A world can be rich in compressible
+structure and still be hard for a bounded learner because the search economics of
+acquiring it are hostile. That is the finding this experiment actually supports
+about cognitive ceilings, and it came from the deterministic half.
+
+**Effort now redirects to the model lane per the standing plan.** The deterministic
+explanatory program is closed. Nine modules remain unrestored and no lane has
+worked since iteration 8.
