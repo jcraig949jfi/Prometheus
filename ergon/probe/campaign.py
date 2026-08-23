@@ -309,7 +309,11 @@ class Arms:
     def __init__(self, rows, gold):
         self.rows_by_uid = {r["uid"]: r for r in rows}
         self.gold = gold
-        self.pool = load_prepass(DIR / "p1_prepass.jsonl")
+        # ledger_id must match the cutoff vector this campaign registers, and the M-rung
+        # task family is COUNT — its prose channel is a measured answer oracle, so the
+        # policy is stated here rather than inferred from a filename prefix.
+        self.pool = load_prepass(DIR / "p1_prepass.jsonl",
+                                 ledger_id="p1_prepass", withhold_prose=True)
         self.tau = {"p1_prepass": 10 ** 9}
         b = best(DIR / "p1_prepass.jsonl")
         self.rep1_ok = {u: (b.get((1, u)) or {}).get("extracted_int") == gold[u] for u in gold}
