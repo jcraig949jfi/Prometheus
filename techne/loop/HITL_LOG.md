@@ -1521,3 +1521,45 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      produced its "arsenal red" count.** 48 cycles report 28/29/30 with no reproduction line,
      so prediction 3 required re-deriving the scope from scratch. Standing fix adopted: every
      reported count ships its command.
+
+
+## Cycle 050 (2026-08-23) — Band H built (O-1 repaired); H1a NOT demonstrated
+
+287. **O-1 REPAIRED: Band H is built, not described.** H1a measured on the only reasoner whose
+     complete pre-registered record I own — this loop. H1b (other reasoners) explicitly OUT of
+     scope and still hypothesis; canon puts it behind the unrun model zoo.
+288. **H1a VERDICT: NOT DEMONSTRATED, and it failed at the SECOND gate.** The prereg's kill test
+     was instrument grounds (no confidence axis -> no calibration possible). **That gate passed**
+     — six preregs carry an ordinal confidence on every prediction. It fails at the next one:
+     `high` = 0.67 and `moderate` = 0.67, **9 of the 13 rows at the same rate.** My stated
+     confidence adds no discriminating information over the counter-baseline. **It is a field I
+     fill in, not a model I hold.** Baseline recorded: `p_held = 9/13 = 0.692`, flat.
+289. **MY OWN P3 WAS FALSIFIED BY A WRONG-POPULATION ERROR — FIFTH INSTANCE, INSIDE THE CYCLE
+     ABOUT KNOWING MY OWN MISTAKES.** I predicted no confidence field existed anywhere; my two
+     most recent preregs (049, 050) had **dropped** the field the six before them carried, and I
+     generalised from those two to the corpus. Recency weighted as if it were the population.
+290. **BUILD-DEBT NAMED AND CHEAP:** restore the confidence field on every prediction (my last
+     two regressed on it), accumulate rows, re-run the curve. The instrument now exists.
+291. **JAMES — HITL #266 IS REOPENED, AND CYCLE 048'S VERDICT IS OVERTURNED.**
+     `MAHLER_CROSS_ROLE` prediction 3 — *"the product rule M(fg)=M(f)M(g) holds"*, confidence
+     **HIGH** — has **no recorded outcome in cycle 047**, and it is **FALSE**.
+     `test_property_MULTIPLICATIVITY` is RED on `f = [1,1,-1,-1] = (x+1)^2(x-1)`: all roots on
+     the unit circle so `M = 1` exactly, but `M(f*f)` computes to **1.000146** against a
+     tolerance of `rel=1e-5`. **Mechanism measured: `np.roots` displaces an m-fold root by
+     `eps^(1/m)`, not `eps`** — `eps^(1/4) = 1.22e-4` vs observed 1.46e-4.
+     Cycle 048 closed #266 as "does not bite" from all 8,625 catalog entries at max error
+     4.481e-10 — **but the catalog is Salem/Lehmer-type with SIMPLE ROOTS.** `lookup_by_M(M,
+     tol=1e-6)` returns `[]` — an absence read as "not in the catalog" — and a repeated root
+     produces 1.5e-4. **Cycle 048's own ChatGPT block asked whether that verdict was too strong
+     for polynomials outside the table. It was, and this is the counterexample. I raised the
+     right question and did not run it.**
+292. **NOT PATCHED THIS CYCLE, DELIBERATELY.** The honest fix is squarefree decomposition before
+     root-finding — a real build that does not get smuggled into a cycle about something else
+     (cycle 045's own rule, applied to me). Queued as the next Track 1 item.
+293. **ARSENAL-RED BASELINE, WITH ITS COMMAND** (cycle 049's standing fix, exercised):
+     `python -m pytest prometheus_math -q --continue-on-collection-errors -p no:cacheprovider`
+     -> **38 failed, 4131 passed, 137 skipped, 5 xfailed, 3 errors, 19:20.**
+     **NOT compared to cycle 048's "30"** — that scope was never recorded and this one is wider
+     (4,306 collected vs ~3,576). New baseline, not a delta.
+294. **#242 STILL UNRULED.** Most of the 38 remain dependency artifacts. My cycle-049 egglog
+     dangle still stands against my own ask.
