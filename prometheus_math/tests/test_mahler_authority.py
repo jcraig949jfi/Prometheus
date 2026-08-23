@@ -183,7 +183,17 @@ def test_the_MEASURED_precision_budget_of_multiplicativity():
         for j, b in enumerate(g):
             prod[i + j] += a * b
     rel = abs(mahler_measure(prod) - mahler_measure(f) * mahler_measure(g)) / mahler_measure(f)
-    assert 1e-9 < rel < 1e-4, f"the documented ill-conditioned case moved: rel={rel}"
+    # CYCLE 051 — THIS CASE IS NOW EXACT, AND THE OLD DIAGNOSIS WAS WRONG.
+    # The bracket here used to be `1e-9 < rel < 1e-4`, recording this as an inherent
+    # precision budget of the tool. It was not. f(1) = 1+0-1+1-3+1+1 = 0, so f carries the
+    # factor (x-1) and g IS (x-1) — their product has a DOUBLE ROOT AT z = 1, sitting
+    # exactly on the unit circle, which is the one place where np.roots' eps^(1/m)
+    # displacement survives into M (max(1,|alpha|) clips the copies that fall inside and
+    # keeps the ones that fall outside). Squarefree decomposition splits the factor out and
+    # the error goes to zero. Cycle 047 measured this correctly and CALLED IT THE WRONG
+    # THING; cycle 048's 5.1e-6 analysis was analysing this defect without recognising it.
+    # The bound is TIGHTENED to the new measurement, never loosened (HITL #267).
+    assert rel < 1e-13, f"the repeated-root fix regressed on its own witness: rel={rel}"
 
 
 # ---- 3. EDGE CASES -------------------------------------------------------------------------------
