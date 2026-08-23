@@ -240,9 +240,9 @@ def main():
     claims = db["claims"]
     tiers = ("fast", "slow") if args.slow else ("fast",)
 
-    print(f"{'claim':32s} {'recorded':>9s} {'now':>9s} {'delta':>9s}  drift  "
-          f"{'evidence':>9s}  standing")
-    print("-" * 96)
+    print(f"{'claim':30s} {'recorded':>9s} {'now':>9s} {'delta':>8s}  drift fam  "
+          f"{'standing':14s} untried/blind      favours")
+    print("-" * 108)
     drift, results = [], {}
     for name, (fn, tier) in CHECKS.items():
         if tier not in tiers or name not in claims:
@@ -260,12 +260,14 @@ def main():
         ok = abs(d) <= tol
         results[name] = got
         cl = claims[name]
-        nsurv = len(cl.get("survived_falsifications", []))
-        need = cl.get("required_falsifications", 1)
+        nfam = cl.get("n_distinct_families", 0)
+        need = cl.get("required_families", 1)
         standing = cl.get("status", "?")
-        print(f"{name:32s} {exp:>9.3f} {got:>9.3f} {d:>+9.3f}  "
-              f"{'ok   ' if ok else 'DRIFT'}  {nsurv:>4d}/{need:<4d}  {standing}"
-              f"{'' if standing == 'ESTABLISHED' else '  (' + cl.get('favours_lane','') + ')'}")
+        untried = len(cl.get("kill_paths_named_but_not_tried", []))
+        blind = len(cl.get("known_blind_spots", []))
+        print(f"{name:30s} {exp:>9.3f} {got:>9.3f} {d:>+8.3f}  "
+              f"{'ok   ' if ok else 'DRIFT'} {nfam}/{need}  {standing:14s} "
+              f"untried={untried} blind={blind}  ({cl.get('favours_lane','')})")
         if not ok:
             drift.append((name, exp, got, claims[name]["why"]))
 
@@ -289,17 +291,20 @@ def main():
         CLAIMS.write_text(json.dumps(db, indent=2), encoding="utf-8")
         print(f"\ninitialised claim registry -> {CLAIMS}")
 
-    prov = [n for n in results if claims[n].get("status") == "PROVISIONAL"]
-    fav_prov = [n for n in prov if claims[n].get("favours_lane") == "favours"]
-    print(f"\nPROVISIONAL: {len(prov)} of {len(results)} claims have not yet survived the "
-          f"required number of independent falsifications.")
-    if fav_prov:
-        print(f"  Of those, {len(fav_prov)} FAVOUR the lane and are therefore the ones most "
-              f"likely to be wrong and least likely to be attacked:")
-        for n in fav_prov:
-            print(f"    {n} ({len(claims[n]['survived_falsifications'])}/"
-                  f"{claims[n]['required_falsifications']})")
+    under = [n for n in results if claims[n].get("status") == "UNDER-ATTACKED"]
+    untried_total = sum(len(claims[n].get("kill_paths_named_but_not_tried", [])) for n in results)
+    blind_total = sum(len(claims[n].get("known_blind_spots", [])) for n in results)
     print()
+    print("No claim is ever ESTABLISHED. The terminal state is UNKILLED — not yet killed.")
+    print("When something survives, the likeliest explanation is a missing kill path.")
+    print(f"  UNDER-ATTACKED (too few distinct kill-path families): {len(under)} of {len(results)}")
+    print(f"  kill paths NAMED BUT NOT TRIED: {untried_total}")
+    print(f"  known blind spots (no instrument exists for these): {blind_total}")
+    for n in results:
+        for b in claims[n].get("known_blind_spots", []):
+            print(f"    [{n}] {b}")
+    print()
+
     if drift:
         print(f"DRIFT DETECTED in {len(drift)} claim(s):")
         for n, e, g, why in drift:

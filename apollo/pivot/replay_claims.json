@@ -6,12 +6,28 @@
       "recorded": "2026-06-27",
       "why": "the headline max_acc. If this moves, every Apollo number moves.",
       "favours_lane": "favours",
-      "survived_falsifications": [
-        "re-scored 2026-08-23 replay harness",
-        "O1 enumeration positive control 2026-08-23"
+      "status": "UNDER-ATTACKED",
+      "kill_path_families": {
+        "re_execution": [
+          "replay harness 2026-08-23",
+          "O1 positive control 2026-08-23"
+        ],
+        "environment_perturbation": [
+          "PYTHONHASHSEED 0-7, 2026-08-23: value identical at every seed"
+        ]
+      },
+      "n_distinct_families": 2,
+      "kill_paths_named_but_not_tried": [
+        "independent re-implementation of the scorer",
+        "held-out battery authored by someone else",
+        "per-task audit that each solve is for the intended reason",
+        "locale/platform perturbation",
+        "different Python minor version"
       ],
-      "required_falsifications": 3,
-      "status": "PROVISIONAL"
+      "known_blind_spots": [
+        "no instrument distinguishes 'solved for the right reason' from 'solved'; the battery is ours, so an authored-in regularity is invisible to every check we own"
+      ],
+      "required_families": 3
     },
     "known_organism_routable_acc": {
       "value": 1.0,
@@ -19,11 +35,23 @@
       "recorded": "2026-06-27",
       "why": "one organism fully solves synth+inference+cross_tier.",
       "favours_lane": "favours",
-      "survived_falsifications": [
-        "re-scored 2026-08-23 replay harness"
+      "status": "UNDER-ATTACKED",
+      "kill_path_families": {
+        "re_execution": [
+          "replay harness 2026-08-23"
+        ],
+        "environment_perturbation": [
+          "PYTHONHASHSEED 0-7, 2026-08-23: value identical at every seed"
+        ]
+      },
+      "n_distinct_families": 2,
+      "kill_paths_named_but_not_tried": [
+        "same three as above, restricted to the routable subsets",
+        "locale/platform perturbation",
+        "different Python minor version"
       ],
-      "required_falsifications": 3,
-      "status": "PROVISIONAL"
+      "known_blind_spots": [],
+      "required_families": 3
     },
     "cross_tier_solver_acc": {
       "value": 1.0,
@@ -31,11 +59,26 @@
       "recorded": "2026-06-10",
       "why": "the cross-tier falsification. The multi-tier organism is the unique solver.",
       "favours_lane": "favours",
-      "survived_falsifications": [
-        "re-scored 2026-08-23 replay harness"
+      "status": "UNDER-ATTACKED",
+      "kill_path_families": {
+        "re_execution": [
+          "replay harness 2026-08-23"
+        ],
+        "environment_perturbation": [
+          "PYTHONHASHSEED 0-7, 2026-08-23: value identical at every seed"
+        ]
+      },
+      "n_distinct_families": 2,
+      "kill_paths_named_but_not_tried": [
+        "hand-audit of all 20 cross-tier tasks for answer leakage",
+        "adversarial cross-tier tasks authored to defeat this exact pipeline",
+        "locale/platform perturbation",
+        "different Python minor version"
       ],
-      "required_falsifications": 3,
-      "status": "PROVISIONAL"
+      "known_blind_spots": [
+        "same: we authored the cross-tier tasks AND the solver"
+      ],
+      "required_families": 3
     },
     "bridge_load_bearing_delta": {
       "value": 0.6,
@@ -43,12 +86,22 @@
       "recorded": "2026-08-23",
       "why": "removing relations_from_facts drops cross-tier accuracy by 0.6, from 1.0 to the 0.4 trivial-heuristic floor for that subset \u2014 NOT to zero. My first baseline here assumed 1.0 from the June write-up; measured, it is 0.6. The bridge is load-bearing for everything above the benchmark artifact floor, which is the honest form of the claim.",
       "favours_lane": "favours",
-      "survived_falsifications": [
-        "type-bridge 2x2 A1 arm 0/5 (2026-08-19)",
-        "re-measured 2026-08-23 \u2014 original 1.0 baseline was WRONG, is 0.6"
+      "status": "UNDER-ATTACKED",
+      "kill_path_families": {
+        "search_level_ablation": [
+          "type-bridge 2x2 A1 arm 0/5"
+        ],
+        "direct_ablation": [
+          "re-measured 2026-08-23; the 1.0 baseline was WRONG"
+        ]
+      },
+      "n_distinct_families": 2,
+      "kill_paths_named_but_not_tried": [
+        "ablate the bridge inside OTHER organisms, not just this one",
+        "task-level: which 40% survive bridge removal, and why"
       ],
-      "required_falsifications": 3,
-      "status": "PROVISIONAL"
+      "known_blind_spots": [],
+      "required_families": 3
     },
     "single_primitive_baseline": {
       "value": 0.0,
@@ -56,11 +109,18 @@
       "recorded": "2026-08-23",
       "why": "pinned at 0 by construction, which makes comp_lift identical to acc. If it ever moves, comp_lift starts meaning something and every historical ccs reading needs reinterpreting.",
       "favours_lane": "adverse",
-      "survived_falsifications": [
-        "measured 2026-08-23"
+      "status": "UNKILLED",
+      "kill_path_families": {
+        "direct_measurement": [
+          "measured 2026-08-23"
+        ]
+      },
+      "n_distinct_families": 1,
+      "kill_paths_named_but_not_tried": [
+        "confirm no task class was silently excluded from the field"
       ],
-      "required_falsifications": 1,
-      "status": "ESTABLISHED"
+      "known_blind_spots": [],
+      "required_families": 1
     },
     "registry_size": {
       "value": 27.0,
@@ -68,9 +128,12 @@
       "recorded": "2026-08-23",
       "why": "the pool grew 14 -> 25 unnoticed and cost 8.6x search efficiency. Growth is allowed; growth WITHOUT NOTICE is what caused the rot.",
       "favours_lane": "neutral",
-      "survived_falsifications": [],
-      "required_falsifications": 1,
-      "status": "PROVISIONAL"
+      "status": "UNDER-ATTACKED",
+      "kill_path_families": {},
+      "n_distinct_families": 0,
+      "kill_paths_named_but_not_tried": [],
+      "known_blind_spots": [],
+      "required_families": 1
     },
     "transformer_count": {
       "value": 15.0,
@@ -78,9 +141,12 @@
       "recorded": "2026-08-23",
       "why": "as above.",
       "favours_lane": "neutral",
-      "survived_falsifications": [],
-      "required_falsifications": 1,
-      "status": "PROVISIONAL"
+      "status": "UNDER-ATTACKED",
+      "kill_path_families": {},
+      "n_distinct_families": 0,
+      "kill_paths_named_but_not_tried": [],
+      "known_blind_spots": [],
+      "required_families": 1
     },
     "scorer_count": {
       "value": 10.0,
@@ -88,9 +154,12 @@
       "recorded": "2026-08-23",
       "why": "as above.",
       "favours_lane": "neutral",
-      "survived_falsifications": [],
-      "required_falsifications": 1,
-      "status": "PROVISIONAL"
+      "status": "UNDER-ATTACKED",
+      "kill_path_families": {},
+      "n_distinct_families": 0,
+      "kill_paths_named_but_not_tried": [],
+      "known_blind_spots": [],
+      "required_families": 1
     },
     "battery_size": {
       "value": 120.0,
@@ -98,9 +167,12 @@
       "recorded": "2026-08-23",
       "why": "every accuracy in the corpus is denominated in this battery.",
       "favours_lane": "neutral",
-      "survived_falsifications": [],
-      "required_falsifications": 1,
-      "status": "PROVISIONAL"
+      "status": "UNDER-ATTACKED",
+      "kill_path_families": {},
+      "n_distinct_families": 0,
+      "kill_paths_named_but_not_tried": [],
+      "known_blind_spots": [],
+      "required_families": 1
     },
     "terminal_only_acc": {
       "value": 0.292,
@@ -108,23 +180,41 @@
       "recorded": "2026-08-23",
       "why": "the no-composition floor Apollo must beat to mean anything.",
       "favours_lane": "neutral",
-      "survived_falsifications": [
-        "measured 2026-08-23"
+      "status": "UNKILLED",
+      "kill_path_families": {
+        "direct_measurement": [
+          "measured 2026-08-23"
+        ]
+      },
+      "n_distinct_families": 1,
+      "kill_paths_named_but_not_tried": [
+        "all 10 terminals, not just score_by_max_value"
       ],
-      "required_falsifications": 1,
-      "status": "ESTABLISHED"
+      "known_blind_spots": [],
+      "required_families": 1
     },
     "trivial_longest_candidate": {
       "value": 0.342,
-      "tol": 0.005,
+      "tol": 0.02,
       "recorded": "2026-08-23",
-      "why": "benchmark-artifact floor. If it rises, the battery is leaking.",
+      "why": "benchmark-artifact floor; if it rises, the battery is leaking. MEASURE WITH PYTHONHASHSEED=0. Unpinned it varies 0.325-0.358 across processes: candidate list order depends on set/dict iteration over strings, and dumb heuristics tie-break on order. Organism scorers select by content and are order-insensitive, which is why the headline does NOT move. Tolerance covers the observed range.",
       "favours_lane": "adverse",
-      "survived_falsifications": [
-        "benchmark attack 2026-08-23 (13 heuristics)"
+      "status": "UNKILLED",
+      "kill_path_families": {
+        "adversarial_heuristic": [
+          "benchmark attack, 13 rules"
+        ],
+        "environment_perturbation": [
+          "PYTHONHASHSEED 0-7, 2026-08-23: value MOVES 0.325-0.358 \u2014 this claim was order-dependent"
+        ]
+      },
+      "n_distinct_families": 2,
+      "kill_paths_named_but_not_tried": [
+        "heuristic families not in my 13 (positional, syntactic, statistical)"
       ],
-      "required_falsifications": 1,
-      "status": "ESTABLISHED"
+      "known_blind_spots": [],
+      "required_families": 1,
+      "measurement_precondition": "PYTHONHASHSEED=0"
     },
     "synth_battery_idempotent": {
       "value": 1.0,
@@ -132,11 +222,18 @@
       "recorded": "2026-08-23",
       "why": "KNOWN FAILING. build_synthetic_canary draws from an unseeded module-level RNG, so rebuilding in one process yields different tasks (25% of the battery). Left failing deliberately so the defect stays visible.",
       "favours_lane": "adverse",
-      "survived_falsifications": [
-        "full-content hash test 2026-08-23"
+      "status": "UNKILLED",
+      "kill_path_families": {
+        "cross_construction": [
+          "full-content hash, 2026-08-23"
+        ]
+      },
+      "n_distinct_families": 1,
+      "kill_paths_named_but_not_tried": [
+        "whether inference/cross_tier builders share the defect under other call patterns"
       ],
-      "required_falsifications": 1,
-      "status": "ESTABLISHED"
+      "known_blind_spots": [],
+      "required_families": 1
     },
     "ab_crossover_discovery_rate": {
       "value": 0.6,
@@ -144,14 +241,33 @@
       "recorded": "2026-08-19",
       "why": "the crossover result. Was 4/5 in June, replayed 3/5 in August. Wide tolerance because n=5 is coarse; the point is to catch a collapse to 0.",
       "favours_lane": "favours",
-      "survived_falsifications": [
-        "type-bridge cycle replay 2026-08-19 (4/5 -> 3/5)",
-        "type-bridge 2x2 A2 arm 0/5 confirms crossover necessity"
+      "status": "UNDER-ATTACKED",
+      "kill_path_families": {
+        "re_execution": [
+          "type-bridge replay 2026-08-19, 4/5 -> 3/5"
+        ],
+        "complementary_arm": [
+          "2x2 A2 arm 0/5 confirms necessity"
+        ]
+      },
+      "n_distinct_families": 2,
+      "kill_paths_named_but_not_tried": [
+        "seeds beyond the 5 archived",
+        "n>5 for a real CI"
       ],
-      "required_falsifications": 3,
-      "status": "PROVISIONAL"
+      "known_blind_spots": [
+        "n=5 cannot separate a real 0.6 rate from anything in 0.3-0.9"
+      ],
+      "required_families": 3
     }
   },
   "history": [],
-  "doctrine": "A positive result is PROVISIONAL until it has survived at least 3 INDEPENDENT falsification attempts, each named. Results that favour the lane require more attacks than results that damage it, because the attack rate is otherwise set by whether the author likes the answer \u2014 and because positives PROPAGATE: a wrong negative costs one abandoned path, a wrong positive costs everything built on top of it. Survival is not permanent; that is what this harness re-checks. (James, 2026-08-23.)"
+  "doctrine": "No claim is ever ESTABLISHED. The terminal state is UNKILLED \u2014 not yet killed \u2014 because when something survives, the most likely explanation is a missing kill path, not truth. A kill is constructive: it names a mechanism. A survival is absence of evidence and names nothing. A claim that survives has survived our IMAGINATION, not reality, so what matters is the DIVERSITY of kill-path families attempted, never the count of attempts \u2014 three attacks from one family is one attack. `kill_paths_named_but_not_tried` and `known_blind_spots` are the load-bearing fields: the unexamined directions carry the information. Age does not strengthen a claim, it weakens it \u2014 the substrate drifts underneath (measured: 8.6x, 2026-08-19). (James, 2026-08-23.)",
+  "battery_nondeterminism": {
+    "finding": "Apollo's task generators build candidate lists in an order that depends on Python string-hash randomisation. Verified 2026-08-23.",
+    "reaches": "trivial/positional heuristics only (they tie-break on order)",
+    "does_NOT_reach": "organism accuracies \u2014 0.8333/1.0/1.0 identical across PYTHONHASHSEED 0-7",
+    "action": "pin PYTHONHASHSEED=0 for any baseline or heuristic measurement; organism accuracies need no pin but pinning costs nothing",
+    "status": "recorded, NOT fixed \u2014 changing generator order would move the battery"
+  }
 }
