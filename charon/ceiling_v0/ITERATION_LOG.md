@@ -1267,3 +1267,55 @@ about cognitive ceilings, and it came from the deterministic half.
 **Effort now redirects to the model lane per the standing plan.** The deterministic
 explanatory program is closed. Nine modules remain unrestored and no lane has
 worked since iteration 8.
+
+---
+
+## Iteration 29 — 2026-08-23 — model pipeline restored and validated offline
+
+**Lane:** openrouter 402, nvidia timeout. Twenty iterations without one.
+
+**Why this, now.** Mechanism search closed by rule at iteration 28, and the
+standing plan redirects to the model lane. The single highest-value outstanding
+measurement is the fragile truth-rate result: 4/37 claims true (10.8%) against a
+3.7% baseline, one-sided p = 0.047, where **one claim reclassified flips it**
+(3/37 -> p = 0.156). About 61 claims settles it at p < 0.01 — roughly 48 forced
+turns, one working lane window. Being unable to use a window when it appears is
+now the binding risk, so the pipeline was restored and proven without a lane.
+
+**Restored:** `reasoner.py` (frozen model client, provider-pinned, tolerant JSON
+extraction), `lanes.py` (representative-payload preflight with purpose-dependent
+throughput bar), `prompts.py` (all five conditions C0/C1/C1N/C3/C4), `arms.py`
+(parsers + LLMArm), `emission.py` (the probe harness).
+
+**Deliberately NOT restored: the P0/P1/P2 accuracy round-loop.** The power
+analysis from iteration 7 showed a paired 10-point accuracy difference needs ~28
+universes and that 2 universes give a +/-29 point confidence interval. A small
+accuracy run is uninterpretable by construction, so restoring machinery to produce
+one would be restoring the ability to generate a number that cannot be read. Scope
+recorded in the module docstring rather than left implicit.
+
+**Two lessons from earlier failures are now baked into the restored code.**
+
+- `reasoner.py` always persists the full exchange. Iteration 9's relevance
+  analysis was only possible because raw transcripts survived when the emission
+  run had logged counts but not claim content; `emission.py` now records claim
+  TEXT with each turn.
+- `lanes.py` keeps the representative-payload probe. A 12-token "say OK" once
+  returned 200 OK from a lane whose balance was negative, and the first real
+  3k-token turn came back 402 with the run lost.
+
+**Validated offline.** New guard `test_model_pipeline_offline` drives every
+condition through render-and-absorb against a ScriptedModel, checks the parsers
+reject malformed runs and non-decreasing claims, confirms answers fall back rather
+than crash, asserts C4 withholds the equivalence hint while C0-C3 keep it, and
+scans all five rendered prompts against the leakage ban list. The ban list itself
+had been lost in the restoration and is now back — deliberately blunt, since
+over-strict beats under-strict for a leakage guard.
+
+**Ready state.** `python emission.py --seeds 12 --turns 4 --conditions C1N` needs
+one lane window and would produce ~48 forced turns. C1N rather than C1 because the
+incentive was measured to add nothing (C1 1.00 claims/turn, C1N 1.57), making C1N
+the cleaner instrument.
+
+**Guards green.** No new measurement this iteration — this was capability
+restoration, and it produced no numbers about the experiment's question.

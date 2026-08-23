@@ -32,6 +32,17 @@ from universe import (BudgetExhausted, EvalSet, InteractionForbidden,
 
 FAILS = []
 
+# Substring ban list for leakage. Deliberately blunt: over-strict beats
+# under-strict for a leakage guard. It once flagged "re-STATE", and the wording
+# was changed rather than the guard weakened.
+BANNED = [
+    "state", "group", "modul", "matrix", "vector", "commut", " order",
+    "parity", "symmetr", "invariant", "cyclic", "lattice", "algebra",
+    "abelian", "translat", "shift", "latent", "coordinate", "dimension",
+    "arithmetic", "addition", "modulo", "offset", "permut", "isomorph",
+    "monoid", "semigroup", "linear", "affine", "mod ", "z_",
+]
+
 
 def check(name, cond, detail=""):
     if cond:
@@ -269,6 +280,54 @@ def test_cross_process_stability():
           len(outs) == 1, str(outs))
 
 
+def test_model_pipeline_offline():
+    """The model pipeline must be proven working WITHOUT a lane, because a lane
+    window is the scarce resource and iteration 5 lost one to a crash on an
+    untested code path."""
+    print("model pipeline, offline")
+    import prompts as pr
+    from arms import LLMArm, parse_claims, parse_answers, parse_runs
+    from reasoner import ScriptedModel, extract_json
+    uni = mk(41)
+    ev = EvalSet(uni)
+    reply = json.dumps({
+        "runs": [{"tag": "K0", "seq": "A1 A2"}, {"tag": "K9", "seq": "A1"}],
+        "claims": [{"lhs": "A1 A1", "rhs": "A2"}, {"lhs": "A1", "rhs": "A2 A3"}],
+        "note": "n" * 4000})
+    obj = extract_json(reply)
+    check("json extracted", obj is not None and "claims" in obj)
+    check("invalid run dropped, valid kept",
+          parse_runs(obj, uni, None, 5) == [("K0", ["A1", "A2"])])
+    cl = parse_claims(obj, uni, ArtifactStore(), 5)
+    check("non-decreasing claim rejected at the parser",
+          len(cl) == 1 and cl[0][0] == ["A1", "A1"])
+    check("answers fall back when missing",
+          parse_answers({"answers": {"0": "q1"}}, uni.symbols, [0, 1], "q0")
+          == ["q1", "q0"])
+
+    for cond in ("C0", "C1", "C1N", "C3", "C4"):
+        a = LLMArm("P2", uni, ev, ScriptedModel([reply] * 20), ArmConfig(), 41,
+                   condition=cond)
+        sess = Session(uni, 60)
+        for _ in range(12):
+            t, w = next(a.stream)
+            sess.run(t, w)
+            a.absorb(sess.log[-1])
+        text = pr.explore_user("P2", uni, sess.remaining, 1, 4, 12,
+                               a.persistent_block(), cond,
+                               a.candidates() if cond == "C3" else ())
+        check(f"{cond} renders and absorbs", isinstance(text, str) and len(text) > 100)
+        low = text.lower()
+        bad = [w for w in BANNED if w in low]
+        check(f"{cond} prompt is leakage-clean", not bad, str(bad))
+    check("C4 withholds the hint",
+          "interchangeably" not in pr.system_prompt(uni, hint=False))
+    check("C0-C3 keep the hint", "interchangeably" in pr.system_prompt(uni))
+    check("prompt length range matches the eval set",
+          f"length {ev.len_lo} to {ev.len_hi}" in pr.system_prompt(
+              uni, ev.len_lo, ev.len_hi))
+
+
 def test_frozen_references():
     """The check that made the 2026-08-22 restoration trustworthy, kept as a
     permanent guard so any future restoration can be verified the same way.
@@ -311,6 +370,7 @@ if __name__ == "__main__":
     test_solvable_ceiling()
     test_wrong_artifacts_die()
     test_pipeline_determinism()
+    test_model_pipeline_offline()
     test_cross_process_stability()
     test_frozen_references()
     print()
