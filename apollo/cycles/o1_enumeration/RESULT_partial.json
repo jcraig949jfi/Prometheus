@@ -1,0 +1,49 @@
+{
+  "partial": true,
+  "by_k": [
+    {
+      "k": 1,
+      "subsets": 15,
+      "orderable_subsets": 8,
+      "evals_at_k": 288,
+      "cumulative_evals": 288,
+      "best_at_k": 0.2917,
+      "best_overall": 0.2917,
+      "elapsed_s": 0.1
+    },
+    {
+      "k": 2,
+      "subsets": 105,
+      "orderable_subsets": 31,
+      "evals_at_k": 2124,
+      "cumulative_evals": 2412,
+      "best_at_k": 0.4167,
+      "best_overall": 0.4167,
+      "elapsed_s": 1.6
+    },
+    {
+      "k": 3,
+      "subsets": 455,
+      "orderable_subsets": 78,
+      "evals_at_k": 14400,
+      "cumulative_evals": 16812,
+      "best_at_k": 0.4583,
+      "best_overall": 0.4583,
+      "elapsed_s": 14.6
+    }
+  ],
+  "best_found": {
+    "acc": 0.4583,
+    "pipeline": [
+      "parse_names_and_relations",
+      "op_build_ordering",
+      "parse_ordinal",
+      "select_nth"
+    ],
+    "k": 3,
+    "evals_when_found": 4293,
+    "comp_lift": 0.4583
+  },
+  "enumeration_evals_to_ceiling": null,
+  "total_evals": 16812
+}

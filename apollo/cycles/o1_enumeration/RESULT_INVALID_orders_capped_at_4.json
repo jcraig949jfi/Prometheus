@@ -1,0 +1,158 @@
+{
+  "experiment": "O1_type_directed_enumeration",
+  "prereg": "apollo/cycles/o1_enumeration/PREREGISTRATION.md",
+  "date": "2026-08-23",
+  "generator": "Apollo (M2)",
+  "config": {
+    "max_k": 10,
+    "orders_per_subset": 4,
+    "n_transformers": 15,
+    "n_tails": 36,
+    "stopped_early": null
+  },
+  "comparator": {
+    "evolution_evals_to_ceiling": 3144,
+    "evolution_ceiling": 0.833,
+    "note": "pop 24 x gen 131, the generation max_acc first hit 0.833"
+  },
+  "enumeration_evals_to_ceiling": null,
+  "ceiling_pipeline": null,
+  "total_evals": 173952,
+  "best_found": {
+    "acc": 0.7333,
+    "pipeline": [
+      "parse_box_items",
+      "op_aggregate_quantities",
+      "parse_comparison",
+      "parse_names_and_relations",
+      "op_build_ordering",
+      "parse_ordinal",
+      "parse_rules",
+      "forward_chain",
+      "parse_which_extreme",
+      "score_by_aggregate__g",
+      "score_by_comparison__g",
+      "score_by_derivability__g",
+      "score_by_extreme_number__g",
+      "select_nth__g"
+    ],
+    "k": 9,
+    "evals_when_found": 155844,
+    "comp_lift": 0.7333
+  },
+  "best_per_subset": {
+    "canary": 0.6,
+    "synth": 1.0,
+    "inference": 1.0,
+    "cross_tier": 0.4
+  },
+  "by_k": [
+    {
+      "k": 1,
+      "subsets": 15,
+      "orderable_subsets": 8,
+      "evals_at_k": 288,
+      "cumulative_evals": 288,
+      "best_at_k": 0.2917,
+      "best_overall": 0.2917,
+      "elapsed_s": 0.1
+    },
+    {
+      "k": 2,
+      "subsets": 105,
+      "orderable_subsets": 31,
+      "evals_at_k": 2124,
+      "cumulative_evals": 2412,
+      "best_at_k": 0.4167,
+      "best_overall": 0.4167,
+      "elapsed_s": 1.4
+    },
+    {
+      "k": 3,
+      "subsets": 455,
+      "orderable_subsets": 78,
+      "evals_at_k": 10368,
+      "cumulative_evals": 12780,
+      "best_at_k": 0.4583,
+      "best_overall": 0.4583,
+      "elapsed_s": 9.8
+    },
+    {
+      "k": 4,
+      "subsets": 1365,
+      "orderable_subsets": 144,
+      "evals_at_k": 20628,
+      "cumulative_evals": 33408,
+      "best_at_k": 0.4583,
+      "best_overall": 0.4583,
+      "elapsed_s": 30.7
+    },
+    {
+      "k": 5,
+      "subsets": 3003,
+      "orderable_subsets": 208,
+      "evals_at_k": 29952,
+      "cumulative_evals": 63360,
+      "best_at_k": 0.4583,
+      "best_overall": 0.4583,
+      "elapsed_s": 66.7
+    },
+    {
+      "k": 6,
+      "subsets": 5005,
+      "orderable_subsets": 242,
+      "evals_at_k": 34848,
+      "cumulative_evals": 98208,
+      "best_at_k": 0.525,
+      "best_overall": 0.525,
+      "elapsed_s": 115.1
+    },
+    {
+      "k": 7,
+      "subsets": 6435,
+      "orderable_subsets": 227,
+      "evals_at_k": 32688,
+      "cumulative_evals": 130896,
+      "best_at_k": 0.6083,
+      "best_overall": 0.6083,
+      "elapsed_s": 166.9
+    },
+    {
+      "k": 8,
+      "subsets": 6435,
+      "orderable_subsets": 168,
+      "evals_at_k": 24192,
+      "cumulative_evals": 155088,
+      "best_at_k": 0.6583,
+      "best_overall": 0.6583,
+      "elapsed_s": 211.4
+    },
+    {
+      "k": 9,
+      "subsets": 5005,
+      "orderable_subsets": 94,
+      "evals_at_k": 13536,
+      "cumulative_evals": 168624,
+      "best_at_k": 0.7333,
+      "best_overall": 0.7333,
+      "elapsed_s": 247.3
+    },
+    {
+      "k": 10,
+      "subsets": 3003,
+      "orderable_subsets": 37,
+      "evals_at_k": 5328,
+      "cumulative_evals": 173952,
+      "best_at_k": 0.7333,
+      "best_overall": 0.7333,
+      "elapsed_s": 291.2
+    }
+  ],
+  "positive_control": {
+    "known_0833_organism_acc": 0.8333,
+    "ok": true
+  },
+  "single_primitive_baseline": 0.0,
+  "wall_clock_s": 291.2,
+  "verdict": "ENUMERATION_CANNOT_REACH_CEILING \u2014 evolution has a reachability advantage"
+}
