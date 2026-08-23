@@ -4,80 +4,154 @@
       "value": 0.833,
       "tol": 0.001,
       "recorded": "2026-06-27",
-      "why": "the headline max_acc. If this moves, every Apollo number moves."
+      "why": "the headline max_acc. If this moves, every Apollo number moves.",
+      "favours_lane": "favours",
+      "survived_falsifications": [
+        "re-scored 2026-08-23 replay harness",
+        "O1 enumeration positive control 2026-08-23"
+      ],
+      "required_falsifications": 3,
+      "status": "PROVISIONAL"
     },
     "known_organism_routable_acc": {
       "value": 1.0,
       "tol": 0.001,
       "recorded": "2026-06-27",
-      "why": "one organism fully solves synth+inference+cross_tier."
+      "why": "one organism fully solves synth+inference+cross_tier.",
+      "favours_lane": "favours",
+      "survived_falsifications": [
+        "re-scored 2026-08-23 replay harness"
+      ],
+      "required_falsifications": 3,
+      "status": "PROVISIONAL"
     },
     "cross_tier_solver_acc": {
       "value": 1.0,
       "tol": 0.001,
       "recorded": "2026-06-10",
-      "why": "the cross-tier falsification. The multi-tier organism is the unique solver."
+      "why": "the cross-tier falsification. The multi-tier organism is the unique solver.",
+      "favours_lane": "favours",
+      "survived_falsifications": [
+        "re-scored 2026-08-23 replay harness"
+      ],
+      "required_falsifications": 3,
+      "status": "PROVISIONAL"
     },
     "bridge_load_bearing_delta": {
       "value": 0.6,
       "tol": 0.05,
       "recorded": "2026-08-23",
-      "why": "removing relations_from_facts drops cross-tier accuracy by 0.6, from 1.0 to the 0.4 trivial-heuristic floor for that subset \u2014 NOT to zero. My first baseline here assumed 1.0 from the June write-up; measured, it is 0.6. The bridge is load-bearing for everything above the benchmark artifact floor, which is the honest form of the claim."
+      "why": "removing relations_from_facts drops cross-tier accuracy by 0.6, from 1.0 to the 0.4 trivial-heuristic floor for that subset \u2014 NOT to zero. My first baseline here assumed 1.0 from the June write-up; measured, it is 0.6. The bridge is load-bearing for everything above the benchmark artifact floor, which is the honest form of the claim.",
+      "favours_lane": "favours",
+      "survived_falsifications": [
+        "type-bridge 2x2 A1 arm 0/5 (2026-08-19)",
+        "re-measured 2026-08-23 \u2014 original 1.0 baseline was WRONG, is 0.6"
+      ],
+      "required_falsifications": 3,
+      "status": "PROVISIONAL"
     },
     "single_primitive_baseline": {
       "value": 0.0,
       "tol": 0.001,
       "recorded": "2026-08-23",
-      "why": "pinned at 0 by construction, which makes comp_lift identical to acc. If it ever moves, comp_lift starts meaning something and every historical ccs reading needs reinterpreting."
+      "why": "pinned at 0 by construction, which makes comp_lift identical to acc. If it ever moves, comp_lift starts meaning something and every historical ccs reading needs reinterpreting.",
+      "favours_lane": "adverse",
+      "survived_falsifications": [
+        "measured 2026-08-23"
+      ],
+      "required_falsifications": 1,
+      "status": "ESTABLISHED"
     },
     "registry_size": {
       "value": 27.0,
       "tol": 0.0,
       "recorded": "2026-08-23",
-      "why": "the pool grew 14 -> 25 unnoticed and cost 8.6x search efficiency. Growth is allowed; growth WITHOUT NOTICE is what caused the rot."
+      "why": "the pool grew 14 -> 25 unnoticed and cost 8.6x search efficiency. Growth is allowed; growth WITHOUT NOTICE is what caused the rot.",
+      "favours_lane": "neutral",
+      "survived_falsifications": [],
+      "required_falsifications": 1,
+      "status": "PROVISIONAL"
     },
     "transformer_count": {
       "value": 15.0,
       "tol": 0.0,
       "recorded": "2026-08-23",
-      "why": "as above."
+      "why": "as above.",
+      "favours_lane": "neutral",
+      "survived_falsifications": [],
+      "required_falsifications": 1,
+      "status": "PROVISIONAL"
     },
     "scorer_count": {
       "value": 10.0,
       "tol": 0.0,
       "recorded": "2026-08-23",
-      "why": "as above."
+      "why": "as above.",
+      "favours_lane": "neutral",
+      "survived_falsifications": [],
+      "required_falsifications": 1,
+      "status": "PROVISIONAL"
     },
     "battery_size": {
       "value": 120.0,
       "tol": 0.0,
       "recorded": "2026-08-23",
-      "why": "every accuracy in the corpus is denominated in this battery."
+      "why": "every accuracy in the corpus is denominated in this battery.",
+      "favours_lane": "neutral",
+      "survived_falsifications": [],
+      "required_falsifications": 1,
+      "status": "PROVISIONAL"
     },
     "terminal_only_acc": {
       "value": 0.292,
       "tol": 0.005,
       "recorded": "2026-08-23",
-      "why": "the no-composition floor Apollo must beat to mean anything."
+      "why": "the no-composition floor Apollo must beat to mean anything.",
+      "favours_lane": "neutral",
+      "survived_falsifications": [
+        "measured 2026-08-23"
+      ],
+      "required_falsifications": 1,
+      "status": "ESTABLISHED"
     },
     "trivial_longest_candidate": {
       "value": 0.342,
       "tol": 0.005,
       "recorded": "2026-08-23",
-      "why": "benchmark-artifact floor. If it rises, the battery is leaking."
+      "why": "benchmark-artifact floor. If it rises, the battery is leaking.",
+      "favours_lane": "adverse",
+      "survived_falsifications": [
+        "benchmark attack 2026-08-23 (13 heuristics)"
+      ],
+      "required_falsifications": 1,
+      "status": "ESTABLISHED"
     },
     "synth_battery_idempotent": {
       "value": 1.0,
       "tol": 0.0,
       "recorded": "2026-08-23",
-      "why": "KNOWN FAILING. build_synthetic_canary draws from an unseeded module-level RNG, so rebuilding in one process yields different tasks (25% of the battery). Left failing deliberately so the defect stays visible."
+      "why": "KNOWN FAILING. build_synthetic_canary draws from an unseeded module-level RNG, so rebuilding in one process yields different tasks (25% of the battery). Left failing deliberately so the defect stays visible.",
+      "favours_lane": "adverse",
+      "survived_falsifications": [
+        "full-content hash test 2026-08-23"
+      ],
+      "required_falsifications": 1,
+      "status": "ESTABLISHED"
     },
     "ab_crossover_discovery_rate": {
       "value": 0.6,
       "tol": 0.2,
       "recorded": "2026-08-19",
-      "why": "the crossover result. Was 4/5 in June, replayed 3/5 in August. Wide tolerance because n=5 is coarse; the point is to catch a collapse to 0."
+      "why": "the crossover result. Was 4/5 in June, replayed 3/5 in August. Wide tolerance because n=5 is coarse; the point is to catch a collapse to 0.",
+      "favours_lane": "favours",
+      "survived_falsifications": [
+        "type-bridge cycle replay 2026-08-19 (4/5 -> 3/5)",
+        "type-bridge 2x2 A2 arm 0/5 confirms crossover necessity"
+      ],
+      "required_falsifications": 3,
+      "status": "PROVISIONAL"
     }
   },
-  "history": []
+  "history": [],
+  "doctrine": "A positive result is PROVISIONAL until it has survived at least 3 INDEPENDENT falsification attempts, each named. Results that favour the lane require more attacks than results that damage it, because the attack rate is otherwise set by whether the author likes the answer \u2014 and because positives PROPAGATE: a wrong negative costs one abandoned path, a wrong positive costs everything built on top of it. Survival is not permanent; that is what this harness re-checks. (James, 2026-08-23.)"
 }

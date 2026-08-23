@@ -240,8 +240,9 @@ def main():
     claims = db["claims"]
     tiers = ("fast", "slow") if args.slow else ("fast",)
 
-    print(f"{'claim':32s} {'recorded':>9s} {'now':>9s} {'delta':>9s}  status")
-    print("-" * 78)
+    print(f"{'claim':32s} {'recorded':>9s} {'now':>9s} {'delta':>9s}  drift  "
+          f"{'evidence':>9s}  standing")
+    print("-" * 96)
     drift, results = [], {}
     for name, (fn, tier) in CHECKS.items():
         if tier not in tiers or name not in claims:
@@ -258,9 +259,13 @@ def main():
         d = got - exp
         ok = abs(d) <= tol
         results[name] = got
+        cl = claims[name]
+        nsurv = len(cl.get("survived_falsifications", []))
+        need = cl.get("required_falsifications", 1)
+        standing = cl.get("status", "?")
         print(f"{name:32s} {exp:>9.3f} {got:>9.3f} {d:>+9.3f}  "
-              f"{'ok' if ok else 'DRIFT'}{'' if ok else '  <- ' + claims[name]['why'][:40]}"
-              f"  ({time.time()-t0:.1f}s)")
+              f"{'ok   ' if ok else 'DRIFT'}  {nsurv:>4d}/{need:<4d}  {standing}"
+              f"{'' if standing == 'ESTABLISHED' else '  (' + cl.get('favours_lane','') + ')'}")
         if not ok:
             drift.append((name, exp, got, claims[name]["why"]))
 
@@ -284,6 +289,16 @@ def main():
         CLAIMS.write_text(json.dumps(db, indent=2), encoding="utf-8")
         print(f"\ninitialised claim registry -> {CLAIMS}")
 
+    prov = [n for n in results if claims[n].get("status") == "PROVISIONAL"]
+    fav_prov = [n for n in prov if claims[n].get("favours_lane") == "favours"]
+    print(f"\nPROVISIONAL: {len(prov)} of {len(results)} claims have not yet survived the "
+          f"required number of independent falsifications.")
+    if fav_prov:
+        print(f"  Of those, {len(fav_prov)} FAVOUR the lane and are therefore the ones most "
+              f"likely to be wrong and least likely to be attacked:")
+        for n in fav_prov:
+            print(f"    {n} ({len(claims[n]['survived_falsifications'])}/"
+                  f"{claims[n]['required_falsifications']})")
     print()
     if drift:
         print(f"DRIFT DETECTED in {len(drift)} claim(s):")
