@@ -1,0 +1,55 @@
+{
+ "cycle": "143-G",
+ "object_class": "number fields (nf_fields), degree 2-4, index=1",
+ "representation": "Dedekind zeta coefficients a_K(n) = #{ideals of norm n}",
+ "native_verb": "Dirichlet convolution",
+ "n_terms": 200,
+ "disc_max": 3000,
+ "n_fields": 2529,
+ "skipped_fields": 0,
+ "controls": {
+  "C1_quadratic": true,
+  "C1_n": 1820,
+  "C1_bad": 0,
+  "C2_multiplicativity": true,
+  "C2_n": 20000,
+  "C2_bad": 0,
+  "C3_degree_bound": true,
+  "C3_bad": 0,
+  "C4_convolution_inverse": true,
+  "C4_n": 200,
+  "C4_bad": 0
+ },
+ "controls_passing": 4,
+ "deduplication": {
+  "labels": 2529,
+  "distinct_zeta_sequences": 2529,
+  "arithmetically_equivalent_groups": 0,
+  "equivalence_used": "field isomorphism (LMFDB label)"
+ },
+ "PART1_diagnostic": {
+  "D1_quadratic_reproduced": 1820,
+  "D1_total": 1820,
+  "D2_v4_brauer_ok": 0,
+  "D2_v4_checked": 0,
+  "D2_examples": [],
+  "status": "MEASUREMENT confirming known mathematics; not the verdict"
+ },
+ "structural_exclusion": "a_K * a_L = a_M is impossible for fields (double vs simple pole at s=1); only the Brauer shape 1*a_M = a_K*a_L was tested",
+ "pairs_total": 3196656,
+ "attainable_pairs": 2554370,
+ "gate_inside_attainable_range": true,
+ "relations_total": 0,
+ "explained_by_known_brauer": 0,
+ "H_unexplained": 0,
+ "headline_hits": [],
+ "branches": {
+  "B1_VACUOUS": false,
+  "B2_ADVANCE": false,
+  "B3_KILL": true
+ },
+ "branch_fired": "B3_KILL",
+ "VERDICT": "KILL",
+ "materiality": "existence; one unexplained exact convolution relation over 200 terms",
+ "what_dies_on_null": "unexplained convolution relations among degree 2-4 number fields of bounded discriminant; NOT the verbs thesis, NOT the 142-F finding"
+}

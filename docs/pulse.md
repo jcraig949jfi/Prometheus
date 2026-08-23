@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-23T08:11:49+00:00
+# PULSE — generated 2026-08-23T09:01:53+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,17 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        688
-consumed (state changes):   269  {'queue_state': 243, 'registry': 25, 'findings': 1}
+emitted (new files):        692
+consumed (state changes):   268  {'queue_state': 242, 'registry': 25, 'findings': 1}
 consumed/emitted:           0.39
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 309
+## Commits, 72h (non-cron): 311
+- eba9bf29 08-23 04:29 Techne: arsenal_red scope corrected -- the count has always covered half the arsenal
+- 03be71b4 08-23 04:21 Techne cycle 051: #266 closed by build -- and the fix corrected two earlier cycles' diagnosis of it
+- e7364043 08-23 04:19 prometheus_math/techne: exactly-repeated roots go through an exact squarefree decomposition
+- cbc85634 08-23 04:12 Aporia P141: CYCLE 142-F â€” KILL on binary verbs, and the vocabulary question is SETTLED
 - c5ccb4f4 08-23 04:00 Techne cycle 051: PRE-REGISTRATION for the squarefree mahler_measure fix (closes reopened #266)
 - eb93079d 08-23 03:32 Aporia P140: CYCLE 141-E TERMINAL KILL â€” the vocabulary does not reach elliptic curves in either representation (+ restores P139, lost to a failed autostash)
 - fe902dce 08-23 02:58 Techne cycle 050: Band H built (O-1 repaired) â€” H1a NOT demonstrated, and my confidence field predicts nothing
@@ -36,11 +40,7 @@ verdict: ALIVE
 - abe9d887 08-23 01:18 Ergon: M30 is LEVELED on the free host; kickoff prompt for Charon's rulings
 - c7c51724 08-23 01:14 iteration 27: candidate burden is causal; tree committed
 - 76254a24 08-23 01:12 Cognitive Ceiling v0: deterministic half, restored and audited
-- 94239f53 08-22 17:29 Aporia P137: allocation â€” OPEN NOTHING. Research capacity is gated on the reviewer seat.
-- a3909031 08-22 16:59 Aporia P136: CAMPAIGN R pass 1 â€” TERMINAL REDESIGN. R4 is a probe set without solvers.
-- eca2351e 08-22 16:33 Aporia P135: allocation â€” CAMPAIGN R opens on the reasoning ladder; 44 PROF rows rest on a category error
-- f8b48404 08-22 16:01 Aporia P134: CAMPAIGN F â€” F3 MOSTLY-ATOMIC. 220 atomic candidates. The OEIS line CLOSES.
-- … +284 more
+- … +286 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
