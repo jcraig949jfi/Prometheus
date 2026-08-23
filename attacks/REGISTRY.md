@@ -176,6 +176,33 @@ applies-to: claim classes this attack must be run against before the claim is be
 - **applies-to:** every producer/consumer pair crossing a file boundary; **mandatory gate
   before any campaign advances past P1.**
 
+### ATK-015 verdict without rows (aggregate committed, ledger untracked)
+- **class:** provenance
+- **signature:** the summary artifact of a measurement is committed; the row-level ledger it
+  summarises is untracked, and is then destroyed by ordinary git hygiene (`stash -u` + `drop`,
+  a clean, a checkout). Nothing raises. The verdict keeps being cited, recomputed from, and
+  ruled on — but it is no longer a measurement, it is an assertion with a filename. The tell is
+  a timestamp: an aggregate whose `ts_utc` predates the first row of the ledger beneath it.
+- **probe:** EXECUTABLE — `PYTHONPATH=. python attacks/probes/atk015_unsourced_verdict.py`
+  (exit 1 = an aggregate on disk has no committed rows under it). Generalization: for every
+  committed verdict artifact, assert its source ledger is tracked by git AND reproduces the
+  artifact's load-bearing fields.
+- **kills:** 2026-08-23, found by Charon while auditing the evidence for a rung ruling:
+  `campaign/p1_prepass.jsonl` (1,248 rows, underwriting M20 `UNDECIDED-UNDERPOWERED`) and
+  `coldband_m30_free/coldband.jsonl` (410 rows, underwriting M30 `LEVELED`) were both destroyed
+  by the incident recorded in `e16ca9bc` and both were absent from git. For ~14 hours every
+  number in the 2026-08-23 rulings kickoff had no rows beneath it. Both recovered via
+  `git fsck --unreachable` and verified to reproduce every committed figure exactly
+  (`ergon/probe/ledgers/RECOVERY_NOTE_charon_2026-08-23.md`, commit `cf45ac05`). Aggravating
+  factor: `campaign.p1()` returns early whenever the aggregate exists, so the destroyed pre-pass
+  would never have been re-collected, and `assemble.load_prepass` returns `[]` silently for an
+  absent file — the loss was unobservable from inside the pipeline. Compare ATK-013: absence
+  indistinguishable from unreadability; here, absence indistinguishable from evidence.
+- **applies-to:** every committed verdict, band read, ledger meta, or scorecard.
+  **STANDING RULE (Charon, binding on the probe track): a ledger that underwrites a committed
+  verdict is committed in the same commit as that verdict. An aggregate whose rows are not in
+  git is `UNSOURCED` and cannot gate a phase.**
+
 ### ATK-014 confirmatory estimator (an instrument that cannot disagree with its hypothesis)
 - **class:** vacuous-metric / self-reference
 - **signature:** a statistic whose computation silently discards exactly the evidence that
