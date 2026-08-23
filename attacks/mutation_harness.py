@@ -34,7 +34,9 @@ merely beaten by a trivial baseline — for that, run the baseline.
 a commit, and never on a dirty working tree.
 """
 import ast
+import atexit
 import pathlib
+import signal
 import subprocess
 import sys
 import time
@@ -124,6 +126,17 @@ class Mutator(ast.NodeTransformer):
         return node
 
 
+def _restore(src, original, bak):
+    """Idempotent restore — runs from finally, atexit, and signal handlers alike."""
+    try:
+        if src.read_text(encoding="utf-8") != original:
+            src.write_text(original, encoding="utf-8")
+            print(f"[restored {src.name} from mutation]")
+        bak.unlink(missing_ok=True)
+    except Exception:
+        pass
+
+
 def run_tests(test_file):
     r = subprocess.run(
         [sys.executable, "-m", "pytest", str(test_file), "-q", "--no-header",
@@ -132,7 +145,42 @@ def run_tests(test_file):
     return r.returncode
 
 
-def mutation_test(src: pathlib.Path, test_file: pathlib.Path, cap: int = 40):
+def count_sites(original: str) -> int:
+    """How many mutable sites exist, so a run can report sampled/total honestly."""
+    n = 0
+    while True:
+        m = Mutator(n)
+        m.visit(ast.parse(original))
+        if m.applied is None:
+            return n
+        n += 1
+
+
+def mutation_test(src: pathlib.Path, test_file: pathlib.Path, cap: int = 0,
+                  sample_ok: bool = False):
+    """cap=0 means ENUMERATE ALL SITES (the default, deliberately).
+
+    A truncated run takes the first N sites in AST traversal order — i.e. the TOP of the
+    file — which systematically misses the verdict-bearing functions that live lower down.
+    Measured 2026-08-23: canon_r6_falsification reads 100% at cap=20 and 85.2% on full
+    enumeration, with survival 0/20 inside the sampled window and 9/41 outside it
+    (Fisher p=0.024). Truncation here is not neutral; it flatters. A score from a truncated
+    run is therefore refused unless sample_ok is set, and always prints sampled/total.
+    """
+    # STARTUP RESTORE — the only recovery that survives a hard kill. Signal/atexit handlers
+    # do NOT run when the process is terminated (MEASURED on Windows 2026-08-23: a 600s tool
+    # timeout left ergon/probe/analysis.py mutated in the working tree despite both being
+    # registered). If a .mutation_bak is on disk, a previous run died mid-mutation: restore
+    # from it before touching anything.
+    stale = src.with_suffix(".mutation_bak")
+    if stale.exists():
+        prior = stale.read_text(encoding="utf-8")
+        if src.read_text(encoding="utf-8") != prior:
+            src.write_text(prior, encoding="utf-8")
+            print(f"[RECOVERED {src.name} — a previous run died mid-mutation and left it "
+                  f"corrupted; restored from {stale.name}]")
+        stale.unlink(missing_ok=True)
+
     original = src.read_text(encoding="utf-8")
     tree = ast.parse(original)
     FUNC_NAMES[:] = [n.name for n in ast.walk(tree)
@@ -142,12 +190,31 @@ def mutation_test(src: pathlib.Path, test_file: pathlib.Path, cap: int = 40):
         print(f"BASELINE RED ({src.name}) — cannot mutation-test a failing suite.")
         return None
 
-    src.with_suffix(".mutation_bak").write_text(original, encoding="utf-8")
+    total_sites = count_sites(original)
+    n = total_sites if cap in (0, None) else min(cap, total_sites)
+    truncated = n < total_sites
+    if truncated and not sample_ok:
+        print(f"REFUSED: {src.name} has {total_sites} mutable sites; a cap of {cap} would "
+              f"sample only the first {n} in AST order (top of file) and flatter the score. "
+              f"Re-run with cap=0 for full enumeration, or pass sample_ok=True to accept a "
+              f"sampled run — which must be reported as {n}/{total_sites}, never as a bare score.")
+        return None
+
+    bak = src.with_suffix(".mutation_bak")
+    bak.write_text(original, encoding="utf-8")
+    # a hard kill does not run `finally`; this does
+    atexit.register(_restore, src, original, bak)
+    for sig in (signal.SIGINT, signal.SIGTERM):
+        try:
+            signal.signal(sig, lambda *_: (_restore(src, original, bak), sys.exit(130)))
+        except (ValueError, OSError):
+            pass  # not on the main thread / unsupported platform
+
     killed = survived = invalid = 0
     survivors = []
     t0 = time.time()
     try:
-        for i in range(cap):
+        for i in range(n):
             m = Mutator(i)
             new_tree = m.visit(ast.parse(original))
             if m.applied is None:
@@ -165,20 +232,22 @@ def mutation_test(src: pathlib.Path, test_file: pathlib.Path, cap: int = 40):
             else:
                 killed += 1
     finally:
-        src.write_text(original, encoding="utf-8")
-        src.with_suffix(".mutation_bak").unlink(missing_ok=True)
+        _restore(src, original, bak)
 
     tested = killed + survived
     score = killed / tested if tested else 0.0
+    scope = "FULL" if not truncated else f"SAMPLED {n}/{total_sites}"
     print(f"{src.name}  killed={killed} survived={survived} score={score:.1%} "
-          f"({time.time() - t0:.0f}s)")
+          f"[{scope} of {total_sites} sites] ({time.time() - t0:.0f}s)")
     if tested < 10:
         print(f"  NOTE: only {tested} mutable sites — a high score on a thin module is a "
               f"weak statement. Report the denominator, always.")
     return {"module": src.name, "killed": killed, "survived": survived,
-            "score": score, "survivors": survivors, "sites_tested": tested}
+            "score": score, "survivors": survivors, "sites_tested": tested,
+            "total_sites": total_sites, "truncated": truncated}
 
 
 if __name__ == "__main__":
-    mutation_test(pathlib.Path(sys.argv[1]), pathlib.Path(sys.argv[2]),
-                  int(sys.argv[3]) if len(sys.argv) > 3 else 40)
+    _cap = int(sys.argv[3]) if len(sys.argv) > 3 else 0
+    mutation_test(pathlib.Path(sys.argv[1]), pathlib.Path(sys.argv[2]), _cap,
+                  sample_ok="--sample" in sys.argv)

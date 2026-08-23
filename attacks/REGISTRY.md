@@ -50,7 +50,20 @@ applies-to: claim classes this attack must be run against before the claim is be
 - **probe:** DESCRIBED — token-tercile difference-in-differences across arms (exit review #2's
   exact method); alarm if effect concentrates in one tercile.
 - **kills:** exit review #2 — token-tercile DiD withdrew the pilot's remaining effect.
-- **applies-to:** any arm comparison; any before/after with changed prompt length.
+  · `95916588` (2026-08-22) — P1 prepass killed as TRUNCATION-CONFOUNDED: truncated rows scored
+  0.000 and parse-fails also scored 0.000, dragging the estimate *into* the band. The defect was
+  flattering the gate.
+  · **2026-08-23 — the mutation harness itself, one day later.** `cap=20` sampled the first 20
+  mutable sites in AST traversal order (top of file), never reaching the verdict functions, and
+  printed no truncation warning. Published `canon_r6_falsification` at 100%; full enumeration
+  reads **85.2%** (52/9/61). Survival 0/20 inside the sampled window, 9/41 outside, Fisher
+  p=0.024. Found by an adversarial red team, not by the instrument's author. **Three kills in
+  this class in one fortnight, twice in instruments built by the seat that had just killed the
+  previous one — a sampling window is the program's most-repeated defect.**
+- **applies-to:** any arm comparison; any before/after with changed prompt length; **any
+  instrument that samples a subset of its own measurement space — the sample order must be
+  shown to be independent of the quantity measured, or the run reports `sampled/total` and no
+  bare score.**
 
 ### ATK-003 self-verdicting substrate
 - **class:** self-reference

@@ -1,5 +1,40 @@
 # Mutation test of the reasoning-ladder circuits — 2026-08-23
 
+> ## ⚠ CORRECTION, same day — THE SCORES BELOW WERE TRUNCATION-CONFOUNDED AND FLATTERED
+>
+> The run used `cap=20`, and the harness took **the first 20 mutable sites in AST traversal
+> order — i.e. the top of the file** — never reaching the verdict-bearing functions lower down,
+> and **printed no warning that it had truncated**. Eight of nine scored modules hit that cap;
+> the denominators were never disclosed and range from **6.5%** (`canon_r10_analogy`, 20 of 308
+> sites) to 100% (`r1_local_op`, 14 of 14).
+>
+> **Re-measured at full enumeration: `canon_r6_falsification` is 85.2% (52 killed / 9 survived /
+> 61 sites), not the 100% published below.** Survival was 0/20 inside the sampled window and
+> 9/41 outside it — Fisher exact **p = 0.024**. The truncation is not neutral; on this module it
+> is measurably flattering.
+>
+> **Withdrawn:** the sentence *"median corrected score ≈ 80% … better than the prediction on
+> record."* It is not supported by its own data. Every score below is a measurement of the tops
+> of files until re-run uncapped.
+>
+> **This is ATK-002's own family — a truncation defect flattering a gate — inside an instrument
+> built one week after this program killed one** (`95916588`, "P1 killed as
+> TRUNCATION-CONFOUNDED — the defect was flattering the gate"; `a7d9bb2d`). No control in the
+> harness would have caught it. Found by an adversarial red team, not by me.
+>
+> **Harness fixed** (same commit as this correction): `cap=0` (full enumeration) is now the
+> default; a truncated run **refuses to print a score** unless `--sample` is passed, and always
+> reports `sampled/total`; and `atexit`/signal handlers now restore the source file, because a
+> hard kill does not run `finally` and a timed-out run was reproduced leaving mutated,
+> comment-stripped source in the working tree.
+>
+> **What survives unchanged:** every finding in §"The pattern" below. Full enumeration
+> *strengthened* it — three of the nine newly-found survivors are unasserted `return` channels
+> in **both** adversarial control instruments (`EagerFalsifier.judge`, `CredulousAsserter.judge`)
+> of a falsification circuit, plus `phantom_rate`'s arithmetic (`Div → Mult`) and two unpinned
+> patience/horizon bounds. The holes are real. The scores were not.
+
+
 **Question asked (James):** *"I don't trust the tests. Can we review those? Is there a way to
 harden them? Test the tests?"*
 
@@ -16,7 +51,7 @@ Reproduce: `python attacks/mutation_harness.py <src.py> <test.py> 20`.
 
 | module | killed | survived | raw | **corrected** | note |
 |---|---|---|---|---|---|
-| `canon_r6_falsification.py` | 20 | 0 | 100% | **100%** | strongest suite measured |
+| `canon_r6_falsification.py` | 20 | 0 | ~~100%~~ | **85.2% (FULL, 61 sites)** | **corrected — see banner** |
 | `canon_r5_invariant.py` | 19 | 1 | 95% | **100%** | lone survivor is `frozen=True` |
 | `r4_strategy.py` | 16 | 4 | 80% | **80%** | |
 | `r7_plan_revision.py` | 16 | 4 | 80% | **80%** | but see H1 — worst *kind* of hole |
@@ -34,10 +69,11 @@ Nothing tests immutability, which is true but near-equivalent — counting them 
 understated every suite. *This is why a mutation score must never be quoted without reading its
 survivors.*
 
-**Headline: median corrected score ≈ 80%.** For a research codebase that is respectable — better
-than the prediction on record (that most rungs would fall). **The ladder's tests are not the weak
-part of this work.** But the surviving holes are not randomly distributed, and where they cluster
-matters more than the scores.
+~~**Headline: median corrected score ≈ 80%.**~~ **WITHDRAWN — see the correction banner.** Eight
+of nine modules were truncated at 20 sites out of totals up to 308, and the one module re-run to
+exhaustion fell 14.8 points. No median is licensed by this run. What *is* licensed: the ladder's
+suites kill most top-of-file mutants, and the holes cluster somewhere specific. **That clustering,
+not any score, is the finding.**
 
 ---
 
