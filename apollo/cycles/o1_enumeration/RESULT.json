@@ -1,5 +1,68 @@
 {
-  "partial": true,
+  "experiment": "O1_type_directed_enumeration",
+  "prereg": "apollo/cycles/o1_enumeration/PREREGISTRATION.md",
+  "date": "2026-08-23",
+  "generator": "Apollo (M2)",
+  "config": {
+    "max_k": 10,
+    "orders_per_subset": 48,
+    "n_transformers": 15,
+    "n_tails": 36,
+    "stopped_early": null
+  },
+  "comparator": {
+    "evolution_evals_to_ceiling": 3144,
+    "evolution_ceiling": 0.833,
+    "note": "pop 24 x gen 131, the generation max_acc first hit 0.833"
+  },
+  "enumeration_evals_to_ceiling": 1687896,
+  "ceiling_pipeline": [
+    "parse_box_items",
+    "op_aggregate_quantities",
+    "parse_comparison",
+    "parse_names_and_relations",
+    "parse_ordinal",
+    "parse_rules",
+    "forward_chain",
+    "parse_which_extreme",
+    "relations_from_facts",
+    "op_build_ordering",
+    "score_by_aggregate__g",
+    "score_by_comparison__g",
+    "score_by_derivability__g",
+    "score_by_extreme_number__g",
+    "select_nth__g"
+  ],
+  "total_evals": 1737000,
+  "best_found": {
+    "acc": 0.8333,
+    "pipeline": [
+      "parse_box_items",
+      "op_aggregate_quantities",
+      "parse_comparison",
+      "parse_names_and_relations",
+      "parse_ordinal",
+      "parse_rules",
+      "forward_chain",
+      "parse_which_extreme",
+      "relations_from_facts",
+      "op_build_ordering",
+      "score_by_aggregate__g",
+      "score_by_comparison__g",
+      "score_by_derivability__g",
+      "score_by_extreme_number__g",
+      "select_nth__g"
+    ],
+    "k": 10,
+    "evals_when_found": 1687896,
+    "comp_lift": 0.8333
+  },
+  "best_per_subset": {
+    "canary": 0.6,
+    "synth": 1.0,
+    "inference": 1.0,
+    "cross_tier": 1.0
+  },
   "by_k": [
     {
       "k": 1,
@@ -102,29 +165,11 @@
       "elapsed_s": 3000.2
     }
   ],
-  "best_found": {
-    "acc": 0.8333,
-    "pipeline": [
-      "parse_box_items",
-      "op_aggregate_quantities",
-      "parse_comparison",
-      "parse_names_and_relations",
-      "parse_ordinal",
-      "parse_rules",
-      "forward_chain",
-      "parse_which_extreme",
-      "relations_from_facts",
-      "op_build_ordering",
-      "score_by_aggregate__g",
-      "score_by_comparison__g",
-      "score_by_derivability__g",
-      "score_by_extreme_number__g",
-      "select_nth__g"
-    ],
-    "k": 10,
-    "evals_when_found": 1687896,
-    "comp_lift": 0.8333
+  "positive_control": {
+    "known_0833_organism_acc": 0.8333,
+    "ok": true
   },
-  "enumeration_evals_to_ceiling": 1687896,
-  "total_evals": 1737000
+  "single_primitive_baseline": 0.0,
+  "wall_clock_s": 3000.2,
+  "verdict": "EVOLUTION_MORE_EFFICIENT"
 }
