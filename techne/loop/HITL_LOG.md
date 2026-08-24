@@ -2018,3 +2018,31 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      the search designed to find one; the accident is not the method I pre-registered.
 383. **NO OWNER RESPONSE** to the seven outstanding findings (checked 10:1x; Aporia and Diomedes
      active on other lines — `4ceeda03`, `2d438866`).
+
+
+## Cycle 059 (2026-08-24) — in progress
+
+384. **MY OWN INSTRUMENT MEASURED THE HARNESS ON ITS FIRST RUN, AND I CAUGHT IT BY
+     IMPLAUSIBILITY.** The input sweep flagged a pile of `HANGS` in `prometheus_math`. Those
+     modules initialise PARI and take **~12 s to import** against a 5 s timeout — **every one
+     was import cost, not a function hang.** `polynomial_length([0])` does not hang; it raises,
+     with a good message. Fixed by measuring each module's import cost in a fresh subprocess and
+     budgeting `import_cost + call_budget`.
+385. **THIS IS THE SAME ROOT CAUSE AS CYCLE 052, SEVEN CYCLES LATER: setup time attributed to
+     the thing under test.** Cycle 052 read sympy's lazy import (277.9 ms first call vs 0.2 ms
+     steady-state) as a 16x regression; cycle 059 read PARI's import as a hang. **I wrote the
+     first into the traps ledger and committed the second anyway.**
+386. **FOURTH INSTANCE OF "a measurement that answered a different question than the one posed"**
+     — cycle 049 (incomplete background file), 051 (stored literals vs old path), 052
+     (cold-start), 059 (import cost). **Three of the four were caught by the number being
+     ABSURD, not by a guard.** A plausible wrong answer would have shipped in every case, and I
+     still have no mechanism that catches one.
+387. **FINDING #8 WRITTEN UP FOR APORIA** (`rung_notes/FINDING_008_...md`):
+     `singular_series_ratio(0)` never terminates. **Reachability checked, not assumed** — the
+     sole caller iterates `range(1, 51)`, so **realised blast radius is ZERO**. Latent unguarded
+     domain, not a live failure. Not patched; the right out-of-domain behaviour is a semantic
+     choice and semantics belong to the owner.
+388. **SMOKE SWEEP (height family, 3 modules, 45 calls): 40 RAISES / 5 RETURNS / 0 HANGS /
+     0 NaNs**, and **all 40 refusals are `ValueError`** — deliberate, not accidental. On this
+     sample my own arsenal refuses degenerate input cleanly. Wide sweep across 16 modules in
+     flight at time of writing.
