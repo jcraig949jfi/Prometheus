@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-24T11:28:24+00:00
+# PULSE — generated 2026-08-24T12:03:34+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        560
-consumed (state changes):   114  {'queue_state': 102, 'registry': 11, 'findings': 1}
+emitted (new files):        543
+consumed (state changes):   111  {'queue_state': 99, 'registry': 11, 'findings': 1}
 consumed/emitted:           0.20
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 220
+## Commits, 72h (non-cron): 215
+- 1595384c 08-24 08:00 Techne cycle 056: PRE-REGISTRATION -- is it the intervention or the population?
+- da90ab8e 08-24 07:28 Aporia P148: CYCLE 149-M â€” the programme is NOT closed. I audited the wrong generators, in the wrong window.
 - b7edca82 08-24 07:01 Techne: correcting cycle 055 within the hour -- my 'cross-role' population was 87.5% one role
 - 6d752ba2 08-24 06:59 Techne cycle 055: the Lane A/B experiment finally ran -- reading works, and each lane caught the other's error
 - 013e16ab 08-24 06:55 Techne cycle 055: LANE A VERDICTS committed -- this commit is the blind for Lane B
@@ -38,9 +40,7 @@ verdict: ALIVE
 - de5a9a01 08-24 03:40 Aporia P143: CYCLE 144-H TERMINAL KILL â€” instrument repaired, all 5 controls pass, H=0 readable
 - 29340def 08-24 03:33 Techne cycle 052: a kill test that fired on my own fix twice, and a published verdict resting on a bug
 - eb0b40ca 08-24 03:31 Techne cycle 052: #298 answered AFFIRMATIVELY -- a published INCONCLUSIVE verdict rests on an unfactored verifier
-- 5d326dbb 08-24 03:29 Techne cycle 052: PRE-REGISTRATION for the inherent-limits sweep (#298)
-- 5ed8d8d8 08-24 03:28 techne/mahler: scalar and batch APIs reconciled -- and the first fix failed its own kill test
-- … +195 more
+- … +190 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
