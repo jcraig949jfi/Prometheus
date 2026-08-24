@@ -675,15 +675,29 @@ def _campaign():
     # +8pp a null routes INCONCLUSIVE-UNDERPOWERED, which never routes Path gamma. So the
     # arms stop here rather than spending ~2,750 free calls on a verdict class that decides
     # nothing. See ergon/probe/R13_REPLENISHMENT_2026-08-24.md (filed to the kill authority).
+    # THE R13 FLOOR MUST BE MEASURED ON THE POPULATION THE ARMS RUN ON. `screen_excluded` is
+    # the SINGLE-family lenient screen — the statistic HB-R1 disqualifies — so using it here
+    # made the enforcement code and the escalation filed to the kill authority describe
+    # different sets (code ~173, filing 191). Fifth instance of the wrong-population class,
+    # in the code written to enforce a rule about it. The arms run post-screen at Tier B,
+    # where the screen is the CROSS-family intersection, so that is what is measured; the
+    # single-family value is retained only as the conservative fallback when no admissible
+    # second family exists yet, and which one was used is recorded.
+    tb = read.get("tier_b_cross_family_screen")
+    if tb:
+        n_post, screen_basis = tb["n"], "cross-family (Tier B, HB-R1)"
+    else:
+        post_single = [r for r in rows if r["uid"] not in set(read["screen_excluded"])]
+        n_post, screen_basis = len(post_single), "single-family FALLBACK (no admissible "                                                 "second family yet; conservative — this screen "                                                 "removes MORE items, so the floor bites sooner)"
     post = [r for r in rows if r["uid"] not in set(read["screen_excluded"])]
-    if len(post) < R13_POWER_FLOOR and not _r13_waiver().exists():
+    if n_post < R13_POWER_FLOOR and not _r13_waiver().exists():
         log(event="campaign_end", verdict="R13-POWER-FLOOR-UNMET",
-            n_post_screen=len(post), floor=R13_POWER_FLOOR,
+            n_post_screen=n_post, screen_basis=screen_basis, floor=R13_POWER_FLOOR,
             reason=("prereg R13: replenish from the pool and re-screen before any arm runs. "
                     "Replenishment extends a sha-pinned manifest and is the kill authority's "
                     f"call; waive by creating {_r13_waiver().name} to run underpowered, in which "
                     "case the run is a pipeline exercise and not a decisive run."))
-        print(f"HALTED: R13 power floor unmet ({len(post)} < {R13_POWER_FLOOR}) — no arm runs")
+        print(f"HALTED: R13 power floor unmet ({n_post} < {R13_POWER_FLOOR}, basis: {screen_basis}) — no arm runs")
         return
     arms = Arms(rows, gold)
     rng = random.Random(SEED)
