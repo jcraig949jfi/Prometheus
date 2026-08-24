@@ -1784,3 +1784,46 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      **Not claiming H1a.**
 335. **ARSENAL RED RE-BASELINE REPORTED: 46 failed / 4286 passed / 3 errors, 37:03**, split 37
      `prometheus_math` / 9 `techne/tests`. **New baseline, not a delta.**
+
+
+## Cycle 054 (2026-08-24) — cycle 053's finding RETRACTED; the catalog is sound
+
+336. **JAMES — I RETRACT HITL #331/#332. THE ERROR WAS MINE, NOT THE TABLE'S.** I reported that
+     `MAHLER_TABLE` held 8,625 entries while claiming to be Mossinghoff's ~178-entry list, and
+     escalated it. **`_mahler_data.py`'s header has documented the whole expansion since
+     2026-04-29**: `Known180.gz`, *"the canonical Mossinghoff M<1.3 through degree 180 list,
+     **8438 polynomials**"*, appended after the original 178-entry Phase-1 section.
+     **Mossinghoff's own list is 8,438, not 178.** I took the TEST's docstring as the authority
+     on what he published and never opened the data module one import away.
+337. **SAME FAILURE AS #330, ONE LAYER UP.** There I named a function without importing it;
+     here I characterised a data source without opening it. **Both times the measurement was
+     fine and the citation was invented.** Two consecutive cycles, same shape.
+338. **THE CHAIN VERIFIED AGAINST THE ARTIFACT, NOT THE DOCSTRING.** `_known180_raw.gz`
+     (128,035 bytes) parses to **exactly 8,438 polynomial records**, with 32 non-record lines
+     that are **Mossinghoff's own header block, carrying his name and department**. M range
+     1.176281–1.299999, degrees 8–180. **Arithmetic closes exactly: 178 + 8,438 + 9 = 8,625**,
+     and the 9 are individually named (Sac-Épée 4, Idris/Sac-Épée 3, Drungilas–Jankauskas–Šiurys
+     1, Hare–Mossinghoff 1).
+339. **KILL TEST PASSED: zero of 8,438 entries exceed their own M < 1.3 cutoff.** Had it fired,
+     the table would have been **contaminated** rather than mislabelled, and every conclusion
+     over "all 8,625 entries" — **including my cycle-048 closure of HITL #266** — would have
+     needed re-examination. **VERDICT: the data is sound; #266's closure stands.**
+340. **WHAT IS ACTUALLY WRONG IS TWO STALE DOCS AND NO BAD DATA.**
+     `test_authority_mossinghoff_178_entries` is a **stale test**, red since the April refresh —
+     and the only reason any of this was checked. `mahler.py`'s wrapper docstring still says
+     *"178 catalog entries ... Degrees 2..30 plus 36"* for a table of 8,625 over degrees 2–180.
+341. **NOT FIXED THIS CYCLE, DELIBERATELY — AND THIS ONE NEEDS YOUR NOD.** Updating
+     `test_authority_mossinghoff_178_entries` means changing an **authority** test's expected
+     count. After two cycles of my own citation errors I would rather **propose** that than
+     perform it quietly in the same cycle that cleared the data. Evidence is in
+     `rung_notes/CYCLE054_CATALOG_PROVENANCE_PREREG.md` and cycle 054. **Say the word and I
+     update both the test and the wrapper docstring to the verified 8,625 / degrees 2–180.**
+342. **PREDICTIONS 4 OF 5, ALL TAGGED `OPEN`** — the new difficulty axis (cycle 053's trap).
+     **P4 FALSIFIED, and its rationale was BACKWARDS**: I wrote *"a SUBSET ... so the table
+     double-counts nothing"*, but if Phase-1 were a subset of Known180 and both sit in the
+     table, that **is** double-counting. Disjointness is what avoids it — measured at **1 of
+     178** overlapping. I predicted the wrong structure and inverted the consequence.
+343. **CALIBRATION 26/37 = 0.703.** high 7/8 | mod-high **7/7** | moderate 8/13 = 0.62 | low-mod
+     4/6 = 0.67 | **low 0/3**. All five rows this cycle are `OPEN`, unlike cycle 053's sweep on
+     a `PRIOR` mechanism, so they are worth more per row despite the lower rate.
+     **`low-to-moderate` and `moderate` have CONVERGED rather than separated. Not claiming H1a.**
