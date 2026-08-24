@@ -52,7 +52,17 @@ from ergon.probe.task_gen_v3 import generate, is_prime, manifest_sha256, generat
 from ergon.probe.chain_run import TRUNCATION_GATE
 
 SOLVER = "nvidia:deepseek-v4-flash"     # FREE host pin — never pooled with paid rows
-RUNG, MANIFEST_N, SEED = "M20", 620, 20260821
+# RE-PINNED 2026-08-23 per Charon RULINGS_2026-08-23 Ruling 2 (route b). The pin is the
+# EXISTING nearmiss_mix-M30 manifest (sha e6b1e001, n=200), NOT a freshly generated one and
+# NOT the cb30 cold band: a second free-host family (nemotron-super-49b-v1) already has rows
+# on this exact manifest, so the primary solver's 400-call leg completes a two-family,
+# one-manifest, one-host Tier B leveling — the thing the probe has never had. Getting M20 to
+# the same place costs ~2,480 calls on a manifest whose raw read sits on the ceiling.
+# NO SWEEPING (Ruling 2 cond. 3): if this fails to level, the campaign STOPS and escalates.
+# It does not walk to M40.
+RUNG, MANIFEST_N, SEED = "M30", 200, 20260821
+PINNED_MANIFEST = "ergon/probe/manifests/nearmiss_mix-M30_manifest_n200.jsonl"
+PINNED_MANIFEST_SHA = "e6b1e001bf79e3ef"
 BAND, MOVABLE_FLOOR = (0.35, 0.60), 0.30
 # MAX_TOK raised 8192 -> 16384 on 2026-08-21 after the confounded first P1: at 8192 the
 # free host truncated 3.13% of rep-1 calls (>2% gate) and — worse — truncated rows scored
@@ -100,6 +110,25 @@ def atomic(path, obj):
 # ------------------------------------------------------------------ manifest (deterministic)
 
 def manifest():
+    """Load the PINNED manifest. It is not generated here: a second family already ran these
+    exact rows, and regenerating would produce different tasks under the same rung name,
+    silently destroying the cross-family screen that Ruling 1 depends on."""
+    pinned = ROOT / PINNED_MANIFEST
+    if pinned.exists():
+        rows = [json.loads(l) for l in pinned.read_text(encoding="utf-8").splitlines()]
+        got = manifest_sha256(rows)[:16]
+        if got != PINNED_MANIFEST_SHA:
+            raise SystemExit(f"REFUSED: pinned manifest sha {got} != {PINNED_MANIFEST_SHA}; "
+                             "the cross-family screen is defined on specific rows")
+        meta = DIR / "manifest_meta.json"
+        if not meta.exists():
+            atomic(meta, {"n": len(rows), "rung": RUNG, "solver_pin": SOLVER,
+                          "pinned_manifest": PINNED_MANIFEST,
+                          "manifest_sha256": manifest_sha256(rows),
+                          "generator_sha256": generator_sha256(),
+                          "second_family": "nvidia:nemotron-super-49b-v1 (Ruling 1 conditions)",
+                          "ts_utc": now()})
+        return rows
     mpath = DIR / f"campaign_manifest_{RUNG}_n{MANIFEST_N}.jsonl"
     if not mpath.exists():
         rows = generate(RUNG, MANIFEST_N, SEED)
@@ -233,8 +262,18 @@ def p1(rows, gold, budget):
     straddles = (mlo < BAND[0] < mhi) or (mlo < BAND[1] < mhi)
     edge = BAND[0] if abs(acc - BAND[0]) < abs(acc - BAND[1]) else BAND[1]
     margin = abs(acc - edge)
+    # TWO designs, labelled -- reporting one beside a recommendation written for the other is
+    # what produced "4.8x the entire manifest" (Charon RULINGS_2026-08-23 Ruling 2).
+    #   items-at-one-rep: variance acc(1-acc)/n   -> answers "how many MORE ITEMS?"
+    #   manifest-level (the ADOPTED estimand): the manifest is frozen and the live noise is
+    #     solver stochasticity, so variance is mean(p_i(1-p_i))/(n*k) and the resolving move
+    #     is MORE REPS. mean(p_i(1-p_i)) is directly estimable from the reps already
+    #     collected: P(discordant) = 2*p_i*(1-p_i), so mean = movable/2 -- NOT acc(1-acc).
     n_decidable = (math.ceil((z / margin) ** 2 * acc * (1 - acc))
                    if margin > 1e-9 else None)
+    per_item_var = movable / 2.0
+    k_required = (max(1, math.ceil((z / margin) ** 2 * per_item_var / n))
+                  if margin > 1e-9 and per_item_var > 0 else None)
     point_in = BAND[0] <= acc <= BAND[1]
     if not point_in:
         verdict = "NOT-LEVELED"
@@ -260,6 +299,13 @@ def p1(rows, gold, budget):
             "interval_straddles_band_edge": straddles,
             "nearest_edge": edge, "margin_to_edge": round(margin, 4),
             "n_required_for_decidability": n_decidable,
+            "n_required_design": "items-at-one-rep (variance acc(1-acc)/n) — NOT the adopted "
+                                 "estimand; reported for comparability only",
+            "k_required_reps": k_required,
+            "k_required_design": "manifest-level, THE ADOPTED ESTIMAND: reps on the frozen "
+                                 "manifest, variance mean(p_i(1-p_i))/(n*k) with "
+                                 "mean(p_i(1-p_i)) = movable/2 estimated from collected reps",
+            "per_item_variance_estimated": round(per_item_var, 4),
             "movable_share": round(movable, 4),
             "full_band_passes": point_in and movable >= MOVABLE_FLOOR and not straddles,
             "leveling_verdict": verdict,

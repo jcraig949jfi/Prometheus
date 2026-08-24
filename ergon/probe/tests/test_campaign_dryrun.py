@@ -125,8 +125,12 @@ def test_r10_reads_the_campaign_arms_ledger(tmpdir_outside_ledgers):
     sys.path.insert(0, str(ROOT / "ergon" / "probe"))
     import importlib
     r10 = importlib.import_module("ergon.probe.r10_recompute")
-    rows = r10.load(str(tmp / "p4_arms.jsonl"),
-                    str(tmp / "campaign_manifest_M20_n200.jsonl"))
+    # the campaign now loads a PINNED manifest (Ruling 2 re-pin) rather than generating one
+    import ergon.probe.campaign as C
+    manifest_path = ROOT / C.PINNED_MANIFEST
+    if not manifest_path.exists():
+        manifest_path = tmp / f"campaign_manifest_{C.RUNG}_n{C.MANIFEST_N}.jsonl"
+    rows = r10.load(str(tmp / "p4_arms.jsonl"), str(manifest_path))
     assert rows and all("arm" in r and "uid" in r and "correct" in r for r in rows)
     arms = {r["arm"] for r in rows}
     assert {"F0", "F-null", "F-prom-retrieved"} <= arms

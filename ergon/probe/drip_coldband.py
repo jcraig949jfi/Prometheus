@@ -37,7 +37,10 @@ CANDIDATES = ("nvidia:nemotron-super-49b-v1.5", "nvidia:nemotron-super-49b-v1",
 # for the real wall instead of assuming one: worst case it stops on the first 429, exactly as
 # designed. deepseek-v4-flash on this same lane served 1,058 calls in a day.
 BATCH_PER_CANDIDATE = 80
-MAX_TOK, TIMEOUT = 8192, 420
+# 8192 is the cap that truncation-confounded P1 at 3.13% (M1_STATUS 7m). The campaign was
+# raised for that reason; this file was not, and then reported truncation 0.0000 from a field
+# its own writer never emitted (Charon addendum 2026-08-23).
+MAX_TOK, TIMEOUT = 16384, 420
 BAND, MOVABLE_FLOOR = (0.35, 0.60), 0.30
 MAN = ROOT / "ergon/probe/manifests/nearmiss_mix-M30_manifest_n200.jsonl"
 DRIP_DIR = ROOT / "ergon/probe/ledgers/coldband_drip"
@@ -100,6 +103,8 @@ def drip(solver):
             sent += 1
             rec = {"solver": solver, "uid": r["uid"], "rep": rep, "status": res.status,
                    "error_type": res.error_type, "latency_s": res.latency_s,
+                   "completion_tokens": res.completion_tokens,
+                   "prompt_tokens": res.prompt_tokens,
                    "extracted_int": extract_numeric(res.text if res.status == "ok" else None).value,
                    "attempt_text": (res.text or "").strip()[:4000],
                    "derives_from_gold": False,
@@ -129,6 +134,26 @@ def drip(solver):
 
 TRANSPORT_FLOOR = 0.95
 
+
+
+def _truncation_rate(recs):
+    """A gate whose input field is ABSENT must raise, never return a passing value.
+
+    This gate previously read `r.get("completion_tokens") or 0` against a field this file's
+    own writer never emitted, so `0 >= MAX_TOK` was always False and the rate was identically
+    0.0000 -- not a measurement, a gate that could not fail (Charon addendum 2026-08-23; the
+    same generalization ATK-013 carries for loaders that parse zero rows).
+    """
+    ok = [r for r in recs if r["status"] == "ok"]
+    if not ok:
+        raise ValueError("truncation gate: no ok rows to measure")
+    missing = [r for r in ok if r.get("completion_tokens") is None]
+    if missing:
+        raise ValueError(
+            f"truncation gate: completion_tokens absent on {len(missing)}/{len(ok)} ok rows -- "
+            "the gate cannot be evaluated. Re-collect with a writer that emits it; do NOT "
+            "treat an absent field as a pass (Charon addendum 2026-08-23).")
+    return round(sum(1 for r in ok if r["completion_tokens"] >= MAX_TOK) / len(ok), 4)
 
 def finalize(solver, led_path, out_path):
     recs = [json.loads(l) for l in led_path.read_text(encoding="utf-8").splitlines()]
@@ -164,6 +189,16 @@ def finalize(solver, led_path, out_path):
     z = 1.959964
     se = math.sqrt(max(acc * (1 - acc), 1e-12) / n)
     lo, hi = max(0.0, acc - z * se), min(1.0, acc + z * se)
+    try:
+        trunc = _truncation_rate(recs)
+    except ValueError as e:
+        band_read = {"solver": solver, "leveling_verdict": "TRUNCATION-UNMEASURED",
+                     "reason": str(e), "transport_ok_rate": round(ok_rate, 4),
+                     "ts_utc": datetime.now(timezone.utc).isoformat(timespec="seconds")}
+        tmp = out_path.with_suffix(".json.tmp")
+        tmp.write_text(json.dumps(band_read, indent=2), encoding="utf-8")
+        os.replace(tmp, out_path)
+        return "REFUSED: TRUNCATION-UNMEASURED"
     band_read = {
         "solver": solver, "n": n,
         "point_estimate": round(acc, 4),
@@ -176,9 +211,7 @@ def finalize(solver, led_path, out_path):
                                            and movable >= MOVABLE_FLOOR) else "NOT-LEVELED"),
         "collected_by": "drip (quota-respecting; batches of %d)" % BATCH_PER_CANDIDATE,
         "transport_ok_rate": round(ok_rate, 4),
-        "truncation_rate": round(sum(1 for r in recs if r["status"] == "ok"
-                                     and (r.get("completion_tokens") or 0) >= MAX_TOK)
-                                 / max(1, sum(1 for r in recs if r["status"] == "ok")), 4),
+        "truncation_rate": trunc,
         "ts_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
     }
     tmp = out_path.with_suffix(".json.tmp")

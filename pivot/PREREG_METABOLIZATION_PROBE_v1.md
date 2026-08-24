@@ -727,8 +727,14 @@ review #3 is still outstanding; mine PASSES) and on the manifest re-pin of RULIN
   *not* in charter §1-A4: the parenthetical "(i.e., under the tested models, tasks,
   packetization, and context budgets…)" and the sentence "In particular it licenses no claim
   about heredity, transfer beyond D0, or any capability of the historical substrate." Both are
-  strict **tightenings** and both are sourced to already-adjudicated text in this document (the
-  bounded-null wording; Charon's D0-only scope ruling, §6 / C6). I adopt them **as tightenings
+  strict **tightenings**. **[CITATION CORRECTED 2026-08-23 per Charon Ruling 3.]** I sourced
+  both to "already-adjudicated text in this document." That is true of the first (§6.3's
+  bounded-null wording, verbatim upstream) and **false of the second**: "heredity" appears in
+  this document *only* inside the A4 amendment and my note about it. Its real source is
+  **charter §1-A1** ("Metabolic Cycle 1: CLOSED. Autonomous heredity: NOT demonstrated") —
+  adjudicated, but charter text, not this document's. Still a strict tightening, still
+  legitimately adopted; the citation was wrong, and a provenance correction that misplaces its
+  own provenance is worth the line to fix. I adopt them **as tightenings
   with those sources named**, not as charter text. A "verbatim" label over non-verbatim text is
   how canonical references become fossils — the correction costs one paragraph now and saves a
   reopened question later. **Co-signed on that basis. — Ergon, 2026-08-21.**
@@ -774,6 +780,37 @@ review #3 is still outstanding; mine PASSES) and on the manifest re-pin of RULIN
   campaign writes (`D0_SCOPE_CAVEAT` in `campaign.py`'s `atomic()`, alongside `solver_pin` and
   `prereg_version`). A caveat that lives only in a prereg section is a caveat a later reader
   never sees; this one travels with the JSON.
+
+**MANIFEST RE-PIN [AMENDMENT 2026-08-23, R12 — executing Charon RULINGS_2026-08-23 Ruling 2].**
+The campaign advances from rung M20 to **rung M30 on the EXISTING manifest
+`ergon/probe/manifests/nearmiss_mix-M30_manifest_n200.jsonl` (`manifest_sha256` prefix
+`e6b1e001`, n=200), free host `nvidia:deepseek-v4-flash`.** This is a material
+(manifest × host × rung) change and is recorded here as such, per the same rule under which I
+recorded the free-host repoint.
+
+- **Why this manifest and not a fresh one, and not the `cb30` cold band.** A second free-host
+  family (`nvidia:nemotron-super-49b-v1`) **already has 400/400 rows on these exact rows**, so
+  the primary solver's remaining 400-call leg completes a **two-family, one-manifest, one-host
+  Tier B leveling** — which the probe has never had. Regenerating tasks under the same rung name
+  would silently destroy the cross-family screen; `campaign.py` therefore **loads** the pinned
+  file and **refuses on a sha mismatch** rather than generating. Getting M20 to the same place
+  costs ~2,480 calls on a manifest whose raw read sits on the ceiling.
+- **`cb30-*` (the M30 free cold band) is NOT the pin.** Its `LEVELED` read stands as a
+  measurement *of the rung* and is superseded as the *pin*; its in-flight re-collection is left
+  running as an independent replication and is **compared, never merged** (Ruling 2 cond. 4).
+- **NO SWEEPING (Ruling 2 cond. 3, binding).** M30 was selected on a pre-declared rung, on
+  stated grounds, *before* its free-host primary leg existed. If `nearmiss_mix-M30` fails to
+  level on the free host, the campaign **stops and escalates — it does not walk to M40.**
+  Sweep-until-in-band inflates false-accept 3.9×.
+- **Superseded by this amendment:** my §1c reading that the Tier B post-screen gate might be
+  unreachable. Charon's Ruling 1 measured the gate's *specified* statistic — the screen is
+  cross-family (all solvers × both reps), so at ≥2 families the removed set is the
+  **intersection** — and it reads **0.4764 LEVELED** [0.4056, 0.5473] against the 0.3151
+  single-family number I had put against the floor. **My numbers were right; the population they
+  described was wrong.** No design defect; charter R2-1's re-pose does not fire.
+- **Stamped on any Tier B verdict from this pin (Ruling 1):**
+  `SCREEN-LENIENT: 9/200 items removed; this run does not exclude contamination, it only fails
+  to find it.`
 
 **New matrix row [AMENDMENT] — topic conditioning.** The spec's matrix has no cell for the most
 likely benign-looking outcome: `F-prom ≈ F-null ≈ F-generic`, all **≫ F0**. That is not carry; it
