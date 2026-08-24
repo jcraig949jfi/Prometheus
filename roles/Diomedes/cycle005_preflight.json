@@ -1,0 +1,442 @@
+{
+ "c4": {
+  "desc": "mutation (relation weakening/strengthening)",
+  "n_sampled": 18976,
+  "payload_keys": [
+   "holds",
+   "invariant_a",
+   "invariant_b",
+   "object_a",
+   "object_b",
+   "original_relation",
+   "parent_record_id",
+   "relation",
+   "self_consistent",
+   "value_a",
+   "value_b",
+   "weak_holds",
+   "catalog_a",
+   "catalog_b"
+  ],
+  "distinct_action_tokens": 252,
+  "top_actions": [
+   [
+    "original_relation=abs_diff_le_3",
+    2502
+   ],
+   [
+    "relation=abs_diff_le_5",
+    953
+   ],
+   [
+    "relation=abs_diff_le_8",
+    940
+   ],
+   [
+    "relation=abs_diff_le_16",
+    877
+   ],
+   [
+    "original_relation=abs_diff_le_5",
+    805
+   ],
+   [
+    "original_relation=abs_diff_le_8",
+    774
+   ]
+  ],
+  "outcome_distribution": [
+   [
+    "holds=True",
+    18976
+   ],
+   [
+    "weak_holds=True",
+    18976
+   ],
+   [
+    "self_consistent=True",
+    18976
+   ]
+  ],
+  "example": {
+   "catalog_a": "knot",
+   "catalog_b": "ec",
+   "holds": true,
+   "invariant_a": "crossing_number",
+   "invariant_b": "tamagawa_product",
+   "object_a": "5_2",
+   "object_b": "7312.b2",
+   "original_relation": "abs_diff_le_3",
+   "parent_record_id": "7f905fc1e32e9f3b6daab771001d894b600eec9f6e0fc80d1c0d38dc3c577000",
+   "relation": "abs_diff_le_16",
+   "self_consistent": true,
+   "value_a": 5
+  }
+ },
+ "c5": {
+  "desc": "mutation",
+  "n_sampled": 8157,
+  "payload_keys": [
+   "boundary_revealed",
+   "catalog_a",
+   "catalog_b",
+   "holds",
+   "invariant_a",
+   "invariant_b",
+   "object_a",
+   "object_b",
+   "original_relation",
+   "parent_record_id",
+   "relation",
+   "strong_holds",
+   "value_a",
+   "value_b"
+  ],
+  "distinct_action_tokens": 181,
+  "top_actions": [
+   [
+    "relation=equal",
+    1923
+   ],
+   [
+    "original_relation=equal_mod_2",
+    1018
+   ],
+   [
+    "original_relation=abs_diff_le_3",
+    960
+   ],
+   [
+    "original_relation=divides",
+    905
+   ],
+   [
+    "relation=abs_diff_le_2",
+    707
+   ],
+   [
+    "relation=abs_diff_le_1",
+    657
+   ]
+  ],
+  "outcome_distribution": [
+   [
+    "holds=True",
+    8157
+   ],
+   [
+    "weak_holds=True",
+    5149
+   ],
+   [
+    "self_consistent=True",
+    5149
+   ]
+  ],
+  "example": {
+   "boundary_revealed": true,
+   "catalog_a": "knot",
+   "catalog_b": "ec",
+   "holds": true,
+   "invariant_a": "crossing_number",
+   "invariant_b": "rank",
+   "object_a": "7_3",
+   "object_b": "6894.m1",
+   "original_relation": "divides",
+   "parent_record_id": "938180d4ed0cdb0dc5490f01ed6253393a4bcf58fb7bc43e29176699c8c9ae1c",
+   "relation": "equal",
+   "strong_holds": false
+  }
+ },
+ "g5": {
+  "desc": "symmetry_transform (scale factor)",
+  "n": 0,
+  "verdict": "ABSENT in sample"
+ },
+ "b1": {
+  "desc": "operator_rotation (apply operator n times)",
+  "n_sampled": 1340,
+  "payload_keys": [
+   "actual_value",
+   "catalog",
+   "expected_sign_flip",
+   "invariant",
+   "matches",
+   "n_applications",
+   "object",
+   "operator",
+   "original_value",
+   "predicted_value"
+  ],
+  "distinct_action_tokens": 6,
+  "top_actions": [
+   [
+    "operator=knot_mirror",
+    1340
+   ],
+   [
+    "n_applications=5",
+    268
+   ],
+   [
+    "n_applications=4",
+    268
+   ],
+   [
+    "n_applications=8",
+    268
+   ],
+   [
+    "n_applications=2",
+    268
+   ],
+   [
+    "n_applications=3",
+    268
+   ]
+  ],
+  "outcome_distribution": [
+   [
+    "matches=True",
+    1340
+   ]
+  ],
+  "example": {
+   "actual_value": 10,
+   "catalog": "knot",
+   "expected_sign_flip": false,
+   "invariant": "crossing_number",
+   "matches": true,
+   "n_applications": 5,
+   "object": "10_2",
+   "operator": "knot_mirror",
+   "original_value": 10,
+   "predicted_value": 10
+  }
+ },
+ "b4": {
+  "desc": "operator_rotation (fixed point)",
+  "n_sampled": 1212,
+  "payload_keys": [
+   "input_value",
+   "is_fixed_point",
+   "non_trivial",
+   "op_v",
+   "operator"
+  ],
+  "distinct_action_tokens": 6,
+  "top_actions": [
+   [
+    "operator=identity",
+    202
+   ],
+   [
+    "operator=sq_mod_100",
+    202
+   ],
+   [
+    "operator=neg",
+    202
+   ],
+   [
+    "operator=log2_floor",
+    202
+   ],
+   [
+    "operator=mod_3",
+    202
+   ],
+   [
+    "operator=abs",
+    202
+   ]
+  ],
+  "outcome_distribution": [
+   [
+    "is_fixed_point=False",
+    892
+   ],
+   [
+    "is_fixed_point=True",
+    320
+   ]
+  ],
+  "example": {
+   "input_value": -6,
+   "is_fixed_point": true,
+   "non_trivial": false,
+   "op_v": -6,
+   "operator": "identity"
+  }
+ },
+ "b2": {
+  "desc": "composition_test (operator commutation)",
+  "n_sampled": 3636,
+  "payload_keys": [
+   "commutes",
+   "fg_result",
+   "gf_result",
+   "input_value",
+   "operator_f",
+   "operator_g"
+  ],
+  "distinct_action_tokens": 6,
+  "top_actions": [
+   [
+    "operator_f=log2_floor",
+    606
+   ],
+   [
+    "operator_f=neg",
+    606
+   ],
+   [
+    "operator_f=identity",
+    606
+   ],
+   [
+    "operator_f=sq_mod_100",
+    606
+   ],
+   [
+    "operator_f=mod_3",
+    606
+   ],
+   [
+    "operator_f=abs",
+    606
+   ]
+  ],
+  "outcome_distribution": [
+   [
+    "commutes=True",
+    2372
+   ],
+   [
+    "commutes=False",
+    1264
+   ]
+  ],
+  "example": {
+   "commutes": true,
+   "fg_result": 0,
+   "gf_result": 0,
+   "input_value": 1,
+   "operator_f": "log2_floor",
+   "operator_g": "mod_3"
+  }
+ },
+ "b3": {
+  "desc": "composition_test (self-inverse)",
+  "n_sampled": 606,
+  "payload_keys": [
+   "input_value",
+   "op_op_v",
+   "op_v",
+   "operator",
+   "self_inverse_at_v"
+  ],
+  "distinct_action_tokens": 6,
+  "top_actions": [
+   [
+    "operator=mod_3",
+    101
+   ],
+   [
+    "operator=abs",
+    101
+   ],
+   [
+    "operator=sq_mod_100",
+    101
+   ],
+   [
+    "operator=identity",
+    101
+   ],
+   [
+    "operator=neg",
+    101
+   ],
+   [
+    "operator=log2_floor",
+    101
+   ]
+  ],
+  "outcome_distribution": [
+   [
+    "self_inverse_at_v=False",
+    346
+   ],
+   [
+    "self_inverse_at_v=True",
+    260
+   ]
+  ],
+  "example": {
+   "input_value": -20,
+   "op_op_v": 1,
+   "op_v": 1,
+   "operator": "mod_3",
+   "self_inverse_at_v": false
+  }
+ },
+ "b5": {
+  "desc": "conservation_law",
+  "n_sampled": 2104,
+  "payload_keys": [
+   "actually_changed",
+   "actually_preserved",
+   "catalog",
+   "expected_change",
+   "expected_preserve",
+   "holds",
+   "object",
+   "operator"
+  ],
+  "distinct_action_tokens": 2,
+  "top_actions": [
+   [
+    "operator=ec_quad_twist_modeled",
+    2000
+   ],
+   [
+    "operator=knot_mirror",
+    104
+   ]
+  ],
+  "outcome_distribution": [
+   [
+    "holds=True",
+    2074
+   ],
+   [
+    "holds=False",
+    30
+   ]
+  ],
+  "example": {
+   "actually_changed": [
+    "signature"
+   ],
+   "actually_preserved": [
+    "crossing_number",
+    "determinant",
+    "three_genus"
+   ],
+   "catalog": "knot",
+   "expected_change": [
+    "signature"
+   ],
+   "expected_preserve": [
+    "crossing_number",
+    "determinant",
+    "three_genus"
+   ],
+   "holds": true,
+   "object": "8_7",
+   "operator": "knot_mirror"
+  }
+ }
+}
