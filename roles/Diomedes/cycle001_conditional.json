@@ -1,0 +1,26 @@
+{
+ "seed": 20260824,
+ "n_states": 37985,
+ "chance_auc": 0.5,
+ "ORACLE_state_specific": {
+  "mean_auc": 1.0,
+  "note": "by construction"
+ },
+ "ORACLE_MARGINAL_best_state_independent": {
+  "mean_auc": 0.6254,
+  "se": 0.0013,
+  "n_states": 37985,
+  "gate_mean_minus_3se": 0.6214
+ },
+ "PROMETHEUS_B1_break_rate": {
+  "mean_auc": 0.556,
+  "se": 0.0008,
+  "n_states": 37985,
+  "gate_mean_minus_3se": 0.5536
+ },
+ "conditional_information_gap": {
+  "definition": "ORACLE (1.0) - ORACLE_MARGINAL; the part of A* that can only be known by attending to the current state",
+  "value": 0.3746
+ },
+ "share_of_marginal_ceiling_captured_by_prometheus": 0.4467
+}

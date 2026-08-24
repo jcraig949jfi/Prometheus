@@ -1,0 +1,422 @@
+{
+ "prereg": "CYCLE_001_PREREG_h1_counterfactual_hunt.md",
+ "relations": [
+  "abs_diff_le_3",
+  "equal_mod_2"
+ ],
+ "K": 100,
+ "seeds": [
+  20260824,
+  20260825,
+  20260826,
+  20260827,
+  20260828
+ ],
+ "scope": "12 stratified files, <=150000 lines each",
+ "chance_auc": 0.5,
+ "split": "held-out INVARIANT PAIR (T3-grade)",
+ "per_seed": [
+  {
+   "seed": 20260824,
+   "n_states_eval": 15711,
+   "n_states_total": 37985,
+   "mean_base_rate": 0.4868,
+   "arms": {
+    "ORACLE": {
+     "mean_auc": 1.0,
+     "se": 0.0,
+     "n": 15711,
+     "gate_mean_minus_3se": 1.0
+    },
+    "RANDOM": {
+     "mean_auc": 0.5,
+     "se": 0.0006,
+     "n": 15711,
+     "gate_mean_minus_3se": 0.4982
+    },
+    "SHUFFLE_cheat": {
+     "mean_auc": 0.4997,
+     "se": 0.0006,
+     "n": 15711,
+     "gate_mean_minus_3se": 0.4979
+    },
+    "B1_break_rate": {
+     "mean_auc": 0.5534,
+     "se": 0.0013,
+     "n": 15711,
+     "gate_mean_minus_3se": 0.5495
+    },
+    "B2_freq": {
+     "mean_auc": 0.4988,
+     "se": 0.0008,
+     "n": 15711,
+     "gate_mean_minus_3se": 0.4965
+    },
+    "B3_adjacency": {
+     "mean_auc": 0.4695,
+     "se": 0.0009,
+     "n": 15711,
+     "gate_mean_minus_3se": 0.4668
+    },
+    "n_cells": {
+     "mean_auc": 0.4917,
+     "se": 0.0003,
+     "n": 15711,
+     "gate_mean_minus_3se": 0.4907
+    },
+    "n_rels": {
+     "mean_auc": 0.5117,
+     "se": 0.0006,
+     "n": 15711,
+     "gate_mean_minus_3se": 0.51
+    },
+    "Z_parent": {
+     "mean_auc": 0.5,
+     "se": 0.0,
+     "n": 15711,
+     "gate_mean_minus_3se": 0.5
+    },
+    "Z_full": {
+     "mean_auc": 0.5551,
+     "se": 0.0014,
+     "n": 15711,
+     "gate_mean_minus_3se": 0.5509
+    }
+   }
+  },
+  {
+   "seed": 20260825,
+   "n_states_eval": 12791,
+   "n_states_total": 37977,
+   "mean_base_rate": 0.4834,
+   "arms": {
+    "ORACLE": {
+     "mean_auc": 1.0,
+     "se": 0.0,
+     "n": 12791,
+     "gate_mean_minus_3se": 1.0
+    },
+    "RANDOM": {
+     "mean_auc": 0.4989,
+     "se": 0.0007,
+     "n": 12791,
+     "gate_mean_minus_3se": 0.4968
+    },
+    "SHUFFLE_cheat": {
+     "mean_auc": 0.4984,
+     "se": 0.0007,
+     "n": 12791,
+     "gate_mean_minus_3se": 0.4963
+    },
+    "B1_break_rate": {
+     "mean_auc": 0.5858,
+     "se": 0.0012,
+     "n": 12791,
+     "gate_mean_minus_3se": 0.582
+    },
+    "B2_freq": {
+     "mean_auc": 0.4858,
+     "se": 0.001,
+     "n": 12791,
+     "gate_mean_minus_3se": 0.4829
+    },
+    "B3_adjacency": {
+     "mean_auc": 0.482,
+     "se": 0.0009,
+     "n": 12791,
+     "gate_mean_minus_3se": 0.4793
+    },
+    "n_cells": {
+     "mean_auc": 0.4976,
+     "se": 0.0002,
+     "n": 12791,
+     "gate_mean_minus_3se": 0.4969
+    },
+    "n_rels": {
+     "mean_auc": 0.4959,
+     "se": 0.0006,
+     "n": 12791,
+     "gate_mean_minus_3se": 0.494
+    },
+    "Z_parent": {
+     "mean_auc": 0.5,
+     "se": 0.0,
+     "n": 12791,
+     "gate_mean_minus_3se": 0.5
+    },
+    "Z_full": {
+     "mean_auc": 0.5804,
+     "se": 0.0013,
+     "n": 12791,
+     "gate_mean_minus_3se": 0.5766
+    }
+   }
+  },
+  {
+   "seed": 20260826,
+   "n_states_eval": 17533,
+   "n_states_total": 37977,
+   "mean_base_rate": 0.4463,
+   "arms": {
+    "ORACLE": {
+     "mean_auc": 1.0,
+     "se": 0.0,
+     "n": 17533,
+     "gate_mean_minus_3se": 1.0
+    },
+    "RANDOM": {
+     "mean_auc": 0.4988,
+     "se": 0.0006,
+     "n": 17533,
+     "gate_mean_minus_3se": 0.4969
+    },
+    "SHUFFLE_cheat": {
+     "mean_auc": 0.4989,
+     "se": 0.0006,
+     "n": 17533,
+     "gate_mean_minus_3se": 0.497
+    },
+    "B1_break_rate": {
+     "mean_auc": 0.5488,
+     "se": 0.0012,
+     "n": 17533,
+     "gate_mean_minus_3se": 0.545
+    },
+    "B2_freq": {
+     "mean_auc": 0.5019,
+     "se": 0.0008,
+     "n": 17533,
+     "gate_mean_minus_3se": 0.4995
+    },
+    "B3_adjacency": {
+     "mean_auc": 0.4732,
+     "se": 0.0009,
+     "n": 17533,
+     "gate_mean_minus_3se": 0.4706
+    },
+    "n_cells": {
+     "mean_auc": 0.4946,
+     "se": 0.0003,
+     "n": 17533,
+     "gate_mean_minus_3se": 0.4937
+    },
+    "n_rels": {
+     "mean_auc": 0.5101,
+     "se": 0.0006,
+     "n": 17533,
+     "gate_mean_minus_3se": 0.5084
+    },
+    "Z_parent": {
+     "mean_auc": 0.5,
+     "se": 0.0,
+     "n": 17533,
+     "gate_mean_minus_3se": 0.5
+    },
+    "Z_full": {
+     "mean_auc": 0.5514,
+     "se": 0.0014,
+     "n": 17533,
+     "gate_mean_minus_3se": 0.5473
+    }
+   }
+  },
+  {
+   "seed": 20260827,
+   "n_states_eval": 16174,
+   "n_states_total": 37987,
+   "mean_base_rate": 0.4423,
+   "arms": {
+    "ORACLE": {
+     "mean_auc": 1.0,
+     "se": 0.0,
+     "n": 16174,
+     "gate_mean_minus_3se": 1.0
+    },
+    "RANDOM": {
+     "mean_auc": 0.4998,
+     "se": 0.0006,
+     "n": 16174,
+     "gate_mean_minus_3se": 0.4979
+    },
+    "SHUFFLE_cheat": {
+     "mean_auc": 0.5,
+     "se": 0.0006,
+     "n": 16174,
+     "gate_mean_minus_3se": 0.4982
+    },
+    "B1_break_rate": {
+     "mean_auc": 0.5698,
+     "se": 0.0013,
+     "n": 16174,
+     "gate_mean_minus_3se": 0.5659
+    },
+    "B2_freq": {
+     "mean_auc": 0.484,
+     "se": 0.0007,
+     "n": 16174,
+     "gate_mean_minus_3se": 0.4818
+    },
+    "B3_adjacency": {
+     "mean_auc": 0.4905,
+     "se": 0.0007,
+     "n": 16174,
+     "gate_mean_minus_3se": 0.4884
+    },
+    "n_cells": {
+     "mean_auc": 0.4982,
+     "se": 0.0002,
+     "n": 16174,
+     "gate_mean_minus_3se": 0.4975
+    },
+    "n_rels": {
+     "mean_auc": 0.5002,
+     "se": 0.0005,
+     "n": 16174,
+     "gate_mean_minus_3se": 0.4985
+    },
+    "Z_parent": {
+     "mean_auc": 0.5,
+     "se": 0.0,
+     "n": 16174,
+     "gate_mean_minus_3se": 0.5
+    },
+    "Z_full": {
+     "mean_auc": 0.5685,
+     "se": 0.0013,
+     "n": 16174,
+     "gate_mean_minus_3se": 0.5644
+    }
+   }
+  },
+  {
+   "seed": 20260828,
+   "n_states_eval": 16539,
+   "n_states_total": 37997,
+   "mean_base_rate": 0.4086,
+   "arms": {
+    "ORACLE": {
+     "mean_auc": 1.0,
+     "se": 0.0,
+     "n": 16539,
+     "gate_mean_minus_3se": 1.0
+    },
+    "RANDOM": {
+     "mean_auc": 0.5001,
+     "se": 0.0006,
+     "n": 16539,
+     "gate_mean_minus_3se": 0.4982
+    },
+    "SHUFFLE_cheat": {
+     "mean_auc": 0.4995,
+     "se": 0.0006,
+     "n": 16539,
+     "gate_mean_minus_3se": 0.4976
+    },
+    "B1_break_rate": {
+     "mean_auc": 0.5554,
+     "se": 0.001,
+     "n": 16539,
+     "gate_mean_minus_3se": 0.5524
+    },
+    "B2_freq": {
+     "mean_auc": 0.5009,
+     "se": 0.0007,
+     "n": 16539,
+     "gate_mean_minus_3se": 0.4987
+    },
+    "B3_adjacency": {
+     "mean_auc": 0.4835,
+     "se": 0.0008,
+     "n": 16539,
+     "gate_mean_minus_3se": 0.481
+    },
+    "n_cells": {
+     "mean_auc": 0.4922,
+     "se": 0.0003,
+     "n": 16539,
+     "gate_mean_minus_3se": 0.4914
+    },
+    "n_rels": {
+     "mean_auc": 0.5093,
+     "se": 0.0006,
+     "n": 16539,
+     "gate_mean_minus_3se": 0.5076
+    },
+    "Z_parent": {
+     "mean_auc": 0.5,
+     "se": 0.0,
+     "n": 16539,
+     "gate_mean_minus_3se": 0.5
+    },
+    "Z_full": {
+     "mean_auc": 0.5612,
+     "se": 0.001,
+     "n": 16539,
+     "gate_mean_minus_3se": 0.5581
+    }
+   }
+  }
+ ],
+ "summary": {
+  "B1_break_rate": {
+   "mean_auc_across_seeds": 0.5626,
+   "min": 0.5488,
+   "max": 0.5858,
+   "n_seeds": 5
+  },
+  "B2_freq": {
+   "mean_auc_across_seeds": 0.4943,
+   "min": 0.484,
+   "max": 0.5019,
+   "n_seeds": 5
+  },
+  "B3_adjacency": {
+   "mean_auc_across_seeds": 0.4797,
+   "min": 0.4695,
+   "max": 0.4905,
+   "n_seeds": 5
+  },
+  "ORACLE": {
+   "mean_auc_across_seeds": 1.0,
+   "min": 1.0,
+   "max": 1.0,
+   "n_seeds": 5
+  },
+  "RANDOM": {
+   "mean_auc_across_seeds": 0.4995,
+   "min": 0.4988,
+   "max": 0.5001,
+   "n_seeds": 5
+  },
+  "SHUFFLE_cheat": {
+   "mean_auc_across_seeds": 0.4993,
+   "min": 0.4984,
+   "max": 0.5,
+   "n_seeds": 5
+  },
+  "Z_full": {
+   "mean_auc_across_seeds": 0.5633,
+   "min": 0.5514,
+   "max": 0.5804,
+   "n_seeds": 5
+  },
+  "Z_parent": {
+   "mean_auc_across_seeds": 0.5,
+   "min": 0.5,
+   "max": 0.5,
+   "n_seeds": 5
+  },
+  "n_cells": {
+   "mean_auc_across_seeds": 0.4949,
+   "min": 0.4917,
+   "max": 0.4982,
+   "n_seeds": 5
+  },
+  "n_rels": {
+   "mean_auc_across_seeds": 0.5054,
+   "min": 0.4959,
+   "max": 0.5117,
+   "n_seeds": 5
+  }
+ }
+}
