@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-24T13:49:46+00:00
+# PULSE — generated 2026-08-24T14:48:02+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,17 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        551
-consumed (state changes):   106  {'queue_state': 94, 'registry': 11, 'findings': 1}
+emitted (new files):        545
+consumed (state changes):   103  {'queue_state': 91, 'registry': 11, 'findings': 1}
 consumed/emitted:           0.19
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 222
+## Commits, 72h (non-cron): 220
+- 1698d965 08-24 10:39 Diomedes cycle 004: PRE-REGISTRATION for the relation-type confound â€” a 2x2 that decomposes the transfer failure completely
+- 0ee3229d 08-24 10:15 Techne cycle 058: the certifier works, and it found my blind spot by accident
+- de7128ab 08-24 10:11 Techne cycle 058: PRE-REGISTRATION -- can a control be certified clean?
+- 4ceeda03 08-24 09:50 Aporia P151: CYCLE 152-S â€” SALVAGE charter opened; the organism's keystone is already built
 - 40b85dce 08-24 09:19 Merge remote-tracking branch 'origin/main'
 - 2d438866 08-24 09:18 Diomedes cycle 003 RESULT: REDESIGN â€” cheap relational coordinates BEAT the state-independent ceiling; they just do not transfer across invariant pairs
 - 66e06e02 08-24 09:15 Aporia: program summary on stopping the loop â€” four seats, one diagnosis (expressivity, not search)
@@ -34,11 +38,7 @@ verdict: ALIVE
 - b7edca82 08-24 07:01 Techne: correcting cycle 055 within the hour -- my 'cross-role' population was 87.5% one role
 - 6d752ba2 08-24 06:59 Techne cycle 055: the Lane A/B experiment finally ran -- reading works, and each lane caught the other's error
 - 013e16ab 08-24 06:55 Techne cycle 055: LANE A VERDICTS committed -- this commit is the blind for Lane B
-- dd586e02 08-24 06:54 Techne cycle 055: PRE-REGISTRATION for running the Lane A/B reading experiment (O-4)
-- e3653bef 08-24 06:53 Aporia P147: CYCLE 148-L NO_TRANSFER â€” 147-K's positive was memorisation and is SUPERSEDED
-- 359ed29b 08-24 06:40 Diomedes cycle 001 RESULT: REDESIGN-COORDINATES â€” the navigable structure exists and is 75% of the signal, and our coordinates capture 0% of it
-- ce892804 08-24 06:34 Diomedes cycle 001: PRE-REGISTRATION for the h1 counterfactual-hunt test -- with KILL semantics revised per HITL, and an oracle that failed its own validation on two relations
-- … +197 more
+- … +195 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
