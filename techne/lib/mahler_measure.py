@@ -346,6 +346,28 @@ def _companion_stack(coeff_matrix: np.ndarray) -> np.ndarray:
     return M
 
 
+def _scalar_or_nan(stripped_row) -> float:
+    """Scalar `mahler_measure` on an already-stripped row; NaN where scalar would raise.
+
+    The batch API is deliberately more forgiving than the scalar one (scans routinely carry
+    degenerate rows), so this adapts the contract without duplicating the mathematics.
+    """
+    if len(stripped_row) == 0:
+        return float("nan")
+    return mahler_measure(list(stripped_row))
+
+
+def _has_repeated_root(stripped_row) -> bool:
+    """True iff the row is a non-squarefree EXACT integer polynomial.
+
+    `deg gcd(f, f') > 0` is exact and decides squarefreeness outright: not a numerical
+    threshold and not a proxy. Non-integer rows return False -- decomposition is undefined
+    over floats, so there is nothing the scalar path could do better for them.
+    """
+    dec = squarefree_factors(list(stripped_row))
+    return dec is not None
+
+
 def mahler_measure_padded(coeff_matrix) -> np.ndarray:
     """Compute Mahler measure for each row of a 2-D coefficient matrix.
 
@@ -389,6 +411,7 @@ def mahler_measure_padded(coeff_matrix) -> np.ndarray:
     if n_polys == 0 or k == 0:
         return out
 
+    suspect: list[int] = []
     # Locate first non-zero column per row (effective leading coefficient).
     # Rows of all-zeros remain NaN.
     nonzero_mask = A != 0
@@ -437,8 +460,48 @@ def mahler_measure_padded(coeff_matrix) -> np.ndarray:
         roots = np.linalg.eigvals(comp)               # shape (n_rows, d)
         contrib = np.maximum(1.0, np.abs(roots))      # shape (n_rows, d)
         out[rows] = leading * np.prod(contrib, axis=1)
+        # Cycle 052: flag repeated-root rows FROM THE ROOTS ALREADY IN HAND. Re-solving them
+        # per row cost 36.9 ms against 0.8 ms for this vectorised form -- 49x, for identical
+        # flags -- and that re-solve is what failed the 2x kill test on the first attempt.
+        suspect.extend(int(rows[j]) for j in _close_root_rows(roots))
+
+    # Cycle 052: this is a SECOND public entry point onto the same companion stack (Charon's
+    # Lehmer scan calls it directly), so gating `mahler_measure_batch` alone would have left
+    # it wrong.
+    #
+    # TWO-STAGE, and the staging is the whole design. The exact `deg gcd(f, f') > 0` test is
+    # 38 us/row of sympy `Poly` construction -- MEASURED AT 2x THE ENTIRE VECTORISED
+    # COMPUTATION IT PROTECTS -- so running it on every row failed this cycle's
+    # pre-registered 2x kill test at 2.56-5.18x. Instead a cheap NECESSARY condition runs
+    # first, over the roots the stack has ALREADY computed: a repeated root forces the
+    # minimum pairwise root separation toward eps^(1/m), so any row carrying one is always
+    # flagged. The screen over-selects and never under-selects, and the exact test then
+    # decides the handful of candidates.
+    for i in suspect:
+        row = A[i, int(first_nz_col[i]):]
+        if _has_repeated_root(row):
+            out[i] = _scalar_or_nan(row)
 
     return out
+
+
+def _close_root_rows(roots: np.ndarray, tol: float = 1e-3):
+    """Indices into a (n_rows, d) root array whose roots are not all well separated.
+
+    A superset of the truly non-squarefree rows, never a subset: `np.roots` displaces an
+    m-fold root by eps^(1/m), so a repeated root always collapses the minimum pairwise
+    separation, while well-separated roots cannot hide one.
+
+    `tol` is deliberately loose. A false positive costs one exact gcd check; a false negative
+    would silently return the wrong measure, which is the failure this line of work exists to
+    remove. The asymmetry is the point.
+    """
+    if roots.ndim != 2 or roots.shape[1] < 2:
+        return np.empty(0, dtype=np.int64)
+    sep = np.abs(roots[:, :, None] - roots[:, None, :])
+    d = roots.shape[1]
+    sep[:, np.arange(d), np.arange(d)] = np.inf
+    return np.flatnonzero(sep.min(axis=(1, 2)) < tol)
 
 
 def _max_degree(coeffs_list: Sequence) -> int:
@@ -525,20 +588,12 @@ def mahler_measure_batch(coeffs_list, method: str = "auto") -> np.ndarray:
                 chosen = "individual"
 
     if chosen == "individual":
+        # Cycle 052: this branch used to REIMPLEMENT the scalar formula inline, which is why
+        # it kept the repeated-root defect after cycle 051 fixed `mahler_measure`. A method
+        # documented as "call scalar mahler_measure for each entry" must actually do that, or
+        # the documentation is the only place the two agree.
         for i, s in enumerate(stripped):
-            if len(s) == 0:
-                out[i] = np.nan
-            elif len(s) == 1:
-                out[i] = abs(complex(s[0]))
-            else:
-                # Cyclotomic short-circuit on the stripped vector.
-                if _cyclotomic_short_circuit(s):
-                    out[i] = 1.0
-                else:
-                    roots = np.roots(s)
-                    out[i] = float(
-                        abs(s[0]) * np.prod(np.maximum(1.0, np.abs(roots)))
-                    )
+            out[i] = np.nan if len(s) == 0 else _scalar_or_nan(s)
         return out
 
     # chosen == 'companion_batch'
@@ -565,15 +620,21 @@ def mahler_measure_batch(coeffs_list, method: str = "auto") -> np.ndarray:
     # scalar-identical at small n; the vectorized path remains for scan scale.
     if len(todo) < 16:
         for i in todo:
-            s = stripped[i]
-            if _cyclotomic_short_circuit(s):
-                out[i] = 1.0
-            else:
-                roots = np.roots(s)
-                out[i] = float(
-                    abs(s[0]) * np.prod(np.maximum(1.0, np.abs(roots)))
-                )
+            out[i] = _scalar_or_nan(stripped[i])
         return out
+
+    # Cycle 052: entries with a REPEATED ROOT leave the stack. `np.roots` displaces an m-fold
+    # root by eps^(1/m), and on the unit circle that survives into M (measured: 1.000146 for
+    # (x+1)^4 (x-1)^2, true value exactly 1). The gate `deg gcd(f, f') > 0` is EXACT -- it
+    # decides the question rather than screening for it -- and is applied PER ENTRY so a
+    # single repeated-root polynomial does not push its whole batch off the fast path.
+    repeated = [i for i in todo if _has_repeated_root(stripped[i])]
+    if repeated:
+        for i in repeated:
+            out[i] = _scalar_or_nan(stripped[i])
+        todo = [i for i in todo if i not in set(repeated)]
+        if not todo:
+            return out
 
     # Build a packed coefficient matrix at max effective degree across todo.
     max_d = int(eff_deg[todo].max())
