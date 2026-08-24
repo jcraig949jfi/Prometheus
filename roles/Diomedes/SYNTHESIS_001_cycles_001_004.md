@@ -112,3 +112,65 @@ manufactured.
   of it locally.
 
 *— Diomedes, synthesis 001, 2026-08-24. Next: cycle 005, the replication on a different action type.*
+
+---
+
+# AMENDMENT — 2026-08-24, HITL review of synthesis 001
+
+Three corrections, all adopted. No measurement changes; three *claims about* the measurements were
+loose, and one framing understated what was found.
+
+## A1 — The "75%" claim is tightened (correction, and it was a real overreach)
+
+Synthesis §1 said *"75% of the available ranking signal is conditional on the state."* The
+measurements are **ranking accuracies, not mutual-information estimates**, and that phrasing converts
+an AUC interval into something that sounds information-theoretic — made worse by the fact that the
+motivating hypothesis is written as `I(Z;A*)`. A reviewer would be right to attack the conversion.
+
+**Corrected empirical claim, to be used verbatim from here on:**
+
+> On this task, roughly three quarters of the observed improvement from chance to the perfect
+> state-specific oracle is **unavailable to the best state-independent ranking**.
+
+`I(A*; Z_a | Z_x)` is retained as the **conceptual framing** of what the thread is about, and is not
+claimed to have been estimated. The same correction applies to every "% of conditional signal"
+phrasing in cycles 003 and 004: 9.2% and 22.6% are **shares of the chance-to-oracle AUC interval**,
+not shares of an information quantity.
+
+## A2 — "The corpus is an autopsy system" is too broad (reframing)
+
+Replaced by the more precise and strategically different statement:
+
+> **The dominant production representation is autopsy-oriented, while fragments of a
+> navigation-capable transition corpus already exist but were never assembled and consumed as such.**
+
+This matters operationally. ~48.4M records carry parent links, several generator families record
+genuine named actions with deterministic oracles, and the kernel's `REWRITE(src, rule, tgt)` opcode
+is already the right shape. **Prometheus may not need rebuilding; it may need to recover and enforce
+its own abandoned edge semantics.** That is a much cheaper conclusion than the one the original
+phrasing implied.
+
+## A3 — The type argument is the strongest result, not the 0.5560 score (re-ranking)
+
+Elevated to the top of the findings. If the decision problem is `a* = argmax_a Q(x,a)`, then a
+representation containing only `Z(x)` **cannot rank actions at all** — every candidate inherits the
+same representation. The measured 0.5000 is the consequence; the type argument is the reason, and it
+holds independently of h1, of the feature family, and of any experiment.
+
+The minimum adequate object is therefore at least `Z(x, a)`, and better `Z(x, a, x', o)` — with the
+resulting state and the observed outcome. **`REWRITE(src, rule, tgt)` is essentially that object,
+designed years before this thread rediscovered it empirically.** The experiment quantifies the
+consequence; the type argument explains why it was inevitable.
+
+## A4 — A distinction to keep operationally separate (adopted)
+
+From here on, never conflate:
+
+- **the information was never recorded** — true of the resulting state `x'` in most generators; and
+- **the information exists somewhere in the 132.6M records but the tested representation does not
+  expose it** — plausible given the parent links and action-bearing families found in RECON.
+
+Cycles 001–004 establish the first for `step_trace` and the second for h1's payload coordinates.
+Conflating them would overstate the damage.
+
+*— Amendment filed 2026-08-24 following HITL review. No disposition changes.*
