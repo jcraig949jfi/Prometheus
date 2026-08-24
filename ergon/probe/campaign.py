@@ -362,6 +362,7 @@ class Arms:
                                  ledger_id="p1_prepass", withhold_prose=True)
         self.tau = {"p1_prepass": 10 ** 9}
         b = best(DIR / "p1_prepass.jsonl")
+        self.generic_status = {}
         self.rep1_ok = {u: (b.get((1, u)) or {}).get("extracted_int") == gold[u] for u in gold}
 
     def prom_body(self, uid):
@@ -386,18 +387,36 @@ class Arms:
         if arm == "F-null":
             return "A prior attempt record:\n" + self.null_body(uid) + "\n\n" + base
         if arm == "F-generic":
-            # Charon's clean-room generic-advice pool. Projected prom packets are tiny
-            # (15-60 tokens) -- below the pool's preamble floor -- so exact matching returns
-            # UNDER-FLOOR. Ruling (R12, recorded): F-generic ships the pool's SMALLEST unit
-            # (~30 tokens, same order as the projection); per-arm token means are logged per
-            # BC-7 so the size relationship is a number, not an assumption.
+            # RE-DERIVED 2026-08-23 (Charon exit review 3 §4a). The prior R12 ruling shipped
+            # the pool's smallest unit on UNDER-FLOOR, premised on projected prom packets
+            # being 15-60 tokens. That premise was measured while ATK-013 was live and is now
+            # FALSE: shipped prom bodies are mean 123.2 tokens (median 124, range 111-131).
+            # A rule calibrated against a broken state, carried forward.
+            #
+            # Re-measured over 200 real targets on the pinned manifest:
+            #   MATCHED                 161/200 (80.5%)  ratio 1.003  <- the sizer works
+            #   UNMATCHABLE-GRANULARITY  39/200 (19.5%)  ratio 0.802
+            # The whole shortfall is non-MATCHED rows being shipped anyway. render_f_generic's
+            # own contract says non-MATCHED statuses are reported and EXCLUDED from the
+            # specificity margin; this code was ignoring the status field entirely.
+            #
+            # Fix: keep the packet (the arm must still run -- F-generic carries the
+            # TOPIC-CONDITIONING row) but RECORD the status so analysis can exclude
+            # non-MATCHED rows from the size-sensitive comparison. Widening the tolerance to
+            # force MATCHED would be fudging the ruler to flatter the arm.
             from ergon.probe.f_generic import render_f_generic, units
             from ergon.probe.assemble import count_tokens
             target = max(40, count_tokens(self.prom_body(uid)))
             pkt = render_f_generic(target)
             text = getattr(pkt, "text", "") or ""
-            if not text:
+            if not text:                      # UNDER-FLOOR: now rare, still handled
                 text = min((u.text for u in units()), key=len)
+            self.generic_status[uid] = {
+                "status": getattr(pkt, "status", "UNKNOWN"),
+                "target_tokens": target,
+                "produced_tokens": count_tokens(text),
+                "ratio": round(count_tokens(text) / max(1, target), 4),
+            }
             return text + "\n\n" + base
         if arm == "F-oracle":
             return oracle_text(self.rows_by_uid[uid], self.rep1_ok[uid]) + "\n\n" + base
@@ -431,6 +450,25 @@ def run_arm_phase(name, arm_task_pairs, arms, budget, led_name):
         return len(have & seen) >= len(want), 0
     sent, ok, walled = push_jobs(led, jobs, budget)
     have = done_keys(led)
+    # BC-7 + exit-review §4a: the F-generic size relationship ships as a NUMBER beside the
+    # rows, so a later reader can exclude non-MATCHED rows from the specificity margin
+    # instead of taking the arm's sizing on trust.
+    if getattr(arms, "generic_status", None):
+        import collections as _c
+        st = _c.Counter(v["status"] for v in arms.generic_status.values())
+        ratios = [v["ratio"] for v in arms.generic_status.values()]
+        matched = [v["ratio"] for v in arms.generic_status.values() if v["status"] == "MATCHED"]
+        atomic(DIR / f"{led_name}_generic_sizing.json", {
+            "phase": name, "n": len(arms.generic_status),
+            "status_counts": dict(st),
+            "ratio_mean_all": round(sum(ratios) / max(1, len(ratios)), 4),
+            "ratio_mean_matched_only": round(sum(matched) / max(1, len(matched)), 4),
+            "matched_share": round(len(matched) / max(1, len(ratios)), 4),
+            "rule": "only MATCHED rows are admissible in the specificity margin "
+                    "(render_f_generic contract); non-MATCHED are reported, not excluded from "
+                    "the run, and the TOPIC-CONDITIONING row must be read with this attached",
+            "per_uid": arms.generic_status,
+        })
     log(phase=name, sent=sent, ok=ok, walled=walled,
         coverage=f"{len(have & seen)}/{len(want)}")
     return len(have & seen) >= len(want), sent

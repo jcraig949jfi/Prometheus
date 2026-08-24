@@ -1,9 +1,12 @@
 {
-  "n": 620,
-  "rung": "M20",
-  "seed": 20260821,
+  "n": 200,
+  "rung": "M30",
   "solver_pin": "nvidia:deepseek-v4-flash",
-  "manifest_sha256": "99c080eb26025bdfafeda47d959a274b911623087c545002d5de41e8fb2e6660",
+  "pinned_manifest": "ergon/probe/manifests/nearmiss_mix-M30_manifest_n200.jsonl",
+  "manifest_sha256": "e6b1e001bf79e3efdb38ac31c8ac62442c8f26573af808386e83363015db598d",
   "generator_sha256": "dd5eb9ce2759091df0ca5cd65e750fca8b3775ffc859eebf516fe42cb053c4c2",
-  "ts_utc": "2026-08-21T07:18:46+00:00"
+  "second_family": "nvidia:nemotron-super-49b-v1 (Ruling 1 conditions)",
+  "ts_utc": "2026-08-24T12:37:14+00:00",
+  "scope_caveat": "SCOPE (prereg \u00a74.1, C6): this is a D0 result on self-generated first-cycle residue (the pre-pass of \u00a74.2). It is NOT a corpus result \u2014 it says nothing about the native residue Prometheus accumulated (D2/D3). A D0 win with a D3 null is not a success for the accumulated corpus. D0 levels are never compared across strata. Pinned to (manifest \u00d7 host); does not transfer across hosts.",
+  "prereg_version": "v1+amendments-2026-08-21"
 }
