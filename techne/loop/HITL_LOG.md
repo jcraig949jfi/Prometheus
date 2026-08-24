@@ -1702,3 +1702,20 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      comparable post-fix figure is **45**. Stated rather than quietly reported as 45, because
      the run that produced 46 is the run I have.
 319. **No other Mahler-family red exists** across either scope — the family is otherwise clean.
+
+320. **I EXTENDED THE KILL TEST BEYOND ITS PRE-REGISTERED RANGE AND NEARLY REPORTED A FALSE
+     REGRESSION.** The cycle-052 kill test covered degrees 6-10 only. Probing degrees 12-80 —
+     the unmeasured population — first showed **16x at degree 20**, well past the 2x ceiling.
+     **It was cold-start, not a regression:** `_has_repeated_root` imports sympy lazily, and the
+     first call in a process costs **277.9 ms against 0.2 ms steady-state — 1387x, paid once.**
+     With warm-up the true ratios are **1.66x / 1.39x / 1.31x / 1.12x / 0.71x** across degrees
+     12-80, all inside the ceiling. **Third time a measurement of mine has answered a different
+     question than intended; this one I caught before reporting it, by noticing that degree 40
+     appeared FASTER than degree 20, which is not a shape any real cost curve has.**
+321. **THE SCREEN IS EXACT IN PRACTICE, NOT MERELY A SUPERSET.** Flagged rows equalled truly
+     non-squarefree rows in **every** sample measured (7/7, 8/8, 9/9, 4/4, 6/6). It is still
+     DESIGNED as a one-sided necessary condition — a false positive costs one gcd check, a false
+     negative silently returns a wrong measure — but it is not paying for that safety in
+     practice.
+322. **`techne/tests/test_mahler_batch.py` is fully green post-fix: 19 passed** (12:32 — the
+     file carries a benchmark). Confirms the resolution at file level, not just in isolation.
