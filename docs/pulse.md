@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-24T10:52:42+00:00
+# PULSE — generated 2026-08-24T11:28:24+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,18 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        556
-consumed (state changes):   116  {'queue_state': 104, 'registry': 11, 'findings': 1}
-consumed/emitted:           0.21
+emitted (new files):        560
+consumed (state changes):   114  {'queue_state': 102, 'registry': 11, 'findings': 1}
+consumed/emitted:           0.20
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 217
+## Commits, 72h (non-cron): 220
+- b7edca82 08-24 07:01 Techne: correcting cycle 055 within the hour -- my 'cross-role' population was 87.5% one role
+- 6d752ba2 08-24 06:59 Techne cycle 055: the Lane A/B experiment finally ran -- reading works, and each lane caught the other's error
+- 013e16ab 08-24 06:55 Techne cycle 055: LANE A VERDICTS committed -- this commit is the blind for Lane B
+- dd586e02 08-24 06:54 Techne cycle 055: PRE-REGISTRATION for running the Lane A/B reading experiment (O-4)
+- e3653bef 08-24 06:53 Aporia P147: CYCLE 148-L NO_TRANSFER â€” 147-K's positive was memorisation and is SUPERSEDED
 - 359ed29b 08-24 06:40 Diomedes cycle 001 RESULT: REDESIGN-COORDINATES â€” the navigable structure exists and is 75% of the signal, and our coordinates capture 0% of it
 - ce892804 08-24 06:34 Diomedes cycle 001: PRE-REGISTRATION for the h1 counterfactual-hunt test -- with KILL semantics revised per HITL, and an oracle that failed its own validation on two relations
 - 364840bc 08-24 06:12 Aporia P146: CYCLE 147-K ADVANCE â€” first positive on this line, and it is fourteen constants
@@ -35,12 +40,7 @@ verdict: ALIVE
 - eb0b40ca 08-24 03:31 Techne cycle 052: #298 answered AFFIRMATIVELY -- a published INCONCLUSIVE verdict rests on an unfactored verifier
 - 5d326dbb 08-24 03:29 Techne cycle 052: PRE-REGISTRATION for the inherent-limits sweep (#298)
 - 5ed8d8d8 08-24 03:28 techne/mahler: scalar and batch APIs reconciled -- and the first fix failed its own kill test
-- 4a644c70 08-24 03:21 Techne cycle 052: PRE-REGISTRATION for the scalar/batch divergence fix
-- f29bf41f 08-23 19:35 Pre-flight on Tier B's adjudicator: analysis.py scores 35.7% (74 killed / 133 survived / 207)
-- 390fc09d 08-23 19:23 CORRECTION: my own mutation headline was truncation-confounded. 100% was really 85.2%
-- ca3ef348 08-23 18:34 Harmonia-A: syntactic-router thesis â€” the wall corpus cannot be searched, only used to validate
-- e00cb013 08-23 17:52 Apollo: no claim is ever ESTABLISHED â€” kill-path FAMILIES, named untried paths, and a new attack that the headline survived
-- … +192 more
+- … +195 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
