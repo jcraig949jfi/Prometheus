@@ -196,6 +196,70 @@ def best(led_path):
 
 # ------------------------------------------------------------------ P1: prepass + band read
 
+
+SECOND_FAMILY = "nvidia:nemotron-super-49b-v1"
+SECOND_FAMILY_LEDGER = "ergon/probe/ledgers/coldband_drip/nvidia_nemotron-super-49b-v1.jsonl"
+
+
+def second_family_screen(rows, gold):
+    """The Tier B screen is CROSS-FAMILY, and this function exists because the single-family
+    number is not a weaker version of it — it is a different statistic that the rule
+    explicitly disqualifies (HB-R1: "contamination requires agreement across families";
+    prereg §4.5 defines the screen as all solvers x both reps). At >=2 families the removed
+    set is the INTERSECTION of the both-right blocks, so the single-family number is only the
+    degenerate lower bound where the second family agrees on every item — which would itself
+    be a contamination signature (Charon RULINGS_2026-08-23 Ruling 1).
+
+    Returns (both_right_uids, diagnostics) or (None, why_not). Admissibility conditions are
+    Ruling 1's, checked here rather than assumed: transport >=0.95, truncation <=0.02,
+    dispersion >=0.30, same manifest.
+    """
+    led = ROOT / SECOND_FAMILY_LEDGER
+    if not led.exists():
+        return None, {"admissible": False, "reason": "second-family ledger absent"}
+    recs = [json.loads(l) for l in led.read_text(encoding="utf-8").splitlines() if l.strip()]
+    if not recs:
+        return None, {"admissible": False, "reason": "second-family ledger empty"}
+
+    ok = [r for r in recs if r.get("status") == "ok"]
+    transport = len(ok) / max(1, len(recs))
+    missing_tok = [r for r in ok if r.get("completion_tokens") is None]
+    if missing_tok:
+        # a gate whose input field is absent must refuse, never pass (Charon addendum)
+        return None, {"admissible": False, "transport_ok_rate": round(transport, 4),
+                      "reason": f"truncation UNMEASURABLE: completion_tokens absent on "
+                                f"{len(missing_tok)}/{len(ok)} ok rows"}
+    trunc = sum(1 for r in ok if r["completion_tokens"] >= MAX_TOK) / max(1, len(ok))
+
+    uids = {r["uid"] for r in rows}
+    covered = {(r["rep"], r["uid"]) for r in ok if r["uid"] in uids}
+    best2 = {(r["rep"], r["uid"]): r for r in ok if r["uid"] in uids}
+    c1 = {u: (best2[(1, u)]["extracted_int"] == gold[u]) for u in uids if (1, u) in best2}
+    c2 = {u: (best2[(2, u)]["extracted_int"] == gold[u]) for u in uids if (2, u) in best2}
+    paired = [u for u in uids if u in c1 and u in c2]
+    disp = (sum(1 for u in paired if c1[u] != c2[u]) / len(paired)) if paired else 0.0
+    both_right = {u for u in paired if c1[u] and c2[u]}
+
+    diag = {"family": SECOND_FAMILY, "n_rows": len(recs), "n_paired": len(paired),
+            "coverage": f"{len(covered)}/{2 * len(uids)}",
+            "transport_ok_rate": round(transport, 4), "truncation_rate": round(trunc, 4),
+            "dispersion": round(disp, 4), "both_right": len(both_right),
+            "raw_rep1_accuracy": round(sum(1 for u in c1 if c1[u]) / max(1, len(c1)), 4)}
+    fails = []
+    if transport < 0.95:
+        fails.append(f"transport {transport:.4f} < 0.95")
+    if trunc > TRUNCATION_GATE:
+        fails.append(f"truncation {trunc:.4f} > {TRUNCATION_GATE}")
+    if disp < MOVABLE_FLOOR:
+        fails.append(f"dispersion {disp:.4f} < {MOVABLE_FLOOR}")
+    if len(paired) < len(uids):
+        fails.append(f"incomplete: {len(paired)}/{len(uids)} tasks have both reps")
+    diag["admissible"] = not fails
+    if fails:
+        diag["reason"] = "; ".join(fails)
+        return None, diag
+    return both_right, diag
+
 def p1(rows, gold, budget):
     led = DIR / "p1_prepass.jsonl"
     out = DIR / "p1_bandread.json"
@@ -253,6 +317,36 @@ def p1(rows, gold, budget):
     acc_post = (sum(1 for r in post
                     if b[(1, r["uid"])]["extracted_int"] == gold[r["uid"]]) / len(post)
                 if post else float("nan"))
+    # THE TIER B STATISTIC. The single-family number above is NOT a weaker version of this;
+    # it is the statistic HB-R1 disqualifies. Computed here whenever the second family's rows
+    # are admissible, so the run never reports the disqualified number bare.
+    sf_both_right, sf_diag = second_family_screen(rows, gold)
+    tierb = None
+    if sf_both_right is not None:
+        removed = set(lenient) & sf_both_right          # INTERSECTION, not this family's block
+        keep = [r for r in rows if r["uid"] not in removed]
+        acc_x = (sum(1 for r in keep
+                     if b[(1, r["uid"])]["extracted_int"] == gold[r["uid"]]) / len(keep)
+                 if keep else float("nan"))
+        disc_x = sum(1 for r in keep
+                     if (b[(1, r["uid"])]["extracted_int"] == gold[r["uid"]])
+                     != (b[(2, r["uid"])]["extracted_int"] == gold[r["uid"]])) / max(1, len(keep))
+        se_x = math.sqrt(max(acc_x * (1 - acc_x), 1e-12) / max(1, len(keep)))
+        lo_x, hi_x = max(0.0, acc_x - z * se_x), min(1.0, acc_x + z * se_x)
+        straddle_x = (lo_x < BAND[0] < hi_x) or (lo_x < BAND[1] < hi_x)
+        tierb = {
+            "point_estimate": round(acc_x, 4), "n": len(keep),
+            "manifest_interval_95": [round(lo_x, 4), round(hi_x, 4)],
+            "movable_share": round(disc_x, 4),
+            "interval_straddles_band_edge": straddle_x,
+            "items_removed": len(removed),
+            "leveling_verdict": ("NOT-LEVELED" if not (BAND[0] <= acc_x <= BAND[1]) else
+                                 "NOT-LEVELED-DISPERSION" if disc_x < MOVABLE_FLOOR else
+                                 "UNDECIDED" if straddle_x else "LEVELED"),
+            "screen_lenient_stamp":
+                f"SCREEN-LENIENT: {len(removed)}/{len(rows)} items removed; this run does not "
+                "exclude contamination, it only fails to find it.",
+        }
     # §3.1 ruling 1 — THREE-VALUED. Point rule is standing; when the manifest-level interval
     # straddles a band edge the level is UNDECIDED and re-measured at the decision-n rather than
     # failed outright; UNDECIDED resolves CONSERVATIVELY INTO FAILURE if it survives
@@ -292,7 +386,14 @@ def p1(rows, gold, budget):
         verdict = "LEVELED"
     read = {"phase": "P1", "solver_pin": SOLVER, "rung": RUNG, "n": n,
             "point_estimate": round(acc, 4),
-            "point_estimate_post_screen": (round(acc_post, 4) if post else None),
+            "point_estimate_post_screen_SINGLE_FAMILY": (round(acc_post, 4) if post else None),
+            "single_family_screen_warning":
+                "NOT the Tier B statistic. HB-R1 disqualifies a one-family screen as a "
+                "contamination screen ('this solver was right twice' is competence, not "
+                "memorization). Reported as a Tier A diagnostic only; it is the degenerate "
+                "LOWER BOUND of the cross-family read below.",
+            "tier_b_cross_family_screen": tierb,
+            "second_family_diagnostics": sf_diag,
             "band_read_on": "raw manifest (HB-R1: one family, screen is diagnostic only)",
             "manifest_interval_95": [round(mlo, 4), round(mhi, 4)],
             "wilson_interval_95": [round(max(0, wc - wh), 4), round(min(1, wc + wh), 4)],
