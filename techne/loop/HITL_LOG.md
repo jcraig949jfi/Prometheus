@@ -1627,3 +1627,58 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      **two scopes, not one**, and the second was invisible because nobody was counting it. The
      ask is unchanged and so is the argument against it (my egglog dangle), but the size of
      what a ruling would clear is larger than I told you.
+
+
+## Cycle 052 (2026-08-24) — a kill test that fired on my own fix, twice
+
+306. **TRACK 1: SCALAR/BATCH DIVERGENCE CLOSED — and the formula existed in FOUR COPIES.**
+     `method='individual'` is documented as *"call scalar `mahler_measure` for each entry"* and
+     instead **reimplemented it inline**, which is exactly why it still carried the defect after
+     cycle 051 fixed the scalar path. `method='auto'` chose between a **correct** path and an
+     **incorrect** one on a **degree-spread heuristic** — so which answer a caller got depended
+     on the shape of the batch their polynomial travelled in. 75 passed across the family.
+307. **MY PRE-REGISTERED KILL TEST FIRED ON MY OWN FIX, TWICE, AND I REDESIGNED RATHER THAN
+     MERGED.** Ceiling was 2x on squarefree batches. Attempt 1 (exact gcd every row):
+     **2.56-5.18x** — sympy `Poly` construction is 38 us/row, **twice the entire vectorised
+     computation it protects**. Attempt 2 (root-separation screen, per row): **2.95-4.56x**, and
+     the reason is instructive — it called `np.roots` per row, **re-solving what the companion
+     stack had already solved in batch: 36.9 ms vs 0.8 ms for IDENTICAL flags, 49x.** Attempt 3
+     consumes the stack's own roots: **1.07-1.93x, PASSED.**
+308. **The screen is a NECESSARY condition, one-sided by design:** over-selects, never
+     under-selects. A false positive costs one exact gcd check; a false negative silently
+     returns a wrong measure.
+309. **JAMES — #298 IS ANSWERED AFFIRMATIVELY, AND A PUBLISHED VERDICT RESTS ON IT.**
+     `lehmer_brute_force._verify_mahler_mpmath` escalates precision three times (dps 15/30/60)
+     and **NEVER FACTORS**. Its NaNs are what produce the run's **INCONCLUSIVE** verdict,
+     written up as *"without high-precision certification we cannot decide H5 vs H2 cleanly."*
+     Measured on **Lehmer x (x+1)^2**, degree 12, double root at -1 **on the unit circle**,
+     true M = 1.1762808182599176:
+     **escalation ladder -> `nan`; squarefree factoring first -> 1.1762808182599176 exact.**
+     **More precision does not fix a clustered repeated root. Factoring does.**
+310. **AND THE DIAGNOSIS WAS ALREADY IN THE REPO, IN WRITING.** `lehmer_path_a.py`'s own
+     docstring names the mechanism — *"clustered repeated unit-circle roots"* — and Path A
+     exists as a **workaround for a defect it correctly diagnosed and never fixed in the
+     verifier it works around.** The knowledge never reached the code it was about.
+311. **NOT FIXED THIS CYCLE, DELIBERATELY.** Changing that verifier changes **historical
+     published verdicts**; it needs its own prereg and blast-radius pass. **Your call on
+     something I cannot decide alone: how much of a verdict built on a defective verifier
+     should be RETRACTED versus RE-RUN, when re-running alters a record other work has cited?**
+312. **The limit-claim class is NOT endemic** — grounded claims outnumber ungrounded ones
+     (prediction 3 falsified in the good direction). But the single suspect it contained was
+     load-bearing for a published verdict. **Rule extracted: a limit claim must state the
+     MECHANISM, not the observation.** "polyroots returned NaN" is an observation; "polyroots
+     cannot resolve clustered repeated roots at any precision" is a mechanism — and the moment
+     you can state it, you can test whether factoring removes it.
+313. **THE CALIBRATION CURVE SEPARATED.** Cycle 050 measured it **flat** (`high` and `moderate`
+     both 0.67) and concluded H1a was not demonstrated. Nine rows later it is **monotone across
+     the ordered bands for the first time**: high 5/6 = 0.83, mod-high 4/4 = 1.00, moderate
+     5/10 = 0.50, low-mod 3/4 = 0.75, **low 0/3 = 0.00**. Total 17/27 = 0.630.
+     **I am NOT claiming H1a** — `low-to-moderate` sits above `moderate`, n per band is 3-10,
+     and the curve is scored by its author on his own preregs. **Overall accuracy FELL
+     (0.722 -> 0.630) while the curve became MORE informative.** Different quantities.
+314. **Prediction 1 scored FALSIFIED on the honest reading:** 22 grep hits but only ~6 genuine
+     limit claims. **Counting hits would have let me claim it**; counting members of the
+     category does not.
+315. **ARSENAL RED RE-BASELINE STILL IN FLIGHT at cycle close** (two scopes, ~40 min). Cycle
+     051's **38** was a `prometheus_math`-only figure; the corrected run reports next cycle
+     **as a new baseline, not a delta**. `techne/tests` alone: 10 failed / 216 passed, all #242.
