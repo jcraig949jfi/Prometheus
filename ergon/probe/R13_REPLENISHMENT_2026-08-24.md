@@ -45,6 +45,38 @@ Tier B band read for 400 calls instead of ~2,480 — and it is correct for that.
 **gate**; `Δ_carry` is the **endpoint**. The gate got cheap and the endpoint got thin, and
 nobody's arithmetic was wrong: the two quantities were being optimized in different sentences.
 
+## 2b. UPDATE — the rung is settled; only the power is not
+
+Rep-1 of the pinned leg completed while this was being filed (194/200 tasks; 6 awaiting
+transport retry):
+
+```
+free host x nearmiss_mix-M30 (pinned)   acc 0.4794   [0.4091, 0.5497]
+                                        truncation 0.0000   parse-fail 0.0000
+                                        IN BAND, and the interval STRADDLES NO EDGE
+```
+
+That is a clean raw leveling — precisely what M20 could never deliver, where the interval sat
+on the 0.60 ceiling and needed n≈2969 to resolve.
+
+**Three independent reads of rung M30 now agree:**
+
+```
+paid host,  n=200 (nearmiss_mix-M30)        0.5000
+free host,  n=200 (cb30 cold band)          0.5000
+free host,  n=194 (this pinned leg)         0.4794
+```
+
+Different hosts, different manifests, same rung, all within noise of each other. The rung is
+stable, the host delta at M30 is ≈0, and **Ruling 2's choice of M30 is confirmed by data rather
+than by projection.**
+
+**This narrows the open question to exactly one thing.** The difficulty axis is settled; the
+instrument is clean (truncation and parse-fail both 0.0000); the leveling is reachable. What
+remains is that the manifest is **half the size the endpoint needs** — and that is the only
+thing between this campaign and a decisive run. Which is an argument for replenishing rather
+than for waiving: everything else about this pin is now working.
+
 ## 3. What replenishment costs
 
 At the measured screen-removal rate (9/200 = 4.5%):
