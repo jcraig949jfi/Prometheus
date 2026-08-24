@@ -155,10 +155,10 @@ def main():
         "kill_patterns_crossing_examples": {k: ["/".join(c) for c in sorted(v)]
                                             for k, v in list(crossing.items())[:10]},
         "records_under_crossing_patterns": sum(kp_counts[k] for k in crossing),
-        "H_kill_pattern_bits": round(H, 3),
-        "H_kill_pattern_given_cell_bits": round(cond, 3),
-        "H_projected_bits": round(H_proj, 3),
-        "H_projected_given_cell_bits": round(cond_proj, 3),
+        "H_kill_pattern_bits": round(H, 6),
+        "H_kill_pattern_given_cell_bits": round(cond, 6),
+        "H_projected_bits": round(H_proj, 6),
+        "H_projected_given_cell_bits": round(cond_proj, 6),
         "estimator_note": "conditional entropies computed from the JOINT (cell x pattern); "
                           "the prior version filtered to patterns exclusive to a cell and so "
                           "could not report evidence against its own hypothesis (ATK-014).",
