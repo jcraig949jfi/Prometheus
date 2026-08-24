@@ -98,6 +98,57 @@ def envelope_identical(prompts_by_arm, carrying_arms):
     return (len(groups) <= 1), {sh[:120]: arms for sh, arms in groups.items()}
 
 
+_LIST_RUN = re.compile(r"(?:[^\s,]+)(?:\s*,\s*[^\s,]+)+")
+
+
+def framing_skeleton(payload):
+    """The payload's FRAMING: literal structure with all content-sized regions collapsed.
+
+    Third attempt at this abstraction, and the first two are worth recording because both
+    produced false alarms against the primary endpoint:
+      1. per-task byte equality of `envelope_shape` — too strict; a ledger sequence number that
+         the redactor treats differently at one digit vs two made 21/200 packets differ.
+      2. multiset equality of `envelope_shape` — still wrong, because `envelope_shape` maps
+         each WORD to `w` and therefore preserves LIST LENGTH. The method census is a
+         comma-separated list whose length is content, so arms carrying different content were
+         guaranteed to differ. I was measuring content and calling it shape.
+
+    Here a comma-separated run of any length collapses to a single `<list>` token, so what
+    remains is framing only: field order, brackets, separators, labels.
+    """
+    s = _LIST_RUN.sub("<list>", payload)
+    s = re.sub(r"[A-Za-z]+", "w", s)
+    s = re.sub(r"\d+", "#", s)
+    return re.sub(r"[ 	]+", " ", s).strip()
+
+
+def envelope_multiset_identical(per_task_prompts, arm_a, arm_b):
+    """INVARIANT 2b — the right decidable form of "shape cannot identify the arm".
+
+    Per-task envelope equality is TOO STRICT: benign metadata (a ledger sequence number that
+    the redactor treats differently at one digit vs two) makes individual packets differ
+    without carrying any arm signal. Measured on this family: F-null and F-prom each show the
+    variant on 9/200 tasks, asymmetric on 2 tasks in each direction — symmetric noise.
+
+    The property that actually matters is that the two arms produce the SAME MULTISET of
+    envelope shapes. If the distributions are identical, no shape statistic can separate the
+    arms, and that is decidable — no classifier, no sampling error.
+
+    Scoped honestly: this licenses "shape cannot identify the arm", NOT "shape is constant".
+    A harmless-because-symmetric argument is scoped to the comparison it was made in.
+    """
+    a = collections.Counter()
+    b = collections.Counter()
+    for prompts in per_task_prompts:
+        base = prompts.get("F0", "")
+        if arm_a in prompts:
+            a[framing_skeleton(payload_of(prompts[arm_a], base))] += 1
+        if arm_b in prompts:
+            b[framing_skeleton(payload_of(prompts[arm_b], base))] += 1
+    return a == b, {"only_in_" + arm_a: dict((a - b).most_common(3)),
+                    "only_in_" + arm_b: dict((b - a).most_common(3))}
+
+
 def charclass_profile(text):
     """Exact multiset of Unicode general categories. Not a model — a census.
 
