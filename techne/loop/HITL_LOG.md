@@ -1979,3 +1979,42 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      the stronger outcome than "different domains".
 374. **NO OWNER RESPONSE** to the seven outstanding findings (checked at 09:0x; Ergon and Charon
      are active but on other lines — `f93f91fd`, `935f54a5`).
+
+
+## Cycle 058 (2026-08-24) — the certifier works, and it found my blind spot by accident
+
+375. **JAMES — A `D0`-GRADE COLLAPSE, REPORTED FIRST.** In cycle 056 I held up
+     `aporia/catalog_attacks/nt_helpers.py::singular_series_ratio` as *"clean by SEMANTICS,
+     which is what cycle 055's control should have been."* **The certifier's input sweep
+     included `k=0` and the run HUNG.** `while m % 2 == 0: m //= 2` never terminates at `m=0`.
+     **Three controls, three defects — every negative control I have selected or authored.**
+376. **THE BLIND SPOT IS REAL AND IT IS NOT A WRONG VALUE.** Non-termination is **absent from my
+     taxonomy**: S1–S5 are all wrong-*value* shapes, because every one was abstracted from a
+     conflation defect I had already found. **A hang produces no value to be wrong**, so no
+     thinking within my taxonomy reaches it. **S6 NON-TERMINATION** added.
+377. **AND I DID NOT REASON MY WAY TO IT — THE INPUT SWEEP FOUND IT BY ACCIDENT**, because S5
+     needed several input sets and `k=0` was natural to include. **The method generalises and is
+     the only step this cycle that reached outside my own imagination: sweep inputs the author
+     would not naturally write.**
+378. **THE CERTIFIER CATCHES BOTH KNOWN-BAD CONTROLS, ON EXACTLY THE SHAPE I MISSED.**
+     `survival_fraction` and `s3_clean` both fail **S1 and nothing else** — precisely the shape I
+     was not thinking about when I certified each. `certify()` reports an unchecked shape as
+     **UNCERTIFIED, never clean**, which is the step that would have caught both.
+379. **P1 HELD but with an honest qualifier: the certifier does NOT eliminate the reader.** All
+     five certificates are mechanical, but **what the caller supplies is the specification**, and
+     per cycle 057 that comes from reading. The gain is that the reader's contribution is now an
+     **explicit API argument** rather than an unexamined assumption.
+380. **THE FALSE-POSITIVE RATE IS STILL NOT ESTABLISHED — THIRD CYCLE RUNNING.** `cert_s1` needs
+     a *determined* correct answer for degenerate input; for `survival_fraction([])` I supplied
+     "structurally distinct", which is a **choice, not a derivation** — a defensible argument
+     exists that `0.0` is right. **P2 UNRESOLVED. I can certify relative to a stated convention;
+     I cannot certify absolutely.**
+381. **PROPERTY-BASED TESTING DOES NOT DISSOLVE CYCLE 057'S BOUNDARY.** P3 HELD: PBT generates
+     *inputs* from a property, and the property **is** the spec, written by a reader. P4 HELD
+     (`D0`): invariant *inference* learns what the code **does** — it would infer *"returns the
+     mean"* and find it consistent. **Inference from behaviour cannot see a gap whose other side
+     is prose.**
+382. **P5 NOT RUN, recorded rather than claimed.** A new shape arrived by accident before I ran
+     the search designed to find one; the accident is not the method I pre-registered.
+383. **NO OWNER RESPONSE** to the seven outstanding findings (checked 10:1x; Aporia and Diomedes
+     active on other lines — `4ceeda03`, `2d438866`).
