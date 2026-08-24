@@ -1,0 +1,183 @@
+{
+ "scope": "10 stratified files of 100, <=40000 lines each",
+ "sampled_records": 360003,
+ "n_cells": 24,
+ "share_parent": 0.4997,
+ "share_named_action": 0.4498,
+ "share_full_named_edge": 0.369,
+ "authoritative_full_scan_parent_share": 0.3661,
+ "sample_is_edge_enriched": true,
+ "per_cell": {
+  "a1/invariant_equality": {
+   "n": 97678,
+   "parent": 0.0,
+   "action": 0.0,
+   "both": 0.0
+  },
+  "d3/kill_neighborhood": {
+   "n": 66746,
+   "parent": 1.0,
+   "action": 1.0,
+   "both": 1.0
+  },
+  "h1/kill_neighborhood": {
+   "n": 51311,
+   "parent": 1.0,
+   "action": 0.9333,
+   "both": 0.9333
+  },
+  "a3/functional_identity": {
+   "n": 20213,
+   "parent": 0.0,
+   "action": 1.0,
+   "both": 0.0
+  },
+  "c1/mutation": {
+   "n": 18685,
+   "parent": 1.0,
+   "action": 0.0,
+   "both": 0.0
+  },
+  "g3/symmetry_transform": {
+   "n": 15469,
+   "parent": 0.0,
+   "action": 0.0,
+   "both": 0.0
+  },
+  "c4/mutation": {
+   "n": 12750,
+   "parent": 1.0,
+   "action": 1.0,
+   "both": 1.0
+  },
+  "f3/invariant_equality": {
+   "n": 10665,
+   "parent": 0.0,
+   "action": 0.0,
+   "both": 0.0
+  },
+  "f1/invariant_equality": {
+   "n": 9545,
+   "parent": 0.0,
+   "action": 0.0,
+   "both": 0.0
+  },
+  "f2/invariant_equality": {
+   "n": 9542,
+   "parent": 0.0,
+   "action": 0.0,
+   "both": 0.0
+  },
+  "c3/mutation": {
+   "n": 9266,
+   "parent": 1.0,
+   "action": 0.0,
+   "both": 0.0
+  },
+  "d2/kill_neighborhood": {
+   "n": 8826,
+   "parent": 1.0,
+   "action": 0.0,
+   "both": 0.0
+  },
+  "g2/symmetry_transform": {
+   "n": 5999,
+   "parent": 0.0,
+   "action": 0.0,
+   "both": 0.0
+  },
+  "c5/mutation": {
+   "n": 5443,
+   "parent": 1.0,
+   "action": 1.0,
+   "both": 1.0
+  },
+  "c2/mutation": {
+   "n": 5392,
+   "parent": 1.0,
+   "action": 0.0,
+   "both": 0.0
+  },
+  "b2/composition_test": {
+   "n": 3631,
+   "parent": 0.0,
+   "action": 1.0,
+   "both": 0.0
+  },
+  "e3/literature_mined": {
+   "n": 2120,
+   "parent": 0.0,
+   "action": 0.0,
+   "both": 0.0
+  },
+  "b5/conservation_law": {
+   "n": 2104,
+   "parent": 0.0,
+   "action": 1.0,
+   "both": 0.0
+  },
+  "d1/kill_neighborhood": {
+   "n": 1435,
+   "parent": 1.0,
+   "action": 0.0,
+   "both": 0.0
+  },
+  "b1/operator_rotation": {
+   "n": 1340,
+   "parent": 0.0,
+   "action": 1.0,
+   "both": 0.0
+  },
+  "b4/operator_rotation": {
+   "n": 1212,
+   "parent": 0.0,
+   "action": 1.0,
+   "both": 0.0
+  },
+  "b3/composition_test": {
+   "n": 606,
+   "parent": 0.0,
+   "action": 1.0,
+   "both": 0.0
+  },
+  "h4/bridge_extension": {
+   "n": 24,
+   "parent": 1.0,
+   "action": 0.0,
+   "both": 0.0
+  },
+  "h2/kill_neighborhood": {
+   "n": 1,
+   "parent": 1.0,
+   "action": 0.0,
+   "both": 0.0
+  }
+ },
+ "step_trace": {
+  "step_kind": {
+   "resample": 332883,
+   "method_variant": 3
+  },
+  "step_method": {
+   "numpy_polyfit": 332883,
+   "polyfit_linear_small": 1,
+   "polyfit_quadratic_mid": 1,
+   "polyfit_cubic_large": 1
+  },
+  "input_variation": {
+   "identical_ignoring_seed": 66746,
+   "varies": 1
+  }
+ },
+ "h1_hunts": {
+  "success": {
+   "True": 47891,
+   "False": 3420
+  },
+  "varied_side": {
+   "a": 16052,
+   "b": 31839,
+   "None": 3420
+  }
+ }
+}
