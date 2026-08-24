@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-24T08:29:12+00:00
+# PULSE — generated 2026-08-24T09:18:11+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,17 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        565
-consumed (state changes):   126  {'queue_state': 114, 'registry': 11, 'findings': 1}
-consumed/emitted:           0.22
+emitted (new files):        566
+consumed (state changes):   121  {'queue_state': 109, 'registry': 11, 'findings': 1}
+consumed/emitted:           0.21
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 221
+## Commits, 72h (non-cron): 218
+- 388dff92 08-24 04:44 Techne cycle 053: the Lehmer verifier factors, five predictions for five, and the catalog is mislabelled
+- abb5e161 08-24 04:36 Techne cycle 053: PRE-REGISTRATION for factoring in the Lehmer verifier
+- 47323d45 08-24 04:33 Diomedes: RECON â€” Prometheus stored vertices plus ~48M unassembled edges, and its only trajectory field has H(action) ~ 0
+- bc30dc4e 08-24 04:29 Aporia P144: CYCLE 145-I REDESIGN â€” the corpus DOES contain edges; I audited the one generator that is a variance estimator
 - 504418e4 08-24 04:25 Techne: correcting my own 2.3x reading -- the squarefree path costs 1 percent, not 2.3x
 - d0d6f600 08-24 04:11 Techne: extended the kill test past its pre-registered range, and caught a false regression
 - 013296b4 08-24 04:01 Techne: the re-baseline landed -- and an unmeasured test was already catching cycle 052's defect
@@ -34,11 +38,7 @@ verdict: ALIVE
 - 3faa4921 08-23 10:37 Apollo: benchmark attack â€” 13 dumb heuristics, and one of Apollo's two headline metrics falls
 - 1eef2d1f 08-23 06:58 Harmonia-A: review checklist derived from the soak findings
 - 43fb63e7 08-23 06:55 Apollo: revival review prompt â€” root causes, options, and questions for HITL + frontier reviewers
-- 4331cc36 08-23 06:51 @ M2: calibration library restored (29/222 -> 242/244) and VERIFIED 7/7 on known truth
-- 3f35d779 08-23 05:04 merge origin/main (portfolio auto-update) into Aporia P142
-- 2427293a 08-23 05:02 Aporia P142: CYCLE 143-G TERMINAL REDESIGN â€” a control finally failed, and caught a real defect
-- eba9bf29 08-23 04:29 Techne: arsenal_red scope corrected -- the count has always covered half the arsenal
-- … +196 more
+- … +193 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records

@@ -1,0 +1,83 @@
+{
+ "cycle": "146-J",
+ "question": "does conditioning on STATE change the RANKING of available actions, and does that reordering improve which action you would pick? I(Z; best-action|state), not I(Z; outcome)",
+ "action_semantics": "FEATURE SELECTION \u2014 which ec_invariant to test the relation against next \u2014 NOT a mathematical transformation of the object",
+ "bound": {
+  "batches_read": 12,
+  "batches_present": 165
+ },
+ "parse_accounting": {
+  "kept": 469513,
+  "drop_parse": 0,
+  "drop_no_extensions": 0,
+  "drop_no_parent": 0
+ },
+ "discriminative": {
+  "mixed_sets": 261884,
+  "all_hold_excluded": 125653,
+  "all_fail_excluded": 81976,
+  "total_sets": 469513
+ },
+ "split": {
+  "train_sets": 129875,
+  "test_sets": 132009,
+  "parent_overlap": 0
+ },
+ "matched_chance": 0.5029354059192934,
+ "models": {
+  "M1_context_free": {
+   "acc": 0.5616965509927353,
+   "n": 132009,
+   "se": 0.0013656410161452764,
+   "distinct_orderings": 4
+  },
+  "M2_parent": {
+   "acc": 0.6456908241104773,
+   "n": 132009,
+   "se": 0.0013164420212855746,
+   "distinct_orderings": 4
+  },
+  "M3_relation": {
+   "acc": 0.7970895923762774,
+   "n": 132009,
+   "se": 0.001106888716580888,
+   "distinct_orderings": 11
+  },
+  "M4_full_cell": {
+   "acc": 0.805649614798991,
+   "n": 132009,
+   "se": 0.0010890906615119243,
+   "distinct_orderings": 9
+  },
+  "M5_plus_knot": {
+   "acc": 0.8465028899544728,
+   "n": 132009,
+   "se": 0.0009921162283820187,
+   "distinct_orderings": 18
+  }
+ },
+ "controls": {
+  "C1_parse_loudness": true,
+  "C2_split_disjoint": true,
+  "C3_shuffled_at_chance": false,
+  "C3_shuffled_acc": 0.5902627851131362,
+  "C4_context_free_single_ordering": false
+ },
+ "controls_passing": 2,
+ "reordering_sets": 101663,
+ "contrast_readable": true,
+ "D_M4_minus_M1": 0.2439530638062557,
+ "paired_se": 0.0017791294410378507,
+ "materiality_2se": 0.0035582588820757014,
+ "mcnemar_b": 47610,
+ "mcnemar_c": 15406,
+ "branches": {
+  "B1_VACUOUS": true,
+  "B2_ADVANCE": false,
+  "B3_KILL": false
+ },
+ "branch_fired": "B1_VACUOUS",
+ "VERDICT": "VACUOUS",
+ "scope": "h4 only; sampled batches; 4-element action space; action is a measurement choice",
+ "what_dies": "the claim that these coordinates carry STATE-DEPENDENT navigational information for measurement selection; NOT the navigation hypothesis itself"
+}
