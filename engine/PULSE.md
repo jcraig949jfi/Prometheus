@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-24T15:19:12+00:00
+# PULSE — generated 2026-08-24T15:50:29+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,22 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        545
-consumed (state changes):   102  {'queue_state': 90, 'registry': 11, 'findings': 1}
-consumed/emitted:           0.19
+emitted (new files):        553
+consumed (state changes):   102  {'findings': 2, 'queue_state': 89, 'registry': 11}
+consumed/emitted:           0.18
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 224
+## Commits, 72h (non-cron): 232
+- 4b1391bb 08-24 11:38 Techne: correcting cycle 059 within the hour -- prediction 1 is NOT falsified, and the hang is mine
+- 6a158712 08-24 11:34 Techne cycle 059: three instrument faults, one valid measurement, and the stopping condition fires
+- 3234f36a 08-24 11:32 Techne cycle 059: the sweep passed STRINGS to every function -- both runs are invalid
+- d9a59e24 08-24 11:27 Diomedes SYNTHESIS 001 (cycles 001-004): 75% of the signal is conditional, arithmetic recovers 22.6% of it locally, and nothing transfers
+- 0603fb36 08-24 11:25 Techne cycle 059 in progress: the instrument measured the harness, and it is a repeat
+- 96d3a963 08-24 11:25 Diomedes cycle 004 RESULT: REDESIGN â€” relation type INVERTS the geometry; both axes matter; nothing transfers
+- 8efca250 08-24 11:24 Techne: finding #8 written up for Aporia -- singular_series_ratio(0) does not terminate
+- 761d575f 08-24 11:23 Techne cycle 059: input sweep instrument -- and its first run measured the harness, not the code
+- c144e89f 08-24 11:20 Aporia P153: CYCLE 154-S â€” Apollo's ceiling decomposed EXACTLY; boolean target VOID; my routable_acc rationale RETRACTED
 - fcedea89 08-24 11:17 Techne cycle 059: PRE-REGISTRATION -- the input sweep, applied deliberately
 - 54dbb137 08-24 11:13 Ergon: R13 power floor fires on the re-pin â€” arms halted, replenishment escalated
 - 571eff7b 08-24 11:07 Ergon: compute the CROSS-FAMILY Tier B screen â€” my code would have repeated the error
@@ -29,16 +38,7 @@ verdict: ALIVE
 - 1fbc2133 08-24 09:10 Diomedes cycle 003: PRE-REGISTRATION for the split discriminator â€” was cycle 002's KILL about coordinates or about transfer?
 - 2780e5b5 08-24 09:08 Diomedes cycle 002 RESULT: KILL â€” relational coordinates carry the signal but a global model cannot transfer it across invariant pairs
 - 96e4c117 08-24 09:08 Techne cycle 057: the domain boundary is real, and it is not where I said it was
-- 61284fbe 08-24 09:06 Techne cycle 057: PRE-REGISTRATION -- different domains, or different power?
-- 248a36b8 08-24 09:04 Diomedes: perpetual research-loop charter granted by HITL â€” bounded autonomous cycles with the pre-registration firewall intact
-- f93f91fd 08-24 08:46 Charon: P150 CORPUS CLOSED rests on a census with a hole, and c1 is in the hole
-- 99b05311 08-24 08:42 Charon cross-cut: the corpus is two populations, and Aporia and Diomedes are on different ones
-- 935f54a5 08-24 08:41 Ergon: re-derive the F-generic sizing ruling post-ATK-013 â€” the shortfall was mine
-- 06ea3ae1 08-24 08:41 Aporia P150: CYCLE 151-O CORPUS CLOSED â€” eight generators, eight distinct reasons, one conclusion
-- 307f6fe6 08-24 08:36 Ergon: execute Charon's rulings â€” re-pin to M30 cross-family manifest, fix my vacuous gate
-- 3041b131 08-24 08:32 Diomedes: cycle 001 AMENDMENT (H2 narrowed to instrument proof) + cycle 002 PRE-REGISTRATION for stupid relational coordinates
-- b22887ac 08-24 08:04 Techne cycle 056: the confound was real, the finding survives it, and the class is repo-wide
-- … +199 more
+- … +207 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
@@ -71,9 +71,10 @@ verdict: ALIVE
 - DONE-HEALED: 1
 - QUEUED: 3 — next: Consume remaining 17 DR reports; emit one typed consumption record eac
 
-## Findings, 7d: 3
+## Findings, 7d: 4
 - aporia/docs/FINDING_2026-08-17_decidability_novelty_correction.md
 - aporia/docs/FINDING_2026-08-18_kill_diagnosis_probe.md
 - aporia/docs/FINDING_backcorpus_420_complete_2026-08-19.md
+- techne/loop/rung_notes/FINDING_008_aporia_singular_series_ratio.md
 
 *North-star gauge is yours to make from the above; this page will not narrate it for you.*
