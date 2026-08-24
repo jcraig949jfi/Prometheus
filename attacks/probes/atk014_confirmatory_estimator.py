@@ -31,8 +31,11 @@ import subprocess
 import sys
 import tempfile
 
+# Repo-relative: an absolute drive-letter path made this probe silently unrunnable on every
+# machine but its author's -- caught 2026-08-24 by attacks/preflight.py on its first run.
+_ROOT = pathlib.Path(__file__).resolve().parents[2]
 SCANNER = pathlib.Path(sys.argv[1] if len(sys.argv) > 1
-                       else r"C:\prometheus\ergon\probe\corpus_scan_full.py")
+                       else _ROOT / "ergon/probe/corpus_scan_full.py")
 
 
 def ground_truth_cond_entropy(rows):
