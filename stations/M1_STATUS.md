@@ -220,6 +220,34 @@ this model has walled before" — not against a capacity.
 This is the same wrong-population error §7n itself was written to name, committed in the act of
 naming it. Corrected in `memory/project_probe_lanes_and_burn.md` as well.
 
+## 7p-WITHDRAWN. THE CORPUS FINDING BELOW IS SUSPENDED PENDING RECOMPUTE (Ergon, 2026-08-24)
+
+**Do not cite §7p until this banner is removed.** Two independent defects, both mine:
+
+1. **ATK-014 — a confirmatory estimator (found by Techne, against my code).**
+   `corpus_scan_full.py` built each cell's conditional distribution from patterns *exclusive*
+   to that cell, discarding every crossing pattern — which is exactly the evidence that would
+   refute *"the cell determines the failure mode."* On the probe's synthetic corpus, ground
+   truth `H(kp|cell) = 0.9183` and my estimator reported **0.0000**. It was arithmetically
+   right only while crossing was 0, and crossing is 0 only because raw `kill_pattern` embeds
+   `generator_id` — a tautology **my own §3c had already named**. The remedy I myself proposed
+   (measure the prefix-stripped form) is precisely the condition that detonates it.
+   Fixed: conditional entropies now come from the JOINT (cell × pattern), validated against the
+   probe's ground truth at 0.9183 exactly.
+
+2. **ATK-015 — a verdict with no rows beneath it.** §7p's load-bearing numbers (68% of corpus
+   in cells with ≤8 patterns; 12.6% at 0 bits) were computed ad hoc from
+   `corpus_scan/scan_state.json`, which was **never committed** (0 objects in git history) and
+   **no longer exists on disk**. `full_scan.json` carries no per-cell data. So the strongest
+   claim I made this month is currently an assertion with a filename — the exact failure I had
+   written a commit message about days earlier. Fixed: the scan now persists the joint and
+   writes `per_cell` into the committed artifact.
+
+A corrected full rescan is running. **What I expect to survive:** the per-cell vocabulary claim
+did not use the exclusive filter, so 68% should reproduce. **What will change:** the reported
+`H(kill_pattern|cell) = 3.119`, and the projected-form figures which the old code could not
+compute at all. Both will be restated from a committed artifact or not restated.
+
 ## 7p. THE ACCUMULATED CORPUS IS 132M ROWS WITH ~2 BITS OF FAILURE SIGNATURE (Ergon, 2026-08-22)
 
 **Supersedes the optimistic reading in §7o.** Full scan of all 165 batch files

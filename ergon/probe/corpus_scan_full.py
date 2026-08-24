@@ -41,6 +41,19 @@ def main():
     cell_counts = collections.Counter({tuple(k.split("\x1f")): v
                                        for k, v in state.get("cell_counts", {}).items()})
     # kill_pattern -> set of cells it appears in (the claim under test)
+    # JOINT counts (cell -> pattern -> n). The previous version kept only marginals and
+    # then built each cell's conditional distribution from patterns EXCLUSIVE to that cell —
+    # dropping every crossing pattern, i.e. exactly the evidence that would refute "the cell
+    # determines the failure mode". ATK-014 (Techne): on a synthetic corpus where 66.7% of
+    # records carry a crossing pattern, ground truth H(kp|cell)=0.9183 and the estimator
+    # reported 0.0000. It was correct only while crossing was 0 — and crossing is 0 only
+    # because raw kill_pattern embeds generator_id, which my own §3c called a tautology.
+    joint = collections.defaultdict(collections.Counter)
+    for k, v in state.get("joint", {}).items():
+        joint[tuple(k.split(""))] = collections.Counter(v)
+    joint_proj = collections.defaultdict(collections.Counter)
+    for k, v in state.get("joint_proj", {}).items():
+        joint_proj[tuple(k.split(""))] = collections.Counter(v)
     kp_cells = collections.defaultdict(set)
     for k, v in state.get("kp_cells", {}).items():
         kp_cells[k] = {tuple(c.split("\x1f")) for c in v}
@@ -75,6 +88,8 @@ def main():
                     kp_counts[kp] += 1
                     cell_counts[cell] += 1
                     kp_cells[kp].add(cell)
+                    joint[cell][kp] += 1
+                    joint_proj[cell][GEN_PREFIX.sub("", kp)] += 1
                     cell_vocab[cell] |= tokens(kp)
                     if d.get("step_trace"):
                         totals["with_step_trace"] += 1
@@ -91,6 +106,8 @@ def main():
             "cell_counts": {"\x1f".join(k): v for k, v in cell_counts.items()},
             "kp_cells": {k: ["\x1f".join(c) for c in v] for k, v in kp_cells.items()},
             "cell_vocab": {"\x1f".join(k): sorted(v) for k, v in cell_vocab.items()},
+            "joint": {chr(31).join(c): dict(v) for c, v in joint.items()},
+            "joint_proj": {chr(31).join(c): dict(v) for c, v in joint_proj.items()},
             "totals": dict(totals),
         }
         tmp = state_path.with_suffix(".json.tmp")
@@ -106,13 +123,24 @@ def main():
     crossing = {k: v for k, v in kp_cells.items() if len(v) > 1}
     n_rej = max(1, totals["rejected"])
     H = -sum((c / n_rej) * math.log2(c / n_rej) for c in kp_counts.values() if c)
-    cond = 0.0
-    for cell, cnt in cell_counts.items():
-        sub = collections.Counter({k: v for k, v in kp_counts.items()
-                                   if kp_cells[k] == {cell}})
-        tot = sum(sub.values())
-        if tot:
-            cond += (cnt / n_rej) * (-sum((c / tot) * math.log2(c / tot) for c in sub.values()))
+    def _cond(jnt):
+        """H(X|Y) = sum_y P(y) H(X|Y=y), over the ACTUAL within-cell distribution. No filter
+        may mention the quantity under test (ATK-014 generalization)."""
+        acc = 0.0
+        for cell, sub in jnt.items():
+            tot = sum(sub.values())
+            if tot:
+                acc += (tot / n_rej) * (
+                    -sum((c / tot) * math.log2(c / tot) for c in sub.values()))
+        return acc
+
+    cond = _cond(joint)
+    cond_proj = _cond(joint_proj)
+    proj_marg = collections.Counter()
+    for sub in joint_proj.values():
+        proj_marg.update(sub)
+    n_proj = max(1, sum(proj_marg.values()))
+    H_proj = -sum((c / n_proj) * math.log2(c / n_proj) for c in proj_marg.values() if c)
     cells = sorted(cell_vocab)
     pairs = [(len(cell_vocab[a] & cell_vocab[b]) / max(1, len(cell_vocab[a] | cell_vocab[b])),
               a, b) for i, a in enumerate(cells) for b in cells[i + 1:]]
@@ -129,6 +157,15 @@ def main():
         "records_under_crossing_patterns": sum(kp_counts[k] for k in crossing),
         "H_kill_pattern_bits": round(H, 3),
         "H_kill_pattern_given_cell_bits": round(cond, 3),
+        "H_projected_bits": round(H_proj, 3),
+        "H_projected_given_cell_bits": round(cond_proj, 3),
+        "estimator_note": "conditional entropies computed from the JOINT (cell x pattern); "
+                          "the prior version filtered to patterns exclusive to a cell and so "
+                          "could not report evidence against its own hypothesis (ATK-014).",
+        "per_cell": {"".join(c).replace("", "/"): {
+            "n": sum(v.values()), "distinct_patterns": len(v),
+            "distinct_projected": len(joint_proj.get(c, {})),
+        } for c, v in joint.items()},
         "top5_pattern_share": round(sum(c for _, c in kp_counts.most_common(5)) / n_rej, 4),
         "mean_pairwise_jaccard": round(sum(j for j, _, _ in pairs) / max(1, len(pairs)), 4),
         "cell_pairs_zero_overlap": f"{zero}/{len(pairs)}",
