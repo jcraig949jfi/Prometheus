@@ -16,7 +16,7 @@ the actual gap: findings are written as prose, so nothing can test them.
 from __future__ import annotations
 
 import argparse
-import importlib
+import ast
 import pathlib
 import re
 import sys
@@ -29,28 +29,50 @@ FILEREF = re.compile(r"`([\w./-]+\.(?:py|md|json|jsonl))`")
 RATE = re.compile(r"\b(\d+)\s*/\s*(\d+)\s*=\s*([01]?\.\d+)")
 
 
-def _importable(dotted_or_path: str, symbol: str, repo: pathlib.Path) -> tuple[bool, str]:
-    """True iff `symbol` can actually be imported from that module. Decidable."""
-    mod = dotted_or_path
-    if mod.endswith(".py"):
-        mod = mod[:-3].replace("/", ".").replace("\\", ".")
+def _defines(module_ref: str, symbol: str, repo: pathlib.Path) -> tuple[bool, str]:
+    """True iff the module's SOURCE defines `symbol`. AST only -- nothing is executed.
+
+    The first version imported the module to check `hasattr`. That was wrong twice over: it
+    cost ~12 s per module for anything that initialises PARI, and it EXECUTED code merely to
+    ask whether a name exists. Reading the source answers the same question in milliseconds
+    with no side effects, which is what a check on a claim should cost.
+    """
+    rel = module_ref[:-3] if module_ref.endswith(".py") else module_ref.replace(".", "/")
+    cand = [repo / f"{rel}.py", repo / rel.replace("/", "\\") ]
+    path = next((c for c in cand if c.suffix == ".py" and c.exists()), None)
+    if path is None:
+        hits = list(repo.rglob(pathlib.Path(rel).name + ".py"))
+        if not hits:
+            return False, "module file not found"
+        path = hits[0]
     try:
-        m = importlib.import_module(mod)
-    except Exception as e:
-        return False, f"module import failed: {type(e).__name__}"
-    return (hasattr(m, symbol), "" if hasattr(m, symbol) else "symbol not present in module")
+        tree = ast.parse(path.read_text(encoding="utf-8", errors="replace"))
+    except SyntaxError as e:
+        return False, f"module unparseable ({e.msg})"
+    for node in ast.walk(tree):
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef))                 and node.name == symbol:
+            return True, ""
+        if isinstance(node, ast.Assign):
+            for t in node.targets:
+                if isinstance(t, ast.Name) and t.id == symbol:
+                    return True, ""
+    return False, "symbol not defined in module source"
 
 
 def check_symbols(text: str, repo: pathlib.Path) -> list[str]:
-    """CHECK 1 -- every `module::symbol` reference must resolve.
+    """CHECK 1 -- every `module::symbol` reference must resolve to a definition.
 
     This alone would have caught cycle 052's `_verify_mahler_mpmath`, a function named in a
     committed report and two log entries that does not exist. The real name is `mpmath_recheck`.
     """
     out = []
+    seen = set()
     for pat in (SYMBOL, DOTTED):
         for mod, sym in pat.findall(text):
-            ok, why = _importable(mod, sym, repo)
+            if (mod, sym) in seen:
+                continue
+            seen.add((mod, sym))
+            ok, why = _defines(mod, sym, repo)
             if not ok:
                 out.append(f"UNRESOLVABLE SYMBOL  {mod}::{sym}  ({why})")
     return out
@@ -89,17 +111,34 @@ def check_rates(text: str) -> list[str]:
 
 
 def check_contradictions(text: str) -> list[str]:
-    """CHECK 4 -- a symbol called a FALSE POSITIVE must not also be counted as a detection.
+    """CHECK 4 -- a symbol called a FALSE POSITIVE must not also appear as a detection.
 
     Cycle 055 recorded `bootstrap_ci_from_seed_means` as a Lane A false positive in two places
-    and reported 7/8 -- a total that counts it as a hit. Decidable by co-occurrence.
+    and reported 7/8 -- a total that counts it as a hit.
+
+    ITS FIRST VERSION DID NOT FIRE ON THAT FILE. It required the symbol inside backticks and
+    within 80 characters of "false positive" in the same sentence. In the real report the two
+    facts sit in different sentences, and the tabulated line has the symbol unquoted inside a
+    code block. A control keyed to formatting conventions the documents do not follow is not a
+    control -- and that only surfaced by running it against the case it was built for.
+
+    Decidable version: flag any identifier co-occurring with BOTH "false positive" and a
+    detection marker. Whether the pairing is a genuine contradiction needs a reader; SURFACING
+    the pair does not.
     """
     out = []
-    fps = set(re.findall(r"`(\w+)`[^.\n]{0,80}false positive", text, re.I))
-    fps |= set(re.findall(r"false positive[^.\n]{0,80}`(\w+)`", text, re.I))
-    for sym in fps:
-        if re.search(rf"`{re.escape(sym)}`[^\n]{{0,60}}\bFLAG\b", text):
-            out.append(f"CONTRADICTION        `{sym}` is called a false positive AND flagged")
+    if "false positive" not in text.lower():
+        return out
+    idents = set(re.findall(r"\b([a-z_][a-z0-9_]{6,})\b", text))
+    for sym in sorted(idents):
+        esc = re.escape(sym)
+        near = (re.search(r"(?s)" + esc + r".{0,400}?false positive", text, re.I)
+                or re.search(r"(?s)false positive.{0,400}?" + esc, text, re.I))
+        if not near:
+            continue
+        if re.search(esc + r"[^\n]{0,60}\bFLAG\b", text):
+            out.append("CONTRADICTION?       `" + sym + "` co-occurs with BOTH 'false "
+                       "positive' and a FLAG -- verify it is not counted as a detection")
     return out
 
 
