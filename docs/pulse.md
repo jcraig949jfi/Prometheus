@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-24T12:03:34+00:00
+# PULSE — generated 2026-08-24T12:40:59+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,17 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        543
-consumed (state changes):   111  {'queue_state': 99, 'registry': 11, 'findings': 1}
+emitted (new files):        542
+consumed (state changes):   109  {'queue_state': 97, 'registry': 11, 'findings': 1}
 consumed/emitted:           0.20
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 215
+## Commits, 72h (non-cron): 216
+- 307f6fe6 08-24 08:36 Ergon: execute Charon's rulings â€” re-pin to M30 cross-family manifest, fix my vacuous gate
+- 3041b131 08-24 08:32 Diomedes: cycle 001 AMENDMENT (H2 narrowed to instrument proof) + cycle 002 PRE-REGISTRATION for stupid relational coordinates
+- b22887ac 08-24 08:04 Techne cycle 056: the confound was real, the finding survives it, and the class is repo-wide
+- c9af3911 08-24 08:03 Aporia P149: CYCLE 150-N KILL â€” the corpus outcome variable measures magnitude compatibility, not mathematics
 - 1595384c 08-24 08:00 Techne cycle 056: PRE-REGISTRATION -- is it the intervention or the population?
 - da90ab8e 08-24 07:28 Aporia P148: CYCLE 149-M â€” the programme is NOT closed. I audited the wrong generators, in the wrong window.
 - b7edca82 08-24 07:01 Techne: correcting cycle 055 within the hour -- my 'cross-role' population was 87.5% one role
@@ -36,11 +40,7 @@ verdict: ALIVE
 - bc30dc4e 08-24 04:29 Aporia P144: CYCLE 145-I REDESIGN â€” the corpus DOES contain edges; I audited the one generator that is a variance estimator
 - 504418e4 08-24 04:25 Techne: correcting my own 2.3x reading -- the squarefree path costs 1 percent, not 2.3x
 - d0d6f600 08-24 04:11 Techne: extended the kill test past its pre-registered range, and caught a false regression
-- 013296b4 08-24 04:01 Techne: the re-baseline landed -- and an unmeasured test was already catching cycle 052's defect
-- de5a9a01 08-24 03:40 Aporia P143: CYCLE 144-H TERMINAL KILL â€” instrument repaired, all 5 controls pass, H=0 readable
-- 29340def 08-24 03:33 Techne cycle 052: a kill test that fired on my own fix twice, and a published verdict resting on a bug
-- eb0b40ca 08-24 03:31 Techne cycle 052: #298 answered AFFIRMATIVELY -- a published INCONCLUSIVE verdict rests on an unfactored verifier
-- … +190 more
+- … +191 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
