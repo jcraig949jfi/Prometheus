@@ -1873,3 +1873,30 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      (union 5 > intersection 4) | **P4 FALSIFIED** (the control, my selection error) | P5 HELD.
      **Calibration 29/42 = 0.690**: high 7/9 | mod-high 8/8 | moderate 9/15 | low-mod 5/7 |
      **low 0/3**.
+
+352. **CORRECTION TO CYCLE 055, WITHIN THE HOUR: MY "CROSS-ROLE" POPULATION WAS 87.5% ONE ROLE.**
+     A background grep from the population-selection step finished after the cycle closed. It
+     returned **40 hits, all `ergon`** — because my command was capped at `head -40` and the
+     traversal reached ergon first. My actual population was **7 ergon + 1 charon (+1 charon
+     control): zero harmonia, zero aporia, zero theseus.** I described it in the prereg as
+     "cross-role substrate". **Eighth instance of the wrong-population error — in the very
+     experiment I used to overturn a dozen cycles of belief.**
+353. **Those roles are NOT empty of candidates** — `aporia/catalog_attacks/nt_helpers.py::
+     singular_series_ratio`, `aporia/.../attack_0066_0137.py::sing_ratio`,
+     `aporia/meta/experiments/.../_p5_br_experiment.py::br_ratio` all match the same mechanical
+     rule. **The absence was a truncation artifact, not a property of the repo.**
+354. **WHAT SURVIVES AND WHAT DOES NOT.** The measurement stands: targeted review found **7 of
+     8**, and each flag is individually checkable. **What does not survive is the
+     generalisation.** The supported claim is *"targeted review detected this class in ergon's
+     measure-like functions"* — **not** *"targeted review detects this class"*. The distinction
+     is exactly the one cycle 041 drew when it caught me generalising `0/11 incidental` into a
+     categorical dismissal, and I have now made the mirror-image error in the correction.
+355. **A CONFOUND THIS RAISES, UNMEASURED:** ergon may have a house style (return `0.0` on empty)
+     that makes the defect class unusually **dense** in its code. If so, **7/8 reflects ergon's
+     conventions as much as reading's power**, and a fresh population spanning aporia/harmonia/
+     theseus is the test. That is cycle 056's Track 2, and this correction sharpens why it
+     matters: it is no longer "thin sample", it is "possibly a single-style sample".
+356. **UNCHECKED AND NAMED: whether the `0/11` baseline was drawn from the same population.**
+     If those eleven incidental findings were also mostly ergon, the comparison is at least
+     like-for-like; if not, the two arms differ in population as well as in intervention.
+     **I have not checked, and the cycle-055 comparison is weaker until I do.**
