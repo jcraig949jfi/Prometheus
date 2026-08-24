@@ -1900,3 +1900,48 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      If those eleven incidental findings were also mostly ergon, the comparison is at least
      like-for-like; if not, the two arms differ in population as well as in intervention.
      **I have not checked, and the cycle-055 comparison is weaker until I do.**
+
+
+## Cycle 056 (2026-08-24) — the confound was real, the finding survives, the class is repo-wide
+
+357. **THE CONFOUND IS CONFIRMED AND WAS WORSE THAN I STATED.** `LADDER_CLAIMS_LEDGER:1204`:
+     *"Cycles 029-041 found eleven instances **in code written for the loop**."* **The 0/11 was
+     measured on MY techne code; the 7/8 on ERGON's production code.** Cycle 055 compared them
+     as if only the intervention differed.
+358. **BUT ERGON IS NOT THE OUTLIER — THE KILL TEST DID NOT FIRE.** Full enumeration, no `head`,
+     no cap: ergon 7/8 = **0.88**, charon 2/2, harmonia 1/1, theseus 1/1, techne 1/1, aporia
+     0/1. **Ergon is slightly BELOW four other roles.** Cycle 055's 7/8 is **not** a house-style
+     artifact. **The class is repo-wide, in five of six roles.** *n per role is 1–2 outside
+     ergon — thin, and I am not pretending otherwise.*
+359. **THE ROW THAT PARTIALLY RESCUES CYCLE 055 IS IN MY OWN CODE.**
+     `techne/ladder_circuits/canon_r11_calibration.py::base_rate` returns **0.0 on an empty
+     battery** — *"the base rate is zero, no claim is true"* — when it means there are no claims.
+     **Same population the 0/11 came from.** So 0/11 was never "my code has no instances": they
+     are there, incidental reading missed them, and targeted reading found one immediately.
+     **On the same population the intervention difference reappears — at n=1.**
+360. **A VALID NEGATIVE CONTROL FINALLY EXISTS.**
+     `aporia/catalog_attacks/nt_helpers.py::singular_series_ratio` — the **empty product is
+     1.0**, which is *mathematically correct*, not a sentinel. No "no data" case exists distinct
+     from a legitimate 1.0. **Clean by semantics, which is what cycle 055's control should have
+     been.**
+361. **JAMES — THE SHARPEST FIND IS NOT A CONFLATION, AND IT IS THESEUS'S.**
+     `theseus/orchestration/lifetime.py::dedup_rate` — **both branches return `1.0`**, and its
+     docstring says *"1.0 = all unique"*. **There is no input that makes it report anything
+     else**; a batch of pure duplicates reports perfect deduplication. The comment calls it a
+     placeholder pending a Tier-2 refactor. **Worse than the conflation class: a conflation
+     needs a degenerate input to bite, this reports the healthy value unconditionally.**
+362. **AND IT IS INVISIBLE TO PROBES BY CONSTRUCTION.** Every input returns the
+     documented-healthy value, so Lane B's degenerate-vs-legitimate comparison **cannot** see
+     it. **That is a capability difference between the lanes, not a score difference** — and it
+     suggests reading and probing have different *domains*, not different power.
+363. **TWO MORE FLAGS, to their owners:** `charon/.../_avg_transfer_rate` (empty means no pair
+     produced a rate, reported as "average transfer is zero") and
+     `harmonia/agents/iris/_pipeline.py::_boilerplate_ratio` (empty fingerprint returns 0.0,
+     indistinguishable from measured-no-boilerplate).
+364. **A FLAW IN MY OWN SELECTOR: `_ratio` MATCHES `_rational`.** Four selected functions were
+     false matches, excluded by hand. **A name-pattern selector selects spellings, not
+     semantics** — the guard-on-a-proxy shape one level down.
+365. **PREDICTIONS 5 OF 5, all `OPEN`. I DISTRUST THE SWEEP.** Several were *plausible* before
+     measuring, and **"open" is not the same as "hard"** — my difficulty tag cannot express that
+     difference. **Calibration 34/47 = 0.723**; low still 0/3, mod-high 9/9.
+366. **NO OWNER RESPONSE YET** to cycle 055's five findings (checked; they are ~1h old).
