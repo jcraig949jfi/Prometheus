@@ -1719,3 +1719,23 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      practice.
 322. **`techne/tests/test_mahler_batch.py` is fully green post-fix: 19 passed** (12:32 — the
      file carries a benchmark). Confirms the resolution at file level, not just in isolation.
+
+323. **CORRECTION TO #320's COMPANION MEASUREMENT: the squarefree path costs 1%, not 2.3x.**
+     I first timed the scalar path over the **first 40** catalog entries and reported 2.3x.
+     Those 40 have **median degree 8**; the table's real median is **115**. On a random n=120
+     sample across the whole table: **19.00 ms/call ON vs 18.80 ms/call OFF = 1.01x.** The
+     cycle-051 change is essentially free on the population it actually runs against, and the
+     2.3x was an artifact of a 100x-unrepresentative degree window.
+324. **THE SAMPLING-WINDOW ANTIPATTERN, COMMITTED BY ME, AGAINST MY OWN MEMORY FILE.**
+     `feedback_sampling_strategy_is_analysis` says ordered iteration is a sampling-window
+     antipattern and to stratify. I took the first 40 rows of an ordered table as a sample of
+     it. **Seventh wrong-population instance**, and this one had a memory written specifically
+     to prevent it.
+325. **A NAME FOSSIL: `test_authority_mossinghoff_snapshot_178_entries` loads 8,625 entries.**
+     The table grew ~48x and the test name never moved, so the suite reads as if a 178-entry
+     authority check is running when it is a 12-minute full-table sweep. Same class as the
+     "2,351 promotions" formula fossil (`feedback_promotion_shape_gated_polycentric`).
+326. **WHERE THE 12:32 ACTUALLY GOES — and it is NOT my change.** Three tests take 767 of the
+     769 seconds: 262s, 261s, 245s. Each computes **8,625 polynomials of median degree 115,
+     twice** (batch and scalar). At ~19 ms/call that is the honest cost of the work, and it was
+     there before cycle 051. **No performance regression exists.**
