@@ -32,7 +32,7 @@ class _Resp:
         self.prompt_tokens, self.completion_tokens, self.usd = 50, 900, 0.0
 
 
-def _harness(tmp, signoff):
+def _harness(tmp, signoff, waive_r13=True):
     """Run the campaign once against a mock tuned to land the band read IN band."""
     import ergon.probe.campaign as C
 
@@ -57,6 +57,10 @@ def _harness(tmp, signoff):
         gold_by_nums[tuple(re.findall(r"\b\d{5,}\b", r["prompt"]))] = r["gold_int"]
     if signoff:
         C.HOLD_FILE.write_text("dryrun", encoding="utf-8")
+    if waive_r13:
+        # the dry-run manifest is deliberately small; this is a STATE-MACHINE test, so the
+        # power floor is waived explicitly here rather than silently lowered in the code.
+        C._r13_waiver().write_text("dryrun: state-machine test", encoding="utf-8")
     C.main()
     return [json.loads(l) for l in
             (tmp / "campaign_log.jsonl").read_text(encoding="utf-8").splitlines()]
@@ -66,7 +70,14 @@ def _harness(tmp, signoff):
 def tmpdir_outside_ledgers():
     tmp = Path(tempfile.mkdtemp(prefix="campaign_dry_"))
     assert "ledgers" not in str(tmp), "dry-run must never write into the real ledger tree"
-    return tmp
+    yield tmp
+    # A test once wrote an R13 waiver into the LIVE campaign directory because the gate path
+    # was bound at import instead of resolved from DIR. A stray waiver silently disables a
+    # power floor on a real run, so the fixture now proves the live tree is untouched.
+    live = ROOT / "ergon/probe/ledgers/campaign"
+    for stray in ("R13_POWER_FLOOR_WAIVED", "RE_REVIEW_SIGNOFF"):
+        assert not (live / stray).exists(), (
+            f"a test created {stray} in the LIVE ledger tree — this disables a real gate")
 
 
 def test_campaign_holds_before_p4_then_completes(tmpdir_outside_ledgers):
@@ -134,3 +145,20 @@ def test_r10_reads_the_campaign_arms_ledger(tmpdir_outside_ledgers):
     assert rows and all("arm" in r and "uid" in r and "correct" in r for r in rows)
     arms = {r["arm"] for r in rows}
     assert {"F0", "F-null", "F-prom-retrieved"} <= arms
+
+
+def test_r13_power_floor_halts_before_any_arm(tmpdir_outside_ledgers):
+    """R13: 'replenish before any arm runs.' A run below the floor must spend nothing on arms.
+
+    This guards the failure this rule exists to prevent: ~2,750 free-lane calls collected into
+    an INCONCLUSIVE-UNDERPOWERED verdict class that, per §6.3, never routes Path gamma.
+    """
+    tmp = tmpdir_outside_ledgers
+    log = _harness(tmp, signoff=True, waive_r13=False)
+    phases = [e.get("phase") for e in log if e.get("phase")]
+    assert "P1" in phases, "the band read must still run — it is what measures the floor"
+    for arm_phase in ("P2", "P3", "P4", "P5"):
+        assert arm_phase not in phases, f"{arm_phase} ran below the R13 power floor"
+    ends = [e for e in log if e.get("verdict") == "R13-POWER-FLOOR-UNMET"]
+    assert ends, "the halt must be recorded, not silent"
+    assert ends[0]["n_post_screen"] < ends[0]["floor"]

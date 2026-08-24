@@ -86,17 +86,19 @@ def main():
                         continue
                     cell = (str(d.get("generator_id")), str(d.get("claim_kind")))
                     seen[cell] += 1
-                    keep = {c: channel_value(d, c) for c in CHANNELS}
+                    # Decide reservoir membership BEFORE extracting channels. Extracting first
+                    # meant json.dumps() on all ~132M payloads to decide whether to keep 129k
+                    # of them — the sampling is 0.1% but the cost was being paid at 100%.
                     res = reservoir[cell]
                     if len(res) < PER_CELL_CAP:
-                        res.append(keep)
+                        res.append({c: channel_value(d, c) for c in CHANNELS})
                     else:                      # reservoir replacement, uniform over the cell
                         j = rng.randrange(seen[cell])
                         if j < PER_CELL_CAP:
-                            res[j] = keep
+                            res[j] = {c: channel_value(d, c) for c in CHANNELS}
         except Exception as e:                 # a bad file must not kill the measurement
             print(f"  !! {f.name}: {type(e).__name__}", flush=True)
-        if i % 20 == 0:
+        if i % 5 == 0:
             print(f"  [{i}/{len(files)}] cells={len(reservoir)} "
                   f"sampled={sum(len(v) for v in reservoir.values()):,}", flush=True)
 

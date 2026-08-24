@@ -75,6 +75,15 @@ BATCH_CAP = 400                          # per firing; the 429 stop is the real 
 CALL_SPACING_S = 2.0
 DIR = ROOT / "ergon/probe/ledgers/campaign"
 HOLD_FILE = DIR / "RE_REVIEW_SIGNOFF"
+R13_POWER_FLOOR = 300                      # prereg §3 R13, post-stratification minimum
+
+
+def _r13_waiver():
+    """Resolved from DIR at CALL time, never bound at import. A module-level
+    `DIR / "..."` freezes the live ledger path, so a test that re-points DIR still writes its
+    waiver into the real campaign directory — which is exactly what happened, and a stray
+    waiver file silently disables a power floor on a live run."""
+    return DIR / "R13_POWER_FLOOR_WAIVED"
 
 
 def now():
@@ -660,7 +669,22 @@ def _campaign():
               f"n_required_for_decidability={read.get('n_required_for_decidability')}")
         return
 
+    # R13 POWER FLOOR, enforced. "Minimum post-stratification N = 300. Below it, replenish
+    # from the pool and re-screen BEFORE any arm runs. An underpowered Delta_carry ~ 0 is
+    # never a verdict." The re-pin gives ~191 post-screen; at 0.41 power for the specified
+    # +8pp a null routes INCONCLUSIVE-UNDERPOWERED, which never routes Path gamma. So the
+    # arms stop here rather than spending ~2,750 free calls on a verdict class that decides
+    # nothing. See ergon/probe/R13_REPLENISHMENT_2026-08-24.md (filed to the kill authority).
     post = [r for r in rows if r["uid"] not in set(read["screen_excluded"])]
+    if len(post) < R13_POWER_FLOOR and not _r13_waiver().exists():
+        log(event="campaign_end", verdict="R13-POWER-FLOOR-UNMET",
+            n_post_screen=len(post), floor=R13_POWER_FLOOR,
+            reason=("prereg R13: replenish from the pool and re-screen before any arm runs. "
+                    "Replenishment extends a sha-pinned manifest and is the kill authority's "
+                    f"call; waive by creating {_r13_waiver().name} to run underpowered, in which "
+                    "case the run is a pipeline exercise and not a decisive run."))
+        print(f"HALTED: R13 power floor unmet ({len(post)} < {R13_POWER_FLOOR}) — no arm runs")
+        return
     arms = Arms(rows, gold)
     rng = random.Random(SEED)
 
