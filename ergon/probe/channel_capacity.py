@@ -37,6 +37,23 @@ _HEX = re.compile(r"\b[0-9a-f]{8,}\b")
 _WS = re.compile(r"\s+")
 
 
+_OBJ_ID = [(re.compile(r"ec:[#a-z0-9._]+"), "ec:@"),
+           (re.compile(r"knot:[#a-z0-9._]+"), "knot:@"),
+           (re.compile(r"oeis:[#A-Za-z0-9]+"), "oeis:@")]
+
+
+def templated_strict(text):
+    """`templated` strips digits but leaves object-identifier FRAGMENTS — the elliptic-curve
+    label letters in `ec:#.b#`, `#.bf#`, knot names — which are instance values, not structure.
+    Measured inflation on the invariant_equality family (~40% of corpus mass): **+3.20 bits**,
+    about a third of its value (ADDENDUM_capacity_inflation_2026-08-24.md). Reported alongside
+    the looser measure rather than replacing it, so the two can be compared."""
+    t = templated(text)
+    for pat, rep in _OBJ_ID:
+        t = pat.sub(rep, t)
+    return t
+
+
 def templated(text):
     """Strip instance particulars, keep structure. Order matters: floats and hex ids before
     bare digits, or the digit rule shreds them into unrecognizable fragments."""
@@ -111,10 +128,13 @@ def main():
             fill = len(vals) / max(1, len(recs))
             h_raw = entropy(collections.Counter(vals))
             h_tpl = entropy(collections.Counter(templated(v) for v in vals))
+            h_strict = entropy(collections.Counter(templated_strict(v) for v in vals))
             row[ch] = {
                 "fill": round(fill, 4),
                 "H_raw": round(h_raw, 3),
                 "H_template": round(h_tpl, 3),
+                "H_template_strict": round(h_strict, 3),
+                "identifier_leakage_bits": round(h_tpl - h_strict, 3),
                 "instance_share": round(1 - (h_tpl / h_raw), 4) if h_raw > 0 else None,
                 "distinct_templates": len({templated(v) for v in vals}),
             }
@@ -124,12 +144,13 @@ def main():
     mass = sum(v["n_population"] for v in usable.values()) or 1
     summary = {}
     for ch in CHANNELS:
-        h = sum(v["n_population"] * v[ch]["H_template"] for v in usable.values()) / mass
-        zero_cells = {k: v[ch]["H_template"] for k, v in usable.items()
-                      if v[ch]["H_template"] < STRUCTURAL_ZERO_BITS}
+        h = sum(v["n_population"] * v[ch]["H_template_strict"] for v in usable.values()) / mass
+        zero_cells = {k: v[ch]["H_template_strict"] for k, v in usable.items()
+                      if v[ch]["H_template_strict"] < STRUCTURAL_ZERO_BITS}
         zero_mass = sum(usable[k]["n_population"] for k in zero_cells) / mass
         summary[ch] = {
-            "H_template_mass_weighted": round(h, 3),
+            "H_template_strict_mass_weighted": round(h, 3),
+            "basis": "strict (object identifiers normalized) — the loose measure inflates the invariant_equality family by +3.2 bits",
             "verdict": ("STRUCTURAL-ZERO" if h < STRUCTURAL_ZERO_BITS else
                         "VIABLE" if h >= VIABLE_BITS else "MARGINAL"),
             "cells_structurally_zero": len(zero_cells),
