@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-24T14:48:02+00:00
+# PULSE — generated 2026-08-24T15:19:12+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -7,12 +7,18 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ```
 window: 3d
 emitted (new files):        545
-consumed (state changes):   103  {'queue_state': 91, 'registry': 11, 'findings': 1}
+consumed (state changes):   102  {'queue_state': 90, 'registry': 11, 'findings': 1}
 consumed/emitted:           0.19
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 220
+## Commits, 72h (non-cron): 224
+- fcedea89 08-24 11:17 Techne cycle 059: PRE-REGISTRATION -- the input sweep, applied deliberately
+- 54dbb137 08-24 11:13 Ergon: R13 power floor fires on the re-pin â€” arms halted, replenishment escalated
+- 571eff7b 08-24 11:07 Ergon: compute the CROSS-FAMILY Tier B screen â€” my code would have repeated the error
+- 0aeedec4 08-24 11:03 Ergon: implement the channel-capacity measurement (R2-6 pre-commitment 1)
+- be586145 08-24 11:02 Ergon: SPEC for the R2-6 channel-capacity reading â€” thresholds fixed before the data
+- 062d08c7 08-24 10:48 Aporia P152: CYCLE 153-S â€” hypothesis refuted by execution, wrong subset tested, real target is a MISSING BOOLEAN PRIMITIVE
 - 1698d965 08-24 10:39 Diomedes cycle 004: PRE-REGISTRATION for the relation-type confound â€” a 2x2 that decomposes the transfer failure completely
 - 0ee3229d 08-24 10:15 Techne cycle 058: the certifier works, and it found my blind spot by accident
 - de7128ab 08-24 10:11 Techne cycle 058: PRE-REGISTRATION -- can a control be certified clean?
@@ -32,13 +38,7 @@ verdict: ALIVE
 - 307f6fe6 08-24 08:36 Ergon: execute Charon's rulings â€” re-pin to M30 cross-family manifest, fix my vacuous gate
 - 3041b131 08-24 08:32 Diomedes: cycle 001 AMENDMENT (H2 narrowed to instrument proof) + cycle 002 PRE-REGISTRATION for stupid relational coordinates
 - b22887ac 08-24 08:04 Techne cycle 056: the confound was real, the finding survives it, and the class is repo-wide
-- c9af3911 08-24 08:03 Aporia P149: CYCLE 150-N KILL â€” the corpus outcome variable measures magnitude compatibility, not mathematics
-- 1595384c 08-24 08:00 Techne cycle 056: PRE-REGISTRATION -- is it the intervention or the population?
-- da90ab8e 08-24 07:28 Aporia P148: CYCLE 149-M â€” the programme is NOT closed. I audited the wrong generators, in the wrong window.
-- b7edca82 08-24 07:01 Techne: correcting cycle 055 within the hour -- my 'cross-role' population was 87.5% one role
-- 6d752ba2 08-24 06:59 Techne cycle 055: the Lane A/B experiment finally ran -- reading works, and each lane caught the other's error
-- 013e16ab 08-24 06:55 Techne cycle 055: LANE A VERDICTS committed -- this commit is the blind for Lane B
-- … +195 more
+- … +199 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records

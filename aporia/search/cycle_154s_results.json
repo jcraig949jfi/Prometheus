@@ -1,0 +1,84 @@
+{
+ "cycle": "154-S",
+ "controls": {
+  "C1_task_file_fidelity": true,
+  "C2_pipeline_fidelity": true,
+  "C3_non_degenerate": true,
+  "C4_chance_per_task": true,
+  "distinct_answers": 29
+ },
+ "controls_passing": 4,
+ "canary_overall_acc": 0.6,
+ "canary_overall_chance": 0.25,
+ "o1_reported_canary": 0.6,
+ "per_category": {
+  "numeric_comparison": {
+   "n": 10,
+   "hit": 10,
+   "acc": 1.0,
+   "chance": 0.25
+  },
+  "numeric_stated_premise": {
+   "n": 10,
+   "hit": 10,
+   "acc": 1.0,
+   "chance": 0.25
+  },
+  "transitivity": {
+   "n": 10,
+   "hit": 10,
+   "acc": 1.0,
+   "chance": 0.25
+  },
+  "all_but_n": {
+   "n": 5,
+   "hit": 0,
+   "acc": 0.0,
+   "chance": 0.25
+  },
+  "temporal_ordering": {
+   "n": 5,
+   "hit": 0,
+   "acc": 0.0,
+   "chance": 0.25
+  },
+  "vacuous_truth": {
+   "n": 5,
+   "hit": 0,
+   "acc": 0.0,
+   "chance": 0.25
+  },
+  "consistency_check": {
+   "n": 5,
+   "hit": 0,
+   "acc": 0.0,
+   "chance": 0.25
+  }
+ },
+ "existing_comparison_ops_on_boolean_cats": {
+  "numeric_comparison": {
+   "n": 10,
+   "acc": 1.0,
+   "chance": 0.25,
+   "scorer_fired": 10
+  },
+  "vacuous_truth": {
+   "n": 5,
+   "acc": 0.0,
+   "chance": 0.25,
+   "scorer_fired": 0
+  },
+  "consistency_check": {
+   "n": 5,
+   "acc": 0.0,
+   "chance": 0.25,
+   "scorer_fired": 0
+  }
+ },
+ "categories_beating_chance_with_existing_ops": [
+  "numeric_comparison"
+ ],
+ "BOOLEAN_GAP_CONFIRMED_BY_MEASUREMENT": false,
+ "boolean_dependent_tasks": 20,
+ "max_movable_fraction_of_canary": 0.2
+}
