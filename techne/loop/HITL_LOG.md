@@ -2092,3 +2092,44 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      But the cycle-059 report says the condition fired, and **it fired on incomplete data**.
 399. **FINDING #12, MINE:** `zaremba_test` needs a documented practical bound on `q` (or a
      `max_q` guard that refuses rather than grinding). Queued with #9–11 for cycle 060.
+
+
+## SECOND PASS (2026-08-24) — mistakes in the mistakes, at James's instruction
+
+400. **JAMES — THE HEADLINE NUMBER WAS INFLATED, AND THE EVIDENCE WAS ON THE SAME PAGE.**
+     I have reported *"targeted review found 7 of 8"* since cycle 055 — to you, in cycle 056,
+     and in the review packet. **Cycle 055's own text records `bootstrap_ci_from_seed_means` as
+     a "Lane A false positive" in two places, and the 7/8 counts it as a hit.** Honest breakdown
+     of Lane A's 7 flags: **4 CONFIRMED** by an independent lane, **1 REFUTED** by one,
+     **2 NEVER EXECUTED** (heavy fixtures). Plus 1 correct CLEAN.
+     **Confirmed-only score is 4/8 = 0.50, not 0.875.** The 7/8 counted a known-wrong flag and
+     two unverified ones as detections.
+401. **AND IT PARTLY SUPPLIES THE RATE I SAID WAS NEVER ESTABLISHED.** Lane A's false-positive
+     rate **on its own flags is 1/5 = 0.20**, measured against a function whose cleanliness an
+     independent method established. **I possessed that number for five cycles and never
+     computed it**, while repeatedly writing that no false-positive rate existed.
+402. **"THREE OF THREE CONTROLS CARRIED THE DEFECT UNDER STUDY" IS FALSE — IT IS 2 OF 3.**
+     Cycle 058's certifier scored `singular_series_ratio` **CLEAN on all five shapes**. It
+     carried a **hang**, which is a different shape outside the taxonomy. **This changes the
+     conclusion**: my controls fail for *two* distinct reasons — the taxonomy being incomplete
+     (1 case) and my certifying against only the shape I had in mind (2 cases) — not one.
+403. **THE "131,000 YEARS" FIGURE SURVIVES BUT WAS NOT VERIFIED.** I measured ~2.2M iter/s at
+     **q = 20,000** and applied it to **q = 2^63** without checking that the rate holds. Checked
+     now: `cf_expand` costs 0.36 µs at q=2^14 and 0.43 µs at q=2^63, so the extrapolation is
+     good to ~20%. **The number was lucky, not verified** — the same extrapolate-across-
+     populations move, committed inside the correction that was cataloguing eight prior
+     instances of it.
+404. **MECHANISM BUILT, NOT PROPOSED: `techne/lib/measurement_guard.py`.** A measurement is
+     unreadable until the SAME code path returns a KNOWN answer for an independently-known case.
+     `Measurement.value` **raises** if read before validation; `population` is a **required
+     field**; `compare()` refuses a two-arm comparison whose arms return the same value on a
+     case chosen because they should differ.
+405. **RETRO-TESTED AGAINST THE ACTUAL FAILURES — 5 of 6 CAUGHT.**
+     059 double-encoding **CAUGHT** · 059 import-as-hang **CAUGHT** · 052 cold-start **CAUGHT** ·
+     051 stored-literals **CAUGHT** · 057 identical-arm comparison **CAUGHT** ·
+     052 sampling window **NOT CAUGHT**.
+406. **THE MISS IS HONEST AND STRUCTURAL: a positive control cannot detect a population error.**
+     What the guard does instead is force `population="FIRST 40 rows of an ordered table"` into
+     the artifact, where it is visible. **Disclosure, not detection** — and the eight
+     wrong-population errors were all invisible precisely because nothing made me write the
+     denominator down.
