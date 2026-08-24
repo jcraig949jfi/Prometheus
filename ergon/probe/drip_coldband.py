@@ -28,8 +28,15 @@ sys.path.insert(0, str(ROOT))
 from ergon.probe.solver import call
 from ergon.probe.extract import extract_numeric
 
-CANDIDATES = ("nvidia:nemotron-super-49b-v1.5", "nvidia:nemotron-super-49b-v1",
-              "nvidia:gpt-oss-120b")
+# SELECTION IS RULED, so the ORDER here no longer carries it. Charon RULINGS_2026-08-23
+# Ruling 1 admitted `nemotron-super-49b-v1` as the second family (transport/dispersion/manifest
+# conditions met, admissible because it DISCRIMINATES rather than because it levels). The
+# pre-declared order existed to pick a winner without forking; the winner is picked. Collecting
+# the admitted family first is executing that ruling, not re-ordering a live selection — and it
+# matters, because each firing was spending up to 8 x 420s of timeouts on a transport-degraded
+# candidate ahead of the one whose rows the cross-family Tier B screen actually needs.
+CANDIDATES = ("nvidia:nemotron-super-49b-v1",)
+DEFERRED_CANDIDATES = ("nvidia:nemotron-super-49b-v1.5", "nvidia:gpt-oss-120b")
 # Was 12, sized to stay under a presumed ~40/day 429 wall. MEASURED 2026-08-22: across all
 # three candidates the drip has logged ZERO 429s and zero 402s — the wall it was throttling
 # for never appeared, while the real constraint (HTTP504 timeouts, 83-96% on two candidates)
