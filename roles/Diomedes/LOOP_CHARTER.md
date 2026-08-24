@@ -192,3 +192,55 @@ only after evaluating every move has not saved search. One that works only on th
 generated it has memorized a landscape.
 
 **The prize is transferable directional information. Be willing to discover the answer is no.**
+
+---
+
+## 20. Standing requirement — non-LLM controls and the inference→discrete ladder
+
+**Granted by James, 2026-08-24:** *"every step of the way, ask: what non-LLM controls can we put in
+place? How do we move from inference to discrete analysis?"* This binds every cycle from here on and
+is the local form of thesis v4 §13 — *never ask cognition to certify cognition when execution can
+certify a consequence instead.*
+
+### 20.1 Two questions asked at design time, answered in every prereg
+
+1. **What non-LLM control can certify this step?** Every load-bearing quantity must be produced or
+   checkable by something whose failure modes are uncorrelated with any model's prior — integer
+   arithmetic, exhaustive enumeration, a symbolic derivation, a differential test between two
+   independent implementations, or a property that must hold exactly.
+2. **What is the exact object underneath this statistic?** Report the statistic as a *summary of an
+   exactly computed table* wherever the table is computable, never as an estimate of an unobserved
+   quantity when enumeration is affordable.
+
+### 20.2 The ladder, preferred top to bottom
+
+1. **Exhaustive enumeration** — the whole space computed; no sampling, no SE, no null needed.
+2. **Symbolic derivation** — a closed-form predicate, verified against enumeration by differential
+   test. Disagreement on any cell is a defect, not noise.
+3. **Exact combinatorics** — integer counts, exact Mann-Whitney/hypergeometric nulls for small k.
+4. **Deterministic decision rules** — a threshold or lookup table with integer parameters; fully
+   reproducible, no fitting.
+5. **Fitted models and sampled estimates** — permitted, but demoted to *summaries*, and never the
+   only evidence for a structural claim.
+
+Each cycle states which rung each of its quantities sits on. A claim resting only on rung 5 must say
+so explicitly.
+
+### 20.3 Mandatory harness properties (assertions, not measurements)
+
+Every runner asserts, and fails loudly on violation: a perfect predictor scores exactly 1.0; a
+constant predictor scores exactly 0.5; the metric is invariant under strictly monotone transforms of
+the score; label permutation drives the metric to chance; and the population digest matches its
+identity proof. These are checkable facts, not results.
+
+### 20.4 Hand-checkable rows
+
+Every cycle emits a small sample of fully expanded rows — state, candidate, every feature value, the
+label, and the resulting rank — so a human can verify the arithmetic without running the code and
+without trusting the narrative.
+
+### 20.5 The standing admission
+
+I am an LLM writing the interpretation. My prose about what the numbers mean is rung 5 at best and
+is not evidence. **The artifacts that survive me are the enumerated tables, the symbolic derivations,
+the assertions, and the hand-checkable rows** — everything else in my reports is commentary on them.
