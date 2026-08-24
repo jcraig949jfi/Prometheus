@@ -1827,3 +1827,49 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      4/6 = 0.67 | **low 0/3**. All five rows this cycle are `OPEN`, unlike cycle 053's sweep on
      a `PRIOR` mechanism, so they are worth more per row despite the lower rate.
      **`low-to-moderate` and `moderate` have CONVERGED rather than separated. Not claiming H1a.**
+
+
+## Cycle 055 (2026-08-24) — O-4 Lane A/B RUN at last; the categorical claim was wrong
+
+344. **O-4 DISCHARGED after fourteen cycles queued. THE CLAIM I HAVE BEEN ACTING ON IS FALSE.**
+     `P(found | INCIDENTAL reading) = 0/11` was the measurement; **`P(found | TARGETED review)
+     = 7/8`** is this cycle's. A one-question checklist found seven of eight. **I preferred
+     executable probes to reading on the strength of a measurement that was never taken.**
+345. **BLINDING WAS REAL: Lane A verdicts sealed at `013e16ab` before Lane B was written.**
+346. **LANE B FALSIFIED A LANE A FLAG.** `bootstrap_ci_from_seed_means`: I reasoned n=1 would
+     **collapse the CI to spurious tightness**. Measured **n=1 width 0.5000 vs n=5 width
+     0.2203** — n=1 is **wider**, correctly reflecting less information. My reasoning was
+     backwards. **Lane A false positive.**
+347. **LANE A CAUGHT A DEFECT LANE B SCORED CLEAN — VIA A BUG IN MY OWN PROBE.** Lane B compared
+     `repr(d) == repr(L)`, and **`repr(-0.0) != repr(0.0)` while `-0.0 == 0.0`**. Numerically the
+     degenerate and legitimate cases differ by **1e-12** — technically unequal, practically
+     identical. **Exact equality was the wrong test entirely.** My comparator was wrong twice in
+     one cycle: once on `repr`, once on using equality at all.
+348. **JAMES — FINDINGS FOR ERGON AND CHARON, read-only, no diffs (semantics are the owner's
+     call under #221):**
+     - **`ergon/meta/fitness.py::compute_disagreement`** *(strongest)* — three conflations plus
+       an unguarded NaN. **A landscape where every optimizer FAILED is indistinguishable from
+       one where they all AGREED**, and it feeds fitness.
+     - **`ergon/meta/trajectory.py::stall_fraction`** — <2 positions returns 0.0 = "never
+       stalled"; `featurize` puts that in a feature vector.
+     - **`ergon/learner/inference/ablation_e007_ab.py::_hit_rate`** — no rubric returns 0.0, the
+       worst score, for a question with no expected keywords.
+     - **`ergon/learner/triviality.py::compute_trigger_rate`** — empty input returns 0.0, which
+       by its **own documented acceptance criterion** reads as "detector not doing meaningful
+       work". `n_total: 0` is available as a disambiguator.
+     - **`ergon/learner/diagnostics/per_class_hit_rates.py::per_seed_rates`** — a class the
+       scheduler **never attempted** is indistinguishable from one attempted often that never
+       promoted.
+349. **MY NEGATIVE CONTROL WAS INVALID, AND I RECORDED THAT BEFORE SEEING LANE B.** Lane B
+     flagged it: `survival_fraction([]) == 0.0 == survival_fraction([0.5,0.6], 1.0)`. Its
+     empty-domain test establishes someone **decided deliberately**, not that the ambiguity is
+     absent. **Consequence, stated rather than reasoned around: this cycle establishes NO
+     false-positive rate for either lane.** I chose a control that has the defect under study.
+350. **A STRUCTURAL ASYMMETRY THE 041 DESIGN DID NOT ANTICIPATE: Lane B is gated on
+     CONSTRUCTIBILITY.** One function could not be probed at all (`GenomeNode` not importable
+     from `ergon.learner.genome`); two more need heavy fixtures. **Lane A has no such gate.**
+     Worth more than the score difference.
+351. **PREDICTIONS 3 OF 5.** P1 HELD (7/8) | **P2 FALSIFIED** (Lane B 4 < Lane A 5) | P3 HELD
+     (union 5 > intersection 4) | **P4 FALSIFIED** (the control, my selection error) | P5 HELD.
+     **Calibration 29/42 = 0.690**: high 7/9 | mod-high 8/8 | moderate 9/15 | low-mod 5/7 |
+     **low 0/3**.
