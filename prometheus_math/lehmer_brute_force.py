@@ -366,14 +366,68 @@ def mpmath_recheck(half_coeffs: Sequence[int], dps: int = 30) -> float:
         High-precision Mahler measure (cast back to float64 for storage).
         NaN when mpmath fails to converge.
     """
+    return mpmath_recheck_descending(build_palindrome_descending(half_coeffs), dps=dps)
+
+
+def mpmath_recheck_descending(desc: Sequence[int], dps: int = 30) -> float:
+    """High-precision Mahler measure of a polynomial in descending coefficient order.
+
+    General entry point; `mpmath_recheck` is the deg-14 palindromic wrapper over it.
+
+    Cycle 053: FACTOR FIRST, THEN ESCALATE PRECISION -- in that order, because the two are
+    not interchangeable. `mpmath.polyroots` fails to converge on a root of multiplicity m no
+    matter how many digits it is given: the iteration is solving a problem whose condition
+    number is what is wrong, and precision does not change the condition number. Escalating
+    dps 15 -> 30 -> 60 on such an input burns three attempts and returns NaN. Splitting the
+    polynomial into squarefree factors removes the multiplicity itself, so every subsequent
+    root-find is well conditioned, and M is recovered multiplicatively (Everest & Ward 1999,
+    Lemma 1.6: M(fg) = M(f)M(g)).
+
+    MEASURED, cycle 053: all 17 `verification_failed` band entries carry a repeated root
+    (factor multiplicities up to 6), and all 17 returned NaN here at dps=30. Their NaNs are
+    what produced the run's INCONCLUSIVE verdict.
+
+    The escalation ladder is KEPT, not replaced -- it is the right response to a genuinely
+    ill-conditioned SQUAREFREE polynomial, which is a different failure from this one.
+    """
     import mpmath as mp_
 
-    desc = build_palindrome_descending(half_coeffs)
+    desc = list(desc)
     # Strip any leading zeros (defensive — should not happen because c_0 != 0).
     while len(desc) > 1 and desc[0] == 0:
         desc = desc[1:]
     if len(desc) <= 1:
         return float("nan")
+
+    try:
+        from techne.lib.mahler_measure import squarefree_factors
+        decomposition = squarefree_factors(desc)
+    except Exception:                                            # pragma: no cover
+        decomposition = None
+
+    if decomposition is not None:
+        content, factors = decomposition
+        M_total = abs(float(content))
+        for g, multiplicity in factors:
+            g_desc = [int(round(c.real)) for c in g]
+            if len(g_desc) <= 1:
+                M_total *= abs(g_desc[0]) ** multiplicity if g_desc else 1.0
+                continue
+            M_factor = _mpmath_roots_measure(mp_, g_desc, dps)
+            if M_factor != M_factor:                             # NaN: give up honestly
+                return float("nan")
+            M_total *= M_factor ** multiplicity
+        return float(M_total)
+
+    return _mpmath_roots_measure(mp_, desc, dps)
+
+
+def _mpmath_roots_measure(mp_, desc: Sequence[int], dps: int) -> float:
+    """M via mpmath root-finding with the precision-escalation ladder. NaN if all fail.
+
+    Correct for SQUAREFREE input. A repeated root must be removed before calling this --
+    see `mpmath_recheck_descending`.
+    """
     leading = abs(mp_.mpf(desc[0]))
     # mpmath's polyroots takes coefficients in descending order.
     # Try increasing precision / extra-precision on convergence failure.

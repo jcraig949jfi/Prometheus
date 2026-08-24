@@ -1739,3 +1739,48 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      769 seconds: 262s, 261s, 245s. Each computes **8,625 polynomials of median degree 115,
      twice** (batch and scalar). At ~19 ms/call that is the honest cost of the work, and it was
      there before cycle 051. **No performance regression exists.**
+
+
+## Cycle 053 (2026-08-24) — the verifier factors; five for five; the catalog is mislabelled
+
+327. **TRACK 1 SHIPPED: `mpmath_recheck` now factors before certifying.** Mechanism stated as a
+     mechanism: **`polyroots` fails on a root of multiplicity m no matter how many digits it is
+     given** — the iteration's problem is the CONDITION NUMBER, which precision does not change.
+     The escalation ladder is **kept, not replaced**: it is correct for a genuinely
+     ill-conditioned *squarefree* input, a different failure.
+328. **ALL FIVE PREDICTIONS HELD.** P1 (`high`) all 17 carry a repeated root — **17 of 17**,
+     multiplicities to 6, so the mechanism explains the **entire** category. P2 (`high`) finite
+     M for all 17. **P3 (`moderate-to-high`) THE KILL TEST: agreement with Path B to 1e-9 on all
+     17** — Path B reached `H5_CONFIRMED` by symbolic `factor_list` over Z[x], the verifier by
+     squarefree decomposition plus per-factor mpmath. P4 (`moderate`) Path B is now
+     confirmatory. P5 (`low-to-moderate`) `kill_vector` cites the 17 as motivation for a
+     first-class field and `lehmer_boundary_layer` treats them as **definitional**.
+329. **SCOPE HELD: the brute force was NOT re-run.** This cycle shipped the mechanism. **#311 —
+     retract vs re-run the published verdict — remains yours and is untouched.**
+330. **A CORRECTION I OWE CYCLE 052: `_verify_mahler_mpmath` DOES NOT EXIST.** The real function
+     is `mpmath_recheck`. I carried a name from my own notes into a committed cycle report and
+     two HITL entries **without ever importing it**. The finding survives — verified against the
+     real function, all 17 return NaN at dps=30 — but **a defect report naming an unimportable
+     symbol is a report nobody can check.**
+331. **JAMES — THE CATALOG IS NOT WHAT ITS DOCSTRING SAYS, AND I HAVE CITED IT THREE TIMES.**
+     The one pre-existing red in the blast-radius run is `test_authority_mossinghoff_178_entries`
+     and **the test is right**: `MAHLER_TABLE` holds **8,625 entries spanning degrees 2-180**
+     while the test asserts **178** over `[2..30] ∪ {36}`. The table is documented as *"a curated
+     snapshot of Michael Mossinghoff's small-Mahler tables"*; his published list is ~178
+     specimens. **The table is ~48x that.** The authority test has been red reporting this drift
+     into a scope nothing counted until yesterday.
+332. **THIS LANDS ON MY OWN WORK.** Cycle 048 closed HITL #266 partly on *"recomputed all 8,625
+     catalog entries"*; cycles 051 and 052 both say *"the 8,625-entry Mossinghoff catalog."*
+     **I attributed 8,625 values to an authority covering ~178 of them.** The measurements stand
+     and were self-consistent; the **attribution** was mine to check and I did not
+     (`feedback_verify_upstream_attributions`).
+333. **NOT RESOLVED, DELIBERATELY.** I do not know the extra 8,447 entries are *wrong* — they may
+     be legitimate measures from a wider scan that inherited a docstring. **The defect is the
+     ATTRIBUTION, not necessarily the data**, and separating those needs its own cycle. Queued.
+334. **CALIBRATION 22/32 = 0.688.** high 7/8 = 0.88 | mod-high 5/5 = 1.00 | moderate 6/11 = 0.55
+     | low-mod 4/5 = 0.80 | **low 0/3 = 0.00**. Five for five is the first clean sweep **and the
+     cheapest kind of evidence** — the mechanism was established the cycle before the predictions
+     were written. `low-to-moderate` still sits above `moderate`, so the ordering is not clean.
+     **Not claiming H1a.**
+335. **ARSENAL RED RE-BASELINE REPORTED: 46 failed / 4286 passed / 3 errors, 37:03**, split 37
+     `prometheus_math` / 9 `techne/tests`. **New baseline, not a delta.**
