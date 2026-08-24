@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-24T12:40:59+00:00
+# PULSE — generated 2026-08-24T13:49:46+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,25 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        542
-consumed (state changes):   109  {'queue_state': 97, 'registry': 11, 'findings': 1}
-consumed/emitted:           0.20
+emitted (new files):        551
+consumed (state changes):   106  {'queue_state': 94, 'registry': 11, 'findings': 1}
+consumed/emitted:           0.19
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 216
+## Commits, 72h (non-cron): 222
+- 40b85dce 08-24 09:19 Merge remote-tracking branch 'origin/main'
+- 2d438866 08-24 09:18 Diomedes cycle 003 RESULT: REDESIGN â€” cheap relational coordinates BEAT the state-independent ceiling; they just do not transfer across invariant pairs
+- 66e06e02 08-24 09:15 Aporia: program summary on stopping the loop â€” four seats, one diagnosis (expressivity, not search)
+- 1fbc2133 08-24 09:10 Diomedes cycle 003: PRE-REGISTRATION for the split discriminator â€” was cycle 002's KILL about coordinates or about transfer?
+- 2780e5b5 08-24 09:08 Diomedes cycle 002 RESULT: KILL â€” relational coordinates carry the signal but a global model cannot transfer it across invariant pairs
+- 96e4c117 08-24 09:08 Techne cycle 057: the domain boundary is real, and it is not where I said it was
+- 61284fbe 08-24 09:06 Techne cycle 057: PRE-REGISTRATION -- different domains, or different power?
+- 248a36b8 08-24 09:04 Diomedes: perpetual research-loop charter granted by HITL â€” bounded autonomous cycles with the pre-registration firewall intact
+- f93f91fd 08-24 08:46 Charon: P150 CORPUS CLOSED rests on a census with a hole, and c1 is in the hole
+- 99b05311 08-24 08:42 Charon cross-cut: the corpus is two populations, and Aporia and Diomedes are on different ones
+- 935f54a5 08-24 08:41 Ergon: re-derive the F-generic sizing ruling post-ATK-013 â€” the shortfall was mine
+- 06ea3ae1 08-24 08:41 Aporia P150: CYCLE 151-O CORPUS CLOSED â€” eight generators, eight distinct reasons, one conclusion
 - 307f6fe6 08-24 08:36 Ergon: execute Charon's rulings â€” re-pin to M30 cross-family manifest, fix my vacuous gate
 - 3041b131 08-24 08:32 Diomedes: cycle 001 AMENDMENT (H2 narrowed to instrument proof) + cycle 002 PRE-REGISTRATION for stupid relational coordinates
 - b22887ac 08-24 08:04 Techne cycle 056: the confound was real, the finding survives it, and the class is repo-wide
@@ -28,19 +40,7 @@ verdict: ALIVE
 - e3653bef 08-24 06:53 Aporia P147: CYCLE 148-L NO_TRANSFER â€” 147-K's positive was memorisation and is SUPERSEDED
 - 359ed29b 08-24 06:40 Diomedes cycle 001 RESULT: REDESIGN-COORDINATES â€” the navigable structure exists and is 75% of the signal, and our coordinates capture 0% of it
 - ce892804 08-24 06:34 Diomedes cycle 001: PRE-REGISTRATION for the h1 counterfactual-hunt test -- with KILL semantics revised per HITL, and an oracle that failed its own validation on two relations
-- 364840bc 08-24 06:12 Aporia P146: CYCLE 147-K ADVANCE â€” first positive on this line, and it is fourteen constants
-- af507362 08-24 05:50 Techne cycle 054: cycle 053's finding RETRACTED -- the catalog is sound and the error was mine
-- 8d7a59b6 08-24 05:49 Diomedes v2: the seat is coordinate adequacy, not white-box mechanism â€” with a cycle contract and its own retirement conditions
-- fd0fd693 08-24 05:46 Techne cycle 054: PRE-REGISTRATION for the MAHLER_TABLE provenance chain -- and cycle 053 was wrong
-- c106173d 08-24 05:18 merge origin/main (portfolio auto-update) into Aporia P145
-- 95c6e5d9 08-24 05:18 Aporia P145: CYCLE 146-J REDESIGN â€” controls caught the harness before it published a +0.244 effect
-- 388dff92 08-24 04:44 Techne cycle 053: the Lehmer verifier factors, five predictions for five, and the catalog is mislabelled
-- abb5e161 08-24 04:36 Techne cycle 053: PRE-REGISTRATION for factoring in the Lehmer verifier
-- 47323d45 08-24 04:33 Diomedes: RECON â€” Prometheus stored vertices plus ~48M unassembled edges, and its only trajectory field has H(action) ~ 0
-- bc30dc4e 08-24 04:29 Aporia P144: CYCLE 145-I REDESIGN â€” the corpus DOES contain edges; I audited the one generator that is a variance estimator
-- 504418e4 08-24 04:25 Techne: correcting my own 2.3x reading -- the squarefree path costs 1 percent, not 2.3x
-- d0d6f600 08-24 04:11 Techne: extended the kill test past its pre-registered range, and caught a false regression
-- … +191 more
+- … +197 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
