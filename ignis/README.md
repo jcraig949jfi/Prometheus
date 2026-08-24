@@ -1,8 +1,64 @@
 # Ignis — Latent Vector Evolution
 
 **Version:** 2.0
-**Status:** Active / TII-Exclusive
+**Status:** DORMANT — closed out 2026-08-24. Last science 2026-04-04.
 **Parent Project:** Prometheus
+
+---
+
+## Close-out (2026-08-24)
+
+Ignis is **dormant and not slated for reinvestment.** This section is the current
+status. Everything below it is preserved as a record of how the line ran, not as a
+live plan.
+
+**How it stopped.** Not on a verdict — on a crash. The Batch F v3 overnight run
+(harder trap battery) hit CUDA OOM four hours into F2 on 2026-04-03, cascaded
+through F3 (OOM) and F4/F5 (access violation `0xC0000005`), and was never
+restarted. `CURRENT_JOB.txt` has read `IDLE` since. `auto_pipeline.py` — the
+automation prerequisite for the entire cloud phase — was never written, so
+Batches H, I and J never ran.
+
+**What is durable.** The bypass result. `cos_with_residual` sits at ~0 on every
+architecture and every trap: CMA-ES was finding artificial bypass, never native
+circuit amplification. Bypass is a **global attractor of the fitness landscape
+over activation-space perturbations** — always closer, always easier, always
+higher-fitness than native amplification. That is a structural finding about the
+optimization landscape, and it is what this line contributed. Secondary and still
+solid: the suppression circuit is cross-architectural (5 of 6 families, Gemma 2B
+the sole outlier), the correction direction is topology-specific (cross-arch
+genome transfer is dead), and the circuit *strengthens* with scale.
+
+**Why it is not being reopened.** The line's own next step pointed at weight
+space — "LoRA is the tool for circuit discovery; CMA-ES is the tool for practical
+correction." That door was subsequently measured shut on unrelated data: the
+2026-06-07 greedy-LoRA decomposition found the gains were format-following, then
+a False/kill prior, then per-template classes, with genuine reasoning ~0.10
+in-domain and ~0 out-of-domain
+(`roles/Ergon/GREEDY_FOLLOWUP_FINDINGS_2026-06-07.md`). Two independent lines on
+different substrates reached the same verdict: *the intervention works and it is
+not the mechanism.* Ignis's roadmap was aimed at a door that has since closed.
+
+**What was left unresolved** — recorded so nobody re-derives it:
+
+- **Generation washout.** Do logit flips become text changes? Partially answered
+  2026-04-03, and inconsistent: Llama 10 flips of 28 failing traps, Qwen-0.5B 3
+  of 22, Phi-2 1 of 20, Pythia 0 of 24. Not fundamental, not reliable.
+  (`results/generation_validation/`)
+- **Scale.** Nothing above 2.7B was ever tested. 7B+ OOMs on a 16GB card.
+
+**What is worth extracting.** The 2026-06-10 program audit keeps Ignis as
+methodology and names the circuit-discovery harness as an extractable: the trap
+battery (`src/trap_batteries_v2.py`, `src/trap_batteries_v3.py`), the TII
+injection engine (`src/tii_engine.py`), the ghost-trap / `cos_with_residual`
+instrumentation, and the causal falsification battery (noise / orthogonal /
+sign-flip / shuffle controls).
+
+**Stale documents.** `NORTH_STAR.md`, `JOB_QUEUE.md`, `SCHEDULE.md` and
+`RESULTS.md` are frozen at 2026-03/04. They describe running jobs, pending
+decision triggers, and a "self-improving loop closed" framing that later work
+undercuts. Read them as an archive of that moment, never as current program
+truth.
 
 ---
 
