@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-23T09:01:53+00:00
+# PULSE — generated 2026-08-24T07:39:55+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,39 +6,39 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        692
-consumed (state changes):   268  {'queue_state': 242, 'registry': 25, 'findings': 1}
-consumed/emitted:           0.39
+emitted (new files):        570
+consumed (state changes):   129  {'queue_state': 117, 'registry': 11, 'findings': 1}
+consumed/emitted:           0.23
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 311
+## Commits, 72h (non-cron): 221
+- 29340def 08-24 03:33 Techne cycle 052: a kill test that fired on my own fix twice, and a published verdict resting on a bug
+- eb0b40ca 08-24 03:31 Techne cycle 052: #298 answered AFFIRMATIVELY -- a published INCONCLUSIVE verdict rests on an unfactored verifier
+- 5d326dbb 08-24 03:29 Techne cycle 052: PRE-REGISTRATION for the inherent-limits sweep (#298)
+- 5ed8d8d8 08-24 03:28 techne/mahler: scalar and batch APIs reconciled -- and the first fix failed its own kill test
+- 4a644c70 08-24 03:21 Techne cycle 052: PRE-REGISTRATION for the scalar/batch divergence fix
+- f29bf41f 08-23 19:35 Pre-flight on Tier B's adjudicator: analysis.py scores 35.7% (74 killed / 133 survived / 207)
+- 390fc09d 08-23 19:23 CORRECTION: my own mutation headline was truncation-confounded. 100% was really 85.2%
+- ca3ef348 08-23 18:34 Harmonia-A: syntactic-router thesis â€” the wall corpus cannot be searched, only used to validate
+- e00cb013 08-23 17:52 Apollo: no claim is ever ESTABLISHED â€” kill-path FAMILIES, named untried paths, and a new attack that the headline survived
+- 0d4cd0d0 08-23 17:22 Apollo: claims carry FALSIFICATION STANDING â€” and every claim favouring Apollo is provisional
+- f91b335a 08-23 11:54 Apollo O1 RESULT: evolution survives on sample-efficiency â€” and 0.833 is the SUBSTRATE's ceiling
+- 3488a31b 08-23 11:02 Apollo O1 + O6: the replay harness fires on its first run, and O1 catches itself twice
+- aa18edb9 08-23 11:07 Merge branch 'main' of https://github.com/jcraig949jfi/Prometheus
+- 03e21c6e 08-23 11:07 Mutation harness: test the tests. Ladder scores ~80% median, holes cluster in verdict code
+- 3faa4921 08-23 10:37 Apollo: benchmark attack â€” 13 dumb heuristics, and one of Apollo's two headline metrics falls
+- 1eef2d1f 08-23 06:58 Harmonia-A: review checklist derived from the soak findings
+- 43fb63e7 08-23 06:55 Apollo: revival review prompt â€” root causes, options, and questions for HITL + frontier reviewers
+- 4331cc36 08-23 06:51 @ M2: calibration library restored (29/222 -> 242/244) and VERIFIED 7/7 on known truth
+- 3f35d779 08-23 05:04 merge origin/main (portfolio auto-update) into Aporia P142
+- 2427293a 08-23 05:02 Aporia P142: CYCLE 143-G TERMINAL REDESIGN â€” a control finally failed, and caught a real defect
 - eba9bf29 08-23 04:29 Techne: arsenal_red scope corrected -- the count has always covered half the arsenal
 - 03be71b4 08-23 04:21 Techne cycle 051: #266 closed by build -- and the fix corrected two earlier cycles' diagnosis of it
 - e7364043 08-23 04:19 prometheus_math/techne: exactly-repeated roots go through an exact squarefree decomposition
 - cbc85634 08-23 04:12 Aporia P141: CYCLE 142-F â€” KILL on binary verbs, and the vocabulary question is SETTLED
 - c5ccb4f4 08-23 04:00 Techne cycle 051: PRE-REGISTRATION for the squarefree mahler_measure fix (closes reopened #266)
-- eb93079d 08-23 03:32 Aporia P140: CYCLE 141-E TERMINAL KILL â€” the vocabulary does not reach elliptic curves in either representation (+ restores P139, lost to a failed autostash)
-- fe902dce 08-23 02:58 Techne cycle 050: Band H built (O-1 repaired) â€” H1a NOT demonstrated, and my confidence field predicts nothing
-- 37483e68 08-23 02:55 Charon: a gate that cannot fail --- and a condition I published as met without checking rows
-- 056ea1f9 08-23 02:53 Techne cycle 050: PRE-REGISTRATION for the H1 self-calibration measurement (repairs O-1)
-- 574c8644 08-23 02:52 Charon: exit review #3 PASS (bounded) + four rulings; the Tier B gate was never computed
-- 8aff9f74 08-23 02:51 Techne cycle 049: #221 exercised, #78 closed, and a retrospective that falsified two of its own predictions
-- 91a26192 08-23 02:46 Techne cycle 049: retrospective audit of 001-048 â€” prediction 1 FALSIFIED, four omissions found
-- c6736671 08-23 02:43 Techne cycle 049: HITL #78 FIXED after 18 cycles â€” and the two-field fix alone would have leaked
-- 3d083b4d 08-23 02:40 Aporia P139: CYCLE 140-D TERMINAL KILL â€” the OEIS operator vocabulary does not reach elliptic curves
-- aac126e0 08-23 02:32 Techne cycle 049: PRE-REGISTRATION for the retrospective audit of cycles 001-048
-- a73aae63 08-23 02:15 Ergon: C7 second family FAILED its cold-band; drip finalize now transport-gated
-- cf45ac05 08-23 02:14 Charon: recover two destroyed ledgers â€” every ruling number had no rows under it
-- 2e06ccf4 08-23 02:14 Aporia P138: CYCLE 138-C' TERMINAL KILL â€” closure records are retrieval middleware, not scientific memory
-- 1cae6520 08-23 02:05 Merge prometheus_llm: one model API for the program
-- be55d5ee 08-23 01:33 iteration 29: model pipeline restored and validated offline
-- faf3ff13 08-23 01:28 iteration 28: confirmatory test void; mechanism closed as unresolved
-- e16ca9bc 08-23 01:20 Ergon: commit the probe ledgers â€” I nearly destroyed them by leaving them untracked
-- abe9d887 08-23 01:18 Ergon: M30 is LEVELED on the free host; kickoff prompt for Charon's rulings
-- c7c51724 08-23 01:14 iteration 27: candidate burden is causal; tree committed
-- 76254a24 08-23 01:12 Cognitive Ceiling v0: deterministic half, restored and audited
-- … +286 more
+- … +196 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records

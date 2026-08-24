@@ -1,0 +1,103 @@
+{
+ "cycle": "144-H",
+ "repair": "Euler factors from stored local_algs (p.f.e.c) where present, mod-p factorization elsewhere; removes the inseparability failure mode rather than patching the radical",
+ "correction_to_143G": "the 143-G writeup asserted a_M(1..8)=[1,0,0,1,0,0,0,0] for 4.0.576.1; independently, zeta_M = zeta*L(-3)*L(-8)*L(24) gives [1,0,2,1,0,0,0,0]. a_M(2)=0 was right; a_M(3)=2, not 0. The p=2 defect was real; the hand-asserted target vector was not.",
+ "n_fields": 2024,
+ "n_quadratics": 1820,
+ "n_quartics": 204,
+ "excluded_unresolvable": null,
+ "n_terms": 200,
+ "disc_max": 3000,
+ "quad_disc_max_for_sweep": 400,
+ "controls": {
+  "C1": true,
+  "C1_n": 1820,
+  "C1_bad": 0,
+  "C2": true,
+  "C2_n": 150,
+  "C2_bad": 0,
+  "C3": true,
+  "C3_v4": 11,
+  "C3_unresolved": 0,
+  "C4_gate": true,
+  "C4_reproduced": 11,
+  "C4_resolved": 11,
+  "C5_independent_ground_truth": true,
+  "C5_n": 11,
+  "C5_bad": 0,
+  "C5_examples": []
+ },
+ "controls_passing": 5,
+ "PART1": {
+  "brauer_reproduced": 11,
+  "resolved": 11,
+  "signature_exists": true,
+  "examples": {
+   "4.0.144.1": [
+    "2.0.3.1",
+    "2.0.4.1",
+    "2.2.12.1"
+   ],
+   "4.0.2304.1": [
+    "2.2.12.1",
+    "2.0.24.1",
+    "2.0.8.1"
+   ],
+   "4.0.2304.2": [
+    "2.0.4.1",
+    "2.0.24.1",
+    "2.2.24.1"
+   ],
+   "4.0.256.1": [
+    "2.0.4.1",
+    "2.0.8.1",
+    "2.2.8.1"
+   ],
+   "4.0.576.1": [
+    "2.0.3.1",
+    "2.0.8.1",
+    "2.2.24.1"
+   ],
+   "4.0.576.2": [
+    "2.0.3.1",
+    "2.2.8.1",
+    "2.0.24.1"
+   ],
+   "4.0.784.1": [
+    "2.0.4.1",
+    "2.2.28.1",
+    "2.0.7.1"
+   ],
+   "4.4.1600.1": [
+    "2.2.40.1",
+    "2.2.8.1",
+    "2.2.5.1"
+   ],
+   "4.4.2304.1": [
+    "2.2.12.1",
+    "2.2.24.1",
+    "2.2.8.1"
+   ],
+   "4.0.1600.1": [
+    "2.0.40.1",
+    "2.0.8.1",
+    "2.2.5.1"
+   ]
+  },
+  "status": "MEASUREMENT confirming known mathematics; not the verdict"
+ },
+ "attainable_triples": 2332880,
+ "relations_total": 11,
+ "explained": 11,
+ "H_unexplained": 0,
+ "headline_hits": [],
+ "branches": {
+  "B1_VACUOUS": false,
+  "B2_ADVANCE": false,
+  "B3_KILL": true
+ },
+ "branch_fired": "B3_KILL",
+ "VERDICT": "KILL",
+ "scope": "statement about 13 V4 quartics and triples from 242 quadratics, NOT about number fields in general",
+ "what_dies_on_null": "unexplained V4-shaped convolution relations among degree 2 and 4 fields of bounded discriminant; NOT the verbs thesis, NOT 142-F"
+}
