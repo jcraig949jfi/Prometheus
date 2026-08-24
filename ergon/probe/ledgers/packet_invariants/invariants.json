@@ -1,0 +1,116 @@
+{
+  "checked_tasks": 200,
+  "failures": 200,
+  "verdict": "FAIL \u2014 arm identity is computationally AVAILABLE",
+  "note": "These are decidable checks, not classifier estimates. A PASS here is a stronger claim than 'a classifier sat at chance': it says no difference exists in the checked feature set, and names the bytes when one does.",
+  "checked_invariants": [
+    "base byte-identical across arms",
+    "payload envelope identical across residue-carrying arms",
+    "no forbidden verdict tokens in any payload",
+    "no verbatim gold in any non-oracle payload"
+  ],
+  "first_failures": [
+    {
+      "uid": "nearmiss_mix-M30-00000",
+      "base_identical": true,
+      "base_diffs": {},
+      "envelope_identical": false,
+      "envelope_groups": {
+        "w w w w:\n[w_w:w_w-w#-# w[w-w]_w#[w-w]]\nw w w (w w; w w \u2014 w w w w): w-w-w, w-w, w-w, w-w-w-w, w-w, w-w\n (w w: w)\n\nw (w w ": [
+          "F-null",
+          "F-prom-retrieved"
+        ],
+        "w w w w w w w w. w w w w w w w w w w w, w w w w w w w. w w w: w w w w w, w w, w w w.\n\n#. w; w w w. w w w w w w w w w w w": [
+          "F-generic"
+        ]
+      },
+      "no_forbidden_tokens": true,
+      "forbidden_hits": {},
+      "no_verbatim_gold": true,
+      "gold_hits": {},
+      "all_pass": false
+    },
+    {
+      "uid": "nearmiss_mix-M30-00001",
+      "base_identical": true,
+      "base_diffs": {},
+      "envelope_identical": false,
+      "envelope_groups": {
+        "w w w w:\n[w_w:w_w-w#-# w[w-w]_w#[w-w]]\nw w w (w w; w w \u2014 w w w w): w-w-w, w-w-w-w, w-w, w-w\n (w w: w)\n\nw (w w w w w w \u2014 ": [
+          "F-null",
+          "F-prom-retrieved"
+        ],
+        "w w w w w w w w. w w w w w w w w w w w, w w w w w w w. w w w: w w w w w, w w, w w w.\n\n#. w; w w w. w w w w w w w w w w w": [
+          "F-generic"
+        ]
+      },
+      "no_forbidden_tokens": true,
+      "forbidden_hits": {},
+      "no_verbatim_gold": true,
+      "gold_hits": {},
+      "all_pass": false
+    },
+    {
+      "uid": "nearmiss_mix-M30-00002",
+      "base_identical": true,
+      "base_diffs": {},
+      "envelope_identical": false,
+      "envelope_groups": {
+        "w w w w:\n[w_w:w_w-w#-# w[w-w]_w#[w-w]]\nw w w (w w; w w \u2014 w w w w): w-w-w, w-w-w-w, w-w, w-w\n (w w: w)\n\nw (w w w w w w \u2014 ": [
+          "F-null",
+          "F-prom-retrieved"
+        ],
+        "w w w w w w w w. w w w w w w w w w w w, w w w w w w w. w w w: w w w w w, w w, w w w.\n\n#. w; w w w. w w w w w w w w w w w": [
+          "F-generic"
+        ]
+      },
+      "no_forbidden_tokens": true,
+      "forbidden_hits": {},
+      "no_verbatim_gold": true,
+      "gold_hits": {},
+      "all_pass": false
+    },
+    {
+      "uid": "nearmiss_mix-M30-00003",
+      "base_identical": true,
+      "base_diffs": {},
+      "envelope_identical": false,
+      "envelope_groups": {
+        "w w w w:\n[w_w:w_w-w#-# w[w-w]_w#[w-w]]\nw w w (w w; w w \u2014 w w w w): w-w-w, w-w-w-w, w-w, w-w\n (w w: w)\n\nw (w w w w w w \u2014 ": [
+          "F-null"
+        ],
+        "w w w w w w w w. w w w w w w w w w w w, w w w w w w w. w w w: w w w w w, w w, w w w.\n\n#. w; w w w. w w w w w w w w w w w": [
+          "F-generic"
+        ],
+        "w w w w:\n[w_w:w_w-w#-# w[w-w]_w#[w-w]]\nw w w (w w; w w \u2014 w w w w): w-w-w, w-w, w-w-w-w, w-w\n (w w: w)\n\nw (w w w w w w \u2014 ": [
+          "F-prom-retrieved"
+        ]
+      },
+      "no_forbidden_tokens": true,
+      "forbidden_hits": {},
+      "no_verbatim_gold": true,
+      "gold_hits": {},
+      "all_pass": false
+    },
+    {
+      "uid": "nearmiss_mix-M30-00004",
+      "base_identical": true,
+      "base_diffs": {},
+      "envelope_identical": false,
+      "envelope_groups": {
+        "w w w w:\n[w_w:w_w-w#-# w[w-w]_w#[w-w]]\nw w w (w w; w w \u2014 w w w w): w-w-w, w-w, w-w-w-w, w-w, w-w\n (w w: w)\n\nw (w w w w w": [
+          "F-null",
+          "F-prom-retrieved"
+        ],
+        "w w w w w w w w. w w w w w w w w w w w, w w w w w w w. w w w: w w w w w, w w, w w w.\n\n#. w; w w w. w w w w w w w w w w w": [
+          "F-generic"
+        ]
+      },
+      "no_forbidden_tokens": true,
+      "forbidden_hits": {},
+      "no_verbatim_gold": true,
+      "gold_hits": {},
+      "all_pass": false
+    }
+  ]
+}
