@@ -1,0 +1,158 @@
+{
+ "cycle": "145-I",
+ "question": "does theseus/corpus preserve (state, OPERATION, outcome) triples in which the OPERATION varies between siblings, i.e. genuine edges?",
+ "bound": {
+  "batches_sampled": 6,
+  "batches_present": 165,
+  "rows_per_batch": 300000,
+  "rows_scanned": 1500001
+ },
+ "parent_pointer_coverage": {
+  "d3": {
+   "rows": 402455,
+   "pct_with_parent": 100.0
+  },
+  "a2": {
+   "rows": 294522,
+   "pct_with_parent": 0.0
+  },
+  "a3": {
+   "rows": 139666,
+   "pct_with_parent": 0.0
+  },
+  "f1": {
+   "rows": 138891,
+   "pct_with_parent": 0.0
+  },
+  "a1": {
+   "rows": 136600,
+   "pct_with_parent": 0.0
+  },
+  "a4": {
+   "rows": 134607,
+   "pct_with_parent": 0.0
+  },
+  "f3": {
+   "rows": 114209,
+   "pct_with_parent": 0.0
+  },
+  "h4": {
+   "rows": 75664,
+   "pct_with_parent": 100.0
+  },
+  "d2": {
+   "rows": 27549,
+   "pct_with_parent": 100.0
+  },
+  "g3": {
+   "rows": 19982,
+   "pct_with_parent": 0.0
+  },
+  "b2": {
+   "rows": 3637,
+   "pct_with_parent": 0.0
+  },
+  "e3": {
+   "rows": 3180,
+   "pct_with_parent": 0.0
+  },
+  "g2": {
+   "rows": 3000,
+   "pct_with_parent": 0.0
+  },
+  "b1": {
+   "rows": 2680,
+   "pct_with_parent": 0.0
+  },
+  "b3": {
+   "rows": 1212,
+   "pct_with_parent": 0.0
+  },
+  "b5": {
+   "rows": 1052,
+   "pct_with_parent": 0.0
+  },
+  "b4": {
+   "rows": 606,
+   "pct_with_parent": 0.0
+  },
+  "g1": {
+   "rows": 368,
+   "pct_with_parent": 0.0
+  },
+  "e5": {
+   "rows": 121,
+   "pct_with_parent": 0.0
+  }
+ },
+ "controls": {
+  "C1_parse_fidelity": true,
+  "C1_malformed": 0,
+  "C2_seed_varies": true,
+  "C2_ok": 401399,
+  "C2_bad": 0,
+  "C3_outcome_varies": true,
+  "C3_with_spread": 401030,
+  "C4_shuffled_ranker_at_chance": true
+ },
+ "controls_passing": 4,
+ "PART1_what_varies": {
+  "['child_seed']": 401399
+ },
+ "resample_only_sets": 401399,
+ "operationally_varying_sets": 0,
+ "sibling_sets_total": 401399,
+ "attainable": 0,
+ "gate_readable": false,
+ "H": 0.0,
+ "ranking_n": 0,
+ "branches": {
+  "B1_VACUOUS": false,
+  "B2_NO_EDGES": true,
+  "B3_ADVANCE": false,
+  "B4_KILL": false
+ },
+ "branch_fired": "B2_NO_EDGES",
+ "VERDICT": "REDESIGN",
+ "scope": "d3 only (the sole generator carrying parent pointers); sampled batches",
+ "what_dies": "the claim that the EXISTING corpus can answer the navigation question; NOT the navigation hypothesis and NOT the verbs thesis",
+ "scope_claim_falsified": {
+  "preregistered": "d3 is the ONLY generator that populates parent_record_id and step_trace",
+  "measured_in_the_same_run": "h4 (75,664 rows) and d2 (27,549 rows) also carry parent pointers at 100 percent",
+  "consequence": "B2_NO_EDGES fired correctly FOR d3, but its reading does not generalize; terminal re-scoped to REDESIGN"
+ },
+ "h4_is_an_edge_corpus": {
+  "rows": 75664,
+  "distinct_parents": 28187,
+  "claim_kind": "bridge_extension",
+  "extension_attempts": 226992,
+  "holds_true": 124197,
+  "holds_false": 102795,
+  "n_holding_over_n_tested": {
+   "3/3": 20230,
+   "2/3": 21461,
+   "1/3": 20585,
+   "0/3": 13388
+  },
+  "operations_varied_over": [
+   "conductor",
+   "tamagawa_product",
+   "torsion",
+   "rank"
+  ],
+  "reading": "the OPERATION varies and the outcome varies (55/45), graded across the full 0..3 range"
+ },
+ "d2_is_a_boundary_distance_corpus": {
+  "rows": 27549,
+  "claim_kind": "kill_neighborhood",
+  "band_distribution": {
+   "comfortable_failure": 16453,
+   "barely_fails": 4913,
+   "barely_survives": 4718,
+   "comfortable_survival": 1465
+  },
+  "margin": "continuous signed distance, observed span beyond +/-9900",
+  "reading": "an ORDERED four-level distance-to-boundary coordinate with every level populated"
+ },
+ "verdict_basis": "branch fired as preregistered but the scope assumption underneath it was falsified by the same run"
+}

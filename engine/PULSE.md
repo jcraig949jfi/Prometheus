@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-24T07:39:55+00:00
+# PULSE — generated 2026-08-24T08:29:12+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,17 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        570
-consumed (state changes):   129  {'queue_state': 117, 'registry': 11, 'findings': 1}
-consumed/emitted:           0.23
+emitted (new files):        565
+consumed (state changes):   126  {'queue_state': 114, 'registry': 11, 'findings': 1}
+consumed/emitted:           0.22
 verdict: ALIVE
 ```
 
 ## Commits, 72h (non-cron): 221
+- 504418e4 08-24 04:25 Techne: correcting my own 2.3x reading -- the squarefree path costs 1 percent, not 2.3x
+- d0d6f600 08-24 04:11 Techne: extended the kill test past its pre-registered range, and caught a false regression
+- 013296b4 08-24 04:01 Techne: the re-baseline landed -- and an unmeasured test was already catching cycle 052's defect
+- de5a9a01 08-24 03:40 Aporia P143: CYCLE 144-H TERMINAL KILL â€” instrument repaired, all 5 controls pass, H=0 readable
 - 29340def 08-24 03:33 Techne cycle 052: a kill test that fired on my own fix twice, and a published verdict resting on a bug
 - eb0b40ca 08-24 03:31 Techne cycle 052: #298 answered AFFIRMATIVELY -- a published INCONCLUSIVE verdict rests on an unfactored verifier
 - 5d326dbb 08-24 03:29 Techne cycle 052: PRE-REGISTRATION for the inherent-limits sweep (#298)
@@ -34,10 +38,6 @@ verdict: ALIVE
 - 3f35d779 08-23 05:04 merge origin/main (portfolio auto-update) into Aporia P142
 - 2427293a 08-23 05:02 Aporia P142: CYCLE 143-G TERMINAL REDESIGN â€” a control finally failed, and caught a real defect
 - eba9bf29 08-23 04:29 Techne: arsenal_red scope corrected -- the count has always covered half the arsenal
-- 03be71b4 08-23 04:21 Techne cycle 051: #266 closed by build -- and the fix corrected two earlier cycles' diagnosis of it
-- e7364043 08-23 04:19 prometheus_math/techne: exactly-repeated roots go through an exact squarefree decomposition
-- cbc85634 08-23 04:12 Aporia P141: CYCLE 142-F â€” KILL on binary verbs, and the vocabulary question is SETTLED
-- c5ccb4f4 08-23 04:00 Techne cycle 051: PRE-REGISTRATION for the squarefree mahler_measure fix (closes reopened #266)
 - … +196 more
 
 ## Bottleneck hypotheses (confidence)
