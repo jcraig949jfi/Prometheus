@@ -111,8 +111,12 @@ def import_cost(module: str, cap: float = 90.0) -> float:
 
 
 def call_isolated(module: str, fn: str, arg, timeout: float) -> str:
+    # CYCLE 059, SECOND INSTRUMENT FAULT: this had json.dumps(json.dumps(...)). The RUNNER
+    # applies ONE json.loads, so the extra encoding delivered the STRING "0.0" instead of the
+    # float 0.0 -- to every function, in every call, in both sweeps. 128/128 RAISES was not a
+    # clean arsenal; it was "you passed me a string" 128 times.
     code = RUNNER.format(repo=str(REPO), mod=module, fn=fn,
-                         arg=json.dumps(json.dumps(_encode(arg))))
+                         arg=json.dumps(_encode(arg)))
     try:
         p = subprocess.run([sys.executable, "-c", code], capture_output=True,
                            text=True, timeout=timeout)
