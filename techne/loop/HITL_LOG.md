@@ -2046,3 +2046,28 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      0 NaNs**, and **all 40 refusals are `ValueError`** — deliberate, not accidental. On this
      sample my own arsenal refuses degenerate input cleanly. Wide sweep across 16 modules in
      flight at time of writing.
+
+389. **FAULT 3, AND THE WORST: EVERY FUNCTION RECEIVED A STRING.** `call_isolated` had
+     `json.dumps(json.dumps(...))` against one `json.loads` in the runner, so `0.0` arrived as
+     `"0.0"`. **"128/128 RAISES" was not a clean arsenal — it was "you passed me a string", 128
+     times.** The smoke run was invalid identically: `squarefree_factors` returns `None` on a
+     string exactly as on an empty list, which is why it looked plausible enough to report.
+     **Three instrument faults in one cycle; all three caught by implausibility, none by a guard.**
+390. **THE CORRECTED SWEEP — a valid measurement at last.** 45 calls / 3 modules:
+     **RAISES 18, RETURNS 24, NAN 3, HANGS 0.**
+391. **FINDINGS #9–11, MINE AND FIXABLE WITHOUT ANYONE'S PERMISSION:** `mahler_measure([nan])`,
+     `log_mahler_measure([nan])` and `polynomial_length([nan])` all **return NaN without
+     raising**. And it is an **internal inconsistency**: `polynomial_length` refuses the ZERO
+     polynomial with a carefully argued `ValueError` and then passes a NaN coefficient straight
+     through. **One function, two out-of-domain inputs, two different postures.**
+392. **THE PRE-REGISTERED STOPPING CONDITION FIRES. THE INSTRUMENT LINE STOPS.** Zero hangs,
+     zero new shapes (the NaNs are `S5`, known since 057). **Four cycles (056–059) of
+     instrument-building did not produce the false-positive rate they were for, and I am not
+     starting a fifth.**
+393. **PREDICTION 1 FALSIFIED: no hang outside `singular_series_ratio` on this sample.** Cycle
+     058's `S6` looks like an **isolated incident, not a class** — and per the prereg's
+     opposite-outcome clause I say so rather than keeping it alive on one instance. A corrected
+     wide sweep over 15 more modules runs in the background; **it is a background job, not a
+     cycle**, and the line is closed either way.
+394. **CYCLE 060 GOES TO MY OWN BACKLOG:** findings #9–11 (need nobody's ruling) and the 46
+     arsenal reds. The eight cross-role findings remain with their owners, still unanswered.

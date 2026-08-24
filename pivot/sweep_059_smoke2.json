@@ -1,0 +1,350 @@
+{
+  "command": "--modules techne.lib.mahler_measure prometheus_math.house prometheus_math.polynomial_length --timeout 5.0",
+  "n_calls": 45,
+  "by_outcome": {
+    "RAISES": 18,
+    "NAN": 3,
+    "RETURNS": 24
+  },
+  "hangs": [],
+  "nans": [
+    {
+      "module": "techne.lib.mahler_measure",
+      "fn": "mahler_measure",
+      "arg": "[nan]",
+      "outcome": "NAN",
+      "budget_s": 5.1
+    },
+    {
+      "module": "techne.lib.mahler_measure",
+      "fn": "log_mahler_measure",
+      "arg": "[nan]",
+      "outcome": "NAN",
+      "budget_s": 5.1
+    },
+    {
+      "module": "prometheus_math.polynomial_length",
+      "fn": "polynomial_length",
+      "arg": "[nan]",
+      "outcome": "NAN",
+      "budget_s": 14.9
+    }
+  ],
+  "rows": [
+    {
+      "module": "techne.lib.mahler_measure",
+      "fn": "mahler_measure",
+      "arg": "[]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 5.1
+    },
+    {
+      "module": "techne.lib.mahler_measure",
+      "fn": "mahler_measure",
+      "arg": "[0]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 5.1
+    },
+    {
+      "module": "techne.lib.mahler_measure",
+      "fn": "mahler_measure",
+      "arg": "[0.0]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 5.1
+    },
+    {
+      "module": "techne.lib.mahler_measure",
+      "fn": "mahler_measure",
+      "arg": "[nan]",
+      "outcome": "NAN",
+      "budget_s": 5.1
+    },
+    {
+      "module": "techne.lib.mahler_measure",
+      "fn": "mahler_measure",
+      "arg": "[1e+308, -1e+308]",
+      "outcome": "RETURNS 1e+308",
+      "budget_s": 5.1
+    },
+    {
+      "module": "techne.lib.mahler_measure",
+      "fn": "squarefree_factors",
+      "arg": "[]",
+      "outcome": "RETURNS None",
+      "budget_s": 5.1
+    },
+    {
+      "module": "techne.lib.mahler_measure",
+      "fn": "squarefree_factors",
+      "arg": "[0]",
+      "outcome": "RETURNS None",
+      "budget_s": 5.1
+    },
+    {
+      "module": "techne.lib.mahler_measure",
+      "fn": "squarefree_factors",
+      "arg": "[0.0]",
+      "outcome": "RETURNS None",
+      "budget_s": 5.1
+    },
+    {
+      "module": "techne.lib.mahler_measure",
+      "fn": "squarefree_factors",
+      "arg": "[nan]",
+      "outcome": "RETURNS None",
+      "budget_s": 5.1
+    },
+    {
+      "module": "techne.lib.mahler_measure",
+      "fn": "squarefree_factors",
+      "arg": "[1e+308, -1e+308]",
+      "outcome": "RETURNS None",
+      "budget_s": 5.1
+    },
+    {
+      "module": "techne.lib.mahler_measure",
+      "fn": "log_mahler_measure",
+      "arg": "[]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 5.1
+    },
+    {
+      "module": "techne.lib.mahler_measure",
+      "fn": "log_mahler_measure",
+      "arg": "[0]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 5.1
+    },
+    {
+      "module": "techne.lib.mahler_measure",
+      "fn": "log_mahler_measure",
+      "arg": "[0.0]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 5.1
+    },
+    {
+      "module": "techne.lib.mahler_measure",
+      "fn": "log_mahler_measure",
+      "arg": "[nan]",
+      "outcome": "NAN",
+      "budget_s": 5.1
+    },
+    {
+      "module": "techne.lib.mahler_measure",
+      "fn": "log_mahler_measure",
+      "arg": "[1e+308, -1e+308]",
+      "outcome": "RETURNS 709.1962086421661",
+      "budget_s": 5.1
+    },
+    {
+      "module": "techne.lib.mahler_measure",
+      "fn": "is_cyclotomic",
+      "arg": "[]",
+      "outcome": "RETURNS False",
+      "budget_s": 5.1
+    },
+    {
+      "module": "techne.lib.mahler_measure",
+      "fn": "is_cyclotomic",
+      "arg": "[0]",
+      "outcome": "RETURNS False",
+      "budget_s": 5.1
+    },
+    {
+      "module": "techne.lib.mahler_measure",
+      "fn": "is_cyclotomic",
+      "arg": "[0.0]",
+      "outcome": "RETURNS False",
+      "budget_s": 5.1
+    },
+    {
+      "module": "techne.lib.mahler_measure",
+      "fn": "is_cyclotomic",
+      "arg": "[nan]",
+      "outcome": "RETURNS False",
+      "budget_s": 5.1
+    },
+    {
+      "module": "techne.lib.mahler_measure",
+      "fn": "is_cyclotomic",
+      "arg": "[1e+308, -1e+308]",
+      "outcome": "RETURNS True",
+      "budget_s": 5.1
+    },
+    {
+      "module": "techne.lib.mahler_measure",
+      "fn": "mahler_measure_padded",
+      "arg": "[]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 5.1
+    },
+    {
+      "module": "techne.lib.mahler_measure",
+      "fn": "mahler_measure_padded",
+      "arg": "[0]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 5.1
+    },
+    {
+      "module": "techne.lib.mahler_measure",
+      "fn": "mahler_measure_padded",
+      "arg": "[0.0]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 5.1
+    },
+    {
+      "module": "techne.lib.mahler_measure",
+      "fn": "mahler_measure_padded",
+      "arg": "[nan]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 5.1
+    },
+    {
+      "module": "techne.lib.mahler_measure",
+      "fn": "mahler_measure_padded",
+      "arg": "[1e+308, -1e+308]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 5.1
+    },
+    {
+      "module": "techne.lib.mahler_measure",
+      "fn": "mahler_measure_batch",
+      "arg": "[]",
+      "outcome": "RETURNS array([], dtype=float64)",
+      "budget_s": 5.1
+    },
+    {
+      "module": "techne.lib.mahler_measure",
+      "fn": "mahler_measure_batch",
+      "arg": "[0]",
+      "outcome": "RETURNS array([nan])",
+      "budget_s": 5.1
+    },
+    {
+      "module": "techne.lib.mahler_measure",
+      "fn": "mahler_measure_batch",
+      "arg": "[0.0]",
+      "outcome": "RETURNS array([nan])",
+      "budget_s": 5.1
+    },
+    {
+      "module": "techne.lib.mahler_measure",
+      "fn": "mahler_measure_batch",
+      "arg": "[nan]",
+      "outcome": "RETURNS array([nan])",
+      "budget_s": 5.1
+    },
+    {
+      "module": "techne.lib.mahler_measure",
+      "fn": "mahler_measure_batch",
+      "arg": "[1e+308, -1e+308]",
+      "outcome": "RETURNS array([1.e+308, 1.e+308])",
+      "budget_s": 5.1
+    },
+    {
+      "module": "techne.lib.mahler_measure",
+      "fn": "mahler_measure_batch_chunked",
+      "arg": "[]",
+      "outcome": "RETURNS array([], dtype=float64)",
+      "budget_s": 5.1
+    },
+    {
+      "module": "techne.lib.mahler_measure",
+      "fn": "mahler_measure_batch_chunked",
+      "arg": "[0]",
+      "outcome": "RETURNS array([nan])",
+      "budget_s": 5.1
+    },
+    {
+      "module": "techne.lib.mahler_measure",
+      "fn": "mahler_measure_batch_chunked",
+      "arg": "[0.0]",
+      "outcome": "RETURNS array([nan])",
+      "budget_s": 5.1
+    },
+    {
+      "module": "techne.lib.mahler_measure",
+      "fn": "mahler_measure_batch_chunked",
+      "arg": "[nan]",
+      "outcome": "RETURNS array([nan])",
+      "budget_s": 5.1
+    },
+    {
+      "module": "techne.lib.mahler_measure",
+      "fn": "mahler_measure_batch_chunked",
+      "arg": "[1e+308, -1e+308]",
+      "outcome": "RETURNS array([1.e+308, 1.e+308])",
+      "budget_s": 5.1
+    },
+    {
+      "module": "prometheus_math.house",
+      "fn": "house",
+      "arg": "[]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 15.2
+    },
+    {
+      "module": "prometheus_math.house",
+      "fn": "house",
+      "arg": "[0]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 15.2
+    },
+    {
+      "module": "prometheus_math.house",
+      "fn": "house",
+      "arg": "[0.0]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 15.2
+    },
+    {
+      "module": "prometheus_math.house",
+      "fn": "house",
+      "arg": "[nan]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 15.2
+    },
+    {
+      "module": "prometheus_math.house",
+      "fn": "house",
+      "arg": "[1e+308, -1e+308]",
+      "outcome": "RETURNS 0.9999999999999999",
+      "budget_s": 15.2
+    },
+    {
+      "module": "prometheus_math.polynomial_length",
+      "fn": "polynomial_length",
+      "arg": "[]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 14.9
+    },
+    {
+      "module": "prometheus_math.polynomial_length",
+      "fn": "polynomial_length",
+      "arg": "[0]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 14.9
+    },
+    {
+      "module": "prometheus_math.polynomial_length",
+      "fn": "polynomial_length",
+      "arg": "[0.0]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 14.9
+    },
+    {
+      "module": "prometheus_math.polynomial_length",
+      "fn": "polynomial_length",
+      "arg": "[nan]",
+      "outcome": "NAN",
+      "budget_s": 14.9
+    },
+    {
+      "module": "prometheus_math.polynomial_length",
+      "fn": "polynomial_length",
+      "arg": "[1e+308, -1e+308]",
+      "outcome": "RETURNS inf",
+      "budget_s": 14.9
+    }
+  ]
+}
