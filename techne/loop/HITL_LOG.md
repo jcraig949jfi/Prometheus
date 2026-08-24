@@ -1682,3 +1682,23 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
 315. **ARSENAL RED RE-BASELINE STILL IN FLIGHT at cycle close** (two scopes, ~40 min). Cycle
      051's **38** was a `prometheus_math`-only figure; the corrected run reports next cycle
      **as a new baseline, not a delta**. `techne/tests` alone: 10 failed / 216 passed, all #242.
+
+316. **THE RE-BASELINE LANDED — 46 red, and one of them was ALREADY CATCHING THIS CYCLE'S
+     DEFECT.** `python -m pytest prometheus_math techne/tests -q --continue-on-collection-errors
+     -p no:cacheprovider` -> **46 failed, 4286 passed, 138 skipped, 5 xfailed, 3 errors, 37:03.**
+     Split: **37 `prometheus_math` / 9 `techne/tests`**. **NEW BASELINE, not a delta** — cycle
+     051's 38 was a `prometheus_math`-only figure.
+317. **JAMES — THE STRONGEST ARGUMENT YET FOR THE SCOPE FIX, AND IT IS AGAINST ME.**
+     `techne/tests/test_mahler_batch.py::test_authority_padded_matrix_matches_scalar_for_100_polys`
+     was **already failing on exactly the scalar/batch divergence I "discovered" this cycle by
+     reasoning.** It draws 100 random reciprocal polynomials; **17 of them carry repeated
+     roots**. Verified by toggling only the shipped screen on the test's own data:
+     **pre-fix max |padded - scalar| = 3.218e-08 (tolerance 1e-10, FAILS); shipped = 0.000e+00.**
+     **An existing authority test had been reporting this defect for as long as it has existed,
+     into a scope nothing was counting.** I found the bug the hard way while a test was
+     shouting it in a file outside my measurement window.
+318. **The baseline of 46 was measured PRE-FIX for the batch path** — the job launched before
+     this cycle's edits. One of the 46 (`test_mahler_batch`) is resolved by `5ed8d8d8`, so the
+     comparable post-fix figure is **45**. Stated rather than quietly reported as 45, because
+     the run that produced 46 is the run I have.
+319. **No other Mahler-family red exists** across either scope — the family is otherwise clean.
