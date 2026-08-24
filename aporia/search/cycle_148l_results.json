@@ -1,0 +1,63 @@
+{
+ "cycle": "148-L",
+ "question": "does the (parent, invariant) structure transfer to a relation never seen in fitting?",
+ "design": "leave-one-relation-out over 4 relations; M4 excluded by design because it has no cell for an unseen relation and testing it would measure a tautology",
+ "bound": {
+  "batches": 12,
+  "of": 165
+ },
+ "parse": {
+  "kept": 469513,
+  "dropped": 0
+ },
+ "discriminative": 261884,
+ "relations": [
+  "abs_diff_le_3",
+  "divides",
+  "equal",
+  "equal_mod_2"
+ ],
+ "M1_heldout": {
+  "acc": 0.32984451131035114,
+  "per_cell_delta": -0.17254967848359667,
+  "clustered_se": 0.044409401025151854,
+  "cells": 14
+ },
+ "M2_heldout": {
+  "acc": 0.31881672801698463,
+  "per_cell_delta": -0.1835774617769632,
+  "clustered_se": 0.059167978364382055,
+  "cells": 14
+ },
+ "NULL_heldout": {
+  "acc": 0.32214262803378596,
+  "per_cell_delta": -0.18025156176016188,
+  "clustered_se": 0.058671356975952216,
+  "cells": 14
+ },
+ "controls": {
+  "C1_one_ranking_per_cell": true,
+  "C2_cells_gt_3": true,
+  "C3_null_at_zero": false,
+  "C4_parse_loud": true,
+  "C5_relation_disjoint": true,
+  "C5_leaked_rows": 0
+ },
+ "controls_passing": 4,
+ "attainability": 59705,
+ "D": -0.011027783293366539,
+ "clustered_SE": 0.07398002813692857,
+ "df": 13,
+ "t_crit": 2.16,
+ "bar": 0.15979686077576571,
+ "naive_se": 0.0009106427922450015,
+ "inflation": 81.23934957476148,
+ "branches": {
+  "B1_VACUOUS": true,
+  "B2_TRANSFERS": false,
+  "B3_NO_TRANSFER": false
+ },
+ "branch_fired": "B1_VACUOUS",
+ "VERDICT": "VACUOUS",
+ "scope": "h4 only; feature-selection action space of 4 invariants; sampled batches"
+}

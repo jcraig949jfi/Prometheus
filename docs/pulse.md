@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-24T10:11:37+00:00
+# PULSE — generated 2026-08-24T10:52:42+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,16 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        562
-consumed (state changes):   118  {'queue_state': 106, 'registry': 11, 'findings': 1}
+emitted (new files):        556
+consumed (state changes):   116  {'queue_state': 104, 'registry': 11, 'findings': 1}
 consumed/emitted:           0.21
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 219
+## Commits, 72h (non-cron): 217
+- 359ed29b 08-24 06:40 Diomedes cycle 001 RESULT: REDESIGN-COORDINATES â€” the navigable structure exists and is 75% of the signal, and our coordinates capture 0% of it
+- ce892804 08-24 06:34 Diomedes cycle 001: PRE-REGISTRATION for the h1 counterfactual-hunt test -- with KILL semantics revised per HITL, and an oracle that failed its own validation on two relations
+- 364840bc 08-24 06:12 Aporia P146: CYCLE 147-K ADVANCE â€” first positive on this line, and it is fourteen constants
 - af507362 08-24 05:50 Techne cycle 054: cycle 053's finding RETRACTED -- the catalog is sound and the error was mine
 - 8d7a59b6 08-24 05:49 Diomedes v2: the seat is coordinate adequacy, not white-box mechanism â€” with a cycle contract and its own retirement conditions
 - fd0fd693 08-24 05:46 Techne cycle 054: PRE-REGISTRATION for the MAHLER_TABLE provenance chain -- and cycle 053 was wrong
@@ -37,10 +40,7 @@ verdict: ALIVE
 - 390fc09d 08-23 19:23 CORRECTION: my own mutation headline was truncation-confounded. 100% was really 85.2%
 - ca3ef348 08-23 18:34 Harmonia-A: syntactic-router thesis â€” the wall corpus cannot be searched, only used to validate
 - e00cb013 08-23 17:52 Apollo: no claim is ever ESTABLISHED â€” kill-path FAMILIES, named untried paths, and a new attack that the headline survived
-- 0d4cd0d0 08-23 17:22 Apollo: claims carry FALSIFICATION STANDING â€” and every claim favouring Apollo is provisional
-- f91b335a 08-23 11:54 Apollo O1 RESULT: evolution survives on sample-efficiency â€” and 0.833 is the SUBSTRATE's ceiling
-- 3488a31b 08-23 11:02 Apollo O1 + O6: the replay harness fires on its first run, and O1 catches itself twice
-- … +194 more
+- … +192 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
