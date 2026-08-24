@@ -1,0 +1,172 @@
+{
+ "scope": "8 stratified files, <=120000 lines each",
+ "K": 100,
+ "seed": 20260824,
+ "value_table": {
+  "n_catalog_invariant_keys": 12,
+  "n_object_value_pairs": 4756,
+  "largest_pools": [
+   [
+    "ec/tamagawa_product",
+    1000
+   ],
+   [
+    "ec/rank",
+    1000
+   ],
+   [
+    "ec/torsion",
+    1000
+   ],
+   [
+    "ec/conductor",
+    1000
+   ],
+   [
+    "ec/regulator",
+    484
+   ],
+   [
+    "knot/crossing_number",
+    52
+   ],
+   [
+    "knot/trace_field_class",
+    52
+   ],
+   [
+    "knot/determinant",
+    52
+   ],
+   [
+    "knot/signature",
+    52
+   ],
+   [
+    "knot/three_genus",
+    52
+   ],
+   [
+    "knot/nf_class_number",
+    8
+   ],
+   [
+    "knot/hyperbolic_volume",
+    4
+   ]
+  ]
+ },
+ "h1": {
+  "parents_with_successful_hunt": 28423,
+  "relations": [
+   [
+    "equal_mod_2",
+    14619
+   ],
+   [
+    "divides",
+    10421
+   ],
+   [
+    "abs_diff_le_3",
+    6761
+   ],
+   [
+    "equal",
+    2064
+   ]
+  ],
+  "top_invariant_pairs": [
+   [
+    [
+     "signature",
+     "rank"
+    ],
+    2401
+   ],
+   [
+    [
+     "three_genus",
+     "torsion"
+    ],
+    2271
+   ],
+   [
+    [
+     "three_genus",
+     "rank"
+    ],
+    2264
+   ],
+   [
+    [
+     "three_genus",
+     "tamagawa_product"
+    ],
+    2210
+   ],
+   [
+    [
+     "signature",
+     "tamagawa_product"
+    ],
+    1719
+   ],
+   [
+    [
+     "trace_field_class",
+     "tamagawa_product"
+    ],
+    1649
+   ],
+   [
+    [
+     "three_genus",
+     "conductor"
+    ],
+    1584
+   ],
+   [
+    [
+     "nf_class_number",
+     "torsion"
+    ],
+    1582
+   ]
+  ],
+  "varied_side": [
+   [
+    "b",
+    18581
+   ],
+   [
+    "a",
+    9842
+   ],
+   [
+    "None",
+    5442
+   ]
+  ]
+ },
+ "attainable_range": {
+  "usable_parent_states": 13128,
+  "unusable_reasons": [
+   [
+    "pool_too_small",
+    9842
+   ],
+   [
+    "relation_unknown",
+    5453
+   ]
+  ],
+  "frac_candidates_breaking_mean": 0.4712,
+  "median": 0.49,
+  "p05": 0.12,
+  "p95": 0.85,
+  "stdev_across_states": 0.2204,
+  "share_degenerate_ge_0.95": 0.0087,
+  "share_degenerate_le_0.05": 0.0149
+ }
+}
