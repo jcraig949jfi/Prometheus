@@ -1945,3 +1945,37 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      measuring, and **"open" is not the same as "hard"** — my difficulty tag cannot express that
      difference. **Calibration 34/47 = 0.723**; low still 0/3, mod-high 9/9.
 366. **NO OWNER RESPONSE YET** to cycle 055's five findings (checked; they are ~1h old).
+
+
+## Cycle 057 (2026-08-24) — the domain boundary is real, and not where I said it was
+
+367. **JAMES — A CORRECTION TO CYCLE 056, WHICH I ESCALATED TO YOU.** I claimed of
+     `theseus::dedup_rate` that *"no executable probe could EVER see it"*. **Too strong.** A
+     probe compared against an input that **should score badly** — `[dup, dup]`, where the right
+     answer is 0.5 — catches it instantly. **The invisibility was a property of MY probe design
+     (degenerate-vs-legitimate pairing), not of the defect.** `dedup_rate` remains a real defect
+     worth Theseus's attention; what is retracted is the claim that probing cannot reach it.
+368. **PREDICTION 1 WAS `high` / `D0` NEAR-TAUTOLOGICAL, AND FALSIFIED.** The tautology was mine.
+369. **THE BOUNDARY THAT IS REAL:** `s3_defective` computes the **mean** while its docstring says
+     **median**. An oracle probe catches it instantly — **but the oracle came from reading the
+     docstring.** The specification is in prose and no amount of executing recovers it. So:
+     **a probe can check any specification it is given and cannot generate one; where the spec
+     exists only in prose, reading is the only lane that can supply it.** Division of labour,
+     not a ranking. **My A-vs-B framing across cycles 055-056 asked the wrong question.**
+370. **LANE B: 4/5 defects detected, 1 missed (S4, needs an oracle), 2/5 FALSE POSITIVES — and
+     BOTH false positives were MY errors.**
+371. **I BUILT AN INVALID CONTROL AGAIN, INSIDE THE BATTERY BUILT TO FIX THAT.** `s3_clean`
+     repairs the median/mean gap and **still returns 0.0 on empty**, which is the S1 conflation.
+     **Second instance of cycle 055's exact error**, and I did not notice until the probe flagged
+     it. `s4_clean`'s two arms both have true answer 1.0, so "indistinguishable" was correct and
+     meaningless. **The false-positive rate is therefore STILL not established** — what I
+     measured is that **2 of 5 controls I authored were not clean.**
+372. **DIFFICULTY SCALE ADOPTED:** `D0 DEDUCED` / `D1 EXPECTED` / `D2 GENUINE` / `D3 CONTRARIAN`,
+     replacing binary `PRIOR`/`OPEN`. **Its first use caught what the binary tag could not: a
+     `D0` failure falsifies the MECHANISM, not the guess**, and is worth more than several `D1`
+     hits. Under the old tag, prediction 1 would have been an ordinary miss.
+373. **PREDICTIONS 3 OF 5. P4 FALSIFIED IN THE USEFUL DIRECTION: every shape is reachable by some
+     lane, so the two lanes TOGETHER are complete over this taxonomy** — the prereg named that as
+     the stronger outcome than "different domains".
+374. **NO OWNER RESPONSE** to the seven outstanding findings (checked at 09:0x; Ergon and Charon
+     are active but on other lines — `f93f91fd`, `935f54a5`).
