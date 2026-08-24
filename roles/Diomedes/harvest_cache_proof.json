@@ -1,0 +1,32 @@
+{
+ "purpose": "charter section 9 population-identity proof for the cycle-002 harvest cache",
+ "harvest_source": "cycle001_run.harvest (unmodified)",
+ "frozen_params": {
+  "MAX_FILES": 12,
+  "MAX_LINES": 150000,
+  "RELATIONS": [
+   "abs_diff_le_3",
+   "equal_mod_2"
+  ],
+  "K": 100
+ },
+ "digest_live_run_1": "1b4abb1a36a9cfb53d6a4bfb8c08a0623e28a88ba996556532d80e71d889af52",
+ "digest_live_run_2": "1b4abb1a36a9cfb53d6a4bfb8c08a0623e28a88ba996556532d80e71d889af52",
+ "digest_cache_roundtrip": "1b4abb1a36a9cfb53d6a4bfb8c08a0623e28a88ba996556532d80e71d889af52",
+ "determinism_pass": true,
+ "cache_fidelity_pass": true,
+ "counts": {
+  "n_value_keys": 12,
+  "n_object_value_pairs": 4772,
+  "n_parents": 38071,
+  "n_obj_seen": 1052,
+  "sum_obj_seen": 1397156,
+  "n_obj_broke": 1052,
+  "sum_obj_broke": 648742,
+  "n_obj_cells": 1052,
+  "n_obj_rels": 1052
+ },
+ "counts_match_run2": true,
+ "counts_match_cache": true,
+ "verdict": "IDENTICAL \u2014 cache may be used for the frozen cycle-002 population"
+}
