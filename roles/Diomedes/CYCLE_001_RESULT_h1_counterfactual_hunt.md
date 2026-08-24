@@ -151,3 +151,64 @@ result — a correct prediction about a null-ish outcome is the cheap direction 
 ```
 
 *— Diomedes, cycle 001 result, 2026-08-24. Verdict REDESIGN-COORDINATES.*
+
+---
+
+# AMENDMENT — 2026-08-24, HITL review of cycle 001
+
+Three corrections and one reframing, all adopted. The rows and verdict are unchanged; two claims
+built on them were overstated.
+
+## A1 — The H2 claim is narrowed one notch (correction)
+
+§4.3 said *"H2 (search transitions carry navigational information) is supported here."* Too broad.
+What was demonstrated is:
+
+> **This particular counterexample-search landscape contains substantial state-conditional action
+> information.** That is H2 **on this population**, not a claim about mathematical solution search
+> in general.
+
+Counterexample hunting over simple catalog relations may be unusually well behaved — predicates
+like parity and bounded absolute difference have obvious relational structure, and one should
+*expect* them to. **Cycle 001 is an instrument proof:** it establishes that the vertex/edge
+distinction is real, measurable, and large in at least one genuine Prometheus search process. That
+is sufficient for a first cycle and it is not to be inflated. Every downstream citation of this
+result must carry the population qualifier.
+
+## A2 — `ORACLE_MARGINAL` is renamed the **state-independent information ceiling** (clarification)
+
+It is computed from evaluation-set ground truth, which makes it unrealistically strong. That is
+deliberate and desirable: it asks *if a perfect state-independent prior were handed to you, how far
+could you get without ever looking at `x`?* Answer: **0.6254**. Everything from there to 1.000
+necessarily requires interaction between state and candidate.
+
+It is therefore **not a deployable baseline** and must never be cited as one. It is a diagnostic
+ceiling. The name `ORACLE_MARGINAL` in `cycle001_conditional.json` stays for row-traceability; the
+prose term is "state-independent information ceiling."
+
+## A3 — `divides` becomes a robustness population, not a discard (scope change)
+
+Excluding `divides` (oracle agreement 0.9915) was correct for the primary result: when the
+measurement is resolving hundredths of AUC, silently tolerating ~0.85% ground-truth disagreement is
+inadmissible, and 564 disagreements in 66,023 observations are of unknown origin (corpus error,
+oracle error, differing semantics, normalization, edge cases).
+
+It is not, however, a reason to discard the population forever. The frozen analysis is to be re-run
+on `divides` **separately and explicitly labelled "results under a 99.15%-agreement oracle"**, never
+merged into the clean primary population. Qualitative ordering surviving is reassuring; changing is
+a finding to investigate. Scheduled as a cycle 002 deliverable.
+
+## A4 — The quantity is reformulated as explicitly conditional (reframing)
+
+`I(Z; A*)` is the wrong way to write what cycle 001 measured. The demonstrated fact is that the
+same candidate is useful from one state and useless from another, so the object of interest is
+
+> **`I(A*; Z_a | Z_x)`** — how much candidate/action information becomes useful *conditioned on the
+> current state*.
+
+This is not "more dimensions." It is relational information, and §4.2's finding is its type-level
+statement: a representation of the form `f(Z(x))` assigns an identical score to every `a_i` and
+therefore **cannot express `a_3 > a_7`**. That is a type error, not a modelling failure. The minimum
+object capable of answering the question is `Z(x, a)`, or `Z(x, a, x')`.
+
+*— Amendment filed 2026-08-24 following HITL review. Verdict REDESIGN-COORDINATES stands.*
