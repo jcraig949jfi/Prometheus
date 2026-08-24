@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-24T15:50:29+00:00
+# PULSE — generated 2026-08-24T19:21:43+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,26 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        553
-consumed (state changes):   102  {'findings': 2, 'queue_state': 89, 'registry': 11}
+emitted (new files):        505
+consumed (state changes):   89  {'queue_state': 76, 'findings': 2, 'registry': 11}
 consumed/emitted:           0.18
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 232
+## Commits, 72h (non-cron): 229
+- b7bf5467 08-24 15:17 Ergon: my own capacity numbers were inflated â€” caught by the spec's own check
+- 1ba5ccdc 08-24 15:15 Diomedes cycle 005 PRE-FLIGHT: my proposed replication target is VACUOUS, and the synthesis recommendation was partly wrong
+- b3763aa6 08-24 15:13 Diomedes: synthesis 001 AMENDMENT â€” the "75%" claim was an overreach, "autopsy system" was too broad, and the type argument outranks the score
+- 24153512 08-24 15:10 Ergon: adversarial self-audit â€” three defects found, two of them mine and live
+- 53864d61 08-24 15:06 Techne second pass: the headline number was inflated, and a guard that catches 5 of 6 real failures
+- e07d166a 08-24 15:04 Lexis seat + library-learning study: Apollo's ceiling is the wall this literature exists to break
+- 0989f0e7 08-24 13:37 Merge branch 'main' of https://github.com/jcraig949jfi/Prometheus
+- dbaa9404 08-24 13:36 Ergon: checkpoint live probe ledgers (M30 rep-1 complete, clean)
+- 8363e309 08-24 13:35 Ergon: M30 rep-1 levels cleanly on the free host â€” the rung is settled, only n is not
+- f0f488fa 08-24 11:57 Ergon: review summary for external readers + drip prioritizes the admitted family
+- 8ccaa03e 08-24 11:57 Charon: external review packet for the 2026-08-23/24 session
+- a700c67b 08-24 11:56 Techne: review packet for cycles 049-059, prepared at James's request
+- e8aa8259 08-24 11:51 Aporia P154: CYCLE 155-S â€” literature debt PAID (advantage confirmed); the four categories are NOT four capabilities
 - 4b1391bb 08-24 11:38 Techne: correcting cycle 059 within the hour -- prediction 1 is NOT falsified, and the hang is mine
 - 6a158712 08-24 11:34 Techne cycle 059: three instrument faults, one valid measurement, and the stopping condition fires
 - 3234f36a 08-24 11:32 Techne cycle 059: the sweep passed STRINGS to every function -- both runs are invalid
@@ -25,20 +38,7 @@ verdict: ALIVE
 - fcedea89 08-24 11:17 Techne cycle 059: PRE-REGISTRATION -- the input sweep, applied deliberately
 - 54dbb137 08-24 11:13 Ergon: R13 power floor fires on the re-pin â€” arms halted, replenishment escalated
 - 571eff7b 08-24 11:07 Ergon: compute the CROSS-FAMILY Tier B screen â€” my code would have repeated the error
-- 0aeedec4 08-24 11:03 Ergon: implement the channel-capacity measurement (R2-6 pre-commitment 1)
-- be586145 08-24 11:02 Ergon: SPEC for the R2-6 channel-capacity reading â€” thresholds fixed before the data
-- 062d08c7 08-24 10:48 Aporia P152: CYCLE 153-S â€” hypothesis refuted by execution, wrong subset tested, real target is a MISSING BOOLEAN PRIMITIVE
-- 1698d965 08-24 10:39 Diomedes cycle 004: PRE-REGISTRATION for the relation-type confound â€” a 2x2 that decomposes the transfer failure completely
-- 0ee3229d 08-24 10:15 Techne cycle 058: the certifier works, and it found my blind spot by accident
-- de7128ab 08-24 10:11 Techne cycle 058: PRE-REGISTRATION -- can a control be certified clean?
-- 4ceeda03 08-24 09:50 Aporia P151: CYCLE 152-S â€” SALVAGE charter opened; the organism's keystone is already built
-- 40b85dce 08-24 09:19 Merge remote-tracking branch 'origin/main'
-- 2d438866 08-24 09:18 Diomedes cycle 003 RESULT: REDESIGN â€” cheap relational coordinates BEAT the state-independent ceiling; they just do not transfer across invariant pairs
-- 66e06e02 08-24 09:15 Aporia: program summary on stopping the loop â€” four seats, one diagnosis (expressivity, not search)
-- 1fbc2133 08-24 09:10 Diomedes cycle 003: PRE-REGISTRATION for the split discriminator â€” was cycle 002's KILL about coordinates or about transfer?
-- 2780e5b5 08-24 09:08 Diomedes cycle 002 RESULT: KILL â€” relational coordinates carry the signal but a global model cannot transfer it across invariant pairs
-- 96e4c117 08-24 09:08 Techne cycle 057: the domain boundary is real, and it is not where I said it was
-- … +207 more
+- … +204 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
