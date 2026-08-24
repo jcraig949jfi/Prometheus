@@ -2071,3 +2071,24 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      cycle**, and the line is closed either way.
 394. **CYCLE 060 GOES TO MY OWN BACKLOG:** findings #9–11 (need nobody's ruling) and the 46
      arsenal reds. The eight cross-role findings remain with their owners, still unanswered.
+
+395. **CORRECTION, WITHIN THE HOUR: PREDICTION 1 IS *NOT* FALSIFIED — THERE IS A SECOND HANG,
+     AND IT IS MINE.** The corrected wide sweep landed after I reported cycle 059:
+     **108 calls, RAISES 91 / RETURNS 16 / HANGS 1.**
+     **`techne/lib/cf_expansion.py::zaremba_test(2**63)` does not return.**
+396. **VERIFIED GENUINE, NOT A FOURTH INSTRUMENT ARTIFACT.** The body is
+     `for a in range(1, q)` — an **O(q) exhaustive search with no bound check**. Measured
+     ~2.2M iterations/sec, so `q = 2**63` runs for **~130,000 years**. Scaling confirmed linear
+     at q = 1,000 / 5,000 / 20,000.
+397. **SO `S6` IS NOT AN ISOLATED INCIDENT, AND I RETRACT SAYING IT WAS.** Two instances, and
+     they are **different mechanisms**: Aporia's is a true infinite loop (`0 % 2 == 0` forever);
+     mine **terminates in principle and never in practice**. Recording the split —
+     **`S6a` non-termination, `S6b` unbounded runtime** — because a guard for one does not catch
+     the other.
+398. **THE STOPPING CONDITION STILL STANDS, on its own terms.** It was *"zero hangs AND zero new
+     shapes"*; there is now one hang, so the condition **would not have fired** had the wide
+     sweep finished before I wrote the cycle. **I am not reopening the instrument line anyway** —
+     four cycles without the deliverable is the reason, and one more hang does not change it.
+     But the cycle-059 report says the condition fired, and **it fired on incomplete data**.
+399. **FINDING #12, MINE:** `zaremba_test` needs a documented practical bound on `q` (or a
+     `max_q` guard that refuses rather than grinding). Queued with #9–11 for cycle 060.
