@@ -1,0 +1,57 @@
+{
+ "cycle": "147-K",
+ "what_146J_got_wrong": "the leak diagnosis (alphabetical tie-breaking / failed shuffle) was falsified: the shuffle equalised cells correctly (marginals 0.4846-0.5150, within-group spreads 0.0053-0.0083) and the model picks rank most, not conductor",
+ "actual_defect": "every model emits a CONSTANT RANKING PER CELL, so the number of independent decisions is the cell count, not the test-set count; a binomial SE over 132,009 sets inflates precision by ~97x",
+ "bound": {
+  "batches": 12,
+  "of": 165
+ },
+ "parse": {
+  "kept": 469513,
+  "dropped": 0
+ },
+ "discriminative": 261884,
+ "train": 129875,
+ "test": 132009,
+ "M4": {
+  "acc": 0.805649614798991,
+  "chance": 0.5029354059192971,
+  "per_cell_delta": 0.3027142088796938,
+  "clustered_se": 0.041739592907468016,
+  "cells": 14
+ },
+ "M1": {
+  "acc": 0.5616965509927353,
+  "chance": 0.5029354059192879,
+  "per_cell_delta": 0.05876114507344753,
+  "clustered_se": 0.04622031121879019,
+  "cells": 4
+ },
+ "NULL": {
+  "acc": 0.5902627851131362,
+  "per_cell_delta": 0.08732737919383904,
+  "clustered_se": 0.0817394823950377,
+  "cells": 14
+ },
+ "controls": {
+  "C1_one_ranking_per_cell": true,
+  "C2_cells_gt_3": true,
+  "C3_null_at_zero_clustered": true,
+  "C4_parse_loud": true
+ },
+ "controls_passing": 4,
+ "attainability_sets_differing": 101663,
+ "D": 0.24395306380624626,
+ "clustered_SE": 0.06227769091129645,
+ "bar_2SE": 0.1245553818225929,
+ "naive_se": 0.0010890906615119243,
+ "inflation_factor": 57.18320164901587,
+ "branches": {
+  "B1_VACUOUS": false,
+  "B2_ADVANCE": true,
+  "B3_KILL": false
+ },
+ "branch_fired": "B2_ADVANCE",
+ "VERDICT": "ADVANCE",
+ "scope": "h4 only; sampled batches; action is feature selection over 4 invariants"
+}

@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-24T09:18:11+00:00
+# PULSE — generated 2026-08-24T10:11:37+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,18 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        566
-consumed (state changes):   121  {'queue_state': 109, 'registry': 11, 'findings': 1}
+emitted (new files):        562
+consumed (state changes):   118  {'queue_state': 106, 'registry': 11, 'findings': 1}
 consumed/emitted:           0.21
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 218
+## Commits, 72h (non-cron): 219
+- af507362 08-24 05:50 Techne cycle 054: cycle 053's finding RETRACTED -- the catalog is sound and the error was mine
+- 8d7a59b6 08-24 05:49 Diomedes v2: the seat is coordinate adequacy, not white-box mechanism â€” with a cycle contract and its own retirement conditions
+- fd0fd693 08-24 05:46 Techne cycle 054: PRE-REGISTRATION for the MAHLER_TABLE provenance chain -- and cycle 053 was wrong
+- c106173d 08-24 05:18 merge origin/main (portfolio auto-update) into Aporia P145
+- 95c6e5d9 08-24 05:18 Aporia P145: CYCLE 146-J REDESIGN â€” controls caught the harness before it published a +0.244 effect
 - 388dff92 08-24 04:44 Techne cycle 053: the Lehmer verifier factors, five predictions for five, and the catalog is mislabelled
 - abb5e161 08-24 04:36 Techne cycle 053: PRE-REGISTRATION for factoring in the Lehmer verifier
 - 47323d45 08-24 04:33 Diomedes: RECON â€” Prometheus stored vertices plus ~48M unassembled edges, and its only trajectory field has H(action) ~ 0
@@ -33,12 +38,7 @@ verdict: ALIVE
 - 0d4cd0d0 08-23 17:22 Apollo: claims carry FALSIFICATION STANDING â€” and every claim favouring Apollo is provisional
 - f91b335a 08-23 11:54 Apollo O1 RESULT: evolution survives on sample-efficiency â€” and 0.833 is the SUBSTRATE's ceiling
 - 3488a31b 08-23 11:02 Apollo O1 + O6: the replay harness fires on its first run, and O1 catches itself twice
-- aa18edb9 08-23 11:07 Merge branch 'main' of https://github.com/jcraig949jfi/Prometheus
-- 03e21c6e 08-23 11:07 Mutation harness: test the tests. Ladder scores ~80% median, holes cluster in verdict code
-- 3faa4921 08-23 10:37 Apollo: benchmark attack â€” 13 dumb heuristics, and one of Apollo's two headline metrics falls
-- 1eef2d1f 08-23 06:58 Harmonia-A: review checklist derived from the soak findings
-- 43fb63e7 08-23 06:55 Apollo: revival review prompt â€” root causes, options, and questions for HITL + frontier reviewers
-- … +193 more
+- … +194 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
