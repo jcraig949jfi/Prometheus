@@ -1,0 +1,2662 @@
+{
+  "config": {
+    "epochs": 50,
+    "reps": 12,
+    "seed": 20260825,
+    "p_blue": 0.35,
+    "p_bogus": 0.2,
+    "p_audit": 0.7,
+    "p_propose": 0.6
+  },
+  "coverage": {
+    "D_instantiation_spotcheck": {
+      "M8_off_by_one_boundary": 1.0,
+      "M10_vacuous_instantiation": 1.0,
+      "M11_induction_base_omission": 1.0
+    },
+    "D_endpoint_spotcheck": {
+      "M4_domain_widening": 1.0,
+      "M5_non_equivalent_rewrite": 1.0,
+      "M7_unjustified_independence": 1.0,
+      "M9_invalid_transitivity": 1.0,
+      "M12_modulus_confusion": 1.0
+    },
+    "D_out_of_domain_instantiation": {
+      "M10_vacuous_instantiation": 1.0
+    },
+    "D_unjustified_generalization": {},
+    "D_case_cover_arity": {
+      "M6_case_cover_gap": 1.0
+    },
+    "D_range_start_outlier": {}
+  },
+  "arms": {
+    "ADAPTIVE": [
+      {
+        "arm": "ADAPTIVE",
+        "epochs": 50,
+        "promotions": 2,
+        "first_promotion_epoch": 11,
+        "bypasses": 17,
+        "bypass_rate_after_promotion": 0.4358974358974359,
+        "landed_rate": 0.46,
+        "bogus_kills": 19,
+        "bogus_caught": 11,
+        "landed_on_covered": null,
+        "landed_on_uncovered": 0.4358974358974359,
+        "n_covered_epochs": 0,
+        "n_uncovered_epochs": 39,
+        "promotion_detail": [
+          {
+            "epoch": 11,
+            "defense": "D_instantiation_spotcheck",
+            "designed_against": "M8_off_by_one_boundary",
+            "independent_hits": [
+              [
+                "SIM-M10_vacuous_instantiation-000",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-001",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-002",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-003",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-004",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M11_induction_base_omission-000",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-001",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-002",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-003",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-004",
+                "M11_induction_base_omission"
+              ]
+            ]
+          },
+          {
+            "epoch": 27,
+            "defense": "D_endpoint_spotcheck",
+            "designed_against": "M4_domain_widening",
+            "independent_hits": [
+              [
+                "SIM-M9_invalid_transitivity-000",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-001",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-002",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-003",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-004",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M12_modulus_confusion-000",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-001",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-002",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-003",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-004",
+                "M12_modulus_confusion"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "arm": "ADAPTIVE",
+        "epochs": 50,
+        "promotions": 2,
+        "first_promotion_epoch": 0,
+        "bypasses": 23,
+        "bypass_rate_after_promotion": 23.0,
+        "landed_rate": 0.46,
+        "bogus_kills": 16,
+        "bogus_caught": 11,
+        "landed_on_covered": null,
+        "landed_on_uncovered": 0.46,
+        "n_covered_epochs": 0,
+        "n_uncovered_epochs": 50,
+        "promotion_detail": [
+          {
+            "epoch": 0,
+            "defense": "D_instantiation_spotcheck",
+            "designed_against": "M8_off_by_one_boundary",
+            "independent_hits": [
+              [
+                "SIM-M10_vacuous_instantiation-000",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-001",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-002",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-003",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-004",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M11_induction_base_omission-000",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-001",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-002",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-003",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-004",
+                "M11_induction_base_omission"
+              ]
+            ]
+          },
+          {
+            "epoch": 5,
+            "defense": "D_endpoint_spotcheck",
+            "designed_against": "M7_unjustified_independence",
+            "independent_hits": [
+              [
+                "SIM-M9_invalid_transitivity-000",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-001",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-002",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-003",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-004",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M12_modulus_confusion-000",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-001",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-002",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-003",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-004",
+                "M12_modulus_confusion"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "arm": "ADAPTIVE",
+        "epochs": 50,
+        "promotions": 2,
+        "first_promotion_epoch": 4,
+        "bypasses": 17,
+        "bypass_rate_after_promotion": 0.3695652173913043,
+        "landed_rate": 0.38,
+        "bogus_kills": 14,
+        "bogus_caught": 8,
+        "landed_on_covered": null,
+        "landed_on_uncovered": 0.3695652173913043,
+        "n_covered_epochs": 0,
+        "n_uncovered_epochs": 46,
+        "promotion_detail": [
+          {
+            "epoch": 4,
+            "defense": "D_endpoint_spotcheck",
+            "designed_against": "M7_unjustified_independence",
+            "independent_hits": [
+              [
+                "SIM-M9_invalid_transitivity-000",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-001",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-002",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-003",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-004",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M12_modulus_confusion-000",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-001",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-002",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-003",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-004",
+                "M12_modulus_confusion"
+              ]
+            ]
+          },
+          {
+            "epoch": 30,
+            "defense": "D_instantiation_spotcheck",
+            "designed_against": "M8_off_by_one_boundary",
+            "independent_hits": [
+              [
+                "SIM-M10_vacuous_instantiation-000",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-001",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-002",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-003",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-004",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M11_induction_base_omission-000",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-001",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-002",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-003",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-004",
+                "M11_induction_base_omission"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "arm": "ADAPTIVE",
+        "epochs": 50,
+        "promotions": 2,
+        "first_promotion_epoch": 2,
+        "bypasses": 25,
+        "bypass_rate_after_promotion": 0.5208333333333334,
+        "landed_rate": 0.52,
+        "bogus_kills": 11,
+        "bogus_caught": 9,
+        "landed_on_covered": null,
+        "landed_on_uncovered": 0.5208333333333334,
+        "n_covered_epochs": 0,
+        "n_uncovered_epochs": 48,
+        "promotion_detail": [
+          {
+            "epoch": 2,
+            "defense": "D_endpoint_spotcheck",
+            "designed_against": "M7_unjustified_independence",
+            "independent_hits": [
+              [
+                "SIM-M9_invalid_transitivity-000",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-001",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-002",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-003",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-004",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M12_modulus_confusion-000",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-001",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-002",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-003",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-004",
+                "M12_modulus_confusion"
+              ]
+            ]
+          },
+          {
+            "epoch": 3,
+            "defense": "D_instantiation_spotcheck",
+            "designed_against": "M8_off_by_one_boundary",
+            "independent_hits": [
+              [
+                "SIM-M10_vacuous_instantiation-000",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-001",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-002",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-003",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-004",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M11_induction_base_omission-000",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-001",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-002",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-003",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-004",
+                "M11_induction_base_omission"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "arm": "ADAPTIVE",
+        "epochs": 50,
+        "promotions": 2,
+        "first_promotion_epoch": 7,
+        "bypasses": 20,
+        "bypass_rate_after_promotion": 0.46511627906976744,
+        "landed_rate": 0.46,
+        "bogus_kills": 16,
+        "bogus_caught": 11,
+        "landed_on_covered": null,
+        "landed_on_uncovered": 0.46511627906976744,
+        "n_covered_epochs": 0,
+        "n_uncovered_epochs": 43,
+        "promotion_detail": [
+          {
+            "epoch": 7,
+            "defense": "D_endpoint_spotcheck",
+            "designed_against": "M5_non_equivalent_rewrite",
+            "independent_hits": [
+              [
+                "SIM-M9_invalid_transitivity-000",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-001",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-002",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-003",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-004",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M12_modulus_confusion-000",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-001",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-002",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-003",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-004",
+                "M12_modulus_confusion"
+              ]
+            ]
+          },
+          {
+            "epoch": 37,
+            "defense": "D_instantiation_spotcheck",
+            "designed_against": "M8_off_by_one_boundary",
+            "independent_hits": [
+              [
+                "SIM-M10_vacuous_instantiation-000",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-001",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-002",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-003",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-004",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M11_induction_base_omission-000",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-001",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-002",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-003",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-004",
+                "M11_induction_base_omission"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "arm": "ADAPTIVE",
+        "epochs": 50,
+        "promotions": 2,
+        "first_promotion_epoch": 4,
+        "bypasses": 20,
+        "bypass_rate_after_promotion": 0.43478260869565216,
+        "landed_rate": 0.46,
+        "bogus_kills": 10,
+        "bogus_caught": 8,
+        "landed_on_covered": null,
+        "landed_on_uncovered": 0.43478260869565216,
+        "n_covered_epochs": 0,
+        "n_uncovered_epochs": 46,
+        "promotion_detail": [
+          {
+            "epoch": 4,
+            "defense": "D_endpoint_spotcheck",
+            "designed_against": "M4_domain_widening",
+            "independent_hits": [
+              [
+                "SIM-M9_invalid_transitivity-000",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-001",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-002",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-003",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-004",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M12_modulus_confusion-000",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-001",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-002",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-003",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-004",
+                "M12_modulus_confusion"
+              ]
+            ]
+          },
+          {
+            "epoch": 35,
+            "defense": "D_instantiation_spotcheck",
+            "designed_against": "M8_off_by_one_boundary",
+            "independent_hits": [
+              [
+                "SIM-M10_vacuous_instantiation-000",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-001",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-002",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-003",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-004",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M11_induction_base_omission-000",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-001",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-002",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-003",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-004",
+                "M11_induction_base_omission"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "arm": "ADAPTIVE",
+        "epochs": 50,
+        "promotions": 2,
+        "first_promotion_epoch": 5,
+        "bypasses": 17,
+        "bypass_rate_after_promotion": 0.37777777777777777,
+        "landed_rate": 0.4,
+        "bogus_kills": 15,
+        "bogus_caught": 10,
+        "landed_on_covered": null,
+        "landed_on_uncovered": 0.37777777777777777,
+        "n_covered_epochs": 0,
+        "n_uncovered_epochs": 45,
+        "promotion_detail": [
+          {
+            "epoch": 5,
+            "defense": "D_endpoint_spotcheck",
+            "designed_against": "M7_unjustified_independence",
+            "independent_hits": [
+              [
+                "SIM-M9_invalid_transitivity-000",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-001",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-002",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-003",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-004",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M12_modulus_confusion-000",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-001",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-002",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-003",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-004",
+                "M12_modulus_confusion"
+              ]
+            ]
+          },
+          {
+            "epoch": 8,
+            "defense": "D_instantiation_spotcheck",
+            "designed_against": "M8_off_by_one_boundary",
+            "independent_hits": [
+              [
+                "SIM-M10_vacuous_instantiation-000",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-001",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-002",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-003",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-004",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M11_induction_base_omission-000",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-001",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-002",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-003",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-004",
+                "M11_induction_base_omission"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "arm": "ADAPTIVE",
+        "epochs": 50,
+        "promotions": 2,
+        "first_promotion_epoch": 0,
+        "bypasses": 18,
+        "bypass_rate_after_promotion": 18.0,
+        "landed_rate": 0.36,
+        "bogus_kills": 9,
+        "bogus_caught": 7,
+        "landed_on_covered": null,
+        "landed_on_uncovered": 0.36,
+        "n_covered_epochs": 0,
+        "n_uncovered_epochs": 50,
+        "promotion_detail": [
+          {
+            "epoch": 0,
+            "defense": "D_endpoint_spotcheck",
+            "designed_against": "M4_domain_widening",
+            "independent_hits": [
+              [
+                "SIM-M9_invalid_transitivity-000",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-001",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-002",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-003",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-004",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M12_modulus_confusion-000",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-001",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-002",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-003",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-004",
+                "M12_modulus_confusion"
+              ]
+            ]
+          },
+          {
+            "epoch": 5,
+            "defense": "D_instantiation_spotcheck",
+            "designed_against": "M8_off_by_one_boundary",
+            "independent_hits": [
+              [
+                "SIM-M10_vacuous_instantiation-000",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-001",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-002",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-003",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-004",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M11_induction_base_omission-000",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-001",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-002",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-003",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-004",
+                "M11_induction_base_omission"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "arm": "ADAPTIVE",
+        "epochs": 50,
+        "promotions": 2,
+        "first_promotion_epoch": 7,
+        "bypasses": 19,
+        "bypass_rate_after_promotion": 0.4418604651162791,
+        "landed_rate": 0.46,
+        "bogus_kills": 12,
+        "bogus_caught": 6,
+        "landed_on_covered": null,
+        "landed_on_uncovered": 0.4418604651162791,
+        "n_covered_epochs": 0,
+        "n_uncovered_epochs": 43,
+        "promotion_detail": [
+          {
+            "epoch": 7,
+            "defense": "D_endpoint_spotcheck",
+            "designed_against": "M5_non_equivalent_rewrite",
+            "independent_hits": [
+              [
+                "SIM-M9_invalid_transitivity-000",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-001",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-002",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-003",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-004",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M12_modulus_confusion-000",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-001",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-002",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-003",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-004",
+                "M12_modulus_confusion"
+              ]
+            ]
+          },
+          {
+            "epoch": 31,
+            "defense": "D_instantiation_spotcheck",
+            "designed_against": "M8_off_by_one_boundary",
+            "independent_hits": [
+              [
+                "SIM-M10_vacuous_instantiation-000",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-001",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-002",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-003",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-004",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M11_induction_base_omission-000",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-001",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-002",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-003",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-004",
+                "M11_induction_base_omission"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "arm": "ADAPTIVE",
+        "epochs": 50,
+        "promotions": 2,
+        "first_promotion_epoch": 5,
+        "bypasses": 13,
+        "bypass_rate_after_promotion": 0.28888888888888886,
+        "landed_rate": 0.3,
+        "bogus_kills": 14,
+        "bogus_caught": 11,
+        "landed_on_covered": null,
+        "landed_on_uncovered": 0.28888888888888886,
+        "n_covered_epochs": 0,
+        "n_uncovered_epochs": 45,
+        "promotion_detail": [
+          {
+            "epoch": 5,
+            "defense": "D_instantiation_spotcheck",
+            "designed_against": "M8_off_by_one_boundary",
+            "independent_hits": [
+              [
+                "SIM-M10_vacuous_instantiation-000",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-001",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-002",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-003",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-004",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M11_induction_base_omission-000",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-001",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-002",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-003",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-004",
+                "M11_induction_base_omission"
+              ]
+            ]
+          },
+          {
+            "epoch": 7,
+            "defense": "D_endpoint_spotcheck",
+            "designed_against": "M7_unjustified_independence",
+            "independent_hits": [
+              [
+                "SIM-M9_invalid_transitivity-000",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-001",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-002",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-003",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-004",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M12_modulus_confusion-000",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-001",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-002",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-003",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-004",
+                "M12_modulus_confusion"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "arm": "ADAPTIVE",
+        "epochs": 50,
+        "promotions": 2,
+        "first_promotion_epoch": 1,
+        "bypasses": 22,
+        "bypass_rate_after_promotion": 0.4489795918367347,
+        "landed_rate": 0.44,
+        "bogus_kills": 17,
+        "bogus_caught": 13,
+        "landed_on_covered": null,
+        "landed_on_uncovered": 0.4489795918367347,
+        "n_covered_epochs": 0,
+        "n_uncovered_epochs": 49,
+        "promotion_detail": [
+          {
+            "epoch": 1,
+            "defense": "D_instantiation_spotcheck",
+            "designed_against": "M8_off_by_one_boundary",
+            "independent_hits": [
+              [
+                "SIM-M10_vacuous_instantiation-000",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-001",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-002",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-003",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-004",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M11_induction_base_omission-000",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-001",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-002",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-003",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-004",
+                "M11_induction_base_omission"
+              ]
+            ]
+          },
+          {
+            "epoch": 13,
+            "defense": "D_endpoint_spotcheck",
+            "designed_against": "M7_unjustified_independence",
+            "independent_hits": [
+              [
+                "SIM-M9_invalid_transitivity-000",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-001",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-002",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-003",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-004",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M12_modulus_confusion-000",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-001",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-002",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-003",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-004",
+                "M12_modulus_confusion"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "arm": "ADAPTIVE",
+        "epochs": 50,
+        "promotions": 2,
+        "first_promotion_epoch": 5,
+        "bypasses": 18,
+        "bypass_rate_after_promotion": 0.4,
+        "landed_rate": 0.42,
+        "bogus_kills": 16,
+        "bogus_caught": 11,
+        "landed_on_covered": null,
+        "landed_on_uncovered": 0.4,
+        "n_covered_epochs": 0,
+        "n_uncovered_epochs": 45,
+        "promotion_detail": [
+          {
+            "epoch": 5,
+            "defense": "D_instantiation_spotcheck",
+            "designed_against": "M8_off_by_one_boundary",
+            "independent_hits": [
+              [
+                "SIM-M10_vacuous_instantiation-000",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-001",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-002",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-003",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-004",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M11_induction_base_omission-000",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-001",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-002",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-003",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-004",
+                "M11_induction_base_omission"
+              ]
+            ]
+          },
+          {
+            "epoch": 19,
+            "defense": "D_endpoint_spotcheck",
+            "designed_against": "M7_unjustified_independence",
+            "independent_hits": [
+              [
+                "SIM-M9_invalid_transitivity-000",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-001",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-002",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-003",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-004",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M12_modulus_confusion-000",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-001",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-002",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-003",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-004",
+                "M12_modulus_confusion"
+              ]
+            ]
+          }
+        ]
+      }
+    ],
+    "NULL": [
+      {
+        "arm": "NULL",
+        "epochs": 50,
+        "promotions": 2,
+        "first_promotion_epoch": 1,
+        "bypasses": 5,
+        "bypass_rate_after_promotion": 0.10204081632653061,
+        "landed_rate": 0.12,
+        "bogus_kills": 9,
+        "bogus_caught": 7,
+        "landed_on_covered": 0.0,
+        "landed_on_uncovered": 0.20833333333333334,
+        "n_covered_epochs": 25,
+        "n_uncovered_epochs": 24,
+        "promotion_detail": [
+          {
+            "epoch": 1,
+            "defense": "D_endpoint_spotcheck",
+            "designed_against": "M7_unjustified_independence",
+            "independent_hits": [
+              [
+                "SIM-M9_invalid_transitivity-000",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-001",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-002",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-003",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-004",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M12_modulus_confusion-000",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-001",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-002",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-003",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-004",
+                "M12_modulus_confusion"
+              ]
+            ]
+          },
+          {
+            "epoch": 3,
+            "defense": "D_instantiation_spotcheck",
+            "designed_against": "M8_off_by_one_boundary",
+            "independent_hits": [
+              [
+                "SIM-M10_vacuous_instantiation-000",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-001",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-002",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-003",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-004",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M11_induction_base_omission-000",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-001",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-002",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-003",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-004",
+                "M11_induction_base_omission"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "arm": "NULL",
+        "epochs": 50,
+        "promotions": 2,
+        "first_promotion_epoch": 2,
+        "bypasses": 13,
+        "bypass_rate_after_promotion": 0.2708333333333333,
+        "landed_rate": 0.28,
+        "bogus_kills": 9,
+        "bogus_caught": 8,
+        "landed_on_covered": 0.0,
+        "landed_on_uncovered": 0.4482758620689655,
+        "n_covered_epochs": 19,
+        "n_uncovered_epochs": 29,
+        "promotion_detail": [
+          {
+            "epoch": 2,
+            "defense": "D_endpoint_spotcheck",
+            "designed_against": "M5_non_equivalent_rewrite",
+            "independent_hits": [
+              [
+                "SIM-M9_invalid_transitivity-000",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-001",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-002",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-003",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-004",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M12_modulus_confusion-000",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-001",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-002",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-003",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-004",
+                "M12_modulus_confusion"
+              ]
+            ]
+          },
+          {
+            "epoch": 18,
+            "defense": "D_instantiation_spotcheck",
+            "designed_against": "M8_off_by_one_boundary",
+            "independent_hits": [
+              [
+                "SIM-M10_vacuous_instantiation-000",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-001",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-002",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-003",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-004",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M11_induction_base_omission-000",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-001",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-002",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-003",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-004",
+                "M11_induction_base_omission"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "arm": "NULL",
+        "epochs": 50,
+        "promotions": 1,
+        "first_promotion_epoch": 2,
+        "bypasses": 12,
+        "bypass_rate_after_promotion": 0.25,
+        "landed_rate": 0.28,
+        "bogus_kills": 3,
+        "bogus_caught": 2,
+        "landed_on_covered": 0.0,
+        "landed_on_uncovered": 0.4,
+        "n_covered_epochs": 18,
+        "n_uncovered_epochs": 30,
+        "promotion_detail": [
+          {
+            "epoch": 2,
+            "defense": "D_endpoint_spotcheck",
+            "designed_against": "M7_unjustified_independence",
+            "independent_hits": [
+              [
+                "SIM-M9_invalid_transitivity-000",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-001",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-002",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-003",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-004",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M12_modulus_confusion-000",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-001",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-002",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-003",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-004",
+                "M12_modulus_confusion"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "arm": "NULL",
+        "epochs": 50,
+        "promotions": 2,
+        "first_promotion_epoch": 2,
+        "bypasses": 11,
+        "bypass_rate_after_promotion": 0.22916666666666666,
+        "landed_rate": 0.26,
+        "bogus_kills": 4,
+        "bogus_caught": 4,
+        "landed_on_covered": 0.0,
+        "landed_on_uncovered": 0.3548387096774194,
+        "n_covered_epochs": 17,
+        "n_uncovered_epochs": 31,
+        "promotion_detail": [
+          {
+            "epoch": 2,
+            "defense": "D_instantiation_spotcheck",
+            "designed_against": "M8_off_by_one_boundary",
+            "independent_hits": [
+              [
+                "SIM-M10_vacuous_instantiation-000",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-001",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-002",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-003",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-004",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M11_induction_base_omission-000",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-001",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-002",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-003",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-004",
+                "M11_induction_base_omission"
+              ]
+            ]
+          },
+          {
+            "epoch": 13,
+            "defense": "D_endpoint_spotcheck",
+            "designed_against": "M7_unjustified_independence",
+            "independent_hits": [
+              [
+                "SIM-M9_invalid_transitivity-000",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-001",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-002",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-003",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-004",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M12_modulus_confusion-000",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-001",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-002",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-003",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-004",
+                "M12_modulus_confusion"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "arm": "NULL",
+        "epochs": 50,
+        "promotions": 2,
+        "first_promotion_epoch": 5,
+        "bypasses": 12,
+        "bypass_rate_after_promotion": 0.26666666666666666,
+        "landed_rate": 0.26,
+        "bogus_kills": 9,
+        "bogus_caught": 5,
+        "landed_on_covered": 0.0,
+        "landed_on_uncovered": 0.42857142857142855,
+        "n_covered_epochs": 17,
+        "n_uncovered_epochs": 28,
+        "promotion_detail": [
+          {
+            "epoch": 5,
+            "defense": "D_instantiation_spotcheck",
+            "designed_against": "M8_off_by_one_boundary",
+            "independent_hits": [
+              [
+                "SIM-M10_vacuous_instantiation-000",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-001",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-002",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-003",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-004",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M11_induction_base_omission-000",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-001",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-002",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-003",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-004",
+                "M11_induction_base_omission"
+              ]
+            ]
+          },
+          {
+            "epoch": 11,
+            "defense": "D_endpoint_spotcheck",
+            "designed_against": "M7_unjustified_independence",
+            "independent_hits": [
+              [
+                "SIM-M9_invalid_transitivity-000",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-001",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-002",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-003",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-004",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M12_modulus_confusion-000",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-001",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-002",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-003",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-004",
+                "M12_modulus_confusion"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "arm": "NULL",
+        "epochs": 50,
+        "promotions": 2,
+        "first_promotion_epoch": 0,
+        "bypasses": 10,
+        "bypass_rate_after_promotion": 10.0,
+        "landed_rate": 0.2,
+        "bogus_kills": 13,
+        "bogus_caught": 10,
+        "landed_on_covered": 0.0,
+        "landed_on_uncovered": 0.3448275862068966,
+        "n_covered_epochs": 21,
+        "n_uncovered_epochs": 29,
+        "promotion_detail": [
+          {
+            "epoch": 0,
+            "defense": "D_instantiation_spotcheck",
+            "designed_against": "M8_off_by_one_boundary",
+            "independent_hits": [
+              [
+                "SIM-M10_vacuous_instantiation-000",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-001",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-002",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-003",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-004",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M11_induction_base_omission-000",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-001",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-002",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-003",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-004",
+                "M11_induction_base_omission"
+              ]
+            ]
+          },
+          {
+            "epoch": 2,
+            "defense": "D_endpoint_spotcheck",
+            "designed_against": "M5_non_equivalent_rewrite",
+            "independent_hits": [
+              [
+                "SIM-M9_invalid_transitivity-000",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-001",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-002",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-003",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-004",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M12_modulus_confusion-000",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-001",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-002",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-003",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-004",
+                "M12_modulus_confusion"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "arm": "NULL",
+        "epochs": 50,
+        "promotions": 2,
+        "first_promotion_epoch": 0,
+        "bypasses": 7,
+        "bypass_rate_after_promotion": 7.0,
+        "landed_rate": 0.14,
+        "bogus_kills": 4,
+        "bogus_caught": 1,
+        "landed_on_covered": 0.0,
+        "landed_on_uncovered": 0.25,
+        "n_covered_epochs": 22,
+        "n_uncovered_epochs": 28,
+        "promotion_detail": [
+          {
+            "epoch": 0,
+            "defense": "D_endpoint_spotcheck",
+            "designed_against": "M4_domain_widening",
+            "independent_hits": [
+              [
+                "SIM-M9_invalid_transitivity-000",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-001",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-002",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-003",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-004",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M12_modulus_confusion-000",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-001",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-002",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-003",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-004",
+                "M12_modulus_confusion"
+              ]
+            ]
+          },
+          {
+            "epoch": 14,
+            "defense": "D_instantiation_spotcheck",
+            "designed_against": "M8_off_by_one_boundary",
+            "independent_hits": [
+              [
+                "SIM-M10_vacuous_instantiation-000",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-001",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-002",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-003",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-004",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M11_induction_base_omission-000",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-001",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-002",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-003",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-004",
+                "M11_induction_base_omission"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "arm": "NULL",
+        "epochs": 50,
+        "promotions": 2,
+        "first_promotion_epoch": 15,
+        "bypasses": 12,
+        "bypass_rate_after_promotion": 0.34285714285714286,
+        "landed_rate": 0.36,
+        "bogus_kills": 11,
+        "bogus_caught": 11,
+        "landed_on_covered": 0.0,
+        "landed_on_uncovered": 0.5714285714285714,
+        "n_covered_epochs": 14,
+        "n_uncovered_epochs": 21,
+        "promotion_detail": [
+          {
+            "epoch": 15,
+            "defense": "D_instantiation_spotcheck",
+            "designed_against": "M8_off_by_one_boundary",
+            "independent_hits": [
+              [
+                "SIM-M10_vacuous_instantiation-000",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-001",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-002",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-003",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-004",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M11_induction_base_omission-000",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-001",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-002",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-003",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-004",
+                "M11_induction_base_omission"
+              ]
+            ]
+          },
+          {
+            "epoch": 27,
+            "defense": "D_endpoint_spotcheck",
+            "designed_against": "M4_domain_widening",
+            "independent_hits": [
+              [
+                "SIM-M9_invalid_transitivity-000",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-001",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-002",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-003",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-004",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M12_modulus_confusion-000",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-001",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-002",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-003",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-004",
+                "M12_modulus_confusion"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "arm": "NULL",
+        "epochs": 50,
+        "promotions": 2,
+        "first_promotion_epoch": 0,
+        "bypasses": 13,
+        "bypass_rate_after_promotion": 13.0,
+        "landed_rate": 0.26,
+        "bogus_kills": 7,
+        "bogus_caught": 5,
+        "landed_on_covered": 0.0,
+        "landed_on_uncovered": 0.3939393939393939,
+        "n_covered_epochs": 17,
+        "n_uncovered_epochs": 33,
+        "promotion_detail": [
+          {
+            "epoch": 0,
+            "defense": "D_endpoint_spotcheck",
+            "designed_against": "M7_unjustified_independence",
+            "independent_hits": [
+              [
+                "SIM-M9_invalid_transitivity-000",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-001",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-002",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-003",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-004",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M12_modulus_confusion-000",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-001",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-002",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-003",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-004",
+                "M12_modulus_confusion"
+              ]
+            ]
+          },
+          {
+            "epoch": 21,
+            "defense": "D_instantiation_spotcheck",
+            "designed_against": "M8_off_by_one_boundary",
+            "independent_hits": [
+              [
+                "SIM-M10_vacuous_instantiation-000",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-001",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-002",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-003",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-004",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M11_induction_base_omission-000",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-001",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-002",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-003",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-004",
+                "M11_induction_base_omission"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "arm": "NULL",
+        "epochs": 50,
+        "promotions": 2,
+        "first_promotion_epoch": 8,
+        "bypasses": 10,
+        "bypass_rate_after_promotion": 0.23809523809523808,
+        "landed_rate": 0.3,
+        "bogus_kills": 7,
+        "bogus_caught": 7,
+        "landed_on_covered": 0.0,
+        "landed_on_uncovered": 0.45454545454545453,
+        "n_covered_epochs": 20,
+        "n_uncovered_epochs": 22,
+        "promotion_detail": [
+          {
+            "epoch": 8,
+            "defense": "D_endpoint_spotcheck",
+            "designed_against": "M4_domain_widening",
+            "independent_hits": [
+              [
+                "SIM-M9_invalid_transitivity-000",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-001",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-002",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-003",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-004",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M12_modulus_confusion-000",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-001",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-002",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-003",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-004",
+                "M12_modulus_confusion"
+              ]
+            ]
+          },
+          {
+            "epoch": 16,
+            "defense": "D_instantiation_spotcheck",
+            "designed_against": "M8_off_by_one_boundary",
+            "independent_hits": [
+              [
+                "SIM-M10_vacuous_instantiation-000",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-001",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-002",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-003",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-004",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M11_induction_base_omission-000",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-001",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-002",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-003",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-004",
+                "M11_induction_base_omission"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "arm": "NULL",
+        "epochs": 50,
+        "promotions": 2,
+        "first_promotion_epoch": 2,
+        "bypasses": 10,
+        "bypass_rate_after_promotion": 0.20833333333333334,
+        "landed_rate": 0.2,
+        "bogus_kills": 11,
+        "bogus_caught": 6,
+        "landed_on_covered": 0.0,
+        "landed_on_uncovered": 0.38461538461538464,
+        "n_covered_epochs": 22,
+        "n_uncovered_epochs": 26,
+        "promotion_detail": [
+          {
+            "epoch": 2,
+            "defense": "D_endpoint_spotcheck",
+            "designed_against": "M7_unjustified_independence",
+            "independent_hits": [
+              [
+                "SIM-M9_invalid_transitivity-000",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-001",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-002",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-003",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-004",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M12_modulus_confusion-000",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-001",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-002",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-003",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-004",
+                "M12_modulus_confusion"
+              ]
+            ]
+          },
+          {
+            "epoch": 31,
+            "defense": "D_instantiation_spotcheck",
+            "designed_against": "M8_off_by_one_boundary",
+            "independent_hits": [
+              [
+                "SIM-M10_vacuous_instantiation-000",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-001",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-002",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-003",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-004",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M11_induction_base_omission-000",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-001",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-002",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-003",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-004",
+                "M11_induction_base_omission"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "arm": "NULL",
+        "epochs": 50,
+        "promotions": 2,
+        "first_promotion_epoch": 6,
+        "bypasses": 18,
+        "bypass_rate_after_promotion": 0.4090909090909091,
+        "landed_rate": 0.44,
+        "bogus_kills": 16,
+        "bogus_caught": 9,
+        "landed_on_covered": 0.0,
+        "landed_on_uncovered": 0.5294117647058824,
+        "n_covered_epochs": 10,
+        "n_uncovered_epochs": 34,
+        "promotion_detail": [
+          {
+            "epoch": 6,
+            "defense": "D_instantiation_spotcheck",
+            "designed_against": "M8_off_by_one_boundary",
+            "independent_hits": [
+              [
+                "SIM-M10_vacuous_instantiation-000",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-001",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-002",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-003",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M10_vacuous_instantiation-004",
+                "M10_vacuous_instantiation"
+              ],
+              [
+                "SIM-M11_induction_base_omission-000",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-001",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-002",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-003",
+                "M11_induction_base_omission"
+              ],
+              [
+                "SIM-M11_induction_base_omission-004",
+                "M11_induction_base_omission"
+              ]
+            ]
+          },
+          {
+            "epoch": 41,
+            "defense": "D_endpoint_spotcheck",
+            "designed_against": "M4_domain_widening",
+            "independent_hits": [
+              [
+                "SIM-M9_invalid_transitivity-000",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-001",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-002",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-003",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M9_invalid_transitivity-004",
+                "M9_invalid_transitivity"
+              ],
+              [
+                "SIM-M12_modulus_confusion-000",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-001",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-002",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-003",
+                "M12_modulus_confusion"
+              ],
+              [
+                "SIM-M12_modulus_confusion-004",
+                "M12_modulus_confusion"
+              ]
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "permutation_p": {
+    "promotions": 1.0,
+    "bypasses": 0.0004997501249375312,
+    "landed_rate": 0.0004997501249375312,
+    "bogus_caught": 0.0069965017491254375
+  }
+}

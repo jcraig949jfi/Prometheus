@@ -1,0 +1,80 @@
+SIMULATED EPOCHS — cycle machinery calibration
+======================================================================
+Scripted seats. No language models. This is instrument
+calibration, not a result about agents.
+
+building item pools ...
+  play families with items    : 8 (['M1', 'M2', 'M3', 'M4', 'M5', 'M6', 'M7', 'M8'])
+  holdout items (promotion)   : 20 from ['M10', 'M11', 'M12', 'M9']
+  clean negative examples     : 12
+
+DEFENSE COVERAGE — measured over items with known planted families
+  (declared coverage is recorded and then ignored)
+  D_instantiation_spotcheck
+    declared : ['M8_off_by_one_boundary']
+    measured : {'M8': 1.0, 'M10': 1.0, 'M11': 1.0}
+    false positives on clean reasoning: 0%
+  D_endpoint_spotcheck
+    declared : ['M4_domain_widening']
+    measured : {'M4': 1.0, 'M5': 1.0, 'M7': 1.0, 'M9': 1.0, 'M12': 1.0}
+    false positives on clean reasoning: 0%
+  D_out_of_domain_instantiation
+    declared : ['M10_vacuous_instantiation']
+    measured : {'M10': 1.0}
+    false positives on clean reasoning: 0%
+  D_unjustified_generalization
+    declared : ['bounded_search_as_proof']
+    measured : nothing
+    false positives on clean reasoning: 0%
+  D_case_cover_arity
+    declared : ['M6_case_cover_gap']
+    measured : {'M6': 1.0}
+    false positives on clean reasoning: 0%
+  D_range_start_outlier
+    declared : ['M4_domain_widening']
+    measured : nothing
+    false positives on clean reasoning: 42%
+
+FINGERPRINT HAZARD (not a defense; the score a prose-matching cheat gets)
+  a grep over mutation prose would flag 57/68 planted defects = 84%
+  structural defenses above never read `text`. If one of them ever
+  approaches this number, check why before believing it.
+
+TWO ARMS — 12 independent runs of 50 epochs each
+  Blue base detection 35% · bogus-kill rate 20% · Purple audit 70% · defense proposal 60%
+
+  metric                           ADAPTIVE         NULL    perm p
+  promotions                           2.00         1.92     1.000
+  bypasses                            19.08        11.08     0.000
+  landed_rate                          0.43         0.26     0.000
+  bogus_caught                         9.67         6.25     0.007
+
+FALSIFICATION CHECK
+  The cycle metrics SEPARATE an adapting Red from a random one.
+  Separating metrics: ['bypasses', 'landed_rate', 'bogus_caught']
+  A live game's 'the loop closed' claim would therefore be
+  falsifiable on this machinery.
+
+INTERNAL CONTROL — are the defenses doing the work?
+  Within each arm, after the first promotion, landing rate on
+  families a promoted defense covers vs families it does not.
+  ADAPTIVE  insufficient epochs in one cell
+  NULL      covered 0.00  uncovered 0.40  perm p 0.000
+  If covered and uncovered do not differ, a promoted defense is
+  not raising detection and the cycle is cosmetic.
+
+WHAT THIS SIMULATION CANNOT TEST
+  The family set is CLOSED: Red chooses from eight known mutation
+  families. A bypass here means picking a family no promoted
+  defense covers — never inventing one that does not yet exist.
+  The rulebook's most interesting outcome, Red producing an
+  unforeseen attack, is outside this vocabulary by construction.
+  Scripted seats cannot invent; that is what live agents are for.
+
+ONE ADAPTIVE RUN, in detail (graph written to sim_graph.jsonl)
+  promotions 2, first at epoch 11, bypasses 17
+    epoch  11  D_instantiation_spotcheck
+              designed against M8, promoted on independent hits: M10, M10, M10, M10
+    epoch  27  D_endpoint_spotcheck
+              designed against M4, promoted on independent hits: M9, M9, M9, M9
+  bogus kills 19, caught by Purple 11 (58%)
