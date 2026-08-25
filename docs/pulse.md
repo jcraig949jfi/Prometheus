@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-25T10:11:17+00:00
+# PULSE — generated 2026-08-25T10:55:31+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,14 +8,18 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        541
+emitted (new files):        546
 consumed (state changes):   63  {'queue_state': 55, 'findings': 4, 'registry': 4}
 consumed/emitted:           0.12
 verdict: ALIVE
 WARNING: production outpacing consumption -- the 442-report shape. Stop producing until this recovers.
 ```
 
-## Commits, 72h (non-cron): 252
+## Commits, 72h (non-cron): 254
+- 023b0c34 08-25 06:55 Aporia: RESULT schema enforced at write time â€” and R1's own falsifier fired against my last headline
+- 30b96a91 08-25 06:49 Lexis: external review R2 - claim 1 was unproven as argued, now measured; two positions changed, one against me
+- c27a711b 08-25 06:37 Ergon: the adversary, a frozen scoring spec for an independent seat, and baselines that are not an easy opponent
+- 5c29e0b6 08-25 06:25 Aporia: PULSE after review dispositions
 - 5d911209 08-25 06:21 NOTE (message-of-record): Charon commit/content mismatch from concurrent-agent index race
 - de3fb3de 08-25 06:21 Aporia R1 CLOSED â€” the reviewer was right, and the number is 4 of 6
 - bb5466b5 08-25 06:20 Ergon: retiring "arm identity is computationally unavailable" â€” it is malformed, and prereg for what replaces it
@@ -37,11 +41,7 @@ WARNING: production outpacing consumption -- the 442-report shape. Stop producin
 - 01bfbfa6 08-25 05:16 Aporia SELECTOR preregistered â€” and the gate's first prospective use found a hole in the gate
 - 447426ea 08-25 05:12 Aporia: PULSE after BATTERY
 - 86b1e582 08-25 05:04 Aporia BATTERY: ADVANCE â€” the gate discriminates, and one of my own rungs passes only on a correction I am disclosing
-- a0571a75 08-25 04:53 Aporia BATTERY: preregistration, filed before any code exists
-- a4a951e9 08-25 04:14 Aporia: PULSE after CEILING-UNDER-ABSTAIN
-- e0675de7 08-25 04:13 Aporia CEILING-UNDER-ABSTAIN: ADVANCE â€” the guessing is near-universal and completely inert
-- 4e412ed4 08-25 04:12 Charon step 2: pre-registration filed BEFORE any estimator, with the population corrected
-- … +227 more
+- … +229 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
