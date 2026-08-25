@@ -1,0 +1,113 @@
+{
+  "experiment": "BATTERY-R1-MACHINE-BOUND",
+  "date": "2026-08-25",
+  "review_item": "R1 \u2014 gate must consume underlying observations, not a transcription",
+  "derivation_notes": {
+    "IQ-PORT-1": [],
+    "IQ-NULL": [
+      "no intervention_class in artifact; derived as INSTRUMENT",
+      "null result (from ['delta_E_null_noop', 'delta_E_check_transitivity']) with no positive-control field in the artifact: G-INERT will fire"
+    ],
+    "PROVENANCE": [
+      "no intervention_class in artifact; derived as INSTRUMENT"
+    ],
+    "TRANSFER-1": [
+      "no intervention_class in artifact; derived as INSTRUMENT"
+    ],
+    "SCORER-FIX": [
+      "no intervention_class in artifact; derived as INSTRUMENT"
+    ],
+    "CEILING-ABSTAIN": [
+      "no intervention_class in artifact; derived as INSTRUMENT",
+      "no reading with an explicit n could be derived",
+      "null result (from ['tasks_lost_ceiling']) with no positive-control field in the artifact: G-INERT will fire"
+    ],
+    "BATTERY": [
+      "no intervention_class in artifact; derived as INSTRUMENT",
+      "no reading with an explicit n could be derived"
+    ],
+    "SELECTOR-PREFLIGHT": [
+      "no intervention_class in artifact; derived as INSTRUMENT"
+    ]
+  },
+  "derived_verdicts": {
+    "IQ-PORT-1": "INADMISSIBLE",
+    "IQ-NULL": "INADMISSIBLE",
+    "PROVENANCE": "ADMISSIBLE",
+    "TRANSFER-1": "ADMISSIBLE",
+    "SCORER-FIX": "ADMISSIBLE",
+    "CEILING-ABSTAIN": "INADMISSIBLE",
+    "BATTERY": "INADMISSIBLE",
+    "SELECTOR-PREFLIGHT": "ADMISSIBLE"
+  },
+  "derived_reasons": {
+    "IQ-PORT-1": [
+      "G-BRANCH: branch table not asserted to partition its outcome space"
+    ],
+    "IQ-NULL": [
+      "G-INERT: null result with no positive control establishing the instrument moves",
+      "G-BRANCH: branch table not asserted to partition its outcome space"
+    ],
+    "CEILING-ABSTAIN": [
+      "G-MANDATORY: falsifier 'evaluation' required for INSTRUMENT was not run",
+      "G-INERT: null result with no positive control establishing the instrument moves"
+    ],
+    "BATTERY": [
+      "G-MANDATORY: falsifier 'evaluation' required for INSTRUMENT was not run"
+    ]
+  },
+  "identity_check": {
+    "IQ-PORT-1": "IQ-PORT-1",
+    "IQ-NULL": "IQ-NULL",
+    "PROVENANCE": "IQ-PORT-1-PROVENANCE",
+    "TRANSFER-1": "TRANSFER-1",
+    "SCORER-FIX": "SCORER-FIX",
+    "CEILING-ABSTAIN": "CEILING-UNDER-ABSTAIN",
+    "BATTERY": "BATTERY",
+    "SELECTOR-PREFLIGHT": "SELECTOR-PREFLIGHT"
+  },
+  "identity_matches_expected": {
+    "IQ-PORT-1": true,
+    "IQ-NULL": true,
+    "PROVENANCE": false,
+    "TRANSFER-1": true,
+    "SCORER-FIX": true,
+    "CEILING-ABSTAIN": false,
+    "BATTERY": true,
+    "SELECTOR-PREFLIGHT": true
+  },
+  "hand_verdicts": {
+    "IQ-PORT-1": "ADMISSIBLE",
+    "IQ-NULL": "ADMISSIBLE",
+    "PROVENANCE": "ADMISSIBLE",
+    "TRANSFER-1": "ADMISSIBLE",
+    "SCORER-FIX": "ADMISSIBLE",
+    "CEILING-ABSTAIN": "ADMISSIBLE"
+  },
+  "verdict_disagreements": {
+    "CEILING-ABSTAIN": {
+      "hand": "ADMISSIBLE",
+      "derived": "INADMISSIBLE"
+    },
+    "IQ-PORT-1": {
+      "hand": "ADMISSIBLE",
+      "derived": "INADMISSIBLE"
+    },
+    "SELECTOR-PREFLIGHT": {
+      "hand": null,
+      "derived": "ADMISSIBLE"
+    },
+    "BATTERY": {
+      "hand": null,
+      "derived": "INADMISSIBLE"
+    },
+    "IQ-NULL": {
+      "hand": "ADMISSIBLE",
+      "derived": "INADMISSIBLE"
+    }
+  },
+  "n_disagreements": 5,
+  "R1_transcription_was_lossy": true,
+  "dropped_records": 0,
+  "dropped_records_note": "Every artifact in FILES is either derived-and-adjudicated or recorded ARTIFACT ABSENT. Underivable fields are emitted as notes, never filled in."
+}
