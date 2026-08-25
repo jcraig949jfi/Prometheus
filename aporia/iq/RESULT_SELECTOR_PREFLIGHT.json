@@ -1,0 +1,210 @@
+{
+  "experiment": "SELECTOR-PREFLIGHT",
+  "date": "2026-08-25",
+  "agent": "Aporia (M1)",
+  "prereg": "aporia/iq/PREREG_SELECTOR_2026-08-25.md",
+  "prereg_commit": "01bfbfa6",
+  "pool_uses_abstain_scorers": true,
+  "abstain_note": "9 of 10 scorers guess candidates[0]; measuring dE under the guessing pool would hand junk candidates a spurious 1-in-4 floor.",
+  "frozen_pool": [
+    "solve_sat",
+    "modus_ponens",
+    "check_transitivity",
+    "negate",
+    "bayesian_update",
+    "expected_value",
+    "entropy",
+    "coin_flip_independence",
+    "dag_traverse",
+    "topological_sort",
+    "counterfactual_intervention",
+    "solve_constraints",
+    "pigeonhole_check",
+    "fencepost_count",
+    "bat_and_ball",
+    "modular_arithmetic",
+    "all_but_n",
+    "solve_linear_system",
+    "temporal_order",
+    "direction_composition",
+    "track_beliefs",
+    "sally_anne_test",
+    "confidence_from_agreement",
+    "information_sufficiency",
+    "parity_check",
+    "parse_all_but_n",
+    "op_all_but_n"
+  ],
+  "frozen_pool_size": 27,
+  "frozen_pool_sha256": "2ad41a2dbd1bcea85e658ca409a926f51621ba67acb051bb0b4895cec9058707",
+  "E_C_under_abstain": 0.833333,
+  "candidates": {
+    "solve_sat": {
+      "expressible": false,
+      "reason": "parameter clauses:list[list[int]] has no slot",
+      "dE": null
+    },
+    "modus_ponens": {
+      "expressible": true,
+      "dE": 0.0
+    },
+    "check_transitivity": {
+      "expressible": true,
+      "dE": 0.0
+    },
+    "negate": {
+      "expressible": true,
+      "dE": 0.0
+    },
+    "bayesian_update": {
+      "expressible": true,
+      "dE": 0.0
+    },
+    "expected_value": {
+      "expressible": false,
+      "reason": "parameter outcomes:list[tuple[float, float]] has no slot",
+      "dE": null
+    },
+    "entropy": {
+      "expressible": true,
+      "dE": 0.0
+    },
+    "coin_flip_independence": {
+      "expressible": true,
+      "dE": 0.0
+    },
+    "dag_traverse": {
+      "expressible": true,
+      "dE": 0.0
+    },
+    "topological_sort": {
+      "expressible": true,
+      "dE": 0.0
+    },
+    "counterfactual_intervention": {
+      "expressible": false,
+      "reason": "parameter values:dict[str, float] has no slot",
+      "dE": null
+    },
+    "solve_constraints": {
+      "expressible": false,
+      "reason": "parameter constraints:list[tuple[list[str], callable]] has no slot",
+      "dE": null
+    },
+    "pigeonhole_check": {
+      "expressible": true,
+      "dE": 0.016667
+    },
+    "fencepost_count": {
+      "expressible": true,
+      "dE": 0.0
+    },
+    "bat_and_ball": {
+      "expressible": false,
+      "reason": "return tuple[float, float] has no slot",
+      "dE": null
+    },
+    "modular_arithmetic": {
+      "expressible": true,
+      "dE": 0.0
+    },
+    "all_but_n": {
+      "expressible": true,
+      "dE": 0.0
+    },
+    "solve_linear_system": {
+      "expressible": false,
+      "reason": "parameter A:list[list[float]] has no slot",
+      "dE": null
+    },
+    "temporal_order": {
+      "expressible": false,
+      "reason": "parameter events:list[tuple[str, str, str]] has no slot",
+      "dE": null
+    },
+    "direction_composition": {
+      "expressible": true,
+      "dE": 0.0
+    },
+    "track_beliefs": {
+      "expressible": false,
+      "reason": "parameter observations:list[tuple[str, str, bool]] has no slot",
+      "dE": null
+    },
+    "sally_anne_test": {
+      "expressible": false,
+      "reason": "return dict[str, str] has no slot",
+      "dE": null
+    },
+    "confidence_from_agreement": {
+      "expressible": true,
+      "dE": 0.0
+    },
+    "information_sufficiency": {
+      "expressible": true,
+      "dE": 0.0
+    },
+    "parity_check": {
+      "expressible": true,
+      "dE": 0.0
+    },
+    "parse_all_but_n": {
+      "expressible": true,
+      "dE": 0.0
+    },
+    "op_all_but_n": {
+      "expressible": true,
+      "dE": 0.0
+    }
+  },
+  "not_expressible": {
+    "solve_sat": "parameter clauses:list[list[int]] has no slot",
+    "expected_value": "parameter outcomes:list[tuple[float, float]] has no slot",
+    "counterfactual_intervention": "parameter values:dict[str, float] has no slot",
+    "solve_constraints": "parameter constraints:list[tuple[list[str], callable]] has no slot",
+    "bat_and_ball": "return tuple[float, float] has no slot",
+    "solve_linear_system": "parameter A:list[list[float]] has no slot",
+    "temporal_order": "parameter events:list[tuple[str, str, str]] has no slot",
+    "track_beliefs": "parameter observations:list[tuple[str, str, bool]] has no slot",
+    "sally_anne_test": "return dict[str, str] has no slot"
+  },
+  "n_expressible": 18,
+  "n_not_expressible": 9,
+  "dropped_records": 0,
+  "dropped_records_note": "LOUD: every one of the frozen pool is accounted for as either expressible-with-a-dE or not-expressible-with-a-reason. n_expressible + n_not_expressible must equal pool size.",
+  "dE_values": {
+    "modus_ponens": 0.0,
+    "check_transitivity": 0.0,
+    "negate": 0.0,
+    "bayesian_update": 0.0,
+    "entropy": 0.0,
+    "coin_flip_independence": 0.0,
+    "dag_traverse": 0.0,
+    "topological_sort": 0.0,
+    "pigeonhole_check": 0.016667,
+    "fencepost_count": 0.0,
+    "modular_arithmetic": 0.0,
+    "all_but_n": 0.0,
+    "direction_composition": 0.0,
+    "confidence_from_agreement": 0.0,
+    "information_sufficiency": 0.0,
+    "parity_check": 0.0,
+    "parse_all_but_n": 0.0,
+    "op_all_but_n": 0.0
+  },
+  "dE_min": 0.0,
+  "dE_max": 0.016667,
+  "dE_mean": 0.000926,
+  "dE_variance": 1.4575e-05,
+  "dE_distinct_values": [
+    0.0,
+    0.016667
+  ],
+  "n_positive_dE": 1,
+  "PF3_threshold": 3,
+  "PF3_passes": false,
+  "verdict": "VACUOUS_DV_CANNOT_VARY",
+  "verdict_rule_null_output": "If every candidate scores dE = 0 the DV is constant and NO selector can beat another for reasons related to selection. That is reported as VACUOUS -- a statement about the substrate's headroom -- and explicitly NOT as 'no selector beat random', which would be a kill of dE-as-selector that this reading cannot support.",
+  "branch_table_partitions": true,
+  "NOT_A_KILL": "VACUOUS is NOT the preregistered KILL. The KILL requires PF3 to pass and then R-ranking to fail against compression or random. That comparison was never reached, so dE-as-selector is UNTESTED here, not refuted."
+}

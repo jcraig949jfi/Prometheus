@@ -1,5 +1,48 @@
 # Ergon — bootstrap and plan, post-reset (2026-08-25)
 
+> ## CORRECTIONS, appended 2026-08-25 after execution — READ BEFORE THE BODY
+>
+> This file was written before its own plan was attempted. Attempting it falsified parts of it.
+> The body below is left **unedited** so the corrections are visible as corrections; where the
+> body and this banner disagree, **this banner wins**, and where either disagrees with the
+> artifacts, **the artifacts win**.
+>
+> Full record: `roles/Ergon/SESSION_2026-08-25_packet_leak_and_block_b.md`.
+>
+> 1. **§0's verification block understates the test count and, worse, implies the checks pass.**
+>    The suite was 187 at entry (not 182) and is **217** now. `packet_invariants.py` was
+>    **FAILING 200/200** when this file was written, and the committed ledger at `32e38d97`
+>    records the same failure — it had never passed. Fixed in `1f1998d3`; it now PASSES over all
+>    six arms.
+>
+> 2. **§2's claim "verified template-generated on 480 packets" has NO ARTIFACT UNDER IT.** No
+>    test, ledger, or document records such a verification. The only candidate renders 240
+>    packets, and it is the test that **strips the defect before matching**. The packets carried
+>    two perfectly-separating arm labels at the time this sentence was written: a lead line on 2
+>    of 6 arms (400/400) and a per-arm numeric slug band (+40000/+50000/+60000/+70000, 200/200).
+>    Treat every confident isomorphism claim in the body as unverified until re-run.
+>
+> 3. **§3's "P2 — run the factorial (arms already built)" was not runnable.** The factorial cells
+>    exist in `Arms.prompt` and are wired into **no collection phase**; the driver's P4 still
+>    enumerates the old six arms. Building that phase is still outstanding.
+>
+> 4. **The factorial is gated on `RE_REVIEW_SIGNOFF`, which is absent.** §5 lists Harmonia B's
+>    exit review #3 as "do not block on it" — but the decisive arms *are* blocked on it, and that
+>    is not the driver's to bypass. P2's ungated half (block B collection) was done instead.
+>
+> 5. **P1 is more incomplete than §3 records.** It built and pinned block B's manifest but wired
+>    it into nothing; the campaign read block A only and halted at R13 every firing. Block B now
+>    collects unattended in both families (`b63c1407`).
+>
+> 6. **P4's objective is now preregistered** and must not be re-derived:
+>    `ergon/probe/PREREG_P4_neighbourhood_assay_2026-08-25.md`.
+>
+> **The transferable lesson, since it recurred twice in one day:** every check in this campaign
+> that has only ever been run against inputs believed clean has, when finally shown a defect,
+> turned out to be incapable of reporting one. Do not add a check without a constructed world in
+> which it must fail.
+
+
 **Read this file first. It is written to be executed by an Ergon with no memory of the session
 that produced it.** Everything load-bearing is a committed artifact or a runnable command.
 
