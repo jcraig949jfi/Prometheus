@@ -1,0 +1,777 @@
+{
+  "command": "--modules techne.lib.alexander_polynomial techne.lib.cf_expansion techne.lib.faltings_height techne.lib.gpd_tail_fit techne.lib.lll_reduction techne.lib.rank_parity_null techne.lib.smith_normal_form techne.lib.tail_vs_bulk techne.lib.tropical_rank techne.lib.tt_splice prometheus_math.certified prometheus_math.tensor_train prometheus_math.adjusted_rand prometheus_math.rand_index prometheus_math.fowlkes_mallows --timeout 8.0",
+  "n_calls": 108,
+  "by_outcome": {
+    "RAISES": 91,
+    "RETURNS": 16,
+    "HANGS": 1
+  },
+  "hangs": [
+    {
+      "module": "techne.lib.cf_expansion",
+      "fn": "zaremba_test",
+      "arg": "9223372036854775808",
+      "outcome": "HANGS",
+      "budget_s": 8.3
+    }
+  ],
+  "nans": [],
+  "rows": [
+    {
+      "module": "techne.lib.alexander_polynomial",
+      "fn": "alexander_polynomial",
+      "arg": "[]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.8
+    },
+    {
+      "module": "techne.lib.alexander_polynomial",
+      "fn": "alexander_polynomial",
+      "arg": "[0]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.8
+    },
+    {
+      "module": "techne.lib.alexander_polynomial",
+      "fn": "alexander_polynomial",
+      "arg": "[0.0]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.8
+    },
+    {
+      "module": "techne.lib.alexander_polynomial",
+      "fn": "alexander_polynomial",
+      "arg": "[nan]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.8
+    },
+    {
+      "module": "techne.lib.alexander_polynomial",
+      "fn": "alexander_polynomial",
+      "arg": "[1e+308, -1e+308]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.8
+    },
+    {
+      "module": "techne.lib.alexander_polynomial",
+      "fn": "alexander_coeffs",
+      "arg": "[]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.8
+    },
+    {
+      "module": "techne.lib.alexander_polynomial",
+      "fn": "alexander_coeffs",
+      "arg": "[0]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.8
+    },
+    {
+      "module": "techne.lib.alexander_polynomial",
+      "fn": "alexander_coeffs",
+      "arg": "[0.0]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.8
+    },
+    {
+      "module": "techne.lib.alexander_polynomial",
+      "fn": "alexander_coeffs",
+      "arg": "[nan]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.8
+    },
+    {
+      "module": "techne.lib.alexander_polynomial",
+      "fn": "alexander_coeffs",
+      "arg": "[1e+308, -1e+308]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.8
+    },
+    {
+      "module": "techne.lib.cf_expansion",
+      "fn": "zaremba_test",
+      "arg": "0",
+      "outcome": "RETURNS {'q': 0, 'bound': 5, 'satisfies': False, 'witness': None, 'n",
+      "budget_s": 8.3
+    },
+    {
+      "module": "techne.lib.cf_expansion",
+      "fn": "zaremba_test",
+      "arg": "-1",
+      "outcome": "RETURNS {'q': -1, 'bound': 5, 'satisfies': False, 'witness': None, '",
+      "budget_s": 8.3
+    },
+    {
+      "module": "techne.lib.cf_expansion",
+      "fn": "zaremba_test",
+      "arg": "1",
+      "outcome": "RETURNS {'q': 1, 'bound': 5, 'satisfies': False, 'witness': None, 'n",
+      "budget_s": 8.3
+    },
+    {
+      "module": "techne.lib.cf_expansion",
+      "fn": "zaremba_test",
+      "arg": "9223372036854775808",
+      "outcome": "HANGS",
+      "budget_s": 8.3
+    },
+    {
+      "module": "techne.lib.cf_expansion",
+      "fn": "zaremba_test",
+      "arg": "-9223372036854775808",
+      "outcome": "RETURNS {'q': -9223372036854775808, 'bound': 5, 'satisfies': False,",
+      "budget_s": 8.3
+    },
+    {
+      "module": "techne.lib.cf_expansion",
+      "fn": "cf_from_float",
+      "arg": "0.0",
+      "outcome": "RETURNS [0]",
+      "budget_s": 8.3
+    },
+    {
+      "module": "techne.lib.cf_expansion",
+      "fn": "cf_from_float",
+      "arg": "-1.0",
+      "outcome": "RETURNS [-1]",
+      "budget_s": 8.3
+    },
+    {
+      "module": "techne.lib.cf_expansion",
+      "fn": "cf_from_float",
+      "arg": "nan",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.3
+    },
+    {
+      "module": "techne.lib.cf_expansion",
+      "fn": "cf_from_float",
+      "arg": "inf",
+      "outcome": "RAISES OverflowError",
+      "budget_s": 8.3
+    },
+    {
+      "module": "techne.lib.cf_expansion",
+      "fn": "cf_from_float",
+      "arg": "-inf",
+      "outcome": "RAISES OverflowError",
+      "budget_s": 8.3
+    },
+    {
+      "module": "techne.lib.cf_expansion",
+      "fn": "cf_from_float",
+      "arg": "1e+308",
+      "outcome": "RETURNS [10000000000000000109790636294404554174049230967731184633681",
+      "budget_s": 8.3
+    },
+    {
+      "module": "techne.lib.cf_expansion",
+      "fn": "cf_expand_batch",
+      "arg": "[]",
+      "outcome": "RETURNS []",
+      "budget_s": 8.3
+    },
+    {
+      "module": "techne.lib.cf_expansion",
+      "fn": "cf_expand_batch",
+      "arg": "[0]",
+      "outcome": "RAISES TypeError",
+      "budget_s": 8.3
+    },
+    {
+      "module": "techne.lib.cf_expansion",
+      "fn": "cf_expand_batch",
+      "arg": "[0.0]",
+      "outcome": "RAISES TypeError",
+      "budget_s": 8.3
+    },
+    {
+      "module": "techne.lib.cf_expansion",
+      "fn": "cf_expand_batch",
+      "arg": "[nan]",
+      "outcome": "RAISES TypeError",
+      "budget_s": 8.3
+    },
+    {
+      "module": "techne.lib.cf_expansion",
+      "fn": "cf_expand_batch",
+      "arg": "[1e+308, -1e+308]",
+      "outcome": "RAISES TypeError",
+      "budget_s": 8.3
+    },
+    {
+      "module": "techne.lib.cf_expansion",
+      "fn": "cf_expand_array",
+      "arg": "[]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.3
+    },
+    {
+      "module": "techne.lib.cf_expansion",
+      "fn": "cf_expand_array",
+      "arg": "[0]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.3
+    },
+    {
+      "module": "techne.lib.cf_expansion",
+      "fn": "cf_expand_array",
+      "arg": "[0.0]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.3
+    },
+    {
+      "module": "techne.lib.cf_expansion",
+      "fn": "cf_expand_array",
+      "arg": "[nan]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.3
+    },
+    {
+      "module": "techne.lib.cf_expansion",
+      "fn": "cf_expand_array",
+      "arg": "[1e+308, -1e+308]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.3
+    },
+    {
+      "module": "techne.lib.faltings_height",
+      "fn": "faltings_height",
+      "arg": "0",
+      "outcome": "RAISES TypeError",
+      "budget_s": 8.0
+    },
+    {
+      "module": "techne.lib.faltings_height",
+      "fn": "faltings_height",
+      "arg": "-1",
+      "outcome": "RAISES TypeError",
+      "budget_s": 8.0
+    },
+    {
+      "module": "techne.lib.faltings_height",
+      "fn": "faltings_height",
+      "arg": "1",
+      "outcome": "RAISES TypeError",
+      "budget_s": 8.0
+    },
+    {
+      "module": "techne.lib.faltings_height",
+      "fn": "faltings_height",
+      "arg": "9223372036854775808",
+      "outcome": "RAISES TypeError",
+      "budget_s": 8.0
+    },
+    {
+      "module": "techne.lib.faltings_height",
+      "fn": "faltings_height",
+      "arg": "-9223372036854775808",
+      "outcome": "RAISES TypeError",
+      "budget_s": 8.0
+    },
+    {
+      "module": "techne.lib.faltings_height",
+      "fn": "faltings_data",
+      "arg": "0",
+      "outcome": "RAISES TypeError",
+      "budget_s": 8.0
+    },
+    {
+      "module": "techne.lib.faltings_height",
+      "fn": "faltings_data",
+      "arg": "-1",
+      "outcome": "RAISES TypeError",
+      "budget_s": 8.0
+    },
+    {
+      "module": "techne.lib.faltings_height",
+      "fn": "faltings_data",
+      "arg": "1",
+      "outcome": "RAISES TypeError",
+      "budget_s": 8.0
+    },
+    {
+      "module": "techne.lib.faltings_height",
+      "fn": "faltings_data",
+      "arg": "9223372036854775808",
+      "outcome": "RAISES TypeError",
+      "budget_s": 8.0
+    },
+    {
+      "module": "techne.lib.faltings_height",
+      "fn": "faltings_data",
+      "arg": "-9223372036854775808",
+      "outcome": "RAISES TypeError",
+      "budget_s": 8.0
+    },
+    {
+      "module": "techne.lib.gpd_tail_fit",
+      "fn": "diagnose_tail",
+      "arg": "[]",
+      "outcome": "RAISES IndexError",
+      "budget_s": 8.7
+    },
+    {
+      "module": "techne.lib.gpd_tail_fit",
+      "fn": "diagnose_tail",
+      "arg": "[0]",
+      "outcome": "RETURNS [{'threshold': 0.0, 'error': 'insufficient_exceedances'}, {'",
+      "budget_s": 8.7
+    },
+    {
+      "module": "techne.lib.gpd_tail_fit",
+      "fn": "diagnose_tail",
+      "arg": "[0.0]",
+      "outcome": "RETURNS [{'threshold': 0.0, 'error': 'insufficient_exceedances'}, {'",
+      "budget_s": 8.7
+    },
+    {
+      "module": "techne.lib.gpd_tail_fit",
+      "fn": "diagnose_tail",
+      "arg": "[nan]",
+      "outcome": "RETURNS [{'threshold': nan, 'error': 'insufficient_exceedances'}, {'",
+      "budget_s": 8.7
+    },
+    {
+      "module": "techne.lib.gpd_tail_fit",
+      "fn": "diagnose_tail",
+      "arg": "[1e+308, -1e+308]",
+      "outcome": "RETURNS [{'threshold': -inf, 'error': 'insufficient_exceedances'}, {",
+      "budget_s": 8.7
+    },
+    {
+      "module": "techne.lib.lll_reduction",
+      "fn": "lll",
+      "arg": "[]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.1
+    },
+    {
+      "module": "techne.lib.lll_reduction",
+      "fn": "lll",
+      "arg": "[0]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.1
+    },
+    {
+      "module": "techne.lib.lll_reduction",
+      "fn": "lll",
+      "arg": "[0.0]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.1
+    },
+    {
+      "module": "techne.lib.lll_reduction",
+      "fn": "lll",
+      "arg": "[nan]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.1
+    },
+    {
+      "module": "techne.lib.lll_reduction",
+      "fn": "lll",
+      "arg": "[1e+308, -1e+308]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.1
+    },
+    {
+      "module": "techne.lib.lll_reduction",
+      "fn": "lll_with_transform",
+      "arg": "[]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.1
+    },
+    {
+      "module": "techne.lib.lll_reduction",
+      "fn": "lll_with_transform",
+      "arg": "[0]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.1
+    },
+    {
+      "module": "techne.lib.lll_reduction",
+      "fn": "lll_with_transform",
+      "arg": "[0.0]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.1
+    },
+    {
+      "module": "techne.lib.lll_reduction",
+      "fn": "lll_with_transform",
+      "arg": "[nan]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.1
+    },
+    {
+      "module": "techne.lib.lll_reduction",
+      "fn": "lll_with_transform",
+      "arg": "[1e+308, -1e+308]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.1
+    },
+    {
+      "module": "techne.lib.lll_reduction",
+      "fn": "shortest_vector_lll",
+      "arg": "[]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.1
+    },
+    {
+      "module": "techne.lib.lll_reduction",
+      "fn": "shortest_vector_lll",
+      "arg": "[0]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.1
+    },
+    {
+      "module": "techne.lib.lll_reduction",
+      "fn": "shortest_vector_lll",
+      "arg": "[0.0]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.1
+    },
+    {
+      "module": "techne.lib.lll_reduction",
+      "fn": "shortest_vector_lll",
+      "arg": "[nan]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.1
+    },
+    {
+      "module": "techne.lib.lll_reduction",
+      "fn": "shortest_vector_lll",
+      "arg": "[1e+308, -1e+308]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.1
+    },
+    {
+      "module": "techne.lib.lll_reduction",
+      "fn": "lll_gram",
+      "arg": "[]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.1
+    },
+    {
+      "module": "techne.lib.lll_reduction",
+      "fn": "lll_gram",
+      "arg": "[0]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.1
+    },
+    {
+      "module": "techne.lib.lll_reduction",
+      "fn": "lll_gram",
+      "arg": "[0.0]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.1
+    },
+    {
+      "module": "techne.lib.lll_reduction",
+      "fn": "lll_gram",
+      "arg": "[nan]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.1
+    },
+    {
+      "module": "techne.lib.lll_reduction",
+      "fn": "lll_gram",
+      "arg": "[1e+308, -1e+308]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.1
+    },
+    {
+      "module": "techne.lib.rank_parity_null",
+      "fn": "rank_parity_null_control",
+      "arg": "[]",
+      "outcome": "RETURNS {'null_distribution': [], 'matched_population_indices': [],",
+      "budget_s": 8.1
+    },
+    {
+      "module": "techne.lib.rank_parity_null",
+      "fn": "rank_parity_null_control",
+      "arg": "[0]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.1
+    },
+    {
+      "module": "techne.lib.rank_parity_null",
+      "fn": "rank_parity_null_control",
+      "arg": "[0.0]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.1
+    },
+    {
+      "module": "techne.lib.rank_parity_null",
+      "fn": "rank_parity_null_control",
+      "arg": "[nan]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.1
+    },
+    {
+      "module": "techne.lib.rank_parity_null",
+      "fn": "rank_parity_null_control",
+      "arg": "[1e+308, -1e+308]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.1
+    },
+    {
+      "module": "techne.lib.smith_normal_form",
+      "fn": "smith_normal_form",
+      "arg": "0",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.4
+    },
+    {
+      "module": "techne.lib.smith_normal_form",
+      "fn": "smith_normal_form",
+      "arg": "-1",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.4
+    },
+    {
+      "module": "techne.lib.smith_normal_form",
+      "fn": "smith_normal_form",
+      "arg": "1",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.4
+    },
+    {
+      "module": "techne.lib.smith_normal_form",
+      "fn": "smith_normal_form",
+      "arg": "9223372036854775808",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.4
+    },
+    {
+      "module": "techne.lib.smith_normal_form",
+      "fn": "smith_normal_form",
+      "arg": "-9223372036854775808",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.4
+    },
+    {
+      "module": "techne.lib.smith_normal_form",
+      "fn": "invariant_factors",
+      "arg": "0",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.4
+    },
+    {
+      "module": "techne.lib.smith_normal_form",
+      "fn": "invariant_factors",
+      "arg": "-1",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.4
+    },
+    {
+      "module": "techne.lib.smith_normal_form",
+      "fn": "invariant_factors",
+      "arg": "1",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.4
+    },
+    {
+      "module": "techne.lib.smith_normal_form",
+      "fn": "invariant_factors",
+      "arg": "9223372036854775808",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.4
+    },
+    {
+      "module": "techne.lib.smith_normal_form",
+      "fn": "invariant_factors",
+      "arg": "-9223372036854775808",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.4
+    },
+    {
+      "module": "techne.lib.smith_normal_form",
+      "fn": "abelian_group_structure",
+      "arg": "0",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.4
+    },
+    {
+      "module": "techne.lib.smith_normal_form",
+      "fn": "abelian_group_structure",
+      "arg": "-1",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.4
+    },
+    {
+      "module": "techne.lib.smith_normal_form",
+      "fn": "abelian_group_structure",
+      "arg": "1",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.4
+    },
+    {
+      "module": "techne.lib.smith_normal_form",
+      "fn": "abelian_group_structure",
+      "arg": "9223372036854775808",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.4
+    },
+    {
+      "module": "techne.lib.smith_normal_form",
+      "fn": "abelian_group_structure",
+      "arg": "-9223372036854775808",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.4
+    },
+    {
+      "module": "techne.lib.tail_vs_bulk",
+      "fn": "decompose_spectral",
+      "arg": "[]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.1
+    },
+    {
+      "module": "techne.lib.tail_vs_bulk",
+      "fn": "decompose_spectral",
+      "arg": "[0]",
+      "outcome": "RETURNS {'tail_signal': array([0.]), 'bulk_signal': array([0.]), 'ta",
+      "budget_s": 8.1
+    },
+    {
+      "module": "techne.lib.tail_vs_bulk",
+      "fn": "decompose_spectral",
+      "arg": "[0.0]",
+      "outcome": "RETURNS {'tail_signal': array([0.]), 'bulk_signal': array([0.]), 'ta",
+      "budget_s": 8.1
+    },
+    {
+      "module": "techne.lib.tail_vs_bulk",
+      "fn": "decompose_spectral",
+      "arg": "[nan]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 8.1
+    },
+    {
+      "module": "techne.lib.tail_vs_bulk",
+      "fn": "decompose_spectral",
+      "arg": "[1e+308, -1e+308]",
+      "outcome": "RETURNS {'tail_signal': array([ 0.e+000, -1.e+308]), 'bulk_signal':",
+      "budget_s": 8.1
+    },
+    {
+      "module": "prometheus_math.tensor_train",
+      "fn": "tt_ranks",
+      "arg": "[]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 18.1
+    },
+    {
+      "module": "prometheus_math.tensor_train",
+      "fn": "tt_ranks",
+      "arg": "[0]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 18.1
+    },
+    {
+      "module": "prometheus_math.tensor_train",
+      "fn": "tt_ranks",
+      "arg": "[0.0]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 18.1
+    },
+    {
+      "module": "prometheus_math.tensor_train",
+      "fn": "tt_ranks",
+      "arg": "[nan]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 18.1
+    },
+    {
+      "module": "prometheus_math.tensor_train",
+      "fn": "tt_ranks",
+      "arg": "[1e+308, -1e+308]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 18.1
+    },
+    {
+      "module": "prometheus_math.tensor_train",
+      "fn": "tt_reconstruct",
+      "arg": "[]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 18.1
+    },
+    {
+      "module": "prometheus_math.tensor_train",
+      "fn": "tt_reconstruct",
+      "arg": "[0]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 18.1
+    },
+    {
+      "module": "prometheus_math.tensor_train",
+      "fn": "tt_reconstruct",
+      "arg": "[0.0]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 18.1
+    },
+    {
+      "module": "prometheus_math.tensor_train",
+      "fn": "tt_reconstruct",
+      "arg": "[nan]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 18.1
+    },
+    {
+      "module": "prometheus_math.tensor_train",
+      "fn": "tt_reconstruct",
+      "arg": "[1e+308, -1e+308]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 18.1
+    },
+    {
+      "module": "prometheus_math.tensor_train",
+      "fn": "tt_rank_null_test",
+      "arg": "[]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 18.1
+    },
+    {
+      "module": "prometheus_math.tensor_train",
+      "fn": "tt_rank_null_test",
+      "arg": "[0]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 18.1
+    },
+    {
+      "module": "prometheus_math.tensor_train",
+      "fn": "tt_rank_null_test",
+      "arg": "[0.0]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 18.1
+    },
+    {
+      "module": "prometheus_math.tensor_train",
+      "fn": "tt_rank_null_test",
+      "arg": "[nan]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 18.1
+    },
+    {
+      "module": "prometheus_math.tensor_train",
+      "fn": "tt_rank_null_test",
+      "arg": "[1e+308, -1e+308]",
+      "outcome": "RAISES ValueError",
+      "budget_s": 18.1
+    },
+    {
+      "module": "prometheus_math.tensor_train",
+      "fn": "signature_occupancy_tensor",
+      "arg": "''",
+      "outcome": "RAISES OperationalError",
+      "budget_s": 18.1
+    },
+    {
+      "module": "prometheus_math.tensor_train",
+      "fn": "signature_occupancy_tensor",
+      "arg": "' '",
+      "outcome": "RAISES OperationalError",
+      "budget_s": 18.1
+    }
+  ]
+}

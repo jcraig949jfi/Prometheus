@@ -26,10 +26,13 @@ review that endorses this is a review that failed.
 connections visible. The longer thesis: mathematics is the language a superintelligence would use
 to find what humanity cannot.
 
-**THE OPERATING BET.** A system that accumulates its own failures can navigate by them. Roughly a
-year of automated mathematical claim-generation and falsification has produced ~132M rejected
-records. The bet is that this residue carries directional information — that failure N can shape
-attempt N+1.
+**THE OPERATING BET, restated after review.** The original bet was that rejected attempts contain
+enough information to improve later search; roughly a year of automated mathematical
+claim-generation and falsification produced ~132M rejected records. **We no longer know whether
+the useful unit is failure residue, state-action transitions, transformation effects, or something
+else — or whether failure deserves privileged status at all.** The earlier wording of this
+paragraph ("the bet is that this residue carries directional information") smuggled the original
+hypothesis into the framing, and a reviewer was right to strike it.
 
 **WHAT WE MEASURED THIS WEEK, and it is mostly bad news for the bet:**
 
@@ -139,6 +142,19 @@ kills the program rather than narrowing it; or a measurement for Q4 we could run
 ## CUT AND PASTE TO HERE
 
 ---
+
+## Adjudicated
+
+First response received and adjudicated 2026-08-25:
+`charon/ADJUDICATION_2026-08-25_external_review.md` — seven adoptions, three amendments, one
+rejection (the Q3 cross-domain kill test, as designed, reproduces the magnitude confound of
+150-N one level up), and one correction of our own numbers that the review provoked: the clean
+action-bearing population is **411,580 rows / 222,715 states**, not the "~50K" quoted here, which
+was a strided sample misquoted as a corpus total.
+
+The load-bearing new measurement, which neither party knew before the exchange: of 47,389 states
+where both actions were recorded, **27,370 (57.8%) have outcomes that differ by action.** Regret
+is non-vacuous; the replacement experiment is live and well-powered.
 
 ## Filing instructions (internal)
 
