@@ -1,0 +1,30 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0-A0_EVAL-0004",
+  "condition": "A",
+  "claim_id": "A0_EVAL-0004",
+  "disposition": "TRUE_BUT_INVALID_ARGUMENT",
+  "evidence_kind": "bounded_search",
+  "witness": null,
+  "search_bound": "Exhaustive over the ENTIRE stated domain: all 579714 integers n in [1, 579714], exact integer arithmetic, no floating point. Result: maximum total stopping time = 469, attained at n = 511935; zero integers in the domain have stopping time >= 470. Because the search covers the full quantified set rather than a proper subset, the conclusion is established for the stated domain and is not an extrapolation. NOTE: 579714 exceeds the protocol's declarable-exhaustion cap of 200000; this overrun is reported truthfully in resource_report.max_search_size rather than the domain being sampled.",
+  "broken_step": "s7. The argument's only sweep is s2, which covers [1, 2030]. Step s7 then states, without any bridging inference, 'The sweep covers [1, 2030]; the statement is asserted for every n in [1, 579714].' Asserting a universal statement over a domain 285x larger than the region actually checked is not an inference of any kind -- there is no induction, no monotonicity lemma, no reduction of large n to small n, and no bound on stopping time as a function of n anywhere in the argument. The gap is load-bearing, not cosmetic: the extremal behaviour of the claim lives entirely in the unchecked region (the maximum over [1, 579714] is 469 at n = 511935, versus a maximum of 178 at n = 871 inside the swept region), so the swept region carries no information about how close the unswept region comes to the 470 threshold. The margin in the unchecked region is a single step. Secondarily, steps s3 through s6 are individually true but wholly irrelevant to the Collatz proposition (n^3 - n = 120 at n = 5; existence of n <= 2000 with n^2 > 2000; n^3 = n mod 6; and (n-3)n^2 = (n-3)H(n) for H(n) = n^2 + [n = 3], which is trivially true since the added indicator is multiplied by zero exactly when it is nonzero). They contribute no support to the conclusion and their listed depends_on edges create the appearance of a derivation chain where none exists. Verdict: the conclusion is correct, but the supplied argument does not establish it.",
+  "confidence": 0.98,
+  "context_items_used": [],
+  "context_items_judged_misleading": [],
+  "what_would_resolve_it": null,
+  "artifacts": [
+    "F:/Prometheus/ama_game/arena/a0/A0_EVAL/runs/A0_EVAL-0004/verify_collatz.py",
+    "F:/Prometheus/ama_game/arena/a0/A0_EVAL/runs/A0_EVAL-0004/verify_collatz.out.txt"
+  ],
+  "notes": "Instrument check: the verifier reproduces the standard value T(27) = 111 under the claim's stated convention (steps counted until the value 1 is reached, T(1) = 0), confirming the step-counting convention matches the hypothesis before the domain sweep is read. The claim is tightly constructed: 469 < 470 by one step, and the next total-stopping-time record above 511935 lies above the domain ceiling 579714, so the domain endpoint was chosen to sit just below a failure. A cheaper sampled search would therefore have been unsafe here -- nothing short of full coverage decides this claim -- which is why the search-size cap was exceeded rather than the domain subsampled.",
+  "resource_report": {
+    "output_tokens": 3600,
+    "wall_time_s": 210.0,
+    "verifier_calls": 2,
+    "solver_calls": 0,
+    "max_search_size": 579714,
+    "artifact_code_bytes": 1995,
+    "estimated": true,
+    "measurement_notes": "verifier_calls = 2 executions of verify_collatz.py (the second was a re-run solely to capture the on-disk log verify_collatz.out.txt; it produced identical output and told me nothing new, and is counted anyway). A prior shell call ran `python -c print('py ok')` as an interpreter-availability probe; it executed no verification logic and is not counted as a verifier call, but is disclosed here. solver_calls = 0, no SMT/CAS used. max_search_size 579714 EXCEEDS the protocol cap of 200000 -- this is a reported budget overrun, not a claim of exhaustion within the cap. output_tokens and wall_time_s are estimates (marked estimated: true); artifact_code_bytes = 1995 is measured."
+  }
+}

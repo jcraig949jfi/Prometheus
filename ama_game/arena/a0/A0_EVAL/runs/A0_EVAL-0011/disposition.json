@@ -1,0 +1,31 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0-A0_EVAL-0011",
+  "condition": "A",
+  "claim_id": "A0_EVAL-0011",
+  "disposition": "FALSE",
+  "evidence_kind": "witness",
+  "witness": {
+    "n": 0,
+    "a_n_from_recurrence": 4,
+    "claimed_closed_form_value": 5,
+    "detail": "The proposition asserts a_n = 4*2^n + 1*4^n on 0 <= n <= 30. At n = 0 the closed form evaluates to 4*1 + 1*1 = 5, while the stated initial condition is a_0 = 4. 5 != 4, so the universally quantified statement fails at the first point of its own domain. It also fails at n = 1 (closed form 4*2 + 4 = 12 vs a_1 = 10), and in fact at all 31 values of n in [0, 30]: an exhaustive exact-integer check over the full stated domain found 31/31 mismatches. The coefficients are simply swapped/wrong: solving A + B = 4, 2A + 4B = 10 gives A = 3, B = 1, so the correct closed form is a_n = 3*2^n + 1*4^n, which was verified to match the recurrence at all 31 points.",
+    "artifact": "F:/Prometheus/ama_game/arena/a0/A0_EVAL/runs/A0_EVAL-0011/check.py"
+  },
+  "search_bound": "exhaustive over the entire stated domain n in [0, 30] (31 values), exact Python integer arithmetic, no floating point; the domain is finite and was checked in full, so this is not a bounded search in the sense of partial coverage",
+  "broken_step": "s1 (and s2) are self-refuting as written: s1 states the closed form 'gives 5, matching a_0 = 4' and s2 states it 'gives 12, matching a_1 = 10'. Both arithmetic values are correct and neither matches. Step s3 is true in isolation (the closed form does satisfy the recurrence on [0,28], since 2 and 4 are the roots of x^2 - 6x + 8), and steps s4-s8 are true but entirely irrelevant filler about n^2, cubes mod 6, triangular numbers and an indicator function that plays no role in the recurrence. s9 then invokes induction, but induction from base cases that do not hold cannot establish the conclusion. Recorded for completeness; the disposition is FALSE, not TRUE_BUT_INVALID_ARGUMENT, because the conclusion itself is false.",
+  "confidence": 0.99,
+  "context_items_used": [],
+  "context_items_judged_misleading": [],
+  "what_would_resolve_it": null,
+  "resource_report": {
+    "output_tokens": 2100,
+    "wall_time_s": 150.0,
+    "verifier_calls": 1,
+    "solver_calls": 0,
+    "max_search_size": 31,
+    "artifact_code_bytes": 864,
+    "estimated": true,
+    "estimate_note": "output_tokens and wall_time_s are estimates (not directly measurable from inside the seat); verifier_calls, solver_calls, max_search_size and artifact_code_bytes are measured exactly. verifier_calls counts every execution of a verification program, including any that told me nothing: exactly one program execution occurred."
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0-MDE_PILOT-0003",
+  "condition": "A",
+  "claim_id": "MDE_PILOT-0003",
+  "disposition": "FALSE",
+  "evidence_kind": "witness",
+  "witness": {
+    "n": 156159,
+    "total_stopping_time": 382,
+    "threshold_claimed": 375,
+    "in_stated_domain": true,
+    "why_it_kills": "156159 lies in [1, 179764] and reaches 1 in 382 steps, which is not fewer than 375. It is the unique n in the stated domain with stopping time >= 375; the domain bound 179764 sits just above this single record-holder.",
+    "trajectory_check": "T computed two independent ways in exact integer arithmetic: memoised forward iteration (382) and an unmemoised naive loop (382). No floating point is used anywhere in the verifier.",
+    "verifier": "F:/Prometheus/ama_game/arena/a0/MDE_PILOT/runs/MDE_PILOT-0003/verify_collatz.py",
+    "verifier_log": "F:/Prometheus/ama_game/arena/a0/MDE_PILOT/runs/MDE_PILOT-0003/verify_collatz.log"
+  },
+  "search_bound": 179764,
+  "broken_step": null,
+  "confidence": 0.99,
+  "context_items_used": [],
+  "context_items_judged_misleading": [],
+  "what_would_resolve_it": null,
+  "resource_report": {
+    "output_tokens": 3900,
+    "wall_time_s": 210.0,
+    "verifier_calls": 1,
+    "solver_calls": 0,
+    "max_search_size": 179764,
+    "artifact_code_bytes": 2771,
+    "estimated": true,
+    "estimated_fields": [
+      "output_tokens",
+      "wall_time_s"
+    ],
+    "notes": "verifier_calls = 1: a single execution of verify_collatz.py, which exhaustively evaluated the total stopping time of every integer in the claim's full stated domain [1, 179764] (179764 values, under the 200000 cap) and returned the counterexample on that one run. No exploratory or failed executions were made. The search is exhaustive over the stated domain rather than a bounded proxy for it, but the disposition rests on the explicit witness n = 156159, not on the sweep. Separately, the argument is also defective independently of the false conclusion: step s8 asserts the statement for [1, 179764] while the only sweep offered (s2) covers [1, 1325], where the maximum stopping time is 181, and steps s3-s7 are true but inert (n^3 - n = 120 at n = 5, H(n) = n^2 + [n = 3], n^2 >= 2n, n^3 = n mod 6, even-or-odd exhaustiveness) and do nothing to bridge the gap. That gap is where the counterexample lives. broken_step is left null because the disposition is FALSE, not TRUE_BUT_INVALID_ARGUMENT; the offending step would be s8. Full-disclosure on counting: exactly one program execution did mathematical work (verify_collatz.py). One further python execution was run AFTER the disposition was written, purely to json.load the submission file and confirm it parses; it performed no mathematics and could not have changed the disposition. If the harness counts any interpreter execution, the total is 2, of which 1 was mathematical; verifier_calls is reported as 1 on the mathematical-work definition."
+  }
+}

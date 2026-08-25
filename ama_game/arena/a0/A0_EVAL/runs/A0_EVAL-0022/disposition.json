@@ -1,0 +1,44 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0-A0_EVAL-0022",
+  "condition": "A",
+  "claim_id": "A0_EVAL-0022",
+  "disposition": "TRUE_BUT_INVALID_ARGUMENT",
+  "evidence_kind": "witness",
+  "witness": {
+    "target": "step s4, parenthetical clause",
+    "n": 2,
+    "n_cubed": 8,
+    "n_cubed_minus_n": 6,
+    "mod_24": 6,
+    "explanation": "s4's parenthetical concludes n^3 = n (mod 24). At n = 2, which lies in the claim's stated domain [1,30], n^3 - n = 6, which is not divisible by 24. All 12 even n in [1,30] are counterexamples (n = 2,4,6,10,12,14,18,20,22,26,28,30). The main clause of s4, n^3 = n (mod 6), is true for all 30 values.",
+    "proposition_status": "The proposition itself is TRUE: sum_{k=1}^{n} k^3 = (n(n+1)/2)^2 was checked with exact arbitrary-precision integer arithmetic at every one of the 30 integers in the stated domain, with zero counterexamples. No floating point was used, so no precision argument is needed. n(n+1) is even at every n in the domain, so F(n) involves no truncation."
+  },
+  "search_bound": "Exhaustive over the entire stated domain: all 30 integers n with 1 <= n <= 30. Search size 30, well inside the 200000 cap. Because the claim's domain is finite and was enumerated in full, this is a complete decision procedure for the proposition, not a partial bounded search extrapolated beyond its range.",
+  "broken_step": {
+    "step_id": "s4",
+    "step_text": "For every integer n with 1 <= n <= 30, n^3 is congruent to n modulo 6. (the congruence holds modulo each factor separately, so it is taken to hold modulo 24)",
+    "why_it_does_not_follow": "Two distinct defects in the parenthetical. (1) Invalid inference: from n^3 = n (mod 2) and n^3 = n (mod 3) the Chinese Remainder Theorem yields the congruence modulo lcm(2,3) = 6, not modulo 24. Establishing a congruence modulo each of several coprime factors licenses their least common multiple, never a larger modulus; 24 is not a product of the factors of 6 in any case. (2) The conclusion reached is materially false, not merely unjustified: n = 2 gives n^3 - n = 6, not a multiple of 24, and 12 of the 30 domain values fail it. A step that asserts a falsehood cannot be a load-bearing link.",
+    "why_this_invalidates_the_presented_argument": "s4 is a declared dependency ancestor of the concluding step s10 along the chain s10 <- s8 <- s6 <- s4 (and s10 <- s9 <- s8 <- s6 <- s4). The argument as presented therefore routes its conclusion through an assertion that is false on the claim's own domain, so the argument does not establish the proposition.",
+    "note_on_the_true_conclusion": "The conclusion is nonetheless true, and a correct proof is recoverable from a subset of the presented steps: s1 verifies the base case at n = 1 (both sides equal 1), and s2's increment F(n+1) - F(n) = (n+1)^3 is correct for every n in [1,29] (verified exactly: ((n+1)(n+2)/2)^2 - (n(n+1)/2)^2 = ((n+1)^2/4)((n+2)^2 - n^2) = ((n+1)^2/4)(4n+4) = (n+1)^3). Induction on s1 and s2 alone gives the identity on [1,30]. That repair is not what the argument as written asserts, since s10's stated support is s8 and s9 rather than s1 and s2 directly. Hence TRUE_BUT_INVALID_ARGUMENT rather than TRUE.",
+    "other_steps_audited": "s2, s5, s6, s7, s8, s9 were each checked exhaustively over the stated domain and all hold. s3 is a tautology (every integer is even or odd) that introduces no case split actually used. s8 and s9 are vacuous identities: both sides differ only by the indicator [n = 3], which is multiplied by the factor (n - 3) that vanishes exactly at n = 3, so they are true but carry no content. The sole defective step is s4."
+  },
+  "confidence": 0.93,
+  "context_items_used": [],
+  "context_items_judged_misleading": [],
+  "what_would_resolve_it": null,
+  "artifacts": [
+    "F:/Prometheus/ama_game/arena/a0/A0_EVAL/runs/A0_EVAL-0022/verify.py",
+    "F:/Prometheus/ama_game/arena/a0/A0_EVAL/runs/A0_EVAL-0022/verify_output.json"
+  ],
+  "resource_report": {
+    "output_tokens": 4200,
+    "wall_time_s": 63.4,
+    "verifier_calls": 1,
+    "solver_calls": 0,
+    "max_search_size": 30,
+    "artifact_code_bytes": 2498,
+    "estimated": true,
+    "estimate_notes": "output_tokens is an estimate (no token meter exposed to the seat); wall_time_s measured from the timestamp taken at the start of work to the moment this record was written; verifier_calls, solver_calls, max_search_size and artifact_code_bytes are measured exactly. Exactly one verification program was executed, and it returned decisive results on its first run."
+  }
+}

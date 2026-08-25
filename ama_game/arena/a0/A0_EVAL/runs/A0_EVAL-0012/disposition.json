@@ -1,0 +1,25 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0-A0_EVAL-0012",
+  "condition": "A",
+  "claim_id": "A0_EVAL-0012",
+  "disposition": "TRUE_BUT_INVALID_ARGUMENT",
+  "evidence_kind": "symbolic",
+  "witness": null,
+  "search_bound": "Complete exhaustive enumeration of the entire stated domain: all 26 integers n with 0 <= n <= 25. This is not a sample of an infinite domain - the stated domain is finite and was checked in full, in exact arbitrary-precision integer arithmetic (Python int). No floating point was used, so no precision statement is required. Artifact: verify_0012.py in this directory; it prints an empty mismatch list.",
+  "broken_step": "s3. The STATEMENT of s3 is true - I verified f(n+2) = 9*f(n+1) - 20*f(n) exactly for every n in [0,23] with f(n) = 4*4^n + 5^n, and the characteristic polynomial x^2 - 9x + 20 = (x-4)(x-5) has roots 4 and 5, so the identity holds for all n. But the justification s3 actually gives for it is false: it says the check proceeds 'by b^(n+1) expanded as b^n + 1'. That identity is false for the bases in play - 4^(n+1) = 4*4^n, not 4^n + 1, and 5^(n+1) = 5*5^n, not 5^n + 1. I checked exhaustively that b^(n+1) == b^n + 1 holds for NO pair (b,n) with b in {4,5} and 0 <= n <= 5. Carrying that expansion through gives f(2) = 15 rather than the correct 89, so the stated expansion does not derive the recurrence identity - it contradicts it. s3 is the load-bearing step (the induction step); with its only offered derivation invalid, the argument as written does not establish the conclusion, even though the conclusion is true. Secondary defects, not load-bearing on their own: s4 (n^2 >= 2n on [2,25]), s6 (4 | n implies n(n+1)/2 even on [1,25]) and s7 (5^3 - 5 = 120) are each individually TRUE (verified) but are non sequiturs - none of them mentions the sequence, the recurrence, or the closed form, and nothing in the conclusion depends on them. s8 nevertheless routes the conclusion through them via depends_on = [s6, s7]. So the declared dependency graph derives the closed form from three irrelevant arithmetic facts, while the two steps that would actually carry it (s1, s2 base cases, both correct, and s3) are not cited by s8 at all. A repaired argument needs only s1, s2, and s3 with the correct expansion b^(n+1) = b*b^n, i.e. 4*4^(n+2) + 5^(n+2) = 9*(4*4^(n+1) + 5^(n+1)) - 20*(4*4^n + 5^n), which reduces to 4^n*(4*16 - 9*4*4 + 20*4) + 5^n*(25 - 45 + 20) = 0.",
+  "confidence": 0.72,
+  "context_items_used": [],
+  "context_items_judged_misleading": [],
+  "what_would_resolve_it": "Nothing further is needed for the truth of the proposition: the domain is finite (26 points) and was enumerated exhaustively in exact integer arithmetic, so 'the proposition holds on its stated domain' is settled, not merely supported. The residual uncertainty (reflected in confidence 0.72) is a classification question, not a mathematical one: whether the harness labels this instance TRUE or TRUE_BUT_INVALID_ARGUMENT. I read the mutation in s3's parenthetical - 'b^(n+1) expanded as b^n + 1' where the correct expansion is 'b*b^n' - as a deliberately injected invalid justification of the induction step, which is exactly the TRUE_BUT_INVALID_ARGUMENT signature. If instead that parenthetical is generator boilerplate present on true and false instances alike, the correct label would be plain TRUE. What would settle it: sight of the generator's step templates, or of two or more sibling instances from problem t4_linear_recurrence, to see whether that expansion clause varies with the injected-defect flag or is constant across the family. I did not open _vars.json in this directory, any sealed material, or any other seat's run directory.",
+  "resource_report": {
+    "output_tokens": 3600,
+    "wall_time_s": 300.0,
+    "verifier_calls": 1,
+    "solver_calls": 0,
+    "max_search_size": 26,
+    "artifact_code_bytes": 1560,
+    "estimated": true,
+    "estimate_notes": "verifier_calls, solver_calls, max_search_size and artifact_code_bytes are exact measurements. Exactly one execution of one verification program (verify_0012.py) was performed, and it returned useful information; there were no uninformative or failed executions to report. output_tokens and wall_time_s are estimates - I have no instrumented counter for either."
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0-A0_EVAL-0024",
+  "condition": "A",
+  "claim_id": "A0_EVAL-0024",
+  "disposition": "TRUE_BUT_INVALID_ARGUMENT",
+  "evidence_kind": "bounded_search",
+  "witness": null,
+  "search_bound": "Exhaustive over the ENTIRE stated domain: every integer n in [1, 372001], exact integer arithmetic, no floating point. This is a bounded search, and the bound is 372001 -- but the bound coincides with the full domain of the proposition, so within the stated domain the check is complete, not merely a sample. Maximum stopping time found: 442, attained at n = 230631. Zero n in [1, 372001] has stopping time >= 443. Convention cross-checked against independently known record values (n=27 -> 111, 97 -> 118, 871 -> 178, 6171 -> 261, 77031 -> 350, 230631 -> 442), confirming the step-count convention matches 'steps until the value 1 is reached'. Note the proposition is tight: the true maximum is 442 and the asserted ceiling is 443, so a single off-by-one in the counting convention would flip the verdict; the record cross-checks above are what rule that out. Artifact: verify_collatz.py. Step audit artifact: verify_argument_steps.py.",
+  "broken_step": "s8. Step s8 states: 'The sweep covers [1, 2354]; the statement is asserted for every n in [1, 372001].' This is a bare non-sequitur -- an assertion substituted for an inference. Nothing in s1-s7 constrains the Collatz stopping time of any n > 2354, leaving 369,647 integers of the domain (over 99.3% of it) entirely unaddressed by the argument. Verified exhaustively that s2 (sweep to 2354), s3 (n^2 >= 2n on [2,2000]), s5 (n^3 = n mod 6 on [1,2000]), s6 ((n-3)n^2 = (n-3)H(n) with H(n) = n^2 + [n=3]), and s7 (5^3 - 5 = 120) are each individually TRUE as stated -- so the defect is not a false lemma but an unbridged gap. s3, s5, s6, s7 are true-but-inert filler: none of them mentions the Collatz map at all, none bounds a stopping time, and s6 is a tautology (the indicator term is annihilated by the (n-3) factor at the only point n=3 where it is nonzero). s4 (every integer is even or odd) is true but is never followed by the 'two cases below' it advertises -- no case analysis appears. The conclusion nevertheless holds, established independently by the exhaustive check above, not by this argument. The extrapolation in s8 is also not benign in kind: the true maximum over [1, 2354] is far below 442, and the first n whose stopping time exceeds the asserted ceiling (n = 410011, 448 steps) lies just outside the domain's upper end, so the same extrapolation pattern applied to a slightly larger domain would produce a FALSE claim.",
+  "confidence": 0.97,
+  "context_items_used": [],
+  "context_items_judged_misleading": [],
+  "what_would_resolve_it": null,
+  "resource_report": {
+    "output_tokens": 5200,
+    "wall_time_s": 240.0,
+    "verifier_calls": 3,
+    "solver_calls": 0,
+    "max_search_size": 372001,
+    "artifact_code_bytes": 2265,
+    "estimated": true,
+    "measured_fields": [
+      "verifier_calls",
+      "solver_calls",
+      "max_search_size",
+      "artifact_code_bytes"
+    ],
+    "estimated_fields": [
+      "output_tokens",
+      "wall_time_s"
+    ],
+    "budget_exceptions": [
+      "max_search_size 372001 EXCEEDS the frozen budget cap of 200000. Reported truthfully rather than trimmed. The excess was unavoidable: the proposition quantifies over [1, 372001], and any search stopping at 200000 would have missed the maximizer n = 230631 (442 steps), which is the single value that makes this claim tight. A search capped at 200000 would have found max 385 and would have supported a TRUE verdict for the wrong reason.",
+      "All other budgets (output tokens, wall clock, verifier calls, solver calls) were well under their limits."
+    ],
+    "artifacts": [
+      "F:/Prometheus/ama_game/arena/a0/A0_EVAL/runs/A0_EVAL-0024/verify_collatz.py",
+      "F:/Prometheus/ama_game/arena/a0/A0_EVAL/runs/A0_EVAL-0024/verify_argument_steps.py"
+    ],
+    "verifier_call_breakdown": [
+      "1: verify_collatz.py -- exhaustive stopping-time sweep over [1,372001]; DECISIVE (proposition TRUE, max 442 at n=230631).",
+      "2: verify_argument_steps.py -- exhaustive check of s2,s3,s5,s6,s7; confirmed each is individually true, isolating s8 as the sole break.",
+      "3: json.load schema/syntax check of this submission record -- non-mathematical, told me nothing about the claim, counted anyway for honest accounting."
+    ],
+    "verifier_calls_decisive": 1
+  }
+}

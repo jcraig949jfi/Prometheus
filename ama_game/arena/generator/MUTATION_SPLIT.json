@@ -1,0 +1,20 @@
+{
+  "_comment": "FROZEN before A0. Play families may appear in items players see during play. Holdout families must not, and are the pool from which defense promotion tests are drawn. Moving a family across this line forks the protocol version.",
+  "protocol_version": "v0.1-alpha",
+  "play": [
+    "M1_quantifier_strengthening",
+    "M2_illicit_cancellation",
+    "M3_invalid_converse",
+    "M4_domain_widening",
+    "M5_non_equivalent_rewrite",
+    "M6_case_cover_gap",
+    "M7_unjustified_independence",
+    "M8_off_by_one_boundary"
+  ],
+  "holdout": [
+    "M9_invalid_transitivity",
+    "M10_vacuous_instantiation",
+    "M11_induction_base_omission",
+    "M12_modulus_confusion"
+  ]
+}

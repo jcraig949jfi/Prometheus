@@ -1,0 +1,44 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0-A0_EVAL-0001",
+  "condition": "A",
+  "claim_id": "A0_EVAL-0001",
+  "disposition": "FALSE",
+  "evidence_kind": "witness",
+  "witness": {
+    "n": 5,
+    "lhs": 15,
+    "rhs": 16,
+    "lhs_expression": "sum_{k=1}^{5} k^1 = 1+2+3+4+5 = 15",
+    "rhs_expression": "5*(5+1)/2 + floor(5/5) = 15 + 1 = 16",
+    "in_stated_domain": true,
+    "note": "n = 5 is an integer with 1 <= n <= 40, so it lies in the claim's stated domain. The proposition fails there, so the universally quantified claim is false. The witness is exact integer arithmetic; no floating point is involved.",
+    "verifier_artifact": "F:/Prometheus/ama_game/arena/a0/A0_EVAL/runs/A0_EVAL-0001/verify_0001.py",
+    "all_counterexamples_in_domain": "every n with 5 <= n <= 40 fails (36 of the 40 domain points); the identity holds only for n in {1,2,3,4}, where floor(n/5) = 0",
+    "argument_defect_note": "This is a FALSE disposition, not TRUE_BUT_INVALID_ARGUMENT, so the broken argument is secondary. Recorded for completeness: step s2 is itself false as stated. With F(n) = n(n+1)/2 + floor(n/5), F(n+1) - F(n) = (n+1) + [5 | n+1], which exceeds n+1 at the 8 values n in {4,9,14,19,24,29,34,39}. Steps s3, s5, s6, s7, s8 are true statements about n^3, n^2 and parity that are irrelevant to the proposition and establish nothing about it; s4 announces a case split that is never performed."
+  },
+  "search_bound": {
+    "kind": "exhaustive_over_full_stated_domain",
+    "range": "all integers n with 1 <= n <= 40",
+    "points_checked": 40,
+    "max_search_size_used": 40,
+    "complete": true,
+    "note": "The claim's domain is finite and was enumerated in full with exact integer arithmetic, so this is a complete decision procedure rather than a bounded search. The FALSE verdict rests on the single witness n = 5 and does not depend on exhaustiveness."
+  },
+  "broken_step": null,
+  "confidence": 0.99,
+  "context_items_used": [],
+  "context_items_judged_misleading": [],
+  "what_would_resolve_it": null,
+  "resource_report": {
+    "output_tokens": 2600,
+    "wall_time_s": 150.0,
+    "verifier_calls": 1,
+    "solver_calls": 0,
+    "max_search_size": 40,
+    "artifact_code_bytes": 1094,
+    "estimated": true,
+    "estimate_note": "verifier_calls, solver_calls, max_search_size and artifact_code_bytes are exact measurements: exactly one execution of verify_0001.py was used to decide the claim, no solver was invoked, 40 domain points were enumerated, and 1094 bytes is wc -c on the artifact. Disclosure for honest accounting: one additional python execution was run after the decision purely to check that this disposition.json parses as JSON; it touched no mathematics and is reported as non_verifier_python_executions rather than being hidden. output_tokens and wall_time_s are estimates: the agent has no instrumented counter for either, and wall_time_s is estimated from the number of tool round-trips in this session.",
+    "non_verifier_python_executions": 1
+  }
+}

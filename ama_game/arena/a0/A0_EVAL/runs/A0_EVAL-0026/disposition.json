@@ -1,0 +1,32 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0-A0_EVAL-0026",
+  "condition": "A",
+  "claim_id": "A0_EVAL-0026",
+  "disposition": "FALSE",
+  "evidence_kind": "witness",
+  "witness": {
+    "n": 12,
+    "lhs": "6^12 mod 23 = 6",
+    "rhs": "6^(12 mod 12) mod 23 = 6^0 mod 23 = 1",
+    "why": "6 != 1 mod 23, so the congruence fails at n = 12, which lies in the stated domain [0, 60].",
+    "reason": "23 is prime, so the multiplicative group mod 23 has order 22. The order of 6 must divide 22, hence lies in {1,2,11,22}; 12 is not among them. Direct computation gives ord_23(6) = 11, not 12. Reduction of the exponent mod 12 is therefore invalid; the correct modulus for the exponent is 11.",
+    "all_failures_in_domain": "49 of the 61 values n in [0,60] fail; exactly the 12 values n in [0,11] satisfy it, trivially, since there n mod 12 = n.",
+    "artifact": "F:/Prometheus/ama_game/arena/a0/A0_EVAL/runs/A0_EVAL-0026/verify.py"
+  },
+  "search_bound": "Not a bounded search: the stated domain is the finite set n in [0,60] and all 61 values were checked exhaustively with exact integer arithmetic (Python arbitrary-precision ints, pow(6,n,23)). No floating point was used.",
+  "broken_step": "s2 (\"The residue 6 has order 12 modulo 23\") is false, and it is the only step that carries the conclusion. Order 12 is impossible mod 23 by Lagrange (12 does not divide 22); the true order is 11. s2's own sub-claim, 6^(n+12) = 6^n mod 23 for n in [0,48], fails at every one of those 49 values. Steps s4, s6, s8, s9 are true but vacuous filler that never feed the conclusion, and s10 inherits s2's falsity.",
+  "confidence": 1.0,
+  "context_items_used": [],
+  "context_items_judged_misleading": [],
+  "what_would_resolve_it": null,
+  "resource_report": {
+    "output_tokens": 1600,
+    "wall_time_s": 150.0,
+    "verifier_calls": 1,
+    "solver_calls": 0,
+    "max_search_size": 61,
+    "artifact_code_bytes": 831,
+    "estimated": true
+  }
+}

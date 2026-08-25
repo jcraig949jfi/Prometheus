@@ -1,0 +1,46 @@
+{
+  "claim_id": "PILOT_A0-0000",
+  "set_name": "PILOT_A0",
+  "template_id": "t1_integer_sum_identity",
+  "domain_label": "integer_identities",
+  "sealed_class": "TRUE_VALID_ARGUMENT",
+  "oracle_disposition": "TRUE",
+  "truth_status": "TRUE",
+  "truth_method": "native exhaustive enumeration over [1, N]",
+  "argument_validity": "VALID",
+  "invalid_steps": [],
+  "incomplete_steps": [],
+  "planted_mutation_type": null,
+  "mutation_target_step": null,
+  "mutation_mechanism": null,
+  "known_witness": null,
+  "known_proof_sketch": "Base case at n=1 plus the increment identity F(n+1)-F(n)=(n+1)^2.",
+  "minimum_known_disposition_method": {
+    "kind": "closed_form_proof",
+    "cost_units": 8,
+    "within_player_budget": true
+  },
+  "difficulty": {
+    "domain_size": 50,
+    "derivation_length": 8,
+    "player_search_budget": 200000
+  },
+  "params": {
+    "p": 2,
+    "N": 50,
+    "formula": "n(n+1)(2n+1)/6",
+    "formula_expr": "n*(n+1)*(2*n+1)//6"
+  },
+  "claim_predicate": "sum_k(n,2) == n*(n+1)*(2*n+1)//6",
+  "witness_var": "n",
+  "domain_lo": 1,
+  "domain_hi": 50,
+  "notes": [],
+  "generation": {
+    "set_seed": 20260825,
+    "item_seed": 50539289916886,
+    "item_index": 0,
+    "generator_sha256": "1f75ab2f63bf2cf050ac4033f042cb2d7ece6b93871160e90b796107dff135b5",
+    "protocol_version": "v0.1-alpha"
+  }
+}

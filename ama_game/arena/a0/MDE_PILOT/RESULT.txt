@@ -1,0 +1,50 @@
+A0 RESULT — MDE_PILOT, condition A, n = 10
+====================================================================
+
+PRIMARY (preregistered, cost rule fixed before data existed)
+  EVC  expected verifier cost to correct disposition : 6.10  (SE 3.16)
+  accuracy                                           : 80%  (8/10)
+  budget cap (cost charged on an incorrect answer)   : 25
+  unit of analysis: the claim.  n = 10
+
+COST STRUCTURE
+  claims charged at the cap (i.e. wrong)  : 2/10 = 20% of the mass
+  verifier calls on correct claims        : median 1, mean 1.4, range [1, 3]
+  the distribution is censored at 25; do not assume normality when testing it
+
+CONFUSION — sealed class (rows) by submitted disposition
+  FALSE_BUT_HARD_WITHIN_BUDGET   n= 2  correct=2/2  -> {'FALSE': 2}
+  FALSE_WITH_WITNESS             n= 2  correct=2/2  -> {'FALSE': 2}
+  TRUE_BUT_INVALID_ARGUMENT      n= 2  correct=2/2  -> {'TRUE_BUT_INVALID_ARGUMENT': 2}
+  TRUE_VALID_ARGUMENT            n= 2  correct=2/2  -> {'TRUE': 2}
+  UNRESOLVED_WITHIN_BUDGET       n= 2  correct=0/2  -> {'FALSE': 1, 'TRUE_BUT_INVALID_ARGUMENT': 1}
+
+FAILURE SHAPE
+  false accusations (FALSE on a claim that is true) : 0/5 = 0%
+  TRUE_BUT_INVALID_ARGUMENT correct                 : 2/2
+    ... called FALSE (spotted the bad proof, then killed the true
+        conclusion with it)                         : 0
+    ... called TRUE (missed the planted defect)     : 0
+  UNRESOLVED correct                                : 0/2
+    ... overclaimed a truth value                   : 1
+        of those, matched the sealed truth          : 1/1
+  invalid falsifiers (FALSE whose witness fails      
+    re-execution against the claim)                 : 0/5 submitted kills
+
+HEADROOM
+  Baseline is competent but fallible (80% accuracy at EVC 6.1).
+  This is the useful regime: room for D to improve, and not so
+  much room that any hint would do it.
+
+PER-CLAIM ROWS (raw)
+  claim              class                          oracle                     submitted                  ok  calls  cost
+  MDE_PILOT-0000     TRUE_VALID_ARGUMENT            TRUE                       TRUE                       Y       1     1
+  MDE_PILOT-0001     FALSE_WITH_WITNESS             FALSE                      FALSE                      Y       3     3
+  MDE_PILOT-0002     TRUE_BUT_INVALID_ARGUMENT      TRUE_BUT_INVALID_ARGUMENT  TRUE_BUT_INVALID_ARGUMENT  Y       1     1
+  MDE_PILOT-0003     FALSE_BUT_HARD_WITHIN_BUDGET   FALSE                      FALSE                      Y       1     1
+  MDE_PILOT-0004     UNRESOLVED_WITHIN_BUDGET       UNRESOLVED                 FALSE                      n       3    25
+  MDE_PILOT-0005     TRUE_VALID_ARGUMENT            TRUE                       TRUE                       Y       1     1
+  MDE_PILOT-0006     FALSE_WITH_WITNESS             FALSE                      FALSE                      Y       1     1
+  MDE_PILOT-0007     TRUE_BUT_INVALID_ARGUMENT      TRUE_BUT_INVALID_ARGUMENT  TRUE_BUT_INVALID_ARGUMENT  Y       1     1
+  MDE_PILOT-0008     FALSE_BUT_HARD_WITHIN_BUDGET   FALSE                      FALSE                      Y       2     2
+  MDE_PILOT-0009     UNRESOLVED_WITHIN_BUDGET       UNRESOLVED                 TRUE_BUT_INVALID_ARGUMENT  n       2    25

@@ -1,0 +1,51 @@
+{
+  "claim_id": "XFER_SAME_MUT_NEW_PROBLEM-0004",
+  "set_name": "XFER_SAME_MUT_NEW_PROBLEM",
+  "template_id": "t6_shortcut_stopping_time",
+  "domain_label": "recurrences",
+  "sealed_class": "UNRESOLVED_WITHIN_BUDGET",
+  "oracle_disposition": "UNRESOLVED",
+  "truth_status": "TRUE",
+  "truth_method": "native iteration with an array memo, computed at generation time under a budget the player does not have",
+  "argument_validity": "INCOMPLETE",
+  "invalid_steps": [],
+  "incomplete_steps": [
+    "s8"
+  ],
+  "planted_mutation_type": null,
+  "mutation_target_step": null,
+  "mutation_mechanism": null,
+  "known_witness": null,
+  "known_proof_sketch": null,
+  "minimum_known_disposition_method": {
+    "kind": "exhaustive",
+    "cost_units": 600000,
+    "within_player_budget": false
+  },
+  "difficulty": {
+    "domain_size": 600000,
+    "derivation_length": 8,
+    "witness_position": null,
+    "player_search_budget": 200000
+  },
+  "params": {
+    "variant": "shortcut",
+    "N": 600000,
+    "K": 296,
+    "checked_hi": 5000
+  },
+  "claim_predicate": "shortcut_time(n) < 296",
+  "witness_var": "n",
+  "domain_lo": 1,
+  "domain_hi": 600000,
+  "notes": [
+    "no closed form is available for this map; the only decision procedure known to the generator is enumeration"
+  ],
+  "generation": {
+    "set_seed": 990001,
+    "item_seed": 179962747011978,
+    "item_index": 4,
+    "generator_sha256": "28e73b444b445e60750a43dd034fc29aa99a47b939d26a56e8e176eefc7af7ea",
+    "protocol_version": "v0.1-alpha"
+  }
+}

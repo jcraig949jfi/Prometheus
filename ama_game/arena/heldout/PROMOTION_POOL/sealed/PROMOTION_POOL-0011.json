@@ -1,0 +1,56 @@
+{
+  "claim_id": "PROMOTION_POOL-0011",
+  "set_name": "PROMOTION_POOL",
+  "template_id": "t4_linear_recurrence",
+  "domain_label": "recurrences",
+  "sealed_class": "FALSE_WITH_WITNESS",
+  "oracle_disposition": "FALSE",
+  "truth_status": "FALSE",
+  "truth_method": "native iteration of the recurrence, compared termwise",
+  "argument_validity": "INVALID",
+  "invalid_steps": [
+    "s1",
+    "s2"
+  ],
+  "incomplete_steps": [],
+  "planted_mutation_type": null,
+  "mutation_target_step": null,
+  "mutation_mechanism": null,
+  "known_witness": {
+    "n": 0
+  },
+  "known_proof_sketch": null,
+  "minimum_known_disposition_method": {
+    "kind": "witness_search",
+    "cost_units": 1,
+    "within_player_budget": true
+  },
+  "difficulty": {
+    "domain_size": 31,
+    "derivation_length": 9,
+    "player_search_budget": 200000
+  },
+  "params": {
+    "r": 3,
+    "s": 6,
+    "C": 5,
+    "D": 1,
+    "p": 9,
+    "q": -18,
+    "a0": 5,
+    "a1": 18,
+    "N": 30
+  },
+  "claim_predicate": "lin_rec(n, 5, 18, 9, -18) == 5*3**n + 1*6**n",
+  "witness_var": "n",
+  "domain_lo": 0,
+  "domain_hi": 30,
+  "notes": [],
+  "generation": {
+    "set_seed": 990004,
+    "item_seed": 91588422635080,
+    "item_index": 11,
+    "generator_sha256": "28e73b444b445e60750a43dd034fc29aa99a47b939d26a56e8e176eefc7af7ea",
+    "protocol_version": "v0.1-alpha"
+  }
+}

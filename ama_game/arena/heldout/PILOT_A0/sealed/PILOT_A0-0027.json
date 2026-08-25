@@ -1,0 +1,49 @@
+{
+  "claim_id": "PILOT_A0-0027",
+  "set_name": "PILOT_A0",
+  "template_id": "t2_modular_power_cycle",
+  "domain_label": "modular_arithmetic",
+  "sealed_class": "TRUE_BUT_INVALID_ARGUMENT",
+  "oracle_disposition": "TRUE_BUT_INVALID_ARGUMENT",
+  "truth_status": "TRUE",
+  "truth_method": "native enumeration with pow(a, n, m) over [0, N]",
+  "argument_validity": "INVALID",
+  "invalid_steps": [
+    "s9"
+  ],
+  "incomplete_steps": [],
+  "planted_mutation_type": "M5_non_equivalent_rewrite",
+  "mutation_target_step": "s9",
+  "mutation_mechanism": "non-equivalent rewrite: n^2 replaced by 2n",
+  "known_witness": null,
+  "known_proof_sketch": "2 has multiplicative order 18 modulo 19.",
+  "minimum_known_disposition_method": {
+    "kind": "closed_form_proof",
+    "cost_units": 10,
+    "within_player_budget": true
+  },
+  "difficulty": {
+    "domain_size": 81,
+    "derivation_length": 10,
+    "player_search_budget": 200000
+  },
+  "params": {
+    "a": 2,
+    "m": 19,
+    "d_claimed": 18,
+    "d_true": 18,
+    "N": 80
+  },
+  "claim_predicate": "pow(2, n, 19) == pow(2, n % 18, 19)",
+  "witness_var": "n",
+  "domain_lo": 0,
+  "domain_hi": 80,
+  "notes": [],
+  "generation": {
+    "set_seed": 20260825,
+    "item_seed": 176350223732406,
+    "item_index": 27,
+    "generator_sha256": "1f75ab2f63bf2cf050ac4033f042cb2d7ece6b93871160e90b796107dff135b5",
+    "protocol_version": "v0.1-alpha"
+  }
+}

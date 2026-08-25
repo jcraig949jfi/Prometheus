@@ -1,0 +1,56 @@
+{
+  "set_name": "PILOT_A0",
+  "requested_count": 40,
+  "emitted": 40,
+  "skipped": [],
+  "seed": 20260825,
+  "generator_sha256": "1f75ab2f63bf2cf050ac4033f042cb2d7ece6b93871160e90b796107dff135b5",
+  "protocol_version": "v0.1-alpha",
+  "player_search_budget": 200000,
+  "family_pool": [
+    "M1_quantifier_strengthening",
+    "M2_illicit_cancellation",
+    "M3_invalid_converse",
+    "M4_domain_widening",
+    "M5_non_equivalent_rewrite",
+    "M6_case_cover_gap",
+    "M7_unjustified_independence",
+    "M8_off_by_one_boundary"
+  ],
+  "template_pool": [
+    "t1_integer_sum_identity",
+    "t2_modular_power_cycle",
+    "t4_linear_recurrence",
+    "t5_collatz_stopping_time"
+  ],
+  "class_pool": [
+    "TRUE_VALID_ARGUMENT",
+    "FALSE_WITH_WITNESS",
+    "TRUE_BUT_INVALID_ARGUMENT",
+    "FALSE_BUT_HARD_WITHIN_BUDGET",
+    "UNRESOLVED_WITHIN_BUDGET"
+  ],
+  "transfer_cell": null,
+  "counts_by_class": {
+    "TRUE_VALID_ARGUMENT": 8,
+    "FALSE_WITH_WITNESS": 8,
+    "TRUE_BUT_INVALID_ARGUMENT": 8,
+    "FALSE_BUT_HARD_WITHIN_BUDGET": 8,
+    "UNRESOLVED_WITHIN_BUDGET": 8
+  },
+  "counts_by_template": {
+    "t1_integer_sum_identity": 6,
+    "t5_collatz_stopping_time": 22,
+    "t2_modular_power_cycle": 6,
+    "t4_linear_recurrence": 6
+  },
+  "counts_by_mutation_family": {
+    "M3_invalid_converse": 1,
+    "M8_off_by_one_boundary": 2,
+    "M5_non_equivalent_rewrite": 2,
+    "M2_illicit_cancellation": 1,
+    "M7_unjustified_independence": 1,
+    "M1_quantifier_strengthening": 1
+  },
+  "build_seconds": 7.2
+}

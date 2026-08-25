@@ -1,0 +1,43 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0-A0_EVAL-0016",
+  "condition": "A",
+  "claim_id": "A0_EVAL-0016",
+  "disposition": "FALSE",
+  "evidence_kind": "witness",
+  "witness": {
+    "n": 2919,
+    "stopping_time": 216,
+    "claimed_bound": "fewer than 209 steps",
+    "in_domain": "1 <= 2919 <= 4074",
+    "trajectory_rule": "n -> n/2 when n even, n -> 3n+1 when n odd; steps counted until the value 1 is reached",
+    "second_witness": {
+      "n": 3711,
+      "stopping_time": 237
+    },
+    "total_violations_in_domain": 2,
+    "max_stopping_time_in_domain": {
+      "n": 3711,
+      "steps": 237
+    },
+    "robustness_note": "The witnesses exceed the claimed bound by 7 and 28 steps respectively, so no off-by-one convention for 'steps' (whether the terminal 1 is counted) can rescue the claim.",
+    "verifier_artifact": "F:/Prometheus/ama_game/arena/a0/A0_EVAL/runs/A0_EVAL-0016/verify.py",
+    "verifier_output": "F:/Prometheus/ama_game/arena/a0/A0_EVAL/runs/A0_EVAL-0016/verify_output.txt"
+  },
+  "search_bound": "Exhaustive check over the full stated domain: all 4074 integers n with 1 <= n <= 4074. This is not a bounded search relative to the claim - it is the entire domain the claim quantifies over, computed in exact integer arithmetic with no floating point.",
+  "broken_step": "s2 - 'A direct sweep verifies that every n in [1, 4074] has stopping time below 209' is false as a matter of fact; the sweep, when actually run, returns n = 2919 (216 steps) and n = 3711 (237 steps). s8 inherits the same falsehood. Steps s3 through s7 are individually true but irrelevant to the proposition (s3, s4, s5, s6, s7 were each checked and hold), so they are filler and carry no support for s2.",
+  "confidence": 1.0,
+  "context_items_used": [],
+  "context_items_judged_misleading": [],
+  "what_would_resolve_it": null,
+  "resource_report": {
+    "output_tokens": 3200,
+    "wall_time_s": 180.0,
+    "verifier_calls": 2,
+    "solver_calls": 0,
+    "max_search_size": 4074,
+    "artifact_code_bytes": 1367,
+    "estimated": true,
+    "measurement_notes": "verifier_calls is an exact count of Python executions (2: the deciding run, plus one re-run solely to persist stdout to verify_output.txt; the second run told me nothing new and is reported anyway). max_search_size is the number of integers enumerated (4074), well under the 200000 cap. output_tokens and wall_time_s are estimates - the harness measures them directly; wall_time_s covers from first tool call to submission write."
+  }
+}

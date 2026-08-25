@@ -1,0 +1,83 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0-MDE_PILOT-0008",
+  "condition": "A",
+  "claim_id": "MDE_PILOT-0008",
+  "disposition": "FALSE",
+  "evidence_kind": "witness",
+  "witness": {
+    "n": 35655,
+    "steps_to_reach_1": 323,
+    "claimed_bound": "fewer than 311 steps",
+    "in_stated_domain": true,
+    "domain": "1 <= 35655 <= 154004",
+    "note": "Smallest counterexample in the claim's stated domain. Independently recomputed without memoization in the same artifact: 323 steps, matching the memoized value.",
+    "additional_counterexamples": [
+      [
+        45127,
+        313
+      ],
+      [
+        47329,
+        313
+      ],
+      [
+        52527,
+        339
+      ],
+      [
+        53483,
+        321
+      ],
+      [
+        56095,
+        321
+      ],
+      [
+        60169,
+        316
+      ],
+      [
+        60975,
+        334
+      ],
+      [
+        61999,
+        316
+      ],
+      [
+        63105,
+        316
+      ]
+    ],
+    "total_counterexamples_in_domain": 114,
+    "worst_case_in_domain": {
+      "n": 142587,
+      "steps": 374
+    },
+    "verifier_artifact": "F:/Prometheus/ama_game/arena/a0/MDE_PILOT/runs/MDE_PILOT-0008/verify_collatz.py",
+    "verifier_output_log": "F:/Prometheus/ama_game/arena/a0/MDE_PILOT/runs/MDE_PILOT-0008/verify_collatz.out.txt"
+  },
+  "search_bound": "Exhaustive over the claim's entire stated domain [1, 154004] (154004 integers, below the 200000 exhaustion cap). This is not a bounded sub-search: the search range equals the quantified domain, so the counterexample set is complete, not merely non-empty. All arithmetic is exact Python integer arithmetic; no floating point is involved, so no precision argument is required. Step counting follows the stated hypothesis (steps until the value 1 is reached; steps(1)=0); 'fewer than 311' is taken to fail at 311 or more.",
+  "broken_step": null,
+  "confidence": 0.99,
+  "context_items_used": [],
+  "context_items_judged_misleading": [],
+  "what_would_resolve_it": null,
+  "notes": [
+    "The proposition is false, so the disposition is FALSE rather than TRUE_BUT_INVALID_ARGUMENT; the argument's defects are recorded below only as secondary observations and are not the basis of the disposition.",
+    "Secondary observation (not load-bearing): step s9 is a bare non-sequitur. It concedes the sweep covers only [1, 4286] and then asserts the proposition on [1, 154004], a domain 35.9x larger, with no covering argument. The smallest counterexample n=35655 lies outside the swept range, which is exactly the gap s9 papers over.",
+    "Secondary observation: steps s3 through s8 are true but wholly irrelevant elementary lemmas about n^2, n^3 mod 6, triangular-number parity, and even/odd exhaustiveness over [1, 2000]. None mentions the Collatz map or stopping time, and none is used by any later step. They supply the appearance of deductive weight without contributing to the conclusion.",
+    "Secondary observation: s2's own claim was checked and is correct - every n in [1, 4286] does reach 1 in fewer than 311 steps - so the defect is the extrapolation, not the sweep."
+  ],
+  "resource_report": {
+    "output_tokens": 3200,
+    "wall_time_s": 210.0,
+    "verifier_calls": 2,
+    "solver_calls": 0,
+    "max_search_size": 154004,
+    "artifact_code_bytes": 1996,
+    "estimated": true,
+    "estimate_notes": "output_tokens and wall_time_s are estimates (no instrumented counter available to this seat). verifier_calls, solver_calls, max_search_size and artifact_code_bytes are exact measured values. verifier_calls=2 counts two executions of verify_collatz.py: the first was decisive and produced the disposition; the second was an identical re-run whose only purpose was to capture stdout to verify_collatz.out.txt so the rows ship with the verdict. It told me nothing new, but it was an execution of a verification program and is reported as one. The JSON-writing step performs no mathematical verification and is not counted."
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0-MDE_PILOT-0002",
+  "condition": "A",
+  "claim_id": "MDE_PILOT-0002",
+  "disposition": "TRUE_BUT_INVALID_ARGUMENT",
+  "evidence_kind": "proof",
+  "witness": {
+    "note": "Not a counterexample to the proposition -- the proposition is true. This is the witness that argument step s6 is false on the claim's own stated domain.",
+    "broken_step_counterexample": {
+      "step": "s6",
+      "n": 1,
+      "n_squared": 1,
+      "two_n": 2,
+      "asserted": "n^2 >= 2n for every integer n with 1 <= n <= 50",
+      "actual_at_n_1": "1 >= 2 is false"
+    },
+    "proposition_check": {
+      "method": "exhaustive enumeration of the complete stated domain, integers n = 1..50, exact integer/Fraction arithmetic, no floating point",
+      "counterexamples_found": [],
+      "F_integral_on_all_of_domain": true
+    },
+    "per_step_truth": {
+      "s1": true,
+      "s2": true,
+      "s3": true,
+      "s4": true,
+      "s5": true,
+      "s6": false,
+      "s7": true,
+      "s8": true,
+      "s9": true
+    },
+    "artifacts": [
+      "F:/Prometheus/ama_game/arena/a0/MDE_PILOT/runs/MDE_PILOT-0002/verify_0002.py",
+      "F:/Prometheus/ama_game/arena/a0/MDE_PILOT/runs/MDE_PILOT-0002/verifier_output.json"
+    ]
+  },
+  "search_bound": 50,
+  "broken_step": {
+    "step_id": "s6",
+    "step_text": "For every integer n with 1 <= n <= 50 we have n^2 >= 2n. (the same estimate is taken to hold from n = 1 onward)",
+    "why_it_does_not_follow": "s6 is not merely unjustified, it is false on the domain the claim itself quantifies over. n^2 >= 2n holds for integers n >= 2 and for n <= 0, but fails at n = 1, where n^2 = 1 and 2n = 2. The claim's domain is 1 <= n <= 50, so n = 1 is inside it, and the step's own parenthetical extends the estimate 'from n = 1 onward', which is exactly the boundary at which it breaks. The declared dependency graph routes the conclusion through this false step: s10 depends on s8, s8 depends on s6, so the transitive ancestors of s10 are s1..s9 inclusive and a false premise sits on the path to the conclusion. A derivation containing a false premise does not establish its conclusion, so the argument as submitted fails even though the conclusion is true.",
+    "defect_family": "boundary omission / off-by-one at the lower endpoint of the quantified domain",
+    "verified_by": "exhaustive integer check over n = 1..50; sole counterexample n = 1"
+  },
+  "confidence": 0.86,
+  "context_items_used": [],
+  "context_items_judged_misleading": [],
+  "what_would_resolve_it": "Nothing further is needed for the proposition itself: the domain is finite (50 integers) and was enumerated exhaustively in exact arithmetic, so its truth is settled, not estimated. The residual uncertainty in my confidence is a labelling question, not a mathematical one -- s1 (base case at n = 1) and s2 (F(n+1) - F(n) = (n+1)^2 for 1 <= n <= 49) do by themselves constitute a complete and correct induction to n = 50, and s10's prose cites exactly those two. An assessor who reads only s10's prose and ignores the declared depends_on edges could therefore call this TRUE. I resolve it against the argument because the submitted argument is the whole annotated graph, including its depends_on fields, and that graph makes the conclusion depend on a step that is false at n = 1. Steps s3, s4, s5, s7, s8, s9 are all true but inert with respect to the identity; the fact that exactly one step in the chain is false is consistent with a single deliberately planted defect rather than incidental sloppiness.",
+  "resource_report": {
+    "output_tokens": 4200,
+    "wall_time_s": 240.0,
+    "verifier_calls": 1,
+    "solver_calls": 0,
+    "max_search_size": 50,
+    "artifact_code_bytes": 3061,
+    "estimated": true,
+    "estimate_notes": "verifier_calls, solver_calls, max_search_size and artifact_code_bytes are measured exactly (one execution of verify_0002.py to decide the claim; a second execution only redirected the identical output to verifier_output.json for the record and is counted, giving 1 decision-bearing call -- see verifier_calls_total). output_tokens and wall_time_s are estimates; I have no instrumented counter for either.",
+    "verifier_calls_total": 2,
+    "verifier_calls_decision_bearing": 1
+  }
+}

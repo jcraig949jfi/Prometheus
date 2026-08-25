@@ -1,0 +1,40 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0-A0_EVAL-0008",
+  "condition": "A",
+  "claim_id": "A0_EVAL-0008",
+  "disposition": "FALSE",
+  "evidence_kind": "witness",
+  "witness": {
+    "n": 10971,
+    "total_stopping_time": 267,
+    "claim_bound": "fewer than 262 steps",
+    "in_stated_domain": true,
+    "note": "10971 lies in [1, 161256] and reaches 1 in 267 steps, which is not fewer than 262. This is the SMALLEST counterexample in the stated domain; 1037 of the 161256 starting values in the domain take 262 or more steps, and the domain maximum is 382 steps at n = 156159.",
+    "replay": "check_collatz.py replays n=10971 with no memoisation and independently reports 267 steps.",
+    "artifacts": [
+      "F:/Prometheus/ama_game/arena/a0/A0_EVAL/runs/A0_EVAL-0008/check_collatz.py",
+      "F:/Prometheus/ama_game/arena/a0/A0_EVAL/runs/A0_EVAL-0008/check_collatz_output.txt"
+    ]
+  },
+  "search_bound": "Exhaustive over the entire stated domain: all 161256 integers n with 1 <= n <= 161256, exact Python integer arithmetic, no floating point. The search is not bounded below the domain -- the domain is finite and was covered completely. Iteration depth per start was unbounded and every trajectory terminated at 1.",
+  "broken_step": null,
+  "confidence": 0.99,
+  "context_items_used": [],
+  "context_items_judged_misleading": [],
+  "what_would_resolve_it": null,
+  "notes": {
+    "argument_assessment": "Not load-bearing for the disposition, but recorded: step s2's sweep is itself sound -- the maximum total stopping time on [1,1836] is 181 at n=1161, so everything in that sub-range is indeed below 262. Steps s3-s8 are true but wholly irrelevant arithmetic facts about n^3 mod 6, triangular-number parity, an indicator-function identity, and n^3-n at n=5; none of them mention the Collatz map. The defect is concentrated in s9, which openly extrapolates a sweep of [1,1836] to [1,161256]. That extrapolation is not merely unjustified, it is false: the claim breaks at n=10971, roughly six times past the sweep boundary.",
+    "cost_narrative": "One program decided this. The proposition is a finite exhaustive assertion over 161256 values, so the cheapest correct instrument is the exhaustive check itself, which runs in about a second with memoisation. No time was spent on the argument's algebraic steps before running it."
+  },
+  "resource_report": {
+    "output_tokens": 3100,
+    "wall_time_s": 260.0,
+    "verifier_calls": 2,
+    "solver_calls": 0,
+    "max_search_size": 161256,
+    "artifact_code_bytes": 1586,
+    "estimated": true,
+    "estimate_note": "output_tokens and wall_time_s are estimated (not instrumented by the harness). verifier_calls, max_search_size and artifact_code_bytes are measured exactly. verifier_calls = 2 counts both executions of check_collatz.py: the first decided the claim, the second re-ran it only to persist its stdout to check_collatz_output.txt and told me nothing new."
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "claim_id": "MDE_PILOT-0007",
+  "set_name": "MDE_PILOT",
+  "template_id": "t2_modular_power_cycle",
+  "domain_label": "modular_arithmetic",
+  "sealed_class": "TRUE_BUT_INVALID_ARGUMENT",
+  "oracle_disposition": "TRUE_BUT_INVALID_ARGUMENT",
+  "truth_status": "TRUE",
+  "truth_method": "native enumeration with pow(a, n, m) over [0, N]",
+  "argument_validity": "INVALID",
+  "invalid_steps": [
+    "s8"
+  ],
+  "incomplete_steps": [],
+  "planted_mutation_type": "M8_off_by_one_boundary",
+  "mutation_target_step": "s8",
+  "mutation_mechanism": "the base case was checked at n = 6 but is used at n = 5",
+  "known_witness": null,
+  "known_proof_sketch": "5 has multiplicative order 6 modulo 7.",
+  "minimum_known_disposition_method": {
+    "kind": "closed_form_proof",
+    "cost_units": 12,
+    "within_player_budget": true
+  },
+  "difficulty": {
+    "domain_size": 81,
+    "derivation_length": 12,
+    "player_search_budget": 200000
+  },
+  "params": {
+    "a": 5,
+    "m": 7,
+    "d_claimed": 6,
+    "d_true": 6,
+    "N": 80
+  },
+  "claim_predicate": "pow(5, n, 7) == pow(5, n % 6, 7)",
+  "witness_var": "n",
+  "domain_lo": 0,
+  "domain_hi": 80,
+  "notes": [],
+  "generation": {
+    "set_seed": 51170023,
+    "item_seed": 106692598462623,
+    "item_index": 7,
+    "generator_sha256": "50101f847258ae7a6929627a883c218e56880e8062a5ac2a483712f016e1808a",
+    "protocol_version": "v0.1-alpha"
+  }
+}

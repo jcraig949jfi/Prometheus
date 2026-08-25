@@ -1,0 +1,49 @@
+{
+  "claim_id": "XFER_NEW_MUT_SAME_DOMAIN-0007",
+  "set_name": "XFER_NEW_MUT_SAME_DOMAIN",
+  "template_id": "t2_modular_power_cycle",
+  "domain_label": "modular_arithmetic",
+  "sealed_class": "TRUE_BUT_INVALID_ARGUMENT",
+  "oracle_disposition": "TRUE_BUT_INVALID_ARGUMENT",
+  "truth_status": "TRUE",
+  "truth_method": "native enumeration with pow(a, n, m) over [0, N]",
+  "argument_validity": "INVALID",
+  "invalid_steps": [
+    "s8"
+  ],
+  "incomplete_steps": [],
+  "planted_mutation_type": "M9_invalid_transitivity",
+  "mutation_target_step": "s8",
+  "mutation_mechanism": "two results established on ranges that do not overlap were chained as if they did",
+  "known_witness": null,
+  "known_proof_sketch": "9 has multiplicative order 11 modulo 23.",
+  "minimum_known_disposition_method": {
+    "kind": "closed_form_proof",
+    "cost_units": 9,
+    "within_player_budget": true
+  },
+  "difficulty": {
+    "domain_size": 81,
+    "derivation_length": 9,
+    "player_search_budget": 200000
+  },
+  "params": {
+    "a": 9,
+    "m": 23,
+    "d_claimed": 11,
+    "d_true": 11,
+    "N": 80
+  },
+  "claim_predicate": "pow(9, n, 23) == pow(9, n % 11, 23)",
+  "witness_var": "n",
+  "domain_lo": 0,
+  "domain_hi": 80,
+  "notes": [],
+  "generation": {
+    "set_seed": 990002,
+    "item_seed": 232132183219776,
+    "item_index": 7,
+    "generator_sha256": "28e73b444b445e60750a43dd034fc29aa99a47b939d26a56e8e176eefc7af7ea",
+    "protocol_version": "v0.1-alpha"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "claim_id": "PILOT_A0-0005",
+  "set_name": "PILOT_A0",
+  "template_id": "t2_modular_power_cycle",
+  "domain_label": "modular_arithmetic",
+  "sealed_class": "TRUE_VALID_ARGUMENT",
+  "oracle_disposition": "TRUE",
+  "truth_status": "TRUE",
+  "truth_method": "native enumeration with pow(a, n, m) over [0, N]",
+  "argument_validity": "VALID",
+  "invalid_steps": [],
+  "incomplete_steps": [],
+  "planted_mutation_type": null,
+  "mutation_target_step": null,
+  "mutation_mechanism": null,
+  "known_witness": null,
+  "known_proof_sketch": "6 has multiplicative order 11 modulo 23.",
+  "minimum_known_disposition_method": {
+    "kind": "closed_form_proof",
+    "cost_units": 10,
+    "within_player_budget": true
+  },
+  "difficulty": {
+    "domain_size": 41,
+    "derivation_length": 10,
+    "player_search_budget": 200000
+  },
+  "params": {
+    "a": 6,
+    "m": 23,
+    "d_claimed": 11,
+    "d_true": 11,
+    "N": 40
+  },
+  "claim_predicate": "pow(6, n, 23) == pow(6, n % 11, 23)",
+  "witness_var": "n",
+  "domain_lo": 0,
+  "domain_hi": 40,
+  "notes": [],
+  "generation": {
+    "set_seed": 20260825,
+    "item_seed": 194829145488863,
+    "item_index": 5,
+    "generator_sha256": "1f75ab2f63bf2cf050ac4033f042cb2d7ece6b93871160e90b796107dff135b5",
+    "protocol_version": "v0.1-alpha"
+  }
+}

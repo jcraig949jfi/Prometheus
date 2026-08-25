@@ -1,0 +1,25 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0-A0_EVAL-0007",
+  "condition": "A",
+  "claim_id": "A0_EVAL-0007",
+  "disposition": "TRUE_BUT_INVALID_ARGUMENT",
+  "evidence_kind": "proof",
+  "witness": null,
+  "search_bound": "Exhaustive over the entire stated domain: all 81 integers n with 0 <= n <= 80 were checked, so this is a complete decision procedure for the proposition, not a bounded sample of a larger domain. Each argument step s1-s8 was also evaluated exhaustively over its own stated range. Artifact: verify.py (exact integer arithmetic via Python pow(3, n, 13); no floating point used).",
+  "broken_step": "s1. The step asserts 'At n = 1 both sides equal 1 modulo 13.' This is false: at n = 1 the left side is 3^1 = 3 mod 13 and the right side is 3^(1 mod 3) = 3^1 = 3 mod 13. Both sides agree, but their common value is 3, not 1. The step as written is a false statement, and it is load-bearing: s2 depends on s1, and s10 concludes from 'periodicity plus the base case', so the base case invoked by the final step is the one asserted incorrectly here. A correct base case is n = 0, where both sides equal 1 mod 13, or n = 1 with the value 3. As given, the chain does not establish the conclusion. (The conclusion is nonetheless true: 3 has multiplicative order 3 mod 13, since 3^3 = 27 = 1 mod 13, so 3^n = 3^(n mod 3) mod 13 for every n >= 0.) Remaining steps s2, s3, s4, s5, s6, s7, s8, s9 were each verified true over their stated ranges, though s3, s4, s6, s7, s8 are irrelevant to the conclusion.",
+  "confidence": 0.96,
+  "context_items_used": [],
+  "context_items_judged_misleading": [],
+  "what_would_resolve_it": null,
+  "resource_report": {
+    "output_tokens": 2100,
+    "wall_time_s": 190.0,
+    "verifier_calls": 2,
+    "solver_calls": 0,
+    "max_search_size": 81,
+    "artifact_code_bytes": 1010,
+    "estimated": true,
+    "verifier_calls_note": "2 program executions total. 1 was mathematical verification (verify.py, which decided the claim). The 2nd was a post-hoc JSON schema/parse check of this record and contributed nothing to the disposition. Counted anyway per the honest-reporting rule."
+  }
+}

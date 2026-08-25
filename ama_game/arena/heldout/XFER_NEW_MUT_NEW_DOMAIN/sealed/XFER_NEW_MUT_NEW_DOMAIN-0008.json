@@ -1,0 +1,46 @@
+{
+  "claim_id": "XFER_NEW_MUT_NEW_DOMAIN-0008",
+  "set_name": "XFER_NEW_MUT_NEW_DOMAIN",
+  "template_id": "t3_min_degree_connectivity",
+  "domain_label": "finite_combinatorics",
+  "sealed_class": "TRUE_BUT_INVALID_ARGUMENT",
+  "oracle_disposition": "TRUE_BUT_INVALID_ARGUMENT",
+  "truth_status": "TRUE",
+  "truth_method": "native exhaustive enumeration of all 2^E labelled graphs",
+  "argument_validity": "INVALID",
+  "invalid_steps": [
+    "s4"
+  ],
+  "incomplete_steps": [],
+  "planted_mutation_type": "M10_vacuous_instantiation",
+  "mutation_target_step": "s4",
+  "mutation_mechanism": "a universal statement was instantiated outside its declared domain",
+  "known_witness": null,
+  "known_proof_sketch": "min degree >= 2 forces components of size >= 3; two such components would need more than 5 vertices.",
+  "minimum_known_disposition_method": {
+    "kind": "exhaustive",
+    "cost_units": 1024,
+    "within_player_budget": true
+  },
+  "difficulty": {
+    "domain_size": 1024,
+    "derivation_length": 7,
+    "player_search_budget": 200000
+  },
+  "params": {
+    "v": 5,
+    "d": 2
+  },
+  "claim_predicate": "(min(graph_degrees(g, 5)) < 2) or (graph_is_connected(g, 5) == 1)",
+  "witness_var": "g",
+  "domain_lo": 0,
+  "domain_hi": 1023,
+  "notes": [],
+  "generation": {
+    "set_seed": 990003,
+    "item_seed": 170131735601711,
+    "item_index": 8,
+    "generator_sha256": "28e73b444b445e60750a43dd034fc29aa99a47b939d26a56e8e176eefc7af7ea",
+    "protocol_version": "v0.1-alpha"
+  }
+}

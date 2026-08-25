@@ -1,0 +1,60 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0-A0_EVAL-0009",
+  "condition": "A",
+  "claim_id": "A0_EVAL-0009",
+  "disposition": "FALSE",
+  "evidence_kind": "witness",
+  "witness": {
+    "n": 230631,
+    "in_stated_domain": true,
+    "domain": "1 <= 230631 <= 402813",
+    "stopping_time": 442,
+    "claim_requires": "stopping time < 386",
+    "trajectory_peak": 76778008,
+    "verifier": "witness_230631.py",
+    "verifier_path": "F:/Prometheus/ama_game/arena/a0/A0_EVAL/runs/A0_EVAL-0009/witness_230631.py",
+    "note": "Single starting value, direct memoization-free iteration, exact Python integer arithmetic. No floating point is used at any point, so no precision argument is needed. The witness alone refutes the proposition; no search or exhaustion is required to check it.",
+    "additional_violations_in_domain": [
+      {"n": 263103, "stopping_time": 406},
+      {"n": 270271, "stopping_time": 406},
+      {"n": 277615, "stopping_time": 388},
+      {"n": 288489, "stopping_time": 388}
+    ]
+  },
+  "search_bound": {
+    "kind": "exhaustive_finite_check_over_full_stated_domain",
+    "range": "[1, 402813]",
+    "starting_values_checked": 402813,
+    "verifier": "verify_collatz.py",
+    "verifier_path": "F:/Prometheus/ama_game/arena/a0/A0_EVAL/runs/A0_EVAL-0009/verify_collatz.py",
+    "result": "maximum stopping time over the domain is 442, attained at n = 230631; the sweep halted after collecting 5 violating n",
+    "budget_note": "This sweep touched 402813 starting values, which exceeds the frozen max_search_size budget of 200000. Reported truthfully. The disposition does NOT rest on this sweep: the decisive evidence is the single witness n = 230631, which is checkable in isolation. The sweep is corroboration and locates the extremal n only.",
+    "calibration": "The sweep reproduces independently known Collatz total-stopping-time record values: T(27)=111, T(703)=170, T(26623)=307, T(106239)=353, T(142587)=374, T(156159)=382, T(216367)=385, T(230631)=442, T(410011)=448."
+  },
+  "broken_step": null,
+  "argument_defects_noted": [
+    "s8 is a non-sequitur: it states that the sweep covers [1, 4519] and then asserts the conclusion for every n in [1, 402813]. This is an unjustified extension of a bounded check to a domain roughly 89 times larger, and it is exactly where the claim fails - the smallest counterexample, n = 230631, lies far outside the swept range. This defect is recorded for completeness only; it is not the disposition, because the conclusion itself is false, not merely unsupported.",
+    "s3 through s7 are true but inert. n^3 = n mod 6, the H(n) identity, the existence of n in [1,2000] with n^2 > 2000, and 5^3 - 5 = 120 have no bearing on Collatz stopping times and support no step that follows them. They function as filler that inflates the apparent density of verified content.",
+    "s3 through s7 also silently narrow the working domain to [1, 2000] while the proposition quantifies over [1, 402813]."
+  ],
+  "confidence": 0.99,
+  "context_items_used": [],
+  "context_items_judged_misleading": [],
+  "what_would_resolve_it": null,
+  "resource_report": {
+    "output_tokens": 3600,
+    "wall_time_s": 240.0,
+    "verifier_calls": 2,
+    "solver_calls": 0,
+    "max_search_size": 402813,
+    "artifact_code_bytes": 2532,
+    "estimated": true,
+    "estimated_fields": ["output_tokens", "wall_time_s"],
+    "measured_fields": ["verifier_calls", "solver_calls", "max_search_size", "artifact_code_bytes"],
+    "verifier_call_log": [
+      "1: verify_collatz.py - exhaustive sweep of [1, 402813]; returned max stopping time 442 at n = 230631 and four further violations. Decisive.",
+      "2: witness_230631.py - independent memoization-free re-derivation of T(230631) = 442, guarding against a memoization bug in call 1. Confirmed."
+    ]
+  }
+}

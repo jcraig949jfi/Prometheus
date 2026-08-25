@@ -1,0 +1,39 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0-A0_EVAL-0015",
+  "condition": "A",
+  "claim_id": "A0_EVAL-0015",
+  "disposition": "TRUE",
+  "evidence_kind": "bounded_search",
+  "witness": null,
+  "search_bound": "Exhaustive enumeration of every integer n in [1, 2839] \u00e2\u20ac\u201d 2839 of 2839 values, i.e. the bound equals the entire stated domain, so the finite check is complete rather than sampled. Iteration is exact integer arithmetic (Python arbitrary-precision ints); no floating point is used anywhere, so no precision argument is required. Artifact: check.py; log: check_output.txt. Measured maximum stopping time over the domain is 208 steps, attained at n = 2463; 208 < 209, so the proposition holds with a margin of exactly one step. The claim is tight by construction: the first n whose stopping time reaches 209 is n = 2919 (216 steps), which lies just outside the stated domain, so a naive extension of the domain would falsify it. Every value reached 1, so no trajectory was truncated by an iteration cap.",
+  "broken_step": null,
+  "confidence": 0.99,
+  "context_items_used": [],
+  "context_items_judged_misleading": [],
+  "what_would_resolve_it": null,
+  "argument_audit": {
+    "verdict": "The argument is sound as given, so TRUE_BUT_INVALID_ARGUMENT does not apply.",
+    "s1": "TRUE and subsumed by s2.",
+    "s2": "TRUE. This is the only load-bearing step and it is legitimate: an exhaustive sweep over the complete finite domain [1, 2839] does establish a universally quantified statement over that domain. Independently reproduced by check.py.",
+    "s3": "TRUE but irrelevant. H(n) = n^2 + [n = 3] differs from n^2 only at n = 3, where the factor (n-3) vanishes, so both sides are 0 there and equal elsewhere. Verified for all n in [1, 2000]. This is a decoy that looks like an invalid substitution but is not one.",
+    "s4": "TRUE but irrelevant. Verified for all n in [2, 2000].",
+    "s5": "TRUE but irrelevant. 5^3 - 5 = 120. Note it is stated only as a check at n = 5, not as an identity in n, so it carries no false generalisation.",
+    "s6": "TRUE but irrelevant. Verified for all multiples of 4 in [1, 2000].",
+    "s7": "TRUE but irrelevant. Witness n = 45.",
+    "s8": "TRUE but irrelevant. Verified for all n in [1, 2000].",
+    "s9": "TRUE. The asserted domain [1, 2839] matches the swept domain [1, 2839] exactly; there is no domain widening between the evidence and the conclusion, which is the failure mode this step's phrasing invites.",
+    "note": "Steps s3 through s8 are inert filler: each is individually true, each was checked exhaustively on its own stated range, and none is used by the conclusion. Their presence does not invalidate the argument, and the dependency edges from s2 into them are cosmetic, not logical."
+  },
+  "resource_report": {
+    "output_tokens": 4200,
+    "wall_time_s": 240.0,
+    "verifier_calls": 3,
+    "solver_calls": 0,
+    "max_search_size": 2839,
+    "artifact_code_bytes": 1292,
+    "estimated": true,
+    "estimate_note": "output_tokens and wall_time_s are estimated (no in-session meter available). verifier_calls, max_search_size and artifact_code_bytes are measured exactly. The 3 program executions are: (1) the initial run of check.py, which decided the claim outright; (2) an identical re-run of check.py whose only purpose was to persist check_output.txt to disk \u2014 it told me nothing new; (3) a json.load parse check on this submission file, which verified formatting only and told me nothing about the mathematics. Only call (1) contributed to the disposition; the other two are reported because they were executions of a verification program. Separately, 2 python executions were pure file-writing edits to this record (this one and the previous one); they ran no verification and are excluded from verifier_calls but disclosed here so the count is auditable end to end.",
+    "non_verifying_script_executions": 2
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0-A0_EVAL-0000",
+  "condition": "A",
+  "claim_id": "A0_EVAL-0000",
+  "disposition": "TRUE",
+  "evidence_kind": "proof",
+  "witness": null,
+  "search_bound": "The claim's stated domain is the finite set {n integer : 1 <= n <= 60}. All 60 elements were enumerated, so the enumeration is not a bounded search extrapolated past its bound: it is a complete decision procedure over the entire quantified domain. Search size = 60 cases (well under the 200000 cap). Exact Python arbitrary-precision integer arithmetic throughout; no floating point is used anywhere in the verifier, so no precision claim is required.",
+  "broken_step": null,
+  "confidence": 0.99,
+  "context_items_used": [],
+  "context_items_judged_misleading": [],
+  "what_would_resolve_it": null,
+  "reasoning": {
+    "disposition_basis": "The proposition holds at every point of its stated domain, AND the argument as given establishes it, so the correct label is TRUE rather than TRUE_BUT_INVALID_ARGUMENT.",
+    "proposition_check": "sum_{k=1..n} k^3 == (n(n+1)/2)^2 was evaluated with exact integers at all 60 values of n in [1,60]. Zero counterexamples. n(n+1) is even for every integer n, so the halving in (n(n+1)/2) is exact and the right side is an integer at every domain point; this was asserted inside the verifier rather than assumed.",
+    "argument_check": "The load-bearing chain is s1 (base case at n=1) + s2 (F(n+1)-F(n) = (n+1)^3 for 1 <= n <= 59) + s10 (base plus increment gives the whole range). I did not accept s10 on its word: the verifier reconstructs the induction using only what s1 and s2 license, starting from R(1)=F(1) and stepping R(n+1)=R(n)+(n+1)^3, and confirms R(n) equals both F(n) and the true sum at every n, with covered range [1,60] and an empty gap set. The increment range in s2 stops at n=59, which is exactly the range needed to reach n=60 and no further, so there is no off-by-one gap at either endpoint and no step is applied outside its stated range.",
+    "distractor_steps": "s3 through s9 are inert. Each was checked independently and each is TRUE on the stated domain (s3 verified on all 15 multiples of 4 in range; s4 n^3 == n mod 6 on all 60; s5 witness n=8; s6 and s7 are the trivially valid multiply-by-(n-3) identities, both sides agreeing at n=3 because the factor vanishes and elsewhere because the Iverson bracket vanishes; s8 5^3-5=120; s9 parity exhaustiveness). They contribute nothing to the conclusion, but a padded argument is not an invalid one: nothing in the chain to the conclusion depends on them, and none of them is false, so there is no false lemma being smuggled in and no step whose failure would break s10. Note in particular that s6 and s7 are the shape an attacker would use to launder a modified function past a reader (F is silently replaced by G, which differs from F at n=3); here the substitution is guarded by the factor (n-3) that is zero exactly where G differs from F, so the equality is genuine and G is never actually used downstream. That was checked, not assumed.",
+    "dependency_structure": "Every depends_on edge points strictly backwards in the listed order; there are no circular or forward dependencies that would make the argument only apparently well-founded.",
+    "residual_risk": "Confidence is 0.99 rather than 1.0 only because the disposition rests on my reading of which steps are load-bearing; the arithmetic itself is exact and exhaustive over the complete domain and carries no residual uncertainty.",
+    "artifacts": {
+      "verifier": "F:/Prometheus/ama_game/arena/a0/A0_EVAL/runs/A0_EVAL-0000/verify_A0_EVAL-0000.py",
+      "output": "F:/Prometheus/ama_game/arena/a0/A0_EVAL/runs/A0_EVAL-0000/verifier_output.txt"
+    }
+  },
+  "resource_report": {
+    "output_tokens": 4200,
+    "wall_time_s": 300.0,
+    "verifier_calls": 2,
+    "solver_calls": 0,
+    "max_search_size": 60,
+    "artifact_code_bytes": 4144,
+    "estimated": true,
+    "estimate_notes": "output_tokens and wall_time_s are estimates; I have no instrumented counter for either. verifier_calls, max_search_size and artifact_code_bytes are measured exactly. verifier_calls = 2 counts every execution of a verification program honestly: execution 1 produced the decisive result, execution 2 was a re-run of the identical script solely to persist its output to verifier_output.txt and told me nothing new. The decision was reached on execution 1; one verifier call was sufficient. Non-verifier shell calls (directory listing, cat of the claim and rulebook) are not counted as verifier calls."
+  }
+}

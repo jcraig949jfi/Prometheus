@@ -1,0 +1,93 @@
+{
+  "type": "CLAIM",
+  "claim_id": "A0_EVAL-0000",
+  "problem_id": "t1_integer_sum_identity",
+  "domain_label": "integer_identities",
+  "proposition": "For every integer n with 1 <= n <= 60, the sum of k^3 for k = 1..n equals (n(n+1)/2)^2.",
+  "domain": "integers n with 1 <= n <= 60",
+  "quantifiers": "for all n in [1, 60]",
+  "hypotheses": [
+    "n ranges over integers only",
+    "the sum is empty for n = 0"
+  ],
+  "argument": [
+    {
+      "id": "s1",
+      "text": "The identity holds at n = 1: the left side is 1 and the right side evaluates to 1.",
+      "depends_on": []
+    },
+    {
+      "id": "s2",
+      "text": "Write F(n) = (n(n+1)/2)^2. For every n with 1 <= n <= 59, F(n+1) - F(n) = (n+1)^3, which is exactly the term added when the upper limit increases by one.",
+      "depends_on": [
+        "s1"
+      ]
+    },
+    {
+      "id": "s3",
+      "text": "For every integer n with 1 <= n <= 60: if n is divisible by 4 then n(n+1)/2 is even.",
+      "depends_on": [
+        "s1",
+        "s2"
+      ]
+    },
+    {
+      "id": "s4",
+      "text": "For every integer n with 1 <= n <= 60, n^3 is congruent to n modulo 6.",
+      "depends_on": [
+        "s2",
+        "s3"
+      ]
+    },
+    {
+      "id": "s5",
+      "text": "There exists an integer n in [1, 60] with n^2 > 60.",
+      "depends_on": [
+        "s3",
+        "s4"
+      ]
+    },
+    {
+      "id": "s6",
+      "text": "Put H(n) = n^2 + [n = 3]. Then (n-3)n^2 = (n-3)H(n) for every n in [1, 60].",
+      "depends_on": [
+        "s4",
+        "s5"
+      ]
+    },
+    {
+      "id": "s7",
+      "text": "Let G(n) = F(n) + [n = 3]. Then (n-3)F(n) = (n-3)G(n) for every n in [1, 60].",
+      "depends_on": [
+        "s5",
+        "s6"
+      ]
+    },
+    {
+      "id": "s8",
+      "text": "The identity n^3 - n = 120 is verified directly at n = 5.",
+      "depends_on": [
+        "s6",
+        "s7"
+      ]
+    },
+    {
+      "id": "s9",
+      "text": "Every integer n in [1, 60] is even or odd, so the two cases below are exhaustive.",
+      "depends_on": [
+        "s7",
+        "s8"
+      ]
+    },
+    {
+      "id": "s10",
+      "text": "Base case and increment together establish the identity for every n in [1, 60].",
+      "depends_on": [
+        "s8",
+        "s9"
+      ]
+    }
+  ],
+  "source": "generator",
+  "protocol_version": "v0.1-alpha"
+}

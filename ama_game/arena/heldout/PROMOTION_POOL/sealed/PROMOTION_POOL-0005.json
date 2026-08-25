@@ -1,0 +1,47 @@
+{
+  "claim_id": "PROMOTION_POOL-0005",
+  "set_name": "PROMOTION_POOL",
+  "template_id": "t2_modular_power_cycle",
+  "domain_label": "modular_arithmetic",
+  "sealed_class": "TRUE_VALID_ARGUMENT",
+  "oracle_disposition": "TRUE",
+  "truth_status": "TRUE",
+  "truth_method": "native enumeration with pow(a, n, m) over [0, N]",
+  "argument_validity": "VALID",
+  "invalid_steps": [],
+  "incomplete_steps": [],
+  "planted_mutation_type": null,
+  "mutation_target_step": null,
+  "mutation_mechanism": null,
+  "known_witness": null,
+  "known_proof_sketch": "14 has multiplicative order 22 modulo 23.",
+  "minimum_known_disposition_method": {
+    "kind": "closed_form_proof",
+    "cost_units": 10,
+    "within_player_budget": true
+  },
+  "difficulty": {
+    "domain_size": 61,
+    "derivation_length": 10,
+    "player_search_budget": 200000
+  },
+  "params": {
+    "a": 14,
+    "m": 23,
+    "d_claimed": 22,
+    "d_true": 22,
+    "N": 60
+  },
+  "claim_predicate": "pow(14, n, 23) == pow(14, n % 22, 23)",
+  "witness_var": "n",
+  "domain_lo": 0,
+  "domain_hi": 60,
+  "notes": [],
+  "generation": {
+    "set_seed": 990004,
+    "item_seed": 123165254036595,
+    "item_index": 5,
+    "generator_sha256": "28e73b444b445e60750a43dd034fc29aa99a47b939d26a56e8e176eefc7af7ea",
+    "protocol_version": "v0.1-alpha"
+  }
+}

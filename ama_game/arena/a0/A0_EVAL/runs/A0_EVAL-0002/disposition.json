@@ -1,0 +1,60 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0-A0_EVAL-0002",
+  "condition": "A",
+  "claim_id": "A0_EVAL-0002",
+  "disposition": "TRUE_BUT_INVALID_ARGUMENT",
+  "evidence_kind": "proof",
+  "witness": {
+    "proposition_status": "holds on every point of its stated domain",
+    "verification": "exhaustive enumeration of all 50 integers n in [1,50], exact integer/Fraction arithmetic, no floating point used anywhere",
+    "counterexamples_to_proposition": [],
+    "broken_step_witness": {
+      "step": "s4",
+      "n": 3,
+      "n_mod_4": 3,
+      "F_n": 6,
+      "F_n_parity": "even",
+      "reading": "n(n+1)/2 is even at n=3 while 4 does not divide 3, so the reverse direction of s4 fails",
+      "all_counterexamples_in_domain": [
+        3,
+        7,
+        11,
+        15,
+        19,
+        23,
+        27,
+        31,
+        35,
+        39,
+        43,
+        47
+      ]
+    }
+  },
+  "search_bound": "n in [1,50], all 50 integers enumerated; 50 is the complete stated domain, not a truncation of a larger one, so the enumeration is a decision procedure for the proposition rather than a bounded search",
+  "broken_step": "s4. As stated, 's4' asserts the forward implication 4 | n => n(n+1)/2 is even, which is true for all n in [1,50] (verified exhaustively, zero counterexamples). But s4 explicitly declares that 'the implication is used in the reverse direction below'. The reverse direction -- n(n+1)/2 even => 4 | n -- is the converse, and it is false on the claim's own domain: n = 3 gives F(3) = 6, which is even, while 3 is not divisible by 4. There are 12 such counterexamples in [1,50] (n = 3, 7, 11, ..., 47). Using an implication in the reverse direction is affirming the consequent; here the consequent-to-antecedent step is not merely unlicensed, its content is demonstrably false. s4 lies inside the dependency closure of the concluding step s9 (closure = {s1,s2,s3,s4,s5,s6,s7,s8}, verified by traversing the depends_on DAG), so the argument as submitted routes its conclusion through an invalid inference. Secondary note, not the scored defect: steps s3, s5, s7 and s8 are individually true but inferentially inert with respect to the identity -- s5 is a single-point arithmetic check presented as 'the identity n^3 - n = 120', s8 is a tautology since the [n=3] indicator is annihilated by the (n-3) factor, and s6's case split is announced but never used, since no two cases follow. The conclusion is nonetheless correct: s1 (base case) and s2 (increment F(n+1) - F(n) = (n+1)) are both true as verified, and an induction using only those two would establish the identity. That is why this is TRUE_BUT_INVALID_ARGUMENT and not FALSE.",
+  "confidence": 0.72,
+  "context_items_used": [],
+  "context_items_judged_misleading": [],
+  "what_would_resolve_it": "The residual uncertainty is not mathematical -- the proposition's truth and s4's converse failure are both settled exhaustively. It is a scoring-convention question: whether an argument whose declared dependency chain passes through an invalid step is graded as invalid even though a valid sub-argument (s1 + s2 + induction) is present inside it. If the convention grades only the minimal sufficient sub-argument, the correct label is TRUE; if it grades the argument as submitted, including its declared depends_on edges, the correct label is TRUE_BUT_INVALID_ARGUMENT. I chose the latter because s4 self-declares its reverse-direction use and that use is false on the stated domain.",
+  "artifacts": {
+    "verifier": "F:/Prometheus/ama_game/arena/a0/A0_EVAL/runs/A0_EVAL-0002/verify.py"
+  },
+  "resource_report": {
+    "output_tokens": 3900,
+    "wall_time_s": 300.0,
+    "verifier_calls": 2,
+    "solver_calls": 0,
+    "max_search_size": 50,
+    "artifact_code_bytes": 2772,
+    "estimated": true,
+    "estimate_notes": "output_tokens and wall_time_s are estimates -- the harness exposes no token or timer readout to the seat. verifier_calls, solver_calls, max_search_size and artifact_code_bytes are measured exactly: verify.py was executed once, total, and it told me everything I needed; no confirmation runs were made after the disposition was decided.",
+    "verifier_calls_breakdown": {
+      "mathematical_verifier_executions": 1,
+      "detail": "verify.py executed exactly once; it settled the proposition, the truth of every step, and the s4 converse failure in that single run. The disposition was decided from it and no confirmation run followed.",
+      "non_mathematical_executions": 1,
+      "non_mathematical_detail": "one post-hoc `python -c` execution that only parsed this submission file to confirm it is well-formed JSON. It ran after the disposition was decided and contributed nothing mathematical, but it was an execution of a program and is counted here rather than omitted."
+    }
+  }
+}

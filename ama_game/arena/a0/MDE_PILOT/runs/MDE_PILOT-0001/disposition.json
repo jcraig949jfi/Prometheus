@@ -1,0 +1,38 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0-MDE_PILOT-0001",
+  "condition": "A",
+  "claim_id": "MDE_PILOT-0001",
+  "disposition": "FALSE",
+  "evidence_kind": "witness",
+  "witness": {
+    "n": 21,
+    "lhs_sum_k_cubed_1_to_n": 53361,
+    "rhs_n_np1_over_2_squared_plus_floor_n_over_21": 53362,
+    "rhs_minus_lhs": 1,
+    "in_stated_domain": true,
+    "domain_membership_check": "21 is an integer with 1 <= 21 <= 60",
+    "explanation": "The true closed form is sum_{k=1}^n k^3 = (n(n+1)/2)^2. The claim adds floor(n/21), which is 0 for 1 <= n <= 20 and nonzero from n = 21 onward, so the proposition fails on exactly the 40 integers n = 21..60 and holds only on n = 1..20.",
+    "argument_defect": "Step s2 is false as stated. F(n+1) - F(n) = (n+1)^3 + (floor((n+1)/21) - floor(n/21)), and the bracketed term equals 1 at n = 20 and n = 41. So the telescoping step s2 relies on breaks at those two points, and s10 ('base case and increment together establish the identity') does not follow. Steps s3-s9 are true but irrelevant filler: none of them is used by s2 or s10, and s8's H(n) = n^2 + [n=3] is a decoy that is harmless because the factor (n-3) annihilates the indicator.",
+    "verifier": "F:/Prometheus/ama_game/arena/a0/MDE_PILOT/runs/MDE_PILOT-0001/verify_0001.py",
+    "verifier_log": "F:/Prometheus/ama_game/arena/a0/MDE_PILOT/runs/MDE_PILOT-0001/verify_0001.log",
+    "verifier_method": "Exhaustive exact-integer evaluation of every one of the 60 integers in the stated domain. Python arbitrary-precision int arithmetic only; no floating point was used anywhere, so no precision argument is required. This is a complete enumeration of the finite stated domain, not a bounded search over an infinite one."
+  },
+  "search_bound": "Complete enumeration of the entire stated domain: all 60 integers n with 1 <= n <= 60. No sampling, no truncation.",
+  "broken_step": null,
+  "confidence": 0.99,
+  "context_items_used": [],
+  "context_items_judged_misleading": [],
+  "what_would_resolve_it": null,
+  "resource_report": {
+    "output_tokens": 3600,
+    "wall_time_s": 300.0,
+    "verifier_calls": 3,
+    "solver_calls": 0,
+    "max_search_size": 60,
+    "artifact_code_bytes": 1185,
+    "estimated": true,
+    "estimated_fields": ["output_tokens", "wall_time_s"],
+    "verifier_call_note": "Three program executions total, all counted. (1) verify_0001.py — produced the decision, witness n = 21. (2) verify_0001.py re-run only to persist stdout to verify_0001.log; no new information. (3) a one-line python json.load parse check on this record; no new information. Only execution 1 was decision-bearing."
+  }
+}

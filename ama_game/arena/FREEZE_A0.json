@@ -1,0 +1,64 @@
+{
+  "_comment": "FROZEN at A0 launch. Any drift in a listed hash invalidates the A0 baseline and forks the protocol version. The empty graph proves no play preceded the baseline; the rest proves D will be measured against the same instrument.",
+  "protocol_version": "v0.1-alpha",
+  "graph_jsonl_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "graph_is_empty": true,
+  "prompt_invariant_sha256_by_role": {
+    "RED": "2d77fd57431ca57c4b090cb1a3c03e470ea807a95845a1ee72541ac27f650de7",
+    "BLUE": "9ebdffb068612f0f7b804d7b747405cf8ab91dba59424d16305f30641ef07be7",
+    "PURPLE": "b9edf71e30842c063579d538873203621ec1631dbe821d761695694cec034b23",
+    "ASSESSOR": "18b737ec9f46d637118a378b5b9c5794c01c5d9351da73c417b7a1bc0bd7e7fc"
+  },
+  "budget": {
+    "_comment": "FROZEN for protocol v0.1-alpha. Identical for every seat and every experimental condition (A0/B/C/D). Changing any value here forks the protocol version and invalidates cross-condition comparison with prior runs. See PREREG_A0.md section 4. BUDGET_SEARCH_SIZE lowered from 1e7 to 2e5 on 2026-08-25, before any run, so that the generator's own enumeration budget can exceed the player's by a factor of 3 or more; that gap is what makes UNRESOLVED_WITHIN_BUDGET constructible.",
+    "protocol_version": "v0.1-alpha",
+    "BUDGET_TOKENS": 40000,
+    "BUDGET_WALL_SECONDS": 900,
+    "BUDGET_VERIFIER_CALLS": 25,
+    "BUDGET_SEARCH_SIZE": 200000,
+    "CONTEXT_TOKEN_CAP": 3000
+  },
+  "files": {
+    "generator/exprlang.py": "756d6433115553d1200ddf11786922392c4feefd90e6dcb9a600d13cbd2775c9",
+    "generator/derivation.py": "ff4406f333b5053fdf349f01514e4bec8dd5045fe20d76b3b9c35fa8f28682c6",
+    "generator/templates.py": "e2f1bedbc61fb2d7aaf436632db439eef54a90b1015eae41a5ca98f29734a11c",
+    "generator/mutations.py": "4428ec4985750e08ddef164820bf374a2339d29d4f25d993da2f32791be928d9",
+    "generator/oracle.py": "502b5b7dc152c6db9c187e75ee7ba2f774adef4f895e2602e52552d45de5b1d2",
+    "generator/generate.py": "3a6f48f7c45ba05a22b718b2c35be03bf277486f74183af3cefd7369538a3159",
+    "generator/pilot.py": "bb0aedca6a5c18d45ee76ecbc2bcd09e3c36af5eb34ca4e5d6c924bd815cb9f6",
+    "generator/MUTATION_SPLIT.json": "ac8f82ad1747c971e684176eb86b9727a721cc2908365b6b5d687f65c8a18914",
+    "generator/PLAY_SCOPE.json": "ac1fba4a77dc13063448b0b3fe3a09cfa927ccadc3c5af287f1dd5e317b61a31",
+    "prompts/00_COMMON_PREAMBLE.md": "d8e014cf2c819e2137d086071ad71d76151cc4e43f6ac9bf0c0065d5fb6c85cb",
+    "prompts/ROLE_ASSESSOR.md": "5499f86b19dc060d3a91af2f61da58a9f46f3534e21c999808e654f024f39268",
+    "prompts/ROLE_RED.md": "497897b28e4e44977c99237fd9617e9fae871e99473af15a06a34a5fdd947665",
+    "prompts/ROLE_BLUE.md": "ac27bd37114201ae0a0732aeb033c6b487b237c153f29fa2917e1b252b692814",
+    "prompts/ROLE_PURPLE.md": "06670a8387180242eab8b6a45d44101b8b87286e6b2819d6994eec844f6fb65d",
+    "prompts/CONTEXT_A_problem_only.md": "266199e87c7f67d74a0d18d7368b89b03d35fb0d514ee92e02cb2761ca06ce82",
+    "prompts/CONTEXT_B_generic.md": "bdf1f59012778a30fa4f6ba88cb82f3e8a8604a6135f32b3f179ab6a51c3f5e7",
+    "prompts/CONTEXT_C_nearest_failures.md": "54216ef3aba4485b36dae2dcf0af42007f9d0fe547bacf48791ac3d73f02069a",
+    "prompts/CONTEXT_D_graph_state.md": "c44508ef7fd6fbbcf5bf4340aedcab7fa3b95271577a842926a59bc4870f54e3",
+    "prompts/assemble.py": "bf233399546a4007be271684c75b6d6b4f5254107ae49baed93ffb1ac6fa88aa",
+    "prompts/budget.json": "355dfb4c8bcb048db3cbe558a869916b3bb32fdb4d7a79c9885a376b1672d694",
+    "a0/HARNESS_ENVELOPE.md": "41373fda0cd7671178abfdb7006a81e8e07414ee24c4854659cb0e28ef56f7b5",
+    "RULEBOOK_v0.1-alpha.md": "d74d44306e68744e06752888f203bd108fc1be77ed0134a98548339424103c35",
+    "PREREG_A0.md": "dc37e21576263d195ffeea19b7feed910653ec4c007328f2ea3f6840074060c9"
+  },
+  "eval_sets": {
+    "heldout/MDE_PILOT": {
+      "manifest_sha256": "4cf14033af7f78bea702e117acf821c94c471253f9308a8691e40718de8822bd",
+      "public_tree_sha256": "b033fac3abf85a128d58a310b95aec2022ee41dad6ebca17ae2edcc6544f4443",
+      "sealed_tree_sha256": "90827c2613a43bec2f8acd540fd2e9ec371035bccb3f02e2e04a6b0f9d217200",
+      "emitted": 10,
+      "seed": 51170023,
+      "generator_sha256": "50101f847258ae7a6929627a883c218e56880e8062a5ac2a483712f016e1808a"
+    },
+    "heldout/A0_EVAL": {
+      "manifest_sha256": "2c73c678edb997146977aaba004f1413cb2aa270d0103fc3d0f808eb3d116188",
+      "public_tree_sha256": "75196044362e708b13c7f29d9693947a2a3c8461edf6846e25a7ca972e966f1a",
+      "sealed_tree_sha256": "a6393156cea77fa49dc96167883cae1cb9a79677487476c53c2d3adf68f02e85",
+      "emitted": 30,
+      "seed": 88041199,
+      "generator_sha256": "50101f847258ae7a6929627a883c218e56880e8062a5ac2a483712f016e1808a"
+    }
+  }
+}

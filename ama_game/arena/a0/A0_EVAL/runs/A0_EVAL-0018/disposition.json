@@ -1,0 +1,58 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0-A0_EVAL-0018",
+  "condition": "A",
+  "claim_id": "A0_EVAL-0018",
+  "disposition": "FALSE",
+  "evidence_kind": "witness",
+  "witness": {
+    "n": 23529,
+    "steps_to_reach_1": 281,
+    "claimed_bound": "fewer than 279 steps",
+    "why_it_refutes": "23529 lies in the stated domain [1, 85828] and requires 281 applications of the map to reach 1, which is not fewer than 279.",
+    "smallest_counterexample_in_domain": true,
+    "additional_counterexamples": [
+      [
+        26623,
+        307
+      ],
+      [
+        31419,
+        284
+      ],
+      [
+        31687,
+        284
+      ],
+      [
+        34239,
+        310
+      ]
+    ],
+    "total_counterexamples_in_domain": 114,
+    "domain_maximum": {
+      "n": 77031,
+      "steps": 350
+    },
+    "artifact": "F:/Prometheus/ama_game/arena/a0/A0_EVAL/runs/A0_EVAL-0018/verify_collatz.py",
+    "arithmetic": "exact integer arithmetic only; no floating point used anywhere, so no precision question arises",
+    "check_type": "exhaustive finite check over the entire stated domain [1, 85828] (85828 values), not a bounded search over a sub-range",
+    "independent_anchors": "the script reproduces three independently known Collatz stopping-time records (27 -> 111, 6171 -> 261, 77031 -> 350), which cross-checks the step-counting convention used"
+  },
+  "search_bound": 85828,
+  "broken_step": "s7 -- the argument itself concedes 'the sweep covers [1, 1806]' and then asserts the statement 'for every n in [1, 85828]'. That is a bare extension of a verified range to a range 47x larger with no supporting inequality, induction, or reduction argument; steps s3-s6 (n^2 >= 2n, parity of n(n+1)/2, existence of n with n^2 > 2000, n^3 - n = 120 at n = 5) are true but wholly unrelated to Collatz stopping times and carry no part of the extension. The gap is not merely formal: the maximum stopping time on the swept range [1, 1806] is 181, while the true maximum on the claimed domain is 350, so the unsupported extrapolation is where the claim actually fails.",
+  "confidence": 1.0,
+  "context_items_used": [],
+  "context_items_judged_misleading": [],
+  "what_would_resolve_it": null,
+  "resource_report": {
+    "output_tokens": 2600,
+    "wall_time_s": 168.0,
+    "verifier_calls": 2,
+    "solver_calls": 0,
+    "max_search_size": 85828,
+    "artifact_code_bytes": 1427,
+    "estimated": true,
+    "estimate_notes": "output_tokens and wall_time_s are estimates (no in-session meter available); verifier_calls, max_search_size and artifact_code_bytes are exact. verifier_calls = 2 counts EVERY program execution in this session: (1) verify_collatz.py, the exhaustive mathematical check, which alone decided the disposition, and (2) a one-line json.load of this submission record to confirm it parses. Exactly one mathematical verifier call was needed to reach the disposition; the second execution was artifact hygiene and contributed nothing to the decision. For full transparency there was a third program execution in the session, a script that rewrote this resource_report field itself; it performed no verification and is excluded from verifier_calls, but total program executions in the session were 3."
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0-MDE_PILOT-0007",
+  "condition": "A",
+  "claim_id": "MDE_PILOT-0007",
+  "disposition": "TRUE_BUT_INVALID_ARGUMENT",
+  "evidence_kind": "witness",
+  "witness": {
+    "conclusion_status": "The proposition itself holds. Its domain is the finite set {0,...,80}, and all 81 values were enumerated exactly (Python arbitrary-precision integers, pow(5,n,7); no floating point anywhere). 5 has multiplicative order 6 modulo 7 (5,4,6,2,3,1), so 5^n = 5^(n mod 6) mod 7 for every non-negative n; the enumeration confirms it on the stated domain with no exceptions.",
+    "broken_step_witness": {
+      "step": "s8",
+      "step_text": "The identity n^3 - n = 120 is verified directly at n = 6.",
+      "n": 6,
+      "claimed_value": 120,
+      "actual_value": 210,
+      "computation": "6^3 - 6 = 216 - 6 = 210 != 120"
+    },
+    "artifacts": [
+      "F:/Prometheus/ama_game/arena/a0/MDE_PILOT/runs/MDE_PILOT-0007/verify.py"
+    ],
+    "per_step_results": {
+      "s1": true,
+      "s2": true,
+      "s3": true,
+      "s4": true,
+      "s5": true,
+      "s6": true,
+      "s7": true,
+      "s8": false,
+      "s9": true,
+      "s10": true,
+      "s11": true,
+      "s12": "conclusion is correct, but its cited support chain passes through the false s8"
+    }
+  },
+  "search_bound": "Exhaustive over the complete stated domain: every integer n with 0 <= n <= 80 (81 values) for the proposition, plus every n in the stated range of each of s1-s11 (1239 integer evaluations in total, largest single sweep 401 values for the auxiliary n^3-n=120 solvability check over n in [-200,200]). Because the claim's domain is finite and was enumerated in full, this is a complete check of the proposition, not a sample of it. Every budget figure is far below the 200000 cap.",
+  "broken_step": "s8 \u00e2\u20ac\u201d 'The identity n^3 - n = 120 is verified directly at n = 6.' This step is simply false as stated: 6^3 - 6 = 210, not 120. It is not a mislabelled-but-recoverable claim either; the unique integer solution of n^3 - n = 120 is n = 5 (bounded search over n in [-200,200] found n = 5 as the only root, and the cubic has at most three real roots so no others exist), so n = 6 does not 'verify' the identity under any reading. s8 is load-bearing in the presented dependency graph: s9 and s10 both depend_on s8, s11 depends_on s10, and the concluding step s12 depends_on s10 and s11. The argument as written therefore routes its conclusion through a false assertion and does not establish the proposition. Two further remarks, offered so the diagnosis is not over-claimed: (a) the conclusion is nonetheless true, and a valid argument is available from the material already present \u00e2\u20ac\u201d s1 (base case at n=0) plus s2 (5^(n+6) = 5^n mod 7 on [0,74]) plus repeated reduction by 6 suffices, which is exactly what s12 asserts; the defect is that s12 cites s10 and s11 rather than s1 and s2. (b) Steps s4, s7, s10 and s11 are individually true but mathematically inert: none of them constrains 5^n modulo 7, and s4's H(n) = n^2 + [n = 3] is a decoy that is true only because the factor (n-3) annihilates the indicator at the one point where it is nonzero. Inert padding is not by itself an invalidity, so the disposition rests on s8 alone.",
+  "confidence": 0.97,
+  "context_items_used": [],
+  "context_items_judged_misleading": [],
+  "what_would_resolve_it": null,
+  "resource_report": {
+    "output_tokens": 4100,
+    "wall_time_s": 210.0,
+    "verifier_calls": 1,
+    "solver_calls": 0,
+    "max_search_size": 1239,
+    "artifact_code_bytes": 2268,
+    "estimated": true,
+    "estimate_notes": "verifier_calls, solver_calls, max_search_size and artifact_code_bytes are measured exactly: exactly one execution of verify.py was performed, it was the only program run, no solver was invoked, the program's own counter reported 1239 integer evaluations, and artifact_code_bytes is the on-disk size of verify.py. output_tokens and wall_time_s are estimates because this seat has no instrumented access to its own token counter or to a harness-side clock; both are rounded upward so as not to under-report. Full disclosure of every program execution in this seat: (1) one run of verify.py, the sole mathematical verification, counted as the single verifier call; (2) one non-mathematical `python -c` invocation that parsed this submission file to confirm it is well-formed JSON, which decided nothing about the claim and is reported here rather than folded into verifier_calls; (3) one `wc -c` to measure artifact_code_bytes. No other executions occurred, and no execution was discarded or re-run after an unfavourable result."
+  }
+}

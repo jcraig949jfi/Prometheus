@@ -1,0 +1,50 @@
+{
+  "claim_id": "MDE_PILOT-0001",
+  "set_name": "MDE_PILOT",
+  "template_id": "t1_integer_sum_identity",
+  "domain_label": "integer_identities",
+  "sealed_class": "FALSE_WITH_WITNESS",
+  "oracle_disposition": "FALSE",
+  "truth_status": "FALSE",
+  "truth_method": "native exhaustive enumeration over [1, N]",
+  "argument_validity": "INVALID",
+  "invalid_steps": [
+    "s2"
+  ],
+  "incomplete_steps": [],
+  "planted_mutation_type": null,
+  "mutation_target_step": null,
+  "mutation_mechanism": null,
+  "known_witness": {
+    "n": 21
+  },
+  "known_proof_sketch": null,
+  "minimum_known_disposition_method": {
+    "kind": "witness_search",
+    "cost_units": 21,
+    "within_player_budget": true
+  },
+  "difficulty": {
+    "domain_size": 60,
+    "derivation_length": 10,
+    "player_search_budget": 200000
+  },
+  "params": {
+    "p": 3,
+    "N": 60,
+    "formula": "(n(n+1)/2)^2 + floor(n/21)",
+    "formula_expr": "((n*(n+1)//2)**2) + (n//21)"
+  },
+  "claim_predicate": "sum_k(n,3) == ((n*(n+1)//2)**2) + (n//21)",
+  "witness_var": "n",
+  "domain_lo": 1,
+  "domain_hi": 60,
+  "notes": [],
+  "generation": {
+    "set_seed": 51170023,
+    "item_seed": 281054201262771,
+    "item_index": 1,
+    "generator_sha256": "50101f847258ae7a6929627a883c218e56880e8062a5ac2a483712f016e1808a",
+    "protocol_version": "v0.1-alpha"
+  }
+}

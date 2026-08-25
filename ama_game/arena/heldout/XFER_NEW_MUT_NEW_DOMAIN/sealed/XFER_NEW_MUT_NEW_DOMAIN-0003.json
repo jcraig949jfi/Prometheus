@@ -1,0 +1,44 @@
+{
+  "claim_id": "XFER_NEW_MUT_NEW_DOMAIN-0003",
+  "set_name": "XFER_NEW_MUT_NEW_DOMAIN",
+  "template_id": "t3_min_degree_connectivity",
+  "domain_label": "finite_combinatorics",
+  "sealed_class": "TRUE_VALID_ARGUMENT",
+  "oracle_disposition": "TRUE",
+  "truth_status": "TRUE",
+  "truth_method": "native exhaustive enumeration of all 2^E labelled graphs",
+  "argument_validity": "VALID",
+  "invalid_steps": [],
+  "incomplete_steps": [],
+  "planted_mutation_type": null,
+  "mutation_target_step": null,
+  "mutation_mechanism": null,
+  "known_witness": null,
+  "known_proof_sketch": "min degree >= 4 forces components of size >= 5; two such components would need more than 6 vertices.",
+  "minimum_known_disposition_method": {
+    "kind": "exhaustive",
+    "cost_units": 32768,
+    "within_player_budget": true
+  },
+  "difficulty": {
+    "domain_size": 32768,
+    "derivation_length": 8,
+    "player_search_budget": 200000
+  },
+  "params": {
+    "v": 6,
+    "d": 4
+  },
+  "claim_predicate": "(min(graph_degrees(g, 6)) < 4) or (graph_is_connected(g, 6) == 1)",
+  "witness_var": "g",
+  "domain_lo": 0,
+  "domain_hi": 32767,
+  "notes": [],
+  "generation": {
+    "set_seed": 990003,
+    "item_seed": 178780837704363,
+    "item_index": 3,
+    "generator_sha256": "28e73b444b445e60750a43dd034fc29aa99a47b939d26a56e8e176eefc7af7ea",
+    "protocol_version": "v0.1-alpha"
+  }
+}

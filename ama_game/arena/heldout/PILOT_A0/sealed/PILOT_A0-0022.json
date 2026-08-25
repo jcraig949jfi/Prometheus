@@ -1,0 +1,48 @@
+{
+  "claim_id": "PILOT_A0-0022",
+  "set_name": "PILOT_A0",
+  "template_id": "t1_integer_sum_identity",
+  "domain_label": "integer_identities",
+  "sealed_class": "TRUE_BUT_INVALID_ARGUMENT",
+  "oracle_disposition": "TRUE_BUT_INVALID_ARGUMENT",
+  "truth_status": "TRUE",
+  "truth_method": "native exhaustive enumeration over [1, N]",
+  "argument_validity": "INVALID",
+  "invalid_steps": [
+    "s3"
+  ],
+  "incomplete_steps": [],
+  "planted_mutation_type": "M7_unjustified_independence",
+  "mutation_target_step": "s3",
+  "mutation_mechanism": "congruences modulo two non-coprime factors combined as if independent",
+  "known_witness": null,
+  "known_proof_sketch": "Base case at n=1 plus the increment identity F(n+1)-F(n)=(n+1)^1.",
+  "minimum_known_disposition_method": {
+    "kind": "closed_form_proof",
+    "cost_units": 7,
+    "within_player_budget": true
+  },
+  "difficulty": {
+    "domain_size": 30,
+    "derivation_length": 7,
+    "player_search_budget": 200000
+  },
+  "params": {
+    "p": 1,
+    "N": 30,
+    "formula": "n(n+1)/2",
+    "formula_expr": "n*(n+1)//2"
+  },
+  "claim_predicate": "sum_k(n,1) == n*(n+1)//2",
+  "witness_var": "n",
+  "domain_lo": 1,
+  "domain_hi": 30,
+  "notes": [],
+  "generation": {
+    "set_seed": 20260825,
+    "item_seed": 208369903075946,
+    "item_index": 22,
+    "generator_sha256": "1f75ab2f63bf2cf050ac4033f042cb2d7ece6b93871160e90b796107dff135b5",
+    "protocol_version": "v0.1-alpha"
+  }
+}

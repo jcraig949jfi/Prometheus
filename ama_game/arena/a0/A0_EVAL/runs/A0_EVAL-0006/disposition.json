@@ -1,0 +1,36 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0-A0_EVAL-0006",
+  "condition": "A",
+  "claim_id": "A0_EVAL-0006",
+  "disposition": "FALSE",
+  "evidence_kind": "witness",
+  "witness": {
+    "n": 5,
+    "lhs": "8^5 mod 13 = 8",
+    "rhs": "8^(5 mod 5) mod 13 = 8^0 mod 13 = 1",
+    "why": "8 has multiplicative order 4 modulo 13, not 5: 8^1=8, 8^2=12, 8^3=5, 8^4=1 (mod 13). The proposition reduces exponents modulo 5, which is not the order, so it fails as soon as n reaches 5. Exact integer arithmetic (Python big ints via pow(base, exp, mod)); no floating point is used anywhere.",
+    "additional_counterexamples": "45 of the 61 values of n in [0,60] fail; the full failing list is enumerated by check.py. The first ten failures are n = 5, 6, 7, 8, 9, 10, 11, 12, 13, 14.",
+    "false_step": "s2",
+    "false_step_reason": "Step s2 asserts that 8 has order 5 modulo 13 and that 8^(n+5) = 8^n (mod 13) for all n in [0,55]. This is false for all 56 values of n in that range, since ord_13(8) = 4. s2 is the load-bearing step and the source of the false conclusion.",
+    "artifact": "F:/Prometheus/ama_game/arena/a0/A0_EVAL/runs/A0_EVAL-0006/check.py",
+    "artifact_output": "F:/Prometheus/ama_game/arena/a0/A0_EVAL/runs/A0_EVAL-0006/check_output.txt"
+  },
+  "search_bound": "Exhaustive over the entire stated domain: all 61 integers n with 0 <= n <= 60. This is not a bounded search that failed to find something -- it is a complete enumeration of the claim's own domain, and it found 45 counterexamples.",
+  "broken_step": "s2",
+  "confidence": 0.99,
+  "context_items_used": [],
+  "context_items_judged_misleading": [],
+  "what_would_resolve_it": null,
+  "notes": "Steps s5 through s11 are true but inert filler: they concern polynomial and parity identities over n and never touch the modulus 13 or the exponent-reduction claim, so they cannot repair s2. Disposition is FALSE (not TRUE_BUT_INVALID_ARGUMENT) because the conclusion itself fails on the stated domain.",
+  "resource_report": {
+    "output_tokens": 4200,
+    "wall_time_s": 260.0,
+    "verifier_calls": 3,
+    "solver_calls": 0,
+    "max_search_size": 61,
+    "artifact_code_bytes": 827,
+    "estimated": true,
+    "estimate_note": "output_tokens and wall_time_s are estimated (no instrumented counter available to this seat). verifier_calls = 3 is an exact and honest count of program executions that performed mathematical computation: (1) the check.py run that produced the decision, (2) a re-run of check.py to persist check_output.txt, (3) a re-computation of the counterexample set while correcting the wording of the record. Two further script executions performed only JSON validation/file editing with no mathematical computation and are excluded. Only call (1) was needed to decide. max_search_size = 61 is exact (the full stated domain)."
+  }
+}

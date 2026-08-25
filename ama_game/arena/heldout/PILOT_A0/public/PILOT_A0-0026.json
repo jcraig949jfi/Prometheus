@@ -1,0 +1,85 @@
+{
+  "type": "CLAIM",
+  "claim_id": "PILOT_A0-0026",
+  "problem_id": "t2_modular_power_cycle",
+  "domain_label": "modular_arithmetic",
+  "proposition": "For every integer n with 0 <= n <= 40, 10^n is congruent to 10^(n mod 8) modulo 13.",
+  "domain": "integers n with 0 <= n <= 40",
+  "quantifiers": "for all n in [0, 40]",
+  "hypotheses": [
+    "gcd(10, 13) = 1",
+    "exponents are non-negative"
+  ],
+  "argument": [
+    {
+      "id": "s1",
+      "text": "At n = 0 both sides equal 1 modulo 13.",
+      "depends_on": []
+    },
+    {
+      "id": "s2",
+      "text": "The residue 10 has order 8 modulo 13: for every n in [0, 32], 10^(n+8) is congruent to 10^n modulo 13.",
+      "depends_on": [
+        "s1"
+      ]
+    },
+    {
+      "id": "s3",
+      "text": "For every integer n with 1 <= n <= 40, n^3 is congruent to n modulo 6.",
+      "depends_on": [
+        "s1",
+        "s2"
+      ]
+    },
+    {
+      "id": "s4",
+      "text": "Every integer n in [1, 40] is even or odd, so the two cases below are exhaustive.",
+      "depends_on": [
+        "s2",
+        "s3"
+      ]
+    },
+    {
+      "id": "s5",
+      "text": "For every n in [0, 40]: if 8 divides n then 10^n is congruent to 1 modulo 13.",
+      "depends_on": [
+        "s3",
+        "s4"
+      ]
+    },
+    {
+      "id": "s6",
+      "text": "For every integer n with 1 <= n <= 40: if n is divisible by 4 then n(n+1)/2 is even.",
+      "depends_on": [
+        "s4",
+        "s5"
+      ]
+    },
+    {
+      "id": "s7",
+      "text": "Every n in [0, 40] falls in exactly one residue class modulo 8.",
+      "depends_on": [
+        "s5",
+        "s6"
+      ]
+    },
+    {
+      "id": "s8",
+      "text": "The identity n^3 - n = 120 is verified directly at n = 5.",
+      "depends_on": [
+        "s6",
+        "s7"
+      ]
+    },
+    {
+      "id": "s9",
+      "text": "Periodicity plus the base case gives the statement for every n in [0, 40].",
+      "depends_on": [
+        "s7",
+        "s8"
+      ]
+    }
+  ],
+  "source": "generator",
+  "protocol_version": "v0.1-alpha"
+}

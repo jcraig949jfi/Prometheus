@@ -1,0 +1,51 @@
+{
+  "_comment": "FROZEN before A0. Declares what players see during play, so the three transfer cells are defined by construction rather than declared after the fact.",
+  "protocol_version": "v0.1-alpha",
+  "play_templates": [
+    "t1_integer_sum_identity",
+    "t2_modular_power_cycle",
+    "t4_linear_recurrence",
+    "t5_collatz_stopping_time"
+  ],
+  "play_domains": [
+    "integer_identities",
+    "modular_arithmetic",
+    "recurrences",
+    "elementary_number_theory"
+  ],
+  "reserved_templates": {
+    "t6_shortcut_stopping_time": "new problem, domain already seen (recurrences)",
+    "t3_min_degree_connectivity": "new domain (finite_combinatorics), never seen in play"
+  },
+  "transfer_cells": {
+    "same_mut_new_problem": {
+      "family_pool": "play",
+      "templates": [
+        "t6_shortcut_stopping_time"
+      ],
+      "tests": "basic reuse: a defect family seen in play, on a problem never played"
+    },
+    "new_mut_same_domain": {
+      "family_pool": "holdout",
+      "templates": [
+        "t1_integer_sum_identity",
+        "t2_modular_power_cycle",
+        "t4_linear_recurrence",
+        "t5_collatz_stopping_time"
+      ],
+      "tests": "abstraction: a defect family never seen, in domains already played"
+    },
+    "new_mut_new_domain": {
+      "family_pool": "holdout",
+      "templates": [
+        "t3_min_degree_connectivity"
+      ],
+      "tests": "the interesting one: unseen defect family in an unseen domain"
+    }
+  },
+  "known_gaps": {
+    "t3_min_degree_connectivity": "hosts only M10 and M12 of the four holdout families; M9 and M11 cannot be planted in it, so the new_mut_new_domain cell is narrower than the other two",
+    "t3_classes": "t3 hosts TRUE_VALID_ARGUMENT, TRUE_BUT_INVALID_ARGUMENT and FALSE_BUT_HARD_WITHIN_BUDGET only; its single false instance has its first witness at enumeration index 5905, past the easy band",
+    "confound_power": "the template/class mutual-information gate is underpowered below roughly n=30; transfer sets generated at n=9-12 report 'inside the shuffle null' rather than a clean result"
+  }
+}

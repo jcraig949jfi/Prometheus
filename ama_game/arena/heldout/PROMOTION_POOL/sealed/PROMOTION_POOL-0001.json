@@ -1,0 +1,50 @@
+{
+  "claim_id": "PROMOTION_POOL-0001",
+  "set_name": "PROMOTION_POOL",
+  "template_id": "t1_integer_sum_identity",
+  "domain_label": "integer_identities",
+  "sealed_class": "FALSE_WITH_WITNESS",
+  "oracle_disposition": "FALSE",
+  "truth_status": "FALSE",
+  "truth_method": "native exhaustive enumeration over [1, N]",
+  "argument_validity": "INVALID",
+  "invalid_steps": [
+    "s2"
+  ],
+  "incomplete_steps": [],
+  "planted_mutation_type": null,
+  "mutation_target_step": null,
+  "mutation_mechanism": null,
+  "known_witness": {
+    "n": 4
+  },
+  "known_proof_sketch": null,
+  "minimum_known_disposition_method": {
+    "kind": "witness_search",
+    "cost_units": 4,
+    "within_player_budget": true
+  },
+  "difficulty": {
+    "domain_size": 60,
+    "derivation_length": 8,
+    "player_search_budget": 200000
+  },
+  "params": {
+    "p": 2,
+    "N": 60,
+    "formula": "n(n+1)(2n+1)/6 + floor(n/4)",
+    "formula_expr": "(n*(n+1)*(2*n+1)//6) + (n//4)"
+  },
+  "claim_predicate": "sum_k(n,2) == (n*(n+1)*(2*n+1)//6) + (n//4)",
+  "witness_var": "n",
+  "domain_lo": 1,
+  "domain_hi": 60,
+  "notes": [],
+  "generation": {
+    "set_seed": 990004,
+    "item_seed": 106823676203644,
+    "item_index": 1,
+    "generator_sha256": "28e73b444b445e60750a43dd034fc29aa99a47b939d26a56e8e176eefc7af7ea",
+    "protocol_version": "v0.1-alpha"
+  }
+}

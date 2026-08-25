@@ -1,0 +1,51 @@
+{
+  "claim_id": "PROMOTION_POOL-0010",
+  "set_name": "PROMOTION_POOL",
+  "template_id": "t4_linear_recurrence",
+  "domain_label": "recurrences",
+  "sealed_class": "TRUE_VALID_ARGUMENT",
+  "oracle_disposition": "TRUE",
+  "truth_status": "TRUE",
+  "truth_method": "native iteration of the recurrence, compared termwise",
+  "argument_validity": "VALID",
+  "invalid_steps": [],
+  "incomplete_steps": [],
+  "planted_mutation_type": null,
+  "mutation_target_step": null,
+  "mutation_mechanism": null,
+  "known_witness": null,
+  "known_proof_sketch": "r=4 and s=6 are the characteristic roots; C and D are fixed by the two initial conditions.",
+  "minimum_known_disposition_method": {
+    "kind": "closed_form_proof",
+    "cost_units": 10,
+    "within_player_budget": true
+  },
+  "difficulty": {
+    "domain_size": 26,
+    "derivation_length": 10,
+    "player_search_budget": 200000
+  },
+  "params": {
+    "r": 4,
+    "s": 6,
+    "C": 2,
+    "D": 3,
+    "p": 10,
+    "q": -24,
+    "a0": 5,
+    "a1": 26,
+    "N": 25
+  },
+  "claim_predicate": "lin_rec(n, 5, 26, 10, -24) == 2*4**n + 3*6**n",
+  "witness_var": "n",
+  "domain_lo": 0,
+  "domain_hi": 25,
+  "notes": [],
+  "generation": {
+    "set_seed": 990004,
+    "item_seed": 195055505511050,
+    "item_index": 10,
+    "generator_sha256": "28e73b444b445e60750a43dd034fc29aa99a47b939d26a56e8e176eefc7af7ea",
+    "protocol_version": "v0.1-alpha"
+  }
+}

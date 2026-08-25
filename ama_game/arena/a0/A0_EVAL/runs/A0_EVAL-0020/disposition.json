@@ -1,0 +1,33 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0-A0_EVAL-0020",
+  "condition": "A",
+  "claim_id": "A0_EVAL-0020",
+  "disposition": "TRUE",
+  "evidence_kind": "proof",
+  "witness": null,
+  "search_bound": "Exhaustive over the entire stated domain: all 40 integers n in [1, 40]. This is not a proper-subset bounded search - the stated domain is finite and every element of it was enumerated, so the check is decisive rather than merely suggestive. Artifact: verify.py; output: verify_output.txt.",
+  "broken_step": null,
+  "confidence": 0.97,
+  "context_items_used": [],
+  "context_items_judged_misleading": [],
+  "what_would_resolve_it": null,
+  "notes": {
+    "proposition": "sum_{k=1}^{n} k^1 = n(n+1)/2 for all integers n in [1,40].",
+    "why_proof_and_not_bounded_search": "The domain quantifier is 'for all n in [1,40]' over integers, i.e. exactly 40 cases. verify.py enumerates all 40 and finds zero counterexamples, which settles the universally quantified statement outright. Independently, s1 (base) plus s2 (increment) is a correct finite induction that also settles it in closed form; verify.py replays the telescope from n=1 to n=40 and it closes exactly.",
+    "arithmetic_precision": "No floating point is used anywhere. Sums are Python arbitrary-precision int; the closed form n(n+1)/2 is evaluated as fractions.Fraction(n*(n+1), 2), which is exact rational arithmetic, so the /2 introduces no rounding and the equality test is exact. This is why the check is sufficient.",
+    "argument_audit": "Every one of the eight steps was checked mechanically and all eight are true statements. s1: base case at n=1 holds. s2: F(n+1)-F(n) = (n+1) for all n in [1,39], verified exactly. s3: (n-3)n^2 = (n-3)H(n) with H(n)=n^2+[n=3] - true, because the Iverson bracket only fires at n=3 where the factor (n-3) is zero. s4: identical device applied to F, also true for the same reason. s5: parity dichotomy, trivially true. s6: n^3 = n (mod 6) for all n in [1,40], verified. s7: 5^3-5 = 120, verified. s8: base case plus increment do establish the identity on [1,40], which is a correct appeal to finite induction.",
+    "why_not_TRUE_BUT_INVALID_ARGUMENT": "Steps s3, s4, s6 and s7 are irrelevant to the conclusion - s3/s4 are vacuous multiply-by-zero identities, s6 and s7 are unrelated cubic facts, and s5 announces a case split whose two cases never appear. They are decoy padding, and the declared depends_on edges route the conclusion through them rather than straight from s1 and s2. But irrelevance is not invalidity: none of those steps is false, none is used to license a step that would otherwise fail, and the load-bearing chain s1 (base) -> s2 (increment) -> s8 (finite induction) is present, complete and sound on its own. Deleting s3-s7 leaves a valid proof of the proposition. A defect requires a false or unjustified step, and there is none, so the correct disposition is TRUE rather than TRUE_BUT_INVALID_ARGUMENT.",
+    "residual_risk": "Confidence is 0.97 rather than 1.0 only to cover the possibility that the intended defect is a presentation-level one I am declining to score as invalidity (the dead case-split announced in s5, or the misrouted dependency graph), not any doubt about the truth of the proposition itself, which is settled exhaustively."
+  },
+  "resource_report": {
+    "output_tokens": 4200,
+    "wall_time_s": 210.0,
+    "verifier_calls": 2,
+    "solver_calls": 0,
+    "max_search_size": 40,
+    "artifact_code_bytes": 1571,
+    "estimated": true,
+    "measurement_notes": "verifier_calls = 2: verify.py was executed twice (once to read results, once to capture verify_output.txt to disk); both executions ran the identical program and the second told me nothing new, but it is reported because the count must be honest. Three further shell invocations were plain file reads (directory listing, claim.json, rulebook, wc -c) and are not counted as verifier calls since they execute no verification logic. output_tokens and wall_time_s are estimates - I have no instrumented counter for either; max_search_size 40 and artifact_code_bytes 1571 are measured exactly."
+  }
+}

@@ -1,0 +1,11 @@
+domain size: 4074
+max stopping time: 237 at n = 3711
+violations (steps >= 209): 2
+first 10 violations: [(2919, 216), (3711, 237)]
+smallest witness: 2919 steps: 216
+witness recheck: True
+s4: 5^3-5 ==120 -> True
+s5: n^3=n mod 6 all n in [1,2000] -> True
+s6: 4|n => n(n+1)/2 even -> True
+s7: (n-3)n^2==(n-3)H(n) -> True
+s3: exists n<=2000 with n^2>2000 -> True

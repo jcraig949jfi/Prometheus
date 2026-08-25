@@ -1,0 +1,53 @@
+{
+  "claim_id": "A0_EVAL-0012",
+  "set_name": "A0_EVAL",
+  "template_id": "t4_linear_recurrence",
+  "domain_label": "recurrences",
+  "sealed_class": "TRUE_BUT_INVALID_ARGUMENT",
+  "oracle_disposition": "TRUE_BUT_INVALID_ARGUMENT",
+  "truth_status": "TRUE",
+  "truth_method": "native iteration of the recurrence, compared termwise",
+  "argument_validity": "INVALID",
+  "invalid_steps": [
+    "s3"
+  ],
+  "incomplete_steps": [],
+  "planted_mutation_type": "M5_non_equivalent_rewrite",
+  "mutation_target_step": "s3",
+  "mutation_mechanism": "non-equivalent rewrite: b^(n+1) expanded as b^n + 1",
+  "known_witness": null,
+  "known_proof_sketch": "r=4 and s=5 are the characteristic roots; C and D are fixed by the two initial conditions.",
+  "minimum_known_disposition_method": {
+    "kind": "closed_form_proof",
+    "cost_units": 8,
+    "within_player_budget": true
+  },
+  "difficulty": {
+    "domain_size": 26,
+    "derivation_length": 8,
+    "player_search_budget": 200000
+  },
+  "params": {
+    "r": 4,
+    "s": 5,
+    "C": 4,
+    "D": 1,
+    "p": 9,
+    "q": -20,
+    "a0": 5,
+    "a1": 21,
+    "N": 25
+  },
+  "claim_predicate": "lin_rec(n, 5, 21, 9, -20) == 4*4**n + 1*5**n",
+  "witness_var": "n",
+  "domain_lo": 0,
+  "domain_hi": 25,
+  "notes": [],
+  "generation": {
+    "set_seed": 88041199,
+    "item_seed": 156494663064169,
+    "item_index": 12,
+    "generator_sha256": "50101f847258ae7a6929627a883c218e56880e8062a5ac2a483712f016e1808a",
+    "protocol_version": "v0.1-alpha"
+  }
+}

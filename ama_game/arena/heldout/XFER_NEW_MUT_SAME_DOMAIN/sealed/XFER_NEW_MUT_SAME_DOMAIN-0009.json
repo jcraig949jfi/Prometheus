@@ -1,0 +1,54 @@
+{
+  "claim_id": "XFER_NEW_MUT_SAME_DOMAIN-0009",
+  "set_name": "XFER_NEW_MUT_SAME_DOMAIN",
+  "template_id": "t5_collatz_stopping_time",
+  "domain_label": "elementary_number_theory",
+  "sealed_class": "UNRESOLVED_WITHIN_BUDGET",
+  "oracle_disposition": "UNRESOLVED",
+  "truth_status": "FALSE",
+  "truth_method": "native iteration with an array memo, computed at generation time under a budget the player does not have",
+  "argument_validity": "INCOMPLETE",
+  "invalid_steps": [],
+  "incomplete_steps": [
+    "s8"
+  ],
+  "planted_mutation_type": null,
+  "mutation_target_step": null,
+  "mutation_mechanism": null,
+  "known_witness": {
+    "n": 410011,
+    "stopping_time": 448
+  },
+  "known_proof_sketch": null,
+  "minimum_known_disposition_method": {
+    "kind": "witness_search",
+    "cost_units": 410011,
+    "within_player_budget": false
+  },
+  "difficulty": {
+    "domain_size": 600000,
+    "derivation_length": 8,
+    "witness_position": 410011,
+    "player_search_budget": 200000
+  },
+  "params": {
+    "variant": "collatz",
+    "N": 600000,
+    "K": 443,
+    "checked_hi": 5000
+  },
+  "claim_predicate": "stop_time(n) < 443",
+  "witness_var": "n",
+  "domain_lo": 1,
+  "domain_hi": 600000,
+  "notes": [
+    "no closed form is available for this map; the only decision procedure known to the generator is enumeration"
+  ],
+  "generation": {
+    "set_seed": 990002,
+    "item_seed": 172053185769584,
+    "item_index": 9,
+    "generator_sha256": "28e73b444b445e60750a43dd034fc29aa99a47b939d26a56e8e176eefc7af7ea",
+    "protocol_version": "v0.1-alpha"
+  }
+}

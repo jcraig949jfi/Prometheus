@@ -1,0 +1,52 @@
+{
+  "claim_id": "PILOT_A0-0026",
+  "set_name": "PILOT_A0",
+  "template_id": "t2_modular_power_cycle",
+  "domain_label": "modular_arithmetic",
+  "sealed_class": "FALSE_WITH_WITNESS",
+  "oracle_disposition": "FALSE",
+  "truth_status": "FALSE",
+  "truth_method": "native enumeration with pow(a, n, m) over [0, N]",
+  "argument_validity": "INVALID",
+  "invalid_steps": [
+    "s2",
+    "s5"
+  ],
+  "incomplete_steps": [],
+  "planted_mutation_type": null,
+  "mutation_target_step": null,
+  "mutation_mechanism": null,
+  "known_witness": {
+    "n": 8
+  },
+  "known_proof_sketch": null,
+  "minimum_known_disposition_method": {
+    "kind": "witness_search",
+    "cost_units": 9,
+    "within_player_budget": true
+  },
+  "difficulty": {
+    "domain_size": 41,
+    "derivation_length": 9,
+    "player_search_budget": 200000
+  },
+  "params": {
+    "a": 10,
+    "m": 13,
+    "d_claimed": 8,
+    "d_true": 6,
+    "N": 40
+  },
+  "claim_predicate": "pow(10, n, 13) == pow(10, n % 8, 13)",
+  "witness_var": "n",
+  "domain_lo": 0,
+  "domain_hi": 40,
+  "notes": [],
+  "generation": {
+    "set_seed": 20260825,
+    "item_seed": 277394845443393,
+    "item_index": 26,
+    "generator_sha256": "1f75ab2f63bf2cf050ac4033f042cb2d7ece6b93871160e90b796107dff135b5",
+    "protocol_version": "v0.1-alpha"
+  }
+}

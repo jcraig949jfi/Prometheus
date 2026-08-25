@@ -1,0 +1,43 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0-A0_EVAL-0023",
+  "condition": "A",
+  "claim_id": "A0_EVAL-0023",
+  "disposition": "FALSE",
+  "evidence_kind": "witness",
+  "witness": {
+    "n": 23529,
+    "steps_to_reach_1": 281,
+    "claimed_bound": "fewer than 279 steps",
+    "in_stated_domain": true,
+    "domain": "1 <= n <= 79400",
+    "trajectory_head": [23529, 70588, 35294, 17647, 52942, 26471, 79414, 39707],
+    "trajectory_tail": [8, 4, 2, 1],
+    "note": "Smallest counterexample in the stated domain. 92 counterexamples exist in [1, 79400]; the extremal one is n=77031 with 350 steps. Verified by exact integer arithmetic; no floating point is used anywhere in the artifact, so no precision statement is needed.",
+    "artifact": "F:/Prometheus/ama_game/arena/a0/A0_EVAL/runs/A0_EVAL-0023/collatz_check.py",
+    "artifact_output": "F:/Prometheus/ama_game/arena/a0/A0_EVAL/runs/A0_EVAL-0023/collatz_check_output.txt"
+  },
+  "search_bound": "Exhaustive over the entire stated domain [1, 79400] (79400 values, within the arena max search size of 200000). This is a complete finite decision over the full quantifier range, not a bounded search with residual uncertainty. The disposition would stand on the single witness n=23529 alone.",
+  "broken_step": "s9. This is not the disposition-bearing finding -- the proposition is outright FALSE, so TRUE_BUT_INVALID_ARGUMENT does not apply -- but it is recorded for the graph. Step s9 asserts the statement for every n in [1, 79400] from a sweep covering only [1, 2190], about 2.8% of the domain, with no monotonicity, induction, or reduction argument connecting the two ranges. Steps s1 and s2 are individually true: the artifact confirms zero counterexamples in [1, 2190]. Steps s3 through s8 are true but wholly inert filler about the parity of n(n+1)/2, the identity n^3 - n = 120 at n = 5, a tautological H(n) rewriting, and n^3 = n mod 6; none of them mention Collatz iteration or stopping time at all, and none is used by s9. The argument is therefore a true prefix plus an unsupported extrapolation, and the extrapolation is exactly where the claim fails: the first counterexample n=23529 lies an order of magnitude beyond the swept range.",
+  "confidence": 1.0,
+  "context_items_used": [],
+  "context_items_judged_misleading": [],
+  "what_would_resolve_it": null,
+  "resource_report": {
+    "output_tokens": 5200,
+    "wall_time_s": 480.0,
+    "verifier_calls": 4,
+    "solver_calls": 0,
+    "max_search_size": 79400,
+    "artifact_code_bytes": 2181,
+    "estimated": true,
+    "verifier_calls_breakdown": {
+      "decisive_mathematical_runs": 1,
+      "redundant_rerun_to_persist_log": 1,
+      "non_mathematical_json_lint": 1,
+      "bookkeeping_rewrite_of_this_record": 1,
+      "calls_to_first_correct_decision": 1
+    },
+    "estimate_note": "output_tokens and wall_time_s are estimates; the harness holds the authoritative values. max_search_size and artifact_code_bytes are measured exactly. verifier_calls = 4 counts EVERY program execution in this session, including the ones that told me nothing: (1) the exhaustive Collatz sweep over [1, 79400], which decided the claim and is the only execution carrying mathematical information; (2) an identical re-run of that same script solely to persist stdout to collatz_check_output.txt; (3) a json.load syntax lint of this submission; (4) a python rewrite of this record's own resource report. Executions 2 through 4 were bookkeeping, not mathematics. Cost to first correct decision was 1 call. The breakdown is supplied so the arena can normalize its central quantity rather than guess which executions were mathematical; this final write was done with a plain file write and not an interpreter run, so the count of 4 is complete as written."
+  }
+}

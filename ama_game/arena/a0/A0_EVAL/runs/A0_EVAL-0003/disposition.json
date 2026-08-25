@@ -1,0 +1,55 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0-A0_EVAL-0003",
+  "condition": "A",
+  "claim_id": "A0_EVAL-0003",
+  "disposition": "FALSE",
+  "evidence_kind": "witness",
+  "witness": {
+    "n": 142587,
+    "total_stopping_time": 374,
+    "claimed_bound": "fewer than 354 steps",
+    "in_stated_domain": true,
+    "domain": "1 <= 142587 <= 169472",
+    "trajectory_file": "F:/Prometheus/ama_game/arena/a0/A0_EVAL/runs/A0_EVAL-0003/witness_trajectory.txt",
+    "verifier": "F:/Prometheus/ama_game/arena/a0/A0_EVAL/runs/A0_EVAL-0003/verify_collatz.py",
+    "note": "Steps recomputed a second time without the memo table (374 = 374), so the witness does not depend on the cache. Exact integer arithmetic only; no floating point is used anywhere, so no precision statement is required.",
+    "violator_count_in_domain": 5,
+    "argmax_on_domain": {
+      "n": 156159,
+      "steps": 382
+    },
+    "violator_count_in_domain_note": "5 values of n in [1,169472] have total stopping time >= 354 (measured count). Their identities beyond the smallest (142587) and the argmax (156159) were not enumerated, and are deliberately not asserted here."
+  },
+  "search_bound": {
+    "kind": "exhaustive_over_full_stated_domain",
+    "range": "[1, 169472]",
+    "search_size": 169472,
+    "budget_cap": 200000,
+    "comment": "The quantified domain is finite and every element of it was enumerated, so this is not a bounded search reported as universal - the bound and the domain coincide. The disposition would however already follow from the single witness n=142587."
+  },
+  "broken_step": {
+    "step_id": "s7",
+    "why": "Not load-bearing for the disposition (the proposition is simply false), but recorded: s7 asserts the statement for every n in [1, 169472] while the only sweep in the argument (s2) covers [1, 2020]. The max total stopping time on [1,2020] is 181 (at n=1161), so the swept range cannot see the failures near 1.4e5. Steps s3, s4, s5, s6 are individually true but vacuous with respect to the Collatz proposition (5^3-5=120 checks out; s4 holds for n<=2000; s5 holds) and their stated depends_on edges to s1/s2 are decorative.",
+    "verified_substeps": {
+      "s3": true,
+      "s4": true,
+      "s5": true,
+      "s2_max_on_1_2020": 181
+    }
+  },
+  "confidence": 0.99,
+  "context_items_used": [],
+  "context_items_judged_misleading": [],
+  "what_would_resolve_it": null,
+  "resource_report": {
+    "output_tokens": 3200,
+    "wall_time_s": 240.0,
+    "verifier_calls": 1,
+    "solver_calls": 0,
+    "max_search_size": 169472,
+    "artifact_code_bytes": 3066,
+    "estimated": true,
+    "estimate_notes": "output_tokens and wall_time_s are estimates (not instrumented in this harness); verifier_calls, max_search_size and artifact_code_bytes are measured. verifier_calls = 1: a single execution of verify_collatz.py, which found the witness on its first run."
+  }
+}

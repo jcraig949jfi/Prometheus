@@ -1,0 +1,77 @@
+{
+  "type": "CLAIM",
+  "claim_id": "XFER_NEW_MUT_NEW_DOMAIN-0007",
+  "problem_id": "t3_min_degree_connectivity",
+  "domain_label": "finite_combinatorics",
+  "proposition": "Every labelled graph on 6 vertices in which every vertex has degree at least 2 is connected.",
+  "domain": "all 32768 labelled graphs on 6 vertices",
+  "quantifiers": "for all graphs G on exactly 6 labelled vertices",
+  "hypotheses": [
+    "graphs are simple and undirected",
+    "vertices are labelled 0..v-1"
+  ],
+  "argument": [
+    {
+      "id": "s1",
+      "text": "At least one graph on 6 vertices has minimum degree at least 2, so the statement is not vacuous.",
+      "depends_on": []
+    },
+    {
+      "id": "s2",
+      "text": "If every vertex has degree at least 2 then every connected component contains at least 3 vertices.",
+      "depends_on": [
+        "s1"
+      ]
+    },
+    {
+      "id": "s3",
+      "text": "A graph on 6 vertices in which every component has at least 3 vertices is connected.",
+      "depends_on": [
+        "s1",
+        "s2"
+      ]
+    },
+    {
+      "id": "s4",
+      "text": "Every graph on 6 vertices either has minimum degree at least 2 or it does not.",
+      "depends_on": [
+        "s2",
+        "s3"
+      ]
+    },
+    {
+      "id": "s5",
+      "text": "The graph at index 1 of the enumeration has exactly one edge; it is checked directly.",
+      "depends_on": [
+        "s3",
+        "s4"
+      ]
+    },
+    {
+      "id": "s6",
+      "text": "Handshake lemma: in every graph on 6 vertices the sum of the degrees is even.",
+      "depends_on": [
+        "s4",
+        "s5"
+      ]
+    },
+    {
+      "id": "s7",
+      "text": "Every graph on 6 vertices with minimum degree at least 2 has at least 6 edges.",
+      "depends_on": [
+        "s5",
+        "s6"
+      ]
+    },
+    {
+      "id": "s8",
+      "text": "Combining the two implications gives the statement for all 32768 labelled graphs on 6 vertices.",
+      "depends_on": [
+        "s6",
+        "s7"
+      ]
+    }
+  ],
+  "source": "generator",
+  "protocol_version": "v0.1-alpha"
+}

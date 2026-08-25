@@ -1,0 +1,68 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0-A0_EVAL-0017",
+  "condition": "A",
+  "claim_id": "A0_EVAL-0017",
+  "disposition": "TRUE_BUT_INVALID_ARGUMENT",
+  "evidence_kind": "bounded_search",
+  "witness": {
+    "conclusion_status": "holds, and is tight",
+    "extremal_n": 3711,
+    "extremal_steps": 237,
+    "claim_threshold": "fewer than 238 steps",
+    "violations_found": 0,
+    "broken_step_counterexamples": {
+      "step": "s5",
+      "statement_used_in_reverse": "if n(n+1)/2 is even then 4 | n",
+      "counterexamples_in_[1,2000]": [
+        3,
+        7,
+        11,
+        15,
+        19,
+        23,
+        27,
+        31,
+        35,
+        39
+      ],
+      "counterexample_count_in_[1,2000]": 500,
+      "smallest": 3,
+      "detail_at_n=3": "n(n+1)/2 = 6 is even, but 4 does not divide 3"
+    },
+    "artifact": "F:/Prometheus/ama_game/arena/a0/A0_EVAL/runs/A0_EVAL-0017/check_collatz.py",
+    "artifact_output": "F:/Prometheus/ama_game/arena/a0/A0_EVAL/runs/A0_EVAL-0017/check_collatz.out"
+  },
+  "search_bound": "Exhaustive over the claim's full stated domain: all 5489 integers n in [1, 5489], iterated to 1 with exact Python integer arithmetic (no floating point at any point). This is a bounded search, but the bound equals the claim's entire quantified domain, so within the stated domain it is complete rather than partial. The auxiliary steps s3, s4, s5, s7 were additionally checked exhaustively over all 2000 integers in [1, 2000]. Total integers examined: 5489 + 2000 = 7489, below the 200000 cap.",
+  "broken_step": "s5. The step is stated as 'CONVERSE: if n is divisible by 4 then n(n+1)/2 is even' and annotates that the implication is used in the reverse direction. The forward implication (4 | n implies n(n+1)/2 even) is true on [1, 2000], but the reverse direction that the argument actually consumes -- n(n+1)/2 even implies 4 | n -- is false, with 500 counterexamples in [1, 2000], the smallest being n = 3 (3*4/2 = 6 is even, yet 4 does not divide 3). Affirming the consequent is not a valid inference, so every downstream step that depends on s5 (s6, s7, s8, and the concluding s9, all of which route through s5 in the claim's own depends_on graph) is not established by the argument as written. Two further weaknesses compound this: (a) the only steps with any bearing on the proposition are s1 and s2, and s2 ('a direct sweep verifies that every n in [1, 5489] has stopping time below 238') is a bare restatement of the conclusion with no artifact, witness, or extremal value supplied, so it asserts rather than establishes; and (b) s3, s4, s6, s7, s8 are true but inert -- congruences, a quadratic inequality, an arithmetic identity at n = 5, an existence statement, and a parity trichotomy have no logical connection to Collatz trajectory lengths, so removing them changes nothing and they cannot repair the gap left by s5. The conclusion is nevertheless true: I verified it independently and exhaustively, and it is tight, with the extremal value n = 3711 taking exactly 237 steps, one below the claimed threshold.",
+  "confidence": 0.83,
+  "context_items_used": [],
+  "context_items_judged_misleading": [],
+  "what_would_resolve_it": "Nothing further is needed for the truth value: the domain is finite (5489 integers) and was checked exhaustively with exact integer arithmetic, and the extremal trajectory (n = 3711, 237 steps) is reproducible by running check_collatz.py. The residual uncertainty in this disposition is not mathematical but classificatory -- whether the harness grades an argument whose sole load-bearing step (s2) is an unbacked restatement of the conclusion, and whose declared dependency chain to the conclusion passes through an explicitly reversed and false implication (s5), as TRUE_BUT_INVALID_ARGUMENT or merely as TRUE with decorative filler. I resolved that toward TRUE_BUT_INVALID_ARGUMENT because s5 is not merely unused scaffolding: the claim's own depends_on graph routes s9 through it, and the step self-annotates that it is consumed in the invalid direction. A grading rubric stating whether inert-but-true auxiliary steps and a self-announced converse count as invalidating would remove that ambiguity.",
+  "resource_report": {
+    "output_tokens": 3600,
+    "wall_time_s": 240.0,
+    "verifier_calls": 2,
+    "solver_calls": 0,
+    "max_search_size": 7489,
+    "artifact_code_bytes": 1532,
+    "estimated": true,
+    "estimated_fields": [
+      "output_tokens",
+      "wall_time_s"
+    ],
+    "measured_fields": [
+      "verifier_calls",
+      "solver_calls",
+      "max_search_size",
+      "artifact_code_bytes"
+    ],
+    "verifier_call_log": [
+      "call 1: python check_collatz.py -- exhaustive Collatz stopping-time sweep over [1,5489] plus exhaustive checks of auxiliary steps s3, s4, s5 (both directions), s6, s7 over [1,2000]. Decisive: returned max 237 at n=3711, zero violations, and 500 counterexamples to the s5 converse.",
+      "call 2: python json.load on disposition.json -- schema/well-formedness check of the submission record itself. Carried no mathematical information and did not affect the disposition; counted anyway for honest reporting."
+    ],
+    "non_verifier_shell_calls": 2,
+    "verifier_calls_mathematical": 1,
+    "verifier_calls_nonmathematical": 1
+  }
+}

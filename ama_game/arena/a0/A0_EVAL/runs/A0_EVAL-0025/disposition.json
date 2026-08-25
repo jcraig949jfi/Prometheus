@@ -1,0 +1,37 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0-A0_EVAL-0025",
+  "condition": "A",
+  "claim_id": "A0_EVAL-0025",
+  "disposition": "TRUE",
+  "evidence_kind": "proof",
+  "witness": null,
+  "search_bound": "Exhaustive over the COMPLETE stated domain: all 61 integers n with 0 <= n <= 60. This is not a sampled or truncated search - the quantified domain is finite and every element was checked, so the enumeration constitutes a proof of the proposition rather than evidence within a bound. Artifact: verify.py (run: python verify.py).",
+  "broken_step": null,
+  "confidence": 0.97,
+  "context_items_used": [],
+  "context_items_judged_misleading": [],
+  "what_would_resolve_it": null,
+  "notes": {
+    "proposition_verdict": "TRUE. Zero counterexamples over all 61 values of n. Independent structural reason: 8 = 2^3 and 2 is a primitive root mod 19 (2^9 = -1), so ord(8) = 18/gcd(3,18) = 6; powers 8^1..8^6 mod 19 are [8,7,18,11,12,1], confirming ord(8) = 6 exactly. Since 8^n depends only on n mod ord(8) = n mod 6, the congruence holds for every non-negative n, and a fortiori on [0,60].",
+    "argument_verdict": "Sound but heavily padded. Every one of s1-s11 was machine-checked and every one is TRUE AS STATED. The load-bearing chain is s1 (base case n=0), s2 (ord(8)=19-periodicity: 8^(n+6) = 8^n for all n in [0,54]), s4 (each n in [0,60] lies in exactly one class mod 6), s11 (descent). I verified s11 constructively: repeatedly subtracting 6 from any n in [0,60] terminates at n mod 6, and every subtraction step used is an instance of s2 within its own stated range [0,54]. So the argument does establish the conclusion and this is NOT TRUE_BUT_INVALID_ARGUMENT.",
+    "irrelevant_but_true_steps": "s3 (n^2 >= 2n on [2,60]), s5 (6 | n implies 8^n = 1), s6 ((n-3)n^2 = (n-3)H(n) with H(n) = n^2 + [n=3]), s7 (n^3 = n mod 6), s8, s9 (4 | n implies n(n+1)/2 even), s10 (parity dichotomy) are all true but contribute nothing to the conclusion. They are distractors, not defects. The declared depends_on edges are largely fictitious (e.g. s3 does not use s1 or s2), but a spurious dependency edge on a true irrelevant lemma does not break the derivation of the conclusion.",
+    "traps_checked_and_cleared": [
+      "s6: H(n) genuinely differs from n^2 at exactly n=3, where the (n-3) factor is 0 - so the identity survives at the one point designed to break it. Checked all n in [1,60].",
+      "s8: reads 'the identity n^3 - n = 120 is VERIFIED DIRECTLY AT n = 5'. 5^3 - 5 = 120, so the sentence is true as scoped. It would be false if read as a general identity (it fails for every n in [1,60] other than 5), but the step does not assert that, and nothing downstream uses it. Scored true-as-stated rather than false.",
+      "s2 range: the periodicity is asserted only on [0,54], and 54 + 6 = 60, so it exactly covers the domain with no off-by-one gap.",
+      "modulus/base: gcd(8,19) = 1 and 19 is prime, so 8 is a unit and the order argument is legitimate."
+    ],
+    "arithmetic_precision": "Exact integer arithmetic throughout (Python arbitrary-precision ints and pow(base, exp, mod)). No floating point was used at any point, so no precision argument is required."
+  },
+  "resource_report": {
+    "output_tokens": 3400,
+    "wall_time_s": 210.0,
+    "verifier_calls": 1,
+    "solver_calls": 0,
+    "max_search_size": 61,
+    "artifact_code_bytes": 2125,
+    "estimated": true,
+    "estimate_note": "output_tokens and wall_time_s are estimates (no instrumentation available to the seat). verifier_calls, solver_calls, max_search_size and artifact_code_bytes are measured exactly: exactly ONE execution of a mathematical verification program (verify.py) was performed, and it decided both the proposition and all 11 argument steps. Full disclosure of every program execution in this run: (1) verify.py - the single mathematical verifier call counted above; (2) one one-line python invocation that only parsed disposition.json to confirm it is syntactically valid JSON, and one that rewrote this note - neither examined the mathematics, so neither is counted as a verifier call, but both are reported here so the count is auditable. Total python process launches in the run: 3."
+  }
+}

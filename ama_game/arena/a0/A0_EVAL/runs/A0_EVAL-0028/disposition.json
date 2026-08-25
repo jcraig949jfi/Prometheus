@@ -1,0 +1,40 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0-A0_EVAL-0028",
+  "condition": "A",
+  "claim_id": "A0_EVAL-0028",
+  "disposition": "FALSE",
+  "evidence_kind": "witness",
+  "witness": {
+    "n": 17647,
+    "stopping_time": 278,
+    "claim_threshold": "fewer than 276 steps",
+    "note": "17647 is in the stated domain [1, 37570] and takes 278 steps to reach 1, so it is not fewer than 276.",
+    "trajectory_head": [17647, 52942, 26471, 79414, 39707, 119122, 59561, 178684, 89342, 44671, 134014, 67007],
+    "trajectory_tail": [53, 160, 80, 40, 20, 10, 5, 16, 8, 4, 2, 1],
+    "trajectory_states_including_endpoints": 279,
+    "additional_counterexamples": [[17673, 278], [23529, 281], [26471, 276], [26510, 276], [26511, 276], [26623, 307], [31419, 284], [31687, 284], [34239, 310], [35655, 323]],
+    "total_counterexamples_in_domain": 18,
+    "domain_maximum": {"n": 35655, "stopping_time": 323},
+    "artifacts": [
+      "F:/Prometheus/ama_game/arena/a0/A0_EVAL/runs/A0_EVAL-0028/verify_collatz.py",
+      "F:/Prometheus/ama_game/arena/a0/A0_EVAL/runs/A0_EVAL-0028/verify_collatz.out"
+    ]
+  },
+  "search_bound": "Exhaustive over the entire stated domain: all 37570 integers n in [1, 37570], each iterated to 1 in exact integer arithmetic (no floating point used, so no precision threshold is involved). This is not a bounded search short of the domain -- the claim's domain is finite and was covered completely.",
+  "broken_step": "s9. The conclusion is false, so no argument could establish it; but the specific unjustified inference is s9, which observes that the sweep covers [1, 3881] and then asserts the statement for every n in [1, 37570]. Nothing in s1-s8 bridges (3881, 37570]. Steps s3-s8 are true but inert filler (n^3-n=120 at n=5; n^2>=2n on [2,2000]; (n-3)n^2=(n-3)H(n); n^3 = n mod 6; 4|n implies n(n+1)/2 even; existence of n<=2000 with n^2>2000) -- none of them mentions the Collatz map or bounds any stopping time. The verifier confirms the argument's own swept range is clean (max stopping time on [1,3881] is 237, at n=3711), so the defect is precisely the unbridged extrapolation, and the first failure past the sweep is n=17647.",
+  "confidence": 1.0,
+  "context_items_used": [],
+  "context_items_judged_misleading": [],
+  "what_would_resolve_it": null,
+  "resource_report": {
+    "output_tokens": 3600,
+    "wall_time_s": 210.0,
+    "verifier_calls": 2,
+    "solver_calls": 0,
+    "max_search_size": 37570,
+    "artifact_code_bytes": 1985,
+    "estimated": true,
+    "measurement_notes": "verifier_calls, solver_calls, max_search_size and artifact_code_bytes are measured exactly. verifier_calls = 2: one exhaustive run that decided the claim, plus one identical re-run whose only purpose was to persist stdout to verify_collatz.out -- it told me nothing new and is reported anyway. output_tokens and wall_time_s are estimates; the agent harness does not expose either to me directly, and wall_time_s is estimated from shell timestamps spanning the tool calls (22 s of measured tool wall time) plus reasoning time between them."
+  }
+}

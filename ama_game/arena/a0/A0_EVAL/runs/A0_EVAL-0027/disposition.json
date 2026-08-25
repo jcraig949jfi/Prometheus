@@ -1,0 +1,40 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0-A0_EVAL-0027",
+  "condition": "A",
+  "claim_id": "A0_EVAL-0027",
+  "disposition": "TRUE_BUT_INVALID_ARGUMENT",
+  "evidence_kind": "proof",
+  "witness": {
+    "broken_step": "s9",
+    "counterexample_to_step": {"n": 1, "n_squared": 1, "two_n": 2, "claimed": "n^2 >= 2n", "actual": "1 < 2"},
+    "conclusion_status": "holds on the full stated domain",
+    "conclusion_proof": "17 is prime and ord_17(7) = 16 (7^2 = 15 = -2, 7^4 = 4, 7^8 = 16 = -1 mod 17, so the order divides 16 but not 8, hence equals 16). Therefore the map n -> 7^n mod 17 is periodic with period 16 on the non-negative integers, so for every n >= 0, writing n = 16q + r with r = n mod 16 gives 7^n = (7^16)^q * 7^r = 7^(n mod 16) mod 17. This covers [0,60] and is not a bounded search.",
+    "conclusion_independent_check": "verify.py also checks all 61 cases n = 0..60 exhaustively with exact integer arithmetic; zero counterexamples.",
+    "artifacts": [
+      "F:/Prometheus/ama_game/arena/a0/A0_EVAL/runs/A0_EVAL-0027/verify.py",
+      "F:/Prometheus/ama_game/arena/a0/A0_EVAL/runs/A0_EVAL-0027/verify_output.txt"
+    ]
+  },
+  "search_bound": "Exhaustive over the entire stated domain: all 61 integers n in [0,60], plus every argument step re-checked over its own stated range (s2 over n in [0,44]; s6, s7, s9, s11 over n in [1,60]; s10 over n in [0,60]). All arithmetic exact integer (Python ints, pow(base, exp, mod)); no floating point used, so no precision question arises. Well under the 200000 claim limit.",
+  "broken_step": {
+    "step_id": "s9",
+    "text": "For every integer n with 1 <= n <= 60 we have n^2 >= 2n. (the same estimate is taken to hold from n = 1 onward)",
+    "why_it_does_not_follow": "The asserted universal is false at the left endpoint of its own stated range: at n = 1, n^2 = 1 and 2n = 2, so n^2 >= 2n fails. The inequality n^2 >= 2n is equivalent to n(n-2) >= 0, which for positive n holds only when n >= 2. The parenthetical 'the same estimate is taken to hold from n = 1 onward' is exactly the off-by-one extension that makes the step false; the correct range is 2 <= n <= 60 (or n = 0). Because s9 is a false premise, and s10, s11 and the concluding s12 are all declared to depend on it (s10 depends_on [s8, s9]; s11 on [s9, s10]; s12 on [s10, s11]), the argument as written derives its conclusion through a falsehood and therefore does not establish it, even though the conclusion is in fact true by the order-16 periodicity argument recorded in s2.",
+    "all_other_steps_checked": "s1, s2, s3, s4, s5, s6, s7, s8, s10, s11, s12 were each verified independently and are true as stated (s3: 5^3-5 = 120; s4: 8^2 = 64 > 60; s11 holds because the modified term is multiplied by (n-3), which vanishes at the only n where H(n) differs from n^2). s9 is the unique false step."
+  },
+  "confidence": 0.93,
+  "context_items_used": [],
+  "context_items_judged_misleading": [],
+  "what_would_resolve_it": null,
+  "resource_report": {
+    "output_tokens": 3400,
+    "wall_time_s": 210.0,
+    "verifier_calls": 2,
+    "solver_calls": 0,
+    "max_search_size": 61,
+    "artifact_code_bytes": 2574,
+    "estimated": true,
+    "estimate_notes": "output_tokens and wall_time_s are estimated; verifier_calls, max_search_size and artifact_code_bytes are measured. verifier_calls = 2 counts both executions of verify.py: the first produced the decision, the second was a re-run solely to persist verify_output.txt to disk and told me nothing new. Reported anyway."
+  }
+}

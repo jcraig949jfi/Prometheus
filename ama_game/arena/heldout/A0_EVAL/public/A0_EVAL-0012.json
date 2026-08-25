@@ -1,0 +1,76 @@
+{
+  "type": "CLAIM",
+  "claim_id": "A0_EVAL-0012",
+  "problem_id": "t4_linear_recurrence",
+  "domain_label": "recurrences",
+  "proposition": "Let a_0 = 5, a_1 = 21 and a_n = 9*a_(n-1) + (-20)*a_(n-2) for n >= 2. Then for every n with 0 <= n <= 25, a_n = 4*4^n + 1*5^n.",
+  "domain": "integers n with 0 <= n <= 25",
+  "quantifiers": "for all n in [0, 25]",
+  "hypotheses": [
+    "the recurrence is applied only for n >= 2"
+  ],
+  "argument": [
+    {
+      "id": "s1",
+      "text": "At n = 0 the closed form gives 5, matching a_0 = 5.",
+      "depends_on": []
+    },
+    {
+      "id": "s2",
+      "text": "At n = 1 the closed form gives 21, matching a_1 = 21.",
+      "depends_on": [
+        "s1"
+      ]
+    },
+    {
+      "id": "s3",
+      "text": "The closed form satisfies the recurrence: for every n in [0, 23], f(n+2) = 9*f(n+1) + (-20)*f(n). (expanding by b^(n+1) expanded as b^n + 1)",
+      "depends_on": [
+        "s1",
+        "s2"
+      ]
+    },
+    {
+      "id": "s4",
+      "text": "For every integer n with 2 <= n <= 25 we have n^2 >= 2n.",
+      "depends_on": [
+        "s2",
+        "s3"
+      ]
+    },
+    {
+      "id": "s5",
+      "text": "Every integer n in [1, 25] is even or odd, so the two cases below are exhaustive.",
+      "depends_on": [
+        "s3",
+        "s4"
+      ]
+    },
+    {
+      "id": "s6",
+      "text": "For every integer n with 1 <= n <= 25: if n is divisible by 4 then n(n+1)/2 is even.",
+      "depends_on": [
+        "s4",
+        "s5"
+      ]
+    },
+    {
+      "id": "s7",
+      "text": "The identity n^3 - n = 120 is verified directly at n = 5.",
+      "depends_on": [
+        "s5",
+        "s6"
+      ]
+    },
+    {
+      "id": "s8",
+      "text": "Two base cases plus the recurrence identity give the closed form for every n in [0, 25].",
+      "depends_on": [
+        "s6",
+        "s7"
+      ]
+    }
+  ],
+  "source": "generator",
+  "protocol_version": "v0.1-alpha"
+}

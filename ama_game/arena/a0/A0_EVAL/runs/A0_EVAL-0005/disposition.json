@@ -1,0 +1,40 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0-A0_EVAL-0005",
+  "condition": "A",
+  "claim_id": "A0_EVAL-0005",
+  "disposition": "TRUE",
+  "evidence_kind": "proof",
+  "witness": null,
+  "search_bound": "The stated domain is finite (61 values, n = 0..60) and was enumerated in full by verify.py; this is a complete enumeration of the domain, not a bounded sample of an infinite domain. The proof given below is independent of that enumeration and covers all integers n >= 0.",
+  "broken_step": null,
+  "confidence": 0.97,
+  "context_items_used": [],
+  "context_items_judged_misleading": [],
+  "what_would_resolve_it": null,
+  "proof": "3 is a unit mod 7 and its powers are 3^0..3^6 = 1,3,2,6,4,5,1 (mod 7), so ord_7(3) = 6 exactly. Write n = 6q + r with r = n mod 6 and q >= 0 (legitimate since n >= 0 by hypothesis). Then 3^n = (3^6)^q * 3^r = 1^q * 3^r = 3^r = 3^(n mod 6) (mod 7). This holds for every non-negative integer n, hence a fortiori on [0, 60].",
+  "argument_assessment": {
+    "verdict": "argument is sound; no false step found",
+    "load_bearing_chain": "s2 (period 6) together with s7 (unique residue class mod 6) and s9 (repeated reduction) suffices. s2 covers n in [0,54], which is exactly the range needed to reduce any n in [0,60] down to n mod 6; verify.py confirms the repeated-subtraction reduction lands on n mod 6 for all n in [0,60].",
+    "steps_checked_true": ["s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8"],
+    "inert_steps": ["s3", "s4", "s5", "s6", "s8"],
+    "notes": "s3 through s6 and s8 are true but contribute nothing to the conclusion; they are decoys. s8's H(n) = n^2 + [n = 3] perturbation is annihilated by the (n-3) factor, so the equality is trivially true and carries no content. s3's wording is the only real defect: it calls n^3 - n = 120 'the identity' when it is not an identity (it fails at n = 0,1,2,3,4, checked), but the step as literally written asserts only that it is verified at n = 5, which is true, and nothing downstream uses it. This is a wording flaw, not a false premise, and it is not on the path to the conclusion, so it does not downgrade the disposition to TRUE_BUT_INVALID_ARGUMENT.",
+    "boundary_checks": "n = 0 (0 mod 6 = 0, both sides 1) and n = 60 (60 mod 6 = 0, 3^60 = 1 mod 7) both hold; the exponent-reduction step needs n >= 0, which is a stated hypothesis, so no negative-exponent gap exists."
+  },
+  "artifacts": [
+    "F:/Prometheus/ama_game/arena/a0/A0_EVAL/runs/A0_EVAL-0005/verify.py"
+  ],
+  "verifier_log": {
+    "call_1": "python verify.py -- exact integer arithmetic (Python ints, pow(...,7)); no floating point anywhere, so no precision statement is needed. Results: main proposition failures = [] over all n in 0..60; ord_7(3) = 6; s2 failures = [] over n in 0..54; s4 failures = []; s5 failures = []; s8 failures = []; s6, s7, s1 true; reduction-by-6 equals n mod 6 for all n in 0..60; n^3 - n = 120 fails at n = 0,1,2,3,4 (so it is not an identity)."
+  },
+  "resource_report": {
+    "output_tokens": 3600,
+    "wall_time_s": 45,
+    "verifier_calls": 1,
+    "solver_calls": 0,
+    "max_search_size": 61,
+    "artifact_code_bytes": 1447,
+    "estimated": true,
+    "estimate_notes": "output_tokens is an estimate (no token meter exposed to the seat); wall_time_s is measured from first tool call to submission write; verifier_calls, max_search_size and artifact_code_bytes are measured exactly. verifier_calls = 1: one execution of verify.py, which checked the proposition and every argument step in a single run."
+  }
+}

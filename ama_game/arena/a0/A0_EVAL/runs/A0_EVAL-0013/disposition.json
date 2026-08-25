@@ -1,0 +1,38 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0-A0_EVAL-0013",
+  "condition": "A",
+  "claim_id": "A0_EVAL-0013",
+  "disposition": "FALSE",
+  "evidence_kind": "witness",
+  "witness": {
+    "n": 17647,
+    "steps_to_reach_1": 278,
+    "claimed_bound": "fewer than 276 steps",
+    "in_stated_domain": true,
+    "note": "n = 17647 lies in [1, 135465] and requires 278 applications of the map to first reach 1, so it does not reach 1 in fewer than 276 steps. This is the smallest counterexample in the domain. There are 357 such n in [1, 135465]; the maximum stopping time on the domain is 353, attained at n = 106239.",
+    "artifact": "F:/Prometheus/ama_game/arena/a0/A0_EVAL/runs/A0_EVAL-0013/verify_collatz.py",
+    "verification": "Exhaustive check over the full stated domain [1, 135465] using exact Python integer arithmetic (no floating point). The witness n = 17647 was additionally recomputed by an independent un-memoized iteration inside the same artifact, yielding 278."
+  },
+  "search_bound": "Exhaustive over the entire stated domain, all 135465 integers n with 1 <= n <= 135465. This is a complete check of the quantifier, not a bounded sample; no extrapolation is involved. Trajectory arithmetic is exact integer arithmetic, so no precision argument is needed.",
+  "broken_step": {
+    "step_id": "s8",
+    "text": "The sweep covers [1, 2956]; the statement is asserted for every n in [1, 135465].",
+    "why_it_fails": "This is a bare extrapolation from a verified subrange to a domain roughly 46x larger, with no monotonicity, induction, or covering argument connecting them. It is also where the claim actually breaks: the maximum stopping time on [1, 2956] is 216 (< 276, so step s2 is itself true), but the maximum on [1, 135465] is 353. Steps s3 through s7 are true but inert -- s3 (n^2 >= 2n for 2 <= n <= 2000), s4 (n^3 = n mod 6), s5 (existence of n with n^2 > 2000), s6 (parity exhaustiveness), and s7 ((n-3)n^2 = (n-3)H(n), which holds because the indicator term is multiplied by n-3 = 0 exactly when it is nonzero) say nothing about Collatz stopping times and cannot bridge the gap. Note that the disposition is FALSE rather than TRUE_BUT_INVALID_ARGUMENT: the conclusion itself is false, so the defective argument is secondary.",
+    "note": "Recorded for completeness; the disposition rests on the witness, not on the argument audit."
+  },
+  "confidence": 0.99,
+  "context_items_used": [],
+  "context_items_judged_misleading": [],
+  "what_would_resolve_it": null,
+  "resource_report": {
+    "output_tokens": 2300,
+    "wall_time_s": 140.0,
+    "verifier_calls": 1,
+    "solver_calls": 0,
+    "max_search_size": 135465,
+    "artifact_code_bytes": 1416,
+    "estimated": true,
+    "estimate_note": "verifier_calls, solver_calls, max_search_size and artifact_code_bytes are measured exactly (one execution of verify_collatz.py, zero solver invocations, full 135465-integer domain sweep, file size on disk). output_tokens and wall_time_s are estimates: the harness does not expose a token counter or a per-seat clock to this seat."
+  }
+}

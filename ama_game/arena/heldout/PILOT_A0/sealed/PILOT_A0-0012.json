@@ -1,0 +1,53 @@
+{
+  "claim_id": "PILOT_A0-0012",
+  "set_name": "PILOT_A0",
+  "template_id": "t4_linear_recurrence",
+  "domain_label": "recurrences",
+  "sealed_class": "TRUE_BUT_INVALID_ARGUMENT",
+  "oracle_disposition": "TRUE_BUT_INVALID_ARGUMENT",
+  "truth_status": "TRUE",
+  "truth_method": "native iteration of the recurrence, compared termwise",
+  "argument_validity": "INVALID",
+  "invalid_steps": [
+    "s6"
+  ],
+  "incomplete_steps": [],
+  "planted_mutation_type": "M5_non_equivalent_rewrite",
+  "mutation_target_step": "s6",
+  "mutation_mechanism": "non-equivalent rewrite: n^2 replaced by 2n",
+  "known_witness": null,
+  "known_proof_sketch": "r=2 and s=3 are the characteristic roots; C and D are fixed by the two initial conditions.",
+  "minimum_known_disposition_method": {
+    "kind": "closed_form_proof",
+    "cost_units": 7,
+    "within_player_budget": true
+  },
+  "difficulty": {
+    "domain_size": 31,
+    "derivation_length": 7,
+    "player_search_budget": 200000
+  },
+  "params": {
+    "r": 2,
+    "s": 3,
+    "C": 1,
+    "D": 1,
+    "p": 5,
+    "q": -6,
+    "a0": 2,
+    "a1": 5,
+    "N": 30
+  },
+  "claim_predicate": "lin_rec(n, 2, 5, 5, -6) == 1*2**n + 1*3**n",
+  "witness_var": "n",
+  "domain_lo": 0,
+  "domain_hi": 30,
+  "notes": [],
+  "generation": {
+    "set_seed": 20260825,
+    "item_seed": 97493093597560,
+    "item_index": 12,
+    "generator_sha256": "1f75ab2f63bf2cf050ac4033f042cb2d7ece6b93871160e90b796107dff135b5",
+    "protocol_version": "v0.1-alpha"
+  }
+}

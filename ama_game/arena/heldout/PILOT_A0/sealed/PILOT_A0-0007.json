@@ -1,0 +1,49 @@
+{
+  "claim_id": "PILOT_A0-0007",
+  "set_name": "PILOT_A0",
+  "template_id": "t2_modular_power_cycle",
+  "domain_label": "modular_arithmetic",
+  "sealed_class": "TRUE_BUT_INVALID_ARGUMENT",
+  "oracle_disposition": "TRUE_BUT_INVALID_ARGUMENT",
+  "truth_status": "TRUE",
+  "truth_method": "native enumeration with pow(a, n, m) over [0, N]",
+  "argument_validity": "INVALID",
+  "invalid_steps": [
+    "s1"
+  ],
+  "incomplete_steps": [],
+  "planted_mutation_type": "M8_off_by_one_boundary",
+  "mutation_target_step": "s1",
+  "mutation_mechanism": "the base case was checked at n = 1 but is used at n = 0",
+  "known_witness": null,
+  "known_proof_sketch": "10 has multiplicative order 22 modulo 23.",
+  "minimum_known_disposition_method": {
+    "kind": "closed_form_proof",
+    "cost_units": 10,
+    "within_player_budget": true
+  },
+  "difficulty": {
+    "domain_size": 41,
+    "derivation_length": 10,
+    "player_search_budget": 200000
+  },
+  "params": {
+    "a": 10,
+    "m": 23,
+    "d_claimed": 22,
+    "d_true": 22,
+    "N": 40
+  },
+  "claim_predicate": "pow(10, n, 23) == pow(10, n % 22, 23)",
+  "witness_var": "n",
+  "domain_lo": 0,
+  "domain_hi": 40,
+  "notes": [],
+  "generation": {
+    "set_seed": 20260825,
+    "item_seed": 91328140586328,
+    "item_index": 7,
+    "generator_sha256": "1f75ab2f63bf2cf050ac4033f042cb2d7ece6b93871160e90b796107dff135b5",
+    "protocol_version": "v0.1-alpha"
+  }
+}

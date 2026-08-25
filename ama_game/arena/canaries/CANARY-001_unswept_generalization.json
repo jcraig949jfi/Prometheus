@@ -1,0 +1,119 @@
+{
+  "canary_id": "CANARY-001_unswept_generalization",
+  "frozen": "2026-08-25",
+  "protocol_version": "v0.1-alpha",
+  "origin": "Found in the generator itself, not in play. Iterated-map items in the FALSE_WITH_WITNESS class were marking a generalization step 'justified' while the sweep stopped short of the witness, so a claim that was FALSE passed every step check and came out with a fully VALID argument. The pilot's coupling detector caught it.",
+  "why_it_is_a_canary": "This is the cleanest available synthetic regression test for the whole 'range establishment / generalization' defense family. If the arena later promotes a defense that claims to catch bounded-search-sold-as-proof and that defense misses this case, the claim is falsified \u2014 no play data required, no agent needed, no interpretation.",
+  "attack_family": "generalization beyond the established range (bounded search presented as proof)",
+  "detection_criterion": "the conclusion step s3 must be flagged; the argument as a whole must not be reported as VALID",
+  "positive_example": {
+    "description": "sweep reaches n = 500; conclusion asserts n = 3000 and marks itself justified",
+    "steps": [
+      {
+        "id": "s1",
+        "tag": "base",
+        "depends_on": [],
+        "text": "Every n in [1, 50] reaches 1 in fewer than 220 steps; checked directly.",
+        "check": {
+          "kind": "forall_inequality",
+          "var": "n",
+          "lo": 1,
+          "hi": 50,
+          "lhs": "stop_time(n)",
+          "rhs": "220",
+          "op": "<"
+        }
+      },
+      {
+        "id": "s2",
+        "tag": "engine",
+        "depends_on": [
+          "s1"
+        ],
+        "text": "A direct sweep verifies every n in [1, 500] has stopping time below 220.",
+        "check": {
+          "kind": "forall_inequality",
+          "var": "n",
+          "lo": 1,
+          "hi": 500,
+          "lhs": "stop_time(n)",
+          "rhs": "220",
+          "op": "<"
+        }
+      },
+      {
+        "id": "s3",
+        "tag": "conclusion",
+        "depends_on": [
+          "s2"
+        ],
+        "text": "The sweep covers [1, 500]; the statement holds for every n in [1, 3000].",
+        "check": {
+          "kind": "generalization",
+          "established_hi": 500,
+          "asserted_hi": 3000,
+          "justified": true
+        }
+      }
+    ],
+    "expected_argument_verdict": "INCOMPLETE",
+    "expected_flagged_steps": [
+      "s3"
+    ]
+  },
+  "negative_example": {
+    "description": "identical shape, but the sweep reaches the full asserted range n = 3000",
+    "steps": [
+      {
+        "id": "s1",
+        "tag": "base",
+        "depends_on": [],
+        "text": "Every n in [1, 50] reaches 1 in fewer than 220 steps; checked directly.",
+        "check": {
+          "kind": "forall_inequality",
+          "var": "n",
+          "lo": 1,
+          "hi": 50,
+          "lhs": "stop_time(n)",
+          "rhs": "220",
+          "op": "<"
+        }
+      },
+      {
+        "id": "s2",
+        "tag": "engine",
+        "depends_on": [
+          "s1"
+        ],
+        "text": "A direct sweep verifies every n in [1, 3000] has stopping time below 220.",
+        "check": {
+          "kind": "forall_inequality",
+          "var": "n",
+          "lo": 1,
+          "hi": 3000,
+          "lhs": "stop_time(n)",
+          "rhs": "220",
+          "op": "<"
+        }
+      },
+      {
+        "id": "s3",
+        "tag": "conclusion",
+        "depends_on": [
+          "s2"
+        ],
+        "text": "The sweep covers [1, 3000], which is the whole asserted range.",
+        "check": {
+          "kind": "generalization",
+          "established_hi": 3000,
+          "asserted_hi": 3000,
+          "justified": true
+        }
+      }
+    ],
+    "expected_argument_verdict": "VALID",
+    "expected_flagged_steps": [],
+    "note": "A defense that flags this case is rejecting valid exhaustive verification. Per the rulebook, no defense is promoted without a negative example it correctly accepts; this is that example."
+  },
+  "second_finding": "Freezing this case immediately exposed a second, deeper hole: the original fix was applied at the generator (producer) side, so a hand-authored derivation could still assert justified=True by fiat and the argument oracle would accept it. derivation.py now requires `justified` to name a step in the same derivation whose check establishes a step relation (forall_identity or congruence). A bounded sweep is not such a step, however far it reached. The canary found this before any player did."
+}

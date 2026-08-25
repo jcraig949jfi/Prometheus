@@ -1,0 +1,56 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0-MDE_PILOT-0000",
+  "condition": "A",
+  "claim_id": "MDE_PILOT-0000",
+  "disposition": "TRUE",
+  "evidence_kind": "proof",
+  "witness": null,
+  "search_bound": "n in [1,40], all 40 integers enumerated -- the enumeration bound EQUALS the claim's stated domain, so this is exhaustion over the whole quantified set, not a truncated search of an infinite one. Exact Python int / fractions.Fraction arithmetic throughout; no floating point is used, so no precision argument is required.",
+  "broken_step": null,
+  "confidence": 0.96,
+  "context_items_used": [],
+  "context_items_judged_misleading": [],
+  "what_would_resolve_it": null,
+  "reasoning": {
+    "conclusion": "sum_{k=1}^{n} k^3 = (n(n+1)/2)^2 holds for every one of the 40 integers in the stated domain. Verified exhaustively with exact arithmetic in a single program run (arena/a0/MDE_PILOT/runs/MDE_PILOT-0000/verify_claim.py). No counterexample exists in the domain; the counterexample list is empty.",
+    "argument_status": "VALID -- the given argument does establish the conclusion, so this is TRUE and not TRUE_BUT_INVALID_ARGUMENT.",
+    "load_bearing_steps": [
+      "s1",
+      "s2",
+      "s11"
+    ],
+    "why_valid": "s1 supplies the base value at n=1 (both sides = 1). s2 supplies the increment F(n+1)-F(n) = (n+1)^3 for 1 <= n <= 39, which is exactly the summand added when the upper limit rises by one; that range covers every step needed to reach n=40. s11 chains them. I did not take this on trust: verify_claim.py reconstructs the value at every n from s1 and s2 ALONE (starting at F(1) and repeatedly adding (n+1)^3, never evaluating the true sum) and compares the reconstruction to both the true sum and to F(n) at each n; the chain matches at all 40 points (key s11_chain_from_s1_s2_only).",
+    "inert_steps": [
+      "s3",
+      "s4",
+      "s5",
+      "s6",
+      "s7",
+      "s8",
+      "s9",
+      "s10"
+    ],
+    "inert_step_finding": "These eight steps are logically irrelevant to the conclusion -- they are filler, and the declared depends_on edges among them are decorative rather than real inferential dependencies. Crucially, filler is not the same as error: each of the eight was checked independently and each is TRUE on its stated domain. The two designed-to-look-wrong ones are s4 and s5, which introduce Iverson-bracket perturbations H(n)=n^2+[n=3] and G(n)=F(n)+[n=3]; both survive because the perturbation is switched on only at n=3, where the multiplier (n-3) is zero, so both sides vanish and the identity is exact on [1,40]. s6 (4|n => n(n+1)/2 even), s7 (5^3-5=120), s8 (n^2 >= 2n on [2,40]), s9 (witness n=7, 49>40) and s10 (n^3 = n mod 6 on [1,40]) are likewise all true. Since every stated step is true and the conclusion follows from the s1/s2/s11 sub-argument, the presence of unused true lemmas does not break the argument.",
+    "traps_checked_and_cleared": [
+      "Off-by-one at the top of the range: s2 is asserted only for 1 <= n <= 39, which is exactly what is needed to reach n=40 -- not one short.",
+      "Hidden non-integrality in the '/2': n(n+1) is even for all n in [1,40], so (n(n+1)/2)^2 involves no truncation; checked as halving_exact, and F was additionally computed as an exact Fraction so a parity failure could not have been masked by integer division.",
+      "Domain drift: the hypothesis 'the sum is empty for n = 0' concerns n=0, which is outside the quantified domain [1,40] and is not relied on by any load-bearing step; it changes nothing.",
+      "Floating point: none used."
+    ],
+    "residual_risk": "The remaining 0.04 is not doubt about the arithmetic, which is exact and exhaustive, but the ordinary risk that my own verifier encodes a step differently from how a reader would read its English -- the most likely site being the informal phrase in s2 ('exactly the term added'), which I formalised as F(n+1)-F(n) = (n+1)^3."
+  },
+  "resource_report": {
+    "output_tokens": 6500,
+    "wall_time_s": 71.2,
+    "verifier_calls": 1,
+    "solver_calls": 0,
+    "max_search_size": 40,
+    "artifact_code_bytes": 3089,
+    "estimated": true,
+    "estimate_notes": "output_tokens is estimated (no token meter exposed to me); wall_time_s is measured from an epoch timestamp taken at the start of the session to the moment this record was written, and therefore includes my reading time. verifier_calls = 1 is an exact count: verify_claim.py was executed exactly once, and that single run decided the proposition and all eleven steps together. No execution was discarded or re-run. Two other shell commands were run and are not counted as verifier calls because they performed no verification: one directory listing plus timestamp, and one cat of the rulebook. This JSON was emitted by a short writer script, which likewise verifies nothing. max_search_size = 40 is the full stated domain, far under the 200000 cap.",
+    "artifacts": [
+      "verify_claim.py"
+    ]
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0-MDE_PILOT-0004",
+  "condition": "A",
+  "claim_id": "MDE_PILOT-0004",
+  "disposition": "FALSE",
+  "evidence_kind": "witness",
+  "witness": {
+    "n": 230631,
+    "in_domain": "1 <= 230631 <= 504120",
+    "steps_to_reach_1": 442,
+    "claim_requires": "fewer than 386 steps",
+    "violation": "442 >= 386",
+    "artifact": "F:/Prometheus/ama_game/arena/a0/MDE_PILOT/runs/MDE_PILOT-0004/witness_check.py",
+    "artifact_output": "216367 385 in_domain / 230631 442 in_domain / 410011 448 in_domain / 511935 469 OUT_OF_DOMAIN",
+    "arithmetic": "exact arbitrary-precision integer arithmetic (Python int); no floating point used, so no precision statement is required",
+    "second_witness": {
+      "n": 410011,
+      "steps_to_reach_1": 448
+    },
+    "note": "230631 is the smallest known total-stopping-time record holder exceeding 385 steps; it was tested directly rather than found by sweep, so this is a single-point exact evaluation, not a bounded search. I do not claim it is the least counterexample.",
+    "near_miss_showing_the_threshold_is_tight": "n = 216367 has exactly 385 steps, i.e. it satisfies the claim; the bound 386 is passed just below 230631, which is why the claim's stated domain ceiling of 504120 is what breaks it"
+  },
+  "search_bound": null,
+  "broken_step": null,
+  "confidence": 0.99,
+  "context_items_used": [],
+  "context_items_judged_misleading": [],
+  "what_would_resolve_it": null,
+  "additional_findings": {
+    "argument_is_also_invalid_independently_of_the_conclusion": true,
+    "detail": [
+      "s8 is a bare non-sequitur: it states that the sweep covers [1, 1592] and then asserts the proposition for every n in [1, 504120]. Nothing in s1-s7 extends a finite sweep of 1592 values to 504120 values. This step alone would fail even if the proposition had been true.",
+      "s3, s4, s5, s6, s7 are true elementary statements (n^2 >= 2n for n >= 2; (n-3)n^2 = (n-3)H(n) since the correction term is killed by the factor (n-3); n^3 = n mod 6; 5^3 - 5 = 120; 45^2 = 2025 > 2000) but none of them mention the Collatz map, so they are inert filler with no bearing on the conclusion.",
+      "The disposition is nevertheless FALSE rather than TRUE_BUT_INVALID_ARGUMENT, because the conclusion itself does not hold: the witness n = 230631 lies in the stated domain and takes 442 steps."
+    ]
+  },
+  "resource_report": {
+    "output_tokens": 2600,
+    "wall_time_s": 200.0,
+    "verifier_calls": 3,
+    "solver_calls": 0,
+    "max_search_size": 4,
+    "artifact_code_bytes": 482,
+    "estimated": true,
+    "estimate_notes": "output_tokens and wall_time_s are estimates (not directly measurable from inside the seat). verifier_calls, solver_calls, max_search_size and artifact_code_bytes are exact: one execution of witness_check.py, which evaluated 4 candidate integers.",
+    "max_search_size_note": "No exhaustive search was performed or claimed. The program evaluated 4 explicitly named integers; the reported 4 is that count, not a swept range.",
+    "verifier_call_breakdown": [
+      "1 mathematical verification: execution of witness_check.py, which computed exact Collatz step counts for 4 named integers and produced the witness. The disposition was decided after this single call.",
+      "2 non-mathematical checks: (a) a json.load of disposition.json confirming the submission record is well-formed, and (b) the record-rewriting script, which re-parsed the same file while editing this report. Neither contributed mathematical evidence, but both were program executions and are counted here rather than hidden."
+    ],
+    "verifier_calls_to_reach_the_disposition": 1
+  }
+}

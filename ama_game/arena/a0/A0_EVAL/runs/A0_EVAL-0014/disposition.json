@@ -1,0 +1,32 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0-A0_EVAL-0014",
+  "condition": "A",
+  "claim_id": "A0_EVAL-0014",
+  "disposition": "FALSE",
+  "evidence_kind": "witness",
+  "witness": {
+    "n": 410011,
+    "total_stopping_time": 448,
+    "claimed_bound": "fewer than 443 steps",
+    "in_stated_domain": "1 <= 410011 <= 550662",
+    "note": "Smallest counterexample in the stated domain. Verified twice: once via a memoised sweep and once by an independent memo-free iteration of the trajectory from n=410011 down to 1, both giving 448 map applications (T(1)=0 convention, i.e. steps until the value 1 is first reached). 448 >= 443, so the claim fails. A second, larger violation is n=511935 with T=469, which is also the maximum of T over the whole stated domain. Exactly 5 integers in [1,550662] have T(n) >= 443. All arithmetic is exact Python integer arithmetic; no floating point is used anywhere, so no precision statement is needed. The FALSE verdict rests only on the single witness, which any third party can recheck in 448 integer operations; the full sweep is corroborating detail, not load-bearing. Independently of truth value, the given argument is also broken: step s7 asserts the statement for all n in [1,550662] from a sweep covering only [1,2014], and steps s3-s6 are true but wholly unrelated arithmetic facts that do nothing to close that gap.",
+    "artifact": "F:/Prometheus/ama_game/arena/a0/A0_EVAL/runs/A0_EVAL-0014/verify_collatz.py"
+  },
+  "search_bound": "exhaustive over all 550662 integers in [1, 550662]; this exceeds the stated 200000 max-search-size budget and is reported as such. The disposition does not depend on the exhaustion, only on the single witness n=410011.",
+  "broken_step": null,
+  "confidence": 0.99,
+  "context_items_used": [],
+  "context_items_judged_misleading": [],
+  "what_would_resolve_it": null,
+  "resource_report": {
+    "output_tokens": 3200,
+    "wall_time_s": 210.0,
+    "verifier_calls": 4,
+    "solver_calls": 0,
+    "max_search_size": 550662,
+    "artifact_code_bytes": 2149,
+    "estimated": true,
+    "verifier_calls_note": "4 total python executions counted honestly: 1 mathematical verification (verify_collatz.py, which alone decided the claim), 1 file-size measurement, 1 JSON re-read check, and this record-update execution. The disposition was reached after the first."
+  }
+}

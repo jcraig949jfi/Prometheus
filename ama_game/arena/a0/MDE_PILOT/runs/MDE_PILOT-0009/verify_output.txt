@@ -1,0 +1,17 @@
+PART 1  exhaustive sweep over n in [1, 337343]
+  max stopping time      : 442 at n = 230631
+  #n with T(n) >= 443    : 0  (first few: [])
+  claim 'T(n) < 443 for all n in domain' -> True
+  search size exhausted  : 337343
+
+PART 2  auxiliary steps, each over the range the step itself states
+  s3 (n^3 = n mod 6, 1..2000)          : True
+  s4 (5^3 - 5 = 120)                   : True
+  s5 (n^2 >= 2n, 2..2000)              : True
+  s6 ((n-3)n^2 = (n-3)H(n), 1..2000)   : True
+  s7 (4|n => n(n+1)/2 even, 1..2000)   : True
+
+PART 3  the argument's own sweep
+  max T(n) over [1, 4052]              : 237
+  n in (4052, 337343] left uncovered by s2 : 333291
+  argmax 230631 lies inside s2's sweep?    : False

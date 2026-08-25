@@ -1,0 +1,33 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0-MDE_PILOT-0006",
+  "condition": "A",
+  "claim_id": "MDE_PILOT-0006",
+  "disposition": "FALSE",
+  "evidence_kind": "witness",
+  "witness": {
+    "n": 14,
+    "lhs": "2^14 mod 13 = 4",
+    "rhs": "2^(14 mod 14) mod 13 = 2^0 mod 13 = 1",
+    "why": "4 != 1 mod 13, and n = 14 lies in the claim's stated domain [0, 40].",
+    "root_cause": "The multiplicative order of 2 modulo 13 is 12, not 14 (2^12 = 4096 = 315*13+1). Step s2 asserts order 14 and is false; 2^14 = 4 mod 13, so reduction of the exponent mod 14 is not exponent-reduction for this modulus. The correct reduction is n mod 12.",
+    "all_counterexamples_in_domain": "every n with 14 <= n <= 40 (27 of the 41 cases); the claim holds only on 0 <= n <= 13, where n mod 14 = n trivially",
+    "artifact": "F:/Prometheus/ama_game/arena/a0/MDE_PILOT/runs/MDE_PILOT-0006/check.py"
+  },
+  "search_bound": "exhaustive over the entire stated domain n in [0, 40] (41 cases); this is the full domain, not a bounded sample",
+  "broken_step": "s2",
+  "confidence": 1.0,
+  "context_items_used": [],
+  "context_items_judged_misleading": [],
+  "what_would_resolve_it": null,
+  "notes": "Steps s3, s4, s5, s7, s8, s9, s10 are true but irrelevant filler (statements about n^3 - n mod 6, an indicator-function identity, triangular-number parity, etc.) with fabricated dependency edges to the modular claim; s6 is false as stated for the same reason as s2 (14 | n does not force 2^n = 1 mod 13; n = 14 gives 4). The claim is FALSE outright, so no TRUE_BUT_INVALID_ARGUMENT disposition applies.",
+  "resource_report": {
+    "output_tokens": 2600,
+    "wall_time_s": 150.0,
+    "verifier_calls": 1,
+    "solver_calls": 0,
+    "max_search_size": 41,
+    "artifact_code_bytes": 415,
+    "estimated": true
+  }
+}

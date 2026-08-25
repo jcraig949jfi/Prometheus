@@ -1,0 +1,11 @@
+range checked: [1, 5489]  (exhaustive, 5489 integers)
+max steps: 237 at n = 3711
+top 8 (steps, n): [(237, 3711), (216, 2919), (214, 4379), (209, 4927), (209, 4926), (208, 2463), (206, 3695), (201, 4255)]
+count with steps >= 238: 0
+violations: []
+s3 n^3==n mod 6 for 1..2000: True
+s4 n^2>=2n for 2..2000: True
+s6 5^3-5 ==120: True
+s7 exists n<=2000 with n^2>2000: True
+s5 forward (4|n -> n(n+1)/2 even) holds: True
+s5 CONVERSE counterexamples (n(n+1)/2 even but 4 does not divide n), first 10: [3, 7, 11, 15, 19, 23, 27, 31, 35, 39] count: 500

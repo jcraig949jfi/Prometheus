@@ -1,0 +1,33 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0-A0_EVAL-0010",
+  "condition": "A",
+  "claim_id": "A0_EVAL-0010",
+  "disposition": "TRUE",
+  "evidence_kind": "proof",
+  "witness": null,
+  "search_bound": null,
+  "broken_step": null,
+  "confidence": 0.96,
+  "context_items_used": [],
+  "context_items_judged_misleading": [],
+  "what_would_resolve_it": null,
+  "reasoning": {
+    "proof": "The characteristic polynomial of a_n = 9*a_(n-1) - 18*a_(n-2) is x^2 - 9x + 18 = (x-3)(x-6), with distinct roots 3 and 6. Hence any f(n) = c1*3^n + c2*6^n satisfies f(n) = 9*f(n-1) - 18*f(n-2) identically for all n >= 2, because 3^2 = 9*3 - 18 and 6^2 = 9*6 - 18. For c1 = 3, c2 = 4: f(0) = 3 + 4 = 7 = a_0 and f(1) = 9 + 24 = 33 = a_1. Two matching base cases plus a shared second-order recurrence give a_n = f(n) for every n >= 0 by strong induction, hence in particular for every n in [0, 25]. This is a proof over all n >= 0, not a bounded search; the exhaustive exact-integer check over 0 <= n <= 25 is corroboration only.",
+    "argument_assessment": "All nine argument steps were checked and every one is true. s1, s2, s3 are the load-bearing chain and s9 draws exactly the induction conclusion they support, so the argument as given does establish the proposition. Steps s4-s8 (n^2 >= 2n; the H(n) = n^2 + [n=3] identity, which holds because the factor (n-3) annihilates the indicator at its only nonzero point n=3; existence of n in [1,25] with n^2 > 25; 4 | n implies n(n+1)/2 even; n^3 = n mod 6) are true but mathematically irrelevant to the recurrence, and the depends_on edges from s9 to s7 and s8 are spurious. Irrelevant true lemmas and decorative dependency edges do not invalidate an argument whose necessary premises are all present and true, so this is TRUE rather than TRUE_BUT_INVALID_ARGUMENT. The plausible trap in this claim family is a coefficient mismatch (wrong c1/c2 or wrong roots); it is not present here.",
+    "verification_artifact": "verify.py \u00e2\u20ac\u201d exact Python integer arithmetic, no floating point at any stage, so precision is not a consideration. It iterates the recurrence to n = 25 (a_25 = 113721154661584633833, matching the closed form exactly) and independently evaluates each of s1-s8 over its own stated finite range. All checks passed with zero mismatches."
+  },
+  "artifacts": [
+    "F:/Prometheus/ama_game/arena/a0/A0_EVAL/runs/A0_EVAL-0010/verify.py"
+  ],
+  "resource_report": {
+    "output_tokens": 3900,
+    "wall_time_s": 35.0,
+    "verifier_calls": 1,
+    "solver_calls": 0,
+    "max_search_size": 26,
+    "artifact_code_bytes": 1228,
+    "estimated": true,
+    "estimate_notes": "output_tokens estimated (no token meter exposed to the seat); wall_time_s measured by epoch-second delta from first tool call to submission write; verifier_calls, solver_calls, max_search_size and artifact_code_bytes are exact measured counts. max_search_size 26 = the 26 values n in [0,25] enumerated; the disposition itself rests on the proof, not on that enumeration. Program executions total 2: one mathematical verifier run (verify.py) and one non-mathematical JSON well-formedness check of this record, which is not counted in verifier_calls because it evaluated no claim content."
+  }
+}

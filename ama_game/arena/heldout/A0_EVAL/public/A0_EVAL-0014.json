@@ -1,0 +1,68 @@
+{
+  "type": "CLAIM",
+  "claim_id": "A0_EVAL-0014",
+  "problem_id": "t5_collatz_stopping_time",
+  "domain_label": "elementary_number_theory",
+  "proposition": "Under the map n -> n/2 when n is even, n -> 3n+1 when n is odd, every integer n with 1 <= n <= 550662 reaches 1 in fewer than 443 steps.",
+  "domain": "integers n with 1 <= n <= 550662",
+  "quantifiers": "for all n in [1, 550662]",
+  "hypotheses": [
+    "the stopping time counts steps until the value 1 is reached"
+  ],
+  "argument": [
+    {
+      "id": "s1",
+      "text": "Every n in [1, 50] has stopping time below 443; the smallest values are checked directly.",
+      "depends_on": []
+    },
+    {
+      "id": "s2",
+      "text": "A direct sweep verifies that every n in [1, 2014] has stopping time below 443.",
+      "depends_on": [
+        "s1"
+      ]
+    },
+    {
+      "id": "s3",
+      "text": "For every integer n with 1 <= n <= 2000, n^3 is congruent to n modulo 6.",
+      "depends_on": [
+        "s1",
+        "s2"
+      ]
+    },
+    {
+      "id": "s4",
+      "text": "There exists an integer n in [1, 2000] with n^2 > 2000.",
+      "depends_on": [
+        "s2",
+        "s3"
+      ]
+    },
+    {
+      "id": "s5",
+      "text": "For every integer n with 1 <= n <= 2000: if n is divisible by 4 then n(n+1)/2 is even.",
+      "depends_on": [
+        "s3",
+        "s4"
+      ]
+    },
+    {
+      "id": "s6",
+      "text": "For every integer n with 2 <= n <= 2000 we have n^2 >= 2n.",
+      "depends_on": [
+        "s4",
+        "s5"
+      ]
+    },
+    {
+      "id": "s7",
+      "text": "The sweep covers [1, 2014]; the statement is asserted for every n in [1, 550662].",
+      "depends_on": [
+        "s5",
+        "s6"
+      ]
+    }
+  ],
+  "source": "generator",
+  "protocol_version": "v0.1-alpha"
+}

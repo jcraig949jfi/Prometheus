@@ -1,0 +1,109 @@
+{
+  "type": "CLAIM",
+  "claim_id": "MDE_PILOT-0007",
+  "problem_id": "t2_modular_power_cycle",
+  "domain_label": "modular_arithmetic",
+  "proposition": "For every integer n with 0 <= n <= 80, 5^n is congruent to 5^(n mod 6) modulo 7.",
+  "domain": "integers n with 0 <= n <= 80",
+  "quantifiers": "for all n in [0, 80]",
+  "hypotheses": [
+    "gcd(5, 7) = 1",
+    "exponents are non-negative"
+  ],
+  "argument": [
+    {
+      "id": "s1",
+      "text": "At n = 0 both sides equal 1 modulo 7.",
+      "depends_on": []
+    },
+    {
+      "id": "s2",
+      "text": "The residue 5 has order 6 modulo 7: for every n in [0, 74], 5^(n+6) is congruent to 5^n modulo 7.",
+      "depends_on": [
+        "s1"
+      ]
+    },
+    {
+      "id": "s3",
+      "text": "Every integer n in [1, 80] is even or odd, so the two cases below are exhaustive.",
+      "depends_on": [
+        "s1",
+        "s2"
+      ]
+    },
+    {
+      "id": "s4",
+      "text": "Put H(n) = n^2 + [n = 3]. Then (n-3)n^2 = (n-3)H(n) for every n in [1, 80].",
+      "depends_on": [
+        "s2",
+        "s3"
+      ]
+    },
+    {
+      "id": "s5",
+      "text": "For every integer n with 1 <= n <= 80, n^3 is congruent to n modulo 6.",
+      "depends_on": [
+        "s3",
+        "s4"
+      ]
+    },
+    {
+      "id": "s6",
+      "text": "Every n in [0, 80] falls in exactly one residue class modulo 6.",
+      "depends_on": [
+        "s4",
+        "s5"
+      ]
+    },
+    {
+      "id": "s7",
+      "text": "For every integer n with 1 <= n <= 80: if n is divisible by 4 then n(n+1)/2 is even.",
+      "depends_on": [
+        "s5",
+        "s6"
+      ]
+    },
+    {
+      "id": "s8",
+      "text": "The identity n^3 - n = 120 is verified directly at n = 6.",
+      "depends_on": [
+        "s6",
+        "s7"
+      ]
+    },
+    {
+      "id": "s9",
+      "text": "For every n in [0, 80]: if 6 divides n then 5^n is congruent to 1 modulo 7.",
+      "depends_on": [
+        "s7",
+        "s8"
+      ]
+    },
+    {
+      "id": "s10",
+      "text": "There exists an integer n in [1, 80] with n^2 > 80.",
+      "depends_on": [
+        "s8",
+        "s9"
+      ]
+    },
+    {
+      "id": "s11",
+      "text": "For every integer n with 2 <= n <= 80 we have n^2 >= 2n.",
+      "depends_on": [
+        "s9",
+        "s10"
+      ]
+    },
+    {
+      "id": "s12",
+      "text": "Periodicity plus the base case gives the statement for every n in [0, 80].",
+      "depends_on": [
+        "s10",
+        "s11"
+      ]
+    }
+  ],
+  "source": "generator",
+  "protocol_version": "v0.1-alpha"
+}

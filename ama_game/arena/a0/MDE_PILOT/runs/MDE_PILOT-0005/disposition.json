@@ -1,0 +1,32 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0-MDE_PILOT-0005",
+  "condition": "A",
+  "claim_id": "MDE_PILOT-0005",
+  "disposition": "TRUE",
+  "evidence_kind": "proof",
+  "witness": null,
+  "search_bound": "Exhaustive over the entire stated domain: all 41 integers n with 0 <= n <= 40 were checked, so this is a complete decision procedure for the proposition rather than a bounded search that is extrapolated. Artifact: verify.py (run: `python verify.py`). All arithmetic is exact Python integer arithmetic via pow(base, exp, mod); no floating point is used anywhere, so no precision statement is required.",
+  "broken_step": null,
+  "confidence": 0.97,
+  "context_items_used": [],
+  "context_items_judged_misleading": [],
+  "what_would_resolve_it": null,
+  "notes": {
+    "proposition_status": "TRUE. 17 is prime and ord_17(7) = 16 (7^1=7, 7^2=15, 7^4=4, 7^8=16=-1, 7^16=1; verified as the least such exponent by enumerating k in [1,16]). Hence 7^n = 7^(n mod 16) mod 17 for every n >= 0, and in particular on [0,40]. Direct exhaustive check found 0 counterexamples among the 41 domain points.",
+    "argument_audit": "Every one of s1-s11 was checked and none is false, so this is not TRUE_BUT_INVALID_ARGUMENT. Detail: s1 true (both sides 1). s2 true on both counts - order is exactly 16, and 7^(n+16) = 7^n mod 17 for all n in [0,24] (0 failures). s3 true: H(n) = n^2 + [n=3] differs from n^2 only at n=3, where the factor (n-3) is 0, so both sides agree on all of [1,40] (0 failures). s4 true. s5 true (witness n=7, 49>40). s6 true: n=4k gives n(n+1)/2 = 2k(4k+1), even (0 failures). s7 true for n>=2 (0 failures). s8 true: the only multiples of 16 in [0,40] are 0, 16, 32, and 7^n = 1 mod 17 at each. s9 true: 5^3-5 = 120. s10 true. s11 true and, critically, SUFFICIENT: the periodicity instances s2 supplies are only stated for n in [0,24], so I tested whether that restricted range actually reaches the whole domain rather than assuming it. Starting from the trivially-true set n in [0,15] (where n mod 16 = n) and closing under the stated instances 7^(n+16) = 7^n for n in [0,24], the reachable set covers all of [0,40] with nothing unreached: n in [16,31] needs one application, and n in [32,40] needs two (e.g. n=40 -> 24 -> 8, and 24 <= 24 so the instance is in range). Had s2 been stated for n in [0,15] only, s11 would have been a genuine gap for n in [32,40]; it is not.",
+    "irrelevance_note": "s3, s5, s6, s7 and s9 are true but mathematically inert with respect to the conclusion - the load-bearing chain is s1 (base case) + s2 (period 16, adequate range) + s10 (residue classes partition the domain) -> s11. Padding with irrelevant true lemmas is a presentational defect, not an invalid argument, and the disposition menu here scores validity, not economy. I therefore did not downgrade to TRUE_BUT_INVALID_ARGUMENT: no step is false and no step in the load-bearing chain fails to follow.",
+    "residual_uncertainty": "Confidence is 0.97 rather than 1.0 only because 'the argument establishes the conclusion' is a judgement about a natural-language chain (in particular whether the unstated but standard step 'n = 16q + (n mod 16) with q in {0,1,2} on this domain' is considered licensed by s10 + s2) rather than a machine-checked entailment. The proposition itself is certain: it is exhaustively verified on its complete finite domain."
+  },
+  "resource_report": {
+    "output_tokens": 3400,
+    "wall_time_s": 240.0,
+    "verifier_calls": 1,
+    "solver_calls": 0,
+    "max_search_size": 41,
+    "artifact_code_bytes": 2259,
+    "estimated": true,
+    "estimate_note": "output_tokens and wall_time_s are estimates - the harness did not expose token counters or a run clock to me. verifier_calls, solver_calls, max_search_size and artifact_code_bytes are exact measurements. verifier_calls = 1 means exactly one execution of verify.py, which decided both the proposition and the whole step audit in that single run; there were no uninformative, repeated or failed mathematical executions to disclose. max_search_size = 41 is the largest enumeration performed (the 41 domain points); the other enumerations were smaller (25 periodicity instances, 16 order candidates).",
+    "full_disclosure_other_executions": "For completeness: one further python execution was made AFTER the disposition was decided, and it performed no mathematics - it only parsed this file to confirm it is well-formed JSON. It is excluded from verifier_calls because it contributed nothing to reaching the disposition, and it is recorded here so the count is not under-reported."
+  }
+}

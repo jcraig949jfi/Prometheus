@@ -1,0 +1,49 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0-A0_EVAL-0019",
+  "condition": "A",
+  "claim_id": "A0_EVAL-0019",
+  "disposition": "FALSE",
+  "evidence_kind": "witness",
+  "witness": {
+    "n": 230631,
+    "in_stated_domain": "1 <= 230631 <= 327637",
+    "steps_to_reach_1": 442,
+    "claim_requires": "steps < 386",
+    "violation": "442 >= 386",
+    "artifact": "F:/Prometheus/ama_game/arena/a0/A0_EVAL/runs/A0_EVAL-0019/witness_check.py",
+    "arithmetic": "exact Python integer arithmetic; no floating point used, so no precision question arises"
+  },
+  "search_bound": "No exhaustive sweep was needed or claimed. The disposition rests on a single explicit witness whose full trajectory was computed exactly. The script additionally re-ran the claim's own asserted region [1, 4989] exhaustively (max delay there = 237 < 386), which confirms step s2 is true and therefore that the defect is the extrapolation, not the base sweep.",
+  "broken_step": null,
+  "confidence": 0.99,
+  "context_items_used": [],
+  "context_items_judged_misleading": [],
+  "what_would_resolve_it": null,
+  "notes": [
+    "The conclusion is false, so the disposition is FALSE rather than TRUE_BUT_INVALID_ARGUMENT. For completeness: the argument is also invalid independently of the conclusion. Steps s3 (n^2 >= 2n on [2,2000]) and s4 (some n in [1,2000] has n^2 > 2000) are true but carry no information about Collatz stopping times; they are inert. Step s5 is a bare non sequitur: it concedes the sweep covers only [1, 4989] and then asserts the property on [1, 327637], a factor of ~66 extrapolation with no argument. That unjustified extension is exactly where the witness lives.",
+    "The threshold 386 sits one above the delay-record value 385 attained at n = 216367, and the domain bound 327637 sits above the next delay record n = 230631 (delay 442). The claim is therefore false by a wide margin, not marginally."
+  ],
+  "resource_report": {
+    "output_tokens": 2600,
+    "wall_time_s": 120.0,
+    "verifier_calls": 1,
+    "solver_calls": 0,
+    "max_search_size": 4989,
+    "artifact_code_bytes": 630,
+    "estimated": true,
+    "estimated_fields": [
+      "output_tokens",
+      "wall_time_s"
+    ],
+    "measured_fields": [
+      "verifier_calls",
+      "solver_calls",
+      "max_search_size",
+      "artifact_code_bytes"
+    ],
+    "verifier_call_log": [
+      "call 1: python witness_check.py - computed exact Collatz delay of n=230631 (=442) and exhaustive max delay over [1,4989] (=237). Decisive."
+    ]
+  }
+}

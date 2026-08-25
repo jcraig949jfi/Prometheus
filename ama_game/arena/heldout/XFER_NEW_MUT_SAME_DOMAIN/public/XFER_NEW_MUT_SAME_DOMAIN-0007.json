@@ -1,0 +1,92 @@
+{
+  "type": "CLAIM",
+  "claim_id": "XFER_NEW_MUT_SAME_DOMAIN-0007",
+  "problem_id": "t2_modular_power_cycle",
+  "domain_label": "modular_arithmetic",
+  "proposition": "For every integer n with 0 <= n <= 80, 9^n is congruent to 9^(n mod 11) modulo 23.",
+  "domain": "integers n with 0 <= n <= 80",
+  "quantifiers": "for all n in [0, 80]",
+  "hypotheses": [
+    "gcd(9, 23) = 1",
+    "exponents are non-negative"
+  ],
+  "argument": [
+    {
+      "id": "s1",
+      "text": "At n = 0 both sides equal 1 modulo 23.",
+      "depends_on": []
+    },
+    {
+      "id": "s2",
+      "text": "The residue 9 has order 11 modulo 23: for every n in [0, 69], 9^(n+11) is congruent to 9^n modulo 23.",
+      "depends_on": [
+        "s1"
+      ]
+    },
+    {
+      "id": "s3",
+      "text": "Every integer n in [1, 80] is even or odd, so the two cases below are exhaustive.",
+      "depends_on": [
+        "s1",
+        "s2"
+      ]
+    },
+    {
+      "id": "s4",
+      "text": "Every n in [0, 80] falls in exactly one residue class modulo 11.",
+      "depends_on": [
+        "s2",
+        "s3"
+      ]
+    },
+    {
+      "id": "s5",
+      "text": "There exists an integer n in [1, 80] with n^2 > 80.",
+      "depends_on": [
+        "s3",
+        "s4"
+      ]
+    },
+    {
+      "id": "s6",
+      "text": "Put H(n) = n^2 + [n = 3]. Then (n-3)n^2 = (n-3)H(n) for every n in [1, 80].",
+      "depends_on": [
+        "s4",
+        "s5"
+      ]
+    },
+    {
+      "id": "s7",
+      "text": "For every integer n with 2 <= n <= 80 we have n^2 >= 2n.",
+      "depends_on": [
+        "s5",
+        "s6"
+      ]
+    },
+    {
+      "id": "s8",
+      "text": "The previous estimate holds on [2, 80] and the boundary value n = 1 was handled separately above, so by transitivity the estimate holds on the whole of [1, 80].",
+      "depends_on": [
+        "s7"
+      ]
+    },
+    {
+      "id": "s9",
+      "text": "For every integer n with 1 <= n <= 80: if n is divisible by 4 then n(n+1)/2 is even.",
+      "depends_on": [
+        "s6",
+        "s7"
+      ]
+    },
+    {
+      "id": "s10",
+      "text": "Periodicity plus the base case gives the statement for every n in [0, 80].",
+      "depends_on": [
+        "s7",
+        "s8"
+      ]
+    }
+  ],
+  "source": "generator",
+  "protocol_version": "v0.1-alpha"
+}

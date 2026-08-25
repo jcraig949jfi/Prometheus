@@ -1,0 +1,49 @@
+{
+  "claim_id": "PROMOTION_POOL-0007",
+  "set_name": "PROMOTION_POOL",
+  "template_id": "t2_modular_power_cycle",
+  "domain_label": "modular_arithmetic",
+  "sealed_class": "TRUE_BUT_INVALID_ARGUMENT",
+  "oracle_disposition": "TRUE_BUT_INVALID_ARGUMENT",
+  "truth_status": "TRUE",
+  "truth_method": "native enumeration with pow(a, n, m) over [0, N]",
+  "argument_validity": "INVALID",
+  "invalid_steps": [
+    "s5"
+  ],
+  "incomplete_steps": [],
+  "planted_mutation_type": "M12_modulus_confusion",
+  "mutation_target_step": "s5",
+  "mutation_mechanism": "a congruence proved modulo 6 was reused modulo 4",
+  "known_witness": null,
+  "known_proof_sketch": "14 has multiplicative order 18 modulo 19.",
+  "minimum_known_disposition_method": {
+    "kind": "closed_form_proof",
+    "cost_units": 11,
+    "within_player_budget": true
+  },
+  "difficulty": {
+    "domain_size": 61,
+    "derivation_length": 11,
+    "player_search_budget": 200000
+  },
+  "params": {
+    "a": 14,
+    "m": 19,
+    "d_claimed": 18,
+    "d_true": 18,
+    "N": 60
+  },
+  "claim_predicate": "pow(14, n, 19) == pow(14, n % 18, 19)",
+  "witness_var": "n",
+  "domain_lo": 0,
+  "domain_hi": 60,
+  "notes": [],
+  "generation": {
+    "set_seed": 990004,
+    "item_seed": 207016810568314,
+    "item_index": 7,
+    "generator_sha256": "28e73b444b445e60750a43dd034fc29aa99a47b939d26a56e8e176eefc7af7ea",
+    "protocol_version": "v0.1-alpha"
+  }
+}

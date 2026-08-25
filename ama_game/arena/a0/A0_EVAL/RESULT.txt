@@ -1,0 +1,73 @@
+A0 RESULT — A0_EVAL, condition A, n = 30
+====================================================================
+
+PRIMARY (preregistered, cost rule fixed before data existed)
+  EVC  expected verifier cost to correct disposition : 6.37  (SE 1.74)
+  accuracy                                           : 80%  (24/30)
+  budget cap (cost charged on an incorrect answer)   : 25
+  unit of analysis: the claim.  n = 30
+
+COST STRUCTURE
+  claims charged at the cap (i.e. wrong)  : 6/30 = 20% of the mass
+  verifier calls on correct claims        : median 2, mean 1.7, range [1, 4]
+  the distribution is censored at 25; do not assume normality when testing it
+
+CONFUSION — sealed class (rows) by submitted disposition
+  FALSE_BUT_HARD_WITHIN_BUDGET   n= 6  correct=6/6  -> {'FALSE': 6}
+  FALSE_WITH_WITNESS             n= 6  correct=6/6  -> {'FALSE': 6}
+  TRUE_BUT_INVALID_ARGUMENT      n= 6  correct=6/6  -> {'TRUE_BUT_INVALID_ARGUMENT': 6}
+  TRUE_VALID_ARGUMENT            n= 6  correct=6/6  -> {'TRUE': 6}
+  UNRESOLVED_WITHIN_BUDGET       n= 6  correct=0/6  -> {'TRUE_BUT_INVALID_ARGUMENT': 2, 'FALSE': 4}
+
+FAILURE SHAPE
+  false accusations (FALSE on a claim that is true) : 0/14 = 0%
+  TRUE_BUT_INVALID_ARGUMENT correct                 : 6/6
+    ... called FALSE (spotted the bad proof, then killed the true
+        conclusion with it)                         : 0
+    ... called TRUE (missed the planted defect)     : 0
+  UNRESOLVED correct                                : 0/6
+    ... overclaimed a truth value                   : 4
+        of those, matched the sealed truth          : 4/4
+        WARNING: every overclaim was right. These items may be
+        resolvable within budget after all, and the class is
+        mislabelled rather than the assessor being lucky.
+  invalid falsifiers (FALSE whose witness fails      
+    re-execution against the claim)                 : 0/16 submitted kills
+
+HEADROOM
+  Baseline is competent but fallible (80% accuracy at EVC 6.4).
+  This is the useful regime: room for D to improve, and not so
+  much room that any hint would do it.
+
+PER-CLAIM ROWS (raw)
+  claim              class                          oracle                     submitted                  ok  calls  cost
+  A0_EVAL-0000       TRUE_VALID_ARGUMENT            TRUE                       TRUE                       Y       2     2
+  A0_EVAL-0001       FALSE_WITH_WITNESS             FALSE                      FALSE                      Y       1     1
+  A0_EVAL-0002       TRUE_BUT_INVALID_ARGUMENT      TRUE_BUT_INVALID_ARGUMENT  TRUE_BUT_INVALID_ARGUMENT  Y       2     2
+  A0_EVAL-0003       FALSE_BUT_HARD_WITHIN_BUDGET   FALSE                      FALSE                      Y       1     1
+  A0_EVAL-0004       UNRESOLVED_WITHIN_BUDGET       UNRESOLVED                 TRUE_BUT_INVALID_ARGUMENT  n       2    25
+  A0_EVAL-0005       TRUE_VALID_ARGUMENT            TRUE                       TRUE                       Y       1     1
+  A0_EVAL-0006       FALSE_WITH_WITNESS             FALSE                      FALSE                      Y       3     3
+  A0_EVAL-0007       TRUE_BUT_INVALID_ARGUMENT      TRUE_BUT_INVALID_ARGUMENT  TRUE_BUT_INVALID_ARGUMENT  Y       2     2
+  A0_EVAL-0008       FALSE_BUT_HARD_WITHIN_BUDGET   FALSE                      FALSE                      Y       2     2
+  A0_EVAL-0009       UNRESOLVED_WITHIN_BUDGET       UNRESOLVED                 FALSE                      n       2    25
+  A0_EVAL-0010       TRUE_VALID_ARGUMENT            TRUE                       TRUE                       Y       1     1
+  A0_EVAL-0011       FALSE_WITH_WITNESS             FALSE                      FALSE                      Y       1     1
+  A0_EVAL-0012       TRUE_BUT_INVALID_ARGUMENT      TRUE_BUT_INVALID_ARGUMENT  TRUE_BUT_INVALID_ARGUMENT  Y       1     1
+  A0_EVAL-0013       FALSE_BUT_HARD_WITHIN_BUDGET   FALSE                      FALSE                      Y       1     1
+  A0_EVAL-0014       UNRESOLVED_WITHIN_BUDGET       UNRESOLVED                 FALSE                      n       4    25
+  A0_EVAL-0015       TRUE_VALID_ARGUMENT            TRUE                       TRUE                       Y       3     3
+  A0_EVAL-0016       FALSE_WITH_WITNESS             FALSE                      FALSE                      Y       2     2
+  A0_EVAL-0017       TRUE_BUT_INVALID_ARGUMENT      TRUE_BUT_INVALID_ARGUMENT  TRUE_BUT_INVALID_ARGUMENT  Y       2     2
+  A0_EVAL-0018       FALSE_BUT_HARD_WITHIN_BUDGET   FALSE                      FALSE                      Y       2     2
+  A0_EVAL-0019       UNRESOLVED_WITHIN_BUDGET       UNRESOLVED                 FALSE                      n       1    25
+  A0_EVAL-0020       TRUE_VALID_ARGUMENT            TRUE                       TRUE                       Y       2     2
+  A0_EVAL-0021       FALSE_WITH_WITNESS             FALSE                      FALSE                      Y       1     1
+  A0_EVAL-0022       TRUE_BUT_INVALID_ARGUMENT      TRUE_BUT_INVALID_ARGUMENT  TRUE_BUT_INVALID_ARGUMENT  Y       1     1
+  A0_EVAL-0023       FALSE_BUT_HARD_WITHIN_BUDGET   FALSE                      FALSE                      Y       4     4
+  A0_EVAL-0024       UNRESOLVED_WITHIN_BUDGET       UNRESOLVED                 TRUE_BUT_INVALID_ARGUMENT  n       2    25
+  A0_EVAL-0025       TRUE_VALID_ARGUMENT            TRUE                       TRUE                       Y       1     1
+  A0_EVAL-0026       FALSE_WITH_WITNESS             FALSE                      FALSE                      Y       1     1
+  A0_EVAL-0027       TRUE_BUT_INVALID_ARGUMENT      TRUE_BUT_INVALID_ARGUMENT  TRUE_BUT_INVALID_ARGUMENT  Y       2     2
+  A0_EVAL-0028       FALSE_BUT_HARD_WITHIN_BUDGET   FALSE                      FALSE                      Y       2     2
+  A0_EVAL-0029       UNRESOLVED_WITHIN_BUDGET       UNRESOLVED                 FALSE                      n       3    25
