@@ -51,8 +51,10 @@ Twitch (2026) is the **junction** of A/B and C, not a descendant of either.
 
 ## What survived eight passes
 
-- **0.833 is an expressivity ceiling of Apollo's blackboard substrate, measured by exhaustive
-  enumeration.** 16.7% of its battery is unreachable in that vocabulary regardless of search.
+- **0.833 is a bounded-language ceiling of Apollo's blackboard substrate** (k<=10 transformers,
+  no operator repetition), measured by enumeration. Ordering axis closed 2026-08-25: the 166,320
+  valid orderings collapse to exactly **4 trace classes**, and the 45,360 that reach 0.833 are
+  exactly one of them. Depth and repetition bounds remain part of the hypothesis.
 - **39 of 45 operator pairs in O1's ceiling pipeline commute; zero undeclared writes across 26
   operators.** The bug that voided two O1 runs was statically derivable from existing metadata.
 - **The forge has a tiered ratchet whose promoted primitives were measured at 0% usage** — and

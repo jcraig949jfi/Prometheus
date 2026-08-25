@@ -349,7 +349,11 @@ shape: *an identifier is not a mechanism, and a title is not a method.*
 Stated plainly, with grades:
 
 - **0.833 is an expressivity ceiling of Apollo's blackboard substrate, measured by exhaustive
-  enumeration [R].** 16.7% of its own battery is unreachable in that vocabulary regardless of search.
+  enumeration [R].** 16.7% unreachable by any composition of at most 10 transformers without operator
+  repetition. **Scope corrected 2026-08-25** after external review: this is a *bounded-language*
+  ceiling, not an expressivity ceiling. The ordering axis is now exhaustive — 166,320 valid orderings
+  collapse to exactly 4 trace classes, and the 45,360 reaching 0.833 are exactly one class. Depth and
+  repetition bounds remain part of the hypothesis.
 - **39 of 45 operator pairs in O1's ceiling pipeline commute; zero undeclared writes across 26
   declared operators [M].** The commutativity theory is derivable and sound; the bug that voided two
   O1 runs was statically derivable.

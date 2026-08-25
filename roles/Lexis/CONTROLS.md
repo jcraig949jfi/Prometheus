@@ -69,7 +69,10 @@ For each question this slice asks, the model-free form:
 
 - *"Is this abstraction reusable?"* → **count call sites across the corpus.** This is what
   compressivity already is: an arithmetic property of a corpus, not a judgment. The field's choice of
-  it is a controls choice before it is a theory choice.
+  it is a controls choice before it is a theory choice. **But note the limit, established 2026-08-25:
+  compressivity guarantees *witnessed* reuse, not *useful* reuse** — usage in the training corpus is
+  100% by construction because the corpus is rewritten with the abstraction. Held-out utility still
+  requires ablation.
 - *"Do these two pipelines do the same thing?"* → **are they in the same e-class modulo theory T?**
   Equality saturation (`egg`, babble) makes this decidable within a saturation bound. This is the
   single largest available move from inference to computation in the slice.
@@ -79,10 +82,22 @@ For each question this slice asks, the model-free form:
 - *"Did the library help?"* → **ablate and diff, at matched compute in a currency fixed in advance.**
   This is gate G2 and it is arithmetic.
 - *"Is this tool novel?"* → currently `compute_portability_score`, a regex heuristic over source
-  text. Replace with a **corpus-relative** count. See §5 for why the current one fails despite being
-  fully deterministic.
+  text. Replace with the **redundancy predicate** (decidable on a finite battery by exhaustive
+  behavioural signature):
+
+      NEW(p, C, T) = 1[ ¬∃ g ∈ G(C) : ∀x ∈ T, p(x) = g(x) ]
+
+  i.e. *is this primitive already representable by some composition of the existing vocabulary?*
+  Without it we cannot distinguish a **search macro** (ΔS>0, ΔE=0 — previously expressible, now
+  cheaper to reach) from **vocabulary expansion** (ΔE>0 — previously impossible). Compression-style
+  library learning predominantly produces the former; the Prometheus thesis needs the latter. These
+  are two separate ledgers and have been conflated under the word "reachability" throughout this
+  study. (§5 explains why the current portability heuristic fails despite being fully deterministic.)
 - *"Could the answer have appeared here at all?"* → **exhaustively enumerate the reachable space.**
-  O1's move; Diomedes' seat. It converted a four-month plateau into a measured expressivity ceiling.
+  O1's move; Diomedes' seat. It converted a four-month plateau into a measured *bounded-language*
+  ceiling — and on 2026-08-25 the ordering axis of that enumeration was closed exactly: 166,320 valid
+  orderings collapse to **4 trace classes**, and the 45,360 reaching 0.833 are exactly one of them.
+  Enumerate equivalence classes, never orderings.
 - *"Is this result robust?"* → **seed variation** (the forge already does this: 100% collapsing to
   79–96%), **permutation null**, **metamorphic mutation** (Nemesis). All deterministic protocols.
 - *"Does this ordering matter?"* → **write-write and read-write hazard analysis.** Pass 5.
@@ -102,7 +117,21 @@ it is the architecture to copy:
 - **ReGAL** — abstractions are refined and admitted **by execution**, not by rating.
 
 The invariant: **the model proposes, a decision procedure disposes.** A model may never be the
-oracle, may never score its own output, and may never appear downstream of the gate. This is also
+oracle, may never score its own output, and may never appear downstream of the gate.
+
+**Amended 2026-08-25 after external review — that invariant is too weak.** With a Boolean verifier,
+accepted candidates satisfy `supp(A) ⊆ supp(G)`: selection reweights what the generator already
+reaches and cannot create support. A verifier that returns only NO is inert with respect to reach.
+But a verifier that returns **counterexamples, unsat cores, failed proof states, interpolants or
+witnesses** supplies information from outside the candidate generator — that is CEGIS, and the
+verifier is then participating in search, not merely disposing. **Prefer witness-producing verifiers
+to Boolean ones.** Our exact oracles mostly *can* produce witnesses; we have not been collecting them.
+
+The second correction: **the LLM is not our only proposer, and asserting that it is was wrong.**
+Ruler synthesizes rewrite rules from a grammar and interpreter with no model involved; Twitch mines
+abstractions from proofs. The generator is properly `G = G_LLM ∪ G_compression ∪ G_symbolic`, and the
+open question is whether the closure `C_{n+1} = C_n ∪ M(C_n, F_n)` — with `F_n` the verifier-produced
+failures — reaches substantially beyond the initial human-written vocabulary. This is also
 exactly what H2 precondition 3 asks for — *"model writes a small verified primitive from a typed
 diagnosis"* — and pass 8 established that Hipster's proof mode and Lemmanaid already occupy that
 design, so the pattern is available rather than speculative.

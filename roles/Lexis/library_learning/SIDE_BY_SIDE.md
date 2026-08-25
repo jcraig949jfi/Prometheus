@@ -22,8 +22,8 @@ a semantic blackboard, or a forge-generated Python tool.
 
 **Two halves, and they differ.** *Apollo has no ratchet* — `apollo/src/genome.py` says it in its own
 docstring, *"primitives are fixed atoms"* — and O1 measured what that costs: 0.833 is the substrate's
-ceiling, exhaustively, with 16.7% of its own battery unreachable in the vocabulary regardless of
-search. *The forge does have one*, and says so: **"The forge is an evolutionary ratchet. Each tier's
+ceiling, exhaustively, with 16.7% unreachable by any composition of at most 10 transformers without operator
+repetition (ordering axis now exhaustive: 4/4 trace classes). *The forge does have one*, and says so: **"The forge is an evolutionary ratchet. Each tier's
 output becomes the next tier's primitives."** T1 forges from scratch; T2's primitives are all passing
 T1 tools; T3's are all passing T1+T2 tools. That is the DreamCoder recursion, built here
 independently.

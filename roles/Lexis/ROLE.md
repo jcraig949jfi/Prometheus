@@ -114,6 +114,13 @@ attainable range of the readout first. On Apollo's blackboard `H` is bounded at 
 the existing 27 operators re-expresses a pipeline already inside O1's enumerated space — so
 **Apollo's battery is disqualified as the substrate for this experiment.**
 
+**G5 — Redundancy / representability.** No primitive is admitted without `NEW(p,C,T)` evaluated —
+is it already representable by a composition of the existing vocabulary over the claimed domain? —
+and its classification recorded on the correct ledger: **ΔS** (searchability gain: previously
+expressible, now cheaper to reach) or **ΔE** (expressible-function gain: previously impossible).
+Decidable on a finite battery by exhaustive behavioural signature. Added 2026-08-25; a search macro
+and a vocabulary expansion are different products and will no longer share a ledger.
+
 **G4 — Spend.** Cloud money is justified by G3 returning positive, and by nothing else. Not by
 accuracy, not by archive coverage, not by a faster rediscovery of the same five structures. This
 matches the operator's own stated bar and the advisor's, independently.

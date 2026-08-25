@@ -10,10 +10,13 @@ non-LLM control ladder, and the Ignis close-out.
 **Apollo's ceiling is the wall a five-year literature exists to break — and we proved that one day
 before finding the literature.**
 
-O1's exhaustive enumeration (2026-08-23) established that 0.833 is an *expressivity* limit of
-Apollo's blackboard vocabulary, not a search limit: 1.74M type-correct pipelines, nothing better,
-16.7% of its own battery unreachable at any search quality. The next day Aporia surfaced DreamCoder,
-and behind it four research families whose entire purpose is growing the vocabulary a search runs
+O1's enumeration (2026-08-23) established that 0.833 is a limit of Apollo's blackboard *vocabulary*,
+not of its search: 1.74M type-correct pipelines, nothing better. Scope, after external review:
+this is a **bounded-language** ceiling — at most 10 transformers, no operator repetition. The
+ordering axis is now exhaustive (166,320 orderings collapse to 4 trace classes; the 45,360 reaching
+0.833 are exactly one class). Depth and repetition remain part of the hypothesis, not proven away.
+
+The next day Aporia surfaced DreamCoder, and behind it four research families whose entire purpose is growing the vocabulary a search runs
 over.
 
 Six findings survived eight passes of trying to break them:
@@ -48,10 +51,16 @@ For four months we tried to make the robot *smarter at picking tools* — better
 evolution, better memory of what worked. It got to 83% and stopped. We assumed the search was the
 problem.
 
-Then someone did the boring exhaustive thing: **try every legal combination of the 27 tools.**
-1.74 million of them. Nothing beat 83%. So the search was never the problem — **the toolbox was.**
-The remaining 17% of puzzles cannot be solved with those 27 tools no matter how cleverly you arrange
-them. You need *new tools*, not better arranging.
+Then someone did the boring exhaustive thing: **try every legal combination of the 27 tools**, up to
+chains of ten with no tool used twice. 1.74 million of them. Nothing beat 83%. So within those
+limits the search was never the problem — **the toolbox was.** You need *new tools*, not better
+arranging.
+
+(Careful bit, added after an outside reviewer pushed back: we checked chains up to ten tools with no
+repeats. A longer chain, or one that uses the same tool twice, might do better — we haven't ruled
+that out, so "impossible" is too strong. What we *did* rule out completely is the order you run them
+in: all 166,320 legal orderings turn out to be only **4 genuinely different schedules**, and we tried
+all four.)
 
 The day after we learned that, we discovered a whole research field that has spent five years on
 exactly one question: **how does a system invent new tools for itself and add them to its own
@@ -80,11 +89,16 @@ something, we were right. Open the file.
 - `library_learning/SOURCES.md` — full bibliography, primary/secondary graded
 - `CONTROLS.md` — the non-LLM control ladder and the inference→decidable substitution table
 - `ROLE.md` — the seat, with pre-committed gates G0–G4
-- `instruments/` — `audit_rw.py`, `commute.py`, `g1_usage.py` (all read-only)
+- `REVIEW_RESPONSE_2026-08-25.md` — external review, what it killed, what survived
+- `instruments/` — `audit_rw.py`, `commute.py`, `g1_usage.py`, `traceclass.py` (all read-only)
 - Published page: <https://claude.ai/code/artifact/651a056a-3c93-4d31-b59e-e94bbdbb7d2d>
 
-## Immediate next steps
+## Immediate next steps (reordered after external review, 2026-08-25)
 
+0. **Can we manufacture a primitive without an LLM?** Generate candidates by repeated-subgraph
+   compression, e-graph/anti-unification, and counterexample-guided synthesis; run all three through
+   identical execution → ablation → held-out → redundancy gates. This decides whether the slice's
+   central premise — that we depend on a corpus-bound generator — is even true. Moved to the front.
 1. **G0** — was the 2026-04-02 T2/T3 rebuild ("AWAITING REVIEW") ever approved and built? Local,
    minutes, blocking. Partial answer already: the six admitted T2 tools call zero of their twelve
    imported reasoning primitives, so the failure mode is present in the current tree regardless.
