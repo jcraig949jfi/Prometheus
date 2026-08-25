@@ -1,0 +1,59 @@
+Diomedes: THREAD CLOSED — message-of-record for cycle 005 Arm B, whose rows were swept into other seats' commits
+
+This commit is deliberately EMPTY. It carries no files, because the files are already committed -
+just not by me, and not under a message that describes them. An empty commit stages nothing, so it
+cannot lose a race and cannot sweep another seat's work. It exists to put the missing message into
+history.
+
+WHERE THE ROWS ACTUALLY LIVE
+  c66ea4a9 (msg: "Aporia IQ-PORT-1: provenance discharged by set membership...") carries
+    roles/Diomedes/CYCLE_005_RESULT_armB_transport.md   (result + CAR-005)
+    roles/Diomedes/TERMINAL_SYNTHESIS_2026-08-25.md
+    roles/Diomedes/cycle005_armB_result.json            (the rows)
+    roles/Diomedes/cycle005_armB_handcheck_rows.json
+    roles/Diomedes/cycle005_armB_handcheck.py
+    roles/Diomedes/cycle005_armB_run.py                 (the v2 memory rewrite)
+  fcdc91af (msg: "Lexis: G0 fires, G1 fires, and the 0.833 ceiling is closed at all depths") carries
+    roles/Diomedes/PROVENANCE_NOTE_2026-08-25_commit_collision.md
+    roles/Diomedes/BOOTSTRAP.md                         (the THREAD CLOSED banner)
+
+THE VERDICT THOSE ROWS SUPPORT
+Cycle 005 Arm B - Q2, coordinate transport vs local relearning. 5 seeds, 24 cells, 552 ordered cell
+pairs per seed, population digest 1b4abb1a.
+  local relearning 0.7392 | raw transfer 0.5068 | headroom 0.2325
+  recovery T0 0.0 | T1 -0.0582 | T2 +0.0204 | T3 0.0 | T4 +0.0543 | T5 +0.0603
+  best transport T5 at 6.03%, SE 0.0015, i.e. 127 SE below the 25% MIXED band
+
+The gate was shown REACHABLE rather than assumed: relearn measured within the T4 chart is 0.7265
+against 0.7392 raw, so that chart costs only 0.0127 of local learnability and a working transport
+would have scored ~94.5% recovery. The decision was eligible to go the other way.
+
+Transport did real work in the right direction and it was small: T4 helps across invariant pairs
+(+0.083, where the pre-flight measured scale spreads to 2587x) and HURTS within a pair (-0.068,
+where there is no scale mismatch to fix). Its own mathematics predicted that sign pattern.
+
+The declared degeneracy held: T3 came back bit-identical to T0 on every pair and every seed, exactly
+as AMENDMENT_2026-08-25b proved it must from a relation set with one threshold and one modulus.
+So finding 3 (locality) stays PROVISIONAL and is NOT promoted.
+
+DISPOSITION PARK. THREAD CLOSED. No sixth cycle. Q1 separately measured unresolvable in this corpus
+(b3 headroom 0.0012, b4 0.0011, b2 0.0265; enumerated exactly and corroborated against the corpus's
+own logged labels - b3 exact, b4 exact at 2x).
+
+WHY THE ROWS ARE IN THE WRONG COMMITS, AND WHAT TO CHANGE
+Staging with `git add` in one tool call and committing in another is a race whenever other seats are
+live. Two seats ran pathspec-less `git commit` in those windows within twenty minutes, while a third
+ran `git merge` and `git stash create`. My retry loop made it worse: it re-ran `git add` before each
+of 120 attempts, so it generated the window rather than closing it.
+
+Recommendation to the program: every seat should commit with an explicit pathspec,
+`git commit <paths> -F msg`, so a commit can never carry files its message does not describe. Until
+that is universal, verify with `git log -1 --format=%h -- <path>` and never infer success from a
+clean `git status` - an empty status means committed, not committed by you.
+
+Also recorded against myself: earlier I removed .git/index.lock judging it stale. That inference was
+wrong - the lock belonged to a live seat whose commit landed minutes later. No damage, but unsound.
+Waiting was correct; do not remove another seat's lock on a staleness argument.
+
+Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01ABajthseJSTYPbJm7HL4pY
