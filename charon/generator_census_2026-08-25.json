@@ -1,0 +1,1662 @@
+{
+  "instrument": "generator_census_v2.py",
+  "supersedes": "generator_census.py (v1: 200K-line prefix truncation; c1-derived action field list)",
+  "scope": {
+    "gz_files": 100,
+    "plain_files": 165,
+    "gigabytes": 370.9,
+    "row_counts": "EXACT - every line of every file scanned",
+    "field_stats": "stratified contiguous windows, 4000 lines every 50000",
+    "action_fields": "derived from data per generator, not carried from c1"
+  },
+  "total_rows_exact": 561314976,
+  "positive_control_c1": "PASS",
+  "generators": [
+    {
+      "generator": "a3",
+      "rows_EXACT": 49569665,
+      "rows_sampled": 3973140,
+      "sample_pct": 8.02,
+      "parent_pct_sampled": 0.0,
+      "verdicts": {
+        "REJECTED": 2525342,
+        "SHADOW_CATALOG": 1447798
+      },
+      "action_candidates": 0,
+      "best_action_field": {
+        "field": "payload.invariant_a",
+        "card": 6,
+        "populated": 3973140,
+        "on_FAIL": 2525342,
+        "multi_action_parents": 0,
+        "values": [
+          "crossing_number",
+          "determinant",
+          "nf_class_number",
+          "signature",
+          "three_genus",
+          "trace_field_class"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": {
+        "field": "verdict",
+        "card": 2,
+        "populated": 3973140,
+        "on_FAIL": 2525342,
+        "multi_action_parents": 0,
+        "values": [
+          "REJECTED",
+          "SHADOW_CATALOG"
+        ]
+      }
+    },
+    {
+      "generator": "a1",
+      "rows_EXACT": 42101659,
+      "rows_sampled": 3375876,
+      "sample_pct": 8.02,
+      "parent_pct_sampled": 0.0,
+      "verdicts": {
+        "REJECTED": 2327560,
+        "SHADOW_CATALOG": 1048316
+      },
+      "action_candidates": 0,
+      "best_action_field": {
+        "field": "payload.invariant_a",
+        "card": 6,
+        "populated": 3375876,
+        "on_FAIL": 2327560,
+        "multi_action_parents": 0,
+        "values": [
+          "crossing_number",
+          "determinant",
+          "nf_class_number",
+          "signature",
+          "three_genus",
+          "trace_field_class"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": {
+        "field": "verdict",
+        "card": 2,
+        "populated": 3375876,
+        "on_FAIL": 2327560,
+        "multi_action_parents": 0,
+        "values": [
+          "REJECTED",
+          "SHADOW_CATALOG"
+        ]
+      }
+    },
+    {
+      "generator": "a2",
+      "rows_EXACT": 41736083,
+      "rows_sampled": 3343582,
+      "sample_pct": 8.01,
+      "parent_pct_sampled": 0.0,
+      "verdicts": {
+        "REJECTED": 3117668,
+        "SHADOW_CATALOG": 225914
+      },
+      "action_candidates": 0,
+      "best_action_field": {
+        "field": "payload.ec_invariant",
+        "card": 4,
+        "populated": 3343582,
+        "on_FAIL": 3343582,
+        "multi_action_parents": 0,
+        "values": [
+          "conductor",
+          "rank",
+          "tamagawa_product",
+          "torsion"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": {
+        "field": "verdict",
+        "card": 2,
+        "populated": 3343582,
+        "on_FAIL": 3343582,
+        "multi_action_parents": 0,
+        "values": [
+          "REJECTED",
+          "SHADOW_CATALOG"
+        ]
+      }
+    },
+    {
+      "generator": "f4",
+      "rows_EXACT": 41313245,
+      "rows_sampled": 3316083,
+      "sample_pct": 8.03,
+      "parent_pct_sampled": 0.0,
+      "verdicts": {
+        "REJECTED": 2182976,
+        "SHADOW_CATALOG": 1133107
+      },
+      "action_candidates": 0,
+      "best_action_field": {
+        "field": "payload.invariant_a",
+        "card": 6,
+        "populated": 3316083,
+        "on_FAIL": 2182976,
+        "multi_action_parents": 0,
+        "values": [
+          "crossing_number",
+          "determinant",
+          "nf_class_number",
+          "signature",
+          "three_genus",
+          "trace_field_class"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": {
+        "field": "kill_pattern",
+        "card": 4,
+        "populated": 2182976,
+        "on_FAIL": 2182976,
+        "multi_action_parents": 0,
+        "values": [
+          "f4_frontier_abs_diff_le_3_violated",
+          "f4_frontier_divides_violated",
+          "f4_frontier_equal_mod_2_violated",
+          "f4_frontier_equal_violated"
+        ]
+      }
+    },
+    {
+      "generator": "d3",
+      "rows_EXACT": 40076374,
+      "rows_sampled": 3214261,
+      "sample_pct": 8.02,
+      "parent_pct_sampled": 100.0,
+      "verdicts": {
+        "REJECTED": 3159042,
+        "INCONCLUSIVE": 55219
+      },
+      "action_candidates": 1,
+      "best_action_field": {
+        "field": "payload.n_branches_evaluated",
+        "card": 4,
+        "populated": 3214261,
+        "on_FAIL": 3214261,
+        "multi_action_parents": 1307,
+        "values": [
+          "2",
+          "3",
+          "4",
+          "5"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": {
+        "field": "verdict",
+        "card": 2,
+        "populated": 3214261,
+        "on_FAIL": 3214261,
+        "multi_action_parents": 48123,
+        "values": [
+          "INCONCLUSIVE",
+          "REJECTED"
+        ]
+      }
+    },
+    {
+      "generator": "f3",
+      "rows_EXACT": 38297377,
+      "rows_sampled": 3071594,
+      "sample_pct": 8.02,
+      "parent_pct_sampled": 0.0,
+      "verdicts": {
+        "REJECTED": 2071533,
+        "SHADOW_CATALOG": 1000061
+      },
+      "action_candidates": 0,
+      "best_action_field": {
+        "field": "payload.invariant_a",
+        "card": 6,
+        "populated": 3071594,
+        "on_FAIL": 2071533,
+        "multi_action_parents": 0,
+        "values": [
+          "crossing_number",
+          "determinant",
+          "nf_class_number",
+          "signature",
+          "three_genus",
+          "trace_field_class"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": {
+        "field": "kill_pattern",
+        "card": 4,
+        "populated": 2071533,
+        "on_FAIL": 2071533,
+        "multi_action_parents": 0,
+        "values": [
+          "f3_active_abs_diff_le_3_violated",
+          "f3_active_divides_violated",
+          "f3_active_equal_mod_2_violated",
+          "f3_active_equal_violated"
+        ]
+      }
+    },
+    {
+      "generator": "f2",
+      "rows_EXACT": 37802486,
+      "rows_sampled": 3033752,
+      "sample_pct": 8.03,
+      "parent_pct_sampled": 0.0,
+      "verdicts": {
+        "REJECTED": 1996479,
+        "SHADOW_CATALOG": 1037273
+      },
+      "action_candidates": 0,
+      "best_action_field": {
+        "field": "payload.invariant_a",
+        "card": 6,
+        "populated": 3033752,
+        "on_FAIL": 1996479,
+        "multi_action_parents": 0,
+        "values": [
+          "crossing_number",
+          "determinant",
+          "nf_class_number",
+          "signature",
+          "three_genus",
+          "trace_field_class"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": {
+        "field": "verdict",
+        "card": 2,
+        "populated": 3033752,
+        "on_FAIL": 1996479,
+        "multi_action_parents": 0,
+        "values": [
+          "REJECTED",
+          "SHADOW_CATALOG"
+        ]
+      }
+    },
+    {
+      "generator": "g5",
+      "rows_EXACT": 33368691,
+      "rows_sampled": 2676427,
+      "sample_pct": 8.02,
+      "parent_pct_sampled": 0.0,
+      "verdicts": {
+        "SHADOW_CATALOG": 2467888,
+        "REJECTED": 208539
+      },
+      "action_candidates": 0,
+      "best_action_field": {
+        "field": "payload.invariant_a",
+        "card": 6,
+        "populated": 2676427,
+        "on_FAIL": 2676427,
+        "multi_action_parents": 0,
+        "values": [
+          "crossing_number",
+          "determinant",
+          "nf_class_number",
+          "signature",
+          "three_genus",
+          "trace_field_class"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": {
+        "field": "verdict",
+        "card": 2,
+        "populated": 2676427,
+        "on_FAIL": 2676427,
+        "multi_action_parents": 0,
+        "values": [
+          "REJECTED",
+          "SHADOW_CATALOG"
+        ]
+      }
+    },
+    {
+      "generator": "f1",
+      "rows_EXACT": 31443849,
+      "rows_sampled": 2517115,
+      "sample_pct": 8.01,
+      "parent_pct_sampled": 0.0,
+      "verdicts": {
+        "INCONCLUSIVE": 1458774,
+        "REJECTED": 737511,
+        "SHADOW_CATALOG": 320830
+      },
+      "action_candidates": 0,
+      "best_action_field": {
+        "field": "payload.invariant_a",
+        "card": 8,
+        "populated": 2517115,
+        "on_FAIL": 2196285,
+        "multi_action_parents": 0,
+        "values": [
+          "alexander_polynomial_degree",
+          "crossing_number",
+          "determinant",
+          "hyperbolic_volume",
+          "nf_class_number",
+          "signature",
+          "three_genus",
+          "trace_field_class"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": {
+        "field": "verdict",
+        "card": 3,
+        "populated": 2517115,
+        "on_FAIL": 2196285,
+        "multi_action_parents": 0,
+        "values": [
+          "INCONCLUSIVE",
+          "REJECTED",
+          "SHADOW_CATALOG"
+        ]
+      }
+    },
+    {
+      "generator": "c1",
+      "rows_EXACT": 30031376,
+      "rows_sampled": 2405858,
+      "sample_pct": 8.01,
+      "parent_pct_sampled": 100.0,
+      "verdicts": {
+        "REJECTED": 1610411,
+        "SHADOW_CATALOG": 795447
+      },
+      "action_candidates": 2,
+      "best_action_field": {
+        "field": "payload.value_a",
+        "card": 31,
+        "populated": 2405858,
+        "on_FAIL": 1610411,
+        "multi_action_parents": 5767,
+        "values": [
+          "-2",
+          "-4",
+          "-6",
+          "-8",
+          "0",
+          "1",
+          "10",
+          "11"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": {
+        "field": "verdict",
+        "card": 2,
+        "populated": 2405858,
+        "on_FAIL": 1610411,
+        "multi_action_parents": 3043,
+        "values": [
+          "REJECTED",
+          "SHADOW_CATALOG"
+        ]
+      }
+    },
+    {
+      "generator": "a4",
+      "rows_EXACT": 28263197,
+      "rows_sampled": 2266482,
+      "sample_pct": 8.02,
+      "parent_pct_sampled": 0.0,
+      "verdicts": {
+        "INCONCLUSIVE": 1571869,
+        "REJECTED": 687239,
+        "SHADOW_CATALOG": 7374
+      },
+      "action_candidates": 0,
+      "best_action_field": {
+        "field": "payload.best_degree",
+        "card": 3,
+        "populated": 2266482,
+        "on_FAIL": 2266482,
+        "multi_action_parents": 0,
+        "values": [
+          "1",
+          "2",
+          "3"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": {
+        "field": "verdict",
+        "card": 3,
+        "populated": 2266482,
+        "on_FAIL": 2266482,
+        "multi_action_parents": 0,
+        "values": [
+          "INCONCLUSIVE",
+          "REJECTED",
+          "SHADOW_CATALOG"
+        ]
+      }
+    },
+    {
+      "generator": "g4",
+      "rows_EXACT": 25968562,
+      "rows_sampled": 2088097,
+      "sample_pct": 8.04,
+      "parent_pct_sampled": 0.0,
+      "verdicts": {
+        "SHADOW_CATALOG": 1975331,
+        "REJECTED": 112766
+      },
+      "action_candidates": 0,
+      "best_action_field": {
+        "field": "payload.invariant_a",
+        "card": 6,
+        "populated": 2088097,
+        "on_FAIL": 2088097,
+        "multi_action_parents": 0,
+        "values": [
+          "crossing_number",
+          "determinant",
+          "nf_class_number",
+          "signature",
+          "three_genus",
+          "trace_field_class"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": {
+        "field": "verdict",
+        "card": 2,
+        "populated": 2088097,
+        "on_FAIL": 2088097,
+        "multi_action_parents": 0,
+        "values": [
+          "REJECTED",
+          "SHADOW_CATALOG"
+        ]
+      }
+    },
+    {
+      "generator": "h1",
+      "rows_EXACT": 20742007,
+      "rows_sampled": 1670047,
+      "sample_pct": 8.05,
+      "parent_pct_sampled": 100.0,
+      "verdicts": {
+        "REJECTED": 1516974,
+        "SHADOW_CATALOG": 153073
+      },
+      "action_candidates": 2,
+      "best_action_field": {
+        "field": "payload.hunter_value_a",
+        "card": 31,
+        "populated": 1516974,
+        "on_FAIL": 1516974,
+        "multi_action_parents": 74095,
+        "values": [
+          "-2",
+          "-4",
+          "-6",
+          "-8",
+          "0",
+          "1",
+          "10",
+          "11"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": {
+        "field": "verdict",
+        "card": 2,
+        "populated": 1670047,
+        "on_FAIL": 1670047,
+        "multi_action_parents": 17574,
+        "values": [
+          "REJECTED",
+          "SHADOW_CATALOG"
+        ]
+      }
+    },
+    {
+      "generator": "h2",
+      "rows_EXACT": 20188271,
+      "rows_sampled": 1633794,
+      "sample_pct": 8.09,
+      "parent_pct_sampled": 100.0,
+      "verdicts": {
+        "REJECTED": 1633519,
+        "INCONCLUSIVE": 274,
+        "SHADOW_CATALOG": 1
+      },
+      "action_candidates": 1,
+      "best_action_field": {
+        "field": "payload.n_methods_evaluated",
+        "card": 2,
+        "populated": 1633794,
+        "on_FAIL": 1633794,
+        "multi_action_parents": 13,
+        "values": [
+          "2",
+          "3"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": {
+        "field": "verdict",
+        "card": 3,
+        "populated": 1633794,
+        "on_FAIL": 1633794,
+        "multi_action_parents": 63,
+        "values": [
+          "INCONCLUSIVE",
+          "REJECTED",
+          "SHADOW_CATALOG"
+        ]
+      }
+    },
+    {
+      "generator": "h4",
+      "rows_EXACT": 19514614,
+      "rows_sampled": 1565941,
+      "sample_pct": 8.02,
+      "parent_pct_sampled": 100.0,
+      "verdicts": {
+        "SHADOW_CATALOG": 798931,
+        "INCONCLUSIVE": 423906,
+        "REJECTED": 343104
+      },
+      "action_candidates": 1,
+      "best_action_field": {
+        "field": "payload.n_holding",
+        "card": 4,
+        "populated": 1565941,
+        "on_FAIL": 1565941,
+        "multi_action_parents": 127,
+        "values": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": {
+        "field": "verdict",
+        "card": 3,
+        "populated": 1565941,
+        "on_FAIL": 1565941,
+        "multi_action_parents": 101,
+        "values": [
+          "INCONCLUSIVE",
+          "REJECTED",
+          "SHADOW_CATALOG"
+        ]
+      }
+    },
+    {
+      "generator": "c3",
+      "rows_EXACT": 12577024,
+      "rows_sampled": 1010404,
+      "sample_pct": 8.03,
+      "parent_pct_sampled": 100.0,
+      "verdicts": {
+        "SHADOW_CATALOG": 557853,
+        "REJECTED": 452551
+      },
+      "action_candidates": 4,
+      "best_action_field": {
+        "field": "payload.invariant_a",
+        "card": 6,
+        "populated": 1010404,
+        "on_FAIL": 452551,
+        "multi_action_parents": 7916,
+        "values": [
+          "crossing_number",
+          "determinant",
+          "nf_class_number",
+          "signature",
+          "three_genus",
+          "trace_field_class"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": {
+        "field": "verdict",
+        "card": 2,
+        "populated": 1010404,
+        "on_FAIL": 452551,
+        "multi_action_parents": 4119,
+        "values": [
+          "REJECTED",
+          "SHADOW_CATALOG"
+        ]
+      }
+    },
+    {
+      "generator": "d2",
+      "rows_EXACT": 11825535,
+      "rows_sampled": 953195,
+      "sample_pct": 8.06,
+      "parent_pct_sampled": 100.0,
+      "verdicts": {
+        "REJECTED": 582222,
+        "SHADOW_CATALOG": 370973
+      },
+      "action_candidates": 0,
+      "best_action_field": {
+        "field": "payload.band",
+        "card": 4,
+        "populated": 953195,
+        "on_FAIL": 953195,
+        "multi_action_parents": 0,
+        "values": [
+          "barely_fails",
+          "barely_survives",
+          "comfortable_failure",
+          "comfortable_survival"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": {
+        "field": "verdict",
+        "card": 2,
+        "populated": 953195,
+        "on_FAIL": 953195,
+        "multi_action_parents": 0,
+        "values": [
+          "REJECTED",
+          "SHADOW_CATALOG"
+        ]
+      }
+    },
+    {
+      "generator": "d4",
+      "rows_EXACT": 9146074,
+      "rows_sampled": 738319,
+      "sample_pct": 8.07,
+      "parent_pct_sampled": 0.0,
+      "verdicts": {
+        "REJECTED": 534224,
+        "SHADOW_CATALOG": 204095
+      },
+      "action_candidates": 0,
+      "best_action_field": {
+        "field": "payload.invariant_a",
+        "card": 7,
+        "populated": 738319,
+        "on_FAIL": 738319,
+        "multi_action_parents": 0,
+        "values": [
+          "crossing_number",
+          "determinant",
+          "hyperbolic_volume",
+          "nf_class_number",
+          "signature",
+          "three_genus",
+          "trace_field_class"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": {
+        "field": "verdict",
+        "card": 2,
+        "populated": 738319,
+        "on_FAIL": 738319,
+        "multi_action_parents": 0,
+        "values": [
+          "REJECTED",
+          "SHADOW_CATALOG"
+        ]
+      }
+    },
+    {
+      "generator": "c2",
+      "rows_EXACT": 8823897,
+      "rows_sampled": 709568,
+      "sample_pct": 8.04,
+      "parent_pct_sampled": 100.0,
+      "verdicts": {
+        "SHADOW_CATALOG": 448433,
+        "REJECTED": 261135
+      },
+      "action_candidates": 1,
+      "best_action_field": {
+        "field": "payload.truth_flipped",
+        "card": 2,
+        "populated": 709568,
+        "on_FAIL": 572568,
+        "multi_action_parents": 2729,
+        "values": [
+          "False",
+          "True"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": {
+        "field": "verdict",
+        "card": 2,
+        "populated": 709568,
+        "on_FAIL": 572568,
+        "multi_action_parents": 2729,
+        "values": [
+          "REJECTED",
+          "SHADOW_CATALOG"
+        ]
+      }
+    },
+    {
+      "generator": "c5",
+      "rows_EXACT": 8761805,
+      "rows_sampled": 703271,
+      "sample_pct": 8.03,
+      "parent_pct_sampled": 100.0,
+      "verdicts": {
+        "REJECTED": 454421,
+        "SHADOW_CATALOG": 248850
+      },
+      "action_candidates": 1,
+      "best_action_field": {
+        "field": "payload.boundary_revealed",
+        "card": 2,
+        "populated": 703271,
+        "on_FAIL": 289729,
+        "multi_action_parents": 238,
+        "values": [
+          "False",
+          "True"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": {
+        "field": "verdict",
+        "card": 2,
+        "populated": 703271,
+        "on_FAIL": 289729,
+        "multi_action_parents": 238,
+        "values": [
+          "REJECTED",
+          "SHADOW_CATALOG"
+        ]
+      }
+    },
+    {
+      "generator": "c4",
+      "rows_EXACT": 8746181,
+      "rows_sampled": 705870,
+      "sample_pct": 8.07,
+      "parent_pct_sampled": 100.0,
+      "verdicts": {
+        "SHADOW_CATALOG": 693596,
+        "REJECTED": 12274
+      },
+      "action_candidates": 1,
+      "best_action_field": {
+        "field": "payload.self_consistent",
+        "card": 2,
+        "populated": 705870,
+        "on_FAIL": 77630,
+        "multi_action_parents": 30,
+        "values": [
+          "False",
+          "True"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": {
+        "field": "kill_pattern",
+        "card": 9,
+        "populated": 11326,
+        "on_FAIL": 11326,
+        "multi_action_parents": 32,
+        "values": [
+          "c4_self_consistency_violated_abs_diff_le_3_implies_abs_diff_le_4",
+          "c4_self_consistency_violated_abs_diff_le_3_implies_abs_diff_le_5",
+          "c4_self_consistency_violated_abs_diff_le_3_implies_abs_diff_le_8",
+          "c4_self_consistency_violated_equal_implies_abs_diff_le_1",
+          "c4_self_consistency_violated_equal_implies_abs_diff_le_2",
+          "c4_self_consistency_violated_equal_implies_abs_diff_le_3",
+          "c4_self_consistency_violated_equal_implies_abs_diff_le_5",
+          "c4_self_consistency_violated_equal_implies_abs_diff_le_8"
+        ]
+      }
+    },
+    {
+      "generator": "g3",
+      "rows_EXACT": 400002,
+      "rows_sampled": 41885,
+      "sample_pct": 10.47,
+      "parent_pct_sampled": 0.0,
+      "verdicts": {
+        "SHADOW_CATALOG": 41885
+      },
+      "action_candidates": 0,
+      "best_action_field": null,
+      "best_outcome_like_field_BLOCKED": null
+    },
+    {
+      "generator": "d1",
+      "rows_EXACT": 137760,
+      "rows_sampled": 20355,
+      "sample_pct": 14.78,
+      "parent_pct_sampled": 100.0,
+      "verdicts": {
+        "SHADOW_CATALOG": 16047,
+        "REJECTED": 4308
+      },
+      "action_candidates": 1,
+      "best_action_field": {
+        "field": "payload.value_a",
+        "card": 30,
+        "populated": 20355,
+        "on_FAIL": 20355,
+        "multi_action_parents": 1455,
+        "values": [
+          "-2",
+          "-4",
+          "-6",
+          "-8",
+          "0",
+          "1",
+          "10",
+          "11"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": {
+        "field": "verdict",
+        "card": 2,
+        "populated": 20355,
+        "on_FAIL": 20355,
+        "multi_action_parents": 353,
+        "values": [
+          "REJECTED",
+          "SHADOW_CATALOG"
+        ]
+      }
+    },
+    {
+      "generator": "b2",
+      "rows_EXACT": 90887,
+      "rows_sampled": 30096,
+      "sample_pct": 33.11,
+      "parent_pct_sampled": 0.0,
+      "verdicts": {
+        "SHADOW_CATALOG": 19486,
+        "REJECTED": 10610
+      },
+      "action_candidates": 0,
+      "best_action_field": {
+        "field": "payload.commutes",
+        "card": 2,
+        "populated": 30096,
+        "on_FAIL": 30096,
+        "multi_action_parents": 0,
+        "values": [
+          "False",
+          "True"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": {
+        "field": "verdict",
+        "card": 2,
+        "populated": 30096,
+        "on_FAIL": 30096,
+        "multi_action_parents": 0,
+        "values": [
+          "REJECTED",
+          "SHADOW_CATALOG"
+        ]
+      }
+    },
+    {
+      "generator": "a5",
+      "rows_EXACT": 80821,
+      "rows_sampled": 13623,
+      "sample_pct": 16.86,
+      "parent_pct_sampled": 0.0,
+      "verdicts": {
+        "INCONCLUSIVE": 10632,
+        "REJECTED": 2691,
+        "SHADOW_CATALOG": 300
+      },
+      "action_candidates": 0,
+      "best_action_field": {
+        "field": "payload.ec_invariant",
+        "card": 4,
+        "populated": 13623,
+        "on_FAIL": 13623,
+        "multi_action_parents": 0,
+        "values": [
+          "conductor",
+          "rank",
+          "tamagawa_product",
+          "torsion"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": {
+        "field": "verdict",
+        "card": 3,
+        "populated": 13623,
+        "on_FAIL": 13623,
+        "multi_action_parents": 0,
+        "values": [
+          "INCONCLUSIVE",
+          "REJECTED",
+          "SHADOW_CATALOG"
+        ]
+      }
+    },
+    {
+      "generator": "k1",
+      "rows_EXACT": 49524,
+      "rows_sampled": 18743,
+      "sample_pct": 37.85,
+      "parent_pct_sampled": 0.0,
+      "verdicts": {
+        "UNVERIFIED": 18743
+      },
+      "action_candidates": 0,
+      "best_action_field": {
+        "field": "payload.expected_target_type",
+        "card": 6,
+        "populated": 18743,
+        "on_FAIL": 18743,
+        "multi_action_parents": 0,
+        "values": [
+          "N",
+          "R",
+          "Z",
+          "Z/2Z",
+          "Z/3Z",
+          "Z/pZ"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": null
+    },
+    {
+      "generator": "e1",
+      "rows_EXACT": 44869,
+      "rows_sampled": 10303,
+      "sample_pct": 22.96,
+      "parent_pct_sampled": 0.0,
+      "verdicts": {
+        "UNVERIFIED": 10303
+      },
+      "action_candidates": 0,
+      "best_action_field": {
+        "field": "payload.source_file",
+        "card": 5,
+        "populated": 288,
+        "on_FAIL": 288,
+        "multi_action_parents": 0,
+        "values": [
+          "F:\\Prometheus\\aporia\\docs\\deep_research_batch1.md",
+          "F:\\Prometheus\\aporia\\docs\\deep_research_batch11_seeds.md",
+          "F:\\Prometheus\\aporia\\docs\\deep_research_batch2.md",
+          "F:\\Prometheus\\aporia\\docs\\deep_research_batch3.md",
+          "F:\\Prometheus\\aporia\\docs\\deep_research_batch4.md"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": null
+    },
+    {
+      "generator": "g2",
+      "rows_EXACT": 39000,
+      "rows_sampled": 15265,
+      "sample_pct": 39.14,
+      "parent_pct_sampled": 0.0,
+      "verdicts": {
+        "UNVERIFIED": 15265
+      },
+      "action_candidates": 0,
+      "best_action_field": {
+        "field": "payload.rank_known",
+        "card": 3,
+        "populated": 15265,
+        "on_FAIL": 15265,
+        "multi_action_parents": 0,
+        "values": [
+          "0",
+          "1",
+          "2"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": null
+    },
+    {
+      "generator": "b1",
+      "rows_EXACT": 36180,
+      "rows_sampled": 22890,
+      "sample_pct": 63.27,
+      "parent_pct_sampled": 0.0,
+      "verdicts": {
+        "SHADOW_CATALOG": 22890
+      },
+      "action_candidates": 0,
+      "best_action_field": {
+        "field": "payload.expected_sign_flip",
+        "card": 2,
+        "populated": 22890,
+        "on_FAIL": 22890,
+        "multi_action_parents": 0,
+        "values": [
+          "False",
+          "True"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": {
+        "field": "payload.actual_value",
+        "card": 31,
+        "populated": 22890,
+        "on_FAIL": 22890,
+        "multi_action_parents": 0,
+        "values": [
+          "-2",
+          "-4",
+          "-6",
+          "-8",
+          "0",
+          "1",
+          "10",
+          "11"
+        ]
+      }
+    },
+    {
+      "generator": "e3",
+      "rows_EXACT": 32860,
+      "rows_sampled": 22942,
+      "sample_pct": 69.82,
+      "parent_pct_sampled": 0.0,
+      "verdicts": {
+        "SHADOW_CATALOG": 13278,
+        "REJECTED": 9664
+      },
+      "action_candidates": 0,
+      "best_action_field": {
+        "field": "payload.growth_class",
+        "card": 5,
+        "populated": 22942,
+        "on_FAIL": 9664,
+        "multi_action_parents": 0,
+        "values": [
+          "exponential",
+          "factorial",
+          "linear",
+          "other",
+          "polynomial"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": {
+        "field": "verdict",
+        "card": 2,
+        "populated": 22942,
+        "on_FAIL": 9664,
+        "multi_action_parents": 0,
+        "values": [
+          "REJECTED",
+          "SHADOW_CATALOG"
+        ]
+      }
+    },
+    {
+      "generator": "b5",
+      "rows_EXACT": 31560,
+      "rows_sampled": 16801,
+      "sample_pct": 53.24,
+      "parent_pct_sampled": 0.0,
+      "verdicts": {
+        "SHADOW_CATALOG": 16352,
+        "REJECTED": 449
+      },
+      "action_candidates": 0,
+      "best_action_field": {
+        "field": "payload.catalog",
+        "card": 2,
+        "populated": 16801,
+        "on_FAIL": 449,
+        "multi_action_parents": 0,
+        "values": [
+          "ec",
+          "knot"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": {
+        "field": "verdict",
+        "card": 2,
+        "populated": 16801,
+        "on_FAIL": 449,
+        "multi_action_parents": 0,
+        "values": [
+          "REJECTED",
+          "SHADOW_CATALOG"
+        ]
+      }
+    },
+    {
+      "generator": "b3",
+      "rows_EXACT": 15756,
+      "rows_sampled": 13598,
+      "sample_pct": 86.3,
+      "parent_pct_sampled": 0.0,
+      "verdicts": {
+        "REJECTED": 7757,
+        "SHADOW_CATALOG": 5841
+      },
+      "action_candidates": 0,
+      "best_action_field": {
+        "field": "payload.operator",
+        "card": 6,
+        "populated": 13598,
+        "on_FAIL": 13598,
+        "multi_action_parents": 0,
+        "values": [
+          "abs",
+          "identity",
+          "log2_floor",
+          "mod_3",
+          "neg",
+          "sq_mod_100"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": {
+        "field": "verdict",
+        "card": 2,
+        "populated": 13598,
+        "on_FAIL": 13598,
+        "multi_action_parents": 0,
+        "values": [
+          "REJECTED",
+          "SHADOW_CATALOG"
+        ]
+      }
+    },
+    {
+      "generator": "b4",
+      "rows_EXACT": 15756,
+      "rows_sampled": 13454,
+      "sample_pct": 85.39,
+      "parent_pct_sampled": 0.0,
+      "verdicts": {
+        "REJECTED": 9880,
+        "SHADOW_CATALOG": 3574
+      },
+      "action_candidates": 0,
+      "best_action_field": {
+        "field": "payload.is_fixed_point",
+        "card": 2,
+        "populated": 13454,
+        "on_FAIL": 13454,
+        "multi_action_parents": 0,
+        "values": [
+          "False",
+          "True"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": {
+        "field": "verdict",
+        "card": 2,
+        "populated": 13454,
+        "on_FAIL": 13454,
+        "multi_action_parents": 0,
+        "values": [
+          "REJECTED",
+          "SHADOW_CATALOG"
+        ]
+      }
+    },
+    {
+      "generator": "n1",
+      "rows_EXACT": 9004,
+      "rows_sampled": 9004,
+      "sample_pct": 100.0,
+      "parent_pct_sampled": 0.0,
+      "verdicts": {
+        "UNVERIFIED": 9004
+      },
+      "action_candidates": 0,
+      "best_action_field": {
+        "field": "payload.verifier_a",
+        "card": 4,
+        "populated": 9004,
+        "on_FAIL": 9004,
+        "multi_action_parents": 0,
+        "values": [
+          "exact_parity",
+          "kill_pattern_classifier_v1",
+          "polyfit_dps_15",
+          "sigma_kernel"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": {
+        "field": "payload.disagreement_axis",
+        "card": 6,
+        "populated": 9004,
+        "on_FAIL": 9004,
+        "multi_action_parents": 0,
+        "values": [
+          "exact_parity_vs_mod_3",
+          "exact_parity_vs_threshold_K10",
+          "exact_parity_vs_threshold_K3",
+          "kill_pattern_attribution",
+          "precision_resolution_dependent",
+          "verdict_disagreement"
+        ]
+      }
+    },
+    {
+      "generator": "e2",
+      "rows_EXACT": 5179,
+      "rows_sampled": 5179,
+      "sample_pct": 100.0,
+      "parent_pct_sampled": 0.0,
+      "verdicts": {
+        "UNVERIFIED": 5179
+      },
+      "action_candidates": 0,
+      "best_action_field": null,
+      "best_outcome_like_field_BLOCKED": null
+    },
+    {
+      "generator": "g1",
+      "rows_EXACT": 4784,
+      "rows_sampled": 4735,
+      "sample_pct": 98.98,
+      "parent_pct_sampled": 0.0,
+      "verdicts": {
+        "REJECTED": 2777,
+        "SHADOW_CATALOG": 1958
+      },
+      "action_candidates": 0,
+      "best_action_field": {
+        "field": "payload.invariant",
+        "card": 4,
+        "populated": 4735,
+        "on_FAIL": 2777,
+        "multi_action_parents": 0,
+        "values": [
+          "conductor",
+          "rank",
+          "tamagawa_product",
+          "torsion"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": {
+        "field": "verdict",
+        "card": 2,
+        "populated": 4735,
+        "on_FAIL": 2777,
+        "multi_action_parents": 0,
+        "values": [
+          "REJECTED",
+          "SHADOW_CATALOG"
+        ]
+      }
+    },
+    {
+      "generator": "s1",
+      "rows_EXACT": 4506,
+      "rows_sampled": 4506,
+      "sample_pct": 100.0,
+      "parent_pct_sampled": 0.0,
+      "verdicts": {
+        "SHADOW_CATALOG": 4305,
+        "REJECTED": 193,
+        "UNVERIFIED": 8
+      },
+      "action_candidates": 0,
+      "best_action_field": {
+        "field": "payload.invariant",
+        "card": 7,
+        "populated": 4506,
+        "on_FAIL": 201,
+        "multi_action_parents": 0,
+        "values": [
+          "abs(signature)",
+          "conductor",
+          "determinant",
+          "rank",
+          "tamagawa_product",
+          "three_genus",
+          "|signature|"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": {
+        "field": "verdict",
+        "card": 3,
+        "populated": 4506,
+        "on_FAIL": 201,
+        "multi_action_parents": 0,
+        "values": [
+          "REJECTED",
+          "SHADOW_CATALOG",
+          "UNVERIFIED"
+        ]
+      }
+    },
+    {
+      "generator": "e4",
+      "rows_EXACT": 3728,
+      "rows_sampled": 3728,
+      "sample_pct": 100.0,
+      "parent_pct_sampled": 0.0,
+      "verdicts": {
+        "UNVERIFIED": 3728
+      },
+      "action_candidates": 0,
+      "best_action_field": {
+        "field": "payload.category",
+        "card": 21,
+        "populated": 3728,
+        "on_FAIL": 3728,
+        "multi_action_parents": 0,
+        "values": [
+          "ag",
+          "alg",
+          "artin",
+          "av",
+          "character",
+          "cmf",
+          "curve",
+          "dq"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": null
+    },
+    {
+      "generator": "w1",
+      "rows_EXACT": 3172,
+      "rows_sampled": 3172,
+      "sample_pct": 100.0,
+      "parent_pct_sampled": 0.0,
+      "verdicts": {
+        "SHADOW_CATALOG": 2324,
+        "REJECTED": 840,
+        "UNVERIFIED": 8
+      },
+      "action_candidates": 0,
+      "best_action_field": {
+        "field": "payload.operation",
+        "card": 8,
+        "populated": 3172,
+        "on_FAIL": 3172,
+        "multi_action_parents": 0,
+        "values": [
+          "add_1_to_crossings",
+          "add_1_to_rank",
+          "connect sum (K_1 # K_2)",
+          "double_conductor",
+          "double_torsion",
+          "isogeny",
+          "quadratic twist by squarefree d coprime to N",
+          "satellite operation (Whitehead double)"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": {
+        "field": "verdict",
+        "card": 3,
+        "populated": 3172,
+        "on_FAIL": 3172,
+        "multi_action_parents": 0,
+        "values": [
+          "REJECTED",
+          "SHADOW_CATALOG",
+          "UNVERIFIED"
+        ]
+      }
+    },
+    {
+      "generator": "t1",
+      "rows_EXACT": 2778,
+      "rows_sampled": 2778,
+      "sample_pct": 100.0,
+      "parent_pct_sampled": 0.0,
+      "verdicts": {
+        "SHADOW_CATALOG": 2772,
+        "UNVERIFIED": 6
+      },
+      "action_candidates": 0,
+      "best_action_field": {
+        "field": "payload.claim_id",
+        "card": 3,
+        "populated": 6,
+        "on_FAIL": 6,
+        "multi_action_parents": 0,
+        "values": [
+          "ec_rank_to_l_value_to_torsion_bound",
+          "knot_alex_to_homology_to_branched_cover",
+          "knot_to_ec_via_nf"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": {
+        "field": "verdict",
+        "card": 2,
+        "populated": 2778,
+        "on_FAIL": 6,
+        "multi_action_parents": 0,
+        "values": [
+          "SHADOW_CATALOG",
+          "UNVERIFIED"
+        ]
+      }
+    },
+    {
+      "generator": "z1",
+      "rows_EXACT": 2208,
+      "rows_sampled": 2208,
+      "sample_pct": 100.0,
+      "parent_pct_sampled": 0.0,
+      "verdicts": {
+        "REJECTED": 1298,
+        "SHADOW_CATALOG": 902,
+        "UNVERIFIED": 8
+      },
+      "action_candidates": 0,
+      "best_action_field": {
+        "field": "payload.a_then_b",
+        "card": 9,
+        "populated": 2200,
+        "on_FAIL": 2200,
+        "multi_action_parents": 0,
+        "values": [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": {
+        "field": "verdict",
+        "card": 3,
+        "populated": 2208,
+        "on_FAIL": 2208,
+        "multi_action_parents": 0,
+        "values": [
+          "REJECTED",
+          "SHADOW_CATALOG",
+          "UNVERIFIED"
+        ]
+      }
+    },
+    {
+      "generator": "e5",
+      "rows_EXACT": 1733,
+      "rows_sampled": 1733,
+      "sample_pct": 100.0,
+      "parent_pct_sampled": 0.0,
+      "verdicts": {
+        "UNVERIFIED": 1733
+      },
+      "action_candidates": 0,
+      "best_action_field": {
+        "field": "payload.claim_text",
+        "card": 17,
+        "populated": 240,
+        "on_FAIL": 240,
+        "multi_action_parents": 0,
+        "values": [
+          "conjecture about Jacobians of curves, proved by Michel Raynaud.",
+          "conjecture about reductive groups, now called Haboush's theorem.",
+          "conjecture in the 1960s with the help of machine computation.",
+          "conjecture is a claim in algebraic topology.",
+          "conjecture is an unproven statement in number theory.",
+          "conjecture was formulated by James E.",
+          "conjectures in mathematics by David Mumford.",
+          "conjectures such as the twin prime conjecture."
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": null
+    },
+    {
+      "generator": "p1",
+      "rows_EXACT": 1388,
+      "rows_sampled": 1388,
+      "sample_pct": 100.0,
+      "parent_pct_sampled": 0.0,
+      "verdicts": {
+        "REJECTED": 1300,
+        "SHADOW_CATALOG": 80,
+        "UNVERIFIED": 8
+      },
+      "action_candidates": 0,
+      "best_action_field": {
+        "field": "payload.chain_id",
+        "card": 6,
+        "populated": 1388,
+        "on_FAIL": 1388,
+        "multi_action_parents": 0,
+        "values": [
+          "ec_high_rank_implies_complex_l_function",
+          "ec_torsion_large_implies_small_conductor",
+          "knot_amphichiral_implies_signature_zero",
+          "knot_genus_3_implies_alexander_degree_6",
+          "knot_low_crossings_implies_simple_invariants",
+          "prime_conductor_implies_squarefree_discriminant"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": {
+        "field": "verdict",
+        "card": 3,
+        "populated": 1388,
+        "on_FAIL": 1388,
+        "multi_action_parents": 0,
+        "values": [
+          "REJECTED",
+          "SHADOW_CATALOG",
+          "UNVERIFIED"
+        ]
+      }
+    },
+    {
+      "generator": "l2",
+      "rows_EXACT": 1128,
+      "rows_sampled": 1128,
+      "sample_pct": 100.0,
+      "parent_pct_sampled": 0.0,
+      "verdicts": {
+        "UNVERIFIED": 1128
+      },
+      "action_candidates": 0,
+      "best_action_field": {
+        "field": "payload.skeleton_id",
+        "card": 8,
+        "populated": 1128,
+        "on_FAIL": 1128,
+        "multi_action_parents": 0,
+        "values": [
+          "ec_l_function_holomorphic",
+          "ec_rank_at_least_lemma",
+          "ec_torsion_finite",
+          "ec_torsion_size_lemma",
+          "knot_alexander_polynomial_at_one",
+          "knot_determinant_lemma",
+          "knot_signature_lemma",
+          "prime_irreducible"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": null
+    },
+    {
+      "generator": "v1",
+      "rows_EXACT": 1092,
+      "rows_sampled": 1092,
+      "sample_pct": 100.0,
+      "parent_pct_sampled": 0.0,
+      "verdicts": {
+        "SHADOW_CATALOG": 654,
+        "REJECTED": 432,
+        "UNVERIFIED": 6
+      },
+      "action_candidates": 0,
+      "best_action_field": {
+        "field": "payload.property",
+        "card": 7,
+        "populated": 1092,
+        "on_FAIL": 1092,
+        "multi_action_parents": 0,
+        "values": [
+          "L(E, 1) > 0",
+          "conductor < 1000",
+          "rank < 3",
+          "rank \u2265 3",
+          "signature \u2260 0",
+          "three_genus \u2264 2",
+          "|det| \u2264 20"
+        ]
+      },
+      "best_outcome_like_field_BLOCKED": {
+        "field": "verdict",
+        "card": 3,
+        "populated": 1092,
+        "on_FAIL": 1092,
+        "multi_action_parents": 0,
+        "values": [
+          "REJECTED",
+          "SHADOW_CATALOG",
+          "UNVERIFIED"
+        ]
+      }
+    }
+  ],
+  "qualifiers": [
+    "d3",
+    "c1",
+    "h1",
+    "h2",
+    "h4",
+    "c3",
+    "c2",
+    "c5",
+    "c4",
+    "d1"
+  ],
+  "near_miss": [
+    "a3",
+    "a1",
+    "a2",
+    "f4",
+    "f3",
+    "f2",
+    "g5",
+    "f1",
+    "a4",
+    "g4",
+    "d2",
+    "d4",
+    "b2",
+    "a5",
+    "k1",
+    "e1",
+    "g2",
+    "b1",
+    "e3",
+    "b5",
+    "b3",
+    "b4",
+    "n1",
+    "g1",
+    "s1",
+    "e4",
+    "w1",
+    "t1",
+    "z1",
+    "e5",
+    "p1",
+    "l2",
+    "v1"
+  ],
+  "kill_rule": "c1 as sole qualifier => the corpus-is-spent verdict is earned",
+  "kill_rule_directionality": "multi-action-parent counts are LOWER BOUNDS (in-window adjacency only); a qualifier found is proven, a qualifier absent is not disproven",
+  "verdict": "NOT-EARNED"
+}
