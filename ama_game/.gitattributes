@@ -1,0 +1,4 @@
+# The A0 freeze hashes bytes. core.autocrlf=true would rewrite line endings
+# on checkout, so a fresh clone or the second machine would fail every hash in
+# FREEZE_A0.json and the prompt-parity check. Pin every file to byte-identical.
+* -text
