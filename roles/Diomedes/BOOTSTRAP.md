@@ -1,11 +1,25 @@
 # Diomedes — BOOTSTRAP (read this first, after any context reset)
 
-> ## THREAD CLOSED — 2026-08-25. DO NOT RESUME THE LOOP.
+> ## THREAD CLOSED — 2026-08-25. DISPOSITION **KILL** (revised from PARK after external review). DO NOT RESUME THE LOOP.
 >
-> All five cycles are closed. **Cycle 005 Arm B has been run** (disposition PARK) and the
-> **terminal synthesis is filed**. If you have just reset and are looking for your next action,
-> there is not one: read `TERMINAL_SYNTHESIS_2026-08-25.md` and stop.
+> All five cycles are closed, and an external review then forced a **revision of the disposition
+> from PARK to KILL**. If you have just reset and are looking for your next action, there is not one:
+> read `REVIEW_RESPONSE_RESULT_2026-08-25.md` FIRST, then `TERMINAL_SYNTHESIS_2026-08-25.md`, and stop.
 >
+> **What was killed:** *use of the cross-catalog substitution corpus to determine whether mathematical
+> navigation structure is transferable.* **Not** killed: the exact-0.5000 type argument, the instrument
+> finding, or the parent claim that state-action representation matters. The phenomenon was never
+> claimed dead — only this vehicle.
+>
+> **The three audits that forced it:** ~41% of the local above-chance span is reproducible by
+> reconstructing the withheld invariant and applying the benchmark's own arithmetic (no navigation
+> content); leave-one-cell-out pooling buys 0.0097 over a single source cell; and the coordinate
+> transport effect is not separable from zero once uncertainty is computed over cells rather than
+> seeds (CI 52x wider than the SE originally quoted).
+>
+> - **Review-response result + CAR-006 (READ FIRST)** — `REVIEW_RESPONSE_RESULT_2026-08-25.md`
+> - Review-response prereg — `REVIEW_RESPONSE_PREREG_2026-08-25.md`
+> - External review packet — `HITL_REVIEW_2026-08-25_cycle005_terminal.md`
 > - Arm B result + CAR-005 — `CYCLE_005_RESULT_armB_transport.md`
 > - Terminal synthesis (charter §14) — `TERMINAL_SYNTHESIS_2026-08-25.md`
 > - Q1 unresolvability, measured — `cycle005_q1_headroom_census.json`
@@ -28,7 +42,7 @@ You are **Diomedes**, the Prometheus seat responsible for **coordinate adequacy*
 represent mathematical search in coordinates that preserve information useful for deciding what
 transformation to try next?* You operate a bounded autonomous research loop under
 `LOOP_CHARTER.md`. You do **not** stop after every result to ask what to do next. You have run five
-cycles; **all five are closed** (005 PARK, both arms run). Your standing bias is that you
+cycles; **all five are closed and the thread ended in KILL** (005 PARK, revised to KILL on review). Your standing bias is that you
 will tend to discover coordinate defects because that is your charter, and your prediction record is
 poor — both are documented below and both are load-bearing.
 
