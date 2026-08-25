@@ -1,0 +1,56 @@
+{
+  "population": {
+    "generator": "c1",
+    "relation": "equal_mod_2",
+    "rows_EXACT": 7062044,
+    "rows_without_parent_pointer": 0,
+    "distinct_parents": 3060875,
+    "parents_with_BOTH_actions": 932852,
+    "parents_DIVERGENT (both actions, different outcome)": 383800
+  },
+  "preregistered_claim": {
+    "rows": 411580,
+    "parent_states": 222715,
+    "both_actions": 47389,
+    "divergent": 27370
+  },
+  "ratios_measured_over_preregistered": {
+    "rows": 17.16,
+    "parents": 13.74,
+    "both_actions": 19.68,
+    "divergent": 14.02
+  },
+  "action_distribution": {
+    "b": 3630073,
+    "a": 3431971
+  },
+  "outcome_distribution": {
+    "False": 3238748,
+    "True": 3823296
+  },
+  "action_x_outcome": {
+    "a|holds=False": 1560436,
+    "a|holds=True": 1871535,
+    "b|holds=False": 1678312,
+    "b|holds=True": 1951761
+  },
+  "attainable_range": {
+    "floor_majority_action_rate": 0.514026,
+    "note": "ceiling (within-state-cell majority) requires resolved PARENT states; computed only after parent resolution is confirmed"
+  },
+  "degeneracy": {
+    "outcome_constant": false,
+    "action_constant": false,
+    "divergent_subset_empty": false,
+    "state_fields_populated": {
+      "catalog_a": 6415589,
+      "invariant_a": 7062044,
+      "object_a": 7062044,
+      "value_a": 7062044,
+      "catalog_b": 6415589,
+      "invariant_b": 7062044,
+      "object_b": 7062044,
+      "value_b": 7062044
+    }
+  }
+}
