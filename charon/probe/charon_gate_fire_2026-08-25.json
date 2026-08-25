@@ -1,0 +1,104 @@
+{
+  "probe": "charon independent gate-fire",
+  "target": "ergon/probe/packet_invariants.py",
+  "n_worlds": 9,
+  "holes": 0,
+  "worlds": [
+    {
+      "world": "W0 clean packets pass (positive control)",
+      "clean_baseline": true,
+      "fired": 0,
+      "n": 40,
+      "caught_by": [],
+      "verdict": "PASS"
+    },
+    {
+      "world": "W1 per-arm lead line (the historical LABEL 1)",
+      "clean_baseline": true,
+      "fired": 40,
+      "n": 40,
+      "caught_by": [
+        "nontreatment_identical_across_arms",
+        "slug_pool_shared",
+        "sparsity_arm_invariant",
+        "template_conformance"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "world": "W2 per-arm trailing suffix (4.1's claimed hole)",
+      "clean_baseline": true,
+      "fired": 40,
+      "n": 40,
+      "caught_by": [
+        "base_identical",
+        "nontreatment_identical_across_arms",
+        "sparsity_arm_invariant"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "world": "W3 arm-INVARIANT text inside residue must NOT fire (over-sensitivity check)",
+      "clean_baseline": true,
+      "fired": 0,
+      "n": 40,
+      "caught_by": [],
+      "verdict": "PASS"
+    },
+    {
+      "world": "W3b arm-invariant text AFTER the shared base SHOULD fire (breaks base identity)",
+      "clean_baseline": true,
+      "fired": 40,
+      "n": 40,
+      "caught_by": [
+        "base_identical"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "world": "W4 one trailing space on one arm",
+      "clean_baseline": true,
+      "fired": 40,
+      "n": 40,
+      "caught_by": [
+        "base_identical",
+        "nontreatment_identical_across_arms",
+        "sparsity_arm_invariant"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "world": "W5 per-arm homoglyph swap (length-preserving, novel class)",
+      "clean_baseline": true,
+      "fired": 40,
+      "n": 40,
+      "caught_by": [
+        "nontreatment_identical_across_arms",
+        "slug_pool_shared",
+        "sparsity_arm_invariant",
+        "template_conformance"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "world": "W6 per-arm zero-width space (invisible to human review)",
+      "clean_baseline": true,
+      "fired": 40,
+      "n": 40,
+      "caught_by": [
+        "base_identical",
+        "nontreatment_identical_across_arms",
+        "sparsity_arm_invariant"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "world": "W7 replanted disjoint slug bands",
+      "clean_baseline": true,
+      "fired": true,
+      "n": 40,
+      "verdict": "PASS"
+    }
+  ],
+  "verdict": "GATES FIRE \u2014 no hole found by this probe"
+}
