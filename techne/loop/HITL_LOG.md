@@ -2329,3 +2329,102 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      first cycle in which a frozen control blocked anything. `adjudication_coverage` **3 of 5**,
      reported below 1.0 because the two that fall short are shown as HELD rather than relabelled.
      `yield` **4 of 5 decision-changing.**
+
+
+## Cycle 062 (2026-08-25) — CAMPAIGN CYCLE 3 OF 20. The reviewer's attack experiments, run
+
+440. **THE REVIEWER'S DIAGNOSIS IS ONTOLOGY CAPTURE, AND I ACCEPTED IT BEFORE MEASURING
+     ANYTHING.** *"Techne is becoming better at classifying its own mistakes, but because Techne
+     owns the categories, a defect can migrate from failure -> known failure -> deliberate red ->
+     not an unaddressed defect without anything in the world improving."* Accepted in the
+     pre-registration, because it is a claim about the structure of my reporting rather than
+     about a number. **Five points adopted, one amended, one adopted-and-deferred. Nothing
+     rejected.**
+441. **EXPERIMENT A KILLED BOTH OF MY PRIOR CHARACTERISATIONS OF THE PROMOTION GATE. 5 OF 5.**
+     Five synthetic records spanning the boundary — valid+independent, not-independent, no
+     adjudication, independent-but-below-strength, contract/population mismatch — decided
+     correctly: **1 ACCEPT, 4 REJECT, both outcome classes present.** Cycle 060 called the gate
+     toothless from eight ACCEPTED examples and zero negative controls; cycle 061 called it
+     honest-label-dependent from two accidental blocks. **Neither cycle had ever handed it
+     something broken on purpose.**
+442. **THE REVIEWER'S MECHANICAL RULE, WHICH IS THE BEST THING IN THE REVIEW: NO GLOBAL CLAIM
+     ABOUT A GATE FROM A SINGLE OUTCOME CLASS.** One negative control would have killed
+     "toothless" in seconds instead of letting it survive a cycle and ship in an external packet.
+443. **EXPERIMENT B FOUND WHAT THE GATE ACTUALLY IS, AND IT IS A THIRD ANSWER BETTER THAN EITHER
+     OF MINE: A PROVENANCE GATE, NOT A TRUTH GATE.** Eight epistemic mutations, **sensitivity
+     0.75**, two survivors: **a claim whose measured VALUE is corrupted by six orders of
+     magnitude is still PROMOTABLE**, as is one whose declared ROW COUNT is off by a factor of a
+     hundred. It validates how a claim was arrived at and is blind by construction to what it
+     says. **#17 SUPERSEDED.**
+444. **THE GAP THIS LEAVES IS NOW PRECISE:** nothing in the promotion path checks that the number
+     is the number the recorded command produces. That is the largest of the deferred repairs.
+445. **EXPERIMENT C DETONATED MY OWN HEADLINE, EXACTLY AS THE REVIEWER PREDICTED. 47 OF 47.**
+     Under his single question — *is something presently false, unavailable, non-reproducible or
+     knowingly corrupted in the tested system?* — **47 YES, 0 NO.** "Zero real defects" is
+     replaced by the narrow claim he offered: **zero NEWLY DISCOVERED mathematical-code defects
+     caused these 47 reds.**
+446. **AND THE PARTITION ITSELF WAS THE PROBLEM.** Cycle 061 used MUTUALLY EXCLUSIVE buckets, so
+     each node got the one label describing its immediate mechanism and everything else about it
+     vanished. Replaced by **seven orthogonal dimensions**, declared ONCE and applied uniformly to
+     all 47, so a case can be `defect_present` AND `known_before_cycle` AND
+     `repair_blocked_by_missing_data` at once and none cancels the others.
+447. **DOCTRINE ADOPTED: DISCOVERY STATE AND WORLD STATE MAY NEVER SHARE A FIELD.** "Previously
+     diagnosed" is discovery state. "Those 48 volumes are still 0.0" is world state. The
+     reviewer's sentence, recorded verbatim because it names this program's largest exposure:
+     ***"Otherwise Prometheus can asymptotically become immaculate by learning all its
+     defects."***
+448. **D_open = 47: D_new 5, D_known_unrepaired 42. REPAIRS THIS CYCLE: ZERO.** This is the number
+     every prior framing was hiding inside the word "known". **Only repair may reduce the second
+     term; classification may not.** Committed to reporting it every cycle from here.
+449. **D0 PREDICTION 2 FALSIFIED, AND IT IS A NEW ERROR SHAPE — FINDING #20.** I predicted at
+     least 4 of 8 mutation families would leave the decision unchanged; two did. **But the eight
+     families were fixed in the SAME document as the prediction, and only two of them touch
+     fields the gate reads nothing from — so the prediction was arithmetically UNSATISFIABLE
+     given the instrument declared beside it.** The stated mechanism was right and the count
+     attached to it was impossible. Not "answered a different question", not "wrong population":
+     **a prediction inconsistent with its own pre-registered instrument.** First of its shape.
+450. **FINDING #21: THE `Adjudicator` ORDERING KNEW SOMETHING THE FIELD NEVER ENFORCED.** Its
+     docstring rates `DIFFERENTIAL_TEST` weak *"if implementations share an assumption"* — and
+     nothing anywhere checks whether they do. Same shape as #17: a caveat in prose sitting beside
+     an unenforced boolean.
+451. **MY ONE AMENDMENT RATHER THAN AN ADOPTION, AND IT IS ABOUT DIRECTION.** The reviewer read 39
+     missing-dependency reds as potentially 39 deployment defects. Measured: they trace to **7
+     named absent packages (8 capability families, counting the MIP backend that raises
+     ValueError and escapes the extractor) across 13 test files.** Reading 39 as 39 defects
+     inflates in the OPPOSITE direction from my own headline. The honest pair is **8 unavailable
+     capabilities producing 39 red symptoms**, quoted together. **His conditional resolves against
+     me, though:** `techne/inventory.json` advertises these tools as available, so
+     `capability_claim_affected` is TRUE for **41 of 47**.
+452. **ESCAPE RATE RETIRED AS A SINGLE NUMBER AND SPLIT, AS REQUIRED.** `E_self` **2** (cycle
+     060's #17, falsified in 061; cycle 061's headline, detonated in 062 — twice, both by me, one
+     cycle later). `E_mechanical` **0** — **no frozen control has ever caught an invalid claim of
+     mine.** `E_external` **1** — the reviewer identified ontology capture before I measured it,
+     the first non-self escape detection in the campaign. `E_latent` **unidentified**.
+453. **held_rate 3 of 6, all three blocks CORRECT, 0 false blocks.** Campaign cumulative: **5
+     blocks in 19 claims, every one correct.** adjudication_coverage 3 of 6, with nothing
+     relabelled to clear the bar. yield 5 of 6.
+454. **JAMES — #424, AND IT IS THE ONE THING I CANNOT DO FOR MYSELF.** The campaign's most
+     valuable remaining experiment is the reviewer's blinded canary harness: corrupt a small
+     fraction of my records after authorship — wrong population id, stale authority value,
+     swapped denominator, plausible numeric perturbation — and measure what fraction I catch.
+     **A harness I write and seed is one I can anticipate.** I need two things from outside me:
+     **(a) a seed I do not choose**, and **(b) per the sealed-holdout design, ONE corruption
+     family withheld from me entirely until the campaign ends.** I can build the harness; I
+     cannot hold the seal. Without it `E_latent` stays unidentified for eighteen more cycles and
+     the campaign's headline metric remains unfalsifiable from the inside — which the reviewer
+     correctly identified as its central weakness.
+455. **JAMES — #425, THE DANGEROUS NULL, ADOPTED AS A STANDING MONITORING COMMITMENT.** The
+     reviewer's sharpest warning is that if I simply stop proposing anything that embarrasses my
+     controls, escape rate falls while nothing improves — *"the mutation engine has learned to
+     produce specimens that look healthy to the selector it lives with."* From cycle 063 I will
+     report every cycle: **raw candidate error rate BEFORE controls; fraction caught BY controls;
+     and claim-difficulty composition**, so `yield` cannot be held steady by harvesting safer
+     territory. **The result I am now aiming for is NOT fewer mistakes. It is continuing to make
+     plausible mistakes that machinery I did not anticipate catches.**
+456. **SEVEN REPAIRS DESIGNED AND DEFERRED PAST CYCLE 20, PER RULE 1**, written now so they land
+     as pre-registered fixes rather than retrofits: an `INSUFFICIENT_CONTRAST` refusal; executable
+     adjudication; provenance-DAG overlap between generator and adjudicator; method-family
+     identifiers so `numpy.roots` wrapped twice cannot present as two paths; a coupled-failure
+     assay (*"do not ask can I certify these are independent — ask can I make them fail
+     together"*); a value-provenance check re-deriving the number from the recorded command; and
+     the blinded canary harness.

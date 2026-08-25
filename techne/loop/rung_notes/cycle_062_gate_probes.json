@@ -1,0 +1,134 @@
+{
+  "population": "EXPERIMENT A: the 5 boundary cases fixed in the cycle-062 pre-registration, complete. EXPERIMENT B: the 8 mutation families fixed in the same pre-registration, complete. No sampling in either.",
+  "command": "python techne/loop/measure_062_gate_probes.py",
+  "freeze_note": "techne/lib/claim_record.py is UNMODIFIED; experiment B mutates deep copies of a synthetic record and calls the real promotable()",
+  "experiment_a_boundary_coverage": {
+    "n_cases": 5,
+    "accepted": 1,
+    "rejected": 4,
+    "correct": 5,
+    "both_outcome_classes_present": true,
+    "rows": [
+      {
+        "case": "a_valid_independent_known_answer",
+        "expected": "ACCEPT",
+        "got": "ACCEPT",
+        "discriminated_correctly": true,
+        "reason": "adjudicated by KNOWN_ANSWER_CONTROL"
+      },
+      {
+        "case": "b_same_claim_but_adjudication_not_independent",
+        "expected": "REJECT",
+        "got": "REJECT",
+        "discriminated_correctly": true,
+        "reason": "strongest independent adjudication is SAME_MODEL_AUDIT, below KNOWN_ANSWER_CONTROL; generation and promotion share a path"
+      },
+      {
+        "case": "c_no_adjudication_at_all",
+        "expected": "REJECT",
+        "got": "REJECT",
+        "discriminated_correctly": true,
+        "reason": "strongest independent adjudication is SAME_MODEL_AUDIT, below KNOWN_ANSWER_CONTROL; generation and promotion share a path"
+      },
+      {
+        "case": "d_independent_but_below_required_strength",
+        "expected": "REJECT",
+        "got": "REJECT",
+        "discriminated_correctly": true,
+        "reason": "strongest independent adjudication is DIFFERENTIAL_TEST, below KNOWN_ANSWER_CONTROL; generation and promotion share a path"
+      },
+      {
+        "case": "e_contract_population_does_not_match_declared",
+        "expected": "REJECT",
+        "got": "REJECT",
+        "discriminated_correctly": true,
+        "reason": "binding errors: POPULATION MISMATCH: contract measures 'SOMETHING-ELSE' but the claim declares 'P1'"
+      }
+    ]
+  },
+  "experiment_b_mutation_assay": {
+    "baseline_promotable": true,
+    "n_families": 8,
+    "detected": 6,
+    "survived_undetected": 2,
+    "undetected_families": [
+      "declared_row_count",
+      "measured_value_corrupted"
+    ],
+    "epistemic_mutation_sensitivity": 0.75,
+    "rows": [
+      {
+        "family": "adjudicator_independence_flag",
+        "baseline_decision": "ACCEPT",
+        "mutated_decision": "REJECT",
+        "decision_changed": true,
+        "should_have_changed": true,
+        "SURVIVED_UNDETECTED": false,
+        "reason": "strongest independent adjudication is SAME_MODEL_AUDIT, below KNOWN_ANSWER_CONTROL; generation and promotion share a path"
+      },
+      {
+        "family": "adjudicator_strength_class",
+        "baseline_decision": "ACCEPT",
+        "mutated_decision": "REJECT",
+        "decision_changed": true,
+        "should_have_changed": true,
+        "SURVIVED_UNDETECTED": false,
+        "reason": "strongest independent adjudication is SAME_MODEL_AUDIT, below KNOWN_ANSWER_CONTROL; generation and promotion share a path"
+      },
+      {
+        "family": "population_id_vs_contract",
+        "baseline_decision": "ACCEPT",
+        "mutated_decision": "REJECT",
+        "decision_changed": true,
+        "should_have_changed": true,
+        "SURVIVED_UNDETECTED": false,
+        "reason": "binding errors: POPULATION MISMATCH: contract measures 'WRONG' but the claim declares 'P1'"
+      },
+      {
+        "family": "declared_row_count",
+        "baseline_decision": "ACCEPT",
+        "mutated_decision": "ACCEPT",
+        "decision_changed": false,
+        "should_have_changed": true,
+        "SURVIVED_UNDETECTED": true,
+        "reason": "adjudicated by KNOWN_ANSWER_CONTROL"
+      },
+      {
+        "family": "sampling_method_to_undisclosed_positional",
+        "baseline_decision": "ACCEPT",
+        "mutated_decision": "REJECT",
+        "decision_changed": true,
+        "should_have_changed": true,
+        "SURVIVED_UNDETECTED": false,
+        "reason": "binding errors: POSITIONAL SAMPLE UNDISCLOSED: sampling_method is 'first-40-ordered' but the proposition does not say so"
+      },
+      {
+        "family": "measurement_command_emptied",
+        "baseline_decision": "ACCEPT",
+        "mutated_decision": "REJECT",
+        "decision_changed": true,
+        "should_have_changed": true,
+        "SURVIVED_UNDETECTED": false,
+        "reason": "binding errors: NO COMMAND: the number cannot be reproduced"
+      },
+      {
+        "family": "measured_value_corrupted",
+        "baseline_decision": "ACCEPT",
+        "mutated_decision": "ACCEPT",
+        "decision_changed": false,
+        "should_have_changed": true,
+        "SURVIVED_UNDETECTED": true,
+        "reason": "adjudicated by KNOWN_ANSWER_CONTROL"
+      },
+      {
+        "family": "counterfactual_removed",
+        "baseline_decision": "ACCEPT",
+        "mutated_decision": "REJECT",
+        "decision_changed": true,
+        "should_have_changed": true,
+        "SURVIVED_UNDETECTED": false,
+        "reason": "binding errors: NO COUNTERFACTUAL: no stated input change that must move this number"
+      }
+    ]
+  }
+}
