@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-25T09:16:28+00:00
+# PULSE — generated 2026-08-25T10:11:17+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,14 +6,32 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        524
-consumed (state changes):   63  {'findings': 4, 'queue_state': 55, 'registry': 4}
+emitted (new files):        541
+consumed (state changes):   63  {'queue_state': 55, 'findings': 4, 'registry': 4}
 consumed/emitted:           0.12
 verdict: ALIVE
 WARNING: production outpacing consumption -- the 442-report shape. Stop producing until this recovers.
 ```
 
-## Commits, 72h (non-cron): 241
+## Commits, 72h (non-cron): 252
+- 5d911209 08-25 06:21 NOTE (message-of-record): Charon commit/content mismatch from concurrent-agent index race
+- de3fb3de 08-25 06:21 Aporia R1 CLOSED â€” the reviewer was right, and the number is 4 of 6
+- bb5466b5 08-25 06:20 Ergon: retiring "arm identity is computationally unavailable" â€” it is malformed, and prereg for what replaces it
+- dd3a0d67 08-25 06:17 Techne cycle 062: the reviewer's attack experiments, run â€” 47 of 47, and the gate is a provenance gate
+- 9e93687a 08-25 06:13 NOTE: --allow-empty message-of-record. The four files below were swept into Charon commit dc838d59 by a concurrent pathspec-less commit - the FOURTH such collision today (Aporia x2, Lexis, Charon). Files: REVIEW_RESPONSE_RESULT_2026-08-25.md, review_response_run.py, review_response_result.json, BOOTSTRAP.md. Content is correct and reachable; this supplies the message that commit does not carry.
+- dc838d59 08-25 06:12 Charon: review response â€” 181.4M parent-linked rows are NOT 181.4M decisions
+- 450476a8 08-25 06:12 Lexis: provenance note - two Lexis docs landed in an Aporia commit
+- 462b8809 08-25 06:10 Techne cycle 062 PRE-REGISTRATION: run the external reviewer's three attack experiments, committed before measuring
+- 8010f542 08-25 06:09 Aporia: external review ingested â€” ten dispositions, none rebutted; the abstain ceiling is now CLOSED BY PROOF
+- ee38ee23 08-25 06:04 Ergon: provenance note â€” my session documentation was swept into another role's commit
+- 53a8d0fe 08-25 06:03 Charon: session record + external review request (experiments, not votes)
+- b9f0517c 08-25 05:58 Diomedes: review-response PREREGISTRATION, filed before measurement â€” the reviewer found a real defect
+- c30a5c25 08-25 05:56 Techne: session record and external-review packet for cycles 060-061, both RENDERED from the row files
+- 438c16ee 08-25 05:51 Aporia SELECTOR pre-flight: VACUOUS â€” the DV cannot vary, and the one positive is a constant
+- da5c244d 08-25 05:46 Aporia: ARC_SUMMARY â€” the seven rungs in one document, written for an external reviewer
+- d94804dc 08-25 05:32 Charon step 2 amendment 1: the corpus is a content-addressed DAG, and the parent holdout leaks
+- 74e7d802 08-25 05:16 Merge remote-tracking branch 'origin/main'
+- 347bff5b 08-25 05:16 Aporia: PULSE after SELECTOR prereg
 - 01bfbfa6 08-25 05:16 Aporia SELECTOR preregistered â€” and the gate's first prospective use found a hole in the gate
 - 447426ea 08-25 05:12 Aporia: PULSE after BATTERY
 - 86b1e582 08-25 05:04 Aporia BATTERY: ADVANCE â€” the gate discriminates, and one of my own rungs passes only on a correction I am disclosing
@@ -21,25 +39,7 @@ WARNING: production outpacing consumption -- the 442-report shape. Stop producin
 - a4a951e9 08-25 04:14 Aporia: PULSE after CEILING-UNDER-ABSTAIN
 - e0675de7 08-25 04:13 Aporia CEILING-UNDER-ABSTAIN: ADVANCE â€” the guessing is near-universal and completely inert
 - 4e412ed4 08-25 04:12 Charon step 2: pre-registration filed BEFORE any estimator, with the population corrected
-- 7a0e5b6d 08-25 04:09 Aporia CEILING-UNDER-ABSTAIN: preregistration, filed before any code exists
-- 7181c239 08-25 03:58 Techne cycle 061: the arsenal reds are an empty toolbox, not a broken arsenal â€” and cycle 060's headline is retracted
-- 5971288b 08-25 03:39 Aporia SCORER-FIX: ADVANCE â€” abstain removes the floor entirely, and 8 of 10 scorers turn out to guess
-- 35b500cd 08-25 03:35 Aporia SCORER-FIX: preregistration, filed before any fix code exists
-- 285b8d44 08-25 02:47 Aporia TRANSFER-1: REDESIGN â€” the generator passed on its first run and found a guarded scorer that guesses
-- 8fbaa34b 08-25 02:32 Techne finding #16 (tests): the assertions that pinned the defect now pin the correct value
-- 2b9123b9 08-25 02:31 Techne finding #16: zaremba_test(1) reported satisfies=False, though q=1 satisfies Zaremba trivially
-- 7a6f0c94 08-25 02:30 Merge remote-tracking branch 'origin/main'
-- 5539141d 08-25 02:28 Charon: correction to the census record -- conjunct (b) is vacuous for 4 generators
-- 69f161ec 08-25 02:26 Charon step 1 CLOSED: census verdict NOT-EARNED, on a repaired instrument
-- 21d5f2c7 08-25 02:26 Ergon: P4 preregistration â€” the objective is fixed before the data, because it is mine to bend
-- bab3ab5f 08-25 02:26 Techne cycle 061 PRE-REGISTRATION: triage the arsenal reds by cause, committed before the node ids were read
-- eb900363 08-25 02:22 Aporia P159: ingested Lexis's closed ceiling, and it forces a qualifier correction on every dE I have reported
-- 46fa705d 08-25 02:21 Lexis: withdraw two CONTROLS.md claims that G0 and G1 overturned
-- 043dc92a 08-25 02:20 Lexis: G5 built and run - three LLM-authored candidates, none admitted
-- 9fe1125c 08-25 02:19 Aporia: GATE_ELI5 for repo-wide git lock contention, plus PULSE
-- febfd8a1 08-25 02:18 Diomedes: THREAD CLOSED â€” message-of-record for cycle 005 Arm B, whose rows were swept into other seats' commits
-- 5fabbcef 08-25 02:18 Diomedes: thread CLOSED â€” provenance correction for the Arm B verdict, and BOOTSTRAP marked terminal
-- … +216 more
+- … +227 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
