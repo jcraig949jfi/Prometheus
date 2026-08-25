@@ -236,3 +236,119 @@ cardinality-matched post-state controls. Recorded as an open liability against t
 
 Full response, including two places the reviewer's proposal breaks against facts measured today:
 `charon/REVIEW_RESPONSE_2026-08-25.md`.
+
+---
+
+# PART II — the rest of the session
+
+## Choice-point census — the denominator, and a false profundity caught
+
+Full filing: `charon/step2/CHOICE_POINT_FINDINGS_2026-08-25.md`.
+
+Run *before* the regret experiment on an external reviewer's ordering, which I accepted. For
+`c1 × equal_mod_2`:
+
+```
+parents                                        3,060,875
+  k_P = 1  (ONE completed intervention)        1,649,801   53.9%   <- no choice ever posed
+DECISION-BEARING (k_P>=2, outcomes differ)       724,723   23.7%
+distinct replacement objects                       1,052
+(P,A) collision rate among REPEATED groups         38.55%
+irreducible regret lower bound                     0.0727   over 932,852 parents
+```
+
+**53.9% of parents were never offered a choice**, so that half is lineage bookkeeping. The
+navigation thesis's true population here is ~724K decision-bearing parents, not 7.06M rows.
+
+**I was one step from reporting a false positive.** The first pass returned
+`H(Y | P, A⁺) = 0.0` — reads as *the completed action fully determines the outcome*, a clean and
+thesis-shaped result. It is an artifact: `(P,A⁺)` cells with ≥2 rows number **0 of 5,871,696**.
+Every completed intervention occurs exactly once, so those cells have zero entropy mechanically.
+Both ΔH figures are void and are retained in the rows file under `DEGENERACY_WARNING` rather than
+deleted. I also corrected my own collision statistic in the same pass — first reported 12.08%,
+which divided by 2.7M singleton groups that cannot exhibit the effect; **38.55%** is correct.
+
+Consequence: the reviewer's Q4 instrumentation test **cannot be run on this corpus**. Since
+`(P,A)` groups repeat but `(P,A⁺)` cells never do, the data is consistent with the completed
+action determining the outcome *and* equally consistent with it also being insufficient. Per the
+pre-registration that is **VACUOUS**, not a null.
+
+**Step 2 status: BUILT, PRE-REGISTERED, NOT RUN.** `charon/step2/run_regret.py` is written and
+validated; parent states are extracted (14,119,560 records for 3,060,875 distinct ids, 4.61×
+duplication). It is deliberately unrun — it targets a population an order of magnitude smaller
+than its pre-registration assumed, on an action vocabulary that provably under-specifies the
+intervention, and both facts belong beside its result.
+
+## Apollo E9 — independent held-out battery, authored blind
+
+`roles/Charon/apollo_e9/` — 42 tasks, 7 categories × 6, requested schema exactly.
+
+Committed to **my own role directory rather than `apollo/data/`** (both were permitted) so the
+property that makes the instrument independent — zero Charon commits touching Apollo paths —
+survives delivery instead of being spent on it. Did not read any listed Apollo internal, the E9
+preregistration, or the standing request; did not look up per-category performance.
+
+Gold is computed, not judged: exact `Fraction` arithmetic, transitive closure for ordering,
+explicit `(antecedent, consequent)` domains enumerated for the quantifiers, exhaustive search over
+finite model spaces for consistency. **Two bugs in my own verifier surfaced and were fixed first**
+— the lowest-element predicate returned the highest element, and the quantifier checks were
+assertions rather than enumerations.
+
+The control they asked me to record caught a leak in my own work: my first build had the correct
+answer shortest in **31 of 42** tasks — "pick the shortest" scored **0.375**, as large as the leak
+being probed, inverted. Fixed with one meaning-preserving knob (equivalent phrasings of the
+uncertainty option). Final: **pick-longest 0.2599, pick-shortest 0.2560** against a 0.25 floor and
+their home battery's 0.342. Position 11/11/10/10.
+
+## Rulings on Ergon's five filed items
+
+Full filing: `charon/probe/RULINGS_2026-08-25.md`. Rows: `charon/probe/charon_gate_fire_2026-08-25.{py,json}`.
+
+I wrote my own gate-fire probe rather than accept his — eight worlds, no import of his suite, two
+defect classes he never instantiated (length-preserving Unicode homoglyph, zero-width space) plus
+an over-sensitivity control. **No hole found.** I corrected my own probe mid-run and kept the
+correction visible as W3b.
+
+- **1 packet changes — UPHELD as execution.** Verified: no arm ledger exists anywhere, pin
+  unmutated. **But a provenance defect that is mine:** no Charon-authored artifact of the REDESIGN
+  ruling exists — confirmed by full-repo sweep. Its only text is the ruled party's paraphrase.
+  Ratified the constraint prospectively; declined to certify wording I cannot authenticate.
+- **2 `envelope_identical` demotion — AUTHORIZED**, and a net strengthening: INV 7 was added and
+  gates, and byte-identity dominates a digit-erased abstraction.
+- **3 block B spend — AUTHORIZED**, after I gate-fired the merge rule myself (FORBIDDEN fires;
+  `n_pooled=None` raises as designed).
+- **4 heuristic floor — does NOT kill the arm line**, because `HINT_ITEMS` names the exact 0.5225
+  heuristic and so saturates that channel structurally. **New kill condition filed before the
+  data: `F-hint`'s own accuracy must reach 0.5225.** Plus: §9b is a required endpoint with no
+  power sizing.
+- **5 adversarial gate vacuity — DISCLOSURE INCOMPLETE.** `leakage_gate.json` has zero occurrences
+  of "vacuous" and its verdict reads PASS. Required fix before further use.
+
+Declined to kill the arm line despite four recurrences of one defect class, for a technical
+reason: **INV 7 is a closure, not a detector** — it enumerates no features, so there is no feature
+list left to be incomplete.
+
+## Repo hazards encountered, recorded because they cost real time
+
+- **Concurrent-agent index races.** `git commit` without a pathspec commits the *index*; with
+  several agents running `git add` against one repo, my commits swept in Aporia's and Diomedes's
+  files and mine were swept into theirs. Content verified intact in HEAD; message-of-record filed
+  at `5d911209`. **Fix adopted: `git add <paths> && git commit -F msg -- <paths>` always.** Four
+  roles hit this on the same day.
+- **An orphaned autostash.** `.git/rebase-merge/` held a stale autostash from 03:59 with no todo
+  and no head-name, carrying another role's ledger rows never restored. Preserved as tag
+  `charon/rescued-autostash-2026-08-25` (pushed) rather than applied — those files have since been
+  modified, so a two-hour-old stash would clobber newer data. **Still open; needs the owning role.**
+- **A 15.4 GB runaway of my own.** The first choice-point census held both passes in memory with a
+  `Counter` per intervention. Killed and rewritten compactly. My error, not the environment's.
+
+## Open obligations
+
+1. **`ergon/probe/ledgers/adversarial_leakage/leakage_gate.json` must carry its own vacuity stamp**
+   before that gate's result is used again. Ruled, not yet done by Ergon.
+2. **`F-hint ≥ 0.5225`** is now a pre-condition on any arm reading. Filed before the data exists.
+3. **`RE_REVIEW_SIGNOFF` remains Harmonia B's** and is not created on my PASS. Still absent.
+4. **The regret experiment is unrun** and should be run against the corrected decision-bearing
+   denominator, with the content holdout from amendment 1.
+5. **The orphaned autostash tag** needs its owner.
+6. **Token-tercile DiD regression** still owed at first arm data. Filed as debt, not dropped.

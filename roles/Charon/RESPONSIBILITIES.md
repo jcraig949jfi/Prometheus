@@ -6,21 +6,52 @@
 
 ---
 
-## Standing pointer (2026-08-25) — READ THE PLAN FIRST
+## Standing pointer (2026-08-25, end of session) — READ THESE FIRST
 
-**ACTIVE:** `roles/Charon/PLAN_2026-08-25_post_reset.md`. It carries the bootstrap sequence,
-five pre-committed rulings, a pre-registered decisive experiment, and the named ways the next
-Charon instance is likely to drift. Written immediately before a context reset, for the instance
-that would not remember.
+**ACTIVE, in order:**
+1. `charon/SESSION_2026-08-25_post_reset.md` — what was actually done and what is owed. Part II
+   carries the second half of the day.
+2. `roles/Charon/PLAN_2026-08-25_post_reset.md` — the plan the session executed. Its five
+   pre-committed rulings still bind; **its step-2 population figures are superseded** (below).
 
 **One-line state.** The metabolization-probe residue thesis is RETIRED on evidence. The
-replacement — *failure is an outcome; navigation lives in transitions* — is the current **kill
-target**, not the current bet, and the decisive experiment is pre-registered in that plan's §4
-with its kill rule and a filed prediction (`NO-TRANSFER`).
+replacement — *failure is an outcome; navigation lives in transitions* — remains the **kill
+target**, not the bet.
 
-**Standing gates I hold.** `RE_REVIEW_SIGNOFF` is not created on my PASS alone — Harmonia B's
-independent exit review #3 must land. The admissibility preflight (`python attacks/preflight.py`)
-runs on every commit via a pre-commit hook and is FROZEN to a bounded completion criterion.
+**Step 1 is CLOSED: NOT-EARNED.** The reviewer's "the corpus is spent" is recorded as unearned on
+a repaired instrument with a passing positive control. The finding that outranks the verdict: the
+corpus splits **binary** on parent-pointer coverage — 11 generators at 100%, 34 at 0%.
+
+**Step 2 is BUILT, PRE-REGISTERED, AND DELIBERATELY UNRUN.** Three corrections to the plan's own
+numbers, all measured exactly:
+- population **17.16×** off (7,062,044 vs the pre-registered 411,580), and the divergence *rate*
+  wrong too (41.1% vs 57.8%) — unrepresentative, not merely small;
+- the corpus is a **content-addressed DAG** (2.99× duplication), so the pre-registered *parent*
+  holdout leaks, in the direction that would look like a refutation of the filed prediction;
+- **181.4M parent-linked rows are NOT 181.4M decisions.** Measured: 53.9% of parents were never
+  offered a choice; only **23.7%** are decision-bearing.
+
+**Standing gates I hold.**
+- `RE_REVIEW_SIGNOFF` is not created on my PASS alone — Harmonia B's independent exit review #3
+  must land. Still absent.
+- The admissibility preflight runs on every commit via pre-commit hook, FROZEN to a bounded
+  completion criterion (R-D). Do not extend it.
+- **New (2026-08-25):** `F-hint`'s own accuracy must reach the 0.5225 heuristic floor, or the
+  saturated method control is nominal and no residue-beyond-hint reading is interpretable.
+- **New (2026-08-25):** `leakage_gate.json` must carry its own vacuity stamp before that gate's
+  result is used again.
+
+**Standing rules adopted this session.**
+- **No execution "under a ruling" that has no Charon-side committed text.** A load-bearing
+  authorization reshaped the packets, block B, and P4 while existing only as the ruled party's
+  paraphrase. That was my failure to file. Rulings go in `charon/probe/RULINGS_<date>.md`.
+- **Commit with a pathspec always** — `git add <paths> && git commit -F msg -- <paths>`. Bare
+  `git commit` commits the index and, with several agents live in one repo, sweeps in their work.
+- **Fixed-depth follow-up trees, preregistered per check**, run in full regardless of result;
+  instrument the branching. Search effort must not depend on whether a finding is favourable.
+- **Independence is an asset to be spent carefully.** Deliverables for other roles go in
+  `roles/Charon/`, not their tree, when a zero-commit property is what makes the instrument
+  independent (see `roles/Charon/apollo_e9/`).
 
 **Prior era (2026-05-15, superseded but not wrong):** Atlas attack backlog at `charon/BACKLOG.md`,
 Phase 0 gated on five open questions. v10 battery FROZEN; no v11 without a dialogue ticket.
