@@ -2235,3 +2235,97 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      it changes a returned value rather than adding a refusal. **I intend to fix it in cycle 061
      as its own isolated commit unless told otherwise.** Flagging rather than doing it silently.
      #242, #311 and #341 remain untouched, as do the eight cross-role findings.
+
+
+## Cycle 061 (2026-08-25) — CAMPAIGN CYCLE 2 OF 20. The reds are an empty toolbox, not a broken arsenal
+
+423. **THE HEADLINE: NONE OF THE 44 ARSENAL REDS IS BROKEN MATHEMATICS.** Every red node id plus
+     all 3 collection errors — 47 in total — re-run individually and classified by the exception
+     it ACTUALLY raised. **39 MISSING_DEPENDENCY / 4 NO_LONGER_FAILS / 1 STALE_ASSERTION /
+     2 DELIBERATELY_RED / 1 ENVIRONMENT. REAL_DEFECT: ZERO.** The standing "N arsenal reds"
+     framing has been reporting an **incomplete environment as a broken arsenal** for many
+     cycles.
+424. **AND "46" WAS THE STALE CYCLE-052 BASELINE.** The current total is 44 FAILED plus 3
+     collection errors. I have been quoting 46 in my own brief.
+425. **PREDICTION 2 FALSIFIED, AND MY DISTRUST WAS THE ERROR.** I pre-registered that FEWER than
+     26 would be missing-dependency, on the reasoning that "26+" had the same unaudited
+     provenance as the "46". **It is 39 of 47** — the standing figure was an UNDERSTATEMENT. I
+     was right that the total was stale and **wrong about the direction of the error in the
+     share**, and because I had pre-committed the direction this scores as a falsification and
+     not a partial hit.
+426. **D0 PREDICTION 1 FALSIFIED, AND IT RETRACTS LAST CYCLE'S HEADLINE.** I predicted at high
+     confidence that no claim would be HELD, because cycle 060's finding #17 said
+     `Claim.promotable()` "cannot block anything". **It blocked 2 of 5, and both blocks were
+     correct** — C061-3 has only a differential test behind it, C061-5 is a judgement about my
+     own scheme with no independent adjudicator at all.
+427. **FINDING #17 NARROWED. THE CORRECT STATEMENT IS SMALLER THAN THE ONE I SHIPPED.**
+     `Claim.promotable()` **does** enforce the bar on any claim labelled honestly. What it cannot
+     do is detect a **mislabelled** one, because `independent_of_generator` is self-reported. Its
+     failure mode is dishonesty, not impotence. **Cycle 060 saw 8 of 8 promotable and concluded
+     the control was toothless; the alternative reading — that those 8 genuinely had
+     known-answer-or-better adjudication — sat on the same page and I did not weigh it. Same
+     shape as the inflated headline I catalogued in cycle 060.**
+428. **SO THE CAMPAIGN HAS ITS FIRST MEASURED ESCAPE, AND IT IS MINE FROM LAST CYCLE.** Finding
+     #17 passed every frozen control, was reported as cycle 060's headline, and was falsified by
+     cycle 061's first measurement. `escape_rate` is **1 of 13** claims across cycles 060–061.
+     Cycle 060's interim zero was wrong within one cycle, exactly as its own text warned it might
+     be.
+429. **PREDICTION 5 FALSIFIED — THERE IS NO UNADDRESSED REAL DEFECT.** Both candidates dissolved
+     informatively. The **hyperbolic-volume** pair is a genuine mathematical defect (48 knots
+     carrying volume 0.0, impossible by Mostow rigidity) that **cycle 046 already diagnosed,
+     flagged in the data via `hyperbolic_volume_known`, and correctly declined to make green** —
+     its pre-registration says outright that making an authority test pass without the
+     authority's data would be fabricating a measurement. The **couplet** failure is
+     `assert result.runtime_ms < 50`, which read **2230 under load and 83 standalone**.
+430. **FINDING #19: A WALL-CLOCK GATE THAT SWINGS 27x WITH MACHINE LOAD.** A threshold with no
+     tolerance and no stated measurement error is the exact shape this loop already has a
+     standing rule against. **NOT PATCHED** — the file is not mine and a timing threshold is its
+     owner's policy call. Reported.
+431. **FINDING #18: THE RED COUNT CONTAINS A COMPONENT THAT MOVES WITHOUT ANYTHING CHANGING.**
+     Four `prometheus_math/databases/tests/test_cremona.py` node ids **fail in the full suite and
+     pass in isolation**. Two independently produced row sets disagree about the same four ids.
+     Mechanism NOT determined — only the discrepancy is measured. Relevant to every cycle that
+     has diffed the count.
+432. **#242 IS NOW PRICED AGAINST EVIDENCE RATHER THAN RECOLLECTION.** The absent modules,
+     extracted from the interpreter's own messages: **GUDHI, chipfiring, cvxpy, matplotlib,
+     pysat, pytest_benchmark, shapely>=2.0**, plus a MIP backend (pyscipopt / ortools / highs)
+     which reports as a `ValueError` rather than an `ImportError`. **A ruling to install buys 39
+     of 47 red node ids on this measurement.**
+433. **#341 CONFIRMED LIVE, WITH ITS NUMBERS.** The stale authority test is
+     `test_authority_mossinghoff_178_entries`, failing on `assert 8625 == 178`. The outstanding
+     ruling is about a currently-red test, not a hypothetical one.
+434. **NAMES ARE NOT CAUSES, AND CLASSIFYING BY NAME WOULD HAVE BEEN WRONG IN BOTH DIRECTIONS.**
+     `test_edge_non_psd_raises` reads as a mathematical edge case and fails on an ImportError;
+     `test_3sat_unsatisfiable` reads as a solver disagreement and fails for want of `pysat`;
+     `test_authority_figure_8_volume_is_2_0299` reads as a broken authority check and is a
+     deliberate red. This loop has twice shipped an invented label attached to a real
+     observation, which is why every id was re-run.
+435. **THE CLASSIFICATION SCHEME I FIXED IN ADVANCE WAS INCOMPLETE, AND SAYING SO IS THE POINT.**
+     The data needed two buckets the pre-registration did not have — `NO_LONGER_FAILS` (not a
+     cause at all, a property of the run) and `DELIBERATELY_RED` (a red a prior pre-registration
+     decided must STAY red). And `REAL_DEFECT`, which I expected to fill, came back **empty**.
+     Fixing a scheme before looking does not make it complete; it makes its incompleteness
+     visible.
+436. **THE MACHINE-DECIDED AND HUMAN-DECIDED SHARES OF THE CLASSIFICATION ARE KEPT SEPARABLE.**
+     35 of 47 were classified by exception TYPE with the absent module name extracted from the
+     interpreter. The other 8 I assigned by reading, and those 8 are listed by name in
+     `techne/loop/claims_061.py::READ_ASSIGNMENTS` rather than merged into one total — the
+     auditable share must not be inflated by the inferential one.
+437. **FINDING #16 CLOSED, IN ITS OWN COMMIT AS PROMISED (HITL #422 DISCHARGED).**
+     `zaremba_test(1)` now reports `satisfies=True, witness=1`. **Measured, not argued:** over
+     q = 1..500 exactly ONE value changed, and all 499 results for q >= 2 are byte-identical.
+     Rows shipped with the verdict in `2b9123b9`; tests in `8fbaa34b`.
+438. **JAMES — #423, A SHARED-WORKTREE HAZARD THAT IS NOT ONLY MINE.** **Twice this cycle a
+     concurrent agent's `git pull --rebase --autostash` reverted my verified-but-uncommitted edit
+     to `techne/lib/cf_expansion.py` — `git status` clean, and NO STASH HOLDING IT.** The second
+     revert landed **between a green test run and `git add`**, so the source fix committed
+     WITHOUT the tests that prove it, and the test file had to be re-applied and committed
+     separately. Detection was accidental: tests that had passed minutes earlier began failing.
+     Mitigated on my side by collapsing edit → verify → add → commit into a single shell
+     invocation, and written to memory. **But every seat in this repo is exposed to it, and the
+     failure is silent.**
+439. **CAMPAIGN METRICS, CYCLE 2 OF 20.** `escape_rate` **1 of 13** across 060–061, the escape
+     being my own cycle-060 headline. `held_rate` **2 of 5, both CORRECT, 0 false blocks** — the
+     first cycle in which a frozen control blocked anything. `adjudication_coverage` **3 of 5**,
+     reported below 1.0 because the two that fall short are shown as HELD rather than relabelled.
+     `yield` **4 of 5 decision-changing.**
