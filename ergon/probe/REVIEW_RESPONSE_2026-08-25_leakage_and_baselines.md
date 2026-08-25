@@ -71,6 +71,25 @@ expect no change). Named as the next one rather than folded into a claim.
 
 → `adversarial_leakage.py`, prereg §3 / §3.1, commit `c27a711b`.
 
+**OUTCOME (appended after the run).** The gate **PASSED**: all twelve pairs below their own
+permutation null p95, and below the null mean. Both positive controls fired, the historical slug
+band at balanced accuracy 1.0000.
+
+**And the sensitivity number, which is what the PASS is worth.** The preregistered `+3` probe was
+not detected, so the floor was bisected: **undetected at a per-arm spread of ~25% of a field's
+range, detected at ~75%.** Both adversaries cross at the same step, so this is a property of the
+signal rather than of one model.
+
+So the reviewer's demotion of the census was right *and* the replacement is coarse. This gate
+excludes blunt nuisance leakage and **has not been shown to exclude subtle leakage**. The
+historical defect sat ~200× above the floor — which is why three weaker checks could miss it and
+this one catches it instantly, and equally why catching it says little about anything finer.
+
+Two further honesty items from the run: the tokenizer fell back to **whitespace** (no local
+subword tokenizer), making the parser/tokenizer class *less* covered than §3.1 claimed; and
+observed accuracy sits consistently **below** the null mean on all twelve live pairs, which is
+unexplained and recorded as unexplained.
+
 ---
 
 ## 3. "Mutation competence and omission competence are different capabilities" — ACCEPTED

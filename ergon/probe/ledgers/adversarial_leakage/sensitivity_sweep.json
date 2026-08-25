@@ -1,0 +1,193 @@
+{
+  "purpose": "smallest per-arm slug offset this gate detects",
+  "parent": "ergon/probe/adversarial_leakage.py",
+  "prereg": "ergon/probe/PREREG_adversarial_leakage_gate_2026-08-25.md",
+  "manifest_sha16": "e6b1e001bf79e3ef",
+  "scope_cap": "lexical+structural adversaries, arm6+cell4 targets, 50 permutations; the omitted adversary/targets were strictly weaker on the positive control, so this is a floor for the BEST available adversary",
+  "arm_offset_rule": "arm k (alphabetical) receives offset k*STEP on the slug index",
+  "steps": {
+    "3": {
+      "detected": false,
+      "pairs": {
+        "lexical|arm6": {
+          "observed": 0.1683,
+          "null_p95": 0.1934,
+          "margin": -0.025,
+          "detected": false
+        },
+        "structural|arm6": {
+          "observed": 0.1725,
+          "null_p95": 0.1955,
+          "margin": -0.023,
+          "detected": false
+        },
+        "lexical|cell4": {
+          "observed": 0.2175,
+          "null_p95": 0.2795,
+          "margin": -0.062,
+          "detected": false
+        },
+        "structural|cell4": {
+          "observed": 0.2387,
+          "null_p95": 0.2796,
+          "margin": -0.0408,
+          "detected": false
+        }
+      },
+      "nonconforming_payloads": 0
+    },
+    "10": {
+      "detected": false,
+      "pairs": {
+        "lexical|arm6": {
+          "observed": 0.175,
+          "null_p95": 0.1858,
+          "margin": -0.0108,
+          "detected": false
+        },
+        "structural|arm6": {
+          "observed": 0.18,
+          "null_p95": 0.1905,
+          "margin": -0.0105,
+          "detected": false
+        },
+        "lexical|cell4": {
+          "observed": 0.2575,
+          "null_p95": 0.2864,
+          "margin": -0.0289,
+          "detected": false
+        },
+        "structural|cell4": {
+          "observed": 0.2625,
+          "null_p95": 0.2808,
+          "margin": -0.0183,
+          "detected": false
+        }
+      },
+      "nonconforming_payloads": 0
+    },
+    "30": {
+      "detected": true,
+      "pairs": {
+        "lexical|arm6": {
+          "observed": 0.2633,
+          "null_p95": 0.1877,
+          "margin": 0.0757,
+          "detected": true
+        },
+        "structural|arm6": {
+          "observed": 0.2692,
+          "null_p95": 0.1867,
+          "margin": 0.0824,
+          "detected": true
+        },
+        "lexical|cell4": {
+          "observed": 0.3688,
+          "null_p95": 0.2891,
+          "margin": 0.0796,
+          "detected": true
+        },
+        "structural|cell4": {
+          "observed": 0.3925,
+          "null_p95": 0.2807,
+          "margin": 0.1118,
+          "detected": true
+        }
+      },
+      "nonconforming_payloads": 0
+    },
+    "100": {
+      "detected": true,
+      "pairs": {
+        "lexical|arm6": {
+          "observed": 0.5167,
+          "null_p95": 0.1847,
+          "margin": 0.332,
+          "detected": true
+        },
+        "structural|arm6": {
+          "observed": 0.5617,
+          "null_p95": 0.183,
+          "margin": 0.3787,
+          "detected": true
+        },
+        "lexical|cell4": {
+          "observed": 0.6975,
+          "null_p95": 0.2857,
+          "margin": 0.4118,
+          "detected": true
+        },
+        "structural|cell4": {
+          "observed": 0.7488,
+          "null_p95": 0.2807,
+          "margin": 0.4681,
+          "detected": true
+        }
+      },
+      "nonconforming_payloads": 0
+    },
+    "300": {
+      "detected": true,
+      "pairs": {
+        "lexical|arm6": {
+          "observed": 1.0,
+          "null_p95": 0.1883,
+          "margin": 0.8117,
+          "detected": true
+        },
+        "structural|arm6": {
+          "observed": 0.9967,
+          "null_p95": 0.1883,
+          "margin": 0.8083,
+          "detected": true
+        },
+        "lexical|cell4": {
+          "observed": 1.0,
+          "null_p95": 0.2801,
+          "margin": 0.7199,
+          "detected": true
+        },
+        "structural|cell4": {
+          "observed": 0.9962,
+          "null_p95": 0.2762,
+          "margin": 0.72,
+          "detected": true
+        }
+      },
+      "nonconforming_payloads": 0
+    },
+    "1000": {
+      "detected": true,
+      "pairs": {
+        "lexical|arm6": {
+          "observed": 1.0,
+          "null_p95": 0.1909,
+          "margin": 0.8091,
+          "detected": true
+        },
+        "structural|arm6": {
+          "observed": 0.9975,
+          "null_p95": 0.1851,
+          "margin": 0.8124,
+          "detected": true
+        },
+        "lexical|cell4": {
+          "observed": 1.0,
+          "null_p95": 0.2839,
+          "margin": 0.7161,
+          "detected": true
+        },
+        "structural|cell4": {
+          "observed": 0.9962,
+          "null_p95": 0.2769,
+          "margin": 0.7193,
+          "detected": true
+        }
+      },
+      "nonconforming_payloads": 0
+    }
+  },
+  "smallest_detected_step": 30,
+  "largest_undetected_step": 10,
+  "interpretation": "The slug index ranges over [0,200), so a per-arm offset of STEP is a mean shift of roughly STEP/200 of the field's range, wrapped mod 100000. A leak SMALLER than the smallest detected step is invisible to this gate, and the live PASS is therefore a statement about leaks at or above that size -- not about leakage in general."
+}

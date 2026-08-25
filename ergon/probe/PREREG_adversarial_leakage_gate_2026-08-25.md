@@ -193,4 +193,61 @@ is that three previous checks felt equally complete on the morning they were pas
 
 ---
 
-*Ergon · SKULLPORT · 2026-08-25 · written before the data, by the party the data would unblock.*
+---
+
+## 8. RESULT, appended after the run (2026-08-25)
+
+**Verdict: PASS.** All twelve (adversary x target) pairs on the live packets sat below their own
+within-task permutation null p95 — and below the null *mean*. Ledger:
+`ergon/probe/ledgers/adversarial_leakage/leakage_gate.json`.
+
+**Positive controls fired as required.** The lead line was caught on all twelve pairs; the
+`+40000` slug band was caught trivially (balanced accuracy 1.0000 on `cell4|lexical` and
+`H|lexical`). The gate is therefore capable of reporting the conclusion it was built to be able
+to report.
+
+### 8.1 The measured detection floor — this is what the PASS is worth
+
+§5's world 3 (`+3` offsets) was **not** detected, leaving the floor bracketed between 3 and
+40,000 — three orders of magnitude, i.e. almost no information. `leakage_sensitivity_sweep.py`
+bisected it. Arm *k* (alphabetical) receives a slug offset of *k × STEP*, against a field whose
+real range is `[0, 200)`:
+
+```
+STEP     3   not detected      STEP    30   DETECTED  (+0.0757 .. +0.1118)
+STEP    10   not detected      STEP   100   DETECTED  (+0.4681)
+                               STEP   300   DETECTED  (+0.8117)
+                               STEP  1000   DETECTED  (+0.8124)
+```
+
+**Floor: between STEP 10 and STEP 30**, i.e. a per-arm spread of ~50/200 (**~25% of the field's
+range**) is invisible, and ~150/200 (**~75%**) is caught. Both the lexical and structural
+adversaries cross at the same step, so the floor is a property of the signal, not of one model.
+
+**The honest statement of the PASS is therefore:** this gate excludes *coarse* nuisance leakage
+in the enumerated representations. A per-arm signal occupying less than roughly a quarter of a
+field's range would pass it undetected. The historical defect was ~200× above this floor, which
+is why three weaker checks could miss it and this one catches it instantly — and is also why
+catching it is unimpressive as evidence about subtler leaks.
+
+### 8.2 A degradation from what was preregistered
+
+§3.1 assumed adversary 3 would use a **proxy subword tokenizer**. No local subword tokenizer was
+available and it fell back to **whitespace splitting**, so `tok_len` and `tok_len_mod_{8,16,64}`
+are whitespace-token counts. The parser/tokenizer class is thus *less* covered than §3.1 claimed:
+not "a proxy instead of the solver's" but no subword tokenization at all. The fallback string
+ships in the ledger.
+
+### 8.3 An unexplained observation, kept as one
+
+Observed accuracy sits consistently **below** the permutation-null mean on all twelve live pairs.
+A no-signal classifier should sit *at* the null. The most likely mechanism is that the sparsity
+slot is constant within a task and varies across tasks, so under grouped CV a classifier fits
+task structure and mispredicts on held-out tasks. **This is a hypothesis and has not been
+tested.** It is recorded rather than resolved, because an unexplained systematic offset in a
+gate's null is the kind of thing that later turns out to matter.
+
+---
+
+*Ergon · SKULLPORT · 2026-08-25 · written before the data, by the party the data would unblock.
+§8 appended after the run.*
