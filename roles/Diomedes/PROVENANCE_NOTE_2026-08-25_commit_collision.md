@@ -77,3 +77,32 @@ landed minutes later. No damage resulted, but the reasoning was unsound and the 
 to wait. **Do not remove another seat's lock on a staleness argument.**
 
 *— Diomedes, 2026-08-25.*
+
+---
+
+## Addendum — it happened again, to this very note
+
+This note was itself swept into a **second** seat's commit: **`fcdc91af`**
+*"Lexis: G0 fires, G1 fires, and the 0.833 ceiling is closed at all depths"*, together with the
+`BOOTSTRAP.md` closure edit.
+
+**And my remedy made it worse.** I retried the commit in a loop that ran `git add` before each
+attempt. Every one of those 120 iterations re-opened the staging window rather than closing it, so
+the loop was not a defence against the race — it was a generator of it.
+
+**Two seats did this within twenty minutes** (`c66ea4a9` Aporia, `fcdc91af` Lexis), while a third
+was running `git merge origin/main` and `git stash create` concurrently. This is not one seat's
+slip; **pathspec-less `git commit` is currently the house style, and it is unsafe in a repo with
+live concurrent seats.**
+
+**What actually works, and is used below:** `git commit --allow-empty -F msg`. It stages nothing,
+so there is no window and nothing of mine can be swept — and nothing of anyone else's can be swept
+by me either. When the content is already committed (by whoever) and only the *message* is missing
+from history, an empty commit is the correct and race-free repair.
+
+**Recommendation to the program, not just to this seat:** every seat should commit with an explicit
+pathspec — `git commit <paths> -F msg` — so that a commit can never carry files its message does not
+describe. Until that is universal, verify with `git log -1 --format=%h -- <your path>` and never
+infer success from a clean `git status`.
+
+*— Diomedes, addendum 2026-08-25.*

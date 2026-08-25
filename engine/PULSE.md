@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-25T05:11:18+00:00
+# PULSE — generated 2026-08-25T06:16:48+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,14 +6,21 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        484
-consumed (state changes):   60  {'findings': 3, 'queue_state': 50, 'registry': 7}
-consumed/emitted:           0.12
+emitted (new files):        522
+consumed (state changes):   59  {'queue_state': 52, 'findings': 3, 'registry': 4}
+consumed/emitted:           0.11
 verdict: ALIVE
 WARNING: production outpacing consumption -- the 442-report shape. Stop producing until this recovers.
 ```
 
-## Commits, 72h (non-cron): 234
+## Commits, 72h (non-cron): 238
+- e7a9b314 08-25 02:18 Aporia TRANSFER-1: preregistration, committed before the generator exists
+- d36f8c3f 08-25 02:18 Techne cycle 060: the height family refuses non-finite input, and a frozen control that cannot block
+- b63c1407 08-25 02:17 Ergon: P2 first half â€” block B collects itself, under the merge rule, in both families
+- bf62fb7c 08-25 02:15 Merge remote-tracking branch 'origin/main'
+- fcdc91af 08-25 01:55 Lexis: G0 fires, G1 fires, and the 0.833 ceiling is closed at all depths
+- c66ea4a9 08-25 01:38 Aporia IQ-PORT-1: provenance discharged by set membership â€” strict predicate FAILS, and the whole failure is one canary task where T = 2N. PIPELINE FROZEN.
+- 953a8e97 08-25 01:13 Aporia IQ-NULL: ADVANCE â€” both nulls read exactly 0, and three registered operators are structurally dead
 - c4e09804 08-25 01:11 Diomedes cycle 005 Step 3b: rows beneath "Q1 is unresolvable in this corpus"
 - 1f1998d3 08-25 01:08 Ergon: the packets carried two perfect arm labels, and three checks passed over them
 - de27e115 08-25 01:03 Aporia IQ-NULL: preregistration, filed before measurement
@@ -32,14 +39,7 @@ WARNING: production outpacing consumption -- the 442-report shape. Stop producin
 - 3b6f9de8 08-25 00:38 Techne cycle 060 PRE-REGISTRATION: the non-finite hole in the height family, committed before measuring
 - 94970ea8 08-25 00:35 Diomedes cycle 005: TERMINAL PRE-REGISTRATION â€” oracle-form replication and coordinate transport, with the transport family frozen in advance
 - 80ded3fb 08-25 00:34 Lexis: review synthesis (TLDR/ELI5) + context-reset-safe bootstrap plan
-- 150b9c00 08-25 00:33 Charon: adjudicate the external review â€” 7 adopted, 3 amended, 1 rejected, 1 self-correction
-- 85c982f9 08-25 00:30 Lexis: external review answered â€” trace-class enumeration closes the ordering axis, four interpretations retracted
-- 8e552676 08-25 00:30 Diomedes AMENDMENT 2026-08-25: wrong causal arity, not wrong geometry â€” finding 1 narrowed, finding 3 demoted to PROVISIONAL, two controls added to cycle 005
-- eb4a8205 08-25 00:29 Ergon: REDESIGN accepted â€” shape isomorphism by construction + the 2x2 factorial
-- 1902bbc7 08-25 00:21 Aporia DOCTRINE: delta namespaces, counterfeit battery, frozen ladder (HITL-adopted)
-- 2e9e88af 08-25 00:19 Techne: typed Claim records, the epistemic-independence doctrine, and the escape-rate prereg
-- b3e2812e 08-25 00:16 Ergon: Tier B statistic computed at last â€” LEVELED 0.4742; corpus claim restated
-- … +209 more
+- … +213 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
