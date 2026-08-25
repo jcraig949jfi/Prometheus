@@ -1,0 +1,123 @@
+{
+  "experiment": "IQ-PORT-1",
+  "date": "2026-08-25",
+  "agent": "Aporia (M1)",
+  "prereg": "aporia/iq/PREREG_IQ_PORT_1_2026-08-25.md",
+  "intervention_class": "PORT_EXISTING_CAPABILITY",
+  "class_fixed_before_execution": true,
+  "evaluator_hash": "10fa10db9989eb3a79c2039d18b748a83e93f751578ec6d0a0e12717eb0fa5ae",
+  "evaluator_hash_matches_prereg": true,
+  "E_C": 0.833333,
+  "E_C_by_subset": {
+    "canary": 0.6,
+    "synth": 1.0,
+    "inference": 1.0,
+    "cross_tier": 1.0
+  },
+  "single_primitive_baseline": 0.0,
+  "reorder_control_acc": 0.833333,
+  "reorder_control_ok": true,
+  "quantities_producers_in_C": [],
+  "footprint_indices": [
+    30,
+    31,
+    32,
+    33,
+    34
+  ],
+  "footprint_size": 5,
+  "footprint_equals_all_but_n": true,
+  "all_but_n_indices": [
+    30,
+    31,
+    32,
+    33,
+    34
+  ],
+  "E_C_union_p_exhibited": 0.875,
+  "E_by_subset_ported": {
+    "canary": 0.7,
+    "synth": 1.0,
+    "inference": 1.0,
+    "cross_tier": 1.0
+  },
+  "delta_E_lower": 0.041667,
+  "delta_E_upper_bound": 0.041667,
+  "delta_E_is_exact": true,
+  "delta_E_upper_strength": "SUPPORTED (requires g-minus-new-ops valid over C; checked for the exhibited pipeline only)",
+  "all_but_n_solved_after_port": "5/5",
+  "single_primitive_baseline_after": 0.0,
+  "no_regression": true,
+  "delegation_probe": {
+    "acc_with_kernel_broken": 0.833333,
+    "all_but_n_solved": "0/5"
+  },
+  "adapter_verdict": "ADAPTER",
+  "INJ_A_all_but_n_solved": 0,
+  "INJ_B_all_but_n_solved": 5,
+  "INJ_A_battery_acc": 0.833333,
+  "INJ_B_battery_acc": 0.875,
+  "injection_branch": "B3_PORT_WITH_PARSER_DEPENDENCY",
+  "branch_table_partitions_36_cells": true,
+  "mutants": {
+    "M1_plus": {
+      "acc": 0.833333,
+      "delta_E": 0.0,
+      "all_but_n_solved": 0
+    },
+    "M2_off_by_one": {
+      "acc": 0.833333,
+      "delta_E": 0.0,
+      "all_but_n_solved": 0
+    },
+    "M3_swapped": {
+      "acc": 0.833333,
+      "delta_E": 0.0,
+      "all_but_n_solved": 0
+    },
+    "M4_identity": {
+      "acc": 0.833333,
+      "delta_E": 0.0,
+      "all_but_n_solved": 0
+    }
+  },
+  "all_mutants_zero_delta": true,
+  "knockout_delta": {
+    "parse_comparison": -0.083333,
+    "parse_which_extreme": -0.083333,
+    "parse_box_items": -0.125,
+    "parse_all_but_n": -0.041667,
+    "op_all_but_n": -0.041667,
+    "op_aggregate_quantities": -0.116667,
+    "parse_rules": -0.333333,
+    "parse_ordinal": -0.266667,
+    "forward_chain": -0.225,
+    "parse_names_and_relations": -0.208333,
+    "relations_from_facts": -0.1,
+    "op_build_ordering": -0.308333,
+    "score_by_extreme_number__g": -0.083333,
+    "score_by_aggregate__g": -0.166667,
+    "score_by_derivability__g": -0.166667,
+    "score_by_comparison__g": -0.083333,
+    "select_nth__g": -0.375
+  },
+  "knockout_port_load_bearing": true,
+  "decorative_ops_in_exhibited_pipeline": [],
+  "checks": {
+    "P1_footprint_exactly_5_all_but_n": true,
+    "P2_battery_0.8750": true,
+    "P3_canary_0.7000": true,
+    "P4_deltaE_5_over_120": true,
+    "P5_single_primitive_baseline_zero": true,
+    "P6_knockout_op_all_but_n": true,
+    "P7_knockout_parse_all_but_n": true,
+    "P8_all_mutants_zero": true,
+    "P9_delegation_breaks_on_patch": true,
+    "reorder_control": true,
+    "no_subset_regression": true,
+    "branch_is_B3": true
+  },
+  "novelty_claim": "ZERO \u2014 class PORT_EXISTING_CAPABILITY establishes nothing about synthesis, discovery, abstraction learning, or library growth.",
+  "verdict": "ADVANCE",
+  "failed_checks": []
+}
