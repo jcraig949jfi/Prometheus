@@ -1,0 +1,543 @@
+{
+  "experiment": "E1_semantic_schedule_classes",
+  "date": "2026-08-25",
+  "prereg": "apollo/cycles/campaign_20260825/PREREGISTRATION.md \u00a74",
+  "static": {
+    "n_transformers": 15,
+    "n_pairs": 105,
+    "write_write": [
+      [
+        "distribution_reducer",
+        "entity_counter",
+        [
+          "evidence"
+        ]
+      ],
+      [
+        "distribution_reducer",
+        "evidence_updater",
+        [
+          "confidence"
+        ]
+      ],
+      [
+        "entity_counter",
+        "parse_box_items",
+        [
+          "counts"
+        ]
+      ],
+      [
+        "parse_names_and_relations",
+        "relations_from_facts",
+        [
+          "relations"
+        ]
+      ],
+      [
+        "parse_ordinal",
+        "parse_question_target",
+        [
+          "question_target"
+        ]
+      ]
+    ],
+    "read_after_write_count": 11,
+    "order_relevant_pairs": 14,
+    "commuting_fraction": 0.8667
+  },
+  "self_test_rediscovers_known_hazard": true,
+  "by_k": [
+    {
+      "k": 4,
+      "subsets_measured": 12,
+      "max_semantic_classes": 1,
+      "median_semantic_classes": 1,
+      "max_orders_enumerated": 24,
+      "mean_collapse_ratio": 18.33,
+      "detail": [
+        {
+          "subset": [
+            "parse_box_items",
+            "parse_ordinal",
+            "parse_question_target",
+            "parse_which_extreme"
+          ],
+          "n_orders_enumerated": 24,
+          "n_semantic_classes": 1,
+          "collapse_ratio": 24.0
+        },
+        {
+          "subset": [
+            "parse_box_items",
+            "parse_names_and_relations",
+            "parse_question_target",
+            "parse_rules"
+          ],
+          "n_orders_enumerated": 24,
+          "n_semantic_classes": 1,
+          "collapse_ratio": 24.0
+        },
+        {
+          "subset": [
+            "forward_chain",
+            "parse_names_and_relations",
+            "parse_numbers",
+            "parse_rules"
+          ],
+          "n_orders_enumerated": 12,
+          "n_semantic_classes": 1,
+          "collapse_ratio": 12.0
+        },
+        {
+          "subset": [
+            "parse_comparison",
+            "parse_ordinal",
+            "parse_question_target",
+            "parse_rules"
+          ],
+          "n_orders_enumerated": 24,
+          "n_semantic_classes": 1,
+          "collapse_ratio": 24.0
+        },
+        {
+          "subset": [
+            "parse_box_items",
+            "parse_comparison",
+            "parse_numbers",
+            "parse_ordinal"
+          ],
+          "n_orders_enumerated": 24,
+          "n_semantic_classes": 1,
+          "collapse_ratio": 24.0
+        },
+        {
+          "subset": [
+            "forward_chain",
+            "parse_names_and_relations",
+            "parse_rules",
+            "parse_which_extreme"
+          ],
+          "n_orders_enumerated": 12,
+          "n_semantic_classes": 1,
+          "collapse_ratio": 12.0
+        },
+        {
+          "subset": [
+            "forward_chain",
+            "parse_box_items",
+            "parse_question_target",
+            "parse_rules"
+          ],
+          "n_orders_enumerated": 12,
+          "n_semantic_classes": 1,
+          "collapse_ratio": 12.0
+        },
+        {
+          "subset": [
+            "parse_box_items",
+            "parse_question_target",
+            "parse_rules",
+            "parse_which_extreme"
+          ],
+          "n_orders_enumerated": 24,
+          "n_semantic_classes": 1,
+          "collapse_ratio": 24.0
+        }
+      ]
+    },
+    {
+      "k": 6,
+      "subsets_measured": 12,
+      "max_semantic_classes": 2,
+      "median_semantic_classes": 1,
+      "max_orders_enumerated": 120,
+      "mean_collapse_ratio": 110.0,
+      "detail": [
+        {
+          "subset": [
+            "forward_chain",
+            "parse_comparison",
+            "parse_names_and_relations",
+            "parse_ordinal",
+            "parse_rules",
+            "parse_which_extreme"
+          ],
+          "n_orders_enumerated": 120,
+          "n_semantic_classes": 1,
+          "collapse_ratio": 120.0
+        },
+        {
+          "subset": [
+            "parse_box_items",
+            "parse_names_and_relations",
+            "parse_numbers",
+            "parse_ordinal",
+            "parse_question_target",
+            "parse_which_extreme"
+          ],
+          "n_orders_enumerated": 120,
+          "n_semantic_classes": 1,
+          "collapse_ratio": 120.0
+        },
+        {
+          "subset": [
+            "forward_chain",
+            "parse_numbers",
+            "parse_ordinal",
+            "parse_rules",
+            "parse_which_extreme",
+            "relations_from_facts"
+          ],
+          "n_orders_enumerated": 120,
+          "n_semantic_classes": 1,
+          "collapse_ratio": 120.0
+        },
+        {
+          "subset": [
+            "parse_comparison",
+            "parse_names_and_relations",
+            "parse_ordinal",
+            "parse_question_target",
+            "parse_rules",
+            "parse_which_extreme"
+          ],
+          "n_orders_enumerated": 120,
+          "n_semantic_classes": 1,
+          "collapse_ratio": 120.0
+        },
+        {
+          "subset": [
+            "forward_chain",
+            "parse_box_items",
+            "parse_comparison",
+            "parse_numbers",
+            "parse_rules",
+            "parse_which_extreme"
+          ],
+          "n_orders_enumerated": 120,
+          "n_semantic_classes": 1,
+          "collapse_ratio": 120.0
+        },
+        {
+          "subset": [
+            "forward_chain",
+            "parse_box_items",
+            "parse_names_and_relations",
+            "parse_ordinal",
+            "parse_question_target",
+            "parse_rules"
+          ],
+          "n_orders_enumerated": 120,
+          "n_semantic_classes": 1,
+          "collapse_ratio": 120.0
+        },
+        {
+          "subset": [
+            "forward_chain",
+            "op_aggregate_quantities",
+            "parse_box_items",
+            "parse_names_and_relations",
+            "parse_question_target",
+            "parse_rules"
+          ],
+          "n_orders_enumerated": 120,
+          "n_semantic_classes": 1,
+          "collapse_ratio": 120.0
+        },
+        {
+          "subset": [
+            "op_build_ordering",
+            "parse_box_items",
+            "parse_names_and_relations",
+            "parse_numbers",
+            "parse_ordinal",
+            "parse_question_target"
+          ],
+          "n_orders_enumerated": 120,
+          "n_semantic_classes": 2,
+          "collapse_ratio": 60.0
+        }
+      ]
+    },
+    {
+      "k": 8,
+      "subsets_measured": 12,
+      "max_semantic_classes": 2,
+      "median_semantic_classes": 1,
+      "max_orders_enumerated": 120,
+      "mean_collapse_ratio": 105.0,
+      "detail": [
+        {
+          "subset": [
+            "forward_chain",
+            "op_aggregate_quantities",
+            "parse_box_items",
+            "parse_comparison",
+            "parse_numbers",
+            "parse_question_target",
+            "parse_rules",
+            "relations_from_facts"
+          ],
+          "n_orders_enumerated": 120,
+          "n_semantic_classes": 1,
+          "collapse_ratio": 120.0
+        },
+        {
+          "subset": [
+            "forward_chain",
+            "op_aggregate_quantities",
+            "op_build_ordering",
+            "parse_box_items",
+            "parse_comparison",
+            "parse_names_and_relations",
+            "parse_ordinal",
+            "parse_rules"
+          ],
+          "n_orders_enumerated": 120,
+          "n_semantic_classes": 1,
+          "collapse_ratio": 120.0
+        },
+        {
+          "subset": [
+            "op_build_ordering",
+            "parse_box_items",
+            "parse_comparison",
+            "parse_names_and_relations",
+            "parse_numbers",
+            "parse_ordinal",
+            "parse_question_target",
+            "parse_which_extreme"
+          ],
+          "n_orders_enumerated": 120,
+          "n_semantic_classes": 2,
+          "collapse_ratio": 60.0
+        },
+        {
+          "subset": [
+            "forward_chain",
+            "op_aggregate_quantities",
+            "parse_box_items",
+            "parse_names_and_relations",
+            "parse_ordinal",
+            "parse_question_target",
+            "parse_rules",
+            "relations_from_facts"
+          ],
+          "n_orders_enumerated": 120,
+          "n_semantic_classes": 1,
+          "collapse_ratio": 120.0
+        },
+        {
+          "subset": [
+            "forward_chain",
+            "op_aggregate_quantities",
+            "parse_box_items",
+            "parse_names_and_relations",
+            "parse_numbers",
+            "parse_question_target",
+            "parse_rules",
+            "relations_from_facts"
+          ],
+          "n_orders_enumerated": 120,
+          "n_semantic_classes": 1,
+          "collapse_ratio": 120.0
+        },
+        {
+          "subset": [
+            "forward_chain",
+            "op_build_ordering",
+            "parse_box_items",
+            "parse_ordinal",
+            "parse_question_target",
+            "parse_rules",
+            "parse_which_extreme",
+            "relations_from_facts"
+          ],
+          "n_orders_enumerated": 120,
+          "n_semantic_classes": 1,
+          "collapse_ratio": 120.0
+        },
+        {
+          "subset": [
+            "forward_chain",
+            "op_build_ordering",
+            "parse_box_items",
+            "parse_names_and_relations",
+            "parse_numbers",
+            "parse_ordinal",
+            "parse_question_target",
+            "parse_rules"
+          ],
+          "n_orders_enumerated": 120,
+          "n_semantic_classes": 2,
+          "collapse_ratio": 60.0
+        },
+        {
+          "subset": [
+            "forward_chain",
+            "op_build_ordering",
+            "parse_box_items",
+            "parse_comparison",
+            "parse_numbers",
+            "parse_question_target",
+            "parse_rules",
+            "relations_from_facts"
+          ],
+          "n_orders_enumerated": 120,
+          "n_semantic_classes": 1,
+          "collapse_ratio": 120.0
+        }
+      ]
+    },
+    {
+      "k": 10,
+      "subsets_measured": 12,
+      "max_semantic_classes": 4,
+      "median_semantic_classes": 2,
+      "max_orders_enumerated": 120,
+      "mean_collapse_ratio": 82.5,
+      "detail": [
+        {
+          "subset": [
+            "forward_chain",
+            "op_build_ordering",
+            "parse_box_items",
+            "parse_names_and_relations",
+            "parse_numbers",
+            "parse_ordinal",
+            "parse_question_target",
+            "parse_rules",
+            "parse_which_extreme",
+            "relations_from_facts"
+          ],
+          "n_orders_enumerated": 120,
+          "n_semantic_classes": 2,
+          "collapse_ratio": 60.0
+        },
+        {
+          "subset": [
+            "forward_chain",
+            "op_aggregate_quantities",
+            "op_build_ordering",
+            "parse_box_items",
+            "parse_comparison",
+            "parse_ordinal",
+            "parse_question_target",
+            "parse_rules",
+            "parse_which_extreme",
+            "relations_from_facts"
+          ],
+          "n_orders_enumerated": 120,
+          "n_semantic_classes": 1,
+          "collapse_ratio": 120.0
+        },
+        {
+          "subset": [
+            "forward_chain",
+            "op_aggregate_quantities",
+            "op_build_ordering",
+            "parse_box_items",
+            "parse_comparison",
+            "parse_names_and_relations",
+            "parse_ordinal",
+            "parse_question_target",
+            "parse_rules",
+            "relations_from_facts"
+          ],
+          "n_orders_enumerated": 120,
+          "n_semantic_classes": 4,
+          "collapse_ratio": 30.0
+        },
+        {
+          "subset": [
+            "forward_chain",
+            "op_aggregate_quantities",
+            "parse_box_items",
+            "parse_comparison",
+            "parse_numbers",
+            "parse_ordinal",
+            "parse_question_target",
+            "parse_rules",
+            "parse_which_extreme",
+            "relations_from_facts"
+          ],
+          "n_orders_enumerated": 120,
+          "n_semantic_classes": 1,
+          "collapse_ratio": 120.0
+        },
+        {
+          "subset": [
+            "forward_chain",
+            "op_build_ordering",
+            "parse_box_items",
+            "parse_comparison",
+            "parse_names_and_relations",
+            "parse_ordinal",
+            "parse_question_target",
+            "parse_rules",
+            "parse_which_extreme",
+            "relations_from_facts"
+          ],
+          "n_orders_enumerated": 120,
+          "n_semantic_classes": 2,
+          "collapse_ratio": 60.0
+        },
+        {
+          "subset": [
+            "forward_chain",
+            "op_aggregate_quantities",
+            "parse_box_items",
+            "parse_comparison",
+            "parse_names_and_relations",
+            "parse_numbers",
+            "parse_question_target",
+            "parse_rules",
+            "parse_which_extreme",
+            "relations_from_facts"
+          ],
+          "n_orders_enumerated": 120,
+          "n_semantic_classes": 1,
+          "collapse_ratio": 120.0
+        },
+        {
+          "subset": [
+            "forward_chain",
+            "op_aggregate_quantities",
+            "parse_box_items",
+            "parse_comparison",
+            "parse_names_and_relations",
+            "parse_numbers",
+            "parse_ordinal",
+            "parse_question_target",
+            "parse_rules",
+            "parse_which_extreme"
+          ],
+          "n_orders_enumerated": 120,
+          "n_semantic_classes": 1,
+          "collapse_ratio": 120.0
+        },
+        {
+          "subset": [
+            "forward_chain",
+            "op_build_ordering",
+            "parse_box_items",
+            "parse_comparison",
+            "parse_names_and_relations",
+            "parse_numbers",
+            "parse_ordinal",
+            "parse_question_target",
+            "parse_rules",
+            "relations_from_facts"
+          ],
+          "n_orders_enumerated": 120,
+          "n_semantic_classes": 2,
+          "collapse_ratio": 60.0
+        }
+      ]
+    }
+  ],
+  "o1_orders_sampled_per_subset": 48,
+  "verdict": "O1 covered essentially all behaviourally distinct schedules",
+  "standing_caveat": "E9 (2026-08-25) showed the battery does not survive independent authorship. E1 is instrument validity on O1, not a capability claim."
+}
