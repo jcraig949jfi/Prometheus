@@ -206,3 +206,33 @@ dropping straddling units and reporting the discards.
 - Token-tercile DiD regression, owed at first arm data. Still filed as debt, not dropped.
 - `RE_REVIEW_SIGNOFF` created only on Harmonia B's independent exit review #3. Not on my PASS.
 - Step 2 verdict, pending the parent extraction.
+
+---
+
+## AMENDMENT (external review, same day) — 181.4M rows is NOT 181.4M decisions
+
+An external reviewer landed a correction on the headline framing above, and I accept it.
+
+> *A transition graph is not a navigation graph.* Strong `P(next | current)` is compatible with no
+> information about `argmax_a P(success | current, a)`.
+
+Where this record says transition structure "lives in 181,424,844 rows (32.3%)", that is an **upper
+bound on navigational observations stated as if it were a count of decisions.** Everything that is
+not a choice point is trajectory data — lineage bookkeeping. The correct denominator is
+**decision-bearing parents**: leakage-distinct parents where multiple *completed* interventions were
+attempted and their consequences differ.
+
+Measured in `charon/step2/choice_point_census.py` (no new corpus scan — the completed action
+`A+ = (side, replacement)` is recoverable from child rows, since `mutation_side == "a"` makes the
+replacement the child's `object_a`). **The step 2 regret experiment does not run until it reports.**
+If the decision-bearing denominator collapses, the pre-registered experiment is measuring a
+population that barely exists, and that fact is worth more than its result.
+
+Also accepted, against today's own conduct: my census qualifier test — categorical, populated on
+failure, varying among siblings — **would pass a synthetic field manufactured from the child-state
+hash.** The step 1 verdict is existential and survives (a weaker detector finding qualifiers still
+proves c1 is not alone), but the **strict qualifier set `{c1, h1, c3}` is not safe** until it beats
+cardinality-matched post-state controls. Recorded as an open liability against that claim.
+
+Full response, including two places the reviewer's proposal breaks against facts measured today:
+`charon/REVIEW_RESPONSE_2026-08-25.md`.
