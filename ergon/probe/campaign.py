@@ -476,6 +476,20 @@ def oracle_text(row, rep1_ok):
 _ALNUM = re.compile(r"[A-Za-z0-9]")
 
 
+# Generic mathematical guidance: topic-relevant, carries no failure record and no
+# task-specific content. Controls "any on-topic text primes the solver".
+GENERIC_ITEMS = ["work-stepwise", "verify-each-claim", "state-assumptions",
+                 "check-boundary-cases", "recompute-before-answering"]
+
+# The SATURATED trivial-method hint. Per the ruling it must be "maximally explicit about the
+# cheap strategy while carrying no task-specific answer information". These name the exact
+# heuristic measured at 0.5225 on fresh tasks (FINDING_heuristic_floor_2026-08-24.md) — the
+# occlusion works only if the cheap method is fully supplied, not hinted at.
+HINT_ITEMS = ["divide-out-2-3-and-5-first", "reject-any-multiple-of-a-small-prime",
+              "then-trial-divide-to-the-square-root", "use-last-digit-and-digit-sum",
+              "count-only-those-surviving-every-check"]
+
+
 class Arms:
     def __init__(self, rows, gold):
         self.rows_by_uid = {r["uid"]: r for r in rows}
@@ -489,6 +503,53 @@ class Arms:
         b = best(DIR / "p1_prepass.jsonl")
         self.generic_status = {}
         self.rep1_ok = {u: (b.get((1, u)) or {}).get("extracted_int") == gold[u] for u in gold}
+
+    #: METHOD_VOCAB, frozen. The item lists are EXTRACTED from the rendered bodies rather
+    #: than re-derived, so the factorial arms carry exactly what the two-arm design carries —
+    #: re-deriving residue content in a second place is the seam error this probe keeps
+    #: committing (ATK-013, and my own base-splitter two days ago).
+    METHOD_VOCAB = ("trial-division", "fermat-test", "miller-rabin", "sqrt-bound",
+                    "parity-or-last-digit", "digit-sum-rule", "modular-arithmetic",
+                    "factorization-attempt")
+
+    @classmethod
+    def _items_from(cls, body):
+        low = body.lower()
+        return [v for v in cls.METHOD_VOCAB if v in low]
+
+    def sparsity_of(self, uid):
+        """The task's own SPARSITY block, extracted from the rendered body rather than rebuilt.
+
+        Shared by every arm: it reports what the substrate recorded for THIS task's pre-pass,
+        which is a property of the record, not of the arm that shipped it. Extracting keeps it
+        exact — 3 of 60 sampled tasks carry an extra `attempt_text` line, so a frozen modal
+        block would have rewritten residue content while appearing to only fix shape.
+        """
+        body = self.prom_body(uid)
+        m = re.search(r"SPARSITY.*", body, re.S)
+        return m.group(0) if m else None
+
+    def null_slug(self, uid):
+        """The slug of the OTHER task whose record F-null drew, extracted from its body.
+
+        Not re-derived: F-null's selection is build_f_null's, and recomputing which record it
+        chose in a second place is the seam error this probe keeps committing.
+        """
+        m = re.search(r"probe_prepass:(\S+?) ", self.null_body(uid))
+        return m.group(1) if m else uid
+
+    #: An empty method census is legitimate — a prior attempt may have used none of the
+    #: catalogued methods — but an empty slot changes the packet's shape, which is the whole
+    #: thing this redesign exists to prevent. So it renders as an explicit token: truthful,
+    #: and shape-preserving. (Zero occurrences on the live manifest; it fires under the
+    #: dry-run's mocked pool, which is exactly where a shape divergence would go unnoticed.)
+    NO_METHODS = ["(no-methods-recorded)"]
+
+    def prom_items(self, uid):
+        return self._items_from(self.prom_body(uid))
+
+    def null_items(self, uid):
+        return self._items_from(self.null_body(uid))
 
     def prom_body(self, uid):
         recs = select_residue(self.pool, stratum="D0", target_uid=uid)
@@ -507,42 +568,49 @@ class Arms:
         base = self.rows_by_uid[uid]["prompt"]
         if arm == "F0":
             return base
-        if arm == "F-prom-retrieved":
-            return "A prior attempt record:\n" + self.prom_body(uid) + "\n\n" + base
-        if arm == "F-null":
-            return "A prior attempt record:\n" + self.null_body(uid) + "\n\n" + base
-        if arm == "F-generic":
-            # RE-DERIVED 2026-08-23 (Charon exit review 3 §4a). The prior R12 ruling shipped
-            # the pool's smallest unit on UNDER-FLOOR, premised on projected prom packets
-            # being 15-60 tokens. That premise was measured while ATK-013 was live and is now
-            # FALSE: shipped prom bodies are mean 123.2 tokens (median 124, range 111-131).
-            # A rule calibrated against a broken state, carried forward.
-            #
-            # Re-measured over 200 real targets on the pinned manifest:
-            #   MATCHED                 161/200 (80.5%)  ratio 1.003  <- the sizer works
-            #   UNMATCHABLE-GRANULARITY  39/200 (19.5%)  ratio 0.802
-            # The whole shortfall is non-MATCHED rows being shipped anyway. render_f_generic's
-            # own contract says non-MATCHED statuses are reported and EXCLUDED from the
-            # specificity margin; this code was ignoring the status field entirely.
-            #
-            # Fix: keep the packet (the arm must still run -- F-generic carries the
-            # TOPIC-CONDITIONING row) but RECORD the status so analysis can exclude
-            # non-MATCHED rows from the size-sensitive comparison. Widening the tolerance to
-            # force MATCHED would be fudging the ruler to flatter the arm.
-            from ergon.probe.f_generic import render_f_generic, units
-            from ergon.probe.assemble import count_tokens
-            target = max(40, count_tokens(self.prom_body(uid)))
-            pkt = render_f_generic(target)
-            text = getattr(pkt, "text", "") or ""
-            if not text:                      # UNDER-FLOOR: now rare, still handled
-                text = min((u.text for u in units()), key=len)
-            self.generic_status[uid] = {
-                "status": getattr(pkt, "status", "UNKNOWN"),
-                "target_tokens": target,
-                "produced_tokens": count_tokens(text),
-                "ratio": round(count_tokens(text) / max(1, target), 4),
-            }
-            return text + "\n\n" + base
+        # F-null and F-prom route through the SAME renderer as every other arm. They
+        # previously used their own path, which is why they shared a template with each
+        # other and not with F-generic. One renderer = one shape, structurally.
+        if arm in ("F-prom-retrieved", "F-null"):
+            from ergon.probe.packet_render import render
+            items = (self.prom_items(uid) if arm == "F-prom-retrieved"
+                     else self.null_items(uid)) or self.NO_METHODS
+            slug = uid if arm == "F-prom-retrieved" else self.null_slug(uid)
+            return ("A prior attempt record:\n" +
+                    render(slug, items, self.sparsity_of(uid)) + "\n\n" + base)
+        # ---- REDESIGN 2026-08-25: shape isomorphism by construction, plus the 2x2.
+        #
+        # The ruling: "If F-generic can be identified against F-null/F-prom from packet shape
+        # alone, then the controller is not a controller. Make the packets syntactically
+        # isomorphic before another arm call. That is prior to the 300-row question."
+        #
+        # Every residue-carrying arm now renders through ONE template (packet_render.render),
+        # so arms cannot diverge in shape without editing that file. Free to do now: no arm
+        # rows exist, and the band read is F0-only.
+        #
+        # And the ruling rejected my proposed subtraction outright: "+.08 - +.05 = +.03
+        # metabolization is not a justified decomposition. Residue and hint can interact,
+        # saturate the same mechanism, alter attention differently, or make one another
+        # redundant." So the design is a FACTORIAL/OCCLUSION control, not an arithmetic
+        # correction: residue absent/present x trivial-method-hint absent/present, all four
+        # cells shape-matched. The question becomes whether residue retains an effect AFTER
+        # the cheap method has already been supplied.
+        if arm in ("F-generic", "F-hint", "F-prom+hint", "F-null+hint"):
+            from ergon.probe.packet_render import render, synthetic_slug
+            idx = int(uid.rsplit("-", 1)[1])
+            if arm == "F-generic":
+                items = GENERIC_ITEMS
+                slug = synthetic_slug(RUNG, idx + 40000)
+            elif arm == "F-hint":
+                items = HINT_ITEMS
+                slug = synthetic_slug(RUNG, idx + 50000)
+            elif arm == "F-null+hint":
+                items = (self.null_items(uid) or self.NO_METHODS) + HINT_ITEMS
+                slug = synthetic_slug(RUNG, idx + 60000)
+            else:                                   # F-prom+hint
+                items = (self.prom_items(uid) or self.NO_METHODS) + HINT_ITEMS
+                slug = synthetic_slug(RUNG, idx + 70000)
+            return render(slug, items, self.sparsity_of(uid)) + "\n\n" + base
         if arm == "F-oracle":
             return oracle_text(self.rows_by_uid[uid], self.rep1_ok[uid]) + "\n\n" + base
         if arm == "F-answer":

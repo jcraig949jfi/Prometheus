@@ -96,35 +96,58 @@ def test_no_verbatim_gold_in_non_oracle_payloads(manifest_rows, arms):
         assert ok, f"{uid}: gold asserted in a non-oracle payload — {hits}"
 
 
-def test_primary_endpoint_arms_are_shape_indistinguishable(manifest_rows, arms):
-    """The PRIMARY endpoint is F-prom-retrieved minus F-null. Shape must not identify the arm.
+def test_every_residue_arm_is_generated_by_the_one_template(manifest_rows, arms):
+    """STRUCTURAL, not heuristic: every residue-carrying arm's packet must match the single
+    template exactly, so shape cannot identify the arm BY CONSTRUCTION.
 
-    NOT per-task envelope equality — that is too strict and I raised a false alarm on it.
-    Benign metadata (a ledger seq number the redactor treats differently at one digit vs two)
-    makes 21/200 individual packets differ, but each arm shows the variant on exactly 9/200
-    tasks with 2 asymmetric tasks in EACH direction. Symmetric noise, not an arm signal.
+    This replaces two weaker checks. Per-task envelope equality was too strict (a redacted
+    sequence number made 21/200 packets differ). Framing-multiset equality was subtly wrong —
+    the abstraction erased words but preserved LIST LENGTH, so a one-item census looked
+    shape-different from a five-item one though both came from the same frame. Matching the
+    template directly needs no abstraction at all.
 
-    The decidable property that matters: the two arms emit the SAME MULTISET of envelope
-    shapes, so no shape statistic can separate them.
+    Closes the defect previously carried here as a strict xfail: F-generic was a prose
+    paragraph while F-null/F-prom were bracketed records. All six now render through
+    packet_render.render.
     """
-    from ergon.probe.packet_invariants import envelope_multiset_identical
-    per_task = [{a: arms.prompt(a, r["uid"]) for a in ("F0", "F-null", "F-prom-retrieved")}
-                for r in manifest_rows]
-    ok, diff = envelope_multiset_identical(per_task, "F-null", "F-prom-retrieved")
-    assert ok, f"primary-endpoint arms emit different shape distributions: {diff}"
+    from ergon.probe.packet_render import matches_template
+    from ergon.probe.packet_invariants import payload_of
+    residue_arms = ("F-null", "F-prom-retrieved", "F-generic",
+                    "F-hint", "F-null+hint", "F-prom+hint")
+    pools = set()
+    for r in manifest_rows[:40]:
+        uid = r["uid"]
+        base = arms.prompt("F0", uid)
+        for a in residue_arms:
+            payload = payload_of(arms.prompt(a, uid), base)
+            if a in ("F-null", "F-prom-retrieved"):
+                payload = payload.split(chr(10), 1)[1]      # shared lead line
+            ok, slots = matches_template(payload)
+            assert ok, f"{uid}/{a}: packet was NOT produced by the shared template"
+            pools.add(slots["slug"].split("-")[0])
+    assert len(pools) == 1, f"the slug pool token differs by arm — a readable label: {pools}"
 
 
-@pytest.mark.xfail(reason="KNOWN AND FILED: F-generic is a prose paragraph while F-null and "
-                          "F-prom are bracketed records, so it is separable by shape alone. "
-                          "Filed in FINDING_heuristic_floor_2026-08-24.md §3; the remedy "
-                          "(give F-generic the residue envelope) changes an arm Charon sized "
-                          "and is his ruling, not mine. Recorded as expected-fail rather than "
-                          "hidden, so it cannot be forgotten and cannot block other seats.",
-                   strict=True)
-def test_f_generic_shares_the_residue_envelope(manifest_rows, arms):
-    from ergon.probe.packet_invariants import envelope_identical
+def test_the_factorial_cells_exist_and_differ_only_in_content(manifest_rows, arms):
+    """The 2x2 the redesign ruling requires: residue absent/present x method-hint
+    absent/present. The ruling rejected subtraction ("+.08 - +.05 = +.03 is not a justified
+    decomposition"), so the cells must be jointly runnable and shape-matched, not differenced.
+    """
+    from ergon.probe.packet_render import matches_template
+    from ergon.probe.packet_invariants import payload_of
     uid = manifest_rows[0]["uid"]
-    prompts = {a: arms.prompt(a, uid)
-               for a in ("F0", "F-null", "F-generic", "F-prom-retrieved")}
-    ok, _ = envelope_identical(prompts, ["F-null", "F-generic", "F-prom-retrieved"])
-    assert ok
+    base = arms.prompt("F0", uid)
+    cells = {"residue-,hint-": "F-generic", "residue-,hint+": "F-hint",
+             "residue+,hint-": "F-prom-retrieved", "residue+,hint+": "F-prom+hint"}
+    items = {}
+    for name, arm in cells.items():
+        payload = payload_of(arms.prompt(arm, uid), base)
+        if arm == "F-prom-retrieved":
+            payload = payload.split(chr(10), 1)[1]
+        ok, slots = matches_template(payload)
+        assert ok, f"{name} ({arm}) is not template-generated"
+        items[name] = slots["items"]
+    assert items["residue-,hint+"] != items["residue-,hint-"], "the hint cell carries no hint"
+    assert items["residue+,hint+"] != items["residue+,hint-"], "hint absent from residue+hint"
+    from ergon.probe.campaign import HINT_ITEMS
+    assert HINT_ITEMS[0] in items["residue+,hint+"], "the saturated hint is not fully supplied"
