@@ -1,0 +1,464 @@
+[
+  {
+    "prompt": "A cargo drone has a payload limit of 47.5 kg. A survey drone has a payload limit of 47.05 kg. Which drone can carry more?",
+    "candidates": [
+      "the survey drone",
+      "both are identical",
+      "the cargo drone",
+      "undetermined"
+    ],
+    "correct": "the cargo drone",
+    "category": "numeric_comparison"
+  },
+  {
+    "prompt": "Station A recorded -12 °C overnight. Station B recorded -3 °C overnight. Which station was colder?",
+    "candidates": [
+      "station B",
+      "neither, both equal",
+      "station A",
+      "it cannot be determined"
+    ],
+    "correct": "station A",
+    "category": "numeric_comparison"
+  },
+  {
+    "prompt": "One reservoir is 3/8 full. Another is 0.4 full. Which holds the larger fraction of its capacity?",
+    "candidates": [
+      "the reservoir at 3/8",
+      "they are equally full",
+      "it depends on the reservoir sizes",
+      "the reservoir at 0.4"
+    ],
+    "correct": "the reservoir at 0.4",
+    "category": "numeric_comparison"
+  },
+  {
+    "prompt": "Ledger A lists 1,204,000 entries. Ledger B lists 1,240,000 entries. Which ledger lists more entries?",
+    "candidates": [
+      "ledger A",
+      "the two are equal",
+      "it cannot be determined",
+      "ledger B"
+    ],
+    "correct": "ledger B",
+    "category": "numeric_comparison"
+  },
+  {
+    "prompt": "Machine A completes 9 items every 4 minutes. Machine B completes 11 items every 5 minutes. Which machine is faster?",
+    "candidates": [
+      "machine B",
+      "they run at the same rate",
+      "machine A",
+      "it cannot be determined"
+    ],
+    "correct": "machine A",
+    "category": "numeric_comparison"
+  },
+  {
+    "prompt": "A beam is 5/4 metres long. A rod is 1.25 metres long. Which is longer?",
+    "candidates": [
+      "the beam",
+      "they are the same length",
+      "the rod",
+      "it cannot be determined"
+    ],
+    "correct": "they are the same length",
+    "category": "numeric_comparison"
+  },
+  {
+    "prompt": "Every crate holds exactly 18 bolts. A shipment contains 7 crates. How many bolts are in the shipment?",
+    "candidates": [
+      "125",
+      "128",
+      "132",
+      "126"
+    ],
+    "correct": "126",
+    "category": "numeric_stated_premise"
+  },
+  {
+    "prompt": "A recipe uses exactly 250 millilitres of stock per serving. You prepare 6 servings. How much stock is used in total?",
+    "candidates": [
+      "1250 millilitres",
+      "1500 millilitres",
+      "1560 millilitres",
+      "2500 millilitres"
+    ],
+    "correct": "1500 millilitres",
+    "category": "numeric_stated_premise"
+  },
+  {
+    "prompt": "A tank loses exactly 3.5 litres of water per hour. How much does it lose over 8 hours?",
+    "candidates": [
+      "24.5 litres",
+      "28 litres",
+      "28.5 litres",
+      "35 litres"
+    ],
+    "correct": "28 litres",
+    "category": "numeric_stated_premise"
+  },
+  {
+    "prompt": "Each page of the register holds exactly 42 lines. A chapter fills 15 pages. How many lines does the chapter occupy?",
+    "candidates": [
+      "620",
+      "588",
+      "672",
+      "630"
+    ],
+    "correct": "630",
+    "category": "numeric_stated_premise"
+  },
+  {
+    "prompt": "A single ticket costs exactly 23 credits. A group buys 14 tickets. What is the total cost?",
+    "candidates": [
+      "322 credits",
+      "312 credits",
+      "329 credits",
+      "337 credits"
+    ],
+    "correct": "322 credits",
+    "category": "numeric_stated_premise"
+  },
+  {
+    "prompt": "A sensor samples exactly 240 times per minute. How many samples does it take in 45 seconds?",
+    "candidates": [
+      "160",
+      "195",
+      "320",
+      "180"
+    ],
+    "correct": "180",
+    "category": "numeric_stated_premise"
+  },
+  {
+    "prompt": "Ana is taller than Bruno. Bruno is taller than Chen. Who is tallest?",
+    "candidates": [
+      "Bruno",
+      "Chen",
+      "Ana",
+      "it cannot be determined"
+    ],
+    "correct": "Ana",
+    "category": "transitivity"
+  },
+  {
+    "prompt": "Crate W is heavier than crate X. Crate X is heavier than crate Y. Crate Y is heavier than crate Z. Which crate is lightest?",
+    "candidates": [
+      "crate W",
+      "crate X",
+      "crate Z",
+      "crate Y"
+    ],
+    "correct": "crate Z",
+    "category": "transitivity"
+  },
+  {
+    "prompt": "Mira finished before Noor. Noor finished before Omar. Who finished last?",
+    "candidates": [
+      "Mira",
+      "Omar",
+      "Noor",
+      "it cannot be determined"
+    ],
+    "correct": "Omar",
+    "category": "transitivity"
+  },
+  {
+    "prompt": "Kai is older than Lena. Mateo is older than Lena. Who is oldest?",
+    "candidates": [
+      "it cannot be determined",
+      "Kai",
+      "Lena",
+      "Mateo"
+    ],
+    "correct": "it cannot be determined",
+    "category": "transitivity"
+  },
+  {
+    "prompt": "Item R costs more than item S. Item S costs more than item T. Item T costs more than item U. Is item R more expensive than item U?",
+    "candidates": [
+      "no",
+      "yes",
+      "they cost the same",
+      "it cannot be determined"
+    ],
+    "correct": "yes",
+    "category": "transitivity"
+  },
+  {
+    "prompt": "Village D lies south of village E. Village E lies south of village F. Which village is furthest north?",
+    "candidates": [
+      "village F",
+      "village D",
+      "village E",
+      "it cannot be determined"
+    ],
+    "correct": "village F",
+    "category": "transitivity"
+  },
+  {
+    "prompt": "A depot received 60 crates. All but 14 of them were sealed. How many crates were sealed?",
+    "candidates": [
+      "14",
+      "60",
+      "46",
+      "74"
+    ],
+    "correct": "46",
+    "category": "all_but_n"
+  },
+  {
+    "prompt": "A shelf holds 33 volumes. All but 8 of them are hardback. How many are hardback?",
+    "candidates": [
+      "25",
+      "8",
+      "33",
+      "41"
+    ],
+    "correct": "25",
+    "category": "all_but_n"
+  },
+  {
+    "prompt": "Of the 120 seats in the hall, all but 27 were occupied. How many seats were occupied?",
+    "candidates": [
+      "27",
+      "120",
+      "147",
+      "93"
+    ],
+    "correct": "93",
+    "category": "all_but_n"
+  },
+  {
+    "prompt": "All but 5 of the 19 sensors reported in. How many sensors reported in?",
+    "candidates": [
+      "5",
+      "19",
+      "14",
+      "24"
+    ],
+    "correct": "14",
+    "category": "all_but_n"
+  },
+  {
+    "prompt": "A batch contains 250 parts. All but 36 of them passed inspection. How many parts failed inspection?",
+    "candidates": [
+      "36",
+      "214",
+      "250",
+      "286"
+    ],
+    "correct": "36",
+    "category": "all_but_n"
+  },
+  {
+    "prompt": "Of 84 submitted entries, all but 11 were valid. How many entries were invalid?",
+    "candidates": [
+      "73",
+      "11",
+      "84",
+      "95"
+    ],
+    "correct": "11",
+    "category": "all_but_n"
+  },
+  {
+    "prompt": "The alarm sounded before the door opened. The door opened before the lights came on. Which happened last?",
+    "candidates": [
+      "the lights came on",
+      "the alarm sounded",
+      "the door opened",
+      "undetermined"
+    ],
+    "correct": "the lights came on",
+    "category": "temporal_ordering"
+  },
+  {
+    "prompt": "The survey was filed after the permit was issued. The permit was issued after the site was cleared. Which happened first?",
+    "candidates": [
+      "the survey was filed",
+      "the permit was issued",
+      "the site was cleared",
+      "undetermined"
+    ],
+    "correct": "the site was cleared",
+    "category": "temporal_ordering"
+  },
+  {
+    "prompt": "Packet A arrived before packet B. Packet B arrived before packet C. Packet C arrived before packet D. Which packet arrived third?",
+    "candidates": [
+      "packet C",
+      "packet A",
+      "packet B",
+      "packet D"
+    ],
+    "correct": "packet C",
+    "category": "temporal_ordering"
+  },
+  {
+    "prompt": "Event X happened after event Y. Event Z happened after event X. Which event happened second?",
+    "candidates": [
+      "event Y",
+      "event Z",
+      "it cannot be determined",
+      "event X"
+    ],
+    "correct": "event X",
+    "category": "temporal_ordering"
+  },
+  {
+    "prompt": "The report was signed after the audit began. The audit began after the invoice was paid. The invoice was paid after the contract was signed. Which happened earliest?",
+    "candidates": [
+      "the report was signed",
+      "the audit began",
+      "the contract was signed",
+      "the invoice was paid"
+    ],
+    "correct": "the contract was signed",
+    "category": "temporal_ordering"
+  },
+  {
+    "prompt": "Task P finished before task Q. Task R finished before task Q. Which task finished first?",
+    "candidates": [
+      "task P",
+      "task Q",
+      "task R",
+      "it cannot be determined"
+    ],
+    "correct": "it cannot be determined",
+    "category": "temporal_ordering"
+  },
+  {
+    "prompt": "The jar contains no red marbles. Consider the claim: every red marble in the jar is chipped. Is the claim true?",
+    "candidates": [
+      "yes, it is true",
+      "no, it is false",
+      "undetermined",
+      "the claim is not well formed"
+    ],
+    "correct": "yes, it is true",
+    "category": "vacuous_truth"
+  },
+  {
+    "prompt": "No book on this shelf has more than 500 pages. Consider the claim: every book on the shelf with more than 500 pages is overdue. Is the claim true?",
+    "candidates": [
+      "yes, it is true",
+      "no, it is false",
+      "undetermined",
+      "only if some book is overdue"
+    ],
+    "correct": "yes, it is true",
+    "category": "vacuous_truth"
+  },
+  {
+    "prompt": "There are exactly three blue tiles, and exactly one of them is cracked. Consider the claim: every blue tile is cracked. Is the claim true?",
+    "candidates": [
+      "yes, it is true",
+      "no, it is false",
+      "undetermined",
+      "the claim is not well formed"
+    ],
+    "correct": "no, it is false",
+    "category": "vacuous_truth"
+  },
+  {
+    "prompt": "No employee in the department holds a pilot licence. Consider the claim: some employee in the department who holds a pilot licence works weekends. Is the claim true?",
+    "candidates": [
+      "yes, it is true",
+      "undetermined",
+      "only on weekends",
+      "no, it is false"
+    ],
+    "correct": "no, it is false",
+    "category": "vacuous_truth"
+  },
+  {
+    "prompt": "The box contains no item weighing more than two kilograms. Consider the claim: if an item in the box weighs more than two kilograms, then it is fragile. Is the claim true?",
+    "candidates": [
+      "no, it is false",
+      "yes, it is true",
+      "it cannot be determined",
+      "only if the box is empty"
+    ],
+    "correct": "yes, it is true",
+    "category": "vacuous_truth"
+  },
+  {
+    "prompt": "Nobody in the room is taller than two metres. Consider the claim: everyone in the room taller than two metres is asleep. Is the claim true?",
+    "candidates": [
+      "yes, it is true",
+      "no, it is false",
+      "it cannot be determined",
+      "only if the room is empty"
+    ],
+    "correct": "yes, it is true",
+    "category": "vacuous_truth"
+  },
+  {
+    "prompt": "Consider these three statements together: P is heavier than Q; Q is heavier than R; R is heavier than P. Can all three hold at once?",
+    "candidates": [
+      "yes, all three can hold",
+      "only if two of them are equal",
+      "it cannot be determined",
+      "no, they contradict one another"
+    ],
+    "correct": "no, they contradict one another",
+    "category": "consistency_check"
+  },
+  {
+    "prompt": "Consider these three statements together: the meeting is on Tuesday; the meeting is in the afternoon; the room is booked for that meeting all Tuesday afternoon. Can all three hold at once?",
+    "candidates": [
+      "no, they contradict one another",
+      "only if the meeting is moved",
+      "yes, all three can hold",
+      "it cannot be determined"
+    ],
+    "correct": "yes, all three can hold",
+    "category": "consistency_check"
+  },
+  {
+    "prompt": "Consider these three statements together: x + y = 10; x - y = 2; x = 7. Can all three hold at once?",
+    "candidates": [
+      "yes, all three can hold",
+      "no, they contradict one another",
+      "only if y is negative",
+      "it cannot be determined"
+    ],
+    "correct": "no, they contradict one another",
+    "category": "consistency_check"
+  },
+  {
+    "prompt": "Three meetings occupy three different days, Monday to Wednesday. Meeting A is not on Monday. Meeting B is not on Tuesday. Meeting C is not on Wednesday. Can all of this hold at once?",
+    "candidates": [
+      "no, it contradicts itself",
+      "yes, all of it can hold",
+      "only if two meetings share a day",
+      "it cannot be determined"
+    ],
+    "correct": "yes, all of it can hold",
+    "category": "consistency_check"
+  },
+  {
+    "prompt": "Consider these three statements together: the room holds at most 40 people; 25 adults are in the room; 12 children are in the room. Can all three hold at once?",
+    "candidates": [
+      "no, they contradict one another",
+      "yes, all three can hold",
+      "only if some people leave",
+      "it cannot be determined"
+    ],
+    "correct": "yes, all three can hold",
+    "category": "consistency_check"
+  },
+  {
+    "prompt": "Consider these three statements together: every technician is certified; no certified person works nights; Sam is a technician who works nights. Can all three hold at once?",
+    "candidates": [
+      "no, they contradict one another",
+      "yes, all three can hold",
+      "only if Sam is uncertified",
+      "it cannot be determined"
+    ],
+    "correct": "no, they contradict one another",
+    "category": "consistency_check"
+  }
+]
