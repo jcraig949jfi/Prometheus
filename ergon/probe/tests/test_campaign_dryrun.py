@@ -70,14 +70,33 @@ def _harness(tmp, signoff, waive_r13=True):
 def tmpdir_outside_ledgers():
     tmp = Path(tempfile.mkdtemp(prefix="campaign_dry_"))
     assert "ledgers" not in str(tmp), "dry-run must never write into the real ledger tree"
-    yield tmp
+
     # A test once wrote an R13 waiver into the LIVE campaign directory because the gate path
     # was bound at import instead of resolved from DIR. A stray waiver silently disables a
-    # power floor on a real run, so the fixture now proves the live tree is untouched.
+    # power floor on a real run, so the fixture proves the live tree is untouched.
+    #
+    # PREDICATE CORRECTED 2026-08-25 (Harmonia B, exit review #3). This asserted ABSOLUTE
+    # ABSENCE, which cannot distinguish "a test leaked a gate file" from "the independent seat
+    # legitimately signed off". The moment a real RE_REVIEW_SIGNOFF existed the suite went red,
+    # leaving two bad options: run red for the whole authorized campaign, or delete a real
+    # signoff to green the suite — silently revoking a gate to satisfy a test. The guard's
+    # actual intent is "no TEST may create these", so it now snapshots before and compares
+    # after. Strictly stronger: it still catches creation, and additionally catches a test
+    # MUTATING a signoff that already exists.
     live = ROOT / "ergon/probe/ledgers/campaign"
-    for stray in ("R13_POWER_FLOOR_WAIVED", "RE_REVIEW_SIGNOFF"):
-        assert not (live / stray).exists(), (
-            f"a test created {stray} in the LIVE ledger tree — this disables a real gate")
+    guarded = ("R13_POWER_FLOOR_WAIVED", "RE_REVIEW_SIGNOFF")
+    before = {f: (live / f).read_bytes() if (live / f).exists() else None for f in guarded}
+
+    yield tmp
+
+    for stray in guarded:
+        after = (live / stray).read_bytes() if (live / stray).exists() else None
+        if before[stray] is None:
+            assert after is None, (
+                f"a test CREATED {stray} in the LIVE ledger tree — this disables a real gate")
+        else:
+            assert after == before[stray], (
+                f"a test MUTATED the live {stray} — a real gate was altered by a test run")
 
 
 def test_campaign_holds_before_p4_then_completes(tmpdir_outside_ledgers):
