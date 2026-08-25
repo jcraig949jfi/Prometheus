@@ -1,0 +1,59 @@
+{
+ "aliasing": {
+  "records": 5026,
+  "cross_boundary": 0,
+  "inter_field": 0,
+  "any_sharing": 0,
+  "cross_examples": [],
+  "inter_examples": [],
+  "any_examples": []
+ },
+ "static": {
+  "globals_used": [],
+  "mutable_defaults": [],
+  "escapes": [],
+  "whole_record_passed": [],
+  "closure_cells": [],
+  "func_attrs": [],
+  "module_mutables_live": [],
+  "module_mutables_inert": [
+   [
+    "blackboard_ops",
+    "OP_REGISTRY",
+    "dict",
+    9,
+    []
+   ],
+   [
+    "blackboard_ops_v2",
+    "OP_REGISTRY_V2",
+    "dict",
+    6,
+    []
+   ],
+   [
+    "blackboard_ops_r2",
+    "OP_REGISTRY_R2",
+    "dict",
+    4,
+    []
+   ]
+  ]
+ },
+ "history_independence": {
+  "tested": 189,
+  "mismatches": []
+ },
+ "cross_task": {
+  "n_tasks": 120,
+  "order_sensitive": []
+ },
+ "module_mutables_changed": [],
+ "verdict": {
+  "no_aliasing": true,
+  "no_cross_boundary": true,
+  "no_hidden_state": true,
+  "history_independent": true,
+  "task_separable": true
+ }
+}

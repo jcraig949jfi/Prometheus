@@ -108,3 +108,38 @@ CANDIDATES = {
     "lexis_op_subtract": op_subtract,
     "lexis_op_order_consistent": op_order_consistent,
 }
+
+
+# ── C4 ── the ROUTER for C2, added 2026-08-25 after external review ────────────
+# The review asked for a bundle test rather than an inference:
+#
+#   "test minimal bundles as well as primitives. Parser alone; readout alone;
+#    parser+readout. If each alone gives zero and the pair gives positive dS, you have
+#    directly demonstrated an interface complementarity rather than merely inferred one."
+#
+# `lexis_op_subtract` (C2) computes 15-1=14 into `max_value` and measured dE = 0, because
+# the only operator that routes `max_value` to an answer is `score_by_max_value` -- a PLAIN
+# unguarded scorer, excluded from the clean pool. This is the missing readout: a GUARDED
+# scorer that matches `max_value` against the candidate strings by content.
+#
+# Content-matching, not positional: it looks for a candidate whose leading integer equals
+# max_value. That is permutation-equivariant by construction, so the pair can be put
+# through the 24-permutation objective rather than only the ordinary one.
+@blackboard_op(reads=["candidates", "max_value"], writes=["selected_answer"],
+               precondition=lambda s: s.max_value is not None and len(s.candidates) > 0,
+               on_fail="skip", name="lexis_score_by_value_match__g")
+def score_by_value_match(state: BlackboardState) -> BlackboardState:
+    """Select the candidate whose leading integer equals max_value."""
+    try:
+        target = int(round(float(state.max_value)))
+    except (TypeError, ValueError):
+        return state
+    for c in state.candidates:
+        m = re.match(r"\s*(-?\d+)", c)
+        if m and int(m.group(1)) == target:
+            state.selected_answer = c
+            return state
+    return state
+
+
+CANDIDATES["lexis_score_by_value_match__g"] = score_by_value_match
