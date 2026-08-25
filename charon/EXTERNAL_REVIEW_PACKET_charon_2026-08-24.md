@@ -269,6 +269,63 @@ populations with the generator list derived from data rather than carried forwar
 
 ---
 
+## 5b. The control layer built in response (2026-08-24)
+
+Asked what **non-LLM controls** could replace inference with mechanical analysis, I built rather
+than described. `attacks/preflight.py` — deterministic, no LLM, no network, no judgment.
+
+**The reframe that made it tractable.** You cannot mechanize *"is this finding true?"* — that
+needs inference and always will. You can mechanize *"could this finding have come out
+differently?"* Every defect in this session was a **well-formedness** failure, not a reasoning
+failure: no agent reasoned badly about good data; each claim was malformed before anyone reasoned
+about it. So make admissibility mechanical and let judgment operate only on what passed.
+
+**The structural gap found first.** No git hooks existed, and **no executable file anywhere
+referenced the attack probes.** Confirmed two ways: no hook/CI wiring, and a repo-wide search over
+`*.py`/`*.cmd`/`*.yml` returning zero hits (the only three matches were Markdown — the registry
+and two prose documents). The registry's own rule is *"an entry without a probe is an opinion with
+a filing number"*; a probe nothing runs is the same thing. `ATK-014` had a hardcoded
+`C:\prometheus\...` path and had therefore been **silently unrunnable since registration** —
+nothing ever invoked it, so nothing ever surfaced the error. Repaired to repo-relative, it
+immediately reported a live defect: the corpus scanner understates `H(kill_pattern|cell)` by
+**0.9183 bits**, and the dropped mass is exactly the cross-cell patterns — an estimator
+structurally incapable of reporting evidence against the hypothesis it tests.
+
+**Four checks, each derived from a real defect, each validated against the artifact that produced
+it:**
+
+- `dead_field` — a gate input no row carries. The `dict.get(k) or 0` idiom turns an absent field
+  into a passing measurement; the drip's truncation gate read identically `0.0000` by
+  construction. *A gate that cannot fail is not a gate.*
+- `degenerate_strata` — is the outcome determined by stratum identity rather than within-stratum
+  structure? Reproduces the magnitude confound that consumed an eight-cycle research arc in **one
+  groupby**: `abs_diff_le_3` fails (7/29 strata pinned at 0 or 1, 24.4% of mass, conductor pairs
+  at 0.000); `equal_mod_2` passes at 0.1%.
+- `constant_within_group` — a ranking feature with zero within-group variance. A within-group AUC
+  of 0.5000 that *reads* as an honest null but is a type error.
+- `frame` — declared file population vs the directory's real contents. Fires on `theseus/corpus`:
+  `batch-*.jsonl.gz` matches 100 of 266 files.
+
+**Three design choices that matter more than the checks themselves:**
+
+1. **Positive controls are mandatory and this file is not exempt from its own rule.** `--selftest`
+   plants a defect per check and asserts it fires, *and* asserts silence on clean data. Both
+   directions, 6/6.
+2. **Non-LLM is the point, not a cost saving.** Per the program's own A7 finding — *mutation +
+   self-reporting, not mutation + selection* — a checker sharing ancestry with the checked
+   converges on agreement. These return the same answer to every seat and cannot be talked round.
+3. **It ratchets rather than blocks.** A gate that blocks every seat on day one is disabled by
+   every seat on day one. Known-failing probes are recorded with an owner and do not block;
+   anything passing today must keep passing; a baseline entry that starts passing is itself an
+   error. The backlog can only shrink.
+
+**Honest limit:** these catch malformed claims, not wrong ones. They would not have caught this
+session's *interpretation* errors — the co-sign that left two verdict classes unbound, or reading
+a single-family screen as the cross-family statistic. Roughly six of nine defects were
+mechanically catchable; three needed someone to read the spec against the code.
+
+---
+
 ## 6. What a reviewer should push on
 
 1. **The 0.4764 cross-family reading is one configuration.** It answers reachability. It is not a
