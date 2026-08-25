@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-25T09:06:02+00:00
+# PULSE — generated 2026-08-25T09:16:28+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,14 +8,16 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        522
-consumed (state changes):   61  {'queue_state': 54, 'findings': 3, 'registry': 4}
+emitted (new files):        524
+consumed (state changes):   63  {'findings': 4, 'queue_state': 55, 'registry': 4}
 consumed/emitted:           0.12
 verdict: ALIVE
 WARNING: production outpacing consumption -- the 442-report shape. Stop producing until this recovers.
 ```
 
-## Commits, 72h (non-cron): 239
+## Commits, 72h (non-cron): 241
+- 01bfbfa6 08-25 05:16 Aporia SELECTOR preregistered â€” and the gate's first prospective use found a hole in the gate
+- 447426ea 08-25 05:12 Aporia: PULSE after BATTERY
 - 86b1e582 08-25 05:04 Aporia BATTERY: ADVANCE â€” the gate discriminates, and one of my own rungs passes only on a correction I am disclosing
 - a0571a75 08-25 04:53 Aporia BATTERY: preregistration, filed before any code exists
 - a4a951e9 08-25 04:14 Aporia: PULSE after CEILING-UNDER-ABSTAIN
@@ -39,9 +41,7 @@ WARNING: production outpacing consumption -- the 442-report shape. Stop producin
 - 9fe1125c 08-25 02:19 Aporia: GATE_ELI5 for repo-wide git lock contention, plus PULSE
 - febfd8a1 08-25 02:18 Diomedes: THREAD CLOSED â€” message-of-record for cycle 005 Arm B, whose rows were swept into other seats' commits
 - 5fabbcef 08-25 02:18 Diomedes: thread CLOSED â€” provenance correction for the Arm B verdict, and BOOTSTRAP marked terminal
-- e7a9b314 08-25 02:18 Aporia TRANSFER-1: preregistration, committed before the generator exists
-- d36f8c3f 08-25 02:18 Techne cycle 060: the height family refuses non-finite input, and a frozen control that cannot block
-- … +214 more
+- … +216 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
@@ -74,9 +74,10 @@ WARNING: production outpacing consumption -- the 442-report shape. Stop producin
 - DONE-HEALED: 1
 - QUEUED: 3 — next: Consume remaining 17 DR reports; emit one typed consumption record eac
 
-## Findings, 7d: 5
+## Findings, 7d: 6
 - aporia/docs/FINDING_2026-08-18_kill_diagnosis_probe.md
 - aporia/docs/FINDING_backcorpus_420_complete_2026-08-19.md
+- aporia/iq/FINDING_GATE_PROSPECTIVE_COVERAGE_2026-08-25.md
 - ergon/probe/FINDING_heuristic_floor_2026-08-24.md
 - ergon/probe/FINDING_packet_arm_labels_2026-08-25.md
 - techne/loop/rung_notes/FINDING_008_aporia_singular_series_ratio.md
