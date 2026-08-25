@@ -1,0 +1,161 @@
+{
+  "experiment": "SCORER-FIX",
+  "date": "2026-08-25",
+  "agent": "Aporia (M1)",
+  "prereg": "aporia/iq/PREREG_SCORERFIX_2026-08-25.md",
+  "C_edited": false,
+  "note": "C = blackboard_evolve.REGISTRY untouched; the fix is a harness-side variant.",
+  "corpus_sha256": "e2e6898d50dfffe9ad4d80205a7e57032521cf95bd6a867a2dcc1c90fc1dcf68",
+  "corpus_matches_transfer1": true,
+  "nondegenerate_n": 410,
+  "degenerate_n": 95,
+  "dropped_records": 0,
+  "dropped_records_note": "Nothing dropped. Every task scored under both pools; pipeline exceptions count as WRONG.",
+  "mutants_nondegenerate": {
+    "M1_plus": {
+      "before": 0.1366,
+      "after": 0.0
+    },
+    "M2_off_by_one": {
+      "before": 0.0,
+      "after": 0.0
+    },
+    "M3_swapped": {
+      "before": 0.1366,
+      "after": 0.0
+    },
+    "M4_identity": {
+      "before": 0.0,
+      "after": 0.0
+    },
+    "M5_return_n": {
+      "before": 0.0,
+      "after": 0.0
+    },
+    "M6_half_total": {
+      "before": 0.1268,
+      "after": 0.0
+    }
+  },
+  "worst_mutant_after": 0.0,
+  "S1_all_mutants_at_or_below_0.02": true,
+  "port_by_surface_before": {
+    "v0": {
+      "correct": 151,
+      "n": 159,
+      "acc": 0.9497
+    },
+    "v1": {
+      "correct": 179,
+      "n": 194,
+      "acc": 0.9227
+    },
+    "v2": {
+      "correct": 0,
+      "n": 197,
+      "acc": 0.0
+    },
+    "v3": {
+      "correct": 48,
+      "n": 50,
+      "acc": 0.96
+    }
+  },
+  "port_by_surface_after": {
+    "v0": {
+      "correct": 151,
+      "n": 159,
+      "acc": 0.9497
+    },
+    "v1": {
+      "correct": 179,
+      "n": 194,
+      "acc": 0.9227
+    },
+    "v2": {
+      "correct": 0,
+      "n": 197,
+      "acc": 0.0
+    },
+    "v3": {
+      "correct": 48,
+      "n": 50,
+      "acc": 0.96
+    }
+  },
+  "port_surfaces_moved": {},
+  "S2_port_unchanged": true,
+  "port_nondegenerate_before": 0.678,
+  "port_nondegenerate_after": 0.678,
+  "battery_baseline_before": 0.833333,
+  "battery_baseline_after": 0.833333,
+  "battery_ported_before": 0.875,
+  "battery_ported_after": 0.875,
+  "battery_moved": false,
+  "S3_battery_unchanged": true,
+  "delta_E_port_after_fix": 0.041667,
+  "scorer_audit": {
+    "score_by_aggregate": {
+      "emitted": "777 a",
+      "guessed_first_candidate": true,
+      "abstained": false
+    },
+    "score_by_aggregate__g": {
+      "emitted": "",
+      "guessed_first_candidate": false,
+      "abstained": true
+    },
+    "score_by_comparison__g": {
+      "emitted": "",
+      "guessed_first_candidate": false,
+      "abstained": true
+    },
+    "score_by_derivability": {
+      "emitted": "777 a",
+      "guessed_first_candidate": true,
+      "abstained": false
+    },
+    "score_by_derivability__g": {
+      "emitted": "",
+      "guessed_first_candidate": false,
+      "abstained": true
+    },
+    "score_by_extreme_number__g": {
+      "emitted": "",
+      "guessed_first_candidate": false,
+      "abstained": true
+    },
+    "score_by_max_entity": {
+      "emitted": "777 a",
+      "guessed_first_candidate": true,
+      "abstained": false
+    },
+    "score_by_max_value": {
+      "emitted": "777 a",
+      "guessed_first_candidate": true,
+      "abstained": false
+    },
+    "select_nth": {
+      "emitted": "777 a",
+      "guessed_first_candidate": true,
+      "abstained": false
+    },
+    "select_nth__g": {
+      "emitted": "777 a",
+      "guessed_first_candidate": true,
+      "abstained": false
+    }
+  },
+  "scorers_that_guess_first_candidate": [
+    "score_by_aggregate",
+    "score_by_derivability",
+    "score_by_max_entity",
+    "score_by_max_value",
+    "select_nth",
+    "select_nth__g"
+  ],
+  "S4_other_guessers_found": true,
+  "verdict": "ADVANCE",
+  "verdict_rule_null_output": "If the corpus regenerated differently, corpus_sha256 would not start e2e6898d and the before/after would be incomparable; that is reported, never silently passed.",
+  "terminal_table_partitions": true
+}
