@@ -35,17 +35,16 @@ def test_authority_zaremba_holds_for_every_q_up_to_200():
     so a bug that fabricated witnesses would have to fabricate them consistently with an
     external mathematical fact.
 
-    **q = 1 IS EXCLUDED, AND THAT IS A FINDING, NOT A TEST CONVENIENCE.** This test was written
-    over `range(1, 201)` and failed at q = 1: `zaremba_test(1)` reports `satisfies=False`. The
-    conjecture holds trivially there -- the residues coprime to 1 are {0}, and 1/1 = [1] has
-    max digit 1 <= 5 -- but the body iterates `range(1, q)`, which is EMPTY at q = 1, so a
-    trivially-satisfied case is reported as a counterexample to a conjecture. Logged as cycle
-    060 finding #16 and deliberately NOT patched in the same commit as the search bound: it
-    changes a RETURNED VALUE rather than adding a refusal, and a semantic change smuggled into
-    a guard commit is how a fix becomes unreviewable. The boundary is pinned by
-    `test_authority_hand_checked_small_cases` so it cannot drift unobserved in the meantime.
+    **q = 1 WAS EXCLUDED FOR ONE CYCLE, AND THE EXCLUSION WAS THE FINDING.** Written first
+    over `range(1, 201)`, this test failed at its FIRST element: `zaremba_test(1)` reported
+    `satisfies=False`, because the body iterated `range(1, q)`, which is empty at q = 1 -- a
+    trivially-satisfied case presented as a counterexample to a conjecture. Logged as cycle
+    060 finding #16, narrowed to `range(2, 201)` for exactly ONE cycle so the defect stayed
+    visible in the suite rather than being absorbed, and fixed in cycle 061 as its own
+    isolated commit because it changes a RETURNED VALUE rather than adding a refusal. The
+    range is now the full 1..200 it should always have been.
     """
-    for q in range(2, 201):
+    for q in range(1, 201):
         r = zaremba_test(q)
         assert r["satisfies"], f"no witness found for q={q}"
 
@@ -54,15 +53,21 @@ def test_authority_hand_checked_small_cases():
     """q = 13: 3/13 = [0; 4, 3], max digit 4 <= 5, so a = 3 is a witness. Hand-computed:
     13 = 4*3 + 1, 3 = 3*1 + 0, giving quotients 0, 4, 3.
 
-    q = 1: the range `1 <= a < 1` is EMPTY, so there is nothing to test and no witness. That
-    is a genuine boundary of the definition rather than a failure, and it is asserted here so
-    the bound guard cannot silently change it.
+    q = 1: a = 1 is the witness. gcd(1, 1) = 1 and 1/1 = [1], whose largest partial quotient
+    is 1 <= 5. Hand-computed: divmod(1, 1) = (1, 0), so the expansion terminates at [1].
+
+    This assertion previously read `n_tested == 0 and witness is None`, pinning the cycle-060
+    defect in place so it could not drift while it waited for its own commit. It now pins the
+    CORRECT value. Both expectations are recorded, because an assertion that quietly changes
+    meaning between cycles is indistinguishable from one that was always right.
     """
     assert cf_expand(3, 13) == [0, 4, 3]
+    assert cf_expand(1, 1) == [1]
     r13 = zaremba_test(13)
     assert r13["satisfies"] and cf_max_digit(r13["witness"], 13) <= 5
     r1 = zaremba_test(1)
-    assert r1["n_tested"] == 0 and r1["witness"] is None
+    assert r1["satisfies"] and r1["witness"] == 1
+    assert r1["n_tested"] == 1 and r1["min_max_digit"] == 1
 
 
 # --------------------------------------------------------------------------------------
@@ -116,7 +121,7 @@ def test_edge_the_hang_input_now_refuses_immediately():
 def test_edge_domain_and_type_refusals():
     """Enumerated edges:
     - q = 0 and q < 0: outside the conjecture's domain, ValueError
-    - q = 1: in-domain, empty search, no witness (asserted in the authority test)
+    - q = 1: in-domain, a = 1 is the witness (asserted in the authority test)
     - q just above the ceiling: refused; q at the ceiling: accepted by the guard
     - q a float or bool: TypeError, since `range(1, 2.0)` would fail confusingly later
     - max_q=None: the deliberate unbounded escape hatch still exists
