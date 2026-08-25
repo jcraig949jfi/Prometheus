@@ -6,19 +6,30 @@
   "point_estimate": 0.49,
   "point_estimate_post_screen_SINGLE_FAMILY": 0.25,
   "single_family_screen_warning": "NOT the Tier B statistic. HB-R1 disqualifies a one-family screen as a contamination screen ('this solver was right twice' is competence, not memorization). Reported as a Tier A diagnostic only; it is the degenerate LOWER BOUND of the cross-family read below.",
-  "tier_b_cross_family_screen": null,
+  "tier_b_cross_family_screen": {
+    "point_estimate": 0.4742,
+    "n": 194,
+    "manifest_interval_95": [
+      0.404,
+      0.5445
+    ],
+    "movable_share": 0.3866,
+    "interval_straddles_band_edge": false,
+    "items_removed": 6,
+    "leveling_verdict": "LEVELED",
+    "screen_lenient_stamp": "SCREEN-LENIENT: 6/200 items removed; this run does not exclude contamination, it only fails to find it."
+  },
   "second_family_diagnostics": {
     "family": "nvidia:nemotron-super-49b-v1",
-    "n_rows": 240,
-    "n_paired": 40,
-    "coverage": "240/400",
+    "n_rows": 400,
+    "n_paired": 200,
+    "coverage": "400/400",
     "transport_ok_rate": 1.0,
     "truncation_rate": 0.0,
-    "dispersion": 0.3,
-    "both_right": 4,
+    "dispersion": 0.315,
+    "both_right": 22,
     "raw_rep1_accuracy": 0.275,
-    "admissible": false,
-    "reason": "incomplete: 40/200 tasks have both reps"
+    "admissible": true
   },
   "band_read_on": "raw manifest (HB-R1: one family, screen is diagnostic only)",
   "manifest_interval_95": [
@@ -108,7 +119,7 @@
     "nearmiss_mix-M30-00199"
   ],
   "n_post_screen": 136,
-  "ts_utc": "2026-08-24T22:04:48+00:00",
+  "ts_utc": "2026-08-25T04:14:05+00:00",
   "scope_caveat": "SCOPE (prereg \u00a74.1, C6): this is a D0 result on self-generated first-cycle residue (the pre-pass of \u00a74.2). It is NOT a corpus result \u2014 it says nothing about the native residue Prometheus accumulated (D2/D3). A D0 win with a D3 null is not a success for the accumulated corpus. D0 levels are never compared across strata. Pinned to (manifest \u00d7 host); does not transfer across hosts.",
   "prereg_version": "v1+amendments-2026-08-21"
 }

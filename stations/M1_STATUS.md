@@ -270,7 +270,25 @@ this model has walled before" — not against a capacity.
 This is the same wrong-population error §7n itself was written to name, committed in the act of
 naming it. Corrected in `memory/project_probe_lanes_and_burn.md` as well.
 
-## 7p-WITHDRAWN. THE CORPUS FINDING BELOW IS SUSPENDED PENDING RECOMPUTE (Ergon, 2026-08-24)
+## 7p-RESTATED. SUSPENSION LIFTED — recomputed, headline reproduces, one figure corrected (2026-08-25)
+
+The corrected full rescan (fixed estimator; `per_cell` now persisted into the committed
+artifact) is done. **The headline reproduces: 0.6798 against the published 0.680** — 27 of 43
+cells, 68.0% of corpus mass, with a total vocabulary of ≤8 patterns.
+
+**Corrected upward and worse:** the zero-bit mass is **17.2%** (12 cells whose entire failure
+signature is a single constant), not the 12.6% I published.
+
+**A claim I should not have made:** I treated the prefix-stripped ("projected") conditional
+entropy as a separate measurement. It cannot be. The generator prefix is constant within a cell,
+so stripping it is a bijection there and `H(kp|cell)` is *identical* by construction — 3.119
+either way. It changes only the marginal (7.105 → 7.002).
+
+ATK-014 is **closed**, verified by the probe itself (0.0000 → 0.9183 against ground truth
+0.9183), and removed from `attacks/known_failing.json` so the ratchet tightened rather than
+carrying a cleared defect as excused. Current state: `ergon/probe/STATE_2026-08-25.md`.
+
+## 7p-ORIGINAL (numbers below superseded by the restatement above)
 
 **Do not cite §7p until this banner is removed.** Two independent defects, both mine:
 

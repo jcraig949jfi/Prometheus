@@ -273,7 +273,22 @@ def p1(rows, gold, budget):
     led = DIR / "p1_prepass.jsonl"
     out = DIR / "p1_bandread.json"
     if out.exists():
-        return json.loads(out.read_text(encoding="utf-8")), 0
+        prior = json.loads(out.read_text(encoding="utf-8"))
+        # STALENESS: the band read caches a verdict, but one of its inputs — the second
+        # family's rows — arrives asynchronously via the drip. A read computed while that
+        # family was incomplete records `tier_b_cross_family_screen: null` and, cached
+        # forever, would mean the pipeline NEVER computes the statistic HB-R1 actually
+        # specifies. Recompute when the missing dependency has since arrived.
+        if prior.get("tier_b_cross_family_screen") is None:
+            fresh_gold = {r["uid"]: r["gold_int"] for r in rows}
+            if second_family_screen(rows, fresh_gold)[0] is not None:
+                log(phase="P1", event="bandread_recompute",
+                    reason="second family became admissible after the cached read; the Tier B "
+                           "cross-family statistic is now computable")
+                out.replace(out.with_name("p1_bandread.PRE-SECOND-FAMILY.json"))
+                prior = None
+        if prior is not None:
+            return prior, 0
     have = done_keys(led)
     jobs = [((rep, r["uid"]), r["prompt"]) for rep in (1, 2) for r in rows
             if (rep, r["uid"]) not in have]
