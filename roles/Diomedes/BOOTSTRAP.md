@@ -1,5 +1,21 @@
 # Diomedes — BOOTSTRAP (read this first, after any context reset)
 
+> ## THREAD CLOSED — 2026-08-25. DO NOT RESUME THE LOOP.
+>
+> All five cycles are closed. **Cycle 005 Arm B has been run** (disposition PARK) and the
+> **terminal synthesis is filed**. If you have just reset and are looking for your next action,
+> there is not one: read `TERMINAL_SYNTHESIS_2026-08-25.md` and stop.
+>
+> - Arm B result + CAR-005 — `CYCLE_005_RESULT_armB_transport.md`
+> - Terminal synthesis (charter §14) — `TERMINAL_SYNTHESIS_2026-08-25.md`
+> - Q1 unresolvability, measured — `cycle005_q1_headroom_census.json`
+> - Commit-collision provenance — `PROVENANCE_NOTE_2026-08-25_commit_collision.md`
+>
+> **§4 below is the plan as it stood before Arm B ran. Steps 1–4 are DONE.** It is retained for
+> the record, not as instructions. Do not re-run Arm B; do not manufacture a sixth cycle. The
+> handoffs in Step 5 (Recommendation C → Techne; the Lean tactic-selection test → a new thread)
+> are for James to route, not for this seat to start.
+
 **Written:** 2026-08-25, immediately before a planned context reset. **Purpose:** restore this seat
 in minutes, not half an hour, and hand it an executable plan. Everything here is either a pointer or
 a settled position; nothing here is speculation.
@@ -12,7 +28,7 @@ You are **Diomedes**, the Prometheus seat responsible for **coordinate adequacy*
 represent mathematical search in coordinates that preserve information useful for deciding what
 transformation to try next?* You operate a bounded autonomous research loop under
 `LOOP_CHARTER.md`. You do **not** stop after every result to ask what to do next. You have run five
-cycles; four are closed and the fifth is half-run (Arm A PARKed, Arm B pending). Your standing bias is that you
+cycles; **all five are closed** (005 PARK, both arms run). Your standing bias is that you
 will tend to discover coordinate defects because that is your charter, and your prediction record is
 poor — both are documented below and both are load-bearing.
 
@@ -23,7 +39,7 @@ Five files. Stop when you can answer "what is pending and why."
 1. **this file** — state and plan
 2. `LOOP_CHARTER.md` — how you operate, incl. §20 (non-LLM controls) **as corrected by** file 3
 3. `AMENDMENT_2026-08-25_arity_and_transport.md` — the corrections that supersede earlier framings
-4. `CYCLE_005_PREREG_terminal.md` — the frozen experiment; Arm A is DONE (PARK), Arm B is next
+4. `CYCLE_005_PREREG_terminal.md` — the frozen experiment; **both arms DONE (PARK)**
 5. `STATUS_2026-08-25.md` — the numbers, if you need them restated
 
 **Do not** re-read cycles 001–004 unless a specific number is in dispute. Their conclusions are
@@ -85,10 +101,13 @@ An external review challenged the thread; the response accepted nearly all of it
 
 ## 3. Where the thread stands
 
-Cycles 001–004 **closed**: REDESIGN, KILL, REDESIGN, REDESIGN. Cycle 005 is **part-run**:
-**Arm A is complete — disposition PARK, Q1 UNRESOLVED** (`CYCLE_005_ARMA_RESULT.md`). **Arm B is
-still to run.** Because prereg §1 makes the cycle terminal only if *both* questions resolve,
-**cycle 005 is no longer terminal as designed.**
+Cycles 001–004 **closed**: REDESIGN, KILL, REDESIGN, REDESIGN. **Cycle 005 CLOSED: PARK.**
+Arm A — PARK, Q1 unresolved (`CYCLE_005_ARMA_RESULT.md`); Q1 later measured *unresolvable in this
+corpus* (`cycle005_q1_headroom_census.json`). Arm B — PARK, best transport recovered **6.03%** of the
+relearning gap against a gate shown reachable at 94.5% (`CYCLE_005_RESULT_armB_transport.md`).
+Because prereg §1 makes the cycle terminal only if *both* questions resolve and Q1 did not, cycle 005
+closed as PARK rather than ADVANCE — **the thread is closed by terminal synthesis, not by a
+terminal cycle.**
 
 The measured decomposition (positive control 1.0000, cheat control 0.4993–0.5005, digest
 `1b4abb1a…`):
@@ -121,18 +140,18 @@ involve `sq_mod_100` mapping into 51–96 where other operators' recovered table
 cells were deliberately not filled**, since computing them would assume semantics beyond what the
 data establishes.
 
-### Step 2 — Cycle 005 Arm B (transport). Rung 5, labelled.
+### Step 2 — Cycle 005 Arm B (transport). Rung 5, labelled. **DONE — PARK, best transport 6.03%.**
 
 Build `cycle005_armB_run.py` on cycle 004's population via `harvest_cache.load_verified()`. For each
 ordered cell pair: raw transfer, each frozen `T0–T5`, and local relearning. Report recovery fraction
 `(condition − raw)/(relearn − raw)`. **Decisive comparison is transport vs relearning.**
 
-### Step 3 — Result, CAR-005, disposition.
+### Step 3 — Result, CAR-005, disposition. **DONE.**
 
 Apply the joint dispositions in prereg §4 exactly as written. Do not soften them. Declare any
 pre-registration defect openly, as was done in cycle 004.
 
-### Step 3b — Decide Q1's status (Arm A forced this open).
+### Step 3b — Decide Q1's status (Arm A forced this open). **DONE — measured unresolvable.**
 
 Q1 did not resolve and, on the cycle-005 pre-flight evidence, **no corpus population satisfies both
 requirements** — a non-arithmetic oracle *and* real conditional headroom. c4/b1/b5 are single-class,
@@ -141,7 +160,7 @@ c5 shares h1's arithmetic oracle form, b2/b3/b4 are small synthetic algebra with
 sharpest form of "the corpus has no second search process with both properties" — **and let the Lean
 thread (§5) carry Q1 forward.** Do not invent a sixth cycle to chase it here.
 
-### Step 4 — Terminal synthesis, then STOP.
+### Step 4 — Terminal synthesis, then STOP. **DONE. STOPPED.**
 
 Per charter §14 and the HITL disposition: what was tested, strongest positive and negative evidence,
 surviving/killed/unresolved claims, what would have to become possible to reopen, consequences for
