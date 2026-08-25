@@ -1,116 +1,97 @@
 {
   "checked_tasks": 200,
-  "failures": 200,
-  "verdict": "FAIL \u2014 arm identity is computationally AVAILABLE",
+  "failures": 0,
+  "slug_bands_not_separable": true,
+  "slug_bands": {
+    "ranges": {
+      "F-null": [
+        1,
+        199
+      ],
+      "F-generic": [
+        0,
+        196
+      ],
+      "F-prom-retrieved": [
+        0,
+        199
+      ],
+      "F-hint": [
+        2,
+        199
+      ],
+      "F-null+hint": [
+        2,
+        197
+      ],
+      "F-prom+hint": [
+        0,
+        199
+      ]
+    },
+    "separable_pairs": {}
+  },
+  "payload_length_report": {
+    "mean_chars": {
+      "F-null": 459.5,
+      "F-generic": 472.3,
+      "F-prom-retrieved": 459.2,
+      "F-hint": 543.3,
+      "F-null+hint": 633.5,
+      "F-prom+hint": 633.2
+    },
+    "range": {
+      "F-null": [
+        421,
+        540
+      ],
+      "F-generic": [
+        470,
+        546
+      ],
+      "F-prom-retrieved": [
+        399,
+        552
+      ],
+      "F-hint": [
+        541,
+        617
+      ],
+      "F-null+hint": [
+        595,
+        714
+      ],
+      "F-prom+hint": [
+        573,
+        726
+      ]
+    },
+    "perfectly_length_separable_pairs": [
+      "F-generic|F-null+hint",
+      "F-generic|F-prom+hint",
+      "F-hint|F-null",
+      "F-null|F-null+hint",
+      "F-null|F-prom+hint",
+      "F-null+hint|F-prom-retrieved",
+      "F-prom+hint|F-prom-retrieved"
+    ],
+    "note": "separable pairs are EXPECTED where the factorial varies item count; they are a confound only for a contrast that is not supposed to vary in size."
+  },
+  "verdict": "PASS \u2014 decidable invariants hold on every task",
   "note": "These are decidable checks, not classifier estimates. A PASS here is a stronger claim than 'a classifier sat at chance': it says no difference exists in the checked feature set, and names the bytes when one does.",
   "checked_invariants": [
     "base byte-identical across arms",
-    "payload envelope identical across residue-carrying arms",
+    "every carrying arm's FULL payload conforms to the template",
+    "slug pool token shared across arms (no label in words)",
+    "slug index bands not separable (no label in digits)",
+    "sparsity slot arm-invariant per task",
     "no forbidden verdict tokens in any payload",
     "no verbatim gold in any non-oracle payload"
   ],
-  "first_failures": [
-    {
-      "uid": "nearmiss_mix-M30-00000",
-      "base_identical": true,
-      "base_diffs": {},
-      "envelope_identical": false,
-      "envelope_groups": {
-        "w w w w:\n[w_w:w_w-w#-# w[w-w]_w#[w-w]]\nw w w (w w; w w \u2014 w w w w): w-w-w, w-w, w-w, w-w-w-w, w-w, w-w\n (w w: w)\n\nw (w w ": [
-          "F-null",
-          "F-prom-retrieved"
-        ],
-        "w w w w w w w w. w w w w w w w w w w w, w w w w w w w. w w w: w w w w w, w w, w w w.\n\n#. w; w w w. w w w w w w w w w w w": [
-          "F-generic"
-        ]
-      },
-      "no_forbidden_tokens": true,
-      "forbidden_hits": {},
-      "no_verbatim_gold": true,
-      "gold_hits": {},
-      "all_pass": false
-    },
-    {
-      "uid": "nearmiss_mix-M30-00001",
-      "base_identical": true,
-      "base_diffs": {},
-      "envelope_identical": false,
-      "envelope_groups": {
-        "w w w w:\n[w_w:w_w-w#-# w[w-w]_w#[w-w]]\nw w w (w w; w w \u2014 w w w w): w-w-w, w-w-w-w, w-w, w-w\n (w w: w)\n\nw (w w w w w w \u2014 ": [
-          "F-null",
-          "F-prom-retrieved"
-        ],
-        "w w w w w w w w. w w w w w w w w w w w, w w w w w w w. w w w: w w w w w, w w, w w w.\n\n#. w; w w w. w w w w w w w w w w w": [
-          "F-generic"
-        ]
-      },
-      "no_forbidden_tokens": true,
-      "forbidden_hits": {},
-      "no_verbatim_gold": true,
-      "gold_hits": {},
-      "all_pass": false
-    },
-    {
-      "uid": "nearmiss_mix-M30-00002",
-      "base_identical": true,
-      "base_diffs": {},
-      "envelope_identical": false,
-      "envelope_groups": {
-        "w w w w:\n[w_w:w_w-w#-# w[w-w]_w#[w-w]]\nw w w (w w; w w \u2014 w w w w): w-w-w, w-w-w-w, w-w, w-w\n (w w: w)\n\nw (w w w w w w \u2014 ": [
-          "F-null",
-          "F-prom-retrieved"
-        ],
-        "w w w w w w w w. w w w w w w w w w w w, w w w w w w w. w w w: w w w w w, w w, w w w.\n\n#. w; w w w. w w w w w w w w w w w": [
-          "F-generic"
-        ]
-      },
-      "no_forbidden_tokens": true,
-      "forbidden_hits": {},
-      "no_verbatim_gold": true,
-      "gold_hits": {},
-      "all_pass": false
-    },
-    {
-      "uid": "nearmiss_mix-M30-00003",
-      "base_identical": true,
-      "base_diffs": {},
-      "envelope_identical": false,
-      "envelope_groups": {
-        "w w w w:\n[w_w:w_w-w#-# w[w-w]_w#[w-w]]\nw w w (w w; w w \u2014 w w w w): w-w-w, w-w-w-w, w-w, w-w\n (w w: w)\n\nw (w w w w w w \u2014 ": [
-          "F-null"
-        ],
-        "w w w w w w w w. w w w w w w w w w w w, w w w w w w w. w w w: w w w w w, w w, w w w.\n\n#. w; w w w. w w w w w w w w w w w": [
-          "F-generic"
-        ],
-        "w w w w:\n[w_w:w_w-w#-# w[w-w]_w#[w-w]]\nw w w (w w; w w \u2014 w w w w): w-w-w, w-w, w-w-w-w, w-w\n (w w: w)\n\nw (w w w w w w \u2014 ": [
-          "F-prom-retrieved"
-        ]
-      },
-      "no_forbidden_tokens": true,
-      "forbidden_hits": {},
-      "no_verbatim_gold": true,
-      "gold_hits": {},
-      "all_pass": false
-    },
-    {
-      "uid": "nearmiss_mix-M30-00004",
-      "base_identical": true,
-      "base_diffs": {},
-      "envelope_identical": false,
-      "envelope_groups": {
-        "w w w w:\n[w_w:w_w-w#-# w[w-w]_w#[w-w]]\nw w w (w w; w w \u2014 w w w w): w-w-w, w-w, w-w-w-w, w-w, w-w\n (w w: w)\n\nw (w w w w w": [
-          "F-null",
-          "F-prom-retrieved"
-        ],
-        "w w w w w w w w. w w w w w w w w w w w, w w w w w w w. w w w: w w w w w, w w, w w w.\n\n#. w; w w w. w w w w w w w w w w w": [
-          "F-generic"
-        ]
-      },
-      "no_forbidden_tokens": true,
-      "forbidden_hits": {},
-      "no_verbatim_gold": true,
-      "gold_hits": {},
-      "all_pass": false
-    }
-  ]
+  "reported_not_gated": [
+    "payload length separability (the factorial varies item count on purpose)",
+    "per-arm character-category census",
+    "envelope_identical, demoted 2026-08-25"
+  ],
+  "first_failures": []
 }

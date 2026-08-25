@@ -576,8 +576,10 @@ class Arms:
             items = (self.prom_items(uid) if arm == "F-prom-retrieved"
                      else self.null_items(uid)) or self.NO_METHODS
             slug = uid if arm == "F-prom-retrieved" else self.null_slug(uid)
-            return ("A prior attempt record:\n" +
-                    render(slug, items, self.sparsity_of(uid)) + "\n\n" + base)
+            # NO CALLER-SIDE PREFIX. The lead line these two arms used to prepend here
+            # was absent from the other four -- a 400/400 arm label outside the frame.
+            # It now lives in TEMPLATE, so every arm gets it or none does.
+            return render(slug, items, self.sparsity_of(uid)) + "\n\n" + base
         # ---- REDESIGN 2026-08-25: shape isomorphism by construction, plus the 2x2.
         #
         # The ruling: "If F-generic can be identified against F-null/F-prom from packet shape
@@ -597,19 +599,22 @@ class Arms:
         # the cheap method has already been supplied.
         if arm in ("F-generic", "F-hint", "F-prom+hint", "F-null+hint"):
             from ergon.probe.packet_render import render, synthetic_slug
-            idx = int(uid.rsplit("-", 1)[1])
+            # The slug index is NOT derived from the task index plus a per-arm offset any
+            # more: those offsets (+40000/+50000/+60000/+70000) were a six-way arm label
+            # in digits, invisible to every shape abstraction because they all erase
+            # digits. synthetic_slug now hashes into the real task-id range.
             if arm == "F-generic":
                 items = GENERIC_ITEMS
-                slug = synthetic_slug(RUNG, idx + 40000)
+                slug = synthetic_slug(RUNG, ("F-generic", uid), MANIFEST_N)
             elif arm == "F-hint":
                 items = HINT_ITEMS
-                slug = synthetic_slug(RUNG, idx + 50000)
+                slug = synthetic_slug(RUNG, ("F-hint", uid), MANIFEST_N)
             elif arm == "F-null+hint":
                 items = (self.null_items(uid) or self.NO_METHODS) + HINT_ITEMS
-                slug = synthetic_slug(RUNG, idx + 60000)
+                slug = synthetic_slug(RUNG, ("F-null+hint", uid), MANIFEST_N)
             else:                                   # F-prom+hint
                 items = (self.prom_items(uid) or self.NO_METHODS) + HINT_ITEMS
-                slug = synthetic_slug(RUNG, idx + 70000)
+                slug = synthetic_slug(RUNG, ("F-prom+hint", uid), MANIFEST_N)
             return render(slug, items, self.sparsity_of(uid)) + "\n\n" + base
         if arm == "F-oracle":
             return oracle_text(self.rows_by_uid[uid], self.rep1_ok[uid]) + "\n\n" + base

@@ -120,12 +120,21 @@ def test_every_residue_arm_is_generated_by_the_one_template(manifest_rows, arms)
         base = arms.prompt("F0", uid)
         for a in residue_arms:
             payload = payload_of(arms.prompt(a, uid), base)
-            if a in ("F-null", "F-prom-retrieved"):
-                payload = payload.split(chr(10), 1)[1]      # shared lead line
+            # THE STRIP IS GONE. It used to remove a "shared lead line" from F-null and
+            # F-prom before matching. The line was not shared -- it was on those two arms and
+            # not the other four, a 400/400 arm label -- and deleting it here is precisely why
+            # three checks passed over it for a day. The lead line now lives in TEMPLATE, so
+            # the full payload matches with nothing removed. Never re-introduce a per-arm
+            # exemption in a check whose job is to prove the arms are indistinguishable.
             ok, slots = matches_template(payload)
             assert ok, f"{uid}/{a}: packet was NOT produced by the shared template"
             pools.add(slots["slug"].split("-")[0])
     assert len(pools) == 1, f"the slug pool token differs by arm — a readable label: {pools}"
+    # NOT SUFFICIENT, and the gap is recorded here because it cost a day: splitting the slug on
+    # "-" and keeping [0] discards the INDEX, which is where the +40000/+50000/+60000/+70000
+    # per-arm bands lived. The digits are checked at population scope by
+    # `packet_invariants.slug_bands_not_separable`, gate-fired in test_packet_leak_gate_fire.py.
+    # A per-task test cannot see a band: one index per arm has nothing to be separable from.
 
 
 def test_the_factorial_cells_exist_and_differ_only_in_content(manifest_rows, arms):
@@ -141,9 +150,7 @@ def test_the_factorial_cells_exist_and_differ_only_in_content(manifest_rows, arm
              "residue+,hint-": "F-prom-retrieved", "residue+,hint+": "F-prom+hint"}
     items = {}
     for name, arm in cells.items():
-        payload = payload_of(arms.prompt(arm, uid), base)
-        if arm == "F-prom-retrieved":
-            payload = payload.split(chr(10), 1)[1]
+        payload = payload_of(arms.prompt(arm, uid), base)   # no per-arm strip; see above
         ok, slots = matches_template(payload)
         assert ok, f"{name} ({arm}) is not template-generated"
         items[name] = slots["items"]

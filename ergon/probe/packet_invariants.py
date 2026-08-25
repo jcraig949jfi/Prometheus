@@ -213,18 +213,165 @@ def gold_substring_scan(prompts_by_arm, gold_value):
     return (not hits), hits
 
 
+# ---------------------------------------------------------------------------------------
+# SLOT-SCOPED INVARIANTS (added 2026-08-25, after the fourth instance of the same class).
+#
+# The class: an arm label that lives where the checks are not looking. Instances to date --
+#   1. a JSON header on one arm's renderer                       (killed exit review #1)
+#   2. a token-length asymmetry                                  (killed exit review #2)
+#   3. the literal pool token `generic_pool`                     (caught by this file's author)
+#   4. a lead line on 2 of 6 arms + a per-arm numeric slug band  (caught 2026-08-25)
+#
+# Instance 4 survived THREE checks at once, and the reason is structural rather than careless:
+#   - `envelope_shape` and `framing_skeleton` erase digit runs to make shape comparable, so a
+#     numeric band label is invisible to them BY CONSTRUCTION;
+#   - `matches_template` only sees the region it is handed, and the lead line sat outside it;
+#   - the isomorphism test stripped the lead line before matching, calling it "shared" when it
+#     was present on two arms of six.
+# Adding a fifth ad-hoc scan would only invite a fifth hiding place. So these checks change the
+# frame instead: `matches_template` decomposes a packet into exactly three slots, and each slot
+# is then given an explicit arm-invariance obligation.
+#
+#   frame     -> arm-invariant for free once conformance holds   (INVARIANT 6a)
+#   slug      -> must not carry arm identity, in words or digits (INVARIANT 6b)
+#   items     -> THE TREATMENT. Exempt by design; the factorial varies it on purpose.
+#   sparsity  -> a property of the task record, not of the arm   (INVARIANT 6c)
+#
+# The exemption is what makes this honest. A check forbidding all cross-arm difference would
+# forbid the experiment; naming WHICH slot is allowed to differ is the entire content of the
+# claim. Everything outside `items` is obliged to be arm-invariant, and now decidably is.
+
+
+def template_conformance(prompts_by_arm, carrying_arms):
+    """INVARIANT 6a -- every carrying arm's payload matches the shared template ON ITS FULL
+    TEXT: no stripping, no leading-line exemption, no per-arm special case.
+
+    The predecessor of this check accepted a caller-supplied prefix by deleting it first. A
+    check that deletes a region before inspecting it cannot report on that region, and the
+    deleted region is exactly where a caller-controlled label goes.
+    """
+    from ergon.probe.packet_render import matches_template
+    base = prompts_by_arm.get("F0", "")
+    bad, slots = {}, {}
+    for arm in carrying_arms:
+        if arm not in prompts_by_arm:
+            continue
+        payload = payload_of(prompts_by_arm[arm], base)
+        ok, sl = matches_template(payload)
+        if ok:
+            slots[arm] = sl
+        else:
+            bad[arm] = payload[:160]
+    return (not bad), bad, slots
+
+
+def slug_pool_shared(slots_by_arm):
+    """INVARIANT 6b(i) -- the slug's POOL TOKEN is one shared literal across every arm.
+
+    This is the `generic_pool` defect: a slug whose SHAPE matched a real id while its words
+    named the arm in plain text. Framing checks can never catch it, because erasing words is
+    what they do.
+    """
+    pools = {arm: sl["slug"].rsplit("-", 2)[0] for arm, sl in slots_by_arm.items()}
+    return (len(set(pools.values())) <= 1), pools
+
+
+def slug_bands_not_separable(per_task_slots):
+    """INVARIANT 6b(ii) -- no single threshold separates any arm pair's slug indices.
+
+    A band label is a property of the DISTRIBUTION, not of one packet: per task each arm has
+    a single index and "separable" is meaningless, so this one is computed over the whole
+    manifest. Separability, not equality, is the right test -- indices SHOULD differ between
+    arms, because they identify different records. What they must not do is occupy disjoint
+    numeric bands.
+
+    This is the check the +40000/+50000/+60000/+70000 offsets would have failed on every task,
+    and the one no shape abstraction could have expressed, since all of them delete digits.
+    """
+    vals = collections.defaultdict(list)
+    for slots in per_task_slots:
+        for arm, sl in slots.items():
+            try:
+                vals[arm].append(int(sl["slug"].rsplit("-", 1)[1]))
+            except (ValueError, IndexError):
+                pass
+    arms = sorted(vals)
+    separable = {}
+    for i, a in enumerate(arms):
+        for b in arms[i + 1:]:
+            va, vb = vals[a], vals[b]
+            if va and vb and (max(va) < min(vb) or max(vb) < min(va)):
+                separable["%s|%s" % (a, b)] = {a: [min(va), max(va)], b: [min(vb), max(vb)]}
+    return (not separable), {"ranges": {a: [min(v), max(v)] for a, v in vals.items()},
+                             "separable_pairs": separable}
+
+
+def sparsity_arm_invariant(slots_by_arm):
+    """INVARIANT 6c -- for a given task the sparsity slot is identical across arms.
+
+    It reports what the substrate failed to record for THIS task, which is a fact about the
+    record. If it varies by arm, the arm is editing the record it claims to be reporting, and
+    the difference is a free label.
+    """
+    seen = {arm: sl["sparsity"] for arm, sl in slots_by_arm.items()}
+    distinct = set(seen.values())
+    return (len(distinct) <= 1), ({} if len(distinct) <= 1
+                                  else {a: v[:80] for a, v in seen.items()})
+
+
+def payload_length_separability(per_task_prompts, carrying_arms):
+    """REPORTED, NOT GATED (BC-7) -- does a single length threshold split any arm pair?
+
+    Exit review #2 died on a token-length asymmetry, so this number belongs in the artifact.
+    It is deliberately NOT a gate, and the reason is the point: the factorial gives the +hint
+    cells more items than their no-hint partners, so a perfect length separator between those
+    cells IS the treatment. Gating on it would forbid the experiment; omitting it would repeat
+    exit review #2. So it ships as a number, for the reader deciding whether a particular
+    contrast is length-confounded.
+    """
+    lens = collections.defaultdict(list)
+    for prompts in per_task_prompts:
+        base = prompts.get("F0", "")
+        for arm in carrying_arms:
+            if arm in prompts:
+                lens[arm].append(len(payload_of(prompts[arm], base)))
+    arms = sorted(lens)
+    sep = []
+    for i, a in enumerate(arms):
+        for b in arms[i + 1:]:
+            if max(lens[a]) < min(lens[b]) or max(lens[b]) < min(lens[a]):
+                sep.append("%s|%s" % (a, b))
+    return {"mean_chars": {a: round(sum(v) / len(v), 1) for a, v in lens.items()},
+            "range": {a: [min(v), max(v)] for a, v in lens.items()},
+            "perfectly_length_separable_pairs": sep,
+            "note": "separable pairs are EXPECTED where the factorial varies item count; they "
+                    "are a confound only for a contrast that is not supposed to vary in size."}
+
+
 def check_task(prompts_by_arm, gold_value, carrying_arms, forbidden):
     r1, d1 = base_identical(prompts_by_arm)
-    r2, d2 = envelope_identical(prompts_by_arm, carrying_arms)
     r4, d4 = forbidden_token_scan(prompts_by_arm, forbidden)
     r5, d5 = gold_substring_scan(prompts_by_arm, gold_value)
+    # `envelope_identical` is RETAINED BUT NO LONGER GATES. It compares a digit-erased,
+    # list-length-preserving abstraction, so it fires on the item-count difference that IS the
+    # treatment while staying blind to the digit-band label that is not. Template conformance
+    # subsumes what it got right. It stays as a reported diagnostic so that demoting it is
+    # visible in the artifact rather than silent.
+    r2, d2 = envelope_identical(prompts_by_arm, carrying_arms)
+    r6, d6, slots = template_conformance(prompts_by_arm, carrying_arms)
+    r6b, d6b = slug_pool_shared(slots) if r6 else (False, {})
+    r6c, d6c = sparsity_arm_invariant(slots) if r6 else (False, {})
     return {
         "base_identical": r1, "base_diffs": d1,
-        "envelope_identical": r2, "envelope_groups": d2,
+        "envelope_identical_DIAGNOSTIC_ONLY": r2, "envelope_groups": d2,
         "no_forbidden_tokens": r4, "forbidden_hits": d4,
         "no_verbatim_gold": r5, "gold_hits": d5,
+        "template_conformance": r6, "non_conforming": d6,
+        "slug_pool_shared": r6b, "slug_pools": d6b,
+        "sparsity_arm_invariant": r6c, "sparsity_diffs": d6c,
         "profiles": profile_spread(prompts_by_arm, carrying_arms),
-        "all_pass": r1 and r2 and r4 and r5,
+        "all_pass": r1 and r4 and r5 and r6 and r6b and r6c,
+        "_slots": slots,
     }
 
 
@@ -240,42 +387,69 @@ def main():
         return 1
 
     arms_obj = C.Arms(rows, gold)
-    carrying = ["F-null", "F-generic", "F-prom-retrieved"]
+    # ALL SIX carrying arms, not the original three. P2 runs the 2x2 factorial, so the
+    # hint cells are live packets; checking only the arms that predate the redesign
+    # would leave the newest four unexamined -- the same scoping error in a new place.
+    carrying = ["F-null", "F-generic", "F-prom-retrieved",
+                "F-hint", "F-null+hint", "F-prom+hint"]
     all_arms = ["F0"] + carrying
     forbidden = ["true", "false", "correct answer", "the answer is"]
 
     failures, checked = [], 0
+    per_task_prompts, per_task_slots = [], []
     for r in rows:
         uid = r["uid"]
         try:
             prompts = {a: arms_obj.prompt(a, uid) for a in all_arms}
-        except Exception as e:                       # a task with no residue yet
+        except Exception:                            # a task with no residue yet
             continue
         res = check_task(prompts, gold[uid], carrying, forbidden)
         checked += 1
+        per_task_prompts.append(prompts)
+        if res.get("_slots"):
+            per_task_slots.append(res["_slots"])
         if not res["all_pass"]:
-            failures.append({"uid": uid, **{k: v for k, v in res.items() if k != "profiles"}})
+            failures.append({"uid": uid, **{k: v for k, v in res.items()
+                                            if k not in ("profiles", "_slots")}})
+
+    # Population-scope checks. A per-arm numeric BAND is not visible one packet at a time --
+    # each task shows a single index per arm and nothing to compare it against -- so this is
+    # deliberately computed across the manifest rather than inside check_task.
+    bands_ok, bands = slug_bands_not_separable(per_task_slots)
+    lengths = payload_length_separability(per_task_prompts, carrying)
 
     out = {
         "checked_tasks": checked,
         "failures": len(failures),
-        "verdict": "PASS — decidable invariants hold on every task" if not failures
+        "slug_bands_not_separable": bands_ok,
+        "slug_bands": bands,
+        "payload_length_report": lengths,
+        "verdict": "PASS — decidable invariants hold on every task"
+                   if (not failures and bands_ok)
                    else "FAIL — arm identity is computationally AVAILABLE",
         "note": "These are decidable checks, not classifier estimates. A PASS here is a "
                 "stronger claim than 'a classifier sat at chance': it says no difference "
                 "exists in the checked feature set, and names the bytes when one does.",
         "checked_invariants": ["base byte-identical across arms",
-                              "payload envelope identical across residue-carrying arms",
+                              "every carrying arm's FULL payload conforms to the template",
+                              "slug pool token shared across arms (no label in words)",
+                              "slug index bands not separable (no label in digits)",
+                              "sparsity slot arm-invariant per task",
                               "no forbidden verdict tokens in any payload",
                               "no verbatim gold in any non-oracle payload"],
+        "reported_not_gated": ["payload length separability (the factorial varies item "
+                              "count on purpose)",
+                              "per-arm character-category census",
+                              "envelope_identical, demoted 2026-08-25"],
         "first_failures": failures[:5],
     }
     outdir = ROOT / "ergon/probe/ledgers/packet_invariants"
     outdir.mkdir(parents=True, exist_ok=True)
     (outdir / "invariants.json").write_text(json.dumps(out, indent=2), encoding="utf-8")
     print(json.dumps({k: out[k] for k in
-                      ("checked_tasks", "failures", "verdict")}, indent=2))
-    return 0 if not failures else 2
+                      ("checked_tasks", "failures", "slug_bands_not_separable",
+                       "verdict")}, indent=2))
+    return 0 if (not failures and bands_ok) else 2
 
 
 if __name__ == "__main__":

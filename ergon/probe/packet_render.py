@@ -19,6 +19,7 @@ WHAT DOES NOT: the literal frame, field order, punctuation, the redaction marker
 trailing sparsity block. The source token is IDENTICAL across arms (`probe_pool`), because a
 differing literal is readable even when the shape matches.
 """
+import hashlib
 import re
 
 #: Shared across every arm — a per-arm pool token would be a readable label.
@@ -26,6 +27,13 @@ POOL = "nearmiss_mix"
 
 #: The single frame. Every residue-carrying arm renders through this and only this.
 TEMPLATE = (
+    # THE LEAD LINE LIVES HERE, NOT IN THE CALLER. It used to be prepended by campaign.py
+    # for F-null and F-prom ONLY -- a plain-text arm label on 2 of 6 arms, 400/400
+    # separating. It survived three layers of check: it sits OUTSIDE the region the
+    # template matcher sees, and the isomorphism test STRIPPED it before matching
+    # (comment: "shared lead line" -- it was not shared). Anything a caller can prepend
+    # is a shape the caller controls, so the frame now owns the first byte of the packet.
+    "A prior attempt record:\n"
     "[probe_pool:{slug} p[COUNT-REDACTED]_prepass#[COUNT-REDACTED]]\n"
     "prior attempt applied (method projection; prose withheld - measured diffuse answer "
     "leakage): {items}\n"
@@ -65,24 +73,40 @@ def slug_for(uid):
     return uid
 
 
-def synthetic_slug(rung, index, pool=None):
-    """A slug for arms with no task provenance (generic, method-hint).
+def synthetic_slug(rung, key, span, pool=None):
+    """A slug for arms with no task provenance (generic, method-hint, the +hint cells).
 
-    CAUGHT ON THE FIRST TEST OF THIS FILE: my initial version took a `pool` argument and
-    produced `generic_pool-M30-00007`. The *shape* matched a real id, so the framing check
-    passed — and the literal token `generic_pool` is a plain-text arm label readable by any
-    reader. That is precisely the leak this module claims to prevent, written into the module
-    itself, and the framing check could never have caught it because framing checks erase
-    words by design.
+    THE INDEX IS AN ARM LABEL IF ITS RANGE IS. The previous version took a caller-supplied
+    integer, and campaign.py supplied `idx + 40000` for F-generic, `+50000` for F-hint,
+    `+60000` for F-null+hint, `+70000` for F-prom+hint, while the two provenance-carrying arms
+    used real task indices in [0, 200). That is a perfect six-way arm label written in digits,
+    and NO shape check could ever have caught it: `envelope_shape` and `framing_skeleton` both
+    map every digit run to `#` by design, and the one test that inspected the slug split on
+    `-` and kept only the pool token, discarding the number. Three checks, all blind to the
+    same class, because the abstractions that make shape comparable are exactly the ones that
+    delete digits.
 
-    So the pool token is now FIXED and shared: every arm's slug is indistinguishable from a
-    real task id. The index is drawn from the arm's own sequence, so it carries nothing about
-    the target task.
+    So the index is no longer the caller's to choose. It is derived by keyed hash into
+    `span` -- the SAME range real task ids occupy -- which makes the numeric range identical
+    across arms by construction. Collision with a real task id is not a defect here; it is the
+    point. The key varies per (arm, task) so the value carries nothing about the target task
+    that the arm does not already carry.
+
+    CAUGHT ON THE FIRST TEST OF THIS FILE (kept, because the defect class recurs): my initial
+    version took a `pool` argument and produced `generic_pool-M30-00007`. The *shape* matched a
+    real id, so the framing check passed -- and the literal token `generic_pool` is a
+    plain-text arm label readable by any reader. So the pool token is FIXED and shared.
     """
     if pool is not None:
         raise ValueError(
             "a per-arm pool token is an arm label in plain text; the pool is fixed and shared")
-    return f"{POOL}-{rung}-{index % 100000:05d}"
+    if not isinstance(span, int) or span <= 0:
+        raise ValueError(
+            "span must be the positive size of the real task-id range; without it the index "
+            "range is the caller's choice again, which is how the +40000 band happened")
+    digest = hashlib.blake2b(str(key).encode("utf-8"), digest_size=8).digest()
+    idx = int.from_bytes(digest, "big") % span
+    return f"{POOL}-{rung}-{idx % 100000:05d}"
 
 
 def template_regex():
