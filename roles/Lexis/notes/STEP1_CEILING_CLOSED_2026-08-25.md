@@ -197,18 +197,41 @@ the four categories fail here rather than at the reasoning level:
 
 - **`temporal_ordering`** is the *same strict partial order* as `transitivity`, which the substrate
   solves **10/10**. It is blocked by lowercase event nouns ("sunrise", "dusk") and by "happened
-  before" not being in the adjective list. Probe: injecting relations from a hand-written
-  generalized pattern and then running the **existing, unmodified** `op_build_ordering →
-  select_nth__g` solves **3 of the 5**. No new verb was introduced.
+  before" not being in the adjective list.
+
+  > **CORRECTION, same day, from `permutation_null.py`.** The first version of this section said
+  > *"injecting relations from a generalized pattern and running the existing `op_build_ordering →
+  > select_nth__g` solves 3 of the 5."* **That was wrong and it was wrong in the same way STEP 1
+  > §4 is about.** The probe omitted `parse_question_target`, so `question_target` was empty,
+  > so `select_nth` took its documented `if idx is None ... selected_answer = candidates[0]`
+  > fallback (`blackboard_ops_v2.py:275`). All three "solves" were the constant guess. Under
+  > candidate-list reversal and rotation, all of them vanish (`permutation_null.py`, 0 of 4
+  > surviving). I caught my own instance of the exact defect I had just written up, one section
+  > earlier, and only because the metamorphic null was run.
+  >
+  > **What actually holds, re-measured.** The *ordering verb transfers perfectly*: with the
+  > generalized relations, `op_build_ordering` produces the correct total order over event nouns
+  > (task 35 → `['lunchtime','sunrise','dawn','dusk']`, and `dusk` is the correct answer to "what
+  > happened first"). What is missing is the **readout**. `_QUESTION_KEYWORDS`
+  > (`blackboard_ops.py:61`) is a closed list of 15 superlatives — `tallest`, `shortest`,
+  > `biggest`… — and contains nothing for "What happened **first**?", so `question_target` stays
+  > empty and `select_nth` can never index into the ordering it was given.
+  >
+  > So `temporal_ordering` is blocked by **two** surface-bound components — the relation parser
+  > and the question-target parser — with a working reasoning step sandwiched between them. That
+  > is a sharper finding than the withdrawn one, and it survives the null because it is a
+  > statement about `ordered`, not about `selected_answer`.
 - **`consistency_check`** uses single-letter names `A`, `B`, `C`; `[A-Z][a-z]+` requires at least one
   lowercase, so these parse to nothing. With a single-letter pattern all 3 relations per task parse
   cleanly. The *reasoning* step (cycle → "No") is still genuinely absent, so this one stays ΔE — but
   its input is already available.
 
-**Caveat, stated plainly:** the generalized pattern is one I wrote by hand and used only to inject
-state for the probe. Nothing in `apollo/` was modified, and this is not a claim that any automatic
-generalization achieves it. It is a measurement that the *verb* is present and the *surface matcher*
-is what excludes the task.
+**Caveat, stated plainly:** the generalized pattern is one I wrote by hand. Nothing in `apollo/`
+was modified, and this is not a claim that any automatic generalization achieves it. It is a
+measurement that the *ordering verb* is present and that *two surface matchers* exclude the task.
+The generalized parser was subsequently put through the full G5 gate as a real candidate — see
+`G5_LEDGER_2026-08-25.md`. **It was not admitted:** NEW = 1, but ΔE = 0 once the permutation null
+is applied.
 
 **Why this matters to the vocabulary seat.** This is the program's own doctrine — verbs over nouns,
 `project_verbs_must_be_native` — appearing as a measured defect in Apollo's own operator set. The
