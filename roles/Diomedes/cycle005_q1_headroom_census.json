@@ -1,0 +1,114 @@
+{
+ "purpose": "rows beneath the Step 3b claim that no corpus population can answer Q1",
+ "standing_rule": "BOOTSTRAP S6 \u2014 conditional headroom below ~0.05 disqualifies a population for a conditional-structure question",
+ "tables_source": "cycle005_operator_tables.json \u2014 step 0, three sources at 1.000000",
+ "operators": [
+  "abs",
+  "identity",
+  "log2_floor",
+  "mod_3",
+  "neg",
+  "sq_mod_100"
+ ],
+ "value_range": [
+  -50,
+  50
+ ],
+ "populations": {
+  "b3": {
+   "population": "b3",
+   "description": "composition_test / self-inverse: f(f(v)) == v",
+   "rung": 1,
+   "cells_enumerated": 606,
+   "cells_missing": 0,
+   "outcome_counts": {
+    "true": 260,
+    "false": 346
+   },
+   "n_states_with_both_classes": 100,
+   "chance": 0.5,
+   "state_independent_ceiling": 0.9988,
+   "oracle": 1.0,
+   "conditional_headroom": 0.0012,
+   "disqualification_floor": 0.05,
+   "qualifies_for_a_conditional_structure_question": false,
+   "operator_success_rates_ignoring_v": {
+    "abs": 0.505,
+    "identity": 1.0,
+    "log2_floor": 0.0099,
+    "mod_3": 0.0297,
+    "neg": 1.0,
+    "sq_mod_100": 0.0297
+   }
+  },
+  "b4": {
+   "population": "b4",
+   "description": "operator_rotation / fixed point: f(v) == v",
+   "rung": 1,
+   "cells_enumerated": 606,
+   "cells_missing": 0,
+   "outcome_counts": {
+    "true": 160,
+    "false": 446
+   },
+   "n_states_with_both_classes": 100,
+   "chance": 0.5,
+   "state_independent_ceiling": 0.9989,
+   "oracle": 1.0,
+   "conditional_headroom": 0.0011,
+   "disqualification_floor": 0.05,
+   "qualifies_for_a_conditional_structure_question": false,
+   "operator_success_rates_ignoring_v": {
+    "abs": 0.505,
+    "identity": 1.0,
+    "log2_floor": 0.0099,
+    "mod_3": 0.0297,
+    "neg": 0.0099,
+    "sq_mod_100": 0.0297
+   }
+  }
+ },
+ "b2_from_arm_A": {
+  "conditional_headroom": 0.0265,
+  "state_independent_ceiling": 0.9735,
+  "oracle": 1.0,
+  "qualifies_for_a_conditional_structure_question": false,
+  "rows_ref": "cycle005_armA_result.json"
+ },
+ "not_enumerated_and_why": {
+  "b5": "conservation_law \u2014 2 distinct action tokens (k=2 candidate set) and 30 negatives in 2,104 records (1.4%); disqualified on structure, from the cycle-005 pre-flight counts, not enumerated here",
+  "c4": "18,976/18,976 holds=True \u2014 single-class, vacuous (this was my recommended replication target; it had no negative class)",
+  "b1": "1,340/1,340 matches=True \u2014 single-class, vacuous",
+  "c5": "8,157/8,157 holds=True on the primary outcome, and its oracle is the same arithmetic relation family as h1, so it cannot answer Q1 by construction",
+  "g5": "absent from the sample entirely (n=0)"
+ },
+ "corroboration_vs_corpus_logged_counts": {
+  "b3": {
+   "enumerated_here": {
+    "true": 260,
+    "false": 346
+   },
+   "logged_in_corpus_sample": {
+    "true": 260,
+    "false": 346
+   },
+   "ratio_logged_over_enumerated": 1.0,
+   "consistent_at_that_ratio": true,
+   "reading": "exact match \u2014 the recovered tables reproduce the corpus's own labels"
+  },
+  "b4": {
+   "enumerated_here": {
+    "true": 160,
+    "false": 446
+   },
+   "logged_in_corpus_sample": {
+    "true": 320,
+    "false": 892
+   },
+   "ratio_logged_over_enumerated": 2.0,
+   "consistent_at_that_ratio": true,
+   "reading": "exact match at 2x \u2014 the corpus sample carries each (operator, value) cell 2 times"
+  }
+ },
+ "verdict": "NO ENUMERATED POPULATION QUALIFIES \u2014 Q1 is unresolvable in this corpus"
+}
