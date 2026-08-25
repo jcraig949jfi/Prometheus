@@ -1,0 +1,55 @@
+{
+  "attack": "techne/attacks/ATTACK_ergon_measurements_2026-08-25.md",
+  "target": "ergon/probe/adversarial_leakage.py",
+  "command": "PYTHONPATH=. python techne/attacks/probe_ergon_leakage_gate_2026-08-25.py",
+  "n_tasks": 60,
+  "n_perm": 60,
+  "seed": 20260825,
+  "adversaries_imported_not_reimplemented": true,
+  "findings": {
+    "W1_gate_verdict_on_perfect_task_conditional_leak": {
+      "any_fail": true,
+      "any_undecided": false,
+      "gate_reports_PASS": false,
+      "pairs_below_null": 0,
+      "of_pairs": 12,
+      "DEFECT": false
+    },
+    "W2_task_aware_recovery_of_the_same_leak": {
+      "balanced_accuracy": 1.0,
+      "n_decoded": 360,
+      "note": "one labelled anchor per task; every other arm read off the marker",
+      "leak_is_real": true
+    },
+    "W3_live_within_task_normalised": {
+      "arm6": {
+        "observed": 0.1667,
+        "null_mean": 0.1667,
+        "null_p95": 0.1667,
+        "null_p05": 0.1667,
+        "delta": 0.0,
+        "abs_delta": 0.0,
+        "n_perm": 60,
+        "n_rows": 360
+      },
+      "R": {
+        "observed": 0.3333,
+        "null_mean": 0.3333,
+        "null_p95": 0.3333,
+        "null_p05": 0.3333,
+        "delta": 0.0,
+        "abs_delta": 0.0,
+        "n_perm": 60,
+        "n_rows": 360
+      },
+      "n_tasks": 60,
+      "nonconforming": 0,
+      "exceeds_null_p95": false
+    },
+    "W4_verdict_is_one_sided": {
+      "tests_upper_tail": true,
+      "tests_lower_tail": false,
+      "DEFECT": true
+    }
+  }
+}

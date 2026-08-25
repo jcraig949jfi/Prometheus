@@ -243,6 +243,72 @@ applies-to: claim classes this attack must be run against before the claim is be
 - **applies-to:** every entropy/diversity/coverage statistic in the program; any instrument whose
   filter mentions the quantity under test.
 
+### ATK-016 provenance stamp blind to the transform
+- **class:** provenance
+- **signature:** a committed artifact carries a provenance hash that still MATCHES, while the
+  numbers it reports no longer reproduce — because the stamp covers the artifact's *inputs* and
+  not the *transform* applied to them. Every field checks out and the artifact is stale. The
+  mirror of ATK-015: there the rows were destroyed and the verdict survived; here the rows are
+  intact and the code between them and the verdict changed underneath it.
+- **probe:** EXECUTABLE — `PYTHONPATH=. python techne/attacks/probe_ergon_leakage_gate_2026-08-25.py`
+  (exit 1 = a defect is present). Generalization: for every committed measurement artifact,
+  stamp a hash of **every module that transforms the inputs into the reported number**, not only
+  the input manifest; and re-derive at least one load-bearing figure before citing it.
+- **kills:** 2026-08-25, Techne, on `ergon/probe/ledgers/adversarial_leakage/leakage_gate.json`.
+  Committed `verdict: PASS`, `manifest_sha16: e6b1e001bf79e3ef`; the current manifest hashes to
+  the same value; **not one of the six LIVE observed figures reproduces** (lexical|arm6 committed
+  0.1275, recomputes 0.1667; R targets 0.2667/0.3125/0.3133 all recompute to 0.3333).
+  INVARIANT 7 re-keyed the packet slug on the task in between, which changed the gate's inputs
+  entirely, and no provenance field on the artifact could see it.
+- **applies-to:** every committed ledger, band read, scorecard or gate verdict whose inputs pass
+  through a renderer, encoder, prompt template or feature extractor — i.e. all of them.
+
+### ATK-017 vacuous gate reported as passing
+- **class:** vacuous-metric
+- **signature:** a gate's INPUT is constant across the conditions it is meant to discriminate, so
+  its statistic is arithmetic rather than measurement — and it reports the passing verdict. The
+  tell is a null distribution with **zero variance**: p05 == p90 == p95 == max == mean, and an
+  observed value sitting exactly at `1/n_classes`. Distinct from ATK-004 (chance-floor
+  masquerade), where the metric merely *sits at* an estimated null; here the constancy of the
+  input is **decidable**, and the defect is in the verdict path rather than in the statistic.
+- **probe:** EXECUTABLE — `ergon/probe/adversarial_leakage.py::input_vacuity` returns
+  `VACUOUS: true` when every group has a single distinct input; `main()` refuses to emit PASS.
+  Generalization: before reading any discriminative gate, assert that its inputs actually VARY
+  across the conditions, and assert the null has non-zero spread. A gate whose input field is
+  absent must raise (ATK-013); a gate whose input field is CONSTANT must report VACUOUS.
+- **kills:** 2026-08-25, Techne, on `ergon/probe/adversarial_leakage.py`. After INVARIANT 7
+  re-keyed the slug on the task, all **200/200** tasks yield one distinct blanked payload across
+  all six arms (138 distinct texts across 1,200 packets). Measured: 12 pairs, **all PASS**, with
+  observed 0.1667 and null_p05 == null_p95 == null_max == 0.1667. Aggravating and instructive:
+  the author had already NAMED the vacuity in `packet_invariants.check_invariant_7`'s docstring
+  — *"a vacuous reading reported as a passing one is its own defect class"* — and nothing
+  enforced it. **The prose knew; the code did not.**
+- **applies-to:** every classifier gate, leakage probe, discrimination test or A/B screen;
+  **mandatory whenever an upstream change is claimed to have "closed a channel by
+  construction", because closing the channel is exactly what makes the downstream gate vacuous.**
+
+### ATK-018 one-sided gate on a two-sided question
+- **class:** vacuous-metric
+- **signature:** a gate asks whether a quantity is RECOVERABLE but tests only the upper tail, so
+  a systematic excursion BELOW the null is scored as passing. Recovery below chance is recovery
+  — the adversary inverts the prediction — so the decision quantity is `|obs − null|` and a
+  one-sided rule cannot fail in the direction where the evidence actually sits.
+- **probe:** EXECUTABLE — `PYTHONPATH=. python techne/attacks/probe_ergon_leakage_gate_2026-08-25.py`
+  reports `W4_verdict_is_one_sided`. Generalization: for any gate over a symmetric statistic,
+  assert that a planted effect of the opposite sign fires it; report the signed AND absolute
+  delta beside every verdict.
+- **kills:** 2026-08-25, Techne, on `ergon/probe/adversarial_leakage.py::run_gate`
+  (`FAIL-LEAK if obs > p95 else UNDECIDED if obs > p90 else PASS`; no lower-tail branch).
+  **The live world was below its null on 9 of 12 pairs**, and its lexical|arm6 signature
+  (obs 0.1275, null 0.1677, delta −0.0402) is quantitatively indistinguishable from the file's
+  OWN planted-leak control `SENSITIVITY_band_plus3` (obs 0.1292, null 0.1647, delta −0.0355) — a
+  leak the sensitivity sweep documents the gate as unable to detect. Both were scored PASS. The
+  arm-varying slug was real; INVARIANT 7 later removed it by a decidable byte comparison; the
+  evidence had been inside the gate's own numbers, concentrated on exactly the R-involving
+  targets, and the one-sided verdict discarded it.
+- **applies-to:** every permutation-null gate, every equivalence/absence claim, and any check
+  whose pass condition is written as a single inequality against a null percentile.
+
 ---
 
 ## Claim × attack coverage matrix

@@ -248,6 +248,34 @@ def target_labels(arm_labels, target):
     raise ValueError(target)
 
 
+def input_vacuity(texts, groups):
+    """Is the gate's INPUT constant within task? Then it can decide nothing.
+
+    TECHNE 2026-08-25, ATK-016. INVARIANT 7 re-keyed the slug on the task, which makes every
+    arm's blanked payload byte-identical -- and `packet_invariants.check_invariant_7`'s own
+    docstring says so: *"the adversarial gate is now VACUOUS on these packets ... a vacuous
+    reading reported as a passing one is its own defect class"*. That was written in prose and
+    nothing enforced it: `main()` would still compute obs = 1/n_classes exactly, find it below
+    p95, and write `verdict: PASS -- no tested adversary recovered assignment`.
+
+    Measured on the current packets: 200 tasks, ONE distinct blanked payload per task across all
+    six arms, and the permutation null has ZERO variance (p05 == p95 == mean). A PASS from that
+    input is not evidence about the packets; it is arithmetic about a constant.
+
+    This is the generalization already recorded in ATK-013: *a gate whose input field is absent
+    must RAISE, never return a passing value.* Here the field is present and CONSTANT, which is
+    the same defect with a different presentation.
+    """
+    per_task = {}
+    for t, g in zip(texts, groups):
+        per_task.setdefault(g, set()).add(t)
+    constant = sum(1 for v in per_task.values() if len(v) <= 1)
+    return {"tasks": len(per_task), "tasks_with_constant_input": constant,
+            "fraction_constant": round(constant / max(1, len(per_task)), 4),
+            "distinct_texts": len(set(texts)), "n_texts": len(texts),
+            "VACUOUS": constant == len(per_task)}
+
+
 def run_gate(texts, arm_labels, groups, label, tokname, tok, n_perm):
     """Every (adversary x target) pair against its OWN within-task permutation null."""
     rng = np.random.default_rng(SEED)
@@ -277,13 +305,32 @@ def run_gate(texts, arm_labels, groups, label, tokname, tok, n_perm):
             null = np.array([cv_balanced_accuracy(Xk, permute_within_task(y, g, rng), g, kind,
                                                   folds) for _ in range(n_perm)])
             p95, p90 = float(np.percentile(null, 95)), float(np.percentile(null, 90))
+            p05 = float(np.percentile(null, 5))
+            # TECHNE 2026-08-25, ATK-016/ATK-017. The verdict was ONE-SIDED: only `obs > p95`
+            # could fail. But balanced accuracy BELOW chance carries the same information as
+            # above it -- an adversary inverts the prediction -- so for a gate asking whether
+            # assignment is RECOVERABLE the quantity is |obs - null|, not obs - null.
+            #
+            # This is not hypothetical here. The committed LIVE world sat below its null on 9 of
+            # 12 pairs, and its lexical|arm6 signature (obs 0.1275, null 0.1677, d = -0.0402) is
+            # quantitatively indistinguishable from this file's OWN planted-leak control
+            # SENSITIVITY_band_plus3 (obs 0.1292, null 0.1647, d = -0.0355) -- a leak the
+            # sensitivity sweep documents the gate as unable to detect. Both were scored PASS.
+            #
+            # The new branch is ADDITIVE and carries its own name rather than reinterpreting the
+            # preregistered upper-tail thresholds: a below-null excursion is reported as
+            # FAIL-LEAK-INVERTED, and the semantics of the original verdicts are untouched.
             verdict = ("FAIL-LEAK" if obs > p95 else
+                       "FAIL-LEAK-INVERTED" if obs < p05 else
                        "UNDECIDED" if obs > p90 else "PASS")
             results[f"{adv}|{target}"] = {
                 "observed_balanced_accuracy": round(obs, 4),
                 "null_mean": round(float(null.mean()), 4),
+                "null_p05": round(p05, 4),
                 "null_p90": round(p90, 4), "null_p95": round(p95, 4),
                 "null_max": round(float(null.max()), 4),
+                "signed_delta": round(float(obs - null.mean()), 4),
+                "abs_delta": round(abs(float(obs - null.mean())), 4),
                 "n_permutations": int(n_perm),
                 "n_rows": int(len(y)), "n_classes": int(len(set(y))),
                 "verdict": verdict,
@@ -291,10 +338,13 @@ def run_gate(texts, arm_labels, groups, label, tokname, tok, n_perm):
         print(f"    {label}/{target}: " + "  ".join(
             f"{a}={results[f'{a}|{target}']['observed_balanced_accuracy']:.3f}"
             f"/p95={results[f'{a}|{target}']['null_p95']:.3f}" for a in Xs))
+    vac = input_vacuity(texts, groups)
     return {"world": label, "tokenizer": tokname, "pairs": results,
             "n_features": {"lexical": int(Xtext.shape[1]), "structural": len(struct_keys),
                            "distributional": len(dist_keys)},
-            "any_fail": any(v["verdict"] == "FAIL-LEAK" for v in results.values()),
+            "input_vacuity": vac,
+            "any_fail": any(v["verdict"].startswith("FAIL-LEAK") for v in results.values()),
+            "any_inverted": any(v["verdict"] == "FAIL-LEAK-INVERTED" for v in results.values()),
             "any_undecided": any(v["verdict"] == "UNDECIDED" for v in results.values())}
 
 
@@ -334,8 +384,20 @@ def main():
     arms_obj = C.Arms(rows, gold)
     tok, tokname = _proxy_tokenizer()
 
+    # TECHNE 2026-08-25, ATK-016. `manifest_sha16` covers the TASK MANIFEST and not the packet
+    # RENDERER, so it is invariant to exactly the change that invalidated this ledger. Measured:
+    # the committed leakage_gate.json carries manifest_sha16 e6b1e001bf79e3ef, the CURRENT
+    # manifest hashes to the same value, and yet not one of its six LIVE observed figures
+    # reproduces -- lexical|arm6 is committed at 0.1275 and recomputes to 0.1667. The slug was
+    # re-keyed on the task between the two, and no provenance field could see it. A stamp that
+    # covers the inputs but not the transform cannot detect a stale artifact.
+    render_src = (ROOT / "ergon/probe/packet_render.py").read_bytes()
+    import hashlib
+    renderer_sha16 = hashlib.sha256(render_src).hexdigest()[:16]
+
     report = {"prereg": "ergon/probe/PREREG_adversarial_leakage_gate_2026-08-25.md",
               "manifest_sha16": C.manifest_sha256(rows)[:16],
+              "renderer_sha16": renderer_sha16,
               "n_tasks": len(rows), "arms": sorted(ARMS),
               "retired_claim": "arm identity is computationally unavailable — MALFORMED, "
                                "retired 2026-08-25: the treatment identifies the arm",
@@ -364,12 +426,34 @@ def main():
     ctrl_ok = all(report["worlds"][n]["detected"]
                   for n in ("POSCTRL_lead_line", "POSCTRL_slug_band"))
     report["positive_controls_pass"] = ctrl_ok
+    # TECHNE 2026-08-25, ATK-016. Vacuity is checked BEFORE the pass/fail ladder, because a
+    # gate whose live input is constant across arms cannot produce evidence about those arms
+    # and its PASS would otherwise be byte-indistinguishable from an earned one.
+    live_vac = live["input_vacuity"]
+    report["live_input_vacuity"] = live_vac
+    if live_vac["VACUOUS"]:
+        report["verdict"] = (
+            "VACUOUS — the live packets' non-treatment content is BYTE-IDENTICAL across all "
+            f"arms ({live_vac['tasks_with_constant_input']}/{live_vac['tasks']} tasks have a "
+            "single distinct blanked payload), so this gate has no input to discriminate on and "
+            "its permutation null has zero variance. This is NOT a PASS: it is the correct "
+            "consequence of INVARIANT 7 having closed the channel by construction, and the gate "
+            "is retained only as a REGRESSION detector that would fire if an arm-varying "
+            "nuisance field were reintroduced. Reporting it as PASS would be a vacuous reading "
+            "presented as a passing one.")
+        (OUT / "leakage_gate.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
+        print()
+        print(report["verdict"])
+        return 0
     if not ctrl_ok:
         report["verdict"] = ("UNINTERPRETABLE — an adversary that cannot detect a KNOWN leak "
                              "proves nothing when it reports a null. This is a terminal finding "
                              "about the gate, not a result about the packets.")
     elif live["any_fail"]:
-        report["verdict"] = "FAIL — nuisance leakage detected on live packets; P2 does not run"
+        inv = " (INVERTED: recovery is BELOW the null, which is recovery all the same — an "
+        inv += "adversary inverts the prediction)" if live.get("any_inverted") else ""
+        report["verdict"] = ("FAIL — nuisance leakage detected on live packets; P2 does not run"
+                             + inv)
     elif live["any_undecided"]:
         report["verdict"] = "UNDECIDED — re-run at 1,000 permutations before reading either way"
     else:
