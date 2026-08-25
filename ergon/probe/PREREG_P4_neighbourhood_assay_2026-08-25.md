@@ -203,8 +203,39 @@ adds something over **everything legitimately available without it**.
 Δ_matched  = predictor(context + failure) − predictor(context + shuffled failure)   # baseline 6
 ```
 
-**Q2 is positive only if `Δ_context > 0` AND `Δ_matched > 0`**, both on held-out records, both
-by more than the reported SE. Beating 1, 2, 3 and 5 is necessary and not sufficient.
+### 6.1 THE POSITIVITY RULE — the exact decision function, frozen
+
+Added 2026-08-25 on external review: *"don't leave the actual positivity threshold in natural
+language."* Correct, and this campaign's own history is the argument — prose has silently become
+a scoring rule here more than once. `"beyond SE"` was underspecified. The decision function is
+now executable and takes no interpretation:
+
+```
+UNIT OF ANALYSIS   the generator stratum (SPEC §7). NOT the row.
+PAIRING            each stratum contributes one paired difference per comparison,
+                   computed on the SAME held-out records for T and for the baseline.
+UNCERTAINTY        paired bootstrap over strata, 10,000 resamples, fixed seed,
+                   BCa interval. Not a normal approximation: the stratum count is
+                   small and the differences are not assumed symmetric.
+DECISION           Δ is POSITIVE iff the BCa 95% interval lies entirely above
+                   MIN_EFFECT, where MIN_EFFECT = 0.02 in the units of the metric
+                   (top-1 accuracy), fixed now.
+Q2 POSITIVE        iff Δ_context POSITIVE **and** Δ_matched POSITIVE.
+```
+
+**`MIN_EFFECT = 0.02` is not decorative.** An interval that merely excludes zero can be
+consistent with an effect too small to mean anything; this campaign has previously spent two
+passes moving a point across a line closer to it than its own standard error. The floor is set
+before the data, and the attainable range is checked so the gate is reachable at all.
+
+**Multiplicity: none is applied, and that is principled, not an omission.** Requiring *both*
+`Δ_context` and `Δ_matched` to clear the bar is an **intersection–union test**: the null is
+rejected only if every component is rejected, so the type-I rate is bounded by α without
+correction. Requiring more components makes it *more* conservative, never less. The other
+baselines (B1, B2, B3, B5) are reported and are **necessary but not part of the decision
+function** — they diagnose *why* a result looks the way it does.
+
+**Beating B1, B2, B3 and B5 is necessary and not sufficient.**
 
 **Every predictor emits per-row contributions**, not only an aggregate. Two programs agreeing on
 a scalar is much weaker evidence than two programs agreeing on the whole vector of row-level
@@ -213,6 +244,64 @@ decisions, and the aggregate is what an implementation error is most likely to p
 **Held-out split is by GENERATOR and by OBJECT**, not by row. Rows from one generator share a
 template, and a row-level split would let the predictor memorise 14 constants — the exact defect
 that retracted the h4 ranking positive.
+
+---
+
+### 6.2 INTERPRETATION MATRIX — every outcome has a destination, written before results exist
+
+Added 2026-08-25 on external review. The point of fixing this now is that *every row, including
+the disappointing ones, is interpretable* — which is the property that makes a negative worth
+running for.
+
+| pooled Δ | heuristic-success subset | heuristic-fail subset | other | reading |
+|---|---|---|---|---|
+| + | + | ≈0 | | **cheap-heuristic reconstruction** — residue helped the solver recover a one-liner it was failing to exploit |
+| + | ≈0 | + | | **strongest metabolization evidence** — residue works where the trivial heuristic cannot |
+| + | + | + | | useful information, **mechanism unresolved** |
+| + | | | `T ≈ B6` | residue **content** helps; the **correspondence** does not — a generic feature blob |
+| | | | `T ≈ B4` | residue adds **little beyond ordinary context** |
+| | | | `T ≈ B5` | **local retrieval** may explain the apparent effect |
+| ≈0 | ≈0 | ≈0 | all ≈ | **no detectable metabolization** |
+
+`≈0` means the §6.1 decision function did **not** return POSITIVE. The heuristic split is §9b.
+
+---
+
+## 6.3 WRONG-RESIDUE DOSE RESPONSE — a graded negative control
+
+Added 2026-08-25 on external review, which observed that a stronger control hides inside B6:
+metabolization should imply more than *"correct beats random"*. Rungs, at controlled semantic
+distance from the target:
+
+```
+correct  →  near-wrong  →  far-wrong  →  random-wrong  →  absent
+```
+
+**Distance is defined WITHOUT the outcome being predicted** — by task surface structure (item
+count, magnitude class, digit length), never by whether the solver succeeded. Defining it by the
+outcome would build the answer into the ladder.
+
+**Two rungs already exist in the running design and this is worth stating plainly:** `F-null`
+carries a real prior-attempt record drawn from a *different* task, which is the **random-wrong**
+rung, and `F-generic` is the **absent** rung. Only `near-wrong` and `far-wrong` are new, so the
+ladder is roughly 60% built rather than a new battery.
+
+Readings, fixed in advance:
+
+- `correct > near > far ≈ random` → **generic relevance / retrieval**, graded by similarity.
+- `correct > near ≈ far ≈ random` → **correspondence-specific information**.
+- `correct > absent` **but** `wrong < absent` → **the solver is being actively misled by the
+  wrong failure record.** This is the most informative outcome available, because being *harmed*
+  by a wrong record is stronger mechanistic evidence that the solver consumes failure
+  information than being *helped* by a right one. It gives metabolization an interpretable
+  negative.
+- `correct ≈ all wrong > absent` → residue functioning as **generic scaffolding**.
+- everything `≈` → dead.
+
+**Scheduling, stated so it cannot become a reason to postpone:** the two new rungs are added to
+the factorial run **if the free lane sustains them at collection time**; otherwise they are the
+**immediate follow-up**, not a prerequisite. This measurement must not become the next reason the
+main experiment does not run.
 
 ---
 

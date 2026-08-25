@@ -572,10 +572,18 @@ class Arms:
         # previously used their own path, which is why they shared a template with each
         # other and not with F-generic. One renderer = one shape, structurally.
         if arm in ("F-prom-retrieved", "F-null"):
-            from ergon.probe.packet_render import render
+            from ergon.probe.packet_render import render, synthetic_slug
             items = (self.prom_items(uid) if arm == "F-prom-retrieved"
                      else self.null_items(uid)) or self.NO_METHODS
-            slug = uid if arm == "F-prom-retrieved" else self.null_slug(uid)
+            # ARM-INDEPENDENT SLUG (2026-08-25, external review). Previously F-prom carried
+            # this task's own uid and F-null the donor task's -- both real, both differing by
+            # arm. That made the slug a nuisance channel, and the adversarial gate could only
+            # bound it: measured detection floor was a per-arm spread of ~25% of the field's
+            # range, so a subtler slug leak would have passed. Removing the channel is strictly
+            # stronger than bounding it, and it is available for free because the slug conveys
+            # nothing the experiment needs: provenance is carried by the ITEMS (the method
+            # census), not by a redacted record id.
+            slug = synthetic_slug(RUNG, uid, MANIFEST_N)
             # NO CALLER-SIDE PREFIX. The lead line these two arms used to prepend here
             # was absent from the other four -- a 400/400 arm label outside the frame.
             # It now lives in TEMPLATE, so every arm gets it or none does.
@@ -599,22 +607,28 @@ class Arms:
         # the cheap method has already been supplied.
         if arm in ("F-generic", "F-hint", "F-prom+hint", "F-null+hint"):
             from ergon.probe.packet_render import render, synthetic_slug
-            # The slug index is NOT derived from the task index plus a per-arm offset any
-            # more: those offsets (+40000/+50000/+60000/+70000) were a six-way arm label
-            # in digits, invisible to every shape abstraction because they all erase
-            # digits. synthetic_slug now hashes into the real task-id range.
+            # The slug is keyed on the TASK ALONE, so every arm of a task shares one id.
+            # Two corrections live here. First: the old +40000/+50000/+60000/+70000 per-arm
+            # offsets were a six-way arm label written in digits, invisible to every shape
+            # abstraction because they all erase digits. Second, and stronger: hashing on
+            # (arm, uid) fixed the RANGE but still varied the VALUE by arm, leaving a nuisance
+            # channel that could only be bounded, never closed -- the adversarial gate measured
+            # its own detection floor at a per-arm spread of ~25% of the field range, so a
+            # subtler slug leak would have survived. Keying on uid alone makes the packets
+            # byte-identical outside the treatment slot, which is decidable rather than
+            # estimated.
             if arm == "F-generic":
                 items = GENERIC_ITEMS
-                slug = synthetic_slug(RUNG, ("F-generic", uid), MANIFEST_N)
+                slug = synthetic_slug(RUNG, uid, MANIFEST_N)
             elif arm == "F-hint":
                 items = HINT_ITEMS
-                slug = synthetic_slug(RUNG, ("F-hint", uid), MANIFEST_N)
+                slug = synthetic_slug(RUNG, uid, MANIFEST_N)
             elif arm == "F-null+hint":
                 items = (self.null_items(uid) or self.NO_METHODS) + HINT_ITEMS
-                slug = synthetic_slug(RUNG, ("F-null+hint", uid), MANIFEST_N)
+                slug = synthetic_slug(RUNG, uid, MANIFEST_N)
             else:                                   # F-prom+hint
                 items = (self.prom_items(uid) or self.NO_METHODS) + HINT_ITEMS
-                slug = synthetic_slug(RUNG, ("F-prom+hint", uid), MANIFEST_N)
+                slug = synthetic_slug(RUNG, uid, MANIFEST_N)
             return render(slug, items, self.sparsity_of(uid)) + "\n\n" + base
         if arm == "F-oracle":
             return oracle_text(self.rows_by_uid[uid], self.rep1_ok[uid]) + "\n\n" + base

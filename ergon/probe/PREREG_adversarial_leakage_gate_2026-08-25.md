@@ -136,6 +136,31 @@ classifier cannot memorise task text and recover the arm from it.
 
 Balanced accuracy, because the six arms are equally sized here but the marginals are not.
 
+### 4.1 MULTIPLICITY SEMANTICS — what this gate is, and what it is not
+
+Added 2026-08-25 on external review, which correctly noted the rule was ambiguous. There are
+**12 pairs** (3 adversaries × 4 targets) and the rule is "any pair above its own p95 fails".
+Under 12 independent null tests the family-wise false-alarm rate is `1 − 0.95¹² ≈ 46%`; the
+tests are positively correlated (shared packets, overlapping targets) so the true rate is lower,
+but it is **emphatically not 5%**.
+
+**The hair trigger is kept deliberately.** For a safety interlock the asymmetry is correct: a
+false alarm costs an inspection, a false clear costs a contaminated factorial. But the semantics
+are now preregistered so a later reader cannot mistake a paranoid engineering gate for a
+calibrated statistical test:
+
+1. **This is a screening gate, not twelve hypothesis claims.** No pair's p-value is reported as
+   a scientific result.
+2. **One p95 excursion pauses the run by design.**
+3. **The nominal 5% is NOT claimed as the experiment-level false-positive rate.** It is a
+   per-pair threshold chosen for sensitivity, not for calibration.
+4. **A FAIL licenses inspection and replication — never the conclusion "leakage proved".** The
+   required response is: name the top-weighted features, construct a decidable check for the
+   suspected channel, and re-run. A FAIL that does not survive replication is a false alarm and
+   is recorded as one.
+5. **A PASS is not a 95%-confidence statement about absence.** It is the §1 sentence, bounded by
+   the measured detection floor in §8.1.
+
 **If the gate FAILS, P2 does not run.** The finding is that nuisance leakage exists, and the
 named features are the next repair. This is the outcome I least want and the reason the threshold
 is written down first.
@@ -249,5 +274,94 @@ gate's null is the kind of thing that later turns out to matter.
 
 ---
 
+---
+
+## 9. SUPERSEDED, 2026-08-25 — the channel was closed rather than bounded
+
+§8's PASS describes packets that **no longer exist**, and the honest disposition of this whole
+gate changed after it ran.
+
+The measurement in §8.1 showed the gate could only *bound* slug leakage: its detection floor was
+a per-arm spread of ~25% of the field's range. A census of what actually varied across arms then
+showed the slug was **the only** nuisance field doing so — sparsity was already arm-invariant
+under INV 6c, and everything else is template-fixed. So the channel was removed rather than
+bounded: the slug is now keyed on the **task alone**, shared by all six arms.
+
+The resulting property is **decidable**, and is now `packet_invariants` INVARIANT 7:
+
+> With the treatment slot blanked, every arm's payload is **byte-identical**.
+> Verified on **200/200 tasks, all six arms**. Gate-fired: a **one-digit** change to a single
+> arm's slug — far below anything the classifier could resolve — is detected and named.
+
+**Therefore this adversarial gate is now VACUOUS on the live packets.** Its inputs are identical
+across arms, so it cannot detect anything and its PASS is no longer evidence about them.
+Re-running it would confirm a mathematical certainty, not measure a property — so it is not
+re-run, and this paragraph exists so that a vacuous reading is never later cited as a passing
+one.
+
+**What the gate is retained for:** a **regression detector**. It fires if an arm-varying nuisance
+field is reintroduced, which is exactly the failure this campaign has now committed four times.
+Its §8 result also retains a narrow historical meaning: the *previous* packets, which did carry
+an arm-varying slug, were not leaking detectably **at that gate's resolution** — a weaker
+statement than the one INV 7 now supports, and superseded by it.
+
+---
+
+---
+
+## 10. THE INVERSION TEST — status, and why half of it is now unnecessary
+
+External review named this the one outstanding blocking item:
+
+> *"Preserve treatment, randomize nuisance → does the measured treatment effect survive?
+> The first detects nuisance carrying arm information. The second detects the solver depending
+> on nuisance-arm correlations even when treatment is available."*
+
+The test decomposes into two halves and they now have different statuses.
+
+### 10.1 The packet half — SATISFIED BY CONSTRUCTION, not by testing
+
+The inversion asks whether randomizing nuisance independently of arm changes anything. On these
+packets the question is **degenerate in the favourable direction**: after §9, the non-treatment
+content is **byte-identical across all six arms** (INV 7, decided on 200/200 tasks).
+
+The nuisance-arm correlation is therefore **exactly zero**, not estimated to be near zero.
+Randomizing a constant changes nothing, so there is no nuisance-arm interaction — nonlinear or
+otherwise — for a solver to depend on. Removing the channel satisfies the packet half more
+strongly than any test of it could: a test would have returned "no detectable dependence at
+resolution X", and this returns "the dependence does not exist".
+
+**What this does NOT cover, stated plainly:** it holds for nuisance *within the packet*.
+Nuisance introduced *outside* the packet — dispatch ordering, retry paths, timing — is untouched,
+and remains on the declared-open list in §3.1.
+
+### 10.2 The solver half — REQUIRED, and it runs WITH the factorial
+
+The remaining question needs the solver and therefore needs arm calls:
+
+> Does the measured treatment effect survive when permitted nuisance is randomized independently
+> of arm?
+
+Since within-packet nuisance is now constant across arms, the live version of this is a
+**re-randomization check on the dispatch layer**, preregistered here:
+
+```
+DESIGN     the factorial is dispatched in a randomized (arm, task) order under a fixed seed,
+           and the seed is recorded. A SECOND dispatch of a preregistered subset (n = 60 tasks
+           x 4 factorial cells) is run under a DIFFERENT seed and a different batch grouping.
+STATISTIC  the per-cell accuracy difference between the two dispatch orders.
+GATE       preregistered as REPORTED, and as a KILL if the two orders disagree beyond the
+           paired bootstrap interval used for the main effect (PREREG_P4 §6.1's procedure,
+           applied to this comparison). Two dispatch orders that disagree mean the measured
+           effect is partly an artifact of dispatch, and no factorial reading survives it.
+COST       240 additional calls on the free lane, ~5 hours, $0.
+```
+
+**This is a blocking prerequisite for reading the factorial, not for running it.** The subset
+re-dispatch is collected in the same campaign; the factorial result may not be interpreted until
+it reports.
+
+---
+
 *Ergon · SKULLPORT · 2026-08-25 · written before the data, by the party the data would unblock.
-§8 appended after the run.*
+§8 appended after the run; §9 after the channel was closed; §10 on external review.*

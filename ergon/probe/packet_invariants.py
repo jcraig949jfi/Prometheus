@@ -348,6 +348,57 @@ def payload_length_separability(per_task_prompts, carrying_arms):
                     "are a confound only for a contrast that is not supposed to vary in size."}
 
 
+def nontreatment_identical_across_arms(prompts_by_arm, carrying_arms):
+    """INVARIANT 7 -- with the treatment slot blanked, every arm's payload is BYTE-IDENTICAL.
+
+    This supersedes the adversarial leakage gate as the primary evidence, and the reason is
+    worth stating because it is a general lesson about this campaign.
+
+    The gate attacked the non-treatment content with classifiers and reported no recovery above
+    a permutation null. But a classifier null is an ESTIMATE with a detection floor, and when
+    that floor was measured it turned out to be coarse: a per-arm spread of ~25% of a field's
+    range passed undetected. So the gate could only ever have bounded slug leakage, never closed
+    it -- and the slug was the one and only nuisance field that varied by arm (sparsity was
+    already arm-invariant under INV 6c; everything else is template-fixed).
+
+    Keying the slug on the TASK alone removes the channel instead of bounding it. What remains
+    is decidable: blank the treatment, compare bytes. Where a property can be decided, deciding
+    it strictly dominates estimating it.
+
+    CONSEQUENCE THAT MUST TRAVEL WITH THIS: the adversarial gate is now VACUOUS on these packets
+    -- its inputs are identical across arms, so it cannot detect anything, and its PASS is no
+    longer evidence about them. It is retained as a REGRESSION detector: it would fire again if
+    someone reintroduced an arm-varying nuisance field. A vacuous reading reported as a passing
+    one is its own defect class, so the vacuity is named here rather than left to be discovered.
+    """
+    from ergon.probe.adversarial_leakage import constantize
+    base = prompts_by_arm.get("F0", "")
+    blanked = {}
+    for arm in carrying_arms:
+        if arm not in prompts_by_arm:
+            continue
+        c = constantize(payload_of(prompts_by_arm[arm], base))
+        if c is None:                      # non-conforming: reported by INV 6a, not swallowed
+            return False, {arm: "payload does not match the template; cannot blank treatment"}
+        blanked[arm] = c
+    distinct = set(blanked.values())
+    if len(distinct) <= 1:
+        return True, {}
+    groups = {}
+    for arm, txt in blanked.items():
+        groups.setdefault(txt, []).append(arm)
+    return False, {"n_distinct_nontreatment_payloads": len(distinct),
+                   "arm_groups": [sorted(v) for v in groups.values()],
+                   "first_diff": _first_diff(*list(distinct)[:2])}
+
+
+def _first_diff(a, b):
+    for i, (x, y) in enumerate(zip(a, b)):
+        if x != y:
+            return {"offset": i, "a": a[max(0, i - 30):i + 30], "b": b[max(0, i - 30):i + 30]}
+    return {"offset": min(len(a), len(b)), "note": "one is a prefix of the other"}
+
+
 def check_task(prompts_by_arm, gold_value, carrying_arms, forbidden):
     r1, d1 = base_identical(prompts_by_arm)
     r4, d4 = forbidden_token_scan(prompts_by_arm, forbidden)
@@ -361,6 +412,7 @@ def check_task(prompts_by_arm, gold_value, carrying_arms, forbidden):
     r6, d6, slots = template_conformance(prompts_by_arm, carrying_arms)
     r6b, d6b = slug_pool_shared(slots) if r6 else (False, {})
     r6c, d6c = sparsity_arm_invariant(slots) if r6 else (False, {})
+    r7, d7 = nontreatment_identical_across_arms(prompts_by_arm, carrying_arms)
     return {
         "base_identical": r1, "base_diffs": d1,
         "envelope_identical_DIAGNOSTIC_ONLY": r2, "envelope_groups": d2,
@@ -369,8 +421,9 @@ def check_task(prompts_by_arm, gold_value, carrying_arms, forbidden):
         "template_conformance": r6, "non_conforming": d6,
         "slug_pool_shared": r6b, "slug_pools": d6b,
         "sparsity_arm_invariant": r6c, "sparsity_diffs": d6c,
+        "nontreatment_identical_across_arms": r7, "nontreatment_diffs": d7,
         "profiles": profile_spread(prompts_by_arm, carrying_arms),
-        "all_pass": r1 and r4 and r5 and r6 and r6b and r6c,
+        "all_pass": r1 and r4 and r5 and r6 and r6b and r6c and r7,
         "_slots": slots,
     }
 
@@ -435,6 +488,10 @@ def main():
                               "slug pool token shared across arms (no label in words)",
                               "slug index bands not separable (no label in digits)",
                               "sparsity slot arm-invariant per task",
+                              "NON-TREATMENT CONTENT BYTE-IDENTICAL ACROSS ARMS (INV 7) — "
+                              "decidable; supersedes the adversarial gate, which is now "
+                              "VACUOUS on these packets and retained only as a regression "
+                              "detector",
                               "no forbidden verdict tokens in any payload",
                               "no verbatim gold in any non-oracle payload"],
         "reported_not_gated": ["payload length separability (the factorial varies item "

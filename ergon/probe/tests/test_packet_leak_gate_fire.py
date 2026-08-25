@@ -274,3 +274,65 @@ def test_every_live_arm_carries_the_lead_line_or_none_does(manifest_rows, arms):
         has = {a: payload_of(arms.prompt(a, uid), base).startswith("A prior attempt record:")
                for a in residue_arms}
         assert len(set(has.values())) == 1, f"{uid}: lead line splits the arms: {has}"
+
+
+# --------------------------------------------------------------------------------------
+# INVARIANT 7 -- the nuisance channel closed by construction, not bounded by a classifier.
+# --------------------------------------------------------------------------------------
+
+def test_a_single_arm_varying_nuisance_byte_is_detected():
+    """The property the adversarial gate could only ESTIMATE, decided instead.
+
+    The gate reported no assignment recovery above its permutation null, but its measured
+    detection floor was coarse: a per-arm spread of ~25% of a field's range passed undetected.
+    So it could bound slug leakage, never close it. INV 7 closes it: blank the treatment,
+    compare bytes.
+
+    Here ONE arm's slug digit is changed -- a leak far below anything the classifier could
+    see -- and the check must still name it.
+    """
+    from ergon.probe.packet_invariants import nontreatment_identical_across_arms
+    from ergon.probe.packet_render import render, synthetic_slug
+
+    slug = synthetic_slug("M30", "task-0", 200)
+    prompts = {"F0": BASE}
+    for arm in CARRYING:
+        prompts[arm] = render(slug, ["m1", "m2"]) + "\n\n" + BASE
+    ok, _ = nontreatment_identical_across_arms(prompts, CARRYING)
+    assert ok, "identical nuisance must pass, or the check is not discriminating"
+
+    idx = (int(slug.rsplit("-", 1)[1]) + 1) % 100000       # ONE digit, on ONE arm
+    prompts["F-null"] = render(f"nearmiss_mix-M30-{idx:05d}", ["m1", "m2"]) + "\n\n" + BASE
+    ok, detail = nontreatment_identical_across_arms(prompts, CARRYING)
+    assert not ok, "a one-unit per-arm slug change passed a DECIDABLE check"
+    assert detail["n_distinct_nontreatment_payloads"] == 2
+    assert ["F-null"] in detail["arm_groups"], detail["arm_groups"]
+
+
+def test_items_may_still_differ_freely_under_invariant_7():
+    """INV 7 must not forbid the experiment. Items are the treatment and are blanked before
+    comparison, so arms carrying wildly different method censuses still pass."""
+    from ergon.probe.packet_invariants import nontreatment_identical_across_arms
+    from ergon.probe.packet_render import render, synthetic_slug
+    slug = synthetic_slug("M30", "task-9", 200)
+    prompts = {"F0": BASE,
+               "F-null": render(slug, ["trial-division"]) + "\n\n" + BASE,
+               "F-prom-retrieved": render(slug, ["a", "b", "c", "d", "e", "f"]) + "\n\n" + BASE,
+               "F-generic": render(slug, ["work-stepwise", "verify"]) + "\n\n" + BASE}
+    ok, detail = nontreatment_identical_across_arms(
+        prompts, ("F-null", "F-prom-retrieved", "F-generic"))
+    assert ok, detail
+
+
+def test_live_packets_have_no_arm_varying_nuisance_at_all(manifest_rows, arms):
+    """The live claim, decided on every task rather than sampled: with the treatment blanked,
+    all six arms are byte-identical. This is what licenses retiring the classifier result from
+    the evidence chain and keeping it only as a regression detector."""
+    from ergon.probe.packet_invariants import nontreatment_identical_across_arms
+    residue_arms = ("F-null", "F-prom-retrieved", "F-generic",
+                    "F-hint", "F-null+hint", "F-prom+hint")
+    for r in manifest_rows:
+        uid = r["uid"]
+        prompts = {a: arms.prompt(a, uid) for a in ("F0",) + residue_arms}
+        ok, detail = nontreatment_identical_across_arms(prompts, residue_arms)
+        assert ok, f"{uid}: arm-varying nuisance survives: {detail}"
