@@ -174,3 +174,64 @@ commit and is gitignored. What is committed is the exact counts (`c1_extract_sum
 `preflight_pass1.json`), the sampled parent ids, and the scripts that regenerate the shards
 deterministically from the corpus (`charon/extract_c1.py`). The verdict, when it comes, ships with
 those counts in the same commit.
+
+---
+
+# AMENDMENT 1 — the corpus is a content-addressed DAG (filed before any estimator)
+
+Measured by `charon/step2/dup_probe.py` on the 12 GB c1 extract:
+
+```
+c1 rows                30,031,376
+distinct record_ids    10,053,478
+duplication factor           2.99x
+```
+
+Duplicate rows are **not byte-identical**. They differ in exactly one field —
+`parent_record_id` — and agree on state, action and outcome. So `record_id` is a **content hash of
+the child claim**, and the corpus is a **DAG**: the same child is reachable from several parents.
+Mutating side `a` of `(knot X, ec E)` and of `(knot Y, ec E)` to the same new knot yields the
+identical child. That is legitimate structure, not corruption.
+
+It has three consequences, all of which bite before a single estimator is fitted.
+
+**C1 — Row counts overstate distinct claims by ~3x.** This applies to the step 1 census as well:
+its `rows_EXACT` column counts *records emitted*, not *distinct claims*. The census verdict does not
+depend on it (the qualifier test is existential), but no row count from that table may be quoted as
+a count of distinct mathematical claims. Recorded against `feedback_wrong_population_statistics`.
+
+**C2 — The pre-registered parent holdout LEAKS, and it leaks in the flattering direction.** Holding
+out a parent does not hold out the child content: the same `record_id` sits under other parents on
+the train side. A win on the parent holdout is therefore consistent with pure content leakage.
+**That outcome would present as a refutation of the filed NO-TRANSFER prediction — i.e. as a success
+for the thesis this seat exists to attack.** It is precisely the shape that must not be allowed to
+pass unexamined.
+
+*Added control, declared before the run:* a fifth holdout, **content** — no `record_id` appears on
+both sides — and **deduplication by `record_id` as the primary analysis population**. Adding a
+stricter control is not a retrofit; removing one would be. All five splits are reported. The
+original four remain exactly as pre-registered so the plan's prediction stays scoreable against the
+split it named.
+
+**C3 — The effective sample is ~3x smaller than the row count**, compounding the frame declaration
+in §2. Clustered SEs are computed over deduplicated content, not emitted rows.
+
+## Amendment 1b — the action is only PARTLY recorded
+
+`mutation_side ∈ {a, b}` names which side was mutated but not **what it was mutated to**. The
+outcome `holds` depends heavily on the replacement object, which is part of the action taken and is
+not part of the action modelled. Regret attributed to the side choice therefore absorbs variance
+driven by object choice — the plan's own scope stamp calls this *"binary-side action space enriched
+by object choice"*, and here it is a confound, not a footnote.
+
+**Pre-committed reading:** if regret on the side choice is indistinguishable from zero while
+outcomes vary strongly with the replacement object, the correct verdict is **UNDER-SPECIFIED ACTION**
+— the corpus recorded a decision it did not fully record — and *not* "navigation does not work".
+Those are different findings and must not be reported as the same one.
+
+## Consequence for the build
+
+The triple needs the parent's pre-decision state, and parent pointers resolve (47.67% inside c1;
+the remainder chiefly in `a1`, plus `c3 f1 f4 f2 g5 g4 f3`). Parent states must therefore be
+extracted before the experiment can run. That extraction is the next step; nothing is fitted until
+it lands.
