@@ -169,3 +169,49 @@ alongside evaluation counts.
 measurement target before calling any later movement "capability acquisition." If E1 fails,
 stop describing O1 as an exhaustive ceiling result. If E11 fails, stop describing the four
 abstention classes as demonstrated missing primitives and investigate the coupling layer.
+
+---
+
+## 8. AMENDMENT — E9 analysis plan, filed 2026-08-25 BEFORE the battery was scored
+
+Charon delivered 42 tasks (7 categories × 6). Schema validated: 4 candidates each, correct
+always present, answer position 11/11/10/10. Charon's trivial floors: pick-longest 0.2599,
+pick-shortest 0.2560, against chance 0.2500 — versus **0.342 on the home battery**. That is
+already a measurement about our battery rather than about Apollo.
+
+**A specification error in my own pre-commitment, found before scoring.** The original
+endpoint — "aggregate accuracy within ±0.15 of the home battery" — is **wrong**, because the
+category mixes differ. Home canary is 10/10/10/5/5/5/5 (60% drawn from the three categories
+Apollo solves); Charon's is 6 each (43%). If Apollo replicated its home behaviour *exactly*,
+raw aggregates would read 30/50 = 0.6000 at home against 18/42 = 0.4286 on Charon's — a
+**0.1714 gap from category mix alone**, which would blow the ±0.15 tolerance and manufacture
+a failure. Comparing raw aggregates across differently-mixed batteries is not a valid test.
+
+**Amended endpoints, committed before any scoring:**
+
+- **PRIMARY — mix-adjusted aggregate.** Reweight Charon's per-category accuracies by the
+  home canary's category weights (10/10/10/5/5/5/5 ÷ 50) and compare against home canary
+  **0.6000**, tolerance **±0.15**.
+- **CO-PRIMARY — the binary category prediction, which is mix-free and sharper.** Apollo's
+  home behaviour is not a graded 0.6; it is 1.0 on three categories and 0.0 on four. So the
+  real prediction is: **numeric_comparison, numeric_stated_premise, transitivity each ≥0.75;
+  all_but_n, temporal_ordering, vacuous_truth, consistency_check each ≤0.25.**
+  Failure of *this* is what would mean the home 10/10s were authorship.
+- **SECONDARY — raw aggregate**, reported for the record, explicitly **not** used for the
+  verdict.
+- **MECHANISM CHECK — abstention.** At home, all 20 unsolved tasks abstain
+  (`selected_answer` empty, zero scorers firing). If Apollo *guesses* on Charon's versions
+  instead of abstaining, that is a distinct finding about guard generality and is reported
+  separately from accuracy.
+- **EXPLORATORY — per-category exact rates.** n=6 per cell; per Charon's own caveat these
+  are coarse and category difficulty is not equalised, so a per-category spread is not by
+  itself evidence about a capability profile.
+
+Charon's caveats are adopted verbatim: six per category is coarse and was deliberately not
+padded; difficulty is not equalised; the tasks are surface-varied but **not adversarial**, so
+a near-home score demonstrates robustness to authorship, not robustness generally; and a
+single author is weaker than two. Charon declined the optional matched-style tier on the
+correct ground that one author writing both tiers confounds the contrast with their own
+style drift — that reasoning is accepted and the tier is not sought from Charon.
+
+**Scored once. No tuning, no retries, published whatever it says.**
