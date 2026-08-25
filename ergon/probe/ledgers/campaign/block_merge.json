@@ -1,0 +1,25 @@
+{
+  "rule": "ergon/probe/PREREG_block_B_merge_rule_2026-08-25.md",
+  "block_A": {
+    "point_estimate": 0.4742,
+    "n": 194,
+    "manifest_interval_95": [
+      0.404,
+      0.5445
+    ],
+    "movable_share": 0.3866,
+    "interval_straddles_band_edge": false,
+    "items_removed": 6,
+    "leveling_verdict": "LEVELED",
+    "screen_lenient_stamp": "SCREEN-LENIENT: 6/200 items removed; this run does not exclude contamination, it only fails to find it."
+  },
+  "block_B": null,
+  "basis": "cross-family (Tier B, HB-R1)",
+  "pooling": "UNAVAILABLE",
+  "n_pooled": null,
+  "reason": "a block without an admissible second-family leg has no cross-family screen, so it contributes nothing to a Tier B reading (merge rule \u00a72, second bullet). Missing: B",
+  "ts_utc": "2026-08-25T06:04:40+00:00",
+  "scope_caveat": "SCOPE (prereg \u00a74.1, C6): this is a D0 result on self-generated first-cycle residue (the pre-pass of \u00a74.2). It is NOT a corpus result \u2014 it says nothing about the native residue Prometheus accumulated (D2/D3). A D0 win with a D3 null is not a success for the accumulated corpus. D0 levels are never compared across strata. Pinned to (manifest \u00d7 host); does not transfer across hosts.",
+  "solver_pin": "nvidia:deepseek-v4-flash",
+  "prereg_version": "v1+amendments-2026-08-21"
+}

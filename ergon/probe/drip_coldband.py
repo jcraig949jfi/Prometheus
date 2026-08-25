@@ -49,13 +49,34 @@ BATCH_PER_CANDIDATE = 80
 # its own writer never emitted (Charon addendum 2026-08-23).
 MAX_TOK, TIMEOUT = 16384, 420
 BAND, MOVABLE_FLOOR = (0.35, 0.60), 0.30
-MAN = ROOT / "ergon/probe/manifests/nearmiss_mix-M30_manifest_n200.jsonl"
 DRIP_DIR = ROOT / "ergon/probe/ledgers/coldband_drip"
 
-rows = [json.loads(l) for l in MAN.read_text(encoding="utf-8").splitlines()]
-gold = {r["uid"]: r["gold_int"] for r in rows}
-# fixed work order: (rep, task) — rep 1 for all tasks, then rep 2
-WORK = [(rep, r) for rep in (1, 2) for r in rows]
+# BLOCK-AWARE (2026-08-25). This file used to load ONE manifest at import. The REDESIGN
+# ruling's remedy for the R13 power floor is a second independently pinned block, and the
+# merge rule is explicit that block B contributes NOTHING to a Tier B reading unless the
+# second family has run block B's own rows -- a cross-family screen is undefined on rows the
+# second family never saw. So the drip now walks both blocks.
+#
+# Block A first, always: its read is already finalized, so `drip` returns "complete" without
+# spending, and block B gets the whole batch. Ordering the other way would starve the leg
+# that is actually incomplete.
+#
+# The block registry is the single source of truth for manifests, shas and ledger names --
+# a second copy of those paths here is how two files come to disagree about what block B is.
+from ergon.probe import blocks as _blocks           # noqa: E402
+
+BLOCK_ORDER = ("A", "B")
+
+
+def block_work(block):
+    """(gold, WORK, ledger_prefix) for a block. `load` verifies the sha and refuses on
+    mismatch, so a tampered or regenerated manifest cannot enter the drip silently."""
+    rows = _blocks.load(block)
+    gold = {r["uid"]: r["gold_int"] for r in rows}
+    # fixed work order: (rep, task) — rep 1 for all tasks, then rep 2
+    work = [(rep, r) for rep in (1, 2) for r in rows]
+    prefix = "" if block == "A" else f"block{block}_"
+    return gold, work, prefix
 
 
 def _slug(solver):
@@ -90,9 +111,10 @@ def probe(solver):
     return r.status == "ok", r.error_type
 
 
-def drip(solver):
-    led_path = DRIP_DIR / f"{_slug(solver)}.jsonl"
-    out_path = DRIP_DIR / f"{_slug(solver)}_bandread.json"
+def drip(solver, block="A"):
+    gold, WORK, prefix = block_work(block)
+    led_path = DRIP_DIR / f"{prefix}{_slug(solver)}.jsonl"
+    out_path = DRIP_DIR / f"{prefix}{_slug(solver)}_bandread.json"
     if out_path.exists():
         return "complete"
     ok, err = probe(solver)
@@ -101,7 +123,7 @@ def drip(solver):
     have = done_keys(led_path)
     todo = [(rep, r) for rep, r in WORK if (rep, r["uid"]) not in have][:BATCH_PER_CANDIDATE]
     if not todo:
-        return finalize(solver, led_path, out_path)
+        return finalize(solver, led_path, out_path, gold)
 
     sent = ok = 0
     with led_path.open("a", encoding="utf-8") as fh:
@@ -131,11 +153,11 @@ def drip(solver):
                       f"workload (floor {BREAK_OK_RATE:.0%}); will retry next firing")
                 break
             time.sleep(3)
-    if not (DRIP_DIR / f"{_slug(solver)}.jsonl").exists():
+    if not led_path.exists():
         return "idle"
     have = done_keys(led_path)
     if len(have) >= len(WORK):
-        return finalize(solver, led_path, out_path)
+        return finalize(solver, led_path, out_path, gold)
     return f"progress {len(have)}/{len(WORK)} (+{ok}/{sent} this batch)"
 
 
@@ -162,7 +184,7 @@ def _truncation_rate(recs):
             "treat an absent field as a pass (Charon addendum 2026-08-23).")
     return round(sum(1 for r in ok if r["completion_tokens"] >= MAX_TOK) / len(ok), 4)
 
-def finalize(solver, led_path, out_path):
+def finalize(solver, led_path, out_path, gold):
     recs = [json.loads(l) for l in led_path.read_text(encoding="utf-8").splitlines()]
     # Transport gate. This path emitted a NOT-LEVELED verdict with no transport check at
     # all: a dead lane scores every row wrong and produces a confident 0.0 that flows
@@ -261,15 +283,17 @@ def main():
 def _drip_all():
     DRIP_DIR.mkdir(parents=True, exist_ok=True)
     log = DRIP_DIR / "drip_log.jsonl"
-    for solver in CANDIDATES:
-        try:
-            status = drip(solver)
-        except Exception as e:            # noqa: BLE001 — a drip must never kill its siblings
-            status = f"error {type(e).__name__}: {e}"
-        with log.open("a", encoding="utf-8") as fh:
-            fh.write(json.dumps({"ts_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-                                 "solver": solver, "status": status}) + "\n")
-        print(solver, "->", status)
+    for block in BLOCK_ORDER:
+        for solver in CANDIDATES:
+            try:
+                status = drip(solver, block)
+            except Exception as e:        # noqa: BLE001 — a drip must never kill its siblings
+                status = f"error {type(e).__name__}: {e}"
+            with log.open("a", encoding="utf-8") as fh:
+                fh.write(json.dumps({
+                    "ts_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+                    "block": block, "solver": solver, "status": status}) + "\n")
+            print(f"block {block}", solver, "->", status)
 
 
 if __name__ == "__main__":

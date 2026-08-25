@@ -778,15 +778,67 @@ def _campaign():
         post_single = [r for r in rows if r["uid"] not in set(read["screen_excluded"])]
         n_post, screen_basis = len(post_single), "single-family FALLBACK (no admissible "                                                 "second family yet; conservative — this screen "                                                 "removes MORE items, so the floor bites sooner)"
     post = [r for r in rows if r["uid"] not in set(read["screen_excluded"])]
+
+    # ---- R13 via BLOCK B, not by widening the pin (REDESIGN ruling + PREREG merge rule).
+    # Block A alone reads 194 post-screen against a floor of 300. The ruling's remedy is a
+    # second independently pinned block, NOT an extension of `e6b1e001` -- extending it would
+    # satisfy the floor by destroying the property the pin exists to hold, and the party
+    # asking for the extension is the one whose run it unblocks.
+    #
+    # So: collect block B here, on this firing's budget, and let the PREREGISTERED merge rule
+    # decide whether the two may be pooled. The rule can refuse. If the blocks' cross-family
+    # intervals do not overlap, pooling is FORBIDDEN, the floor stays unmet, and the
+    # disagreement is the finding -- `blocks.merge_reading` returns n_pooled=None in that case
+    # precisely so this code cannot clear its own floor by reading a number without reading
+    # the verdict beside it.
     if n_post < R13_POWER_FLOOR and not _r13_waiver().exists():
-        log(event="campaign_end", verdict="R13-POWER-FLOOR-UNMET",
-            n_post_screen=n_post, screen_basis=screen_basis, floor=R13_POWER_FLOOR,
-            reason=("prereg R13: replenish from the pool and re-screen before any arm runs. "
-                    "Replenishment extends a sha-pinned manifest and is the kill authority's "
-                    f"call; waive by creating {_r13_waiver().name} to run underpowered, in which "
-                    "case the run is a pipeline exercise and not a decisive run."))
-        print(f"HALTED: R13 power floor unmet ({n_post} < {R13_POWER_FLOOR}, basis: {screen_basis}) — no arm runs")
-        return
+        from ergon.probe import blocks as B
+        read_b, spent_b = B.collect("B", budget)
+        budget -= spent_b
+        merged = B.merge_reading(read, read_b)
+        atomic(DIR / "block_merge.json", dict(merged, ts_utc=now()))
+        log(phase="R13", block_b_spent=spent_b, pooling=merged["pooling"],
+            n_pooled=merged.get("n_pooled"),
+            block_b_verdict=(read_b or {}).get("leveling_verdict"),
+            reason=merged["reason"])
+
+        if merged["pooling"] != "PERMITTED":
+            # THE HALT IS RECORDED, ALWAYS. A firing that ends here ends because the floor is
+            # unmet, whether block B is mid-collection or permanently unpoolable, so it
+            # carries the R13 verdict either way. An earlier version of this branch returned
+            # after logging only a phase="R13" progress line, which made the halt invisible to
+            # anyone grepping verdicts -- caught by the dry-run's "the halt must be recorded,
+            # not silent" assertion, which is exactly the guard it was written to be.
+            log(event="campaign_end", verdict="R13-POWER-FLOOR-UNMET",
+                n_post_screen=n_post, screen_basis=screen_basis, floor=R13_POWER_FLOOR,
+                block_b_pooling=merged["pooling"], block_b_spent_this_firing=spent_b,
+                block_b_verdict=(read_b or {}).get("leveling_verdict"),
+                reason=("R13 is unmet on block A alone and the remedy is block B under the "
+                        "preregistered merge rule, NOT a widened pin. " + merged["reason"]))
+            print(f"HALTED: R13 unmet ({n_post} < {R13_POWER_FLOOR}); block B {merged['pooling']}"
+                  f" — {merged['reason'][:140]}")
+            if spent_b:
+                print(f"  block B collection advanced by {spent_b} calls this firing")
+            return
+        n_post, screen_basis = merged["n_pooled"], "pooled A+B cross-family (merge rule §4)"
+        if n_post < R13_POWER_FLOOR:
+            log(event="campaign_end", verdict="R13-POWER-FLOOR-UNMET-AFTER-B",
+                n_post_screen=n_post, screen_basis=screen_basis, floor=R13_POWER_FLOOR,
+                reason=("both blocks are collected and poolable and the floor is STILL unmet. "
+                        "Merge rule §6: NO THIRD BLOCK. That is a result about the design, not "
+                        "a licence to keep adding blocks until the floor is met -- adding "
+                        "blocks until a gate passes is sweep-until-in-band in other clothes."))
+            print(f"HALTED: R13 unmet after A+B ({n_post} < {R13_POWER_FLOOR}) — no third block")
+            return
+        # The arms must run on the POOLED population, or the floor was measured on a set the
+        # arms do not use -- the wrong-population error this campaign has now committed five
+        # times. `post` is therefore extended with block B's post-screen rows.
+        rows_b = B.load("B")
+        excl_b = set((read_b or {}).get("screen_excluded") or [])
+        post = post + [r for r in rows_b if r["uid"] not in excl_b]
+        rows = rows + rows_b
+        gold.update({r["uid"]: r["gold_int"] for r in rows_b})
+        log(phase="R13", event="pooled_population_adopted", n_arms_population=len(post))
     arms = Arms(rows, gold)
     rng = random.Random(SEED)
 
