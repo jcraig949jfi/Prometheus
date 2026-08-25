@@ -222,3 +222,34 @@ the c1 result as a convenient upgrade.
 - Per plan §5 ordering, the census being incomplete blocked the rebuild decision; it is now complete
   and **R-B still binds** — no rebuild is authorised until the step 2 regret experiment reports.
 - Proceed to step 2 on c1.
+
+---
+
+# CORRECTION (same day, post-commit 69f161ec) — conjunct (b) is vacuous for four generators
+
+Checked after committing, because the verdict vocabulary turned out to be
+`{INCONCLUSIVE, REJECTED, SHADOW_CATALOG, UNVERIFIED}` — **there is no `ACCEPTED` token anywhere in
+the corpus.** `is_fail()` falls back to `verdict != "ACCEPTED"` whenever `payload.holds` is absent,
+which marks **every** row of such a generator as a failure. For those generators conjunct (b),
+*"populated on failure, not only on success"*, degenerates to *"populated at all"* and discriminates
+nothing.
+
+Decomposing the sampled `@FAIL` counts against the sampled verdict counts separates them exactly:
+
+- **Real failure signal** (`payload.holds` present; `@FAIL` < sampled rows): `c1` (1,610,411 of
+  2,405,858), `h1` (1,516,974 of 1,670,047), `c3` (452,551 of 1,010,404), `c2` (572,568 of 709,568),
+  `c5` (289,729 of 703,271), `c4` (77,630 of 705,870).
+- **Vacuous** (`@FAIL` == every sampled row): `d3`, `h2`, `h4`, **`d1`**.
+
+For c1/h1/c3 the `@FAIL` count equals the `REJECTED` count exactly, i.e. `REJECTED ⟺ holds=false`.
+That is a consistency check the instrument passes.
+
+**Withdrawn:** the verdict section above lists `h1`, `c3` and `d1` as qualifying on pre-decision
+fields. **`d1` is withdrawn** — its failure signal is vacuous, so it qualifies on (a)+(c) only.
+
+**Strict qualifier set — real failure discrimination AND a pre-decision, non-outcome action field:
+`c1`, `h1`, `c3`.**
+
+**The verdict is unchanged and is now better founded.** NOT-EARNED required only that c1 not be
+alone; it is not alone even under the strictest reading, and the strict set no longer depends on my
+outcome-blocklist judgement. Two of the three strict qualifiers (h1, c3) were invisible to v1.
