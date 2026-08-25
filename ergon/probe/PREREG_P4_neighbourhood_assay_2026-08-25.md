@@ -164,17 +164,51 @@ range is checked so the threshold is reachable on the actual data before the res
 Task: rank the neighbourhood by predicted improvement, using `Z` only (with the intervened field
 masked). Metric: **top-1 accuracy at identifying `A*`**, plus **mean rank of `A*`**.
 
-**The baseline is not chance.** It is the strongest of:
-1. uniform random over the neighbourhood;
-2. the **stratum's modal intervention** — the field/value that most often produces `A*` in
-   training, ignoring `Z` entirely;
-3. a **magnitude-only** predictor using nothing but the two invariant values' orders of
-   magnitude.
+**The baseline is not chance.** AMENDED 2026-08-25 after external review, which judged the
+original three insufficient to support the claim actually being made — and was right. Random,
+modal and magnitude-only are diagnostics; they are an easy opponent. The claim is *"the stored
+failure representation predicts the best local repair"*, and that claim requires showing failure
+adds something over **everything legitimately available without it**.
 
-**Q2 is positive only if the `Z`-using predictor beats all three**, on held-out records, by more
-than the reported SE. Baseline 3 exists because a prior finding established that this corpus's
-outcome variable largely measures **magnitude compatibility** rather than mathematics; if `Z`
-only recovers that, it must show as a null against baseline 3, not as a win against chance.
+1. **Uniform random** over the neighbourhood.
+2. **Stratum-modal intervention** — the field/value most often producing `A*` in training,
+   ignoring `Z` entirely.
+3. **Magnitude-only** — nothing but the two invariant values' orders of magnitude. A prior
+   finding established this corpus's outcome variable largely measures magnitude compatibility
+   rather than mathematics, so if `Z` recovers only that it must read as a null here, not as a
+   win against chance.
+4. **CONTEXT-ONLY (the "everything-except-failure" predictor).** Every covariate legitimately
+   available at decision time — catalog identities, invariant names, object identities, claim
+   kind, method, precision, the current invariant values — and **not** the stored failure
+   representation. **Same model class, same training budget, same tuning procedure** as the
+   `Z`-using predictor; anything else compares a tuned model to an untuned one and calls the
+   difference information.
+5. **CONTEXT-ONLY LOCAL-NEIGHBOUR.** What repair worked for nearby cases, using non-failure
+   coordinates only. This is the retrieval confound: if `Z` is effectively a verbose encoding of
+   *"this resembles records 17, 31 and 48"*, then a positive result establishes local similarity
+   retrieval, not metabolization of failure. If this baseline is awkward to construct, that is
+   not an argument against it — it is evidence that the modal baseline was giving the treatment
+   an easy opponent.
+6. **WITHIN-STRATUM SHUFFLED RESIDUE.** Identical representation dimensionality, missingness,
+   computational path, model class and training procedure, with residue **permuted among matched
+   records**. This controls a different thing from (4): baseline 4 asks whether failure adds
+   information at all; baseline 6 asks whether *the correct correspondence between this failure
+   and this case* adds information. A representation that beats context-only but not shuffled
+   residue is representation machinery with no residue-specific content.
+
+**The headline quantity is therefore a difference, not an accuracy:**
+
+```
+Δ_context  = predictor(context + failure) − predictor(context)          # baseline 4
+Δ_matched  = predictor(context + failure) − predictor(context + shuffled failure)   # baseline 6
+```
+
+**Q2 is positive only if `Δ_context > 0` AND `Δ_matched > 0`**, both on held-out records, both
+by more than the reported SE. Beating 1, 2, 3 and 5 is necessary and not sufficient.
+
+**Every predictor emits per-row contributions**, not only an aggregate. Two programs agreeing on
+a scalar is much weaker evidence than two programs agreeing on the whole vector of row-level
+decisions, and the aggregate is what an implementation error is most likely to preserve.
 
 **Held-out split is by GENERATOR and by OBJECT**, not by row. Rows from one generator share a
 template, and a row-level split would let the predictor memorise 14 constants — the exact defect
@@ -240,6 +274,34 @@ Standing constraints that apply:
 
 ---
 
+## 9b. The trivial-heuristic floor changes what a positive means — added 2026-08-25
+
+A one-line non-reasoning heuristic scores **0.5225** on fresh tasks from the probe's task family
+while the solver under study scores **0.4900**
+(`ergon/probe/FINDING_heuristic_floor_2026-08-24.md`). External review is correct that stamping
+this beside a result understates it: it changes what an affirmative result *means*.
+
+Suppose residue moves the solver 0.490 → 0.510 with overwhelming confidence. That may establish
+that residue contains exploitable signal. It still describes a system whose *metabolized*
+reasoning loses to a one-line heuristic. That is a valid result and it is **not** evidence of
+useful navigation.
+
+So the following decomposition is **preregistered as a required endpoint**, not an optional
+follow-up, wherever a residue effect is measured on the probe family:
+
+> Report the residue effect **separately on the subset where the trivial heuristic is already
+> correct and the subset where it fails.**
+
+- Gains concentrated where the heuristic already succeeds → residue is most consistent with
+  helping the solver reconstruct a cheap heuristic it was failing to exploit.
+- Gains concentrated where the heuristic fails → residue is doing something the cheap heuristic
+  cannot, which is the only version of this result that supports the thesis.
+
+Reporting the pooled effect alone cannot distinguish these, and the pooled effect is the one that
+sounds best.
+
+---
+
 ## 10. Acceptance criteria for P4
 
 - The four gate-fire worlds pass, committed, before the first real record is read.
@@ -248,6 +310,13 @@ Standing constraints that apply:
 - Q1 and Q2 are reported **per relation**, each with its SE, each against its three baselines.
 - The partition in §7 is answered with committed rows, or the reason it cannot be is recorded.
 - No LLM appears anywhere in the pipeline.
+- Q2 reports `Δ_context` and `Δ_matched` (§6 baselines 4 and 6) with their SEs. An accuracy
+  quoted against chance, modal or magnitude alone does **not** satisfy this criterion.
+- Every predictor ships **per-row contributions**, so an independent implementation can be
+  compared on the decision vector rather than on an aggregate.
+- Where the probe family is involved, the §9b heuristic-conditional decomposition is reported.
+- The scoring rule used is the one frozen in `SPEC_P4_scoring_2026-08-25.md`, and the independent
+  implementation's per-row vector is compared against ours before any verdict is filed.
 
 ---
 

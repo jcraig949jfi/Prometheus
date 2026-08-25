@@ -97,7 +97,30 @@ joint.
 
 **Null: permutation of arm labels WITHIN task.** Each task contributes exactly one packet per
 arm, so permuting the six labels within a task destroys arm identity while preserving every task
-property. This is the exchangeability the design asserts. **200 permutations.**
+property. This is the exchangeability the design asserts.
+
+**Permutations — AMENDMENT 1, 2026-08-25, made before any result was observed.** The original
+text said "200 permutations" flat. The first run was stopped mid-flight for being too slow to
+finish, **with no ledger written and no number read**; the amendment is therefore pre-data, and
+is recorded here rather than silently applied. Allocation:
+
+```
+LIVE world              200 permutations per (adversary x target)   — the load-bearing null
+positive-control worlds  50 permutations                            — must only DETECT a large
+                                                                      planted leak
+```
+
+The saving is spent where the answer matters. The count actually used ships in every row of the
+ledger as `n_permutations`, so a reader never has to trust this paragraph.
+
+A second, purely computational change accompanies it: features are vectorized **once per world**,
+outside the permutation loop, because permuting *labels* does not change the features. The
+vectorizer is fit on all rows, which is safe precisely because it is **label-blind** — it cannot
+transmit information it never saw — and it is applied identically to the observed and permuted
+runs, so any transductive advantage is absorbed by the null rather than credited to the
+adversary. Re-vectorizing inside the loop was costing roughly two orders of magnitude, and would
+have forced a weaker null to fit the time budget. **Weakening the null to save time is the trade
+this amendment exists to avoid making silently.**
 
 Chance is *not* the reference. With high-dimensional features and n = 1,200 an adversary can beat
 1/6 by overfitting; the permutation null absorbs that.
