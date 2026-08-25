@@ -127,7 +127,7 @@ def main() -> int:
             print("REFUSING: state/graph.jsonl is not empty. A0 must be measured "
                   "against an empty graph.", file=sys.stderr)
             return 2
-        out.write_text(json.dumps(rec, indent=2) + "\n", encoding="utf-8")
+        out.write_text(json.dumps(rec, indent=2) + "\n", encoding="utf-8", newline="\n")
         print(json.dumps({k: v for k, v in rec.items() if k != "files"}, indent=2))
         print(f"\n{len(rec['files'])} files hashed -> {out}")
         return 0

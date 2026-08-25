@@ -130,7 +130,7 @@ def cmd_assemble(args: argparse.Namespace) -> int:
     if args.out:
         out = Path(args.out)
         out.parent.mkdir(parents=True, exist_ok=True)
-        out.write_text(prompt, encoding="utf-8")
+        out.write_text(prompt, encoding="utf-8", newline="\n")
         out.with_suffix(out.suffix + ".manifest.json").write_text(
             json.dumps(manifest, indent=2) + "\n", encoding="utf-8"
         )

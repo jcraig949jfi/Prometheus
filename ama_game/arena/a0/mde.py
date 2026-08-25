@@ -149,8 +149,8 @@ def main() -> int:
         "pilot": args.pilot, "cap": cap, "arm": arm,
         "observed_evc": res["evc"], "observed_accuracy": res["accuracy"],
         "grid": table,
-    }, indent=2) + "\n", encoding="utf-8")
-    (HERE / args.pilot / "MDE.txt").write_text(text + "\n", encoding="utf-8")
+    }, indent=2) + "\n", encoding="utf-8", newline="\n")
+    (HERE / args.pilot / "MDE.txt").write_text(text + "\n", encoding="utf-8", newline="\n")
     return 0
 
 

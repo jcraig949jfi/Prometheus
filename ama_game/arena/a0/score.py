@@ -235,8 +235,8 @@ def main() -> int:
         "evc_se": se([r["cost"] for r in scored]),
         "accuracy": sum(r["correct"] for r in scored) / len(scored),
         "rows": scored,
-    }, indent=2) + "\n", encoding="utf-8")
-    (dest.parent / "RESULT.txt").write_text(text + "\n", encoding="utf-8")
+    }, indent=2) + "\n", encoding="utf-8", newline="\n")
+    (dest.parent / "RESULT.txt").write_text(text + "\n", encoding="utf-8", newline="\n")
     return 0
 
 

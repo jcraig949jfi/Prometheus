@@ -96,7 +96,7 @@ def main() -> int:
         "runs": index,
     }
     (out / "INDEX.json").write_text(json.dumps(idx, indent=2) + "\n",
-                                    encoding="utf-8")
+                                    encoding="utf-8", newline="\n")
     print(json.dumps({k: v for k, v in idx.items() if k != "runs"}, indent=2))
     return 0 if idx["parity_ok"] else 1
 

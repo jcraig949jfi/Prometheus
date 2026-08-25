@@ -245,9 +245,9 @@ def generate_set(args) -> dict:
             },
         }
         (out_dir / "public" / f"{claim_id}.json").write_text(
-            json.dumps(public, indent=2) + "\n", encoding="utf-8")
+            json.dumps(public, indent=2) + "\n", encoding="utf-8", newline="\n")
         (out_dir / "sealed" / f"{claim_id}.json").write_text(
-            json.dumps(sealed, indent=2) + "\n", encoding="utf-8")
+            json.dumps(sealed, indent=2) + "\n", encoding="utf-8", newline="\n")
         records.append(sealed)
 
     counts: dict[str, int] = {}
@@ -282,7 +282,7 @@ def generate_set(args) -> dict:
         "build_seconds": round(time.time() - t0, 1),
     }
     (out_dir / "MANIFEST.json").write_text(
-        json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+        json.dumps(manifest, indent=2) + "\n", encoding="utf-8", newline="\n")
     return manifest
 
 
