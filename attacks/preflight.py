@@ -241,6 +241,30 @@ def selftest():
            constant_within_group([{"state": f"s{i%20}", "z": i % 20} for i in range(400)],
                                  "state", "z"), True)
     expect("constant/clean", constant_within_group(clean, "state", "feat"), False)
+
+    # The RATCHET is what makes every check above binding, so it needs its own positive
+    # control. Caught 2026-08-24: the four checks were self-tested and the enforcement
+    # mechanism was not -- a meter without a positive control, guarding meters that have one.
+    import json as _json, tempfile as _tf
+    global BASELINE
+    _save = BASELINE
+    try:
+        _t = pathlib.Path(_tf.mkdtemp()) / "kf.json"
+        _t.write_text(_json.dumps({"probe[x]": {"owner": "o", "note": "open"}}), encoding="utf-8")
+        BASELINE = _t
+        for name, finding, want in (
+                ("ratchet/known-still-failing", Finding("probe[x]", False, ""), False),
+                ("ratchet/stale-entry-now-passes", Finding("probe[x]", True, ""), True),
+                ("ratchet/new-regression", Finding("probe[y]", False, ""), True)):
+            _, n = ratchet([finding])
+            ok = bool(n) == want
+            res.append(Finding(f"selftest::{name}", ok,
+                               ("blocked as required" if want else "allowed as required")
+                               if ok else
+                               ("DID NOT BLOCK -- the ratchet is inert and every check it "
+                                "guards is advisory" if want else "BLOCKED when it should not")))
+    finally:
+        BASELINE = _save
     return res
 
 
