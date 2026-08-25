@@ -1,0 +1,269 @@
+{
+  "experiment": "IQ-PORT-1-PROVENANCE",
+  "date": "2026-08-25",
+  "agent": "Aporia (M1)",
+  "requirement": "IQ-PORT-1 (4): provenance by SET MEMBERSHIP over winning pipelines",
+  "parent_result": "aporia/iq/RESULT_IQ_PORT_1.json (ADVANCE, 28761a6f)",
+  "evaluator_hash_matches_prereg": true,
+  "body_pool": [
+    "entity_counter",
+    "forward_chain",
+    "op_aggregate_quantities",
+    "op_all_but_n",
+    "op_build_ordering",
+    "parse_all_but_n",
+    "parse_box_items",
+    "parse_comparison",
+    "parse_names_and_relations",
+    "parse_numbers",
+    "parse_ordinal",
+    "parse_question_target",
+    "parse_rules",
+    "parse_which_extreme",
+    "relations_from_facts"
+  ],
+  "declared_scope": "ALL subsets of the 15 enumeration-reachable transformers (including the two port ops) of size 1..6 = 9948 subsets, each with up to 8 valid orderings, each closed with all 36 O1 scorer tails; PLUS the ceiling body and the ported body explicitly, which sit above the size cap. Every subset in that range is visited -- nothing sampled, no prefix taken. NOT covered: subsets of size 7..15 other than the two named explicitly.",
+  "pipelines_evaluated": 464652,
+  "pipelines_solving_zero_all_but_n": 444971,
+  "pipelines_solving_at_least_one": 19681,
+  "dropped_records": 0,
+  "dropped_records_note": "LOUD ACCOUNTING: every enumerated pipeline is visited and classified into exactly one of {solves >=1, solves 0}; exceptions inside run_pipeline count as 'not solved' rather than being discarded. winners + losers must equal evals.",
+  "partition_holds": true,
+  "counterexamples": [
+    {
+      "pipeline": [
+        "parse_numbers",
+        "score_by_max_value"
+      ],
+      "solved": [
+        33
+      ],
+      "contains_op_all_but_n": false,
+      "contains_parse_all_but_n": false
+    },
+    {
+      "pipeline": [
+        "parse_all_but_n",
+        "parse_numbers",
+        "score_by_max_value"
+      ],
+      "solved": [
+        33
+      ],
+      "contains_op_all_but_n": false,
+      "contains_parse_all_but_n": true
+    },
+    {
+      "pipeline": [
+        "parse_numbers",
+        "parse_all_but_n",
+        "score_by_max_value"
+      ],
+      "solved": [
+        33
+      ],
+      "contains_op_all_but_n": false,
+      "contains_parse_all_but_n": true
+    },
+    {
+      "pipeline": [
+        "parse_box_items",
+        "parse_numbers",
+        "score_by_max_value"
+      ],
+      "solved": [
+        33
+      ],
+      "contains_op_all_but_n": false,
+      "contains_parse_all_but_n": false
+    },
+    {
+      "pipeline": [
+        "parse_numbers",
+        "parse_box_items",
+        "score_by_max_value"
+      ],
+      "solved": [
+        33
+      ],
+      "contains_op_all_but_n": false,
+      "contains_parse_all_but_n": false
+    },
+    {
+      "pipeline": [
+        "parse_comparison",
+        "parse_numbers",
+        "score_by_max_value"
+      ],
+      "solved": [
+        33
+      ],
+      "contains_op_all_but_n": false,
+      "contains_parse_all_but_n": false
+    },
+    {
+      "pipeline": [
+        "parse_numbers",
+        "parse_comparison",
+        "score_by_max_value"
+      ],
+      "solved": [
+        33
+      ],
+      "contains_op_all_but_n": false,
+      "contains_parse_all_but_n": false
+    },
+    {
+      "pipeline": [
+        "parse_names_and_relations",
+        "parse_numbers",
+        "score_by_max_value"
+      ],
+      "solved": [
+        33
+      ],
+      "contains_op_all_but_n": false,
+      "contains_parse_all_but_n": false
+    },
+    {
+      "pipeline": [
+        "parse_numbers",
+        "parse_names_and_relations",
+        "score_by_max_value"
+      ],
+      "solved": [
+        33
+      ],
+      "contains_op_all_but_n": false,
+      "contains_parse_all_but_n": false
+    },
+    {
+      "pipeline": [
+        "parse_numbers",
+        "parse_ordinal",
+        "score_by_max_value"
+      ],
+      "solved": [
+        33
+      ],
+      "contains_op_all_but_n": false,
+      "contains_parse_all_but_n": false
+    }
+  ],
+  "n_counterexamples": 3931,
+  "SET_MEMBERSHIP_op_all_but_n_in_every_winner": false,
+  "reading_is_non_vacuous": true,
+  "histogram_solved_WITHOUT_op_all_but_n": {
+    "1": 3931
+  },
+  "histogram_solved_WITH_op_all_but_n": {
+    "1": 943,
+    "5": 14807
+  },
+  "max_solved_without_port": 1,
+  "max_solved_with_port": 5,
+  "n_pipelines_solving_all_5": 14807,
+  "n_pipelines_solving_all_5_without_port": 0,
+  "tasks_ever_solved_without_port": [
+    33
+  ],
+  "chance_model": "4 candidates per task, 5 tasks: a uniformly guessing pipeline is Binomial(5, 0.25), mean 1.25, P(X>=3)=0.1035 for a SINGLE pipeline. With 464,652 pipelines enumerated, multiplicity makes per-pipeline tail probabilities uninformative; the discriminating statistic is whether ANY non-port pipeline reaches the port's count of 5.",
+  "SET_MEMBERSHIP_only_port_reaches_full_category": true,
+  "verdict_rule_null_output": "If winners == 0 the membership predicate is vacuously true; that is reported as VACUOUS, not as a pass.",
+  "verdict": "PROVENANCE_CONFIRMED_MODULO_INCIDENTAL_HITS",
+  "branch_table_partitions": true,
+  "branch_states_reachable_in_enumeration": [
+    "PROVENANCE_CONFIRMED_MODULO_INCIDENTAL_HITS",
+    "PROVENANCE_CONFIRMED_STRICT",
+    "PROVENANCE_FAILED_ALTERNATE_ROUTE_SOLVES_FULL_CATEGORY",
+    "PROVENANCE_FAILED_NON_PORT_MATCHES_PORT",
+    "VACUOUS_NO_WINNERS"
+  ],
+  "winners_containing_parse_all_but_n": 17442,
+  "max_all_but_n_solved_by_any_pipeline": 5,
+  "example_winners": [
+    {
+      "pipeline": [
+        "parse_numbers",
+        "score_by_max_value"
+      ],
+      "solved": [
+        33
+      ],
+      "contains_op_all_but_n": false,
+      "contains_parse_all_but_n": false
+    },
+    {
+      "pipeline": [
+        "parse_all_but_n",
+        "parse_numbers",
+        "score_by_max_value"
+      ],
+      "solved": [
+        33
+      ],
+      "contains_op_all_but_n": false,
+      "contains_parse_all_but_n": true
+    },
+    {
+      "pipeline": [
+        "parse_numbers",
+        "parse_all_but_n",
+        "score_by_max_value"
+      ],
+      "solved": [
+        33
+      ],
+      "contains_op_all_but_n": false,
+      "contains_parse_all_but_n": true
+    }
+  ],
+  "frozen_pipeline": {
+    "status": "FROZEN as of 2026-08-25",
+    "exhibited_pipeline": [
+      "parse_comparison",
+      "parse_which_extreme",
+      "parse_box_items",
+      "parse_all_but_n",
+      "op_all_but_n",
+      "op_aggregate_quantities",
+      "parse_rules",
+      "parse_ordinal",
+      "forward_chain",
+      "parse_names_and_relations",
+      "relations_from_facts",
+      "op_build_ordering",
+      "score_by_extreme_number__g",
+      "score_by_aggregate__g",
+      "score_by_derivability__g",
+      "score_by_comparison__g",
+      "select_nth__g"
+    ],
+    "baseline_pipeline": [
+      "parse_comparison",
+      "parse_which_extreme",
+      "parse_box_items",
+      "op_aggregate_quantities",
+      "parse_rules",
+      "parse_ordinal",
+      "forward_chain",
+      "parse_names_and_relations",
+      "relations_from_facts",
+      "op_build_ordering",
+      "score_by_extreme_number__g",
+      "score_by_aggregate__g",
+      "score_by_derivability__g",
+      "score_by_comparison__g",
+      "select_nth__g"
+    ],
+    "baseline_pool": "blackboard_evolve.REGISTRY, byte-frozen, never edited",
+    "evaluator_hash": "10fa10db9989eb3a79c2039d18b748a83e93f751578ec6d0a0e12717eb0fa5ae",
+    "harness_hashes": {
+      "aporia/iq/port_ops.py": "6baff49dd03994be",
+      "aporia/iq/run_iq_port_1.py": "33ee51c8a590e8df",
+      "aporia/iq/run_iq_null.py": "152b714728858561",
+      "aporia/iq/run_provenance_audit.py": "0c59beceb54b6121"
+    },
+    "meaning": "No further edits to the port, the harnesses or the pool may be made without a new preregistration. IQ-NULL and every downstream rung compare against exactly this configuration."
+  }
+}

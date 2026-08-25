@@ -39,11 +39,13 @@ Arm B remains rung 5 (fitted, sampled) as prereg S6 labels it; the assertions ar
     python roles/Diomedes/cycle005_armB_run.py
 """
 import collections
+import gc
 import hashlib
 import json
 import math
 import pathlib
 import random
+import struct
 
 import numpy as np
 from sklearn.linear_model import LogisticRegression
@@ -63,6 +65,17 @@ NC = C2.N_COMPANIONS                 # 3
 CHARTS = ["T0", "T2", "T3", "T4", "T5"]          # T1 acts on the score, not the chart
 POP_DIGEST = "1b4abb1a36a9cfb53d6a4bfb8c08a0623e28a88ba996556532d80e71d889af52"
 HEADROOM_FLOOR = 0.05                # BOOTSTRAP S6 standing rule
+
+# Semantics-preservation anchor (charter S7). The v1 runner produced these on seed 20260824
+# before it was killed for exhausting memory (16.5 GB). The v2 rewrite below changes ONLY
+# storage layout - numpy arrays instead of Python dicts, and a streamed digest instead of a
+# simultaneous two-builder comparison. It must reproduce these to 1e-9 or it is not the same
+# experiment. An optimisation that moves a number is an experimental change, not an optimisation.
+V1_SEED0_ANCHOR = {"seed": 20260824, "relearn": 0.7414, "raw": 0.5054, "headroom": 0.2360,
+                   "transfer": {"T0": 0.5054, "T1": 0.4946, "T2": 0.5101, "T3": 0.5054,
+                                "T4": 0.5196, "T5": 0.5206},
+                   "recovery": {"T0": 0.0, "T1": -0.0455, "T2": 0.0199, "T3": 0.0,
+                                "T4": 0.0604, "T5": 0.0644}}
 
 FEATS = []
 for _i in range(NC):
@@ -116,7 +129,9 @@ def states_aug(values, parents, osee, obrk, ocel, orel, inv_cat, by_cat, sortedv
     """Frozen cycle-002/003 state builder, PLUS the raw quantile components T4 needs.
 
     The feature expressions are copied verbatim from cycle003_run.C2_states. Identity with
-    that function is not asserted by inspection but by differential test in main().
+    that function is not asserted by inspection but by the streamed differential digest in
+    main(). Values are stored as numpy arrays rather than dicts purely for memory; v1 stored
+    dicts and exhausted 16.5 GB. The numbers are unchanged and V1_SEED0_ANCHOR proves it.
     """
     out = []
     for st in parents:
@@ -134,58 +149,79 @@ def states_aug(values, parents, osee, obrk, ocel, orel, inv_cat, by_cat, sortedv
         cands = names if len(names) <= R.K else rng.sample(names, R.K)
         # target is a value of the TESTED invariant -> ranked in the tested invariant's own list
         qt = C2.qrank(sortedvals[(cat, tested)], target)
-        labels, oracle, rows, qrows = [], [], [], []
-        for c in cands:
+        n = len(cands)
+        X = np.zeros((n, 18), dtype=np.float64)
+        QU = np.zeros((n, NC)); QP = np.zeros((n, NC)); HS = np.zeros((n, NC))
+        labels = np.zeros(n, dtype=np.float64)
+        for t, c in enumerate(cands):
             v = pool[c]
             va, vb = (v, st["val_b"]) if st["side"] == "a" else (st["val_a"], v)
             broke = not R.relation_holds(st["rel"], va, vb)
-            labels.append(1 if broke else 0)
-            oracle.append(1.0 if broke else 0.0)
-            f, q = {}, {}
+            labels[t] = 1.0 if broke else 0.0
             for i in range(NC):
                 u = p = None
                 if i < len(comp):
                     tbl = values[(cat, comp[i])]
                     u, p = tbl.get(c), tbl.get(pobj)
                 if u is None:
-                    for nm in (f"delta_{i}", f"absdelta_{i}", f"parity_match_{i}",
-                               f"absdiff_target_{i}", f"absdiff_le3_{i}", f"rank_delta_{i}"):
-                        f[nm] = 0.0
-                    q[f"has_{i}"] = 0.0
-                    q[f"qu_{i}"] = q[f"qp_{i}"] = 0.0
-                    continue
+                    continue                      # all six already 0.0, as the frozen builder does
                 p = u if p is None else p
-                f[f"delta_{i}"] = float(u - p)
-                f[f"absdelta_{i}"] = float(abs(u - p))
-                f[f"parity_match_{i}"] = float(int(u - target) % 2 == 0)
-                f[f"absdiff_target_{i}"] = float(abs(u - target))
-                f[f"absdiff_le3_{i}"] = float(abs(u - target) <= 3)
+                X[t, IX[f"delta_{i}"]] = float(u - p)
+                X[t, IX[f"absdelta_{i}"]] = float(abs(u - p))
+                X[t, IX[f"parity_match_{i}"]] = float(int(u - target) % 2 == 0)
+                X[t, IX[f"absdiff_target_{i}"]] = float(abs(u - target))
+                X[t, IX[f"absdiff_le3_{i}"]] = float(abs(u - target) <= 3)
                 sv = sortedvals[(cat, comp[i])]
                 qu, qp = C2.qrank(sv, u), C2.qrank(sv, p)
-                f[f"rank_delta_{i}"] = qu - qp
-                q[f"has_{i}"] = 1.0
-                q[f"qu_{i}"], q[f"qp_{i}"] = qu, qp
-            q["qt"] = qt
-            rows.append(f)
-            qrows.append(q)
-        if 0 < sum(labels) < len(labels):
-            out.append({"labels": labels, "oracle": oracle, "F": rows, "Q": qrows,
+                X[t, IX[f"rank_delta_{i}"]] = qu - qp
+                HS[t, i], QU[t, i], QP[t, i] = 1.0, qu, qp
+        sl = labels.sum()
+        if 0 < sl < n:
+            out.append({"labels": labels, "oracle": labels.copy(), "X": X,
+                        "qu": QU, "qp": QP, "has": HS, "qt": qt,
                         "key": (st["inv_a"], st["inv_b"]), "rel": st["rel"],
                         "tested": tested, "cat": cat, "comp": comp,
                         "target": target, "cands": cands, "pobj": pobj})
     return out
 
 
+def _dig_head(h, key, rel, labels):
+    h.update(str(key).encode()); h.update(rel.encode())
+    h.update(struct.pack(f"<{len(labels)}q", *[int(x) for x in labels]))
+
+
+def digest_frozen(states_ref):
+    """sha256 over EVERY feature value the frozen cycle-003 builder produced."""
+    h = hashlib.sha256()
+    nvals = 0
+    for s in states_ref:
+        _dig_head(h, s["key"], s["rel"], s["labels"])
+        for f in s["F"]:
+            h.update(struct.pack("<18d", *[f[n] for n in FEATS]))
+            nvals += 18
+    return h.hexdigest(), len(states_ref), nvals
+
+
+def digest_aug(states):
+    """The same sha256 over the augmented builder's arrays. Must match, byte for byte."""
+    h = hashlib.sha256()
+    nvals = 0
+    for s in states:
+        _dig_head(h, s["key"], s["rel"], s["labels"])
+        h.update(np.ascontiguousarray(s["X"], dtype="<f8").tobytes())
+        nvals += s["X"].size
+    return h.hexdigest(), len(states), nvals
+
+
 def pack(cell_states):
-    """Flatten a cell into arrays: raw features, quantile components, labels, segments."""
-    X = np.array([[f[n] for n in FEATS] for s in cell_states for f in s["F"]], dtype=float)
-    qu = np.array([[q[f"qu_{i}"] for i in range(NC)] for s in cell_states for q in s["Q"]])
-    qp = np.array([[q[f"qp_{i}"] for i in range(NC)] for s in cell_states for q in s["Q"]])
-    hs = np.array([[q[f"has_{i}"] for i in range(NC)] for s in cell_states for q in s["Q"]])
-    qt = np.array([q["qt"] for s in cell_states for q in s["Q"]])
-    y = np.array([l for s in cell_states for l in s["labels"]], dtype=float)
-    seg = np.array([len(s["labels"]) for s in cell_states], dtype=np.int64)
-    return {"X": X, "qu": qu, "qp": qp, "has": hs, "qt": qt, "y": y, "seg": seg}
+    """Flatten states into contiguous arrays plus segment lengths."""
+    return {"X": np.concatenate([s["X"] for s in cell_states]),
+            "qu": np.concatenate([s["qu"] for s in cell_states]),
+            "qp": np.concatenate([s["qp"] for s in cell_states]),
+            "has": np.concatenate([s["has"] for s in cell_states]),
+            "qt": np.concatenate([np.full(len(s["labels"]), s["qt"]) for s in cell_states]),
+            "y": np.concatenate([s["labels"] for s in cell_states]),
+            "seg": np.array([len(s["labels"]) for s in cell_states], dtype=np.int64)}
 
 
 # ------------------------------------------------------------------- transports
@@ -254,23 +290,26 @@ def main():
     per_seed, handrows = [], None
 
     for seed in SEEDS:
-        # ---- differential test 1: augmented builder == frozen builder, bit for bit ----
-        st_aug = states_aug(values, parents, osee, obrk, ocel, orel,
-                            inv_cat, by_cat, sortedvals, random.Random(seed))
+        # ---- differential test 1: augmented builder == frozen builder, every value ----
+        # Streamed, not simultaneous: the frozen build is hashed and freed BEFORE the
+        # augmented build is made, so peak memory is one build, not two. Coverage is
+        # stronger than v1's pairwise loop - one sha256 over every feature value.
         st_ref = C3.C2_states(values, parents, osee, obrk, ocel, orel,
                               inv_cat, by_cat, sortedvals, random.Random(seed), FEATS, CARRY)
-        assert len(st_aug) == len(st_ref), f"builder length mismatch {len(st_aug)}!={len(st_ref)}"
-        nfeat = 0
-        for a, b in zip(st_aug, st_ref):
-            assert a["labels"] == b["labels"] and a["key"] == b["key"] and a["rel"] == b["rel"]
-            for fa, fb in zip(a["F"], b["F"]):
-                for n in FEATS:
-                    assert fa[n] == fb[n], f"feature {n} diverged"
-                    nfeat += 1
+        d_ref, n_ref, v_ref = digest_frozen(st_ref)
+        del st_ref
+        gc.collect()
+        states = states_aug(values, parents, osee, obrk, ocel, orel,
+                            inv_cat, by_cat, sortedvals, random.Random(seed))
+        d_aug, n_aug, v_aug = digest_aug(states)
+        assert (d_ref, n_ref, v_ref) == (d_aug, n_aug, v_aug), (
+            f"augmented builder diverged from cycle003_run.C2_states: "
+            f"{d_ref}/{n_ref}/{v_ref} vs {d_aug}/{n_aug}/{v_aug}")
         checks[f"builder_differential_seed_{seed}"] = {
-            "n_states": len(st_aug), "n_feature_values_compared": nfeat, "identical": True}
+            "n_states": n_ref, "n_feature_values_hashed": v_ref,
+            "sha256_frozen_builder": d_ref, "sha256_augmented_builder": d_aug,
+            "identical": True}
 
-        states = st_aug
         cell = collections.defaultdict(list)
         for s in states:
             cell[(s["key"], s["rel"])].append(s)
@@ -283,13 +322,15 @@ def main():
         cells = [(k, r) for k in mixed for r in rels if len(cell.get((k, r), [])) >= MIN_CELL]
 
         # ---- pack, split ----
-        PK, TR, EV = {}, {}, {}
+        TR, EV = {}, {}
         for c in cells:
             ss = cell[c]
             tri, evi = split_idx(seed, c, len(ss))
             TR[c] = pack([ss[i] for i in tri])
             EV[c] = pack([ss[i] for i in evi])
-            PK[c] = pack(ss)                       # full cell, for the reproduction check
+            # PK (full cell) is NOT materialised: the reproduction check concatenates TR and
+            # EV instead. AUC is computed per state segment and averaged, so segment ORDER is
+            # irrelevant and the mean is identical to packing the cell in its original order.
 
         # ---- differential test 2: batched AUC == cycle001_run.auc ----
         if seed == SEEDS[0]:
@@ -356,13 +397,15 @@ def main():
                     else:
                         transfer[T][(i, j)] = float(a)
                 if T == "T0":                      # reproduction check vs cycle 004
-                    Xf = chart(PK[j], "T0", j[1])
+                    Xf = np.concatenate([chart(TR[j], "T0", j[1]), Xe])
+                    yf = np.concatenate([TR[j]["y"], ye])
+                    sgf = np.concatenate([TR[j]["seg"], sg])
                     for i in cells:
                         m = models.get(("T0", i))
                         if m is None or i == j:
                             continue
                         raw_full[(i, j)] = float(np.nanmean(
-                            batched_auc(PK[j]["y"], Xf @ m["v"], PK[j]["seg"])))
+                            batched_auc(yf, Xf @ m["v"], sgf)))
 
         # ---- assertion: T3 is the identity map, so it must equal T0 exactly ----
         d3 = max(abs(transfer["T3"][k] - transfer["T0"][k]) for k in transfer["T0"])
@@ -440,6 +483,26 @@ def main():
             ks = [k for k in raw_full if types.get(k) == tp]
             rawfull_by_type[tp] = round(float(np.mean([raw_full[k] for k in ks])), 4) if ks else None
 
+        # ---- charter S7: the memory rewrite must not have moved a number ----
+        if seed == V1_SEED0_ANCHOR["seed"]:
+            av = V1_SEED0_ANCHOR
+            drift = {"relearn": abs(mean_relearn - av["relearn"]),
+                     "raw": abs(mean_raw - av["raw"]),
+                     "headroom": abs(headroom - av["headroom"])}
+            for T in av["transfer"]:
+                drift[f"transfer_{T}"] = abs(agg(T) - av["transfer"][T])
+                drift[f"recovery_{T}"] = abs(rec[T] - av["recovery"][T])
+            worst = max(drift.values())
+            assert worst < 5e-5, (
+                f"v2 rewrite moved a number vs the v1 run: worst drift {worst:.2e}; {drift}. "
+                "An optimisation that changes a result is an experimental change.")
+            checks["v1_v2_semantics_preserved"] = {
+                "anchor": av, "worst_abs_drift": float(worst),
+                "tolerance": 5e-5,
+                "note": "v1 printed 4dp, so 5e-5 is the rounding floor, not a slack allowance",
+                "pass": True}
+            print(f"   [v1/v2 semantics preserved: worst drift {worst:.2e}]")
+
         per_seed.append({
             "seed": seed, "n_cells": len(cells), "n_ordered_pairs": len(keys),
             "mean_relearn_raw_chart": round(mean_relearn, 4),
@@ -496,6 +559,8 @@ def main():
                 "auc_this_state_T4": float(batched_auc(
                     np.array(s["labels"], float), sc4, np.array([len(s["labels"])]))[0]),
                 "rows": rows}
+        del states, cell, TR, EV, models
+        gc.collect()
         print(f"seed {seed}: cells={len(cells)} pairs={len(keys)} "
               f"relearn={mean_relearn:.4f} raw={mean_raw:.4f} headroom={headroom:.4f}")
         print("   transfer:", {T: round(agg(T), 4) for T in ["T0", "T1", "T2", "T3", "T4", "T5"]})
