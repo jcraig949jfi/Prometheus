@@ -6,17 +6,24 @@
 
 ---
 
-## Standing pointer (2026-05-15)
+## Standing pointer (2026-08-25) — READ THE PLAN FIRST
 
-**Where I left off:** Revival session under the Atlas Continuous Attack Roadmap (`pivot/atlas_continuous_attack_roadmap_2026-05-15.md`). Authored `charon/BACKLOG.md` — 31 items (BL-C-001 through BL-C-031) spanning Phase 0 through Phase 3. Phase 0 Aporia-seeded queue at `aporia/meta/problem_queue/charon.jsonl` does not yet exist; Phase 0 execution gated on five open questions filed in BACKLOG §"Open questions for James / Aporia" (cron mechanism, queue schema, substrate-block emission path for non-Gemini outputs, kill_ledger canonical location, :07 cron prompt content).
+**ACTIVE:** `roles/Charon/PLAN_2026-08-25_post_reset.md`. It carries the bootstrap sequence,
+five pre-committed rulings, a pre-registered decisive experiment, and the named ways the next
+Charon instance is likely to drift. Written immediately before a context reset, for the instance
+that would not remember.
 
-**What was paused:** All Phase 0 attack execution. The BACKLOG is filed but no attacks have run yet — answering the five open questions unlocks BL-C-001.
+**One-line state.** The metabolization-probe residue thesis is RETIRED on evidence. The
+replacement — *failure is an outcome; navigation lives in transitions* — is the current **kill
+target**, not the current bet, and the decisive experiment is pre-registered in that plan's §4
+with its kill rule and a filed prediction (`NO-TRANSFER`).
 
-**Active new-project assignment (2026-05-15):** Reasoning Ladder design doc. Filed at `pivot/reasoning_ladder_design_2026-05-15.md`. This is the work in flight; the Atlas attack backlog resumes after this design doc is reviewed.
+**Standing gates I hold.** `RE_REVIEW_SIGNOFF` is not created on my PASS alone — Harmonia B's
+independent exit review #3 must land. The admissibility preflight (`python attacks/preflight.py`)
+runs on every commit via a pre-commit hook and is FROZEN to a bounded completion criterion.
 
-**Hard stops still in force:** v10 battery FROZEN; no v11 escalation without dialogue ticket; no kernel contract changes; no `--writeable` upgrade; no LoRA work; no multiprocessing scaling.
-
-**Cron status:** :07 slot reserved per roadmap §7 but not yet activated. Awaiting mechanism confirmation.
+**Prior era (2026-05-15, superseded but not wrong):** Atlas attack backlog at `charon/BACKLOG.md`,
+Phase 0 gated on five open questions. v10 battery FROZEN; no v11 without a dialogue ticket.
 
 ---
 
