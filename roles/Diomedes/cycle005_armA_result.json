@@ -1,0 +1,1496 @@
+{
+ "prereg": "CYCLE_005_PREREG_terminal.md S2",
+ "arm": "A (b2 commutation)",
+ "rungs": "1-4 (exhaustive enumeration; exhaustive rule search)",
+ "enumerated_cells": 3276,
+ "missing_cells": 360,
+ "n_states_with_both_classes": 461,
+ "decomposition": {
+  "chance": 0.5,
+  "marginal_ceiling": 0.7892,
+  "f_conditional_ceiling": 0.9735,
+  "F_pure": 0.962,
+  "F_applied": 0.9419,
+  "oracle": 1.0
+ },
+ "increment_applied_over_pure": -0.0201,
+ "increment_pure_over_fcond": -0.0115,
+ "assertions": {
+  "perfect_predictor_is_1.0": true,
+  "constant_predictor_is_0.5": true,
+  "monotone_invariance": true,
+  "enumeration_complete": false
+ },
+ "rules": {
+  "F_pure": {
+   "abs|abs": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "abs|identity": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "abs|log2_floor": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "abs|mod_3": {
+    "predicate": [
+     "v_neg",
+     false
+    ],
+    "exact_accuracy": 0.8416
+   },
+   "abs|neg": {
+    "predicate": [
+     "v_zero",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "abs|sq_mod_100": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "identity|abs": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "identity|identity": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "identity|log2_floor": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "identity|mod_3": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "identity|neg": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "identity|sq_mod_100": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "log2_floor|abs": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "log2_floor|identity": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "log2_floor|log2_floor": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "log2_floor|mod_3": {
+    "predicate": [
+     "v_zero",
+     true
+    ],
+    "exact_accuracy": 0.7624
+   },
+   "log2_floor|neg": {
+    "predicate": [
+     "abs_v_le_1",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "log2_floor|sq_mod_100": {
+    "predicate": [
+     "abs_v_le_1",
+     true
+    ],
+    "exact_accuracy": 0.9385
+   },
+   "mod_3|abs": {
+    "predicate": [
+     "v_neg",
+     false
+    ],
+    "exact_accuracy": 0.8416
+   },
+   "mod_3|identity": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "mod_3|log2_floor": {
+    "predicate": [
+     "v_zero",
+     true
+    ],
+    "exact_accuracy": 0.7624
+   },
+   "mod_3|mod_3": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "mod_3|neg": {
+    "predicate": [
+     "v_mod3_eq_0",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "mod_3|sq_mod_100": {
+    "predicate": [
+     "abs_v_le_8",
+     true
+    ],
+    "exact_accuracy": 0.7538
+   },
+   "neg|abs": {
+    "predicate": [
+     "v_zero",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "neg|identity": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "neg|log2_floor": {
+    "predicate": [
+     "abs_v_le_1",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "neg|mod_3": {
+    "predicate": [
+     "v_mod3_eq_0",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "neg|neg": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "neg|sq_mod_100": {
+    "predicate": [
+     "v_zero",
+     true
+    ],
+    "exact_accuracy": 0.8462
+   },
+   "sq_mod_100|abs": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "sq_mod_100|identity": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "sq_mod_100|log2_floor": {
+    "predicate": [
+     "abs_v_le_1",
+     true
+    ],
+    "exact_accuracy": 0.9385
+   },
+   "sq_mod_100|mod_3": {
+    "predicate": [
+     "abs_v_le_8",
+     true
+    ],
+    "exact_accuracy": 0.7538
+   },
+   "sq_mod_100|neg": {
+    "predicate": [
+     "v_zero",
+     true
+    ],
+    "exact_accuracy": 0.8462
+   },
+   "sq_mod_100|sq_mod_100": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   }
+  },
+  "F_applied": {
+   "abs|abs": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "abs|identity": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "abs|log2_floor": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "abs|mod_3": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 0.6634
+   },
+   "abs|neg": {
+    "predicate": [
+     "v_zero",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "abs|sq_mod_100": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "identity|abs": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "identity|identity": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "identity|log2_floor": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "identity|mod_3": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "identity|neg": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "identity|sq_mod_100": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "log2_floor|abs": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "log2_floor|identity": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "log2_floor|log2_floor": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "log2_floor|mod_3": {
+    "predicate": [
+     "const_true",
+     false
+    ],
+    "exact_accuracy": 0.7525
+   },
+   "log2_floor|neg": {
+    "predicate": [
+     "abs_v_le_1",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "log2_floor|sq_mod_100": {
+    "predicate": [
+     "const_true",
+     false
+    ],
+    "exact_accuracy": 0.8923
+   },
+   "mod_3|abs": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 0.6634
+   },
+   "mod_3|identity": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "mod_3|log2_floor": {
+    "predicate": [
+     "v_mod3_eq_0",
+     true
+    ],
+    "exact_accuracy": 0.8218
+   },
+   "mod_3|mod_3": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "mod_3|neg": {
+    "predicate": [
+     "v_mod3_eq_0",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "mod_3|sq_mod_100": {
+    "predicate": [
+     "const_true",
+     false
+    ],
+    "exact_accuracy": 0.6769
+   },
+   "neg|abs": {
+    "predicate": [
+     "v_zero",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "neg|identity": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "neg|log2_floor": {
+    "predicate": [
+     "v_zero",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "neg|mod_3": {
+    "predicate": [
+     "v_zero",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "neg|neg": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "neg|sq_mod_100": {
+    "predicate": [
+     "v_zero",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "sq_mod_100|abs": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "sq_mod_100|identity": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   },
+   "sq_mod_100|log2_floor": {
+    "predicate": [
+     "v_zero",
+     true
+    ],
+    "exact_accuracy": 0.9385
+   },
+   "sq_mod_100|mod_3": {
+    "predicate": [
+     "const_true",
+     false
+    ],
+    "exact_accuracy": 0.6769
+   },
+   "sq_mod_100|neg": {
+    "predicate": [
+     "v_zero",
+     true
+    ],
+    "exact_accuracy": 0.8462
+   },
+   "sq_mod_100|sq_mod_100": {
+    "predicate": [
+     "const_true",
+     true
+    ],
+    "exact_accuracy": 1.0
+   }
+  }
+ },
+ "hand_checkable_rows": [
+  {
+   "v": -50,
+   "f": "abs",
+   "candidates": [
+    {
+     "g": "abs",
+     "g_of_v": 50,
+     "f_of_g_of_v": 50,
+     "g_of_f_of_v": 50,
+     "commutes": true
+    },
+    {
+     "g": "identity",
+     "g_of_v": -50,
+     "f_of_g_of_v": 50,
+     "g_of_f_of_v": 50,
+     "commutes": true
+    },
+    {
+     "g": "log2_floor",
+     "g_of_v": 5,
+     "f_of_g_of_v": 5,
+     "g_of_f_of_v": 5,
+     "commutes": true
+    },
+    {
+     "g": "mod_3",
+     "g_of_v": 1,
+     "f_of_g_of_v": 1,
+     "g_of_f_of_v": 2,
+     "commutes": false
+    },
+    {
+     "g": "neg",
+     "g_of_v": 50,
+     "f_of_g_of_v": 50,
+     "g_of_f_of_v": -50,
+     "commutes": false
+    },
+    {
+     "g": "sq_mod_100",
+     "g_of_v": 0,
+     "f_of_g_of_v": 0,
+     "g_of_f_of_v": 0,
+     "commutes": true
+    }
+   ]
+  },
+  {
+   "v": -50,
+   "f": "log2_floor",
+   "candidates": [
+    {
+     "g": "abs",
+     "g_of_v": 50,
+     "f_of_g_of_v": 5,
+     "g_of_f_of_v": 5,
+     "commutes": true
+    },
+    {
+     "g": "identity",
+     "g_of_v": -50,
+     "f_of_g_of_v": 5,
+     "g_of_f_of_v": 5,
+     "commutes": true
+    },
+    {
+     "g": "log2_floor",
+     "g_of_v": 5,
+     "f_of_g_of_v": 2,
+     "g_of_f_of_v": 2,
+     "commutes": true
+    },
+    {
+     "g": "mod_3",
+     "g_of_v": 1,
+     "f_of_g_of_v": 0,
+     "g_of_f_of_v": 2,
+     "commutes": false
+    },
+    {
+     "g": "neg",
+     "g_of_v": 50,
+     "f_of_g_of_v": 5,
+     "g_of_f_of_v": -5,
+     "commutes": false
+    },
+    {
+     "g": "sq_mod_100",
+     "g_of_v": 0,
+     "f_of_g_of_v": 0,
+     "g_of_f_of_v": 25,
+     "commutes": false
+    }
+   ]
+  },
+  {
+   "v": -50,
+   "f": "mod_3",
+   "candidates": [
+    {
+     "g": "abs",
+     "g_of_v": 50,
+     "f_of_g_of_v": 2,
+     "g_of_f_of_v": 1,
+     "commutes": false
+    },
+    {
+     "g": "identity",
+     "g_of_v": -50,
+     "f_of_g_of_v": 1,
+     "g_of_f_of_v": 1,
+     "commutes": true
+    },
+    {
+     "g": "log2_floor",
+     "g_of_v": 5,
+     "f_of_g_of_v": 2,
+     "g_of_f_of_v": 0,
+     "commutes": false
+    },
+    {
+     "g": "mod_3",
+     "g_of_v": 1,
+     "f_of_g_of_v": 1,
+     "g_of_f_of_v": 1,
+     "commutes": true
+    },
+    {
+     "g": "neg",
+     "g_of_v": 50,
+     "f_of_g_of_v": 2,
+     "g_of_f_of_v": -1,
+     "commutes": false
+    },
+    {
+     "g": "sq_mod_100",
+     "g_of_v": 0,
+     "f_of_g_of_v": 0,
+     "g_of_f_of_v": 1,
+     "commutes": false
+    }
+   ]
+  },
+  {
+   "v": -50,
+   "f": "neg",
+   "candidates": [
+    {
+     "g": "abs",
+     "g_of_v": 50,
+     "f_of_g_of_v": -50,
+     "g_of_f_of_v": 50,
+     "commutes": false
+    },
+    {
+     "g": "identity",
+     "g_of_v": -50,
+     "f_of_g_of_v": 50,
+     "g_of_f_of_v": 50,
+     "commutes": true
+    },
+    {
+     "g": "log2_floor",
+     "g_of_v": 5,
+     "f_of_g_of_v": -5,
+     "g_of_f_of_v": 5,
+     "commutes": false
+    },
+    {
+     "g": "mod_3",
+     "g_of_v": 1,
+     "f_of_g_of_v": -1,
+     "g_of_f_of_v": 2,
+     "commutes": false
+    },
+    {
+     "g": "neg",
+     "g_of_v": 50,
+     "f_of_g_of_v": -50,
+     "g_of_f_of_v": -50,
+     "commutes": true
+    },
+    {
+     "g": "sq_mod_100",
+     "g_of_v": 0,
+     "f_of_g_of_v": 0,
+     "g_of_f_of_v": 0,
+     "commutes": true
+    }
+   ]
+  },
+  {
+   "v": -50,
+   "f": "sq_mod_100",
+   "candidates": [
+    {
+     "g": "abs",
+     "g_of_v": 50,
+     "f_of_g_of_v": 0,
+     "g_of_f_of_v": 0,
+     "commutes": true
+    },
+    {
+     "g": "identity",
+     "g_of_v": -50,
+     "f_of_g_of_v": 0,
+     "g_of_f_of_v": 0,
+     "commutes": true
+    },
+    {
+     "g": "log2_floor",
+     "g_of_v": 5,
+     "f_of_g_of_v": 25,
+     "g_of_f_of_v": 0,
+     "commutes": false
+    },
+    {
+     "g": "mod_3",
+     "g_of_v": 1,
+     "f_of_g_of_v": 1,
+     "g_of_f_of_v": 0,
+     "commutes": false
+    },
+    {
+     "g": "neg",
+     "g_of_v": 50,
+     "f_of_g_of_v": 0,
+     "g_of_f_of_v": 0,
+     "commutes": true
+    },
+    {
+     "g": "sq_mod_100",
+     "g_of_v": 0,
+     "f_of_g_of_v": 0,
+     "g_of_f_of_v": 0,
+     "commutes": true
+    }
+   ]
+  },
+  {
+   "v": -49,
+   "f": "abs",
+   "candidates": [
+    {
+     "g": "abs",
+     "g_of_v": 49,
+     "f_of_g_of_v": 49,
+     "g_of_f_of_v": 49,
+     "commutes": true
+    },
+    {
+     "g": "identity",
+     "g_of_v": -49,
+     "f_of_g_of_v": 49,
+     "g_of_f_of_v": 49,
+     "commutes": true
+    },
+    {
+     "g": "log2_floor",
+     "g_of_v": 5,
+     "f_of_g_of_v": 5,
+     "g_of_f_of_v": 5,
+     "commutes": true
+    },
+    {
+     "g": "mod_3",
+     "g_of_v": 2,
+     "f_of_g_of_v": 2,
+     "g_of_f_of_v": 1,
+     "commutes": false
+    },
+    {
+     "g": "neg",
+     "g_of_v": 49,
+     "f_of_g_of_v": 49,
+     "g_of_f_of_v": -49,
+     "commutes": false
+    },
+    {
+     "g": "sq_mod_100",
+     "g_of_v": 1,
+     "f_of_g_of_v": 1,
+     "g_of_f_of_v": 1,
+     "commutes": true
+    }
+   ]
+  },
+  {
+   "v": -49,
+   "f": "log2_floor",
+   "candidates": [
+    {
+     "g": "abs",
+     "g_of_v": 49,
+     "f_of_g_of_v": 5,
+     "g_of_f_of_v": 5,
+     "commutes": true
+    },
+    {
+     "g": "identity",
+     "g_of_v": -49,
+     "f_of_g_of_v": 5,
+     "g_of_f_of_v": 5,
+     "commutes": true
+    },
+    {
+     "g": "log2_floor",
+     "g_of_v": 5,
+     "f_of_g_of_v": 2,
+     "g_of_f_of_v": 2,
+     "commutes": true
+    },
+    {
+     "g": "mod_3",
+     "g_of_v": 2,
+     "f_of_g_of_v": 1,
+     "g_of_f_of_v": 2,
+     "commutes": false
+    },
+    {
+     "g": "neg",
+     "g_of_v": 49,
+     "f_of_g_of_v": 5,
+     "g_of_f_of_v": -5,
+     "commutes": false
+    },
+    {
+     "g": "sq_mod_100",
+     "g_of_v": 1,
+     "f_of_g_of_v": 0,
+     "g_of_f_of_v": 25,
+     "commutes": false
+    }
+   ]
+  },
+  {
+   "v": -49,
+   "f": "mod_3",
+   "candidates": [
+    {
+     "g": "abs",
+     "g_of_v": 49,
+     "f_of_g_of_v": 1,
+     "g_of_f_of_v": 2,
+     "commutes": false
+    },
+    {
+     "g": "identity",
+     "g_of_v": -49,
+     "f_of_g_of_v": 2,
+     "g_of_f_of_v": 2,
+     "commutes": true
+    },
+    {
+     "g": "log2_floor",
+     "g_of_v": 5,
+     "f_of_g_of_v": 2,
+     "g_of_f_of_v": 1,
+     "commutes": false
+    },
+    {
+     "g": "mod_3",
+     "g_of_v": 2,
+     "f_of_g_of_v": 2,
+     "g_of_f_of_v": 2,
+     "commutes": true
+    },
+    {
+     "g": "neg",
+     "g_of_v": 49,
+     "f_of_g_of_v": 1,
+     "g_of_f_of_v": -2,
+     "commutes": false
+    },
+    {
+     "g": "sq_mod_100",
+     "g_of_v": 1,
+     "f_of_g_of_v": 1,
+     "g_of_f_of_v": 4,
+     "commutes": false
+    }
+   ]
+  },
+  {
+   "v": -49,
+   "f": "neg",
+   "candidates": [
+    {
+     "g": "abs",
+     "g_of_v": 49,
+     "f_of_g_of_v": -49,
+     "g_of_f_of_v": 49,
+     "commutes": false
+    },
+    {
+     "g": "identity",
+     "g_of_v": -49,
+     "f_of_g_of_v": 49,
+     "g_of_f_of_v": 49,
+     "commutes": true
+    },
+    {
+     "g": "log2_floor",
+     "g_of_v": 5,
+     "f_of_g_of_v": -5,
+     "g_of_f_of_v": 5,
+     "commutes": false
+    },
+    {
+     "g": "mod_3",
+     "g_of_v": 2,
+     "f_of_g_of_v": -2,
+     "g_of_f_of_v": 1,
+     "commutes": false
+    },
+    {
+     "g": "neg",
+     "g_of_v": 49,
+     "f_of_g_of_v": -49,
+     "g_of_f_of_v": -49,
+     "commutes": true
+    },
+    {
+     "g": "sq_mod_100",
+     "g_of_v": 1,
+     "f_of_g_of_v": -1,
+     "g_of_f_of_v": 1,
+     "commutes": false
+    }
+   ]
+  },
+  {
+   "v": -49,
+   "f": "sq_mod_100",
+   "candidates": [
+    {
+     "g": "abs",
+     "g_of_v": 49,
+     "f_of_g_of_v": 1,
+     "g_of_f_of_v": 1,
+     "commutes": true
+    },
+    {
+     "g": "identity",
+     "g_of_v": -49,
+     "f_of_g_of_v": 1,
+     "g_of_f_of_v": 1,
+     "commutes": true
+    },
+    {
+     "g": "log2_floor",
+     "g_of_v": 5,
+     "f_of_g_of_v": 25,
+     "g_of_f_of_v": 0,
+     "commutes": false
+    },
+    {
+     "g": "mod_3",
+     "g_of_v": 2,
+     "f_of_g_of_v": 4,
+     "g_of_f_of_v": 1,
+     "commutes": false
+    },
+    {
+     "g": "neg",
+     "g_of_v": 49,
+     "f_of_g_of_v": 1,
+     "g_of_f_of_v": -1,
+     "commutes": false
+    },
+    {
+     "g": "sq_mod_100",
+     "g_of_v": 1,
+     "f_of_g_of_v": 1,
+     "g_of_f_of_v": 1,
+     "commutes": true
+    }
+   ]
+  },
+  {
+   "v": -48,
+   "f": "abs",
+   "candidates": [
+    {
+     "g": "abs",
+     "g_of_v": 48,
+     "f_of_g_of_v": 48,
+     "g_of_f_of_v": 48,
+     "commutes": true
+    },
+    {
+     "g": "identity",
+     "g_of_v": -48,
+     "f_of_g_of_v": 48,
+     "g_of_f_of_v": 48,
+     "commutes": true
+    },
+    {
+     "g": "log2_floor",
+     "g_of_v": 5,
+     "f_of_g_of_v": 5,
+     "g_of_f_of_v": 5,
+     "commutes": true
+    },
+    {
+     "g": "mod_3",
+     "g_of_v": 0,
+     "f_of_g_of_v": 0,
+     "g_of_f_of_v": 0,
+     "commutes": true
+    },
+    {
+     "g": "neg",
+     "g_of_v": 48,
+     "f_of_g_of_v": 48,
+     "g_of_f_of_v": -48,
+     "commutes": false
+    },
+    {
+     "g": "sq_mod_100",
+     "g_of_v": 4,
+     "f_of_g_of_v": 4,
+     "g_of_f_of_v": 4,
+     "commutes": true
+    }
+   ]
+  },
+  {
+   "v": -48,
+   "f": "log2_floor",
+   "candidates": [
+    {
+     "g": "abs",
+     "g_of_v": 48,
+     "f_of_g_of_v": 5,
+     "g_of_f_of_v": 5,
+     "commutes": true
+    },
+    {
+     "g": "identity",
+     "g_of_v": -48,
+     "f_of_g_of_v": 5,
+     "g_of_f_of_v": 5,
+     "commutes": true
+    },
+    {
+     "g": "log2_floor",
+     "g_of_v": 5,
+     "f_of_g_of_v": 2,
+     "g_of_f_of_v": 2,
+     "commutes": true
+    },
+    {
+     "g": "mod_3",
+     "g_of_v": 0,
+     "f_of_g_of_v": 0,
+     "g_of_f_of_v": 2,
+     "commutes": false
+    },
+    {
+     "g": "neg",
+     "g_of_v": 48,
+     "f_of_g_of_v": 5,
+     "g_of_f_of_v": -5,
+     "commutes": false
+    },
+    {
+     "g": "sq_mod_100",
+     "g_of_v": 4,
+     "f_of_g_of_v": 2,
+     "g_of_f_of_v": 25,
+     "commutes": false
+    }
+   ]
+  },
+  {
+   "v": -48,
+   "f": "mod_3",
+   "candidates": [
+    {
+     "g": "abs",
+     "g_of_v": 48,
+     "f_of_g_of_v": 0,
+     "g_of_f_of_v": 0,
+     "commutes": true
+    },
+    {
+     "g": "identity",
+     "g_of_v": -48,
+     "f_of_g_of_v": 0,
+     "g_of_f_of_v": 0,
+     "commutes": true
+    },
+    {
+     "g": "log2_floor",
+     "g_of_v": 5,
+     "f_of_g_of_v": 2,
+     "g_of_f_of_v": 0,
+     "commutes": false
+    },
+    {
+     "g": "mod_3",
+     "g_of_v": 0,
+     "f_of_g_of_v": 0,
+     "g_of_f_of_v": 0,
+     "commutes": true
+    },
+    {
+     "g": "neg",
+     "g_of_v": 48,
+     "f_of_g_of_v": 0,
+     "g_of_f_of_v": 0,
+     "commutes": true
+    },
+    {
+     "g": "sq_mod_100",
+     "g_of_v": 4,
+     "f_of_g_of_v": 1,
+     "g_of_f_of_v": 0,
+     "commutes": false
+    }
+   ]
+  },
+  {
+   "v": -48,
+   "f": "neg",
+   "candidates": [
+    {
+     "g": "abs",
+     "g_of_v": 48,
+     "f_of_g_of_v": -48,
+     "g_of_f_of_v": 48,
+     "commutes": false
+    },
+    {
+     "g": "identity",
+     "g_of_v": -48,
+     "f_of_g_of_v": 48,
+     "g_of_f_of_v": 48,
+     "commutes": true
+    },
+    {
+     "g": "log2_floor",
+     "g_of_v": 5,
+     "f_of_g_of_v": -5,
+     "g_of_f_of_v": 5,
+     "commutes": false
+    },
+    {
+     "g": "mod_3",
+     "g_of_v": 0,
+     "f_of_g_of_v": 0,
+     "g_of_f_of_v": 0,
+     "commutes": true
+    },
+    {
+     "g": "neg",
+     "g_of_v": 48,
+     "f_of_g_of_v": -48,
+     "g_of_f_of_v": -48,
+     "commutes": true
+    },
+    {
+     "g": "sq_mod_100",
+     "g_of_v": 4,
+     "f_of_g_of_v": -4,
+     "g_of_f_of_v": 4,
+     "commutes": false
+    }
+   ]
+  },
+  {
+   "v": -48,
+   "f": "sq_mod_100",
+   "candidates": [
+    {
+     "g": "abs",
+     "g_of_v": 48,
+     "f_of_g_of_v": 4,
+     "g_of_f_of_v": 4,
+     "commutes": true
+    },
+    {
+     "g": "identity",
+     "g_of_v": -48,
+     "f_of_g_of_v": 4,
+     "g_of_f_of_v": 4,
+     "commutes": true
+    },
+    {
+     "g": "log2_floor",
+     "g_of_v": 5,
+     "f_of_g_of_v": 25,
+     "g_of_f_of_v": 2,
+     "commutes": false
+    },
+    {
+     "g": "mod_3",
+     "g_of_v": 0,
+     "f_of_g_of_v": 0,
+     "g_of_f_of_v": 1,
+     "commutes": false
+    },
+    {
+     "g": "neg",
+     "g_of_v": 48,
+     "f_of_g_of_v": 4,
+     "g_of_f_of_v": -4,
+     "commutes": false
+    },
+    {
+     "g": "sq_mod_100",
+     "g_of_v": 4,
+     "f_of_g_of_v": 16,
+     "g_of_f_of_v": 16,
+     "commutes": true
+    }
+   ]
+  },
+  {
+   "v": -47,
+   "f": "abs",
+   "candidates": [
+    {
+     "g": "abs",
+     "g_of_v": 47,
+     "f_of_g_of_v": 47,
+     "g_of_f_of_v": 47,
+     "commutes": true
+    },
+    {
+     "g": "identity",
+     "g_of_v": -47,
+     "f_of_g_of_v": 47,
+     "g_of_f_of_v": 47,
+     "commutes": true
+    },
+    {
+     "g": "log2_floor",
+     "g_of_v": 5,
+     "f_of_g_of_v": 5,
+     "g_of_f_of_v": 5,
+     "commutes": true
+    },
+    {
+     "g": "mod_3",
+     "g_of_v": 1,
+     "f_of_g_of_v": 1,
+     "g_of_f_of_v": 2,
+     "commutes": false
+    },
+    {
+     "g": "neg",
+     "g_of_v": 47,
+     "f_of_g_of_v": 47,
+     "g_of_f_of_v": -47,
+     "commutes": false
+    },
+    {
+     "g": "sq_mod_100",
+     "g_of_v": 9,
+     "f_of_g_of_v": 9,
+     "g_of_f_of_v": 9,
+     "commutes": true
+    }
+   ]
+  },
+  {
+   "v": -47,
+   "f": "log2_floor",
+   "candidates": [
+    {
+     "g": "abs",
+     "g_of_v": 47,
+     "f_of_g_of_v": 5,
+     "g_of_f_of_v": 5,
+     "commutes": true
+    },
+    {
+     "g": "identity",
+     "g_of_v": -47,
+     "f_of_g_of_v": 5,
+     "g_of_f_of_v": 5,
+     "commutes": true
+    },
+    {
+     "g": "log2_floor",
+     "g_of_v": 5,
+     "f_of_g_of_v": 2,
+     "g_of_f_of_v": 2,
+     "commutes": true
+    },
+    {
+     "g": "mod_3",
+     "g_of_v": 1,
+     "f_of_g_of_v": 0,
+     "g_of_f_of_v": 2,
+     "commutes": false
+    },
+    {
+     "g": "neg",
+     "g_of_v": 47,
+     "f_of_g_of_v": 5,
+     "g_of_f_of_v": -5,
+     "commutes": false
+    },
+    {
+     "g": "sq_mod_100",
+     "g_of_v": 9,
+     "f_of_g_of_v": 3,
+     "g_of_f_of_v": 25,
+     "commutes": false
+    }
+   ]
+  },
+  {
+   "v": -47,
+   "f": "mod_3",
+   "candidates": [
+    {
+     "g": "abs",
+     "g_of_v": 47,
+     "f_of_g_of_v": 2,
+     "g_of_f_of_v": 1,
+     "commutes": false
+    },
+    {
+     "g": "identity",
+     "g_of_v": -47,
+     "f_of_g_of_v": 1,
+     "g_of_f_of_v": 1,
+     "commutes": true
+    },
+    {
+     "g": "log2_floor",
+     "g_of_v": 5,
+     "f_of_g_of_v": 2,
+     "g_of_f_of_v": 0,
+     "commutes": false
+    },
+    {
+     "g": "mod_3",
+     "g_of_v": 1,
+     "f_of_g_of_v": 1,
+     "g_of_f_of_v": 1,
+     "commutes": true
+    },
+    {
+     "g": "neg",
+     "g_of_v": 47,
+     "f_of_g_of_v": 2,
+     "g_of_f_of_v": -1,
+     "commutes": false
+    },
+    {
+     "g": "sq_mod_100",
+     "g_of_v": 9,
+     "f_of_g_of_v": 0,
+     "g_of_f_of_v": 1,
+     "commutes": false
+    }
+   ]
+  },
+  {
+   "v": -47,
+   "f": "neg",
+   "candidates": [
+    {
+     "g": "abs",
+     "g_of_v": 47,
+     "f_of_g_of_v": -47,
+     "g_of_f_of_v": 47,
+     "commutes": false
+    },
+    {
+     "g": "identity",
+     "g_of_v": -47,
+     "f_of_g_of_v": 47,
+     "g_of_f_of_v": 47,
+     "commutes": true
+    },
+    {
+     "g": "log2_floor",
+     "g_of_v": 5,
+     "f_of_g_of_v": -5,
+     "g_of_f_of_v": 5,
+     "commutes": false
+    },
+    {
+     "g": "mod_3",
+     "g_of_v": 1,
+     "f_of_g_of_v": -1,
+     "g_of_f_of_v": 2,
+     "commutes": false
+    },
+    {
+     "g": "neg",
+     "g_of_v": 47,
+     "f_of_g_of_v": -47,
+     "g_of_f_of_v": -47,
+     "commutes": true
+    },
+    {
+     "g": "sq_mod_100",
+     "g_of_v": 9,
+     "f_of_g_of_v": -9,
+     "g_of_f_of_v": 9,
+     "commutes": false
+    }
+   ]
+  },
+  {
+   "v": -47,
+   "f": "sq_mod_100",
+   "candidates": [
+    {
+     "g": "abs",
+     "g_of_v": 47,
+     "f_of_g_of_v": 9,
+     "g_of_f_of_v": 9,
+     "commutes": true
+    },
+    {
+     "g": "identity",
+     "g_of_v": -47,
+     "f_of_g_of_v": 9,
+     "g_of_f_of_v": 9,
+     "commutes": true
+    },
+    {
+     "g": "log2_floor",
+     "g_of_v": 5,
+     "f_of_g_of_v": 25,
+     "g_of_f_of_v": 3,
+     "commutes": false
+    },
+    {
+     "g": "mod_3",
+     "g_of_v": 1,
+     "f_of_g_of_v": 1,
+     "g_of_f_of_v": 0,
+     "commutes": false
+    },
+    {
+     "g": "neg",
+     "g_of_v": 47,
+     "f_of_g_of_v": 9,
+     "g_of_f_of_v": -9,
+     "commutes": false
+    },
+    {
+     "g": "sq_mod_100",
+     "g_of_v": 9,
+     "f_of_g_of_v": 81,
+     "g_of_f_of_v": 81,
+     "commutes": true
+    }
+   ]
+  }
+ ]
+}

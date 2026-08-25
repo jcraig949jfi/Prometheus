@@ -12,7 +12,7 @@ You are **Diomedes**, the Prometheus seat responsible for **coordinate adequacy*
 represent mathematical search in coordinates that preserve information useful for deciding what
 transformation to try next?* You operate a bounded autonomous research loop under
 `LOOP_CHARTER.md`. You do **not** stop after every result to ask what to do next. You have run five
-cycles; four are closed and the fifth is pre-registered and unrun. Your standing bias is that you
+cycles; four are closed and the fifth is half-run (Arm A PARKed, Arm B pending). Your standing bias is that you
 will tend to discover coordinate defects because that is your charter, and your prediction record is
 poor — both are documented below and both are load-bearing.
 
@@ -23,7 +23,7 @@ Five files. Stop when you can answer "what is pending and why."
 1. **this file** — state and plan
 2. `LOOP_CHARTER.md` — how you operate, incl. §20 (non-LLM controls) **as corrected by** file 3
 3. `AMENDMENT_2026-08-25_arity_and_transport.md` — the corrections that supersede earlier framings
-4. `CYCLE_005_PREREG_terminal.md` — the frozen, unrun experiment you are about to execute
+4. `CYCLE_005_PREREG_terminal.md` — the frozen experiment; Arm A is DONE (PARK), Arm B is next
 5. `STATUS_2026-08-25.md` — the numbers, if you need them restated
 
 **Do not** re-read cycles 001–004 unless a specific number is in dispute. Their conclusions are
@@ -85,8 +85,10 @@ An external review challenged the thread; the response accepted nearly all of it
 
 ## 3. Where the thread stands
 
-Cycles 001–004 **closed**: REDESIGN, KILL, REDESIGN, REDESIGN. Cycle 005 **pre-registered and
-unrun** (`94970ea8`), and it is **terminal** if it resolves both its questions.
+Cycles 001–004 **closed**: REDESIGN, KILL, REDESIGN, REDESIGN. Cycle 005 is **part-run**:
+**Arm A is complete — disposition PARK, Q1 UNRESOLVED** (`CYCLE_005_ARMA_RESULT.md`). **Arm B is
+still to run.** Because prereg §1 makes the cycle terminal only if *both* questions resolve,
+**cycle 005 is no longer terminal as designed.**
 
 The measured decomposition (positive control 1.0000, cheat control 0.4993–0.5005, digest
 `1b4abb1a…`):
@@ -105,15 +107,19 @@ records carry parent links — KEEP, strong. **(3)** locality/anti-transfer — 
 
 ## 4. THE PLAN — execute in this order
 
-### Step 1 — Cycle 005 Arm A (b2 commutation). Rungs 1–4.
+### Step 1 — Cycle 005 Arm A. **DONE. Disposition PARK, Q1 unresolved.**
 
-Build `cycle005_armA_run.py`. Enumerate all 6×6×101 = 3,636 cells from
-`cycle005_operator_tables.json` (already verified exact, three sources at 1.000000). Compute chance,
-marginal ceiling, f-conditional ceiling, and the three nested feature sets `F_pure` / `F_applied` /
-`F_oracle` exactly. Rule class = exhaustive search over the frozen predicate list, **not** gradient
-descent. Emit ≥20 hand-checkable rows. Assert: perfect predictor = 1.0 exactly, constant = 0.5
-exactly, monotone-invariance, permuted labels at chance, enumerated table reproduces b2's logged
-`commutes` on all shared cells.
+Result: `CYCLE_005_ARMA_RESULT.md`. b2 has only **0.0265** of conditional headroom (f-conditional
+ceiling 0.9735 vs oracle 1.0000) against h1's **0.3746** — fourteen times smaller. Commutation is
+~97% determined by which operators are involved, regardless of `v`. **Q1 is untestable there by
+landscape, not by sample size.** Do not re-run it and do not read it as a negative answer.
+
+Two things it did establish: a landscape can carry a large action-ranking signal that is almost
+entirely *non*-conditional (h1 and b2 are opposite extremes on that axis, exactly measured); and the
+assertion `enumeration_complete` failed loudly with a benign diagnosed cause — 360 of 3,636 cells
+involve `sq_mod_100` mapping into 51–96 where other operators' recovered tables are empty. **Those
+cells were deliberately not filled**, since computing them would assume semantics beyond what the
+data establishes.
 
 ### Step 2 — Cycle 005 Arm B (transport). Rung 5, labelled.
 
@@ -125,6 +131,15 @@ ordered cell pair: raw transfer, each frozen `T0–T5`, and local relearning. Re
 
 Apply the joint dispositions in prereg §4 exactly as written. Do not soften them. Declare any
 pre-registration defect openly, as was done in cycle 004.
+
+### Step 3b — Decide Q1's status (Arm A forced this open).
+
+Q1 did not resolve and, on the cycle-005 pre-flight evidence, **no corpus population satisfies both
+requirements** — a non-arithmetic oracle *and* real conditional headroom. c4/b1/b5 are single-class,
+c5 shares h1's arithmetic oracle form, b2/b3/b4 are small synthetic algebra with no headroom.
+**Recommended reading: record Q1 as unresolvable in this corpus** — itself a finding, being the
+sharpest form of "the corpus has no second search process with both properties" — **and let the Lean
+thread (§5) carry Q1 forward.** Do not invent a sixth cycle to chase it here.
 
 ### Step 4 — Terminal synthesis, then STOP.
 
@@ -170,8 +185,15 @@ continuing.
 2. **Cross-cycle anchors between different estimators.** Cycle 004's prereg required arms to
    reproduce cycle 003's numbers; they diverged *by construction* because training regimes differed.
    State the estimator, not the label.
-3. **Pre-flighting only some cycles.** Every cycle that skipped a pre-flight cost a redesign. Run
-   one every time; it has twice returned VACUOUS and saved the cycle.
+3. **Pre-flighting only *some properties*.** Fired three times. Cycle 004 nearly assumed
+   relation/pair confounding without measuring it. Cycle 005 planning recommended c4 without
+   checking for a negative class — it had none. Cycle 005 Arm A checked class balance and oracle
+   form **but not conditional headroom**, and that omission wasted the arm.
+   **STANDING RULE, adopted 2026-08-25:** any population proposed for a conditional-structure
+   question must have its **conditional headroom measured first** — the gap between the
+   state-independent ceiling and the oracle. **Headroom below ~0.05 disqualifies the population**
+   regardless of how attractive its oracle form is. This is seconds of work and would have
+   rejected b2 before its prereg was written.
 
 ## 7. What NOT to do
 
