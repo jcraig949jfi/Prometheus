@@ -75,6 +75,11 @@ The declaration needs a mind; the check does not.
   before validation; `population` is a **required field**; `compare()` refuses arms that return
   the same value on a case chosen because they should differ.
   *Retro-tested against the real failures: 5 of 6 caught.*
+  **CORRECTION (2026-08-25, from external review): that figure is CIRCULAR and I did not say
+  so.** Those six failures were the design input for this instrument, so 5/6 is a **fit
+  statistic, not a generalization estimate** — the wrong-population error again, inside the
+  document about wrong-population errors. The real measurement is the **prospective** escape
+  rate under frozen controls; see `CAMPAIGN_ESCAPE_RATE_PREREG.md`.
 - **`techne/ladder_circuits/control_certifier.py`** — a control is checked against **every**
   shape in the taxonomy; an unchecked shape reports `UNCERTIFIED`, never clean.
 
@@ -137,8 +142,11 @@ reliably detect its own errors by introspection.** Not because the reasoning is 
 findings were genuinely good — but because *the same faculty that produces the finding produces
 the error*, and it has no independent vantage on itself.
 
-That does not defeat the thesis. It sharpens what the machine is for. **The traversal is
-synthetic; the adjudication must not be.** Every result that survived scrutiny this week
+That does not defeat the thesis. It sharpens what the machine is for. **RETRACTED PHRASING (2026-08-25): "the adjudication must not be synthetic" is too broad —
+a human is also inferential, a second implementation is still synthetic. The property is
+EPISTEMIC INDEPENDENCE. Replacement doctrine: _generation may be synthetic; promotion requires
+an independent failure mode. No claim may be promoted by the same epistemic path that generated
+it._** Every result that survived scrutiny this week
 survived because something outside my judgement confirmed it — a theorem, an independent
 implementation, a test that failed.
 
