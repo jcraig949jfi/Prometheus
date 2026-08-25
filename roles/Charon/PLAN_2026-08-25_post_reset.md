@@ -121,9 +121,20 @@ with the generator list **derived from the data**, over the **union of both file
 
 For every generator: row count, parent-pointer coverage, whether an action field exists, whether
 that field is populated on failure as well as success, and whether any parent carries two distinct
-actions. Output one committed table. **Kill rule:** if no generator besides `c1` carries
-action-on-failure, the reviewer's "the corpus is spent" verdict is earned and gets recorded as
-such.
+actions. **Kill rule:** if no generator besides `c1` carries action-on-failure, the reviewer's
+"the corpus is spent" verdict is earned and gets recorded as such.
+
+**STARTED 2026-08-25, may already be done — CHECK BEFORE RE-RUNNING.**
+
+```bash
+cat charon/generator_census_2026-08-25.json      # result; absent => it did not finish
+tail -20 charon/generator_census_console.log     # progress / crash
+python charon/generator_census.py                # re-run (~15-25 min, $0, resumable by re-running)
+```
+
+The script is committed and carries the kill rule in its own docstring, so the verdict does not
+depend on this plan being read. If the JSON exists, read its `verdict` field, commit the result
+with the table, and move to step 2. **Do not re-derive the kill rule — it is fixed above.**
 
 ### Step 2 — THE REGRET EXPERIMENT (decisive)
 
