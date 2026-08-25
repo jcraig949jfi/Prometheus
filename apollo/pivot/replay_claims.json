@@ -4,9 +4,9 @@
       "value": 0.833,
       "tol": 0.001,
       "recorded": "2026-06-27",
-      "why": "the headline max_acc. If this moves, every Apollo number moves.",
+      "why": "0.833 is still what Apollo scores on the HOME battery and that value replicates. Its INTERPRETATION as a capability number is dead: E9 scored 0.0667 mix-adjusted on an independently authored battery in the same seven categories, with 40/42 ABSTENTIONS and zero guesses. The number measures co-adaptation between a battery and parsers written by the same author.",
       "favours_lane": "favours",
-      "status": "UNKILLED",
+      "status": "VALUE-INTACT-INTERPRETATION-KILLED",
       "kill_path_families": {
         "re_execution": [
           "replay harness 2026-08-23",
@@ -17,9 +17,12 @@
         ],
         "independent_replication": [
           "Aporia P153 (c144e89f, 2026-08-24): canary 0.6 replicated independently; ceiling decomposes exactly 30+30+20+20=100/120, missing 16.7% = precisely 20 ABSTAINED tasks"
+        ],
+        "independent_authorship": [
+          "E9, 2026-08-25: battery authored blind by Charon. Mix-adjusted 0.0667 vs home 0.6000. KILLED AS A CAPABILITY NUMBER."
         ]
       },
-      "n_distinct_families": 3,
+      "n_distinct_families": 4,
       "kill_paths_named_but_not_tried": [
         "independent re-implementation of the scorer",
         "held-out battery authored by someone else",
@@ -28,7 +31,7 @@
         "different Python minor version"
       ],
       "known_blind_spots": [
-        "no instrument distinguishes 'solved for the right reason' from 'solved'; the battery is ours, so an authored-in regularity is invisible to every check we own"
+        "RESOLVED by E9 \u2014 the blind spot ('an authored-in regularity is invisible to every check we own') was real and the regularity was found the moment a different author wrote the tasks."
       ],
       "required_families": 3
     },
@@ -297,6 +300,13 @@
       "status": "SURVIVES BUT MATERIALLY NARROWED",
       "killed_by": "Aporia P155 (c666081a)",
       "evidence": "True of Apollo v2's 27-op registry, and NOT of the program. Apollo v1's PRIMITIVE_CATALOG held 25 primitives IDENTICAL to Hephaestus forge_primitives (intersection 25, none missing); the v2 blackboard rewrite DROPPED the entire library. Three of the four unsolved categories already have a primitive there (all_but_n, temporal_order, check_transitivity/solve_constraints). Only vacuous_truth has no match. The ceiling is substantially SELF-INFLICTED."
+    },
+    {
+      "claim": "0.833 is a capability of Apollo",
+      "where": "everywhere in the Apollo corpus",
+      "status": "INTERPRETATION KILLED (value intact)",
+      "killed_by": "E9 / Charon battery, 2026-08-25",
+      "evidence": "mix-adjusted 0.0667 vs 0.6000; numeric_comparison 10/10 -> 0/6, numeric_stated_premise 10/10 -> 0/6, transitivity 10/10 -> 2/6; 40/42 abstained, 0 guessed. Mechanism located in source: transformer preconditions are surface templates (startswith('is ')), violating Apollo's own rule that preconditions key on semantic slots and never on problem_text surface. The rule was enforced on scorers and violated by transformers; parsing is where the capability lives."
     }
   ],
   "owed_by_apollo": [
