@@ -6,31 +6,151 @@
   "scope_cap": "lexical+structural adversaries, arm6+cell4 targets, 50 permutations; the omitted adversary/targets were strictly weaker on the positive control, so this is a floor for the BEST available adversary",
   "arm_offset_rule": "arm k (alphabetical) receives offset k*STEP on the slug index",
   "steps": {
+    "1": {
+      "detected": true,
+      "pairs": {
+        "lexical|arm6": {
+          "observed": 0.165,
+          "null_p05": 0.1416,
+          "null_p95": 0.1896,
+          "null_mean": 0.1655,
+          "signed_delta": -0.0005,
+          "margin_upper": -0.0246,
+          "margin_lower": -0.0234,
+          "side": "none",
+          "detected": false
+        },
+        "structural|arm6": {
+          "observed": 0.2025,
+          "null_p05": 0.1434,
+          "null_p95": 0.1947,
+          "null_mean": 0.1681,
+          "signed_delta": 0.0344,
+          "margin_upper": 0.0078,
+          "margin_lower": -0.0591,
+          "side": "upper",
+          "detected": true
+        },
+        "lexical|cell4": {
+          "observed": 0.2525,
+          "null_p05": 0.2174,
+          "null_p95": 0.2924,
+          "null_mean": 0.2507,
+          "signed_delta": 0.0018,
+          "margin_upper": -0.0399,
+          "margin_lower": -0.0351,
+          "side": "none",
+          "detected": false
+        },
+        "structural|cell4": {
+          "observed": 0.2612,
+          "null_p05": 0.2218,
+          "null_p95": 0.2758,
+          "null_mean": 0.2497,
+          "signed_delta": 0.0115,
+          "margin_upper": -0.0146,
+          "margin_lower": -0.0394,
+          "side": "none",
+          "detected": false
+        }
+      },
+      "nonconforming_payloads": 0
+    },
+    "2": {
+      "detected": true,
+      "pairs": {
+        "lexical|arm6": {
+          "observed": 0.1458,
+          "null_p05": 0.147,
+          "null_p95": 0.1892,
+          "null_mean": 0.1674,
+          "signed_delta": -0.0215,
+          "margin_upper": -0.0433,
+          "margin_lower": 0.0011,
+          "side": "lower",
+          "detected": true
+        },
+        "structural|arm6": {
+          "observed": 0.1775,
+          "null_p05": 0.1504,
+          "null_p95": 0.1977,
+          "null_mean": 0.171,
+          "signed_delta": 0.0065,
+          "margin_upper": -0.0202,
+          "margin_lower": -0.0271,
+          "side": "none",
+          "detected": false
+        },
+        "lexical|cell4": {
+          "observed": 0.2087,
+          "null_p05": 0.2189,
+          "null_p95": 0.2933,
+          "null_mean": 0.2509,
+          "signed_delta": -0.0421,
+          "margin_upper": -0.0846,
+          "margin_lower": 0.0102,
+          "side": "lower",
+          "detected": true
+        },
+        "structural|cell4": {
+          "observed": 0.2462,
+          "null_p05": 0.2127,
+          "null_p95": 0.2816,
+          "null_mean": 0.2445,
+          "signed_delta": 0.0018,
+          "margin_upper": -0.0354,
+          "margin_lower": -0.0336,
+          "side": "none",
+          "detected": false
+        }
+      },
+      "nonconforming_payloads": 0
+    },
     "3": {
       "detected": false,
       "pairs": {
         "lexical|arm6": {
-          "observed": 0.1683,
-          "null_p95": 0.1934,
-          "margin": -0.025,
+          "observed": 0.1692,
+          "null_p05": 0.1495,
+          "null_p95": 0.1867,
+          "null_mean": 0.1676,
+          "signed_delta": 0.0016,
+          "margin_upper": -0.0175,
+          "margin_lower": -0.0197,
+          "side": "none",
           "detected": false
         },
         "structural|arm6": {
-          "observed": 0.1725,
-          "null_p95": 0.1955,
-          "margin": -0.023,
+          "observed": 0.1783,
+          "null_p05": 0.1381,
+          "null_p95": 0.1868,
+          "null_mean": 0.1669,
+          "signed_delta": 0.0115,
+          "margin_upper": -0.0085,
+          "margin_lower": -0.0403,
+          "side": "none",
           "detected": false
         },
         "lexical|cell4": {
-          "observed": 0.2175,
-          "null_p95": 0.2795,
-          "margin": -0.062,
+          "observed": 0.2538,
+          "null_p05": 0.2175,
+          "null_p95": 0.2769,
+          "null_mean": 0.2477,
+          "signed_delta": 0.006,
+          "margin_upper": -0.0232,
+          "margin_lower": -0.0363,
+          "side": "none",
           "detected": false
         },
         "structural|cell4": {
-          "observed": 0.2387,
-          "null_p95": 0.2796,
-          "margin": -0.0408,
+          "observed": 0.2437,
+          "null_p05": 0.2093,
+          "null_p95": 0.2881,
+          "null_mean": 0.2485,
+          "signed_delta": -0.0048,
+          "margin_upper": -0.0444,
+          "margin_lower": -0.0344,
+          "side": "none",
           "detected": false
         }
       },
@@ -40,27 +160,47 @@
       "detected": false,
       "pairs": {
         "lexical|arm6": {
-          "observed": 0.175,
-          "null_p95": 0.1858,
-          "margin": -0.0108,
+          "observed": 0.1658,
+          "null_p05": 0.1445,
+          "null_p95": 0.1818,
+          "null_mean": 0.1641,
+          "signed_delta": 0.0018,
+          "margin_upper": -0.016,
+          "margin_lower": -0.0213,
+          "side": "none",
           "detected": false
         },
         "structural|arm6": {
-          "observed": 0.18,
-          "null_p95": 0.1905,
-          "margin": -0.0105,
+          "observed": 0.1608,
+          "null_p05": 0.142,
+          "null_p95": 0.19,
+          "null_mean": 0.167,
+          "signed_delta": -0.0062,
+          "margin_upper": -0.0292,
+          "margin_lower": -0.0188,
+          "side": "none",
           "detected": false
         },
         "lexical|cell4": {
-          "observed": 0.2575,
-          "null_p95": 0.2864,
-          "margin": -0.0289,
+          "observed": 0.2437,
+          "null_p05": 0.2163,
+          "null_p95": 0.2884,
+          "null_mean": 0.2546,
+          "signed_delta": -0.0108,
+          "margin_upper": -0.0447,
+          "margin_lower": -0.0274,
+          "side": "none",
           "detected": false
         },
         "structural|cell4": {
-          "observed": 0.2625,
-          "null_p95": 0.2808,
-          "margin": -0.0183,
+          "observed": 0.2512,
+          "null_p05": 0.2156,
+          "null_p95": 0.2938,
+          "null_mean": 0.2498,
+          "signed_delta": 0.0015,
+          "margin_upper": -0.0426,
+          "margin_lower": -0.0357,
+          "side": "none",
           "detected": false
         }
       },
@@ -70,124 +210,54 @@
       "detected": true,
       "pairs": {
         "lexical|arm6": {
-          "observed": 0.2633,
-          "null_p95": 0.1877,
-          "margin": 0.0757,
+          "observed": 0.25,
+          "null_p05": 0.1429,
+          "null_p95": 0.1813,
+          "null_mean": 0.1645,
+          "signed_delta": 0.0855,
+          "margin_upper": 0.0687,
+          "margin_lower": -0.1071,
+          "side": "upper",
           "detected": true
         },
         "structural|arm6": {
-          "observed": 0.2692,
-          "null_p95": 0.1867,
-          "margin": 0.0824,
+          "observed": 0.2492,
+          "null_p05": 0.1475,
+          "null_p95": 0.1893,
+          "null_mean": 0.1682,
+          "signed_delta": 0.081,
+          "margin_upper": 0.0598,
+          "margin_lower": -0.1017,
+          "side": "upper",
           "detected": true
         },
         "lexical|cell4": {
-          "observed": 0.3688,
-          "null_p95": 0.2891,
-          "margin": 0.0796,
-          "detected": true
-        },
-        "structural|cell4": {
-          "observed": 0.3925,
-          "null_p95": 0.2807,
-          "margin": 0.1118,
-          "detected": true
-        }
-      },
-      "nonconforming_payloads": 0
-    },
-    "100": {
-      "detected": true,
-      "pairs": {
-        "lexical|arm6": {
-          "observed": 0.5167,
-          "null_p95": 0.1847,
-          "margin": 0.332,
-          "detected": true
-        },
-        "structural|arm6": {
-          "observed": 0.5617,
-          "null_p95": 0.183,
-          "margin": 0.3787,
-          "detected": true
-        },
-        "lexical|cell4": {
-          "observed": 0.6975,
+          "observed": 0.385,
+          "null_p05": 0.2188,
           "null_p95": 0.2857,
-          "margin": 0.4118,
+          "null_mean": 0.2488,
+          "signed_delta": 0.1362,
+          "margin_upper": 0.0993,
+          "margin_lower": -0.1663,
+          "side": "upper",
           "detected": true
         },
         "structural|cell4": {
-          "observed": 0.7488,
-          "null_p95": 0.2807,
-          "margin": 0.4681,
-          "detected": true
-        }
-      },
-      "nonconforming_payloads": 0
-    },
-    "300": {
-      "detected": true,
-      "pairs": {
-        "lexical|arm6": {
-          "observed": 1.0,
-          "null_p95": 0.1883,
-          "margin": 0.8117,
-          "detected": true
-        },
-        "structural|arm6": {
-          "observed": 0.9967,
-          "null_p95": 0.1883,
-          "margin": 0.8083,
-          "detected": true
-        },
-        "lexical|cell4": {
-          "observed": 1.0,
-          "null_p95": 0.2801,
-          "margin": 0.7199,
-          "detected": true
-        },
-        "structural|cell4": {
-          "observed": 0.9962,
-          "null_p95": 0.2762,
-          "margin": 0.72,
-          "detected": true
-        }
-      },
-      "nonconforming_payloads": 0
-    },
-    "1000": {
-      "detected": true,
-      "pairs": {
-        "lexical|arm6": {
-          "observed": 1.0,
-          "null_p95": 0.1909,
-          "margin": 0.8091,
-          "detected": true
-        },
-        "structural|arm6": {
-          "observed": 0.9975,
-          "null_p95": 0.1851,
-          "margin": 0.8124,
-          "detected": true
-        },
-        "lexical|cell4": {
-          "observed": 1.0,
-          "null_p95": 0.2839,
-          "margin": 0.7161,
-          "detected": true
-        },
-        "structural|cell4": {
-          "observed": 0.9962,
-          "null_p95": 0.2769,
-          "margin": 0.7193,
+          "observed": 0.3912,
+          "null_p05": 0.208,
+          "null_p95": 0.2789,
+          "null_mean": 0.2497,
+          "signed_delta": 0.1416,
+          "margin_upper": 0.1124,
+          "margin_lower": -0.1832,
+          "side": "upper",
           "detected": true
         }
       },
       "nonconforming_payloads": 0
     }
   },
-  "smallest_detected_step": 30,
+  "smallest_detected_step": 1,
   "largest_undetected_step": 10,
   "interpretation": "The slug index ranges over [0,200), so a per-arm offset of STEP is a mean shift of roughly STEP/200 of the field's range, wrapped mod 100000. A leak SMALLER than the smallest detected step is invisible to this gate, and the live PASS is therefore a statement about leaks at or above that size -- not about leakage in general."
 }

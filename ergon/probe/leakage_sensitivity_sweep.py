@@ -43,7 +43,8 @@ from ergon.probe.adversarial_leakage import (
 
 #: Multipliers on a per-arm rank, so arm k gets offset k*STEP. STEP=3 reproduces the
 #: preregistered probe that was NOT detected; 40000 reproduces the historical defect that was.
-STEPS = (3, 10, 30, 100, 300, 1000)
+STEPS = (1, 2, 3, 10, 30)   # extended DOWN: the two-sided rule caught +3, so the
+#                             floor is below the old sweep's smallest rung
 N_PERM = 50
 ARM_RANK = {a: i for i, a in enumerate(sorted(ARMS))}
 
@@ -74,10 +75,30 @@ def evaluate(texts, arm_labels, groups, n_perm=N_PERM):
             null = np.array([cv_balanced_accuracy(Xk, permute_within_task(y, g, rng), g, kind,
                                                   folds) for _ in range(n_perm)])
             p95 = float(np.percentile(null, 95))
-            hit = obs > p95
+            p05 = float(np.percentile(null, 5))
+            # TWO-SIDED (ATK-018, Techne). The first version used `obs > p95` alone. Balanced
+            # accuracy BELOW chance carries the same information as above it -- an adversary
+            # inverts its own prediction -- so the quantity for a recoverability question is
+            # |obs - null|, and a one-sided rule discards half the evidence.
+            #
+            # DO NOT COMPARE THIS SWEEP'S FLOOR TO THE OLD ONE AS IF ONE VARIABLE MOVED. Two
+            # things changed between them: the verdict became two-sided, AND INV 7 re-keyed the
+            # slug so it is now constant across arms. On the old packets the slug already
+            # varied per arm, so an injected offset was a signal on top of existing per-arm
+            # noise; on these it is a clean band in an otherwise constant field. The old
+            # number described a configuration that no longer exists and is RETIRED rather
+            # than corrected. I wrote "that number was a property of the broken verdict" in the
+            # first version of this comment -- that was an over-attribution of exactly the kind
+            # this file exists to prevent, and it is withdrawn.
+            hit = (obs > p95) or (obs < p05)
             detected |= hit
-            out[f"{adv}|{target}"] = {"observed": round(obs, 4), "null_p95": round(p95, 4),
-                                      "margin": round(obs - p95, 4), "detected": bool(hit)}
+            out[f"{adv}|{target}"] = {
+                "observed": round(obs, 4), "null_p05": round(p05, 4), "null_p95": round(p95, 4),
+                "null_mean": round(float(null.mean()), 4),
+                "signed_delta": round(obs - float(null.mean()), 4),
+                "margin_upper": round(obs - p95, 4), "margin_lower": round(p05 - obs, 4),
+                "side": "upper" if obs > p95 else "lower" if obs < p05 else "none",
+                "detected": bool(hit)}
     return out, detected
 
 
@@ -106,7 +127,7 @@ def main():
                                       "nonconforming_payloads": nc}
         if detected and smallest is None:
             smallest = step
-        best = max(v["margin"] for v in pairs.values())
+        best = max(max(v["margin_upper"], v["margin_lower"]) for v in pairs.values())
         print(f"step {step:>6}  detected={detected!s:5s}  best_margin={best:+.4f}")
 
     report["smallest_detected_step"] = smallest
