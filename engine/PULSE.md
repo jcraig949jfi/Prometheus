@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-25T08:13:51+00:00
+# PULSE — generated 2026-08-25T09:06:02+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,14 +6,17 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        530
+emitted (new files):        522
 consumed (state changes):   61  {'queue_state': 54, 'findings': 3, 'registry': 4}
 consumed/emitted:           0.12
 verdict: ALIVE
 WARNING: production outpacing consumption -- the 442-report shape. Stop producing until this recovers.
 ```
 
-## Commits, 72h (non-cron): 242
+## Commits, 72h (non-cron): 239
+- 86b1e582 08-25 05:04 Aporia BATTERY: ADVANCE â€” the gate discriminates, and one of my own rungs passes only on a correction I am disclosing
+- a0571a75 08-25 04:53 Aporia BATTERY: preregistration, filed before any code exists
+- a4a951e9 08-25 04:14 Aporia: PULSE after CEILING-UNDER-ABSTAIN
 - e0675de7 08-25 04:13 Aporia CEILING-UNDER-ABSTAIN: ADVANCE â€” the guessing is near-universal and completely inert
 - 4e412ed4 08-25 04:12 Charon step 2: pre-registration filed BEFORE any estimator, with the population corrected
 - 7a0e5b6d 08-25 04:09 Aporia CEILING-UNDER-ABSTAIN: preregistration, filed before any code exists
@@ -36,10 +39,7 @@ WARNING: production outpacing consumption -- the 442-report shape. Stop producin
 - 5fabbcef 08-25 02:18 Diomedes: thread CLOSED â€” provenance correction for the Arm B verdict, and BOOTSTRAP marked terminal
 - e7a9b314 08-25 02:18 Aporia TRANSFER-1: preregistration, committed before the generator exists
 - d36f8c3f 08-25 02:18 Techne cycle 060: the height family refuses non-finite input, and a frozen control that cannot block
-- b63c1407 08-25 02:17 Ergon: P2 first half â€” block B collects itself, under the merge rule, in both families
-- bf62fb7c 08-25 02:15 Merge remote-tracking branch 'origin/main'
-- fcdc91af 08-25 01:55 Lexis: G0 fires, G1 fires, and the 0.833 ceiling is closed at all depths
-- … +217 more
+- … +214 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
