@@ -1,5 +1,21 @@
 # Diomedes — review-response audit RESULT: the reviewer was substantially right, and the disposition changes to KILL
 
+> ## CORRECTED BY ROUND-2 REVIEW — read `REVIEW_ROUND2_CORRECTIONS_2026-08-25.md` first
+>
+> Three claims in this document are **withdrawn** as written:
+> 1. *"roughly two fifths of that predictability is surrogate measurement"* — AUC does not decompose
+>    over mechanisms. The defensible form is that an independent proxy **reproduces performance
+>    equivalent to** 40.9% of the local above-chance span. Not variance attribution.
+> 2. *"~59% of the span is unaccounted for"* — that is performance not reproduced by this proxy, not
+>    an identified residual component.
+> 3. *"disposes of Interpretation 4" / "no shared structure"* — model failure is not structural
+>    impossibility. A2 licenses only: naive supervised pooling adds little **under this
+>    representation and model family**.
+>
+> And the disposition logic in §4 is **superseded**: no pre-registered branch fired, so the
+> **pre-registered verdict is UNRESOLVED**. The KILL stands as a **program disposition** justified
+> independently by the Q1 census — not as the A1/A2 verdict.
+
 **Filed:** 2026-08-25. **Pre-registration:** `REVIEW_RESPONSE_PREREG_2026-08-25.md`, committed at
 `b9f0517c` **before** any audit ran. **Rows:** `review_response_run.py` →
 `review_response_result.json`.
