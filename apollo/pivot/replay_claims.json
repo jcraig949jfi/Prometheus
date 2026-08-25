@@ -6,7 +6,7 @@
       "recorded": "2026-06-27",
       "why": "the headline max_acc. If this moves, every Apollo number moves.",
       "favours_lane": "favours",
-      "status": "UNDER-ATTACKED",
+      "status": "UNKILLED",
       "kill_path_families": {
         "re_execution": [
           "replay harness 2026-08-23",
@@ -14,9 +14,12 @@
         ],
         "environment_perturbation": [
           "PYTHONHASHSEED 0-7, 2026-08-23: value identical at every seed"
+        ],
+        "independent_replication": [
+          "Aporia P153 (c144e89f, 2026-08-24): canary 0.6 replicated independently; ceiling decomposes exactly 30+30+20+20=100/120, missing 16.7% = precisely 20 ABSTAINED tasks"
         ]
       },
-      "n_distinct_families": 2,
+      "n_distinct_families": 3,
       "kill_paths_named_but_not_tried": [
         "independent re-implementation of the scorer",
         "held-out battery authored by someone else",
@@ -59,16 +62,19 @@
       "recorded": "2026-06-10",
       "why": "the cross-tier falsification. The multi-tier organism is the unique solver.",
       "favours_lane": "favours",
-      "status": "UNDER-ATTACKED",
+      "status": "UNKILLED",
       "kill_path_families": {
         "re_execution": [
           "replay harness 2026-08-23"
         ],
         "environment_perturbation": [
           "PYTHONHASHSEED 0-7, 2026-08-23: value identical at every seed"
+        ],
+        "independent_replication": [
+          "Aporia P153 (c144e89f, 2026-08-24): canary 0.6 replicated independently; ceiling decomposes exactly 30+30+20+20=100/120, missing 16.7% = precisely 20 ABSTAINED tasks"
         ]
       },
-      "n_distinct_families": 2,
+      "n_distinct_families": 3,
       "kill_paths_named_but_not_tried": [
         "hand-audit of all 20 cross-tier tasks for answer leakage",
         "adversarial cross-tier tasks authored to defeat this exact pipeline",
@@ -269,5 +275,32 @@
     "does_NOT_reach": "organism accuracies \u2014 0.8333/1.0/1.0 identical across PYTHONHASHSEED 0-7",
     "action": "pin PYTHONHASHSEED=0 for any baseline or heuristic measurement; organism accuracies need no pin but pinning costs nothing",
     "status": "recorded, NOT fixed \u2014 changing generator order would move the battery"
-  }
+  },
+  "falsified_apollo_claims": [
+    {
+      "claim": "canary's compare/bool tasks are unsolvable for want of a boolean primitive",
+      "where": "apollo/src/blackboard_evolve.py comment; 0.558 diagnosis; STARTUP",
+      "status": "VOID",
+      "killed_by": "Aporia P153 (c144e89f)",
+      "evidence": "numeric_comparison scores 10/10 through the EXISTING parse_comparison -> score_by_comparison__g pair, guard firing 10/10. The capability exists and is already routed."
+    },
+    {
+      "claim": "routable_acc is needed because canary rewards unconditional guessing and penalizes the honest abstaining router",
+      "where": "blackboard_evolve.py _routable_idx comment (2026-06-24); strategy docs",
+      "status": "FALSIFIED",
+      "killed_by": "Aporia P153 (c144e89f)",
+      "evidence": "The ceiling organism ABSTAINS. All 20 unsolved tasks emit selected_answer=None with ZERO scorers firing \u2014 which is why they score 0.0000, not ~0.2500. There is no guessing to penalize. The metric may still be defensible; the stated reason for it was wrong."
+    },
+    {
+      "claim": "0.833 is an expressivity limit of the substrate (O1, 2026-08-23)",
+      "where": "apollo/cycles/o1_enumeration/FINDINGS.md",
+      "status": "SURVIVES BUT MATERIALLY NARROWED",
+      "killed_by": "Aporia P155 (c666081a)",
+      "evidence": "True of Apollo v2's 27-op registry, and NOT of the program. Apollo v1's PRIMITIVE_CATALOG held 25 primitives IDENTICAL to Hephaestus forge_primitives (intersection 25, none missing); the v2 blackboard rewrite DROPPED the entire library. Three of the four unsolved categories already have a primitive there (all_but_n, temporal_order, check_transitivity/solve_constraints). Only vacuous_truth has no match. The ceiling is substantially SELF-INFLICTED."
+    }
+  ],
+  "owed_by_apollo": [
+    "Static write-write hazard check. Lexis measured 26 declared operators, zero undeclared writes, 39/45 operator pairs commuting \u2014 and established that the write-write hazard which invalidated TWO O1 runs was statically derivable from the existing @blackboard_op declarations. Both invalid runs were preventable without executing anything.",
+    "Re-scope the O1 ceiling claim in FINDINGS.md to 'ceiling of the v2 registry', not 'of the substrate', and cite the severed v1 library."
+  ]
 }
