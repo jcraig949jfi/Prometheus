@@ -1,0 +1,216 @@
+{
+  "experiment": "TRANSFER-1",
+  "date": "2026-08-25",
+  "agent": "Aporia (M1)",
+  "prereg": "aporia/iq/PREREG_TRANSFER_1_2026-08-25.md",
+  "prereg_commit": "e7a9b314",
+  "E_of_C_qualifier": "E(C)=0.8333 is the exact ceiling under Apollo's CLEAN-ROUTING regime (Lexis fcdc91af), not the unrestricted-pool maximum 0.8917. This rung does not measure dE at all.",
+  "corpus_sha256": "e2e6898d50dfffe9ad4d80205a7e57032521cf95bd6a867a2dcc1c90fc1dcf68",
+  "seed": 20260825,
+  "n_train": 400,
+  "n_test": 200,
+  "stratum_mix_declared": {
+    "NONDEGENERATE": 0.7,
+    "DEGENERATE": 0.15,
+    "NEAR_DEGENERATE": 0.15
+  },
+  "train_strata": {
+    "NONDEGENERATE": 272,
+    "NEAR_DEGENERATE": 69,
+    "DEGENERATE": 59
+  },
+  "test_strata": {
+    "NONDEGENERATE": 138,
+    "DEGENERATE": 36,
+    "NEAR_DEGENERATE": 26
+  },
+  "train_surfaces": {
+    "v1": 153,
+    "v2": 135,
+    "v0": 112
+  },
+  "test_surfaces": {
+    "v0": 47,
+    "v2": 62,
+    "v3": 50,
+    "v1": 41
+  },
+  "test_unseen_combination_n": 50,
+  "stratum_request_mismatches": 0,
+  "dropped_records": 0,
+  "dropped_records_note": "Nothing is dropped. Every generated task is scored; pipeline exceptions count as WRONG. Draws whose realised stratum differs from the requested one are counted above and kept, labelled by their REALISED stratum.",
+  "T1_nondegenerate_clean": true,
+  "T1_nondegenerate_n": 410,
+  "T1_violations": 0,
+  "stratum_labels_partition": true,
+  "port_train": {
+    "n": 400,
+    "correct": 251,
+    "acc": 0.6275,
+    "by_stratum": {
+      "DEGENERATE": {
+        "correct": 22,
+        "n": 59,
+        "acc": 0.3729
+      },
+      "NEAR_DEGENERATE": {
+        "correct": 47,
+        "n": 69,
+        "acc": 0.6812
+      },
+      "NONDEGENERATE": {
+        "correct": 182,
+        "n": 272,
+        "acc": 0.6691
+      }
+    },
+    "by_surface": {
+      "v0": {
+        "correct": 108,
+        "n": 112,
+        "acc": 0.9643
+      },
+      "v1": {
+        "correct": 143,
+        "n": 153,
+        "acc": 0.9346
+      },
+      "v2": {
+        "correct": 0,
+        "n": 135,
+        "acc": 0.0
+      }
+    },
+    "parser_fires": 265,
+    "label": "G-heldout TRAIN"
+  },
+  "port_test": {
+    "n": 200,
+    "correct": 127,
+    "acc": 0.635,
+    "by_stratum": {
+      "DEGENERATE": {
+        "correct": 15,
+        "n": 36,
+        "acc": 0.4167
+      },
+      "NEAR_DEGENERATE": {
+        "correct": 16,
+        "n": 26,
+        "acc": 0.6154
+      },
+      "NONDEGENERATE": {
+        "correct": 96,
+        "n": 138,
+        "acc": 0.6957
+      }
+    },
+    "by_surface": {
+      "v0": {
+        "correct": 43,
+        "n": 47,
+        "acc": 0.9149
+      },
+      "v1": {
+        "correct": 36,
+        "n": 41,
+        "acc": 0.878
+      },
+      "v2": {
+        "correct": 0,
+        "n": 62,
+        "acc": 0.0
+      },
+      "v3": {
+        "correct": 48,
+        "n": 50,
+        "acc": 0.96
+      }
+    },
+    "parser_fires": 138,
+    "label": "G-heldout TEST (held-out parameter region)"
+  },
+  "T2_port_train_nondegenerate_acc": {
+    "correct": 182,
+    "n": 272,
+    "acc": 0.6691
+  },
+  "T3_port_test_nondegenerate_acc": {
+    "correct": 96,
+    "n": 138,
+    "acc": 0.6957
+  },
+  "mutants": {
+    "M1_plus": {
+      "nondegenerate_acc": 0.1366,
+      "degenerate_acc": 0.2105
+    },
+    "M2_off_by_one": {
+      "nondegenerate_acc": 0.0,
+      "degenerate_acc": 0.0
+    },
+    "M3_swapped": {
+      "nondegenerate_acc": 0.1366,
+      "degenerate_acc": 0.2105
+    },
+    "M4_identity": {
+      "nondegenerate_acc": 0.0,
+      "degenerate_acc": 0.0
+    },
+    "M5_return_n": {
+      "nondegenerate_acc": 0.0,
+      "degenerate_acc": 0.3895
+    },
+    "M6_half_total": {
+      "nondegenerate_acc": 0.1268,
+      "degenerate_acc": 0.3895
+    }
+  },
+  "port_nondegenerate_acc": 0.678,
+  "port_degenerate_acc": 0.3895,
+  "degenerate_n": 95,
+  "worst_mutant_nondegenerate_acc": 0.1366,
+  "T4_mutants_separated": false,
+  "T4_return_n_wins_on_degenerate": false,
+  "x_heldout": {
+    "set_membership": {
+      "n": 100,
+      "acc": 0.0,
+      "parser_fires": 0,
+      "by_stratum": {
+        "NEAR_DEGENERATE": {
+          "correct": 0,
+          "n": 4,
+          "acc": 0.0
+        },
+        "NONDEGENERATE": {
+          "correct": 0,
+          "n": 96,
+          "acc": 0.0
+        }
+      }
+    },
+    "tabular": {
+      "n": 100,
+      "acc": 0.0,
+      "parser_fires": 0,
+      "by_stratum": {
+        "NEAR_DEGENERATE": {
+          "correct": 0,
+          "n": 2,
+          "acc": 0.0
+        },
+        "NONDEGENERATE": {
+          "correct": 0,
+          "n": 98,
+          "acc": 0.0
+        }
+      }
+    }
+  },
+  "T5_parser_fails_on_all_X_routes": true,
+  "T6_mutants_passing_G_failing_X": [],
+  "verdict": "REDESIGN_UNSTRATIFIED_DEGENERACY",
+  "verdict_rule_null_output": "If the generator produced zero NONDEGENERATE draws, T1 is false and the run PARKs; a vacuous pass is impossible because T1 requires len(nondegenerate) > 0.",
+  "terminal_table_partitions": true
+}
