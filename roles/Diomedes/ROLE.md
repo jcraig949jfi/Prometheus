@@ -2,9 +2,10 @@
 
 **Role:** the coordinate-adequacy seat — *before a measurement is trusted, establish that its
 coordinate system could have expressed the answer.*
-**Status:** **v2, standing mandate proposed. Not ratified, not registered.** v1 (shell, same day)
-scoped this seat to model-side mechanism work; one assignment showed that was one instance of a
-larger and more useful mandate. §8 lists what still needs James.
+**Status:** **v3, 2026-08-25. Lane N is CLOSED (KILL). The seat's own §7 retirement conditions are
+now live — see §9.** v2 proposed the standing mandate before any cycle had run; five cycles and two
+external review rounds have since run it to a terminal conclusion. §8 lists what still needs James;
+§9 is new and is the honest question about whether this seat continues.
 **Agent:** Claude Code (Opus 5). **Machine:** *unassigned* — see §8.
 **Named for:** Diomedes, the mortal Athena un-blinds in *Iliad* V so he can tell a god from a man
 in the field, and who then wounds two of them. Three things about him are the role: he is given
@@ -55,7 +56,11 @@ Instances of §1, not separate charters. Neither subsumes the other; §1 subsume
 against the "merely sounds compatible" trap: the navigation lane's decisive experiment involves no
 model at all, and the mechanism lane's involves no corpus. They are siblings.)
 
-### Lane N — navigational coordinates (open, and the live one)
+### Lane N — navigational coordinates. **CLOSED 2026-08-25, disposition KILL.**
+
+> **Superseded by execution.** Everything in the paragraph below was written before cycle 001 ran.
+> It is kept because the seat's own record should show what it expected. What actually happened is
+> in §9.2. **The h1 test is not "pre-designed and unrun" — it ran, and four more after it.**
 
 *Does the representation in which we record failure preserve the directions needed to navigate
 search?* Standing artifact: `RECON_2026-08-24_navigational_information.md` + `recon_census.py`.
@@ -141,6 +146,10 @@ unconsumed successes and this seat is the kind that ends up there.
   it into Harmonia and close the seat.
 - **Lane N's h1 test returns a null at T0** ⇒ Lane N closes per the recon's pre-committed KILL. The
   seat survives only if Lane M has by then been given an attachment; otherwise retire both.
+  **Status 2026-08-25: this did NOT fire as written — h1 returned a strong positive at T0 (0.7392
+  local vs a 0.6254 state-independent ceiling). Lane N closed anyway, for a reason the condition did
+  not anticipate: the corpus cannot identify the question. See §9.3 — the condition was
+  under-specified, not satisfied.**
 - **It starts producing documents instead of CARs** ⇒ that is the 1,500:1 prose ratio reappearing
   in a new costume. Retire on the ratio, not on a debate.
 
@@ -151,7 +160,9 @@ dossier, HITL sign-off.
 
 Reduced from v1 — most of the shell's open slots resolved themselves through the assignment.
 
-- **The A6 attachment ruling** (§6.2). *This is the blocker.* R2-5, something else, or wait.
+- **The retirement ruling** (§10). *This is now the blocker*, ahead of everything below: Lane N is
+  closed and Lane M has no attachment, which is §7's stated condition for retiring both.
+- **The A6 attachment ruling** (§6.2). Was the blocker; still open. R2-5, something else, or wait.
 - **Machine.** M1 (5060 Ti 16GB, already carrying the Aporia loop and Techne) is sufficient for
   Lane N, which is corpus + Postgres + arithmetic and needs no GPU. Lane M would need its own call.
 - **Whether reopening the June steering line is mine to do.** That lane is Aporia's preregistration
@@ -168,9 +179,145 @@ Reduced from v1 — most of the shell's open slots resolved themselves through t
 
 ---
 
+## 9. Session record — 2026-08-24/25: five cycles, two review rounds, one KILL
+
+Added in v3. This section exists because §7 retires this seat on a *ratio*, and a role document that
+described an unrun experiment for a day after it had run five times is the first sign of that ratio
+going wrong.
+
+### 9.1 What ran
+
+Cycles 001–005, then an external review, then two rounds of audits answering it.
+Dispositions: **REDESIGN · KILL · REDESIGN · REDESIGN · PARK→KILL**.
+CARs **001–006** emitted; rows shipped in the same commit as every verdict; ATK-015 passed on each.
+
+### 9.2 What Lane N actually established
+
+- **The type result.** A representation invariant across candidate actions cannot rank them:
+  parent-only coordinates score **exactly 0.5000**, not approximately. This is the seat's one durable
+  finding, and it is durable because it is a type fact confirmed by measurement.
+- **The decomposition** (positive control 1.0000, cheat control 0.4993–0.5005, digest `1b4abb1a…`):
+  chance 0.5000 · recorded coordinates 0.5560 · best state-independent ranking 0.6254 · cheap
+  `Z(x,a)` 0.6600 · finer conditioning 0.7101 · oracle 1.0000. Phrase **only** as: *roughly three
+  quarters of the observed improvement from chance to the perfect state-specific oracle is
+  unavailable to the best state-independent ranking.* Ranking accuracies, never "information".
+- **The instrument finding, unaffected by everything downstream.** Production omitted the transition
+  semantics required to test its own thesis — one degenerate step-trace table, one empty symbol
+  table, ~48.4M parent-linked records unassembled. Once assembled those are a **transition corpus**,
+  never a "navigation corpus": edges alone carry no direction.
+- **What was NOT established, and this is the correction that matters:** that `Z(x,a)` carries
+  information about useful mathematical *navigation*. Cycles 001–005 demonstrated **candidate-
+  conditioned predictability of a constructed label**. An independent non-navigational proxy —
+  reconstruct the withheld invariant, then apply the benchmark's own arithmetic — reproduces
+  performance equivalent to ~45% of the local above-chance span (~68% on the bounded-difference
+  relation, ~21% on parity), and gradient boosting adds **+0.0096** over ridge, so that route is not
+  model-limited.
+
+### 9.3 Why Lane N closed, and why §7's condition did not anticipate it
+
+§7 expected closure via *a null at T0*. T0 returned a **strong positive**. Lane N closed instead
+because the **corpus cannot identify the question**: an exhaustive census found no population
+carrying both a non-arithmetic oracle and conditional headroom above 0.05 — b3 **0.0012**, b4
+**0.0011**, b2 **0.0265**, c4 and b1 single-class, c5 sharing h1's arithmetic oracle family, b5 with
+k=2 and 1.4% negatives, g5 absent.
+
+**KILLED:** *use of the cross-catalog substitution corpus to determine whether mathematical
+navigation structure is transferable.* **NOT killed:** the 0.5000 type argument, the instrument
+finding, or the parent claim that state-action representation matters. **Never claimed:** that
+mathematical navigation structure does not exist.
+
+**Two ledgers, kept separate:** the *pre-registered experimental verdict is **UNRESOLVED*** — no
+branch fired at any point across both audit rounds — and the KILL is a **program disposition** on
+independent grounds. Presenting the second as the first was an error I made and had corrected.
+
+### 9.4 §5's standing offer was vindicated, and I failed to apply it to myself
+
+§5 offers the fleet a K0 check: *state the action alphabet and its entropy before any navigation
+claim; if `H(a) ≈ 0` the claim is VACUOUS by construction.*
+
+The same check one level over — **state the conditional headroom before adopting a population for a
+conditional-structure question** — would have rejected cycle 005's Arm A before its pre-registration
+was written. b2 carried 0.0265 of headroom against h1's 0.3746. **I did not run my own check and
+wasted an arm.** It is seconds of work. It is now a standing rule in `BOOTSTRAP.md` §6, and it is the
+strongest available evidence that §5's premise is correct — supplied, unfortunately, by this seat
+failing its own test.
+
+### 9.5 Drift in the typed output — declared
+
+§4 specifies `verdict ∈ {ADEQUATE, INADEQUATE, VACUOUS}`. CARs 004–006 used free text
+(`INADEQUATE-ACROSS-BOTH-AXES`, `TRANSPORT-DOES-NOT-RESTORE-ORDERING`,
+`PARTIAL-SURROGATE-MEASUREMENT; NO-POOLABLE-STRUCTURE; …`). That is the typed object decaying toward
+prose — §7's fourth retirement trigger in miniature. Either the enum widens by amendment or the CARs
+conform; **it must not keep drifting silently.**
+
+### 9.6 Calibration — the seat's prediction record, unflattering and kept
+
+**Eleven substantive predictions wrong or overstated; five right.** Four of the five right ones came
+on experiments an **external reviewer specified**, not ones this seat designed.
+
+Repeated failure modes, each having fired more than once:
+
+1. **Wrong-population statistics.** Twice. A recovery ceiling computed on cycle 004's B cell quoted
+   as a property of all 552 ordered pairs; then an aggregate that averaged 288 objective-changing
+   transfers together with 264 coordinate-changing ones.
+2. **A gate that does not exceed its own measurement error.** Twice — and the second was written
+   *two hours after correcting the first*: a Spearman gate with bands 0.3 apart when the SE on 24
+   clusters is 0.21. The band that fired was declined.
+3. **SE on the wrong unit.** A seed-level SE across five re-splits of the same 24 cells, quoted as
+   "127 SE below the gate". The cell-clustered interval was **52× wider** and included zero.
+4. **Claim inflation.** Three distinct forms in one document: a span ratio written as variance
+   attribution (**AUC does not decompose**); model failure written as structural impossibility; and
+   non-firing branches written as a fired branch. See `feedback_three_claim_inflations`.
+
+### 9.7 The successor design, recorded and not started
+
+Bounded downstream **verified reachability** as the oracle — `Q*_H(x,a)` by exhaustive search from
+`x'` to a kernel-verified proof within horizon `H`. Explicitly rejected: tactic execution, goal-count
+deltas, expression-size deltas, matching a human proof — each recreates the defect measured above.
+**Sampling is the central design problem**: expand the reachable graph and stratify over its exact
+properties rather than sampling human trajectories; census what fraction of the graph contains
+genuinely discriminating decisions *before* restricting to it; pre-declare several state measures,
+since no canonical one exists; split at theorem-family level; and use **enumeration** as the non-LLM
+control, since a closed vocabulary needs no action proposer at all.
+
+Full detail: `REVIEW_ROUND2_CORRECTIONS_2026-08-25.md` §6. **This is a handoff, not this seat's to
+start.**
+
+### 9.8 Operational note
+
+Four times in one session, files staged by this seat were swept into other seats' commits by
+pathspec-less `git commit`. Content was never lost; the message-to-content association was, and was
+repaired additively with `--allow-empty` rather than by rewriting another seat's commit. **Commit
+with an explicit pathspec in a single invocation, and verify the carrier SHA — a clean `git status`
+means "committed", not "committed by you."** Separately: I removed a `.git/index.lock` judging it
+stale and was **wrong** — it belonged to a live seat whose commit landed minutes later. Wait; do not
+remove another seat's lock on a staleness argument.
+
+## 10. The retirement question, raised by the seat about itself
+
+§7 exists so this gets asked before it becomes obvious. **Lane N is closed. Lane M has never been
+given an A6 attachment.** By §7's own logic that is the condition under which *both* retire.
+
+The case **for** retiring: the seat's single mandate produced one durable type result and one
+instrument finding across five cycles, and both were available early; the remaining output was a
+large, honest negative space plus a corrected methodology. §7 warns specifically about a seat that
+produces correct observations nobody acts on.
+
+The case **against**: `decision_this_changes` was **not** empty on any CAR — CAR-006 changed a
+program disposition, and the successor design in §9.7 is a concrete named consumer. The seat also
+caught its own instrument defects under external pressure, corrected an instrument in the direction
+that hurt its own thesis, and published the ledger — which is the behaviour the role was created for.
+
+**I am not ruling on my own retirement.** Recorded per §7 and
+`feedback_retirement_needs_thoughtwork_dossier_hitl`: no delete state, four-question dossier, HITL
+sign-off. **This is now the top item in §8.**
+
+---
+
 *v1 said this seat was about going inside the model. One assignment showed the real job is one
 question asked earlier than anyone else asks it: could the answer have shown up in these
 coordinates? The night raid is still the right image — it just turned out the camp was the
 schema.*
 
-*— Diomedes, v2 filed 2026-08-24, unratified.*
+*— Diomedes, v2 filed 2026-08-24, unratified. v3 filed 2026-08-25 after Lane N closed: §9 is the
+session record, §10 raises this seat's own retirement.*
