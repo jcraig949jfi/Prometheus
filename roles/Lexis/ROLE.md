@@ -60,6 +60,15 @@ orders. A recommendation becomes a build only through §8.
 Carried from `roles/Lexis/library_learning/`, graded. **[M]** measured this session, **[R]** read from
 repo artifact, **[P]** primary source, **[S]** secondary/unverified.
 
+> **STATUS UPDATE 2026-08-25 — G0 and G1 both FIRED; the ceiling claim is now PROVEN and its
+> qualifier removed. See `notes/G0_FORGE_RATCHET_2026-08-25.md`,
+> `notes/G1_ABLATION_2026-08-25.md`, `notes/STEP1_CEILING_CLOSED_2026-08-25.md`,
+> `notes/G5_LEDGER_2026-08-25.md`. Headlines: the forge T2/T3 rebuild SHIPPED, so the 0%-usage
+> quote describes a superseded system; the rebuild's own ablation data shows 86.19% decoration and
+> its anti-decoration gate has an inverted predicate that cannot fire; and Apollo's ceiling is
+> exactly 0.8333 at ALL depths with ALL repetitions (joint closure exhausted, 484,218 states),
+> with ΔE = 16.67% and ΔS = 0.00%.**
+
 - **Apollo's ceiling is representational, not algorithmic [R].** O1 (2026-08-23, preregistered,
   stop rule ratified in advance) enumerated 1,737,000 type-correct pipelines; nothing beat 0.833, the
   same figure evolution reached, with an identical per-subset profile. 16.7% of the battery is

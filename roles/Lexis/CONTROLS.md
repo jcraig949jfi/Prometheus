@@ -55,6 +55,14 @@ cost and decreasing deniability.
 number as "the forge's primitive usage" would be `feedback_wrong_population_statistics` in its
 purest form. Ask which rows.
 
+> **WITHDRAWN 2026-08-25 — and this section made the very error it warns about.**
+> `forge/v2/hephaestus_t2/forge/` is dated **2026-04-02 10:38–10:41**, seven hours BEFORE the
+> T2/T3 rebuild's first implementation file (19:01 the same day). It is the *previous attempt's*
+> surviving tools — the population the rebuild was written to replace. Calling it "the live tree"
+> was wrong. The live population is `forge/candidates/` (606 files, 203 verdicts, run 04-03→04-12).
+> See `notes/G0_FORGE_RATCHET_2026-08-25.md`.
+> The 42%-vs-82% methodological point stands unchanged; only the label "live" is withdrawn.
+
 **And R2 is not the deciding rung.** An 82% static call rate is compatible with the T2/T3 failure
 analysis's own finding of *"93% hand-coded regex/if-blocks"* — a primitive can be called inside a
 `try/except` that always throws, on a branch never taken, or with its result discarded. **R2 tells
@@ -191,5 +199,26 @@ standing doctrine:
 - `commute.py` — Bernstein independence over O1's ceiling pipeline
 - `g1_usage.py` — R1/R2 import-and-call-site measurement, parameterised by forge directory
 
-Rung 3 (coverage trace) and rung 4 (ablation) are **not yet built**. They are the next instruments
-this seat needs, and neither requires a model.
+~~Rung 3 (coverage trace) and rung 4 (ablation) are **not yet built**.~~
+
+> **WITHDRAWN 2026-08-25.** R4 was never unbuilt for the forge. `forge/tester.py:122`
+> `run_ablation()` stubs each imported primitive and re-runs the battery; `forge/thresholds.py`
+> pre-committed `min_ablation_impact = 0.20` and `max_ablation_budget_share = 0.60` before any
+> evaluation; `FAIL_ABLATION` is a real verdict branch. **198 verdicts carry 2,103 measured
+> primitive deltas.** G1 was a mining task, not a build — see `notes/G1_ABLATION_2026-08-25.md`.
+> Result: 86.19% of validly-ablated primitives are decoration, and the gate's predicate is
+> inverted so it cannot fire on decoration at all.
+
+Still to build, added 2026-08-25:
+
+- **R3 (coverage trace)** — genuinely not built. Still the cheap pre-filter of §3.3 of the review
+  response, never a verdict.
+- **The metamorphic permutation null is now MANDATORY on any ΔE claim.**
+  `instruments/permutation_null.py`. Permute the candidate list — same prompt, same correct string,
+  same option set. Content-driven answers are invariant; position-driven answers die. It overturned
+  two already-written claims in one session, one of Apollo's and one of this seat's. A ΔE credited
+  without it is unearned.
+
+Built 2026-08-25 and not listed above: `answer_slice.py` (the answer-relevant backward slice and
+its theorem), `reachable_answers.py`, `product_ceiling_fast.py`, `ceiling_diagnosis.py`,
+`g5_redundancy.py` (the `NEW(p,C,T)` gate), `g1_ablation.py`, `g1_ablation_decompose.py`.
