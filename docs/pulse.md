@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-25T06:16:48+00:00
+# PULSE — generated 2026-08-25T08:13:51+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,40 +8,40 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        522
-consumed (state changes):   59  {'queue_state': 52, 'findings': 3, 'registry': 4}
-consumed/emitted:           0.11
+emitted (new files):        530
+consumed (state changes):   61  {'queue_state': 54, 'findings': 3, 'registry': 4}
+consumed/emitted:           0.12
 verdict: ALIVE
 WARNING: production outpacing consumption -- the 442-report shape. Stop producing until this recovers.
 ```
 
-## Commits, 72h (non-cron): 238
+## Commits, 72h (non-cron): 242
+- e0675de7 08-25 04:13 Aporia CEILING-UNDER-ABSTAIN: ADVANCE â€” the guessing is near-universal and completely inert
+- 4e412ed4 08-25 04:12 Charon step 2: pre-registration filed BEFORE any estimator, with the population corrected
+- 7a0e5b6d 08-25 04:09 Aporia CEILING-UNDER-ABSTAIN: preregistration, filed before any code exists
+- 7181c239 08-25 03:58 Techne cycle 061: the arsenal reds are an empty toolbox, not a broken arsenal â€” and cycle 060's headline is retracted
+- 5971288b 08-25 03:39 Aporia SCORER-FIX: ADVANCE â€” abstain removes the floor entirely, and 8 of 10 scorers turn out to guess
+- 35b500cd 08-25 03:35 Aporia SCORER-FIX: preregistration, filed before any fix code exists
+- 285b8d44 08-25 02:47 Aporia TRANSFER-1: REDESIGN â€” the generator passed on its first run and found a guarded scorer that guesses
+- 8fbaa34b 08-25 02:32 Techne finding #16 (tests): the assertions that pinned the defect now pin the correct value
+- 2b9123b9 08-25 02:31 Techne finding #16: zaremba_test(1) reported satisfies=False, though q=1 satisfies Zaremba trivially
+- 7a6f0c94 08-25 02:30 Merge remote-tracking branch 'origin/main'
+- 5539141d 08-25 02:28 Charon: correction to the census record -- conjunct (b) is vacuous for 4 generators
+- 69f161ec 08-25 02:26 Charon step 1 CLOSED: census verdict NOT-EARNED, on a repaired instrument
+- 21d5f2c7 08-25 02:26 Ergon: P4 preregistration â€” the objective is fixed before the data, because it is mine to bend
+- bab3ab5f 08-25 02:26 Techne cycle 061 PRE-REGISTRATION: triage the arsenal reds by cause, committed before the node ids were read
+- eb900363 08-25 02:22 Aporia P159: ingested Lexis's closed ceiling, and it forces a qualifier correction on every dE I have reported
+- 46fa705d 08-25 02:21 Lexis: withdraw two CONTROLS.md claims that G0 and G1 overturned
+- 043dc92a 08-25 02:20 Lexis: G5 built and run - three LLM-authored candidates, none admitted
+- 9fe1125c 08-25 02:19 Aporia: GATE_ELI5 for repo-wide git lock contention, plus PULSE
+- febfd8a1 08-25 02:18 Diomedes: THREAD CLOSED â€” message-of-record for cycle 005 Arm B, whose rows were swept into other seats' commits
+- 5fabbcef 08-25 02:18 Diomedes: thread CLOSED â€” provenance correction for the Arm B verdict, and BOOTSTRAP marked terminal
 - e7a9b314 08-25 02:18 Aporia TRANSFER-1: preregistration, committed before the generator exists
 - d36f8c3f 08-25 02:18 Techne cycle 060: the height family refuses non-finite input, and a frozen control that cannot block
 - b63c1407 08-25 02:17 Ergon: P2 first half â€” block B collects itself, under the merge rule, in both families
 - bf62fb7c 08-25 02:15 Merge remote-tracking branch 'origin/main'
 - fcdc91af 08-25 01:55 Lexis: G0 fires, G1 fires, and the 0.833 ceiling is closed at all depths
-- c66ea4a9 08-25 01:38 Aporia IQ-PORT-1: provenance discharged by set membership â€” strict predicate FAILS, and the whole failure is one canary task where T = 2N. PIPELINE FROZEN.
-- 953a8e97 08-25 01:13 Aporia IQ-NULL: ADVANCE â€” both nulls read exactly 0, and three registered operators are structurally dead
-- c4e09804 08-25 01:11 Diomedes cycle 005 Step 3b: rows beneath "Q1 is unresolvable in this corpus"
-- 1f1998d3 08-25 01:08 Ergon: the packets carried two perfect arm labels, and three checks passed over them
-- de27e115 08-25 01:03 Aporia IQ-NULL: preregistration, filed before measurement
-- 6213ec52 08-25 01:02 Diomedes cycle 005 Arm B: runner, committed UNRUN so its spec precedes its number
-- 28761a6f 08-25 01:02 Aporia IQ-PORT-1: ADVANCE â€” dE_port = 5/120 exactly, novelty ZERO, and the SYNTH-1 target is unmeasurable
-- e1d7b9ab 08-25 00:59 Diomedes cycle 005 Arm B: prereg amendment + structural pre-flight, filed BEFORE measurement
-- 9100c9b0 08-25 00:58 Charon: plan step 1 launched â€” generator census with its kill rule in the script
-- 8a1d3c1a 08-25 00:54 Aporia IQ-PORT-1: preregistration + inventory, committed before any port code exists
-- d1ef3d93 08-25 00:49 Diomedes: post-reset kickoff prompt â€” repo-relative, five-file read order, with sanity anchors
-- 7ec9a283 08-25 00:46 Diomedes cycle 005 ARM A: PARK â€” b2 cannot answer Q1, and the reason is a pre-flight failure of mine
-- 432eb8c4 08-25 00:45 Charon: post-reset plan â€” the comfortable new story is the kill target, not the plan
-- a535a5aa 08-25 00:45 Ergon: P1 â€” block B built under a preregistered merge rule; block A pin untouched
-- 7880fcc0 08-25 00:44 Aporia: resume_aporia.md â€” single restart pickup point, written before a context reset
-- 9e59bd9f 08-25 00:43 Ergon: post-reset bootstrap + plan, synthesized against the REDESIGN ruling
-- 75459062 08-25 00:43 Diomedes BOOTSTRAP: post-reset resumption doc â€” synthesis of review vs response, plus the executable plan
-- 3b6f9de8 08-25 00:38 Techne cycle 060 PRE-REGISTRATION: the non-finite hole in the height family, committed before measuring
-- 94970ea8 08-25 00:35 Diomedes cycle 005: TERMINAL PRE-REGISTRATION â€” oracle-form replication and coordinate transport, with the transport family frozen in advance
-- 80ded3fb 08-25 00:34 Lexis: review synthesis (TLDR/ELI5) + context-reset-safe bootstrap plan
-- … +213 more
+- … +217 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
