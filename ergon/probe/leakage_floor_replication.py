@@ -46,12 +46,36 @@ from ergon.probe.adversarial_leakage import (
 )
 from ergon.probe.leakage_sensitivity_sweep import make_injector
 
-STEPS = (1, 2, 3, 30)          # 30 is the positive control for the replication itself
+#: STEP 0 IS THE CONTROL THIS DESIGN WAS MISSING. See `one()` for why the first version could
+#: not distinguish a real small signal from a borderline observation against a stable null.
+STEPS = (0, 1, 2, 3, 30)       # 0 = NO injection; 30 = positive control for the harness
 SEEDS = (11, 22, 33, 44, 55)
 N_PERM = 50
 
 
+def _shuffled_folds(y, g, seed):
+    """5 grouped folds with the GROUP-TO-FOLD ASSIGNMENT SHUFFLED by `seed`.
+
+    THIS IS THE CORRECTION. The first version of this script varied only the permutation seed,
+    which re-estimates the NULL and leaves `obs` untouched -- `GroupKFold` is deterministic
+    given the groups, and the classifier seed was fixed, so the observed statistic was
+    literally identical across every "replicate". A borderline `obs` sitting just outside a
+    stable null therefore reproduced 100% of the time WITHOUT BEING REAL, and I read that as
+    evidence about signal. It was evidence about null-estimation noise.
+
+    Varying the fold assignment moves `obs` as well, so a detection now has to survive a
+    different partition of the data and not merely a different null draw.
+    """
+    groups = np.unique(g)
+    rng = np.random.default_rng(seed)
+    rng.shuffle(groups)
+    assign = {grp: i % 5 for i, grp in enumerate(groups)}
+    fold_of = np.array([assign[x] for x in g])
+    return [(np.where(fold_of != k)[0], np.where(fold_of == k)[0]) for k in range(5)]
+
+
 def one(texts, arm_labels, groups, seed):
+    """One replicate: BOTH the fold assignment and the permutation null vary with `seed`."""
     rng = np.random.default_rng(seed)
     Xtext = TfidfVectorizer(analyzer="char", ngram_range=(1, 5), min_df=2,
                             lowercase=False).fit_transform(texts)
@@ -63,12 +87,12 @@ def one(texts, arm_labels, groups, seed):
                 else np.ones(len(arm_labels), dtype=bool))
         idx = np.where(keep)[0]
         g, y = groups[idx], y_all[idx]
-        folds = list(GroupKFold(n_splits=5).split(np.zeros(len(y)), y, g))
+        folds = _shuffled_folds(y, g, seed)
         for adv, X, kind in (("lexical", Xtext, "text"), ("structural", Xstruct, "trees")):
             Xk = X[idx]
-            obs = cv_balanced_accuracy(Xk, y, g, kind, folds)
+            obs = cv_balanced_accuracy(Xk, y, g, kind, folds, seed=seed)
             null = np.array([cv_balanced_accuracy(Xk, permute_within_task(y, g, rng), g, kind,
-                                                  folds) for _ in range(N_PERM)])
+                                                  folds, seed=seed) for _ in range(N_PERM)])
             p05, p95 = np.percentile(null, 5), np.percentile(null, 95)
             hits[f"{adv}|{target}"] = bool(obs > p95 or obs < p05)
     return hits
@@ -102,21 +126,31 @@ def main():
         print(f"step {step:>3}  any-detection in {rate:.0%} of seeds   "
               f"max single-pair rate {max(pair_rate.values()):.0%}")
 
+    r0 = report["steps"]["0"]["any_detection_rate"]
     r1 = report["steps"]["1"]["any_detection_rate"]
-    r2 = report["steps"]["2"]["any_detection_rate"]
     r30 = report["steps"]["30"]["any_detection_rate"]
-    report["verdict"] = (
-        "STEPS 1-2 ARE FALSE ALARMS. They fired once and did not reproduce, while step 30 "
-        "reproduced. The sweep's `smallest_detected_step: 1` is an artifact of the "
-        "deliberately-hair-trigger multiplicity rule and MUST NOT be published as a "
-        "sensitivity floor."
-        if (r1 < 1.0 and r2 < 1.0 and r30 == 1.0) else
-        "REPLICATED — the small-step detections are not obviously false alarms and the "
-        "non-monotonicity needs a different explanation. Do not treat this as a clean floor "
-        "either; investigate before publishing any number."
-        if (r1 == 1.0 or r2 == 1.0) else
-        "INCONCLUSIVE — including the step-30 positive control, which did not replicate. If the "
-        "control does not fire reliably, no null from this harness is interpretable.")
+    report["control_step0_false_alarm_rate"] = r0
+    if r30 < 1.0:
+        report["verdict"] = ("INCONCLUSIVE — the step-30 positive control did not fire in every "
+                             "replicate. If the control is unreliable, no null from this harness "
+                             "is interpretable and nothing else here may be read.")
+    elif r0 >= 0.5:
+        report["verdict"] = (
+            "SINGLE-PAIR DETECTIONS ARE AN ARTIFACT. With NO injected leak at all, 'any pair "
+            "fires' occurs in %.0f%% of replicates — so a lone pair firing carries no evidence, "
+            "and the steps 1-2 detections must not be read as a sensitivity floor. Only "
+            "unanimous multi-pair detections (step 30) mean anything in this harness." % (100 * r0))
+    elif r0 == 0.0 and r1 >= 0.8:
+        report["verdict"] = (
+            "SMALL-STEP DETECTIONS SURVIVE THE CORRECTED DESIGN. The step-0 control never fired, "
+            "and step 1 fired across shuffled folds as well as shuffled nulls. The gate detects "
+            "a per-arm offset of 1 on an otherwise-constant field. NOTE this is a statement "
+            "about a CONSTANT baseline field (INV 7), not about the old packets.")
+    else:
+        report["verdict"] = (
+            "MIXED — control fired at %.0f%%, step 1 at %.0f%%. Not clean either way. Do NOT "
+            "publish a floor from this; the honest statement is that only unanimous multi-pair "
+            "detections are trustworthy in this harness." % (100 * r0, 100 * r1))
     (OUT / "floor_replication.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
     print("\n" + report["verdict"])
     return 0

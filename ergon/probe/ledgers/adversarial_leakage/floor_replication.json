@@ -1,0 +1,216 @@
+{
+  "purpose": "does a small-step detection REPLICATE across permutation seeds?",
+  "prior_stated_before_running": "steps 1 and 2 will not replicate; step 30 will replicate every time",
+  "why": "the sweep curve was non-monotonic (1 and 2 detected, 3 and 10 not, 30 detected), which a real dose-response cannot be",
+  "n_seeds": 5,
+  "n_perm": 50,
+  "steps": {
+    "0": {
+      "any_detection_rate": 0.0,
+      "per_pair_rate": {
+        "lexical|arm6": 0.0,
+        "lexical|cell4": 0.0,
+        "structural|arm6": 0.0,
+        "structural|cell4": 0.0
+      },
+      "per_seed": {
+        "11": {
+          "lexical|arm6": false,
+          "structural|arm6": false,
+          "lexical|cell4": false,
+          "structural|cell4": false
+        },
+        "22": {
+          "lexical|arm6": false,
+          "structural|arm6": false,
+          "lexical|cell4": false,
+          "structural|cell4": false
+        },
+        "33": {
+          "lexical|arm6": false,
+          "structural|arm6": false,
+          "lexical|cell4": false,
+          "structural|cell4": false
+        },
+        "44": {
+          "lexical|arm6": false,
+          "structural|arm6": false,
+          "lexical|cell4": false,
+          "structural|cell4": false
+        },
+        "55": {
+          "lexical|arm6": false,
+          "structural|arm6": false,
+          "lexical|cell4": false,
+          "structural|cell4": false
+        }
+      }
+    },
+    "1": {
+      "any_detection_rate": 1.0,
+      "per_pair_rate": {
+        "lexical|arm6": 0.6,
+        "lexical|cell4": 0.0,
+        "structural|arm6": 0.2,
+        "structural|cell4": 0.4
+      },
+      "per_seed": {
+        "11": {
+          "lexical|arm6": true,
+          "structural|arm6": false,
+          "lexical|cell4": false,
+          "structural|cell4": false
+        },
+        "22": {
+          "lexical|arm6": true,
+          "structural|arm6": false,
+          "lexical|cell4": false,
+          "structural|cell4": false
+        },
+        "33": {
+          "lexical|arm6": false,
+          "structural|arm6": false,
+          "lexical|cell4": false,
+          "structural|cell4": true
+        },
+        "44": {
+          "lexical|arm6": false,
+          "structural|arm6": true,
+          "lexical|cell4": false,
+          "structural|cell4": true
+        },
+        "55": {
+          "lexical|arm6": true,
+          "structural|arm6": false,
+          "lexical|cell4": false,
+          "structural|cell4": false
+        }
+      }
+    },
+    "2": {
+      "any_detection_rate": 1.0,
+      "per_pair_rate": {
+        "lexical|arm6": 0.0,
+        "lexical|cell4": 0.6,
+        "structural|arm6": 0.8,
+        "structural|cell4": 0.0
+      },
+      "per_seed": {
+        "11": {
+          "lexical|arm6": false,
+          "structural|arm6": false,
+          "lexical|cell4": true,
+          "structural|cell4": false
+        },
+        "22": {
+          "lexical|arm6": false,
+          "structural|arm6": true,
+          "lexical|cell4": true,
+          "structural|cell4": false
+        },
+        "33": {
+          "lexical|arm6": false,
+          "structural|arm6": true,
+          "lexical|cell4": false,
+          "structural|cell4": false
+        },
+        "44": {
+          "lexical|arm6": false,
+          "structural|arm6": true,
+          "lexical|cell4": false,
+          "structural|cell4": false
+        },
+        "55": {
+          "lexical|arm6": false,
+          "structural|arm6": true,
+          "lexical|cell4": true,
+          "structural|cell4": false
+        }
+      }
+    },
+    "3": {
+      "any_detection_rate": 0.4,
+      "per_pair_rate": {
+        "lexical|arm6": 0.0,
+        "lexical|cell4": 0.0,
+        "structural|arm6": 0.4,
+        "structural|cell4": 0.0
+      },
+      "per_seed": {
+        "11": {
+          "lexical|arm6": false,
+          "structural|arm6": false,
+          "lexical|cell4": false,
+          "structural|cell4": false
+        },
+        "22": {
+          "lexical|arm6": false,
+          "structural|arm6": false,
+          "lexical|cell4": false,
+          "structural|cell4": false
+        },
+        "33": {
+          "lexical|arm6": false,
+          "structural|arm6": true,
+          "lexical|cell4": false,
+          "structural|cell4": false
+        },
+        "44": {
+          "lexical|arm6": false,
+          "structural|arm6": true,
+          "lexical|cell4": false,
+          "structural|cell4": false
+        },
+        "55": {
+          "lexical|arm6": false,
+          "structural|arm6": false,
+          "lexical|cell4": false,
+          "structural|cell4": false
+        }
+      }
+    },
+    "30": {
+      "any_detection_rate": 1.0,
+      "per_pair_rate": {
+        "lexical|arm6": 1.0,
+        "lexical|cell4": 1.0,
+        "structural|arm6": 1.0,
+        "structural|cell4": 1.0
+      },
+      "per_seed": {
+        "11": {
+          "lexical|arm6": true,
+          "structural|arm6": true,
+          "lexical|cell4": true,
+          "structural|cell4": true
+        },
+        "22": {
+          "lexical|arm6": true,
+          "structural|arm6": true,
+          "lexical|cell4": true,
+          "structural|cell4": true
+        },
+        "33": {
+          "lexical|arm6": true,
+          "structural|arm6": true,
+          "lexical|cell4": true,
+          "structural|cell4": true
+        },
+        "44": {
+          "lexical|arm6": true,
+          "structural|arm6": true,
+          "lexical|cell4": true,
+          "structural|cell4": true
+        },
+        "55": {
+          "lexical|arm6": true,
+          "structural|arm6": true,
+          "lexical|cell4": true,
+          "structural|cell4": true
+        }
+      }
+    }
+  },
+  "control_step0_false_alarm_rate": 0.0,
+  "verdict": "SMALL-STEP DETECTIONS SURVIVE THE CORRECTED DESIGN. The step-0 control never fired, and step 1 fired across shuffled folds as well as shuffled nulls. The gate detects a per-arm offset of 1 on an otherwise-constant field. NOTE this is a statement about a CONSTANT baseline field (INV 7), not about the old packets."
+}

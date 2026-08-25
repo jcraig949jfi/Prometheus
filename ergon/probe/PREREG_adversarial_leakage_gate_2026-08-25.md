@@ -276,6 +276,51 @@ gate's null is the kind of thing that later turns out to matter.
 
 ---
 
+## 8.4 THE FLOOR, RESOLVED — and the dose axis was the wrong one
+
+Appended after a corrected replication. §8.1's floor (~25% of a field's range) was measured with
+a **one-sided** verdict on packets whose slug already varied by arm. Both of those changed, so
+that number is **retired, not corrected**, and no attribution between the two causes is claimed.
+
+The two-sided sweep on INV 7 packets produced a non-monotonic curve, which I first over-read as
+sensitivity and then over-corrected to "multiplicity false alarms". **Both readings were made on
+inadequate evidence.** The first replication was also inadequate and is recorded as such: it
+varied only the permutation seed, which re-estimates the *null* while leaving `obs` untouched
+(`GroupKFold` is deterministic given the groups, classifier seed fixed), so a borderline
+observation against a stable null reproduced 100% of the time **without being real**.
+
+Corrected design — fold assignment varies with the seed so `obs` moves too, plus a **step-0
+control with no injection**, which the first version lacked entirely:
+
+```
+step  0   any-detection   0%    <- THE CONTROL. Never fires with no leak present.
+step  1                 100%    across 3 different pairs
+step  2                 100%    across 2 different pairs
+step  3                  40%
+step 30                 100%    all four pairs, unanimous
+```
+
+**Readings, in order of confidence:**
+
+1. **The harness is sound.** A 0% false-alarm rate at step 0 means "any pair fires" is not an
+   artifact of the pipeline, and detections may be read.
+2. **The gate detects a per-arm offset of 1** on an otherwise-constant field. My "false alarm"
+   call was wrong.
+3. **The dose axis is not magnitude — it is digit-pattern legibility, and that makes "a
+   detection floor in units of offset" the wrong frame.** The slug is decimal: an offset of 1
+   gives arms `0,1,2,3,4,5` in the last digit (clean); 30 gives `0,30,60,90,120,150` (clean in
+   the tens); 3 gives `0,3,6,9,12,15`, which scatters across both digit positions and is the
+   weakest at 40%. That accounts for the non-monotonicity without appealing to noise. **It is a
+   hypothesis consistent with the curve, not a tested claim.**
+
+**What this does NOT license.** On INV 7 packets the baseline field is *constant across arms*, so
+any per-arm variation in it is a perfect label — detecting it is close to tautological and says
+little about a field that already varies. **The operative guarantee remains INVARIANT 7**, which
+is decidable and catches a one-digit change without a classifier. The gate is confirmatory here,
+not load-bearing.
+
+---
+
 ## 9. SUPERSEDED, 2026-08-25 — the channel was closed rather than bounded
 
 §8's PASS describes packets that **no longer exist**, and the honest disposition of this whole

@@ -8,8 +8,10 @@ Three reviews landed on the same day: an **external** review of the packet-leak 
 implementations. All three found real defects. Two found defects that no internal control of
 mine could have found, and one of those was a defect in a *claim* rather than in code.
 
-**The headline, so it is not buried under the repairs: I misread my own instrument three times
-today, in three different directions.** That is the most important thing in this file.
+**The headline, so it is not buried under the repairs: I misread my own instrument FOUR times
+today, in four different directions — and got one of them right by luck.** That is the most
+important thing in this file. Scoring: 1 wrong, 2 right-by-luck, 3 wrong, 4 caught before
+publishing. See §3.
 
 ---
 
@@ -157,12 +159,36 @@ reported a sensitivity improvement before reading the rest of the curve. The res
 was non-monotonic (1 and 2 detected, 3 and 10 not, 30 detected) and was in the same output.
 
 **Misreading 3 — over-corrected.** Having caught misreading 2, I declared steps 1 and 2 false
-alarms from the multiplicity hair-trigger, and said so. **The replication is falsifying that
-too:** step 1 reproduces in **100% of seeds, with the same pair firing every time**. It is not a
-false alarm. The non-monotonicity has some other explanation — most likely that the "dose" here
-is not magnitude but **digit-position legibility**, since the slug is decimal and a step of 1
-makes the last digit a clean arm label while a step of 10 moves the signal to the tens place.
-That hypothesis is untested and is recorded as untested.
+alarms from the multiplicity hair-trigger, and said so. **Wrong.** The corrected replication
+detects both at 100% of replicates against a step-0 control that never fires.
+
+**Misreading 4 — the one I caught in time, and only just.** My first replication varied *only the
+permutation seed*. That re-estimates the null and leaves `obs` untouched — `GroupKFold` is
+deterministic given the groups and the classifier seed was fixed, so the observed statistic was
+**identical in every "replicate"**. A borderline observation against a stable null reproduces
+100% of the time without being real. The script printed `REPLICATED`, which was the answer I
+wanted, and I had written that verdict logic myself an hour earlier with all of the day's lessons
+in hand. What stopped me was reading the per-pair table instead of the summary line: steps 1 and
+2 fired in *different single pairs* and step 3 in none, which is not what signal looks like.
+
+The corrected design — fold assignment varying with the seed, plus a **step-0 no-injection
+control** the first version lacked entirely — resolves it:
+
+```
+step 0  0%   <- control never fires        step  2  100%  (2 pairs)
+step 1  100% (3 pairs)                     step  3   40%
+                                           step 30  100%  (4 pairs, unanimous)
+```
+
+So: the harness is sound, the gate does detect a per-arm offset of 1 on a constant field, and the
+**dose axis was the wrong frame all along** — the slug is decimal, so detectability tracks
+digit-pattern legibility rather than magnitude (offset 3 gives `0,3,6,9,12,15`, scattered across
+both digit positions, and is weakest at 40%). Recorded as a hypothesis consistent with the curve,
+not a tested claim.
+
+**Scoring the four honestly:** 1 wrong, 2 *right by luck* — the conclusion happened to hold but
+the evidence at the time did not support it, and being right by luck is not being right — 3
+wrong, 4 caught. One in four.
 
 **The common failure is not motivated reasoning about the outcome.** I was not protecting a
 result — misreadings 1 and 3 both cut against me. It is that I read a marginal number through
@@ -216,9 +242,13 @@ spend                    $0
 post-hoc rule amendment (Item 2); HB3-2 and HB3-3 on *reading* the factorial; block B still
 collecting.
 
-**In flight:** the seed replication of the sensitivity floor. Its step-1 result already falsified
-my stated prior, so the sensitivity number remains **retired, not corrected**, and no floor may
-be published until it completes.
+**Resolved since:** the sensitivity floor. The old ~25%-of-range number stays **retired, not
+corrected** (two variables changed at once, so no attribution is claimed). The corrected
+replication shows the gate detecting a per-arm offset of 1 against a control that never fires —
+but on INV 7 packets the baseline field is constant across arms, so detecting any per-arm
+variation in it is close to tautological. **The operative guarantee remains INVARIANT 7**, which
+is decidable; the classifier gate is confirmatory, not load-bearing. Detail in
+`PREREG_adversarial_leakage_gate_2026-08-25.md` §8.4.
 
 ---
 
