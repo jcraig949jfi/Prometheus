@@ -1,0 +1,113 @@
+{
+  "experiment": "IQ-NULL",
+  "date": "2026-08-25",
+  "agent": "Aporia (M1)",
+  "prereg": "aporia/iq/PREREG_IQ_NULL_2026-08-25.md",
+  "prereg_commit": "de27e115",
+  "null_ops_frozen_at": "28761a6f (null_noop)",
+  "evaluator_hash_matches_prereg": true,
+  "E_C": 0.833333,
+  "unreachable_ops_in_C": [
+    "distribution_reducer",
+    "entity_counter",
+    "evidence_updater"
+  ],
+  "n_unreachable_in_C": 3,
+  "ops_unlocked_by_null_noop": [
+    "entity_counter"
+  ],
+  "N2_entity_counter_unreachable_in_C": true,
+  "N3_null_noop_changes_reachable_set": true,
+  "null_noop_footprint_size": 0,
+  "N1_null_noop_footprint_zero": true,
+  "null_region_body_pool": [
+    "entity_counter",
+    "forward_chain",
+    "null_noop",
+    "op_aggregate_quantities",
+    "op_build_ordering",
+    "op_numeric_argmax",
+    "op_transitive_closure",
+    "parse_box_items",
+    "parse_comparison",
+    "parse_names_and_relations",
+    "parse_numbers",
+    "parse_ordinal",
+    "parse_question_target",
+    "parse_rules",
+    "parse_which_extreme",
+    "relations_from_facts"
+  ],
+  "null_region_must_contain": [
+    "entity_counter",
+    "null_noop"
+  ],
+  "null_region_A_best": {
+    "acc": 0.733333,
+    "pipeline": [
+      "null_noop",
+      "parse_box_items",
+      "op_aggregate_quantities",
+      "parse_comparison",
+      "parse_names_and_relations",
+      "entity_counter",
+      "parse_ordinal",
+      "op_build_ordering",
+      "parse_which_extreme",
+      "parse_rules",
+      "forward_chain",
+      "relations_from_facts",
+      "score_by_aggregate__g",
+      "score_by_comparison__g",
+      "score_by_derivability__g",
+      "score_by_extreme_number__g",
+      "select_nth__g"
+    ]
+  },
+  "null_region_subsets": 1471,
+  "null_region_declared_scope": "Region A: ceiling body + ['entity_counter', 'null_noop'], <=24 orderings x 36 tails. Region B: all subsets containing ['entity_counter', 'null_noop'] plus up to 4 of 14 other transformers = 1471 subsets, <=8 orderings x 36 tails. Every subset in that range is visited; nothing is sampled. NOT covered: subsets with 5+ extras that are not a superset of the ceiling body.",
+  "null_region_evals": 56880,
+  "null_region_best": {
+    "acc": 0.733333,
+    "pipeline": [
+      "null_noop",
+      "parse_box_items",
+      "op_aggregate_quantities",
+      "parse_comparison",
+      "parse_names_and_relations",
+      "entity_counter",
+      "parse_ordinal",
+      "op_build_ordering",
+      "parse_which_extreme",
+      "parse_rules",
+      "forward_chain",
+      "relations_from_facts",
+      "score_by_aggregate__g",
+      "score_by_comparison__g",
+      "score_by_derivability__g",
+      "score_by_extreme_number__g",
+      "select_nth__g"
+    ]
+  },
+  "delta_E_null_noop": 0.0,
+  "N4_delta_null_noop_zero": true,
+  "op_check_transitivity_footprint_size": 25,
+  "op_check_transitivity_footprint_by_category": {
+    "canary:transitivity": 10,
+    "synth:nth_ranked": 15
+  },
+  "N6_reading_is_non_vacuous": true,
+  "N6_footprint_excludes_unsolved": true,
+  "check_transitivity_evals": 9396,
+  "check_transitivity_best": 0.833333,
+  "delta_E_check_transitivity": 0.0,
+  "N5_delta_check_transitivity_zero": true,
+  "checks": {
+    "N1": true,
+    "N4": true,
+    "N5": true,
+    "N6": true
+  },
+  "verdict": "ADVANCE",
+  "failed_checks": []
+}

@@ -133,6 +133,65 @@ is **untested — if it is a rewrite, the port IS a mint and the class changes.*
 
 ---
 
+## PART 2.5 — WHAT THE 2026-08-25 PASS SETTLED. Read before PART 3; it overrides parts of it.
+
+**IQ-PORT-1: ADVANCE (28761a6f). IQ-NULL: ADVANCE. Do not re-run either.**
+
+**IQ-PORT-1.** `ΔE_port(all_but_n) = +0.0416667 = 5/120 EXACTLY` — battery 0.8333 -> 0.8750,
+canary 0.60 -> 0.70, all 5 previously-abstaining tasks solved, `single_primitive_baseline` still
+0.0000. Exact rather than bounded because the two new ops' footprint, measured by state-diff over
+all 120 tasks, is precisely those 5. All 12 preregistered checks passed. Verdict **ADAPTER**, by
+monkeypatching `fp.all_but_n` (5/5 -> 0/5), not by reading source. Four semantic mutants all at
+ΔE 0.000000. 17-op leave-one-out knockout, zero decorative ops. Novelty claim **ZERO**.
+
+**The deflationary diagnostic, which is the real content.** Injection branch resolved to B3:
+injecting the parser's output solves 0/5, injecting the port's output solves 5/5. **C's existing
+routing and scoring tail already handled `all_but_n` completely given the count.** The delta is
+a NEW template-shaped regex parser plus a one-line subtraction that has existed since v1.
+
+**IQ-NULL.** `ΔE(null_noop) = 0.000000` and `ΔE(op_check_transitivity) = 0.000000`, both exact.
+The assay measures expressivity, not search dynamics, so IQ-PORT-1's number stands as a ΔE over
+a max. It was genuinely at risk: `null_noop` writes nothing at runtime but *declares*
+`writes=[quantities]`, and the enumeration grammar keys on DECLARED writes — so it **did** unlock
+`entity_counter` into the enumerable space (N3 true). That newly-reachable region tops out at
+**0.7333**, a full 0.1000 below the ceiling. Real unlock, zero gain.
+
+**THREE OF THE 27 REGISTERED OPERATORS ARE STRUCTURALLY DEAD.** By a fixpoint over declared
+reads/writes: `entity_counter`, `evidence_updater`, `distribution_reducer` can never appear in
+ANY valid ordering, because `quantities`, `hypotheses` and `probabilities` have no producer
+anywhere in the registry. Those three are exactly the ops `blackboard_ops_v2.py` was written to
+create in the 2026-05-25 rewrite. **O1 was computed over an effective pool of 12 transformers,
+not 15** — the standing qualifier must now say so. Giving `probabilities`/`hypotheses` a producer
+would resurrect two operators without adding any capability claim: a cheap, non-widening rung.
+
+**THE LADDER'S SYNTH-1 TARGET IS UNMEASURABLE — this overrides PART 3.** canary `vacuous_truth`
+has **2 distinct prompts across 5 tasks** and correct-answer first token "Yes" in **5/5**. A
+scorer that ignores the problem text entirely and always picks the "Yes" candidate scores
+**5/5**. `consistency_check` (2 prompts) falls to the same counterfeit at 3/5. A mint moving
++0.0417 there would satisfy exactly the criteria the port satisfied while demonstrating nothing.
+**TRANSFER-1's frozen G-heldout generator must be built BEFORE SYNTH-1's reading is taken.** The
+mint may still be proposed first; the reading has no instrument. Measured by
+`aporia/iq/probe_synth1_target_degeneracy.py`.
+
+**Files.** Everything is in `aporia/iq/`: preregs, findings, `RESULT_IQ_PORT_1.json`,
+`RESULT_IQ_NULL.json`, `port_ops.py` (the port + the frozen `null_noop`), `run_iq_port_1.py`,
+`run_iq_null.py`, `inventory_battery.py`, `probe_synth1_target_degeneracy.py`,
+`COST_TO_FALSIFY.jsonl`. All harnesses are deterministic — re-running is free.
+The baseline pool `C = blackboard_evolve.REGISTRY` is **byte-frozen and never edited**; the port
+lives outside `apollo/src` precisely so a `C` exists to compare against. **Keep it that way —
+editing C destroys every ΔE.**
+
+**Two method notes earned this pass, both about verdict rules rather than measurements:**
+a comparator tested 6-dp-rounded report values against unrounded ones and reported REDESIGN on a
+clean pass (P121, and in the false-negative direction for the first time); and a footprint
+computed as a set-difference of two touched-task lists was empty *by construction*, so the
+predicate reading it passed **vacuously** (P138). Both are fixed in code, not in prose — the
+differential footprint now asserts non-emptiness before its predicate is read.
+
+**Cost-to-falsify is now prospective.** `aporia/iq/COST_TO_FALSIFY.jsonl` holds rows opened
+before outcomes were known; 6/6 matched their predicted probe cost. Keep opening rows at
+prediction time — that is the fix for the doctrine's post-hoc-carving caveat.
+
 ## PART 3 — THE PLAN. Execute in order. No widening before SELECTOR.
 
 Each step is a loop pass unless marked otherwise. **Do not add domains, revive agents, or widen the
@@ -204,7 +263,19 @@ at the same budget.
 
 ## FIRST ACTION AFTER RESET
 
-Read PART 0's list, then begin **IQ-PORT-1**. Start by testing whether
-`all_but_n(total, n) → int` can be wrapped as a `BlackboardState → BlackboardState` op with a
-precondition that fires only on its own category — **execute it, do not reason about it.** If the
-wrapper is a rewrite rather than an adapter, stop and reclassify before proceeding.
+Read PART 0's list **and PART 2.5**, then:
+
+1. **Do NOT re-run IQ-PORT-1 or IQ-NULL.** Both are ADVANCE. Their RESULT json files in
+   `aporia/iq/` are the authority.
+2. The next constructive step is **TRANSFER-1's frozen G-heldout generator**, NOT SYNTH-1 —
+   because SYNTH-1's target has been measured to be unmeasurable (PART 2.5). Build the
+   generator with train/test parameter partitions and unseen combinations, preregister it,
+   and freeze it before any mint exists. Then X-heldout via independent construction
+   semantics; mutants passing G but failing X measure generator weakness and that is a
+   result, not a nuisance.
+3. Preregister before touching data, as the last two rungs did. Commit the prereg in its own
+   commit so the ordering is in the git history, not in a claim about the git history.
+4. BATTERY, SELECTOR, ABLATION follow unchanged. The arc is judged on SELECTOR.
+
+Standing: execute rather than reason; the LLM proposes, a deterministic predicate decides;
+never ask, never end a pass with a question, PARK real blocks with a GATE_ELI5.

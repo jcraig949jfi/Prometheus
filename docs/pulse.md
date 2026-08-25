@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-25T05:00:59+00:00
+# PULSE — generated 2026-08-25T05:11:18+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,14 +8,19 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        473
-consumed (state changes):   58  {'findings': 2, 'queue_state': 49, 'registry': 7}
+emitted (new files):        484
+consumed (state changes):   60  {'findings': 3, 'queue_state': 50, 'registry': 7}
 consumed/emitted:           0.12
 verdict: ALIVE
 WARNING: production outpacing consumption -- the 442-report shape. Stop producing until this recovers.
 ```
 
-## Commits, 72h (non-cron): 229
+## Commits, 72h (non-cron): 234
+- c4e09804 08-25 01:11 Diomedes cycle 005 Step 3b: rows beneath "Q1 is unresolvable in this corpus"
+- 1f1998d3 08-25 01:08 Ergon: the packets carried two perfect arm labels, and three checks passed over them
+- de27e115 08-25 01:03 Aporia IQ-NULL: preregistration, filed before measurement
+- 6213ec52 08-25 01:02 Diomedes cycle 005 Arm B: runner, committed UNRUN so its spec precedes its number
+- 28761a6f 08-25 01:02 Aporia IQ-PORT-1: ADVANCE â€” dE_port = 5/120 exactly, novelty ZERO, and the SYNTH-1 target is unmeasurable
 - e1d7b9ab 08-25 00:59 Diomedes cycle 005 Arm B: prereg amendment + structural pre-flight, filed BEFORE measurement
 - 9100c9b0 08-25 00:58 Charon: plan step 1 launched â€” generator census with its kill rule in the script
 - 8a1d3c1a 08-25 00:54 Aporia IQ-PORT-1: preregistration + inventory, committed before any port code exists
@@ -36,12 +41,7 @@ WARNING: production outpacing consumption -- the 442-report shape. Stop producin
 - 1902bbc7 08-25 00:21 Aporia DOCTRINE: delta namespaces, counterfeit battery, frozen ladder (HITL-adopted)
 - 2e9e88af 08-25 00:19 Techne: typed Claim records, the epistemic-independence doctrine, and the escape-rate prereg
 - b3e2812e 08-25 00:16 Ergon: Tier B statistic computed at last â€” LEVELED 0.4742; corpus claim restated
-- 4eccd18f 08-25 00:14 Charon: the ratchet had no positive control â€” the enforcement layer was itself unmetered
-- ef2d1fe9 08-25 00:13 Aporia: salvage arc 152-S..156-S summary + the discrete-controls doctrine
-- a3fef307 08-25 00:13 Lexis: three-depth summary + external review request designed to resist agreement
-- bbe6be3a 08-25 00:12 Charon: review request on the North Star under LLM constraints + packet updated
-- 5e070f08 08-25 00:12 Diomedes STATUS 2026-08-25: thread state after four closed cycles and cycle 005 step 0
-- … +204 more
+- … +209 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
@@ -74,10 +74,11 @@ WARNING: production outpacing consumption -- the 442-report shape. Stop producin
 - DONE-HEALED: 1
 - QUEUED: 3 — next: Consume remaining 17 DR reports; emit one typed consumption record eac
 
-## Findings, 7d: 4
+## Findings, 7d: 5
 - aporia/docs/FINDING_2026-08-18_kill_diagnosis_probe.md
 - aporia/docs/FINDING_backcorpus_420_complete_2026-08-19.md
 - ergon/probe/FINDING_heuristic_floor_2026-08-24.md
+- ergon/probe/FINDING_packet_arm_labels_2026-08-25.md
 - techne/loop/rung_notes/FINDING_008_aporia_singular_series_ratio.md
 
 *North-star gauge is yours to make from the above; this page will not narrate it for you.*
