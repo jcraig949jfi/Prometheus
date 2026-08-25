@@ -336,3 +336,77 @@ def test_live_packets_have_no_arm_varying_nuisance_at_all(manifest_rows, arms):
         prompts = {a: arms.prompt(a, uid) for a in ("F0",) + residue_arms}
         ok, detail = nontreatment_identical_across_arms(prompts, residue_arms)
         assert ok, f"{uid}: arm-varying nuisance survives: {detail}"
+
+
+# --------------------------------------------------------------------------------------
+# HB3-1 -- the whitespace hole Harmonia B found in INVARIANT 7, pinned as a regression.
+# --------------------------------------------------------------------------------------
+
+@pytest.mark.parametrize("mutate,label", [
+    (lambda p: p + " ", "trailing space"),
+    (lambda p: " " + p, "leading space"),
+    (lambda p: p + "\n", "trailing newline"),
+    (lambda p: p.replace("\n  (not recorded", "\n   (not recorded"), "interior indent"),
+])
+def test_pure_whitespace_arm_labels_are_detected(mutate, label):
+    """HB3-1. The blanker used to run `payload.strip()` before comparing, so a pure-whitespace
+    arm label survived it. Harmonia B predicted the hole from source and measured it: a planted
+    trailing space was caught 0/25, while a lead line, a one-digit slug change and a
+    one-character frame edit were each caught 25/25.
+
+    Fifth instance of the same shape -- a check that removes a region before inspecting it,
+    where the removed region is exactly where a caller-controlled label goes. Whitespace is
+    nuisance and must survive to the comparison, so `blank_treatment` strips nothing.
+
+    Parameterized over all four edges because the previous fix addressed the side that had
+    burned us and left the others open, which is how instance five happened.
+    """
+    from ergon.probe.packet_invariants import nontreatment_identical_across_arms
+    from ergon.probe.packet_render import render, synthetic_slug
+
+    slug = synthetic_slug("M30", "task-0", 200)
+    prompts = {"F0": BASE}
+    for arm in CARRYING:
+        prompts[arm] = render(slug, ["m1", "m2"]) + "\n\n" + BASE
+    assert nontreatment_identical_across_arms(prompts, CARRYING)[0], "clean input must pass"
+
+    payload = render(slug, ["m1", "m2"])
+    prompts["F-null"] = mutate(payload) + "\n\n" + BASE
+    ok, detail = nontreatment_identical_across_arms(prompts, CARRYING)
+    assert not ok, f"a pure-whitespace arm label ({label}) passed INVARIANT 7"
+
+    # TWO LEGITIMATE DETECTION PATHS, and the test names both rather than assuming one.
+    # Edge whitespace survives blanking and is caught by the BYTE COMPARISON, reported
+    # as arm_groups. Interior whitespace inside the frame breaks TEMPLATE CONFORMANCE
+    # first, so blanking returns None and the arm is named without a byte diff.
+    # Asserting only the first path is how a passing test comes to mean less than it
+    # looks like -- the interior-indent case failed exactly that way when this test was
+    # first written, and the fix is to name the paths, not to drop the case.
+    if "arm_groups" in detail:
+        assert ["F-null"] in detail["arm_groups"], detail["arm_groups"]
+    else:
+        assert "F-null" in detail, detail
+        assert "template" in str(detail["F-null"]).lower(), detail
+
+
+def test_the_two_blankers_are_one_blanker():
+    """`constantize` and `blank_treatment` diverging is the seam that produced HB3-1: one
+    stripped, the other did not, and INV 7 happened to call the stripping one."""
+    from ergon.probe.adversarial_leakage import constantize
+    from ergon.probe.packet_render import blank_treatment, render
+    for items in (["a"], ["a", "b", "c"], ["(no-methods-recorded)"]):
+        p = render("nearmiss_mix-M30-00007", items)
+        for variant in (p, p + " ", " " + p, p + "\n"):
+            assert constantize(variant) == blank_treatment(variant)
+
+
+def test_blanking_splices_by_span_not_by_string_replace():
+    """The old blanker did `match.group(0).replace(items_text, ...)`, so an items value that
+    also occurred elsewhere in the packet would have been blanked in BOTH places -- silently
+    erasing nuisance and manufacturing the identity INV 7 reports. Span splicing cannot."""
+    from ergon.probe.packet_render import blank_treatment, render
+    # an items token that also appears in the frame's own wording
+    p = render("nearmiss_mix-M30-00007", ["prior", "attempt"])
+    blanked = blank_treatment(p)
+    assert blanked.count("<TREATMENT>") == 1
+    assert "prior attempt applied" in blanked, "frame text was collaterally blanked"

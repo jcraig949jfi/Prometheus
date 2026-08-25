@@ -131,6 +131,39 @@ def template_regex():
     return re.compile(pat, re.S)
 
 
+TREATMENT_BLANK = "<TREATMENT>"
+
+
+def blank_treatment(payload):
+    """Replace the treatment slot with a constant, PRESERVING EVERY OTHER BYTE.
+
+    HB3-1 (Harmonia B, exit review #3). The previous blanker ran `payload.strip()` before
+    substituting, so leading/trailing whitespace was erased before any comparison could see it.
+    Harmonia B predicted the hole from source and then measured it: a trailing space planted on
+    one arm was caught 0/25, while a lead line, a one-digit slug change and a one-character
+    frame edit were each caught 25/25.
+
+    That is structurally the SAME defect as the one filed on 2026-08-25 -- the isomorphism test
+    stripped the lead line and then certified the remainder isomorphic -- in a new location. It
+    is the fifth instance of "a check that removes a region before inspecting it", and the
+    region removed is always where a caller-controlled label goes.
+
+    Two changes from the old implementation:
+      * NO STRIP. Whitespace anywhere in the payload is nuisance and must survive to the
+        comparison.
+      * SPAN SUBSTITUTION, not `.replace(items_text, ...)`. The old form replaced every
+        occurrence of the items string in the match, so an items value that also appeared
+        elsewhere would have blanked both. Splicing by span cannot do that.
+
+    Returns None if the payload was not produced by TEMPLATE -- non-conformance is itself an
+    arm-conditional shape and is reported by INVARIANT 6a, never swallowed here.
+    """
+    m = template_regex().search(payload)
+    if m is None or m.start("items") < 0:
+        return None
+    return payload[:m.start("items")] + TREATMENT_BLANK + payload[m.end("items"):]
+
+
 def matches_template(payload):
     """True iff `payload` was produced by TEMPLATE. Returns (ok, slots)."""
     m = template_regex().fullmatch(payload.strip())

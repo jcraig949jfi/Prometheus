@@ -1,36 +1,36 @@
 {
-  "block": "A",
-  "n_tasks_in_block": 200,
-  "checked_tasks": 200,
+  "block": "B",
+  "n_tasks_in_block": 220,
+  "checked_tasks": 220,
   "skipped_tasks": 0,
-  "coverage": "200/200",
+  "coverage": "220/220",
   "first_skipped": [],
   "failures": 0,
   "slug_bands_not_separable": true,
   "slug_bands": {
     "ranges": {
       "F-null": [
-        0,
+        1,
         199
       ],
       "F-generic": [
-        0,
+        1,
         199
       ],
       "F-prom-retrieved": [
-        0,
+        1,
         199
       ],
       "F-hint": [
-        0,
+        1,
         199
       ],
       "F-null+hint": [
-        0,
+        1,
         199
       ],
       "F-prom+hint": [
-        0,
+        1,
         199
       ]
     },
@@ -38,43 +38,42 @@
   },
   "payload_length_report": {
     "mean_chars": {
-      "F-null": 459.5,
-      "F-generic": 472.3,
-      "F-prom-retrieved": 459.2,
-      "F-hint": 543.3,
-      "F-null+hint": 633.5,
-      "F-prom+hint": 633.2
+      "F-null": 461.8,
+      "F-generic": 488.5,
+      "F-prom-retrieved": 461.6,
+      "F-hint": 559.5,
+      "F-null+hint": 635.8,
+      "F-prom+hint": 635.6
     },
     "range": {
       "F-null": [
-        421,
-        540
+        418,
+        552
       ],
       "F-generic": [
         470,
-        546
+        547
       ],
       "F-prom-retrieved": [
-        399,
+        411,
         552
       ],
       "F-hint": [
         541,
-        617
+        618
       ],
       "F-null+hint": [
-        595,
-        714
+        592,
+        726
       ],
       "F-prom+hint": [
-        573,
+        585,
         726
       ]
     },
     "perfectly_length_separable_pairs": [
       "F-generic|F-null+hint",
       "F-generic|F-prom+hint",
-      "F-hint|F-null",
       "F-null|F-null+hint",
       "F-null|F-prom+hint",
       "F-null+hint|F-prom-retrieved",

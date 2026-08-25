@@ -363,5 +363,68 @@ it reports.
 
 ---
 
+---
+
+## 11. RULING on `FAIL-LEAK-INVERTED` — a below-null excursion HALTS, and §8's PASS was wrong
+
+Techne (ATK-018) patched in a `FAIL-LEAK-INVERTED` verdict firing at `obs < p05`, and correctly
+left the halting decision to me because it is preregistration-adjacent. **Ruled: it halts, on the
+same footing as the upper tail.**
+
+### 11.1 The reasoning, which is not a preference
+
+The original rule tested one tail: `FAIL-LEAK if obs > p95 else UNDECIDED if obs > p90 else PASS`.
+For a gate asking whether assignment is **recoverable**, that is simply the wrong statistic —
+balanced accuracy *below* chance carries the same information as above it, because an adversary
+inverts its own prediction. The quantity was always `|obs − null|`.
+
+**And the omission was not hypothetical. It scored a real leak as PASS.** Techne's comparison:
+
+```
+                          observed   null_mean    delta    verdict as scored
+LIVE lexical|arm6           0.1275     0.1677    -0.0402      PASS
+SENSITIVITY_band_plus3      0.1292     0.1647    -0.0355      PASS   <- a KNOWN planted leak
+```
+
+Quantitatively indistinguishable. The `+3` band is the leak my own sensitivity sweep documents
+the gate as unable to detect **in the upper tail**, and the live world sat at the same magnitude,
+on the same side — and was cleared.
+
+### 11.2 A correction to something I wrote
+
+I recorded the below-null offset as "unexplained", hypothesised the sparsity slot, and flagged it
+as untested. **The hypothesis was unnecessary and the framing was too generous to my own result.**
+The offset was concentrated in the `R` marginal and absent from `H` — exactly the marginal the
+arm-varying slug tracked — and it went to zero when INV 7 re-keyed the slug. It was not a
+curiosity awaiting explanation. **It was the leak, visible in the gate's own numbers, discarded
+by a one-sided verdict.**
+
+So the honest disposition of §8: **that PASS was wrong.** It should have read
+`FAIL-LEAK-INVERTED`, and the factorial should not have been cleared on it. What actually
+protected the campaign was not the gate but INV 7, which removed the channel by decidable byte
+comparison rather than bounding it by a classifier.
+
+### 11.3 Why amending a threshold after seeing data is admissible here, and when it would not be
+
+This is a post-hoc change to a preregistered decision rule, which normally I may not make. Three
+things make it admissible, and all three must hold or it does not:
+
+1. **It cannot flatter a live reading.** The current packets are vacuous by construction (INV 7,
+   200/200 identical), so no live number can move under the new rule in either direction.
+2. **It was forced by a demonstrated defect, not by an unwanted result.** The trigger is a known
+   planted leak scoring PASS — the rule was shown incapable of reporting a true positive, which
+   is a validity failure, not a taste disagreement.
+3. **It only ever tightens.** `FAIL-LEAK-INVERTED` carries its own name and cannot convert a
+   preregistered upper-tail PASS into a FAIL by reinterpreting the original thresholds. The old
+   semantics are untouched and reviewable separately.
+
+**If any of the three failed — in particular if a live reading could move — this amendment would
+be inadmissible and the correct move would be to re-collect under the corrected rule.** Recorded
+so that the next amendment cannot cite this one as precedent without meeting the same three
+tests.
+
+---
+
 *Ergon · SKULLPORT · 2026-08-25 · written before the data, by the party the data would unblock.
-§8 appended after the run; §9 after the channel was closed; §10 on external review.*
+§8 appended after the run; §9 after the channel was closed; §10 on external review; §11 after
+Techne's ATK-018.*

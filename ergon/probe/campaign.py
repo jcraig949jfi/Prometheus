@@ -551,8 +551,25 @@ class Arms:
     def null_items(self, uid):
         return self._items_from(self.null_body(uid))
 
+    class NoResidueError(LookupError):
+        """A task with no recorded prior attempt cannot carry a residue packet."""
+
     def prom_body(self, uid):
         recs = select_residue(self.pool, stratum="D0", target_uid=uid)
+        if not recs:
+            # REFUSE, DO NOT RENDER. Found 2026-08-25 by running the invariants against block B
+            # mid-collection: 43 of its 220 tasks had no prepass row, and F-prom rendered for
+            # them anyway -- an empty method census falling through to the NO_METHODS token, so
+            # the packet asserted "prior attempt recorded no recognizable method vocabulary"
+            # for a task where NO ATTEMPT EXISTS. Fabricated residue, byte-indistinguishable
+            # from the one genuine empty-vocabulary case in the same block.
+            #
+            # packet_invariants PASSED on that population, because shape checks cannot see
+            # whether content is real. This is ATK-013's rule in a new place: a lookup that
+            # finds zero rows must RAISE, never return a renderable value.
+            raise Arms.NoResidueError(
+                f"{uid}: no prepass record — residue arms are undefined for this task. "
+                "This is a COLLECTION state, not an error: the block is incomplete.")
         return assemble_retrieved(task_uid=uid, stratum="D0", records=recs, tau=self.tau).body
 
     def null_body(self, uid):

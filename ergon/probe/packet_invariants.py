@@ -371,13 +371,17 @@ def nontreatment_identical_across_arms(prompts_by_arm, carrying_arms):
     someone reintroduced an arm-varying nuisance field. A vacuous reading reported as a passing
     one is its own defect class, so the vacuity is named here rather than left to be discovered.
     """
-    from ergon.probe.adversarial_leakage import constantize
+    # HB3-1: `blank_treatment`, NOT the adversary's `constantize`. The latter strips the
+    # payload before substituting, which erased whitespace differences between arms before this
+    # comparison could see them -- Harmonia B measured a planted trailing space at 0/25 caught
+    # while every non-whitespace perturbation was caught 25/25. Byte-identical must mean bytes.
+    from ergon.probe.packet_render import blank_treatment
     base = prompts_by_arm.get("F0", "")
     blanked = {}
     for arm in carrying_arms:
         if arm not in prompts_by_arm:
             continue
-        c = constantize(payload_of(prompts_by_arm[arm], base))
+        c = blank_treatment(payload_of(prompts_by_arm[arm], base))
         if c is None:                      # non-conforming: reported by INV 6a, not swallowed
             return False, {arm: "payload does not match the template; cannot blank treatment"}
         blanked[arm] = c
@@ -428,15 +432,44 @@ def check_task(prompts_by_arm, gold_value, carrying_arms, forbidden):
     }
 
 
-def main():
+def main(block="A"):
+    """Run the decidable invariants against a BLOCK.
+
+    HB3 scope condition (Harmonia B, exit review #3): the clear covers pinned block A only.
+    Block B is a different population with its own manifest and its own prepass pool, and
+    `C.manifest()` returns block A unconditionally -- so before HB3 this file could not have
+    been pointed at block B at all, and "the invariants pass" would silently have meant "on the
+    population that is not the one you are about to read".
+
+        python ergon/probe/packet_invariants.py          # block A
+        python ergon/probe/packet_invariants.py B        # block B
+    """
     from ergon.probe.assemble import load_prepass
     import ergon.probe.campaign as C
+    from ergon.probe import blocks as B
 
-    rows = C.manifest()
+    if block == "A":
+        rows = C.manifest()
+        ctx = _nullcontext()
+    else:
+        rows = B.load(block)
+        ctx = B.repointed(block)        # so the prepass pool resolves to the block's own
     gold = {r["uid"]: r["gold_int"] for r in rows}
+    with ctx:
+        return _run(block, rows, gold, C)
+
+
+import contextlib as _contextlib
+
+
+def _nullcontext():
+    return _contextlib.nullcontext()
+
+
+def _run(block, rows, gold, C):
     pool_path = C.DIR / "p1_prepass.jsonl"
     if not pool_path.exists():
-        print("no prepass pool yet — run P1 first")
+        print(f"block {block}: no prepass pool yet — run P1 first")
         return 1
 
     arms_obj = C.Arms(rows, gold)
@@ -448,13 +481,19 @@ def main():
     all_arms = ["F0"] + carrying
     forbidden = ["true", "false", "correct answer", "the answer is"]
 
-    failures, checked = [], 0
+    failures, checked, skipped = [], 0, []
     per_task_prompts, per_task_slots = [], []
     for r in rows:
         uid = r["uid"]
         try:
             prompts = {a: arms_obj.prompt(a, uid) for a in all_arms}
-        except Exception:                            # a task with no residue yet
+        except Exception as e:
+            # COUNTED, NOT SILENTLY SKIPPED. This clause used to `continue`, so a block
+            # mid-collection reported PASS over only the tasks that happened to be ready and
+            # said nothing about the rest -- a coverage denominator quietly redefined by which
+            # rows had arrived. The verdict below refuses to read PASS when any task was
+            # skipped.
+            skipped.append({"uid": uid, "reason": f"{type(e).__name__}: {str(e)[:120]}"})
             continue
         res = check_task(prompts, gold[uid], carrying, forbidden)
         checked += 1
@@ -472,12 +511,22 @@ def main():
     lengths = payload_length_separability(per_task_prompts, carrying)
 
     out = {
+        "block": block,
+        "n_tasks_in_block": len(rows),
         "checked_tasks": checked,
+        "skipped_tasks": len(skipped),
+        "coverage": f"{checked}/{len(rows)}",
+        "first_skipped": skipped[:3],
         "failures": len(failures),
         "slug_bands_not_separable": bands_ok,
         "slug_bands": bands,
         "payload_length_report": lengths,
-        "verdict": "PASS — decidable invariants hold on every task"
+        "verdict": ("INCOMPLETE — %d/%d tasks have no residue yet; the invariants hold on "
+                    "the tasks that could be checked, and say NOTHING about the rest. Not a "
+                    "PASS: a coverage denominator set by which rows happened to arrive is the "
+                    "wrong-population error this campaign has committed five times."
+                    % (len(skipped), len(rows))) if skipped
+                   else "PASS — decidable invariants hold on every task"
                    if (not failures and bands_ok)
                    else "FAIL — arm identity is computationally AVAILABLE",
         "note": "These are decidable checks, not classifier estimates. A PASS here is a "
@@ -502,12 +551,16 @@ def main():
     }
     outdir = ROOT / "ergon/probe/ledgers/packet_invariants"
     outdir.mkdir(parents=True, exist_ok=True)
-    (outdir / "invariants.json").write_text(json.dumps(out, indent=2), encoding="utf-8")
+    # PER-BLOCK LEDGER. One shared filename would let block B's run overwrite block A's
+    # verdict, so a later reader could not tell which population a committed PASS described --
+    # the ATK-016 shape (provenance that cannot see what changed) in a new place.
+    name = "invariants.json" if block == "A" else f"invariants_block{block}.json"
+    (outdir / name).write_text(json.dumps(out, indent=2), encoding="utf-8")
     print(json.dumps({k: out[k] for k in
-                      ("checked_tasks", "failures", "slug_bands_not_separable",
+                      ("block", "checked_tasks", "failures", "slug_bands_not_separable",
                        "verdict")}, indent=2))
-    return 0 if (not failures and bands_ok) else 2
+    return 0 if (not failures and bands_ok and not skipped) else 2
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(main(sys.argv[1] if len(sys.argv) > 1 else "A"))

@@ -78,13 +78,16 @@ def constantize(payload):
     Returns None if the payload does not match the template, which is itself a leak (a packet
     outside the frame is a packet whose shape is arm-conditional) and is counted, not dropped
     silently.
+
+    DELEGATES to `packet_render.blank_treatment` and keeps no blanking logic of its own.
+
+    It used to strip the payload before substituting, which erased whitespace differences
+    between arms -- Harmonia B measured a planted trailing space at 0/25 caught (HB3-1). Two
+    blankers with two behaviours is the seam this campaign keeps re-cutting, so there is now
+    one, and this name survives only because the adversary's call sites read better with it.
     """
-    from ergon.probe.packet_render import matches_template, template_regex
-    ok, _ = matches_template(payload)
-    if not ok:
-        return None
-    return template_regex().sub(
-        lambda m: m.group(0).replace(m.group("items"), "<TREATMENT>"), payload.strip(), count=1)
+    from ergon.probe.packet_render import blank_treatment
+    return blank_treatment(payload)
 
 
 def build(rows, arms_obj, inject=None):
