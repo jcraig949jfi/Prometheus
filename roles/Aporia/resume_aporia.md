@@ -192,6 +192,55 @@ differential footprint now asserts non-emptiness before its predicate is read.
 before outcomes were known; 6/6 matched their predicted probe cost. Keep opening rows at
 prediction time — that is the fix for the doctrine's post-hoc-carving caveat.
 
+## PART 2.6 — RUNGS 3-4 AND TWO CORRECTIONS. Read with PART 2.5; both override PART 3.
+
+**TRANSFER-1: REDESIGN (285b8d44). The redesign target is the SCORER, not the generator.**
+Preregistered at `e7a9b314` before the generator existed. Frozen seeded corpus
+`sha256 e2e6898d`, seed 20260825, 400 train / 200 test / 200 X-heldout. Artifacts:
+`aporia/iq/transfer1_generator.py`, `run_transfer_1.py`, `RESULT_TRANSFER_1.json`,
+`FINDINGS_TRANSFER_1_2026-08-25.md`. **This rung does not measure ΔE.**
+
+- **T1 PASS** — 0 of 410 NONDEGENERATE draws have target equal to an operand.
+- **T2/T3** — port NONDEGENERATE train 0.6691, test 0.6957. No train/test gap, so no
+  parameter-range binding. **By surface: v0 0.9643, v1 0.9346, v3 0.9600, v2 0.0000.** v3 is
+  the unseen surface×range cell and scores joint-highest. The whole gap between 0.67 and 0.95
+  is one surface the regex cannot match. **Quote it as two numbers, never one.**
+- **T4 FAIL, and the prereg's gloss on that branch is FALSIFIED.** Not a generator degeneracy.
+  Executed: `M1_plus` emits `candidates[0]` on **182/182** parser-firing tasks.
+  **`score_by_aggregate` falls through to `candidates[0]` when its value matches no candidate**
+  — free credit at 1-in-4 to any firing-but-wrong rule. Same pathology Lexis found in the plain
+  `score_by_max_value`, but in a GUARDED scorer inside the clean-routing pool.
+- **T5 CONFIRMED** — parser fires **0/200** on both X routes expressing the identical relation.
+  Whatever IQ-PORT-1 demonstrated, **it was not a transferable capability.**
+
+**TWO STANDING CORRECTIONS — carry these into every future reading.**
+
+1. **The null for a firing-but-wrong rule on a k-candidate task is 1/k, NOT 0.** A threshold at
+   "near zero" sits below the achievable floor. I put a `<0.10` bar in TRANSFER-1's own prereg
+   one pass after logging P138. Compute the attainable range before choosing any bar.
+2. **Apollo's clean-routing regime is NOT free of the guessing pathology** — it only excludes
+   the unconditional form. This narrows the qualifier adopted in
+   `AMENDMENT_E_OF_C_QUALIFIER_2026-08-25.md`.
+
+**DO NOT FIX `score_by_aggregate` casually.** It is a change to byte-frozen `C`, and every ΔE is
+defined against `C`. It needs a preregistered rung of its own, and that rung is the obvious next
+one: fixing the fall-through to an abstain, then re-reading TRANSFER-1 against the same frozen
+corpus — the corpus hash makes that a clean before/after.
+
+**Five canary tasks cannot distinguish 0.00 from 0.14.** The four mutants that read ΔE = 0 in
+IQ-PORT-1 sit at 0.1366 on 410 generated tasks. Treat every 5-task reading accordingly.
+
+**PULSE has been missed several passes.** `pulse.py` shells out to git at `:19` and `:46` and
+hangs under multi-agent lock contention. Retry it; do not skip it silently.
+
+**Git, hard-won this session.** Other agents hold `.git/index.lock` and push concurrently.
+**Race for the lock in a retry loop — never check-then-act**, which loses the gap and cost me
+several failed attempts. **Never delete the lock**; check `.git/MERGE_HEAD` and
+`.git/rebase-merge` to confirm nothing is wedged. **Never force-push**: a background pusher of
+mine published a commit while a foreground amend loop was rewriting it, and the repair is
+`git reset --soft` to the published commit. Merges abort on other seats' untracked files — that
+is theirs to clear, not yours.
+
 ## PART 3 — THE PLAN. Execute in order. No widening before SELECTOR.
 
 Each step is a loop pass unless marked otherwise. **Do not add domains, revive agents, or widen the
