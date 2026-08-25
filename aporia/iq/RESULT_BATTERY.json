@@ -1,0 +1,93 @@
+{
+  "experiment": "BATTERY",
+  "date": "2026-08-25",
+  "agent": "Aporia (M1)",
+  "prereg": "aporia/iq/PREREG_BATTERY_2026-08-25.md",
+  "prereg_commit": "a0571a75",
+  "B1_verdicts": {
+    "IQ-PORT-1": "ADMISSIBLE",
+    "IQ-NULL": "ADMISSIBLE",
+    "PROVENANCE": "ADMISSIBLE",
+    "TRANSFER-1": "ADMISSIBLE",
+    "SCORER-FIX": "ADMISSIBLE",
+    "CEILING-ABSTAIN": "ADMISSIBLE"
+  },
+  "B1_reasons": {},
+  "B1_all_admissible": true,
+  "B2_ablation_applied": {
+    "IQ-PORT-1": "parse falsifier removed",
+    "IQ-NULL": "evaluation falsifier removed",
+    "PROVENANCE": "evaluation falsifier removed",
+    "TRANSFER-1": "evaluation falsifier removed",
+    "SCORER-FIX": "evaluation falsifier removed",
+    "CEILING-ABSTAIN": "evaluation falsifier removed"
+  },
+  "B2_verdicts": {
+    "IQ-PORT-1": "INADMISSIBLE",
+    "IQ-NULL": "INADMISSIBLE",
+    "PROVENANCE": "INADMISSIBLE",
+    "TRANSFER-1": "INADMISSIBLE",
+    "SCORER-FIX": "INADMISSIBLE",
+    "CEILING-ABSTAIN": "INADMISSIBLE"
+  },
+  "B2_all_inadmissible": true,
+  "gate_range_both_endpoints_occur": true,
+  "B3_defects": {
+    "TRANSFER-1_subfloor_threshold": {
+      "verdict": "INADMISSIBLE",
+      "expected_gate": "G-FLOOR",
+      "caught_by_expected_gate": true,
+      "reasons": [
+        "G-FLOOR: threshold 'mutant_bar'=0.1 sits outside its attainable range [0.25, 1.0] and cannot discriminate"
+      ]
+    },
+    "check_transitivity_vacuous_footprint": {
+      "verdict": "INADMISSIBLE",
+      "expected_gate": "G-VACUOUS",
+      "caught_by_expected_gate": true,
+      "reasons": [
+        "G-VACUOUS: reading 'footprint' has n=0 on the branch it reads"
+      ]
+    },
+    "ceiling_abstain_v1_perturbing_probe": {
+      "verdict": "INADMISSIBLE",
+      "expected_gate": "G-PERTURB",
+      "caught_by_expected_gate": true,
+      "reasons": [
+        "G-PERTURB: the probe modifies the quantity it measures"
+      ]
+    },
+    "ceiling_abstain_null_before_positive_control": {
+      "verdict": "INADMISSIBLE",
+      "expected_gate": "G-INERT",
+      "caught_by_expected_gate": true,
+      "reasons": [
+        "G-INERT: null result with no positive control establishing the instrument moves"
+      ]
+    }
+  },
+  "B3_all_caught": true,
+  "B3_IS_A_FIT_CHECK": "These four defects DESIGNED these four gates. Catching them is a fit statistic, NOT evidence the gate catches unseen defects. The only real test is prospective: the gate binds SELECTOR before SELECTOR runs.",
+  "B4_deterministic": true,
+  "B4_fields_read_by_gates": [
+    "attainable_hi",
+    "attainable_lo",
+    "branch_table_partitions",
+    "falsifiers_run",
+    "intervention_class",
+    "is_null_result",
+    "n",
+    "positive_control_ran",
+    "probe_modifies_measured_quantity",
+    "readings",
+    "thresholds",
+    "value"
+  ],
+  "B4_fields_outside_declared_set": [],
+  "B4_pure": true,
+  "dropped_records": 0,
+  "dropped_records_note": "Nothing dropped: every claim is adjudicated and every verdict recorded, including reasons on failures.",
+  "verdict": "ADVANCE",
+  "verdict_rule_null_output": "A gate returning one value on every input is VACUOUS whichever value it is; B1 and B2 together require BOTH endpoints of the [0, N] range to occur.",
+  "terminal_table_partitions": true
+}
