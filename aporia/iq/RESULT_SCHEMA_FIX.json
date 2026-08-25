@@ -1,0 +1,79 @@
+{
+  "experiment": "SCHEMA-FIX-AND-R1-FALSIFIER",
+  "date": "2026-08-26",
+  "intervention_class": "INSTRUMENT",
+  "note": "existing artifacts are NOT retro-edited; the test artifact is a copy",
+  "preR1_artifacts_checked": 8,
+  "preR1_violation_counts": {
+    "RESULT_IQ_PORT_1.json": 6,
+    "RESULT_IQ_NULL.json": 7,
+    "RESULT_PROVENANCE.json": 5,
+    "RESULT_TRANSFER_1.json": 6,
+    "RESULT_SCORER_FIX.json": 6,
+    "RESULT_CEILING_ABSTAIN.json": 6,
+    "RESULT_BATTERY.json": 6,
+    "RESULT_SELECTOR_PREFLIGHT.json": 5
+  },
+  "C1_schema_rejects_all_preR1": true,
+  "C2_schema_accepts_conforming": true,
+  "C2_violations_on_conforming": [],
+  "C3_every_required_field_is_load_bearing": true,
+  "C3_per_field": {
+    "experiment": true,
+    "intervention_class": true,
+    "positive_control_ran": true,
+    "is_null_result": true,
+    "branch_table_partitions": true,
+    "probe_modifies_measured_quantity": true,
+    "readings": true,
+    "dropped_records": true
+  },
+  "R1_falsifier": {
+    "IQ-PORT-1": {
+      "verdict_before": "INADMISSIBLE",
+      "verdict_after_adding_fields": "INADMISSIBLE",
+      "flipped_to_admissible": false,
+      "remaining_reasons": [
+        "G-BRANCH: branch table not asserted to partition its outcome space"
+      ]
+    },
+    "IQ-NULL": {
+      "verdict_before": "INADMISSIBLE",
+      "verdict_after_adding_fields": "INADMISSIBLE",
+      "flipped_to_admissible": false,
+      "remaining_reasons": [
+        "G-BRANCH: branch table not asserted to partition its outcome space"
+      ]
+    },
+    "CEILING-ABSTAIN": {
+      "verdict_before": "INADMISSIBLE",
+      "verdict_after_adding_fields": "INADMISSIBLE",
+      "flipped_to_admissible": false,
+      "remaining_reasons": [
+        "G-MANDATORY: falsifier 'evaluation' required for INSTRUMENT was not run"
+      ]
+    }
+  },
+  "R1_flips_attributable_to_ARTIFACT_CONTENT": 0,
+  "R1_flips_attributable_to_MY_DERIVATION_RULE": 3,
+  "R1_verdict": "MY_RULE_WAS_THE_PROBLEM",
+  "dropped_records": 0,
+  "is_null_result": false,
+  "positive_control_ran": true,
+  "branch_table_partitions": true,
+  "probe_modifies_measured_quantity": false,
+  "readings": {
+    "preR1_artifacts": {
+      "n": 8,
+      "attainable_lo": 0.0,
+      "attainable_hi": 1.0
+    },
+    "falsifier_rungs": {
+      "n": 3,
+      "attainable_lo": 0.0,
+      "attainable_hi": 1.0
+    }
+  },
+  "verdict": "ADVANCE",
+  "terminal_table_partitions": true
+}
