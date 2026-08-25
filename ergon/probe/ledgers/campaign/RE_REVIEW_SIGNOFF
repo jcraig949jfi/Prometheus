@@ -1,0 +1,84 @@
+EXIT REVIEW #3 — SIGNOFF
+seat: Harmonia B (independent gate on the decisive arms)
+date: 2026-08-25
+repo: 4df06d0dc
+ruling: CONDITIONAL CLEAR
+ruling_doc: roles/Harmonia/EXIT_REVIEW_3_2026-08-25.md
+gatefire: harmonia/probe/exit3_inv7_gatefire.py
+
+CRITERION USED (the retired invariant was NOT used; the replacement sentence was NOT adopted):
+  The non-treatment content of the delivered prompt must be byte-identical across all arms,
+  decided on every task in the pinned manifest — and the check that decides it must itself be
+  gate-fired against planted defects at the finest perturbation the channel admits.
+
+AUTHORIZED:  collection of the factorial.
+NOT AUTHORIZED:  reading/interpreting the factorial result.
+
+CONDITIONS
+  HB3-1  BLOCKS THE FIRST FACTORIAL CALL.
+         Close the INV 7 whitespace hole. constantize() ends in payload.strip(), so leading and
+         trailing whitespace differences between arms are erased before the byte comparison.
+         Measured by Harmonia B: a planted trailing space on one arm is caught 0/25, while a
+         one-digit slug change, the historical lead line, and a one-char frame edit are each
+         caught 25/25. Currently LATENT — live packets are uniformly (leading 0, trailing 2)
+         on all six arms across 200/200 tasks — but INV 7 is the sole standing gate.
+         CLEARED BY: whitespace-preserving comparison (or an explicit whitespace-profile
+         equality check) + a test planting a trailing space and asserting rejection.
+         ACCEPTANCE TEST: harmonia/probe/exit3_inv7_gatefire.py reports 0 holes.
+
+  HB3-2  BLOCKS READING.
+         check_admissibility gates parse-fail spread and FLAGS timeout spread, but does not gate
+         per-arm TRUNCATION spread. Truncation is arm-correlated by construction because
+         treatment length varies by arm, and this campaign has already had truncated rows drag a
+         point into the band.
+         CLEARED BY: a TRUNCATION_SPREAD_LIMIT fail (not a flag) in check_admissibility, same
+         shape as the parse-fail guard, with a test.
+
+  HB3-3  BLOCKS READING.
+         The §10.2 solver-half re-dispatch, as preregistered — ACCEPTED as specified, with one
+         addition: the dispatch seed and batch grouping must be written to the ledger AT DISPATCH
+         TIME, not reconstructed afterwards.
+
+SCOPE LIMIT
+  Verified on the pinned block A manifest e6b1e001, n=200, six carrying arms.
+  Block B is NOT covered. When block B arms are wired, packet_invariants.py AND
+  exit3_inv7_gatefire.py must both re-run against block B before its rows are read.
+
+VERIFIED BY EXECUTION (not accepted from the driver, who is a conflicted party):
+  pytest ergon/probe/tests/ -q ........... 220 passed
+  packet_invariants.py ................... PASS, 0 failures, slug_bands_not_separable true
+  attacks/preflight.py ................... ADMISSIBLE
+  INV 7 negative control ................. 0/25 tasks fail on clean input
+  adversarial gate vacuity ............... 200/200 tasks, all six constantized payloads identical
+  envelope_identical demotion ............ justified; fails 200/200 on CLEAN packets
+  whitespace reachability ................ 0/200 tasks vary across arms (hole latent, not live)
+
+QUESTION RULINGS
+  Q1 INV 7 sufficient?          YES IN FORM; sufficient for this seat once HB3-1 lands.
+  Q2 envelope_identical demoted LEGITIMATE — verified broken (200/200 false alarms on clean).
+  Q3 vacuous gate retained      HONEST. But strictly dominated by INV 7 as a regression detector;
+                                may NOT be counted in any coverage tally, and §9's vacuity
+                                paragraph must travel with every citation of its §8 PASS.
+  Q4 three uncovered classes    tokenizer/parser is SUBSTANTIALLY CLOSED by INV 7 (identical bytes
+                                tokenize identically; residual boundary effects are treatment, not
+                                nuisance). Dispatch ordering: open, correctly routed to §10.2.
+                                Failure paths: BLOCKS READING -> HB3-2.
+  Q5 run/read split             ACCEPTED, with the dispatch-seed-at-dispatch-time addition.
+
+SECOND FINDING, produced by the act of clearing (see ruling doc section 3b)
+  Writing this file turned the suite red: tests/test_campaign_dryrun.py's teardown guard asserted
+  ABSOLUTE ABSENCE of RE_REVIEW_SIGNOFF, so a legitimate signoff was indistinguishable from a
+  test-leaked gate file. That left only two options — run red for the whole authorized campaign,
+  or DELETE A REAL SIGNOFF to green the suite, silently revoking a gate to satisfy a test.
+  REPAIRED and gate-fired: the fixture now snapshots the guarded files and asserts the test did
+  not CREATE them. Strictly stronger — it also catches a test MUTATING an existing signoff, which
+  the old predicate could not see. Both plants verified to fire; live tree restored; suite 220
+  passed WITH this signoff present. Ergon may revert or rewrite, but the suite must never be in a
+  state where greening it requires deleting a gate.
+
+NOT CERTIFIED
+  The band read, the corpus entropy finding, and block B are outside this review's scope.
+  This is not a claim that no arm label exists; nothing finite is. Prediction P-A (constantize
+  uses an uncounted string replace and could over-blank) is unresolved and filed as a watch item.
+
+— Harmonia B, M2, 2026-08-25
