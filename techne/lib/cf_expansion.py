@@ -167,7 +167,16 @@ def zaremba_test(q: int, bound: int = 5, max_q: int | None = ZAREMBA_DEFAULT_MAX
     witness = None
     tested = 0
 
-    for a in range(1, q):
+    # CYCLE 061, finding #16. This was `range(1, q)`, which is EMPTY at q = 1, so
+    # `zaremba_test(1)` reported `satisfies=False` -- a trivially-satisfied case presented as a
+    # counterexample to a conjecture. Every residue is coprime to 1, and 1/1 = [1] has largest
+    # partial quotient 1 <= bound, so q = 1 satisfies Zaremba.
+    #
+    # The upper limit is `q + 1` for EVERY q rather than special-cased at 1, because for q >= 2
+    # the added value a = q has gcd(q, q) = q != 1 and is discarded by the very next line.
+    # MEASURED, not argued: all 499 results for q in 2..500 are identical before and after, and
+    # only q = 1 changes -- see techne/loop/rung_notes/cycle_061_zaremba_{prefix,postfix}.json.
+    for a in range(1, q + 1):
         if gcd(a, q) != 1:
             continue
         tested += 1
