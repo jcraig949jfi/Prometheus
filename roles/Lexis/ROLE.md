@@ -60,27 +60,70 @@ orders. A recommendation becomes a build only through §8.
 Carried from `roles/Lexis/library_learning/`, graded. **[M]** measured this session, **[R]** read from
 repo artifact, **[P]** primary source, **[S]** secondary/unverified.
 
-> **STATUS UPDATE 2026-08-25 — G0 and G1 both FIRED; the ceiling claim is now PROVEN and its
-> qualifier removed. See `notes/G0_FORGE_RATCHET_2026-08-25.md`,
-> `notes/G1_ABLATION_2026-08-25.md`, `notes/STEP1_CEILING_CLOSED_2026-08-25.md`,
-> `notes/G5_LEDGER_2026-08-25.md`. Headlines: the forge T2/T3 rebuild SHIPPED, so the 0%-usage
-> quote describes a superseded system; the rebuild's own ablation data shows 86.19% decoration and
-> its anti-decoration gate has an inverted predicate that cannot fire; and Apollo's ceiling is
-> exactly 0.8333 at ALL depths with ALL repetitions (joint closure exhausted, 484,218 states),
-> with ΔE = 16.67% and ΔS = 0.00%.**
+### 4a. Measured 2026-08-25 — this session's results supersede several bullets below
 
-- **Apollo's ceiling is representational, not algorithmic [R].** O1 (2026-08-23, preregistered,
-  stop rule ratified in advance) enumerated 1,737,000 type-correct pipelines; nothing beat 0.833, the
-  same figure evolution reached, with an identical per-subset profile. 16.7% of the battery is
-  unreachable in that vocabulary. Enumeration cost 1,687,896 evaluations against evolution's 3,144
-  (537×), so the pre-committed kill did not fire — but *no search improvement can pass 0.833*.
+Full record: `SESSION_2026-08-25.md`. Notes: `notes/G0_FORGE_RATCHET_2026-08-25.md`,
+`notes/G1_ABLATION_2026-08-25.md`, `notes/STEP1_CEILING_CLOSED_2026-08-25.md`,
+`notes/G5_LEDGER_2026-08-25.md`. External review round 2: `REVIEW_RESPONSE_2026-08-25_R2.md`.
+
+- **Apollo's ceiling is EXACT, not sampled [M].** Joint product BFS over the 120-task battery
+  **exhausted** — 484,218 joint states, frontier empty at depth 23. **100/120 = 0.8333 is the exact
+  optimum of Apollo's admissible program language at every depth, with every repetition, in every
+  order, with every tail.** The per-task upper bound is the same number, so the bounds meet. O1's
+  "well-supported but not proven" is discharged, and the k≤10 / no-repeat qualifier is gone.
+- **The noun matters and the wider one is FALSE [M].** *"The substrate's ceiling is 0.8333"* is
+  **retracted**: with the unrestricted 27-operator pool an **11-transformer** program reaches
+  **107/120 = 0.8917**, so O1's `max_k = 10` was one operator short. It wins by unconditional
+  guessing (remove the one plain scorer → 0.7500; `max_value is None` on all 7 gained tasks; 6 of 7
+  emit `candidates[0]`). The correct noun is **Apollo's pre-existing admissibility rules**, which
+  its own `_MUT_SCORER_POOL` and `routing_purity` enforce mechanically.
+- **The gap is 100% ΔE [M].** All 20 unreached tasks lie outside the operator closure; **ΔS = 0**.
+  Nothing is reachable-but-unrouted. They are canary 30–49, four categories × 5: `all_but_n`,
+  `temporal_ordering`, `vacuous_truth`, `consistency_check`.
+- **The closure result has a PRECONDITION, measured not assumed [M].** The field projection `D`
+  (17 of 23 slots) is only a valid quotient if it is a **congruence**. External review supplied a
+  valid aliasing counterexample that survives perfect read detection.
+  `instruments/congruence_audit.py` tests it: over 5,029+ reachable records, **zero** object sharing
+  of any kind, zero globals/mutable-defaults/closure-cells/escape-hatches, 189 history-independence
+  pairs with 0 mismatches, 0/120 cross-task contamination. **Re-run this per operator set; a single
+  `bb.scratch = bb.d` invalidates the ceiling.**
+- **The unit of vocabulary growth is an INTERFACE PAIR, not a primitive [M].** Measured, all closures
+  exhausted, all permutation-robust: a compute primitive alone `ΔE=ΔS=ΔROBUST=0`; a readout primitive
+  alone `0`; **the pair `+5 / +5 / +5`** — exactly the five `all_but_n` tasks. A wrong value cannot
+  be rescued by a reader, so this rules out dead computation and makes "readout bottleneck" a
+  measurement. **Any generator proposing one operator at a time scores zero here regardless of
+  operator quality.**
+- **Two of Apollo's 27 operators are provably decorative [M].** `distribution_reducer` and
+  `evidence_updater` write only slots outside `D`; they cannot change any answer in any pipeline at
+  any depth.
+- **Half the "missing vocabulary" is surface-bound [M].** `_REL_PATTERN` requires capitalised
+  multi-letter names and one of ten fixed comparatives; `_QUESTION_KEYWORDS` is a closed list of 15
+  superlatives with nothing for *"what happened first?"*. The ordering verb itself transfers
+  correctly to temporal nouns.
+- **Permutation robustness is now the standard [M].** All **24** orderings, not a 2-permutation
+  canary. Under it the unrestricted pool buys exactly **one** task over the clean pool — the single
+  `all_but_n` instance whose answer is a literal in its own prompt (10−5=5). Passing permutation
+  proves equivariance, **not** reasoning.
+
+### 4b. Carried facts
+
+- **Apollo's ceiling is representational, not algorithmic [R]** — O1's original result, now
+  **superseded in precision by §4a** but correct in substance. 1,737,000 type-correct pipelines,
+  nothing above 0.833, identical per-subset profile, 1,687,896 evaluations vs evolution's 3,144
+  (537×). Its error was a **declared bound** (`max_k=10`, tail grammar), not a mis-measurement: the
+  object it characterized does cap at exactly 100/120, and it wrote a headline one noun wider than
+  its bounds supported.
 - **The commutativity theory is sound and derivable [M].** 26 declared blackboard operators, **zero
   undeclared writes**, one undeclared read (`select_nth` / `candidates`). Over O1's ceiling pipeline,
   **39 of 45 operator pairs commute; 6 are order-dependent** — and the sixth is exactly the
   write-write hazard that invalidated two O1 runs.
-- **The forge has a ratchet; its promoted primitives went unused [R].** T1→T2→T3, each tier's
-  primitives are the prior tiers' passing tools. Measured: *"Winning tools used 0% of their own
-  primitive libraries — primitives were decoration."*
+- **The forge has a ratchet; its promoted primitives are decoration [M, corrected].** T1→T2→T3.
+  The famous *"winning tools used 0% of their own primitive libraries"* describes the **superseded**
+  pre-2026-04-02 system. The **rebuilt** forge shipped and ran (606 candidates, 203 verdicts) and its
+  own ablation ledger — 198 verdicts, **2,103 measured deltas** — gives **86.19% decoration** among
+  validly-ablated primitives, 61% of tools wholly decorative, 5.94% load-bearing. Its
+  anti-decoration gate tests contribution *concentration*, so an all-zero tool passes by
+  construction and `FAIL_ABLATION` fired **zero** times.
 - **Compressivity guarantees usage; novelty-gating forfeits it.** An abstraction admitted *because it
   already recurs* cannot be unused. Gate B rewards difference from the library, then supplies no
   consumer. 0% usage is that design's predicted outcome.
@@ -99,13 +142,19 @@ softened after the number exists; a gate that cannot fire is not a gate
 (`feedback_gate_must_be_shown_reachable`), and a gate closer to the observed value than its own SE is
 not a gate either (`feedback_gate_must_exceed_measurement_error`).
 
-**G0 — Is the forge's ratchet live?** *Cheapest, unrun, blocking everything.* Was the 2026-04-02
+**G0 — Is the forge's ratchet live? → FIRED 2026-08-25. The rebuild SHIPPED.** Every artifact in
+the architecture doc's file plan exists; implementation began 19:01 the same evening. Consequence:
+the 0%-usage headline describes a superseded population, and `CONTROLS.md` §2's "live tree" claim is
+withdrawn. *Original text:* Was the 2026-04-02
 T2/T3 rebuild ("AWAITING REVIEW — no implementation code until approved") ever approved and built?
 Until this is answered, the 0%-usage finding may describe a superseded system.
 → **Fires:** if the rebuild shipped, re-measure primitive usage before any other work in this slice.
 If it did not, the slice's headline finding stands as current.
 
-**G1 — Does anything consume a primitive?** Measure actual usage rate of admitted primitives by the
+**G1 — Does anything consume a primitive? → FIRED 2026-08-25.** Load-bearing rate at rung R4 is
+**5.94%**, under the pre-committed 10%. The admission criterion is the problem. The measurement was
+a *read*, not a build — `forge/tester.py` had already run it in April 2026 and nobody read the
+numbers its own gate had written. *Original text:* Measure actual usage rate of admitted primitives by the
 tier that is supposed to consume them. **Pre-committed:** usage < 10% means the admission criterion
 is the problem, not the primitives. This is `H` — consumer-improves-under-ablation — which the
 program already ratified as the forge's success criterion in June 2026, and never measured.
@@ -122,6 +171,9 @@ substrate B where they are useful but insufficient. **Pre-committed before desig
 attainable range of the readout first. On Apollo's blackboard `H` is bounded at zero — any macro over
 the existing 27 operators re-expresses a pipeline already inside O1's enumerated space — so
 **Apollo's battery is disqualified as the substrate for this experiment.**
+→ **CONFIRMED BY PROOF 2026-08-25**, no longer an inference: ΔS = 0 over the entire unreached
+battery, with the joint closure exhausted. Any macro over the existing operators is bounded at
+0.8333 exactly.
 
 **G5 — Redundancy / representability.** No primitive is admitted without `NEW(p,C,T)` evaluated —
 is it already representable by a composition of the existing vocabulary over the claimed domain? —
@@ -129,26 +181,60 @@ and its classification recorded on the correct ledger: **ΔS** (searchability ga
 expressible, now cheaper to reach) or **ΔE** (expressible-function gain: previously impossible).
 Decidable on a finite battery by exhaustive behavioural signature. Added 2026-08-25; a search macro
 and a vocabulary expansion are different products and will no longer share a ledger.
+→ **BUILT AND RUN 2026-08-25** (`instruments/g5_redundancy.py`). First ledger: three LLM-authored
+singleton candidates, **all `NEW=1, ΔE=0, ΔS=0`, none admitted**. The first and only ΔE > 0 to date
+is a **PAIR** (compute + readout, `+5/+5/+5`, closures exhausted, permutation-robust). **G5 is
+hereby extended: bundles are admissible units of proposal, and a singleton scoring zero is not
+evidence the capability is absent.**
+
+**G6 — Permutation robustness. Added 2026-08-25 after external review.** No ΔE may be credited
+without surviving **all 24** candidate permutations. Rationale: the null overturned two written
+claims on first use — one of Apollo's and one of mine, the latter in the section where I had just
+finished explaining the defect. **Directionality:** permuting can only remove a positional
+advantage, so the test can only lower a claim. **Stated limit, non-negotiable:** failure
+demonstrates unacceptable order sensitivity; survival demonstrates *equivariance*, **not** reasoning
+— "choose the shortest string" passes. Two permutations remain a cheap canary; 24 is the standard
+for a claim.
 
 **G4 — Spend.** Cloud money is justified by G3 returning positive, and by nothing else. Not by
 accuracy, not by archive coverage, not by a faster rediscovery of the same five structures. This
 matches the operator's own stated bar and the advisor's, independently.
 
-## 6. Backlog, ranked
+## 6. Backlog, ranked — reordered 2026-08-25
 
-1. **G0** — establish whether the T2/T3 rebuild shipped. Local, minutes, blocking.
-2. **G1** — measure primitive usage. Local, cheap, decides whether the slice has a live problem.
-3. **Read babble in full** — the state/effects question the tooling recommendation depends on is
-   `[S]`, and the recommendation should not harden until it is `[P]`.
-4. **Read Hipster and Lemmanaid properly** — they occupy the admission criterion this program claimed
-   as its own; how well they occupy it decides whether W3 is a variation or a contribution.
-5. **Widen the reads/writes audit** past `blackboard_ops*.py`.
-6. *(Only after 1–4)* — Ruler/Enumo → babble as the tooling stack, if a substrate is chosen. Note
+**Done this session:** G0 (fired), G1 (fired), the depth/repetition closure, G5 built and run,
+G6 added, and the congruence precondition established. Items 1–2 of the previous list are closed;
+item 5 (widen the reads/writes audit) was absorbed into `congruence_audit.py`, which audits reads,
+writes, aliasing and hidden state together.
+
+1. **Re-specify STEP 3 around BUNDLES, then run it.** The deciding experiment — can Prometheus
+   manufacture vocabulary without an LLM — is not cancelled, it is mis-aimed as written. Two
+   measured reasons: singletons score zero on this substrate by construction (§4a), and the
+   generator premise must be tested per generator (§7). Every arm proposes compute+readout pairs.
+2. **Build the generator-indistinguishability test.** The sharp form of the strategic claim, from
+   external review: find input pairs requiring different behaviour that are *observationally
+   indistinguishable under a generator's feature vocabulary*. `all_but_n` tasks 30 and 34 are a
+   ready-made instance for any generator lacking integer subtraction. This converts "compression
+   seems mis-aimed" into an impossibility result about a **specified interface**.
+3. **Harden the congruence audit with fresh-process comparison.** History independence is currently
+   sampled (189 pairs, 0 mismatches), not proven. This is the acknowledged remaining gap in the
+   closure result.
+4. **Harvest witnesses.** Our exact oracles mostly *can* emit counterexamples, unsat cores and
+   failed proof states, and we do not collect them. A verifier returning only NO cannot enlarge
+   generator support; one returning witnesses can. Unchanged in priority, still not started.
+5. **Read babble in full** — the state/effects question the tooling recommendation depends on is
+   `[S]` and should not harden until `[P]`.
+6. **Read Hipster and Lemmanaid properly** — they occupy the admission criterion this program
+   claimed as its own; how well they occupy it decides whether W3 is a variation or a contribution.
+7. *(Only after 1–6)* — Ruler/Enumo → babble as the tooling stack, if a substrate is chosen. Note
    this buys **cheaper, more complete search of the same bounded space** and cannot raise a ceiling.
 
-**Not on the backlog, with reasons.** "Run Apollo longer" (ceiling measured). "Better search
-operators" (capped by construction). "The C-vs-R experiment as originally proposed" (readout has no
-headroom). "More forge tools" (pending G1). "Cloud spend" (pending G3).
+**Not on the backlog, with reasons.** "Run Apollo longer" (ceiling now *proven*, not measured).
+"Better search operators" (ΔS = 0 over the whole gap, exhaustively). "The C-vs-R experiment as
+originally proposed" (readout has no headroom). "More forge tools" (G1 fired). "Cloud spend"
+(pending G3). "R3 coverage tracing" — dropped with a reason rather than deferred: for the forge R4
+already ran, and for Apollo the answer-relevant slice gives a *static exhaustive* decoration proof
+that strictly dominates a coverage trace.
 
 ## 7. Posture
 
@@ -166,18 +252,57 @@ headroom). "More forge tools" (pending G1). "Cloud spend" (pending G3).
   one and it is seductive.
 - **Record drops.** An item deferred twice is done or dropped, never carried a third time.
 
+*Added 2026-08-25, each from something that actually went wrong this session:*
+
+- **A clean `git status` does not mean "committed by me."** On a worktree with concurrent agents,
+  `git add` then `git commit` is not atomic — two Lexis documents were swept into another seat's
+  commit. Use `git commit --only <paths>`, and verify with `git log -- <path>` against the
+  *committed blob*, never the working tree. See `notes/PROVENANCE_2026-08-25.md`.
+- **Check the population's DATE, not just its path.** `CONTROLS.md` §2 called a tree "live" that was
+  timestamped seven hours before the rebuild replaced it — inside the very section written to warn
+  against wrong-population statistics.
+- **Read the numbers your own gate already wrote.** The forge computed 2,103 ablation deltas in
+  April 2026 that convict it, stored them, and never read them. Before building an instrument, check
+  whether the measurement is already on disk.
+- **Verify the mechanism, not the number — especially when the number is yours.** I published
+  "3 of 5 solved" that was entirely a `candidates[0]` fallback, in the section immediately after I
+  explained that exact defect. The metamorphic null caught it; nothing else would have.
+- **A detector that fails is a claim about the detector until proven otherwise.** The congruence
+  audit FAILED on three module dicts that turned out to be read-only lookup tables. Resolve it
+  properly and report the fix; do not wave it off, and do not accept it either.
+- **Run the test that could make your judgment call unnecessary, and publish it when it fails.**
+  The permutation-robust unrestricted bound was built to retire the contested pool restriction. It
+  came back 101 vs 100 — the restriction is load-bearing. That is reported as the headline of §3 of
+  the review response, not a footnote.
+
 ## 8. What needs James
+
+**Open decisions, unchanged and still unanswered:**
 
 1. **Ratify or reject the seat**, and its scope boundary against Apollo (arrangement) — the boundary
    is the whole differentiation argument.
-2. **Machine assignment**, or confirm this seat is compute-free by design (it may be: G0–G2 are reads
-   and small measurements).
-3. **Ratify G2 as house rule for the slice** — compute-matched or unreported. This is the one gate
-   that constrains other seats' outputs and therefore needs authority.
+2. **Machine assignment**, or confirm this seat is compute-free by design. *Note 2026-08-25: this
+   session ran entirely on local CPU in a few hours, so compute-free looks right.*
+3. **Ratify G2 as house rule** — compute-matched or unreported.
 4. **Confirm the standing no-touch constraint** on Apollo and Hephaestus, or replace it with a
-   handoff protocol. As written, Lexis can recommend and cannot commission.
-5. **G4 pre-commitment**: is transfer-positive genuinely the sole cloud-spend trigger for this slice?
-   Saying so now is worth more than saying so after a number exists.
+   handoff protocol. As written, Lexis can recommend and cannot commission — and this session
+   produced a one-line fix it may not apply.
+5. **G4 pre-commitment**: is transfer-positive genuinely the sole cloud-spend trigger?
+
+**Added 2026-08-25, from measured results:**
+
+6. **Freeze forge tier-ratchet admission.** T3 mints primitives from a T2 pool whose load-bearing
+   rate is 5.94% and whose gate cannot detect that. *(Recommendation, not executed.)*
+7. **Freeze enlargement of the 132M corpus** pending `P(useful p | F) > P(useful p)` at matched
+   proposal budget. The corpus is an **untested `F_n`**, not "storage" — the gate tests whether it
+   functions as one.
+8. **Idle Apollo on the frozen 27-operator language.** 0.8333 is now proven, not inferred. Retain
+   Apollo as a search instrument, not an active discovery programme, until `C` changes.
+9. **Ratify G5 and G6 as house rules** — redundancy with separated ΔE/ΔS ledgers, and
+   all-24-permutation robustness on any ΔE claim.
+10. **One-line forge fix, for your call:** gate on `min_ablation_impact`, which the forge already
+    computes and already stores, instead of the inverted concentration predicate. Under the no-touch
+    constraint I have not applied it.
 
 ## 9. Artifacts
 
@@ -187,3 +312,30 @@ headroom). "More forge tools" (pending G1). "Cloud spend" (pending G3).
 - `roles/Lexis/library_learning/SOURCES.md` — full bibliography with primary/secondary grades
 - `roles/Lexis/library_learning/notes/PASS_01..08` — the working record
 - Published reference page: `https://claude.ai/code/artifact/651a056a-3c93-4d31-b59e-e94bbdbb7d2d`
+
+**Added 2026-08-25.**
+
+- `SESSION_2026-08-25.md` — consolidated session record, including §6 "errors made and how caught"
+- `REVIEW_RESPONSE_2026-08-25_R2.md` — second external review; what changed on measurement
+- `EXTERNAL_REVIEW_REQUEST_2026-08-25.md` — the self-contained reviewer block
+- `notes/G0_FORGE_RATCHET_2026-08-25.md`, `notes/G1_ABLATION_2026-08-25.md`,
+  `notes/STEP1_CEILING_CLOSED_2026-08-25.md`, `notes/G5_LEDGER_2026-08-25.md`,
+  `notes/PROVENANCE_2026-08-25.md`
+
+**Instruments** (`instruments/`, all deterministic, all repo-relative, all read-only on `apollo/`):
+
+- `answer_slice.py` — the answer-relevant backward slice `D` and its read-completeness audit
+- `congruence_audit.py` — **precondition of the ceiling result**: aliasing, hidden state, history
+  independence, cross-task separability
+- `reachable_answers.py` — per-task reachable-answer closure (the upper bound)
+- `product_ceiling_fast.py` — joint product BFS, the exact ceiling (`product_ceiling.py` is the
+  slow, readable reference implementation)
+- `ceiling_diagnosis.py` — the ΔE / ΔS split of the unreached battery
+- `g5_redundancy.py` — `NEW(p,C,T)` with ΔE and ΔS on separate ledgers
+- `permutation_null.py` — the 2-permutation canary
+- `robust_ceiling.py` — the all-24-permutation ceiling, used to test whether the pool restriction is
+  load-bearing (it is, by one task)
+- `bundle_test.py` — compute / readout / pair arms; the interface-complementarity measurement
+- `candidate_primitives.py` — candidates with provenance stated in the docstring
+- `g1_ablation.py`, `g1_ablation_decompose.py` — the forge R4 mine and its dead-import decomposition
+- `traceclass.py`, `audit_rw.py`, `commute.py`, `g1_usage.py` — earlier instruments (2026-08-24)
