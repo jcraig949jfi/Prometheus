@@ -28,6 +28,10 @@ from typing import Iterable, Mapping, Sequence
 
 import numpy as np
 
+from techne.lib.coefficient_domain import (NonFiniteCoefficient,  # noqa: F401
+                                          require_finite_array,
+                                          require_finite_coefficients)
+
 
 # ---------------------------------------------------------------------------
 # Scalar API (Tier 1, original)
@@ -52,6 +56,7 @@ def mahler_measure(coefficients: list) -> float:
     ValueError
         If coefficients is empty or all zeros.
     """
+    coefficients = require_finite_coefficients(coefficients, function="mahler_measure")
     coeffs = np.array(coefficients, dtype=np.complex128)
     # Strip leading zeros
     nonzero = np.nonzero(coeffs)[0]
@@ -194,6 +199,7 @@ def is_cyclotomic(coefficients: list, tol: float = 1e-10) -> bool:
 
     Returns False for constant polynomials.
     """
+    coefficients = require_finite_coefficients(coefficients, function="is_cyclotomic")
     coeffs = np.array(coefficients, dtype=np.complex128)
     nonzero = np.nonzero(coeffs)[0]
     if len(nonzero) == 0 or len(coeffs) <= 1:
@@ -401,6 +407,7 @@ def mahler_measure_padded(coeff_matrix) -> np.ndarray:
     through `np.linalg.eigvals`.  The result is rendered into a
     common float64 output array.
     """
+    require_finite_array(coeff_matrix, function="mahler_measure_padded")
     A = np.asarray(coeff_matrix, dtype=np.complex128)
     if A.ndim != 2:
         raise ValueError(
@@ -562,6 +569,9 @@ def mahler_measure_batch(coeffs_list, method: str = "auto") -> np.ndarray:
         )
 
     items = list(coeffs_list)
+    # Cycle 060: refuse non-finite INPUT at the front door so that NaN in the OUTPUT keeps
+    # exactly one meaning -- a degenerate (all-zero) row. See `techne.lib.coefficient_domain`.
+    items = [require_finite_array(c, function="mahler_measure_batch") for c in items]
     n = len(items)
     out = np.empty(n, dtype=np.float64)
     if n == 0:

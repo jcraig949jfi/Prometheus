@@ -95,13 +95,72 @@ def cf_max_digit(p: int, q: int) -> int:
     return max(cf_expand(p, q))
 
 
-def zaremba_test(q: int, bound: int = 5) -> dict:
+#: Default ceiling on `zaremba_test`'s exhaustive search, in denominators.
+#:
+#: CYCLE 060, finding #12. The body is `for a in range(1, q)` -- an O(q) exhaustive search with
+#: no bound check, so the cost is set entirely by an argument the caller may not have thought
+#: of as a cost. MEASURED on this machine: 2,691,790 iter/s at q=2,000, 2,379,196 at q=20,000,
+#: 2,022,862 at q=100,000. The rate DECLINES with q, so extrapolating the fastest rate outward
+#: understates the runtime; the projection in the refusal message uses the slowest measured
+#: rate and is still an extrapolation across ~14 orders of magnitude, which the message says.
+#:
+#: 10**7 is ~5 s at the slowest measured rate -- long enough to be useful, short enough that a
+#: caller who exceeds it has almost certainly made a mistake rather than a decision.
+ZAREMBA_DEFAULT_MAX_Q = 10 ** 7
+
+#: Slowest measured rate, at the largest q actually timed. Named so the refusal message cannot
+#: quote a number with no provenance.
+ZAREMBA_MEASURED_ITERS_PER_SEC = 2_022_862
+ZAREMBA_RATE_MEASURED_AT_Q = 100_000
+
+
+def zaremba_test(q: int, bound: int = 5, max_q: int | None = ZAREMBA_DEFAULT_MAX_Q) -> dict:
     """Test the Zaremba conjecture for a given denominator q.
 
     Zaremba's conjecture: for every q >= 1, there exists a with
     gcd(a, q) = 1 such that all partial quotients of a/q are <= bound.
+
+    Parameters
+    ----------
+    q : int
+        Denominator. The search is exhaustive over `1 <= a < q`, so cost is LINEAR in q.
+    bound : int, default 5
+        The conjectured absolute bound on partial quotients.
+    max_q : int or None, default `ZAREMBA_DEFAULT_MAX_Q`
+        Refuse rather than grind if `q` exceeds this. Pass `None` to run unbounded, which is
+        a deliberate choice a caller can make and not one they can make by accident.
+
+    Raises
+    ------
+    ValueError
+        If `q < 1`, or if `q > max_q`. The refusal reports the projected runtime, because
+        "too large" without a number leaves the caller unable to judge whether to raise the
+        ceiling or change the approach.
+
+    Notes
+    -----
+    Cycle 059's input sweep recorded this function as the arsenal's second HANG:
+    `zaremba_test(2**63)` never returns. It is not an infinite loop -- it terminates in
+    principle and never in practice, which is a DIFFERENT shape from a true non-termination
+    (`S6b` vs `S6a` in the loop's ledger) and needs a different guard. A timeout would catch
+    both; only a domain bound turns this one into an immediate, explanatory refusal.
     """
     from math import gcd
+
+    if not isinstance(q, int) or isinstance(q, bool):
+        raise TypeError(f"zaremba_test: q must be an int, got {type(q).__name__}")
+    if q < 1:
+        raise ValueError(f"zaremba_test: q must be >= 1, got {q}")
+    if max_q is not None and q > max_q:
+        seconds = q / ZAREMBA_MEASURED_ITERS_PER_SEC
+        raise ValueError(
+            f"zaremba_test: q = {q} exceeds max_q = {max_q}. The search is EXHAUSTIVE over "
+            f"1 <= a < q, so this call would run about {seconds:.3g} s "
+            f"({seconds / 31_557_600:.3g} years) at the slowest rate measured for this code "
+            f"({ZAREMBA_MEASURED_ITERS_PER_SEC:,} iter/s at q = "
+            f"{ZAREMBA_RATE_MEASURED_AT_Q:,}); note that rate is an extrapolation and was not "
+            f"measured anywhere near this q. Pass max_q=None to run it anyway, or raise max_q "
+            f"deliberately.")
 
     best_max = float('inf')
     best_a = None

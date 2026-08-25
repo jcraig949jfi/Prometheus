@@ -34,6 +34,8 @@ from typing import Sequence
 
 import numpy as np
 
+from techne.lib.coefficient_domain import require_finite_coefficients
+
 __all__ = ["EVEREST_WARD_1999", "house"]
 
 EVEREST_WARD_1999 = ("Everest, G. & Ward, T. (1999). Heights of Polynomials and Entropy in "
@@ -46,6 +48,12 @@ def house(coefficients: Sequence) -> float:
     Raises `ValueError` on the zero polynomial (no polynomial), and on a non-zero constant (a
     polynomial with no roots — see the module docstring for why 0.0 is not returned there).
     """
+    # Cycle 060: measured `house([inf, 1, -1]) == 0.0` -- a PLAUSIBLE wrong answer, since 0.0 is
+    # house's genuine value for a monomial. `np.roots` normalises by the leading coefficient and
+    # `[1, -1] / inf` is `[0, 0]`. The refusal on `house([nan])` was incidental, arriving from the
+    # no-roots-on-a-constant branch below rather than from any check, so a refactor there would
+    # have silently reopened it. Now it is a check.
+    coefficients = require_finite_coefficients(coefficients, function="house")
     coeffs = np.array(list(coefficients), dtype=np.complex128)
     nonzero = np.nonzero(coeffs)[0]
     if len(nonzero) == 0:

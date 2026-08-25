@@ -17,10 +17,20 @@ screen whose domain exceeds the thing it screens will pass inputs the expensive 
 and the caller discovers the mismatch at the far end. Cycles 043-046 spent four separate tests
 pinning places where a family of related functions did NOT agree on where it was defined; this one
 starts agreeing.
+
+**CYCLE 060 — that paragraph was an intention, not a fact, and nothing tested it.** A full
+enumeration of the family against the non-finite input grid found this function returning a number
+on 9 of 9 such inputs while `mahler_measure` refused on 6 of 9: the screen's domain was strictly
+WIDER than the thing it screens, which is the exact failure the paragraph above argues against.
+The domain is now enforced by `techne.lib.coefficient_domain.require_finite_coefficients`, shared
+with `mahler_measure`, `is_cyclotomic` and `house`, and the agreement is asserted as a test in
+`techne/tests/test_coefficient_domain.py` rather than asserted in prose here.
 """
 from __future__ import annotations
 
 from typing import Sequence
+
+from techne.lib.coefficient_domain import require_finite_coefficients
 
 __all__ = ["MAHLER_1960", "polynomial_length"]
 
@@ -39,6 +49,7 @@ def polynomial_length(coefficients: Sequence) -> float:
     Raises `ValueError` on the zero polynomial (empty, or all coefficients zero), matching
     `mahler_measure`.
     """
+    coefficients = require_finite_coefficients(coefficients, function="polynomial_length")
     total = 0.0
     for c in coefficients:
         total += abs(complex(c))

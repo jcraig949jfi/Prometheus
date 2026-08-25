@@ -2133,3 +2133,105 @@ Newest first. Answer any of these whenever; replies get folded into the next cyc
      the artifact, where it is visible. **Disclosure, not detection** — and the eight
      wrong-population errors were all invisible precisely because nothing made me write the
      denominator down.
+
+
+## Cycle 060 (2026-08-25) — CAMPAIGN CYCLE 1 OF 20. The height family's domain, and a control that cannot block
+
+407. **PRE-REGISTRATION COMMITTED BEFORE MEASURING, as its own commit.** Section 1 of
+     `techne/loop/cycle_060.md` went in at `3b6f9de8` with six predictions, each carrying a
+     confidence and a D-tag, and the refuse-vs-propagate CRITERION was committed while the
+     decision itself was deliberately left open: *the posture that wins is the one under which a
+     caller cannot confuse "no height exists" with "the height is small."*
+408. **FIRST PLAUSIBLE WRONG ANSWER THIS LOOP HAS EVER FOUND BY DESIGN RATHER THAN BY ABSURDITY.**
+     `prometheus_math/house.py::house([inf, 1, -1])` returned **0.0**. That is not an absurd
+     number — **0.0 is house's genuine, documented answer for a MONOMIAL**, so it is
+     indistinguishable from a correct result by inspection. Mechanism confirmed independently in
+     numpy: `np.roots` normalises by the leading coefficient and `[1, -1] / inf` is `[0, 0]`.
+     Every prior instance in this record was caught because the number looked wrong. This one
+     would not have been. Finding #13.
+409. **FIVE FUNCTIONS, FOUR POSTURES, AND THE POSTURE DEPENDED ON POSITION.** Full 45-call
+     enumeration, no sampling: **RETURNS_NONFINITE 19 / RAISES 19 / RETURNS_BOOL 5 /
+     RETURNS_FINITE 2.** The same `inf` returned `inf` from `mahler_measure` in the leading slot
+     and raised from it in the trailing slot. Most of the nineteen refusals were numpy's
+     `"Array must not contain infs or NaNs"` — an implementation detail leaking through a
+     mathematical interface — and `house([nan])` refused only INCIDENTALLY, via its
+     no-roots-on-a-constant branch, so a refactor there would have silently reopened the hole.
+410. **DECISION: REFUSE, NOT PROPAGATE — and the reason is stronger than I expected.** NaN is not
+     merely wrong, it is **UNORDERED**. `mahler_measure([nan])` is neither below, nor above, nor
+     equal to the Lehmer bound; all three comparisons are False. A candidate whose measure failed
+     to compute exits every screen **without ever being counted as a failure**. Guard installed
+     at all five scalar entry points and all three batch entry points; the same enumeration now
+     returns **45 RAISES and nothing else**.
+411. **THE 059 DOUBLE-ENCODING FAULT WOULD HAVE BEEN INVISIBLE HERE, BECAUSE THIS FUNCTION
+     ANSWERS IT CORRECTLY.** `mahler_measure(["1.0", "-2.0"])` returned **2.0** — the true Mahler
+     measure of x − 2 — because numpy parses numeric strings on cast. And
+     `polynomial_length("123")` returned 6.0 by iterating characters. A guard that checks only
+     value-validity leaves type-confusion undetectable, so str/bytes is now rejected BY TYPE.
+     Finding #15.
+412. **D0 PREDICTION 3 FALSIFIED, AND THE REASON IS THE CLASS THIS CYCLE IS ABOUT.** I predicted
+     a NaN measure passes the Lehmer screen silently and wired a probe for it. **The probe aimed
+     at `[nan, 1.0, -1.0]`, which RAISES**, so it returned "no". The mechanism is real on
+     `[nan]`, which I did not test. **Instance nine of "a measurement answered a different
+     question than the one posed"**, committed inside a script whose docstring cites the eight
+     prior instances. Scored FALSIFIED rather than rescued: the pre-registered operationalisation
+     IS the prediction.
+413. **D1 PREDICTION 2 ALSO FALSIFIED, AND I AM NOT COUNTING THE NEARBY WIN.** I predicted
+     `house([nan, 1.0])` propagates; it raises. A worse leak exists one input over
+     (`house([inf, ...]) -> 0.0`), but **counting a miss as a hit because something adjacent was
+     worse is exactly how the inflated headline survived five cycles.**
+414. **THE CYCLE'S REAL RESULT, AND IT IS A HOLE IN A FROZEN CONTROL. `Claim.promotable()`
+     CANNOT BLOCK ANYTHING.** I predicted at least one claim would be HELD on first authoring and
+     pre-committed that zero would look suspiciously clean. **Zero were held; all 8 rendered
+     PROMOTABLE.** The rule requires an adjudication flagged `independent_of_generator=True` —
+     and **that flag is a boolean I set myself, in the same file, in the same act of authorship
+     as the claim.** A claim adjudicated by nothing is promotable if I label it well. Nothing in
+     Tier 0 or Tier 1 can see this, because the field is DATA, not a check. Finding #17.
+415. **PER CAMPAIGN RULE 1, #17 IS RECORDED AND NOT FIXED.** The repair is obvious — make the
+     adjudication an executable callable that must run and pass, moving the field from Tier 3 to
+     Tier 0 — and it is deferred to after cycle 20. Writing the intended repair down NOW so that
+     when it is built it is a pre-registered fix and not a retrofit.
+416. **THE ONLY TWO REAL BLOCKS CAME FROM DOMAIN AUTHORITY, NOT FROM MY MACHINERY.** (a) An
+     authority test failed on my hand-computed `L(Lehmer) = 8`; the true value is **9** — the
+     eleven coefficients include two zeros. **The code was right and MY AUTHORITY VALUE was
+     wrong**, which is the direction that makes an authority test worth having. (b) An authority
+     test written over q = 1..200 failed at its **first element** and surfaced a defect I was not
+     looking for. **Zero false blocks:** `zaremba_test(q) == zaremba_test(q, max_q=None)` for 60
+     hypothesis-drawn q below the ceiling, and M(Lehmer) unchanged to 1e-12.
+417. **FINDING #16, MINE, AND DELIBERATELY NOT PATCHED THIS CYCLE.**
+     `techne/lib/cf_expansion.py::zaremba_test(1)` reports `satisfies=False`. Zaremba's
+     conjecture holds trivially at q = 1, but the body iterates `range(1, q)`, which is EMPTY
+     there, so a trivially-satisfied case is reported as a counterexample to a conjecture. Not
+     fixed alongside the search bound because **it changes a RETURNED VALUE rather than adding a
+     refusal**, and a semantic change smuggled into a guard commit is unreviewable. Pinned by a
+     test so it cannot drift unobserved.
+418. **FINDING #12 CLOSED, AND CYCLE 059'S FIGURE EXTRAPOLATED IN THE FLATTERING DIRECTION.**
+     Measured: 2,691,790 iter/s at q=2,000; 2,379,196 at q=20,000; **2,022,862 at q=100,000**.
+     The rate **DECLINES** with q, so 059's "~131,000 years" — computed at q=20,000 and applied
+     to q=2^63 — understated it. `zaremba_test` now takes `max_q` (default 10^7) and refuses
+     above it in under a millisecond, with a message quoting the rate, **the q it was measured
+     at**, and the fact that the projection is an extrapolation. **Findings #9, #10, #11 CLOSED**
+     by the shared guard.
+419. **NO REGRESSION, BY NODE-ID DIFF AND NOT BY COUNT.** Full arsenal sweep, 52 minutes:
+     **44 failed, 4,395 passed, 3 collection errors; NEW 0, GONE 2** against the cycle-052
+     baseline. A guard that had disturbed behaviour on finite input would appear as a NEW node
+     id in a suite written across forty earlier cycles for unrelated reasons — the strongest
+     independent adjudication available this cycle.
+420. **PREDICTION 4 CONFIRMED BUT WEAKLY, AND THE WEAKNESS IS REPORTED RATHER THAN ABSORBED.**
+     Over the registry population — every function in `techne/inventory.json` with exactly one
+     required positional parameter, **68 considered, 14 dropped for arity and named** — three
+     functions outside the height family accept a non-finite argument and return a value:
+     `techne/lib/gpd_tail_fit.py::diagnose_tail`,
+     `techne/lib/singularity_classifier.py::classify_singularity` and
+     `techne/lib/singularity_classifier.py::estimate_radius`. **All three return a structured
+     result carrying an explicit failure marker** (`insufficient_exceedances`, `UNKNOWN`, `None`)
+     — graceful degradation, materially milder than `house -> 0.0`.
+421. **CAMPAIGN METRICS, CYCLE 1 OF 20.** `escape_rate` **0 of 8 exported claims** and **nearly
+     uninformative**, because per #414 the frozen controls blocked nothing, so a zero numerator
+     measures the absence of a test rather than correctness. `held_rate` frozen controls **0**,
+     Tier-2 authority layer **2, both correct**, false blocks **0**. `adjudication_coverage`
+     **8 of 8 nominal and an upper bound I do not believe**, per #414. `yield` **5 of 8 claims
+     decision-changing.**
+422. **JAMES — ONE NEW OPEN ITEM.** Finding #16 (`zaremba_test(1)`) is mine and I can fix it, but
+     it changes a returned value rather than adding a refusal. **I intend to fix it in cycle 061
+     as its own isolated commit unless told otherwise.** Flagging rather than doing it silently.
+     #242, #311 and #341 remain untouched, as do the eight cross-role findings.

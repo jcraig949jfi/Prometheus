@@ -1,0 +1,290 @@
+{
+  "population": "FULL enumeration: 5 height-family scalar entry points x 9 non-finite inputs = 45 calls. No sampling.",
+  "command": "python techne/loop/measure_060_nonfinite.py",
+  "controls_passed": [
+    "empty-input-classified-RAISES",
+    "known-M(x-2)=2-classified-RETURNS_FINITE",
+    "known-M(x-2)-value"
+  ],
+  "n_calls": 45,
+  "tally": {
+    "RAISES": 45
+  },
+  "functions_returning_nonfinite": [],
+  "n_functions_returning_nonfinite": 0,
+  "lehmer_screen_probe": {
+    "raised": true
+  },
+  "rows": [
+    {
+      "function": "techne/lib/mahler_measure.py::mahler_measure",
+      "input": "deg0[nan]",
+      "outcome": "RAISES",
+      "detail": "ValueError: mahler_measure: coefficient at index 0 is nan (real part is "
+    },
+    {
+      "function": "techne/lib/mahler_measure.py::mahler_measure",
+      "input": "lead[nan,1,-1]",
+      "outcome": "RAISES",
+      "detail": "ValueError: mahler_measure: coefficient at index 0 is nan (real part is "
+    },
+    {
+      "function": "techne/lib/mahler_measure.py::mahler_measure",
+      "input": "trail[1,-1,nan]",
+      "outcome": "RAISES",
+      "detail": "ValueError: mahler_measure: coefficient at index 2 is nan (real part is "
+    },
+    {
+      "function": "techne/lib/mahler_measure.py::mahler_measure",
+      "input": "deg0[inf]",
+      "outcome": "RAISES",
+      "detail": "ValueError: mahler_measure: coefficient at index 0 is inf (real part is "
+    },
+    {
+      "function": "techne/lib/mahler_measure.py::mahler_measure",
+      "input": "lead[inf,1,-1]",
+      "outcome": "RAISES",
+      "detail": "ValueError: mahler_measure: coefficient at index 0 is inf (real part is "
+    },
+    {
+      "function": "techne/lib/mahler_measure.py::mahler_measure",
+      "input": "trail[1,-1,inf]",
+      "outcome": "RAISES",
+      "detail": "ValueError: mahler_measure: coefficient at index 2 is inf (real part is "
+    },
+    {
+      "function": "techne/lib/mahler_measure.py::mahler_measure",
+      "input": "deg0[-inf]",
+      "outcome": "RAISES",
+      "detail": "ValueError: mahler_measure: coefficient at index 0 is -inf (real part is"
+    },
+    {
+      "function": "techne/lib/mahler_measure.py::mahler_measure",
+      "input": "lead[-inf,1,-1]",
+      "outcome": "RAISES",
+      "detail": "ValueError: mahler_measure: coefficient at index 0 is -inf (real part is"
+    },
+    {
+      "function": "techne/lib/mahler_measure.py::mahler_measure",
+      "input": "trail[1,-1,-inf]",
+      "outcome": "RAISES",
+      "detail": "ValueError: mahler_measure: coefficient at index 2 is -inf (real part is"
+    },
+    {
+      "function": "techne/lib/mahler_measure.py::log_mahler_measure",
+      "input": "deg0[nan]",
+      "outcome": "RAISES",
+      "detail": "ValueError: mahler_measure: coefficient at index 0 is nan (real part is "
+    },
+    {
+      "function": "techne/lib/mahler_measure.py::log_mahler_measure",
+      "input": "lead[nan,1,-1]",
+      "outcome": "RAISES",
+      "detail": "ValueError: mahler_measure: coefficient at index 0 is nan (real part is "
+    },
+    {
+      "function": "techne/lib/mahler_measure.py::log_mahler_measure",
+      "input": "trail[1,-1,nan]",
+      "outcome": "RAISES",
+      "detail": "ValueError: mahler_measure: coefficient at index 2 is nan (real part is "
+    },
+    {
+      "function": "techne/lib/mahler_measure.py::log_mahler_measure",
+      "input": "deg0[inf]",
+      "outcome": "RAISES",
+      "detail": "ValueError: mahler_measure: coefficient at index 0 is inf (real part is "
+    },
+    {
+      "function": "techne/lib/mahler_measure.py::log_mahler_measure",
+      "input": "lead[inf,1,-1]",
+      "outcome": "RAISES",
+      "detail": "ValueError: mahler_measure: coefficient at index 0 is inf (real part is "
+    },
+    {
+      "function": "techne/lib/mahler_measure.py::log_mahler_measure",
+      "input": "trail[1,-1,inf]",
+      "outcome": "RAISES",
+      "detail": "ValueError: mahler_measure: coefficient at index 2 is inf (real part is "
+    },
+    {
+      "function": "techne/lib/mahler_measure.py::log_mahler_measure",
+      "input": "deg0[-inf]",
+      "outcome": "RAISES",
+      "detail": "ValueError: mahler_measure: coefficient at index 0 is -inf (real part is"
+    },
+    {
+      "function": "techne/lib/mahler_measure.py::log_mahler_measure",
+      "input": "lead[-inf,1,-1]",
+      "outcome": "RAISES",
+      "detail": "ValueError: mahler_measure: coefficient at index 0 is -inf (real part is"
+    },
+    {
+      "function": "techne/lib/mahler_measure.py::log_mahler_measure",
+      "input": "trail[1,-1,-inf]",
+      "outcome": "RAISES",
+      "detail": "ValueError: mahler_measure: coefficient at index 2 is -inf (real part is"
+    },
+    {
+      "function": "techne/lib/mahler_measure.py::is_cyclotomic",
+      "input": "deg0[nan]",
+      "outcome": "RAISES",
+      "detail": "ValueError: is_cyclotomic: coefficient at index 0 is nan (real part is n"
+    },
+    {
+      "function": "techne/lib/mahler_measure.py::is_cyclotomic",
+      "input": "lead[nan,1,-1]",
+      "outcome": "RAISES",
+      "detail": "ValueError: is_cyclotomic: coefficient at index 0 is nan (real part is n"
+    },
+    {
+      "function": "techne/lib/mahler_measure.py::is_cyclotomic",
+      "input": "trail[1,-1,nan]",
+      "outcome": "RAISES",
+      "detail": "ValueError: is_cyclotomic: coefficient at index 2 is nan (real part is n"
+    },
+    {
+      "function": "techne/lib/mahler_measure.py::is_cyclotomic",
+      "input": "deg0[inf]",
+      "outcome": "RAISES",
+      "detail": "ValueError: is_cyclotomic: coefficient at index 0 is inf (real part is i"
+    },
+    {
+      "function": "techne/lib/mahler_measure.py::is_cyclotomic",
+      "input": "lead[inf,1,-1]",
+      "outcome": "RAISES",
+      "detail": "ValueError: is_cyclotomic: coefficient at index 0 is inf (real part is i"
+    },
+    {
+      "function": "techne/lib/mahler_measure.py::is_cyclotomic",
+      "input": "trail[1,-1,inf]",
+      "outcome": "RAISES",
+      "detail": "ValueError: is_cyclotomic: coefficient at index 2 is inf (real part is i"
+    },
+    {
+      "function": "techne/lib/mahler_measure.py::is_cyclotomic",
+      "input": "deg0[-inf]",
+      "outcome": "RAISES",
+      "detail": "ValueError: is_cyclotomic: coefficient at index 0 is -inf (real part is "
+    },
+    {
+      "function": "techne/lib/mahler_measure.py::is_cyclotomic",
+      "input": "lead[-inf,1,-1]",
+      "outcome": "RAISES",
+      "detail": "ValueError: is_cyclotomic: coefficient at index 0 is -inf (real part is "
+    },
+    {
+      "function": "techne/lib/mahler_measure.py::is_cyclotomic",
+      "input": "trail[1,-1,-inf]",
+      "outcome": "RAISES",
+      "detail": "ValueError: is_cyclotomic: coefficient at index 2 is -inf (real part is "
+    },
+    {
+      "function": "prometheus_math/polynomial_length.py::polynomial_length",
+      "input": "deg0[nan]",
+      "outcome": "RAISES",
+      "detail": "ValueError: polynomial_length: coefficient at index 0 is nan (real part "
+    },
+    {
+      "function": "prometheus_math/polynomial_length.py::polynomial_length",
+      "input": "lead[nan,1,-1]",
+      "outcome": "RAISES",
+      "detail": "ValueError: polynomial_length: coefficient at index 0 is nan (real part "
+    },
+    {
+      "function": "prometheus_math/polynomial_length.py::polynomial_length",
+      "input": "trail[1,-1,nan]",
+      "outcome": "RAISES",
+      "detail": "ValueError: polynomial_length: coefficient at index 2 is nan (real part "
+    },
+    {
+      "function": "prometheus_math/polynomial_length.py::polynomial_length",
+      "input": "deg0[inf]",
+      "outcome": "RAISES",
+      "detail": "ValueError: polynomial_length: coefficient at index 0 is inf (real part "
+    },
+    {
+      "function": "prometheus_math/polynomial_length.py::polynomial_length",
+      "input": "lead[inf,1,-1]",
+      "outcome": "RAISES",
+      "detail": "ValueError: polynomial_length: coefficient at index 0 is inf (real part "
+    },
+    {
+      "function": "prometheus_math/polynomial_length.py::polynomial_length",
+      "input": "trail[1,-1,inf]",
+      "outcome": "RAISES",
+      "detail": "ValueError: polynomial_length: coefficient at index 2 is inf (real part "
+    },
+    {
+      "function": "prometheus_math/polynomial_length.py::polynomial_length",
+      "input": "deg0[-inf]",
+      "outcome": "RAISES",
+      "detail": "ValueError: polynomial_length: coefficient at index 0 is -inf (real part"
+    },
+    {
+      "function": "prometheus_math/polynomial_length.py::polynomial_length",
+      "input": "lead[-inf,1,-1]",
+      "outcome": "RAISES",
+      "detail": "ValueError: polynomial_length: coefficient at index 0 is -inf (real part"
+    },
+    {
+      "function": "prometheus_math/polynomial_length.py::polynomial_length",
+      "input": "trail[1,-1,-inf]",
+      "outcome": "RAISES",
+      "detail": "ValueError: polynomial_length: coefficient at index 2 is -inf (real part"
+    },
+    {
+      "function": "prometheus_math/house.py::house",
+      "input": "deg0[nan]",
+      "outcome": "RAISES",
+      "detail": "ValueError: house: coefficient at index 0 is nan (real part is nan). No "
+    },
+    {
+      "function": "prometheus_math/house.py::house",
+      "input": "lead[nan,1,-1]",
+      "outcome": "RAISES",
+      "detail": "ValueError: house: coefficient at index 0 is nan (real part is nan). No "
+    },
+    {
+      "function": "prometheus_math/house.py::house",
+      "input": "trail[1,-1,nan]",
+      "outcome": "RAISES",
+      "detail": "ValueError: house: coefficient at index 2 is nan (real part is nan). No "
+    },
+    {
+      "function": "prometheus_math/house.py::house",
+      "input": "deg0[inf]",
+      "outcome": "RAISES",
+      "detail": "ValueError: house: coefficient at index 0 is inf (real part is inf). No "
+    },
+    {
+      "function": "prometheus_math/house.py::house",
+      "input": "lead[inf,1,-1]",
+      "outcome": "RAISES",
+      "detail": "ValueError: house: coefficient at index 0 is inf (real part is inf). No "
+    },
+    {
+      "function": "prometheus_math/house.py::house",
+      "input": "trail[1,-1,inf]",
+      "outcome": "RAISES",
+      "detail": "ValueError: house: coefficient at index 2 is inf (real part is inf). No "
+    },
+    {
+      "function": "prometheus_math/house.py::house",
+      "input": "deg0[-inf]",
+      "outcome": "RAISES",
+      "detail": "ValueError: house: coefficient at index 0 is -inf (real part is -inf). N"
+    },
+    {
+      "function": "prometheus_math/house.py::house",
+      "input": "lead[-inf,1,-1]",
+      "outcome": "RAISES",
+      "detail": "ValueError: house: coefficient at index 0 is -inf (real part is -inf). N"
+    },
+    {
+      "function": "prometheus_math/house.py::house",
+      "input": "trail[1,-1,-inf]",
+      "outcome": "RAISES",
+      "detail": "ValueError: house: coefficient at index 2 is -inf (real part is -inf). N"
+    }
+  ]
+}

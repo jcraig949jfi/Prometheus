@@ -1,0 +1,505 @@
+{
+  "population": "every function named in techne/inventory.json interface/also fields with EXACTLY ONE required positional parameter, called with a single non-finite argument (nan, or [nan, 1.0, -1.0] where the parameter name or annotation indicates a sequence). Full scan of the registry.",
+  "command": "python techne/loop/measure_060_p4_arsenal.py",
+  "modules_probed": 27,
+  "functions_considered": 68,
+  "tally": {
+    "DROPPED_ARITY": 14,
+    "RAISES_OTHER": 5,
+    "RAISES_TYPE": 12,
+    "RAISES": 34,
+    "RETURNS_OTHER": 3
+  },
+  "dropped_arity": [
+    "prometheus_math.reasoning_quality_emit::make_record",
+    "prometheus_math.reasoning_quality_emit::append_records",
+    "techne.lib.cf_expansion::cf_expand",
+    "techne.lib.cf_expansion::cf_max_digit",
+    "techne.lib.cf_expansion::sturm_bound",
+    "techne.lib.gpd_tail_fit::gpd_tail_fit",
+    "techne.lib.operator_portability::operator_portability_test",
+    "techne.lib.regulator::height",
+    "techne.lib.root_number::local_root_number",
+    "techne.lib.root_number::parity_consistent",
+    "techne.lib.tropical_rank::tropical_rank",
+    "techne.lib.tropical_rank::tropical_rank_graph",
+    "techne.lib.tropical_rank::is_winnable",
+    "techne.lib.tt_splice::tt_splice_compatibility"
+  ],
+  "module_timeouts": [],
+  "accepts_nonfinite_returns_a_value": [
+    "techne.lib.gpd_tail_fit::diagnose_tail",
+    "techne.lib.singularity_classifier::classify_singularity",
+    "techne.lib.singularity_classifier::estimate_radius"
+  ],
+  "outside_the_height_family": [
+    "techne.lib.gpd_tail_fit::diagnose_tail",
+    "techne.lib.singularity_classifier::classify_singularity",
+    "techne.lib.singularity_classifier::estimate_radius"
+  ],
+  "n_outside_the_height_family": 3,
+  "rows": [
+    {
+      "module": "prometheus_math.reasoning_quality_emit",
+      "function": "make_record",
+      "outcome": "DROPPED_ARITY",
+      "detail": "required args = 3"
+    },
+    {
+      "module": "prometheus_math.reasoning_quality_emit",
+      "function": "mark_contested",
+      "outcome": "RAISES_OTHER",
+      "arg": "sequence",
+      "detail": "AttributeError: 'float' object has no attribute 'evaluator_scores'"
+    },
+    {
+      "module": "prometheus_math.reasoning_quality_emit",
+      "function": "append_records",
+      "outcome": "DROPPED_ARITY",
+      "detail": "required args = 2"
+    },
+    {
+      "module": "prometheus_math.reasoning_quality_emit",
+      "function": "load_records",
+      "outcome": "RAISES_TYPE",
+      "arg": "scalar",
+      "detail": "TypeError: argument should be a str or an os.PathLike object where __fspath__ ret"
+    },
+    {
+      "module": "prometheus_math.reasoning_quality_emit",
+      "function": "to_relational_records",
+      "outcome": "RAISES_OTHER",
+      "arg": "sequence",
+      "detail": "AttributeError: 'float' object has no attribute 'evaluator_scores'"
+    },
+    {
+      "module": "prometheus_math.reasoning_quality_emit",
+      "function": "is_task_contested",
+      "outcome": "RAISES_TYPE",
+      "arg": "scalar",
+      "detail": "TypeError: object of type 'float' has no len()"
+    },
+    {
+      "module": "prometheus_math.reasoning_quality_emit",
+      "function": "top_candidate_per_evaluator",
+      "outcome": "RAISES_OTHER",
+      "arg": "scalar",
+      "detail": "AttributeError: 'float' object has no attribute 'values'"
+    },
+    {
+      "module": "prometheus_math.reasoning_quality_emit",
+      "function": "candidate_id_for",
+      "outcome": "RAISES_OTHER",
+      "arg": "scalar",
+      "detail": "AttributeError: 'float' object has no attribute 'encode'"
+    },
+    {
+      "module": "techne.lib.alexander_polynomial",
+      "function": "alexander_polynomial",
+      "outcome": "RAISES_TYPE",
+      "arg": "scalar",
+      "detail": "TypeError: Unsupported knot type: <class 'float'>"
+    },
+    {
+      "module": "techne.lib.alexander_polynomial",
+      "function": "alexander_coeffs",
+      "outcome": "RAISES_TYPE",
+      "arg": "scalar",
+      "detail": "TypeError: Unsupported knot type: <class 'float'>"
+    },
+    {
+      "module": "techne.lib.analytic_sha",
+      "function": "analytic_sha",
+      "outcome": "RAISES",
+      "arg": "sequence",
+      "detail": "ValueError: ainvs must have 5 entries, got 3"
+    },
+    {
+      "module": "techne.lib.analytic_sha",
+      "function": "sha_an_rounded",
+      "outcome": "RAISES",
+      "arg": "sequence",
+      "detail": "ValueError: ainvs must have 5 entries, got 3"
+    },
+    {
+      "module": "techne.lib.cf_expansion",
+      "function": "cf_expand",
+      "outcome": "DROPPED_ARITY",
+      "detail": "required args = 2"
+    },
+    {
+      "module": "techne.lib.cf_expansion",
+      "function": "cf_max_digit",
+      "outcome": "DROPPED_ARITY",
+      "detail": "required args = 2"
+    },
+    {
+      "module": "techne.lib.cf_expansion",
+      "function": "zaremba_test",
+      "outcome": "RAISES_TYPE",
+      "arg": "scalar",
+      "detail": "TypeError: zaremba_test: q must be an int, got float"
+    },
+    {
+      "module": "techne.lib.cf_expansion",
+      "function": "sturm_bound",
+      "outcome": "DROPPED_ARITY",
+      "detail": "required args = 2"
+    },
+    {
+      "module": "techne.lib.class_number",
+      "function": "class_number",
+      "outcome": "RAISES",
+      "arg": "sequence",
+      "detail": "ValueError: cannot convert float NaN to integer"
+    },
+    {
+      "module": "techne.lib.class_number",
+      "function": "class_group",
+      "outcome": "RAISES",
+      "arg": "sequence",
+      "detail": "ValueError: cannot convert float NaN to integer"
+    },
+    {
+      "module": "techne.lib.class_number",
+      "function": "regulator_nf",
+      "outcome": "RAISES",
+      "arg": "sequence",
+      "detail": "ValueError: cannot convert float NaN to integer"
+    },
+    {
+      "module": "techne.lib.cm_order_data",
+      "function": "cm_order_data",
+      "outcome": "RAISES",
+      "arg": "scalar",
+      "detail": "ValueError: D = nan is not \u2261 0 or 1 mod 4; not a valid discriminant"
+    },
+    {
+      "module": "techne.lib.conductor",
+      "function": "conductor",
+      "outcome": "RAISES",
+      "arg": "scalar",
+      "detail": "ValueError: ainvs must be a length-5 list [a1,a2,a3,a4,a6], got nan"
+    },
+    {
+      "module": "techne.lib.conductor",
+      "function": "global_reduction",
+      "outcome": "RAISES",
+      "arg": "scalar",
+      "detail": "ValueError: ainvs must be a length-5 list [a1,a2,a3,a4,a6], got nan"
+    },
+    {
+      "module": "techne.lib.conductor",
+      "function": "bad_primes",
+      "outcome": "RAISES",
+      "arg": "scalar",
+      "detail": "ValueError: ainvs must be a length-5 list [a1,a2,a3,a4,a6], got nan"
+    },
+    {
+      "module": "techne.lib.faltings_height",
+      "function": "faltings_height",
+      "outcome": "RAISES",
+      "arg": "sequence",
+      "detail": "ValueError: ainvs must have 5 entries, got 3"
+    },
+    {
+      "module": "techne.lib.faltings_height",
+      "function": "faltings_data",
+      "outcome": "RAISES",
+      "arg": "sequence",
+      "detail": "ValueError: ainvs must have 5 entries, got 3"
+    },
+    {
+      "module": "techne.lib.functional_eq_check",
+      "function": "functional_eq_check",
+      "outcome": "RAISES_TYPE",
+      "arg": "scalar",
+      "detail": "TypeError: unsupported input: float. Accepts 5-tuple (ainvs), 1 (zeta), PARI expr"
+    },
+    {
+      "module": "techne.lib.functional_eq_check",
+      "function": "fe_residual",
+      "outcome": "RAISES_TYPE",
+      "arg": "scalar",
+      "detail": "TypeError: unsupported input: float. Accepts 5-tuple (ainvs), 1 (zeta), PARI expr"
+    },
+    {
+      "module": "techne.lib.galois_group",
+      "function": "galois_group",
+      "outcome": "RAISES",
+      "arg": "sequence",
+      "detail": "ValueError: cannot convert float NaN to integer"
+    },
+    {
+      "module": "techne.lib.galois_group",
+      "function": "is_abelian",
+      "outcome": "RAISES",
+      "arg": "sequence",
+      "detail": "ValueError: cannot convert float NaN to integer"
+    },
+    {
+      "module": "techne.lib.galois_group",
+      "function": "disc_is_square",
+      "outcome": "RAISES",
+      "arg": "sequence",
+      "detail": "ValueError: cannot convert float NaN to integer"
+    },
+    {
+      "module": "techne.lib.gpd_tail_fit",
+      "function": "gpd_tail_fit",
+      "outcome": "DROPPED_ARITY",
+      "detail": "required args = 2"
+    },
+    {
+      "module": "techne.lib.gpd_tail_fit",
+      "function": "diagnose_tail",
+      "outcome": "RETURNS_OTHER",
+      "arg": "sequence",
+      "detail": "[{'threshold': nan, 'error': 'insufficient_exceedances'}, {'"
+    },
+    {
+      "module": "techne.lib.hilbert_class_field",
+      "function": "hilbert_class_field",
+      "outcome": "RAISES",
+      "arg": "sequence",
+      "detail": "ValueError: cannot convert float NaN to integer"
+    },
+    {
+      "module": "techne.lib.hilbert_class_field",
+      "function": "class_field_tower",
+      "outcome": "RAISES",
+      "arg": "sequence",
+      "detail": "ValueError: cannot convert float NaN to integer"
+    },
+    {
+      "module": "techne.lib.hyperbolic_volume",
+      "function": "hyperbolic_volume",
+      "outcome": "RAISES_TYPE",
+      "arg": "scalar",
+      "detail": "TypeError: Unsupported knot input: float"
+    },
+    {
+      "module": "techne.lib.hyperbolic_volume",
+      "function": "hyperbolic_volume_hp",
+      "outcome": "RAISES_TYPE",
+      "arg": "scalar",
+      "detail": "TypeError: Unsupported knot input: float"
+    },
+    {
+      "module": "techne.lib.hyperbolic_volume",
+      "function": "is_hyperbolic",
+      "outcome": "RAISES_TYPE",
+      "arg": "scalar",
+      "detail": "TypeError: Unsupported knot input: float"
+    },
+    {
+      "module": "techne.lib.hyperbolic_volume",
+      "function": "volume_conjecture_ratio",
+      "outcome": "RAISES_TYPE",
+      "arg": "scalar",
+      "detail": "TypeError: Unsupported knot input: float"
+    },
+    {
+      "module": "techne.lib.knot_shape_field",
+      "function": "knot_shape_field",
+      "outcome": "RAISES_TYPE",
+      "arg": "scalar",
+      "detail": "TypeError: \n    A Manifold is specified by a string or a byte sequence, according"
+    },
+    {
+      "module": "techne.lib.knot_shape_field",
+      "function": "polredabs",
+      "outcome": "RAISES",
+      "arg": "sequence",
+      "detail": "ValueError: cannot convert float NaN to integer"
+    },
+    {
+      "module": "techne.lib.lll_reduction",
+      "function": "lll",
+      "outcome": "RAISES",
+      "arg": "scalar",
+      "detail": "ValueError: lll_reduction: expected 2D basis matrix, got shape ()"
+    },
+    {
+      "module": "techne.lib.lll_reduction",
+      "function": "lll_with_transform",
+      "outcome": "RAISES",
+      "arg": "scalar",
+      "detail": "ValueError: lll_reduction: expected 2D basis matrix, got shape ()"
+    },
+    {
+      "module": "techne.lib.lll_reduction",
+      "function": "shortest_vector_lll",
+      "outcome": "RAISES",
+      "arg": "scalar",
+      "detail": "ValueError: lll_reduction: expected 2D basis matrix, got shape ()"
+    },
+    {
+      "module": "techne.lib.lll_reduction",
+      "function": "lll_gram",
+      "outcome": "RAISES_OTHER",
+      "arg": "scalar",
+      "detail": "IndexError: tuple index out of range"
+    },
+    {
+      "module": "techne.lib.mahler_measure",
+      "function": "mahler_measure",
+      "outcome": "RAISES",
+      "arg": "sequence",
+      "detail": "ValueError: mahler_measure: coefficient at index 0 is nan (real part is nan). No h"
+    },
+    {
+      "module": "techne.lib.mahler_measure",
+      "function": "log_mahler_measure",
+      "outcome": "RAISES",
+      "arg": "sequence",
+      "detail": "ValueError: mahler_measure: coefficient at index 0 is nan (real part is nan). No h"
+    },
+    {
+      "module": "techne.lib.mahler_measure",
+      "function": "is_cyclotomic",
+      "outcome": "RAISES",
+      "arg": "sequence",
+      "detail": "ValueError: is_cyclotomic: coefficient at index 0 is nan (real part is nan). No he"
+    },
+    {
+      "module": "techne.lib.operator_portability",
+      "function": "operator_portability_test",
+      "outcome": "DROPPED_ARITY",
+      "detail": "required args = 2"
+    },
+    {
+      "module": "techne.lib.rank_parity_null",
+      "function": "rank_parity_null_control",
+      "outcome": "RAISES",
+      "arg": "sequence",
+      "detail": "ValueError: population does not expose field 'analytic_rank'"
+    },
+    {
+      "module": "techne.lib.regulator",
+      "function": "regulator",
+      "outcome": "RAISES",
+      "arg": "sequence",
+      "detail": "ValueError: ainvs must have exactly 5 entries [a1,a2,a3,a4,a6], got 3"
+    },
+    {
+      "module": "techne.lib.regulator",
+      "function": "mordell_weil",
+      "outcome": "RAISES",
+      "arg": "sequence",
+      "detail": "ValueError: ainvs must have exactly 5 entries [a1,a2,a3,a4,a6], got 3"
+    },
+    {
+      "module": "techne.lib.regulator",
+      "function": "height",
+      "outcome": "DROPPED_ARITY",
+      "detail": "required args = 2"
+    },
+    {
+      "module": "techne.lib.root_number",
+      "function": "root_number",
+      "outcome": "RAISES",
+      "arg": "scalar",
+      "detail": "ValueError: ainvs must be a length-5 list [a1,a2,a3,a4,a6], got nan"
+    },
+    {
+      "module": "techne.lib.root_number",
+      "function": "local_root_number",
+      "outcome": "DROPPED_ARITY",
+      "detail": "required args = 2"
+    },
+    {
+      "module": "techne.lib.root_number",
+      "function": "parity_consistent",
+      "outcome": "DROPPED_ARITY",
+      "detail": "required args = 2"
+    },
+    {
+      "module": "techne.lib.sat_solver",
+      "function": "solve_cnf",
+      "outcome": "RAISES",
+      "arg": "sequence",
+      "detail": "ValueError: clause 0 is not iterable"
+    },
+    {
+      "module": "techne.lib.selmer_rank",
+      "function": "selmer_2_rank",
+      "outcome": "RAISES",
+      "arg": "sequence",
+      "detail": "ValueError: ainvs must have 5 entries, got 3"
+    },
+    {
+      "module": "techne.lib.selmer_rank",
+      "function": "selmer_2_data",
+      "outcome": "RAISES",
+      "arg": "sequence",
+      "detail": "ValueError: ainvs must have 5 entries, got 3"
+    },
+    {
+      "module": "techne.lib.singularity_classifier",
+      "function": "classify_singularity",
+      "outcome": "RETURNS_OTHER",
+      "arg": "sequence",
+      "detail": "{'type': 'UNKNOWN', 'alpha': None, 'radius': None, 'growth_r"
+    },
+    {
+      "module": "techne.lib.singularity_classifier",
+      "function": "estimate_radius",
+      "outcome": "RETURNS_OTHER",
+      "arg": "sequence",
+      "detail": "None"
+    },
+    {
+      "module": "techne.lib.smith_normal_form",
+      "function": "smith_normal_form",
+      "outcome": "RAISES",
+      "arg": "sequence",
+      "detail": "ValueError: expected 2D matrix, got shape (3,)"
+    },
+    {
+      "module": "techne.lib.smith_normal_form",
+      "function": "invariant_factors",
+      "outcome": "RAISES",
+      "arg": "sequence",
+      "detail": "ValueError: expected 2D matrix, got shape (3,)"
+    },
+    {
+      "module": "techne.lib.smith_normal_form",
+      "function": "abelian_group_structure",
+      "outcome": "RAISES",
+      "arg": "sequence",
+      "detail": "ValueError: expected 2D matrix, got shape (3,)"
+    },
+    {
+      "module": "techne.lib.tail_vs_bulk",
+      "function": "decompose_spectral",
+      "outcome": "RAISES",
+      "arg": "sequence",
+      "detail": "ValueError: spectral_signal must contain only finite values"
+    },
+    {
+      "module": "techne.lib.tropical_rank",
+      "function": "tropical_rank",
+      "outcome": "DROPPED_ARITY",
+      "detail": "required args = 2"
+    },
+    {
+      "module": "techne.lib.tropical_rank",
+      "function": "tropical_rank_graph",
+      "outcome": "DROPPED_ARITY",
+      "detail": "required args = 3"
+    },
+    {
+      "module": "techne.lib.tropical_rank",
+      "function": "is_winnable",
+      "outcome": "DROPPED_ARITY",
+      "detail": "required args = 2"
+    },
+    {
+      "module": "techne.lib.tt_splice",
+      "function": "tt_splice_compatibility",
+      "outcome": "DROPPED_ARITY",
+      "detail": "required args = 2"
+    }
+  ]
+}
