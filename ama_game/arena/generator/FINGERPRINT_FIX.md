@@ -67,7 +67,30 @@ targetable kind now appears at least twice with independent parameters, leaving
 a coin flip that only arithmetic settles.
 → 27.3% to **17.2%**, and the verdict flipped.
 
-## The residue, stated plainly
+## Negative control (added after external review) — the earlier PASS was wrong
+
+Zero above-chance predictability is the wrong standard: legitimate mathematics
+predicts where mistakes live. The real question is whether the planted step can
+be found WITHOUT checking the mathematics. The audit now runs the same
+classifier over content-destroying representations plus a position-only
+baseline.
+
+Run 1: FAIL. Lift survived digit masking; skeleton beat full text (24.2% vs
+17.2%, chance 9.4%). Causes: argmax broke ties by position, and M4/M9/M7
+targeted the only step of their shape, so the planted step could be pinned by
+kind.
+
+Run 2: the entire residue was positional — position_only scored exactly what
+full text scored.
+
+Final: full 4.7%, digits_masked 3.1%, digits_shuffled 4.7%, skeleton 3.1%,
+position_only 6.2%, against chance 5.4%. All at or below chance.
+
+This shows a lexical or positional reader has no signal. It does not show a
+semantically capable reader has none — but that reader would be doing the
+mathematics, which is the point.
+
+## The residue under the earlier, weaker standard
 
 +7.8% over chance is not zero. It sits in the two modulus families (M12 6/9,
 M7 5/9) and in domain widening (M4 4/10). Judging those steps takes one

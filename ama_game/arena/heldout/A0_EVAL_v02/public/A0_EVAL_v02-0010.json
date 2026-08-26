@@ -12,19 +12,19 @@
   "argument": [
     {
       "id": "s1",
-      "text": "At n = 0, (4*3^n + 1*6^n) = 5.",
+      "text": "For every integer n with 1 <= n <= 30, 2*n^2 is congruent to (2*n^2) + 21 modulo 7.",
       "depends_on": []
     },
     {
       "id": "s2",
-      "text": "At n = 1, (4*3^n + 1*6^n) = 18.",
+      "text": "At n = 2, n^3 + n = 10.",
       "depends_on": [
         "s1"
       ]
     },
     {
       "id": "s3",
-      "text": "For every integer n with 0 <= n <= 28, 4*3^(n+2) + 1*6^(n+2) equals 9*(4*3^(n+1) + 1*6^(n+1)) + (-18)*(4*3^n + 1*6^n).",
+      "text": "For every integer n with 1 <= n <= 30, if n mod 2 = 1 then (n^2) mod 2 = 1.",
       "depends_on": [
         "s1",
         "s2"
@@ -32,7 +32,7 @@
     },
     {
       "id": "s4",
-      "text": "At n = 2, n^3 + n = 10.",
+      "text": "For every integer n with 1 <= n <= 30, at least one of the following holds: n mod 2 = 0; n mod 2 = 1.",
       "depends_on": [
         "s2",
         "s3"
@@ -40,7 +40,7 @@
     },
     {
       "id": "s5",
-      "text": "There is a integer n with 1 <= n <= 30 for which n^2 > 10.",
+      "text": "For every integer n with 0 <= n <= 28, 4*3^(n+2) + 1*6^(n+2) equals 9*(4*3^(n+1) + 1*6^(n+1)) + (-18)*(4*3^n + 1*6^n).",
       "depends_on": [
         "s3",
         "s4"
@@ -48,7 +48,7 @@
     },
     {
       "id": "s6",
-      "text": "For every integer n with 1 <= n <= 30, (n-3)*(n^2) equals (n-3)*((n^2) + [n = 3]).",
+      "text": "For every integer n with 1 <= n <= 30, n^3 + 1 exceeds n^2.",
       "depends_on": [
         "s4",
         "s5"
@@ -56,7 +56,7 @@
     },
     {
       "id": "s7",
-      "text": "At n = 8, n^2 - n = 56.",
+      "text": "For every integer n with 1 <= n <= 30, if n mod 4 = 0 then (n*(n+1)/2) mod 2 = 0.",
       "depends_on": [
         "s5",
         "s6"
@@ -64,7 +64,7 @@
     },
     {
       "id": "s8",
-      "text": "For every integer n with 2 <= n <= 30, n^3 is at least 3*n.",
+      "text": "For every integer n with 1 <= n <= 30, n^3 + n is congruent to (n^3 + n) + 133 modulo 19.",
       "depends_on": [
         "s6",
         "s7"
@@ -72,7 +72,7 @@
     },
     {
       "id": "s9",
-      "text": "For every integer n with 1 <= n <= 30, at least one of the following holds: n mod 4 = 0; n mod 4 = 1; n mod 4 = 2; n mod 4 = 3.",
+      "text": "At n = 0, (4*3^n + 1*6^n) = 5.",
       "depends_on": [
         "s7",
         "s8"
@@ -80,7 +80,7 @@
     },
     {
       "id": "s10",
-      "text": "For every integer n with 1 <= n <= 30, 2*n^2 is congruent to (2*n^2) + 21 modulo 7.",
+      "text": "At n = 8, n^2 - n = 56.",
       "depends_on": [
         "s8",
         "s9"
@@ -88,10 +88,66 @@
     },
     {
       "id": "s11",
-      "text": "The steps above establish the statement up to 30, and it is taken to hold for the whole range up to 30.",
+      "text": "There is a integer n with 1 <= n <= 30 for which n^3 > 15.",
       "depends_on": [
         "s9",
         "s10"
+      ]
+    },
+    {
+      "id": "s12",
+      "text": "For every integer n with 1 <= n <= 30, at least one of the following holds: n mod 4 = 0; n mod 4 = 1; n mod 4 = 2; n mod 4 = 3.",
+      "depends_on": [
+        "s10",
+        "s11"
+      ]
+    },
+    {
+      "id": "s13",
+      "text": "For every integer n with 2 <= n <= 30, n^3 is at least 3*n.",
+      "depends_on": [
+        "s11",
+        "s12"
+      ]
+    },
+    {
+      "id": "s14",
+      "text": "For every integer n with 1 <= n <= 30, (n-4)*(n^2) equals (n-4)*((n^2) + [n = 4]).",
+      "depends_on": [
+        "s12",
+        "s13"
+      ]
+    },
+    {
+      "id": "s15",
+      "text": "There is a integer n with 1 <= n <= 30 for which n^2 > 15.",
+      "depends_on": [
+        "s13",
+        "s14"
+      ]
+    },
+    {
+      "id": "s16",
+      "text": "For every integer n with 1 <= n <= 30, (n-3)*(n^2) equals (n-3)*((n^2) + [n = 3]).",
+      "depends_on": [
+        "s14",
+        "s15"
+      ]
+    },
+    {
+      "id": "s17",
+      "text": "At n = 1, (4*3^n + 1*6^n) = 18.",
+      "depends_on": [
+        "s15",
+        "s16"
+      ]
+    },
+    {
+      "id": "s18",
+      "text": "The steps above establish the statement up to 30, and it is taken to hold for the whole range up to 30.",
+      "depends_on": [
+        "s16",
+        "s17"
       ]
     }
   ],

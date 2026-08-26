@@ -9,43 +9,44 @@
   "truth_method": "native enumeration with pow(a, n, m) over [0, N]",
   "argument_validity": "INVALID",
   "invalid_steps": [
-    "s2"
+    "s4",
+    "s8"
   ],
   "incomplete_steps": [],
   "planted_mutation_type": null,
   "mutation_target_step": null,
   "mutation_mechanism": null,
   "known_witness": {
-    "n": 12
+    "n": 8
   },
   "known_proof_sketch": null,
   "minimum_known_disposition_method": {
     "kind": "witness_search",
-    "cost_units": 13,
+    "cost_units": 9,
     "within_player_budget": true
   },
   "difficulty": {
-    "domain_size": 41,
-    "derivation_length": 9,
+    "domain_size": 81,
+    "derivation_length": 19,
     "player_search_budget": 200000
   },
   "params": {
-    "a": 16,
-    "m": 23,
-    "d_claimed": 12,
-    "d_true": 11,
-    "N": 40
+    "a": 8,
+    "m": 19,
+    "d_claimed": 8,
+    "d_true": 6,
+    "N": 80
   },
-  "claim_predicate": "pow(16, n, 23) == pow(16, n % 12, 23)",
+  "claim_predicate": "pow(8, n, 19) == pow(8, n % 8, 19)",
   "witness_var": "n",
   "domain_lo": 0,
-  "domain_hi": 40,
+  "domain_hi": 80,
   "notes": [],
   "generation": {
     "set_seed": 88041199,
     "item_seed": 202747835163909,
     "item_index": 6,
-    "generator_sha256": "03acac48df9bf3e9facf4f17095edf5cbf75e69dff80d17d4451c61ccea9c952",
+    "generator_sha256": "e0c336ae656d2bcbbdbd58fda85b5bcf0fecd103ffe69f3e27d71deab4ff371e",
     "protocol_version": "v0.2-alpha"
   }
 }

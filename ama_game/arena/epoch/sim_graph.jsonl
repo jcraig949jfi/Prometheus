@@ -1,306 +1,236 @@
-{"claim_id": "SIM-M2_illicit_cancellation-002", "epoch": 0, "family": "M2_illicit_cancellation", "id": "66dd03925aa7", "template": "t5_collatz_stopping_time", "type": "CLAIM"}
-{"epoch": 0, "id": "a4a38c277717", "seat": "BLUE_A", "target_step": "s3", "type": "ATTACK", "valid": false}
-{"dst": "66dd03925aa7", "rel": "ATTACKS", "src": "a4a38c277717", "type": "EDGE"}
+{"claim_id": "SIM-M2_illicit_cancellation-002", "epoch": 0, "family": "M2_illicit_cancellation", "id": "84f28c8bdae0", "template": "t1_integer_sum_identity", "type": "CLAIM"}
+{"epoch": 0, "id": "ab1e68ef51bf", "seat": "BLUE_A", "target_step": "s12", "type": "ATTACK", "valid": false}
+{"dst": "84f28c8bdae0", "rel": "ATTACKS", "src": "ab1e68ef51bf", "type": "EDGE"}
 {"bogus_caught": 0, "bogus_seen": 1, "epoch": 0, "id": "2b959dbf6cdb", "type": "AUDIT"}
-{"dst": "66dd03925aa7", "rel": "AUDITS", "src": "2b959dbf6cdb", "type": "EDGE"}
+{"dst": "84f28c8bdae0", "rel": "AUDITS", "src": "2b959dbf6cdb", "type": "EDGE"}
 {"claim_id": "SIM-M4_domain_widening-002", "epoch": 1, "family": "M4_domain_widening", "id": "236b8b1d78df", "template": "t5_collatz_stopping_time", "type": "CLAIM"}
-{"epoch": 1, "id": "64a45093eb10", "seat": "BLUE_B", "target_step": "s6", "type": "ATTACK", "valid": true}
-{"dst": "236b8b1d78df", "rel": "ATTACKS", "src": "64a45093eb10", "type": "EDGE"}
-{"dst": "236b8b1d78df", "rel": "FALSIFIES", "src": "64a45093eb10", "type": "EDGE"}
+{"epoch": 1, "id": "717ccf2d8866", "seat": "BLUE_B", "target_step": "s3", "type": "ATTACK", "valid": true}
+{"dst": "236b8b1d78df", "rel": "ATTACKS", "src": "717ccf2d8866", "type": "EDGE"}
+{"dst": "236b8b1d78df", "rel": "FALSIFIES", "src": "717ccf2d8866", "type": "EDGE"}
 {"bogus_caught": 0, "bogus_seen": 0, "epoch": 1, "id": "1debb6ef666b", "type": "AUDIT"}
 {"dst": "236b8b1d78df", "rel": "AUDITS", "src": "1debb6ef666b", "type": "EDGE"}
-{"claim_id": "SIM-M4_domain_widening-001", "epoch": 2, "family": "M4_domain_widening", "id": "346eacbba37f", "template": "t5_collatz_stopping_time", "type": "CLAIM"}
-{"epoch": 2, "id": "f80d327891f7", "seat": "BLUE_A", "target_step": "s2", "type": "ATTACK", "valid": false}
-{"dst": "346eacbba37f", "rel": "ATTACKS", "src": "f80d327891f7", "type": "EDGE"}
-{"epoch": 2, "id": "a642f77c8d18", "seat": "BLUE_B", "target_step": "s10", "type": "ATTACK", "valid": false}
-{"dst": "346eacbba37f", "rel": "ATTACKS", "src": "a642f77c8d18", "type": "EDGE"}
-{"bogus_caught": 2, "bogus_seen": 2, "epoch": 2, "id": "aa9e3136f9a3", "type": "AUDIT"}
-{"dst": "346eacbba37f", "rel": "AUDITS", "src": "aa9e3136f9a3", "type": "EDGE"}
-{"claim_id": "SIM-M8_off_by_one_boundary-003", "epoch": 3, "family": "M8_off_by_one_boundary", "id": "4940893fa9cb", "template": "t5_collatz_stopping_time", "type": "CLAIM"}
-{"epoch": 3, "id": "ac2bc34d50fd", "seat": "BLUE_A", "target_step": "s3", "type": "ATTACK", "valid": true}
-{"dst": "4940893fa9cb", "rel": "ATTACKS", "src": "ac2bc34d50fd", "type": "EDGE"}
-{"dst": "4940893fa9cb", "rel": "FALSIFIES", "src": "ac2bc34d50fd", "type": "EDGE"}
+{"claim_id": "SIM-M4_domain_widening-001", "epoch": 2, "family": "M4_domain_widening", "id": "6599d20952c7", "template": "t4_linear_recurrence", "type": "CLAIM"}
+{"epoch": 2, "id": "e501281b25c2", "seat": "BLUE_A", "target_step": "s3", "type": "ATTACK", "valid": false}
+{"dst": "6599d20952c7", "rel": "ATTACKS", "src": "e501281b25c2", "type": "EDGE"}
+{"epoch": 2, "id": "2c45931d8715", "seat": "BLUE_B", "target_step": "s17", "type": "ATTACK", "valid": false}
+{"dst": "6599d20952c7", "rel": "ATTACKS", "src": "2c45931d8715", "type": "EDGE"}
+{"bogus_caught": 1, "bogus_seen": 2, "epoch": 2, "id": "dc63ac38f629", "type": "AUDIT"}
+{"dst": "6599d20952c7", "rel": "AUDITS", "src": "dc63ac38f629", "type": "EDGE"}
+{"claim_id": "SIM-M7_unjustified_independence-002", "epoch": 3, "family": "M7_unjustified_independence", "id": "b123dbba9d3a", "template": "t2_modular_power_cycle", "type": "CLAIM"}
+{"epoch": 3, "id": "6dc2f4393494", "seat": "BLUE_B", "target_step": "s16", "type": "ATTACK", "valid": true}
+{"dst": "b123dbba9d3a", "rel": "ATTACKS", "src": "6dc2f4393494", "type": "EDGE"}
+{"dst": "b123dbba9d3a", "rel": "FALSIFIES", "src": "6dc2f4393494", "type": "EDGE"}
 {"bogus_caught": 0, "bogus_seen": 0, "epoch": 3, "id": "3e484f8ecb4b", "type": "AUDIT"}
-{"dst": "4940893fa9cb", "rel": "AUDITS", "src": "3e484f8ecb4b", "type": "EDGE"}
-{"claim_id": "SIM-M1_quantifier_strengthening-004", "epoch": 4, "family": "M1_quantifier_strengthening", "id": "04c79c7690ea", "template": "t1_integer_sum_identity", "type": "CLAIM"}
-{"epoch": 4, "id": "103a635a8ccc", "seat": "BLUE_B", "target_step": "s5", "type": "ATTACK", "valid": true}
-{"dst": "04c79c7690ea", "rel": "ATTACKS", "src": "103a635a8ccc", "type": "EDGE"}
-{"dst": "04c79c7690ea", "rel": "FALSIFIES", "src": "103a635a8ccc", "type": "EDGE"}
+{"dst": "b123dbba9d3a", "rel": "AUDITS", "src": "3e484f8ecb4b", "type": "EDGE"}
+{"claim_id": "SIM-M1_quantifier_strengthening-004", "epoch": 4, "family": "M1_quantifier_strengthening", "id": "23c796c73ce9", "template": "t5_collatz_stopping_time", "type": "CLAIM"}
+{"epoch": 4, "id": "7d3534ac6a1a", "seat": "BLUE_B", "target_step": "s14", "type": "ATTACK", "valid": true}
+{"dst": "23c796c73ce9", "rel": "ATTACKS", "src": "7d3534ac6a1a", "type": "EDGE"}
+{"dst": "23c796c73ce9", "rel": "FALSIFIES", "src": "7d3534ac6a1a", "type": "EDGE"}
 {"bogus_caught": 0, "bogus_seen": 0, "epoch": 4, "id": "a65a107b47cc", "type": "AUDIT"}
-{"dst": "04c79c7690ea", "rel": "AUDITS", "src": "a65a107b47cc", "type": "EDGE"}
-{"claim_id": "SIM-M2_illicit_cancellation-002", "epoch": 5, "family": "M2_illicit_cancellation", "id": "e67983977b49", "template": "t5_collatz_stopping_time", "type": "CLAIM"}
-{"epoch": 5, "id": "6d8bf8a5cafd", "seat": "BLUE_A", "target_step": "s5", "type": "ATTACK", "valid": true}
-{"dst": "e67983977b49", "rel": "ATTACKS", "src": "6d8bf8a5cafd", "type": "EDGE"}
-{"dst": "e67983977b49", "rel": "FALSIFIES", "src": "6d8bf8a5cafd", "type": "EDGE"}
+{"dst": "23c796c73ce9", "rel": "AUDITS", "src": "a65a107b47cc", "type": "EDGE"}
+{"claim_id": "SIM-M2_illicit_cancellation-002", "epoch": 5, "family": "M2_illicit_cancellation", "id": "613edc0aa4c8", "template": "t1_integer_sum_identity", "type": "CLAIM"}
+{"epoch": 5, "id": "47af8dea4549", "seat": "BLUE_A", "target_step": "s11", "type": "ATTACK", "valid": true}
+{"dst": "613edc0aa4c8", "rel": "ATTACKS", "src": "47af8dea4549", "type": "EDGE"}
+{"dst": "613edc0aa4c8", "rel": "FALSIFIES", "src": "47af8dea4549", "type": "EDGE"}
 {"bogus_caught": 0, "bogus_seen": 0, "epoch": 5, "id": "0d1ee550ed78", "type": "AUDIT"}
-{"dst": "e67983977b49", "rel": "AUDITS", "src": "0d1ee550ed78", "type": "EDGE"}
+{"dst": "613edc0aa4c8", "rel": "AUDITS", "src": "0d1ee550ed78", "type": "EDGE"}
 {"claim_id": "SIM-M6_case_cover_gap-001", "epoch": 6, "family": "M6_case_cover_gap", "id": "02a19aa1a7f7", "template": "t2_modular_power_cycle", "type": "CLAIM"}
-{"epoch": 6, "id": "b75a5d61803c", "seat": "BLUE_A", "target_step": "s5", "type": "ATTACK", "valid": true}
-{"dst": "02a19aa1a7f7", "rel": "ATTACKS", "src": "b75a5d61803c", "type": "EDGE"}
-{"dst": "02a19aa1a7f7", "rel": "FALSIFIES", "src": "b75a5d61803c", "type": "EDGE"}
+{"epoch": 6, "id": "bf4787068023", "seat": "BLUE_A", "target_step": "s4", "type": "ATTACK", "valid": true}
+{"dst": "02a19aa1a7f7", "rel": "ATTACKS", "src": "bf4787068023", "type": "EDGE"}
+{"dst": "02a19aa1a7f7", "rel": "FALSIFIES", "src": "bf4787068023", "type": "EDGE"}
 {"bogus_caught": 0, "bogus_seen": 0, "epoch": 6, "id": "39f4dab0f9e3", "type": "AUDIT"}
 {"dst": "02a19aa1a7f7", "rel": "AUDITS", "src": "39f4dab0f9e3", "type": "EDGE"}
-{"claim_id": "SIM-M2_illicit_cancellation-003", "epoch": 7, "family": "M2_illicit_cancellation", "id": "bd48e7dc017c", "template": "t4_linear_recurrence", "type": "CLAIM"}
-{"epoch": 7, "id": "971187f691ee", "seat": "BLUE_A", "target_step": "s6", "type": "ATTACK", "valid": true}
-{"dst": "bd48e7dc017c", "rel": "ATTACKS", "src": "971187f691ee", "type": "EDGE"}
-{"dst": "bd48e7dc017c", "rel": "FALSIFIES", "src": "971187f691ee", "type": "EDGE"}
-{"epoch": 7, "id": "de83fe8df8cf", "seat": "BLUE_B", "target_step": "s5", "type": "ATTACK", "valid": false}
-{"dst": "bd48e7dc017c", "rel": "ATTACKS", "src": "de83fe8df8cf", "type": "EDGE"}
+{"claim_id": "SIM-M2_illicit_cancellation-003", "epoch": 7, "family": "M2_illicit_cancellation", "id": "b8a746c8a575", "template": "t5_collatz_stopping_time", "type": "CLAIM"}
+{"epoch": 7, "id": "a7d1243bff1f", "seat": "BLUE_A", "target_step": "s11", "type": "ATTACK", "valid": true}
+{"dst": "b8a746c8a575", "rel": "ATTACKS", "src": "a7d1243bff1f", "type": "EDGE"}
+{"dst": "b8a746c8a575", "rel": "FALSIFIES", "src": "a7d1243bff1f", "type": "EDGE"}
+{"epoch": 7, "id": "285a64ba0e9d", "seat": "BLUE_B", "target_step": "s10", "type": "ATTACK", "valid": false}
+{"dst": "b8a746c8a575", "rel": "ATTACKS", "src": "285a64ba0e9d", "type": "EDGE"}
 {"bogus_caught": 0, "bogus_seen": 1, "epoch": 7, "id": "c1e44589ee7d", "type": "AUDIT"}
-{"dst": "bd48e7dc017c", "rel": "AUDITS", "src": "c1e44589ee7d", "type": "EDGE"}
-{"claim_id": "SIM-M8_off_by_one_boundary-004", "epoch": 8, "family": "M8_off_by_one_boundary", "id": "64af449c7534", "template": "t2_modular_power_cycle", "type": "CLAIM"}
+{"dst": "b8a746c8a575", "rel": "AUDITS", "src": "c1e44589ee7d", "type": "EDGE"}
+{"claim_id": "SIM-M8_off_by_one_boundary-004", "epoch": 8, "family": "M8_off_by_one_boundary", "id": "10ad8b75187d", "template": "t4_linear_recurrence", "type": "CLAIM"}
 {"bogus_caught": 0, "bogus_seen": 0, "epoch": 8, "id": "5ea1916f8698", "type": "AUDIT"}
-{"dst": "64af449c7534", "rel": "AUDITS", "src": "5ea1916f8698", "type": "EDGE"}
-{"claim_id": "SIM-M4_domain_widening-001", "epoch": 9, "family": "M4_domain_widening", "id": "00f32a5344f0", "template": "t5_collatz_stopping_time", "type": "CLAIM"}
+{"dst": "10ad8b75187d", "rel": "AUDITS", "src": "5ea1916f8698", "type": "EDGE"}
+{"claim_id": "SIM-M4_domain_widening-001", "epoch": 9, "family": "M4_domain_widening", "id": "bb8cc22cefec", "template": "t4_linear_recurrence", "type": "CLAIM"}
 {"bogus_caught": 0, "bogus_seen": 0, "epoch": 9, "id": "113e050f3e69", "type": "AUDIT"}
-{"dst": "00f32a5344f0", "rel": "AUDITS", "src": "113e050f3e69", "type": "EDGE"}
+{"dst": "bb8cc22cefec", "rel": "AUDITS", "src": "113e050f3e69", "type": "EDGE"}
 {"claim_id": "SIM-M8_off_by_one_boundary-005", "epoch": 10, "family": "M8_off_by_one_boundary", "id": "1045761ccde1", "template": "t1_integer_sum_identity", "type": "CLAIM"}
-{"epoch": 10, "id": "8fa9d01f7950", "seat": "BLUE_A", "target_step": "s1", "type": "ATTACK", "valid": true}
-{"dst": "1045761ccde1", "rel": "ATTACKS", "src": "8fa9d01f7950", "type": "EDGE"}
-{"dst": "1045761ccde1", "rel": "FALSIFIES", "src": "8fa9d01f7950", "type": "EDGE"}
+{"epoch": 10, "id": "9a30d5e7da3f", "seat": "BLUE_A", "target_step": "s16", "type": "ATTACK", "valid": true}
+{"dst": "1045761ccde1", "rel": "ATTACKS", "src": "9a30d5e7da3f", "type": "EDGE"}
+{"dst": "1045761ccde1", "rel": "FALSIFIES", "src": "9a30d5e7da3f", "type": "EDGE"}
 {"bogus_caught": 0, "bogus_seen": 0, "epoch": 10, "id": "7d71b8d8f77a", "type": "AUDIT"}
 {"dst": "1045761ccde1", "rel": "AUDITS", "src": "7d71b8d8f77a", "type": "EDGE"}
 {"defense": "D_instantiation_spotcheck", "designed_against": "M8_off_by_one_boundary", "epoch": 10, "id": "2ce973b7db74", "status": "PROMOTED", "type": "DEFENSE"}
 {"dst": "2ce973b7db74", "rel": "DEFENDED_BY", "src": "1045761ccde1", "type": "EDGE"}
-{"claim_id": "SIM-M3_invalid_converse-005", "epoch": 11, "family": "M3_invalid_converse", "id": "be77f161cbfc", "template": "t2_modular_power_cycle", "type": "CLAIM"}
-{"epoch": 11, "id": "8cd64cafd479", "seat": "BLUE_A", "target_step": "s7", "type": "ATTACK", "valid": false}
-{"dst": "be77f161cbfc", "rel": "ATTACKS", "src": "8cd64cafd479", "type": "EDGE"}
+{"claim_id": "SIM-M3_invalid_converse-005", "epoch": 11, "family": "M3_invalid_converse", "id": "f3053384a283", "template": "t5_collatz_stopping_time", "type": "CLAIM"}
+{"epoch": 11, "id": "da6b8ee1acaf", "seat": "BLUE_A", "target_step": "s12", "type": "ATTACK", "valid": false}
+{"dst": "f3053384a283", "rel": "ATTACKS", "src": "da6b8ee1acaf", "type": "EDGE"}
 {"bogus_caught": 0, "bogus_seen": 1, "epoch": 11, "id": "ddc4c50966c1", "type": "AUDIT"}
-{"dst": "be77f161cbfc", "rel": "AUDITS", "src": "ddc4c50966c1", "type": "EDGE"}
-{"dst": "promoted-set", "rel": "BYPASSES_DEFENSE", "src": "be77f161cbfc", "type": "EDGE"}
+{"dst": "f3053384a283", "rel": "AUDITS", "src": "ddc4c50966c1", "type": "EDGE"}
+{"dst": "promoted-set", "rel": "BYPASSES_DEFENSE", "src": "f3053384a283", "type": "EDGE"}
 {"claim_id": "SIM-M4_domain_widening-002", "epoch": 12, "family": "M4_domain_widening", "id": "8e767d7e5754", "template": "t5_collatz_stopping_time", "type": "CLAIM"}
-{"epoch": 12, "id": "12616cc5ca55", "seat": "BLUE_A", "target_step": "s6", "type": "ATTACK", "valid": true}
-{"dst": "8e767d7e5754", "rel": "ATTACKS", "src": "12616cc5ca55", "type": "EDGE"}
-{"dst": "8e767d7e5754", "rel": "FALSIFIES", "src": "12616cc5ca55", "type": "EDGE"}
+{"epoch": 12, "id": "009fe6ab7972", "seat": "BLUE_A", "target_step": "s3", "type": "ATTACK", "valid": true}
+{"dst": "8e767d7e5754", "rel": "ATTACKS", "src": "009fe6ab7972", "type": "EDGE"}
+{"dst": "8e767d7e5754", "rel": "FALSIFIES", "src": "009fe6ab7972", "type": "EDGE"}
 {"bogus_caught": 0, "bogus_seen": 0, "epoch": 12, "id": "cac5738f71fe", "type": "AUDIT"}
 {"dst": "8e767d7e5754", "rel": "AUDITS", "src": "cac5738f71fe", "type": "EDGE"}
-{"claim_id": "SIM-M7_unjustified_independence-005", "epoch": 13, "family": "M7_unjustified_independence", "id": "5c7d621a2930", "template": "t5_collatz_stopping_time", "type": "CLAIM"}
+{"claim_id": "SIM-M7_unjustified_independence-005", "epoch": 13, "family": "M7_unjustified_independence", "id": "b4144d1e54d0", "template": "t1_integer_sum_identity", "type": "CLAIM"}
 {"bogus_caught": 0, "bogus_seen": 0, "epoch": 13, "id": "150dab14d9d8", "type": "AUDIT"}
-{"dst": "5c7d621a2930", "rel": "AUDITS", "src": "150dab14d9d8", "type": "EDGE"}
-{"dst": "promoted-set", "rel": "BYPASSES_DEFENSE", "src": "5c7d621a2930", "type": "EDGE"}
+{"dst": "b4144d1e54d0", "rel": "AUDITS", "src": "150dab14d9d8", "type": "EDGE"}
+{"dst": "promoted-set", "rel": "BYPASSES_DEFENSE", "src": "b4144d1e54d0", "type": "EDGE"}
 {"claim_id": "SIM-M5_non_equivalent_rewrite-001", "epoch": 14, "family": "M5_non_equivalent_rewrite", "id": "4309562cdc56", "template": "t5_collatz_stopping_time", "type": "CLAIM"}
-{"epoch": 14, "id": "d3101b46ea27", "seat": "BLUE_A", "target_step": "s2", "type": "ATTACK", "valid": false}
-{"dst": "4309562cdc56", "rel": "ATTACKS", "src": "d3101b46ea27", "type": "EDGE"}
+{"epoch": 14, "id": "74f87ea0e11e", "seat": "BLUE_A", "target_step": "s4", "type": "ATTACK", "valid": false}
+{"dst": "4309562cdc56", "rel": "ATTACKS", "src": "74f87ea0e11e", "type": "EDGE"}
 {"bogus_caught": 0, "bogus_seen": 1, "epoch": 14, "id": "1f4b72b39703", "type": "AUDIT"}
 {"dst": "4309562cdc56", "rel": "AUDITS", "src": "1f4b72b39703", "type": "EDGE"}
 {"dst": "promoted-set", "rel": "BYPASSES_DEFENSE", "src": "4309562cdc56", "type": "EDGE"}
-{"claim_id": "SIM-M3_invalid_converse-003", "epoch": 15, "family": "M3_invalid_converse", "id": "bbf710ca233a", "template": "t1_integer_sum_identity", "type": "CLAIM"}
-{"epoch": 15, "id": "3c4fd47c4cdb", "seat": "BLUE_B", "target_step": "s4", "type": "ATTACK", "valid": true}
-{"dst": "bbf710ca233a", "rel": "ATTACKS", "src": "3c4fd47c4cdb", "type": "EDGE"}
-{"dst": "bbf710ca233a", "rel": "FALSIFIES", "src": "3c4fd47c4cdb", "type": "EDGE"}
-{"epoch": 15, "id": "9317a6b011da", "seat": "BLUE_A", "target_step": "s11", "type": "ATTACK", "valid": false}
-{"dst": "bbf710ca233a", "rel": "ATTACKS", "src": "9317a6b011da", "type": "EDGE"}
-{"bogus_caught": 1, "bogus_seen": 1, "epoch": 15, "id": "104fce4b7764", "type": "AUDIT"}
-{"dst": "bbf710ca233a", "rel": "AUDITS", "src": "104fce4b7764", "type": "EDGE"}
+{"claim_id": "SIM-M3_invalid_converse-003", "epoch": 15, "family": "M3_invalid_converse", "id": "0dabccf3ee5d", "template": "t5_collatz_stopping_time", "type": "CLAIM"}
+{"epoch": 15, "id": "17551fa6fcb5", "seat": "BLUE_B", "target_step": "s8", "type": "ATTACK", "valid": true}
+{"dst": "0dabccf3ee5d", "rel": "ATTACKS", "src": "17551fa6fcb5", "type": "EDGE"}
+{"dst": "0dabccf3ee5d", "rel": "FALSIFIES", "src": "17551fa6fcb5", "type": "EDGE"}
+{"epoch": 15, "id": "da782295a2ba", "seat": "BLUE_A", "target_step": "s1", "type": "ATTACK", "valid": false}
+{"dst": "0dabccf3ee5d", "rel": "ATTACKS", "src": "da782295a2ba", "type": "EDGE"}
+{"bogus_caught": 0, "bogus_seen": 1, "epoch": 15, "id": "5a156f608af1", "type": "AUDIT"}
+{"dst": "0dabccf3ee5d", "rel": "AUDITS", "src": "5a156f608af1", "type": "EDGE"}
 {"claim_id": "SIM-M2_illicit_cancellation-000", "epoch": 16, "family": "M2_illicit_cancellation", "id": "2eec3e0f98ef", "template": "t4_linear_recurrence", "type": "CLAIM"}
-{"epoch": 16, "id": "841986bbe70a", "seat": "BLUE_A", "target_step": "s8", "type": "ATTACK", "valid": false}
-{"dst": "2eec3e0f98ef", "rel": "ATTACKS", "src": "841986bbe70a", "type": "EDGE"}
-{"epoch": 16, "id": "7b1683ab37f7", "seat": "BLUE_B", "target_step": "s10", "type": "ATTACK", "valid": false}
-{"dst": "2eec3e0f98ef", "rel": "ATTACKS", "src": "7b1683ab37f7", "type": "EDGE"}
+{"epoch": 16, "id": "b40c6bec2e7b", "seat": "BLUE_A", "target_step": "s15", "type": "ATTACK", "valid": false}
+{"dst": "2eec3e0f98ef", "rel": "ATTACKS", "src": "b40c6bec2e7b", "type": "EDGE"}
+{"epoch": 16, "id": "c1efdb48bc3b", "seat": "BLUE_B", "target_step": "s18", "type": "ATTACK", "valid": false}
+{"dst": "2eec3e0f98ef", "rel": "ATTACKS", "src": "c1efdb48bc3b", "type": "EDGE"}
 {"bogus_caught": 2, "bogus_seen": 2, "epoch": 16, "id": "898ec74e1f8f", "type": "AUDIT"}
 {"dst": "2eec3e0f98ef", "rel": "AUDITS", "src": "898ec74e1f8f", "type": "EDGE"}
 {"dst": "promoted-set", "rel": "BYPASSES_DEFENSE", "src": "2eec3e0f98ef", "type": "EDGE"}
-{"claim_id": "SIM-M1_quantifier_strengthening-005", "epoch": 17, "family": "M1_quantifier_strengthening", "id": "99da6c4ffa2a", "template": "t1_integer_sum_identity", "type": "CLAIM"}
-{"epoch": 17, "id": "3b626fcc00b1", "seat": "BLUE_A", "target_step": "s3", "type": "ATTACK", "valid": true}
-{"dst": "99da6c4ffa2a", "rel": "ATTACKS", "src": "3b626fcc00b1", "type": "EDGE"}
-{"dst": "99da6c4ffa2a", "rel": "FALSIFIES", "src": "3b626fcc00b1", "type": "EDGE"}
+{"claim_id": "SIM-M1_quantifier_strengthening-005", "epoch": 17, "family": "M1_quantifier_strengthening", "id": "d59543c6d0aa", "template": "t5_collatz_stopping_time", "type": "CLAIM"}
+{"epoch": 17, "id": "4b6bda4e9d24", "seat": "BLUE_A", "target_step": "s4", "type": "ATTACK", "valid": true}
+{"dst": "d59543c6d0aa", "rel": "ATTACKS", "src": "4b6bda4e9d24", "type": "EDGE"}
+{"dst": "d59543c6d0aa", "rel": "FALSIFIES", "src": "4b6bda4e9d24", "type": "EDGE"}
 {"bogus_caught": 0, "bogus_seen": 0, "epoch": 17, "id": "834cd52db640", "type": "AUDIT"}
-{"dst": "99da6c4ffa2a", "rel": "AUDITS", "src": "834cd52db640", "type": "EDGE"}
-{"claim_id": "SIM-M1_quantifier_strengthening-003", "epoch": 18, "family": "M1_quantifier_strengthening", "id": "1e79d39f5f84", "template": "t5_collatz_stopping_time", "type": "CLAIM"}
-{"epoch": 18, "id": "feb9cec2abcf", "seat": "BLUE_A", "target_step": "s9", "type": "ATTACK", "valid": true}
-{"dst": "1e79d39f5f84", "rel": "ATTACKS", "src": "feb9cec2abcf", "type": "EDGE"}
-{"dst": "1e79d39f5f84", "rel": "FALSIFIES", "src": "feb9cec2abcf", "type": "EDGE"}
+{"dst": "d59543c6d0aa", "rel": "AUDITS", "src": "834cd52db640", "type": "EDGE"}
+{"claim_id": "SIM-M1_quantifier_strengthening-003", "epoch": 18, "family": "M1_quantifier_strengthening", "id": "81e663d43a11", "template": "t1_integer_sum_identity", "type": "CLAIM"}
+{"epoch": 18, "id": "2dc1eaabb7cc", "seat": "BLUE_A", "target_step": "s3", "type": "ATTACK", "valid": true}
+{"dst": "81e663d43a11", "rel": "ATTACKS", "src": "2dc1eaabb7cc", "type": "EDGE"}
+{"dst": "81e663d43a11", "rel": "FALSIFIES", "src": "2dc1eaabb7cc", "type": "EDGE"}
 {"bogus_caught": 0, "bogus_seen": 0, "epoch": 18, "id": "0a04fc1fa0e1", "type": "AUDIT"}
-{"dst": "1e79d39f5f84", "rel": "AUDITS", "src": "0a04fc1fa0e1", "type": "EDGE"}
-{"claim_id": "SIM-M6_case_cover_gap-003", "epoch": 19, "family": "M6_case_cover_gap", "id": "de713cc48509", "template": "t2_modular_power_cycle", "type": "CLAIM"}
-{"epoch": 19, "id": "3a7df7630689", "seat": "BLUE_B", "target_step": "s10", "type": "ATTACK", "valid": false}
-{"dst": "de713cc48509", "rel": "ATTACKS", "src": "3a7df7630689", "type": "EDGE"}
+{"dst": "81e663d43a11", "rel": "AUDITS", "src": "0a04fc1fa0e1", "type": "EDGE"}
+{"claim_id": "SIM-M6_case_cover_gap-003", "epoch": 19, "family": "M6_case_cover_gap", "id": "2b753282b3b9", "template": "t5_collatz_stopping_time", "type": "CLAIM"}
+{"epoch": 19, "id": "e37cb4587cb8", "seat": "BLUE_B", "target_step": "s16", "type": "ATTACK", "valid": false}
+{"dst": "2b753282b3b9", "rel": "ATTACKS", "src": "e37cb4587cb8", "type": "EDGE"}
 {"bogus_caught": 1, "bogus_seen": 1, "epoch": 19, "id": "6793070dcd82", "type": "AUDIT"}
-{"dst": "de713cc48509", "rel": "AUDITS", "src": "6793070dcd82", "type": "EDGE"}
-{"dst": "promoted-set", "rel": "BYPASSES_DEFENSE", "src": "de713cc48509", "type": "EDGE"}
-{"claim_id": "SIM-M6_case_cover_gap-003", "epoch": 20, "family": "M6_case_cover_gap", "id": "a68a34af5eb0", "template": "t2_modular_power_cycle", "type": "CLAIM"}
-{"epoch": 20, "id": "78bf53e93d4e", "seat": "BLUE_A", "target_step": "s4", "type": "ATTACK", "valid": true}
-{"dst": "a68a34af5eb0", "rel": "ATTACKS", "src": "78bf53e93d4e", "type": "EDGE"}
-{"dst": "a68a34af5eb0", "rel": "FALSIFIES", "src": "78bf53e93d4e", "type": "EDGE"}
-{"bogus_caught": 0, "bogus_seen": 0, "epoch": 20, "id": "17c014793bd5", "type": "AUDIT"}
-{"dst": "a68a34af5eb0", "rel": "AUDITS", "src": "17c014793bd5", "type": "EDGE"}
-{"claim_id": "SIM-M2_illicit_cancellation-004", "epoch": 21, "family": "M2_illicit_cancellation", "id": "bcc2bc960350", "template": "t5_collatz_stopping_time", "type": "CLAIM"}
-{"epoch": 21, "id": "6605f8bfbfb9", "seat": "BLUE_A", "target_step": "s8", "type": "ATTACK", "valid": true}
-{"dst": "bcc2bc960350", "rel": "ATTACKS", "src": "6605f8bfbfb9", "type": "EDGE"}
-{"dst": "bcc2bc960350", "rel": "FALSIFIES", "src": "6605f8bfbfb9", "type": "EDGE"}
+{"dst": "2b753282b3b9", "rel": "AUDITS", "src": "6793070dcd82", "type": "EDGE"}
+{"dst": "promoted-set", "rel": "BYPASSES_DEFENSE", "src": "2b753282b3b9", "type": "EDGE"}
+{"claim_id": "SIM-M5_non_equivalent_rewrite-003", "epoch": 20, "family": "M5_non_equivalent_rewrite", "id": "f31bc2f7239d", "template": "t5_collatz_stopping_time", "type": "CLAIM"}
+{"epoch": 20, "id": "ada77273b703", "seat": "BLUE_B", "target_step": "s2", "type": "ATTACK", "valid": false}
+{"dst": "f31bc2f7239d", "rel": "ATTACKS", "src": "ada77273b703", "type": "EDGE"}
+{"bogus_caught": 1, "bogus_seen": 1, "epoch": 20, "id": "cb3e4b4424af", "type": "AUDIT"}
+{"dst": "f31bc2f7239d", "rel": "AUDITS", "src": "cb3e4b4424af", "type": "EDGE"}
+{"dst": "promoted-set", "rel": "BYPASSES_DEFENSE", "src": "f31bc2f7239d", "type": "EDGE"}
+{"claim_id": "SIM-M2_illicit_cancellation-002", "epoch": 21, "family": "M2_illicit_cancellation", "id": "81cc8e47cb06", "template": "t1_integer_sum_identity", "type": "CLAIM"}
 {"bogus_caught": 0, "bogus_seen": 0, "epoch": 21, "id": "4627c5fb267e", "type": "AUDIT"}
-{"dst": "bcc2bc960350", "rel": "AUDITS", "src": "4627c5fb267e", "type": "EDGE"}
-{"claim_id": "SIM-M5_non_equivalent_rewrite-000", "epoch": 22, "family": "M5_non_equivalent_rewrite", "id": "f21fc21507c4", "template": "t5_collatz_stopping_time", "type": "CLAIM"}
-{"epoch": 22, "id": "15471ee25b1d", "seat": "BLUE_A", "target_step": "s7", "type": "ATTACK", "valid": true}
-{"dst": "f21fc21507c4", "rel": "ATTACKS", "src": "15471ee25b1d", "type": "EDGE"}
-{"dst": "f21fc21507c4", "rel": "FALSIFIES", "src": "15471ee25b1d", "type": "EDGE"}
-{"bogus_caught": 0, "bogus_seen": 0, "epoch": 22, "id": "5fe95df5e1d3", "type": "AUDIT"}
-{"dst": "f21fc21507c4", "rel": "AUDITS", "src": "5fe95df5e1d3", "type": "EDGE"}
-{"claim_id": "SIM-M6_case_cover_gap-003", "epoch": 23, "family": "M6_case_cover_gap", "id": "9b8c8fade580", "template": "t2_modular_power_cycle", "type": "CLAIM"}
-{"epoch": 23, "id": "c245d8dee866", "seat": "BLUE_B", "target_step": "s2", "type": "ATTACK", "valid": false}
-{"dst": "9b8c8fade580", "rel": "ATTACKS", "src": "c245d8dee866", "type": "EDGE"}
-{"bogus_caught": 0, "bogus_seen": 1, "epoch": 23, "id": "081d560f86e4", "type": "AUDIT"}
-{"dst": "9b8c8fade580", "rel": "AUDITS", "src": "081d560f86e4", "type": "EDGE"}
-{"dst": "promoted-set", "rel": "BYPASSES_DEFENSE", "src": "9b8c8fade580", "type": "EDGE"}
-{"claim_id": "SIM-M6_case_cover_gap-003", "epoch": 24, "family": "M6_case_cover_gap", "id": "70cc9a8329d9", "template": "t2_modular_power_cycle", "type": "CLAIM"}
-{"epoch": 24, "id": "bbb5aee33011", "seat": "BLUE_A", "target_step": "s10", "type": "ATTACK", "valid": false}
-{"dst": "70cc9a8329d9", "rel": "ATTACKS", "src": "bbb5aee33011", "type": "EDGE"}
+{"dst": "81cc8e47cb06", "rel": "AUDITS", "src": "4627c5fb267e", "type": "EDGE"}
+{"dst": "promoted-set", "rel": "BYPASSES_DEFENSE", "src": "81cc8e47cb06", "type": "EDGE"}
+{"claim_id": "SIM-M4_domain_widening-005", "epoch": 22, "family": "M4_domain_widening", "id": "c4499e4a2e06", "template": "t5_collatz_stopping_time", "type": "CLAIM"}
+{"epoch": 22, "id": "963d4618d5f8", "seat": "BLUE_A", "target_step": "s2", "type": "ATTACK", "valid": true}
+{"dst": "c4499e4a2e06", "rel": "ATTACKS", "src": "963d4618d5f8", "type": "EDGE"}
+{"dst": "c4499e4a2e06", "rel": "FALSIFIES", "src": "963d4618d5f8", "type": "EDGE"}
+{"epoch": 22, "id": "1853597f722a", "seat": "BLUE_B", "target_step": "s4", "type": "ATTACK", "valid": false}
+{"dst": "c4499e4a2e06", "rel": "ATTACKS", "src": "1853597f722a", "type": "EDGE"}
+{"bogus_caught": 0, "bogus_seen": 1, "epoch": 22, "id": "1e265ae22d95", "type": "AUDIT"}
+{"dst": "c4499e4a2e06", "rel": "AUDITS", "src": "1e265ae22d95", "type": "EDGE"}
+{"claim_id": "SIM-M4_domain_widening-002", "epoch": 23, "family": "M4_domain_widening", "id": "1746c47dbeae", "template": "t5_collatz_stopping_time", "type": "CLAIM"}
+{"epoch": 23, "id": "ce77d8eb8982", "seat": "BLUE_A", "target_step": "s3", "type": "ATTACK", "valid": true}
+{"dst": "1746c47dbeae", "rel": "ATTACKS", "src": "ce77d8eb8982", "type": "EDGE"}
+{"dst": "1746c47dbeae", "rel": "FALSIFIES", "src": "ce77d8eb8982", "type": "EDGE"}
+{"bogus_caught": 0, "bogus_seen": 0, "epoch": 23, "id": "e9ce81d25473", "type": "AUDIT"}
+{"dst": "1746c47dbeae", "rel": "AUDITS", "src": "e9ce81d25473", "type": "EDGE"}
+{"defense": "D_endpoint_spotcheck", "designed_against": "M4_domain_widening", "epoch": 23, "id": "169dd3ed3df2", "status": "PROMOTED", "type": "DEFENSE"}
+{"dst": "169dd3ed3df2", "rel": "DEFENDED_BY", "src": "1746c47dbeae", "type": "EDGE"}
+{"claim_id": "SIM-M6_case_cover_gap-001", "epoch": 24, "family": "M6_case_cover_gap", "id": "9e8a7e6f349d", "template": "t2_modular_power_cycle", "type": "CLAIM"}
+{"epoch": 24, "id": "dde49959bff2", "seat": "BLUE_A", "target_step": "s4", "type": "ATTACK", "valid": true}
+{"dst": "9e8a7e6f349d", "rel": "ATTACKS", "src": "dde49959bff2", "type": "EDGE"}
+{"dst": "9e8a7e6f349d", "rel": "FALSIFIES", "src": "dde49959bff2", "type": "EDGE"}
+{"epoch": 24, "id": "2c6cacfc9de3", "seat": "BLUE_B", "target_step": "s16", "type": "ATTACK", "valid": false}
+{"dst": "9e8a7e6f349d", "rel": "ATTACKS", "src": "2c6cacfc9de3", "type": "EDGE"}
 {"bogus_caught": 0, "bogus_seen": 1, "epoch": 24, "id": "a1001e91ec85", "type": "AUDIT"}
-{"dst": "70cc9a8329d9", "rel": "AUDITS", "src": "a1001e91ec85", "type": "EDGE"}
-{"dst": "promoted-set", "rel": "BYPASSES_DEFENSE", "src": "70cc9a8329d9", "type": "EDGE"}
-{"claim_id": "SIM-M7_unjustified_independence-003", "epoch": 25, "family": "M7_unjustified_independence", "id": "404bc809551c", "template": "t1_integer_sum_identity", "type": "CLAIM"}
-{"epoch": 25, "id": "ad05cc101cb4", "seat": "BLUE_A", "target_step": "s6", "type": "ATTACK", "valid": true}
-{"dst": "404bc809551c", "rel": "ATTACKS", "src": "ad05cc101cb4", "type": "EDGE"}
-{"dst": "404bc809551c", "rel": "FALSIFIES", "src": "ad05cc101cb4", "type": "EDGE"}
-{"epoch": 25, "id": "584f6d236e76", "seat": "BLUE_B", "target_step": "s6", "type": "ATTACK", "valid": true}
-{"dst": "404bc809551c", "rel": "ATTACKS", "src": "584f6d236e76", "type": "EDGE"}
-{"dst": "404bc809551c", "rel": "FALSIFIES", "src": "584f6d236e76", "type": "EDGE"}
+{"dst": "9e8a7e6f349d", "rel": "AUDITS", "src": "a1001e91ec85", "type": "EDGE"}
+{"claim_id": "SIM-M1_quantifier_strengthening-005", "epoch": 25, "family": "M1_quantifier_strengthening", "id": "02053c0b083b", "template": "t5_collatz_stopping_time", "type": "CLAIM"}
+{"epoch": 25, "id": "21faa4ba934b", "seat": "BLUE_A", "target_step": "s4", "type": "ATTACK", "valid": true}
+{"dst": "02053c0b083b", "rel": "ATTACKS", "src": "21faa4ba934b", "type": "EDGE"}
+{"dst": "02053c0b083b", "rel": "FALSIFIES", "src": "21faa4ba934b", "type": "EDGE"}
 {"bogus_caught": 0, "bogus_seen": 0, "epoch": 25, "id": "3750eebb15fd", "type": "AUDIT"}
-{"dst": "404bc809551c", "rel": "AUDITS", "src": "3750eebb15fd", "type": "EDGE"}
-{"claim_id": "SIM-M4_domain_widening-003", "epoch": 26, "family": "M4_domain_widening", "id": "371ea400294e", "template": "t4_linear_recurrence", "type": "CLAIM"}
-{"epoch": 26, "id": "ef5ddcece58f", "seat": "BLUE_B", "target_step": "s9", "type": "ATTACK", "valid": true}
-{"dst": "371ea400294e", "rel": "ATTACKS", "src": "ef5ddcece58f", "type": "EDGE"}
-{"dst": "371ea400294e", "rel": "FALSIFIES", "src": "ef5ddcece58f", "type": "EDGE"}
-{"bogus_caught": 0, "bogus_seen": 0, "epoch": 26, "id": "f1233966c776", "type": "AUDIT"}
-{"dst": "371ea400294e", "rel": "AUDITS", "src": "f1233966c776", "type": "EDGE"}
-{"defense": "D_endpoint_spotcheck", "designed_against": "M4_domain_widening", "epoch": 26, "id": "7090617d286c", "status": "PROMOTED", "type": "DEFENSE"}
-{"dst": "7090617d286c", "rel": "DEFENDED_BY", "src": "371ea400294e", "type": "EDGE"}
-{"claim_id": "SIM-M1_quantifier_strengthening-003", "epoch": 27, "family": "M1_quantifier_strengthening", "id": "203f625166ae", "template": "t5_collatz_stopping_time", "type": "CLAIM"}
-{"epoch": 27, "id": "03d26f056779", "seat": "BLUE_A", "target_step": "s1", "type": "ATTACK", "valid": false}
-{"dst": "203f625166ae", "rel": "ATTACKS", "src": "03d26f056779", "type": "EDGE"}
-{"bogus_caught": 0, "bogus_seen": 1, "epoch": 27, "id": "911cb9d71639", "type": "AUDIT"}
-{"dst": "203f625166ae", "rel": "AUDITS", "src": "911cb9d71639", "type": "EDGE"}
-{"dst": "promoted-set", "rel": "BYPASSES_DEFENSE", "src": "203f625166ae", "type": "EDGE"}
-{"claim_id": "SIM-M6_case_cover_gap-004", "epoch": 28, "family": "M6_case_cover_gap", "id": "f8990a601d96", "template": "t2_modular_power_cycle", "type": "CLAIM"}
-{"epoch": 28, "id": "1a903401f58a", "seat": "BLUE_A", "target_step": "s3", "type": "ATTACK", "valid": true}
-{"dst": "f8990a601d96", "rel": "ATTACKS", "src": "1a903401f58a", "type": "EDGE"}
-{"dst": "f8990a601d96", "rel": "FALSIFIES", "src": "1a903401f58a", "type": "EDGE"}
-{"epoch": 28, "id": "79429ced2f48", "seat": "BLUE_B", "target_step": "s3", "type": "ATTACK", "valid": true}
-{"dst": "f8990a601d96", "rel": "ATTACKS", "src": "79429ced2f48", "type": "EDGE"}
-{"dst": "f8990a601d96", "rel": "FALSIFIES", "src": "79429ced2f48", "type": "EDGE"}
+{"dst": "02053c0b083b", "rel": "AUDITS", "src": "3750eebb15fd", "type": "EDGE"}
+{"claim_id": "SIM-M1_quantifier_strengthening-004", "epoch": 26, "family": "M1_quantifier_strengthening", "id": "6c3d8cc73eea", "template": "t5_collatz_stopping_time", "type": "CLAIM"}
+{"epoch": 26, "id": "a7f3814f2789", "seat": "BLUE_A", "target_step": "s15", "type": "ATTACK", "valid": false}
+{"dst": "6c3d8cc73eea", "rel": "ATTACKS", "src": "a7f3814f2789", "type": "EDGE"}
+{"bogus_caught": 1, "bogus_seen": 1, "epoch": 26, "id": "0e3840325a8b", "type": "AUDIT"}
+{"dst": "6c3d8cc73eea", "rel": "AUDITS", "src": "0e3840325a8b", "type": "EDGE"}
+{"dst": "promoted-set", "rel": "BYPASSES_DEFENSE", "src": "6c3d8cc73eea", "type": "EDGE"}
+{"claim_id": "SIM-M6_case_cover_gap-003", "epoch": 27, "family": "M6_case_cover_gap", "id": "f87d77f5c7d2", "template": "t5_collatz_stopping_time", "type": "CLAIM"}
+{"epoch": 27, "id": "7167887be6ff", "seat": "BLUE_B", "target_step": "s14", "type": "ATTACK", "valid": false}
+{"dst": "f87d77f5c7d2", "rel": "ATTACKS", "src": "7167887be6ff", "type": "EDGE"}
+{"bogus_caught": 1, "bogus_seen": 1, "epoch": 27, "id": "16438e4853ef", "type": "AUDIT"}
+{"dst": "f87d77f5c7d2", "rel": "AUDITS", "src": "16438e4853ef", "type": "EDGE"}
+{"dst": "promoted-set", "rel": "BYPASSES_DEFENSE", "src": "f87d77f5c7d2", "type": "EDGE"}
+{"claim_id": "SIM-M6_case_cover_gap-000", "epoch": 28, "family": "M6_case_cover_gap", "id": "6eb6c226083b", "template": "t2_modular_power_cycle", "type": "CLAIM"}
 {"bogus_caught": 0, "bogus_seen": 0, "epoch": 28, "id": "6f0170ef8401", "type": "AUDIT"}
-{"dst": "f8990a601d96", "rel": "AUDITS", "src": "6f0170ef8401", "type": "EDGE"}
-{"claim_id": "SIM-M6_case_cover_gap-005", "epoch": 29, "family": "M6_case_cover_gap", "id": "8c7c6b24aa4f", "template": "t5_collatz_stopping_time", "type": "CLAIM"}
-{"epoch": 29, "id": "30618a367769", "seat": "BLUE_A", "target_step": "s7", "type": "ATTACK", "valid": true}
-{"dst": "8c7c6b24aa4f", "rel": "ATTACKS", "src": "30618a367769", "type": "EDGE"}
-{"dst": "8c7c6b24aa4f", "rel": "FALSIFIES", "src": "30618a367769", "type": "EDGE"}
-{"epoch": 29, "id": "8d670cc5725b", "seat": "BLUE_B", "target_step": "s9", "type": "ATTACK", "valid": false}
-{"dst": "8c7c6b24aa4f", "rel": "ATTACKS", "src": "8d670cc5725b", "type": "EDGE"}
-{"bogus_caught": 1, "bogus_seen": 1, "epoch": 29, "id": "647c68a46e33", "type": "AUDIT"}
-{"dst": "8c7c6b24aa4f", "rel": "AUDITS", "src": "647c68a46e33", "type": "EDGE"}
-{"claim_id": "SIM-M3_invalid_converse-004", "epoch": 30, "family": "M3_invalid_converse", "id": "feb97522f6f0", "template": "t1_integer_sum_identity", "type": "CLAIM"}
-{"epoch": 30, "id": "14d1cc955867", "seat": "BLUE_A", "target_step": "s11", "type": "ATTACK", "valid": true}
-{"dst": "feb97522f6f0", "rel": "ATTACKS", "src": "14d1cc955867", "type": "EDGE"}
-{"dst": "feb97522f6f0", "rel": "FALSIFIES", "src": "14d1cc955867", "type": "EDGE"}
-{"epoch": 30, "id": "235928d7ccb6", "seat": "BLUE_B", "target_step": "s4", "type": "ATTACK", "valid": false}
-{"dst": "feb97522f6f0", "rel": "ATTACKS", "src": "235928d7ccb6", "type": "EDGE"}
-{"bogus_caught": 1, "bogus_seen": 1, "epoch": 30, "id": "dc6c4991eea6", "type": "AUDIT"}
-{"dst": "feb97522f6f0", "rel": "AUDITS", "src": "dc6c4991eea6", "type": "EDGE"}
-{"claim_id": "SIM-M6_case_cover_gap-005", "epoch": 31, "family": "M6_case_cover_gap", "id": "54a7062b6ceb", "template": "t5_collatz_stopping_time", "type": "CLAIM"}
-{"epoch": 31, "id": "d20103103eb8", "seat": "BLUE_B", "target_step": "s7", "type": "ATTACK", "valid": true}
-{"dst": "54a7062b6ceb", "rel": "ATTACKS", "src": "d20103103eb8", "type": "EDGE"}
-{"dst": "54a7062b6ceb", "rel": "FALSIFIES", "src": "d20103103eb8", "type": "EDGE"}
+{"dst": "6eb6c226083b", "rel": "AUDITS", "src": "6f0170ef8401", "type": "EDGE"}
+{"dst": "promoted-set", "rel": "BYPASSES_DEFENSE", "src": "6eb6c226083b", "type": "EDGE"}
+{"claim_id": "SIM-M6_case_cover_gap-001", "epoch": 29, "family": "M6_case_cover_gap", "id": "230f47364660", "template": "t2_modular_power_cycle", "type": "CLAIM"}
+{"epoch": 29, "id": "6951983a9863", "seat": "BLUE_A", "target_step": "s4", "type": "ATTACK", "valid": true}
+{"dst": "230f47364660", "rel": "ATTACKS", "src": "6951983a9863", "type": "EDGE"}
+{"dst": "230f47364660", "rel": "FALSIFIES", "src": "6951983a9863", "type": "EDGE"}
+{"bogus_caught": 0, "bogus_seen": 0, "epoch": 29, "id": "4147e845faae", "type": "AUDIT"}
+{"dst": "230f47364660", "rel": "AUDITS", "src": "4147e845faae", "type": "EDGE"}
+{"claim_id": "SIM-M6_case_cover_gap-005", "epoch": 30, "family": "M6_case_cover_gap", "id": "e1bbb757d5d5", "template": "t1_integer_sum_identity", "type": "CLAIM"}
+{"epoch": 30, "id": "c2ce8fa6f25a", "seat": "BLUE_B", "target_step": "s2", "type": "ATTACK", "valid": true}
+{"dst": "e1bbb757d5d5", "rel": "ATTACKS", "src": "c2ce8fa6f25a", "type": "EDGE"}
+{"dst": "e1bbb757d5d5", "rel": "FALSIFIES", "src": "c2ce8fa6f25a", "type": "EDGE"}
+{"bogus_caught": 0, "bogus_seen": 0, "epoch": 30, "id": "de0446429790", "type": "AUDIT"}
+{"dst": "e1bbb757d5d5", "rel": "AUDITS", "src": "de0446429790", "type": "EDGE"}
+{"claim_id": "SIM-M2_illicit_cancellation-001", "epoch": 31, "family": "M2_illicit_cancellation", "id": "03d010992afa", "template": "t5_collatz_stopping_time", "type": "CLAIM"}
+{"epoch": 31, "id": "0a826f143898", "seat": "BLUE_A", "target_step": "s16", "type": "ATTACK", "valid": true}
+{"dst": "03d010992afa", "rel": "ATTACKS", "src": "0a826f143898", "type": "EDGE"}
+{"dst": "03d010992afa", "rel": "FALSIFIES", "src": "0a826f143898", "type": "EDGE"}
 {"bogus_caught": 0, "bogus_seen": 0, "epoch": 31, "id": "608046d6246c", "type": "AUDIT"}
-{"dst": "54a7062b6ceb", "rel": "AUDITS", "src": "608046d6246c", "type": "EDGE"}
-{"claim_id": "SIM-M2_illicit_cancellation-001", "epoch": 32, "family": "M2_illicit_cancellation", "id": "3b7e631b9613", "template": "t1_integer_sum_identity", "type": "CLAIM"}
-{"epoch": 32, "id": "4294af2b3e81", "seat": "BLUE_A", "target_step": "s5", "type": "ATTACK", "valid": true}
-{"dst": "3b7e631b9613", "rel": "ATTACKS", "src": "4294af2b3e81", "type": "EDGE"}
-{"dst": "3b7e631b9613", "rel": "FALSIFIES", "src": "4294af2b3e81", "type": "EDGE"}
+{"dst": "03d010992afa", "rel": "AUDITS", "src": "608046d6246c", "type": "EDGE"}
+{"claim_id": "SIM-M2_illicit_cancellation-000", "epoch": 32, "family": "M2_illicit_cancellation", "id": "9261c4da504f", "template": "t4_linear_recurrence", "type": "CLAIM"}
+{"epoch": 32, "id": "8259e3bfd663", "seat": "BLUE_B", "target_step": "s10", "type": "ATTACK", "valid": true}
+{"dst": "9261c4da504f", "rel": "ATTACKS", "src": "8259e3bfd663", "type": "EDGE"}
+{"dst": "9261c4da504f", "rel": "FALSIFIES", "src": "8259e3bfd663", "type": "EDGE"}
 {"bogus_caught": 0, "bogus_seen": 0, "epoch": 32, "id": "aec9aa45e2f5", "type": "AUDIT"}
-{"dst": "3b7e631b9613", "rel": "AUDITS", "src": "aec9aa45e2f5", "type": "EDGE"}
-{"claim_id": "SIM-M2_illicit_cancellation-000", "epoch": 33, "family": "M2_illicit_cancellation", "id": "c6bd8cbb55d0", "template": "t4_linear_recurrence", "type": "CLAIM"}
-{"epoch": 33, "id": "b077522bc095", "seat": "BLUE_B", "target_step": "s6", "type": "ATTACK", "valid": true}
-{"dst": "c6bd8cbb55d0", "rel": "ATTACKS", "src": "b077522bc095", "type": "EDGE"}
-{"dst": "c6bd8cbb55d0", "rel": "FALSIFIES", "src": "b077522bc095", "type": "EDGE"}
+{"dst": "9261c4da504f", "rel": "AUDITS", "src": "aec9aa45e2f5", "type": "EDGE"}
+{"claim_id": "SIM-M6_case_cover_gap-003", "epoch": 33, "family": "M6_case_cover_gap", "id": "62b3cea0a9cd", "template": "t5_collatz_stopping_time", "type": "CLAIM"}
+{"epoch": 33, "id": "af51932faeca", "seat": "BLUE_B", "target_step": "s15", "type": "ATTACK", "valid": true}
+{"dst": "62b3cea0a9cd", "rel": "ATTACKS", "src": "af51932faeca", "type": "EDGE"}
+{"dst": "62b3cea0a9cd", "rel": "FALSIFIES", "src": "af51932faeca", "type": "EDGE"}
 {"bogus_caught": 0, "bogus_seen": 0, "epoch": 33, "id": "2d9299bc058c", "type": "AUDIT"}
-{"dst": "c6bd8cbb55d0", "rel": "AUDITS", "src": "2d9299bc058c", "type": "EDGE"}
-{"claim_id": "SIM-M6_case_cover_gap-003", "epoch": 34, "family": "M6_case_cover_gap", "id": "21fb24509391", "template": "t2_modular_power_cycle", "type": "CLAIM"}
-{"epoch": 34, "id": "bfd886e60dac", "seat": "BLUE_B", "target_step": "s4", "type": "ATTACK", "valid": true}
-{"dst": "21fb24509391", "rel": "ATTACKS", "src": "bfd886e60dac", "type": "EDGE"}
-{"dst": "21fb24509391", "rel": "FALSIFIES", "src": "bfd886e60dac", "type": "EDGE"}
-{"bogus_caught": 0, "bogus_seen": 0, "epoch": 34, "id": "3be1f95b0edd", "type": "AUDIT"}
-{"dst": "21fb24509391", "rel": "AUDITS", "src": "3be1f95b0edd", "type": "EDGE"}
-{"claim_id": "SIM-M2_illicit_cancellation-001", "epoch": 35, "family": "M2_illicit_cancellation", "id": "33ea728f0043", "template": "t1_integer_sum_identity", "type": "CLAIM"}
-{"epoch": 35, "id": "468d4fddb378", "seat": "BLUE_B", "target_step": "s10", "type": "ATTACK", "valid": false}
-{"dst": "33ea728f0043", "rel": "ATTACKS", "src": "468d4fddb378", "type": "EDGE"}
-{"bogus_caught": 0, "bogus_seen": 1, "epoch": 35, "id": "01d7cf1ad3d0", "type": "AUDIT"}
-{"dst": "33ea728f0043", "rel": "AUDITS", "src": "01d7cf1ad3d0", "type": "EDGE"}
-{"dst": "promoted-set", "rel": "BYPASSES_DEFENSE", "src": "33ea728f0043", "type": "EDGE"}
-{"claim_id": "SIM-M3_invalid_converse-002", "epoch": 36, "family": "M3_invalid_converse", "id": "eb091d83aab2", "template": "t2_modular_power_cycle", "type": "CLAIM"}
-{"epoch": 36, "id": "6e20aefadbbc", "seat": "BLUE_B", "target_step": "s10", "type": "ATTACK", "valid": true}
-{"dst": "eb091d83aab2", "rel": "ATTACKS", "src": "6e20aefadbbc", "type": "EDGE"}
-{"dst": "eb091d83aab2", "rel": "FALSIFIES", "src": "6e20aefadbbc", "type": "EDGE"}
+{"dst": "62b3cea0a9cd", "rel": "AUDITS", "src": "2d9299bc058c", "type": "EDGE"}
+{"claim_id": "SIM-M2_illicit_cancellation-001", "epoch": 34, "family": "M2_illicit_cancellation", "id": "f00a7d17aee8", "template": "t5_collatz_stopping_time", "type": "CLAIM"}
+{"epoch": 34, "id": "96bdcd72a4b9", "seat": "BLUE_B", "target_step": "s7", "type": "ATTACK", "valid": false}
+{"dst": "f00a7d17aee8", "rel": "ATTACKS", "src": "96bdcd72a4b9", "type": "EDGE"}
+{"bogus_caught": 1, "bogus_seen": 1, "epoch": 34, "id": "69e9d787b443", "type": "AUDIT"}
+{"dst": "f00a7d17aee8", "rel": "AUDITS", "src": "69e9d787b443", "type": "EDGE"}
+{"dst": "promoted-set", "rel": "BYPASSES_DEFENSE", "src": "f00a7d17aee8", "type": "EDGE"}
+{"claim_id": "SIM-M1_quantifier_strengthening-000", "epoch": 35, "family": "M1_quantifier_strengthening", "id": "0dfd0debe00d", "template": "t1_integer_sum_identity", "type": "CLAIM"}
+{"epoch": 35, "id": "0fff3ca8549b", "seat": "BLUE_A", "target_step": "s12", "type": "ATTACK", "valid": true}
+{"dst": "0dfd0debe00d", "rel": "ATTACKS", "src": "0fff3ca8549b", "type": "EDGE"}
+{"dst": "0dfd0debe00d", "rel": "FALSIFIES", "src": "0fff3ca8549b", "type": "EDGE"}
+{"bogus_caught": 0, "bogus_seen": 0, "epoch": 35, "id": "3d8461d13589", "type": "AUDIT"}
+{"dst": "0dfd0debe00d", "rel": "AUDITS", "src": "3d8461d13589", "type": "EDGE"}
+{"claim_id": "SIM-M3_invalid_converse-001", "epoch": 36, "family": "M3_invalid_converse", "id": "dd5c1b28d547", "template": "t1_integer_sum_identity", "type": "CLAIM"}
 {"bogus_caught": 0, "bogus_seen": 0, "epoch": 36, "id": "1f093369f26b", "type": "AUDIT"}
-{"dst": "eb091d83aab2", "rel": "AUDITS", "src": "1f093369f26b", "type": "EDGE"}
-{"claim_id": "SIM-M3_invalid_converse-001", "epoch": 37, "family": "M3_invalid_converse", "id": "59eae9a24e89", "template": "t1_integer_sum_identity", "type": "CLAIM"}
-{"bogus_caught": 0, "bogus_seen": 0, "epoch": 37, "id": "86cab9ce0285", "type": "AUDIT"}
-{"dst": "59eae9a24e89", "rel": "AUDITS", "src": "86cab9ce0285", "type": "EDGE"}
-{"dst": "promoted-set", "rel": "BYPASSES_DEFENSE", "src": "59eae9a24e89", "type": "EDGE"}
-{"claim_id": "SIM-M6_case_cover_gap-004", "epoch": 38, "family": "M6_case_cover_gap", "id": "9c526d74edfc", "template": "t2_modular_power_cycle", "type": "CLAIM"}
-{"epoch": 38, "id": "27563139fcdb", "seat": "BLUE_A", "target_step": "s11", "type": "ATTACK", "valid": false}
-{"dst": "9c526d74edfc", "rel": "ATTACKS", "src": "27563139fcdb", "type": "EDGE"}
-{"bogus_caught": 0, "bogus_seen": 1, "epoch": 38, "id": "41bbef0cb713", "type": "AUDIT"}
-{"dst": "9c526d74edfc", "rel": "AUDITS", "src": "41bbef0cb713", "type": "EDGE"}
-{"dst": "promoted-set", "rel": "BYPASSES_DEFENSE", "src": "9c526d74edfc", "type": "EDGE"}
-{"claim_id": "SIM-M1_quantifier_strengthening-004", "epoch": 39, "family": "M1_quantifier_strengthening", "id": "bd99643bdc3a", "template": "t1_integer_sum_identity", "type": "CLAIM"}
+{"dst": "dd5c1b28d547", "rel": "AUDITS", "src": "1f093369f26b", "type": "EDGE"}
+{"dst": "promoted-set", "rel": "BYPASSES_DEFENSE", "src": "dd5c1b28d547", "type": "EDGE"}
+{"claim_id": "SIM-M6_case_cover_gap-004", "epoch": 37, "family": "M6_case_cover_gap", "id": "76ca35b79bc5", "template": "t2_modular_power_cycle", "type": "CLAIM"}
+{"epoch": 37, "id": "747305d6f38d", "seat": "BLUE_A", "target_step": "s19", "type": "ATTACK", "valid": false}
+{"dst": "76ca35b79bc5", "rel": "ATTACKS", "src": "747305d6f38d", "type": "EDGE"}
+{"bogus_caught": 1, "bogus_seen": 1, "epoch": 37, "id": "8e2513edd9fc", "type": "AUDIT"}
+{"dst": "76ca35b79bc5", "rel": "AUDITS", "src": "8e2513edd9fc", "type": "EDGE"}
+{"dst": "promoted-set", "rel": "BYPASSES_DEFENSE", "src": "76ca35b79bc5", "type": "EDGE"}
+{"claim_id": "SIM-M1_quantifier_strengthening-004", "epoch": 38, "family": "M1_quantifier_strengthening", "id": "ef6f5fde9d13", "template": "t5_collatz_stopping_time", "type": "CLAIM"}
+{"bogus_caught": 0, "bogus_seen": 0, "epoch": 38, "id": "6976f5231fdd", "type": "AUDIT"}
+{"dst": "ef6f5fde9d13", "rel": "AUDITS", "src": "6976f5231fdd", "type": "EDGE"}
+{"dst": "promoted-set", "rel": "BYPASSES_DEFENSE", "src": "ef6f5fde9d13", "type": "EDGE"}
+{"claim_id": "SIM-M3_invalid_converse-001", "epoch": 39, "family": "M3_invalid_converse", "id": "4802ca290844", "template": "t1_integer_sum_identity", "type": "CLAIM"}
 {"bogus_caught": 0, "bogus_seen": 0, "epoch": 39, "id": "a6bde02558af", "type": "AUDIT"}
-{"dst": "bd99643bdc3a", "rel": "AUDITS", "src": "a6bde02558af", "type": "EDGE"}
-{"dst": "promoted-set", "rel": "BYPASSES_DEFENSE", "src": "bd99643bdc3a", "type": "EDGE"}
-{"claim_id": "SIM-M3_invalid_converse-001", "epoch": 40, "family": "M3_invalid_converse", "id": "a2e05c0ba28a", "template": "t1_integer_sum_identity", "type": "CLAIM"}
-{"bogus_caught": 0, "bogus_seen": 0, "epoch": 40, "id": "2754f3ac9fad", "type": "AUDIT"}
-{"dst": "a2e05c0ba28a", "rel": "AUDITS", "src": "2754f3ac9fad", "type": "EDGE"}
-{"dst": "promoted-set", "rel": "BYPASSES_DEFENSE", "src": "a2e05c0ba28a", "type": "EDGE"}
-{"claim_id": "SIM-M1_quantifier_strengthening-002", "epoch": 41, "family": "M1_quantifier_strengthening", "id": "300032bc161e", "template": "t1_integer_sum_identity", "type": "CLAIM"}
-{"bogus_caught": 0, "bogus_seen": 0, "epoch": 41, "id": "d3d3a29ef144", "type": "AUDIT"}
-{"dst": "300032bc161e", "rel": "AUDITS", "src": "d3d3a29ef144", "type": "EDGE"}
-{"dst": "promoted-set", "rel": "BYPASSES_DEFENSE", "src": "300032bc161e", "type": "EDGE"}
-{"claim_id": "SIM-M6_case_cover_gap-005", "epoch": 42, "family": "M6_case_cover_gap", "id": "ad82e17353ca", "template": "t5_collatz_stopping_time", "type": "CLAIM"}
-{"epoch": 42, "id": "a9011232c7a0", "seat": "BLUE_A", "target_step": "s5", "type": "ATTACK", "valid": false}
-{"dst": "ad82e17353ca", "rel": "ATTACKS", "src": "a9011232c7a0", "type": "EDGE"}
-{"bogus_caught": 1, "bogus_seen": 1, "epoch": 42, "id": "5f8079829d1d", "type": "AUDIT"}
-{"dst": "ad82e17353ca", "rel": "AUDITS", "src": "5f8079829d1d", "type": "EDGE"}
-{"dst": "promoted-set", "rel": "BYPASSES_DEFENSE", "src": "ad82e17353ca", "type": "EDGE"}
-{"claim_id": "SIM-M3_invalid_converse-005", "epoch": 43, "family": "M3_invalid_converse", "id": "063ff9565296", "template": "t2_modular_power_cycle", "type": "CLAIM"}
-{"epoch": 43, "id": "c23b394efd0c", "seat": "BLUE_A", "target_step": "s6", "type": "ATTACK", "valid": true}
-{"dst": "063ff9565296", "rel": "ATTACKS", "src": "c23b394efd0c", "type": "EDGE"}
-{"dst": "063ff9565296", "rel": "FALSIFIES", "src": "c23b394efd0c", "type": "EDGE"}
-{"bogus_caught": 0, "bogus_seen": 0, "epoch": 43, "id": "d83eab7aa087", "type": "AUDIT"}
-{"dst": "063ff9565296", "rel": "AUDITS", "src": "d83eab7aa087", "type": "EDGE"}
-{"claim_id": "SIM-M2_illicit_cancellation-000", "epoch": 44, "family": "M2_illicit_cancellation", "id": "3aa128e1a191", "template": "t4_linear_recurrence", "type": "CLAIM"}
-{"epoch": 44, "id": "0c261a795890", "seat": "BLUE_A", "target_step": "s6", "type": "ATTACK", "valid": true}
-{"dst": "3aa128e1a191", "rel": "ATTACKS", "src": "0c261a795890", "type": "EDGE"}
-{"dst": "3aa128e1a191", "rel": "FALSIFIES", "src": "0c261a795890", "type": "EDGE"}
-{"epoch": 44, "id": "a45ea402987d", "seat": "BLUE_B", "target_step": "s6", "type": "ATTACK", "valid": true}
-{"dst": "3aa128e1a191", "rel": "ATTACKS", "src": "a45ea402987d", "type": "EDGE"}
-{"dst": "3aa128e1a191", "rel": "FALSIFIES", "src": "a45ea402987d", "type": "EDGE"}
-{"bogus_caught": 0, "bogus_seen": 0, "epoch": 44, "id": "f2a19a752c34", "type": "AUDIT"}
-{"dst": "3aa128e1a191", "rel": "AUDITS", "src": "f2a19a752c34", "type": "EDGE"}
-{"claim_id": "SIM-M2_illicit_cancellation-000", "epoch": 45, "family": "M2_illicit_cancellation", "id": "a8b2b9cd85c0", "template": "t4_linear_recurrence", "type": "CLAIM"}
-{"bogus_caught": 0, "bogus_seen": 0, "epoch": 45, "id": "0411a8895f52", "type": "AUDIT"}
-{"dst": "a8b2b9cd85c0", "rel": "AUDITS", "src": "0411a8895f52", "type": "EDGE"}
-{"dst": "promoted-set", "rel": "BYPASSES_DEFENSE", "src": "a8b2b9cd85c0", "type": "EDGE"}
-{"claim_id": "SIM-M1_quantifier_strengthening-003", "epoch": 46, "family": "M1_quantifier_strengthening", "id": "0b16d6615397", "template": "t5_collatz_stopping_time", "type": "CLAIM"}
-{"epoch": 46, "id": "cb1a147c212a", "seat": "BLUE_A", "target_step": "s9", "type": "ATTACK", "valid": true}
-{"dst": "0b16d6615397", "rel": "ATTACKS", "src": "cb1a147c212a", "type": "EDGE"}
-{"dst": "0b16d6615397", "rel": "FALSIFIES", "src": "cb1a147c212a", "type": "EDGE"}
-{"epoch": 46, "id": "74bada9b5f62", "seat": "BLUE_B", "target_step": "s9", "type": "ATTACK", "valid": true}
-{"dst": "0b16d6615397", "rel": "ATTACKS", "src": "74bada9b5f62", "type": "EDGE"}
-{"dst": "0b16d6615397", "rel": "FALSIFIES", "src": "74bada9b5f62", "type": "EDGE"}
-{"bogus_caught": 0, "bogus_seen": 0, "epoch": 46, "id": "4e9e843988bb", "type": "AUDIT"}
-{"dst": "0b16d6615397", "rel": "AUDITS", "src": "4e9e843988bb", "type": "EDGE"}
-{"claim_id": "SIM-M3_invalid_converse-004", "epoch": 47, "family": "M3_invalid_converse", "id": "403114886471", "template": "t1_integer_sum_identity", "type": "CLAIM"}
-{"epoch": 47, "id": "88dd120d158e", "seat": "BLUE_A", "target_step": "s5", "type": "ATTACK", "valid": false}
-{"dst": "403114886471", "rel": "ATTACKS", "src": "88dd120d158e", "type": "EDGE"}
-{"bogus_caught": 1, "bogus_seen": 1, "epoch": 47, "id": "ad8b006d86fb", "type": "AUDIT"}
-{"dst": "403114886471", "rel": "AUDITS", "src": "ad8b006d86fb", "type": "EDGE"}
-{"dst": "promoted-set", "rel": "BYPASSES_DEFENSE", "src": "403114886471", "type": "EDGE"}
-{"claim_id": "SIM-M1_quantifier_strengthening-000", "epoch": 48, "family": "M1_quantifier_strengthening", "id": "5390f0f52f40", "template": "t1_integer_sum_identity", "type": "CLAIM"}
-{"epoch": 48, "id": "72b9fb6e78fe", "seat": "BLUE_B", "target_step": "s3", "type": "ATTACK", "valid": true}
-{"dst": "5390f0f52f40", "rel": "ATTACKS", "src": "72b9fb6e78fe", "type": "EDGE"}
-{"dst": "5390f0f52f40", "rel": "FALSIFIES", "src": "72b9fb6e78fe", "type": "EDGE"}
-{"bogus_caught": 0, "bogus_seen": 0, "epoch": 48, "id": "185cfc452301", "type": "AUDIT"}
-{"dst": "5390f0f52f40", "rel": "AUDITS", "src": "185cfc452301", "type": "EDGE"}
-{"claim_id": "SIM-M1_quantifier_strengthening-001", "epoch": 49, "family": "M1_quantifier_strengthening", "id": "cfd9b38d9553", "template": "t4_linear_recurrence", "type": "CLAIM"}
-{"bogus_caught": 0, "bogus_seen": 0, "epoch": 49, "id": "d765a8458ad5", "type": "AUDIT"}
-{"dst": "cfd9b38d9553", "rel": "AUDITS", "src": "d765a8458ad5", "type": "EDGE"}
-{"dst": "promoted-set", "rel": "BYPASSES_DEFENSE", "src": "cfd9b38d9553", "type": "EDGE"}
+{"dst": "4802ca290844", "rel": "AUDITS", "src": "a6bde02558af", "type": "EDGE"}
+{"dst": "promoted-set", "rel": "BYPASSES_DEFENSE", "src": "4802ca290844", "type": "EDGE"}

@@ -39,12 +39,46 @@ LEGACY_TELLS = ["CONVERSE:", "Cancelling the factor", "the same estimate is take
                 "is anchored by checking", "by transitivity", "satisfies n^2 >"]
 
 
+def ablate(text: str, mode: str, rng: random.Random) -> str:
+    """Representations that keep surface form and destroy mathematical content.
+
+    The decisive question is not whether the planted step is predictable — a
+    domain-widening step SHOULD attract scrutiny, and legitimate mathematics
+    predicts where mistakes live. The question is whether it can be identified
+    WITHOUT checking the mathematics. These ablations answer it:
+
+      full             the step as written
+      digits_masked    every numeral -> '#'. Arithmetic relations destroyed,
+                       syntax, kind, length and word choice preserved.
+      digits_shuffled  every numeral -> a random numeral of the same width.
+                       Numbers still present, relations between them gone.
+      skeleton         numerals masked AND every identifier collapsed. Only the
+                       grammatical frame of the step survives.
+
+    If the lift survives digit masking, something identifies the planted step
+    without arithmetic, and that is leakage. If the lift disappears and returns
+    only when real digits return, the residue is mathematics.
+    """
+    if mode == "full":
+        return text
+    if mode == "digits_masked":
+        return re.sub(r"\d+", "#", text)
+    if mode == "digits_shuffled":
+        return re.sub(r"\d+",
+                      lambda m: "".join(str(rng.randint(0, 9)) for _ in m.group()),
+                      text)
+    if mode == "skeleton":
+        t = re.sub(r"\d+", "#", text)
+        return re.sub(r"[a-zA-Z_]{1,3}", "V", t)
+    raise ValueError(mode)
+
+
 def tokens(text: str) -> list[str]:
     words = re.findall(r"[A-Za-z_]+|\d+|[<>=^+*/%-]+", text.lower())
     return words + [f"{a}|{b}" for a, b in zip(words, words[1:])]
 
 
-def build_items(n: int, seed: int, gen_dir: Path) -> list[dict]:
+def build_items(n: int, seed: int, gen_dir: Path, fast: bool = False) -> list[dict]:
     sys.path.insert(0, str(gen_dir))
     for m in ("templates", "mutations", "generate", "derivation", "exprlang",
               "oracle", "render"):
@@ -56,7 +90,9 @@ def build_items(n: int, seed: int, gen_dir: Path) -> list[dict]:
     rng = random.Random(seed)
     fams = MUT.PLAY_FAMILIES + MUT.HOLDOUT_FAMILIES
     tids = ["t1_integer_sum_identity", "t2_modular_power_cycle",
-            "t4_linear_recurrence", "t5_collatz_stopping_time"]
+            "t4_linear_recurrence"]
+    if not fast:
+        tids.append("t5_collatz_stopping_time")   # exhaustive sweeps: slow
     budget = GEN.budget_search_size()
     out, tries = [], 0
     while len(out) < n and tries < n * 20:
@@ -72,13 +108,13 @@ def build_items(n: int, seed: int, gen_dir: Path) -> list[dict]:
     return out
 
 
-def train_nb(items: list[dict]):
+def train_nb(items: list[dict], mode="full", rng=None):
     pos, neg = Counter(), Counter()
     npos = nneg = 0
     for it in items:
         for s in it["steps"]:
             bag = pos if s["id"] == it["target"] else neg
-            bag.update(tokens(s["text"]))
+            bag.update(tokens(ablate(s["text"], mode, rng)))
             if s["id"] == it["target"]:
                 npos += 1
             else:
@@ -106,28 +142,62 @@ def main() -> int:
     p.add_argument("--seed", type=int, default=17)
     p.add_argument("--generator-dir", default=str(HERE))
     p.add_argument("--label", default="current")
+    p.add_argument("--fast", action="store_true",
+                   help="skip the iterated-map template, whose exhaustive "
+                        "sweeps dominate build time and carry no extra prose")
     args = p.parse_args()
 
-    items = build_items(args.items, args.seed, Path(args.generator_dir).resolve())
+    items = build_items(args.items, args.seed, Path(args.generator_dir).resolve(),
+                        args.fast)
     rng = random.Random(args.seed)
     rng.shuffle(items)
     cut = int(len(items) * 0.6)
     train, test = items[:cut], items[cut:]
 
-    lp, ln, prior, vocab = train_nb(train)
+    ablations = {}
+    for mode in ("full", "digits_masked", "digits_shuffled", "skeleton"):
+        arng = random.Random(99)
+        lp, ln, prior, vocab = train_nb(train, mode, arng)
+        arng = random.Random(99)
+        hits, chance, per_family = 0, 0.0, defaultdict(lambda: [0, 0])
+        for it in test:
+            shuffled = list(it["steps"])
+            arng.shuffle(shuffled)          # break score ties at random, not by
+            ranked = max(shuffled,          # position: argmax on equal scores
+                         key=lambda s: score(ablate(s["text"], mode, arng),
+                                             lp, ln, prior, vocab))
+            ok = ranked["id"] == it["target"]
+            hits += ok
+            chance += 1 / len(it["steps"])
+            per_family[it["family"]][0] += ok
+            per_family[it["family"]][1] += 1
+        ablations[mode] = {"top1": hits / len(test), "chance": chance / len(test),
+                           "by_family": dict(per_family)}
+        if mode == "full":
+            full_family = per_family
 
-    hits, chance, per_family = 0, 0.0, defaultdict(lambda: [0, 0])
-    for it in test:
-        ranked = max(it["steps"],
-                     key=lambda s: score(s["text"], lp, ln, prior, vocab))
-        ok = ranked["id"] == it["target"]
-        hits += ok
-        chance += 1 / len(it["steps"])
-        per_family[it["family"]][0] += ok
-        per_family[it["family"]][1] += 1
-
+    lp, ln, prior, vocab = train_nb(train, "full", random.Random(99))
+    per_family = full_family
     n = len(test)
-    acc, ch = hits / n, chance / n
+    acc, ch = ablations["full"]["top1"], ablations["full"]["chance"]
+
+    # positional baseline: index alone, no text whatsoever
+    pos_counts, pos_tot = Counter(), Counter()
+    for it in train:
+        for i, st in enumerate(it["steps"]):
+            pos_tot[i] += 1
+            if st["id"] == it["target"]:
+                pos_counts[i] += 1
+    prng2 = random.Random(5)
+    phits, pch = 0, 0.0
+    for it in test:
+        idx = list(range(len(it["steps"])))
+        prng2.shuffle(idx)
+        best = max(idx, key=lambda i: (pos_counts[i] + 1) / (pos_tot[i] + 2))
+        phits += it["steps"][best]["id"] == it["target"]
+        pch += 1 / len(it["steps"])
+    ablations["position_only"] = {"top1": phits / len(test),
+                                  "chance": pch / len(test), "by_family": {}}
 
     legacy = sum(1 for it in items
                  if any(t in s["text"] for t in LEGACY_TELLS
@@ -157,13 +227,47 @@ def main() -> int:
     L.append("  most planted-indicative tokens (judge these by hand):")
     L.append("    " + ", ".join(repr(w) for w in disc))
     L.append("")
-    if acc - ch < 0.10:
-        L.append("VERDICT: prose carries no usable signature. A falsifier cannot")
-        L.append("skip the mathematics by reading style.")
+    L.append("NEGATIVE CONTROL — is the residue mathematics, or leakage?")
+    L.append("  Same classifier on representations that keep surface form and")
+    L.append("  destroy mathematical content. Leakage survives digit masking;")
+    L.append("  mathematics does not.")
+    L.append("")
+    L.append(f"    {'representation':<18s} {'top-1':>8s} {'chance':>8s} {'lift':>8s}")
+    for mode, r in ablations.items():
+        L.append(f"    {mode:<18s} {r['top1']:>7.1%} {r['chance']:>8.1%} "
+                 f"{r['top1'] - r['chance']:>+8.1%}")
+    L.append("")
+    sk = ablations["skeleton"]["by_family"]
+    if sk:
+        L.append("  which families are identifiable with ALL content destroyed:")
+        for fam, (h, t) in sorted(sk.items(), key=lambda kv: -kv[1][0] / max(1, kv[1][1])):
+            if t:
+                L.append(f"    {fam.split('_')[0]:<4s} {h}/{t}  "
+                         f"{h/t:>5.0%}")
+        L.append("")
+
+    masked_lift = ablations["digits_masked"]["top1"] - ablations["digits_masked"]["chance"]
+    skel_lift = ablations["skeleton"]["top1"] - ablations["skeleton"]["chance"]
+    full_lift = acc - ch
+    content_dependent = full_lift - max(masked_lift, skel_lift)
+
+    L.append(f"  lift that requires real digits: {content_dependent:+.1%}")
+    L.append(f"  lift surviving content removal: {max(masked_lift, skel_lift):+.1%}")
+    L.append("")
+    if max(masked_lift, skel_lift) < 0.04:
+        L.append("VERDICT: PASS. The residual signal disappears once arithmetic")
+        L.append("content is destroyed and returns only when real digits return.")
+        L.append("The planted step cannot be found without checking the")
+        L.append("mathematics, which is the standard that matters. Above-chance")
+        L.append("predictability from content is not leakage - legitimate")
+        L.append("mathematics predicts where mistakes live.")
+    elif max(masked_lift, skel_lift) < 0.10:
+        L.append("VERDICT: UNRESOLVED. Some signal survives content removal, but")
+        L.append("weakly. Neither a clean pass nor a demonstrated fingerprint.")
+        L.append("Do not report this as fixed.")
     else:
-        L.append("VERDICT: the prose still leaks. Inspect the tokens above and")
-        L.append("decide whether the residue is mathematical content a reader")
-        L.append("should legitimately see, or a tic of the mutation operator.")
+        L.append("VERDICT: FAIL. The planted step is identifiable with the")
+        L.append("arithmetic destroyed, so a falsifier can skip the mathematics.")
 
     text = "\n".join(L)
     print(text)
@@ -173,7 +277,9 @@ def main() -> int:
         "legacy_grep_rate": legacy / len(items),
         "classifier_top1": acc, "chance": ch, "lift": acc - ch,
         "by_family": {k: v for k, v in per_family.items()},
-        "top_tokens": disc,
+        "top_tokens": disc, "ablations": ablations,
+        "lift_requiring_digits": content_dependent,
+        "lift_surviving_content_removal": max(masked_lift, skel_lift),
     }, indent=2) + "\n", encoding="utf-8", newline="\n")
     return 0
 

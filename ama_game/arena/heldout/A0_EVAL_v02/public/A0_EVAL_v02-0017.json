@@ -12,19 +12,19 @@
   "argument": [
     {
       "id": "s1",
-      "text": "For every integer n with 1 <= n <= 50, the stopping time of n is less than 182.",
+      "text": "There is a integer n with 1 <= n <= 1571 for which n^2 > 1571.",
       "depends_on": []
     },
     {
       "id": "s2",
-      "text": "For every integer n with 1 <= n <= 1571, the stopping time of n is less than 182.",
+      "text": "For every integer n with 2 <= n <= 1571, n^2 is at least 2*n.",
       "depends_on": [
         "s1"
       ]
     },
     {
       "id": "s3",
-      "text": "At n = 6, n^3 + n = 222.",
+      "text": "For every integer n with 1 <= n <= 1571, if n mod 4 = 0 then (n*(n+1)/2) mod 2 = 0.",
       "depends_on": [
         "s1",
         "s2"
@@ -32,7 +32,7 @@
     },
     {
       "id": "s4",
-      "text": "For every integer n with 1 <= n <= 1571, n^3 + n is congruent to (n^3 + n) + 34 modulo 17.",
+      "text": "For every integer n with 1 <= n <= 1571, if n mod 2 = 1 then (n^2) mod 2 = 1.",
       "depends_on": [
         "s2",
         "s3"
@@ -40,7 +40,7 @@
     },
     {
       "id": "s5",
-      "text": "For every integer n with 1 <= n <= 1571, n^2 equals (n^2) + [n = 3].",
+      "text": "For every integer n with 1 <= n <= 1571, the stopping time of n is less than 182.",
       "depends_on": [
         "s3",
         "s4"
@@ -48,7 +48,7 @@
     },
     {
       "id": "s6",
-      "text": "For every integer n with 1 <= n <= 1571, n^2 is at least n.",
+      "text": "For every integer n with 1 <= n <= 1571, (n-4)*(2*n^2) equals (n-4)*((2*n^2) + [n = 4]).",
       "depends_on": [
         "s4",
         "s5"
@@ -56,7 +56,7 @@
     },
     {
       "id": "s7",
-      "text": "There is a integer n with 1 <= n <= 1571 for which n^2 > 1571.",
+      "text": "For every integer n with 1 <= n <= 1571, at least one of the following holds: n mod 3 = 0; n mod 3 = 1; n mod 3 = 2.",
       "depends_on": [
         "s5",
         "s6"
@@ -64,7 +64,7 @@
     },
     {
       "id": "s8",
-      "text": "For every integer n with 1 <= n <= 1571, at least one of the following holds: n mod 2 = 0; n mod 2 = 1.",
+      "text": "At n = 6, n^3 + n = 222.",
       "depends_on": [
         "s6",
         "s7"
@@ -72,7 +72,7 @@
     },
     {
       "id": "s9",
-      "text": "At n = 2, n^3 - n = 6.",
+      "text": "For every integer n with 1 <= n <= 1571, at least one of the following holds: n mod 2 = 0; n mod 2 = 1.",
       "depends_on": [
         "s7",
         "s8"
@@ -80,7 +80,7 @@
     },
     {
       "id": "s10",
-      "text": "For every integer n with 1 <= n <= 1571, if n mod 4 = 0 then (n*(n+1)/2) mod 2 = 0.",
+      "text": "For every integer n with 1 <= n <= 50, the stopping time of n is less than 182.",
       "depends_on": [
         "s8",
         "s9"
@@ -88,10 +88,58 @@
     },
     {
       "id": "s11",
-      "text": "The steps above establish the statement up to 1571, and it is taken to hold for the whole range up to 1571.",
+      "text": "For every integer n with 1 <= n <= 1571, n^3 + n is congruent to (n^3 + n) + 34 modulo 17.",
       "depends_on": [
         "s9",
         "s10"
+      ]
+    },
+    {
+      "id": "s12",
+      "text": "For every integer n with 1 <= n <= 1571, n^3 is congruent to (n^3) + 66 modulo 33.",
+      "depends_on": [
+        "s10",
+        "s11"
+      ]
+    },
+    {
+      "id": "s13",
+      "text": "There is a integer n with 1 <= n <= 1571 for which n^3 > 523.",
+      "depends_on": [
+        "s11",
+        "s12"
+      ]
+    },
+    {
+      "id": "s14",
+      "text": "At n = 2, n^3 - n = 6.",
+      "depends_on": [
+        "s12",
+        "s13"
+      ]
+    },
+    {
+      "id": "s15",
+      "text": "For every integer n with 1 <= n <= 1571, n^2 is at least n.",
+      "depends_on": [
+        "s13",
+        "s14"
+      ]
+    },
+    {
+      "id": "s16",
+      "text": "For every integer n with 1 <= n <= 1571, n^2 equals (n^2) + [n = 3].",
+      "depends_on": [
+        "s14",
+        "s15"
+      ]
+    },
+    {
+      "id": "s17",
+      "text": "The steps above establish the statement up to 1571, and it is taken to hold for the whole range up to 1571.",
+      "depends_on": [
+        "s15",
+        "s16"
       ]
     }
   ],

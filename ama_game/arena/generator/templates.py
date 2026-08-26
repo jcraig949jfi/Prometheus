@@ -69,9 +69,14 @@ def step(sid: str, tag: str, text: str, check: dict, depends_on=()) -> dict:
 def _assemble(rng: random.Random, base: list[dict], engine: list[dict],
               aux: list[dict], conclusion: list[dict]) -> list[dict]:
     """Order steps, shuffling the auxiliary block so position is not a tell."""
-    keep = [a for a in aux if rng.random() < 0.75]
-    rng.shuffle(keep)
-    ordered = base + engine + keep + conclusion
+    keep = list(aux)   # keep all: a varying step count is a shape cue
+    # Base and engine steps go into the shuffle too. Holding them at fixed early
+    # indices made step POSITION identify the planted step as well as the text
+    # did -- the negative control found position_only scoring exactly what the
+    # full text classifier scored. Only the concluding step keeps its place.
+    body = base + engine + keep
+    rng.shuffle(body)
+    ordered = body + conclusion
     for i, s in enumerate(ordered, start=1):
         s["id"] = f"s{i}"
     for i, s in enumerate(ordered):
@@ -144,43 +149,64 @@ def generic_aux(rng: random.Random, lo: int, hi: int) -> list[dict]:
     div2 = [d for d in range(2, C2) if C2 % d == 0]
     m2 = rng.choice(div2) if div2 else 2
 
-    return [
+    ilhs2, irhs2, iop2, ilo2 = rng.choice(ineqs)
+    ilo2 = max(ilo2, lo) if lo > 0 else ilo2
+    d = rng.choice([2, 3, 4])
+    d2 = rng.choice([2, 3, 4])
+    f3 = rng.choice(["n**2", "n**3", "n*(n+1)", "n**2 + n", "2*n**2"])
+
+    # Two of every targetable kind, with independent parameters, and none of
+    # them dropped. A single instance of a kind lets a reader pin the planted
+    # step by naming its SHAPE: the negative control found M4 at 100% and M9 at
+    # 73% with all arithmetic destroyed, purely because they targeted the one
+    # inequality-shaped step in the derivation.
+    out = [
         step("", "aux_inequality", "",
              {"kind": "forall_inequality", "var": "n", "lo": ilo, "hi": hi,
               "lhs": ilhs, "rhs": irhs, "op": iop}),
+        step("", "aux_inequality2", "",
+             {"kind": "forall_inequality", "var": "n", "lo": ilo2, "hi": hi,
+              "lhs": ilhs2, "rhs": irhs2, "op": iop2}),
         step("", "aux_exists", "",
              {"kind": "exists_pred", "var": "n", "lo": lo, "hi": hi,
               "pred": f"n**2 > {max(1, hi // rng.choice([1, 2, 3]))}"}),
+        step("", "aux_exists2", "",
+             {"kind": "exists_pred", "var": "n", "lo": lo, "hi": hi,
+              "pred": f"n**3 > {max(1, hi // rng.choice([2, 3, 4]))}"}),
         step("", "aux_cases", "",
              {"kind": "case_cover", "var": "n", "lo": lo, "hi": hi,
-              "cases": [f"n % {d} == {r}" for r in range(d)]
-              if (d := rng.choice([2, 3, 4])) else []}),
+              "cases": [f"n % {d} == {r}" for r in range(d)]}),
+        step("", "aux_cases2", "",
+             {"kind": "case_cover", "var": "n", "lo": lo, "hi": hi,
+              "cases": [f"n % {d2} == {r}" for r in range(d2)]}),
         step("", "aux_congruence", "",
              {"kind": "congruence", "var": "n", "lo": lo, "hi": hi,
               "lhs": f, "rhs": f"({f}) + {C}", "modulus": m}),
-        # a second congruence and a second point check, with independent
-        # parameters. With one of each, a reader could pin the planted step by
-        # naming its KIND -- the audit showed exactly that, M7 and M12 scoring
-        # 9/9 while M3 and M6 scored 0. Two of each leaves a coin flip that only
-        # arithmetic can settle.
         step("", "aux_congruence2", "",
              {"kind": "congruence", "var": "n", "lo": lo, "hi": hi,
               "lhs": f2, "rhs": f"({f2}) + {C2}", "modulus": m2}),
-        step("", "worked_value2", "",
-             {"kind": "instantiation", "var": "n", "lo": lo1, "hi": hi,
-              "point": pt2, "pred": f"n**{k2} + n == {pt2**k2 + pt2}"}),
         step("", "aux_implication", "",
              {"kind": "forall_implication", "var": "n", "lo": lo1, "hi": hi,
-              "ante": "n % 4 == 0",
-              "cons": "(n*(n+1)//2) % 2 == 0"}),
+              "ante": "n % 4 == 0", "cons": "(n*(n+1)//2) % 2 == 0"}),
+        step("", "aux_implication2", "",
+             {"kind": "forall_implication", "var": "n", "lo": lo1, "hi": hi,
+              "ante": "n % 2 == 1", "cons": "(n**2) % 2 == 1"}),
         step("", "cancellable", "",
              {"kind": "forall_identity", "var": "n", "lo": lo1, "hi": hi,
               "lhs": "(n-3)*(n**2)",
               "rhs": "(n-3)*((n**2) + (1 if n == 3 else 0))"}),
+        step("", "cancellable2", "",
+             {"kind": "forall_identity", "var": "n", "lo": lo1, "hi": hi,
+              "lhs": f"(n-4)*({f3})",
+              "rhs": f"(n-4)*(({f3}) + (1 if n == 4 else 0))"}),
         step("", "worked_value", "",
              {"kind": "instantiation", "var": "n", "lo": lo1, "hi": hi,
               "point": pt, "pred": f"n**{k} - n == {pt**k - pt}"}),
+        step("", "worked_value2", "",
+             {"kind": "instantiation", "var": "n", "lo": lo1, "hi": hi,
+              "point": pt2, "pred": f"n**{k2} + n == {pt2**k2 + pt2}"}),
     ]
+    return out
 
 
 # ==========================================================================

@@ -13,19 +13,19 @@
   "argument": [
     {
       "id": "s1",
-      "text": "At n = 1, the sum of k^1 for k = 1..n = 1.",
+      "text": "For every integer n with 1 <= n <= 30, (n-4)*(n^2) equals (n-4)*((n^2) + [n = 4]).",
       "depends_on": []
     },
     {
       "id": "s2",
-      "text": "For every integer n with 1 <= n <= 29, ((n+1)*((n+1)+1)/2) - (n*(n+1)/2) equals (n+1)^1.",
+      "text": "For every integer n with 1 <= n <= 30, at least one of the following holds: n mod 2 = 0; n mod 2 = 1.",
       "depends_on": [
         "s1"
       ]
     },
     {
       "id": "s3",
-      "text": "For every integer n with 1 <= n <= 30, n^2 + n is congruent to (n^2 + n) + 437 modulo 19.",
+      "text": "There is a integer n with 1 <= n <= 30 for which n^3 > 7.",
       "depends_on": [
         "s1",
         "s2"
@@ -33,7 +33,7 @@
     },
     {
       "id": "s4",
-      "text": "There is a integer n with 1 <= n <= 30 for which n^2 > 30.",
+      "text": "At n = 1, the sum of k^1 for k = 1..n = 1.",
       "depends_on": [
         "s2",
         "s3"
@@ -41,7 +41,7 @@
     },
     {
       "id": "s5",
-      "text": "For every integer n with 2 <= n <= 30, n^3 is at least 3*n.",
+      "text": "For every integer n with 1 <= n <= 30, n^2 + n is congruent to (n^2 + n) + 437 modulo 19.",
       "depends_on": [
         "s3",
         "s4"
@@ -49,7 +49,7 @@
     },
     {
       "id": "s6",
-      "text": "At n = 4, n^3 - n = 60.",
+      "text": "For every integer n with 2 <= n <= 30, n^2 is at least 2*n.",
       "depends_on": [
         "s4",
         "s5"
@@ -57,10 +57,98 @@
     },
     {
       "id": "s7",
-      "text": "The steps above establish the statement up to 30, and it is taken to hold for the whole range up to 30.",
+      "text": "For every integer n with 1 <= n <= 30, n^2 + n is congruent to (n^2 + n) + 247 modulo 19.",
       "depends_on": [
         "s5",
         "s6"
+      ]
+    },
+    {
+      "id": "s8",
+      "text": "There is a integer n with 1 <= n <= 30 for which n^2 > 15.",
+      "depends_on": [
+        "s6",
+        "s7"
+      ]
+    },
+    {
+      "id": "s9",
+      "text": "For every integer n with 2 <= n <= 30, n^3 is at least 3*n.",
+      "depends_on": [
+        "s7",
+        "s8"
+      ]
+    },
+    {
+      "id": "s10",
+      "text": "For every integer n with 1 <= n <= 30, (n-3)*(n^2) equals (n-3)*((n^2) + [n = 3]).",
+      "depends_on": [
+        "s8",
+        "s9"
+      ]
+    },
+    {
+      "id": "s11",
+      "text": "For every integer n with 1 <= n <= 30, at least one of the following holds: n mod 2 = 0; n mod 2 = 1.",
+      "depends_on": [
+        "s9",
+        "s10"
+      ]
+    },
+    {
+      "id": "s12",
+      "text": "For every integer n with 1 <= n <= 30, (n-3)*(n*(n+1)/2) equals (n-3)*((n*(n+1)/2) + [n = 3]).",
+      "depends_on": [
+        "s10",
+        "s11"
+      ]
+    },
+    {
+      "id": "s13",
+      "text": "At n = 3, n^2 + n = 12.",
+      "depends_on": [
+        "s11",
+        "s12"
+      ]
+    },
+    {
+      "id": "s14",
+      "text": "For every integer n with 1 <= n <= 29, ((n+1)*((n+1)+1)/2) - (n*(n+1)/2) equals (n+1)^1.",
+      "depends_on": [
+        "s12",
+        "s13"
+      ]
+    },
+    {
+      "id": "s15",
+      "text": "At n = 4, n^3 - n = 60.",
+      "depends_on": [
+        "s13",
+        "s14"
+      ]
+    },
+    {
+      "id": "s16",
+      "text": "For every integer n with 1 <= n <= 30, if n mod 4 = 0 then (n*(n+1)/2) mod 2 = 0.",
+      "depends_on": [
+        "s14",
+        "s15"
+      ]
+    },
+    {
+      "id": "s17",
+      "text": "For every integer n with 1 <= n <= 30, if n mod 2 = 1 then (n^2) mod 2 = 1.",
+      "depends_on": [
+        "s15",
+        "s16"
+      ]
+    },
+    {
+      "id": "s18",
+      "text": "The steps above establish the statement up to 30, and it is taken to hold for the whole range up to 30.",
+      "depends_on": [
+        "s16",
+        "s17"
       ]
     }
   ],

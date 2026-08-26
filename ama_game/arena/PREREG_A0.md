@@ -244,3 +244,81 @@ Declared now, so it cannot be renegotiated later:
 - Graph size growing while `EVC` stays flat → the arena has recreated the
   original problem in graph form.
 - Defenses failing on fresh agents, or failing cross-domain → no transfer.
+
+---
+
+## AMENDMENT 1 — co-primary outcomes (registered 2026-08-26, protocol v0.2-alpha)
+
+Registered **before** any v0.2 run. The v0.1 A0 result is unaffected and is not
+rescored; it stands as a v0.1 measurement under the original single-metric rule.
+
+### Why
+
+Under the original rule, an incorrect disposition is charged the full budget cap
+(25) while a correct one typically costs 2. EVC is therefore dominated by
+correctness almost to the exclusion of cost. The v0.1 MDE simulation made this
+concrete: cutting verifier cost 60% on already-correct answers moves EVC by 0.28
+and reaches 5% power, while fixing errors moves it by 4.7.
+
+That means the original metric is nearly blind to the thing the navigation
+experiment was built to measure — whether graph state helps an agent choose a
+cheaper next operation. A single number cannot serve as both a risk summary and
+a navigation test.
+
+### The amended objective
+
+Two **co-primary** outcomes, reported together, neither subordinate:
+
+1. **Disposition correctness.** Accuracy against the oracle disposition, with
+   the false-accusation and invalid-falsifier rates reported alongside.
+2. **Verifier cost conditional on a correct disposition.**
+
+Capped EVC is retained as a **secondary summary risk metric**, not a success
+criterion.
+
+### The navigation claim, restated
+
+D earns a navigation claim when, against C:
+
+- correctness does **not** decrease (non-inferiority, margin registered below), **and**
+- verifier cost among correct dispositions **decreases**.
+
+If D improves correctness, that is reported as its own effect and does not
+substitute for the cost result.
+
+### Conditioning on correctness is a collider — how the cost contrast is defined
+
+"Cost among correct dispositions" conditions on a post-treatment variable. If D
+changes *which* items are answered correctly, the two correct-sets are not
+comparable, and D could appear cheaper merely by newly solving cheap items or
+newly failing expensive ones. Reporting a naive conditional mean would trade one
+bias for a subtler one.
+
+The cost contrast is therefore defined on the **intersection**: items
+dispositioned correctly under **both** conditions being compared. Registered
+now, before any data:
+
+- the intersection size is reported with the contrast, and a contrast on fewer
+  than 20 items is declared UNPOWERED rather than interpreted;
+- the two non-overlapping sets (correct in C only, correct in D only) are
+  reported with their sizes and cost distributions. A large asymmetry between
+  them is itself a finding and must be stated, not absorbed;
+- because the sets are disjoint samples rather than paired items, the
+  intersection is defined by latent problem structure (see Amendment 2) rather
+  than by claim identity.
+
+### Non-inferiority margin
+
+Correctness under D may fall below C by no more than **5 percentage points**
+before the navigation claim is refused regardless of any cost reduction. Fixed
+now so it cannot be chosen to suit a result.
+
+### What would kill the amended claim
+
+- cost among the intersection not lower under D, beyond the MDE → the graph does
+  not aid operation selection;
+- cost lower but correctness down more than the margin → D bought speed with
+  accuracy;
+- both improve, but B matches D → generic guidance is doing the work;
+- intersection too small to test → UNPOWERED, and the design needs more n before
+  any claim is made.

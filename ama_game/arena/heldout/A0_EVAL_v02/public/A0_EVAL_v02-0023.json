@@ -12,19 +12,19 @@
   "argument": [
     {
       "id": "s1",
-      "text": "For every integer n with 1 <= n <= 50, the stopping time of n is less than 268.",
+      "text": "For every integer n with 1 <= n <= 2000, (n-4)*(n^2) equals (n-4)*((n^2) + [n = 4]).",
       "depends_on": []
     },
     {
       "id": "s2",
-      "text": "For every integer n with 1 <= n <= 1523, the stopping time of n is less than 268.",
+      "text": "For every integer n with 1 <= n <= 2000, at least one of the following holds: n mod 4 = 0; n mod 4 = 1; n mod 4 = 2; n mod 4 = 3.",
       "depends_on": [
         "s1"
       ]
     },
     {
       "id": "s3",
-      "text": "For every integer n with 1 <= n <= 2000, at least one of the following holds: n mod 4 = 0; n mod 4 = 1; n mod 4 = 2; n mod 4 = 3.",
+      "text": "For every integer n with 1 <= n <= 2000, if n mod 4 = 0 then (n*(n+1)/2) mod 2 = 0.",
       "depends_on": [
         "s1",
         "s2"
@@ -32,7 +32,7 @@
     },
     {
       "id": "s4",
-      "text": "For every integer n with 1 <= n <= 2000, n^2 is at least n.",
+      "text": "For every integer n with 1 <= n <= 2000, n^3 + n is congruent to (n^3 + n) + 22 modulo 11.",
       "depends_on": [
         "s2",
         "s3"
@@ -40,7 +40,7 @@
     },
     {
       "id": "s5",
-      "text": "For every integer n with 1 <= n <= 2000, if n mod 4 = 0 then (n*(n+1)/2) mod 2 = 0.",
+      "text": "For every integer n with 1 <= n <= 2000, if n mod 2 = 1 then (n^2) mod 2 = 1.",
       "depends_on": [
         "s3",
         "s4"
@@ -48,7 +48,7 @@
     },
     {
       "id": "s6",
-      "text": "For every integer n with 1 <= n <= 2000, n^3 is congruent to (n^3) + 85 modulo 5.",
+      "text": "There is a integer n with 1 <= n <= 2000 for which n^3 > 666.",
       "depends_on": [
         "s4",
         "s5"
@@ -56,7 +56,7 @@
     },
     {
       "id": "s7",
-      "text": "At n = 4, n^3 + n = 68.",
+      "text": "For every integer n with 1 <= n <= 2000, (n-3)*(n^2) equals (n-3)*((n^2) + [n = 3]).",
       "depends_on": [
         "s5",
         "s6"
@@ -64,10 +64,82 @@
     },
     {
       "id": "s8",
-      "text": "The steps above establish the statement up to 1523, and it is taken to hold for the whole range up to 139166.",
+      "text": "At n = 10, n^3 - n = 990.",
       "depends_on": [
         "s6",
         "s7"
+      ]
+    },
+    {
+      "id": "s9",
+      "text": "For every integer n with 1 <= n <= 2000, n^2 + 1 exceeds n.",
+      "depends_on": [
+        "s7",
+        "s8"
+      ]
+    },
+    {
+      "id": "s10",
+      "text": "For every integer n with 1 <= n <= 50, the stopping time of n is less than 268.",
+      "depends_on": [
+        "s8",
+        "s9"
+      ]
+    },
+    {
+      "id": "s11",
+      "text": "For every integer n with 1 <= n <= 2000, n^3 is congruent to (n^3) + 85 modulo 5.",
+      "depends_on": [
+        "s9",
+        "s10"
+      ]
+    },
+    {
+      "id": "s12",
+      "text": "At n = 4, n^3 + n = 68.",
+      "depends_on": [
+        "s10",
+        "s11"
+      ]
+    },
+    {
+      "id": "s13",
+      "text": "For every integer n with 1 <= n <= 2000, n^2 is at least n.",
+      "depends_on": [
+        "s11",
+        "s12"
+      ]
+    },
+    {
+      "id": "s14",
+      "text": "There is a integer n with 1 <= n <= 2000 for which n^2 > 2000.",
+      "depends_on": [
+        "s12",
+        "s13"
+      ]
+    },
+    {
+      "id": "s15",
+      "text": "For every integer n with 1 <= n <= 2000, at least one of the following holds: n mod 4 = 0; n mod 4 = 1; n mod 4 = 2; n mod 4 = 3.",
+      "depends_on": [
+        "s13",
+        "s14"
+      ]
+    },
+    {
+      "id": "s16",
+      "text": "For every integer n with 1 <= n <= 1523, the stopping time of n is less than 268.",
+      "depends_on": [
+        "s14",
+        "s15"
+      ]
+    },
+    {
+      "id": "s17",
+      "text": "The steps above establish the statement up to 1523, and it is taken to hold for the whole range up to 139166.",
+      "depends_on": [
+        "s15",
+        "s16"
       ]
     }
   ],
