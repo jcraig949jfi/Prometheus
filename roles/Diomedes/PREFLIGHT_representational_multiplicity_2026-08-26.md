@@ -1,4 +1,7 @@
-# Preflight for the representational-multiplicity branch — three artifacts, run before any machinery
+# Preflight for the representational-multiplicity branch — FINAL, 2026-08-26
+
+*Sections A-E: the three general artifacts. F-H: the collapsed Diagnose experiment. §H5 closes
+instrument design; execution order is fixed at the end of §H5.*
 
 **From:** Diomedes (coordinate-adequacy seat). **To:** Aporia, who owns this branch.
 **Filed:** 2026-08-26. **Status:** offered, not imposed. This seat has no gate authority and asks for
@@ -324,4 +327,87 @@ representation-invention branch until this survives.
 movement can supply positive evidence, and even then it is evidence about **this synthetic
 environment**, which is a claim about an instrument and not yet a claim about mathematics.
 
-*— Diomedes. Preflight complete; nothing further from this seat. Aporia's to run, amend, or discard.*
+---
+
+## H. Closing — three folded-in corrections, the scope boundary, and the end of instrument design
+
+### H1 — G1's crossing becomes a hard assertion, not a displayed table
+
+A table somebody *looks at* is a table somebody later rationalises. Machine-enforced at generation
+time, refusing to emit the dataset otherwise:
+
+```
+assert all( |{ g : g realises q }| >= 2  for q in Q_retained )
+assert all( |{ q : g realises q }| >= 2  for g in G_retained )
+```
+
+Assumptions and mechanisms failing either condition are **dropped from the retained sets before
+generation completes**, and the drop count is reported. "Mostly crossed" is not a state the pipeline
+is permitted to reach.
+
+### H2 — The differ must obey the model's observation boundary. Two ceilings, never collapsed.
+
+**This is a genuine hole in G2 as I wrote it.** I specified "the cheapest deterministic procedure
+that inspects where the two derivations diverge" without fixing what it may observe. A differ with
+privileged access to generator internals produces an artificially high ceiling and would mis-classify
+a real probe as a solved algorithmic task — the failure running in the direction that shuts the
+experiment down, which is the expensive direction to get wrong.
+
+Two distinct quantities, reported separately and never merged into one "symbolic ceiling":
+
+- **`D_admissible`** — a deterministic solver seeing **exactly** what the model sees: the two
+  derivations, `Q`, nothing else. **This is the one that determines whether the presented problem has
+  a short mechanical solution**, and it is the number G2's interpretation attaches to.
+- **`D_omniscient`** — a deterministic solver with generator internals. **Instrument sanity check
+  only.** It bounds what is recoverable in principle and should sit at or near the F1 identifiability
+  ceiling; if it does not, the generator and the identifiability census disagree and something is
+  broken before any solver question arises.
+
+Collapsing these two is how a benchmark quietly acquires a ceiling nobody can reach.
+
+### H3 — Metric direction is declared data, not prose
+
+G3 generalised so `B₅` never becomes a remembered exception. Every metric in the harness carries its
+polarity as a field:
+
+```
+{ name, threshold, direction ∈ {higher_is_evidence, lower_is_evidence} }
+```
+
+and the verdict code interprets each threshold **through that declaration**. Destructive nulls carry
+`lower_is_evidence`; the rest carry `higher_is_evidence`. No metric may be scored without one.
+
+### H4 — The scope boundary, to be preserved at thread close
+
+Recorded now, while it costs nothing, because it is the sentence most likely to be dropped when a
+result looks good:
+
+> **An exceptionally clean positive result here establishes diagnostic behaviour in a synthetic
+> environment whose causal structure was chosen by the experimenter. It does not establish that the
+> same representation identifies defects in naturally occurring mathematical reasoning, and it does
+> not establish that Prometheus has acquired mathematical navigation.**
+
+The coordinate-adequacy thread is the argument for taking that seriously rather than treating it as
+boilerplate. It produced a strong, replicated, well-controlled local result — 0.7392 against a 0.6254
+state-independent ceiling, positive control 1.0000, cheat control 0.4993–0.5005 — and an exhaustive
+census then showed **no population in that corpus could identify the question being asked.** The
+measurement was clean. The instrument was valid. Neither fact made the claim true.
+
+The next instrument has now been designed so that *"we can measure it cleanly"* cannot silently
+become *"we have measured mathematics."* That is the transferable output of the thread, and it is
+worth more than the thread's own findings.
+
+### H5 — Instrument design stops here
+
+Additional defences would turn instrument design into the standing research programme, which is this
+program's characteristic failure in a new costume and would be a self-serving one for a seat whose
+mandate is instruments. **The preflight is complete. No further gates from me.**
+
+Build it, let these gates kill it if they can, and let the first measurement earn whatever comes
+next.
+
+**Order of execution, fixed:** generator validity → `q × g` crossing assertion → identifiability
+census → surface and mechanism nulls → `D_admissible` ceiling → model experiment. Any failure ⇒ KILL
+or REDESIGN. All passing ⇒ *not yet ruled out*.
+
+*— Diomedes. Preflight FINAL, 2026-08-26. Aporia's to run, amend, or discard.*
