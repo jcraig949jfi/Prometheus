@@ -24,6 +24,7 @@ import re
 from typing import Any, Callable
 
 from derivation import INVALID, argument_oracle
+from render import render
 
 PLAY_FAMILIES = ["M1_quantifier_strengthening", "M2_illicit_cancellation",
                  "M3_invalid_converse", "M4_domain_widening",
@@ -42,6 +43,27 @@ def _by_kind(steps: list[dict], kind: str) -> list[int]:
 
 def _by_tag(steps: list[dict], tag: str) -> list[int]:
     return [i for i, s in enumerate(steps) if s.get("tag") == tag]
+
+
+def _modulus_candidates(current: int, rng: random.Random) -> list[int]:
+    """Replacement moduli sampled the way legitimate ones are.
+
+    The congruence family draws its constant as a random product of distinct
+    primes and its modulus as a divisor of that constant, so no (constant,
+    modulus) pair recurs. Replacements are drawn from the same construction,
+    which leaves a reader with an actual division to perform and a
+    bag-of-words model with nothing to memorise.
+    """
+    out = []
+    for _ in range(24):
+        primes = rng.sample([2, 3, 5, 7, 11, 13, 17, 19, 23], rng.choice([2, 3]))
+        c = 1
+        for q in primes:
+            c *= q
+        divs = [d for d in range(2, c) if c % d == 0 and d != current]
+        if divs:
+            out.append(rng.choice(divs))
+    return out
 
 
 def _single_defect(steps: list[dict], idx: int) -> bool:
@@ -63,11 +85,8 @@ def m1_quantifier_strengthening(steps, rng):
     for i in rng.sample(_by_kind(steps, "exists_pred"), len(_by_kind(steps, "exists_pred")) or 0):
         out = copy.deepcopy(steps)
         c = out[i]["check"]
-        out[i]["check"] = {"kind": "case_cover", "var": c.get("var", "n"),
-                           "lo": c["lo"], "hi": c["hi"], "cases": [c["pred"]]}
-        out[i]["text"] = out[i]["text"].replace(
-            "There exists an integer n in", "Every integer n in").replace(
-            "with n^2 >", "satisfies n^2 >")
+        out[i]["check"] = {"kind": "forall_pred", "var": c.get("var", "n"),
+                           "lo": c["lo"], "hi": c["hi"], "pred": c["pred"]}
         if _single_defect(out, i):
             return out, {"target": out[i]["id"],
                          "mechanism": "an existential established over the range "
@@ -84,9 +103,6 @@ def m2_illicit_cancellation(steps, rng):
         if lhs == c["lhs"] or rhs == c["rhs"]:
             continue
         out[i]["check"] = {**c, "lhs": lhs, "rhs": rhs}
-        out[i]["text"] = out[i]["text"].replace(
-            "Then (n-3)F(n) = (n-3)G(n)",
-            "Cancelling the factor (n-3) from (n-3)F(n) = (n-3)G(n) gives F(n) = G(n)")
         if _single_defect(out, i):
             return out, {"target": out[i]["id"],
                          "mechanism": "a factor that vanishes somewhere in the "
@@ -101,8 +117,6 @@ def m3_invalid_converse(steps, rng):
         out = copy.deepcopy(steps)
         c = out[i]["check"]
         out[i]["check"] = {**c, "ante": c["cons"], "cons": c["ante"]}
-        out[i]["text"] = out[i]["text"].replace("if ", "CONVERSE: if ", 1) + \
-            " (the implication is used in the reverse direction below)"
         if _single_defect(out, i):
             return out, {"target": out[i]["id"],
                          "mechanism": "an implication was applied as its converse"}
@@ -122,10 +136,6 @@ def m4_domain_widening(steps, rng):
             if new_lo >= c["lo"]:
                 continue
             out[i]["check"] = {**c, "lo": new_lo}
-            out[i]["text"] = re.sub(r"\b%d <= n\b" % c["lo"], f"{new_lo} <= n",
-                                    out[i]["text"])
-            out[i]["text"] += (f" (the same estimate is taken to hold from "
-                               f"n = {new_lo} onward)")
             if _single_defect(out, i):
                 return out, {"target": out[i]["id"],
                              "mechanism": f"a step valid from {c['lo']} was "
@@ -154,7 +164,6 @@ def m5_non_equivalent_rewrite(steps, rng):
                     continue
                 out = copy.deepcopy(steps)
                 out[i]["check"] = {**c, side: re.sub(pat, rep, c[side], count=1)}
-                out[i]["text"] += f" (expanding by {desc})"
                 if _single_defect(out, i):
                     return out, {"target": out[i]["id"],
                                  "mechanism": f"non-equivalent rewrite: {desc}"}
@@ -171,8 +180,6 @@ def m6_case_cover_gap(steps, rng):
             out = copy.deepcopy(steps)
             kept = [x for j, x in enumerate(c["cases"]) if j != drop]
             out[i]["check"] = {**c, "cases": kept}
-            out[i]["text"] += (f" (the analysis below treats only {len(kept)} of "
-                               f"the {len(c['cases'])} cases)")
             if _single_defect(out, i):
                 return out, {"target": out[i]["id"],
                              "mechanism": "a case split no longer covers its range"}
@@ -184,13 +191,11 @@ def m7_unjustified_independence(steps, rng):
     rng.shuffle(idxs)
     for i in idxs:
         c = steps[i]["check"]
-        for m2 in (24, 8, 12, 16):
+        for m2 in _modulus_candidates(c["modulus"], rng):
             if m2 == c["modulus"]:
                 continue
             out = copy.deepcopy(steps)
             out[i]["check"] = {**c, "modulus": m2}
-            out[i]["text"] += (f" (the congruence holds modulo each factor "
-                               f"separately, so it is taken to hold modulo {m2})")
             if _single_defect(out, i):
                 return out, {"target": out[i]["id"],
                              "mechanism": "congruences modulo two non-coprime "
@@ -209,7 +214,6 @@ def m8_off_by_one_boundary(steps, rng):
                 continue
             out = copy.deepcopy(steps)
             out[i]["check"] = {**c, "point": pt}
-            out[i]["text"] = out[i]["text"].replace(f"n = {c['point']}", f"n = {pt}")
             if _single_defect(out, i):
                 return out, {"target": out[i]["id"],
                              "mechanism": f"the base case was checked at n = {pt} "
@@ -230,11 +234,7 @@ def m9_invalid_transitivity(steps, rng):
         c = steps[i]["check"]
         out = copy.deepcopy(steps)
         fused = {**c, "lo": c["lo"] - 1}
-        new = {"id": "", "tag": "fused",
-               "text": (f"The previous estimate holds on [{c['lo']}, {c['hi']}] and "
-                        f"the boundary value n = {c['lo'] - 1} was handled "
-                        "separately above, so by transitivity the estimate holds "
-                        f"on the whole of [{c['lo'] - 1}, {c['hi']}]."),
+        new = {"id": "", "tag": "fused", "text": render(fused),
                "check": fused, "depends_on": [out[i]["id"]]}
         out.insert(i + 1, new)
         for k, s in enumerate(out, start=1):
@@ -254,9 +254,6 @@ def m10_vacuous_instantiation(steps, rng):
         out = copy.deepcopy(steps)
         pt = c["lo"] - 1
         out[i]["check"] = {**c, "point": pt}
-        out[i]["text"] = out[i]["text"].replace(f"n = {c['point']}", f"n = {pt}")
-        out[i]["text"] += (f" (n = {pt} lies outside the stated range but the "
-                           "identity is applied there)")
         if _single_defect(out, i):
             return out, {"target": out[i]["id"],
                          "mechanism": "a universal statement was instantiated "
@@ -276,8 +273,6 @@ def m11_induction_base_omission(steps, rng):
                 continue
             out = copy.deepcopy(steps)
             out[i]["check"] = {**c, "point": pt}
-            out[i]["text"] = (f"The induction is anchored by checking the case "
-                              f"n = {pt}, from which the remaining cases follow.")
             if _single_defect(out, i):
                 return out, {"target": out[i]["id"],
                              "mechanism": "the induction is anchored at a point "
@@ -290,14 +285,11 @@ def m12_modulus_confusion(steps, rng):
     rng.shuffle(idxs)
     for i in idxs:
         c = steps[i]["check"]
-        for m2 in (4, 9, 10, 14, 15):
+        for m2 in _modulus_candidates(c["modulus"], rng):
             if m2 == c["modulus"]:
                 continue
             out = copy.deepcopy(steps)
             out[i]["check"] = {**c, "modulus": m2}
-            out[i]["text"] = re.sub(r"modulo \d+", f"modulo {m2}", out[i]["text"])
-            out[i]["text"] += (f" (the congruence established modulo "
-                               f"{c['modulus']} is carried over to modulo {m2})")
             if _single_defect(out, i):
                 return out, {"target": out[i]["id"],
                              "mechanism": f"a congruence proved modulo "
@@ -327,5 +319,10 @@ def apply_mutation(family: str, steps: list[dict], rng: random.Random):
     if got is None:
         return None
     out, rec = got
+    # Re-render every step from its own check. A mutated step is described by
+    # the same code that describes an untouched one, so the prose carries no
+    # trace of which operator ran or whether one ran at all.
+    for st in out:
+        st["text"] = render(st["check"])
     rec["family"] = family
     return out, rec

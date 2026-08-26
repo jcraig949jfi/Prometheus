@@ -1,0 +1,49 @@
+{
+  "claim_id": "A0_EVAL_v02-0027",
+  "set_name": "A0_EVAL_v02",
+  "template_id": "t2_modular_power_cycle",
+  "domain_label": "modular_arithmetic",
+  "sealed_class": "TRUE_BUT_INVALID_ARGUMENT",
+  "oracle_disposition": "TRUE_BUT_INVALID_ARGUMENT",
+  "truth_status": "TRUE",
+  "truth_method": "native enumeration with pow(a, n, m) over [0, N]",
+  "argument_validity": "INVALID",
+  "invalid_steps": [
+    "s3"
+  ],
+  "incomplete_steps": [],
+  "planted_mutation_type": "M5_non_equivalent_rewrite",
+  "mutation_target_step": "s3",
+  "mutation_mechanism": "non-equivalent rewrite: n^3 replaced by 3n",
+  "known_witness": null,
+  "known_proof_sketch": "3 has multiplicative order 3 modulo 13.",
+  "minimum_known_disposition_method": {
+    "kind": "closed_form_proof",
+    "cost_units": 10,
+    "within_player_budget": true
+  },
+  "difficulty": {
+    "domain_size": 41,
+    "derivation_length": 10,
+    "player_search_budget": 200000
+  },
+  "params": {
+    "a": 3,
+    "m": 13,
+    "d_claimed": 3,
+    "d_true": 3,
+    "N": 40
+  },
+  "claim_predicate": "pow(3, n, 13) == pow(3, n % 3, 13)",
+  "witness_var": "n",
+  "domain_lo": 0,
+  "domain_hi": 40,
+  "notes": [],
+  "generation": {
+    "set_seed": 88041199,
+    "item_seed": 50049213208537,
+    "item_index": 27,
+    "generator_sha256": "03acac48df9bf3e9facf4f17095edf5cbf75e69dff80d17d4451c61ccea9c952",
+    "protocol_version": "v0.2-alpha"
+  }
+}

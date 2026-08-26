@@ -1,0 +1,47 @@
+{
+  "claim_id": "A0_EVAL_v02-0025",
+  "set_name": "A0_EVAL_v02",
+  "template_id": "t2_modular_power_cycle",
+  "domain_label": "modular_arithmetic",
+  "sealed_class": "TRUE_VALID_ARGUMENT",
+  "oracle_disposition": "TRUE",
+  "truth_status": "TRUE",
+  "truth_method": "native enumeration with pow(a, n, m) over [0, N]",
+  "argument_validity": "VALID",
+  "invalid_steps": [],
+  "incomplete_steps": [],
+  "planted_mutation_type": null,
+  "mutation_target_step": null,
+  "mutation_mechanism": null,
+  "known_witness": null,
+  "known_proof_sketch": "7 has multiplicative order 10 modulo 11.",
+  "minimum_known_disposition_method": {
+    "kind": "closed_form_proof",
+    "cost_units": 7,
+    "within_player_budget": true
+  },
+  "difficulty": {
+    "domain_size": 61,
+    "derivation_length": 7,
+    "player_search_budget": 200000
+  },
+  "params": {
+    "a": 7,
+    "m": 11,
+    "d_claimed": 10,
+    "d_true": 10,
+    "N": 60
+  },
+  "claim_predicate": "pow(7, n, 11) == pow(7, n % 10, 11)",
+  "witness_var": "n",
+  "domain_lo": 0,
+  "domain_hi": 60,
+  "notes": [],
+  "generation": {
+    "set_seed": 88041199,
+    "item_seed": 29600336730473,
+    "item_index": 25,
+    "generator_sha256": "03acac48df9bf3e9facf4f17095edf5cbf75e69dff80d17d4451c61ccea9c952",
+    "protocol_version": "v0.2-alpha"
+  }
+}

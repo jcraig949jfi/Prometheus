@@ -1,0 +1,57 @@
+{
+  "set_name": "A0_EVAL_v02",
+  "requested_count": 30,
+  "emitted": 30,
+  "skipped": [],
+  "seed": 88041199,
+  "generator_sha256": "03acac48df9bf3e9facf4f17095edf5cbf75e69dff80d17d4451c61ccea9c952",
+  "protocol_version": "v0.2-alpha",
+  "player_search_budget": 200000,
+  "family_pool": [
+    "M1_quantifier_strengthening",
+    "M2_illicit_cancellation",
+    "M3_invalid_converse",
+    "M4_domain_widening",
+    "M5_non_equivalent_rewrite",
+    "M6_case_cover_gap",
+    "M7_unjustified_independence",
+    "M8_off_by_one_boundary"
+  ],
+  "template_pool": [
+    "t1_integer_sum_identity",
+    "t2_modular_power_cycle",
+    "t4_linear_recurrence",
+    "t5_collatz_stopping_time"
+  ],
+  "class_pool": [
+    "TRUE_VALID_ARGUMENT",
+    "FALSE_WITH_WITNESS",
+    "TRUE_BUT_INVALID_ARGUMENT",
+    "FALSE_BUT_HARD_WITHIN_BUDGET",
+    "UNRESOLVED_WITHIN_BUDGET"
+  ],
+  "transfer_cell": null,
+  "distinct_propositions": 30,
+  "excluded_propositions_from": [],
+  "counts_by_class": {
+    "TRUE_VALID_ARGUMENT": 6,
+    "FALSE_WITH_WITNESS": 6,
+    "TRUE_BUT_INVALID_ARGUMENT": 6,
+    "FALSE_BUT_HARD_WITHIN_BUDGET": 6,
+    "UNRESOLVED_WITHIN_BUDGET": 6
+  },
+  "counts_by_template": {
+    "t1_integer_sum_identity": 6,
+    "t5_collatz_stopping_time": 15,
+    "t2_modular_power_cycle": 6,
+    "t4_linear_recurrence": 3
+  },
+  "counts_by_mutation_family": {
+    "M3_invalid_converse": 1,
+    "M8_off_by_one_boundary": 1,
+    "M5_non_equivalent_rewrite": 2,
+    "M2_illicit_cancellation": 1,
+    "M7_unjustified_independence": 1
+  },
+  "build_seconds": 4.3
+}

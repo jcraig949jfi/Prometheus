@@ -1,0 +1,56 @@
+{
+  "claim_id": "A0_EVAL_v02-0011",
+  "set_name": "A0_EVAL_v02",
+  "template_id": "t4_linear_recurrence",
+  "domain_label": "recurrences",
+  "sealed_class": "FALSE_WITH_WITNESS",
+  "oracle_disposition": "FALSE",
+  "truth_status": "FALSE",
+  "truth_method": "native iteration of the recurrence, compared termwise",
+  "argument_validity": "INVALID",
+  "invalid_steps": [
+    "s1",
+    "s2"
+  ],
+  "incomplete_steps": [],
+  "planted_mutation_type": null,
+  "mutation_target_step": null,
+  "mutation_mechanism": null,
+  "known_witness": {
+    "n": 0
+  },
+  "known_proof_sketch": null,
+  "minimum_known_disposition_method": {
+    "kind": "witness_search",
+    "cost_units": 1,
+    "within_player_budget": true
+  },
+  "difficulty": {
+    "domain_size": 26,
+    "derivation_length": 8,
+    "player_search_budget": 200000
+  },
+  "params": {
+    "r": 2,
+    "s": 3,
+    "C": 3,
+    "D": 4,
+    "p": 5,
+    "q": -6,
+    "a0": 6,
+    "a1": 16,
+    "N": 25
+  },
+  "claim_predicate": "lin_rec(n, 6, 16, 5, -6) == 3*2**n + 4*3**n",
+  "witness_var": "n",
+  "domain_lo": 0,
+  "domain_hi": 25,
+  "notes": [],
+  "generation": {
+    "set_seed": 88041199,
+    "item_seed": 147300795583535,
+    "item_index": 11,
+    "generator_sha256": "03acac48df9bf3e9facf4f17095edf5cbf75e69dff80d17d4451c61ccea9c952",
+    "protocol_version": "v0.2-alpha"
+  }
+}

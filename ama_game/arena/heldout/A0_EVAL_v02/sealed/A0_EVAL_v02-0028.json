@@ -1,0 +1,54 @@
+{
+  "claim_id": "A0_EVAL_v02-0028",
+  "set_name": "A0_EVAL_v02",
+  "template_id": "t5_collatz_stopping_time",
+  "domain_label": "elementary_number_theory",
+  "sealed_class": "FALSE_BUT_HARD_WITHIN_BUDGET",
+  "oracle_disposition": "FALSE",
+  "truth_status": "FALSE",
+  "truth_method": "native iteration with an array memo, computed at generation time under a budget the player does not have",
+  "argument_validity": "INCOMPLETE",
+  "invalid_steps": [],
+  "incomplete_steps": [
+    "s11"
+  ],
+  "planted_mutation_type": null,
+  "mutation_target_step": null,
+  "mutation_mechanism": null,
+  "known_witness": {
+    "n": 13255,
+    "stopping_time": 275
+  },
+  "known_proof_sketch": null,
+  "minimum_known_disposition_method": {
+    "kind": "witness_search",
+    "cost_units": 13255,
+    "within_player_budget": true
+  },
+  "difficulty": {
+    "domain_size": 184550,
+    "derivation_length": 11,
+    "witness_position": 13255,
+    "player_search_budget": 200000
+  },
+  "params": {
+    "variant": "collatz",
+    "N": 184550,
+    "K": 268,
+    "checked_hi": 4817
+  },
+  "claim_predicate": "stop_time(n) < 268",
+  "witness_var": "n",
+  "domain_lo": 1,
+  "domain_hi": 184550,
+  "notes": [
+    "no closed form is available for this map; the only decision procedure known to the generator is enumeration"
+  ],
+  "generation": {
+    "set_seed": 88041199,
+    "item_seed": 214501010937212,
+    "item_index": 28,
+    "generator_sha256": "03acac48df9bf3e9facf4f17095edf5cbf75e69dff80d17d4451c61ccea9c952",
+    "protocol_version": "v0.2-alpha"
+  }
+}

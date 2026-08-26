@@ -1,5 +1,18 @@
 # A0 baseline — result
 
+> **SUPERSEDED as a baseline for B/C/D, 2026-08-26.** This run was measured
+> under protocol **v0.1-alpha**. The fingerprint fix rewrote how every step's
+> prose is generated, which forks the protocol version to v0.2-alpha, and the
+> preregistration is explicit that prior data does not carry over. Its freeze
+> record is preserved as `FREEZE_A0_v0.1-alpha.json`, and `freeze.py --verify`
+> will now report drift against it — correctly, because the instrument changed.
+>
+> **A0 must be re-run under v0.2-alpha before any B/C/D comparison.** The
+> findings below still stand as statements about v0.1: the baseline was at
+> ceiling, the comparison was unpowered at n = 30/arm, and one class of five
+> measured compliance rather than calibration. None of those is fixed by the
+> prose change, and all three still gate the navigation experiment.
+
 **Run:** 2026-08-25 · protocol v0.1-alpha · condition A · n = 30
 **Freeze:** `FREEZE_A0.json`, re-verified after the run — no drift, `graph.jsonl`
 still the empty-file hash. 24 tracked files, all four role prompts' invariant

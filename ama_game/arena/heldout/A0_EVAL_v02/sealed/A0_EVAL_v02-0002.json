@@ -1,0 +1,48 @@
+{
+  "claim_id": "A0_EVAL_v02-0002",
+  "set_name": "A0_EVAL_v02",
+  "template_id": "t1_integer_sum_identity",
+  "domain_label": "integer_identities",
+  "sealed_class": "TRUE_BUT_INVALID_ARGUMENT",
+  "oracle_disposition": "TRUE_BUT_INVALID_ARGUMENT",
+  "truth_status": "TRUE",
+  "truth_method": "native exhaustive enumeration over [1, N]",
+  "argument_validity": "INVALID",
+  "invalid_steps": [
+    "s8"
+  ],
+  "incomplete_steps": [],
+  "planted_mutation_type": "M3_invalid_converse",
+  "mutation_target_step": "s8",
+  "mutation_mechanism": "an implication was applied as its converse",
+  "known_witness": null,
+  "known_proof_sketch": "Base case at n=1 plus the increment identity F(n+1)-F(n)=(n+1)^2.",
+  "minimum_known_disposition_method": {
+    "kind": "closed_form_proof",
+    "cost_units": 12,
+    "within_player_budget": true
+  },
+  "difficulty": {
+    "domain_size": 40,
+    "derivation_length": 12,
+    "player_search_budget": 200000
+  },
+  "params": {
+    "p": 2,
+    "N": 40,
+    "formula": "n(n+1)(2n+1)/6",
+    "formula_expr": "n*(n+1)*(2*n+1)//6"
+  },
+  "claim_predicate": "sum_k(n,2) == n*(n+1)*(2*n+1)//6",
+  "witness_var": "n",
+  "domain_lo": 1,
+  "domain_hi": 40,
+  "notes": [],
+  "generation": {
+    "set_seed": 88041199,
+    "item_seed": 9386852543902,
+    "item_index": 2,
+    "generator_sha256": "03acac48df9bf3e9facf4f17095edf5cbf75e69dff80d17d4451c61ccea9c952",
+    "protocol_version": "v0.2-alpha"
+  }
+}

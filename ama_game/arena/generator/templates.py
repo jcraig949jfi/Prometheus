@@ -22,6 +22,8 @@ import random
 from dataclasses import dataclass, field
 from typing import Any, Callable
 
+from render import render_steps
+
 TRUE_VALID = "TRUE_VALID_ARGUMENT"
 FALSE_WITNESS = "FALSE_WITH_WITNESS"
 TRUE_INVALID = "TRUE_BUT_INVALID_ARGUMENT"
@@ -31,6 +33,13 @@ UNRESOLVED = "UNRESOLVED_WITHIN_BUDGET"
 ALL_CLASSES = [TRUE_VALID, FALSE_WITNESS, TRUE_INVALID, FALSE_HARD, UNRESOLVED]
 
 EASY_WITNESS_MAX = 5000
+
+# Genuine congruences, each with a different modulus. Legitimate steps draw from
+# this pool and so do the modulus-swapping mutations, so no single modulus value
+# can indicate that a step was planted.
+_UNUSED_TRUE_CONGRUENCES = [("n**3", "n", 6), ("n**5", "n", 30), ("n**7", "n", 42),
+                    ("n**2", "n", 2), ("n**3", "n", 3)]
+MODULUS_POOL = [6, 30, 42, 2, 3]
 
 
 @dataclass
@@ -67,6 +76,9 @@ def _assemble(rng: random.Random, base: list[dict], engine: list[dict],
         s["id"] = f"s{i}"
     for i, s in enumerate(ordered):
         s["depends_on"] = [ordered[j]["id"] for j in range(i)][-2:]
+    # every step's prose comes from its own check, via the single renderer.
+    # Bespoke per-template wording would itself be a signature, so none survives.
+    render_steps(ordered)
     engine_id = next((s["id"] for s in ordered if s.get("tag") == "engine"), None)
     for s in ordered:
         if s["check"]["kind"] == "generalization" and s["check"].get("justified"):
@@ -78,42 +90,96 @@ def _assemble(rng: random.Random, base: list[dict], engine: list[dict],
 # generic auxiliary steps (pure arithmetic in n; reusable across templates)
 # --------------------------------------------------------------------------
 
-def generic_aux(lo: int, hi: int) -> list[dict]:
+def generic_aux(rng: random.Random, lo: int, hi: int) -> list[dict]:
+    """Auxiliary steps drawn from wide parameter families.
+
+    Every family below is sampled, not fixed. The fingerprint audit showed why:
+    when true congruences were always (n^3, mod 6) and planted ones always
+    (n^3, mod 42), a reader could memorise the honest pairings and flag the odd
+    one out without evaluating anything. Sampling f, g and m independently makes
+    the space too large to memorise, so the only way to judge a congruence is to
+    check it.
+    """
     hi = max(hi, lo + 3)
+    lo1 = max(lo, 1)
+
+    # f(n) is congruent to f(n) + C modulo any divisor of C. The modulus is NOT
+    # written into the expression: an earlier version used f + m*g (mod m), and
+    # the audit found it instantly because the reader only had to compare two
+    # printed numbers. Here the same pair is true for every divisor of C and
+    # false otherwise, so judging it costs one division rather than a memory
+    # lookup, and no modulus value is diagnostic on its own.
+    f = rng.choice(["n**2", "n**3", "n*(n+1)", "n**2 + n", "2*n**2", "n**3 + n"])
+    # C is a random product of distinct primes, so the (C, modulus) pairs
+    # essentially never repeat. Drawing both from a small fixed menu let a
+    # bag-of-words model memorise which pairs were honest; with hundreds of
+    # constants there is nothing to memorise and the only way to judge the step
+    # is to divide.
+    primes = rng.sample([2, 3, 5, 7, 11, 13, 17, 19, 23], rng.choice([2, 3]))
+    C = 1
+    for q in primes:
+        C *= q
+    divisors = [d for d in range(2, C) if C % d == 0]
+    m = rng.choice(divisors) if divisors else 2
+
+    # each inequality is stated from its own true threshold; thresholds vary, so
+    # a low lower bound is not by itself evidence of anything
+    ineqs = [("n**2", "2*n", ">=", 2), ("n**2 + 1", "n", ">", 0),
+             ("n**3", "3*n", ">=", 2), ("n**2", "n", ">=", 0),
+             ("2*n", "n", ">=", 0), ("n**3 + 1", "n**2", ">", 0),
+             ("n*(n+1)", "2*n", ">=", 1)]
+    ilhs, irhs, iop, ilo = rng.choice(ineqs)
+    ilo = max(ilo, lo) if lo > 0 else ilo
+
+    pt = rng.randint(lo1 + 1, max(lo1 + 2, min(hi - 1, lo1 + 9)))
+    k = rng.choice([2, 3])
+    pt2 = rng.randint(lo1 + 1, max(lo1 + 2, min(hi - 1, lo1 + 9)))
+    k2 = rng.choice([2, 3])
+
+    f2 = rng.choice(["n**2", "n**3", "n*(n+1)", "n**2 + n", "2*n**2", "n**3 + n"])
+    primes2 = rng.sample([2, 3, 5, 7, 11, 13, 17, 19, 23], rng.choice([2, 3]))
+    C2 = 1
+    for q in primes2:
+        C2 *= q
+    div2 = [d for d in range(2, C2) if C2 % d == 0]
+    m2 = rng.choice(div2) if div2 else 2
+
     return [
-        step("", "aux_inequality",
-             f"For every integer n with 2 <= n <= {hi} we have n^2 >= 2n.",
-             {"kind": "forall_inequality", "var": "n", "lo": 2, "hi": hi,
-              "lhs": "n**2", "rhs": "2*n", "op": ">="}),
-        step("", "aux_exists",
-             f"There exists an integer n in [{lo}, {hi}] with n^2 > {hi}.",
+        step("", "aux_inequality", "",
+             {"kind": "forall_inequality", "var": "n", "lo": ilo, "hi": hi,
+              "lhs": ilhs, "rhs": irhs, "op": iop}),
+        step("", "aux_exists", "",
              {"kind": "exists_pred", "var": "n", "lo": lo, "hi": hi,
-              "pred": f"n**2 > {hi}"}),
-        step("", "aux_cases",
-             f"Every integer n in [{lo}, {hi}] is even or odd, so the two cases "
-             "below are exhaustive.",
+              "pred": f"n**2 > {max(1, hi // rng.choice([1, 2, 3]))}"}),
+        step("", "aux_cases", "",
              {"kind": "case_cover", "var": "n", "lo": lo, "hi": hi,
-              "cases": ["n % 2 == 0", "n % 2 == 1"]}),
-        step("", "aux_congruence",
-             f"For every integer n with {lo} <= n <= {hi}, n^3 is congruent to n "
-             "modulo 6.",
+              "cases": [f"n % {d} == {r}" for r in range(d)]
+              if (d := rng.choice([2, 3, 4])) else []}),
+        step("", "aux_congruence", "",
              {"kind": "congruence", "var": "n", "lo": lo, "hi": hi,
-              "lhs": "n**3", "rhs": "n", "modulus": 6}),
-        step("", "aux_implication",
-             f"For every integer n with {lo} <= n <= {hi}: if n is divisible by 4 "
-             "then n(n+1)/2 is even.",
-             {"kind": "forall_implication", "var": "n", "lo": max(lo, 1), "hi": hi,
-              "ante": "n % 4 == 0", "cons": "(n*(n+1)//2) % 2 == 0"}),
-        step("", "cancellable",
-             f"Put H(n) = n^2 + [n = 3]. Then (n-3)n^2 = (n-3)H(n) for every n in "
-             f"[{max(lo,1)}, {hi}].",
-             {"kind": "forall_identity", "var": "n", "lo": max(lo, 1), "hi": hi,
+              "lhs": f, "rhs": f"({f}) + {C}", "modulus": m}),
+        # a second congruence and a second point check, with independent
+        # parameters. With one of each, a reader could pin the planted step by
+        # naming its KIND -- the audit showed exactly that, M7 and M12 scoring
+        # 9/9 while M3 and M6 scored 0. Two of each leaves a coin flip that only
+        # arithmetic can settle.
+        step("", "aux_congruence2", "",
+             {"kind": "congruence", "var": "n", "lo": lo, "hi": hi,
+              "lhs": f2, "rhs": f"({f2}) + {C2}", "modulus": m2}),
+        step("", "worked_value2", "",
+             {"kind": "instantiation", "var": "n", "lo": lo1, "hi": hi,
+              "point": pt2, "pred": f"n**{k2} + n == {pt2**k2 + pt2}"}),
+        step("", "aux_implication", "",
+             {"kind": "forall_implication", "var": "n", "lo": lo1, "hi": hi,
+              "ante": "n % 4 == 0",
+              "cons": "(n*(n+1)//2) % 2 == 0"}),
+        step("", "cancellable", "",
+             {"kind": "forall_identity", "var": "n", "lo": lo1, "hi": hi,
               "lhs": "(n-3)*(n**2)",
               "rhs": "(n-3)*((n**2) + (1 if n == 3 else 0))"}),
-        step("", "worked_value",
-             "The identity n^3 - n = 120 is verified directly at n = 5.",
-             {"kind": "instantiation", "var": "n", "lo": max(lo, 1), "hi": hi,
-              "point": 5, "pred": "n**3 - n == 120"}),
+        step("", "worked_value", "",
+             {"kind": "instantiation", "var": "n", "lo": lo1, "hi": hi,
+              "point": pt, "pred": f"n**{k} - n == {pt**k - pt}"}),
     ]
 
 
@@ -163,7 +229,7 @@ def build_t1(rng: random.Random, target: str) -> Item | None:
                    {"kind": "forall_identity", "var": "n", "lo": 1, "hi": N - 1,
                     "lhs": f"({expr_c.replace('n', '(n+1)')}) - ({expr_c})",
                     "rhs": f"(n+1)**{p}"})]
-    aux = generic_aux(1, N)
+    aux = generic_aux(rng, 1, N)
     if target != FALSE_WITNESS:
         # cancellable step: valid as stated, invalid once (n-3) is divided out
         aux.append(step("", "cancellable",
@@ -232,7 +298,7 @@ def build_t2(rng: random.Random, target: str) -> Item | None:
                    {"kind": "congruence", "var": "n", "lo": 0, "hi": N - d_c,
                     "lhs": f"pow({a}, n+{d_c}, {m})", "rhs": f"pow({a}, n, {m})",
                     "modulus": m})]
-    aux = generic_aux(1, N) + [
+    aux = generic_aux(rng, 1, N) + [
         step("", "aux_cases",
              f"Every n in [0, {N}] falls in exactly one residue class modulo "
              f"{d_c}.",
@@ -448,7 +514,7 @@ def build_t4(rng: random.Random, target: str) -> Item | None:
                    {"kind": "forall_identity", "var": "n", "lo": 0, "hi": N - 2,
                     "lhs": cf.replace("n", "(n+2)"),
                     "rhs": f"{p}*({cf.replace('n', '(n+1)')}) + ({q})*({cf})"})]
-    aux = generic_aux(1, N)
+    aux = generic_aux(rng, 1, N)
     conclusion = [step("", "conclusion",
                        f"Two base cases plus the recurrence identity give the "
                        f"closed form for every n in [0, {N}].",
@@ -609,7 +675,7 @@ def build_iterated(variant: str, rng: random.Random, target: str,
                    {"kind": "forall_inequality", "var": "n", "lo": 1,
                     "hi": checked_hi, "lhs": cfg["expr"], "rhs": str(K),
                     "op": "<"})]
-    aux = generic_aux(1, min(N, 2000))
+    aux = generic_aux(rng, 1, min(N, 2000))
     conclusion = [step("", "conclusion",
                        f"The sweep covers [1, {checked_hi}]; the statement is "
                        f"asserted for every n in [1, {N}].",

@@ -1,0 +1,85 @@
+{
+  "type": "CLAIM",
+  "claim_id": "A0_EVAL_v02-0026",
+  "problem_id": "t2_modular_power_cycle",
+  "domain_label": "modular_arithmetic",
+  "proposition": "For every integer n with 0 <= n <= 60, 4^n is congruent to 4^(n mod 13) modulo 23.",
+  "domain": "integers n with 0 <= n <= 60",
+  "quantifiers": "for all n in [0, 60]",
+  "hypotheses": [
+    "gcd(4, 23) = 1",
+    "exponents are non-negative"
+  ],
+  "argument": [
+    {
+      "id": "s1",
+      "text": "At n = 0, 4^(n) mod 23 = 1.",
+      "depends_on": []
+    },
+    {
+      "id": "s2",
+      "text": "For every integer n with 0 <= n <= 47, 4^(n+13) mod 23 is congruent to 4^(n) mod 23 modulo 23.",
+      "depends_on": [
+        "s1"
+      ]
+    },
+    {
+      "id": "s3",
+      "text": "For every integer n with 0 <= n <= 60, at least one of the following holds: n mod 13 = 0; n mod 13 = 1; n mod 13 = 2; n mod 13 = 3; n mod 13 = 4; n mod 13 = 5; n mod 13 = 6; n mod 13 = 7; n mod 13 = 8; n mod 13 = 9; n mod 13 = 10; n mod 13 = 11; n mod 13 = 12.",
+      "depends_on": [
+        "s1",
+        "s2"
+      ]
+    },
+    {
+      "id": "s4",
+      "text": "For every integer n with 1 <= n <= 60, if n mod 4 = 0 then (n*(n+1)/2) mod 2 = 0.",
+      "depends_on": [
+        "s2",
+        "s3"
+      ]
+    },
+    {
+      "id": "s5",
+      "text": "For every integer n with 1 <= n <= 60, 2*n^2 is congruent to (2*n^2) + 33 modulo 3.",
+      "depends_on": [
+        "s3",
+        "s4"
+      ]
+    },
+    {
+      "id": "s6",
+      "text": "There is a integer n with 1 <= n <= 60 for which n^2 > 30.",
+      "depends_on": [
+        "s4",
+        "s5"
+      ]
+    },
+    {
+      "id": "s7",
+      "text": "For every integer n with 1 <= n <= 60, n^2 is at least n.",
+      "depends_on": [
+        "s5",
+        "s6"
+      ]
+    },
+    {
+      "id": "s8",
+      "text": "For every integer n with 1 <= n <= 60, n^2 + n is congruent to (n^2 + n) + 391 modulo 17.",
+      "depends_on": [
+        "s6",
+        "s7"
+      ]
+    },
+    {
+      "id": "s9",
+      "text": "The steps above establish the statement up to 60, and it is taken to hold for the whole range up to 60.",
+      "depends_on": [
+        "s7",
+        "s8"
+      ]
+    }
+  ],
+  "source": "generator",
+  "protocol_version": "v0.2-alpha"
+}

@@ -1,0 +1,100 @@
+{
+  "type": "CLAIM",
+  "claim_id": "A0_EVAL_v02-0010",
+  "problem_id": "t4_linear_recurrence",
+  "domain_label": "recurrences",
+  "proposition": "Let a_0 = 5, a_1 = 18 and a_n = 9*a_(n-1) + (-18)*a_(n-2) for n >= 2. Then for every n with 0 <= n <= 30, a_n = 4*3^n + 1*6^n.",
+  "domain": "integers n with 0 <= n <= 30",
+  "quantifiers": "for all n in [0, 30]",
+  "hypotheses": [
+    "the recurrence is applied only for n >= 2"
+  ],
+  "argument": [
+    {
+      "id": "s1",
+      "text": "At n = 0, (4*3^n + 1*6^n) = 5.",
+      "depends_on": []
+    },
+    {
+      "id": "s2",
+      "text": "At n = 1, (4*3^n + 1*6^n) = 18.",
+      "depends_on": [
+        "s1"
+      ]
+    },
+    {
+      "id": "s3",
+      "text": "For every integer n with 0 <= n <= 28, 4*3^(n+2) + 1*6^(n+2) equals 9*(4*3^(n+1) + 1*6^(n+1)) + (-18)*(4*3^n + 1*6^n).",
+      "depends_on": [
+        "s1",
+        "s2"
+      ]
+    },
+    {
+      "id": "s4",
+      "text": "At n = 2, n^3 + n = 10.",
+      "depends_on": [
+        "s2",
+        "s3"
+      ]
+    },
+    {
+      "id": "s5",
+      "text": "There is a integer n with 1 <= n <= 30 for which n^2 > 10.",
+      "depends_on": [
+        "s3",
+        "s4"
+      ]
+    },
+    {
+      "id": "s6",
+      "text": "For every integer n with 1 <= n <= 30, (n-3)*(n^2) equals (n-3)*((n^2) + [n = 3]).",
+      "depends_on": [
+        "s4",
+        "s5"
+      ]
+    },
+    {
+      "id": "s7",
+      "text": "At n = 8, n^2 - n = 56.",
+      "depends_on": [
+        "s5",
+        "s6"
+      ]
+    },
+    {
+      "id": "s8",
+      "text": "For every integer n with 2 <= n <= 30, n^3 is at least 3*n.",
+      "depends_on": [
+        "s6",
+        "s7"
+      ]
+    },
+    {
+      "id": "s9",
+      "text": "For every integer n with 1 <= n <= 30, at least one of the following holds: n mod 4 = 0; n mod 4 = 1; n mod 4 = 2; n mod 4 = 3.",
+      "depends_on": [
+        "s7",
+        "s8"
+      ]
+    },
+    {
+      "id": "s10",
+      "text": "For every integer n with 1 <= n <= 30, 2*n^2 is congruent to (2*n^2) + 21 modulo 7.",
+      "depends_on": [
+        "s8",
+        "s9"
+      ]
+    },
+    {
+      "id": "s11",
+      "text": "The steps above establish the statement up to 30, and it is taken to hold for the whole range up to 30.",
+      "depends_on": [
+        "s9",
+        "s10"
+      ]
+    }
+  ],
+  "source": "generator",
+  "protocol_version": "v0.2-alpha"
+}

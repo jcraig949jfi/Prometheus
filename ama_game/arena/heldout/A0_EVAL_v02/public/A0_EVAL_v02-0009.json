@@ -1,0 +1,84 @@
+{
+  "type": "CLAIM",
+  "claim_id": "A0_EVAL_v02-0009",
+  "problem_id": "t5_collatz_stopping_time",
+  "domain_label": "elementary_number_theory",
+  "proposition": "Under the map n -> n/2 when n is even, n -> 3n+1 when n is odd, every integer n with 1 <= n <= 452722 reaches 1 in fewer than 449 steps.",
+  "domain": "integers n with 1 <= n <= 452722",
+  "quantifiers": "for all n in [1, 452722]",
+  "hypotheses": [
+    "the stopping time counts steps until the value 1 is reached"
+  ],
+  "argument": [
+    {
+      "id": "s1",
+      "text": "For every integer n with 1 <= n <= 50, the stopping time of n is less than 449.",
+      "depends_on": []
+    },
+    {
+      "id": "s2",
+      "text": "For every integer n with 1 <= n <= 4886, the stopping time of n is less than 449.",
+      "depends_on": [
+        "s1"
+      ]
+    },
+    {
+      "id": "s3",
+      "text": "For every integer n with 1 <= n <= 2000, (n-3)*(n^2) equals (n-3)*((n^2) + [n = 3]).",
+      "depends_on": [
+        "s1",
+        "s2"
+      ]
+    },
+    {
+      "id": "s4",
+      "text": "For every integer n with 2 <= n <= 2000, n^2 is at least 2*n.",
+      "depends_on": [
+        "s2",
+        "s3"
+      ]
+    },
+    {
+      "id": "s5",
+      "text": "There is a integer n with 1 <= n <= 2000 for which n^2 > 1000.",
+      "depends_on": [
+        "s3",
+        "s4"
+      ]
+    },
+    {
+      "id": "s6",
+      "text": "For every integer n with 1 <= n <= 2000, n^3 is congruent to (n^3) + 130 modulo 65.",
+      "depends_on": [
+        "s4",
+        "s5"
+      ]
+    },
+    {
+      "id": "s7",
+      "text": "At n = 7, n^3 - n = 336.",
+      "depends_on": [
+        "s5",
+        "s6"
+      ]
+    },
+    {
+      "id": "s8",
+      "text": "For every integer n with 1 <= n <= 2000, 2*n^2 is congruent to (2*n^2) + 1463 modulo 77.",
+      "depends_on": [
+        "s6",
+        "s7"
+      ]
+    },
+    {
+      "id": "s9",
+      "text": "The steps above establish the statement up to 4886, and it is taken to hold for the whole range up to 452722.",
+      "depends_on": [
+        "s7",
+        "s8"
+      ]
+    }
+  ],
+  "source": "generator",
+  "protocol_version": "v0.2-alpha"
+}

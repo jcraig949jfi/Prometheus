@@ -1,0 +1,53 @@
+{
+  "claim_id": "A0_EVAL_v02-0012",
+  "set_name": "A0_EVAL_v02",
+  "template_id": "t4_linear_recurrence",
+  "domain_label": "recurrences",
+  "sealed_class": "TRUE_BUT_INVALID_ARGUMENT",
+  "oracle_disposition": "TRUE_BUT_INVALID_ARGUMENT",
+  "truth_status": "TRUE",
+  "truth_method": "native iteration of the recurrence, compared termwise",
+  "argument_validity": "INVALID",
+  "invalid_steps": [
+    "s3"
+  ],
+  "incomplete_steps": [],
+  "planted_mutation_type": "M5_non_equivalent_rewrite",
+  "mutation_target_step": "s3",
+  "mutation_mechanism": "non-equivalent rewrite: b^(n+1) expanded as b^n + 1",
+  "known_witness": null,
+  "known_proof_sketch": "r=3 and s=5 are the characteristic roots; C and D are fixed by the two initial conditions.",
+  "minimum_known_disposition_method": {
+    "kind": "closed_form_proof",
+    "cost_units": 11,
+    "within_player_budget": true
+  },
+  "difficulty": {
+    "domain_size": 21,
+    "derivation_length": 11,
+    "player_search_budget": 200000
+  },
+  "params": {
+    "r": 3,
+    "s": 5,
+    "C": 4,
+    "D": 2,
+    "p": 8,
+    "q": -15,
+    "a0": 6,
+    "a1": 22,
+    "N": 20
+  },
+  "claim_predicate": "lin_rec(n, 6, 22, 8, -15) == 4*3**n + 2*5**n",
+  "witness_var": "n",
+  "domain_lo": 0,
+  "domain_hi": 20,
+  "notes": [],
+  "generation": {
+    "set_seed": 88041199,
+    "item_seed": 240114752159510,
+    "item_index": 12,
+    "generator_sha256": "03acac48df9bf3e9facf4f17095edf5cbf75e69dff80d17d4451c61ccea9c952",
+    "protocol_version": "v0.2-alpha"
+  }
+}

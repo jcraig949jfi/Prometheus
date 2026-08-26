@@ -1,0 +1,108 @@
+{
+  "type": "CLAIM",
+  "claim_id": "A0_EVAL_v02-0015",
+  "problem_id": "t5_collatz_stopping_time",
+  "domain_label": "elementary_number_theory",
+  "proposition": "Under the map n -> n/2 when n is even, n -> 3n+1 when n is odd, every integer n with 1 <= n <= 2894 reaches 1 in fewer than 209 steps.",
+  "domain": "integers n with 1 <= n <= 2894",
+  "quantifiers": "for all n in [1, 2894]",
+  "hypotheses": [
+    "the stopping time counts steps until the value 1 is reached"
+  ],
+  "argument": [
+    {
+      "id": "s1",
+      "text": "For every integer n with 1 <= n <= 50, the stopping time of n is less than 209.",
+      "depends_on": []
+    },
+    {
+      "id": "s2",
+      "text": "For every integer n with 1 <= n <= 2894, the stopping time of n is less than 209.",
+      "depends_on": [
+        "s1"
+      ]
+    },
+    {
+      "id": "s3",
+      "text": "For every integer n with 1 <= n <= 2000, n*(n+1) is congruent to (n*(n+1)) + 1105 modulo 17.",
+      "depends_on": [
+        "s1",
+        "s2"
+      ]
+    },
+    {
+      "id": "s4",
+      "text": "For every integer n with 1 <= n <= 2000, at least one of the following holds: n mod 4 = 0; n mod 4 = 1; n mod 4 = 2; n mod 4 = 3.",
+      "depends_on": [
+        "s2",
+        "s3"
+      ]
+    },
+    {
+      "id": "s5",
+      "text": "For every integer n with 1 <= n <= 2000, n^3 + 1 exceeds n^2.",
+      "depends_on": [
+        "s3",
+        "s4"
+      ]
+    },
+    {
+      "id": "s6",
+      "text": "For every integer n with 1 <= n <= 2000, (n-3)*(n^2) equals (n-3)*((n^2) + [n = 3]).",
+      "depends_on": [
+        "s4",
+        "s5"
+      ]
+    },
+    {
+      "id": "s7",
+      "text": "At n = 9, n^2 - n = 72.",
+      "depends_on": [
+        "s5",
+        "s6"
+      ]
+    },
+    {
+      "id": "s8",
+      "text": "There is a integer n with 1 <= n <= 2000 for which n^2 > 1000.",
+      "depends_on": [
+        "s6",
+        "s7"
+      ]
+    },
+    {
+      "id": "s9",
+      "text": "For every integer n with 1 <= n <= 2000, n^3 + n is congruent to (n^3 + n) + 51 modulo 17.",
+      "depends_on": [
+        "s7",
+        "s8"
+      ]
+    },
+    {
+      "id": "s10",
+      "text": "At n = 9, n^2 + n = 90.",
+      "depends_on": [
+        "s8",
+        "s9"
+      ]
+    },
+    {
+      "id": "s11",
+      "text": "For every integer n with 1 <= n <= 2000, if n mod 4 = 0 then (n*(n+1)/2) mod 2 = 0.",
+      "depends_on": [
+        "s9",
+        "s10"
+      ]
+    },
+    {
+      "id": "s12",
+      "text": "The steps above establish the statement up to 2894, and it is taken to hold for the whole range up to 2894.",
+      "depends_on": [
+        "s10",
+        "s11"
+      ]
+    }
+  ],
+  "source": "generator",
+  "protocol_version": "v0.2-alpha"
+}

@@ -1,0 +1,92 @@
+{
+  "type": "CLAIM",
+  "claim_id": "A0_EVAL_v02-0014",
+  "problem_id": "t5_collatz_stopping_time",
+  "domain_label": "elementary_number_theory",
+  "proposition": "Under the map n -> n/2 when n is even, n -> 3n+1 when n is odd, every integer n with 1 <= n <= 420523 reaches 1 in fewer than 383 steps.",
+  "domain": "integers n with 1 <= n <= 420523",
+  "quantifiers": "for all n in [1, 420523]",
+  "hypotheses": [
+    "the stopping time counts steps until the value 1 is reached"
+  ],
+  "argument": [
+    {
+      "id": "s1",
+      "text": "For every integer n with 1 <= n <= 50, the stopping time of n is less than 383.",
+      "depends_on": []
+    },
+    {
+      "id": "s2",
+      "text": "For every integer n with 1 <= n <= 2948, the stopping time of n is less than 383.",
+      "depends_on": [
+        "s1"
+      ]
+    },
+    {
+      "id": "s3",
+      "text": "At n = 6, n^2 - n = 30.",
+      "depends_on": [
+        "s1",
+        "s2"
+      ]
+    },
+    {
+      "id": "s4",
+      "text": "For every integer n with 1 <= n <= 2000, (n-3)*(n^2) equals (n-3)*((n^2) + [n = 3]).",
+      "depends_on": [
+        "s2",
+        "s3"
+      ]
+    },
+    {
+      "id": "s5",
+      "text": "For every integer n with 1 <= n <= 2000, 2*n^2 is congruent to (2*n^2) + 1045 modulo 19.",
+      "depends_on": [
+        "s3",
+        "s4"
+      ]
+    },
+    {
+      "id": "s6",
+      "text": "For every integer n with 1 <= n <= 2000, n*(n+1) is congruent to (n*(n+1)) + 91 modulo 13.",
+      "depends_on": [
+        "s4",
+        "s5"
+      ]
+    },
+    {
+      "id": "s7",
+      "text": "For every integer n with 1 <= n <= 2000, if n mod 4 = 0 then (n*(n+1)/2) mod 2 = 0.",
+      "depends_on": [
+        "s5",
+        "s6"
+      ]
+    },
+    {
+      "id": "s8",
+      "text": "For every integer n with 1 <= n <= 2000, at least one of the following holds: n mod 4 = 0; n mod 4 = 1; n mod 4 = 2; n mod 4 = 3.",
+      "depends_on": [
+        "s6",
+        "s7"
+      ]
+    },
+    {
+      "id": "s9",
+      "text": "There is a integer n with 1 <= n <= 2000 for which n^2 > 666.",
+      "depends_on": [
+        "s7",
+        "s8"
+      ]
+    },
+    {
+      "id": "s10",
+      "text": "The steps above establish the statement up to 2948, and it is taken to hold for the whole range up to 420523.",
+      "depends_on": [
+        "s8",
+        "s9"
+      ]
+    }
+  ],
+  "source": "generator",
+  "protocol_version": "v0.2-alpha"
+}

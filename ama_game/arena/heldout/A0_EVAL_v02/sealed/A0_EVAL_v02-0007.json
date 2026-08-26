@@ -1,0 +1,49 @@
+{
+  "claim_id": "A0_EVAL_v02-0007",
+  "set_name": "A0_EVAL_v02",
+  "template_id": "t2_modular_power_cycle",
+  "domain_label": "modular_arithmetic",
+  "sealed_class": "TRUE_BUT_INVALID_ARGUMENT",
+  "oracle_disposition": "TRUE_BUT_INVALID_ARGUMENT",
+  "truth_status": "TRUE",
+  "truth_method": "native enumeration with pow(a, n, m) over [0, N]",
+  "argument_validity": "INVALID",
+  "invalid_steps": [
+    "s1"
+  ],
+  "incomplete_steps": [],
+  "planted_mutation_type": "M8_off_by_one_boundary",
+  "mutation_target_step": "s1",
+  "mutation_mechanism": "the base case was checked at n = 1 but is used at n = 0",
+  "known_witness": null,
+  "known_proof_sketch": "12 has multiplicative order 6 modulo 19.",
+  "minimum_known_disposition_method": {
+    "kind": "closed_form_proof",
+    "cost_units": 12,
+    "within_player_budget": true
+  },
+  "difficulty": {
+    "domain_size": 41,
+    "derivation_length": 12,
+    "player_search_budget": 200000
+  },
+  "params": {
+    "a": 12,
+    "m": 19,
+    "d_claimed": 6,
+    "d_true": 6,
+    "N": 40
+  },
+  "claim_predicate": "pow(12, n, 19) == pow(12, n % 6, 19)",
+  "witness_var": "n",
+  "domain_lo": 0,
+  "domain_hi": 40,
+  "notes": [],
+  "generation": {
+    "set_seed": 88041199,
+    "item_seed": 110053212073796,
+    "item_index": 7,
+    "generator_sha256": "03acac48df9bf3e9facf4f17095edf5cbf75e69dff80d17d4451c61ccea9c952",
+    "protocol_version": "v0.2-alpha"
+  }
+}

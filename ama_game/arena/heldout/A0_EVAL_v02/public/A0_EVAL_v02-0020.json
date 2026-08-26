@@ -1,0 +1,69 @@
+{
+  "type": "CLAIM",
+  "claim_id": "A0_EVAL_v02-0020",
+  "problem_id": "t1_integer_sum_identity",
+  "domain_label": "integer_identities",
+  "proposition": "For every integer n with 1 <= n <= 30, the sum of k^1 for k = 1..n equals n(n+1)/2.",
+  "domain": "integers n with 1 <= n <= 30",
+  "quantifiers": "for all n in [1, 30]",
+  "hypotheses": [
+    "n ranges over integers only",
+    "the sum is empty for n = 0"
+  ],
+  "argument": [
+    {
+      "id": "s1",
+      "text": "At n = 1, the sum of k^1 for k = 1..n = 1.",
+      "depends_on": []
+    },
+    {
+      "id": "s2",
+      "text": "For every integer n with 1 <= n <= 29, ((n+1)*((n+1)+1)/2) - (n*(n+1)/2) equals (n+1)^1.",
+      "depends_on": [
+        "s1"
+      ]
+    },
+    {
+      "id": "s3",
+      "text": "For every integer n with 1 <= n <= 30, n^2 + n is congruent to (n^2 + n) + 437 modulo 19.",
+      "depends_on": [
+        "s1",
+        "s2"
+      ]
+    },
+    {
+      "id": "s4",
+      "text": "There is a integer n with 1 <= n <= 30 for which n^2 > 30.",
+      "depends_on": [
+        "s2",
+        "s3"
+      ]
+    },
+    {
+      "id": "s5",
+      "text": "For every integer n with 2 <= n <= 30, n^3 is at least 3*n.",
+      "depends_on": [
+        "s3",
+        "s4"
+      ]
+    },
+    {
+      "id": "s6",
+      "text": "At n = 4, n^3 - n = 60.",
+      "depends_on": [
+        "s4",
+        "s5"
+      ]
+    },
+    {
+      "id": "s7",
+      "text": "The steps above establish the statement up to 30, and it is taken to hold for the whole range up to 30.",
+      "depends_on": [
+        "s5",
+        "s6"
+      ]
+    }
+  ],
+  "source": "generator",
+  "protocol_version": "v0.2-alpha"
+}

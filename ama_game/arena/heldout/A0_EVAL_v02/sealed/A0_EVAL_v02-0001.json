@@ -1,0 +1,50 @@
+{
+  "claim_id": "A0_EVAL_v02-0001",
+  "set_name": "A0_EVAL_v02",
+  "template_id": "t1_integer_sum_identity",
+  "domain_label": "integer_identities",
+  "sealed_class": "FALSE_WITH_WITNESS",
+  "oracle_disposition": "FALSE",
+  "truth_status": "FALSE",
+  "truth_method": "native exhaustive enumeration over [1, N]",
+  "argument_validity": "INVALID",
+  "invalid_steps": [
+    "s2"
+  ],
+  "incomplete_steps": [],
+  "planted_mutation_type": null,
+  "mutation_target_step": null,
+  "mutation_mechanism": null,
+  "known_witness": {
+    "n": 20
+  },
+  "known_proof_sketch": null,
+  "minimum_known_disposition_method": {
+    "kind": "witness_search",
+    "cost_units": 20,
+    "within_player_budget": true
+  },
+  "difficulty": {
+    "domain_size": 40,
+    "derivation_length": 9,
+    "player_search_budget": 200000
+  },
+  "params": {
+    "p": 3,
+    "N": 40,
+    "formula": "(n(n+1)/2)^2 + floor(n/20)",
+    "formula_expr": "((n*(n+1)//2)**2) + (n//20)"
+  },
+  "claim_predicate": "sum_k(n,3) == ((n*(n+1)//2)**2) + (n//20)",
+  "witness_var": "n",
+  "domain_lo": 1,
+  "domain_hi": 40,
+  "notes": [],
+  "generation": {
+    "set_seed": 88041199,
+    "item_seed": 238202146847949,
+    "item_index": 1,
+    "generator_sha256": "03acac48df9bf3e9facf4f17095edf5cbf75e69dff80d17d4451c61ccea9c952",
+    "protocol_version": "v0.2-alpha"
+  }
+}

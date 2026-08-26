@@ -1,0 +1,76 @@
+{
+  "type": "CLAIM",
+  "claim_id": "A0_EVAL_v02-0023",
+  "problem_id": "t5_collatz_stopping_time",
+  "domain_label": "elementary_number_theory",
+  "proposition": "Under the map n -> n/2 when n is even, n -> 3n+1 when n is odd, every integer n with 1 <= n <= 139166 reaches 1 in fewer than 268 steps.",
+  "domain": "integers n with 1 <= n <= 139166",
+  "quantifiers": "for all n in [1, 139166]",
+  "hypotheses": [
+    "the stopping time counts steps until the value 1 is reached"
+  ],
+  "argument": [
+    {
+      "id": "s1",
+      "text": "For every integer n with 1 <= n <= 50, the stopping time of n is less than 268.",
+      "depends_on": []
+    },
+    {
+      "id": "s2",
+      "text": "For every integer n with 1 <= n <= 1523, the stopping time of n is less than 268.",
+      "depends_on": [
+        "s1"
+      ]
+    },
+    {
+      "id": "s3",
+      "text": "For every integer n with 1 <= n <= 2000, at least one of the following holds: n mod 4 = 0; n mod 4 = 1; n mod 4 = 2; n mod 4 = 3.",
+      "depends_on": [
+        "s1",
+        "s2"
+      ]
+    },
+    {
+      "id": "s4",
+      "text": "For every integer n with 1 <= n <= 2000, n^2 is at least n.",
+      "depends_on": [
+        "s2",
+        "s3"
+      ]
+    },
+    {
+      "id": "s5",
+      "text": "For every integer n with 1 <= n <= 2000, if n mod 4 = 0 then (n*(n+1)/2) mod 2 = 0.",
+      "depends_on": [
+        "s3",
+        "s4"
+      ]
+    },
+    {
+      "id": "s6",
+      "text": "For every integer n with 1 <= n <= 2000, n^3 is congruent to (n^3) + 85 modulo 5.",
+      "depends_on": [
+        "s4",
+        "s5"
+      ]
+    },
+    {
+      "id": "s7",
+      "text": "At n = 4, n^3 + n = 68.",
+      "depends_on": [
+        "s5",
+        "s6"
+      ]
+    },
+    {
+      "id": "s8",
+      "text": "The steps above establish the statement up to 1523, and it is taken to hold for the whole range up to 139166.",
+      "depends_on": [
+        "s6",
+        "s7"
+      ]
+    }
+  ],
+  "source": "generator",
+  "protocol_version": "v0.2-alpha"
+}

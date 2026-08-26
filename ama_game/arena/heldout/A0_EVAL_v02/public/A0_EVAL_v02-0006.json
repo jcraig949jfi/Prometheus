@@ -1,0 +1,85 @@
+{
+  "type": "CLAIM",
+  "claim_id": "A0_EVAL_v02-0006",
+  "problem_id": "t2_modular_power_cycle",
+  "domain_label": "modular_arithmetic",
+  "proposition": "For every integer n with 0 <= n <= 40, 16^n is congruent to 16^(n mod 12) modulo 23.",
+  "domain": "integers n with 0 <= n <= 40",
+  "quantifiers": "for all n in [0, 40]",
+  "hypotheses": [
+    "gcd(16, 23) = 1",
+    "exponents are non-negative"
+  ],
+  "argument": [
+    {
+      "id": "s1",
+      "text": "At n = 0, 16^(n) mod 23 = 1.",
+      "depends_on": []
+    },
+    {
+      "id": "s2",
+      "text": "For every integer n with 0 <= n <= 28, 16^(n+12) mod 23 is congruent to 16^(n) mod 23 modulo 23.",
+      "depends_on": [
+        "s1"
+      ]
+    },
+    {
+      "id": "s3",
+      "text": "At n = 9, n^2 + n = 90.",
+      "depends_on": [
+        "s1",
+        "s2"
+      ]
+    },
+    {
+      "id": "s4",
+      "text": "At n = 9, n^3 - n = 720.",
+      "depends_on": [
+        "s2",
+        "s3"
+      ]
+    },
+    {
+      "id": "s5",
+      "text": "For every integer n with 1 <= n <= 40, at least one of the following holds: n mod 2 = 0; n mod 2 = 1.",
+      "depends_on": [
+        "s3",
+        "s4"
+      ]
+    },
+    {
+      "id": "s6",
+      "text": "For every integer n with 1 <= n <= 40, n*(n+1) is congruent to (n*(n+1)) + 46 modulo 2.",
+      "depends_on": [
+        "s4",
+        "s5"
+      ]
+    },
+    {
+      "id": "s7",
+      "text": "For every integer n with 1 <= n <= 40, if n mod 4 = 0 then (n*(n+1)/2) mod 2 = 0.",
+      "depends_on": [
+        "s5",
+        "s6"
+      ]
+    },
+    {
+      "id": "s8",
+      "text": "For every integer n with 1 <= n <= 40, (n-3)*(n^2) equals (n-3)*((n^2) + [n = 3]).",
+      "depends_on": [
+        "s6",
+        "s7"
+      ]
+    },
+    {
+      "id": "s9",
+      "text": "The steps above establish the statement up to 40, and it is taken to hold for the whole range up to 40.",
+      "depends_on": [
+        "s7",
+        "s8"
+      ]
+    }
+  ],
+  "source": "generator",
+  "protocol_version": "v0.2-alpha"
+}

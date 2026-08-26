@@ -144,6 +144,8 @@ def run_check(check: dict) -> StepResult:
         elif kind == "congruence":
             m = int(check["modulus"])
             ok = (evaluate(check["lhs"], b) - evaluate(check["rhs"], b)) % m == 0
+        elif kind == "forall_pred":
+            ok = bool(evaluate(check["pred"], b))
         elif kind == "case_cover":
             ok = any(bool(evaluate(p, b)) for p in check["cases"])
         else:

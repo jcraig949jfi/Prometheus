@@ -1,0 +1,85 @@
+{
+  "type": "CLAIM",
+  "claim_id": "A0_EVAL_v02-0005",
+  "problem_id": "t2_modular_power_cycle",
+  "domain_label": "modular_arithmetic",
+  "proposition": "For every integer n with 0 <= n <= 40, 2^n is congruent to 2^(n mod 8) modulo 17.",
+  "domain": "integers n with 0 <= n <= 40",
+  "quantifiers": "for all n in [0, 40]",
+  "hypotheses": [
+    "gcd(2, 17) = 1",
+    "exponents are non-negative"
+  ],
+  "argument": [
+    {
+      "id": "s1",
+      "text": "At n = 0, 2^(n) mod 17 = 1.",
+      "depends_on": []
+    },
+    {
+      "id": "s2",
+      "text": "For every integer n with 0 <= n <= 32, 2^(n+8) mod 17 is congruent to 2^(n) mod 17 modulo 17.",
+      "depends_on": [
+        "s1"
+      ]
+    },
+    {
+      "id": "s3",
+      "text": "For every integer n with 0 <= n <= 40, if n mod 8 = 0 then 2^(n) mod 17 = 1.",
+      "depends_on": [
+        "s1",
+        "s2"
+      ]
+    },
+    {
+      "id": "s4",
+      "text": "At n = 5, n^3 + n = 130.",
+      "depends_on": [
+        "s2",
+        "s3"
+      ]
+    },
+    {
+      "id": "s5",
+      "text": "For every integer n with 1 <= n <= 40, if n mod 4 = 0 then (n*(n+1)/2) mod 2 = 0.",
+      "depends_on": [
+        "s3",
+        "s4"
+      ]
+    },
+    {
+      "id": "s6",
+      "text": "For every integer n with 1 <= n <= 40, at least one of the following holds: n mod 2 = 0; n mod 2 = 1.",
+      "depends_on": [
+        "s4",
+        "s5"
+      ]
+    },
+    {
+      "id": "s7",
+      "text": "For every integer n with 1 <= n <= 40, 2*n is at least n.",
+      "depends_on": [
+        "s5",
+        "s6"
+      ]
+    },
+    {
+      "id": "s8",
+      "text": "For every integer n with 0 <= n <= 40, at least one of the following holds: n mod 8 = 0; n mod 8 = 1; n mod 8 = 2; n mod 8 = 3; n mod 8 = 4; n mod 8 = 5; n mod 8 = 6; n mod 8 = 7.",
+      "depends_on": [
+        "s6",
+        "s7"
+      ]
+    },
+    {
+      "id": "s9",
+      "text": "The steps above establish the statement up to 40, and it is taken to hold for the whole range up to 40.",
+      "depends_on": [
+        "s7",
+        "s8"
+      ]
+    }
+  ],
+  "source": "generator",
+  "protocol_version": "v0.2-alpha"
+}
