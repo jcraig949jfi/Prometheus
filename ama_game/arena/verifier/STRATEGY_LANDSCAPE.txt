@@ -1,0 +1,37 @@
+METERED STRATEGY LANDSCAPE
+==================================================================
+claims 200 · domain [1, 5000] · budget 1500
+Scripted strategies. This measures the COST LANDSCAPE the meter
+creates, not any agent's ability to navigate it.
+
+  strategy          accuracy  mean cost   median      p90
+  naive_sweep           30%     1500.0     1500     1500
+  left_step             30%     1188.2     1500     1500
+  boundary_first        64%      706.5      536     1500
+  informed              87%      347.7       79     1500
+
+SEPARATION versus the naive sweep
+  left_step        mean   1188.2 vs   1500.0   perm p 0.000
+  boundary_first   mean    706.5 vs   1500.0   perm p 0.000
+  informed         mean    347.7 vs   1500.0   perm p 0.000
+  informed vs boundary_first                      perm p 0.000
+
+INTERSECTION CONTRAST (PREREG Amendment 1)
+  claims dispositioned correctly by every strategy: 52/200
+    naive_sweep      mean   1500.0  median    1500
+    left_step        mean    442.7  median      36
+    boundary_first   mean    508.8  median      82
+    informed         mean     72.4  median      35
+  naive/informed cost ratio on the intersection: 20.7x   perm p 0.000
+  informed vs boundary_first on the intersection: perm p 0.000
+
+  Reported separately, as the amendment requires: the strategies
+  differ in ACCURACY too (naive_sweep 30%, left_step 30%, boundary_first 64%, informed 87%).
+  That is a real effect and not a substitute for the cost result.
+
+VERDICT
+  The meter creates a 20.7x cost spread on the
+  INTERSECTION, so it is not an accuracy effect in disguise,
+  and informed separates from a
+  merely boundary-aware strategy. There is headroom for D to
+  win on cost without needing the mathematics to be harder.
