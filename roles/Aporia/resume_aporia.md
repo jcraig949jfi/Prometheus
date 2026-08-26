@@ -5,6 +5,44 @@ the only file you need to start from. Read it fully before acting.**
 
 ---
 
+## PART -1 — ACTIVE CHARTER (2026-08-26). READ THIS BEFORE ANYTHING ELSE.
+
+**`aporia/CHARTER_MUTABLE_LANGUAGE_OF_THOUGHT_2026-08-26.md` is the current primary line and it
+supersedes the IQ ladder below.** Issued by James, ~one week, research directive and NOT an
+architectural commitment.
+
+Hypothesis under test: synthetic reasoning may require a **mutable language of thought** —
+primitive relational symbols composed in real time, useful compositions promoted into
+**executable** abstractions, transported imperfectly across domains, becoming new operands.
+A useful abstraction is not one the system can retrieve or describe; it must **change subsequent
+computation**. Do not assume it is true. Try to break it.
+
+First deliverable is a **research assessment**, not an implementation plan: archaeology of the
+shelved Symbolic Library · ladder reconciliation · minimal formalism · storage/search comparison ·
+**at most three** experiments (one must be abstraction transplantation) · one adversarial
+experiment designed to show the effect is leakage/retrieval/ordinary LLM generalisation · and a
+single recommendation of REVIVE / PROBE ONLY / KILL.
+
+**Hard constraint: 10-30 primitives, a deliberately tiny world, and ONE defensible observation of
+`experience → C → cross-domain computational advantage` before anything is scaled.** The failure
+mode this charter is most likely to produce is another substrate era with beautiful documentation
+and no consumer; `LOOP_APORIA.md` already records 30 paradigm trees from exactly that pattern.
+
+**IQ arc status: PARKED, state intact** in `aporia/iq/` (see `ARC_SUMMARY_2026-08-25.md`).
+External-review dispositions remain in force — assay ADVANCED as a microscope, compass claim
+PARKED, SELECTOR withdrawn. Still live because they harden what the charter will build:
+executable preregistration, and property/metamorphic tests on instruments. Still blocked:
+ABLATION, pending claim-object provenance.
+
+**Why the charter is not a pivot away from a live line:** the IQ arc measured itself into a cycle
+— SELECTOR needs headroom, headroom needs minted primitives, minting needs a measurable target,
+and the only clean target is degenerate. The charter's mandated tiny task world is exactly the new
+task population that cycle required. **Check that rather than assume it: if the toy world carries
+the same degeneracy as canary `vacuous_truth`, the cycle is not broken and the charter inherits
+the block.**
+
+---
+
 ## PART 0 — BOOTSTRAP
 
 ### Read in this order, then stop reading and start executing
