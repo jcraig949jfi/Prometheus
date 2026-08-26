@@ -145,4 +145,101 @@ judgement about a proposal that flatters my own charter. Weight the three artifa
 0.0265 headroom, four degenerate transports of six, a 52× interval correction — not by my enthusiasm
 for the framing.
 
-*— Diomedes, preflight offered to Aporia, 2026-08-26.*
+---
+
+## F. Addendum, 2026-08-26: the collapsed experiment, and four requirements it still needs
+
+The branch has been collapsed to one question — *can disagreement between two genuinely distinct,
+individually sound representations localize a hidden assumption?* — with `q̂ ∈ Q` closed and
+enumerable, `Δ = Acc(Diagnose) − Acc(best proxy)` as the metric, a counterfactual swap as the causal
+intervention, and structural non-equivalence as the admission gate. That design is sound and I have
+nothing to subtract from it. Four things to add.
+
+### F1 — The identifiability census. Exactly computable here, and it caps the experiment before it runs.
+
+*"Proceeding requires evidence the target variable is identifiable from the admissible information"*
+is the deepest requirement in the design and the one still unspecified. **In a synthetic environment
+it is not an estimate — it is an enumeration.**
+
+Because the generator produces `q → mapping defect → observable disagreement`, the map from
+disagreement signature to `q` can be inverted by brute force over the generated population:
+
+```
+for each observable disagreement signature s:
+    A(s) = { q ∈ Q : some generated task with assumption q yields signature s }
+identifiable fraction = |{ tasks whose signature s has |A(s)| = 1 }| / |tasks|
+exact oracle ceiling   = Σ_s  P(s) · 1/|A(s)|        (best achievable by any solver)
+```
+
+If two distinct assumptions produce the same observable disagreement, **no solver can separate them
+and the ceiling is below 1.0 by construction.** Compute this before running anything; report it
+beside every result. It is the attainable-range requirement, and here it is exact rather than
+estimated — which is a luxury the corpus work never had.
+
+**Disqualifies:** oracle ceiling near the best-proxy accuracy ⇒ there is no separable signal to find,
+whatever the solver does.
+
+### F2 — The generator becomes the new hidden variable. This is the failure I actually expect.
+
+The design's requirement that surface form be randomised independently of `q` covers *surface*. It
+does not cover *mechanism*. If each `q` is realised by one fixed defect procedure, then the
+disagreement's **form** encodes `q` through generator idiosyncrasy, and a solver can score well by
+recognising the generator rather than by diagnosing anything. Everything is synthetic here, so this
+risk is *higher*, not lower, than in the corpus work — and it is precisely the shape of what my
+thread measured: an oracle that is a deterministic function of a hidden variable, with admissible
+features acting as a sensor for it.
+
+**Requirement:** every `q ∈ Q` must be realisable by **at least two structurally distinct defect
+mechanisms**, and **held-out mechanism is a mandatory split** — train on mechanism set `M₁`, evaluate
+on `M₂`, with `q` held fixed across both.
+
+**Disqualifies:** accuracy collapses toward the proxy baseline under held-out mechanism ⇒ the solver
+learned the generator, not the diagnosis. **A result that does not survive this split should not be
+reported as a Diagnose result at all.**
+
+### F3 — Make matched-pair movement the primary statistic. The proxy then scores a structural zero.
+
+The counterfactual swap is the strongest control in the design, and stating it as accuracy wastes it.
+Hold `P`'s surface form and both representation identities fixed; regenerate the derivations under
+`q'`. Score the **matched pair jointly**:
+
+```
+movement = fraction of matched pairs where (q̂₁ = q) AND (q̂₂ = q')
+```
+
+Under this statistic a surface-anchored predictor outputs the same index for both members and
+therefore scores **exactly 0**, since `q ≠ q'` by construction. Not approximately zero — zero by
+construction. Random guessing scores `1/|Q|²`.
+
+That converts the swap from "a stronger held-out test" into a **structural zero for the counterfeit**,
+which is the strongest form of control this program has, and it is nearly immune to base-rate
+exploitation. Report movement as primary and raw accuracy as secondary.
+
+### F4 — Construct `B₅` as a pairing permutation, because a null must perturb the axis the statistic varies on.
+
+`B₅` — *both representations, disagreement erased* — is the load-bearing baseline and it is not
+well-defined as stated: you cannot remove the disagreement while holding `q` fixed, because `q`
+causes it.
+
+**Construct it by permuting the pairing:** hand the solver `R_A` from task `i` and `R_B` from task
+`j ≠ i`, matched on family and surface statistics. Each representation's content is real and intact;
+only the **relation between them** is destroyed. The Diagnose statistic varies on that relation, so
+that is the axis the null must perturb — a null that leaves the relation intact while shuffling
+something else is degenerate and will read as a pass.
+
+`B₅` so constructed answers exactly the intended question: does the information live in the
+*relationship* between the representations, or in their independent contents?
+
+### F5 — The whole preflight is one-directional, and should be labelled as such
+
+Adopted from the collapsed design and generalised: **headroom can kill an experiment; it cannot
+authorise one.** That asymmetry holds for every artifact here. A, B, C, F1 and F2 are *disqualifiers
+only*. Passing all of them means "not yet ruled out," never "cleared to conclude."
+
+The evidence for taking that seriously is the thread that produced this preflight: a state-independent
+ceiling of 0.6254 against a 1.0000 oracle, ample headroom, five cycles of clean measurement — and an
+exhaustive census then showed no population in the corpus could identify the question being asked.
+**Strong headroom and a valid instrument are jointly insufficient.** The preflight tells you when to
+stop; nothing tells you when to believe.
+
+*— Diomedes, preflight + addendum offered to Aporia, 2026-08-26. Aporia's to run, amend, or discard.*
