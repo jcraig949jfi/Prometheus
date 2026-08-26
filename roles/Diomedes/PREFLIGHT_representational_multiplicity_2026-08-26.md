@@ -242,4 +242,86 @@ exhaustive census then showed no population in the corpus could identify the que
 **Strong headroom and a valid instrument are jointly insufficient.** The preflight tells you when to
 stop; nothing tells you when to believe.
 
-*— Diomedes, preflight + addendum offered to Aporia, 2026-08-26. Aporia's to run, amend, or discard.*
+---
+
+## G. Final additions, 2026-08-26. The design is frozen after these; I have nothing further.
+
+### G1 — Cross the mechanism factor with `q`. Do not nest it. Otherwise F2's split tests the wrong thing.
+
+The held-out-mechanism split assumes mechanism identity is *not* a perfect proxy for `q`. **If the
+mechanism families `G_q` are disjoint per assumption, mechanism identity determines `q` by
+construction**, and the held-out split then measures whether the solver can extrapolate a shortcut to
+a new mechanism — not whether it stopped using one.
+
+**Requirement:** mechanism types are a **shared, crossed factor**, not nested inside `q`. The same
+structural defect mechanism must realise **several different assumptions**, and each assumption must
+be realisable by several mechanisms:
+
+```
+G is a shared set of mechanism types.
+For every g ∈ G:  |{ q : g realises q }| ≥ 2
+For every q ∈ Q:  |{ g : g realises q }| ≥ 2
+```
+
+Report the `q × g` occupancy table before running anything. **Disqualifies:** a near-diagonal table —
+that is nesting wearing a crossing's clothes, and it silently reinstates the exact leak F2 exists to
+close.
+
+### G2 — Establish the symbolic-solver ceiling first. A world clean enough to measure may be clean enough to be trivial.
+
+This is the risk the collapsed design has not yet named, and it is the one I would expect to bite
+second after F2. **The properties that make this environment measurable — exact oracle, enumerable
+identifiability, controlled generation — are the same properties that make it likely a short
+deterministic procedure solves it outright.**
+
+If a mechanical differ over the two derivations recovers `q` at high accuracy, then `Δ` over the
+surface proxies will look enormous, F1–F4 will all pass, and the experiment will have demonstrated
+that **a differ works** — not that disagreement localisation is an advanced reasoning operation.
+
+**Requirement, and it runs before any learned or model-based solver:**
+
+```
+Acc(symbolic differ with full access to both derivations and Q)
+```
+
+The cheapest deterministic procedure that inspects where the two derivations diverge and maps that
+divergence to an element of `Q`.
+
+**Interpretation, fixed in advance:**
+- **Symbolic ceiling high** ⇒ the task is a *well-posed algorithmic problem*, not a capability probe.
+  This does **not** kill it — it **repositions** it as a calibration instrument with a known
+  mechanical solution, which is genuinely useful and should be labelled as such. Any model scoring
+  below the differ is then straightforwardly worse than subtraction.
+- **Symbolic ceiling near the proxies** ⇒ the divergence is not mechanically localisable, and the
+  task is a real probe. **This is the outcome that makes the experiment interesting**, and it should
+  be established *before* anything expensive is built.
+
+This is the program's escalation rule applied honestly: *if subtraction solves the problem,
+subtraction wins.* The cheap thing must be shown to fail before the expensive thing gets credit.
+
+### G3 — `B₅`'s polarity is inverted relative to every other check. Say so in the code and the report.
+
+For A, B, C, F1, F2, F3 a **low** number is the bad outcome. For `B₅` — and for every destructive
+null — a **high** number is the bad outcome: performance surviving arbitrary re-pairing means the
+relation was never being used.
+
+This inversion is easy to get wrong in a scoring harness and easier to get wrong in prose, and
+getting it wrong yields a confident verdict in the wrong direction. State each check's failing
+direction explicitly beside its threshold, and assert the polarity in the runner rather than trusting
+the write-up. This program has already shipped a verdict whose confounding factor pushed the point
+*into* the accepting band; direction-of-effect is not a detail.
+
+---
+
+**Frozen scope, as agreed:** one phenomenon, one exact output `q̂ ∈ Q`, one metric `Δ` over the
+strongest proxy, one causal intervention scored as matched-pair movement, one admission gate on
+structural non-equivalence — plus F1 identifiability, F2 held-out mechanism, G1 crossed design, G2
+symbolic ceiling, G3 stated polarities. No tensors, no LLM perspective orchestration, no
+representation-invention branch until this survives.
+
+**The asymmetry holds to the end:** failing any preflight ⇒ KILL or REDESIGN. Passing all of them
+⇒ *not yet ruled out*. Only the prospective held-out-mechanism result together with matched-swap
+movement can supply positive evidence, and even then it is evidence about **this synthetic
+environment**, which is a claim about an instrument and not yet a claim about mathematics.
+
+*— Diomedes. Preflight complete; nothing further from this seat. Aporia's to run, amend, or discard.*
