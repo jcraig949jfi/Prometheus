@@ -1,0 +1,20 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0021",
+  "condition": "A",
+  "claim_id": "NAV-0021",
+  "session": "A0NAV-NAV-0021",
+  "disposition": "FALSE",
+  "witness": {
+    "n": 51,
+    "f_n_mod_2711": 506,
+    "confirmed_by": [
+      "sample --point 51 -> value 506",
+      "evaluate --point 51 -> holds false"
+    ]
+  },
+  "reasoning": "Hypothesis 3 states f obeys a linear recurrence of order at most 2, so the whole sequence mod 2711 is determined by four observations. I sampled n=1..5: 18, 66, 246, 930, 847. Solving f(n) = a*f(n-1) + b*f(n-2) mod 2711 from the first four gave a unique solution (the 2x2 system had determinant 2639, invertible mod the prime 2711): a = 7, b = 2699 = -12. The fifth sample was held out and matched the prediction exactly (847). The characteristic polynomial x^2 - 7x + 12 factors as (x-3)(x-4), giving the closed form f(n) = 2*3^n + 3*4^n, which reproduces all five observations; I verified the closed form against the recurrence iteration for all n in [1,600] locally. Iterating that recurrence mod 2711 over the full stated domain, residue 506 occurs exactly once, at n = 51. I then spent two metered calls at that single point: sample(51) returned 506 and evaluate(51) returned holds=false, so the witness is confirmed by the arena's own interface and does not rest on my reconstruction. The proposition asserts f(n) mod 2711 is never 506 on [1,600]; n = 51 falsifies it. Note on scope: my local scan of 600 terms is not a metered exhaustive search and I do not claim it as one - it was only a search for candidate witnesses, and the single candidate it produced was verified directly. The disposition FALSE rests solely on the confirmed point n = 51, which requires no assumption about the recurrence at all.",
+  "route_taken": "Reconstructed the sealed sequence instead of searching it: 5 samples to fit and validate the order-2 recurrence mod 2711, a free local iteration over [1,600] to locate the unique residue-506 point, then 2 metered calls to confirm the witness at n=51 - 7 calls total, chosen over a range(1,600) sweep costing 600 or a blind evaluate scan that would have cost 51 calls before reaching the same witness.",
+  "confidence": 0.99,
+  "what_would_resolve_it": null
+}

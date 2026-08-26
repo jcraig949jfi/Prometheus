@@ -1,0 +1,16 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0008",
+  "condition": "A",
+  "claim_id": "NAV-0008",
+  "session": "A0NAV-NAV-0008",
+  "disposition": "TRUE",
+  "witness": null,
+  "reasoning": "The hypotheses state f satisfies a linear recurrence of order at most 2, and the observable is f(n) mod 2711. 2711 is prime (no prime factor <= 52 divides it), so I bought f(1..4) = 59, 389, 2579, 923 and solved the 2x2 system f(3)=a*f(2)+b*f(1), f(4)=a*f(3)+b*f(2) over GF(2711). Its determinant f(2)^2 - f(1)*f(3) = 1871 is a unit, so under the stated order-<=2 hypothesis the coefficients are uniquely determined: a=13, b=-42, i.e. f(n) = 13 f(n-1) - 42 f(n-2), characteristic polynomial (x-6)(x-7). I then bought three confirmations: f(5)=1277 (local), f(300)=2058 and f(600)=372 (far field, chosen mainly to exclude an inhomogeneous variant f(n)=a f(n-1)+b f(n-2)+c, which a four-point fit plus a single adjacent check could not separate). All three matched the model exactly, including the far endpoint of the domain. With the recurrence pinned I generated all 600 terms locally at exact integer arithmetic mod 2711 (no floating point anywhere) and scanned for the value 290. There is no n in [1,600] with f(n) mod 2711 = 290; the closest approach is n=497 with f(497)=295. This is an exhaustive check over the full stated domain of 600 points, not a bounded sample of it: the enumeration is complete because the sequence was reconstructed rather than sampled. The residual risk is not statistical but structural, namely that the sealed f violates its own declared hypothesis (order > 2, or a non-constant-coefficient rule) in a way that still reproduces all seven purchased points including both far-field ones; I judge that unlikely but it is the only route by which this verdict fails. Artifact: reconstruct.py, which reproduces every metered observation and reruns the scan with no metered calls.",
+  "route_taken": "Bought seven sample() calls only - f(1..5) to identify and locally check the order-2 recurrence over the prime field GF(2711), then f(300) and f(600) as far-field confirmations - and reconstructed the sequence offline instead of asking the interface about points, because range(1,600) would have cost 600 (over the 120 cap and thus refused whole) and even a partial range or point-by-point evaluate() scan would have cost tens to hundreds of credits to learn what four well-chosen samples determine outright.",
+  "confidence": 0.93,
+  "what_would_resolve_it": null,
+  "artifacts": [
+    "F:/Prometheus/ama_game/arena/a0/NAV_PILOT_RUN/runs/NAV-0008/reconstruct.py"
+  ]
+}

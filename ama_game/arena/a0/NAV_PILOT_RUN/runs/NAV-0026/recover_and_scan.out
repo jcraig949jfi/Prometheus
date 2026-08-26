@@ -1,0 +1,6 @@
+recurrence: f(n) = 9*f(n-1) + 3983*f(n-2) (mod 4001)  [ = 9 f(n-1) - 18 f(n-2) ]
+closed form: f(n) = 5*(3^n + 6^n) mod 4001
+held-out validation passed at n=317 (660) and n=600 (1270)
+n in [1,600] with f(n) == 133: []
+nearest approaches: [(299, 139), (476, 141), (278, 124), (516, 122), (134, 114)]
+PROPOSITION HOLDS

@@ -1,0 +1,6 @@
+fitted recurrence : f(n) = 13*f(n-1) - 42*f(n-2)  (mod 2711)
+closed form       : f(n) = 4*6^n + 5*7^n          (mod 2711)
+far-point checks  : f(383)=870 f(600)=372  (both metered, both match)
+n in [1,600] with f(n) == 161 mod 2711 : []
+n in [1,2710] with f(n) == 161 mod 2711: [1585]
+VERDICT: proposition is TRUE

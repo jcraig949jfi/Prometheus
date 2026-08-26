@@ -1,0 +1,20 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0019",
+  "condition": "A",
+  "claim_id": "NAV-0019",
+  "session": "A0NAV-NAV-0019",
+  "disposition": "FALSE",
+  "witness": {
+    "n": 384,
+    "f_n_mod_5003": 1140,
+    "confirmed_by": [
+      "sample(384) -> 1140",
+      "evaluate(384) -> holds: false"
+    ]
+  },
+  "reasoning": "The claim's own hypotheses state f satisfies a linear recurrence of order at most 2, which makes f fully determined by four observations. I sampled n=1..5, obtaining 27, 123, 567, 2643, 2441 (mod 5003). Solving f(n) = a*f(n-1) + b*f(n-2) over GF(5003) from the pairs (f1,f2,f3) and (f2,f3,f4) gave a unique solution (determinant 4823, invertible mod 5003): a = 9, b = 4983 = -20 mod 5003. The fifth sample was held out and matched the prediction exactly (2441), so the fit was validated, not merely interpolated. The characteristic polynomial x^2 - 9x + 20 factors as (x-4)(x-5), and fitting the initial conditions gives the closed form f(n) = 3*(4^n + 5^n); this closed form reproduces all five observed values and agrees with the recurrence at every n in [1,600] (checked locally, both ways, at zero metered cost). Generating all 600 residues from that model, exactly one n in [1,600] satisfies f(n) mod 5003 == 1140, namely n = 384. This is a complete enumeration of the stated domain, not a bounded search: the domain is finite with 600 points and all 600 were computed. I then spent two metered calls to confirm the extrapolation at the point that matters rather than trusting a model fitted near n=1 out to n=384: sample(384) returned 1140, matching the prediction exactly, and evaluate(384) returned holds=false. The proposition asserts f(n) mod 5003 is never 1140 on [1,600]; n=384 is a witness that it is, so the proposition is FALSE. Note that establishing FALSE requires only the existence of one failure point, and that point has been confirmed directly through the metered interface, so no claim about the model's validity elsewhere in the domain is load-bearing for this disposition.",
+  "route_taken": "I exploited the stated order-<=2 hypothesis to reconstruct f from 5 samples (4 to solve, 1 held out to validate), derived the closed form f(n)=3*(4^n+5^n), enumerated all 600 residues offline for free, and spent only 2 further calls confirming the single predicted witness at n=384 - chosen over the naive route of range(1,600) or per-point evaluation, which would have cost 600 and up to 384 credits respectively, because the recurrence hypothesis converts an observation problem into an arithmetic one that costs nothing to run locally.",
+  "confidence": 0.99,
+  "what_would_resolve_it": null
+}

@@ -1,0 +1,13 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0016",
+  "condition": "A",
+  "claim_id": "NAV-0016",
+  "session": "A0NAV-NAV-0016",
+  "disposition": "TRUE",
+  "witness": null,
+  "reasoning": "The hypotheses state f obeys a linear recurrence of order at most 2, so the whole sequence mod 1009 is determined by four observations. I sampled f(1..5) = 23, 133, 773, 477, 219 (mod 1009). Solving f(n) = a*f(n-1) + b*f(n-2) from n=3,4 gives the 2x2 system [[133,23],[773,133]] with determinant 133^2 - 23*773 = 919 mod 1009, which is invertible, so the coefficients are uniquely pinned: a = 11, b = 979 (= -30) mod 1009. f(5) was NOT used in the fit and the model predicts it exactly (219), a 1-in-1009 holdout. I then reconstructed f(n) mod 1009 for all n in [1,600] locally (artifact solve.py) and found no n with f(n) = 163. To test the model far from the fitting points rather than only near them, I spent two more samples at the far end of the domain: the model predicted f(300) = 889 and f(600) = 274 before the calls, and both matched exactly. Chance agreement across the three independent checks is about 1009^-3 ~ 1e-9. Separately (artifact period.py), the state (f(n), f(n+1)) is purely periodic with period 504 < 600, so the reconstructed span [1,600] covers a full orbit and 163 is not attained at ANY n >= 1, not merely inside the stated domain; the claim therefore has no boundary-sensitive escape. This is not a bounded search over the metered interface: it is an exhaustive check over a closed-form reconstruction of the sequence, valid conditional on the stated hypothesis that the recurrence has order at most 2 with constant coefficients. All arithmetic is exact integer arithmetic mod 1009; no floating point is used.",
+  "route_taken": "Rather than scanning the domain with range/evaluate (which would cost up to 600 credits and only ever confirm points already checked), I used the order-<=2 hypothesis to invert the sequence from 4 samples, validated the inferred recurrence on one holdout and two distant points, and did the 600-point sweep locally for free - 7 metered calls instead of 600.",
+  "confidence": 0.97,
+  "what_would_resolve_it": null
+}

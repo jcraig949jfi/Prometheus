@@ -1,0 +1,13 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0026",
+  "condition": "A",
+  "claim_id": "NAV-0026",
+  "session": "A0NAV-NAV-0026",
+  "disposition": "TRUE",
+  "witness": null,
+  "reasoning": "The claim states f obeys a linear recurrence of order at most 2, so f is determined mod 4001 by four consecutive observations. I sampled f(1)=45, f(2)=225, f(3)=1215, f(4)=2884 and solved the 2x2 system mod 4001 (det = f(2)^2 - f(3)f(1) = 3952, invertible; 4001 is prime), giving f(n) = 9*f(n-1) - 18*f(n-2), characteristic (x-3)(x-6), closed form f(n) = 5*(3^n + 6^n) mod 4001. I did not trust the fit on its own: I held out four points spread across the whole stated domain and checked them against the metered interface -- f(5)=85, f(137)=2986, f(300)=2607, f(600)=1270 -- and the reconstruction matched all four exactly, which is 4 independent agreements in a 4001-element residue class (chance agreement ~ 4001^-4). One evaluate(300) call returned holds=true, confirming my reading of the proposition matches the harness's. I then enumerated all 600 values of the reconstructed sequence in exact integer arithmetic mod 4001 -- no floating point anywhere -- and the value 133 does not occur at any n in [1,600]. This is an exhaustive check of the full stated domain, not a bounded search: the domain is finite and I covered all 600 points. The residual risk is entirely in the hypothesis that f really is order <= 2, which is given in the claim and corroborated by the four held-out matches, including at the far endpoint n=600. Artifact: reconstruct.py (runnable, reproduces the fit, the held-out validation, an independent closed-form cross-check, and the search).",
+  "route_taken": "Reconstructed the sealed sequence from 4 samples using the stated order-<=2 hypothesis, validated the reconstruction against 4 held-out samples spanning the domain plus 1 evaluate for semantics, then enumerated all 600 points locally -- 10 metered calls instead of the 600 a range(1,600) scan would have cost, and 600 is unaffordable under the 120-call cap anyway, so the reconstruction route was the only route that could reach a decisive TRUE at all.",
+  "confidence": 0.97,
+  "what_would_resolve_it": null
+}

@@ -1,0 +1,23 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0029",
+  "condition": "A",
+  "claim_id": "NAV-0029",
+  "session": "A0NAV-NAV-0029",
+  "disposition": "FALSE",
+  "witness": {
+    "n": 46,
+    "f_n_mod_1409": 21,
+    "confirmed_by": [
+      "evaluate --point 46 -> {\"holds\": false}",
+      "sample --point 46 -> {\"value\": 21}"
+    ]
+  },
+  "reasoning": "Hypothesis 3 states f satisfies a linear recurrence of order at most 2, and the observable is f(n) mod 1409 with 1409 prime. That makes f fully reconstructible offline from a constant number of samples, so the 600-point domain never has to be paid for. I bought f(1..6) mod 1409 = 37, 229, 14, 427, 736, 88 (6 calls) and solved the 2x2 system f(3)=a*f(2)+b*f(1), f(4)=a*f(3)+b*f(2) over GF(1409); the determinant f(2)^2-f(1)f(3) = 1199 is nonzero, so the fit is unique, giving f(n) = 13*f(n-1) + 1367*f(n-2) (mod 1409). The two samples f(5), f(6) were held out of the fit and both are predicted exactly (736, 88), which is a genuine out-of-sample check rather than a restatement of the fit. Iterating that recurrence over the whole stated domain offline (artifact fit_recurrence.py) gives exactly one n in [1,600] with f(n) mod 1409 == 21, namely n = 46. This is an exhaustive check of all 600 points of the domain, but it is exhaustive over a RECONSTRUCTED model of f, not over metered observations, so I did not treat it as decisive on its own. I then paid 1 metered call to adjudicate the candidate directly: evaluate(46) returns holds=false, and sample(46) returns 21, confirming the witness against the sealed object rather than against my model. As an independent guard against the model being only locally valid, I spent 1 further call far outside the fitting window: the model predicts f(511) = 1371 and the metered sample returns 1371. The proposition is a universal statement over [1,600] and it fails at n = 46, so the disposition is FALSE. The witness is exhibited and independently confirmed by the arena's own evaluator, so the verdict does not depend on my reconstruction being correct; the reconstruction only told me where to look.",
+  "route_taken": "Used the order-<=2 hypothesis to buy 6 samples, solve for the recurrence over GF(1409), verify it on 2 held-out samples and 1 far point, reconstruct all 600 residues offline, and then spend a single evaluate on the one predicted failure - chosen over 'range 1 600' (600 credits, over budget), over a binary/blocked range search (tens of credits and blind to the fact that failures here are isolated points, not a prefix property), and over blind point-by-point evaluate (expected ~46 credits), because the sealed object is fully determined by a constant number of observations and paying per point wastes the structure the claim itself hands you.",
+  "confidence": 0.99,
+  "what_would_resolve_it": null,
+  "artifacts": [
+    "F:/Prometheus/ama_game/arena/a0/NAV_PILOT_RUN/runs/NAV-0029/fit_recurrence.py"
+  ]
+}

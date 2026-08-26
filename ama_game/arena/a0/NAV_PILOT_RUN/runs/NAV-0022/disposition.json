@@ -1,0 +1,18 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0022",
+  "condition": "A",
+  "claim_id": "NAV-0022",
+  "session": "A0NAV-NAV-0022",
+  "disposition": "TRUE",
+  "witness": null,
+  "reasoning": "The claim's own hypotheses state that f satisfies a linear recurrence of order at most 2, and the observable is f(n) mod 2003 with 2003 prime. That makes the sequence identifiable from a constant number of samples rather than requiring a scan of the domain. I sampled n=1..6. Fitting a homogeneous order-2 recurrence over GF(2003) to n=1..4 gave f(n+2) = 10*f(n+1) + 1982*f(n) mod 2003 (1982 = -21), with a nonsingular fit matrix so the solution is unique. The two held-out samples n=5,6 were predicted exactly. The characteristic polynomial x^2 - 10x + 21 factors as (x-3)(x-7), giving the closed form f(n) = 3^(n+1) + 2*7^n mod 2003, which reproduces all six samples. To guard against the model being locally correct but globally wrong, I spent three further samples far outside the fit window, at n=200, 437 and 600; predicted 39, 348, 1698 and observed 39, 348, 1698. One metered evaluate(600) returned holds=true, consistent with the model and confirming that the verdict interface and the value interface agree in orientation. With the model pinned, I enumerated the COMPLETE stated domain locally: all 600 points n=1..600, not a bounded sample of a larger range. The residue 1403 is attained at no point; the closest approach is 1408 at n=327, a distance of 5, and 518 distinct residues are attained. Arithmetic is exact integer arithmetic in GF(2003) with no floating point anywhere. Stated limitation: the identification of f rests on the claim's hypothesis that the recurrence order is at most 2. If that hypothesis were false, my closed form would be an interpolant rather than the sequence; the nine exact agreements, three of them hundreds of terms beyond the fit window, are strong but not deductive evidence against that. Within the stated hypotheses the proposition holds throughout its domain.",
+  "route_taken": "Instead of scanning the domain point by point, which the metered interface prices at 600 credits and which the 120-call cap makes unaffordable in any case, I used the stated order-at-most-2 hypothesis to identify f from 4 samples, spent 2 more on held-out prediction checks and 3 on far-field checks at n=200/437/600 plus 1 evaluate for interface orientation, then enumerated all 600 points offline for free; 10 metered calls total, versus 600 for the naive scan and 120 for the largest scan the budget could have bought.",
+  "confidence": 0.96,
+  "what_would_resolve_it": null,
+  "artifacts": [
+    "F:/Prometheus/ama_game/arena/a0/NAV_PILOT_RUN/runs/NAV-0022/verify_nav0022.py",
+    "F:/Prometheus/ama_game/arena/a0/NAV_PILOT_RUN/runs/NAV-0022/verify_nav0022.out",
+    "F:/Prometheus/ama_game/arena/a0/NAV_PILOT_RUN/runs/NAV-0022/scan_rows.csv"
+  ]
+}

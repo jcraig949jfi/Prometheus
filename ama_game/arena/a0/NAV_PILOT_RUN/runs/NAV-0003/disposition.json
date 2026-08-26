@@ -1,0 +1,23 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0003",
+  "condition": "A",
+  "claim_id": "NAV-0003",
+  "session": "A0NAV-NAV-0003",
+  "disposition": "FALSE",
+  "witness": {
+    "n": 243,
+    "f_n_mod_2003": 364,
+    "confirmed_by": [
+      "meter evaluate --point 243 -> {\"holds\": false}",
+      "meter sample --point 243 -> {\"value\": 364}"
+    ]
+  },
+  "reasoning": "The claim's own hypotheses state f satisfies a linear recurrence of order at most 2, so f is fully determined mod 2003 by four consecutive observations. I sampled n=1..6 (cost 6), obtaining 15, 39, 105, 291, 825, 376. Solving f(3)=a*f(2)+b*f(1) and f(4)=a*f(3)+b*f(2) over GF(2003) (determinant f(2)^2 - f(1)f(3) = -54, invertible mod the prime 2003) gives a=5, b=-6, i.e. f(n) = 5f(n-1) - 6f(n-2). The two samples not used in the fit, n=5 and n=6, were held out and are predicted exactly (825 and 2379 = 376 mod 2003), which is a 1-in-2003^2 coincidence under a wrong fit. The characteristic polynomial x^2-5x+6 has roots 2 and 3, giving the closed form f(n) = 3*2^n + 3^(n+1), which also reproduces all six samples. Iterating that recurrence locally over the full stated domain n in [1,600] -- an exhaustive scan of all 600 points of the domain, performed in exact integer arithmetic mod 2003 with no floating point anywhere -- yields exactly one n with f(n) mod 2003 = 364, namely n = 243. I then spent 2 metered calls to confirm that point against the sealed object rather than trusting my model: evaluate(243) reports the proposition does not hold there, and sample(243) returns 364. The witness is therefore confirmed directly by the arena's own interface and does not depend on the fitted recurrence being correct. The proposition asserts f(n) mod 2003 is never 364 on [1,600]; it is 364 at n=243, so the proposition is false. Note that the local scan is exhaustive over the entire domain and is not a bounded search short of the domain; the only inference step is the recurrence fit, and the decisive fact is a metered observation.",
+  "route_taken": "I bought the sequence's structure instead of its points: 6 samples to over-determine the order-<=2 recurrence the hypotheses guaranteed, solved it in closed form, scanned all 600 domain points offline for free, and spent 2 final metered calls confirming the single predicted witness -- 8 credits total, versus 600 for a range scan of the domain or ~243 for a linear evaluate walk.",
+  "confidence": 0.99,
+  "what_would_resolve_it": null,
+  "artifacts": {
+    "fit_and_scan.py": "F:/Prometheus/ama_game/arena/a0/NAV_PILOT_RUN/runs/NAV-0003/fit_and_scan.py"
+  }
+}

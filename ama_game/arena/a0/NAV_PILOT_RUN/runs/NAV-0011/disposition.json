@@ -1,0 +1,20 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0011",
+  "condition": "A",
+  "claim_id": "NAV-0011",
+  "session": "A0NAV-NAV-0011",
+  "disposition": "FALSE",
+  "witness": {
+    "n": 243,
+    "f_n_mod_4001": 1372,
+    "confirmed_by": [
+      "sample --point 243 -> value 1372",
+      "evaluate --point 243 -> holds false"
+    ]
+  },
+  "reasoning": "The hypotheses state f satisfies a linear recurrence of order at most 2, so f(n) mod 4001 obeys f(n) = a*f(n-1) + b*f(n-2) (mod 4001) for some fixed a,b. I sampled n=1..6 (6 calls). Solving the 2x2 system from (f1,f2,f3,f4) mod 4001 gave a nonsingular determinant (1282, invertible mod the prime 4001), hence a unique solution a=10, b=3980 (= -21). The fitted recurrence reproduced n=5 and n=6 exactly -- two points not used in the fit -- so the model was confirmed out of sample before extrapolation. I then generated f(n) mod 4001 for all n in [1,600] locally (no metered cost) and searched for the value 1372: exactly one occurrence, at n=243. Two metered calls confirmed it: sample(243) returned 1372 and evaluate(243) returned holds=false. This is an exhaustive check of the full stated domain [1,600] under the model, not a bounded search, and the disposition itself rests on a directly observed metered counterexample, so it does not depend on the model being right. The predicted sequence is at predicted_seq.txt; the fit and scan code are at fit.py and scan.py.",
+  "route_taken": "Rather than scanning the domain with the metered interface (up to 600 credits, and more than the 120-credit cap allows), I used the order-<=2 hypothesis to identify the recurrence from 6 samples, reconstructed all 600 terms offline for free, and spent only 2 further credits confirming the single predicted violation -- 8 credits total instead of a linear sweep.",
+  "confidence": 0.99,
+  "what_would_resolve_it": null
+}

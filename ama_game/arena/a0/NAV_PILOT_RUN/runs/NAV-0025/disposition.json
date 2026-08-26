@@ -1,0 +1,17 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0025",
+  "condition": "A",
+  "claim_id": "NAV-0025",
+  "session": "A0NAV-NAV-0025",
+  "disposition": "FALSE",
+  "witness": {
+    "n": 8,
+    "f_n_mod_4001": 3825,
+    "confirmed_by": "evaluate --point 8 -> {\"holds\": false}"
+  },
+  "reasoning": "The claim's own hypotheses state that f obeys a linear recurrence of order at most 2, which makes f mod 4001 fully determined by four consecutive observations. I sampled f(1..4) = 32, 176, 992, 1695 (mod 4001) and solved the 2x2 system 176a+32b=992, 992a+176b=1695 over GF(4001); the determinant 3233 is nonzero, so the fit is unique: f(n) = 10*f(n-1) + 3977*f(n-2) (mod 4001), equivalently f(n) = 10*f(n-1) - 24*f(n-2). Extrapolating that recurrence locally over the entire stated domain and scanning all 600 points gives exactly one n with f(n) mod 4001 = 3825, namely n = 8. This local scan is exhaustive over the full domain [1, 600] rather than a bounded search inside a larger space, and it is exact integer arithmetic modulo a prime -- no floating point is involved at any step. Because the extrapolation rests on an unverified hypothesis (that the order-2 model holds beyond the fitted window), I did not treat it as decisive on its own: I spent one metered call to test the predicted point directly, and evaluate(8) returned holds=false. That single oracle answer is by itself sufficient to falsify a universally quantified proposition, so the disposition does not depend on the fitted model being correct -- the model only chose which point to ask about. The proposition is false at n = 8.",
+  "route_taken": "Rather than scanning the domain with range calls (up to 600 charged units for a witness at n=8, and a full sweep would have cost the entire budget), I used the order-<=2 hypothesis to reconstruct the recurrence from 4 samples, located the unique offending point offline for free, and spent exactly 1 further call to confirm it with the oracle: 5 metered calls total.",
+  "confidence": 0.99,
+  "what_would_resolve_it": null
+}

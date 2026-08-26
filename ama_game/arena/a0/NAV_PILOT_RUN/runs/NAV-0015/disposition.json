@@ -1,0 +1,23 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0015",
+  "condition": "A",
+  "claim_id": "NAV-0015",
+  "session": "A0NAV-NAV-0015",
+  "disposition": "FALSE",
+  "witness": {
+    "n": 306,
+    "f_n_mod_1409": 1247,
+    "confirmed_by": [
+      "sample(306) returned value 1247",
+      "evaluate(306) returned holds: false"
+    ]
+  },
+  "reasoning": "The claim's own hypotheses state f satisfies a linear recurrence of order at most 2, and sample(n) exposes f(n) mod 1409. That makes the sealed object fully determined by four residues, so the domain can be swept offline instead of probed pointwise. I sampled n=1..6 (42, 216, 1188, 1168, 400, 893) and searched the entire model class exhaustively -- all 1409^2 = 1985281 pairs (a,b) with f(n) = a*f(n-1) + b*f(n-2) mod 1409 -- against the four constraints n=3,4,5,6. Exactly one pair survives: (a,b) = (9, 1391) = (9, -18), i.e. characteristic x^2 - 9x + 18 = (x-3)(x-6), giving the closed form f(n) = 4*3^n + 5*6^n. Two unknowns fitted against four equations leaves two degrees of overdetermination, and the two extra points (n=5,6) were reproduced exactly, so this is not an underdetermined fit. Iterating that recurrence over the full quantified domain 1 <= n <= 600 in exact integer arithmetic mod 1409 (no floating point anywhere), and independently cross-checking every one of the 600 terms against the closed form, gives exactly one n with f(n) mod 1409 == 1247, namely n = 306. I then spent two metered calls to confirm the prediction on the sealed object rather than on my reconstruction: sample(306) returned 1247, and evaluate(306) returned holds: false. The proposition therefore fails at n = 306. Note the residual risk this route carries: the coefficient recovery is only as good as the hypothesis that the recurrence is order at most 2 and homogeneous, which is why I did not submit on the reconstruction alone -- the witness is verified directly against the metered oracle, so the disposition stands even if the model class had been mis-stated. The scan is exhaustive over the stated domain, not a bounded search: 600 of 600 points were covered.",
+  "route_taken": "I bought six samples to pin down the order-2 recurrence mod 1409 exactly, projected it over all 600 points offline for free, then spent two calls confirming the single predicted hit -- eight credits total, chosen over range(1,600) (600 credits, 75x more) and over pointwise evaluate scanning (expected ~300 credits for a single hit at n=306), because the sealed object's own stated structure makes the whole domain derivable from four residues.",
+  "confidence": 0.99,
+  "what_would_resolve_it": null,
+  "artifacts": [
+    "F:/Prometheus/ama_game/arena/a0/NAV_PILOT_RUN/runs/NAV-0015/recover_and_scan.py"
+  ]
+}

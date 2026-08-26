@@ -1,0 +1,13 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0004",
+  "condition": "A",
+  "claim_id": "NAV-0004",
+  "session": "A0NAV-NAV-0004",
+  "disposition": "TRUE",
+  "witness": null,
+  "reasoning": "The claim's own hypotheses state f satisfies a linear recurrence of order at most 2, and 2711 is prime (verified by trial division to 52 >= sqrt(2711)). Four consecutive metered samples therefore pin the sequence down completely: sample(1..4) = 38, 208, 1148, 966. The Hankel system [[f2,f1],[f3,f2]]*(a,b)^T = (f3,f4) has determinant f2^2 - f1*f3 = 2351 != 0 mod 2711, so the coefficients are unique: f(n+2) = 11*f(n+1) - 30*f(n) mod 2711. The characteristic polynomial x^2 - 11x + 30 factors as (x-5)(x-6), giving the closed form f(n) = 4*5^n + 3*6^n mod 2711. I then confirmed the recovered model against the sealed oracle at two points far from the fitting window: sample(257) = 2701 and sample(600) = 1890, both predicted exactly, so the model is not an artifact of local fitting. With f known in closed form I checked ALL 600 points of the stated domain locally in exact integer arithmetic (no floating point anywhere) by two independent routes -- forward iteration of the recurrence and direct modular exponentiation of the closed form -- and asserted the two agree at every n. 1673 is attained at no n in [1,600]. The closest approach is at n = 545, where f(545) mod 2711 is 4 away from 1673 in cyclic distance; I spent one evaluate call there, at the single most adversarially dangerous point in the domain, and the oracle returned holds = true, confirming both my model and that my reading of the proposition matches the harness's. Stronger than the claim: the period of f mod 2711 is exactly 1355 (the least k with 5^k = 6^k = 1 mod 2711; it divides p-1 = 2710 = 2*5*271), and 1673 does not occur anywhere in a full period, so the proposition in fact holds for every n >= 1, not merely on [1,600]. This is an exhaustive check over the whole quantified domain, not a bounded search short of it. Artifact: verify_nav0004.py in this directory, runnable by a third party; it re-derives the sequence, asserts against all six observed metered values, and prints the empty hit set.",
+  "route_taken": "Rather than testing points -- range 1..600 would have cost 600 against a cap of 120, and any sampling short of that could only ever produce a bounded search over a domain requiring exhaustion -- I bought the object itself: 4 samples to solve for the order-2 coefficients exactly, 2 far-field samples (n=257, 600) to falsify the recovered model, and 1 evaluate at the closest-approach point n=545 as an adversarial check, which moved the check from metered to local and made all 600 points free.",
+  "confidence": 0.97,
+  "what_would_resolve_it": null
+}

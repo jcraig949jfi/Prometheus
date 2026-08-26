@@ -1,0 +1,20 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0023",
+  "condition": "A",
+  "claim_id": "NAV-0023",
+  "session": "A0NAV-NAV-0023",
+  "disposition": "FALSE",
+  "witness": {
+    "n": 166,
+    "f_n_mod_4001": 1554,
+    "confirmed_by": [
+      "sample --point 166 -> value 1554",
+      "evaluate --point 166 -> holds: false"
+    ]
+  },
+  "reasoning": "The hypotheses state f obeys a linear recurrence of order at most 2, so five metered samples determine it. sample(1..5) mod 4001 gave 21, 89, 381, 1649, 3220. Solving f(n) = a*f(n-1) + b*f(n-2) on the first three equations gives a = 9, b = -20 (integer solution, determinant -80 invertible mod the prime 4001), and that recurrence reproduces the held-out fifth sample exactly (9*1649 - 20*381 = 7221 == 3220 mod 4001). Its characteristic polynomial x^2 - 9x + 20 = (x-4)(x-5) yields the closed form f(n) = 4^(n+1) + 5^n, which matches all five samples. Reconstructing all 600 residues locally from this model (artifact model.py, which also asserts recurrence and closed form agree at every n in [1,600]) gives exactly one n with f(n) mod 4001 == 1554, namely n = 166. I then spent two metered calls to confirm the witness against the sealed object rather than against my own model: sample(166) returned 1554 and evaluate(166) returned holds:false. The witness is therefore established directly by the interface and does not depend on the recovered model being correct; the model was only the search device that located it. The proposition asserts f(n) mod 4001 is never 1554 on [1,600], and it fails at n = 166, so the proposition is FALSE. No bounded-search caveat is needed for the disposition: a single confirmed counterexample refutes a universal claim outright. (For completeness, the local scan covering the full stated domain [1,600] was exhaustive over that domain, but the local scan is model-derived and is not what carries the verdict.)",
+  "route_taken": "Spent 5 calls on sample(1..5) to identify the order-2 recurrence outright, reconstructed all 600 residues offline for free, and spent 2 calls confirming the single predicted counterexample at n=166 -- chosen over scanning with range/evaluate, which would have cost 166 calls to reach the same witness and would have exhausted the 120 budget before finding it.",
+  "confidence": 0.99,
+  "what_would_resolve_it": null
+}

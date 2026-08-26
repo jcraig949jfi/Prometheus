@@ -1,0 +1,13 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0006",
+  "condition": "A",
+  "claim_id": "NAV-0006",
+  "session": "A0NAV-NAV-0006",
+  "disposition": "TRUE",
+  "witness": null,
+  "reasoning": "The hypotheses state f obeys a linear recurrence of order at most 2, so the sequence mod 2711 is fully determined by four consecutive observed values, and the remaining 596 points need not be bought. I sampled f(1..6) mod 2711 = 14, 52, 200, 784, 393, 1508. Solving a*f(2)+b*f(1)=f(3), a*f(3)+b*f(2)=f(4) over GF(2711) (2711 is prime; the 2x2 Hankel determinant f(2)^2-f(1)f(3) = 2615 is invertible, so the solution is unique) gives a=6, b=2703=-8, i.e. f(n)=6f(n-1)-8f(n-2) mod 2711, characteristic polynomial (x-2)(x-4), closed form f(n) = 2^n + 3*4^n mod 2711. n=5 and n=6 were held out of the fit and both matched exactly. I then bought three widely separated confirmations at n=137, 401, 600; predicted 1852/1533/1323, observed 1852/1533/1323 - five independent held-out matches, so a coincidental fit would require a chance of order 2711^-5. With the model pinned I recomputed all 600 residues locally (exhaustive over the full stated domain n in [1,600] - this is not a bounded search inside a larger domain; the domain is finite and was covered completely) and the residue 732 does not occur at any n. The proposition holds throughout its stated domain. Residual risk is confined to the stated hypothesis itself: if f were not order <= 2 the extrapolation would be unlicensed, but the five held-out confirmations, including one at the far endpoint n=600, bound that risk to negligible. Artifacts: fit_and_scan.py (fit, verification, exhaustive scan), observations.json (every metered value used).",
+  "route_taken": "Bought 6 consecutive samples to solve for the order-2 recurrence coefficients over GF(2711) and 3 far-flung held-out samples to falsify the fitted model, then scanned all 600 points offline - chosen over range(1,600), which would have cost 600 and blown the cap, and over blind evaluate() probing, which pays per point for a domain of 600 while learning nothing transferable about f.",
+  "confidence": 0.97,
+  "what_would_resolve_it": null
+}

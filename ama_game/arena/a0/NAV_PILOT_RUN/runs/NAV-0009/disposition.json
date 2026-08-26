@@ -1,0 +1,23 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0009",
+  "condition": "A",
+  "claim_id": "NAV-0009",
+  "session": "A0NAV-NAV-0009",
+  "disposition": "FALSE",
+  "witness": {
+    "n": 49,
+    "f_n_mod_2003": 1079,
+    "confirmed_by": [
+      "evaluate(49) -> {\"holds\": false}",
+      "sample(49) -> 1079"
+    ]
+  },
+  "reasoning": "The claim's own hypotheses state that f satisfies a linear recurrence of order at most 2, so f is determined mod the prime 2003 by four consecutive terms whenever the Hankel matrix is invertible. I sampled f(1)=39, f(2)=223, f(3)=1311, f(4)=1918 (4 credits). The matrix [[f2,f1],[f3,f2]] has determinant 223^2 - 39*1311 = -1400 = 603 mod 2003, which is nonzero and hence invertible mod the prime, so the order-2 fit is unique rather than one candidate among several: f(n) = 12*f(n-1) + 1968*f(n-2) mod 2003. Iterating that recurrence off-meter over the whole stated domain 1..600 predicts f(n) = 1079 at exactly n = 49 and n = 225 and nowhere else. This is a complete deterministic evaluation of the domain, not a bounded search: I did not stop at a bound, I computed every one of the 600 points from the reconstructed recurrence. I then spent 2 credits testing the earlier prediction against the sealed object: evaluate(49) returned holds=false and sample(49) returned 1079, matching the model exactly at a point 45 steps past the last term used to fit it. The witness is therefore metered and direct, and does not depend on the reconstruction being correct: evaluate(49) alone falsifies the proposition. The reconstruction is what told me where to look for 1 credit instead of scanning. Total metered cost 6 credits, 0 refusals. Caveat retained for a third party: the reconstruction inherits the claim's hypothesis of order <= 2; if that hypothesis were false the extrapolation to n=225 would not be trustworthy, but the disposition would not change, because the n=49 falsification rests on the metered evaluate/sample pair and not on the model. Artifact: reconstruct.py in this directory reproduces the fit and the witness list from the six observed values.",
+  "route_taken": "I paid 4 credits for f(1..4), solved the order-<=2 recurrence mod 2003 in closed form, iterated it off-meter across all 600 points to locate the only two candidate hits (n=49, n=225), and spent 2 credits confirming the first one; I chose this over range(1,120) scans, which cost 120 credits, cannot cover a 600-wide domain under a 120 cap, and would have missed nothing here only by luck, and over blind point sampling, which has a 2-in-600 hit rate.",
+  "confidence": 0.99,
+  "what_would_resolve_it": null,
+  "artifacts": [
+    "F:/Prometheus/ama_game/arena/a0/NAV_PILOT_RUN/runs/NAV-0009/reconstruct.py"
+  ]
+}

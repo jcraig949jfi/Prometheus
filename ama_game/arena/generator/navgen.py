@@ -41,6 +41,7 @@ from __future__ import annotations
 import argparse
 import json
 import random
+import shutil
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -54,8 +55,21 @@ def sequence(a0: int, a1: int, p: int, q: int, n_max: int) -> list[int]:
     return f
 
 
-def build(rng: random.Random, n_max: int, target_witness: int | None):
-    """One claim. Returns (public, sealed) or None if the parameters miss."""
+def build(rng: random.Random, n_max: int, cls: str, budget: int):
+    """One claim of the requested class. Returns (public, sealed) or None.
+
+    Three classes, and deliberately no UNRESOLVED. A genuine order-2 sequence is
+    always resolvable from four samples, so an unresolvable-within-budget
+    navigation claim cannot be built without lying about the hypotheses. That
+    class stays with the opaque-iteration items, where it belongs; here the
+    measurement is cost and correctness, which is what Amendment 1 asks for.
+
+      NAV_TRUE        the residue never occurs. Only the structural route can
+                      establish it; enumeration runs out of budget.
+      NAV_FALSE_NEAR  witness inside the budget. Both routes work, at very
+                      different prices.
+      NAV_FALSE_FAR   witness beyond the budget. Only the structural route.
+    """
     r, s = sorted(rng.sample([2, 3, 4, 5, 6, 7], 2))
     C, D = rng.randint(1, 5), rng.randint(1, 5)
     p, q = r + s, -r * s
@@ -71,20 +85,38 @@ def build(rng: random.Random, n_max: int, target_witness: int | None):
     f = sequence(a0, a1, p, q, n_max)
     residues = [f[n] % M for n in range(n_max + 1)]
 
-    # choose R so the first violation lands where we want it
-    if target_witness is None:
-        R = rng.randrange(M)
+    present = set(residues[1:n_max + 1])
+    if cls == "NAV_TRUE":
+        absent = [x for x in range(M) if x not in present]
+        if not absent:
+            return None
+        R = rng.choice(absent)
+        first = None
     else:
-        R = residues[target_witness]
-    first = next((n for n in range(1, n_max + 1) if residues[n] == R), None)
-    if first is None:
-        return None
+        if cls == "NAV_FALSE_NEAR":
+            window = [n for n in range(2, max(3, budget // 2))
+                      if residues[n] not in residues[1:n]]
+        else:
+            window = [n for n in range(budget + 30, n_max)
+                      if residues[n] not in residues[1:n]]
+        if not window:
+            return None
+        w = rng.choice(window)
+        R = residues[w]
+        first = next((n for n in range(1, n_max + 1) if residues[n] == R), None)
+        if first is None:
+            return None
+        if cls == "NAV_FALSE_NEAR" and first > budget:
+            return None
+        if cls == "NAV_FALSE_FAR" and first <= budget:
+            return None
 
     # route costs, computed rather than asserted
-    cost_enumerate = first
+    cost_enumerate = first if first is not None else n_max
     boundary_probes = list(range(n_max, n_max - 40, -1)) + list(range(1, 41))
     cost_boundary = next((i + 1 for i, n in enumerate(boundary_probes)
                           if 1 <= n <= n_max and residues[n] == R), None)
+    enumerate_within_budget = cost_enumerate <= budget
     # fit: sample four values, solve the 2x2 system for (p, q), one confirming
     # evaluate at the position the local computation predicts
     cost_fit = 5
@@ -107,8 +139,10 @@ def build(rng: random.Random, n_max: int, target_witness: int | None):
     }
     sealed = {
         "claim_id": None,
-        "truth_status": "FALSE",
-        "witness": {"n": first},
+        "sealed_class": cls,
+        "truth_status": "TRUE" if first is None else "FALSE",
+        "oracle_disposition": "TRUE" if first is None else "FALSE",
+        "witness": None if first is None else {"n": first},
         "sealed_component": True,
         "witness_var": "n",
         "domain_lo": 1, "domain_hi": n_max,
@@ -126,6 +160,8 @@ def build(rng: random.Random, n_max: int, target_witness: int | None):
         },
         "cheapest_route": "fit_recurrence",
         "achievable_floor": cost_fit,
+        "enumerate_within_budget": enumerate_within_budget,
+        "budget_assumed": budget,
     }
     return public, sealed
 
@@ -136,23 +172,36 @@ def main() -> int:
     ap.add_argument("--count", type=int, default=40)
     ap.add_argument("--seed", type=int, default=20260826)
     ap.add_argument("--n-max", type=int, default=600)
+    ap.add_argument("--budget", type=int, default=120)
     ap.add_argument("--out", default=str(ARENA / "heldout" / "NAV_PILOT"))
+    ap.add_argument("--overwrite", action="store_true")
     args = ap.parse_args()
 
     rng = random.Random(args.seed)
     out = Path(args.out)
-    (out / "public").mkdir(parents=True, exist_ok=True)
-    (out / "sealed").mkdir(parents=True, exist_ok=True)
+    # Clear before writing. generate.py already refuses to merge two runs; this
+    # module did not, and a 32-claim run silently inherited 28 files from a
+    # previous 60-claim run whose records lacked a field added since. Same
+    # defect class, second location - worth a guard rather than a habit.
+    existing = list((out / "sealed").glob("*.json")) if out.exists() else []
+    if existing and not args.overwrite:
+        raise SystemExit(
+            f"{out} already holds {len(existing)} items. Pass --overwrite to "
+            "rebuild from scratch, or choose a different --out.")
+    for sub in ("public", "sealed"):
+        if (out / sub).exists():
+            shutil.rmtree(out / sub)
+        (out / sub).mkdir(parents=True, exist_ok=True)
 
+    # Half TRUE, half FALSE. An equal three-way split would make 2/3 of the set
+    # false, and a seat that answered FALSE to everything would score 67%
+    # without resolving anything.
+    classes = ["NAV_TRUE", "NAV_FALSE_NEAR", "NAV_TRUE", "NAV_FALSE_FAR"]
     made, tries = [], 0
-    while len(made) < args.count and tries < args.count * 40:
+    while len(made) < args.count and tries < args.count * 60:
         tries += 1
-        # spread witnesses so enumerate cost varies widely; that spread is the
-        # headroom a navigating seat can capture
-        tw = rng.choice([rng.randint(2, 40), rng.randint(40, 200),
-                         rng.randint(200, args.n_max - 1),
-                         rng.randint(200, args.n_max - 1)])
-        got = build(rng, args.n_max, tw)
+        cls = classes[len(made) % len(classes)]
+        got = build(rng, args.n_max, cls, args.budget)
         if not got:
             continue
         pub, sea = got
@@ -167,9 +216,15 @@ def main() -> int:
     enum = [m["route_menu"]["enumerate"] for m in made]
     bnd = [m["route_menu"]["boundary"] for m in made
            if m["route_menu"]["boundary"] is not None]
+    by_class = {}
+    for m in made:
+        by_class[m["sealed_class"]] = by_class.get(m["sealed_class"], 0) + 1
     manifest = {
         "set_name": out.name, "emitted": len(made), "seed": args.seed,
-        "n_max": args.n_max,
+        "n_max": args.n_max, "budget": args.budget,
+        "counts_by_class": by_class,
+        "enumerate_within_budget":
+            f"{sum(1 for m in made if m['enumerate_within_budget'])}/{len(made)}",
         "route_cost_summary": {
             "enumerate": {"min": min(enum), "median": sorted(enum)[len(enum)//2],
                           "max": max(enum)},

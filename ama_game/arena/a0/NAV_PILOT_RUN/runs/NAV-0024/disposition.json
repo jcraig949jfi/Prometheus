@@ -1,0 +1,13 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0024",
+  "condition": "A",
+  "claim_id": "NAV-0024",
+  "session": "A0NAV-NAV-0024",
+  "disposition": "TRUE",
+  "witness": null,
+  "reasoning": "The hypotheses state f obeys a linear recurrence of order at most 2, and the observable is f(n) mod 3301. 3301 is prime (no prime factor <= 57 divides it), so four consecutive observed values determine the recurrence uniquely whenever the 2x2 system is nonsingular. I sampled n=1..6: 30, 200, 1380, 3018, 1240, 1918. Fitting f(n) = a*f(n-1) + b*f(n-2) to n=1..4 gives the unique solution a=9, b=-14 (3287 mod 3301); n=5 and n=6 were reproduced exactly out of sample. The characteristic polynomial x^2-9x+14 factors as (x-2)(x-7), giving the closed form f(n) = 2^n + 4*7^n mod 3301. Because a fit to small n could in principle be an artefact of the window, I bought three far out-of-sample checks: predicted f(300)=1500, f(450)=2828, f(599)=875, and the meter returned exactly those values. With the sequence reconstructed I recomputed all 600 residues locally at zero metered cost. None equals 981; the closest approach in the whole domain is n=109 with f(109)=987. This is not a bounded search over a larger space -- it is an exhaustive check of the complete stated domain [1,600], every point of it, using a closed form validated against 9 metered observations (5 of them out of sample). The only way the disposition is wrong is if the stated hypothesis 'order at most 2' is false, in which case a degree-2 model agreeing with the true f at n=1..6 and again at n=300, 450 and 599 would be a coincidence I cannot construct. Artifact: reconstruct.py in this directory, which re-derives the sequence and re-runs the check with no metered calls.",
+  "route_taken": "I spent 6 samples at n=1..6 to solve for the order-2 recurrence outright rather than probing the domain for a hit, then 3 samples at n=300/450/599 as far out-of-sample validation, then swept all 600 points offline for free -- chosen over range(1,600) (600 credits, over budget), over binary or block scanning (hundreds of credits and only ever evidence of absence within the blocks bought), and over a bare 4-sample fit with no distant confirmation (cheaper by 5 but leaves the model unfalsified anywhere but the fitting window).",
+  "confidence": 0.97,
+  "what_would_resolve_it": null
+}

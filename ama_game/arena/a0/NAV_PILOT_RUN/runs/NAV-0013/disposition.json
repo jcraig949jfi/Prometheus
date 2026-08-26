@@ -1,0 +1,22 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0013",
+  "condition": "A",
+  "claim_id": "NAV-0013",
+  "session": "A0NAV-NAV-0013",
+  "disposition": "FALSE",
+  "witness": {
+    "n": 34,
+    "f_n_mod_1409": 569,
+    "confirmed_by": "sample(34) returned 569; evaluate(34) returned holds=false",
+    "uniqueness": "n=34 is the ONLY point in [1,600] where f(n) mod 1409 == 569, per the reconstructed sequence"
+  },
+  "reasoning": "Hypothesis 3 states f obeys a linear recurrence of order at most 2, which makes f fully determined by four observations. I sampled n=1..4 (30, 156, 840, 429) and solved the 2x2 system a*f(2)+b*f(1)=f(3), a*f(3)+b*f(2)=f(4) over GF(1409) (1409 is prime; the system determinant 545 is invertible, so the coefficients are unique). This gives f(n) = 10*f(n-1) + 1385*f(n-2) = 10*f(n-1) - 24*f(n-2) mod 1409. The characteristic polynomial x^2-10x+24 factors as (x-4)(x-6), yielding the closed form f(n) = 3*(4^n + 6^n), which matches all sampled values exactly. I then held out n=5 as an out-of-sample check: the recurrence predicted 1038 and sample(5) returned 1038, so the model was fitted on 4 points and confirmed on a 5th it had not seen. Iterating the recurrence over the full stated domain n in [1,600] locally (an exhaustive check of all 600 points, done offline against my reconstruction, not a metered bounded search), exactly one point satisfies f(n) mod 1409 == 569: n=34. Independently, the closed form 3*(4^n+6^n) mod 1409 agrees with the iterated recurrence at all 600 points (zero mismatches), so the reconstruction is internally cross-validated by two distinct computations. I then confirmed the witness through the meter rather than trusting my own model: sample(34) returned 569 exactly as predicted, and evaluate(34) returned holds=false. To rule out misreading the verdict polarity of evaluate, I spent one control call at n=33 (a point my reconstruction says is NOT 569), which returned holds=true. The instrument therefore reports true where the proposition holds and false where it fails, and it fails at n=34. The proposition asserts f(n) mod 1409 is never 569 on [1,600]; it is 569 at n=34, so the proposition is FALSE.",
+  "route_taken": "Rather than scanning the domain with range/evaluate calls (up to 600 credits, and more than the 120 cap allows), I exploited the order-<=2 recurrence hypothesis to reconstruct f from 4 samples, verified the model out-of-sample at n=5, searched all 600 points offline for free, and spent 3 further calls confirming the single witness at n=34 and checking evaluate's polarity at n=33 - 8 metered credits total.",
+  "confidence": 0.99,
+  "what_would_resolve_it": null,
+  "artifacts": {
+    "solve.py": "F:/Prometheus/ama_game/arena/a0/NAV_PILOT_RUN/runs/NAV-0013/solve.py",
+    "reconstruct.py": "F:/Prometheus/ama_game/arena/a0/NAV_PILOT_RUN/runs/NAV-0013/reconstruct.py"
+  }
+}

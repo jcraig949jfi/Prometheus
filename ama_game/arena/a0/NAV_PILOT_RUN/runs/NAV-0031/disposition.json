@@ -1,0 +1,20 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0031",
+  "condition": "A",
+  "claim_id": "NAV-0031",
+  "session": "A0NAV-NAV-0031",
+  "disposition": "FALSE",
+  "witness": {
+    "n": 514,
+    "f_n_mod_4001": 1243,
+    "confirmed_by": [
+      "sample --point 514 -> value 1243",
+      "evaluate --point 514 -> holds false"
+    ]
+  },
+  "reasoning": "The claim's own hypotheses state f obeys a linear recurrence of order at most 2, so f mod 4001 is determined by four consecutive metered samples. I sampled f(1..5) mod 4001 = 23, 151, 1037, 3218, 2441. Solving f(n) = a*f(n-1) + b*f(n-2) mod 4001 (4001 is prime, so the 2x2 system is invertible; its determinant was 2951, nonzero) from f(1..4) gives a = 9, b = -14. The fifth sample was held out and is predicted exactly, which is an independent check on the fit rather than a restatement of it. The characteristic polynomial x^2 - 9x + 14 factors as (x-2)(x-7), giving the closed form f(n) = 2^n + 3*7^n, which reproduces all five metered values. Iterating the recurrence over n = 1..600 - an exhaustive check of the entire stated domain, done on the reconstructed model, not a bounded search of a larger space - yields exactly one n with f(n) mod 4001 == 1243, namely n = 514; a second, independent evaluation via the closed form agrees at all 600 points. I did not rest on the model: the predicted witness was then put back to the meter, where sample 514 returned 1243 and evaluate 514 returned holds=false. All arithmetic is exact integer arithmetic modulo 4001; no floating point is used anywhere. The proposition therefore fails, with witness n = 514. Artifact: reconstruct.py in this directory, which re-derives the fit, asserts the held-out check, scans the full domain and prints the witness.",
+  "route_taken": "Rather than scanning the domain with the meter (a range 1-600 would cost 600, over the whole cap, and even a blind binary/stride search costs tens of calls with no guarantee), I bought five samples to identify the order-2 recurrence the claim itself guarantees, extrapolated the sequence over all 600 points offline for free, and spent two further metered calls confirming the single predicted witness - seven calls in total, of which two are pure confirmation.",
+  "confidence": 0.99,
+  "what_would_resolve_it": null
+}

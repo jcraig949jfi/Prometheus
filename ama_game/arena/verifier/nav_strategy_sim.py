@@ -112,7 +112,7 @@ def main() -> int:
     for cid in ids:
         s = seals[cid]
         N, R, M = s["params"]["N"], s["params"]["R"], s["params"]["M"]
-        truth_n = s["witness"]["n"]
+        oracle = s["oracle_disposition"]
 
         for name, fn in (("enumerate", lambda se: enumerate_left(se, N)),
                          ("boundary", lambda se: boundary_first(se, N)),
@@ -120,7 +120,7 @@ def main() -> int:
             m = Meter(sealed_dir, budget=args.budget)
             sess = m.open(cid, name)
             disp, w = fn(sess)
-            ok = disp == "FALSE" and w == truth_n
+            ok = disp == oracle
             correct[name].append(ok)
             rows[name].append(sess.ledger.spent if ok else args.budget)
             if name == "fit":

@@ -1,0 +1,19 @@
+{
+  "session": "A0NAV-NAV-0026",
+  "note": "Every fact about f below came from the metered CLI. Session showed spent=7 before my first call.",
+  "calls": [
+    {"op": "remaining", "result": {"remaining": 113, "spent": 7}},
+    {"op": "sample", "point": 1, "value": 45, "spent_after": 8},
+    {"op": "sample", "point": 2, "value": 225, "spent_after": 9},
+    {"op": "sample", "point": 3, "value": 1215, "spent_after": 10},
+    {"op": "sample", "point": 4, "value": 2884, "spent_after": 11},
+    {"op": "sample", "point": 5, "value": 85, "spent_after": 12},
+    {"op": "sample", "point": 250, "value": 1099, "spent_after": 13},
+    {"op": "sample", "point": 600, "value": 1270, "spent_after": 14},
+    {"op": "evaluate", "point": 1, "holds": true, "spent_after": 20}
+  ],
+  "final_remaining": 100,
+  "final_spent": 20,
+  "refusals": 0,
+  "instrument_note": "sample was charged 1 each as documented; the single evaluate call was charged 6, not the documented 1."
+}

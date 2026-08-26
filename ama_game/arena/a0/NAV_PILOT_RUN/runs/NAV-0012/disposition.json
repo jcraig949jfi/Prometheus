@@ -1,0 +1,16 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0012",
+  "condition": "A",
+  "claim_id": "NAV-0012",
+  "session": "A0NAV-NAV-0012",
+  "disposition": "TRUE",
+  "witness": null,
+  "reasoning": "The hypotheses state f obeys a linear recurrence of order at most 2, so the whole sequence mod 4001 is determined by four consecutive observations. I sampled f(1..5) = 33, 183, 1137, 3526, 3381 (mod 4001). 4001 is prime, so GF(4001) linear algebra applies; fitting f(n) = a*f(n-1) + b*f(n-2) to f(1..4) gives a nonzero determinant (f2^2 - f1*f3 = 3970) and the unique solution a = 10, b = 3980 = -21. The fifth sample was held out and matched the prediction exactly. The characteristic polynomial x^2 - 10x + 21 factors as (x-3)(x-7), giving the closed form f(n) = 4*3^n + 3*7^n, which reproduces all 600 reconstructed residues. Scanning the reconstructed residues over the complete stated domain n = 1..600 (not a bounded search inside a larger domain - this is the entire quantified range) finds no n with f(n) mod 4001 = 1422. The nearest approach is n = 315, where f(315) mod 4001 = 1423, one off; this looked like a deliberately placed near-trap, so I checked it on both channels: sample(315) returned 1423, matching the model, and evaluate(315) returned holds = true. Three further model checks at spread points n = 200, 401, 600 returned 2324, 288, 481, all exactly as predicted. Five independent metered confirmations of the reconstruction (n = 5, 200, 315, 401, 600) make a coincidental fit implausible. The only assumption not verified by me is the stated hypothesis that the recurrence order is at most 2; the reconstruction is otherwise exact arithmetic in a finite field with no floating point anywhere.",
+  "route_taken": "Rather than testing points one at a time or paying 600 credits for a full range sweep, I used the order-at-most-2 hypothesis to reconstruct the recurrence from 5 samples, computed all 600 residues locally for free, and then spent 5 more metered calls confirming the reconstruction at spread points and at the single near-miss n = 315 - total 10 credits instead of 600.",
+  "confidence": 0.97,
+  "what_would_resolve_it": null,
+  "artifacts": [
+    "F:/Prometheus/ama_game/arena/a0/NAV_PILOT_RUN/runs/NAV-0012/reconstruct.py"
+  ]
+}

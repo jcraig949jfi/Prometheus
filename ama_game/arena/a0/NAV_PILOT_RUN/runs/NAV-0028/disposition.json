@@ -1,0 +1,13 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0028",
+  "condition": "A",
+  "claim_id": "NAV-0028",
+  "session": "A0NAV-NAV-0028",
+  "disposition": "TRUE",
+  "witness": null,
+  "reasoning": "The claim's own hypothesis states f satisfies a linear recurrence of order at most 2, so f mod 1009 is determined by four observations. I sampled f(1..5) = 12, 32, 96, 320, 143. Solving f(3)=a*f(2)+b*f(1) and f(4)=a*f(3)+b*f(2) over GF(1009) gave a nonsingular system (det = 881) with the unique solution f(n) = 6*f(n-1) - 8*f(n-2) mod 1009. Point n=5 was held out of the fit and the fit predicted it exactly (143). The characteristic roots are 2 and 4, giving the closed form f(n) = 2^(n+2) + 4^n, which reproduces all observed values. I then validated the model far from the fit region with two additional metered samples: n=317 predicted 523, observed 523; n=600 predicted 83, observed 83. Enumerating the closed form over n in [1,600] locally (a derived computation, not a metered search) yields no n with f(n) = 612 mod 1009. The nearest approaches are f(65)=613, f(569)=613, f(499)=614 - a deliberate near-miss structure, so I spent two further metered calls on the tightest one: sample(65) returned 613, matching the model, and evaluate(65) returned holds=true. Stronger than the stated domain: 2 has multiplicative order 504 mod 1009, so f mod 1009 is purely periodic with period 504, and 612 does not occur anywhere in a full period; the value is therefore never attained for any n >= 1, not merely on [1,600]. Residual risk is confined to the hypothesis itself - if f secretly violated the declared order-<=2 recurrence it could deviate at an unsampled index, but three independent holdout points (n=5, 317, 600) spanning the full domain agreed exactly with the fit, and one boolean oracle check agreed at the worst-case index.",
+  "route_taken": "Rather than scanning the domain with range calls (which would cost 600, five times the cap), I exploited the declared order-<=2 hypothesis: 4 samples pin the recurrence exactly, after which the whole sequence is computable for free, so I spent the remaining budget on holdout validation at distant and worst-case indices instead of on coverage - 12 metered calls total (5 fit+holdout, 2 distant checks, 1 sample and 1 evaluate at the nearest-miss index n=65, plus free remaining queries).",
+  "confidence": 0.97,
+  "what_would_resolve_it": null
+}

@@ -1,0 +1,12 @@
+{
+  "note": "All values obtained via metered sample() calls. f(n) mod 2711.",
+  "samples": {"1": 14, "2": 52, "3": 200, "4": 784, "5": 393, "6": 1508,
+              "137": 1852, "401": 1533, "600": 1323},
+  "fitted_recurrence": "f(n) = 6*f(n-1) - 8*f(n-2) (mod 2711)",
+  "characteristic_polynomial": "x^2 - 6x + 8 = (x-2)(x-4)",
+  "closed_form": "f(n) = 2^n + 3*4^n (mod 2711)",
+  "fit_inputs": ["n=1","n=2","n=3","n=4"],
+  "held_out_confirmations": ["n=5","n=6","n=137","n=401","n=600"],
+  "held_out_all_matched": true,
+  "scan": "n=1..600 recomputed locally; residue 732 never attained; count=0"
+}

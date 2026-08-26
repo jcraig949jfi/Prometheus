@@ -1,0 +1,20 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0007",
+  "condition": "A",
+  "claim_id": "NAV-0007",
+  "session": "A0NAV-NAV-0007",
+  "disposition": "FALSE",
+  "witness": {
+    "n": 260,
+    "f_n_mod_2711": 887,
+    "confirmed_by": [
+      "sample --point 260 -> value 887",
+      "evaluate --point 260 -> holds: false"
+    ]
+  },
+  "reasoning": "The claim's own hypotheses state f satisfies a linear recurrence of order at most 2, and the observable is f(n) mod 2711. 2711 is prime, so four consecutive samples determine the recurrence exactly over GF(2711) provided the 2x2 Hankel determinant is a unit. Sampling n=1..4 gave f = 22, 124, 712, 1433; the Hankel determinant f(2)^2 - f(1)f(3) = 2423 != 0 mod 2711, and the unique solution is f(n) = 10*f(n-1) + 2687*f(n-2) = 10*f(n-1) - 24*f(n-2) (mod 2711), characteristic polynomial (x-4)(x-6), closed form f(n) = 4^n + 3*6^n, which reproduces all four observed samples. Iterating that recurrence locally over the full stated domain n in [1,600] -- an exhaustive check of all 600 points, done offline on the reconstructed model, not a bounded search of the sealed object -- gives f(n) mod 2711 == 887 at exactly n = 260 and n = 543. I then spent two metered calls on the predicted first witness: sample(260) returned 887, matching the model prediction, and evaluate(260) returned holds:false. The disposition therefore does not rest on the reconstruction alone; the arena's own verdict oracle reports the proposition failing at n=260, so the universally quantified claim is false. Residual risk: the reconstruction assumes the stated order-<=2 homogeneous form, but since the final disposition is carried by evaluate(260) directly, an error in the model could only have cost extra calls, not produced a wrong verdict.",
+  "route_taken": "Rather than scanning the domain with range (up to 600 credits, and 120 of budget could not have covered it) or probing points blindly, I used the claim's own order-<=2 hypothesis: 4 samples pin the recurrence over the prime field 2711, extrapolation off-meter locates the first violating index, and 2 confirming calls at n=260 close it -- 6 metered credits total instead of a search.",
+  "confidence": 0.99,
+  "what_would_resolve_it": null
+}

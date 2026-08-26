@@ -1,0 +1,13 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0014",
+  "condition": "A",
+  "claim_id": "NAV-0014",
+  "session": "A0NAV-NAV-0014",
+  "disposition": "TRUE",
+  "witness": null,
+  "reasoning": "The claim grants that f satisfies a linear recurrence of order at most 2, so f mod 1409 is determined by four consecutive observations. I bought sample(1..4) = 39, 207, 1161, 1087 and solved the 2x2 system over GF(1409) (1409 is prime; exact integer arithmetic, no floating point) to get f(n) = 9*f(n-1) + 1391*f(n-2) mod 1409. I then bought five observations that were NOT used in the fit: sample(5)=157, sample(6)=164, sample(200)=1237, sample(400)=1347, sample(600)=228. The model reproduces all five exactly, including the far endpoint n=600, which is the point at which any drift between model and true sequence would be largest. With the model validated I enumerated all 600 points of the stated domain locally at zero metered cost. This is an exhaustive finite check over the entire domain n in [1,600], not a bounded search: 379 never occurs. The closest approaches are f(57)=380, f(389)=380 and f(198)=376, so the claim is true but not by a wide margin at the residue level. As a final independent probe of the nearest-miss point I spent one evaluate(57), which returned holds=true, consistent with the model and confirming that the proposition's own verdict oracle agrees with my reconstruction where it is most likely to be brittle. Residual risk: the whole route rests on the stated hypothesis that the recurrence has order at most 2 and constant coefficients. If f were, say, order 3 or piecewise, a model that matches at nine points including n=200/400/600 would be a surprising coincidence, but it would not be impossible; that is the assumption I am relying on and I state it rather than hide it. Artifact: fit_recurrence.py in this directory reproduces the fit, the out-of-fit checks, and the full enumeration.",
+  "route_taken": "Rather than testing points one at a time or paying for a wide range scan (a range 1-600 would have cost 600, five times the entire budget), I exploited the order-at-most-2 hypothesis: 4 samples to identify the recurrence over GF(1409), 5 held-out samples spread to n=600 to falsify the identification, 1 evaluate at the model's nearest miss (n=57), and then a free local enumeration of all 600 points.",
+  "confidence": 0.95,
+  "what_would_resolve_it": null
+}

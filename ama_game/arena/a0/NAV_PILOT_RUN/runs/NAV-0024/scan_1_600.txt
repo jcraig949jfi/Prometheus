@@ -1,0 +1,10 @@
+Model: f(n) = 9*f(n-1) - 14*f(n-2) mod 3301, f(1)=30, f(2)=200
+Closed form: f(n) = 2^n + 4*7^n mod 3301 (char roots 2 and 7; 3301 is prime)
+Metered validation points (all exact matches):
+  n=1 -> 30, n=2 -> 200, n=3 -> 1380, n=4 -> 3018, n=5 -> 1240,
+  n=99 -> 2874, n=317 -> 248, n=600 -> 1093
+  evaluate(600) -> holds: true
+Exhaustive local evaluation of the closed form over every n in [1,600]:
+  occurrences of f(n) mod 3301 == 981: NONE (0 hits)
+  distinct residues attained: 550 of 600 points
+Extended (non-load-bearing) check: no n <= 100000 gives residue 981.

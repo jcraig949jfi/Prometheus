@@ -1,0 +1,21 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0005",
+  "condition": "A",
+  "claim_id": "NAV-0005",
+  "session": "A0NAV-NAV-0005",
+  "disposition": "FALSE",
+  "witness": {
+    "n": 21,
+    "f_n_mod_4001": 303,
+    "confirmed_by": "evaluate --point 21 -> {\"holds\": false}"
+  },
+  "reasoning": "Hypothesis 3 states f satisfies a linear recurrence of order at most 2, which makes f fully determined mod 4001 by a handful of observations rather than requiring point-by-point search. I spent 6 sample calls on n=1..6, obtaining 28, 116, 532, 2564, 625, 2741. Solving the 2x2 system f(3)=a*f(2)+b*f(1), f(4)=a*f(3)+b*f(2) over GF(4001) (4001 is prime, so the field inverse is exact and no floating point is involved) gives a=7, b=3991=-10, i.e. f(n)=7f(n-1)-10f(n-2). The two held-back samples n=5 and n=6 were predicted correctly by that fit, so the order-2 homogeneous model was cross-checked on data not used to fit it and no inhomogeneous term is needed. The characteristic polynomial x^2-7x+10 factors as (x-2)(x-5), giving the closed form f(n)=4*(2^n+5^n); this closed form reproduces all 600 recurrence values, an independent check of the iteration. Reconstructing f(1..600) mod 4001 locally, exactly one n in the domain has f(n)=303, namely n=21. This local scan is exact integer arithmetic over the complete stated domain [1,600] and is not a bounded search short of the domain. I then spent one metered call, evaluate --point 21, which returned holds=false, confirming the witness against the sealed object rather than only against my reconstruction. The proposition therefore fails, at n=21.",
+  "route_taken": "I bought the recurrence rather than the answer: 6 samples to identify and cross-validate the order-2 recurrence mod 4001, a free local reconstruction of all 600 terms to locate the single violating index, and 1 evaluate call to confirm it against the sealed sequence (7 metered calls total) - chosen over scanning with range or evaluate, which would have cost 21 calls to stumble on n=21 and 600 to certify the domain.",
+  "confidence": 0.99,
+  "what_would_resolve_it": null,
+  "artifacts": {
+    "fit_and_scan_program": "F:/Prometheus/ama_game/arena/a0/NAV_PILOT_RUN/runs/NAV-0005/fit_recurrence.py",
+    "program_output": "F:/Prometheus/ama_game/arena/a0/NAV_PILOT_RUN/runs/NAV-0005/scan_log.txt"
+  }
+}

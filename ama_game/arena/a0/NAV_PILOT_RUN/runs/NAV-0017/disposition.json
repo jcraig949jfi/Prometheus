@@ -1,0 +1,17 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0017",
+  "condition": "A",
+  "claim_id": "NAV-0017",
+  "session": "A0NAV-NAV-0017",
+  "disposition": "FALSE",
+  "witness": {
+    "n": 40,
+    "f_n_mod_1009": 24,
+    "confirmed_by": "sample(40) returned 24 and evaluate(40) returned holds=false"
+  },
+  "reasoning": "The hypotheses state f satisfies a linear recurrence of order at most 2, so f mod 1009 is fully determined by a small number of observations. I sampled n=1..6 (values 40, 230, 321, 667, 734, 172) and fitted the general affine order-2 model f(n) = a*f(n-1) + b*f(n-2) + c over GF(1009) by exhaustive search over all 1009^2 pairs (a,b), with c forced by the n=3 equation and the remaining three equations (n=4,5,6) used as constraints. Exactly one model in the whole parameter space survives: a=11, b=979, c=0, i.e. f(n) = 11*f(n-1) - 30*f(n-2) mod 1009. This is an exact exhaustive determination over the full coefficient space, not a bounded heuristic search. Iterating that recurrence from the two observed seeds gives all 600 residues; f(n) mod 1009 equals 24 exactly at n=40 and n=544 (the residue sequence is purely periodic with period 504, and 544 = 40 + 504, which is a self-consistency check on the model rather than an independent hit). I then spent one call on sample(500) as an out-of-sample validation far from the fitting window: the model predicted 646 and the metered interface returned 646, a match with prior probability 1/1009 under a wrong model. Finally I confirmed the witness directly through the interface rather than relying on the model at all: sample(40) = 24 and evaluate(40) = holds false. The disposition therefore does not depend on the reconstruction being correct - the reconstruction only told me where to look, and the metered oracle itself certifies the counterexample. The proposition 'for every n in [1,600], f(n) mod 1009 is not 24' is false at n=40.",
+  "route_taken": "I bought six consecutive samples to pin down the order-2 recurrence exactly (uniquely solvable over GF(1009)), extrapolated all 600 residues offline for free, then spent three calls confirming it - one far out-of-sample point at n=500 to validate the model globally, and sample(40)+evaluate(40) to certify the counterexample at the oracle rather than in my own arithmetic - for 9 metered calls total; I chose this over range 1 600 (costs 600, unaffordable against a 120 cap), over range 1 120 (costs 120, exhausts the entire budget and would have found n=40 but left nothing for validation), and over blind point-by-point scanning (expected ~40 calls to stumble on the witness and no way to certify absence if it had been TRUE).",
+  "confidence": 0.99,
+  "what_would_resolve_it": null
+}

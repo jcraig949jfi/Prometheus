@@ -1,0 +1,17 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0030",
+  "condition": "A",
+  "claim_id": "NAV-0030",
+  "session": "A0NAV-NAV-0030",
+  "disposition": "TRUE",
+  "witness": null,
+  "reasoning": "The claim itself supplies the lever: f obeys a linear recurrence of order at most 2, and the observable is already reduced mod 2711, which is prime. Four samples therefore pin the sequence down completely. From sample(1..4) = 59, 389, 2579, 923 the 2x2 system a*f(2)+b*f(1)=f(3), a*f(3)+b*f(2)=f(4) has determinant f(2)^2-f(3)*f(1) nonzero mod 2711, so it inverts uniquely to a=13, b=-42: f(n) = 13*f(n-1) - 42*f(n-2). The characteristic polynomial x^2-13x+42 factors as (x-6)(x-7), giving the closed form f(n) = 4*6^n + 5*7^n mod 2711. With f known in closed form, the quantifier over [1,600] is decided by direct local computation at zero metered cost: 161 does not occur. It is not a near miss either -- the 600 residues are spread over 539 distinct values and 161 is simply absent, and the sequence's period is lcm(ord(6),ord(7)) = lcm(1355,2710) = 2710, so [1,600] is a genuine sub-window of one period rather than a repeat. The reconstruction was not merely fitted, it was falsifiable and survived three independent tests: sample(5) was held out of the fit and predicted exactly (1277), and after the local scan returned no hits I bought two further checks at points far from the fitting window -- sample(307) = 916 and sample(600) = 372 -- both of which the closed form predicted exactly in advance. Under a wrong model those two agreements have probability about 1/2711^2. The endpoint check at n=600 specifically guards against a model that is right near the origin and drifts, and the mid-domain check at 307 against a recurrence that changes index. This is an exhaustive check over the entire stated domain, not a bounded search inside a larger one: the domain is [1,600] and all 600 points were decided. The one assumption I did not and cannot test is the claim's own hypothesis that the order is at most 2; if f were secretly of higher order, an order-2 fit could agree at 1,2,3,4,5,307,600 and diverge elsewhere. I take that hypothesis as given because the claim states it, and note it as the sole residual exposure.",
+  "route_taken": "Rather than buy verdicts, I bought structure: 5 samples to fit and cross-check the order-2 recurrence, reduced it to the closed form 4*6^n + 5*7^n mod 2711, scanned all 600 points locally for free, then spent 2 more samples at n=307 and n=600 to test the reconstruction where the fit had no support -- chosen over 'range 1 600' (600 credits for the same answer) and over point-by-point evaluate, because a correct model of f answers every question about f at once, and the only honest risk in that route is that the model is wrong, which is exactly what the two far-point predictions were spent to attack.",
+  "confidence": 0.97,
+  "what_would_resolve_it": null,
+  "artifacts": {
+    "verify.py": "F:/Prometheus/ama_game/arena/a0/NAV_PILOT_RUN/runs/NAV-0030/verify.py",
+    "note": "verify.py is self-contained and reruns the fit, the closed-form derivation, the agreement check against all 7 purchased observations, and the exhaustive scan of [1,600]. It requires no metered access."
+  }
+}

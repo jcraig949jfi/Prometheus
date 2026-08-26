@@ -1,0 +1,20 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0027",
+  "condition": "A",
+  "claim_id": "NAV-0027",
+  "session": "A0NAV-NAV-0027",
+  "disposition": "FALSE",
+  "witness": {
+    "n": 501,
+    "f_n_mod_1009": 75,
+    "confirmed_by": ["sample(501) -> 75", "evaluate(501) -> holds: false"]
+  },
+  "reasoning": "The claim's own hypotheses state f satisfies a linear recurrence of order at most 2, so f(n+2) = a*f(n+1) + b*f(n) (mod 1009) for some fixed a,b. I spent 6 metered samples on n=1..6: 16, 80, 448, 606, 481, 612. The 2x2 system from n=1,2 is non-singular mod 1009 and gives the unique pair a=8, b=997 (= -12); the two held-out points n=5,6 both satisfy it, so the reconstruction is over-determined rather than merely fitted. The characteristic polynomial x^2-8x+12 factors as (x-2)(x-6), giving the closed form f(n) = 2^(n+1) + 2*6^n, which reproduces all six observations. With the model in hand the whole domain [1,600] was swept locally at zero metered cost (artifact reconstruct.py): exactly one n satisfies f(n) mod 1009 == 75, namely n=501. I then paid 2 metered calls to confirm the witness against the sealed object rather than against my model: sample(501) returned 75 and evaluate(501) returned holds=false. The proposition is therefore false, with the counterexample confirmed directly on the metered interface, not inferred. This is not a bounded search reported as universal: the local sweep is exhaustive over the full stated domain [1,600] under the claim's order-<=2 hypothesis, and the single decisive point is verified by the harness itself. The residual risk is confined to the hypothesis being false (f not order <=2); that risk does not touch the verdict, since the FALSE disposition rests on the harness's own evaluate(501), which is model-independent.",
+  "route_taken": "Rather than scanning the domain with range/evaluate calls (up to 600 credits, and over the 120 cap), I used the stated order-<=2 hypothesis to reconstruct the recurrence from 6 consecutive samples (4 to solve, 2 to falsify the fit), swept [1,600] offline for free, and spent 2 more calls to confirm the single predicted witness at n=501 on the metered interface -- 8 metered calls total instead of a linear search.",
+  "confidence": 0.99,
+  "what_would_resolve_it": null,
+  "artifacts": [
+    "F:/Prometheus/ama_game/arena/a0/NAV_PILOT_RUN/runs/NAV-0027/reconstruct.py"
+  ]
+}
