@@ -308,6 +308,26 @@ program disposition, and the successor design in §9.7 is a concrete named consu
 caught its own instrument defects under external pressure, corrected an instrument in the direction
 that hurt its own thesis, and published the ledger — which is the behaviour the role was created for.
 
+**Ledger state as of 2026-08-26, recorded and deliberately NOT repaired:**
+
+```
+Lane N              CLOSED
+Lane M              OPEN - retirement criterion unmet (A6 attachment absent)
+Instrument preflight FINAL (frozen at eca6af61)
+Lean handoff        DISCHARGED (HANDOFF_lean_successor_2026-08-26.md)
+Execution           proceeds per the fixed order in the preflight
+```
+
+**This dangling state is evidence, not housekeeping debt.** §7 makes the A6 attachment a *condition*
+for retiring Lane M. That condition is unmet, so Lane M does not retire. It will **not** be repaired
+administratively — not by rewording §10, not by treating "effectively done" as done, and not by
+attaching an A6-shaped retrospective artifact after the fact. Either a valid A6 exists and is
+attached under its **original** semantics, or Lane M stays visibly open and failed-to-retire.
+
+**Retirement is not an execution prerequisite.** §7 states a condition for retiring the lanes; it does
+not gate work on that condition. So the honest state above is complete as written, and manufacturing
+closure to tidy the ledger would be the more damaging option.
+
 **I am not ruling on my own retirement.** Recorded per §7 and
 `feedback_retirement_needs_thoughtwork_dossier_hitl`: no delete state, four-question dossier, HITL
 sign-off. **This is now the top item in §8.**
