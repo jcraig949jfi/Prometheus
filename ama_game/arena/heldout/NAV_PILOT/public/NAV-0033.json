@@ -1,0 +1,13 @@
+{
+  "claim_id": "NAV-0033",
+  "kind": "navigation",
+  "proposition": "Let f be the sequence held by the arena. For every integer n with 1 <= n <= 600, f(n) mod 4001 is not 2474.",
+  "domain": "integers n with 1 <= n <= 600",
+  "quantifiers": "for all n in [1, 600]",
+  "hypotheses": [
+    "f is an integer sequence; its defining coefficients are sealed",
+    "f may be observed only through the metered interface",
+    "f satisfies a linear recurrence of order at most 2"
+  ],
+  "observable": "sample(n) returns f(n) mod 4001; evaluate(n) tests the proposition at n"
+}

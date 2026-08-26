@@ -44,6 +44,7 @@ def fixture(tmp: Path, n_claims: int = 4) -> Path:
             "witness_var": "n",
             # holds everywhere except one known point
             "claim_predicate": f"n != {first_bad}",
+            "sealed_value_expr": "n*2",
             "first_failure": first_bad,
             "sealed_component": True,
         }, indent=2), encoding="utf-8", newline="\n")
@@ -67,9 +68,11 @@ def test_taint_point_evaluations(sealed: Path) -> None:
     for _ in range(300):
         s = rng.choice(sessions)
         try:
-            op = rng.choice(["evaluate", "range", "symbolic", "free"])
+            op = rng.choice(["evaluate", "sample", "range", "symbolic", "free"])
             if op == "evaluate":
                 s.evaluate(rng.randint(1, 1000))
+            elif op == "sample":
+                s.sample(rng.randint(1, 1000))
             elif op == "range":
                 lo = rng.randint(1, 900)
                 s.evaluate_range(lo, lo + rng.randint(0, 40))
@@ -85,7 +88,7 @@ def test_taint_point_evaluations(sealed: Path) -> None:
     # equality. Equality would forbid short-circuiting, which is free to the
     # seat only in the sense that it already paid for it.
     point_spend = sum(e["cost"] for s in sessions for e in s.ledger.entries
-                      if e["op"] in ("evaluate", "evaluate_range"))
+                      if e["op"] in ("evaluate", "evaluate_range", "sample"))
     check("no evaluation happens that was not paid for",
           m._oracle_evaluations <= point_spend,
           f"oracle={m._oracle_evaluations} charged={point_spend}")
@@ -188,6 +191,7 @@ def test_every_public_method_that_reads_is_charged(sealed: Path) -> None:
     probes = {
         "remaining": (), "refusals": (), "statement": (), "report": (),
         "evaluate": (7,), "evaluate_range": (7, 9), "symbolic_check": ("n > 0",),
+        "sample": (7,),
     }
     public = [n for n, _ in inspect.getmembers(Session, inspect.isfunction)
               if not n.startswith("_")]
@@ -254,7 +258,7 @@ def test_cheating_seat_cannot_overspend(sealed: Path) -> None:
         except BudgetExhausted:
             continue
     point_spend = sum(e["cost"] for e in s.ledger.entries
-                      if e["op"] in ("evaluate", "evaluate_range"))
+                      if e["op"] in ("evaluate", "evaluate_range", "sample"))
     check("a seat ignoring refusals still cannot exceed the budget",
           s.ledger.spent <= 250, f"spent={s.ledger.spent}")
     check("evaluations performed never exceed the budget",

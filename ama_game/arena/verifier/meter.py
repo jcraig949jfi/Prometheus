@@ -153,6 +153,19 @@ class Session:
                 break
         return {"first_failure": first, "points_paid": cost}
 
+    def sample(self, point: int):
+        """Observe the sealed object's VALUE at a point. Cost 1.
+
+        Distinct from `evaluate`, which returns only whether the proposition
+        holds. A seat cannot fit a structure from booleans; it needs values. So
+        the cheap structural route -- sample a few points, recognise the
+        recurrence, then compute the rest locally for free -- only exists if
+        this primitive does. It is the operation the navigation experiment is
+        built to reward, and it is charged like any other read.
+        """
+        self._charge("sample", 1, {"point": point})
+        return self._meter._sealed_sample(self.claim_id, point)
+
     def symbolic_check(self, relation: str) -> bool:
         """Ask whether a stated relation holds identically on the domain.
 
@@ -218,6 +231,14 @@ class Meter:
         if not (lo <= point <= hi):
             return True          # outside the quantified domain: vacuous
         return bool(_raw_evaluate(c["claim_predicate"], {c["witness_var"]: point}))
+
+    def _sealed_sample(self, claim_id: str, point: int):
+        c = self.load(claim_id)
+        expr = c.get("sealed_value_expr")
+        if not expr:
+            return None          # this claim exposes no observable object
+        self._oracle_evaluations += 1
+        return _raw_evaluate(expr, {c["witness_var"]: point})
 
     def _sealed_symbolic(self, claim_id: str, relation: str) -> bool:
         """A symbolic question, answered by sampling under the hood.

@@ -1,0 +1,33 @@
+{
+  "claim_id": "NAV-0015",
+  "truth_status": "FALSE",
+  "witness": {
+    "n": 20
+  },
+  "sealed_component": true,
+  "witness_var": "n",
+  "domain_lo": 1,
+  "domain_hi": 600,
+  "claim_predicate": "lin_rec(n, 7, 25, 8, -15) % 1409 != 1009",
+  "sealed_value_expr": "lin_rec(n, 7, 25, 8, -15) % 1409",
+  "params": {
+    "r": 3,
+    "s": 5,
+    "C": 5,
+    "D": 2,
+    "p": 8,
+    "q": -15,
+    "a0": 7,
+    "a1": 25,
+    "M": 1409,
+    "R": 1009,
+    "N": 600
+  },
+  "route_menu": {
+    "enumerate": 20,
+    "boundary": 60,
+    "fit_recurrence": 5
+  },
+  "cheapest_route": "fit_recurrence",
+  "achievable_floor": 5
+}

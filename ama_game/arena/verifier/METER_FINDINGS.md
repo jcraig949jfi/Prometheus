@@ -125,11 +125,51 @@ Point evaluations and symbolic sampling are counted on **separate** taint
 counters. Folding them into one would make the invariant approximate, and an
 approximate invariant is exactly where a metering bug would hide.
 
+## Finding 4 — the route menu had to be proved walkable, not asserted
+
+`navgen.py` writes an `achievable_floor` into every sealed record. That is a
+claim about the world until something reaches it, so `nav_strategy_sim.py` runs
+a seat that actually does the mathematics through the real meter: sample four
+residues, solve the two-by-two system for the recurrence coefficients modulo M,
+reconstruct the sequence locally, confirm with one evaluate.
+
+First attempt at the generator produced **no headroom at all** — median
+enumerate cost 4, max 26, against a fit cost of 5. The structural route was
+*worse* than brute force. Cause: residues of a linear recurrence modulo a small
+number cycle fast, so any residue that occurs at all occurs almost immediately
+and the witness was always tiny. Fixed with a large prime modulus (M >> N), which
+gives a long period and lets the witness land where it is placed.
+
+Result on 60 generated claims, budget 650:
+
+```
+  route         accuracy  mean cost   median
+  enumerate        100%      168.8       94
+  boundary          95%      250.9      214
+  fit              100%        5.0        5
+
+INTERSECTION (57/60 claims every route got right)
+  enumerate    mean   176.1   median  134
+  boundary     mean   229.9   median  175
+  fit          mean     5.0   median    5
+
+  enumerate / fit on the intersection: 35.2x
+```
+
+`fit` reached the sealed floor on **60/60** claims it solved. The cheap route is
+walkable and costs what the record says, so the headroom figure is a measurement.
+
+Note `boundary` is *worse* than plain enumeration here (229.9 vs 176.1). A
+heuristic tuned for a different failure geometry actively costs more than not
+having one, which is worth remembering when reading condition B: generic
+guidance is not free.
+
 ## Still open
 
-- The meter serves sealed fixtures. Wiring it to the real generator needs claims
-  that carry a genuine sealed component; today's generator emits fully public
-  claims, so `binding` would be False for all of them.
+- ~~The meter serves sealed fixtures.~~ Done: `navgen.py` emits claims whose
+  defining coefficients are sealed, so `binding` is True and the cap bites.
+  The v0.1-style templates remain fully public and would still be non-binding;
+  they are not used for navigation measurement.
 - `symbolic_check` answers by sampling five points. That is a placeholder: a
   real symbolic route should answer a structural question, not sample.
 - The strategy landscape is scripted. It shows the cost geometry exists; it says
