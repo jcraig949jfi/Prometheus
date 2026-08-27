@@ -1,0 +1,108 @@
+{
+ "census": "meta_v4",
+ "date": "2026-08-26",
+ "budget": 400000,
+ "probe_budget": 20000,
+ "D1_space": {
+  "n_stage_programs": 634,
+  "enumeration_sha": "c44f6a4f09094537"
+ },
+ "D2_diversity": {
+  "n_behavioral_classes": 78
+ },
+ "D3_not_spelled": {
+  "n_meet_class": 16,
+  "frac_meet_class": 0.0252,
+  "first_meet_rank": 49,
+  "first_meet_serial": "STAGE[AS+ZP|ALT|ANY]"
+ },
+ "D4_reachable": {
+  "n_solving_all_deep_probes": 16
+ },
+ "D5_first_seq_serial": "SEQ(STAGE[AS+ZP|ALT|ANY],STAGE[AS+ZP|ALT|ANY])",
+ "D5_e_structure": {
+  "one_stage_A3_solves_via": false,
+  "seq_fwd_fwd_solves": false,
+  "seq_meet_meet_solves": true,
+  "seq_meet_meet_ops": [
+   4404,
+   4408
+  ],
+  "first_via_solving_seq_rank": 4831,
+  "n_seq_programs": 401956
+ },
+ "worlds": {
+  "dA": {
+   "a0_deep_solved": 0,
+   "a0_shallow_solved": 4,
+   "a0_deep_med_ops": 400004.0,
+   "a3_deep_solved": 6,
+   "a3_deep_med_ops": 3648.5,
+   "n_deep": 6,
+   "n_shallow": 4,
+   "gen_sec": null,
+   "plant_in_shallow_solutions": "4/4"
+  },
+  "dB": {
+   "a0_deep_solved": 0,
+   "a0_shallow_solved": 4,
+   "a0_deep_med_ops": 400005.0,
+   "a3_deep_solved": 6,
+   "a3_deep_med_ops": 3744.5,
+   "n_deep": 6,
+   "n_shallow": 4,
+   "gen_sec": null
+  },
+  "dC": {
+   "a0_deep_solved": 0,
+   "a0_shallow_solved": 4,
+   "a0_deep_med_ops": 400004.0,
+   "a3_deep_solved": 6,
+   "a3_deep_med_ops": 4836.5,
+   "n_deep": 6,
+   "n_shallow": 4,
+   "gen_sec": null
+  },
+  "dD": {
+   "a0_solved": 8,
+   "a3_solved": 8,
+   "a0_med_ops": 8546.5,
+   "a3_med_ops": 23964.5,
+   "a3_over_a0_med": 2.081,
+   "a3_runs_with_verify_failures": 5,
+   "a3_runs_with_bad_bwd_edges": 8,
+   "n": 8
+  },
+  "clean_worlds_verify_failures_total": 0,
+  "clean_worlds_bad_bwd_edges_total": 0,
+  "W4_consistency_probe": {
+   "dD_flagged": 60,
+   "clean_flagged": 0,
+   "n_each": 60
+  },
+  "dW0": {
+   "a0_solved": 6,
+   "a0_med_ops": 2515.5,
+   "n": 6
+  }
+ },
+ "verdicts": {
+  "D2_diversity_ge_10": true,
+  "D3_frac_le_8pct": true,
+  "D3_rank_ge_25": true,
+  "D4_reachable": true,
+  "D5_one_stage_cannot": true,
+  "D5_seq_fwd_fails": true,
+  "D5_seq_meet_solves": true,
+  "D5_rank_ge_200": true,
+  "W1_pathology": true,
+  "W2_ceiling": true,
+  "W3_trap": true,
+  "W4_guardable": true,
+  "W5_recursion": true,
+  "W6_no_pressure": true
+ },
+ "FAILED": [],
+ "CENSUS_PASSES": true,
+ "wall_sec": 27.6
+}

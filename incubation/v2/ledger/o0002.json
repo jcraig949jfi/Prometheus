@@ -1,0 +1,85 @@
+{
+ "id": "o0002",
+ "derivation": {
+  "route": {
+   "feature": "AUDIT_T",
+   "threshold": 0,
+   "learn_ops": 378,
+   "bad_range": [
+    24,
+    24
+   ],
+   "good_range": [
+    0,
+    0
+   ]
+  },
+  "wraps": "STAGE[AS+ZP|ALT|ANY]",
+  "fallback": "STAGE[AS|ONLY:0|GOAL]"
+ },
+ "dependencies": [
+  "o0001"
+ ],
+ "creation_event": {
+  "phase": "revision",
+  "date": "2026-08-26"
+ },
+ "admission_test": {
+  "gates": {
+   "D_REVISED": true,
+   "D_VALID": true
+  }
+ },
+ "effect_size": {
+  "dD_fresh_vs_A0": {
+   "n": 70,
+   "median": 1.0085,
+   "ci95": [
+    1.0037,
+    1.0123
+   ],
+   "per_seed": {
+    "11": 1.008,
+    "22": 1.0083,
+    "33": 1.0086,
+    "44": 1.0081,
+    "55": 1.008
+   }
+  },
+  "dA_fresh_overhead": {
+   "n": 30,
+   "median": 1.0028,
+   "ci95": [
+    1.0016,
+    1.0036
+   ],
+   "per_seed": {
+    "11": 1.0026,
+    "22": 1.0028,
+    "33": 1.0026,
+    "44": 1.0026,
+    "55": 1.0026
+   }
+  }
+ },
+ "ablation_result": {
+  "note": "removing the route reproduces o0001 blind (measured alongside on dD_fresh)"
+ },
+ "transfer_results": {},
+ "observed_failure_region": null,
+ "revisions": [],
+ "status": "admitted",
+ "events": [
+  {
+   "phase": "revision",
+   "date": "2026-08-26",
+   "kind": "created"
+  },
+  {
+   "kind": "status_change",
+   "frm": "candidate",
+   "to": "admitted",
+   "reason": "revision gates"
+  }
+ ]
+}

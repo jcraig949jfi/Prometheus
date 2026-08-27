@@ -177,8 +177,16 @@ class LossyDomain(Domain):
     succ/apply are exact — only backward information is poisoned. Omniscient
     diagnostics keep using the true inverses."""
 
-    DROP_PCT = 70
-    SPURIOUS = 6
+    # Trap lineage: 70/6 rejected by the first full operator_genesis run (pooled
+    # blind harm 1.42 vs gate 1.5; anomaly rate 28.6% in two seeds vs gate 30%).
+    # 85/8 rejected by census meta_v3 (ratio 1.405): the backward ROOT is always
+    # meetable, so a dead backward tree degrades meet-search to forward-plus-waste,
+    # and with frontier balancing the waste share stays ~0.4. The lever that works
+    # is spurious VOLUME (backward expansion cost): at 24 the frontier-balancing
+    # variant pays ~2.1x and alternating variants collapse outright (28x, solve
+    # loss), per the recorded sweep. DROP 85 keeps true backward regions deserts.
+    DROP_PCT = 85
+    SPURIOUS = 24
 
     def pred(self, s):
         out = []

@@ -1,0 +1,187 @@
+{
+ "id": "o0001",
+ "derivation": {
+  "program": "STAGE[AS+ZP|ALT|ANY]",
+  "constructed_by": "exhaustive metered evaluation of the frozen 1-stage space on the learner's own budget-failed tasks",
+  "construction_cost": {
+   "candidates": 634,
+   "construction_ops": 62279994
+  }
+ },
+ "dependencies": [
+  "meta-runtime primitives: spawn/expand/observe/meet/reconstruct via succ+pred"
+ ],
+ "creation_event": {
+  "phase": "construct",
+  "date": "2026-08-26",
+  "trigger": {
+   "fired": true,
+   "n": 20,
+   "budget_failures": 13,
+   "frac": 0.65
+  }
+ },
+ "admission_test": {
+  "gates": {
+   "G_ADMIT_SOLVE": true,
+   "G_ADMIT_COST": true,
+   "G_BEATS_A1": true
+  },
+  "vs_A0": {
+   "n": 150,
+   "median": 0.0115,
+   "ci95": [
+    0.0114,
+    0.0125
+   ],
+   "per_seed": {
+    "11": 0.0115,
+    "22": 0.0115,
+    "33": 0.0115,
+    "44": 0.0115,
+    "55": 0.0115
+   }
+  },
+  "vs_A1": {
+   "n": 150,
+   "median": 0.0126,
+   "ci95": [
+    0.0126,
+    0.0174
+   ],
+   "per_seed": {
+    "11": 0.0174,
+    "22": 0.0118,
+    "33": 0.0154,
+    "44": 0.0172,
+    "55": 0.0126
+   }
+  }
+ },
+ "effect_size": {
+  "capture_vs_ceiling": {
+   "n": 150,
+   "median": 1.0,
+   "ci95": [
+    1.0,
+    1.0
+   ],
+   "per_seed": {
+    "11": 1.0,
+    "22": 1.0,
+    "33": 1.0,
+    "44": 1.0,
+    "55": 1.0
+   }
+  },
+  "classifier": "ARCHITECTURAL"
+ },
+ "ablation_result": {
+  "dA": true,
+  "dC": true
+ },
+ "transfer_results": {
+  "dC_vs_A0": {
+   "n": 80,
+   "median": 0.0171,
+   "ci95": [
+    0.0171,
+    0.0171
+   ],
+   "per_seed": {
+    "11": 0.0171,
+    "22": 0.0171,
+    "33": 0.0171,
+    "44": 0.0171,
+    "55": 0.0171
+   }
+  },
+  "frozen": true
+ },
+ "observed_failure_region": {
+  "unreliable_predecessor_worlds": {
+   "n": 70,
+   "median": 2.2559,
+   "ci95": [
+    2.124,
+    4.8563
+   ],
+   "per_seed": {
+    "11": 33.1568,
+    "22": 3.1592,
+    "33": 1.3853,
+    "44": 3.5995,
+    "55": 2.1593
+   }
+  },
+  "detection": [
+   {
+    "anomalous": 14,
+    "n_blind": 14,
+    "audit_hits": 14,
+    "clean_anomalies": 0,
+    "threshold": 12632.5
+   },
+   {
+    "anomalous": 14,
+    "n_blind": 14,
+    "audit_hits": 14,
+    "clean_anomalies": 0,
+    "threshold": 12570.0
+   },
+   {
+    "anomalous": 9,
+    "n_blind": 14,
+    "audit_hits": 9,
+    "clean_anomalies": 0,
+    "threshold": 11070.0
+   },
+   {
+    "anomalous": 14,
+    "n_blind": 14,
+    "audit_hits": 14,
+    "clean_anomalies": 0,
+    "threshold": 12470.0
+   },
+   {
+    "anomalous": 13,
+    "n_blind": 14,
+    "audit_hits": 13,
+    "clean_anomalies": 0,
+    "threshold": 12620.0
+   }
+  ]
+ },
+ "revisions": [
+  {
+   "successor": "o0002",
+   "kind": "learned routing predicate over executable task features (backward-edge consistency audit)"
+  }
+ ],
+ "status": "bounded",
+ "events": [
+  {
+   "phase": "construct",
+   "date": "2026-08-26",
+   "trigger": {
+    "fired": true,
+    "n": 20,
+    "budget_failures": 13,
+    "frac": 0.65
+   },
+   "kind": "created"
+  },
+  {
+   "kind": "status_change",
+   "frm": "candidate",
+   "to": "admitted",
+   "reason": "admission gates"
+  },
+  {
+   "kind": "status_change",
+   "frm": "admitted",
+   "to": "bounded",
+   "reason": "negative transfer measured in unreliable-predecessor worlds; routing bounded by o0002"
+  }
+ ]
+}
