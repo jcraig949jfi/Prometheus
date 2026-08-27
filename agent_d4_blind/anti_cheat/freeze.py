@@ -63,7 +63,7 @@ def main():
     lines.append("- binding runs: substrates/run_phase1.py {S1_REG,S2_STACK,"
                  "S3_REWRITE,S4_MEM}, executed once each after the freeze commit.")
     import re
-    s = re.sub(r"## FROZEN \(filled at freeze commit\)[\s\S]*$", "\n".join(lines) + "\n", s)
+    s = re.sub(r"## FROZEN[\s\S]*$", "\n".join(lines) + "\n", s)
     s = s.replace("Status: DRAFT — becomes BINDING",
                   "Status: BINDING (frozen 2026-08-27) — became binding")
     open(pp, "w", encoding="utf-8", newline="\n").write(s)
