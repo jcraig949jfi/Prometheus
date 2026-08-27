@@ -24,7 +24,7 @@ failure. All fired flags are reported.
 from __future__ import annotations
 
 THRESHOLDS = {
-    "status": "CALIBRATING",
+    "status": "FROZEN-2026-08-27",
     # G1 phenotype mass
     "MIN_VIABLE_FRAC": 0.005,
     "MIN_CLASSES": 250,
