@@ -36,7 +36,7 @@ verdicts for every condition are in `results/threshold_sensitivity.json`.
 Each basis is blocked by a *different* precondition:
 
 - **S1 (typed point-free calculus)** — the most navigable substrate found, and
-  the only one to pass M0 coverage and witness access. Blocked purely on
+  the only basis to pass both M0 coverage and witness access. Blocked purely on
   taxonomy: its edit distribution concentrates on one family.
 - **S2 (total flat bytecode)** — passes everything on the substrate side except
   taxonomy, and is blocked on far-stratum reachability (0.15 vs 0.20).
@@ -121,7 +121,7 @@ it was not the substrate.
 S1 is the one place the map is not one-to-one: E-PERTURB, E-PRUNE and E-REPLACE
 all collapse onto `relabel` (0.88-1.00), E-GRAFT splits across
 prepend/wrap/splice, and **E-SWAP produces an identical token string in 100% of
-800 sampled draws** — one of five tree operators is dead, because same-typed
+806 sampled draws** — one of five tree operators is dead, because same-typed
 sibling subtrees in small typed terms are usually literally equal. That dead
 operator was not detected before the freeze and was not repaired after it.
 
