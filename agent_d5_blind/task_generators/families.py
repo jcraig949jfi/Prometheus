@@ -48,8 +48,8 @@ def gen_f1(seed, pool=None):
     """AFFMOD: composition of k=2..5 unary primitives on D64."""
     pool = pool or H
     rng = random.Random(seed)
-    k = rng.randint(2, 5)
-    prims = _pick(rng, pool, k)
+    k = rng.randint(1, 5)   # depth-1 on-ramp included (curriculum needs a
+    prims = _pick(rng, pool, k)   # findable band; calibrated 2026-08-27)
     f = _compose_py(prims)
     return {'family': 'F1', 'seed': seed, 'domain': D64,
             'table': [((x,), f(x)) for (x,) in D64],
@@ -115,7 +115,7 @@ def gen_f4(seed, pool=None):
     bitpool = [p for p in pool if p['name'].startswith(
         ('SWAP3', 'ANDC', 'ORC', 'XORC', 'SHLC', 'SHRC'))]
     rng = random.Random(seed)
-    k = rng.randint(2, 4)
+    k = rng.randint(1, 4)
     prims = _pick(rng, bitpool, k)
     f = _compose_py(prims)
     return {'family': 'F4', 'seed': seed, 'domain': D64,
@@ -125,20 +125,25 @@ def gen_f4(seed, pool=None):
 
 
 def gen_ctrl(seed):
-    """CTRL-RAND: independently random 4-point lookup table, outputs in the
-    palette. Structureless by construction (content is iid random)."""
+    """CTRL-RAND: independently random lookup table on {0..n-1}, n in {2,3,4},
+    outputs in the palette. Structureless by construction (content is iid
+    random). Case-count mix keeps part of the family inside the M0-findable
+    band so the G8 selectivity gate is not a floor effect (fixed wlen-21
+    4-case tables measured 0/8 findable at 30k on engineering seeds)."""
     rng = random.Random(seed)
-    ys = [PAL[rng.randrange(len(PAL))] for _ in range(4)]
-    # SET r1 0; SET r6 y0; for i in 1..3: MOV r2 r0; SET r3 i; XOR r2 r3;
+    n = rng.choice([2, 3, 4])
+    ys = [PAL[rng.randrange(len(PAL))] for _ in range(n)]
+    # SET r1 0; SET r6 y0; for i in 1..n-1: MOV r2 r0; SET r3 i; XOR r2 r3;
     #   SET r4 yi; SKG r2 r1; MOV r6 r4;  then MOV r0 r6
     w = [('SET', 1, PIDX[0]), ('SET', 6, PIDX[ys[0]])]
-    for i in (1, 2, 3):
+    for i in range(1, n):
         w += [('MOV', 2, 0), ('SET', 3, PIDX[i]), ('XOR', 2, 3),
               ('SET', 4, PIDX[ys[i]]), ('SKG', 2, 1), ('MOV', 6, 4)]
     w += [('MOV', 0, 6)]
-    return {'family': 'CTRL', 'seed': seed, 'domain': D4,
-            'table': [((x,), ys[x]) for (x,) in D4],
-            'gen_meta': {'ys': ys},
+    dom = [(x,) for x in range(n)]
+    return {'family': 'CTRL', 'seed': seed, 'domain': dom,
+            'table': [((x,), ys[x]) for (x,) in dom],
+            'gen_meta': {'ys': ys, 'cases': n},
             'witness': tuple(w)}
 
 

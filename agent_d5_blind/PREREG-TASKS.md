@@ -1,9 +1,15 @@
 # PREREG-TASKS — Hard-Task Battery, Oracles, Reachability (Phase 1)
 
-Status: DRAFT. Freezes only after (a) evidence preflight G0 passes, (b) the
-instrument-validation battery of section 8 passes, (c) hardness calibration on
-engineering seeds completes. Task-generation evidence seeds (3000–3999 dev,
-6000–6999 alien) remain untouched until freeze.
+Status: FROZEN 2026-08-27. Preconditions met in order: (a) G0_PASS on the
+evidence preflight (commit a516b2d2); (b) instrument validation ALL 7 CASES
+PASS; (c) hardness calibration complete (depth sweep: full pool 80/40/20% by
+depth 1/2/3 at 30k; per-primitive heterogeneity measured; CTRL case-mix
+calibrated 2-case 50% / 3-case 11% / 4-case 0%). Final pre-freeze design
+deltas, all calibration-driven and pre-evidence: F1 depth range 1-5 and F4
+depth 1-4 (depth-1 on-ramp so development has a findable entry band);
+CTRL-RAND case count in {2,3,4}; navigation objective = bitwise Hamming
+(s6b). Battery composed from evidence seeds and frozen in
+results/task_manifest.json (58 dev + 20 alien, EC = RC = 1.0).
 
 ## 1. Task model
 A task is a total function f over a small finite input domain D, presented

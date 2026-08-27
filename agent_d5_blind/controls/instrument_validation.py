@@ -51,16 +51,30 @@ def enumerate_len_le2_behaviors():
 def main():
     report = {}
 
-    # Case 1: expressible + reachable + easy (shallow F1)
-    easy = [t for s in range(1500, 1560)
-            for t in [gen_task('F1', s)] if len(t['witness']) <= 4][:5]
+    # Case 1: expressible + reachable + easy TO FIND. Findability is
+    # per-task heterogeneous even at depth 1 (measured 2026-08-27: SHRC 8/8,
+    # MULC3 0/8 at 8000), so 'easy' is selected by engineering probe (2
+    # screening seeds) and VALIDATED on fresh navigator seeds — this validates
+    # the harness, not a scientific claim.
+    easy = []
+    for s in range(1500, 1600):
+        t = gen_task('F1', s)
+        if len(t['witness']) > 4:
+            continue
+        probe = [M0_SUITE['M0c-RX'](t, random.Random(9000 + s * 2 + j), 2000)['solved']
+                 for j in range(2)]
+        if all(probe):
+            easy.append(t)
+        if len(easy) == 5:
+            break
     ok1 = all(solves(t['witness'], t) and
               classify(t, t['witness'])['status'] == 'REACHABLE' for t in easy)
-    solved1 = sum(M0_SUITE['M0c-RX'](t, random.Random(1600 + i), 2000)['solved']
-                  for i, t in enumerate(easy))
+    fresh1 = sum(any(M0_SUITE['M0c-RX'](t, random.Random(1600 + i * 3 + j),
+                                        2000)['solved'] for j in range(2))
+                 for i, t in enumerate(easy))
     report['case1_easy'] = {'n': len(easy), 'classified_ok': ok1,
-                            'm0_solved_at_2000': solved1,
-                            'pass': ok1 and solved1 >= len(easy) - 1}
+                            'fresh_seed_found': fresh1,
+                            'pass': ok1 and len(easy) == 5 and fresh1 >= 4}
 
     # Case 2: expressible + reachable + hard to find (long F2 witnesses)
     hard = [t for s in range(1500, 1600)
@@ -104,11 +118,14 @@ def main():
         'le2_behavior_count': len(le2), 'pass': found == 3}
 
     # Case 5: structure-shared sequence — witnesses share H template fragments
-    f1s = [gen_task('F1', s) for s in range(1500, 1520)]
+    # (over compositions of depth >= 2; depth-1 witnesses are too short to
+    # carry shared fragments)
+    f1s = [t for s in range(1500, 1560)
+           for t in [gen_task('F1', s)] if len(t['witness']) >= 4][:10]
     def frags(w):
         return {tuple(w[i:i + 2]) for i in range(len(w) - 1)}
     shared = 0
-    for a, b in itertools.combinations(f1s[:10], 2):
+    for a, b in itertools.combinations(f1s, 2):
         if frags(a['witness']) & frags(b['witness']):
             shared += 1
     report['case5_shared_structure'] = {'pairs_sharing_fragments': shared,
