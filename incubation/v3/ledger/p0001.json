@@ -1,0 +1,199 @@
+{
+ "id": "p0001",
+ "derivation": {
+  "lens": "LENS[u00.u03.u06|u01.u04.u07]",
+  "typed_signature": "task{start,target} -> ordered subtasks, one per group, over the group's discovered support",
+  "constructed_by": "exhaustive metered evaluation of the frozen lens space on the learner's own budget-failed tasks",
+  "construction_cost": {
+   "n_evaluated": 326,
+   "construction_ops": 11555104
+  },
+  "information_discarded": "excluded primitives (per lens serial)",
+  "induced_equivalence": "none - no state merging; aliasing 0",
+  "trigger_evidence": {
+   "fired": true,
+   "n": 20,
+   "budget_failures": 13,
+   "frac": 0.65
+  }
+ },
+ "dependencies": [
+  "v2 downstream engine (unchanged)"
+ ],
+ "creation_event": {
+  "phase": "construct",
+  "date": "2026-08-27",
+  "seeds": [
+   11,
+   22,
+   33,
+   44,
+   55
+  ]
+ },
+ "admission_test": {
+  "gates": {
+   "G_ADMIT_SOLVE": true,
+   "G_ADMIT_COST": true,
+   "G_BEATS_R1": true,
+   "G_FEATURE": true
+  },
+  "vs_R2": {
+   "n": 150,
+   "median": 0.0008,
+   "ci95": [
+    0.0008,
+    0.0008
+   ],
+   "per_seed": {
+    "11": 0.0008,
+    "22": 0.0008,
+    "33": 0.0008,
+    "44": 0.0008,
+    "55": 0.0008
+   }
+  },
+  "vs_F1": {
+   "n": 150,
+   "median": 0.0008,
+   "ci95": [
+    0.0008,
+    0.0008
+   ],
+   "per_seed": {
+    "11": 0.0008,
+    "22": 0.0008,
+    "33": 0.0008,
+    "44": 0.0008,
+    "55": 0.0008
+   }
+  }
+ },
+ "effect_size": {
+  "capture_vs_ceiling": {
+   "n": 150,
+   "median": 1.0,
+   "ci95": [
+    1.0,
+    1.0
+   ],
+   "per_seed": {
+    "11": 1.0,
+    "22": 1.0,
+    "33": 1.0,
+    "44": 1.0,
+    "55": 1.0
+   }
+  },
+  "classifier": "REPRESENTATIONAL"
+ },
+ "ablation_result": {
+  "vA": true,
+  "vC": true
+ },
+ "transfer_results": {
+  "vC_vs_R2": {
+   "n": 80,
+   "median": 0.0009,
+   "ci95": [
+    0.0009,
+    0.0009
+   ],
+   "per_seed": {
+    "11": 0.0009,
+    "22": 0.0009,
+    "33": 0.0009,
+    "44": 0.0009,
+    "55": 0.0009
+   }
+  },
+  "frozen": true
+ },
+ "observed_failure_region": {
+  "heavy_cross_transform_worlds": {
+   "n": 60,
+   "median": 9.3655,
+   "ci95": [
+    9.3441,
+    9.5611
+   ],
+   "per_seed": {
+    "11": 9.4918,
+    "22": 9.4047,
+    "33": 9.3441,
+    "44": 9.35,
+    "55": 9.3539
+   }
+  },
+  "detection": [
+   {
+    "anomalous": 12,
+    "n_blind": 12,
+    "clean_anomalies": 0,
+    "threshold": 1580.0,
+    "learned_cap": 3160
+   },
+   {
+    "anomalous": 12,
+    "n_blind": 12,
+    "clean_anomalies": 0,
+    "threshold": 1580.0,
+    "learned_cap": 3160
+   },
+   {
+    "anomalous": 12,
+    "n_blind": 12,
+    "clean_anomalies": 0,
+    "threshold": 1580.0,
+    "learned_cap": 3160
+   },
+   {
+    "anomalous": 12,
+    "n_blind": 12,
+    "clean_anomalies": 0,
+    "threshold": 1580.0,
+    "learned_cap": 3160
+   },
+   {
+    "anomalous": 12,
+    "n_blind": 12,
+    "clean_anomalies": 0,
+    "threshold": 1580.0,
+    "learned_cap": 3160
+   }
+  ]
+ },
+ "revisions": [
+  {
+   "successor": "p0002",
+   "kind": "try-cap route learned from the learner's own clean cost statistics"
+  }
+ ],
+ "status": "bounded",
+ "events": [
+  {
+   "phase": "construct",
+   "date": "2026-08-27",
+   "seeds": [
+    11,
+    22,
+    33,
+    44,
+    55
+   ],
+   "kind": "created"
+  },
+  {
+   "kind": "status_change",
+   "frm": "candidate",
+   "to": "admitted",
+   "reason": "admission gates"
+  },
+  {
+   "kind": "status_change",
+   "frm": "admitted",
+   "to": "bounded",
+   "reason": "negative transfer measured in heavy-decoy worlds; routing bounded by p0002"
+  }
+ ]
+}

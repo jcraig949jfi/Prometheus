@@ -1,0 +1,79 @@
+{
+ "id": "p0002",
+ "derivation": {
+  "route": "try p0001 under learned cap; on failure fall back to the old representation",
+  "caps_by_seed": [
+   3160,
+   3160,
+   3160,
+   3160,
+   3160
+  ],
+  "wraps": "LENS[u00.u03.u06|u01.u04.u07]"
+ },
+ "dependencies": [
+  "p0001"
+ ],
+ "creation_event": {
+  "phase": "revision",
+  "date": "2026-08-27"
+ },
+ "admission_test": {
+  "gates": {
+   "D_REVISED": true,
+   "D_VALID": true
+  }
+ },
+ "effect_size": {
+  "vD_fresh_vs_R2": {
+   "n": 60,
+   "median": 1.0747,
+   "ci95": [
+    1.0747,
+    1.0749
+   ],
+   "per_seed": {
+    "11": 1.0747,
+    "22": 1.0747,
+    "33": 1.0747,
+    "44": 1.0752,
+    "55": 1.0747
+   }
+  },
+  "clean_overhead": {
+   "n": 30,
+   "median": 1.0,
+   "ci95": [
+    1.0,
+    1.0
+   ],
+   "per_seed": {
+    "11": 1.0,
+    "22": 1.0,
+    "33": 1.0,
+    "44": 1.0,
+    "55": 1.0
+   }
+  }
+ },
+ "ablation_result": {
+  "note": "removing the route reproduces blind p0001 (measured alongside on vD_fresh)"
+ },
+ "transfer_results": {},
+ "observed_failure_region": null,
+ "revisions": [],
+ "status": "admitted",
+ "events": [
+  {
+   "phase": "revision",
+   "date": "2026-08-27",
+   "kind": "created"
+  },
+  {
+   "kind": "status_change",
+   "frm": "candidate",
+   "to": "admitted",
+   "reason": "revision gates"
+  }
+ ]
+}
