@@ -98,22 +98,25 @@ class Process:
         return new
 
     def word_root_to(self, state):
-        """S-process: forward word root -> state."""
-        out = []
+        """S-process: forward word root -> state. An edge label may be a TUPLE of
+        primitive ids (a macro edge, arm A1): it flattens to its real primitives."""
+        segs = []
         while self.visited[state] is not None:
             prev, pid = self.visited[state]
-            out.append(pid)
+            segs.append(pid)
             state = prev
-        return list(reversed(out))
+        return [p for seg in reversed(segs)
+                for p in (seg if isinstance(seg, tuple) else (seg,))]
 
     def word_to_root(self, state):
         """P-process: forward word state -> root (each edge claims apply(pid,ns)=s)."""
-        out = []
+        segs = []
         while self.visited[state] is not None:
             prev, pid = self.visited[state]
-            out.append(pid)
+            segs.append(pid)
             state = prev
-        return out
+        return [p for seg in segs
+                for p in (seg if isinstance(seg, tuple) else (seg,))]
 
 
 def _obs(name, proc):
@@ -236,10 +239,31 @@ def audit_backward(trace, ad):
     return bad, checked
 
 
-def run_program(domain, task, prog, budget, audit=False):
-    """Execute a full program (STAGE or SEQ) on a task. Returns result record."""
-    meter = Meter(budget)
-    ad = Adapter(domain, task, meter)
+class MacroAdapter(Adapter):
+    """Adapter for the v1-macro control (A1): the successor relation is augmented with
+    one mined macro edge whose execution is charged at its true primitive length."""
+
+    def __init__(self, domain, task, meter, macro):
+        super().__init__(domain, task, meter)
+        self._macro = tuple(macro)
+        self._dapply = domain.apply
+
+    def succ(self, s):
+        r = self._succ(s)
+        self.meter.charge(len(r))
+        v = s
+        for pid in self._macro:
+            self.meter.charge(1)
+            v = self._dapply(pid, v)
+        return list(r) + [(self._macro, v)]
+
+
+def run_program(domain, task, prog, budget, audit=False, meter=None, adapter=None):
+    """Execute a full program (STAGE or SEQ) on a task. Returns result record.
+    A pre-charged meter may be supplied (routing wrappers pay for their probes);
+    a custom adapter may be supplied (the macro control)."""
+    meter = meter if meter is not None else Meter(budget)
+    ad = adapter if adapter is not None else Adapter(domain, task, meter)
     trace = new_trace()
     trace["_audit"] = audit
     if prog[0] == "SEQ":
