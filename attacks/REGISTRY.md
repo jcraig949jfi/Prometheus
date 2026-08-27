@@ -342,6 +342,34 @@ applies-to: claim classes this attack must be run against before the claim is be
   is a hazard worth a guard, in the same commit. If it cannot be guarded, the comment must say
   why not — an unenforceable hazard is a finding, not a footnote.**
 
+
+### ATK-020 detector scored on planted positives only
+- **class:** vacuous-metric (sibling of ATK-018; there the *gate* was one-sided, here the
+  *detector's evaluation* is)
+- **signature:** a detection capability is measured by planting defects and counting catches, and
+  **no clean case is ever planted under the same suspicion**. Sensitivity is reported without
+  specificity, so the metric is maximised by flagging everything and cannot distinguish a
+  detector that works from one that has stopped trusting its inputs. The tell is a design
+  document that specifies an injection rate, a corruption taxonomy and a catch criterion, and
+  specifies **no zero-injection condition** — there is no false-alarm denominator anywhere in it.
+  Aggravated when the subject knows the harness exists: vigilance then inflates catch, so the
+  confound points at the flattering side and only an unfavourable result is readable.
+- **probe:** DESCRIBED — for any planted-defect harness, assert that the injection schedule
+  contains draws of **exactly zero**, that the ledger records flags raised on unplanted items,
+  and that the report carries `false_alarm_rate` beside `catch_rate`. Generalization: for any
+  claimed detection ability, ask what the detector said about the cases where there was nothing
+  to find; if that was never measured, the capability estimate is an upper bound only.
+- **kills:** 2026-08-27, Charon, on `techne/loop/HANDOFF_424_canary_harness_review.md` — the
+  blinded canary harness spec, reviewed before any code existed. It fixes eight corruption
+  families, asks for an injection rate, and defines `escape sensitivity = 1 - caught/planted`
+  with **no clean-claim condition at any point**. Rejected pre-build; the corrected design adds
+  zero-injection cycles as the specificity arm. Full adjudication:
+  `roles/Charon/reviews/REVIEW_2026-08-27_techne_424_canary_harness.md`.
+- **applies-to:** every canary, honeypot, mutation-assay, planted-bug and red-team harness; every
+  "the reviewer caught N of M" figure; every claim that a control, a model or an agent *detects*
+  something. **Standing rule: a detection rate without its false-alarm rate is an upper bound on
+  capability and nothing else, and must be reported as such.**
+
 ---
 
 ## Claim × attack coverage matrix
