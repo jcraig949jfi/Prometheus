@@ -150,7 +150,7 @@ class VMSubstrate(Substrate):
         for inp in PROBE_INPUTS:
             rows.append(self._run_program(genome, inp))
         fp = ProbeFingerprint(tuple(rows))
-        if len(self._cache) < 400_000:
+        if len(self._cache) < 100_000:
             self._cache[genome] = fp
         return fp
 
@@ -192,8 +192,8 @@ class VMSubstrate(Substrate):
             ds += abs(r1[1] - r2[1]) / 7.0
             dt += abs(r1[2] - r2[2]) / 7.0
             t1, t2 = r1[4], r2[4]
-            u = len(t1 | t2)
-            dj += (1 - len(t1 & t2) / u) if u else 0.0
+            u = (t1 | t2).bit_count()
+            dj += (1 - (t1 & t2).bit_count() / u) if u else 0.0
         n = len(f1.rows)
         return {"d_steps": ds / n, "d_touched": dt / n, "d_trace": dj / n}
 
@@ -249,11 +249,15 @@ class S1Reg(VMSubstrate):
         out = []
         steps = 0
         halted = False
-        visited = set()
+        visited = 0
+        nvis = 0
         n = self.NWORDS
         while steps < self.STEPS:
             op, rd, rs, imm = code[pc]
-            visited.add(pc)
+            b = 1 << pc
+            if not (visited & b):
+                visited |= b
+                nvis += 1
             steps += 1
             npc = pc + 1
             if op == 0:
@@ -297,8 +301,7 @@ class S1Reg(VMSubstrate):
                 halted = True
                 break
             pc = npc % n
-        return (tuple(out), _bucket(steps), _bucket(len(visited)), halted,
-                frozenset(visited))
+        return (tuple(out), _bucket(steps), _bucket(nvis), halted, visited)
 
     def witness_genome(self) -> bytes:
         # IN R0; OUT R0; JMP -2   (echo)
@@ -326,13 +329,17 @@ class S2Stack(VMSubstrate):
         out = []
         steps = 0
         halted = False
-        visited = set()
+        visited = 0
+        nvis = 0
         dec = self._decode_byte
         while steps < self.STEPS:
             b = dec(genome[pc])
             op = (b >> 5) & 7
             arg = b & 0x1F
-            visited.add(pc)
+            pb = 1 << pc
+            if not (visited & pb):
+                visited |= pb
+                nvis += 1
             steps += 1
             npc = pc + 1
             if op == 0:      # PUSH
@@ -399,8 +406,7 @@ class S2Stack(VMSubstrate):
                         halted = True
                         break
             pc = npc % n
-        return (tuple(out), _bucket(steps), _bucket(len(visited)), halted,
-                frozenset(visited))
+        return (tuple(out), _bucket(steps), _bucket(nvis), halted, visited)
 
     def witness_genome(self) -> bytes:
         # IN; OUT; BR -2  (echo)
@@ -437,7 +443,7 @@ class S3Rewrite(VMSubstrate):
         rules = self._rules(genome)
         tape = [s & 7 for s in inp]
         steps = 0
-        fired = set()
+        fired = 0
         while steps < self.STEPS:
             applied = False
             for pos in range(len(tape) - 1):
@@ -447,7 +453,7 @@ class S3Rewrite(VMSubstrate):
                         tape[pos:pos + 2] = list(rhs)
                         del tape[16:]
                         steps += 1
-                        fired.add(ridx)
+                        fired |= 1 << ridx
                         applied = True
                         break
                 if applied:
@@ -456,7 +462,7 @@ class S3Rewrite(VMSubstrate):
                 break
         out = tuple(tape[:OUT_CAP])
         return (out, _bucket(steps), _bucket(len(tape)), steps < self.STEPS,
-                frozenset(fired))
+                fired)
 
     def witness_genome(self) -> bytes:
         # 8 rules: (a,a) -> (a)  [collapse adjacent repeats]; 8 inactive
@@ -487,11 +493,15 @@ class S4Mem(VMSubstrate):
         out = []
         steps = 0
         halted = False
-        visited = set()
+        visited = 0
+        nvis = 0
         dec = self._decode_byte
         while steps < self.STEPS:
             op = dec(genome[pc]) & 7
-            visited.add(pc)
+            pb = 1 << pc
+            if not (visited & pb):
+                visited |= pb
+                nvis += 1
             steps += 1
             npc = pc + 1
             if op == 0:
@@ -518,8 +528,7 @@ class S4Mem(VMSubstrate):
                 if tape[ptr] != 0:
                     npc = pc - 6
             pc = npc % n
-        return (tuple(out), _bucket(steps), _bucket(len(visited)), halted,
-                frozenset(visited))
+        return (tuple(out), _bucket(steps), _bucket(nvis), halted, visited)
 
     def witness_genome(self) -> bytes:
         return bytes([4, 5] * (self.glen // 2))

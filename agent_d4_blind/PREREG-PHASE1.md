@@ -267,6 +267,25 @@ checked for attainability before freeze (chance levels and ceilings
 documented above; hit criterion reachable by construction; oracle reports
 the topological ceiling for navigation gates).
 
+## Engineering amendments (post-freeze, measurement-equivalent only)
+
+- E1 (2026-08-27): the first launch of the four binding runs was killed by
+  memory exhaustion (four processes; per-probe trace stored as a frozenset
+  of visited program counters, ~20-35 KB per fingerprint; 400k-entry
+  evaluation cache; ~8-14 GB per process on a 32 GB machine). NO binding
+  measurement was produced or observed (results are written at completion;
+  logs were empty). Repair: trace stored as an int bitmask over the same
+  index set (PCs 0..95 / rules 0..15) and cache cap 400k -> 100k entries.
+  Measurement equivalence: the trace never enters pkey, fp_bytes, or d1;
+  d_aux trace Jaccard over bitmasks equals set Jaccard by construction and
+  was verified against an independent set-based reimplementation on 300
+  random genome pairs per substrate (max abs deviation < 1e-12); witness
+  viability and determinism re-verified. The cache is a pure compute
+  optimization (hits metered identically for all consumers). File hashes
+  re-recorded below; the binding runs were then launched once, from the
+  identical frozen seed (12000), executing the identical measurement the
+  killed processes would have produced.
+
 ## FROZEN (2026-08-27)
 
 - thresholds: FROZEN-2026-08-27, byte-identical to the values used in the final full instrument-validation run (status stamp is the only change).
