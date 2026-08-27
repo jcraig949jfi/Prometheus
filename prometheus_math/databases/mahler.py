@@ -34,14 +34,26 @@ M).
 
 Coverage
 --------
-The Phase-1 + Phase-2 snapshot covers:
+**Verified 2026-08-27 (HITL #341). The figures below were stale for several cycles: they
+described the `phase1_curated` TIER and were read as describing the table.**
 
-* **178 catalog entries** (after the Phase-1 expansion from 21).
-* **Degrees** 2..30 plus 36 (every degree in [2, 30] populated).
-* **Mahler measures** in the range [1.0, 1.84].  Cyclotomic Phi_n
-  contribute the M = 1 baseline; Lehmer's polynomial sits at
-  1.176280818... and the densely populated Salem cluster runs
-  through 1.18..1.30.
+`MAHLER_TABLE` holds **8,625 entries across 104 distinct degrees spanning 2-180**, in three
+provenance tiers:
+
+* ``phase1_curated``     **178**   degrees [2..30] u {36}  -- the original curated snapshot,
+  and the population every "178" in this file's history referred to. Still exactly 178; it did
+  not go stale, the surrounding prose did.
+* ``known180_2022``      **8,431**
+* ``arxiv_promoted_2026``   **16**
+
+* **Mahler measures** in the range [1.0, 1.84] within the curated tier. Cyclotomic Phi_n
+  contribute the M = 1 baseline; Lehmer's polynomial sits at 1.176280818... and the densely
+  populated Salem cluster runs through 1.18..1.30.
+
+Both counts are pinned by tests in `prometheus_math/research/tests/test_lehmer.py`
+(`test_authority_phase1_curated_is_still_178_entries` and
+`test_authority_full_catalog_is_8625_entries`), with the tier breakdown asserted individually
+so a future ingest cannot pass by moving rows between tiers.
 
 Public API
 ----------
@@ -523,8 +535,10 @@ def search_polynomial(M: float,
 
     Notes
     -----
-    The catalog covers M in [1.0, 1.84] and degrees [2..30, 36].
-    Search is O(N) over the 178-entry catalog (no index needed).
+    The `phase1_curated` tier covers M in [1.0, 1.84] and degrees [2..30, 36]; the full table
+    spans degrees 2-180. Search is O(N) over the **8,625-entry** catalog (no index needed) --
+    this said "178-entry" until 2026-08-27, which was the curated tier's size, not the
+    table's (HITL #341).
     """
     M = float(M)
     out: list[tuple] = []
