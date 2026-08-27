@@ -1,5 +1,8 @@
 # incubation/v2 — Operator Genesis
 
+> Full program documentation (design lineage, mechanics, scope, artifact
+> registry): [`../DOCUMENTATION.md`](../DOCUMENTATION.md)
+
 ## Hypothesis
 
 Repeated failure/cost structure can cause a learner to construct a new executable

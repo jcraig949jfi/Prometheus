@@ -1,5 +1,8 @@
 # incubation — executable symbolic learning substrate
 
+> Full program documentation (design lineage, mechanics, scope, artifact
+> registry): [`DOCUMENTATION.md`](DOCUMENTATION.md)
+
 ## Hypothesis
 
 A symbolic composition learned in one problem world can become a reusable entity that
