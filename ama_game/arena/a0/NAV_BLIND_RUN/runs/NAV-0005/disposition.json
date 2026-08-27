@@ -1,0 +1,18 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0005",
+  "condition": "A",
+  "claim_id": "NAV-0005",
+  "session": "A0NAV_BLIND-NAV-0005",
+  "disposition": "FALSE",
+  "witness": {
+    "n": 21,
+    "f_n_mod_4001": 303,
+    "oracle_sample": {"point": 21, "value": 303},
+    "oracle_evaluate": {"point": 21, "holds": false}
+  },
+  "reasoning": "A range check over the quantified domain was unaffordable: range 1 600 costs 600 against a budget of 120, so the domain cannot be swept and the claim had to be decided by modelling f rather than by exhaustion. I sampled f(1..20) (20 calls) and ran Berlekamp-Massey over GF(4001) on the 20 observed residues. It returned a minimal connection polynomial of order 2, [1, 3994, 10], i.e. f(n) = 7*f(n-1) - 10*f(n-2) mod 4001 -- an order-2 law determined by 4 terms and then corroborated by the 16 further terms it was not fitted to. Its characteristic polynomial x^2 - 7x + 10 factors as (x-2)(x-5), and solving the initial conditions 2A + 5B = 28, 4A + 25B = 116 gives A = B = 4, so f(n) = 4*(2^n + 5^n) mod 4001. That closed form reproduces all 20 metered samples exactly with zero mismatches (model_check.py asserts this, and separately asserts the closed form agrees with the iterated recurrence at every n in [1,600]). Evaluating the closed form over the full domain n in [1,600] -- a local computation costing nothing, not a metered search -- yields exactly one n with f(n) mod 4001 == 303, namely n = 21. This prediction is not the evidence; it is only a pointer telling me where to spend. I then spent 2 metered calls at that single point, and both confirm the failure independently of the model: sample(21) returned the value 303, and evaluate(21) returned holds = false. The claim asserts f(n) mod 4001 is not 303 for every n in [1, 600]; n = 21 lies inside that domain and takes the value 303, so the universally quantified proposition is false. The decisive evidence is the oracle's own verdict at n = 21, so the disposition does not depend on the fitted model being correct -- the model only chose which question to ask. Stated limitation: the model is an inference from a bounded sample of 20 points and I make no claim that f obeys this recurrence beyond the observed points; had the search come back empty I could not have concluded TRUE on this basis, since a sequence agreeing with an order-2 law on [1,20] may depart from it later and I had no metered coverage of [22,600]. Nothing in this disposition rests on that, because falsifying a for-all statement needs one confirmed witness and I have one.",
+  "route_taken": "Rather than sweep the domain (range 1 600 = 600 credits, unaffordable at 120), I bought 20 samples to identify f's generating law by Berlekamp-Massey, solved it to the closed form 4*(2^n + 5^n) mod 4001, computed the whole domain offline to find the single candidate hit at n = 21, and spent 2 calls confirming it -- 22 credits total, though in hindsight 6 samples would have pinned the order-2 recurrence with margin and the same route would have closed at about 8, so most of what I spent was redundant corroboration rather than information.",
+  "confidence": 0.99,
+  "what_would_resolve_it": null
+}

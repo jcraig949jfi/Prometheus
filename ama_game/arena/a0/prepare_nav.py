@@ -36,9 +36,8 @@ def main() -> int:
         shutil.rmtree(out)
     (out / "prompts").mkdir(parents=True)
     (out / "runs").mkdir(parents=True)
-    sessions = HERE / "_meter_sessions"
-    if sessions.exists():
-        shutil.rmtree(sessions)
+    # keep prior sessions: the v0.2 run's ledgers are evidence and are read by
+    # its report. Only this set's sessions are reset.
 
     role = (ARENA / "prompts" / "ROLE_ASSESSOR_NAV.md").read_text(encoding="utf-8")
     common = (ARENA / "prompts" / "00_COMMON_PREAMBLE.md").read_text(encoding="utf-8")
@@ -52,7 +51,7 @@ def main() -> int:
         run_dir = out / "runs" / cid
         run_dir.mkdir()
         shutil.copyfile(cp, run_dir / "claim.json")
-        sid = f"A0NAV-{cid}"
+        sid = f"A0{name}-{cid}"
 
         r = subprocess.run(
             [sys.executable, str(CLI), "open", "--claim", cid, "--seat", sid,

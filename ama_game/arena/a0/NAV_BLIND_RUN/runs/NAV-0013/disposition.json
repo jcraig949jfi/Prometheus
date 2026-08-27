@@ -1,0 +1,21 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0013",
+  "condition": "A",
+  "claim_id": "NAV-0013",
+  "session": "A0NAV_BLIND-NAV-0013",
+  "disposition": "FALSE",
+  "witness": {
+    "n": 34,
+    "f_n_mod_1409": 569,
+    "confirmed_by": [
+      "meter_cli evaluate --point 34 -> {\"holds\": false}",
+      "meter_cli sample --point 34 -> {\"value\": 569}"
+    ],
+    "artifact": "F:/Prometheus/ama_game/arena/a0/NAV_BLIND_RUN/runs/NAV-0013/reconstruct.py"
+  },
+  "reasoning": "I did not search the domain; I identified the generator and then computed. Eight metered samples at n=1..8 (30, 156, 840, 429, 1038, 84, 1290, 1021) were fitted over GF(1409) to a linear recurrence. An order-2 fit succeeded using only the first two equations and then reproduced all eight sampled points, giving four independent confirmations beyond the two consumed by the fit: f(n+2) = 10*f(n+1) - 24*f(n) mod 1409. The characteristic polynomial x^2 - 10x + 24 factors as (x-4)(x-6), so f(n) = A*4^n + B*6^n; solving against f(1)=30 and f(2)=156 gives A = B = 3, hence f(n) = 3*(4^n + 6^n) mod 1409. Scanning that closed form over the full stated domain n in [1,600] -- a free, off-meter computation, not a metered search -- yields exactly one n with f(n) = 569, namely n = 34. I then spent two metered calls to confirm that prediction against the sealed object rather than trusting the model: evaluate(34) returned holds=false and sample(34) returned 569. The disposition does not rest on the reconstruction being correct. FALSE requires a single witness, and evaluate(34) is the arena's own authoritative verdict at that point; the closed form served only to tell me which one point to pay for. Total metered cost 10 of 120, with no refusals. No bounded-search claim is being made in either direction: the domain was covered by a closed form, and I claim exhaustiveness only for the model, while the disposition itself is carried by the single confirmed witness.",
+  "route_taken": "I spent 8 calls to reconstruct the generator (order-2 linear recurrence over GF(1409), closed form 3*(4^n+6^n)), scanned all 600 points off-meter to locate the unique candidate at n=34, then spent 2 calls confirming it -- chosen over range(1,600) at cost 600 (unaffordable, exceeding the 120 cap), over a 120-wide range probe that would have covered only a fifth of the domain and, starting at n=1, would have found n=34 but taught me nothing transferable, and over point-by-point evaluation which cannot cover 600 points within budget and would leave any TRUE verdict unsupported.",
+  "confidence": 1.0,
+  "what_would_resolve_it": null
+}

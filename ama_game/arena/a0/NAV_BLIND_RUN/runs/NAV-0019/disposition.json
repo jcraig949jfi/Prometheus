@@ -1,0 +1,18 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0019",
+  "condition": "A",
+  "claim_id": "NAV-0019",
+  "session": "A0NAV_BLIND-NAV-0019",
+  "disposition": "FALSE",
+  "witness": {
+    "n": 384,
+    "f_n_mod_5003": 1140,
+    "metered_sample": {"point": 384, "value": 1140},
+    "metered_evaluate": {"point": 384, "holds": false}
+  },
+  "reasoning": "Twelve consecutive samples (n=1..12) were fitted, over GF(5003), to the shortest linear recurrence consistent with them. Order 1 is inconsistent; order 2 fits exactly and uniquely: f(n) = 9*f(n-1) - 20*f(n-2) (mod 5003). Orders 3-5 return the same solution padded with zero coefficients, so the order-2 fit is the minimal one and the extra samples are 10 independent consistency checks on a 2-parameter model rather than a saturated fit. The characteristic polynomial x^2 - 9x + 20 factors as (x-4)(x-5), giving closed form f(n) = 3*(4^n + 5^n) mod 5003, which reproduces all twelve observed values. 5003 is prime (trial division to 67 < sqrt(5003)); all arithmetic is exact integer arithmetic mod 5003 with no floating point anywhere. Enumerating the model over the full stated domain 1 <= n <= 600 -- computed locally, not searched through the meter -- yields exactly one n with f(n) mod 5003 == 1140, namely n = 384. That prediction was then put to the sealed oracle: sample(384) returned 1140 and evaluate(384) returned holds=false. The disposition therefore does not rest on the fitted model at all; the model was only a search heuristic for where to spend a call, and the witness is confirmed directly by the metered interface. The proposition is refuted at n = 384.",
+  "route_taken": "Spent 12 calls sampling n=1..12 to recover the sequence's minimal linear recurrence and closed form, enumerated the closed form over all 600 points locally for free to locate the single predicted collision, then spent 2 calls (sample + evaluate at n=384) to confirm the witness against the sealed oracle -- chosen over range(1,600), which cannot be afforded at 600 credits against a 120 cap, and over blind sampling or bisection, which have no purchase on a claim whose single failure point sits at n=384 with no monotone structure to bisect on.",
+  "confidence": 0.99,
+  "what_would_resolve_it": null
+}

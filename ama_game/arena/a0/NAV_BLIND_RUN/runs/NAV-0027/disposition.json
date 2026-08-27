@@ -1,0 +1,20 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0027",
+  "condition": "A",
+  "claim_id": "NAV-0027",
+  "session": "A0NAV_BLIND-NAV-0027",
+  "disposition": "FALSE",
+  "witness": {
+    "n": 501,
+    "f_n_mod_1009": 75,
+    "metered_confirmation": [
+      "sample(501) -> 75",
+      "evaluate(501) -> holds=false"
+    ]
+  },
+  "reasoning": "The proposition asserts f(n) mod 1009 != 75 for all n in [1,600]. Exhaustive metered checking would cost 600 calls against a cap of 120, so brute force is not merely expensive here, it is unaffordable; the only affordable route is to recover the generator from a small sample and then search the domain locally at zero metered cost. I spent 10 calls on sample(1..10) and fitted a minimal linear recurrence over GF(1009) by Gaussian elimination. The minimal fit is order 2 with coefficients (8, -12): f(n) = 8*f(n-1) - 12*f(n-2) mod 1009. Orders 3, 4 and 5 returned the same recurrence padded with zero coefficients, and an inhomogeneous constant term fitted to 0, so order 2 is minimal and no affine offset is present. The characteristic polynomial x^2 - 8x + 12 factors as (x-2)(x-6), which with f(1)=16 and f(2)=80 gives the closed form f(n) = 2*2^n + 2*6^n mod 1009. That closed form reproduces all ten metered samples exactly. Evaluating it locally over the entire stated domain n in [1,600] -- a complete, not bounded, sweep of the claim's own domain, performed offline -- yields exactly one solution of f(n) == 75, at n = 501. I then paid 2 metered calls to test that prediction against the sealed object rather than trusting the model: sample(501) returned 75 and evaluate(501) returned holds=false. Note that the second of these is decisive on its own regardless of whether the fitted model is the true generator -- the arena's own oracle reports the proposition failing at n=501 -- so the recurrence served only as the search heuristic that told me which single point to buy, and the verdict does not rest on it. The claim is therefore FALSE with witness n=501. Total metered spend: 12 of 120, with 0 refusals. Artifact: model_fit.py in this directory, which re-derives the closed form, asserts agreement with all ten samples, and re-runs the full [1,600] sweep.",
+  "route_taken": "Bought 10 samples at n=1..10, fitted the minimal GF(1009) linear recurrence (order 2, f(n)=8f(n-1)-12f(n-2), closed form 2*2^n+2*6^n), swept the whole domain offline for free to get the unique candidate n=501, then spent 2 calls confirming it -- chosen over range(1,600) which costs 600 against a 120 cap and is simply unaffordable, and over blind sampling or bisection, neither of which can certify a TRUE-shaped 'for all' claim within budget and both of which would likely miss a single isolated hit in 600 points.",
+  "confidence": 0.99,
+  "what_would_resolve_it": null
+}

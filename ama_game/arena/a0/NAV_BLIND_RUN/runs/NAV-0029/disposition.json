@@ -1,0 +1,20 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0029",
+  "condition": "A",
+  "claim_id": "NAV-0029",
+  "session": "A0NAV_BLIND-NAV-0029",
+  "disposition": "FALSE",
+  "witness": {
+    "n": 46,
+    "f_n_mod_1409": 21,
+    "metered_confirmation": {
+      "evaluate_46": {"holds": false},
+      "sample_46": {"value": 21}
+    }
+  },
+  "reasoning": "Brute force was structurally unavailable: the domain has 600 points and the metered cap is 120, so range(1,600) is unaffordable and no exhaustive scan of the domain could be purchased. Instead I treated the sealed sequence as an unknown linear recurrence over GF(1409) and identified it from samples. Sixteen consecutive samples, f(1..16) mod 1409 = 37,229,14,427,736,88,1230,1022,1078,679,185,658,784,873,965,1241, fed to Berlekamp-Massey over GF(1409) return a minimal LFSR of order L=2: f(n) = 13*f(n-1) - 42*f(n-2) mod 1409. Only the first 4 samples are needed to fix an order-2 recurrence, so 12 of the 16 samples are held-out predictions and all 12 are reproduced exactly; the probability of a 12-term agreement by chance is 1409^-12. The characteristic polynomial factors as x^2-13x+42=(x-6)(x-7), giving the closed form f(n) = 5*6^n + 7^n mod 1409, which independently reproduces all 600 reconstructed terms. Extrapolating the recurrence over the full domain n=1..600 (a complete, unbounded-within-domain scan performed locally at zero metered cost, not a bounded search) yields exactly one n with f(n) mod 1409 = 21, namely n=46. I then spent two metered calls to confirm the witness against the sealed object rather than against my model: evaluate(46) returned holds=false and sample(46) returned 21. The claim asserts f(n) mod 1409 is not 21 for every n in [1,600]; n=46 is a verified counterexample, so the proposition is FALSE. The disposition rests on the direct metered evaluate/sample at n=46, which is decisive on its own; the reconstruction served only to locate where to look. Artifact: reconstruct.py (1887 bytes) in this directory reruns the identification, the held-out check, the closed-form cross-check, and the domain scan.",
+  "route_taken": "Rather than buy a scan of the domain (600 credits, over the 120 cap and therefore impossible), I bought 16 samples, recovered the sequence's order-2 linear recurrence over GF(1409) by Berlekamp-Massey, extrapolated it for free across all 600 points to predict the single failure at n=46, and spent 2 metered calls confirming that witness directly - 18 credits total, because identifying the generator converts an unaffordable search into a free one.",
+  "confidence": 0.99,
+  "what_would_resolve_it": null
+}

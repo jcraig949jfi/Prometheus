@@ -1,0 +1,23 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0025",
+  "condition": "A",
+  "claim_id": "NAV-0025",
+  "session": "A0NAV_BLIND-NAV-0025",
+  "disposition": "FALSE",
+  "witness": {
+    "n": 8,
+    "f_n_mod_4001": 3825,
+    "confirmed_by": [
+      "meter_cli evaluate --point 8 -> {\"holds\": false}",
+      "meter_cli sample --point 8 -> {\"value\": 3825}"
+    ]
+  },
+  "reasoning": "The domain has 600 points and the budget is 120 calls, so no exhaustive metered sweep is affordable; the only cheap route is to reconstruct f from a small number of samples and then search offline for free. I spent 6 samples on n=1..6, obtaining 32, 176, 992, 1695, 1144, 2768 (mod 4001). Four of those points determine a candidate order-2 linear recurrence over GF(4001) by solving a 2x2 system; it came out f(n+2) = 10*f(n+1) + 3977*f(n) = 10*f(n+1) - 24*f(n) (mod 4001), and the remaining two samples (n=5,6) were held-out checks that it reproduced exactly. The characteristic polynomial x^2 - 10x + 24 factors as (x-4)(x-6), and fitting the initial conditions gives the closed form f(n) = 2*4^n + 4*6^n (mod 4001), which matches all six observations. Evaluating that closed form over the whole stated domain offline (no metered cost) gives exactly one n in [1,600] with f(n) = 3825, namely n = 8. I then paid two metered calls to test that prediction against the sealed object rather than assert it: evaluate(8) returned holds=false and sample(8) returned 3825. The witness is therefore confirmed directly by the metered interface and does not rest on the reconstruction being correct; the reconstruction only told me where to look. Scope note: the FALSE verdict needs only the single confirmed witness at n=8, which is decisive. The stronger side-claim that n=8 is the *unique* such n in [1,600] rests on the reconstructed closed form (fit on 4 points, held out on 2, plus 1 confirmed prediction at n=8) and is not independently metered, so it is offered as a model-based statement, not an exhaustive metered check. Total metered spend: 8 credits of 120.",
+  "route_taken": "Sampled n=1..6 (6 credits), fitted an order-2 linear recurrence over GF(4001) that closed to f(n) = 2*4^n + 4*6^n, searched [1,600] offline for free, and spent 2 credits confirming the single predicted hit at n=8 -- chosen over a metered range sweep, which would have cost 600 credits for the full domain and 8 credits even truncated to [1,8] with no structural knowledge to justify starting there, and over blind binary probing, which is useless here because the predicate is a point property with no monotonicity to bisect on.",
+  "confidence": 0.99,
+  "what_would_resolve_it": null,
+  "artifacts": [
+    "F:/Prometheus/ama_game/arena/a0/NAV_BLIND_RUN/runs/NAV-0025/reconstruct.py"
+  ]
+}

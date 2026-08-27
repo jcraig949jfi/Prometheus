@@ -1,0 +1,32 @@
+{
+  "session": "A0NAV_BLIND-NAV-0010",
+  "modulus": 5003,
+  "calls": [
+    {"op": "sample", "point": 1, "value": 43, "purpose": "seed"},
+    {"op": "sample", "point": 2, "value": 271, "purpose": "seed"},
+    {"op": "sample", "point": 3, "value": 1747, "purpose": "fit"},
+    {"op": "sample", "point": 4, "value": 1473, "purpose": "fit"},
+    {"op": "sample", "point": 5, "value": 1558, "purpose": "held-out confirm"},
+    {"op": "sample", "point": 6, "value": 2162, "purpose": "held-out confirm"},
+    {"op": "sample", "point": 7, "value": 1432, "purpose": "held-out confirm"},
+    {"op": "sample", "point": 8, "value": 1550, "purpose": "held-out confirm"},
+    {"op": "sample", "point": 37, "value": 4354, "purpose": "extrapolation confirm"},
+    {"op": "sample", "point": 99, "value": 4669, "purpose": "extrapolation confirm"},
+    {"op": "sample", "point": 150, "value": 3892, "purpose": "extrapolation confirm"},
+    {"op": "sample", "point": 233, "value": 2765, "purpose": "extrapolation confirm"},
+    {"op": "sample", "point": 301, "value": 4632, "purpose": "extrapolation confirm"},
+    {"op": "sample", "point": 388, "value": 684, "purpose": "extrapolation confirm"},
+    {"op": "sample", "point": 450, "value": 3294, "purpose": "extrapolation confirm"},
+    {"op": "sample", "point": 512, "value": 4066, "purpose": "extrapolation confirm"},
+    {"op": "sample", "point": 577, "value": 4112, "purpose": "extrapolation confirm"},
+    {"op": "sample", "point": 600, "value": 3078, "purpose": "extrapolation confirm (domain endpoint)"},
+    {"op": "evaluate", "point": 600, "holds": true, "purpose": "cross-instrument check that evaluate agrees with sample"}
+  ],
+  "model": {
+    "form": "order-2 linear recurrence mod 5003",
+    "seed": [43, 271],
+    "coefficients": {"f(n-1)": 12, "f(n-2)": 4968},
+    "note": "4968 = -35 mod 5003",
+    "out_of_sample_exact_matches": 14
+  }
+}

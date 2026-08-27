@@ -1,0 +1,23 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0011",
+  "condition": "A",
+  "claim_id": "NAV-0011",
+  "session": "A0NAV_BLIND-NAV-0011",
+  "disposition": "FALSE",
+  "witness": {
+    "n": 243,
+    "f_n_mod_4001": 1372,
+    "confirmed_by": [
+      "sample(243) -> 1372",
+      "evaluate(243) -> holds=false"
+    ]
+  },
+  "reasoning": "The proposition asserts f(n) mod 4001 != 1372 for all n in [1,600]. Rather than search the domain point-by-point (600 calls, unaffordable against a 120-call cap), I reconstructed f from a small prefix. Twenty metered sample() calls at n=1..20 were fed to Gaussian elimination over GF(4001) searching for a linear recurrence; order 1 admits none, order 2 does: f(n) = 10*f(n-1) - 21*f(n-2) (mod 4001), i.e. characteristic roots 3 and 7 and closed form f(n) = 4*3^n + 5*7^n (mod 4001). That model reproduces all 20 observed values exactly, and the fit was over-determined (18 equations, 2 unknowns), so it is not curve-fitting to the count of parameters. Iterating the recurrence unmetered over the full stated domain 1..600 yields exactly one n with f(n) mod 4001 == 1372, at n = 243. Because a reconstruction from a prefix is an extrapolation and not a proof about the sealed object, I did not stop at the prediction: I spent two further metered calls at the predicted point. sample(243) returned 1372 and evaluate(243) returned holds=false, confirming the counterexample directly against the sealed sequence. The disposition therefore does not depend on the recurrence being correct anywhere except at n=243, where the metered interface itself certifies the failure. No bounded-search claim of absence is being made; this is a positive witness. All arithmetic is exact integer arithmetic mod 4001, no floating point.",
+  "route_taken": "Spent 20 calls sampling n=1..20, fitted a minimal linear recurrence over GF(4001) offline to predict the whole domain for free, then spent 2 calls (sample + evaluate at the single predicted hit n=243) to certify the witness against the sealed object \u2014 chosen over range(1,600) which costs 600 and over blind point-sampling which would need ~600 calls to be sure of finding a single-point violation, both far past the 120-call cap.",
+  "confidence": 0.99,
+  "what_would_resolve_it": null,
+  "artifacts": [
+    "F:/Prometheus/ama_game/arena/a0/NAV_BLIND_RUN/runs/NAV-0011/model_fit.py"
+  ]
+}

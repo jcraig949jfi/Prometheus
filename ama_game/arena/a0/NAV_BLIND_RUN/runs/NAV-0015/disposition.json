@@ -1,0 +1,19 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0015",
+  "condition": "A",
+  "claim_id": "NAV-0015",
+  "session": "A0NAV_BLIND-NAV-0015",
+  "disposition": "FALSE",
+  "witness": {
+    "n": 306,
+    "f_n_mod_1409": 1247,
+    "oracle_sample": 1247,
+    "oracle_evaluate_holds": false,
+    "artifact": "F:/Prometheus/ama_game/arena/a0/NAV_BLIND_RUN/runs/NAV-0015/witness.py"
+  },
+  "reasoning": "The domain has 600 points and the budget is 120 calls, so no exhaustive route exists; the only affordable route is to identify f from a few samples and then search the model offline. I spent 10 calls on sample(1..10). Over GF(1409) (1409 is prime) exact linear algebra on those 10 terms gives a minimal order-2 linear recurrence f(n) = 9*f(n-1) - 18*f(n-2) (mod 1409), fitted from 8 equations in 2 unknowns and exact on all of them. Its characteristic polynomial factors as (x-3)(x-6), and the initial conditions f(1)=42, f(2)=216 give the closed form f(n) = 4*3^n + 5*6^n (mod 1409). This is not a bounded search over f: it is a complete offline scan of the fitted model over all 600 points of the stated domain, which yields exactly one n with value 1247, namely n = 306. Because the model was inferred rather than disclosed, I did not rest the disposition on it: I confirmed n = 306 against the metered oracle directly. sample(306) returned 1247 and evaluate(306) returned holds=false. That single confirmed point is by itself sufficient to refute a universally quantified claim, so the disposition does not depend on the closed form being correct anywhere else. The claim asserts f(n) mod 1409 is never 1247 on [1,600]; n = 306 is a counterexample, so the claim is FALSE.",
+  "route_taken": "Sampled f(1..10) (10 calls), fitted an exact order-2 recurrence over GF(1409) to get the closed form f(n) = 4*3^n + 5*6^n, scanned all 600 domain points offline to locate the unique candidate witness n=306, then spent 2 metered calls confirming it (sample + evaluate) -- chosen over range/exhaustive enumeration, which would have cost 600 calls against a 120 cap and was therefore not merely more expensive but infeasible, and over blind spot-sampling, which at 120 of 600 points had roughly a 1-in-5 chance of finding the single witness and would otherwise have forced UNRESOLVED.",
+  "confidence": 0.99,
+  "what_would_resolve_it": null
+}

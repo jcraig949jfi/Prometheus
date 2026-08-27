@@ -170,9 +170,31 @@ def main() -> int:
         return 0
 
     commit(rec, sess)
+
+    # Shared-session detection, surfaced to the seat rather than buried. In the
+    # v0.2 A0 run the launcher relaunched claims whose first seat was still
+    # working, so 12 of 32 sessions were charged by two seats. The seats noticed
+    # and reported it unprompted, but only by inferring it from jumps in the
+    # spend. Telling them directly costs nothing and removes the guesswork.
+    seen, shared = set(), False
+    for e in rec["ledger"]:
+        key = (e["op"], e.get("point"), e.get("lo"), e.get("hi"))
+        if key in seen:
+            shared = True
+            break
+        seen.add(key)
+    if shared:
+        rec["shared_session"] = True
+
     save(a.session, rec)
     out["remaining"] = rec["remaining"]
     out["spent"] = rec["spent"]
+    if shared:
+        out["shared_session_warning"] = (
+            "This session's ledger contains a repeated observation, which means "
+            "another seat is working the same claim. Your spend is not solely "
+            "yours. Report your own call count; the harness will exclude this "
+            "session from the cost analysis.")
     print(json.dumps(out))
     return 0
 

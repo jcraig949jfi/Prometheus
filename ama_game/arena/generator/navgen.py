@@ -55,7 +55,8 @@ def sequence(a0: int, a1: int, p: int, q: int, n_max: int) -> list[int]:
     return f
 
 
-def build(rng: random.Random, n_max: int, cls: str, budget: int):
+def build(rng: random.Random, n_max: int, cls: str, budget: int,
+          blind: bool = False):
     """One claim of the requested class. Returns (public, sealed) or None.
 
     Three classes, and deliberately no UNRESOLVED. A genuine order-2 sequence is
@@ -129,11 +130,18 @@ def build(rng: random.Random, n_max: int, cls: str, budget: int):
                         f"not {R}."),
         "domain": f"integers n with 1 <= n <= {n_max}",
         "quantifiers": f"for all n in [1, {n_max}]",
+        # The third hypothesis is the route hint. Disclosing it hands the seat
+        # the cheap strategy: v0.2 A0 came in at 1.6x the achievable floor with
+        # 29 of 32 seats naming the recurrence fit, and several said outright
+        # that the hypothesis made the sealed object "identifiable rather than
+        # opaque". Withholding it is the whole experiment - a seat must now
+        # DISCOVER that the sequence has exploitable structure.
         "hypotheses": [
             "f is an integer sequence; its defining coefficients are sealed",
             "f may be observed only through the metered interface",
-            "f satisfies a linear recurrence of order at most 2",
-        ],
+        ] + ([] if blind else
+             ["f satisfies a linear recurrence of order at most 2"]),
+        "disclosure": "blind" if blind else "structure_disclosed",
         "observable": (f"sample(n) returns f(n) mod {M}; evaluate(n) tests the "
                        "proposition at n"),
     }
@@ -175,6 +183,9 @@ def main() -> int:
     ap.add_argument("--budget", type=int, default=120)
     ap.add_argument("--out", default=str(ARENA / "heldout" / "NAV_PILOT"))
     ap.add_argument("--overwrite", action="store_true")
+    ap.add_argument("--blind", action="store_true",
+                    help="withhold the structural hypothesis from the public "
+                         "package; the sealed record is unchanged")
     args = ap.parse_args()
 
     rng = random.Random(args.seed)
@@ -201,7 +212,7 @@ def main() -> int:
     while len(made) < args.count and tries < args.count * 60:
         tries += 1
         cls = classes[len(made) % len(classes)]
-        got = build(rng, args.n_max, cls, args.budget)
+        got = build(rng, args.n_max, cls, args.budget, args.blind)
         if not got:
             continue
         pub, sea = got
@@ -222,6 +233,7 @@ def main() -> int:
     manifest = {
         "set_name": out.name, "emitted": len(made), "seed": args.seed,
         "n_max": args.n_max, "budget": args.budget,
+        "disclosure": "blind" if args.blind else "structure_disclosed",
         "counts_by_class": by_class,
         "enumerate_within_budget":
             f"{sum(1 for m in made if m['enumerate_within_budget'])}/{len(made)}",

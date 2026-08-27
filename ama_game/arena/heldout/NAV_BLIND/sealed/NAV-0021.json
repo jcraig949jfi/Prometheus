@@ -1,0 +1,37 @@
+{
+  "claim_id": "NAV-0021",
+  "sealed_class": "NAV_FALSE_NEAR",
+  "truth_status": "FALSE",
+  "oracle_disposition": "FALSE",
+  "witness": {
+    "n": 51
+  },
+  "sealed_component": true,
+  "witness_var": "n",
+  "domain_lo": 1,
+  "domain_hi": 600,
+  "claim_predicate": "lin_rec(n, 5, 18, 7, -12) % 2711 != 506",
+  "sealed_value_expr": "lin_rec(n, 5, 18, 7, -12) % 2711",
+  "params": {
+    "r": 3,
+    "s": 4,
+    "C": 2,
+    "D": 3,
+    "p": 7,
+    "q": -12,
+    "a0": 5,
+    "a1": 18,
+    "M": 2711,
+    "R": 506,
+    "N": 600
+  },
+  "route_menu": {
+    "enumerate": 51,
+    "boundary": null,
+    "fit_recurrence": 5
+  },
+  "cheapest_route": "fit_recurrence",
+  "achievable_floor": 5,
+  "enumerate_within_budget": true,
+  "budget_assumed": 120
+}

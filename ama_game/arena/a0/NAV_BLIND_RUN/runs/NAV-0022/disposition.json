@@ -1,0 +1,13 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0022",
+  "condition": "A",
+  "claim_id": "NAV-0022",
+  "session": "A0NAV_BLIND-NAV-0022",
+  "disposition": "TRUE",
+  "witness": null,
+  "reasoning": "Reconstructed f rather than scanning it. sample(1..12) gave 12 consecutive residues mod 2003; Berlekamp-Massey over GF(2003) returned the minimal linear recurrence f(n) = 10*f(n-1) - 21*f(n-2) (mod 2003), order 2, i.e. 12 terms over-determining the fit by 8 confirmations. Characteristic polynomial x^2-10x+21 = (x-3)(x-7), and fitting f(1)=23, f(2)=125 gives the closed form f(n) = 3*3^n + 2*7^n (mod 2003). I then tested that closed form against 24 further metered observations spread across the whole domain at n = 25,50,...,600 (both endpoints included): all 24 matched exactly, 36 observations with zero mismatches. 2003 is prime; ord(3)=1001 and ord(7)=2002, so f is periodic with period lcm = 2002. An exhaustive check of one full period (n = 1..2002, a bounded search of 2002 points, and complete for all n by periodicity) shows the residue 1403 is not in the image of f at all -- so it is not attained on [1,600] for a structural reason, not merely because the window happens to miss it. Two evaluate() calls at unsampled points (n = 13, n = 599) returned holds=true, confirming my reading of the proposition matches the harness. Stated limitation: the metered budget (120) is smaller than the domain (600), so no route available to this seat can check every point directly; the claim rests on the reconstructed model, which is confirmed at 38 metered points including both endpoints and is contradicted at none. A single adversarially planted override at one of the 562 unobserved points would defeat it, and I cannot exclude that within budget. The artifact model_check.py in this directory reproduces every step from the 36 recorded observations.",
+  "route_taken": "Fit the sequence instead of searching it: 12 consecutive samples -> Berlekamp-Massey -> closed form 3*3^n + 2*7^n mod 2003, then 24 spread-point samples plus 2 evaluates to falsify the model rather than the claim; I chose this over range(1,600) (600 credits, unaffordable at a cap of 120) and over blind sampling (which at best covers 120/600 points and proves nothing about the rest), because one identified generator decides all 600 points at once.",
+  "confidence": 0.93,
+  "what_would_resolve_it": "Exhaustive metered coverage of the 562 unobserved points in [1,600] -- i.e. a budget of at least 600 range-credits, or disclosure of the sealed coefficients so the closed form can be confirmed rather than inferred. That is the only thing that would rule out a single-point override of the recurrence at an unobserved n."
+}

@@ -1,0 +1,21 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0001",
+  "condition": "A",
+  "claim_id": "NAV-0001",
+  "session": "A0NAV_BLIND-NAV-0001",
+  "disposition": "FALSE",
+  "witness": {
+    "n": 27,
+    "f_n_mod_1009": 17,
+    "metered_confirmation": {
+      "sample_27": {"value": 17},
+      "evaluate_27": {"holds": false}
+    },
+    "second_predicted_failure_unverified": {"n": 531, "predicted_f_n_mod_1009": 17, "note": "predicted by the fitted model; not separately purchased, since one witness already decides the claim"}
+  },
+  "reasoning": "I bought f(1..8) mod 1009 as eight sample calls (41, 257, 730, 954, 384, 190, 370, 670). Finite differences ruled out a low-degree polynomial, but Berlekamp-Massey over GF(1009) returned a length-2 minimal recurrence, connection polynomial [1, -9, 14], i.e. f(n) = 9 f(n-1) - 14 f(n-2) mod 1009. Eight terms overdetermine an order-2 recurrence, so the fit was checked, not merely fitted: it reproduces terms 3 through 8, six consistency checks it was not free to fail. The characteristic polynomial x^2 - 9x + 14 factors as (x-2)(x-7), giving the closed form f(n) = 3*2^n + 5*7^n mod 1009, which reproduces all eight metered samples exactly. Evaluating that closed form offline over the full stated domain n in [1,600] - an exhaustive, non-metered scan of all 600 points of the model, not a bounded search of f itself - gives exactly two points with residue 17: n = 27 and n = 531. I then spent two metered calls to test the model where it makes a falsifiable prediction: sample(27) returned 17 and evaluate(27) returned holds=false. The witness is therefore established by the metered interface directly and does not depend on my reconstruction being correct; the reconstruction only told me where to look. The proposition asserts f(n) mod 1009 is never 17 on [1,600]; at n=27 it is 17, so the proposition is false. Note the direction of the residual risk: an incorrect model could only have sent me to a point that failed to witness anything, costing me credits, not a wrong verdict - the verdict rests on evaluate(27) alone. Arithmetic throughout is exact integer arithmetic modulo 1009; no floating point is involved. Total metered spend 10 credits, 0 refusals.",
+  "route_taken": "I bought eight consecutive samples, recovered the sequence's minimal linear recurrence over GF(1009) by Berlekamp-Massey and its closed form 3*2^n + 5*7^n, scanned the reconstructed model over all 600 points offline for free, and spent two more metered calls confirming the single cheapest predicted failure at n=27 - chosen over a range scan of [1,600], which would have cost 600 credits against a 120 cap and was therefore not merely expensive but unaffordable, and over blind spot-sampling, which at a hit density of 2 in 600 would almost certainly have returned an inconclusive run.",
+  "confidence": 0.99,
+  "what_would_resolve_it": null
+}

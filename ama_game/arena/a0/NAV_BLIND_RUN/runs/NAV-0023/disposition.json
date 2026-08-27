@@ -1,0 +1,23 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0023",
+  "condition": "A",
+  "claim_id": "NAV-0023",
+  "session": "A0NAV_BLIND-NAV-0023",
+  "disposition": "FALSE",
+  "witness": {
+    "n": 166,
+    "f_n_mod_4001": 1554,
+    "confirmed_by": [
+      "evaluate --point 166 -> {\"holds\": false}",
+      "sample --point 166 -> {\"value\": 1554}"
+    ]
+  },
+  "reasoning": "The domain has 600 points and the metered budget was 120 calls, so an exhaustive scan (range 1 600, cost 600) was unaffordable and never attempted. Instead I spent 10 calls sampling f(1..10) and fit a model to the observed residues. The first four terms 21, 89, 381, 1649 admit an order-2 linear recurrence over Q: solving 381 = 89a + 21b and 1649 = 381a + 89b gives a = 9, b = -20, i.e. f(n) = 9 f(n-1) - 20 f(n-2), with characteristic polynomial x^2 - 9x + 20 = (x-4)(x-5). Fitting the closed form A*4^n + B*5^n to f(1) = 21 and f(2) = 89 gives A = 4, B = 1, hence f(n) = 4^(n+1) + 5^n. This reproduced all ten observed residues mod 4001 exactly, including the wraparound points n=5 (7221 mod 4001 = 3220) and n=6 (32009 mod 4001 = 1), which are the terms where a merely-coincidental small-integer fit would have broken. Scanning the model over the full stated domain 1 <= n <= 600 in local arithmetic (free, no metered calls) gave exactly one solution of f(n) = 1554: n = 166. I then paid 1 call to evaluate the arena's own predicate at that point, which returned holds = false, and 1 further call to sample the value, which returned 1554. The disposition therefore does not rest on the fitted model at all: the model was only a search heuristic for where to point the meter, and the falsification is carried by a direct observation of the sealed object at a single point. The proposition asserts f(n) mod 4001 is never 1554 on [1, 600]; the arena reports it is 1554 at n = 166. Scope note: I did not exhaustively verify the sealed sequence against the closed form outside the ten sampled points plus n = 166, so the identity f(n) = 4^(n+1) + 5^n is asserted only as a fit over the eleven observed points and is not load-bearing for this verdict. Claiming the model holds on all of [1, 600] would be an unbounded extrapolation from an 11-point fit, and I do not make it. The universal claim under assessment needs only one counterexample to die, and that counterexample was observed, not inferred.",
+  "route_taken": "Spent 10 calls on a contiguous prefix f(1..10) to expose algebraic structure, fit an order-2 linear recurrence / closed form 4^(n+1) + 5^n offline, scanned all 600 domain points for free in local arithmetic to localise the single candidate n = 166, and spent 2 metered calls confirming it directly (evaluate then sample) - chosen over range 1 600 (cost 600, unaffordable), over a blind linear walk (expected ~166 calls to stumble on this witness, also over budget), and over binary/bisection search, which does not apply because the predicate is a scattered pointwise hit rather than a monotone threshold.",
+  "confidence": 0.99,
+  "what_would_resolve_it": null,
+  "artifacts": {
+    "fit_model.py": "F:/Prometheus/ama_game/arena/a0/NAV_BLIND_RUN/runs/NAV-0023/fit_model.py"
+  }
+}

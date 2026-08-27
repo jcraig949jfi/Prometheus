@@ -1,0 +1,23 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0021",
+  "condition": "A",
+  "claim_id": "NAV-0021",
+  "session": "A0NAV_BLIND-NAV-0021",
+  "disposition": "FALSE",
+  "witness": {
+    "n": 51,
+    "f_n_mod_2711": 506,
+    "metered_confirmation": [
+      "sample(51) -> value 506",
+      "evaluate(51) -> holds: false"
+    ]
+  },
+  "reasoning": "The proposition asserts f(n) mod 2711 != 506 for all n in [1,600]. It fails at n = 51. Six metered sample() calls at n = 1..6 returned 18, 66, 246, 930, 847, 191. Lifting the two wrapped terms (a5 = 3558, a6 = 13746) exposes the relation a_n = 3*a_{n-1} + 12*4^(n-2), i.e. the closed form f(n) = 2*3^n + 3*4^n, which reproduces all six observations exactly (2*3+3*4=18, 2*9+3*16=66, 2*27+3*64=246, 2*81+3*256=930, 3558 mod 2711 = 847, 13746 mod 2711 = 191). Under that closed form the congruence 2*3^n + 3*4^n = 506 (mod 2711) has exactly one solution in [1,600], at n = 51 (exhaustive evaluation of the FITTED MODEL over all 600 points; this is local arithmetic, not a metered search, and the model itself is a 6-point inference and not a proof of f). The inference was therefore not trusted on its own: the predicted witness was put back to the metered oracle, which returned sample(51) = 506 and evaluate(51) = false. The kill rests on those two oracle answers, not on the model; the model was only the search heuristic that found where to point the oracle. No claim of universality is made about the model outside the six fitted points and the confirmed witness.",
+  "route_taken": "Spent 6 calls sampling n=1..6 to fit a closed form off-line rather than paying for a metered search, solved 2*3^n+3*4^n = 506 mod 2711 locally to get the single candidate n=51, and spent 2 calls confirming it at the oracle -- 8 calls total, chosen over range(1,600) which costs 600 and over blind sampling which would have needed ~600 draws in expectation to land on a single-point failure.",
+  "confidence": 0.99,
+  "what_would_resolve_it": null,
+  "artifacts": [
+    "F:/Prometheus/ama_game/arena/a0/NAV_BLIND_RUN/runs/NAV-0021/model_fit.py"
+  ]
+}

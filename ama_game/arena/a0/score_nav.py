@@ -44,6 +44,8 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--run", default="NAV_PILOT_RUN")
     ap.add_argument("--set", default=str(ARENA / "heldout" / "NAV_PILOT"))
+    ap.add_argument("--compare", help="a second RUN dir to contrast against, "
+                                      "paired by claim id")
     args = ap.parse_args()
 
     idx = json.loads((HERE / args.run / "INDEX.json").read_text(encoding="utf-8"))

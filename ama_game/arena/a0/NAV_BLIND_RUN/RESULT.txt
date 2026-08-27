@@ -1,0 +1,70 @@
+A0 v0.2 — METERED NAVIGATION, NAV_BLIND, condition A, n = 32
+======================================================================
+budget 120 credits per claim · cost measured by the harness
+
+LEDGER INTEGRITY: all 32 hash chains intact
+
+CO-PRIMARY 1 — disposition correctness
+  accuracy: 100% (32/32)
+    NAV_FALSE_FAR    8/8  -> {'FALSE': 8}
+    NAV_FALSE_NEAR   8/8  -> {'FALSE': 8}
+    NAV_TRUE         16/16  -> {'TRUE': 16}
+  false accusations (FALSE on a true claim): 0/16
+  FALSE dispositions with a wrong witness: 0
+
+SESSION CONTAMINATION: 0/32 sessions were charged by two seats
+  Cause: the launcher hit its concurrency limit and relaunched claims whose
+  first seat was still running, so two seats shared one session. Correctness
+  is unaffected — each seat reached its own conclusion — but the COST is not
+  attributable, so these are excluded from co-primary 2 and reported here.
+
+CO-PRIMARY 2 — verifier cost among correct dispositions (uncontaminated only, n=32)
+  n = 32   mean 17.2 (SE 1.4)   median 16
+  achievable floor on those claims: mean 5.0
+  OVERSPEND RATIO (spent / floor): mean 3.5x   median 3.3x
+  This is the headroom figure. A seat that found the structural
+  route sits near 1.0x; one that enumerated sits far above it.
+
+SECONDARY — capped EVC (risk summary, not a success criterion)
+  EVC 17.2 (SE 1.4)
+
+ROUTE BEHAVIOUR
+  correct at <= 2x the floor (found the cheap route): 9/32
+  claims enumeration could NOT solve within budget: 24/24 answered correctly
+  That second line is the sharpest signal: those claims are
+  unreachable without the structural route.
+
+PER-CLAIM ROWS
+  claim      class            oracle     submitted   ok   spent  floor      x
+  NAV-0000   NAV_TRUE         TRUE       TRUE        Y       18      5    3.6
+  NAV-0001   NAV_FALSE_NEAR   FALSE      FALSE       Y       10      5    2.0
+  NAV-0002   NAV_TRUE         TRUE       TRUE        Y       22      5    4.4
+  NAV-0003   NAV_FALSE_FAR    FALSE      FALSE       Y        8      5    1.6
+  NAV-0004   NAV_TRUE         TRUE       TRUE        Y       17      5    3.4
+  NAV-0005   NAV_FALSE_NEAR   FALSE      FALSE       Y       22      5    4.4
+  NAV-0006   NAV_TRUE         TRUE       TRUE        Y       26      5    5.2
+  NAV-0007   NAV_FALSE_FAR    FALSE      FALSE       Y       10      5    2.0
+  NAV-0008   NAV_TRUE         TRUE       TRUE        Y       29      5    5.8
+  NAV-0009   NAV_FALSE_NEAR   FALSE      FALSE       Y       10      5    2.0
+  NAV-0010   NAV_TRUE         TRUE       TRUE        Y       19      5    3.8
+  NAV-0011   NAV_FALSE_FAR    FALSE      FALSE       Y       22      5    4.4
+  NAV-0012   NAV_TRUE         TRUE       TRUE        Y       33      5    6.6
+  NAV-0013   NAV_FALSE_NEAR   FALSE      FALSE       Y       10      5    2.0
+  NAV-0014   NAV_TRUE         TRUE       TRUE        Y       19      5    3.8
+  NAV-0015   NAV_FALSE_FAR    FALSE      FALSE       Y       12      5    2.4
+  NAV-0016   NAV_TRUE         TRUE       TRUE        Y       24      5    4.8
+  NAV-0017   NAV_FALSE_NEAR   FALSE      FALSE       Y        7      5    1.4
+  NAV-0018   NAV_TRUE         TRUE       TRUE        Y       16      5    3.2
+  NAV-0019   NAV_FALSE_FAR    FALSE      FALSE       Y       14      5    2.8
+  NAV-0020   NAV_TRUE         TRUE       TRUE        Y       21      5    4.2
+  NAV-0021   NAV_FALSE_NEAR   FALSE      FALSE       Y        8      5    1.6
+  NAV-0022   NAV_TRUE         TRUE       TRUE        Y       38      5    7.6
+  NAV-0023   NAV_FALSE_FAR    FALSE      FALSE       Y       12      5    2.4
+  NAV-0024   NAV_TRUE         TRUE       TRUE        Y       22      5    4.4
+  NAV-0025   NAV_FALSE_NEAR   FALSE      FALSE       Y        8      5    1.6
+  NAV-0026   NAV_TRUE         TRUE       TRUE        Y       25      5    5.0
+  NAV-0027   NAV_FALSE_FAR    FALSE      FALSE       Y       12      5    2.4
+  NAV-0028   NAV_TRUE         TRUE       TRUE        Y       15      5    3.0
+  NAV-0029   NAV_FALSE_NEAR   FALSE      FALSE       Y       18      5    3.6
+  NAV-0030   NAV_TRUE         TRUE       TRUE        Y       15      5    3.0
+  NAV-0031   NAV_FALSE_FAR    FALSE      FALSE       Y       10      5    2.0

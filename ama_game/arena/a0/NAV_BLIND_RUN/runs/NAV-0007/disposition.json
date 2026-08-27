@@ -1,0 +1,20 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0007",
+  "condition": "A",
+  "claim_id": "NAV-0007",
+  "session": "A0NAV_BLIND-NAV-0007",
+  "disposition": "FALSE",
+  "witness": {
+    "n": 260,
+    "f_n_mod_2711": 887,
+    "confirmed_by": [
+      "sample(260) -> 887",
+      "evaluate(260) -> holds: false"
+    ]
+  },
+  "reasoning": "I spent 8 credits sampling f at n=1..8 (22, 124, 712, 1433, 2664, 381, 2227, 2282) and fitted a linear recurrence over GF(2711) (2711 is prime) by Gaussian elimination in fit.py. A homogeneous order-2 recurrence fits and is verified on every sampled point: f(n+2) = 10*f(n+1) - 24*f(n) mod 2711. Its characteristic polynomial x^2 - 10x + 24 = (x-4)(x-6) gives the closed form f(n) = 4^n + 3*6^n mod 2711, which reproduces all 8 samples exactly. Under that model, f(n) mod 2711 == 887 exactly at n = 260 and n = 543 within 1 <= n <= 600 (model.py). The model was a hypothesis inferred from 8 observations, not a proof, so I did not report it as the result; I used it only as a pointer and then paid 2 credits to test the pointer directly: sample(260) returned 887 and evaluate(260) returned holds=false. The disposition therefore does not depend on the recurrence hypothesis being right - it rests on two direct metered observations at a single point. The claim is a universal statement over [1, 600] and a single counterexample refutes it. No bounded search underlies the verdict; the exhaustive scan over n in [1, 600] was performed on the fitted model in exact integer arithmetic (no floating point anywhere), and only served to select which point to probe.",
+  "route_taken": "Rather than paying 600 credits for range(1,600) or binary-searching blind, I bought 8 cheap sample() values, algebraically identified the sequence as a 2-term linear recurrence over the prime field GF(2711) (closed form 4^n + 3*6^n), solved offline for the exact n where the residue equals 887, and then spent 2 metered calls confirming the predicted witness at n=260 - 10 credits total instead of 600.",
+  "confidence": 0.99,
+  "what_would_resolve_it": null
+}

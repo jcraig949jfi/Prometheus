@@ -1,0 +1,23 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0031",
+  "condition": "A",
+  "claim_id": "NAV-0031",
+  "session": "A0NAV_BLIND-NAV-0031",
+  "disposition": "FALSE",
+  "witness": {
+    "n": 514,
+    "f_n_mod_4001": 1243,
+    "confirmed_by": [
+      "sample(514) -> 1243",
+      "evaluate(514) -> holds=false"
+    ]
+  },
+  "reasoning": "The domain has 600 points and the budget is 120 calls, so no scan can cover it and a null scan would only ever license a bounded-search statement, never the universal claim. Instead I spent 8 sample calls on n=1..8 and fitted a linear recurrence over GF(4001) to the observed residues 23, 151, 1037, 3218, 2441, 923, 2140, 2337. The minimal fit is order 2: f(n+2) = 9*f(n+1) - 14*f(n) mod 4001, which reproduces all 8 observations (2 free parameters fitted from 3 terms, then 5 further terms predicted correctly and matched -- a 5-point out-of-sample agreement, chance ~4001^-5). Its characteristic polynomial factors as (x-2)(x-7), giving the closed form f(n) = 2^n + 3*7^n mod 4001. Scanning that closed form over the whole stated domain 1 <= n <= 600 costs nothing metered and yields exactly one solution of f(n) == 1243, at n = 514. I then paid 2 metered calls to test that prediction against the sealed sequence itself: sample(514) returned 1243 and evaluate(514) returned holds=false. The disposition therefore does not rest on the fitted model -- the model was only a search heuristic for where to aim, and the witness is confirmed directly by the arena's own interface. All arithmetic is exact integer arithmetic mod 4001 (Python ints, pow with modulus); no floating point is involved anywhere. Total metered cost: 10 of 120, 0 refusals.",
+  "route_taken": "Rather than scan the domain (impossible: 600 points, 120 calls) or spot-check and abstain, I bought 8 consecutive samples, recovered the sequence's order-2 recurrence and closed form f(n)=2^n+3*7^n mod 4001 by exact linear algebra over GF(4001), solved offline for the single n in [1,600] hitting 1243, and spent 2 calls confirming n=514 directly -- 10 calls total, because reconstructing the generator turns an unaffordable 600-point search into an 8-point identification plus a targeted confirmation.",
+  "confidence": 0.99,
+  "what_would_resolve_it": null,
+  "artifacts": [
+    "F:/Prometheus/ama_game/arena/a0/NAV_BLIND_RUN/runs/NAV-0031/fit_and_witness.py"
+  ]
+}

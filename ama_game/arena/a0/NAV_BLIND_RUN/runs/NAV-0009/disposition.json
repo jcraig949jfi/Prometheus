@@ -1,0 +1,28 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0009",
+  "condition": "A",
+  "claim_id": "NAV-0009",
+  "session": "A0NAV_BLIND-NAV-0009",
+  "disposition": "FALSE",
+  "witness": {
+    "n": 49,
+    "f_n_mod_2003": 1079,
+    "confirmed_by": [
+      "sample --point 49 returned value 1079",
+      "evaluate --point 49 returned holds=false"
+    ],
+    "second_predicted_witness": {
+      "n": 225,
+      "f_n_mod_2003": 1079,
+      "status": "predicted by the fitted model, not separately metered"
+    }
+  },
+  "reasoning": "I spent 8 metered samples on n=1..8 (values 39, 223, 1311, 1918, 1167, 955, 660, 534) and fitted models over GF(2003), which is prime so linear algebra mod 2003 is exact and no floating point is involved anywhere in this work. A constant-coefficient linear recurrence of order 2, f(n) = 12*f(n-1) + 1968*f(n-2) mod 2003 with f(1)=39, f(2)=223, reproduces all eight observations; with 6 equations in 2 unknowns the fit is overdetermined fourfold, so it is not a fit-anything model. No order-1 model exists and the order-3/order-4 and affine solutions collapse to the same order-2 relation (trailing/constant coefficients solve to 0), so order 2 is the minimal relation consistent with the data. Extrapolating that recurrence over the whole stated domain n in [1,600] at zero metered cost predicts exactly two points where f(n) mod 2003 = 1079: n = 49 and n = 225. I then paid 2 credits to check the earlier prediction directly: sample(49) returned 1079 and evaluate(49) returned holds=false. The counterexample is therefore established by direct metered observation and does not depend on the model being correct; the model was only the search device that told me where to look. The claim is a universal statement over [1,600] and it fails at n=49, so it is FALSE. Note the model was inferred from a bounded set of 8 observations and is not proven to describe f outside them; that inference is load-bearing only for the claim that n=49 and n=225 are the ONLY such points, which I do not assert as verified.",
+  "route_taken": "Rather than scanning the domain (a range 1..600 would cost 600, five times my entire budget, and even the affordable prefix range 1..120 would have cost 120 to find the same witness at 49), I bought 8 cheap samples, recovered the order-2 linear recurrence mod 2003 that generates the sequence, extrapolated all 600 residues offline for free, and spent 2 more credits confirming the predicted counterexample at n=49 by both sample and evaluate.",
+  "confidence": 0.99,
+  "what_would_resolve_it": null,
+  "artifacts": [
+    "F:/Prometheus/ama_game/arena/a0/NAV_BLIND_RUN/runs/NAV-0009/fit_and_scan.py"
+  ]
+}

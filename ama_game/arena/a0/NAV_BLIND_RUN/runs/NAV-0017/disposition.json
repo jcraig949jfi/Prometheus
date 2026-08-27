@@ -1,0 +1,18 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0017",
+  "condition": "A",
+  "claim_id": "NAV-0017",
+  "session": "A0NAV_BLIND-NAV-0017",
+  "disposition": "FALSE",
+  "witness": {
+    "n": 40,
+    "f_n_mod_1009": 24,
+    "metered_confirmation": "sample(40) -> 24 ; evaluate(40) -> holds=false",
+    "artifact": "F:/Prometheus/ama_game/arena/a0/NAV_BLIND_RUN/runs/NAV-0017/reconstruct.py"
+  },
+  "reasoning": "The proposition asserts f(n) mod 1009 != 24 for all n in [1,600]; a single counterexample settles it. Exhausting the domain would cost 600 credits against a 120 cap, so exhaustion was never a live route and TRUE was not directly attainable. Instead I spent 5 credits on sample(1..5) = 40, 230, 321, 667, 734 and fitted an order-2 linear recurrence mod 1009 to n=1..4: f(n+2) = 11*f(n+1) + 979*f(n) = 11*f(n+1) - 30*f(n). The fit was determined by n=1..4 alone, so n=5 was a genuine held-out prediction, and it matched (734). The characteristic polynomial x^2 - 11x + 30 factors as (x-5)(x-6), giving the closed form f(n) = 2*5^n + 5*6^n mod 1009, which reproduces all five observed values. Under that model f(n) = 24 exactly twice in [1,600], at n = 40 and n = 544. I then checked the earlier of the two through the meter rather than trusting the model: sample(40) returned 24 and evaluate(40) returned holds=false. The disposition therefore does not rest on the reconstructed model at all - the model was only a search heuristic for where to point one metered evaluate, and the witness is confirmed directly by the arena's own verdict at n=40. Limitation worth stating plainly: the closed form is an inference from six sampled points and is not independently verified over the rest of the domain, so the secondary prediction f(544) = 24 remains unconfirmed and is not part of the claim I am making. No bounded search over the domain was performed or relied upon.",
+  "route_taken": "Fitted an order-2 linear recurrence mod 1009 from five cheap samples, solved the resulting closed form f(n) = 2*5^n + 5*6^n for the first n in [1,600] hitting 24, and spent two metered calls confirming that single point - chosen over a range sweep (600 credits, unaffordable) and over blind point-probing (about 0.6 expected hits across the whole domain, so no small random sample would have been likely to find the witness).",
+  "confidence": 0.99,
+  "what_would_resolve_it": null
+}

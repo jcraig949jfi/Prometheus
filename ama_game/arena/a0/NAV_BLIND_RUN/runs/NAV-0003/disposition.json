@@ -1,0 +1,21 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0003",
+  "condition": "A",
+  "claim_id": "NAV-0003",
+  "session": "A0NAV_BLIND-NAV-0003",
+  "disposition": "FALSE",
+  "witness": {
+    "n": 243,
+    "f_n_mod_2003": 364,
+    "sample_call": "sample --point 243 -> {\"value\": 364}",
+    "evaluate_call": "evaluate --point 243 -> {\"holds\": false}"
+  },
+  "reasoning": "Brute force is impossible here: the domain has 600 points and the cap is 120 credits, so no exhaustive route (range 1 600 costs 600; 600 evaluates cost 600) can decide the claim. I therefore spent credits on VALUES rather than VERDICTS, because sample(n) carries far more information per credit than evaluate(n) when the object is structured. Six samples at n=1..6 gave 15, 39, 105, 291, 825, 376 (mod 2003). Growth was close to but not exactly geometric with ratio 3, which suggests a two-term exponential; fitting f(n) = a*3^n + b*2^n on n=1,2 gives 3a+2b=15 and 9a+4b=39, hence a=3, b=3, i.e. f(n) = 3^(n+1) + 3*2^n. That closed form reproduces all six samples exactly, including the modular wrap at n=6 (2379 mod 2003 = 376), so four of the six samples were free confirmations rather than fitting data. Solving f(n) = 364 (mod 2003) over the stated domain by direct local computation of the fitted model (no metered cost) gives exactly one solution, n = 243. I then spent two credits testing that prediction against the real sealed object: sample(243) returned 364 and evaluate(243) returned holds=false. The proposition asserts f(n) mod 2003 is never 364 on [1,600], so a single confirmed hit falsifies it. Note the disposition does not rest on the fitted model being correct: the model was only a search heuristic for WHERE to look, and the falsification rests entirely on the two metered calls at n=243, which are direct observations of the arena's own object. The model is nevertheless corroborated at seven points spanning the domain. Total metered cost: 8 of 120 credits, 0 refusals.",
+  "route_taken": "Bought six cheap sample() VALUES instead of evaluate() verdicts, fitted the closed form f(n) = 3^(n+1) + 3*2^n (exact on all six, including the mod wrap), solved the congruence f(n) = 364 mod 2003 offline to the unique candidate n = 243, and spent two metered calls confirming it - chosen over the exhaustive routes (range 1 600 = 600 credits, per-point evaluate = 600 credits) which are strictly unaffordable under the 120 cap, and over a partial/random scan, which could only ever have returned an inconclusive bounded-search null over at most 120 of the 600 points.",
+  "confidence": 0.99,
+  "what_would_resolve_it": null,
+  "artifacts": [
+    "F:/Prometheus/ama_game/arena/a0/NAV_BLIND_RUN/runs/NAV-0003/fit_model.py"
+  ]
+}

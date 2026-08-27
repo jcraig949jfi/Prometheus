@@ -1,0 +1,24 @@
+{
+  "set_name": "NAV_BLIND",
+  "emitted": 32,
+  "seed": 55501,
+  "n_max": 600,
+  "budget": 120,
+  "disclosure": "blind",
+  "counts_by_class": {
+    "NAV_TRUE": 16,
+    "NAV_FALSE_NEAR": 8,
+    "NAV_FALSE_FAR": 8
+  },
+  "enumerate_within_budget": "8/32",
+  "route_cost_summary": {
+    "enumerate": {
+      "min": 8,
+      "median": 600,
+      "max": 600
+    },
+    "boundary_solvable": "5/32",
+    "fit_recurrence": 5
+  },
+  "headroom_ratio_median_enumerate_over_fit": 120.0
+}

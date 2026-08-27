@@ -1,0 +1,16 @@
+{
+  "type": "DISPOSITION",
+  "run_id": "A0NAV-NAV-0020",
+  "condition": "A",
+  "claim_id": "NAV-0020",
+  "session": "A0NAV_BLIND-NAV-0020",
+  "disposition": "TRUE",
+  "witness": null,
+  "reasoning": "I treated the sealed sequence as an unknown linear-recurrent sequence over GF(2711) (2711 is prime) rather than as 600 opaque points. Thirteen consecutive metered samples, f(1..13) mod 2711 = 20,116,740,2253,1568,899,461,1997,2156,1311,366,528,305, fed to Berlekamp-Massey give linear complexity L=2 with connection polynomial x^2 - 10x + 21 = (x-3)(x-7); solving the two initial conditions gives the closed form f(n) = 2*3^n + 2*7^n (mod 2711). Thirteen terms is 6.5x the 2L=4 terms needed to pin an order-2 recurrence, so the fit is over-determined by nine terms. I then spent eight further samples spread across the whole claimed domain (n = 14, 15, 89, 200, 337, 450, 550, 600) purely as an adversarial check on the model; all eight matched the closed form exactly, so 21 of 21 metered observations agree with it. With the closed form in hand the decision is a local, exhaustive computation over all 600 points of the domain, not a bounded search: f(n) = 1822 has no solution for any n in [1,600]. Stronger, since 3 and 7 both have multiplicative order dividing 2710, f is periodic with period 2710, and 1822 does not occur anywhere in a full period n in [1,2710] -- the value 1822 is simply not in the image of f, so the proposition would still hold if the bound 600 were raised arbitrarily. The nearest approach inside the domain is |f(n) - 1822| = 2, i.e. the claim is a genuine near-miss construction rather than a trivially wide margin, which is what the bound 600 appears designed to probe. Residual risk, stated plainly: the metered interface can never exhaust the domain (a full range 1..600 costs 600 against a cap of 120), so no route reaches TRUE without inferring the generator. My verification is therefore conditional on the sealed sequence being the recurrent object its own hypotheses describe ('its defining coefficients are sealed'); a sequence that agreed with 2*3^n+2*7^n at all 21 observed points but was patched to 1822 at one of the 579 unobserved points would defeat me, and I could not have excluded it at any affordable cost. I judge that scenario inconsistent with the stated hypotheses, not merely unlikely.",
+  "route_taken": "Sampled 13 consecutive points to recover the generator by Berlekamp-Massey over GF(2711) rather than spending the budget on coverage, then bought 8 spread-out samples as a falsification check on the recovered closed form and finished the decision by exhaustive local computation -- I chose this over range/evaluate scanning because brute force can cover at most 120 of the 600 points and so cannot reach TRUE at any price, while generator recovery decides the whole domain (and in fact the whole period) for 21 calls.",
+  "confidence": 0.95,
+  "what_would_resolve_it": null,
+  "artifacts": {
+    "recover_and_scan.py": "F:/Prometheus/ama_game/arena/a0/NAV_BLIND_RUN/runs/NAV-0020/recover_and_scan.py"
+  }
+}

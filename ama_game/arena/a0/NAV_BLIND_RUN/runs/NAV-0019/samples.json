@@ -1,0 +1,8 @@
+{
+  "modulus": 5003,
+  "samples_n_1_to_12": {"1":27,"2":123,"3":567,"4":2643,"5":2441,"6":4130,"7":3359,"8":2664,"9":1823,"10":3151,"11":1905,"12":4155},
+  "fitted_recurrence": "f(n) = 9*f(n-1) - 20*f(n-2)  (mod 5003)",
+  "closed_form": "f(n) = 3*(4^n + 5^n) mod 5003",
+  "predicted_witness": {"n": 384, "predicted_value": 1140},
+  "metered_confirmation": {"sample_384": 1140, "evaluate_384_holds": false}
+}
