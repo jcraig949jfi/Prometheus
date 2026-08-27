@@ -1,0 +1,117 @@
+{
+  "experiment": "LOT-A1-CALIBRATION",
+  "intervention_class": "INSTRUMENT",
+  "is_null_result": false,
+  "positive_control_ran": true,
+  "branch_table_partitions": true,
+  "probe_modifies_measured_quantity": false,
+  "dropped_records": 0,
+  "interventional_sweep": [
+    {
+      "leak": 0.0,
+      "worst_gap": 0.0575,
+      "verdict": "FAMILY_ADMISSIBLE"
+    },
+    {
+      "leak": 0.25,
+      "worst_gap": 0.2908,
+      "verdict": "FAMILY_REJECTED"
+    },
+    {
+      "leak": 0.5,
+      "worst_gap": 0.5023,
+      "verdict": "FAMILY_REJECTED"
+    },
+    {
+      "leak": 0.75,
+      "worst_gap": 0.8068,
+      "verdict": "FAMILY_REJECTED"
+    },
+    {
+      "leak": 1.0,
+      "worst_gap": 1.0,
+      "verdict": "FAMILY_REJECTED"
+    }
+  ],
+  "sweep_monotone_nondecreasing": true,
+  "metamorphic_relabel_verdict": "FAMILY_ADMISSIBLE",
+  "metamorphic_invariant": true,
+  "fixtures": [
+    {
+      "fixture": "KNOWN_GOOD_clean_xor",
+      "expected": "FAMILY_ADMISSIBLE",
+      "verdict": "FAMILY_ADMISSIBLE",
+      "correct": true,
+      "T1": true,
+      "T2": true,
+      "T3": true,
+      "worst_marginal_gap": 0.0425,
+      "best_alt": [
+        "q02_ANDNOT_q07",
+        0.535
+      ],
+      "occupancy": {
+        "00": 0.2562,
+        "01": 0.2487,
+        "10": 0.25,
+        "11": 0.245
+      }
+    },
+    {
+      "fixture": "KNOWN_BAD_marginal_leak",
+      "expected": "FAMILY_REJECTED",
+      "verdict": "FAMILY_REJECTED",
+      "correct": true,
+      "T1": true,
+      "T2": false,
+      "T3": false,
+      "worst_marginal_gap": 1.0,
+      "best_alt": [
+        "q03_NOTAND_q07",
+        0.7675
+      ],
+      "occupancy": {
+        "00": 0.2487,
+        "01": 0.2512,
+        "10": 0.2487,
+        "11": 0.2512
+      }
+    },
+    {
+      "fixture": "KNOWN_BAD_alt_composition",
+      "expected": "FAMILY_REJECTED",
+      "verdict": "FAMILY_REJECTED",
+      "correct": true,
+      "T1": true,
+      "T2": true,
+      "T3": false,
+      "worst_marginal_gap": 0.0865,
+      "best_alt": [
+        "q05_ANDNOT_q06",
+        0.7612
+      ],
+      "occupancy": {
+        "00": 0.25,
+        "01": 0.235,
+        "10": 0.2512,
+        "11": 0.2637
+      }
+    }
+  ],
+  "readings": {
+    "fixtures": {
+      "n": 3,
+      "attainable_lo": 0.0,
+      "attainable_hi": 1.0
+    },
+    "sweep": {
+      "n": 5,
+      "attainable_lo": 0.0,
+      "attainable_hi": 1.0
+    }
+  },
+  "dynamic_range_ok": true,
+  "verdict": "INSTRUMENT_VALIDATED",
+  "verdict_rule_null_output": "An over-strict preflight rejects everything and would fail the KNOWN_GOOD fixture; a permissive one accepts everything and would fail both KNOWN_BAD fixtures. Only an instrument that traverses the range passes, which is the property that was missing when the three world rejections were issued.",
+  "terminal_table_partitions": true
+}
