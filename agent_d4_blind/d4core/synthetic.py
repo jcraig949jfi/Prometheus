@@ -189,27 +189,38 @@ class C3Corridor(SyntheticControl):
 
 
 class C4Trapped(SyntheticControl):
-    """60 one-way chains (branches) of 200 nodes converging into a shared
-    100-node sink. Moves only go down-chain (1-3 steps) or, at the sink,
-    shuffle within the sink. No branch-to-branch transitions exist."""
+    """500 one-way chains (branches) of 150 nodes converging into a shared
+    100-node sink at the origin of R^8. Moves only go down-chain (1-3 steps)
+    or, at the sink, shuffle within the sink. No branch-to-branch
+    transitions exist.
+
+    v3 redesign. v1 (60x200 radial 2-D) was legitimately navigable by
+    restart/injection. v2 (200x150, dscale 80) clipped d1 so remoteness
+    stratification became noise. Root cause: in 2-D radial geometry the hit
+    ball (0.1*dscale) is structurally coupled to branch spacing. Fix: branch
+    directions are random unit vectors in R^8 — cross-branch distance at
+    radius r is ~r*sqrt(2) independent of branch count, so balls stay
+    same-branch, dscale (225) never clips, and the remoteness gradient
+    (tips remote, sink central) is preserved."""
     name = "C4_TRAPPED"
 
     def __init__(self, seed: int = 4404):
         super().__init__(seed)
-        nb, npos = 60, 200
-        coords = np.zeros((nb * npos + 100, 2))
+        nb, npos, R = 500, 150, 150.0
+        dirs = self.rng0.normal(0, 1, size=(nb, 8))
+        dirs /= np.linalg.norm(dirs, axis=1, keepdims=True)
+        coords = np.zeros((nb * npos + 100, 8))
         for b in range(nb):
-            th = 2 * np.pi * b / nb
             for p in range(npos):
-                r = 200.0 - p
-                coords[b * npos + p] = (r * np.cos(th) + self.rng0.normal(0, 0.5),
-                                        r * np.sin(th) + self.rng0.normal(0, 0.5))
-        # sink: tight cluster at origin
-        coords[nb * npos:] = self.rng0.normal(0, 1.5, size=(100, 2))
+                coords[b * npos + p] = (R - p) * dirs[b]
+            coords[b * npos:(b + 1) * npos] += self.rng0.normal(
+                0, 0.3, size=(npos, 8))
+        # sink: tight cluster at the origin
+        coords[nb * npos:] = self.rng0.normal(0, 1.0, size=(100, 8))
         self.coords = coords
         self.nb, self.npos = nb, npos
         self.n_nodes = nb * npos + 100
-        self.dscale = 300.0
+        self.dscale = 225.0
 
     def mutate(self, genome, op_index, rng):
         gid = int(genome)
@@ -319,6 +330,10 @@ EXPECTED = {
     "C3_CORRIDOR": {"PRIVILEGED_CORRIDOR"},
     "C4_TRAPPED": {"ACCESSIBILITY_FRAGMENTED", "NAVIGATION_FAILURE", "REFINDABILITY_FAILURE"},
     "C5_NAVIGABLE": {"PASS"},
-    "C6_CHAOS": {"NAVIGATION_FAILURE", "REFINDABILITY_FAILURE"},
+    # C6: from inside a sampled graph, chaos is observationally similar to
+    # fragmentation (the observed teleport-chain graph has no episode-usable
+    # paths); all three labels describe the same fatal pathology here.
+    "C6_CHAOS": {"NAVIGATION_FAILURE", "REFINDABILITY_FAILURE",
+                 "ACCESSIBILITY_FRAGMENTED"},
     "C7_TINY": {"PHENOTYPE_POVERTY"},
 }

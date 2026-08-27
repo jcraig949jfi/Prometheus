@@ -188,6 +188,7 @@ def gini(x: np.ndarray) -> float:
 
 def graph_metrics(store: EdgeStore) -> dict:
     edges = [(a, b) for (a, b) in store.edges if a != b]
+    n_x = len([1 for (a, b) in store.edges_x if a != b])
     nodes = set()
     indeg: dict = {}
     outdeg: dict = {}
@@ -221,6 +222,7 @@ def graph_metrics(store: EdgeStore) -> dict:
     top = np.sort(ind)[-k:]
     return {
         "n_nodes": n, "n_edges": len(edges),
+        "n_crossover_edges_excluded": n_x,
         "giant_component_share": sizes[0] / n,
         "n_components": len(sizes),
         "indegree_gini": gini(ind),
@@ -279,11 +281,16 @@ def select_targets(sub, rng, n_walks: int, walk_len: int, n_ref: int,
     density = np.zeros(len(pool_items))
     for i, (_, f) in enumerate(pool_items):
         density[i] = sum(1 for j in sidx if j != i and sub.d1m(f, pool_items[j][1]) <= eps_dens)
-    t1, t2 = np.quantile(remoteness, [1 / 3, 2 / 3])
+    # v2 repair: band-based strata. Tertile membership diluted the far
+    # stratum with barely-above-median members (C3: half the "far" targets
+    # sat at remoteness 0.12 beside genuine 0.77 corridor-crossers, halving
+    # the measured ablation drop). Strata are now the remoteness EXTREMES:
+    # near = bottom decile, mid = middle decile, far = top decile.
+    q = np.quantile(remoteness, [0.10, 0.45, 0.55, 0.90])
     targets = []
-    for sname, mask in (("near", remoteness <= t1),
-                        ("mid", (remoteness > t1) & (remoteness <= t2)),
-                        ("far", remoteness > t2)):
+    for sname, mask in (("near", remoteness <= q[0]),
+                        ("mid", (remoteness > q[1]) & (remoteness <= q[2])),
+                        ("far", remoteness > q[3])):
         idx = np.where(mask)[0]
 
         def hkey(i):
@@ -303,7 +310,7 @@ def select_targets(sub, rng, n_walks: int, walk_len: int, n_ref: int,
                 "remoteness": float(remoteness[i]), "density": int(density[i]),
             })
     return {"status": "OK", "pool_size": len(pool_items), "n_refs": len(refs),
-            "remoteness_tertiles": [float(t1), float(t2)],
+            "remoteness_bands": [float(x) for x in q],
             "targets": targets}
 
 
@@ -328,6 +335,7 @@ def run_navigation(sub, targets, nav_plan, budget: int, eps_hit: float,
                     "stratum": t["stratum"], "seed": s,
                     "hit": res["hit"], "evals_to_hit": res["evals_to_hit"],
                     "best_d": res["best_d"], "evals_used": res["evals_used"],
+                    "start_pkey": res["start_pkey"],
                 })
     return rows
 

@@ -1,11 +1,18 @@
 """Omniscient offline navigation oracle. ANALYSIS ONLY.
 
-Knows the empirical phenotype graph (every observed transition from every
-component of the run). Used solely to attribute navigation failure to
-topology (no observed path exists) vs search weakness (path exists, M0
-missed it). Its output never reaches any navigator — enforced structurally:
-this module is imported only by the pipeline's analysis stage, after all
-navigation rows are final.
+Knows the empirical single-parent phenotype graph (crossover edges excluded:
+they are population-dependent two-parent events and would let the oracle
+"hop" between regions no single trajectory can connect). Used solely to
+attribute navigation failure to topology (no observed path existed for that
+episode) vs search weakness (a path existed, M0 missed it). Output never
+reaches any navigator.
+
+v3 repair: reachability is PER EPISODE. v1/v2 ran BFS from the union of all
+runs' starts, which in a fragmented space with broad ab-initio support
+always contains a start near any target (some run began on its island) even
+though every single episode was trapped. Now: reverse BFS from each
+target's hit-ball; an episode counts as oracle-reachable iff ITS OWN start
+lies in the ball's basin.
 """
 from __future__ import annotations
 
@@ -14,42 +21,42 @@ from collections import deque
 from .navigators import EdgeStore
 
 
-def oracle_reachability(sub, store: EdgeStore, targets, eps_hit: float) -> dict:
-    adj: dict = {}
+def oracle_reachability(sub, store: EdgeStore, targets, eps_hit: float,
+                        nav_rows) -> dict:
+    radj: dict = {}
     for a, b in store.edges:
         if a != b:
-            adj.setdefault(a, set()).add(b)
-    # BFS from the union of actual navigation start phenotypes
-    starts = set(store.nav_start_pkeys)
-    reachable = set(starts)
-    q = deque(starts)
-    while q:
-        v = q.popleft()
-        for w in adj.get(v, ()):
-            if w not in reachable:
-                reachable.add(w)
-                q.append(w)
+            radj.setdefault(b, set()).add(a)
+    starts_by_target: dict = {}
+    for r in nav_rows:
+        if r.get("start_pkey") is not None:
+            starts_by_target.setdefault(r["target_id"], []).append(r["start_pkey"])
+    all_pkeys = list(store.fp_by_pkey.items())
     per_target = []
     strata: dict = {}
     for t in targets:
-        goal_hit = False
         tfp = t["fp"]
-        for pk in reachable:
-            f = store.fp_by_pkey.get(pk)
-            if f is not None and sub.d1(f, tfp) <= eps_hit:
-                goal_hit = True
-                break
+        ball = [pk for pk, f in all_pkeys if sub.d1(f, tfp) <= eps_hit]
+        basin = set(ball)
+        q = deque(ball)
+        while q:
+            v = q.popleft()
+            for w in radj.get(v, ()):
+                if w not in basin:
+                    basin.add(w)
+                    q.append(w)
+        eps_starts = starts_by_target.get(t["target_id"], [])
+        frac = (sum(1 for s in eps_starts if s in basin) / len(eps_starts)
+                if eps_starts else 0.0)
         per_target.append({"target_id": t["target_id"], "stratum": t["stratum"],
-                           "oracle_reachable": goal_hit})
-        s = strata.setdefault(t["stratum"], [0, 0])
-        s[0] += int(goal_hit)
-        s[1] += 1
+                           "ball_size": len(ball), "basin_size": len(basin),
+                           "episode_reach_frac": frac})
+        s = strata.setdefault(t["stratum"], [])
+        s.append(frac)
     return {
-        "n_starts": len(starts),
-        "n_reachable_pkeys": len(reachable),
-        "n_graph_nodes": len(set(store.fp_by_pkey.keys())),
+        "n_graph_nodes": len(all_pkeys),
         "per_target": per_target,
-        "strata_reach": {k: v[0] / v[1] for k, v in strata.items()},
-        "pooled_reach": (sum(p["oracle_reachable"] for p in per_target) / len(per_target))
-        if per_target else 0.0,
+        "strata_reach": {k: sum(v) / len(v) for k, v in strata.items()},
+        "pooled_reach": (sum(p["episode_reach_frac"] for p in per_target)
+                         / len(per_target)) if per_target else 0.0,
     }

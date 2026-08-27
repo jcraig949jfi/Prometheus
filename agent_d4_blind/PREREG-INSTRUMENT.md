@@ -1,10 +1,41 @@
 # PREREG-INSTRUMENT — D-4 Phase 1 instrument definition
 
-Status: DRAFT v1 (2026-08-27). Iteration permitted ONLY until the
+Status: v3 (2026-08-27). Iteration permitted ONLY until the
 instrument-validation gate (Section 8) passes on the synthetic controls.
 Every revision is committed; nothing is overwritten silently. After
 instrument validation, the surviving definitions are copied verbatim into
 PREREG-PHASE1.md and frozen.
+
+## Amendment log (instrument-development history; runs preserved in git)
+
+- v1 -> v2 (after validation run 1: C1 false PRIVILEGED, C3 missed
+  corridor, C4 mis-specified):
+  1. Crossover (two-parent) edges excluded from the oracle graph — in v1
+     they let BFS hop between regions no single trajectory can connect.
+  2. N4 fresh-injection rate 0.15 -> 0.05 (at 0.15 N4 was substantially a
+     restart sampler, brute-forcing fragmented spaces via ab-initio
+     teleportation).
+  3. Target strata tertiles -> deciles (bottom/middle/top 10%): tertile
+     membership diluted the far stratum with barely-above-median members,
+     halving C3's measured ablation drop to exactly the gate value.
+  4. Gate order: NAVIGATION_FAILURE moved upstream of PRIVILEGED_CORRIDOR
+     (privilege is a claim about HOW navigation succeeds; ablation drops
+     around a failing baseline are noise). Ablation collapse now also
+     requires two-proportion z >= 1.96 (C1 v1 fired on n=12 noise).
+  5. C4 control rebuilt (branch/ball geometry mis-specified).
+- v2 -> v3 (after validation run 2: C1 attribution wrong, C4 still PASS):
+  6. Oracle reachability is PER EPISODE (reverse BFS from each target's
+     hit-ball; an episode counts iff ITS OWN start lies in the basin). The
+     v1/v2 union-of-starts BFS declared fragmented spaces "reachable"
+     because some other run had started near the target.
+  7. C4 rebuilt in R^8 (500 one-way branches along random unit vectors +
+     absorbing sink): in 2-D radial geometry the hit ball is structurally
+     coupled to branch spacing, and v2's dscale clipped d1 so remoteness
+     stratification was noise.
+  8. C6 accepted-flag set widened to include ACCESSIBILITY_FRAGMENTED:
+     from inside a sampled graph, chaos and fragmentation are
+     observationally similar; all three accepted labels are fatal and
+     name the same pathology.
 
 Design rule observed throughout: no metric may be scored by classifying the
 generator's own output categories back onto themselves. Privilege is

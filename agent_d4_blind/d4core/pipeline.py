@@ -64,7 +64,7 @@ def _stratum_rates(rows, nav_name):
     for sname in ("near", "mid", "far"):
         rs = [r for r in rows if r["navigator"] == nav_name and r["stratum"] == sname]
         if rs:
-            out[sname] = sum(r["hit"] for r in rs) / len(rs)
+            out[sname] = (sum(r["hit"] for r in rs) / len(rs), len(rs))
     return out
 
 
@@ -132,7 +132,8 @@ def run_pipeline(sub, cfg: dict, out_dir: str, is_real: bool = False,
                                   component="counterfactual", base_seed=7000 + op)
             abl = _stratum_rates(rows, best_nav)
             stratum_drops[f"remove_op{op}"] = {
-                s: {"baseline": baseline_best.get(s, 0.0), "ablated": abl.get(s, 0.0)}
+                s: {"baseline": baseline_best[s][0], "n_base": baseline_best[s][1],
+                    "ablated": abl.get(s, (0.0, 0))[0], "n_abl": abl.get(s, (0.0, 0))[1]}
                 for s in baseline_best}
         # crossover removal (N4 is the only crossover consumer)
         wsub = MenuWrapper(sub, use_crossover=False)
@@ -143,7 +144,8 @@ def run_pipeline(sub, cfg: dict, out_dir: str, is_real: bool = False,
                               component="counterfactual", base_seed=7600)
         abl = _stratum_rates(rows, "N4_RECOMBINER")
         stratum_drops["remove_crossover"] = {
-            s: {"baseline": baseline_n4.get(s, 0.0), "ablated": abl.get(s, 0.0)}
+            s: {"baseline": baseline_n4[s][0], "n_base": baseline_n4[s][1],
+                "ablated": abl.get(s, (0.0, 0))[0], "n_abl": abl.get(s, (0.0, 0))[1]}
             for s in baseline_n4}
     res["ablation"] = {"navigator": best_nav, "stratum_drops": stratum_drops}
 
@@ -207,7 +209,8 @@ def run_pipeline(sub, cfg: dict, out_dir: str, is_real: bool = False,
     log(f"[{sub.name}] oracle + graph analysis")
     meter.set_component("oracle_validation")
     if targets:
-        res["oracle"] = oracle_reachability(sub, store, targets, THRESHOLDS["EPS_HIT"])
+        res["oracle"] = oracle_reachability(sub, store, targets, THRESHOLDS["EPS_HIT"],
+                                            nav_rows)
     else:
         res["oracle"] = {}
     res["graph"] = graph_metrics(store)

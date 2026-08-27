@@ -37,6 +37,7 @@ THRESHOLDS = {
     # G4 privilege
     "MIN_HIT_FOR_ABLATION": 0.15,  # per-stratum baseline needed to judge drop
     "MAX_ABLATION_REL_DROP": 0.60,
+    "ABLATION_MIN_Z": 1.96,        # drop must exceed two-proportion noise
     "IDENT_ACC_HI": 0.30,          # calibrated between C5 and C3
     "ANISO_HI": 0.75,              # calibrated between C5 and C3
     # G5 navigation
@@ -55,12 +56,27 @@ FLAG_ORDER = [
     "PHENOTYPE_POVERTY",
     "DISPLACEMENT_COLLAPSE",
     "ACCESSIBILITY_FRAGMENTED",
-    "PRIVILEGED_CORRIDOR",
     "NAVIGATION_FAILURE",
+    "PRIVILEGED_CORRIDOR",
     "REFINDABILITY_FAILURE",
     "REPRESENTATION_SENSITIVE",
     "COUNTERFACTUAL_UNSTABLE",
 ]
+# v2 repair: NAVIGATION_FAILURE is upstream of PRIVILEGED_CORRIDOR. Privilege
+# is a claim about HOW navigation succeeds; ablation drops measured around a
+# failing baseline are noise (C1 v1 false positive). Privilege gates are
+# evaluated only when navigation passes; privilege DIAGNOSTICS are always
+# reported.
+
+
+def _two_prop_z(p1: float, n1: int, p2: float, n2: int) -> float:
+    if n1 == 0 or n2 == 0:
+        return 0.0
+    p = (p1 * n1 + p2 * n2) / (n1 + n2)
+    se2 = p * (1 - p) * (1 / n1 + 1 / n2)
+    if se2 <= 0:
+        return 0.0 if p1 == p2 else 99.0
+    return abs(p1 - p2) / se2 ** 0.5
 
 
 def evaluate_gates(res: dict, th: dict = THRESHOLDS) -> dict:
@@ -112,25 +128,34 @@ def evaluate_gates(res: dict, th: dict = THRESHOLDS) -> dict:
     if (not nav_ok) and ofar is not None and ofar < th["ORACLE_FAR_MIN"]:
         flags.append("ACCESSIBILITY_FRAGMENTED")
 
-    # --- G4 privilege
+    # --- G4 navigation (upstream of privilege)
+    if not nav_ok and "ACCESSIBILITY_FRAGMENTED" not in flags:
+        flags.append("NAVIGATION_FAILURE")
+
+    # --- G5 privilege (evaluated only around a PASSING navigation baseline;
+    #     diagnostics always reported)
     priv = False
     abl = res.get("ablation", {})
     worst = None
     for op_name, strata in abl.get("stratum_drops", {}).items():
         for sname, d in strata.items():
-            if d["baseline"] >= th["MIN_HIT_FOR_ABLATION"] and d["baseline"] > 0:
-                rel = (d["baseline"] - d["ablated"]) / d["baseline"]
+            base, ab = d["baseline"], d["ablated"]
+            nb, na = d.get("n_base", 0), d.get("n_abl", 0)
+            if base >= th["MIN_HIT_FOR_ABLATION"] and base > 0:
+                rel = (base - ab) / base
+                z = _two_prop_z(base, nb, ab, na)
                 if worst is None or rel > worst[2]:
-                    worst = (op_name, sname, rel)
+                    worst = (op_name, sname, rel, z)
     margins["worst_ablation_drop"] = {
         "value": None if worst is None else {"op": worst[0], "stratum": worst[1],
-                                             "rel_drop": worst[2]},
-        "gate": th["MAX_ABLATION_REL_DROP"]}
-    if worst is not None and worst[2] > th["MAX_ABLATION_REL_DROP"]:
+                                             "rel_drop": worst[2], "z": worst[3]},
+        "gate": th["MAX_ABLATION_REL_DROP"], "z_gate": th["ABLATION_MIN_Z"]}
+    if (nav_ok and worst is not None and worst[2] > th["MAX_ABLATION_REL_DROP"]
+            and worst[3] >= th["ABLATION_MIN_Z"]):
         priv = True
     ident_res = ops.get("identifiability", {})
     aniso = ops.get("anisotropy_top_share")
-    if (ident_res.get("status") == "OK" and aniso is not None
+    if (nav_ok and ident_res.get("status") == "OK" and aniso is not None
             and ident_res["accuracy"] > th["IDENT_ACC_HI"] and aniso > th["ANISO_HI"]):
         priv = True
     margins["identifiability_acc"] = {
@@ -139,10 +164,6 @@ def evaluate_gates(res: dict, th: dict = THRESHOLDS) -> dict:
     margins["anisotropy_top_share"] = {"value": aniso, "gate_with_acc": th["ANISO_HI"]}
     if priv:
         flags.append("PRIVILEGED_CORRIDOR")
-
-    # --- G5 navigation
-    if not nav_ok and "ACCESSIBILITY_FRAGMENTED" not in flags:
-        flags.append("NAVIGATION_FAILURE")
 
     # --- G6 re-findability (best pair navigator)
     refind = best_stats["refind_ratio"] if best_stats else 0.0

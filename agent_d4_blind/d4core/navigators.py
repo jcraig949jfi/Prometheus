@@ -18,7 +18,11 @@ class EdgeStore:
     never read by any navigator)."""
 
     def __init__(self) -> None:
-        self.edges: set[tuple] = set()
+        self.edges: set[tuple] = set()      # single-parent menu transitions only
+        self.edges_x: set[tuple] = set()    # crossover (two-parent) transitions:
+        #   population-dependent; excluded from the oracle graph, which must
+        #   estimate single-trajectory menu-physics topology (v2 repair: in v1
+        #   crossover edges let oracle BFS hop between disconnected regions)
         self.fp_by_pkey: dict = {}
         self.nav_start_pkeys: set = set()
 
@@ -30,7 +34,10 @@ class EdgeStore:
     def edge(self, sub, fp_from, op, fp_to) -> None:
         self.see(sub, fp_from)
         self.see(sub, fp_to)
-        self.edges.add((sub.pkey(fp_from), sub.pkey(fp_to)))
+        if op == -1:
+            self.edges_x.add((sub.pkey(fp_from), sub.pkey(fp_to)))
+        else:
+            self.edges.add((sub.pkey(fp_from), sub.pkey(fp_to)))
 
 
 class RunResult(dict):
@@ -245,8 +252,11 @@ def n3_novelty(sub, rng, budget, target_fp=None, eps_hit=0.1, store=None,
 
 
 def n4_recombiner(sub, rng, budget, target_fp=None, eps_hit=0.1, store=None,
-                  coverage_out=None, pop_size=16, p_mutate=0.5, p_fresh=0.15,
+                  coverage_out=None, pop_size=16, p_mutate=0.5, p_fresh=0.05,
                   tourn_k=3):
+    # v2 repair: p_fresh 0.15 -> 0.05. At 0.15 N4 was ~15% restart-sampler,
+    # blurring its mechanism identity with N1 and brute-forcing fragmented
+    # spaces through ab-initio teleportation rather than recombination.
     """N4: population recombination with selection on d1-to-target."""
     assert target_fp is not None
     used = 0

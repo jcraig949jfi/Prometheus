@@ -79,9 +79,10 @@ class VMSubstrate(Substrate):
     cell = 1           # bytes per encoding cell (alignment unit for cell ops)
     glen = 96          # genome length in bytes
 
-    def __init__(self, encoded: bool = False):
+    def __init__(self, encoded: bool = False, radius2: bool = False):
         super().__init__()
         self.encoded = encoded
+        self.radius2 = radius2  # counterfactual: doubled bitflip-burst radius
         self._cache: dict = {}
 
     # --- genome ------------------------------------------------------------
@@ -103,8 +104,9 @@ class VMSubstrate(Substrate):
         n = len(g)
         ncells = n // self.cell
         if op_index == 0:            # bitflip burst
+            cap, cont = (16, 0.75) if self.radius2 else (8, 0.5)
             k = 1
-            while k < 8 and rng.random() < 0.5:
+            while k < cap and rng.random() < cont:
                 k += 1
             for _ in range(k):
                 p = int(rng.integers(0, n * 8))
