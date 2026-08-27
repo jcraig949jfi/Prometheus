@@ -29,16 +29,43 @@ from typing import Iterable, List, Sequence, Tuple, Dict
 
 import numpy as np
 
+# TECHNE 2026-08-27, HITL #242. THIS GUARD LIED, AND THE LIE WAS EXPENSIVE.
+#
+# It caught `Exception` across THREE imports and reported every one of them as "GUDHI is
+# required ... install with `pip install gudhi`". Measured today with gudhi 3.13.0 INSTALLED and
+# importing cleanly: `import gudhi.wasserstein` raises `ModuleNotFoundError: No module named
+# 'ot'` -- the optional POT (Python Optimal Transport) backend. The guard converted a precise,
+# actionable error about a DIFFERENT package into an install instruction that was already
+# satisfied. A caller following it installs gudhi, sees no change, and has no next step.
+#
+# That is ATK-013's shape: absence indistinguishable from unreadability. Here it is the inverse
+# and worse -- PRESENCE reported as absence, with a remedy that cannot work.
+#
+# Each import is now guarded separately and the ORIGINAL exception is preserved, so the message
+# names the module that actually failed and the reason it gave.
+_GUDHI_IMPORT_ERRORS: dict = {}
+
 try:
     import gudhi as _gd
-    import gudhi.wasserstein as _gd_wasserstein
-    import gudhi.representations as _gd_repr
-    _HAS_GUDHI = True
-except Exception:  # pragma: no cover - tested via skip
+except Exception as _e:                    # pragma: no cover - environment-dependent
     _gd = None
+    _GUDHI_IMPORT_ERRORS["gudhi"] = f"{type(_e).__name__}: {_e}"
+
+try:
+    import gudhi.wasserstein as _gd_wasserstein
+except Exception as _e:                    # pragma: no cover - environment-dependent
     _gd_wasserstein = None
+    _GUDHI_IMPORT_ERRORS["gudhi.wasserstein"] = f"{type(_e).__name__}: {_e}"
+
+try:
+    import gudhi.representations as _gd_repr
+except Exception as _e:                    # pragma: no cover - environment-dependent
     _gd_repr = None
-    _HAS_GUDHI = False
+    _GUDHI_IMPORT_ERRORS["gudhi.representations"] = f"{type(_e).__name__}: {_e}"
+
+#: Kept for backwards compatibility with existing call sites. It means "the whole GUDHI surface
+#: this module uses is importable", which is what the old flag meant and what callers assume.
+_HAS_GUDHI = not _GUDHI_IMPORT_ERRORS
 
 
 # ---------------------------------------------------------------------------
@@ -48,12 +75,28 @@ except Exception:  # pragma: no cover - tested via skip
 Diagram = List[Tuple[int, Tuple[float, float]]]
 
 
-def _require_gudhi() -> None:
-    if not _HAS_GUDHI:
-        raise ImportError(
-            "GUDHI is required for prometheus_math.recipes.persistent_homology. "
-            "Install with `pip install gudhi`."
-        )
+def _require_gudhi(*modules: str) -> None:
+    """Refuse with the module that ACTUALLY failed and the error it ACTUALLY raised.
+
+    Pass the specific submodules a caller needs (e.g. `_require_gudhi("gudhi.wasserstein")`) to
+    refuse only on those; with no arguments it requires the full surface, preserving the old
+    behaviour for existing call sites.
+    """
+    needed = modules or tuple(("gudhi", "gudhi.wasserstein", "gudhi.representations"))
+    failed = {m: _GUDHI_IMPORT_ERRORS[m] for m in needed if m in _GUDHI_IMPORT_ERRORS}
+    if not failed:
+        return
+    detail = "; ".join(f"{m} -> {err}" for m, err in sorted(failed.items()))
+    hint = ""
+    if any("No module named 'ot'" in e for e in failed.values()):
+        hint = (" `gudhi.wasserstein` needs the POT optimal-transport backend: "
+                "`pip install POT`. GUDHI itself is already present.")
+    raise ImportError(
+        "prometheus_math.recipes.persistent_homology could not import the GUDHI surface it "
+        f"needs. FAILED: {detail}." + hint +
+        " (This message previously said only 'GUDHI is required ... pip install gudhi', which "
+        "was wrong whenever gudhi imported and a SUBMODULE did not.)"
+    )
 
 
 def _connected_components_from_simplex_tree(st, n_vertices: int) -> int:

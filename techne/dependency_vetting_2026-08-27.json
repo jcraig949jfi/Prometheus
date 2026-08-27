@@ -849,6 +849,93 @@
           "highspy-1.15.1.dist-info"
         ]
       }
+    },
+    {
+      "import_name": "ot",
+      "pypi_name": "POT",
+      "why_needed": "optimal transport; gudhi.wasserstein imports it, so the whole persistent_homology recipe surface is gated on it",
+      "red_nodes_it_should_clear": "prometheus_math/recipes/persistent_homology/tests (35 nodes, previously skipped)",
+      "version": "0.9.7.post1",
+      "summary": "Python Optimal Transport Library",
+      "provenance": {
+        "n_releases": 33,
+        "first_release": "2016-10-28T15:50:03.411237Z",
+        "home_page": "https://github.com/PythonOT/POT",
+        "project_urls": {
+          "Download": "https://github.com/PythonOT/POT/archive/0.9.7.post1.tar.gz",
+          "Homepage": "https://github.com/PythonOT/POT"
+        },
+        "author": "Remi Flamary, Nicolas Courty, C\u00e9dric Vincent-Cuaz, POT Contributors",
+        "license": "MIT",
+        "requires_python": ">=3.7",
+        "YOUNG_PROJECT": false
+      },
+      "artifact": {
+        "filename": "pot-0.9.7.post1-cp312-cp312-macosx_10_13_universal2.whl",
+        "packagetype": "bdist_wheel",
+        "size_bytes": 1532951,
+        "pypi_sha256": "b549328f8f0049afd414e3aa544f20faca25edc8b386b278f06ea08dbcd96bf0",
+        "downloaded_sha256": "b549328f8f0049afd414e3aa544f20faca25edc8b386b278f06ea08dbcd96bf0",
+        "DIGEST_MATCHES_PYPI": true
+      },
+      "runs_code_at_install": false,
+      "scan": {
+        "members": 83,
+        "python_like_files": 75,
+        "compiled_objects": 3,
+        "pattern_hits": {
+          "install_time_exec": [],
+          "network_call": [],
+          "process_spawn": [
+            {
+              "file": "ot/helpers/openmp_helpers.py",
+              "line": 63,
+              "text": "output = subprocess.check_output(\"./test_program\")"
+            }
+          ],
+          "dynamic_exec": [],
+          "opaque_blob": []
+        },
+        "pattern_counts": {
+          "install_time_exec": 0,
+          "network_call": 0,
+          "process_spawn": 1,
+          "dynamic_exec": 0,
+          "opaque_blob": 0
+        },
+        "very_long_lines": [
+          {
+            "file": "ot/utils.py",
+            "line": 1413,
+            "len": 473
+          },
+          {
+            "file": "ot/utils.py",
+            "line": 1591,
+            "len": 473
+          },
+          {
+            "file": "ot/batch/_linear.py",
+            "line": 271,
+            "len": 565
+          },
+          {
+            "file": "ot/batch/_linear.py",
+            "line": 458,
+            "len": 565
+          },
+          {
+            "file": "ot/batch/_utils.py",
+            "line": 334,
+            "len": 406
+          }
+        ],
+        "n_very_long_lines": 5,
+        "top_level_names": [
+          "ot",
+          "pot-0.9.7.post1.dist-info"
+        ]
+      }
     }
   ]
 }

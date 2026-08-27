@@ -57,6 +57,15 @@ PACKAGES = [
      "prometheus_math/tests/test_geometry_voronoi.py (6 nodes)"),
     ("highspy", "highspy", "MIP backend; solve_mip raises ValueError without one",
      "prometheus_math/tests/test_edge_cases.py + test_composition.py (4 nodes)"),
+    # THE NINTH, and it was INVISIBLE to the #242 enumeration. The list of eight was derived
+    # from FAILING node ids; the persistent-homology suite was SKIPPED (`importorskip("gudhi")`)
+    # so it contributed no failures to enumerate from. Installing gudhi made 156 tests newly
+    # collectable and 35 of them failed on `gudhi.wasserstein -> No module named 'ot'`.
+    # A missing-dependency census built from failures cannot see dependencies whose absence
+    # SKIPS the test rather than failing it. Same wrong-population shape, new surface.
+    ("ot", "POT", "optimal transport; gudhi.wasserstein imports it, so the whole "
+                  "persistent_homology recipe surface is gated on it",
+     "prometheus_math/recipes/persistent_homology/tests (35 nodes, previously skipped)"),
 ]
 
 #: Patterns that carry supply-chain payloads. Presence is a FLAG for reading, not a verdict --
