@@ -309,6 +309,39 @@ applies-to: claim classes this attack must be run against before the claim is be
 - **applies-to:** every permutation-null gate, every equivalence/absence claim, and any check
   whose pass condition is written as a single inequality against a null percentile.
 
+### ATK-019 documented hazard, unguarded code
+- **class:** ops-zombie (presents as measurement-confound when it fires)
+- **signature:** a docstring or comment states a limit, a hazard, or a vacuity condition
+  **correctly and specifically** — and no code enforces it. The author understood the failure
+  precisely enough to write it down, and the understanding stayed in prose. The tell is that the
+  bug report, when it finally arrives, can be answered by quoting the module's own comment.
+  Distinct from ordinary missing validation: here the knowledge is already present and
+  *localised*, so the defect is purely the gap between knowing and enforcing.
+- **probe:** DESCRIBED — for any module, extract quantitative or conditional claims from
+  docstrings and comments ("more than N", "must not", "causes X with 12+", "is now vacuous",
+  "only when") and assert that a guard, test, or refusal references the same quantity. Cheap
+  approximation available today: grep comments for a numeral-plus-hazard and check whether that
+  numeral appears anywhere in executable code in the same file.
+- **kills:** three in three days, all found by Techne, two in other seats' code and one in its
+  own — which is why this is a class and not an incident.
+  · 2026-08-25 — `techne/lib/claim_record.py`: the `Adjudicator` ordering's docstring rates
+  `DIFFERENTIAL_TEST` weak *"if implementations share an assumption"*, and nothing anywhere
+  checks whether they do. Logged as finding #21.
+  · 2026-08-25 — `ergon/probe/packet_invariants.py::check_invariant_7`: its docstring states
+  *"the adversarial gate is now VACUOUS on these packets ... a vacuous reading reported as a
+  passing one is its own defect class"*. Nothing enforced it; the gate went on emitting 12 PASS
+  verdicts against a permutation null with **zero variance**. See ATK-017.
+  · 2026-08-27 — `prometheus_math/lehmer_brute_force.py`: the worker-pool comment states that
+  each process allocates ~1 GB of PARI stack and that this "caus[es] memory exhaustion with 12+
+  workers", while the default resolved to `cpu_count - 1` = **15** on the machine it runs on.
+  The HITL #311 re-run died on `Unable to allocate 7.48 MiB`. Fixed by
+  `_cap_workers_by_memory`, which reads available memory and reduces the width rather than
+  failing.
+- **applies-to:** every module carrying a numeric limit, a resource cost, a vacuity condition or
+  a "must not" in prose. **Standing rule earned by the third kill: a hazard worth writing down
+  is a hazard worth a guard, in the same commit. If it cannot be guarded, the comment must say
+  why not — an unenforceable hazard is a finding, not a footnote.**
+
 ---
 
 ## Claim × attack coverage matrix

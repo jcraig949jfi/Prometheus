@@ -1028,6 +1028,76 @@ def verdict_from_band(verified_band_entries: list[dict]) -> str:
 # Top-level driver
 # ---------------------------------------------------------------------------
 
+#: Measured startup cost of one worker process: cypari/PARI allocates a 1 GB stack and grows it
+#: to 1.5 GB under load (both figures appear verbatim in this module's own run logs). The cap
+#: uses the larger figure, because the failure mode of underestimating is an OOM mid-run that
+#: discards hours of enumeration.
+_PARI_BYTES_PER_WORKER = 1_600_000_000
+#: Leave this much for the parent process, the OS, and anything else on the machine.
+_MEMORY_HEADROOM_BYTES = 4_000_000_000
+
+
+def _available_memory_bytes() -> Optional[int]:
+    """Physical memory currently available, or None if it cannot be determined.
+
+    Returns None rather than guessing: a wrong number here silently re-creates the bug it is
+    meant to prevent, and an unknown budget must fall through to the caller's choice rather
+    than to a fabricated one.
+    """
+    try:                                            # psutil if present, portable and exact
+        import psutil
+        return int(psutil.virtual_memory().available)
+    except Exception:                               # noqa: BLE001
+        pass
+    if os.name == "nt":
+        try:
+            import ctypes
+
+            class _MemStatus(ctypes.Structure):
+                _fields_ = [("dwLength", ctypes.c_ulong), ("dwMemoryLoad", ctypes.c_ulong),
+                            ("ullTotalPhys", ctypes.c_ulonglong),
+                            ("ullAvailPhys", ctypes.c_ulonglong),
+                            ("ullTotalPageFile", ctypes.c_ulonglong),
+                            ("ullAvailPageFile", ctypes.c_ulonglong),
+                            ("ullTotalVirtual", ctypes.c_ulonglong),
+                            ("ullAvailVirtual", ctypes.c_ulonglong),
+                            ("ullAvailExtendedVirtual", ctypes.c_ulonglong)]
+
+            st = _MemStatus()
+            st.dwLength = ctypes.sizeof(_MemStatus)
+            if ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(st)):
+                return int(st.ullAvailPhys)
+        except Exception:                           # noqa: BLE001
+            return None
+        return None
+    try:                                            # POSIX
+        return int(os.sysconf("SC_AVPHYS_PAGES") * os.sysconf("SC_PAGE_SIZE"))
+    except (ValueError, AttributeError, OSError):
+        return None
+
+
+def _cap_workers_by_memory(num_workers: int, progress: bool = True) -> int:
+    """Reduce the worker count to what physical memory can actually hold.
+
+    Each worker costs ~1.5 GB of PARI stack, so the ceiling is a MEMORY ceiling and not a core
+    ceiling. Capping is deliberately silent-but-reported: the run continues at a workable width
+    rather than failing, and it prints the reduction so a slow run is never mistaken for a
+    normal one.
+    """
+    avail = _available_memory_bytes()
+    if avail is None:
+        return num_workers                          # unknown budget: do not fabricate one
+    affordable = max(1, int((avail - _MEMORY_HEADROOM_BYTES) // _PARI_BYTES_PER_WORKER))
+    if affordable >= num_workers:
+        return num_workers
+    if progress:
+        print(f"[lehmer_brute_force] MEMORY CAP: {num_workers} workers would need "
+              f"~{num_workers * _PARI_BYTES_PER_WORKER / 2**30:.1f} GiB of PARI stack but only "
+              f"{avail / 2**30:.1f} GiB is available; running {affordable} instead. "
+              f"This is a cap, not a failure -- the run is wider-capable on a freer machine.")
+    return affordable
+
+
 def run_brute_force(
     coef_range: tuple[int, int] = DEFAULT_COEF_RANGE,
     band_upper: float = DEFAULT_BAND_UPPER,
@@ -1073,6 +1143,17 @@ def run_brute_force(
     if num_workers is None:
         num_workers = max(1, (os.cpu_count() or 1) - 1)
     num_workers = min(int(num_workers), n_shards)
+    # TECHNE 2026-08-27, HITL #311. THE HAZARD WAS DOCUMENTED AND UNGUARDED. The comment on the
+    # worker-pool branch below has said, since it was written, that each process allocates ~1 GB
+    # of PARI stack at startup and that this "caus[es] memory exhaustion with 12+ workers" -- and
+    # the default resolved to `cpu_count - 1`, which is 15 on this machine. It is 12+ by default
+    # on any 13-core-or-larger box.
+    #
+    # MEASURED, not inferred: the #311 re-run died with
+    # `numpy._core._exceptions._ArrayMemoryError: Unable to allocate 7.48 MiB` -- a trivial
+    # allocation failing because 15 workers had already claimed the machine. A brute force that
+    # cannot complete its default configuration is not a slow tool, it is a broken one.
+    num_workers = _cap_workers_by_memory(num_workers, progress=progress)
 
     if progress:
         print(f"[lehmer_brute_force] subspace size: {n_total:,} polys")
