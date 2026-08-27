@@ -1,0 +1,131 @@
+{
+ "id": "c0002",
+ "derivation": {
+  "word": [
+   "r01",
+   "r02",
+   "r01"
+  ],
+  "guard_atoms": [
+   [
+    [
+     "r02"
+    ],
+    0,
+    "<",
+    161
+   ],
+   [
+    [],
+    0,
+    "<",
+    161
+   ]
+  ],
+  "learned_from": "c0001 runtime-failure evidence"
+ },
+ "dependencies": [
+  "c0001"
+ ],
+ "creation_event": {
+  "phase": "revision",
+  "date": "2026-08-26",
+  "seeds": [
+   11,
+   22,
+   33,
+   44,
+   55
+  ]
+ },
+ "admission_test": {
+  "gate": "guard predicts c0001 runtime failure on 400 fresh wC states per seed with accuracy >= 0.95",
+  "guard_oos_accuracy_by_seed": [
+   1.0,
+   0.9975,
+   1.0,
+   1.0,
+   1.0
+  ],
+  "failures_blind_vs_guarded": [
+   2207501,
+   0
+  ]
+ },
+ "effect_size": {
+  "exec_ratio_vs_blind": {
+   "n": 125,
+   "median": 1.0348,
+   "ci95": [
+    1.0222,
+    1.0411
+   ],
+   "per_seed_median": {
+    "11": 1.0332,
+    "22": 1.0349,
+    "33": 1.0439,
+    "44": 1.035,
+    "55": 1.0148
+   }
+  },
+  "friendly_nodes_vs_P0": {
+   "n": 125,
+   "median": 0.1617,
+   "ci95": [
+    0.1525,
+    0.1693
+   ],
+   "per_seed_median": {
+    "11": 0.1668,
+    "22": 0.1597,
+    "33": 0.1536,
+    "44": 0.1878,
+    "55": 0.1419
+   }
+  }
+ },
+ "ablation_result": {
+  "note": "removing the guard reproduces c0001 (blind arm measured alongside)"
+ },
+ "transfer_results": {},
+ "observed_failure_region": {
+  "hostile_residual_nodes_vs_P0": {
+   "n": 125,
+   "median": 2.9097,
+   "ci95": [
+    2.7764,
+    3.0376
+   ],
+   "per_seed_median": {
+    "11": 2.6227,
+    "22": 2.7411,
+    "33": 3.0038,
+    "44": 2.9802,
+    "55": 3.0008
+   }
+  },
+  "note": "guard removes runtime failures, not task-level hostile node harm"
+ },
+ "revisions": [],
+ "status": "admitted",
+ "events": [
+  {
+   "phase": "revision",
+   "date": "2026-08-26",
+   "seeds": [
+    11,
+    22,
+    33,
+    44,
+    55
+   ],
+   "kind": "created"
+  },
+  {
+   "kind": "status_change",
+   "frm": "candidate",
+   "to": "admitted",
+   "reason": "revision gates passed"
+  }
+ ]
+}

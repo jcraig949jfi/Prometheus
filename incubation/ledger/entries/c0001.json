@@ -1,0 +1,297 @@
+{
+ "id": "c0001",
+ "derivation": {
+  "word": [
+   "r01",
+   "r02",
+   "r01"
+  ],
+  "mined_from": "wA training episodes (solver's own solutions)",
+  "mining": {
+   "n_episodes": 30,
+   "min_support": 7,
+   "n_groups": 24,
+   "top10": [
+    {
+     "word": [
+      "r01",
+      "r02",
+      "r01"
+     ],
+     "support": 30,
+     "score": 60,
+     "n_members": 1
+    },
+    {
+     "word": [
+      "r01",
+      "r02",
+      "r01",
+      "r02"
+     ],
+     "support": 15,
+     "score": 45,
+     "n_members": 1
+    },
+    {
+     "word": [
+      "r02",
+      "r01",
+      "r02"
+     ],
+     "support": 20,
+     "score": 40,
+     "n_members": 1
+    },
+    {
+     "word": [
+      "r02",
+      "r01",
+      "r02",
+      "r01"
+     ],
+     "support": 13,
+     "score": 39,
+     "n_members": 1
+    },
+    {
+     "word": [
+      "r01",
+      "r02",
+      "r01",
+      "r03"
+     ],
+     "support": 12,
+     "score": 36,
+     "n_members": 1
+    },
+    {
+     "word": [
+      "r03",
+      "r01",
+      "r02",
+      "r01"
+     ],
+     "support": 12,
+     "score": 36,
+     "n_members": 1
+    },
+    {
+     "word": [
+      "r01",
+      "r02"
+     ],
+     "support": 30,
+     "score": 30,
+     "n_members": 1
+    },
+    {
+     "word": [
+      "r02",
+      "r01"
+     ],
+     "support": 30,
+     "score": 30,
+     "n_members": 1
+    },
+    {
+     "word": [
+      "r02",
+      "r01",
+      "r03"
+     ],
+     "support": 13,
+     "score": 26,
+     "n_members": 1
+    },
+    {
+     "word": [
+      "r03",
+      "r01",
+      "r02"
+     ],
+     "support": 12,
+     "score": 24,
+     "n_members": 1
+    }
+   ]
+  }
+ },
+ "dependencies": [
+  "r01",
+  "r02"
+ ],
+ "creation_event": {
+  "phase": "discovery",
+  "date": "2026-08-26",
+  "seeds": [
+   11,
+   22,
+   33,
+   44,
+   55
+  ]
+ },
+ "admission_test": {
+  "gate": "wA held-out pooled: median(P3/P0 nodes) <= 0.5, CI95 upper < 1.0",
+  "result": {
+   "n": 150,
+   "median": 0.1689,
+   "ci95": [
+    0.1643,
+    0.1705
+   ],
+   "per_seed_median": {
+    "11": 0.1742,
+    "22": 0.1678,
+    "33": 0.1705,
+    "44": 0.1628,
+    "55": 0.164
+   }
+  },
+  "vs_random": {
+   "n": 150,
+   "median": 0.0409,
+   "ci95": [
+    0.0405,
+    0.0411
+   ],
+   "per_seed_median": {
+    "11": 0.041,
+    "22": 0.0403,
+    "33": 0.041,
+    "44": 0.0415,
+    "55": 0.0405
+   }
+  },
+  "passed": true
+ },
+ "effect_size": {
+  "wA_nodes_ratio": {
+   "n": 150,
+   "median": 0.1689,
+   "ci95": [
+    0.1643,
+    0.1705
+   ],
+   "per_seed_median": {
+    "11": 0.1742,
+    "22": 0.1678,
+    "33": 0.1705,
+    "44": 0.1628,
+    "55": 0.164
+   }
+  },
+  "invoke_exec_cost": 3
+ },
+ "ablation_result": {
+  "wA": true,
+  "wB": true
+ },
+ "transfer_results": {
+  "wB_nodes_ratio_vs_P0": {
+   "n": 150,
+   "median": 0.1704,
+   "ci95": [
+    0.1677,
+    0.1727
+   ],
+   "per_seed_median": {
+    "11": 0.1707,
+    "22": 0.1728,
+    "33": 0.1711,
+    "44": 0.1652,
+    "55": 0.1713
+   }
+  },
+  "wB_vs_flat": {
+   "n": 150,
+   "median": 0.1704,
+   "ci95": [
+    0.1677,
+    0.1727
+   ],
+   "per_seed_median": {
+    "11": 0.1707,
+    "22": 0.1728,
+    "33": 0.1711,
+    "44": 0.1652,
+    "55": 0.1713
+   }
+  },
+  "frozen": true
+ },
+ "observed_failure_region": {
+  "world": "constrained dynamics (band trap)",
+  "runtime_failure_rate_blind": 0.3013,
+  "hostile_node_harm_vs_P0": {
+   "n": 125,
+   "median": 2.8531,
+   "ci95": [
+    2.7175,
+    3.0052
+   ],
+   "per_seed_median": {
+    "11": 2.8531,
+    "22": 3.0301,
+    "33": 2.8663,
+    "44": 2.6144,
+    "55": 2.7751
+   }
+  },
+  "note": "hostile harm is task-level (minimal solutions avoid the composition); not state-predictable; bounded, not repaired"
+ },
+ "revisions": [
+  {
+   "successor": "c0002",
+   "trigger": "runtime failures in constrained world",
+   "kind": "applicability predicate learned from executable failure evidence"
+  }
+ ],
+ "status": "bounded",
+ "events": [
+  {
+   "phase": "discovery",
+   "date": "2026-08-26",
+   "seeds": [
+    11,
+    22,
+    33,
+    44,
+    55
+   ],
+   "kind": "created"
+  },
+  {
+   "kind": "status_change",
+   "frm": "candidate",
+   "to": "admitted",
+   "reason": "admission gates passed"
+  },
+  {
+   "kind": "negative_transfer_observed",
+   "detection": {
+    "wA_runtime_failures": 0,
+    "wB_runtime_failures": 0,
+    "wC_blind_attempts": 6978052,
+    "wC_blind_failures": 2102725,
+    "wC_blind_failure_rate": 0.3013,
+    "wC_val_blind_failures": 2207501,
+    "wC_val_guarded_failures": 0,
+    "guard_oos_accuracy_by_seed": [
+     1.0,
+     0.9975,
+     1.0,
+     1.0,
+     1.0
+    ]
+   }
+  },
+  {
+   "kind": "status_change",
+   "frm": "admitted",
+   "to": "bounded",
+   "reason": "negative transfer measured; applicability bounded by c0002's guard; hostile region recorded"
+  }
+ ]
+}

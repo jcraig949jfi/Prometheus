@@ -1,4 +1,4 @@
-"""incubation_v1.py — the preregistered incubation experiment.
+"""incubation_v1.py â€” the preregistered incubation experiment.
 
 Phases (all deterministic; 5 master seeds; the unit of analysis is the TASK):
 
@@ -28,7 +28,7 @@ Arms:
   P3G  c0002: c0001 bounded by the learned applicability guard
 
 The omniscient sections (witness words, M_WORD comparisons, world sampling for guard
-holdout) are marked OMNISCIENT and are diagnostics only — nothing from them reaches
+holdout) are marked OMNISCIENT and are diagnostics only â€” nothing from them reaches
 solver-side code. tests/ enforce the import boundary.
 """
 from __future__ import annotations
@@ -100,7 +100,7 @@ PREREG = {
 }
 
 
-# ── helpers ─────────────────────────────────────────────────────────────────────────
+# â”€â”€ helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 def seed_for(master, stream):
     return master * 1000 + STREAM[stream]
@@ -130,9 +130,21 @@ class StepShim:
         return tuple(s)
 
 
-def gen_tasks(world, seed, n, embed):
+def gen_tasks(world, seed, n, embed, used=None):
+    """used: omniscient-side set of witness words already consumed this master seed.
+    Witnesses are sampled WITHOUT REPLACEMENT across all cells so no two tasks anywhere
+    in a replicate share a witness word — tree-search cost is near-deterministic in the
+    witness word, so shared words would make cells non-independent measurements."""
     rng = random.Random(seed)
-    return [world.gen_task(rng, embed_m=embed) for _ in range(n)]
+    out = []
+    while len(out) < n:
+        task, omni = world.gen_task(rng, embed_m=embed)
+        if used is not None:
+            if omni["witness"] in used:
+                continue
+            used.add(omni["witness"])
+        out.append((task, omni))
+    return out
 
 
 def run_arm(world, task, arm, word=None, guard=None, cid=None, collect=None):
@@ -223,16 +235,17 @@ def pick_random_macro(ms, episodes, cand_word):
             return w
 
 
-# ── per-seed pipeline ───────────────────────────────────────────────────────────────
+# â”€â”€ per-seed pipeline â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 def run_seed(ms, rows, diag):
     worlds = make_worlds()
     wa, wb, wc = worlds["wA"], worlds["wB"], worlds["wC"]
     sd = {"seed": ms}
+    used = set()          # witness words consumed this replicate (omniscient side)
 
-    # Phase 1 — discovery
+    # Phase 1 â€” discovery
     t0 = time.time()
-    train = gen_tasks(wa, seed_for(ms, "A_train"), N_TRAIN, embed=True)
+    train = gen_tasks(wa, seed_for(ms, "A_train"), N_TRAIN, embed=True, used=used)
     episodes = []
     for task, _omni in train:
         rec = run_arm(wa, task, "P0")
@@ -250,8 +263,8 @@ def run_seed(ms, rows, diag):
                                        tuple(PRIM_IDS[i] for i in M_WORD))
     print(f"  [seed {ms}] mined {cand_word} ({time.time()-t0:.0f}s)", flush=True)
 
-    # Phase 2 — admission on wA held-out
-    held = gen_tasks(wa, seed_for(ms, "A_held"), N_HELD, embed=True)
+    # Phase 2 â€” admission on wA held-out
+    held = gen_tasks(wa, seed_for(ms, "A_held"), N_HELD, embed=True, used=used)
     rand_word = pick_random_macro(ms, episodes, cand_word)
     sd["random_macro"] = list(rand_word)
     for task, _omni in held:
@@ -270,10 +283,10 @@ def run_seed(ms, rows, diag):
     sd["ablation_identity_wA"] = all(abl)
     print(f"  [seed {ms}] admission done ({time.time()-t0:.0f}s)", flush=True)
 
-    # Phase 3 — transfer to wB, concept FROZEN
+    # Phase 3 â€” transfer to wB, concept FROZEN
     concept = Concept("c0001", cand_word)
     sd["c0001_hash_at_admission"] = concept.content_hash()
-    beval = gen_tasks(wb, seed_for(ms, "B_eval"), N_HELD, embed=True)
+    beval = gen_tasks(wb, seed_for(ms, "B_eval"), N_HELD, embed=True, used=used)
     for i, (task, _omni) in enumerate(beval):
         arms = [("P0", None, None), ("P1", None, None), ("P2a", cand_word, None),
                 ("P2b", cand_word, None), ("P3", cand_word, "c0001")]
@@ -296,9 +309,9 @@ def run_seed(ms, rows, diag):
     sd["witness_overlap_wA_wB"] = len(wit_a & wit_b)
     print(f"  [seed {ms}] transfer done ({time.time()-t0:.0f}s)", flush=True)
 
-    # Phase 4 — wC blind exposure with evidence collection
-    cbf = gen_tasks(wc, seed_for(ms, "C_blind_f"), N_C, embed=True)
-    cbh = gen_tasks(wc, seed_for(ms, "C_blind_h"), N_C, embed=False)
+    # Phase 4 â€” wC blind exposure with evidence collection
+    cbf = gen_tasks(wc, seed_for(ms, "C_blind_f"), N_C, embed=True, used=used)
+    cbh = gen_tasks(wc, seed_for(ms, "C_blind_h"), N_C, embed=False, used=used)
     collect = {"c0001": Evidence()}
     for stratum, tasks in (("friendly", cbf), ("hostile", cbh)):
         for task, _omni in tasks:
@@ -322,7 +335,7 @@ def run_seed(ms, rows, diag):
     print(f"  [seed {ms}] wC blind done, evidence ok/fail = "
           f"{len(ev.ok)}/{len(ev.fail)} ({time.time()-t0:.0f}s)", flush=True)
 
-    # Phase 4b — guard learning (solver-side evidence, executable features only)
+    # Phase 4b â€” guard learning (solver-side evidence, executable features only)
     shim = StepShim(wc)
     guard, ginfo = learn_guard(cand_word, ev.ok, ev.fail, shim.apply, PRIM_IDS)
     sd["guard_info"] = ginfo
@@ -344,9 +357,9 @@ def run_seed(ms, rows, diag):
         correct += (pred_fail == truth_fail)
     sd["guard_oos_accuracy"] = round(correct / n_holdout, 4)
 
-    # Phase 5 — validation on fresh wC tasks: P0 vs blind P3 vs guarded P3G (c0002)
-    cvf = gen_tasks(wc, seed_for(ms, "C_val_f"), N_C, embed=True)
-    cvh = gen_tasks(wc, seed_for(ms, "C_val_h"), N_C, embed=False)
+    # Phase 5 â€” validation on fresh wC tasks: P0 vs blind P3 vs guarded P3G (c0002)
+    cvf = gen_tasks(wc, seed_for(ms, "C_val_f"), N_C, embed=True, used=used)
+    cvh = gen_tasks(wc, seed_for(ms, "C_val_h"), N_C, embed=False, used=used)
     for stratum, tasks in (("friendly", cvf), ("hostile", cvh)):
         for task, _omni in tasks:
             for arm, w, cid, g in (("P0", None, None, None),
@@ -360,7 +373,7 @@ def run_seed(ms, rows, diag):
     return cand_word, guard, ginfo
 
 
-# ── pooled analysis ─────────────────────────────────────────────────────────────────
+# â”€â”€ pooled analysis â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 def cell_rows(rows, cell, arm):
     return [r for r in rows if r["cell"] == cell and r["arm"] == arm]
