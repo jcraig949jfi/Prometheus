@@ -1,0 +1,484 @@
+<title>The Homoiconic Attack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --card: #FDFCF9;
+    --ink: #232A2E;
+    --muted: #5D6A6E;
+    --accent: #35707A;
+    --accent-ink: #2A5A62;
+    --line: #DBD9D0;
+    --line-strong: #B8B6AC;
+    --kill: #A83A2C;
+    --kill-bg: #F7ECE9;
+    --pass: #2E7A4E;
+    --pass-bg: #EBF2EC;
+    --code-bg: #EEEDE7;
+    --display: "Zilla Slab", "Rockwell", serif;
+    --body: "Source Serif 4", Georgia, serif;
+    --mono: "IBM Plex Mono", "Consolas", monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #141A1C;
+      --card: #1A2224;
+      --ink: #DEE3DF;
+      --muted: #94A2A2;
+      --accent: #6FB2BC;
+      --accent-ink: #8CC4CC;
+      --line: #2A3538;
+      --line-strong: #40504F;
+      --kill: #E07B66;
+      --kill-bg: #33211D;
+      --pass: #6FBF8D;
+      --pass-bg: #1C2E23;
+      --code-bg: #1E282A;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #141A1C;
+    --card: #1A2224;
+    --ink: #DEE3DF;
+    --muted: #94A2A2;
+    --accent: #6FB2BC;
+    --accent-ink: #8CC4CC;
+    --line: #2A3538;
+    --line-strong: #40504F;
+    --kill: #E07B66;
+    --kill-bg: #33211D;
+    --pass: #6FBF8D;
+    --pass-bg: #1C2E23;
+    --code-bg: #1E282A;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 1.05rem;
+    line-height: 1.62;
+    margin: 0;
+    padding: 0;
+  }
+  .page {
+    max-width: 46rem;
+    margin: 0 auto;
+    padding: 3rem 1.25rem 6rem;
+  }
+  h1, h2, h3 { font-family: var(--display); line-height: 1.15; text-wrap: balance; }
+  h1 { font-size: 2.6rem; font-weight: 700; margin: 0.4rem 0 0.6rem; letter-spacing: -0.01em; }
+  h2 { font-size: 1.55rem; font-weight: 600; margin: 3rem 0 0.8rem; padding-top: 1.4rem; border-top: 1px solid var(--line-strong); }
+  h3 { font-size: 1.12rem; font-weight: 600; margin: 1.8rem 0 0.5rem; }
+  p { margin: 0.75rem 0; }
+  a { color: var(--accent-ink); }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    font-weight: 500;
+  }
+  .secnum {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-weight: 400;
+    margin-right: 0.55em;
+  }
+  .subtitle { color: var(--muted); font-size: 1.05rem; margin: 0.2rem 0 1.2rem; }
+  .meta {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--muted);
+    display: flex; flex-wrap: wrap; gap: 0.4rem 1.6rem;
+    padding: 0.8rem 0 1.6rem;
+    border-bottom: 2px solid var(--ink);
+  }
+  code, .tok {
+    font-family: var(--mono);
+    font-size: 0.86em;
+    background: var(--code-bg);
+    padding: 0.08em 0.34em;
+    border-radius: 2px;
+  }
+  pre {
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    line-height: 1.55;
+    background: var(--code-bg);
+    border: 1px solid var(--line);
+    padding: 0.9rem 1.1rem;
+    overflow-x: auto;
+    margin: 1rem 0;
+  }
+  pre code { background: none; padding: 0; }
+
+  .verdict-box {
+    border: 1.5px solid var(--pass);
+    background: var(--pass-bg);
+    padding: 1.1rem 1.3rem;
+    margin: 1.8rem 0 0.6rem;
+  }
+  .verdict-box .stamp { margin-bottom: 0.5rem; }
+  .stamp {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    padding: 0.2rem 0.55rem;
+    border: 1.5px solid currentColor;
+  }
+  .stamp.pass { color: var(--pass); }
+  .stamp.kill { color: var(--kill); }
+  .stamp.neutral { color: var(--muted); }
+
+  .statrow {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+    gap: 1px;
+    background: var(--line-strong);
+    border: 1px solid var(--line-strong);
+    margin: 1.4rem 0 0.4rem;
+  }
+  .stat { background: var(--card); padding: 0.75rem 0.9rem; }
+  .stat .n {
+    font-family: var(--mono);
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--accent-ink);
+    font-variant-numeric: tabular-nums;
+    display: block;
+  }
+  .stat .l { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+
+  .scroll { overflow-x: auto; margin: 1rem 0; }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 0.88rem;
+    background: var(--card);
+    border: 1px solid var(--line-strong);
+  }
+  th {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    text-align: left;
+    color: var(--muted);
+    font-weight: 500;
+    padding: 0.5rem 0.7rem;
+    border-bottom: 1.5px solid var(--line-strong);
+    white-space: nowrap;
+  }
+  td {
+    padding: 0.45rem 0.7rem;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  td.num, th.num { text-align: right; font-family: var(--mono); font-size: 0.82rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  td.mono { font-family: var(--mono); font-size: 0.8rem; }
+  td.pass-cell { color: var(--pass); font-family: var(--mono); font-size: 0.78rem; font-weight: 600; }
+  td.kill-cell { color: var(--kill); font-family: var(--mono); font-size: 0.78rem; font-weight: 600; }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line-strong);
+    padding: 1.1rem 1.3rem;
+    margin: 1.2rem 0;
+  }
+  .card.rejected { border-left: 4px solid var(--kill); }
+  .card.passed { border-left: 4px solid var(--pass); }
+  .card h3 { margin-top: 0; display: flex; align-items: baseline; gap: 0.8rem; flex-wrap: wrap; }
+  .card .kills { font-family: var(--mono); font-size: 0.78rem; color: var(--kill); }
+
+  .notice {
+    border: 1px solid var(--line-strong);
+    border-left: 4px solid var(--accent);
+    background: var(--card);
+    padding: 0.9rem 1.2rem;
+    margin: 1.2rem 0;
+    font-size: 0.97rem;
+  }
+  .notice.warn { border-left-color: var(--kill); }
+  .notice .eyebrow { display: block; margin-bottom: 0.3rem; }
+
+  ul, ol { padding-left: 1.4rem; }
+  li { margin: 0.4rem 0; }
+  li::marker { color: var(--muted); }
+  .qlist li { margin: 0.9rem 0; }
+  .qlist strong { font-family: var(--display); font-weight: 600; }
+
+  .hashline { font-family: var(--mono); font-size: 0.72rem; word-break: break-all; color: var(--muted); }
+  .small { font-size: 0.9rem; color: var(--muted); }
+  .toc {
+    columns: 2; column-gap: 2.5rem;
+    font-size: 0.92rem; margin: 1.4rem 0 0;
+    padding: 0; list-style: none;
+  }
+  .toc li { margin: 0.25rem 0; break-inside: avoid; }
+  .toc a { text-decoration: none; }
+  .toc .secnum { margin-right: 0.4em; }
+  @media (max-width: 34rem) { .toc { columns: 1; } h1 { font-size: 2.1rem; } }
+</style>
+
+<div class="page">
+
+<header>
+  <span class="eyebrow">Prometheus &middot; incubation_d &middot; Agent D &middot; external + HITL review</span>
+  <h1>The Homoiconic Attack</h1>
+  <p class="subtitle">Census dossier for the first-action phase: a frozen machine-native substrate for testing whether executable experience can learn new ways of modifying executable structure &mdash; and the quantitative attempt to prove the meta-language secretly contains the answer.</p>
+  <div class="meta">
+    <span>DATE&ensp;2026-08-27</span>
+    <span>SEAT&ensp;Agent D</span>
+    <span>PROTOCOL&ensp;census v1.1</span>
+    <span>COMMITS&ensp;cb9acf6d &rarr; f97fecea</span>
+  </div>
+  <ol class="toc">
+    <li><a href="#s1"><span class="secnum">1</span>Mandate and question</a></li>
+    <li><a href="#s2"><span class="secnum">2</span>Experimental boundary</a></li>
+    <li><a href="#s3"><span class="secnum">3</span>The D-VM substrate</a></li>
+    <li><a href="#s4"><span class="secnum">4</span>Census protocol</a></li>
+    <li><a href="#s5"><span class="secnum">5</span>Grammar lineage</a></li>
+    <li><a href="#s6"><span class="secnum">6</span>The gv2 verdict in detail</a></li>
+    <li><a href="#s7"><span class="secnum">7</span>What is and is not established</a></li>
+    <li><a href="#s8"><span class="secnum">8</span>Attack surface</a></li>
+    <li><a href="#s9"><span class="secnum">9</span>Not built, and why</a></li>
+    <li><a href="#s10"><span class="secnum">10</span>Questions for reviewers</a></li>
+    <li><a href="#sA"><span class="secnum">A</span>Artifact registry</a></li>
+  </ol>
+</header>
+
+<div class="verdict-box">
+  <span class="stamp pass">GRAMMAR_PASSED_CENSUS</span>
+  <p style="margin:0.4rem 0 0">Grammar candidate <strong>gv2</strong> passed all seven preregistered kill gates after two predecessors were rejected and preserved. The four legacy mutation categories (append, pre-transform, control-wrap, branch-route) exist in the frozen language only as retrospective compositions &mdash; cheap, but no cheaper than the space around them. The grammar, VM, and census protocol are frozen and hashed. <strong>No worlds exist, no learner exists, and no meta-learning claim of any strength is being made.</strong> This dossier asks reviewers to attack the substrate before the evidence phase is designed.</p>
+</div>
+
+<div class="statrow">
+  <div class="stat"><span class="n">3</span><span class="l">grammar candidates</span></div>
+  <div class="stat"><span class="n">2</span><span class="l">rejected + preserved</span></div>
+  <div class="stat"><span class="n">7 / 7</span><span class="l">gates passed (gv2)</span></div>
+  <div class="stat"><span class="n">0.365</span><span class="l">legacy share (kill &gt; 0.60)</span></div>
+  <div class="stat"><span class="n">1,584</span><span class="l">distinct behaviors</span></div>
+  <div class="stat"><span class="n">12 / 12</span><span class="l">edit shapes in cheap window</span></div>
+</div>
+<p class="small">Every count in this dossier is an exact, deterministic result of full enumeration &mdash; there is no sampling error anywhere in the census, and every figure reproduces from the committed code in about one second.</p>
+
+<h2 id="s1"><span class="secnum">1</span>Mandate and question</h2>
+<p>Agent D&rsquo;s target is the endogenous evolution of machine-native self-modification. The question the eventual experiment must answer:</p>
+<p style="padding-left:1.2rem; border-left: 3px solid var(--accent); font-style: italic;">Can accumulated executable experience create reusable transformations of executable structure, such that the system learns not merely artifacts, algorithms, representations, or routing policies, but new ways of modifying its own cognitive machinery?</p>
+<p>The specification imposes hard constraints on how that question may be attacked:</p>
+<ul>
+  <li>No general reasoning system; no natural language in the learner&rsquo;s symbolic substrate; no LLM as judge.</li>
+  <li>No human-authored mutation categories in the learner&rsquo;s API. There is no <code>mutate_as_algorithm(...)</code> because no such category may exist. Tokens equivalent to <code>APPEND_MUTATION</code>, <code>CONTROL_WRAP</code>, <code>PRE_TRANSFORM</code>, or <code>BRANCH_ROUTE</code> are forbidden; if those families arise, they must arise as compositions humans recognize only retrospectively.</li>
+  <li>The central control is M0 vs M1: generic enumeration over the frozen meta-language versus history-conditioned generation, under identical budgets, worlds, and gates. If M0 finds useful transforms as cheaply as M1, no learned self-modification search may be claimed.</li>
+  <li>Selection, not semantic diagnosis: survivors persist because the environment filtered them, and the system is never credited with knowing <em>why</em> a mutation works.</li>
+</ul>
+<p>The mandated first action &mdash; the only phase executed so far &mdash; was to attack the proposed homoiconic substrate itself: produce a design manifest, build a census of the meta-language, and try to demonstrate that the language secretly contains the vending machine. Grammars were to be killed until that criticism no longer survives quantitatively, and only then frozen.</p>
+
+<h2 id="s2"><span class="secnum">2</span>Experimental boundary</h2>
+<p>No claim of freedom from designer priors is made, and reviewers should not evaluate the work against that impossible standard. Humans (here, the Agent D seat) chose: the virtual-machine physics, the primitive operations, the type system, resource budgets, admissible observations, the census probes, deterministic verification, and the selection rules. The narrower hypothesis under test is:</p>
+<p style="padding-left:1.2rem; border-left: 3px solid var(--accent);">Given fixed computational physics and selection, can the system construct useful self-transformations without being given a human ontology of what kinds of cognitive changes exist?</p>
+<p>The census phase reviewed here tests a precondition of that hypothesis: that the frozen meta-language is neither a re-labeled set of human mutation buttons (leakage) nor too impoverished to express anything beyond them (poverty).</p>
+
+<h2 id="s3"><span class="secnum">3</span>The D-VM substrate</h2>
+<p>The D-VM (<code>incubation_d/vm/machine.py</code>) is a deterministic, bounded, typed stack machine with a single value universe &mdash; <code>Int</code> and <code>Block</code> &mdash; and two opcode tiers sharing it. There are no clocks, no randomness, and no host-language introspection anywhere in learner-visible space. Python implements the VM; learned artifacts are Blocks only.</p>
+
+<h3>Homoiconicity</h3>
+<p>A program <em>is</em> a Block: an immutable tuple of instructions, where an instruction is an opcode name or a literal push <code>('P', value)</code> whose value may itself be a Block. Blocks live on the same stack as integers, so an executable artifact is directly inspectable, decomposable, and recombinable data. The <code>qlit</code> operation reifies any Block into a single instruction that pushes it &mdash; the reflection step that makes transforms-of-transforms reachable. There is no parse/unparse boundary and no path to host-language source generation.</p>
+
+<h3>Object tier (executes artifacts)</h3>
+<div class="scroll"><table>
+  <tr><th>Opcode</th><th>Effect</th><th>Documentation-side semantics</th></tr>
+  <tr><td class="mono">o0</td><td class="mono">I I &rarr; I</td><td>addition mod 97</td></tr>
+  <tr><td class="mono">o1</td><td class="mono">I I &rarr; I</td><td>multiplication mod 97</td></tr>
+  <tr><td class="mono">o2</td><td class="mono">a &rarr; a a</td><td>duplicate top of stack</td></tr>
+  <tr><td class="mono">o3</td><td class="mono">a b &rarr; b a</td><td>swap top two</td></tr>
+  <tr><td class="mono">o4</td><td class="mono">I &rarr;</td><td>skip next instruction if popped value is zero (first-order conditional; no nested control blocks, so control flow in artifacts is built by insertion of <code>o4</code> tokens, never by a wrap primitive)</td></tr>
+</table></div>
+
+<h3>Meta tier (edits Blocks as data)</h3>
+<p>Total and straight-line in the frozen grammar: no loops, no recursion, no meta-tier conditional &mdash; every transform terminates by construction and its execution cost equals its token count. Learner-visible names are arbitrary IDs; the semantics column is human documentation that never enters machine state.</p>
+<div class="scroll"><table>
+  <tr><th>Token</th><th>Type</th><th>Documentation-side semantics</th></tr>
+  <tr><td class="mono">d00 / d01 / d02</td><td class="mono">polymorphic</td><td>dup / swap / drop</td></tr>
+  <tr><td class="mono">d03</td><td class="mono">&rarr; B</td><td>push empty Block</td></tr>
+  <tr><td class="mono">d04</td><td class="mono">B B &rarr; B</td><td>concatenate (under + top)</td></tr>
+  <tr><td class="mono">d05</td><td class="mono">B &rarr; I</td><td>length</td></tr>
+  <tr><td class="mono">d06</td><td class="mono">B I &rarr; B B</td><td>split at clamped index</td></tr>
+  <tr><td class="mono">d07</td><td class="mono">B &rarr; B</td><td>qlit: one-instruction Block that pushes the argument</td></tr>
+  <tr><td class="mono">d08 / d09 / d10 / d11</td><td class="mono">int ops</td><td>zero / successor / add / floor-halve</td></tr>
+  <tr><td class="mono">d12</td><td class="mono">B &rarr; B B</td><td>uncons: head Block (length &le; 1) below tail</td></tr>
+  <tr><td class="mono">d13</td><td class="mono">a b &rarr; b a b</td><td>tuck</td></tr>
+  <tr><td class="mono">d14</td><td class="mono">a b &rarr; b</td><td>nip</td></tr>
+  <tr><td class="mono">d15</td><td class="mono">B B &rarr; B</td><td>icat: argument-swapped concatenation (top + under)</td></tr>
+  <tr><td class="mono">t0 &hellip; t4</td><td class="mono">&rarr; B</td><td>introducers: push the length-1 Block containing one object opcode; uniform cost per introduced token</td></tr>
+</table></div>
+<p>Deliberate absences, recorded as attack surface: no meta-tier conditional (a transform cannot branch on artifact content), and no introducers for <em>meta</em> tokens (a transform can emit meta-code only by harvesting it from its input or via <code>qlit</code>).</p>
+
+<h3>Failure geometry and bounds</h3>
+<p>Every execution failure is a typed numeric descriptor <code>(code, ip, depth)</code> &mdash; underflow, type breach, block cap, stack cap, step cap, bad op, int cap. No English diagnostic ever reaches learner-visible state. Frozen physical caps: stack depth 16, block length 64, integer magnitude 2<sup>20</sup>, object step budget 64, modulus 97.</p>
+
+<h2 id="s4"><span class="secnum">4</span>Census protocol</h2>
+<p>The census (<code>census/prereg_census.json</code>, committed <em>before</em> the first run in commit <code>cb9acf6d</code>) applies unchanged to every grammar candidate. It enumerates <strong>all</strong> typed <code>Block &rarr; Block</code> meta-programs to length L=5 in shortlex canonical order (the grammar&rsquo;s frozen token order defines rank), so every count is exact and every gate deterministic.</p>
+
+<h3>Dual fingerprints</h3>
+<p>Each valid program runs on 7 frozen probe artifacts (lengths 0&ndash;5, content-varied, with and without the conditional token). Two extensional fingerprints are taken:</p>
+<ul>
+  <li><strong>Structural</strong> &mdash; the exact output Block per probe. Defines &ldquo;behaviorally distinct.&rdquo;</li>
+  <li><strong>Object-semantic</strong> &mdash; each output artifact executed on 5 frozen probe stacks, error codes included. Structural distinctness upper-bounds semantic diversity; both are reported, and the semantic floor is the binding diversity gate.</li>
+</ul>
+<p>Offline &mdash; and only offline &mdash; each distinct behavior is audited into a collapsed <em>edit shape</em> (identity, constant, quote, append, prepend, wrap, insert, take, drop-prefix, delete, self-concatenation, permutation, mixed, other) plus behavior flags (introduces / removes / reorders tokens, introduces control, introduces literals). The four legacy families map to: append &rarr; <code>APPEND_MUTATION</code>, prepend &rarr; <code>PRE_TRANSFORM</code>, wrap &rarr; <code>CONTROL_WRAP</code>, and the introduces-control flag &rarr; <code>BRANCH_ROUTE</code>. These labels exist for grammar auditing and never become learner-visible (the interpretation firewall of spec &sect;25).</p>
+
+<h3>The kill gates</h3>
+<div class="scroll"><table>
+  <tr><th>Gate</th><th>Kill rule</th><th>Rationale</th></tr>
+  <tr><td class="mono">CK1</td><td>any single token realizes a legacy family</td><td>a one-token legacy family is a vending-machine button with a new label</td></tr>
+  <tr><td class="mono">CK2</td><td>legacy families &gt; 60% of the first 200 distinct non-trivial behaviors</td><td>payload variety makes legacy families numerous in any concatenative editor; the kill is for a cheap region that is <em>essentially only</em> the old buttons</td></tr>
+  <tr><td class="mono">CK3</td><td>&lt; 12 distinct shapes in that window, or non-legacy shapes &lt; 2&times; legacy shapes present</td><td>the cheap region must be a continuum of edit shapes in which the old buttons are unremarkable points</td></tr>
+  <tr><td class="mono">CK4</td><td>any legacy family&rsquo;s minimal program &le; median minimal shape length &minus; 2</td><td>grammar-relative test for &ldquo;trivial low-rank basins&rdquo;</td></tr>
+  <tr><td class="mono">CK5</td><td>any required shape unreachable at the horizon</td><td>a grammar that cannot express a family is not avoiding leakage, it is avoiding the hypothesis</td></tr>
+  <tr><td class="mono">CK6</td><td>distinct &lt; 3% of valid, or &lt; 500 structural, or &lt; 300 semantic distinct</td><td>below these floors the space is syntactic duplication and search has nothing to select among</td></tr>
+  <tr><td class="mono">CK7</td><td>mixed-shape density &lt; 1% of distinct non-identity behaviors</td><td>the experiment&rsquo;s target phenotypes are mixed; they must be reachable at more than trace density</td></tr>
+  <tr><td class="mono">CK8</td><td><em>deferred:</em> kill any <em>world</em> whose target falls to a &le;3-token single-family template</td><td>requires worlds; recorded now so it cannot be quietly dropped</td></tr>
+</table></div>
+
+<div class="notice warn">
+  <span class="eyebrow">Disclosed protocol repair &mdash; v1.0 &rarr; v1.1</span>
+  The first gv0 run exposed an instrument defect: the flag audit compared instruction multisets at top level only, so quote-nesting (input preserved <em>inside</em> a literal) was misread as removal-plus-introduction and classified &ldquo;mixed,&rdquo; inflating gv0&rsquo;s apparent mixed count from a true 5 to 273; alignment ambiguity also produced false &ldquo;reorders&rdquo; flags on prepends. Per the spec-&sect;32 discipline the defective run was rejected and preserved (<code>results/census_gv0.protocol_v1.0.DEFECTIVE.json</code>), the classifier repaired to recursive token streams with order-preserving embedding for reorder detection, the protocol refrozen as v1.1 with the repair recorded inside the prereg file, and all candidates rerun from scratch. <strong>Kill thresholds were not changed</strong> &mdash; then or at any later point.
+</div>
+
+<h2 id="s5"><span class="secnum">5</span>Grammar lineage</h2>
+<p>Three candidates were censused. The load-bearing pattern: <strong>the leakage gates (CK1, CK2, CK4) never fired on any candidate.</strong> Both rejections were for the opposite defect &mdash; poverty of the cheap region &mdash; and both fixes were generic structural combinators, never mutation categories.</p>
+
+<div class="card rejected">
+  <h3>gv0 <span class="stamp kill">REJECTED &middot; POVERTY</span> <span class="kills">CK3, CK5, CK7</span></h3>
+  <p>17 tokens: stack ops, block ops, int ops, introducers. 1,508,597 sequences enumerated; 7,404 valid programs; 681 distinct behaviors (541 semantic). Insert was <em>unreachable</em> at the horizon; the cheap window held only 7 of 12 shapes; true mixed density was 0.007 (5 of 680) against the 0.01 floor. Leakage side: legacy share 0.400, legacy minimal lengths (append 2, prepend 3, wrap 5, route 2) against a shape median of 3 &mdash; passed.</p>
+</div>
+
+<div class="card rejected">
+  <h3>gv1 <span class="stamp kill">REJECTED &middot; POVERTY</span> <span class="kills">CK3</span></h3>
+  <p>gv0 + <code>unc</code>/<code>tuck</code>/<code>nip</code>, decomposition-first canonical order. 3,368,420 sequences; 18,629 valid; 903 distinct (751 semantic). Mixed density recovered to 0.131 and every shape became reachable (CK5 and CK7 passed) &mdash; but <code>insert</code>, at minimal length 5 and lexicographically late, was the single shape missing from the first-200 window: 11 of 12. Legacy share 0.365; legacy minimal lengths at or above the median of 2 &mdash; leakage gates passed again.</p>
+</div>
+
+<div class="card passed">
+  <h3>gv2 <span class="stamp pass">PASSED &middot; FROZEN</span></h3>
+  <p>gv1 + <code>icat</code> (argument-swapped concatenation, the swoncat of the Joy family), with the canonical order restructured: structural edits first, fragment injection second, measurement and arithmetic third, construction-from-nothing and reflection (<code>qlit</code>) last. <code>icat</code> brings insert to length 4 and prepend to length 2 &mdash; note that cheapening a <em>legacy</em> family tightens CK2/CK4 against the grammar&rsquo;s own favor, which is the honest direction for a leakage test. 4,288,305 sequences; 28,891 valid; 1,584 distinct (1,296 semantic). All seven gates passed; details in &sect;6. Frozen and hashed into <code>meta_grammar.json</code>.</p>
+</div>
+
+<p>The emergent-composition property the spec demands now holds concretely. Each legacy button exists only as an ordinary composition among 1,583 others, for example:</p>
+<pre><code>t0 d04                append o0            (2 tokens)
+t0 d15                prepend o0           (2 tokens)
+t0 d13 d04 d04        wrap: o0 + P + o0    (4 tokens)
+d12 t0 d15 d04        insert o0 at pos 1   (4 tokens)
+t4 d04                append conditional   (2 tokens; route-like arises
+                                            by inserting o4, never by a
+                                            wrap-in-control primitive)
+d12 d15               rotate head to tail  (2 tokens, non-legacy)
+d12 d12 d14 d04       delete position 1    (4 tokens, non-legacy)
+d12 d14 t0 d15        drop head, prepend   (4 tokens, mixed)</code></pre>
+
+<h2 id="s6"><span class="secnum">6</span>The gv2 verdict in detail</h2>
+<h3>Gate-by-gate</h3>
+<div class="scroll"><table>
+  <tr><th>Gate</th><th>Observed</th><th>Kill line</th><th>Margin</th><th></th></tr>
+  <tr><td class="mono">CK1</td><td>0 single-token legacy realizations</td><td class="num">&ge; 1</td><td>only length-1 program is <code>qlit</code> (quote)</td><td class="pass-cell">PASS</td></tr>
+  <tr><td class="mono">CK2</td><td>legacy share 0.365 (append 25, prepend 21, route 26, wrap 12 of 200)</td><td class="num">&gt; 0.60</td><td>cheap region is ~2/3 non-legacy</td><td class="pass-cell">PASS</td></tr>
+  <tr><td class="mono">CK3</td><td>12 of 12 shapes in window; 8 non-legacy vs 4 legacy present</td><td class="num">&lt; 12 or &lt; 2&times;</td><td>exact-full coverage</td><td class="pass-cell">PASS</td></tr>
+  <tr><td class="mono">CK4</td><td>legacy minima append 2, prepend 2, wrap 4, route 2; shape median 2</td><td class="num">&le; median &minus; 2</td><td>nothing below the median at all</td><td class="pass-cell">PASS</td></tr>
+  <tr><td class="mono">CK5</td><td>every required shape reachable</td><td class="num">any missing</td><td>&mdash;</td><td class="pass-cell">PASS</td></tr>
+  <tr><td class="mono">CK6</td><td>1,584 structural / 1,296 semantic distinct; ratio 0.0548</td><td class="num">&lt;500 / &lt;300 / &lt;0.03</td><td>3.2&times; / 4.3&times; / 1.8&times; the floors</td><td class="pass-cell">PASS</td></tr>
+  <tr><td class="mono">CK7</td><td>mixed density 0.150 (238 of 1,583)</td><td class="num">&lt; 0.01</td><td>15&times; the floor</td><td class="pass-cell">PASS</td></tr>
+</table></div>
+
+<h3>Population and distribution</h3>
+<div class="scroll"><table>
+  <tr><th>Count</th><th class="num">gv0</th><th class="num">gv1</th><th class="num">gv2</th></tr>
+  <tr><td>Token inventory</td><td class="num">17</td><td class="num">20</td><td class="num">21</td></tr>
+  <tr><td>Total sequences (L &le; 5)</td><td class="num">1,508,597</td><td class="num">3,368,420</td><td class="num">4,288,305</td></tr>
+  <tr><td>Typed sequences (no type crash)</td><td class="num">288,113</td><td class="num">643,116</td><td class="num">744,215</td></tr>
+  <tr><td>Valid programs (B &rarr; B)</td><td class="num">7,404</td><td class="num">18,629</td><td class="num">28,891</td></tr>
+  <tr><td>Runtime failures on probes</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+  <tr><td>Distinct structural behaviors</td><td class="num">681</td><td class="num">903</td><td class="num">1,584</td></tr>
+  <tr><td>Distinct semantic behaviors</td><td class="num">541</td><td class="num">751</td><td class="num">1,296</td></tr>
+  <tr><td>Destructive (all outputs error)</td><td class="num">92</td><td class="num">104</td><td class="num">193</td></tr>
+  <tr><td>Semantic no-ops</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+  <tr><td>Mixed-shape behaviors</td><td class="num">5</td><td class="num">118</td><td class="num">238</td></tr>
+</table></div>
+<p>gv2 shape distribution over all 1,584 distinct behaviors: other 811, mixed 238, constant 140, append 139, prepend 139, wrap 91, insert 11, permutation 5, self-concatenation 3, take 2, drop-prefix 2, delete 1, quote 1, identity 1. New distinct behaviors by program length: 1, 22, 48, 292, 1,221 for lengths 1&ndash;5. The large &ldquo;other&rdquo; bucket is dominated by quote-nesting and length-relative edits (behaviors like take-half whose cut position tracks input length) that match no fixed-parameter template &mdash; a diversity reservoir, but an unaudited one; see &sect;8.</p>
+
+<h2 id="s7"><span class="secnum">7</span>What is and is not established</h2>
+<h3>Established</h3>
+<ul>
+  <li>A homoiconic, deterministic, bounded substrate exists in which artifacts and transforms share one typed value universe, transforms-of-transforms are type-reachable, and all failure is numeric. Six VM unit tests pass; the census executes 28,891 programs with zero runtime failures.</li>
+  <li>Under a fixed, preregistered, fully deterministic protocol, the frozen meta-language <strong>gv2</strong> is quantitatively neither a re-skinned vending machine (CK1/CK2/CK4) nor an impoverished one (CK3/CK5/CK6/CK7): the census horizon&rsquo;s cheap region contains all twelve audited edit shapes, mixed edits at 15% density, and legacy families at 36.5% share with minimal lengths at the shape median.</li>
+  <li>The rejection machinery works and was used: two grammars and one defective protocol run were killed and preserved, not discarded.</li>
+</ul>
+<h3>Not established &mdash; and not claimed</h3>
+<ul>
+  <li>Nothing about learning, self-modification, meta-plasticity, or history-conditioned advantage. No world has applied selection pressure; no transform has ever been admitted; M0 and M1 do not exist yet.</li>
+  <li>Nothing about the meta-language&rsquo;s adequacy under real selection. The census measures reachability and cost structure at L &le; 5, not usefulness.</li>
+  <li>Nothing beyond the probe sets: behavioral equivalence is probe-relative extensionality, not proven program equivalence.</li>
+</ul>
+<p>The strongest claim this dossier supports: <em>within this frozen substrate, the four human mutation categories are ordinary, unprivileged points in a much larger reachable space of structural edits.</em> That is a statement about the instrument, not about any learner.</p>
+
+<h2 id="s8"><span class="secnum">8</span>Attack surface</h2>
+<p>Weaknesses reviewers should press on, in rough order of how much I would weight them:</p>
+<ol class="qlist">
+  <li><strong>Weak-form preregistration.</strong> The prereg was authored and committed by the same agent that then ran the census, hours apart, in one session. Mitigations: gates are deterministic exact counts with no analyst degrees of freedom at evaluation time; thresholds were never edited after data (the one protocol change was an instrument repair, disclosed, with the defective run preserved); the full history is in two commits. But this is self-preregistration, and the evidence-phase prereg should be held to a stronger standard &mdash; ideally reviewed by a second party before the first evidence row.</li>
+  <li><strong>Designer adaptivity under fixed gates.</strong> The grammar was iterated <em>against</em> the census: unc/tuck/nip and icat were chosen after seeing where gv0 and gv1 failed, and the canonical token order (edits first, reflection last) was restructured knowing that order determines which behaviors land in the CK3 window. The defense: gates never moved; every addition was a generic combinator with standard concatenative-language pedigree; the order is a declared part of the frozen spec that M0 will use identically; and reordering also pulled <em>legacy</em> families earlier, tightening CK2 against the grammar. The residual worry is real: CK3 was passed partly by choosing what canonical search sees first. A concrete robustness check is proposed in &sect;10.</li>
+  <li><strong>Threshold choices are judgment calls.</strong> The 200-behavior window, the 60% share line, the 12-shape requirement, the 3%/500/300 floors, and the 1% mixed floor were set by argued rationale, not derived from anything. They were set before any run and survived unchanged &mdash; but different defensible numbers exist, and gv2&rsquo;s CK3 pass (12 of 12, where 11 was a kill) has no slack.</li>
+  <li><strong>The shape audit is heuristic.</strong> Collapsed shapes are fixed-parameter templates; 811 of 1,584 behaviors land in &ldquo;other&rdquo; and are not individually audited. A behavior in &ldquo;other&rdquo; could be legacy-like in a way the templates miss (e.g., a length-relative append). Since CK2/CK3 count &ldquo;other&rdquo; as non-legacy, template misses bias <em>toward</em> passing the leakage gates.</li>
+  <li><strong>Structural distinctness inflates diversity.</strong> Two structurally different outputs can be semantically equal; the 1,584 figure is an upper bound on what selection can distinguish. The semantic count (1,296, floor 300) partially covers this, but the shape audit itself runs on structural fingerprints.</li>
+  <li><strong>Horizon L = 5.</strong> The learner will search beyond length 5; the census says nothing about the landscape there. The horizon was fixed for tractability of <em>full</em> enumeration (no sampling) &mdash; a deliberate trade of depth for exactness.</li>
+  <li><strong>No meta-tier conditional.</strong> A gv2 transform cannot branch on the content of the artifact it edits (only on lengths, via arithmetic into <code>splt</code>). This caps the expressible transform space and may matter under world pressure. It is a recorded absence, to be revisited only if worlds demand it &mdash; never as a convenience.</li>
+  <li><strong>Small probe sets and a small object tier.</strong> Seven structural probes, five semantic stacks, five object opcodes. Route-likeness reduces to &ldquo;introduces <code>o4</code> where the input had none&rdquo; &mdash; coarse. Larger probe batteries are cheap to add at world time and should be.</li>
+</ol>
+
+<h2 id="s9"><span class="secnum">9</span>Not built, and why</h2>
+<p>Spec &sect;40 forbids building the full experiment before the substrate survives its own attack, and the seat stopped at that line. Deliberately absent: Worlds A&ndash;F (meta-pressure, frozen transfer, hostile transform, transform-of-transform, mutation-distribution, NULL), the candidate generator, the M0/M1 arms, quality-diversity maintenance, the append-only transform ledger, the anti-cheat battery, evidence seeds, and verdict code.</p>
+<p>The committed next-phase order, each step behind its own preregistration and freeze:</p>
+<ol>
+  <li><strong>World census (CK8).</strong> Every world candidate faces the same discipline the grammars did: kill any world whose target is solvable by a &le;3-token single-legacy-family template; preserve rejections in <code>rejected_worlds.jsonl</code>. World A&rsquo;s mixed pathology must demand deletion/restructuring, selective preservation, and insertion-with-reordering simultaneously.</li>
+  <li><strong>Full evidence prereg.</strong> Budgets, candidate counts, QD descriptors, admission gates, confirmation protocol (discovery and confirmation data strictly segregated; battery-wide hypothesis count recorded; Holm&ndash;Bonferroni where exact tests are impossible), evidence seeds, and verdict code &mdash; all frozen before the first evidence row.</li>
+  <li><strong>M0/M1 with the anti-cheat battery</strong>, including the static check that no candidate-independent information enters M1 but not M0, and that no work escapes the shared meter.</li>
+</ol>
+<p>The verdict hierarchy is conservative by construction (from <code>NO_META_PLASTICITY</code> up to <code>RECURSIVE_MUTATION_EVOLUTION</code>), the top verdict requires the World E history-advantage gate, and a null &mdash; M1 no cheaper than M0 &mdash; is a preserved outcome, not a failure. Stop condition: the experiment halts at its preregistered verdict; no open-ended evolution, no external language models, no unrestricted code generation, no scaling because something looked interesting.</p>
+
+<h2 id="s10"><span class="secnum">10</span>Questions for reviewers</h2>
+<ol class="qlist">
+  <li><strong>Canonical-order robustness.</strong> Does the edits-first token order constitute tuning the CK3 window? Proposed check before the world phase: rerun the census under N random token orders with gates unchanged, and report how many orders gv2 survives. Should a minimum survival fraction be added as a frozen gate, and at what N?</li>
+  <li><strong>Threshold audit.</strong> Are the CK2 (60%), CK3 (12 shapes / 2&times;), and CK6/CK7 floors defensible where they stand? If a reviewer would move any line, that argument is wanted <em>now</em>, while no evidence depends on them &mdash; moving them later is exactly what the discipline forbids.</li>
+  <li><strong>Post-hoc combinators.</strong> Is the gv0 &rarr; gv2 iteration (adding unc/tuck/nip/icat after observed failures, under fixed gates) acceptable grammar engineering, or does it demand an additional control &mdash; e.g., censusing a small family of independently plausible grammars and requiring the conclusion to hold across survivors?</li>
+  <li><strong>The &ldquo;other&rdquo; bucket.</strong> 811 behaviors escape the shape templates and count as non-legacy. Should a sampled manual audit, or additional templates (length-relative append/take), be required before the leakage verdict is trusted?</li>
+  <li><strong>Meta-tier conditional.</strong> Hold the line on content-blind transforms until world pressure demands otherwise, or admit a bounded <code>select</code> now so the M1 hypothesis space is not silently capped from the start? Either choice changes what &ldquo;history-conditioned generation&rdquo; can mean.</li>
+  <li><strong>M0&rsquo;s definition.</strong> Frozen shortlex enumeration, seed-fixed uniform sampling of the valid space, or both as separate arms? The choice sets the cost baseline every meta-learning claim divides by, and it should be fixed by argument before any M1 code exists.</li>
+</ol>
+
+<h2 id="sA"><span class="secnum">A</span>Artifact registry</h2>
+<div class="scroll"><table>
+  <tr><th>Artifact</th><th>Role</th></tr>
+  <tr><td class="mono">design_manifest.md</td><td>the 12-question first-action manifest; boundary statement; census postscript</td></tr>
+  <tr><td class="mono">vm/machine.py</td><td>D-VM: both tiers, typing, caps, serialization, hashing (6 unit tests in <code>tests/test_vm.py</code>)</td></tr>
+  <tr><td class="mono">meta_language/grammar_v0&hellip;v2.py</td><td>the three candidates; token order is part of each spec</td></tr>
+  <tr><td class="mono">census/prereg_census.json</td><td>protocol v1.1: probes, shape definitions, gates, thresholds, rationale, repair record</td></tr>
+  <tr><td class="mono">census/census.py</td><td>enumeration + dual fingerprints + shape audit + gate evaluation</td></tr>
+  <tr><td class="mono">results/census_gv0&hellip;gv2.json</td><td>full census rows per candidate, committed with the verdict; plus the preserved defective v1.0 run</td></tr>
+  <tr><td class="mono">rejected_grammars.jsonl</td><td>append-only rejection ledger (gv0, gv1)</td></tr>
+  <tr><td class="mono">meta_grammar.json / meta_census.json</td><td>frozen grammar with file hashes; frozen census result</td></tr>
+</table></div>
+<p class="hashline">Frozen gv2 grammar hash&ensp;f08eb560631a998e4cdd5877781491d5366cd79ec25dece53fdaaca357d87c06</p>
+<p class="hashline">Commits&ensp;cb9acf6d (substrate + prereg, before any run)&ensp;&middot;&ensp;f97fecea (verdict + all census rows; amended once to force-add <code>results/</code> past a repo-wide gitignore, before push, so rows ship in the same commit as the verdict)</p>
+<h3>Reproduce</h3>
+<pre><code>cd incubation_d
+python tests/test_vm.py            # 6 VM tests
+python census/census.py grammar_v2 # exact, deterministic, ~1 s</code></pre>
+<p class="small">Prepared by the Agent D seat for external and human-in-the-loop review, 2026-08-27. Every number above traces to a committed, deterministic artifact; nothing in this document feeds back into machine state.</p>
+
+</div>
