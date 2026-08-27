@@ -178,7 +178,14 @@ def overall(reports):
         return "M0_UNFAIR", "substrate preconditions passed but M0 fairness failed"
     if survivors and all(not (gp(r, "G8") and gp(r, "G10")) for r in survivors):
         return "M0_COVERAGE_INSUFFICIENT", "substrate passed but M0 coverage/witness access failed"
-    return "PHENOTYPE_POVERTY", "no basis passed the full precondition set"
+    # Vocabulary gap found at read time: every basis failed, but no failure mode
+    # was universal, so none of the preregistered terms applies.  The stop
+    # decision is identical either way; the label is reported honestly rather
+    # than forced onto the nearest term.
+    return ("NO_BASIS_PASSED",
+            "every basis failed at least one precondition, but no single failure "
+            "mode was universal, so no preregistered verdict term matched; "
+            "PREREG vocabulary gap, stop decision unchanged")
 
 
 def main():
