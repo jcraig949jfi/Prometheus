@@ -54,15 +54,40 @@ SEM_INPUTS = [sem_of_artifact(p) for p in PROBES]
 
 # ---------- offline shape audit (human-side only) ----------
 
+def _flatten(b):
+    """Recursive token stream of a block: descends into 'P' literals.
+
+    A lit-push contributes a '#P' marker plus its content's tokens (or a
+    '#<int>' marker for int literals). Protocol v1.1 repair: top-level
+    multiset comparison misread quote-nesting as removal+introduction.
+    """
+    out = []
+    for i in b:
+        if isinstance(i, str):
+            out.append(i)
+        else:  # ('P', v)
+            out.append("#P")
+            v = i[1]
+            if isinstance(v, tuple):
+                out.extend(_flatten(v))
+            else:
+                out.append("#%d" % v)
+    return out
+
+
 def _instr_multiset(b):
-    return Counter(ser_instr(i) for i in b)
+    return Counter(_flatten(b))
 
 
-def _restrict(seq, common):
+def _is_subseq(needle, hay):
+    it = iter(hay)
+    return all(any(x == h for h in it) for x in needle)
+
+
+def _restrict(seq_tokens, common):
     budget = dict(common)
     out = []
-    for i in seq:
-        k = ser_instr(i)
+    for k in seq_tokens:
         if budget.get(k, 0) > 0:
             budget[k] -= 1
             out.append(k)
@@ -78,26 +103,26 @@ def classify(pairs):
     ins = [a for a, _ in pairs]
     outs = [b for _, b in pairs]
 
-    # flags
+    # flags (protocol v1.1: recursive token streams; reorders = the input's
+    # retained tokens no longer embed order-preservingly in the output)
     flags = set()
     for a, b in pairs:
-        ma, mb = _instr_multiset(a), _instr_multiset(b)
-        if any(mb[k] > ma.get(k, 0) for k in mb):
+        fa, fb = _flatten(a), _flatten(b)
+        ma, mb = Counter(fa), Counter(fb)
+        if any(mb[k] > ma.get(k, 0) for k in mb if k != "#P"):
             flags.add("introduces_tokens")
-        if any(ma[k] > mb.get(k, 0) for k in ma):
+        if any(ma[k] > mb.get(k, 0) for k in ma if k != "#P"):
             flags.add("removes_tokens")
-        common = {k: min(ma.get(k, 0), mb.get(k, 0)) for k in ma}
-        if _restrict(a, common) != _restrict(b, common):
+        common = {k: min(ma.get(k, 0), mb.get(k, 0)) for k in ma
+                  if k != "#P"}
+        if not _is_subseq(_restrict(fa, common), fb):
             flags.add("reorders")
+        if mb.get("#P", 0) > ma.get("#P", 0):
+            flags.add("introduces_lit")
     for p in PROBES_NO_CTRL:
         b = outs[PROBES.index(p)]
-        if any(ser_instr(i) == CTRL_TOK for i in b):
+        if CTRL_TOK in _flatten(b):
             flags.add("introduces_control")
-            break
-    for a, b in pairs:
-        if any(isinstance(i, tuple) for i in b) and not any(
-                isinstance(i, tuple) for i in a):
-            flags.add("introduces_lit")
             break
     flags = tuple(sorted(flags))
 

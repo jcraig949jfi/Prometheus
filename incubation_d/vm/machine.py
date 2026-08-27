@@ -138,6 +138,10 @@ META_OPS = (
     "d09",  # succ   (I -> I)
     "d10",  # add    (I I -> I)
     "d11",  # half   (I -> I) floor div 2
+    "d12",  # unc    (B -> B B) head-block (len<=1) below tail
+    "d13",  # tuck   (a b -> b a b)
+    "d14",  # nip    (a b -> b)
+    "d15",  # icat   (B B -> B) argument-swapped cat: top + under
 )
 
 
@@ -220,6 +224,30 @@ def exec_meta(prog, stack):
             push(v, ip)
         elif op == "d11":
             push(pop_int(ip) // 2, ip)
+        elif op == "d12":
+            b = pop_block(ip)
+            push(b[:1], ip)
+            push(b[1:], ip)
+        elif op == "d15":
+            b = pop_block(ip)
+            a = pop_block(ip)
+            r = b + a
+            if len(r) > MAX_BLOCK:
+                raise VMError(E_BLOCK_CAP, ip, len(st))
+            push(r, ip)
+        elif op == "d13":
+            if len(st) < 2:
+                raise VMError(E_UNDERFLOW, ip, len(st))
+            b, a = st.pop(), st.pop()
+            push(b, ip)
+            push(a, ip)
+            push(b, ip)
+        elif op == "d14":
+            if len(st) < 2:
+                raise VMError(E_UNDERFLOW, ip, len(st))
+            b = st.pop()
+            st.pop()
+            push(b, ip)
         elif op in TOKEN_BLOCKS:
             push(TOKEN_BLOCKS[op], ip)
         else:
@@ -252,6 +280,8 @@ META_TYPE = {
     "d09": (("I",), ("I",)),
     "d10": (("I", "I"), ("I",)),
     "d11": (("I",), ("I",)),
+    "d12": (("B",), ("B", "B")),
+    "d15": (("B", "B"), ("B",)),
 }
 for _t in TOKEN_BLOCKS:
     META_TYPE[_t] = ((), ("B",))
@@ -271,6 +301,16 @@ def type_step(tstack, op):
         if not tstack:
             return None
         return tstack[:-1]
+    if op == "d13":
+        if len(tstack) < 2:
+            return None
+        if len(tstack) + 1 > MAX_STACK:
+            return None
+        return tstack[:-2] + (tstack[-1], tstack[-2], tstack[-1])
+    if op == "d14":
+        if len(tstack) < 2:
+            return None
+        return tstack[:-2] + (tstack[-1],)
     sig = META_TYPE.get(op)
     if sig is None:
         return None

@@ -1,0 +1,83 @@
+{
+ "frozen": true,
+ "date": "2026-08-27",
+ "grammar": {
+  "id": "gv2",
+  "tokens": [
+   "d12",
+   "d06",
+   "d04",
+   "d15",
+   "d13",
+   "d14",
+   "d00",
+   "d01",
+   "d02",
+   "t0",
+   "t1",
+   "t2",
+   "t3",
+   "t4",
+   "d05",
+   "d08",
+   "d09",
+   "d10",
+   "d11",
+   "d03",
+   "d07"
+  ],
+  "introducers": {
+   "t0": [
+    "o0"
+   ],
+   "t1": [
+    "o1"
+   ],
+   "t2": [
+    "o2"
+   ],
+   "t3": [
+    "o3"
+   ],
+   "t4": [
+    "o4"
+   ]
+  },
+  "meta_conditional": false,
+  "meta_token_introducers": false,
+  "notes": [
+   "gv1 + icat; edits-first canonical order, reflection last.",
+   "No meta-tier conditional; no introducers for meta tokens."
+  ]
+ },
+ "grammar_hash": "f08eb560631a998e4cdd5877781491d5366cd79ec25dece53fdaaca357d87c06",
+ "vm_caps": {
+  "MAX_STACK": 16,
+  "MAX_BLOCK": 64,
+  "MAX_INT": 1048576,
+  "OBJ_MAX_STEPS": 64,
+  "MOD": 97
+ },
+ "file_hashes": {
+  "vm/machine.py": "43de323464e6a08e88d46c03c3e82dce91c28f53e57a08ee638938ad70f0252d",
+  "meta_language/grammar_v2.py": "89af061101d77800405de5294edec140fbf55d361da8785a38b2c0a22390e02e",
+  "census/prereg_census.json": "7b3d6a375b1b76c66ee40a0206d1b194d4f995a999700f49152a79e3302a6b03",
+  "census/census.py": "b0093b8c36d54e71d07b3b72cf0196545523e9fc7375d7ec4b2f77d050f2ae0a"
+ },
+ "census_verdict": "GRAMMAR_PASSED_CENSUS",
+ "census_result": "results/census_gv2.json",
+ "rejected_predecessors": [
+  "gv0",
+  "gv1"
+ ],
+ "not_yet_frozen": [
+  "worlds",
+  "budgets",
+  "candidate counts",
+  "QD descriptors",
+  "admission gates",
+  "confirmation protocol",
+  "evidence seeds",
+  "verdict code"
+ ]
+}

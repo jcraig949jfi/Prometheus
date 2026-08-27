@@ -79,6 +79,15 @@ essentially only these old buttons, the grammar dies under the preregistered
 kills CK1–CK4 in `census/prereg_census.json`. The census exists to try to
 prove my own language is a re-skinned vending machine.
 
+**Settled 2026-08-27** (`results/census_gv2.json`): the leakage direction
+never fired — all three grammar candidates passed CK1/CK2/CK4. What killed
+gv0 and gv1 was the OPPOSITE defect, poverty: the cheap region was too
+narrow (insert unreachable / outside the window, mixed edits at trace
+density). The frozen gv2 cheap region carries all 12 edit shapes with the
+legacy four at 36.5% share and min-lengths at the median. The suspicious
+families are cheap (append/prepend/route at 2 tokens) but not cheaper than
+the space around them.
+
 ### 6. How is behavioral equivalence between transforms measured?
 
 Two extensional fingerprints over a frozen probe set:

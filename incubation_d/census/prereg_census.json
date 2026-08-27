@@ -1,6 +1,15 @@
 {
-  "protocol": "incubation_d meta-language census v1",
+  "protocol": "incubation_d meta-language census v1.1",
   "date_frozen": "2026-08-27",
+  "protocol_repairs": [
+    {
+      "version": "1.1",
+      "date": "2026-08-27",
+      "defect": "v1.0 flag audit compared instruction multisets at TOP LEVEL only, so quote-nesting (input preserved inside a 'P' literal) was misread as removes_tokens+introduces_tokens and classified 'mixed'; alignment ambiguity also produced false 'reorders' on prepends. Exposed by census_gv0.protocol_v1.0.DEFECTIVE.json (preserved).",
+      "repair": "flags computed on RECURSIVE token streams (descend into 'P' literals; '#P' markers counted separately for introduces_lit); reorders = input's retained-common token sequence fails to embed order-preservingly in the output stream. Kill thresholds unchanged.",
+      "discipline": "spec section 32: defective run rejected and preserved; protocol repaired and refrozen; all grammar candidates rerun from scratch under v1.1"
+    }
+  ],
   "applies_to": "every grammar candidate submitted, unchanged between candidates",
   "purpose": "Attack the grammar: decide quantitatively whether it merely re-skins the four legacy mutation buttons (APPEND_MUTATION, PRE_TRANSFORM, CONTROL_WRAP, BRANCH_ROUTE), and whether its cheap region is rich enough to host non-human-taxonomy change.",
   "enumeration": {
