@@ -38,8 +38,13 @@ THRESHOLDS = {
     "MIN_HIT_FOR_ABLATION": 0.15,  # per-stratum baseline needed to judge drop
     "MAX_ABLATION_REL_DROP": 0.60,
     "ABLATION_MIN_Z": 1.96,        # drop must exceed two-proportion noise
-    "IDENT_ACC_HI": 0.30,          # calibrated between C5 and C3
-    "ANISO_HI": 0.75,              # calibrated between C5 and C3
+    # NOTE (v4): identifiability accuracy and displacement anisotropy are
+    # DIAGNOSTICS ONLY — reported with chance level, CI, and confusion
+    # matrix; never gated. The red-team review confirmed a gate on them
+    # would relabel menu distinctness as privilege (zero positive
+    # calibration; absolute accuracy vs data-dependent chance; anisotropy
+    # calibrated on a feature family real substrates never produce).
+    # Privilege gating rests on PRIV-3 (ablation) and PRIV-4 (re-coding).
     # G5 navigation
     "MIN_POOLED_HIT": 0.25,        # each of the competitive pair
     "MIN_FAR_HIT": 0.10,           # best pair navigator, far stratum
@@ -87,15 +92,21 @@ def evaluate_gates(res: dict, th: dict = THRESHOLDS) -> dict:
 
     census = res["census"]
     ops = res["op_census"]
+    diversity = res.get("diversity", {})
     nav = res["nav_summary"]
     oracle = res.get("oracle", {})
 
     # --- G1 phenotype mass
     vf = census["viable_frac"]
-    nc = census["n_classes_viable"]
+    # v4: diversity floor counted on census UNION target-generation pool
+    # (both generic processes); the census alone caps classes at
+    # viable_frac * census_n, making the floor unattainable in
+    # [MIN_VIABLE_FRAC, MIN_CLASSES/census_n).
+    nc = diversity.get("combined_classes", census["n_classes_viable"])
     margins["viable_frac"] = {"value": vf, "gate": th["MIN_VIABLE_FRAC"],
                               "ci95": census.get("viable_frac_ci95")}
-    margins["n_classes"] = {"value": nc, "gate": th["MIN_CLASSES"]}
+    margins["n_classes"] = {"value": nc, "gate": th["MIN_CLASSES"],
+                            "census_only": census["n_classes_viable"]}
     if vf < th["MIN_VIABLE_FRAC"] or nc < th["MIN_CLASSES"]:
         flags.append("PHENOTYPE_POVERTY")
 
@@ -136,7 +147,10 @@ def evaluate_gates(res: dict, th: dict = THRESHOLDS) -> dict:
     #     diagnostics always reported)
     priv = False
     abl = res.get("ablation", {})
-    worst = None
+    worst = None          # max drop among ELIGIBLE cells (diagnostic)
+    qualifying = []       # ALL cells that clear drop AND z (v4: no masking —
+    #                       a qualifying cell fires regardless of whether a
+    #                       larger-drop-but-insignificant cell exists)
     for op_name, strata in abl.get("stratum_drops", {}).items():
         for sname, d in strata.items():
             base, ab = d["baseline"], d["ablated"]
@@ -146,22 +160,24 @@ def evaluate_gates(res: dict, th: dict = THRESHOLDS) -> dict:
                 z = _two_prop_z(base, nb, ab, na)
                 if worst is None or rel > worst[2]:
                     worst = (op_name, sname, rel, z)
+                if rel > th["MAX_ABLATION_REL_DROP"] and z >= th["ABLATION_MIN_Z"]:
+                    qualifying.append({"op": op_name, "stratum": sname,
+                                       "rel_drop": rel, "z": z})
     margins["worst_ablation_drop"] = {
         "value": None if worst is None else {"op": worst[0], "stratum": worst[1],
                                              "rel_drop": worst[2], "z": worst[3]},
+        "qualifying_cells": qualifying,
         "gate": th["MAX_ABLATION_REL_DROP"], "z_gate": th["ABLATION_MIN_Z"]}
-    if (nav_ok and worst is not None and worst[2] > th["MAX_ABLATION_REL_DROP"]
-            and worst[3] >= th["ABLATION_MIN_Z"]):
+    if nav_ok and qualifying:
         priv = True
+    # PRIV-1 / PRIV-2 diagnostics (never gated; red-team can use them to
+    # weaken a verdict narrative, never to strengthen one)
     ident_res = ops.get("identifiability", {})
     aniso = ops.get("anisotropy_top_share")
-    if (nav_ok and ident_res.get("status") == "OK" and aniso is not None
-            and ident_res["accuracy"] > th["IDENT_ACC_HI"] and aniso > th["ANISO_HI"]):
-        priv = True
-    margins["identifiability_acc"] = {
+    margins["identifiability_acc_DIAGNOSTIC"] = {
         "value": ident_res.get("accuracy"), "chance": ident_res.get("chance"),
-        "ci95": ident_res.get("ci95"), "gate_with_aniso": th["IDENT_ACC_HI"]}
-    margins["anisotropy_top_share"] = {"value": aniso, "gate_with_acc": th["ANISO_HI"]}
+        "ci95": ident_res.get("ci95")}
+    margins["anisotropy_top_share_DIAGNOSTIC"] = {"value": aniso}
     if priv:
         flags.append("PRIVILEGED_CORRIDOR")
 
@@ -173,20 +189,40 @@ def evaluate_gates(res: dict, th: dict = THRESHOLDS) -> dict:
 
     # --- G7 representation robustness (real substrates only)
     rep = res.get("representation")
-    if rep is not None and rep.get("status") == "OK":
-        delta = abs(rep["pooled_hit"] - rep["baseline_pooled_hit"])
-        margins["representation_delta"] = {"value": delta, "gate": th["REPRESENTATION_BAND"]}
-        if delta > th["REPRESENTATION_BAND"]:
+    if rep is not None:
+        if rep.get("status") == "OK":
+            delta = abs(rep["pooled_hit"] - rep["baseline_pooled_hit"])
+            zr = _two_prop_z(rep["pooled_hit"], rep.get("n_runs", 0),
+                             rep["baseline_pooled_hit"], rep.get("baseline_n", 0))
+            margins["representation_delta"] = {"value": delta, "z": zr,
+                                               "gate": th["REPRESENTATION_BAND"],
+                                               "z_gate": th["ABLATION_MIN_Z"]}
+            if delta > th["REPRESENTATION_BAND"] and zr >= th["ABLATION_MIN_Z"]:
+                flags.append("REPRESENTATION_SENSITIVE")
+        else:
+            # v4: the composite requires "not an artifact of encoding" —
+            # unmeasured is NOT established. No silent skip.
+            margins["representation_delta"] = {"value": "NOT_MEASURED",
+                                               "status": rep.get("status")}
             flags.append("REPRESENTATION_SENSITIVE")
 
     # --- G8 counterfactual stability (real substrates only)
     cf = res.get("counterfactual_stability")
+    if cf is not None and cf.get("status") != "OK":
+        margins["counterfactual_worst_delta"] = {"value": "NOT_MEASURED"}
+        flags.append("COUNTERFACTUAL_UNSTABLE")
     if cf is not None and cf.get("status") == "OK":
-        worst_cf = max((abs(v["pooled_hit"] - v["baseline_pooled_hit"])
-                        for v in cf["variants"].values()), default=0.0)
-        margins["counterfactual_worst_delta"] = {"value": worst_cf,
-                                                 "gate": th["COUNTERFACTUAL_BAND"]}
-        if worst_cf > th["COUNTERFACTUAL_BAND"]:
+        worst_cf, worst_z = 0.0, 0.0
+        for v in cf["variants"].values():
+            d = abs(v["pooled_hit"] - v["baseline_pooled_hit"])
+            if d > worst_cf:
+                worst_cf = d
+                worst_z = _two_prop_z(v["pooled_hit"], v.get("n_runs", 0),
+                                      v["baseline_pooled_hit"], v.get("baseline_n", 0))
+        margins["counterfactual_worst_delta"] = {"value": worst_cf, "z": worst_z,
+                                                 "gate": th["COUNTERFACTUAL_BAND"],
+                                                 "z_gate": th["ABLATION_MIN_Z"]}
+        if worst_cf > th["COUNTERFACTUAL_BAND"] and worst_z >= th["ABLATION_MIN_Z"]:
             flags.append("COUNTERFACTUAL_UNSTABLE")
 
     ordered = [f for f in FLAG_ORDER if f in flags]

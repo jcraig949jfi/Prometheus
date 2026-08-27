@@ -33,7 +33,7 @@ def main(names=None):
         print(f"== {name}: got={got} expected={sorted(want)} "
               f"{'OK' if ok else 'MISMATCH'} ({summary[name]['wall_s']}s)")
     all_ok = all(v["ok"] for v in summary.values())
-    summary["_instrument_valid"] = all_ok
+    summary["instrument_valid"] = all_ok
     with open(os.path.join(OUT, "synthetic_control_results.json"), "w") as fh:
         json.dump(_san(summary), fh, indent=1)
     print(f"INSTRUMENT {'VALID' if all_ok else 'INVALID'}")

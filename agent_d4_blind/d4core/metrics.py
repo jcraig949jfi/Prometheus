@@ -52,7 +52,10 @@ def op_census(sub, viable_pool, rng, n_parents: int, reps: int, store: EdgeStore
     rows_op, rows_same, rows_vch, rows_d1, rows_parent = [], [], [], [], []
     feats = []
     reach: dict[int, set] = {op: set() for op in range(sub.n_ops)}
+    dest_counts: dict[int, dict] = {op: {} for op in range(sub.n_ops)}
     rev_pool: list = []
+    rev_seen = 0
+    rev_rng = np.random.default_rng(9900)
     for pi, (g, f) in enumerate(parents):
         pk = sub.pkey(f)
         for op in range(sub.n_ops):
@@ -70,9 +73,20 @@ def op_census(sub, viable_pool, rng, n_parents: int, reps: int, store: EdgeStore
                 rows_parent.append(pi)
                 feats.append(sub.disp_features(f, fc))
                 if vch:
-                    reach[op].add(sub.pkey(fc))
-                if (not same) and len(rev_pool) < rev_sample * 4:
-                    rev_pool.append((g, pk, child, op))
+                    ck = sub.pkey(fc)
+                    reach[op].add(ck)
+                    if not same:
+                        dest_counts[op][ck] = dest_counts[op].get(ck, 0) + 1
+                if not same:
+                    # reservoir sample (uniform over ALL non-identity
+                    # transitions, not just the earliest parents)
+                    rev_seen += 1
+                    if len(rev_pool) < rev_sample * 4:
+                        rev_pool.append((g, pk, child, op))
+                    else:
+                        j = int(rev_rng.integers(0, rev_seen))
+                        if j < rev_sample * 4:
+                            rev_pool[j] = (g, pk, child, op)
     rows_op = np.array(rows_op)
     rows_same = np.array(rows_same)
     rows_vch = np.array(rows_vch)
@@ -87,6 +101,13 @@ def op_census(sub, viable_pool, rng, n_parents: int, reps: int, store: EdgeStore
         ident = float(rows_same[m].mean()) if nn else None
         vfrac = float(rows_vch[m].mean()) if nn else None
         nonid_viable = float((~rows_same[m] & rows_vch[m]).mean()) if nn else None
+        dc = np.array(list(dest_counts[op].values()), dtype=float)
+        if dc.size:
+            pdist = dc / dc.sum()
+            H = float(-(pdist * np.log(pdist)).sum())
+            eff_support = float(np.exp(H))
+        else:
+            eff_support = 0.0
         per_op[op] = {
             "n": nn, "identity_rate": ident, "child_viable_rate": vfrac,
             "effective_rate": nonid_viable,  # non-identity AND viable child
@@ -94,6 +115,7 @@ def op_census(sub, viable_pool, rng, n_parents: int, reps: int, store: EdgeStore
             "d1_median": float(np.median(rows_d1[m])) if nn else None,
             "d1_p90": float(np.quantile(rows_d1[m], 0.9)) if nn else None,
             "reach_support": len(reach[op]),
+            "dest_effective_support": eff_support,  # exp(entropy) diagnostic
         }
     # pairwise reach overlap (Jaccard)
     overlap = {}
@@ -105,7 +127,7 @@ def op_census(sub, viable_pool, rng, n_parents: int, reps: int, store: EdgeStore
     # reversibility: from child, can ANY menu op recover the parent phenotype?
     sub.meter.set_component("reversibility")
     rev_results = {op: [0, 0] for op in range(sub.n_ops)}
-    ridx = np.random.default_rng(9900).permutation(len(rev_pool))[:rev_sample]
+    ridx = np.random.default_rng(9901).permutation(len(rev_pool))[:rev_sample]
     for i in ridx:
         g, pk, child, op = rev_pool[i]
         ok = False
@@ -235,8 +257,10 @@ def graph_metrics(store: EdgeStore) -> dict:
 # -------------------------------------------------------- target selection ----
 def select_targets(sub, rng, n_walks: int, walk_len: int, n_ref: int,
                    eps_dens: float, k_low: int, k_high: int, store: EdgeStore,
-                   dens_sample: int = 400, max_attempts_factor: int = 5) -> dict:
-    sub.meter.set_component("target_generation")
+                   dens_sample: int = 400, max_attempts_factor: int = 5,
+                   min_remote: float = 0.15,
+                   component: str = "target_generation") -> dict:
+    sub.meter.set_component(component)
     pool: dict = {}
     for _ in range(n_walks):
         g, f = None, None
@@ -276,6 +300,19 @@ def select_targets(sub, rng, n_walks: int, walk_len: int, n_ref: int,
         return {"status": "POOL_TOO_SMALL", "pool_size": len(pool_items),
                 "n_refs": len(refs)}
     remoteness = np.array([np.mean([sub.d1m(f, r) for r in refs]) for _, f in pool_items])
+    # targets inside the ab-initio hit ball measure nothing about navigation:
+    # a phenotype whose mean distance to random-viable starts is below
+    # EPS_HIT + margin can be "hit" at the start sample with zero mutation
+    # steps. Filter them (count reported), so every target requires real
+    # displacement from a typical start.
+    keep = remoteness >= min_remote
+    n_filtered = int((~keep).sum())
+    pool_items = [pool_items[i] for i in np.where(keep)[0]]
+    remoteness = remoteness[keep]
+    if len(pool_items) < 3 * (k_low + k_high):
+        return {"status": "POOL_TOO_SMALL_AFTER_REMOTENESS_FILTER",
+                "pool_size": len(pool_items), "n_filtered_trivial": n_filtered,
+                "n_refs": len(refs)}
     # density vs a deterministic subsample of the pool
     sidx = np.random.default_rng(8801).permutation(len(pool_items))[:dens_sample]
     density = np.zeros(len(pool_items))
@@ -288,10 +325,14 @@ def select_targets(sub, rng, n_walks: int, walk_len: int, n_ref: int,
     # near = bottom decile, mid = middle decile, far = top decile.
     q = np.quantile(remoteness, [0.10, 0.45, 0.55, 0.90])
     targets = []
+    chosen_global: set = set()
     for sname, mask in (("near", remoteness <= q[0]),
-                        ("mid", (remoteness > q[1]) & (remoteness <= q[2])),
-                        ("far", remoteness > q[3])):
-        idx = np.where(mask)[0]
+                        ("mid", (remoteness >= q[1]) & (remoteness <= q[2])),
+                        ("far", remoteness >= q[3])):
+        # inclusive bands + global dedup: under heavily tied remoteness
+        # distributions strict inequalities could leave a stratum empty and
+        # fail a substrate on an instrument edge case rather than physics.
+        idx = [i for i in np.where(mask)[0] if i not in chosen_global]
 
         def hkey(i):
             return hashlib.sha256(sub.fp_bytes(pool_items[i][1])).hexdigest()
@@ -303,6 +344,7 @@ def select_targets(sub, rng, n_walks: int, walk_len: int, n_ref: int,
             if i in seen:
                 continue
             seen.add(i)
+            chosen_global.add(i)
             targets.append({
                 "target_id": f"{sname}_{hkey(i)[:12]}",
                 "stratum": sname, "pkey": pool_items[i][0],
@@ -310,7 +352,11 @@ def select_targets(sub, rng, n_walks: int, walk_len: int, n_ref: int,
                 "remoteness": float(remoteness[i]), "density": int(density[i]),
             })
     return {"status": "OK", "pool_size": len(pool_items), "n_refs": len(refs),
+            "_pool_pkeys": [pk for pk, _ in pool_items],
+            "n_filtered_trivial": n_filtered,
             "remoteness_bands": [float(x) for x in q],
+            "remoteness_spread": float(np.quantile(remoteness, 0.9)
+                                       - np.quantile(remoteness, 0.1)),
             "targets": targets}
 
 
@@ -336,6 +382,8 @@ def run_navigation(sub, targets, nav_plan, budget: int, eps_hit: float,
                     "hit": res["hit"], "evals_to_hit": res["evals_to_hit"],
                     "best_d": res["best_d"], "evals_used": res["evals_used"],
                     "start_pkey": res["start_pkey"],
+                    "start_pkeys": res["start_pkeys"],
+                    "hit_via": res["hit_via"],
                 })
     return rows
 
@@ -385,17 +433,39 @@ def summarize_navigation(rows, pair) -> dict:
         for r in rs:
             by_target.setdefault(r["target_id"], []).append(r["hit"])
         once_hit = {t: v for t, v in by_target.items() if any(v)}
-        refind = (float(np.mean([np.mean(v) for v in once_hit.values()]))
-                  if once_hit else 0.0)
+        # re-find excludes the qualifying discovery itself: for a target hit
+        # by k of S seeds, refind = (k-1)/(S-1) — "given a first discovery,
+        # what fraction of independent seeds ALSO reach it".
+        refind_vals = []
+        for v in once_hit.values():
+            S, k = len(v), sum(v)
+            if S > 1:
+                refind_vals.append((k - 1) / (S - 1))
+        refind = float(np.mean(refind_vals)) if refind_vals else 0.0
         fp_costs = [r["evals_to_hit"] for r in rs if r["hit"]]
+        search_hits = sum(1 for r in rs if r["hit"] and r.get("hit_via") == "search")
         lo, hi = wilson_ci(hits, n)
+        # cluster-level uncertainty: targets are the independent unit; seeds
+        # within a target are correlated. Bootstrap over targets (seeded).
+        tgt_rates = [float(np.mean(v)) for v in by_target.values()]
+        if tgt_rates:
+            brng = np.random.default_rng(4242)
+            boots = [float(np.mean(brng.choice(tgt_rates, size=len(tgt_rates))))
+                     for _ in range(2000)]
+            cl_lo, cl_hi = float(np.quantile(boots, 0.025)), float(np.quantile(boots, 0.975))
+        else:
+            cl_lo, cl_hi = 0.0, 1.0
         out["per_navigator"][nav] = {
             "n_runs": n, "pooled_hit_rate": hits / n if n else 0.0,
             "pooled_ci95": [lo, hi],
+            "cluster_bootstrap_ci95": [cl_lo, cl_hi],
+            "n_targets_cluster_unit": len(by_target),
             "strata": strata,
             "n_targets_once_hit": len(once_hit),
             "n_targets": len(by_target),
             "refind_ratio": refind,
+            "search_hit_rate": search_hits / n if n else 0.0,
+            "start_hit_rate": (hits - search_hits) / n if n else 0.0,
             "first_passage_median": float(np.median(fp_costs)) if fp_costs else None,
         }
     pair_stats = [out["per_navigator"].get(p) for p in pair if p in out["per_navigator"]]

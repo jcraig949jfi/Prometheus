@@ -82,9 +82,13 @@ navigators never choose named operators.
 1,200 viable parents x 5 ops x 4 reps (= 24,000 transitions) + 500
 crossover pairs. Per operator: identity rate, child-viability, effective
 rate (non-identity AND viable), displacement distribution (d1 mean/median/
-p90), reach support, pairwise reach-overlap Jaccard, reversibility (400
-sampled non-identity transitions x 8 inverse tries), downstream stats.
+p90), reach support, destination effective support (exp entropy), pairwise
+reach-overlap Jaccard, reversibility (400 uniformly reservoir-sampled
+non-identity transitions x 8 inverse tries), downstream stats.
 An operator with effective rate < 0.02 is DEAD and disclosed.
+Statistical note: transitions cluster by parent (1,200 parents x 20);
+quoted SEs on pooled rates are transition-level and understate cluster
+variance - margins are read against this disclosure.
 
 Mutation-source identifiability (PRIV-1): frozen softmax classifier
 (d4core/classifier.py: 300 epochs, lr 0.5, L2 1e-4, seed 7700), trained on
@@ -92,16 +96,30 @@ non-identity transitions from viable parents, features = behavioral
 displacement only, 70/30 split grouped by parent, full confusion matrix +
 Wilson CI + chance level reported. Displacement anisotropy: top-1
 covariance eigenshare of non-identity displacement features (PRIV-2).
+PRIV-1/PRIV-2 are DIAGNOSTICS-ONLY: the adversarial review confirmed a
+gate on them would relabel menu distinctness as privilege (zero positive
+calibration; absolute accuracy vs data-dependent chance; anisotropy
+calibrated on a feature family real substrates never produce). They are
+reported in full and may only weaken a verdict via the red-team analysis.
 
 ## 5. Target selection (frozen; deterministic; independent of navigation)
 
-64 random-viable starts; uniform-menu random walks of 150 accepted viable
-steps (attempt cap 5x); pool = deduped phenotypes recorded at every
-accepted step. Remoteness = mean d1 to 48 fresh random-viable references.
-Strata = remoteness EXTremes: near = bottom decile, mid = middle decile
-(45-55%), far = top decile. Within each stratum: 4 lowest-density + 4
-highest-density members (density = pool-mates within d1 <= 0.15 against a
-400-member deterministic subsample), SHA-256 tie-break. 24 targets total.
+64 random-viable starts (dedicated RNG stream, independent of census
+consumption); uniform-menu random walks of 150 accepted viable steps
+(attempt cap 5x); pool = deduped phenotypes recorded at every accepted
+step; walk edges are kept OUT of the oracle graph. Remoteness = mean d1 to
+48 fresh random-viable references. Pool filter: members with remoteness
+< EPS_HIT + 0.05 = 0.15 are removed (counted, reported) - a target inside
+the ab-initio hit ball can be "hit" at the start sample with zero mutation
+steps and measures nothing about navigation. Strata = remoteness extremes
+of the filtered pool: near = bottom decile, mid = middle decile (45-55%),
+far = top decile (inclusive bands, global dedup). Within each stratum: 6
+lowest-density + 6 highest-density members (density = pool-mates within
+d1 <= 0.15 against a 400-member deterministic subsample), SHA-256
+tie-break. 36 targets total. Under near-constant remoteness (a homogeneous
+substrate), strata are arbitrary labels and the far gate measures repeated
+independent displacement rather than graded distance; the remoteness
+spread is reported so this is visible.
 Disclosure: this measures reproducible accessibility of phenotypes the
 physics itself exhibited under an independent seed — not reachability of
 arbitrary mathematically-existing phenotypes.
@@ -110,7 +128,12 @@ arbitrary mathematically-existing phenotypes.
 
 Budget 1,200 metered evaluations per run; hit = d1 <= 0.10 (reachable by
 construction: the target phenotype scores 0). Per target: N1 x 3 seeds,
-N2 x 5, N3 x 2, N4 x 5 (= 360 runs per substrate).
+N2 x 5, N3 x 2, N4 x 5 (= 540 runs per substrate). Every run records all
+its viable starts (initial, restarts, fresh injections) and whether a hit
+was scored on an ab-initio draw ('start') or a mutated/recombined child
+('search'); both rates are reported (gates count all hits - restart
+sampling is a legitimate generic history-free process once trivially
+adjacent targets are filtered).
 
 - N1 RESTART-WALK: random-accept viable walk, restart after 25 consecutive
   non-viable children.
@@ -127,15 +150,22 @@ population recombination. Coverage runs: N1, N3 x 2 seeds x 3,000 evals.
 ## 7. Oracle (analysis only)
 
 Per-episode attribution: reverse BFS from each target's hit-ball over the
-observed single-parent transition graph (crossover edges excluded); an
-episode is oracle-reachable iff its own start lies in the basin. Output
-never reaches any navigator. Used only to attribute navigation failure
-(topology vs search weakness) and report navigation regret.
+observed single-parent transition graph, restricted to viable endpoints
+(navigators can neither traverse nor score non-viable states), with
+crossover and target-generation edges excluded; an episode is
+oracle-reachable iff ANY of its own starts lies in the basin. Output never
+reaches any navigator. Used only to attribute navigation failure (topology
+vs search weakness). Disclosure: the observed graph undersamples the true
+graph, so FRAGMENTED-vs-NAVIGATION attribution is a statement about the
+demonstrated topology; both flags are equally fatal.
 
 ## 8. Counterfactual suite (frozen)
 
-Navigation-based counterfactuals run the baseline best pair navigator on
-all 24 targets x 2 seeds at the same budget:
+Navigation-based counterfactuals run the baseline best pair navigator at
+the same budget (ablations: all 36 targets x 4 seeds; reweight/radius/
+encoding: all 36 targets x 2 seeds, compared against the baseline
+restricted to the SAME seeds-per-target so the comparison is
+seed-symmetric):
 
 - ablation: remove OP_i (5 variants) + remove crossover (N4 without
   crossover)
@@ -152,9 +182,9 @@ No counterfactual result feeds back into the frozen physics.
 ## 9. Budgets and meters
 
 Census 10,000; operator census 24,000 (+500 crossover, +3,200 max
-reversibility); targets ~ <= 64x150x5 attempts; navigation 360 runs x
-<= 1,200; coverage 4 x 3,000; counterfactuals (6 ablations + 3 reweights +
-1 radius + 1 encoding) x 48 runs x <= 1,200. Every evaluate() metered per
+reversibility); targets ~ <= 64x150x5 attempts; navigation 540 runs x
+<= 1,200; coverage 4 x 3,000; counterfactuals: 6 ablations x 144 runs +
+(3 reweights + 1 radius + 1 encoding) x 72 runs, each <= 1,200. Every evaluate() metered per
 component; cache hits metered identically (no cache asymmetry); no
 post-budget success (hit checks inside the budget loop).
 
@@ -164,28 +194,45 @@ Evaluated in causal order; primary flag = first failure; all flags reported
 with margins and CIs.
 
 - G1 PHENOTYPE_POVERTY: viable fraction < 0.005 (n=10,000; SE at gate
-  ~0.0007) OR viable phenotype classes < 250.
+  ~0.0007) OR viable phenotype classes < 250, counted on census UNION
+  target-generation pool (census alone caps classes at viable_frac x
+  10,000, which would make the floor unattainable for viable fractions in
+  [0.005, 0.025)). Classes are exact-fingerprint equivalence - finer than
+  the d1 <= 0.10 balls navigation is tested on; both granularities are
+  reported.
 - G2 DISPLACEMENT_COLLAPSE: pooled identity rate > 0.85 OR pooled effective
   rate < 0.05 (n=24,000; SE < 0.003) OR alive operators < 3 of 5.
 - G3 ACCESSIBILITY_FRAGMENTED: navigation fails AND oracle far-stratum
   episode reach < 0.20 (topology attribution).
 - G4 NAVIGATION_FAILURE: fewer than 2 competitive-pair navigators with
-  pooled hit >= 0.25 (n=120 runs each; SE at gate ~0.040) OR best pair
-  navigator far-stratum hit < 0.10 (n=40; SE at gate ~0.047 — CI reported
-  beside the verdict).
+  pooled hit >= 0.25 (n=180 runs each; run-level SE at gate ~0.032;
+  cluster unit = 36 targets, cluster SE larger and reported via bootstrap
+  CI) OR best pair navigator far-stratum hit < 0.10 (n=60 runs over 12
+  target clusters; cluster-level SE at the gate ~0.09 - a marginal far
+  verdict is visibly marginal in the margins, and the cluster bootstrap CI
+  is printed beside it). Winner-curse disclosure: the "best pair
+  navigator" is selected on the same rows that feed the far and refind
+  gates; both pair navigators' full statistics are reported.
 - G5 PRIVILEGED_CORRIDOR (evaluated only around a passing navigation
-  baseline; diagnostics always reported): any single-mechanism ablation
-  with per-stratum baseline >= 0.15, relative drop > 0.60, AND two-
-  proportion z >= 1.96; OR identifiability accuracy > 0.35 jointly with
-  anisotropy top-share > 0.85 (calibration: neutral pole C5 acc 0.201 (chance 0.200) /
-  aniso 0.412; corridor C3 aniso 0.999, ablation drop 1.0 at z=6.5 — the joint trigger targets common+
-  directional menu partitioning; rare corridor ops are caught by ablation).
-- G6 REFINDABILITY_FAILURE: best pair navigator re-find ratio < 0.40
-  (mean over once-hit targets of per-seed hit fraction; per-target rows
-  reported).
-- G7 REPRESENTATION_SENSITIVE: |pooled hit (re-coded) - baseline| > 0.15.
+  baseline; diagnostics always reported): ANY single-mechanism ablation
+  cell with per-stratum baseline >= 0.15, relative drop > 0.60, AND
+  two-proportion z >= 1.96 (no masking: every eligible cell is tested;
+  attainability: with 12x5=60 baseline and 12x4=48 ablated runs, a total
+  collapse at the 0.15 floor reaches z=2.8). Identifiability accuracy and
+  anisotropy are DIAGNOSTICS-ONLY (see Section 4). Scope disclosure:
+  PRIV-3 ablates single mechanisms; privilege spread across mechanism
+  PAIRS is not ablation-tested (combinatorial) and is addressed only by
+  the reweight counterfactuals and the red team.
+- G6 REFINDABILITY_FAILURE: best pair navigator re-find ratio < 0.40,
+  where re-find for a target hit by k of S seeds is (k-1)/(S-1) - the
+  qualifying discovery does not count itself (per-target rows reported;
+  unit = once-hit targets, n disclosed).
+- G7 REPRESENTATION_SENSITIVE: |pooled hit (re-coded, own fresh target
+  suite under the same frozen procedure) - baseline| > 0.15 AND two-
+  proportion z >= 1.96 (48-run variant vs 120-run baseline; the z-guard
+  prevents the band firing on suite-sampling noise).
 - G8 COUNTERFACTUAL_UNSTABLE: worst |pooled hit (reweight/radius) -
-  baseline| > 0.15.
+  baseline| > 0.15 AND two-proportion z >= 1.96.
 - PASS = ACCESSIBILITY_GEOMETRY_ESTABLISHED for that substrate.
 
 Overall verdict: NO_BASIS_PASSED if no substrate passes. If >= 1 passes, it
@@ -212,7 +259,9 @@ the one that classifies all seven controls correctly.
 
 Unit of analysis for navigation = (target x seed) runs; for census =
 genomes; for operator census = transitions (clustered by parent — grouped
-split in the classifier). Wilson 95% CIs on every gated proportion. Seeds:
+split in the classifier). Wilson 95% CIs on every gated proportion, plus a cluster
+bootstrap CI over targets (the unit at which independence actually holds)
+reported beside every navigation hit rate. Seeds:
 5 per competitive-pair navigator on the binding run. Every gate value was
 checked for attainability before freeze (chance levels and ceilings
 documented above; hit criterion reachable by construction; oracle reports

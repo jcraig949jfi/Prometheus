@@ -49,6 +49,12 @@ FORBIDDEN = {
                                     r"\beval\(", r"\bexec\("],
     "d4core/metrics.py": [r"\bopen\(", r"\brequests\b", r"\bsocket\b",
                           r"\btime\.", r"\bdatetime\b"],
+    "d4core/classifier.py": [r"\bopen\(", r"\brequests\b", r"\bsocket\b",
+                             r"\btime\.", r"\bdatetime\b", r"\bimport random\b"],
+    "d4core/oracle.py": [r"\bopen\(", r"\brequests\b", r"\bsocket\b",
+                         r"\btime\.", r"\bdatetime\b", r"\bimport random\b"],
+    "d4core/gates.py": [r"\bopen\(", r"\brequests\b", r"\bsocket\b",
+                        r"\btime\.", r"\bdatetime\b", r"\bimport random\b"],
 }
 
 MACHINE_VISIBLE = {

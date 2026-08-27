@@ -19,22 +19,26 @@ from .oracle import oracle_reachability
 
 DEFAULT_CFG = {
     "seed": 11000,
-    "census_n": 4000,
-    "op_parents": 800,
+    # v4: single source of scale — instrument validation and binding runs
+    # use the SAME configuration (the red team flagged the scale mismatch).
+    "census_n": 10_000,
+    "op_parents": 1200,
     "op_reps": 4,
-    "n_cross": 400,
-    "rev_sample": 300,
-    "n_walks": 48,
+    "n_cross": 500,
+    "rev_sample": 400,
+    "n_walks": 64,
     "walk_len": 150,
-    "n_ref": 32,
-    "k_low": 3,
-    "k_high": 3,
-    "nav_budget": 800,
+    "n_ref": 48,
+    "k_low": 6,
+    "k_high": 6,
+    "nav_budget": 1200,
     "nav_plan": [["N1_RESTART_WALK", 3], ["N2_HILLCLIMB", 5],
                  ["N3_NOVELTY", 2], ["N4_RECOMBINER", 5]],
     "coverage_seeds": 2,
-    "coverage_budget": 2000,
-    "ablation_seeds": 2,
+    "coverage_budget": 3000,
+    # ablation seeds 4: at 2 seeds the collapse gate was unattainable for
+    # baselines in [0.15, ~0.21) (total collapse could not reach z=1.96)
+    "ablation_seeds": 4,
     "cf_seeds": 2,          # reweight/radius/encoding variants (real only)
 }
 
@@ -97,10 +101,25 @@ def run_pipeline(sub, cfg: dict, out_dir: str, is_real: bool = False,
                             "status": "NO_VIABLE_PARENTS"}
 
     log(f"[{sub.name}] target selection")
-    tsel = select_targets(sub, rng, cfg["n_walks"], cfg["walk_len"], cfg["n_ref"],
-                          THRESHOLDS["EPS_DENS"], cfg["k_low"], cfg["k_high"], store)
-    res["target_selection"] = {k: v for k, v in tsel.items() if k != "targets"}
+    # dedicated RNG stream (independent of census/op-census consumption) and
+    # dedicated edge store: target-generation edges must not enter the
+    # oracle graph (they would make oracle reachability partially true by
+    # construction along the walk that created each target).
+    rng_t = np.random.default_rng(cfg["seed"] + 777)
+    tg_store = EdgeStore()
+    tsel = select_targets(sub, rng_t, cfg["n_walks"], cfg["walk_len"], cfg["n_ref"],
+                          THRESHOLDS["EPS_DENS"], cfg["k_low"], cfg["k_high"], tg_store,
+                          min_remote=THRESHOLDS["EPS_HIT"] + 0.05)
+    res["target_selection"] = {k: v for k, v in tsel.items()
+                               if k not in ("targets", "_pool_pkeys")}
     targets = tsel.get("targets", [])
+    census_class_keys = set(census["_class_counts"].keys())
+    pool_keys = set(tsel.get("_pool_pkeys", []))
+    res["diversity"] = {
+        "census_classes": len(census_class_keys),
+        "pool_classes": len(pool_keys),
+        "combined_classes": len(census_class_keys | pool_keys),
+    }
     res["target_selection"]["targets_meta"] = [
         {k: v for k, v in t.items() if k != "fp"} for t in targets]
 
@@ -151,8 +170,9 @@ def run_pipeline(sub, cfg: dict, out_dir: str, is_real: bool = False,
 
     # --- reweight / radius / encoding counterfactuals (real substrates) ---
     if is_real and targets:
-        base_pooled = (res["nav_summary"]["per_navigator"]
-                       .get(best_nav, {}).get("pooled_hit_rate", 0.0))
+        base_stats = res["nav_summary"]["per_navigator"].get(best_nav, {})
+        base_pooled = base_stats.get("pooled_hit_rate", 0.0)
+        base_n = base_stats.get("n_runs", 0)
         variants: dict = {}
         for wi, wseed in enumerate((101, 102, 103)):
             w = np.random.default_rng(wseed).dirichlet(np.ones(sub.n_ops) * 2.0)
@@ -166,7 +186,20 @@ def run_pipeline(sub, cfg: dict, out_dir: str, is_real: bool = False,
             variants[f"reweight_{wseed}"] = {
                 "weights": [float(x) for x in w],
                 "pooled_hit": float(np.mean(hits)) if hits else 0.0,
+                "n_runs": len(hits), "baseline_n": base_n,
                 "baseline_pooled_hit": base_pooled}
+        # seed-symmetric baseline for counterfactual comparisons: restrict
+        # the baseline to the SAME number of seeds per target as the
+        # counterfactual runs, so the two-proportion test compares
+        # like-with-like populations.
+        base_rows_cf = [r for r in nav_rows if r["navigator"] == best_nav
+                        and r["seed"] < cfg["cf_seeds"]]
+        base_pooled = (float(np.mean([r["hit"] for r in base_rows_cf]))
+                       if base_rows_cf else 0.0)
+        base_n = len(base_rows_cf)
+        for v in variants.values():
+            v["baseline_pooled_hit"] = base_pooled
+            v["baseline_n"] = base_n
         if radius_variant_factory is not None:
             rsub = radius_variant_factory()
             rsub.bind_meter(meter)
@@ -176,6 +209,7 @@ def run_pipeline(sub, cfg: dict, out_dir: str, is_real: bool = False,
                                   component="counterfactual", base_seed=7800)
             hits = [r["hit"] for r in rows]
             variants["radius_x2"] = {"pooled_hit": float(np.mean(hits)) if hits else 0.0,
+                                     "n_runs": len(hits), "baseline_n": base_n,
                                      "baseline_pooled_hit": base_pooled}
         res["counterfactual_stability"] = {"status": "OK", "variants": variants}
 
@@ -190,7 +224,9 @@ def run_pipeline(sub, cfg: dict, out_dir: str, is_real: bool = False,
             rng_e = np.random.default_rng(cfg["seed"] + 555)
             tsel_e = select_targets(esub, rng_e, cfg["n_walks"], cfg["walk_len"],
                                     cfg["n_ref"], THRESHOLDS["EPS_DENS"],
-                                    cfg["k_low"], cfg["k_high"], cf_store)
+                                    cfg["k_low"], cfg["k_high"], cf_store,
+                                    min_remote=THRESHOLDS["EPS_HIT"] + 0.05,
+                                    component="counterfactual")
             if tsel_e.get("status") == "OK":
                 rows = run_navigation(esub, tsel_e["targets"],
                                       [[best_nav, cfg["cf_seeds"]]],
@@ -201,6 +237,7 @@ def run_pipeline(sub, cfg: dict, out_dir: str, is_real: bool = False,
                 res["representation"] = {
                     "status": "OK",
                     "pooled_hit": float(np.mean(hits)) if hits else 0.0,
+                    "n_runs": len(hits), "baseline_n": base_n,
                     "baseline_pooled_hit": base_pooled}
             else:
                 res["representation"] = {"status": tsel_e.get("status")}

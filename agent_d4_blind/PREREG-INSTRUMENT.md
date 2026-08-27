@@ -1,6 +1,6 @@
 # PREREG-INSTRUMENT — D-4 Phase 1 instrument definition
 
-Status: v3 (2026-08-27). Iteration permitted ONLY until the
+Status: v4 (2026-08-27). Iteration permitted ONLY until the
 instrument-validation gate (Section 8) passes on the synthetic controls.
 Every revision is committed; nothing is overwritten silently. After
 instrument validation, the surviving definitions are copied verbatim into
@@ -36,6 +36,54 @@ PREREG-PHASE1.md and frozen.
      from inside a sampled graph, chaos and fragmentation are
      observationally similar; all three accepted labels are fatal and
      name the same pathology.
+- v3 -> v4 (after a 31-agent adversarial review of the constitution;
+  findings ledger: ledgers/redteam_findings.json; 23 confirmed):
+  9.  PRIV-1 identifiability and PRIV-2 anisotropy DEMOTED to
+      diagnostics-only. The review confirmed the planned gate had zero
+      positive calibration (no control ever entered its firing region),
+      gated absolute accuracy against a data-dependent chance level, and
+      calibrated anisotropy on signed-coordinate features while real
+      substrates emit non-negative mismatch features with a built-in
+      linear dependence — it would have relabelled menu distinctness as
+      privilege (the D-3 tautology inverted). Privilege gating rests on
+      PRIV-3 (single-mechanism ablation) and PRIV-4 (re-coding).
+  10. Target pool filtered to remoteness >= EPS_HIT + 0.05: targets whose
+      mean distance to random-viable starts is inside the hit ball can be
+      "hit" at the start sample with zero mutation steps (confirmed
+      empirically on C3's near stratum, remoteness 0.079-0.097 vs ball
+      0.10). Hits are additionally labeled 'start' vs 'search' and both
+      rates reported.
+  11. Ablation privilege arm fires on ANY qualifying cell (drop > 0.60
+      AND z >= 1.96) — the v3 evaluator z-tested only the max-drop cell,
+      which could be an insignificant large drop masking a significant
+      qualifying one. Ablation seeds 2 -> 4: at 2 seeds even a total
+      collapse could not reach z = 1.96 for baselines in [0.15, ~0.21).
+  12. Oracle graph restricted to viable endpoints and viable hit-balls
+      (navigators can neither traverse nor score non-viable states);
+      target-generation edges excluded (they made oracle reachability
+      partially true by construction along the walk that created each
+      target); episodes credited for ALL their starts (initial, restarts,
+      fresh injections), not just the first.
+  13. Counterfactual comparisons made seed-symmetric (baseline restricted
+      to the same seeds-per-target as the variant) with z-guards; a
+      counterfactual that could not be measured now FAILS its gate rather
+      than being silently skipped.
+  14. Re-findability redefined to exclude the qualifying discovery:
+      (k-1)/(S-1) over once-hit targets.
+  15. Diversity floor counted on census UNION target-generation pool
+      (census alone made the floor unattainable for viable fractions in
+      [0.005, 0.025)).
+  16. Instrument validation now runs at EXACTLY the binding-run scale and
+      configuration (single DEFAULT_CFG source), and freeze.py no longer
+      changes any threshold — it stamps status and hashes only, so the
+      frozen instrument is byte-equivalent to the validated one.
+  17. C8_SPARSE control added (60%-viable torus): v1-v3 controls were all
+      100% viable, so the viability code paths (restart logic, viable-only
+      census and oracle) were validated nowhere.
+  18. Reversibility census switched to uniform reservoir sampling (was
+      biased to the earliest parents); per-op destination entropy
+      (effective support) added as a PRIV-2 diagnostic; target generation
+      given its own RNG stream, independent of census consumption.
 
 Design rule observed throughout: no metric may be scored by classifying the
 generator's own output categories back onto themselves. Privilege is
@@ -81,7 +129,10 @@ navigators and cache hits are metered at 1 evaluation (no cache asymmetry).
 
 Privilege = the fixed physics makes a small set of directions, structures,
 operators, or corridors disproportionately responsible for practical
-accessibility. Four frozen assays, chosen because each detects a distinct
+accessibility. GATED assays: PRIV-3 and PRIV-4. PRIV-1 and PRIV-2 are
+diagnostics-only (v4 - see amendment 9): they are reported in full and may
+weaken a verdict narrative in the red-team analysis, never gate it.
+Four frozen assays, chosen because each detects a distinct
 mechanism by which a designer can smuggle in "what kinds of change matter",
 and none consults semantic labels:
 
@@ -249,16 +300,27 @@ against the SYNTHETIC controls only.
 
 Run the complete pipeline (census, operator census, identifiability,
 graph metrics, targets, all navigators, ablation counterfactual, gate
-evaluator) on C1..C7. The instrument PASSES iff the frozen gate evaluator
-assigns:
+evaluator) on C1..C8 at the binding-run scale. The instrument PASSES iff
+the frozen gate evaluator assigns:
 
-- C1 -> primary failure ACCESSIBILITY_FRAGMENTED
-- C2 -> primary failure DISPLACEMENT_COLLAPSE (identity-dominated)
-- C3 -> primary failure PRIVILEGED_CORRIDOR
-- C4 -> primary failure NAVIGATION_FAILURE or REFINDABILITY_FAILURE
+- C1 -> ACCESSIBILITY_FRAGMENTED
+- C2 -> DISPLACEMENT_COLLAPSE (identity-dominated)
+- C3 -> PRIVILEGED_CORRIDOR
+- C4 -> ACCESSIBILITY_FRAGMENTED, NAVIGATION_FAILURE, or
+        REFINDABILITY_FAILURE (the one-way trap is a fragmentation of
+        DIRECTED accessibility: which of the three fatal labels fires
+        depends on whether the sampled graph exposes the one-way
+        structure, and all three are honest names for it; what C4 must
+        NOT be called is poverty, displacement-collapse, privilege, or
+        PASS)
 - C5 -> PASS on all gates
-- C6 -> primary failure NAVIGATION_FAILURE or REFINDABILITY_FAILURE
-- C7 -> primary failure PHENOTYPE_POVERTY (diversity floor)
+- C6 -> NAVIGATION_FAILURE, REFINDABILITY_FAILURE, or
+        ACCESSIBILITY_FRAGMENTED (from inside a sampled graph, chaos and
+        fragmentation are observationally similar; all three are fatal;
+        what C6 must NOT be called is poverty, displacement-collapse,
+        privilege, or PASS)
+- C7 -> PHENOTYPE_POVERTY (diversity floor)
+- C8 -> PASS on all gates (viability-sparse navigable control)
 
 All seven classifications must be produced by the SAME thresholds that will
 be frozen for the real substrates. Thresholds are calibrated on these

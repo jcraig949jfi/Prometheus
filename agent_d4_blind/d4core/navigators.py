@@ -7,6 +7,10 @@ distribution is physics, not navigator knowledge.
 
 Navigators never receive: operator semantics, substrate identity, oracle
 output, graph structure, target identity (only a raw target fingerprint).
+
+Every run records ALL of its viable starts (initial, restarts, fresh
+injections) for per-episode oracle attribution, and whether a hit was scored
+on an ab-initio draw ('start') or on a mutated/recombined child ('search').
 """
 from __future__ import annotations
 
@@ -21,8 +25,7 @@ class EdgeStore:
         self.edges: set[tuple] = set()      # single-parent menu transitions only
         self.edges_x: set[tuple] = set()    # crossover (two-parent) transitions:
         #   population-dependent; excluded from the oracle graph, which must
-        #   estimate single-trajectory menu-physics topology (v2 repair: in v1
-        #   crossover edges let oracle BFS hop between disconnected regions)
+        #   estimate single-trajectory menu-physics topology
         self.fp_by_pkey: dict = {}
         self.nav_start_pkeys: set = set()
 
@@ -44,8 +47,9 @@ class RunResult(dict):
     pass
 
 
-def _sample_viable_start(sub, rng, budget_left, store):
-    """Sample a fresh viable start; returns (genome, fp, evals_spent) or None."""
+def _sample_viable_start(sub, rng, budget_left, store, starts):
+    """Sample a fresh viable start; returns (genome, fp, evals_spent) or None.
+    Records the start pkey into `starts` (per-run) and the global store."""
     spent = 0
     while spent < budget_left:
         g = sub.random_genome(rng)
@@ -54,13 +58,19 @@ def _sample_viable_start(sub, rng, budget_left, store):
         if store is not None:
             store.see(sub, f)
         if sub.viable(f):
+            pk = sub.pkey(f)
+            starts.append(pk)
+            if store is not None:
+                store.nav_start_pkeys.add(pk)
             return g, f, spent
     return None, None, spent
 
 
-def _mk_result(hit, evals_to_hit, best_d, evals_used, start_pkey):
+def _mk_result(hit, evals_to_hit, best_d, evals_used, starts, hit_via=None):
     return RunResult(hit=bool(hit), evals_to_hit=evals_to_hit, best_d=float(best_d),
-                     evals_used=int(evals_used), start_pkey=start_pkey)
+                     evals_used=int(evals_used),
+                     start_pkey=starts[0] if starts else None,
+                     start_pkeys=list(starts), hit_via=hit_via)
 
 
 def n1_restart_walk(sub, rng, budget, target_fp=None, eps_hit=0.1, store=None,
@@ -68,19 +78,17 @@ def n1_restart_walk(sub, rng, budget, target_fp=None, eps_hit=0.1, store=None,
     """N1: random-accept viable walk with restarts."""
     used = 0
     best_d = np.inf
-    g, f, s = _sample_viable_start(sub, rng, budget, store)
+    starts: list = []
+    g, f, s = _sample_viable_start(sub, rng, budget, store, starts)
     used += s
     if g is None:
-        return _mk_result(False, None, best_d, used, None)
-    start_pkey = sub.pkey(f)
-    if store is not None:
-        store.nav_start_pkeys.add(start_pkey)
+        return _mk_result(False, None, best_d, used, starts)
     if coverage_out is not None:
         coverage_out.append((used, sub.pkey(f)))
     if target_fp is not None:
         best_d = sub.d1m(f, target_fp)
         if best_d <= eps_hit:
-            return _mk_result(True, used, best_d, used, start_pkey)
+            return _mk_result(True, used, best_d, used, starts, "start")
     streak = 0
     while used < budget:
         op = sub.sample_op(rng)
@@ -96,13 +104,13 @@ def n1_restart_walk(sub, rng, budget, target_fp=None, eps_hit=0.1, store=None,
                 d = sub.d1m(fc, target_fp)
                 best_d = min(best_d, d)
                 if d <= eps_hit:
-                    return _mk_result(True, used, best_d, used, start_pkey)
+                    return _mk_result(True, used, best_d, used, starts, "search")
             g, f = child, fc
             streak = 0
         else:
             streak += 1
             if streak >= nonviable_restart:
-                g2, f2, s = _sample_viable_start(sub, rng, budget - used, store)
+                g2, f2, s = _sample_viable_start(sub, rng, budget - used, store, starts)
                 used += s
                 if g2 is None:
                     break
@@ -114,8 +122,8 @@ def n1_restart_walk(sub, rng, budget, target_fp=None, eps_hit=0.1, store=None,
                     d = sub.d1m(f, target_fp)
                     best_d = min(best_d, d)
                     if d <= eps_hit:
-                        return _mk_result(True, used, best_d, used, start_pkey)
-    return _mk_result(False, None, best_d, used, start_pkey)
+                        return _mk_result(True, used, best_d, used, starts, "start")
+    return _mk_result(False, None, best_d, used, starts)
 
 
 def n2_hillclimb(sub, rng, budget, target_fp=None, eps_hit=0.1, store=None,
@@ -124,23 +132,21 @@ def n2_hillclimb(sub, rng, budget, target_fp=None, eps_hit=0.1, store=None,
     assert target_fp is not None
     used = 0
     best_d = np.inf
+    starts: list = []
 
     def fresh():
         nonlocal used
-        g, f, s = _sample_viable_start(sub, rng, budget - used, store)
+        g, f, s = _sample_viable_start(sub, rng, budget - used, store, starts)
         used += s
         return g, f
 
     g, f = fresh()
     if g is None:
-        return _mk_result(False, None, best_d, used, None)
-    start_pkey = sub.pkey(f)
-    if store is not None:
-        store.nav_start_pkeys.add(start_pkey)
+        return _mk_result(False, None, best_d, used, starts)
     d_cur = sub.d1m(f, target_fp)
     best_d = d_cur
     if d_cur <= eps_hit:
-        return _mk_result(True, used, best_d, used, start_pkey)
+        return _mk_result(True, used, best_d, used, starts, "start")
     stall = 0
     nonviable = 0
     while used < budget:
@@ -155,7 +161,7 @@ def n2_hillclimb(sub, rng, budget, target_fp=None, eps_hit=0.1, store=None,
             d = sub.d1m(fc, target_fp)
             best_d = min(best_d, d)
             if d <= eps_hit:
-                return _mk_result(True, used, best_d, used, start_pkey)
+                return _mk_result(True, used, best_d, used, starts, "search")
             if d < d_cur or (d == d_cur and rng.random() < 0.5):
                 if d < d_cur:
                     stall = 0
@@ -175,10 +181,10 @@ def n2_hillclimb(sub, rng, budget, target_fp=None, eps_hit=0.1, store=None,
             d_cur = sub.d1m(f, target_fp)
             best_d = min(best_d, d_cur)
             if d_cur <= eps_hit:
-                return _mk_result(True, used, best_d, used, start_pkey)
+                return _mk_result(True, used, best_d, used, starts, "start")
             stall = 0
             nonviable = 0
-    return _mk_result(False, None, best_d, used, start_pkey)
+    return _mk_result(False, None, best_d, used, starts)
 
 
 def n3_novelty(sub, rng, budget, target_fp=None, eps_hit=0.1, store=None,
@@ -188,6 +194,7 @@ def n3_novelty(sub, rng, budget, target_fp=None, eps_hit=0.1, store=None,
     search state, discarded across runs). Incidental target hits recorded."""
     used = 0
     best_d = np.inf
+    starts: list = []
     archive: list = []
 
     def novelty(f):
@@ -199,20 +206,17 @@ def n3_novelty(sub, rng, budget, target_fp=None, eps_hit=0.1, store=None,
         ds.sort()
         return float(np.mean(ds[:k_near]))
 
-    g, f, s = _sample_viable_start(sub, rng, budget, store)
+    g, f, s = _sample_viable_start(sub, rng, budget, store, starts)
     used += s
     if g is None:
-        return _mk_result(False, None, best_d, used, None)
-    start_pkey = sub.pkey(f)
-    if store is not None:
-        store.nav_start_pkeys.add(start_pkey)
+        return _mk_result(False, None, best_d, used, starts)
     archive.append(f)
     if coverage_out is not None:
         coverage_out.append((used, sub.pkey(f)))
     if target_fp is not None:
         best_d = sub.d1m(f, target_fp)
         if best_d <= eps_hit:
-            return _mk_result(True, used, best_d, used, start_pkey)
+            return _mk_result(True, used, best_d, used, starts, "start")
     nov_cur = 0.0
     streak = 0
     while used < budget:
@@ -225,12 +229,17 @@ def n3_novelty(sub, rng, budget, target_fp=None, eps_hit=0.1, store=None,
         if not sub.viable(fc):
             streak += 1
             if streak >= nonviable_restart:
-                g2, f2, s = _sample_viable_start(sub, rng, budget - used, store)
+                g2, f2, s = _sample_viable_start(sub, rng, budget - used, store, starts)
                 used += s
                 if g2 is None:
                     break
                 g, f = g2, f2
                 streak = 0
+                if target_fp is not None:
+                    d = sub.d1m(f, target_fp)
+                    best_d = min(best_d, d)
+                    if d <= eps_hit:
+                        return _mk_result(True, used, best_d, used, starts, "start")
             continue
         streak = 0
         if coverage_out is not None:
@@ -239,7 +248,7 @@ def n3_novelty(sub, rng, budget, target_fp=None, eps_hit=0.1, store=None,
             d = sub.d1m(fc, target_fp)
             best_d = min(best_d, d)
             if d <= eps_hit:
-                return _mk_result(True, used, best_d, used, start_pkey)
+                return _mk_result(True, used, best_d, used, starts, "search")
         nov_child = novelty(fc)
         if nov_child >= nov_cur:
             g, f, nov_cur = child, fc, nov_child
@@ -248,21 +257,19 @@ def n3_novelty(sub, rng, budget, target_fp=None, eps_hit=0.1, store=None,
             archive.append(fc)
             if len(archive) > archive_cap:
                 archive.pop(0)
-    return _mk_result(False, None, best_d, used, start_pkey)
+    return _mk_result(False, None, best_d, used, starts)
 
 
 def n4_recombiner(sub, rng, budget, target_fp=None, eps_hit=0.1, store=None,
                   coverage_out=None, pop_size=16, p_mutate=0.5, p_fresh=0.05,
                   tourn_k=3):
-    # v2 repair: p_fresh 0.15 -> 0.05. At 0.15 N4 was ~15% restart-sampler,
-    # blurring its mechanism identity with N1 and brute-forcing fragmented
-    # spaces through ab-initio teleportation rather than recombination.
-    """N4: population recombination with selection on d1-to-target."""
+    """N4: population recombination with selection on d1-to-target.
+    p_fresh kept low (0.05): at 0.15 N4 was substantially a restart sampler."""
     assert target_fp is not None
     used = 0
     best_d = np.inf
+    starts: list = []
     pop: list = []  # (genome, fp, d)
-    start_pkey = None
     while len(pop) < pop_size and used < budget // 3:
         g = sub.random_genome(rng)
         f = sub.evaluate(g)
@@ -270,17 +277,17 @@ def n4_recombiner(sub, rng, budget, target_fp=None, eps_hit=0.1, store=None,
         if store is not None:
             store.see(sub, f)
         if sub.viable(f):
+            pk = sub.pkey(f)
+            starts.append(pk)
+            if store is not None:
+                store.nav_start_pkeys.add(pk)
             d = sub.d1m(f, target_fp)
             best_d = min(best_d, d)
-            if start_pkey is None:
-                start_pkey = sub.pkey(f)
-                if store is not None:
-                    store.nav_start_pkeys.add(start_pkey)
             if d <= eps_hit:
-                return _mk_result(True, used, best_d, used, start_pkey)
+                return _mk_result(True, used, best_d, used, starts, "start")
             pop.append((g, f, d))
     if len(pop) < 2:
-        return _mk_result(False, None, best_d, used, start_pkey)
+        return _mk_result(False, None, best_d, used, starts)
 
     def tournament():
         idx = rng.integers(0, len(pop), size=tourn_k)
@@ -291,8 +298,14 @@ def n4_recombiner(sub, rng, budget, target_fp=None, eps_hit=0.1, store=None,
             child = sub.random_genome(rng)
             fc = sub.evaluate(child)
             used += 1
+            via = "start"
             if store is not None:
                 store.see(sub, fc)
+            if sub.viable(fc):
+                pk = sub.pkey(fc)
+                starts.append(pk)
+                if store is not None:
+                    store.nav_start_pkeys.add(pk)
         else:
             i, j = tournament(), tournament()
             child = sub.crossover(pop[i][0], pop[j][0], rng)
@@ -301,17 +314,18 @@ def n4_recombiner(sub, rng, budget, target_fp=None, eps_hit=0.1, store=None,
                 child = sub.mutate(child, op, rng)
             fc = sub.evaluate(child)
             used += 1
+            via = "search"
             if store is not None:
                 store.edge(sub, pop[i][1], -1, fc)
         if sub.viable(fc):
             d = sub.d1m(fc, target_fp)
             best_d = min(best_d, d)
             if d <= eps_hit:
-                return _mk_result(True, used, best_d, used, start_pkey)
+                return _mk_result(True, used, best_d, used, starts, via)
             worst = max(range(len(pop)), key=lambda t: pop[t][2])
             if d < pop[worst][2]:
                 pop[worst] = (child, fc, d)
-    return _mk_result(False, None, best_d, used, start_pkey)
+    return _mk_result(False, None, best_d, used, starts)
 
 
 NAVIGATORS = {

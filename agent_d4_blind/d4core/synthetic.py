@@ -274,6 +274,25 @@ class C5Navigable(SyntheticControl):
         return mx * s + my
 
 
+class C8Sparse(C5Navigable):
+    """C5 torus with a random 40% of nodes NON-VIABLE (v4 addition: the
+    v1-v3 validation set never exercised the viability axis — every control
+    was 100% viable, so navigator restart logic, viable-only census, and
+    the oracle's viable-only graph were validated nowhere). Truth: the
+    viable 60% remains a connected, multiply navigable region (site
+    percolation with a 48-cell step neighborhood at 0.6 is far above
+    threshold). Expected: PASS, with viable_frac ~0.6 reported honestly."""
+    name = "C8_SPARSE"
+
+    def __init__(self, seed: int = 4408):
+        super().__init__(seed)
+        mask_rng = np.random.default_rng(seed + 1)
+        self.viable_mask = mask_rng.random(self.n_nodes) < 0.6
+
+    def viable(self, fp) -> bool:
+        return bool(self.viable_mask[fp[0]])
+
+
 class C6Chaos(SyntheticControl):
     """100k nodes, 8-dim hash-random fingerprints, uniform teleport moves.
     Diversity without locality: nothing is navigable or re-findable."""
@@ -318,6 +337,7 @@ ALL_CONTROLS = {
     "C5_NAVIGABLE": C5Navigable,
     "C6_CHAOS": C6Chaos,
     "C7_TINY": C7Tiny,
+    "C8_SPARSE": C8Sparse,
 }
 
 # What the frozen gate evaluator MUST produce for the instrument to pass.
@@ -336,4 +356,5 @@ EXPECTED = {
     "C6_CHAOS": {"NAVIGATION_FAILURE", "REFINDABILITY_FAILURE",
                  "ACCESSIBILITY_FRAGMENTED"},
     "C7_TINY": {"PHENOTYPE_POVERTY"},
+    "C8_SPARSE": {"PASS"},
 }

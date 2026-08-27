@@ -20,26 +20,10 @@ from substrates.vm_substrates import SUBSTRATES  # noqa: E402
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(BASE, "results")
 
-REAL_CFG = {
-    "seed": 12000,
-    "census_n": 10_000,
-    "op_parents": 1200,
-    "op_reps": 4,
-    "n_cross": 500,
-    "rev_sample": 400,
-    "n_walks": 64,
-    "walk_len": 150,
-    "n_ref": 48,
-    "k_low": 4,
-    "k_high": 4,
-    "nav_budget": 1200,
-    "nav_plan": [["N1_RESTART_WALK", 3], ["N2_HILLCLIMB", 5],
-                 ["N3_NOVELTY", 2], ["N4_RECOMBINER", 5]],
-    "coverage_seeds": 2,
-    "coverage_budget": 3000,
-    "ablation_seeds": 2,
-    "cf_seeds": 2,
-}
+# Everything except the seed comes from the single frozen scale in
+# d4core/pipeline.py DEFAULT_CFG — instrument validation and binding runs
+# use identical configuration.
+REAL_CFG = {"seed": 12000}
 
 
 def main(name: str):
