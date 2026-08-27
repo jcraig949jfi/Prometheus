@@ -294,3 +294,92 @@ criterion, the reconciliation hook, and the reveal.
 ---
 
 *Charon, 2026-08-27. Most cargo doesn't come back. This one was turned around at the dock.*
+
+---
+
+# ADDENDUM A — 2026-08-27, same session, after reading the authorship code
+
+Filed append-only. §3.2 and §3.5 above are **corrected, not withdrawn**: the verdict stands and
+one of the three blocking decisions is downgraded.
+
+I wrote §3.2 and §3.5 from the handoff and `claim_record.py`. I then read `claims_060.py`,
+`claims_061.py` and `claims_062.py` — the modules that actually author the exported claims — and
+found a fourth injection point that is better than two of the three I named, and available today.
+
+## A.1 Campaign Rule 2 is itself the injection surface
+
+Every claims module opens with the same discipline, stated in its own docstring:
+
+> *"CAMPAIGN RULE 2: no manually authored numerical findings. Every number below is READ FROM the
+> committed row files."*
+
+`claims_062.py` loads `rung_notes/cycle_062_gate_probes.json` and
+`cycle_062_hostile_census.json` and builds `row_count`, `value` and the rest out of those dicts.
+060 and 061 do the same against their own row files. **Every cycle therefore has a single,
+campaign-mandated, machine-readable choke point between measurement and claim** — and nothing in
+the frozen controls verifies that the row file agrees with the world. `measurement_command` is
+recorded; cycle 062 measured that `promotable()` never re-runs it.
+
+So: **a corrupted row file passes every frozen control by construction.** The rule that forbids
+typed numbers, and that makes the record auditable, is the same rule that makes it injectable.
+That is not an argument against Rule 2 — it is the best thing in the campaign — but it is where
+the canary belongs.
+
+## A.2 The fourth injection point: PRE-AUTHORSHIP (the rows)
+
+Corrupt what the claims module *reads*, before Techne writes a word of prose around it.
+
+This has the property §3.5 says the eight families lack. Techne authors the proposition, the
+contract, the caveats and the counterfactual **around whatever the row file says**, so the
+finished record is internally flawless: `binding_errors()` returns empty, `promotable()` passes,
+and every field agrees with every other. It is **coherent misbinding**, reachable today, with no
+change to how work enters his loop.
+
+What it can plant coherently:
+
+- **P→S** — drop or swap a stratum inside the rows while the declared `of_total` / `n_cases`
+  stays put. The population he declares is then not the population he touched, and he will have
+  written the selection predicate himself, in good faith, to match the wrong one.
+- **M→C** — perturb a value by a few percent. He then writes the prose, the caveat and the
+  counterfactual around a number that is not the one his command produces.
+- **Neighbouring-sample substitution** — hand him cycle N−1's rows under cycle N's filename.
+
+What it still cannot plant: **Q→P**. The question is his, and only brief corruption (§3.5b)
+reaches it. That limitation is real and unchanged.
+
+**Implementation, and it is cleaner than the ledger design in §3.4.** Intercept the *read*, not
+the file: patch the row-file load inside the harness's process so the corrupted value never
+touches disk and is never committed. Contamination then cannot occur — there is no wrong number
+in the tree to reconcile. And a later unharnessed re-run of `python techne/loop/claims_06N.py`
+returns the true number, which is a legitimate D3 detection channel rather than a leak.
+
+## A.3 Correction to §3.2 — there is no natural post-control seam
+
+I described "post-control, pre-export" as Techne's default and as measuring the reader. In the
+code as written there is no such seam: `main()` calls `promotable()` and `render()` in the same
+loop, so control and export are one step. Injecting there means corrupting a record after
+`promotable()` has already returned, which is implementable but artificial, and measures only
+whether Techne re-reads his own rendered markdown.
+
+**Revised split of the planted budget:**
+
+    50%  PRE-AUTHORSHIP (rows)      — coherent misbinding, P->S and M->C.   Available now.
+    30%  POST-AUTHORSHIP, PRE-CONTROL — the machinery, single-field.        Available now.
+    20%  PRE-AUTHORSHIP (brief)     — coherent misbinding, Q->P.            Needs decision 2.
+
+## A.4 What this changes for James
+
+**Decision 2 is downgraded from blocking to strengthening.** The harness is buildable at
+meaningful strength on decisions 1 and 3 alone: the row-level point plants the coherent defect
+class that §1 says the original design missed entirely. Brief corruption remains the only route
+to Q→P — the arrow Techne's own prediction 2 names as where the escapes will cluster — so it is
+worth authorising, but the harness no longer waits on it.
+
+**Decisions 1 (custody) and 3 (reveal key) still block.** Unchanged.
+
+## A.5 What this does not change
+
+The four defects in §1 stand. The answer key is still published, specificity is still unmeasured,
+the seal still confounds unseen-ness with difficulty, and cycle-20-only exposure still has one
+attainable firing region. A better injection point does not repair an unreadable comparison.
+
