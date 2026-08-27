@@ -14,19 +14,31 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'substrate'))
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'mutation'))
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'exact_oracle'))
 from physics import mutate, crossover, SEED_REPERTOIRE
-from oracle import bit_mismatch_capped as nav_dist
+from oracle import solves as _authoritative_solves
+from rm_fast import FastTask
 
 BIG = 10 ** 9
 
 
-def _full_d(prog, task):
-    return nav_dist(prog, task, 16 * len(task['table']))
+class _Ctx:
+    """Per-task fast scorer. Claimed solves (dist 0) are re-verified on the
+    reference VM (authoritative exact oracle) before being reported."""
+    def __init__(self, task):
+        self.task = task
+        self.ft = FastTask(task)
+
+    def d(self, prog):
+        v = self.ft.dist(prog)
+        if v == 0:
+            assert _authoritative_solves(prog, self.task),                 'fast/reference divergence: freeze-blocker'
+        return v
 
 
 def m0_hc(task, rng, budget, repertoire=None, lam=8, stall=50, extra_pool=None):
+    ctx = _Ctx(task)
     rep = repertoire or SEED_REPERTOIRE
     cur = rep[rng.randrange(len(rep))]
-    bd = _full_d(cur, task)
+    bd = ctx.d(cur)
     evals = 1
     if bd == 0:
         return {'solved': True, 'first_solve': 1, 'evals': 1}
@@ -36,7 +48,7 @@ def m0_hc(task, rng, budget, repertoire=None, lam=8, stall=50, extra_pool=None):
         for _ in range(lam):
             c = mutate(cur, rng)
             evals += 1
-            d = nav_dist(c, task, best_d)
+            d = ctx.d(c)
             if d <= best_d:
                 best_c, best_d = c, d
             if best_d == 0 or evals >= budget:
@@ -51,7 +63,7 @@ def m0_hc(task, rng, budget, repertoire=None, lam=8, stall=50, extra_pool=None):
             return {'solved': True, 'first_solve': evals, 'evals': evals}
         if no_imp >= stall:
             cur = rep[rng.randrange(len(rep))]
-            bd = _full_d(cur, task)
+            bd = ctx.d(cur)
             evals += 1
             no_imp = 0
             if bd == 0:
@@ -63,6 +75,7 @@ def _m0_pop(task, rng, budget, use_crossover, repertoire=None, extra_pool=None,
             psize=32, immigrant=0.10):
     """extra_pool: additional artifact source for immigrants/parents — used
     ONLY by M1 wrappers later; M0 evidence arms always pass None."""
+    ctx = _Ctx(task)
     rep = repertoire or SEED_REPERTOIRE
     def fresh():
         if extra_pool and rng.random() < 0.5:
@@ -71,7 +84,7 @@ def _m0_pop(task, rng, budget, use_crossover, repertoire=None, extra_pool=None,
     pop = [fresh() for _ in range(psize)]
     evals, dists = 0, []
     for g in pop:
-        d = _full_d(g, task)
+        d = ctx.d(g)
         evals += 1
         if d == 0:
             return {'solved': True, 'first_solve': evals, 'evals': evals}
@@ -92,7 +105,7 @@ def _m0_pop(task, rng, budget, use_crossover, repertoire=None, extra_pool=None,
                 children.append(mutate(p1, rng))
         pop, dists = children, []
         for g in pop:
-            d = _full_d(g, task)
+            d = ctx.d(g)
             evals += 1
             if d == 0:
                 return {'solved': True, 'first_solve': evals, 'evals': evals}

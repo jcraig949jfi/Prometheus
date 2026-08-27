@@ -82,6 +82,21 @@ seeds before freeze): EASY W* <= 4; MEDIUM 5–8; HARD 9–14; VERY_HARD >= 15.
 Battery rejects tasks trivial for frozen M0 calibration on engineering seeds
 (constitution section 19) and families with surface shortcuts.
 
+## 6b. Navigation objective (frozen meter component)
+All arms (M0 suite and M1) navigate on the same deterministic score: bitwise
+Hamming distance between candidate outputs and target outputs, summed over the
+FULL task domain (constitution s23 deterministic partial credit). Score 0 is
+equivalent to the exact oracle passing; every claimed solve is re-verified on
+the reference VM. Rationale (engineering measurement 2026-08-27): the
+pointwise exact-match count is a needle landscape on externally generated
+tasks — witness 1-mutation neighborhoods jump from 0 to seed-level distance,
+and M0 solved 0/48 tasks at 10k evaluations across all families. Bitwise
+distance restores a usable gradient at shallow depth (depth-1: 4/5 solved in
+<= 237 evaluations). The performance path is a Numba engine verified
+bit-identical to the reference VM on 2,402-program orbits
+(substrate/test_equivalence.py); the reference VM remains the authoritative
+oracle.
+
 ## 7. Findability (F) and primary metric
 CFR = learner-exact-solved / oracle-expressible(-reachable), by stratum and
 family, at each rung of a frozen budget ladder (provisional: 1000 / 3000 /
