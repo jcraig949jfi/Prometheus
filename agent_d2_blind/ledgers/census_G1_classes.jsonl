@@ -1,0 +1,137 @@
+{"kind": "TRIV_NOOP", "labels": [], "secondary": [], "minsize": 1, "minrank": 0, "members": 13372, "rep": "x", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": ["S7_COLLAPSE", "Z_SHRINK"], "minsize": 1, "minrank": 6, "members": 13390, "rep": "(q x)", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": ["S7_COLLAPSE", "Z_SHRINK"], "minsize": 1, "minrank": 7, "members": 13390, "rep": "(q nil)", "productive": true}
+{"kind": "LIVE", "labels": ["DELETE"], "secondary": ["Z_SHRINK"], "minsize": 3, "minrank": 100, "members": 146, "rep": "(head (tail x))", "productive": true}
+{"kind": "LIVE", "labels": ["DELETE"], "secondary": ["Z_SHRINK"], "minsize": 4, "minrank": 740, "members": 1, "rep": "(head (tail (tail x)))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": [], "minsize": 4, "minrank": 840, "members": 81, "rep": "(head (cons x x))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": ["S7_COLLAPSE", "Z_SHRINK"], "minsize": 4, "minrank": 960, "members": 21, "rep": "(head (cons (q x) x))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": ["S7_COLLAPSE", "Z_SHRINK"], "minsize": 4, "minrank": 980, "members": 21, "rep": "(head (cons (q nil) x))", "productive": true}
+{"kind": "LIVE", "labels": ["RELABEL"], "secondary": ["Z_SAME"], "minsize": 4, "minrank": 3020, "members": 1, "rep": "(cons (q q) (tail x))", "productive": true}
+{"kind": "LIVE", "labels": ["RELABEL"], "secondary": ["Z_SAME"], "minsize": 4, "minrank": 3080, "members": 1, "rep": "(cons (q head) (tail x))", "productive": true}
+{"kind": "LIVE", "labels": ["RELABEL"], "secondary": ["Z_SAME"], "minsize": 4, "minrank": 3140, "members": 1, "rep": "(cons (q tail) (tail x))", "productive": true}
+{"kind": "LIVE", "labels": ["RELABEL"], "secondary": ["Z_SAME"], "minsize": 4, "minrank": 3200, "members": 1, "rep": "(cons (q self) (tail x))", "productive": true}
+{"kind": "LIVE", "labels": ["RELABEL"], "secondary": ["Z_SAME"], "minsize": 4, "minrank": 3260, "members": 1, "rep": "(cons (q cons) (tail x))", "productive": true}
+{"kind": "LIVE", "labels": ["RELABEL"], "secondary": ["Z_SAME"], "minsize": 4, "minrank": 3320, "members": 1, "rep": "(cons (q if) (tail x))", "productive": true}
+{"kind": "LIVE", "labels": ["DELETE"], "secondary": ["Z_SHRINK"], "minsize": 5, "minrank": 6200, "members": 1, "rep": "(head (tail (head (tail x))))", "productive": true}
+{"kind": "LIVE", "labels": ["DELETE"], "secondary": ["Z_SHRINK"], "minsize": 5, "minrank": 6260, "members": 1, "rep": "(head (tail (tail (tail x))))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": [], "minsize": 5, "minrank": 7360, "members": 64, "rep": "(head (cons x (tail x)))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": ["S7_COLLAPSE", "Z_SHRINK"], "minsize": 5, "minrank": 7720, "members": 61, "rep": "(head (cons (q x) (tail x)))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": ["S7_COLLAPSE", "Z_SHRINK"], "minsize": 5, "minrank": 7780, "members": 61, "rep": "(head (cons (q nil) (tail x)))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": [], "minsize": 5, "minrank": 13480, "members": 96, "rep": "(tail (cons (head x) x))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["Z_SHRINK"], "minsize": 5, "minrank": 26300, "members": 1, "rep": "(cons (q q) (tail (tail x)))", "productive": true}
+{"kind": "LIVE", "labels": ["WRAP"], "secondary": ["Z_GROW"], "minsize": 5, "minrank": 26401, "members": 1, "rep": "(cons (q q) (cons x nil))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 5, "minrank": 26441, "members": 1, "rep": "(cons (q q) (cons (q a) nil))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 5, "minrank": 26461, "members": 1, "rep": "(cons (q q) (cons (q b) nil))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 5, "minrank": 26481, "members": 1, "rep": "(cons (q q) (cons (q c) nil))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 5, "minrank": 26501, "members": 1, "rep": "(cons (q q) (cons (q d) nil))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 5, "minrank": 26521, "members": 1, "rep": "(cons (q q) (cons (q x) nil))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 5, "minrank": 26541, "members": 1, "rep": "(cons (q q) (cons (q nil) nil))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 5, "minrank": 26561, "members": 1, "rep": "(cons (q q) (cons (q true) nil))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 5, "minrank": 26581, "members": 1, "rep": "(cons (q q) (cons (q false) nil))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 5, "minrank": 26601, "members": 1, "rep": "(cons (q q) (cons (q q) nil))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 5, "minrank": 26621, "members": 1, "rep": "(cons (q q) (cons (q head) nil))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 5, "minrank": 26641, "members": 1, "rep": "(cons (q q) (cons (q tail) nil))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 5, "minrank": 26661, "members": 1, "rep": "(cons (q q) (cons (q self) nil))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 5, "minrank": 26681, "members": 1, "rep": "(cons (q q) (cons (q cons) nil))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 5, "minrank": 26701, "members": 1, "rep": "(cons (q q) (cons (q if) nil))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 5, "minrank": 26721, "members": 1, "rep": "(cons (q q) (cons (q atom) nil))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 5, "minrank": 26741, "members": 1, "rep": "(cons (q q) (cons (q null) nil))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 5, "minrank": 26761, "members": 1, "rep": "(cons (q q) (cons (q not) nil))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 5, "minrank": 26781, "members": 1, "rep": "(cons (q q) (cons (q eq) nil))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["Z_SHRINK"], "minsize": 5, "minrank": 26880, "members": 1, "rep": "(cons (q head) (tail (tail x)))", "productive": true}
+{"kind": "LIVE", "labels": ["WRAP"], "secondary": ["Z_GROW"], "minsize": 5, "minrank": 26981, "members": 1, "rep": "(cons (q head) (cons x nil))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 5, "minrank": 27101, "members": 1, "rep": "(cons (q head) (cons (q x) nil))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 5, "minrank": 27121, "members": 1, "rep": "(cons (q head) (cons (q nil) nil))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["Z_SHRINK"], "minsize": 5, "minrank": 27460, "members": 1, "rep": "(cons (q tail) (tail (tail x)))", "productive": true}
+{"kind": "LIVE", "labels": ["WRAP"], "secondary": ["Z_GROW"], "minsize": 5, "minrank": 27561, "members": 1, "rep": "(cons (q tail) (cons x nil))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 5, "minrank": 27681, "members": 1, "rep": "(cons (q tail) (cons (q x) nil))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 5, "minrank": 27701, "members": 1, "rep": "(cons (q tail) (cons (q nil) nil))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["Z_SHRINK"], "minsize": 5, "minrank": 28040, "members": 1, "rep": "(cons (q self) (tail (tail x)))", "productive": true}
+{"kind": "LIVE", "labels": ["WRAP"], "secondary": ["Z_GROW"], "minsize": 5, "minrank": 28141, "members": 1, "rep": "(cons (q self) (cons x nil))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 5, "minrank": 28261, "members": 2, "rep": "(cons (q self) (cons (q x) nil))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["Z_SHRINK"], "minsize": 5, "minrank": 28620, "members": 1, "rep": "(cons (q cons) (tail (tail x)))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["S7_COLLAPSE", "Z_SHRINK"], "minsize": 5, "minrank": 52021, "members": 70, "rep": "(if (atom x) x nil)", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["S7_COLLAPSE", "Z_SHRINK"], "minsize": 5, "minrank": 52026, "members": 7, "rep": "(if (atom x) x (q x))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["S7_COLLAPSE", "Z_SHRINK"], "minsize": 5, "minrank": 52027, "members": 7, "rep": "(if (atom x) x (q nil))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["S7_COLLAPSE", "Z_SHRINK"], "minsize": 5, "minrank": 52046, "members": 93, "rep": "(if (atom x) nil (q x))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["S7_COLLAPSE", "Z_SHRINK"], "minsize": 5, "minrank": 52047, "members": 93, "rep": "(if (atom x) nil (q nil))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": [], "minsize": 5, "minrank": 52140, "members": 4, "rep": "(if (atom x) (q x) x)", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["S7_COLLAPSE", "Z_SHRINK"], "minsize": 5, "minrank": 52141, "members": 54, "rep": "(if (atom x) (q x) nil)", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["S7_COLLAPSE", "Z_SHRINK"], "minsize": 5, "minrank": 52147, "members": 2, "rep": "(if (atom x) (q x) (q nil))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": [], "minsize": 5, "minrank": 52160, "members": 4, "rep": "(if (atom x) (q nil) x)", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["S7_COLLAPSE", "Z_SHRINK"], "minsize": 5, "minrank": 52161, "members": 54, "rep": "(if (atom x) (q nil) nil)", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["S7_COLLAPSE", "Z_SHRINK"], "minsize": 5, "minrank": 52166, "members": 2, "rep": "(if (atom x) (q nil) (q x))", "productive": true}
+{"kind": "LIVE", "labels": ["DELETE"], "secondary": ["Z_SHRINK"], "minsize": 6, "minrank": 73840, "members": 1, "rep": "(head (tail (head (tail (tail x)))))", "productive": true}
+{"kind": "LIVE", "labels": ["DELETE"], "secondary": ["Z_SHRINK"], "minsize": 6, "minrank": 73940, "members": 21, "rep": "(head (tail (head (cons x x))))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": [], "minsize": 6, "minrank": 74360, "members": 1, "rep": "(head (tail (tail (head (tail x)))))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": [], "minsize": 6, "minrank": 83660, "members": 1, "rep": "(head (cons x (head (tail x))))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": ["S7_COLLAPSE", "Z_SHRINK"], "minsize": 6, "minrank": 87140, "members": 1, "rep": "(head (cons (q x) (head (tail x))))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": ["S7_COLLAPSE", "Z_SHRINK"], "minsize": 6, "minrank": 87720, "members": 1, "rep": "(head (cons (q nil) (head (tail x))))", "productive": true}
+{"kind": "LIVE", "labels": ["DELETE"], "secondary": ["S1_PARTIAL", "Z_SHRINK"], "minsize": 6, "minrank": 146880, "members": 20, "rep": "(tail (cons x (head (tail x))))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["Z_SHRINK"], "minsize": 6, "minrank": 308480, "members": 1, "rep": "(cons (q q) (tail (head (tail x))))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["Z_SHRINK"], "minsize": 6, "minrank": 308540, "members": 1, "rep": "(cons (q q) (tail (tail (tail x))))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 6, "minrank": 310821, "members": 1, "rep": "(cons (q q) (cons (head x) nil))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["Z_SHRINK"], "minsize": 6, "minrank": 313420, "members": 1, "rep": "(cons (q head) (tail (head (tail x))))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["Z_SHRINK"], "minsize": 6, "minrank": 313480, "members": 1, "rep": "(cons (q head) (tail (tail (tail x))))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["Z_SHRINK"], "minsize": 6, "minrank": 318360, "members": 1, "rep": "(cons (q tail) (tail (head (tail x))))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["Z_SHRINK"], "minsize": 6, "minrank": 318420, "members": 1, "rep": "(cons (q tail) (tail (tail (tail x))))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["Z_SHRINK"], "minsize": 6, "minrank": 323300, "members": 1, "rep": "(cons (q self) (tail (head (tail x))))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["Z_SHRINK"], "minsize": 6, "minrank": 323360, "members": 1, "rep": "(cons (q self) (tail (tail (tail x))))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["Z_SHRINK"], "minsize": 6, "minrank": 328240, "members": 1, "rep": "(cons (q cons) (tail (head (tail x))))", "productive": true}
+{"kind": "LIVE", "labels": ["WRAP"], "secondary": ["DUP2", "Z_GROW"], "minsize": 6, "minrank": 329400, "members": 1, "rep": "(cons (q cons) (cons x (tail x)))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["Z_GROW"], "minsize": 6, "minrank": 329760, "members": 1, "rep": "(cons (q cons) (cons (q x) (tail x)))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["Z_GROW"], "minsize": 6, "minrank": 329820, "members": 1, "rep": "(cons (q cons) (cons (q nil) (tail x)))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["Z_GROW"], "minsize": 6, "minrank": 334820, "members": 1, "rep": "(cons (q if) (cons (q true) (tail x)))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["Z_GROW"], "minsize": 6, "minrank": 334880, "members": 1, "rep": "(cons (q if) (cons (q false) (tail x)))", "productive": true}
+{"kind": "LIVE", "labels": ["WRAP"], "secondary": ["DUP2", "Z_GROW"], "minsize": 6, "minrank": 357461, "members": 1, "rep": "(cons (head x) (cons x nil))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 6, "minrank": 357501, "members": 1, "rep": "(cons (head x) (cons (q a) nil))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 6, "minrank": 357521, "members": 1, "rep": "(cons (head x) (cons (q b) nil))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 6, "minrank": 357541, "members": 1, "rep": "(cons (head x) (cons (q c) nil))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 6, "minrank": 357561, "members": 1, "rep": "(cons (head x) (cons (q d) nil))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["S7_COLLAPSE", "Z_SHRINK"], "minsize": 6, "minrank": 357581, "members": 1, "rep": "(cons (head x) (cons (q x) nil))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 6, "minrank": 357601, "members": 1, "rep": "(cons (head x) (cons (q nil) nil))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 6, "minrank": 357621, "members": 1, "rep": "(cons (head x) (cons (q true) nil))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 6, "minrank": 357641, "members": 1, "rep": "(cons (head x) (cons (q false) nil))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 6, "minrank": 357661, "members": 1, "rep": "(cons (head x) (cons (q q) nil))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 6, "minrank": 357681, "members": 1, "rep": "(cons (head x) (cons (q head) nil))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 6, "minrank": 357701, "members": 1, "rep": "(cons (head x) (cons (q tail) nil))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 6, "minrank": 357721, "members": 1, "rep": "(cons (head x) (cons (q self) nil))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 6, "minrank": 357741, "members": 1, "rep": "(cons (head x) (cons (q cons) nil))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 6, "minrank": 357761, "members": 1, "rep": "(cons (head x) (cons (q if) nil))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 6, "minrank": 357781, "members": 1, "rep": "(cons (head x) (cons (q atom) nil))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 6, "minrank": 357801, "members": 1, "rep": "(cons (head x) (cons (q null) nil))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 6, "minrank": 357821, "members": 1, "rep": "(cons (head x) (cons (q not) nil))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["S7_COLLAPSE"], "minsize": 6, "minrank": 357841, "members": 1, "rep": "(cons (head x) (cons (q eq) nil))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": [], "minsize": 6, "minrank": 579281, "members": 1, "rep": "(if (atom x) x (head nil))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": [], "minsize": 6, "minrank": 579301, "members": 1, "rep": "(if (atom x) x (tail nil))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": [], "minsize": 6, "minrank": 579302, "members": 18, "rep": "(if (atom x) x (tail (q a)))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": [], "minsize": 6, "minrank": 579320, "members": 2, "rep": "(if (atom x) x (self x))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": [], "minsize": 6, "minrank": 579641, "members": 1, "rep": "(if (atom x) (q x) (head nil))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": [], "minsize": 6, "minrank": 579661, "members": 1, "rep": "(if (atom x) (q x) (tail nil))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": [], "minsize": 6, "minrank": 579662, "members": 18, "rep": "(if (atom x) (q x) (tail (q a)))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": [], "minsize": 6, "minrank": 579680, "members": 2, "rep": "(if (atom x) (q x) (self x))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": [], "minsize": 6, "minrank": 579701, "members": 1, "rep": "(if (atom x) (q nil) (head nil))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": [], "minsize": 6, "minrank": 579721, "members": 1, "rep": "(if (atom x) (q nil) (tail nil))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": [], "minsize": 6, "minrank": 579722, "members": 18, "rep": "(if (atom x) (q nil) (tail (q a)))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": [], "minsize": 6, "minrank": 579740, "members": 2, "rep": "(if (atom x) (q nil) (self x))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": [], "minsize": 6, "minrank": 629700, "members": 1, "rep": "(if (atom x) (head nil) x)", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": ["S7_COLLAPSE", "Z_SHRINK"], "minsize": 6, "minrank": 629706, "members": 1, "rep": "(if (atom x) (head nil) (q x))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": ["S7_COLLAPSE", "Z_SHRINK"], "minsize": 6, "minrank": 629707, "members": 1, "rep": "(if (atom x) (head nil) (q nil))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": [], "minsize": 6, "minrank": 630100, "members": 1, "rep": "(if (atom x) (tail nil) x)", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": ["S7_COLLAPSE", "Z_SHRINK"], "minsize": 6, "minrank": 630106, "members": 1, "rep": "(if (atom x) (tail nil) (q x))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": ["S7_COLLAPSE", "Z_SHRINK"], "minsize": 6, "minrank": 630107, "members": 1, "rep": "(if (atom x) (tail nil) (q nil))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": [], "minsize": 6, "minrank": 630480, "members": 19, "rep": "(if (atom x) (self x) x)", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": ["S7_COLLAPSE", "Z_SHRINK"], "minsize": 6, "minrank": 630486, "members": 19, "rep": "(if (atom x) (self x) (q x))", "productive": true}
+{"kind": "TRIV_CONST", "labels": [], "secondary": ["S7_COLLAPSE", "Z_SHRINK"], "minsize": 6, "minrank": 630487, "members": 19, "rep": "(if (atom x) (self x) (q nil))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["S7_COLLAPSE", "Z_SHRINK"], "minsize": 6, "minrank": 747281, "members": 68, "rep": "(if (eq x (q x)) x nil)", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": [], "minsize": 6, "minrank": 747300, "members": 34, "rep": "(if (eq x (q x)) nil x)", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["S7_COLLAPSE", "Z_SHRINK"], "minsize": 6, "minrank": 747306, "members": 34, "rep": "(if (eq x (q x)) nil (q x))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["S7_COLLAPSE", "Z_SHRINK"], "minsize": 6, "minrank": 747307, "members": 34, "rep": "(if (eq x (q x)) nil (q nil))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["S7_COLLAPSE", "Z_SHRINK"], "minsize": 6, "minrank": 747421, "members": 34, "rep": "(if (eq x (q x)) (q nil) nil)", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["S7_COLLAPSE", "Z_SHRINK"], "minsize": 6, "minrank": 747426, "members": 2, "rep": "(if (eq x (q x)) (q nil) (q x))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["S7_COLLAPSE", "Z_SHRINK"], "minsize": 6, "minrank": 747681, "members": 68, "rep": "(if (eq x (q nil)) x nil)", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": [], "minsize": 6, "minrank": 747700, "members": 34, "rep": "(if (eq x (q nil)) nil x)", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["S7_COLLAPSE", "Z_SHRINK"], "minsize": 6, "minrank": 747706, "members": 34, "rep": "(if (eq x (q nil)) nil (q x))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["S7_COLLAPSE", "Z_SHRINK"], "minsize": 6, "minrank": 747707, "members": 34, "rep": "(if (eq x (q nil)) nil (q nil))", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["S7_COLLAPSE", "Z_SHRINK"], "minsize": 6, "minrank": 747801, "members": 34, "rep": "(if (eq x (q nil)) (q x) nil)", "productive": true}
+{"kind": "LIVE", "labels": [], "secondary": ["S7_COLLAPSE", "Z_SHRINK"], "minsize": 6, "minrank": 747807, "members": 2, "rep": "(if (eq x (q nil)) (q x) (q nil))", "productive": true}
