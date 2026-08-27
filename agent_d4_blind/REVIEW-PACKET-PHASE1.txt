@@ -1,0 +1,662 @@
+AGENT D-4 -- BLIND ACCESSIBILITY GEOMETRY -- PHASE 1 EXTERNAL REVIEW PACKET
+2026-08-27 -- self-contained; no repository access is assumed
+
+====================================================================
+0. WHAT IS BEING ASKED OF YOU
+====================================================================
+
+This is a preregistered, adversarial, instrument-first experiment. Its
+verdict is already frozen and committed; it cannot be improved, only
+invalidated. You are asked to ATTACK it:
+
+  - find circularity: any place a designer choice is measured back to
+    itself and reported as a discovery;
+  - find statistical malpractice: gates inside noise bands, wrong units
+    of analysis, unattainable thresholds, selection effects;
+  - find leakage: information reaching a component that must not see it;
+  - find claim inflation: any sentence in Section 9 stronger than the
+    committed rows support;
+  - say which of the two PASS verdicts you would overturn, and on what
+    evidence in this packet.
+
+A confirmed fatal defect makes the generation's verdict INVALID; that is
+a useful outcome and will be recorded as such. Specific questions for
+the reviewer are listed in Section 12.
+
+====================================================================
+1. THE QUESTION AND THE CLAIM LADDER
+====================================================================
+
+Question: once a machine-native computational physics is fixed, does it
+provide broad, navigable access to executable behavioral change -- or
+has the designer already built privileged corridors that predetermine
+what kinds of change are reachable?
+
+This generation deliberately contains NO learner. It tests only whether
+a fair substrate for a later learning experiment can exist. The claim
+ladder is:
+
+  P0  executable self-transformations exist (witness programs)
+  P1  generic mutation reaches viable behavioral diversity
+  P2  the viable phenotype space is intrinsically navigable
+  P3  navigation does not depend on designer-privileged corridors
+  P4  strong history-free search (M0) can fairly navigate it
+  P5  developmental history changes future acquisition   -- NOT tested
+  P6  learned transformations alter later transformation -- NOT tested
+
+Only P1-P4 are claimed, and only as properties of specific frozen
+substrates under specific frozen budgets. Forbidden conclusions
+(preregistered): AGI, intelligence, consciousness, understanding,
+autonomous diagnosis, human-independent cognition, elimination of human
+priors, open-ended evolution.
+
+History: two predecessor generations died. D-2: SUBSTRATE_INVALID (all
+four bases failed census). D-3: NO_BASIS_PASSED, and its own
+"taxonomy-neutrality gate" was found to be a relabelling of the
+designer's operator menu -- a classifier scored the generator's own
+output categories back onto themselves. D-4's design goal was to make
+that specific failure impossible, so circularity is the first thing to
+hunt for here.
+
+====================================================================
+2. DESIGN: SUBSTRATES (all frozen before any measurement)
+====================================================================
+
+Four machine-native computational bases, all with TOTAL DECODE: every
+byte string is an executable program. Syntactic validity is therefore
+trivially ~1.0 by construction; this is disclosed and never rewarded.
+
+  S1_REG      48 x 16-bit words; 4 x 16-bit registers; dense 16-opcode
+              decode (ALU, shifts, load/move/swap, skip-if-zero,
+              skip-if-greater, relative jump, IN, OUT, HLT); program
+              counter wraps mod 48; 128-step budget per probe.
+  S2_STACK    96 one-byte instructions; circular 16-deep 16-bit stack
+              (over/underflow wraps -- total semantics); 8 dense opcode
+              families (push, ALU, stack ops, compare, branch-if-zero,
+              branch, IN, OUT); pc wraps mod 96; 128-step budget.
+  S3_REWRITE  16 rules x 3 bytes over an 8-symbol alphabet;
+              leftmost-first pair rewriting (rule = lhs symbol pair,
+              rhs of length 0-3, active bit, 6 reserved bits); tape cap
+              16; halts when no rule matches; 64-rewrite budget.
+  S4_MEM      72 operations (low 3 bits of each byte; 5 reserved bits);
+              16-cell wrapping byte tape; inc/dec/left/right/IN/OUT/
+              skip-if-zero/back-jump-6; pc wraps mod 72; 128 steps.
+
+Expressivity witnesses (P0): each substrate has a hand-written echo (or
+repeat-collapse, for S3) program, verified viable before census; a
+substrate whose witness fails dies immediately. All four passed.
+
+Behavioral probes and fingerprint (frozen):
+  - 8 probe inputs, 8 nibbles each, drawn once from seed 20260827;
+  - per-probe row: (output tuple <= 8 nibbles, log2-bucketed step
+    count, log2-bucketed touched-locations count, halted flag, trace
+    set of visited program locations); for S3_REWRITE the third field
+    is the bucketed final tape length and the trace is the set of
+    fired-rule indices;
+  - phenotype key = exact identity of (outputs, buckets, halted) across
+    the 8 probes; trace excluded from identity;
+  - d1 (primary distance) = mean over probes of positional nibble
+    mismatch on outputs padded to 8 with a sentinel; range [0,1];
+  - auxiliary distances (reported, never gated alone): step-profile L1,
+    touched-profile L1, trace Jaccard;
+  - VIABLE := nonempty output on >= 4 of 8 probes AND >= 2 distinct
+    output tuples across probes (input sensitivity) AND >= 1 executed
+    step.
+  - Disclosure: phenotype equality is equality on 8 frozen probes; no
+    global program-equivalence claim is made anywhere.
+
+Mutation physics (frozen; content-blind; identical across substrates;
+defined on raw encodings, cell = the substrate's alignment unit: 2
+bytes for S1, 3 for S3, 1 for S2/S4):
+
+  OP0  bitflip burst: k flips, k = 1 + min(Geom(0.5), 7)
+  OP1  cell substitution: one uniform cell replaced with uniform bytes
+  OP2  block copy: 2-8 cells duplicated within the genome
+  OP3  block swap: two disjoint equal-length blocks exchanged
+  OP4  rotation: whole genome rotated by a uniform cell offset
+  XOVER one-point crossover at a cell boundary -- registered mechanism,
+       reachable ONLY through the recombining navigator, censused and
+       ablated like any other mechanism.
+
+The menu distribution is physics (uniform over OP0-OP4 via a substrate
+method); navigators never choose named operators and never see operator
+semantics, substrate identity, graph structure, or oracle output.
+
+====================================================================
+3. DESIGN: TARGETS, NAVIGATORS, ORACLE, COUNTERFACTUALS, GATES
+====================================================================
+
+Target selection (deterministic, independent seed stream, before any
+navigation): 64 random-viable starts; uniform-menu random walks of 150
+accepted viable steps; pool = deduped phenotypes at every accepted
+step; walk edges are kept OUT of the oracle graph. Remoteness of a pool
+member = mean d1 to 48 fresh random-viable reference genomes. Pool
+filter: members with remoteness < 0.15 (= hit radius 0.10 + 0.05) are
+removed, because a target inside the ab-initio hit ball can be "hit" at
+the start sample with zero mutation steps. Strata = remoteness extremes
+of the filtered pool: near = bottom decile, mid = middle decile
+(45-55%), far = top decile. Within each stratum: 6 lowest-density + 6
+highest-density members (density = pool-mates within d1 <= 0.15),
+SHA-256 tie-break. 36 targets per substrate.
+
+Disclosure: this measures REPRODUCIBLE ACCESSIBILITY of phenotypes the
+physics itself exhibited under an independent seed -- not reachability
+of arbitrary mathematically-existing phenotypes.
+
+History-free navigator suite (M0; budget 1,200 metered evaluations per
+run; hit = d1 <= 0.10, reachable by construction since the target
+phenotype itself scores 0):
+
+  N1 RESTART-WALK  random-accept viable walk, restart after 25
+                   consecutive non-viable children (floor baseline)
+  N2 HILLCLIMB     greedy d1 descent, plateau-tolerant, restarts after
+                   60 non-improving or 25 non-viable evaluations
+  N3 NOVELTY       archive novelty walk (5-nearest, add threshold 0.05,
+                   cap 400); targetless mapper, incidental hits counted
+  N4 RECOMBINER    population 16, tournament size 3 on d1-to-target,
+                   one-point crossover + 50% menu mutation, 5% fresh
+                   ab-initio injection
+
+Per target: N1 x3, N2 x5, N3 x2, N4 x5 seeds = 540 runs per substrate.
+Competitive pair for gates: (N2, N4) -- single-trajectory descent vs
+population recombination. Every run records ALL its viable starts and
+whether each hit was scored on an ab-initio draw ("start") or on a
+mutated/recombined child ("search"); both rates are reported.
+
+Oracle (analysis only; output never reaches any navigator): per-episode
+attribution by reverse BFS from each target's hit ball over the
+observed single-parent transition graph, restricted to viable
+endpoints, with crossover and target-generation edges excluded. An
+episode counts as oracle-reachable iff ANY of its own starts lies in
+the ball's basin. Used solely to attribute navigation failure to
+demonstrated topology vs search weakness; both attributions are fatal.
+
+Counterfactual suite (frozen): ablation of each single mechanism
+(OP0..OP4, 36 targets x 4 seeds each) and of crossover (N4 without
+crossover); menu reweighting by three frozen Dirichlet(2) draws (seeds
+101/102/103); doubled bitflip radius (k = 1 + min(Geom(0.75), 15));
+representation re-coding = a frozen random permutation of all 256 byte
+values (seed 3301) applied at decode time. Re-coding preserves the
+reachable program set exactly (bijection) while genuinely changing
+bit-level mutation adjacency; cell-level operators commute with it.
+Reweight/radius/re-coding run 36 targets x 2 seeds and are compared
+against the baseline RESTRICTED to the same seeds per target
+(seed-symmetric populations). The re-coded substrate gets fresh targets
+under the same frozen procedure (its physics differs; conclusions, not
+matched items, are compared). A counterfactual that cannot be measured
+FAILS its gate; there is no silent skip.
+
+Frozen gates, evaluated in causal order; primary flag = first failure;
+all margins, CIs, and diagnostics reported:
+
+  G1 PHENOTYPE_POVERTY       viable fraction < 0.005 (n=10,000) OR
+                             viable phenotype classes < 250 counted on
+                             census UNION target-generation pool
+  G2 DISPLACEMENT_COLLAPSE   pooled identity rate > 0.85 OR pooled
+                             effective rate (non-identity AND viable
+                             child) < 0.05 OR alive operators < 3 of 5
+                             (alive = effective rate >= 0.02)
+  G3 ACCESSIBILITY_FRAGMENTED  navigation fails AND oracle far-stratum
+                             episode reach < 0.20
+  G4 NAVIGATION_FAILURE      fewer than 2 competitive-pair navigators
+                             with pooled hit >= 0.25, OR best pair
+                             navigator far-stratum hit < 0.10
+  G5 PRIVILEGED_CORRIDOR     (only around a passing navigation
+                             baseline) ANY single-mechanism ablation
+                             cell with per-stratum baseline >= 0.15,
+                             relative drop > 0.60, AND two-proportion
+                             z >= 1.96; identifiability accuracy and
+                             displacement anisotropy are DIAGNOSTICS
+                             ONLY (see Section 5, finding 1)
+  G6 REFINDABILITY_FAILURE   best pair navigator re-find < 0.40, where
+                             re-find for a target hit by k of S seeds
+                             is (k-1)/(S-1) -- the qualifying discovery
+                             does not count itself
+  G7 REPRESENTATION_SENSITIVE  |pooled hit (re-coded) - baseline| >
+                             0.15 AND z >= 1.96
+  G8 COUNTERFACTUAL_UNSTABLE worst |pooled hit (reweight/radius) -
+                             baseline| > 0.15 AND z >= 1.96
+  PASS = ACCESSIBILITY_GEOMETRY_ESTABLISHED for that substrate.
+  Overall NO_BASIS_PASSED if no substrate passes.
+
+Statistical discipline: Wilson 95% CIs on every gated proportion plus a
+cluster bootstrap CI over targets (the unit where independence actually
+holds; seeds within a target are correlated). Attainability was checked
+for every threshold before freeze; e.g. the ablation z-gate is
+attainable across its whole eligible region (total collapse at the 0.15
+floor reaches z = 2.8 with 60 baseline / 48 ablated runs).
+
+====================================================================
+4. INSTRUMENT-FIRST METHOD AND VALIDATION HISTORY
+====================================================================
+
+No real substrate was measured until the metric suite proved it could
+classify eight SYNTHETIC geometries with known pathologies, using the
+same code path end to end (same census, navigators, oracle, gates):
+
+  C1 FRAGMENTED   400 isolated islands            -> must flag fragmentation
+  C2 IDENTITY     ring, 98% identity mutations    -> must flag displacement
+  C3 CORRIDOR     two clusters, ONE operator      -> must flag privilege
+                  crosses via a gateway edge
+  C4 TRAPPED      500 one-way chains in R^8 into  -> must flag one of
+                  an absorbing sink                  fragmented/navigation/
+                                                     refindability
+  C5 NAVIGABLE    torus, five overlapping         -> must PASS
+                  isotropic operators
+  C6 CHAOS        100k nodes, hash fingerprints,  -> must flag navigation/
+                  teleport moves                     refindability/fragmented
+  C7 TINY         40-node complete graph          -> must flag poverty
+  C8 SPARSE       C5 with 40% of nodes non-viable -> must PASS
+
+The instrument FAILED validation twice and was repaired each time; all
+iterations are committed with their failure evidence:
+
+  Run 1 (v1): INVALID. C1 falsely flagged PRIVILEGED (crossover edges
+  let the oracle BFS hop between islands; ablation fired on n=12
+  noise); C3's corridor was MISSED (tertile strata diluted the far
+  stratum with barely-above-median members, halving the measured
+  ablation drop to exactly the gate value); C4 passed (control
+  mis-specified: with uniform ab-initio support, restart sampling
+  legitimately reaches everything).
+
+  Run 2 (v2): INVALID. C1 misattributed (union-of-starts oracle:
+  in a fragmented space with broad ab-initio support, SOME run always
+  starts near any target, so BFS from the union of all starts says
+  "reachable" even though every individual episode is trapped); C4
+  still passed (2-D radial geometry structurally couples the hit-ball
+  radius to branch spacing; also distance clipping degraded remoteness
+  stratification to noise).
+
+  Run 3 (v3): VALID on 7 controls (per-episode reverse-BFS oracle;
+  decile-extreme strata; z-guarded ablation; C4 rebuilt with 500
+  branches along random unit vectors in R^8, where cross-branch
+  distance ~ r*sqrt(2) regardless of branch count).
+
+  Run 4 (v4, after the adversarial review of Section 5, with C8 added
+  and everything at the exact binding scale and configuration): VALID
+  on all 8 controls. This is the instrument that was frozen,
+  byte-identical except a status stamp.
+
+====================================================================
+5. PRE-FREEZE ADVERSARIAL REVIEW (31 agents)
+====================================================================
+
+Before freezing, the draft constitution and code were attacked by four
+independent review agents (lenses: circularity, statistics, leakage,
+contradictory incentives), producing 47 raw findings; the 27 non-minor
+findings each went to an independent verification agent instructed to
+REFUTE them against the actual files. Result: 23 CONFIRMED, 4 REFUTED,
+plus 20 minor findings. All 23 confirmed defects were repaired before
+freeze. The most consequential:
+
+  1. FATAL: the planned privilege gate on mutation-source
+     identifiability x displacement anisotropy had ZERO positive
+     calibration (no control ever entered its firing region), gated
+     absolute accuracy against a data-dependent chance level, and its
+     anisotropy threshold was calibrated on signed-coordinate synthetic
+     features while real substrates emit non-negative mismatch features
+     with a built-in linear dependence. On a real substrate it would
+     have relabelled MENU DISTINCTNESS as privilege -- the predecessor
+     D-3 tautology, inverted. Repair: demoted to diagnostics-only;
+     privilege gating rests on ablation collapse and re-coding.
+  2. FATAL: nothing separated target strata from the hit criterion --
+     on the corridor control, "near" targets had remoteness 0.079-0.097
+     vs hit radius 0.10, so an average random START was already inside
+     the hit ball and navigation gates could be carried by ab-initio
+     adjacency with zero mutation steps. Repair: pool remoteness floor
+     (>= 0.15) plus start-vs-search hit provenance reporting.
+  3. FATAL: the ablation evaluator z-tested only the MAX-drop cell, so
+     a large-but-insignificant drop could mask a smaller qualifying
+     one. Repair: every eligible cell is tested. Also: at 2 ablation
+     seeds even a TOTAL collapse could not reach z = 1.96 for baselines
+     in [0.15, ~0.21) -- an unattainable gate; repaired with 4 seeds.
+  4. Oracle attribution biases (confirmed): hit balls included
+     non-viable phenotypes navigators can never score, and
+     target-generation edges made oracle reachability partially true
+     by construction. Both repaired.
+  5. Freeze integrity: the freeze script originally rewrote two
+     thresholds AFTER validation, so the frozen instrument would never
+     have classified the controls. Repaired: freeze stamps a status and
+     records hashes only; validation re-run on the final bytes.
+  6. Assorted confirmed findings: diversity floor mathematically
+     unattainable for viable fractions in [0.005, 0.025) (repaired:
+     census UNION pool); counterfactual comparisons were
+     2-seed-vs-5-seed asymmetric (repaired); a never-measured
+     counterfactual silently skipped its gate (now fails closed);
+     validation ran at a smaller scale than binding (now identical);
+     the validation set never exercised viability (C8 added).
+
+Two further repairs were adopted from MINOR (unverified) findings, not
+from the 23 confirmed: oracle episodes are now credited for ALL their
+starts (initial, restarts, fresh injections), not just the first; and
+the re-find ratio was redefined to (k-1)/(S-1) so the qualifying
+discovery does not count itself (the packet reports provenance
+honestly: the related non-minor refind finding was REFUTED).
+
+The four REFUTED claims (kept in the findings ledger) included a
+composite-gaming construction and a claimed IN/OUT bit-adjacency
+corridor that the re-coding counterfactual in fact perturbs.
+
+====================================================================
+6. FREEZE DISCIPLINE AND ENGINEERING AMENDMENT E1
+====================================================================
+
+Freeze commit: SHA-256 of 13 files (both preregistrations, all
+instrument code, substrates, run harness, anti-cheat checker) recorded
+before any real-substrate measurement. After freeze: no primitive
+addition/deletion, no threshold movement, no probe/target/navigator
+repair, no horizon extension, no rerun-to-positive. Anti-cheat static
+checks (comment/string-stripped source scan): no filesystem, network,
+clock, unseeded randomness, or host introspection in the measurement
+path; navigators cannot reference the oracle.
+
+E1 (disclosed in full in the preregistration): the FIRST launch of the
+four binding runs was killed by memory exhaustion -- per-probe traces
+were stored as Python frozensets (~20-35 KB per fingerprint) with a
+400k-entry cache, four processes on a 32 GB machine. No binding
+measurement was produced or observed (results are written only at
+completion; all logs were empty). Repair: traces packed into int
+bitmasks over the same index sets, cache capped at 100k. The trace
+never enters phenotype identity, canonical bytes, or d1; bitmask
+Jaccard was verified against an independent set-based reimplementation
+on 300 random genome pairs per substrate (max deviation < 1e-12).
+Hashes re-recorded; the relaunch executed the identical measurement
+from the identical frozen seed (12000). Post-repair footprint observed
+at relaunch: ~0.5 GB across all four processes (session observation,
+not part of the committed record; the committed E1 note records the
+pre-repair footprint).
+
+====================================================================
+7. BINDING RESULTS (frozen gates; ~1.4-1.8M metered evaluations each)
+====================================================================
+
+Summary:
+
+  substrate    primary verdict              wall(s)  meter evals
+  S1_REG       NAVIGATION_FAILURE             675    1,816,683
+  S2_STACK     PASS (marginal, disclosed)     538    1,627,181
+  S3_REWRITE   ACCESSIBILITY_FRAGMENTED       289    1,545,849
+  S4_MEM       PASS (robust)                  459    1,416,705
+
+Note: the trivial-target filter removed 0 pool members on every real
+substrate (it mattered only on synthetic C3); and every substrate had
+all 5 mechanisms alive, so G1/G2 upstream kills never fired on real
+substrates.
+
+--- S4_MEM -> PASS (robust) ------------------------------------------
+
+  viability          0.593  [0.583, 0.602]
+  phenotype classes  9,575 (deduplicated union of 5,634 census and
+                     4,043 pool; 102 overlap); unseen mass 0.929
+  identity/effective 0.522 / 0.384; all 5 ops alive
+  navigation         N2 pooled 0.522, cluster CI [0.38, 0.67]
+                     N4 pooled 0.489, cluster CI [0.35, 0.63]
+                     (both cluster LOWER bounds clear the 0.25 gate)
+  far stratum        N2 0.53 (32/60; ALL search-mediated; 9 of 12
+                     distinct far targets), N4 0.42 (25/60, 23 search /
+                     2 start), N1 floor 0.28, N3 0.08
+  first passage      median 149 evals (N2)
+  re-findability     0.69 (N2) / 0.71 (N4)
+  ablation           worst cell: remove rotation, far, rel drop 0.14,
+                     z = 0.77; zero qualifying cells -- graceful
+                     degradation across the entire menu (the same
+                     signature as the known-navigable control C5)
+  reweight/radius    worst delta 0.056 (z = 0.67)
+  re-coding          delta 0.097 (z = 1.17) -- inside the band; largest
+                     representation sensitivity of the four; disclosed
+  oracle             far episode-reach 0.73 vs achieved 0.53 (M0
+                     under-exploits demonstrated topology)
+  diagnostics        identifiability 0.512 (chance 0.395), anisotropy
+                     0.862 -- reported, not gated
+
+--- S2_STACK -> PASS (marginal; two disclosures) ----------------------
+
+  viability          0.500  [0.490, 0.510]
+  phenotype classes  7,281 combined; unseen mass 0.849
+  identity/effective 0.590 / 0.295; all 5 ops alive
+  navigation         N2 pooled 0.333, cluster CI [0.19, 0.48]
+                     N4 pooled 0.344, cluster CI [0.22, 0.48]
+    DISCLOSURE 1: both point estimates clear the frozen 0.25 gate, but
+    both cluster CIs CONTAIN the gate -- the pooled pass is within
+    cluster-level noise. The frozen rule binds on point estimates; the
+    packet flags this rather than hiding it.
+  far stratum        best nav N4: 0.15 (9/60; all search-mediated; 5 of
+                     12 distinct far targets) vs gate 0.10; N2 0.05
+  re-findability     0.61 (N4) / 0.69 (N2); first passage median 87
+  ablation           worst cell: remove OP1 (cell substitution), far,
+                     rel drop 0.72, z = 1.85; zero qualifying cells
+    DISCLOSURE 2: this is the closest privilege call in the generation
+    -- a 72% far-stratum collapse at z = 1.85 vs the frozen z = 1.96.
+    The gate did not fire. The human-taxonomy red team independently
+    notes OP1's modal edit family is I/O-count change (30% of its
+    effective transitions; OP2's modal family, a combined control+I/O
+    count change at 37%, also touches I/O counts -- no cross-mechanism
+    superlative is claimed). Any successor probing S2 should treat
+    OP1-dependence as its first target.
+  reweight/radius    worst delta 0.069 (z = 0.86)
+  re-coding          delta 0.014 (z = 0.17)
+  oracle             far episode-reach 0.50 vs achieved 0.15 --
+                     substantial navigation regret
+  diagnostics        identifiability 0.597 (chance 0.472), anisotropy
+                     0.832
+
+--- S1_REG -> NAVIGATION_FAILURE (preserved) --------------------------
+
+  viability          0.093  [0.088, 0.099]
+  phenotype classes  3,452 combined; unseen mass 0.738
+  identity/effective 0.519 / 0.278; all 5 ops alive
+  navigation         pooled arm PASSES: N2 0.317 [0.18, 0.46],
+                     N4 0.289 [0.18, 0.40]
+  far stratum        DEAD: N2 0.00, N4 0.02; gate 0.10 -> primary flag
+  re-findability     0.77 (N2) on near/mid hits
+  oracle             far episode-reach 0.41: for ~2 in 5 far episodes
+                     an observed viable path existed; attribution is
+                     search weakness / lottery topology at this budget,
+                     not proven fragmentation
+  reading            locally navigable, remotely inaccessible at 1,200
+                     evaluations. Remote register-machine behaviors
+                     demonstrated to exist by the generation process
+                     were all but never re-reached: 1 hit in 180
+                     far-stratum runs across all four navigators (the
+                     single N4 hit, search-mediated).
+
+--- S3_REWRITE -> ACCESSIBILITY_FRAGMENTED (preserved) ----------------
+
+  viability          0.996  [0.995, 0.997]  (highest of the four)
+  phenotype classes  11,717 combined (largest); unseen mass 0.99
+  identity/effective 0.705 / 0.293; all 5 ops alive
+  navigation         near/mid partially navigable (N4 pooled 0.433);
+                     far 0.00 for EVERY navigator
+  oracle             far episode-reach 0.00 -- across ~1.5M metered
+                     evaluations, not one observed viable path led from
+                     any episode's starts into any far target's ball
+  reading            the charter's central warning realized: maximal
+                     validity and maximal diversity with a dead
+                     accessibility geometry at the frozen budget.
+                     Deep-rewrite phenotypes recorded on generation
+                     walks were not re-reached by any navigator, and
+                     no observed viable path led back to them --
+                     lottery-phenotype behavior at 1,200 evaluations.
+                     Validity is a coordinate, not the objective;
+                     diversity is a coordinate, not the objective.
+
+====================================================================
+8. HUMAN-TAXONOMY RED TEAM (weaken-only, post-run)
+====================================================================
+
+Per the charter, human edit-family classification returns only as an
+attack: it can weaken a PASS narrative, never strengthen one, and
+unclassifiable residue is never counted as novelty. Method: independent
+diagnostic sample (separate seed stream, ~1,500 viable parents x 5 ops
+x 3 reps per substrate), each non-identity transition classified by
+which decoded instruction-class counts changed (I/O count, control
+count, other opcode change, operand-only).
+
+  - Large displacements (d1 > 0.3) on S1/S2/S4 are dominated by
+    REARRANGEMENT of existing code (OPCODE_OTHER family: 70% / 78% /
+    79%), not by edits changing the count of designed I/O primitives
+    (9% / 7% / 8%). No evidence of an "I/O vending machine" behind the
+    passes.
+  - Block swap and rotation change no instruction-class counts by
+    construction (pure permutation edits); bitflip, substitution, and
+    copy can all change them. For S2 this aligns with Disclosure 2
+    (OP1's modal edit family is I/O-count change, 30% of its effective
+    transitions) and WEAKENS the S2 narrative exactly as the mechanism
+    is designed to.
+  - S3's edits split between only two families: per-mechanism
+    OTHER_UNKNOWN shares are 84.5% (bitflip), 40.4% (substitution),
+    39.0% (copy), 100% (swap), 100% (rotation); pooled
+    large-displacement OTHER_UNKNOWN share 56%. Substitution and copy
+    are majority-classifiable (mostly CONTROL_COUNT: active-rule-count
+    edits). Unclassifiable residue is recorded as unclassifiable, not
+    as novelty.
+
+====================================================================
+9. VERDICT AND THE STRONGEST ALLOWED CLAIM
+====================================================================
+
+Frozen overall verdict:
+  ACCESSIBILITY_GEOMETRY_ESTABLISHED on S2_STACK and S4_MEM (2 of 4);
+  S1_REG NAVIGATION_FAILURE; S3_REWRITE ACCESSIBILITY_FRAGMENTED.
+
+Strongest allowed claim, exactly as preregistered and scoped, asserted
+in full for S4_MEM. For S2_STACK it is asserted only with Disclosure 2
+incorporated: S2's margins contain SUB-THRESHOLD contrary evidence on
+the single-mechanism arm (OP1 far collapse 0.72 at z = 1.85 vs the
+frozen 1.96), so for S2 the accurate rendering is "no gate-qualifying
+evidence", not "no evidence". The claim:
+
+  "Under the frozen computational physics, executable behavioral change
+  forms a substantially diverse, reproducibly navigable accessibility
+  geometry under multiple generic history-free search processes,
+  without evidence that navigation is dominated by any single
+  designer-privileged mutation mechanism or by the particular binary
+  encoding."
+
+Nothing stronger. This is a property of two frozen substrates under a
+1,200-evaluation budget, 8 frozen probes, and a d1 <= 0.10 hit ball.
+Per the frozen protocol, the passing substrates are frozen; a Phase-2
+preregistration (whether accumulated executable history changes what
+can be acquired under fixed resources) MAY be designed but is not
+executed, and no learner exists in this generation.
+
+====================================================================
+10. KNOWN LIMITS (carried explicitly; attack them)
+====================================================================
+
+  1. S2's pass sits inside cluster-level noise on the pooled gate and
+     one z = 1.85 privilege near-miss. S4 is the load-bearing basis.
+  2. Privilege was tested for SINGLE-mechanism ablations and byte-level
+     re-coding only. Mechanism-PAIR privilege is combinatorially
+     untested; only the reweight counterfactuals and the red team touch
+     it.
+  3. "Accessible mass" is relative to phenotypes the physics itself
+     exhibited under an independent seed -- reproducible accessibility,
+     not reachability of arbitrary existing phenotypes.
+  4. Navigation regret is substantial (oracle far-reach minus achieved:
+     0.35 on S2, 0.20 on S4, 0.41 on S1): the M0 suite under-exploits
+     demonstrated topology. A stronger M0 would RAISE the bar for any
+     future learner comparison, so this conservatism cuts against
+     Phase 2, not for it.
+  5. Phenotype identity is exactness on 8 frozen probes; behavioral
+     distance is output disagreement on those probes. Trace and
+     resource profiles are auxiliary only.
+  6. The far-hit gate (0.10) at 12 target clusters has cluster-level SE
+     ~0.09 at the gate; S2's far 0.15 is a marginal read (S4's 0.53 is
+     not).
+  7. The "best pair navigator" for far/refind gates is selected on the
+     same rows those gates consume (winner's curse); both navigators'
+     full statistics are reported, and on S4 both clear the gates
+     regardless.
+  8. All navigation used one budget (1,200), one hit radius (0.10),
+     8 probes, and one seed family; robustness to these frozen
+     constants beyond the preregistered counterfactuals is unknown.
+  9. The oracle sees only observed transitions; FRAGMENTED vs
+     NAVIGATION attribution is about demonstrated topology. Both flags
+     are equally fatal, so no verdict hinges on the distinction.
+
+====================================================================
+11. REPRODUCIBILITY AND PROVENANCE
+====================================================================
+
+  - Everything deterministic given frozen seeds. Probe seed 20260827;
+    re-coding permutation seed 3301; binding pipeline seed 12000
+    (target stream +777, re-coded target stream +555); reweight seeds
+    101/102/103; classifier seed 7700; navigation run seeds derived by
+    SHA-256 of (navigator, target id, seed index).
+  - Budgets metered per component (census, operator census,
+    reversibility, target generation, navigation, counterfactual);
+    the oracle is analysis-only over recorded transitions and consumes
+    no metered evaluations; budget binds on evaluate() calls; cache
+    hits are metered identically for every consumer; hit checks occur
+    inside the budget loop (no post-budget success).
+  - Repository: agent_d4_blind/ -- preregistrations, frozen code,
+    synthetic controls with all validation runs, binding results with
+    all 540 navigation rows per substrate, counterfactual results,
+    red-team findings ledger (47 raw findings with verification
+    reasoning), anti-cheat report, SHA-256 manifest of the 13 frozen
+    files, and the machine-readable verdict.
+  - Commit chain (short hashes): 927f17f8 instrument v1 + failed run 1;
+    c9ff2b56 v3 valid on 7 controls; d3f8e8d0 v4 after the 23 confirmed
+    review findings; 95d68549 CONSTITUTION FROZEN; b3f64f4b engineering
+    amendment E1; 3aecd7ed freeze-script regex fix + refresh of the
+    hash list embedded in the preregistration doc (post-E1, pre-run);
+    20adccd3 verdict with all rows in the same commit.
+  - Hash-manifest caveat: 12 of the 13 recorded SHA-256 values verify
+    byte-exact against the final files. The 13th is the
+    preregistration document itself, whose recorded hash predates the
+    refresh of its own embedded hash list (a self-reference cannot
+    close); the diff between hashed and final doc is exactly that
+    embedded list. Reviewers verifying hashes should expect this one
+    mismatch.
+  - Blindness: no artifact of the predecessor attempts (agent_d2_blind,
+    agent_d3_blind) was opened, imported, or imitated; only their
+    published verdict labels were known to the designer.
+
+====================================================================
+12. QUESTIONS FOR THE REVIEWER
+====================================================================
+
+  1. Circularity: targets are generated by random walks under the same
+     mutation physics navigation uses (disclosed as "reproducible
+     accessibility"). Does any gate thereby become true by
+     construction rather than merely easier? The pool remoteness floor
+     and start-vs-search provenance were the mitigations -- are they
+     sufficient?
+  2. Would you overturn the S2_STACK PASS? The frozen rule binds on
+     point estimates; the cluster CIs contain the pooled gate and the
+     OP1 ablation sits at z = 1.85 with a 72% far drop. Is reporting
+     these as disclosures (rather than flags) defensible, given they
+     were preregistered before any data existed?
+  3. Is per-episode reverse-BFS over observed viable transitions a
+     sound attribution instrument, given the observed graph
+     undersamples the true graph? Does excluding target-generation
+     edges overcorrect toward FRAGMENTED?
+  4. The viability predicate (output on >= 4 probes, input
+     sensitivity, >= 1 step) is a designer choice. Does it privilege
+     I/O-adjacent programs in a way the ablation and re-coding
+     counterfactuals cannot detect?
+  5. Is the re-coding counterfactual (byte-value permutation at decode)
+     a sufficient representation-invariance test, given cell-level
+     operators commute with it and only the bitflip mechanism's
+     adjacency actually changes?
+  6. Demoting identifiability/anisotropy to diagnostics removed a
+     tautology but also removed a detection channel: a corridor
+     implemented by a COMMON, directional mechanism with no single-op
+     ablation signature would now be caught only by reweighting. Is
+     that an acceptable hole, and is it disclosed adequately (limit 2)?
+  7. S3's fragmentation verdict rests on far oracle reach 0.00 plus far
+     hits 0.00. Could a longer budget or a different navigator suite
+     plausibly overturn it, and does the packet claim more than
+     "inaccessible at this budget"?
+  8. E1 (post-freeze memory repair): does the equivalence argument
+     (trace never enters identity/distance-gated quantities; bitmask
+     Jaccard == set Jaccard, verified < 1e-12; nothing observed before
+     the change) fully preserve freeze integrity?
+  9. Are there claim inflations anywhere in this packet -- any sentence
+     stronger than the rows and margins reported here support?
+ 10. The stated Phase-2 gate is "design a preregistration only". Given
+     the disclosures, would you authorize Phase 2 on S4_MEM alone, on
+     S4+S2, or on neither?
+
+END OF PACKET
