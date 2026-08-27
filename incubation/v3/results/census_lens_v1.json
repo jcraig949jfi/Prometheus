@@ -1,0 +1,149 @@
+{
+ "census": "lens_v1",
+ "date": "2026-08-27",
+ "budget": 400000,
+ "probe_budget": 20000,
+ "B1_space": {
+  "n_lenses": 11050,
+  "enumeration_sha": "be25ed731e597b5e"
+ },
+ "space_stats": {
+  "n_valid_precheck": 326,
+  "precheck_ops": 132096,
+  "n_solving_all_probes": 1,
+  "frac_solving_of_total": 9e-05,
+  "first_solver_rank": 2957,
+  "first_solver_serial": "LENS[u00.u03.u06|u01.u04.u07]",
+  "n_behavioral_classes": 28,
+  "single_group_share_of_valid": 0.7822,
+  "true_lens_groups_contiguous_in_alphabet": true,
+  "aliasing": 0,
+  "represented_spaces": {
+   "joint": "997^8",
+   "per_block": "2 x 997^4"
+  }
+ },
+ "worlds": {
+  "vA": {
+   "r0_deep_solved": 0,
+   "r2_deep_solved": 0,
+   "r2_shallow_solved": 4,
+   "f1_deep_solved": 0,
+   "r4_deep_solved": 5,
+   "r4_deep_med_ops": 316,
+   "r2_deep_med_ops": 400008,
+   "n_deep": 5,
+   "n_shallow": 4,
+   "r2_shortcut_rate_shallow": "0/4"
+  },
+  "vB": {
+   "r0_deep_solved": 0,
+   "r2_deep_solved": 0,
+   "r2_shallow_solved": 4,
+   "f1_deep_solved": 0,
+   "r4_deep_solved": 5,
+   "r4_deep_med_ops": 316,
+   "r2_deep_med_ops": 400008,
+   "n_deep": 5,
+   "n_shallow": 4,
+   "r2_shortcut_rate_shallow": "0/4"
+  },
+  "vC": {
+   "r0_deep_solved": 0,
+   "r2_deep_solved": 0,
+   "r2_shallow_solved": 4,
+   "f1_deep_solved": 1,
+   "r4_deep_solved": 5,
+   "r4_deep_med_ops": 358,
+   "r2_deep_med_ops": 400008,
+   "n_deep": 5,
+   "n_shallow": 4,
+   "r2_shortcut_rate_shallow": "0/4"
+  }
+ },
+ "clean_lens_failures": 0,
+ "trap": {
+  "r2_solved": 8,
+  "blind_lens_solved": 7,
+  "blind_whys": [
+   "sub_failed_budget"
+  ],
+  "r2_med_ops": 34450.0,
+  "blind_med_ops": 34666.5,
+  "blind_over_r2_med": 1.006,
+  "n": 8
+ },
+ "extension_winner": "LENS[u00.u03.u06.u08.u09.u10|u01.u04.u07]",
+ "recursion": {
+  "two_block_lens_solves": 0,
+  "three_block_ops": [
+   192,
+   192,
+   192,
+   192
+  ],
+  "three_block_solved": 4,
+  "known_solver_class": {
+   "LENS[u00.u03.u06|u01.u04.u07|u08.u09.u10]": {
+    "rank": 1305364,
+    "solves": true,
+    "ops": [
+     192,
+     192
+    ]
+   },
+   "LENS[u00.u01.u03.u04.u06.u07|u08.u09.u10]": {
+    "rank": 523378,
+    "solves": true,
+    "ops": [
+     5304,
+     5304
+    ]
+   },
+   "LENS[u00.u03.u06.u08.u09.u10|u01.u04.u07]": {
+    "rank": 666351,
+    "solves": true,
+    "ops": [
+     5304,
+     5304
+    ]
+   },
+   "LENS[u00.u03.u06|u01.u04.u07.u08.u09.u10]": {
+    "rank": 669840,
+    "solves": true,
+    "ops": [
+     5304,
+     5304
+    ]
+   }
+  },
+  "min_solver_rank": 523378,
+  "n_lenses_vE": 2798250,
+  "spot_earlier_solves": "0/40",
+  "extension_rank": 68
+ },
+ "vW0": {
+  "r2_solved": 6,
+  "n": 6
+ },
+ "verdicts": {
+  "B1_space_ge_5000": true,
+  "B2_diversity_ge_5": true,
+  "B3_frac_le_2pct": true,
+  "B3_rank_ge_25": true,
+  "B4_reachable": true,
+  "B5_pathology": false,
+  "B6_ceiling": true,
+  "B7_trap": false,
+  "B8_recursion": true,
+  "B9_no_pressure": true,
+  "B10_feature_not_lens": false
+ },
+ "FAILED": [
+  "B5_pathology",
+  "B7_trap",
+  "B10_feature_not_lens"
+ ],
+ "CENSUS_PASSES": false,
+ "wall_sec": 63.5
+}
