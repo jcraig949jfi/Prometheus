@@ -1,0 +1,127 @@
+{
+  "experiment": "LOT-A2-CALIBRATION",
+  "intervention_class": "INSTRUMENT",
+  "is_null_result": false,
+  "positive_control_ran": true,
+  "branch_table_partitions": true,
+  "probe_modifies_measured_quantity": false,
+  "dropped_records": 0,
+  "closure": {
+    "candidates_expanded": 69738,
+    "distinct_signatures": 18224,
+    "budget_exhausted": false,
+    "max_size": 6,
+    "layer_widths": {
+      "0_V": 1,
+      "0_S": 0,
+      "1_V": 5,
+      "1_S": 2,
+      "2_V": 25,
+      "2_S": 5,
+      "3_V": 119,
+      "3_S": 23,
+      "4_V": 570,
+      "4_S": 76,
+      "5_V": 2782,
+      "5_S": 261,
+      "6_V": 13588,
+      "6_S": 767
+    }
+  },
+  "layer1_width": 5,
+  "fixtures": [
+    {
+      "fixture": "KNOWN_GOOD_matched",
+      "asserted_on": "W4",
+      "expected": true,
+      "observed": true,
+      "correct": true,
+      "W4_stat": 0.6711,
+      "W4_bar": 2.6927,
+      "verdict": "WORLD_REJECTED_CLASSES_NOT_SEPARATED"
+    },
+    {
+      "fixture": "KNOWN_BAD_size_skew",
+      "asserted_on": "W4",
+      "expected": false,
+      "observed": false,
+      "correct": true,
+      "W4_stat": 5.7781,
+      "W4_bar": 2.7155,
+      "verdict": "WORLD_REJECTED_UNUSABLE_BAND"
+    },
+    {
+      "fixture": "KNOWN_BAD_no_separation",
+      "asserted_on": "W5a",
+      "expected": false,
+      "observed": false,
+      "correct": true,
+      "W5a_gap": -0.0139,
+      "W5_band_late": 1.0,
+      "verdict": "WORLD_REJECTED_CLASSES_NOT_SEPARATED"
+    }
+  ],
+  "interventional_sweep": [
+    {
+      "sigma_sizes_shifted": 0,
+      "W4_stat": 0.5973,
+      "W4_bar": 2.6628,
+      "W4": true,
+      "verdict": "WORLD_REJECTED_CLASSES_NOT_SEPARATED",
+      "solve_rate": 1.0
+    },
+    {
+      "sigma_sizes_shifted": 1,
+      "W4_stat": 2.3327,
+      "W4_bar": 2.761,
+      "W4": true,
+      "verdict": "WORLD_REJECTED_CLASSES_NOT_SEPARATED",
+      "solve_rate": 1.0
+    },
+    {
+      "sigma_sizes_shifted": 2,
+      "W4_stat": 3.1004,
+      "W4_bar": 2.734,
+      "W4": false,
+      "verdict": "WORLD_REJECTED_NUISANCE_CONFOUND",
+      "solve_rate": 1.0
+    },
+    {
+      "sigma_sizes_shifted": 3,
+      "W4_stat": 4.4877,
+      "W4_bar": 2.725,
+      "W4": false,
+      "verdict": "WORLD_REJECTED_NUISANCE_CONFOUND",
+      "solve_rate": 1.0
+    },
+    {
+      "sigma_sizes_shifted": 4,
+      "W4_stat": 6.1702,
+      "W4_bar": 2.7263,
+      "W4": false,
+      "verdict": "WORLD_REJECTED_UNUSABLE_BAND",
+      "solve_rate": 1.0
+    }
+  ],
+  "sweep_monotone_nondecreasing": true,
+  "sweep_verdict_flips": true,
+  "metamorphic_bit_identical": true,
+  "metamorphic_verdict": "WORLD_REJECTED_CLASSES_NOT_SEPARATED",
+  "metamorphic_invariant": true,
+  "dynamic_range_ok": true,
+  "readings": {
+    "fixtures": {
+      "n": 3,
+      "attainable_lo": 0.0,
+      "attainable_hi": 1.0
+    },
+    "sweep_W4_stat": {
+      "n": 5,
+      "attainable_lo": 0.0,
+      "attainable_hi": 7.1702
+    }
+  },
+  "verdict": "INSTRUMENT_VALIDATED",
+  "verdict_rule_null_output": "A probe that rejected every world would fail KNOWN_GOOD_matched; one that accepted every world would fail both known-negatives; one that read a constant would fail the sweep. The rule can only return VALIDATED for a probe that traverses the range and moves with the one variable that was intervened on.",
+  "terminal_table_partitions": true
+}
