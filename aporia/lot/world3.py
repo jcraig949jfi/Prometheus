@@ -340,14 +340,23 @@ EPISODE_TASKS = 24
 LATE_REUSE_EARLY_SHARED = 3          # weak early evidence: 3 of the first 12
 
 
-def make_episode(rng, prims, feas, cls, total_size, n_tasks=EPISODE_TASKS):
-    """Build one episode of a given class. Ground truth only; no solver is run here."""
+def make_episode(rng, prims, feas, cls, total_size, n_tasks=EPISODE_TASKS, reuse_p=1.0):
+    """Build one episode of a given class. Ground truth only; no solver is run here.
+
+    `reuse_p` applies to the REUSE recipe only and is used by the A2b interventional sweep. It
+    is a DETERMINISTIC evenly-spread quota rather than a coin flip, so the shared-motif task set
+    at a lower rho is a strict subset of the set at a higher rho -- which is what makes the
+    sweep monotone by construction instead of monotone in expectation. At rho = 1.0 every task
+    shares, which reproduces the original behaviour draw for draw.
+    """
     half = n_tasks // 2
     shared = sample_motif(rng, prims, feas)
     tasks = []
     for i in range(n_tasks):
         early = i < half
-        if cls in ("REUSE", "CONTROL"):
+        if cls == "REUSE":
+            use_shared = int((i + 1) * reuse_p) > int(i * reuse_p)
+        elif cls == "CONTROL":
             use_shared = True
         elif cls == "NO_REUSE":
             use_shared = False
@@ -367,7 +376,7 @@ def make_episode(rng, prims, feas, cls, total_size, n_tasks=EPISODE_TASKS):
 
 
 def world(seed, prims, classes=CLASSES, episodes_per_class=12, total_size=6,
-          n_tasks=EPISODE_TASKS, size_fn=None, recipe_by_class=None):
+          n_tasks=EPISODE_TASKS, size_fn=None, recipe_by_class=None, reuse_p=1.0):
     """Generate the whole world.
 
     COMMON RANDOM NUMBERS. Each episode draws from its own seeded stream derived from
@@ -387,7 +396,7 @@ def world(seed, prims, classes=CLASSES, episodes_per_class=12, total_size=6,
         for j in range(episodes_per_class):
             sz = size_fn(cls, j) if size_fn else total_size
             rng = random.Random(seed * 1000003 + ci * 997 + j)
-            ep = make_episode(rng, prims, feas, recipe, sz, n_tasks)
+            ep = make_episode(rng, prims, feas, recipe, sz, n_tasks, reuse_p=reuse_p)
             ep["class"] = cls                      # label as declared, generated as `recipe`
             ep["recipe"] = recipe
             ep["total_size"] = sz

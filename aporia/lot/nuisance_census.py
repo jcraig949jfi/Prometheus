@@ -158,8 +158,95 @@ def _null_band_raw(rng, labels, values, draws=NULL_DRAWS):
     return out[int(0.95 * (len(out) - 1))]
 
 
+
+# ---------------------------------------------------------------------------- W5, both rules
+#
+# The BAND rule is the one preregistered for A2. It is kept, unedited, because RESULT_A2_WORLD
+# must stay reproducible byte-for-byte -- and because a killed rule that is deleted cannot be
+# re-run against a fixture to demonstrate WHY it was killed.
+#
+# The PVALUE rule is A2b's repair. See PREREG_A2B_2026-08-27.md section 2.
+
+PERM_B = 1999
+ALPHA = 0.05
+
+
+def _perm_reference(rng, labels, values, draws=PERM_B):
+    """Sorted max-T reference: the largest ordered pairwise class-mean gap under label
+    permutation. One reference serves every contrast on the same statistic."""
+    labs = list(labels)
+    out = []
+    for _ in range(draws):
+        rng.shuffle(labs)
+        out.append(_max_pair_gap_raw(labs, values))
+    out.sort()
+    return out
+
+
+def _p_from_ref(ref, g_obs):
+    """One-sided max-T p-value. Attainable range [1/(B+1), 1], so the 0.05 bar lies strictly
+    inside it -- which is the property the killed rule did not have."""
+    return (1 + sum(1 for r in ref if r >= g_obs)) / (len(ref) + 1)
+
+
+def w5_decide(rng, labels, rec_late, rec_early, rule="prereg_band", draws=NULL_DRAWS):
+    """The W5 verdict, isolated from the world so it can be fed synthetic fixtures."""
+    def cmean(cls, vals):
+        v = [x for lab, x in zip(labels, vals) if lab == cls]
+        return st.fmean(v) if v else 0.0
+
+    g_a = cmean("REUSE", rec_late) - cmean("NO_REUSE", rec_late)
+    d_early = cmean("DECOY_REUSE", rec_early) - cmean("NO_REUSE", rec_early)
+    d_late = cmean("DECOY_REUSE", rec_late) - cmean("NO_REUSE", rec_late)
+    l_late = cmean("LATE_REUSE", rec_late) - cmean("NO_REUSE", rec_late)
+    l_early = cmean("LATE_REUSE", rec_early) - cmean("NO_REUSE", rec_early)
+
+    out = {"rule": rule,
+           "W5a_reuse_minus_noreuse": round(g_a, 4),
+           "W5b_decoy_early_lift": round(d_early, 4),
+           "W5b_decoy_late_gap": round(abs(d_late), 4),
+           "W5c_late_lift": round(l_late, 4),
+           "W5c_late_early_gap": round(abs(l_early), 4)}
+
+    if rule == "prereg_band":
+        null_late = _null_band_raw(rng, labels, rec_late, draws)
+        null_early = _null_band_raw(rng, labels, rec_early, draws)
+        band_late = NULL_MULTIPLE * null_late
+        band_early = NULL_MULTIPLE * null_early
+        out.update({"W5_band_late": round(band_late, 4),
+                    "W5_band_early": round(band_early, 4),
+                    "W5a": g_a > band_late,
+                    "W5b": (d_early > band_early) and (abs(d_late) <= band_late),
+                    "W5c": (l_late > band_late) and (abs(l_early) <= band_early)})
+    elif rule == "perm_pvalue":
+        ref_late = _perm_reference(rng, labels, rec_late)
+        ref_early = _perm_reference(rng, labels, rec_early)
+        p_a = _p_from_ref(ref_late, g_a)
+        p_de = _p_from_ref(ref_early, d_early)
+        p_dl = _p_from_ref(ref_late, abs(d_late))
+        p_ll = _p_from_ref(ref_late, l_late)
+        p_le = _p_from_ref(ref_early, abs(l_early))
+        out.update({"p_W5a": p_a, "p_decoy_early": p_de, "p_decoy_late": p_dl,
+                    "p_late_late": p_ll, "p_late_early": p_le,
+                    "alpha": ALPHA, "perm_B": PERM_B,
+                    "p_attainable_lo": round(1 / (PERM_B + 1), 6), "p_attainable_hi": 1.0,
+                    "W5a": p_a <= ALPHA,
+                    "W5b": (p_de <= ALPHA) and (p_dl > ALPHA),
+                    "W5c": (p_ll <= ALPHA) and (p_le > ALPHA),
+                    "absence_of_evidence_flag": (
+                        "p_decoy_late and p_late_early are NON-significance requirements. A "
+                        "non-significant p is evidence of absence only weakly: it says the "
+                        "world was not caught differing, not that it does not differ. It is "
+                        "admissible here only because the paired half of the same class must "
+                        "be significant, so low power would fail that half first.")})
+    else:
+        raise ValueError(rule)
+    out["W5"] = out["W5a"] and out["W5b"] and out["W5c"]
+    return out
+
+
 def census(episodes, probes, prims, minsize, order, layer1_width, seed=20260827,
-           draws=NULL_DRAWS):
+           draws=NULL_DRAWS, w5_rule="prereg_band"):
     rng = random.Random(seed)
     eps = [measure_episode(e, probes, prims, minsize, order) for e in episodes]
     rows = [r for e in eps for r in e["_rows"]]
@@ -189,32 +276,16 @@ def census(episodes, probes, prims, minsize, order, layer1_width, seed=20260827,
     w4_null = _null_band(rng, labels, value_lists, draws)
     w4 = w4_stat <= NULL_MULTIPLE * w4_null
 
-    # ---- W5 class separation on the intended axis
-    def cmean(cls, key):
-        v = [e[key] for e in eps if e["class"] == cls]
-        return st.fmean(v) if v else 0.0
-
-    null_late = _null_band_raw(rng, labels, [e["rec_late"] for e in eps], draws)
-    null_early = _null_band_raw(rng, labels, [e["rec_early"] for e in eps], draws)
-    band_late = NULL_MULTIPLE * null_late                      # already raw units
-    band_early = NULL_MULTIPLE * null_early
-
-    g_a = cmean("REUSE", "rec_late") - cmean("NO_REUSE", "rec_late")
-    w5a = g_a > band_late
-    d_early = cmean("DECOY_REUSE", "rec_early") - cmean("NO_REUSE", "rec_early")
-    d_late = abs(cmean("DECOY_REUSE", "rec_late") - cmean("NO_REUSE", "rec_late"))
-    w5b = (d_early > band_early) and (d_late <= band_late)
-    l_late = cmean("LATE_REUSE", "rec_late") - cmean("NO_REUSE", "rec_late")
-    l_early = abs(cmean("LATE_REUSE", "rec_early") - cmean("NO_REUSE", "rec_early"))
-    w5c = (l_late > band_late) and (l_early <= band_early)
-    w5 = w5a and w5b and w5c
+    # ---- W5 class separation on the intended axis, delegated to the isolated rule
+    w5 = w5_decide(rng, labels, [e["rec_late"] for e in eps], [e["rec_early"] for e in eps],
+                   rule=w5_rule, draws=draws)
 
     # ---- branch table, evaluated in order; the four terminals are asserted to be exhaustive
     if not (w1 and w2 and w3):
         verdict = "WORLD_REJECTED_UNUSABLE_BAND"
     elif not w4:
         verdict = "WORLD_REJECTED_NUISANCE_CONFOUND"
-    elif not w5:
+    elif not w5["W5"]:
         verdict = "WORLD_REJECTED_CLASSES_NOT_SEPARATED"
     else:
         verdict = "WORLD_ADMISSIBLE"
@@ -240,14 +311,13 @@ def census(episodes, probes, prims, minsize, order, layer1_width, seed=20260827,
         "W4_gaps": {k: round(v, 4) for k, v in gaps.items()},
         "W4_stat": round(w4_stat, 4), "W4_null_p95": round(w4_null, 4),
         "W4_bar": round(NULL_MULTIPLE * w4_null, 4), "W4": w4,
-        "W5_rec_late_by_class": {c: round(cmean(c, "rec_late"), 4) for c in W3.CLASSES},
-        "W5_rec_early_by_class": {c: round(cmean(c, "rec_early"), 4) for c in W3.CLASSES},
-        "W5_band_late": round(band_late, 4), "W5_band_early": round(band_early, 4),
-        "W5a_reuse_minus_noreuse": round(g_a, 4), "W5a": w5a,
-        "W5b_decoy_early_lift": round(d_early, 4), "W5b_decoy_late_gap": round(d_late, 4),
-        "W5b": w5b,
-        "W5c_late_lift": round(l_late, 4), "W5c_late_early_gap": round(l_early, 4), "W5c": w5c,
-        "W5": w5,
+        "W5_rec_late_by_class": {c: round(st.fmean([e["rec_late"] for e in eps
+                                                    if e["class"] == c] or [0]), 4)
+                                 for c in W3.CLASSES},
+        "W5_rec_early_by_class": {c: round(st.fmean([e["rec_early"] for e in eps
+                                                     if e["class"] == c] or [0]), 4)
+                                  for c in W3.CLASSES},
+        **w5,
         "verdict": verdict,
         "episodes": [{k: v for k, v in e.items() if k != "_rows"} for e in eps],
     }
