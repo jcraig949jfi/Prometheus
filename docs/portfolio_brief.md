@@ -1,5 +1,5 @@
 # Prometheus Portfolio Brief
-*Generated: 2026-08-28 03:14:56 AM UTC*
+*Generated: 2026-08-28 07:14:54 AM UTC*
 *Author: Metis (multi-machine reporter mode)*
 
 ---
@@ -7,7 +7,7 @@
 ## Act on this
 
 **Hephaestus @ M3, forge — substrate generator with falsification battery — DEAD, daemon stopped**
-No heartbeat for 128809min (7728592s). Was last ALIVE at 2026-05-28T01:38:15.244017-04:00.
+No heartbeat for 129049min (7742994s). Was last ALIVE at 2026-05-28T01:38:15.244017-04:00.
 Investigate the process on M3 and restart, or kill watchdog if intentional.
 
 ## Watch this
@@ -41,7 +41,7 @@ Check Pythia queue depth; refill DR ticket inbox if dry.
 
 ## Shadow review (Elenchus)
 
-Worklog passes: 210 | reviewed: 26 | awaiting review: 187
+Worklog passes: 211 | reviewed: 26 | awaiting review: 188
 - ELEN-BOOTSTRAP-2026-08-27: **MIXED** (note) THE SHADOW CHANNEL WENT DARK. The reviewer seat filed nothing between 2026-08-21 (HEAD c30
 - ELEN-2026-08-27T01:00Z-P175: **MIXED** (correction-needed) INSTRUMENT_VALIDATED is issued at strength 'certain' on a validation that never probed T3 
 - ELEN-2026-08-26T06:00Z-P174: **MIXED** (note) A NON-FIRING ITEM IS QUOTED INSIDE A FIRING LIST. The evidence line reads 'T2 STILL FAILS,
@@ -51,7 +51,7 @@ https://github.com/jcraig949jfi/Prometheus/blob/main/engine/shadow/REVIEWS.jsonl
 
 ## For the record
 
-Session-model activity (the live operating model): 171 non-cron commits in 72h. Ground truth: engine/PULSE.md.
+Session-model activity (the live operating model): 148 non-cron commits in 72h. Ground truth: engine/PULSE.md.
 
 
 **1 agents ALIVE** (Pronoia).
