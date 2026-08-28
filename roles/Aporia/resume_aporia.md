@@ -43,6 +43,56 @@ the block.**
 
 ---
 
+## PART -0.5 — CURRENT POSITION AS OF 2026-08-27 P176. READ THIS BEFORE PART 0.
+
+**A1, A2 and A2b are CLOSED. TINYPROG is WORLD_ADMISSIBLE. The next rung is A3.**
+
+Everything lives in `aporia/lot/`. Do not rebuild any of it.
+
+- `AMENDMENT_1_LEVELS_AND_INSTRUMENT_RULE_2026-08-27.md` governs over the charter. Widening
+  claim KILLED as definitional; target is **Level 1 OPERANDIZATION**; the instrument rule is
+  program-wide; `C_search` and `C_execution` must never be merged.
+- **A1** (`RESULT_A1_CALIBRATION.json`) INSTRUMENT_VALIDATED — the boolean-world preflight.
+- **A2** (`RESULT_A2_WORLD.json`, `FINDINGS_A2_2026-08-27.md`) — world v3 TINYPROG, built
+  semantics-first as an extensional-signature closure. W1 1.0000, W2 0.9569, W3 734.4x, **W4
+  0.5973 against a bar of 2.6628 so the five classes are NUISANCE-MATCHED**. W5 was declared
+  INADMISSIBLE by me rather than reported.
+- **A2b** (`RESULT_A2B_W5_REPAIR.json`, `FINDINGS_A2B_2026-08-27.md`) — W5 repaired to a max-T
+  permutation p-value; six fixtures; **WORLD_ADMISSIBLE unanimous on seeds 20260901-20260905**.
+
+**Seeds 20260827, 20260828, 20260829, 20260830 and 20260901-20260905 are BURNED.** A3 must draw
+fresh ones.
+
+**Three facts A3 depends on, do not rediscover them:**
+
+1. **The flat solver cost identity is exactly `C_execution = 6.0 * C_search`** for every solved
+   task, because each expansion executes one primitive over 6 probes. A promoted macro must
+   break that identity: one search decision, whole-expansion execution cost. **Report the two
+   separately or the result is meaningless** (amendment section 5, unit-cost macro privilege).
+2. **Promotion on early episodes, benefit on genuinely unseen later ones.** Hindsight promotion
+   is the second named confound.
+3. **LATE_REUSE is the noisy class** — `rec_late` runs 0.757-0.917 across seeds where REUSE and
+   CONTROL sit at exactly 1.0, because its modal early motif is only usually the shared one.
+   Expect a weaker promotion signal there and do not read it as a mechanism failure.
+
+**THE DEFECT FAMILY THAT COST THIS PASS TWO RUNGS — check it as a reflex.** A bar derived from a
+null computed on the same rows is unsafe whenever the statistic is BOUNDED: a strong effect
+inflates the null and the bar can reach the ceiling. It happened twice in one pass (W4 capped at
+sqrt(8) with a bar at 2.49; W5 bar at exactly 1.0 on a fraction) and once on 2026-08-23 (cut
+0.14 above a maximum attainable 0.1364). **Compute the bar AT THE STATISTIC CEILING before
+running anything.**
+
+**And the procedural half:** a calibration is validated **per-component**. Every component that
+can issue a FAIL needs a fixture asserting True; every one that can issue a PASS needs one
+asserting False. A2 shipped a W5 with only a known-negative and the asymmetry was visible in its
+own fixture table before any world was read.
+
+**Kill criteria for A3 are amendment section 9, all five still live** — especially number 5:
+if an ordinary memoised search cache reproduces the whole reification advantage, the
+mutable-language interpretation has earned nothing.
+
+---
+
 ## PART 0 — BOOTSTRAP
 
 ### Read in this order, then stop reading and start executing
