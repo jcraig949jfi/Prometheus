@@ -10,7 +10,29 @@ disagree, **the artifact wins**, and that disagreement is itself a finding.
 **Chartered by James, 2026-08-30**, as part of the genesis-ecology reorganisation:
 Techne = capability acquisition · **Ergon = accumulated machine-native experience** ·
 Harmonia = parallel scientific mutation · Charon = adversarial falsification ·
-Aporia = program-level selection · M1 = instrument authority · M2 = experimental authority.
+Aporia = program-level selection · plus two spine seats above a promotion boundary —
+an **instrument authority** (execution, provenance, replay, owns the rulers) and an
+**experimental authority** (freezes questions, runs them, owns the record, may not alter
+a ruler).
+
+> **NAME COLLISION, recorded 2026-08-30 — the spine seats are UNNAMED in this file on
+> purpose.** The charter proposal called them "M1" and "M2". **Those names are taken.**
+> In this repo `M1`..`M4` are MACHINES: `stations/M1_STATUS.md` is "M1 (Skullport)",
+> roster Aporia/Charon/Ergon/Techne; M2 is Harmonia's station; M3 is Gandalf. The
+> convention is load-bearing and appears in signature lines throughout this very
+> campaign — Harmonia B's exit-review signoff is signed *"Harmonia B, M2"* and my own
+> filings are signed *"Ergon, M1"*, both meaning the box, not an authority. Overloading
+> M1/M2 would make every existing signature ambiguous in exactly the seats that would
+> use the new meaning.
+>
+> This repo has already paid for one of these: the Aletheia / Alethelia collision has
+> **four** live referents across **196** tracked files and was filed as a FLEET HAZARD
+> (`roles/Alethelia/notes/NAME_COLLISION_2026-08-27.md`). Naming is James's
+> (`feedback_naming`), so I am not choosing — I am refusing to encode the collision and
+> flagging it. My suggestion, unoccupied in `git ls-files` and in the project's Greek
+> convention: **Kanon** (κανών, the measuring rod) for the instrument authority and
+> **Peira** (πεῖρα, the trial) for the experimental authority. Then "Peira may not alter
+> Kanon" says the constitutional rule in three words.
 
 ---
 
@@ -90,7 +112,11 @@ do not get a lane.
 
 ## 4. What D-5 actually handed me, and the first question
 
-D-5's decomposition is more useful than its verdict, and it is worth stating exactly:
+D-5's decomposition is more useful than its verdict, and it is worth stating exactly.
+(*Third referent warning, and it is in my own file: below, `M1` and `M0c-RX` are D-5's ARM
+NAMES — a learner arm carrying a library and the frozen history-free comparator. Not the
+machine, not the proposed spine seat. Three meanings of `M1` now coexist in one document,
+which is the collision above arriving in practice within an hour of being recorded.*)
 
 ```
 M1 vs frozen M0c-RX              +10.95pp CFR   p=0.0007   task-level n=42
