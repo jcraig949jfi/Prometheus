@@ -1,0 +1,78 @@
+=====================================================================
+D-14 AMENDMENT A1 -- measurement-path repair (frozen before any
+influence value exists)
+Date: 2026-08-31. Amends FREEZE_D14.txt sections 5-7 ONLY.
+Hypothesis, interval, threshold, verdict mapping, no-rescue rule,
+support minimums (>=100 parents, >=1000 sites), and controls'
+intent are UNCHANGED.
+=====================================================================
+WHY. The frozen path assumed /v0/search-physics/displacement pairs
+were genotype-addressable. Measured fact: every artifact GET on the
+5,120 collected pairs returned 404 unknown_artifact -- the
+endpoint's parents/children are EPHEMERAL (computed, not
+persisted). Site recovery by diff is impossible on that path. A
+seed-mapping probe (create_random over candidate seeds vs observed
+parent ids) found no correspondence. The 5,120 rows are retained
+as results/pairs_raw.jsonl for post-hoc descriptive use only; no
+influence value was derived from them, and their displacement
+DISTRIBUTION was not examined before this amendment (only the
+structure of one row, to read the 404).
+
+REPAIRED PATH (all server-executed, deterministic, artifact-store
+based; discovered by probes journaled as methodological):
+  PARENTS  /v0/artifacts create_random(stackvm-v1, seed), frozen
+           seeds 910001..910100 (100 parents). Persisted; genotype
+           via /v0/artifacts/{id}/genotype (base64; observed
+           length 84 bytes; distribution reported). Determinism
+           anchor reproduced: create_random(424242) ->
+           sha256:a8279588... exactly as D-12 recorded.
+  INTERVENTIONS  /v0/artifacts mutate(parent, seed=k, config =
+           D-13 I-L_strong verbatim: point_indel p_point=1,
+           max_point_sites=1, indels/dup off), k = 1..64 per
+           parent. Child persisted; site = positional diff of
+           parent/child genotypes (lengths must match; diff==1).
+           FIRST-HIT RULE (unchanged in spirit, order now fully
+           deterministic): influence(P,s) uses the child from the
+           LOWEST mutation seed k whose eligible diff is site s.
+  CONSEQUENCE  battery = 8 input cases, each a length-4 sequence
+           of integers 0..255, drawn once from a frozen RNG
+           (SeedSequence [20260914]); 8 single-case tasks + 1
+           combined 8-case task created via /v0/tasks (ids
+           recorded). Observable outcome of artifact A on case i =
+           the result.output_hash of /v0/evaluate(A, task_i,
+           seed=0). influence(P,s) = #{i : output_hash(child,i)
+           != output_hash(parent,i)} / 8 -- the task charter's
+           exact formula (changed_cases / evaluable_cases).
+           Mechanical shortcut (no discretion): the combined task
+           is evaluated first; if its output_hash equals the
+           parent's, influence = 0 without per-case calls.
+  FAULTS   a child whose evaluate reports failure.kind != "none"
+           on any needed case is a FAULT-class intervention:
+           excluded from the spectrum, counted, rate reported
+           (mirrors D-13's clean-pair convention).
+
+DECLARED DEVIATION (the honest cost of the repair): D-13's
+displacement channel measured TRAJECTORY disagreement over WORLD
+probes (seq_transducer_v1). A1's consequence is FINAL-OUTPUT
+change on raw engine evaluation cases -- the task charter's
+"final observable behavior" notion, executed by the predecessor
+engine's own evaluate capability, with x_uniform-style inputs at
+the world's horizon length. This is the closest faithful
+instantiation the instrument's persistence model permits. The
+comparator therefore matches the D-14 charter's definition
+EXACTLY and D-13's displacement notion only approximately; both
+facts are stated here and in the packet, and the freeze section
+2b risk note is updated by it: the primary statistic is now
+LESS coupled to D-13's kpos025 than the original path would have
+been (a fresh comparator), i.e. the prediction is RISKIER under
+A1 than under the voided path.
+
+CONTROLS (C1-C5 re-instantiated): C1 replay = repeated evaluate
+of one parent on all tasks, hashes identical + repeated mutate
+(same parent, same seed) -> identical child id. C2 no-op = every
+diff==0 child must have all output hashes equal to parent's.
+C3 locality = diff-count histogram; included pairs diff==1.
+C4 comparator = the charter formula implemented on server-side
+output hashes only; client never computes behavior. C5 = sha256
+of fetched genotype bytes equals the artifact id, >= 5 artifacts.
+=====================================================================
