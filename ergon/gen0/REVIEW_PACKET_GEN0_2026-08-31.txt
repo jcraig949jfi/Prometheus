@@ -1,0 +1,529 @@
+ERGON GEN-0 -- REVIEW PACKET
+2026-08-31. Findings against the Gen-0 brief, written for a hostile reviewer
+who has not seen the originating conversation.
+
+====================================================================
+0. THE ONE-PARAGRAPH ANSWER
+====================================================================
+
+The brief asked whether donor-derived accumulated structure earns
+machine-level reuse in the one consumer with a metered appetite. The
+answer is that the consumer's appetite is for CONTENT, not for
+ABSTRACTIONS, and this is a property of its interface rather than a
+preference or a ranking. The D-5 library slot eats whole executable
+genotypes used as mutation seeds. It has no application site, no splice
+site, and no primitive-extension path. So the characteristic product of
+Family A -- a reusable parameterised abstraction that becomes a new
+primitive -- has nowhere to go AT ANY ACQUISITION PRICE. No primary arm
+ran. Two independent gates stopped it, and the brief names both as
+valid results.
+
+Commits: 503dd553 (Gen-0), f97d1705 (version-provenance fix).
+Sits downstream of Techne 3e9c5b06 / d70a417c / 231c1ea7.
+
+====================================================================
+1. SECTION-BY-SECTION: WHAT WAS ASKED, WHAT WAS DONE
+====================================================================
+
+  0  inherit current facts .............. DONE, read at source
+  1  inherit Lexis gates ................ DONE, fired status preserved
+  2  central question ................... ANSWERED, negatively
+  3  Family A/B cost asymmetry .......... DISSOLVED, not settled
+  4  first decision: consumer fit ....... DONE, by execution
+  5  Stitch acquisition ................. BLOCKED, not installed
+  6  primary experiment ................. NOT RUN -- gated, not skipped
+  7  outcomes ........................... N/A, no arm ran
+  8  required ablations ................. N/A, no arm ran
+  9  Family-B probe ..................... DONE, requirement written
+ 10  machine knowledge test ............. APPLIED to all three donors
+ 11  do not build a memory database ..... COMPLIED, nothing built
+ 12  negative results that count ........ TWO of the listed ones landed
+ 13  Charon handoff ..................... DONE, with a declared breach
+ 14  deliverables ....................... DONE, minus the ones that
+                                          presuppose an arm having run
+ 15  success criterion .................. MET in the falsification sense
+
+====================================================================
+2. THE CONSUMER'S EXACT CONTRACT, READ FROM FROZEN SOURCE
+====================================================================
+
+Source: agent_d5_blind/learner/m1.py, mutation/physics.py,
+substrate/rm_vm.py
+
+  entry type ......... tuple of (OPCODE:str, a:int, b:int), len 1..24
+  opcodes ............ 14, FROZEN: ADD AND JNZ MOD MOV MUL OR SET
+                       SHL SHR SKG SKZ SUB XOR
+  registers .......... 8
+  const palette ...... 10 entries [0,1,2,3,5,7,11,13,16,255]
+  library ............ cap 64, most-recent-first eviction,
+                       genotype-deduped
+  admission .......... solving genotype (if any) + up to 4
+                       BEHAVIOUR-DISTINCT best-scoring candidates from
+                       the last scored generation
+
+  CONSUMPTION PATH -- this is the whole of it:
+
+      def fresh():
+          if extra_pool and rng.random() < 0.5:
+              return mutate(extra_pool[rng.randrange(len(extra_pool))], rng)
+          return mutate(rep[rng.randrange(len(rep))], rng)
+
+  application site ....... NONE
+  splice site ............ NONE
+  instantiation site ..... NONE
+  primitive extension .... NONE. OP_LIST = sorted(OPS) computed at
+                           import from a literal dict; rm_vm.run
+                           dispatches on a hardcoded if/elif chain;
+                           zero registration hooks in learner or VM.
+
+====================================================================
+3. CONSUMER FIT -- THE SECTION 4 DETERMINATION
+====================================================================
+
+Instrument: ergon/gen0/consumer_fit.py
+Report:     ergon/gen0/consumer_fit_2026-08-31.json
+Every verdict comes from ONE classify() function.
+
+  A   native D-5 executable artifact ....... CONSUMABLE_AS_IS
+  B   Stitch abstraction, >= 1 hole ........ NOT_CONSUMABLE
+  B*  Stitch abstraction, zero holes ....... CONSUMABLE_AS_IS
+  C   egglog-rewritten genotype ............ CONSUMABLE_AS_IS by TYPE,
+                                             producible today: NO
+  --  artifact needing a learned primitive .. TOOL_FIT_FAILURE
+
+Two of these need their caveat travelling with them or they will be
+misread.
+
+B* is consumable because a zero-hole abstraction is just a concrete
+subprogram, and short programs are valid entries -- the frozen seed
+repertoire itself contains length-1 and length-2 programs. But under
+that route what enters the library is a concrete genotype
+indistinguishable in TYPE from a native artifact, so the arm would
+measure Stitch-as-SELECTOR over native content, not donor-derived
+memory. This is the most attractive wrong experiment available and it
+is named as a trap in the Charon packet.
+
+C is type-compatible because a rewritten genotype is still a genotype.
+The input was constructed BY HAND to test the type. It is not evidence
+egglog can emit one. Producing one requires RM semantics including
+JNZ/SKZ/SKG as an egglog theory, which is unbuilt.
+
+GATE-FIRE: 7 constructed worlds, answers known in advance, 0 holes.
+
+    world                                      expected
+    W1 native genotype                         CONSUMABLE_AS_IS
+    W2 zero-hole motif (fair Stitch case)      CONSUMABLE_AS_IS
+    W3 abstraction with a hole                 NOT_CONSUMABLE
+    W4 artifact needing a learned primitive    TOOL_FIT_FAILURE
+    W5 float operand                           NOT_CONSUMABLE
+    W6 const index out of palette              NOT_CONSUMABLE
+    W7 over-length genotype                    NOT_CONSUMABLE
+
+W1 and W2 exist because a probe merely biased toward NOT_CONSUMABLE
+would produce this generation's headline for free. W2 in particular
+forces the probe to say CONSUMABLE about a Stitch-shaped object.
+
+====================================================================
+4. TWO CORPUS FACTS THAT BLOCK ANY FUTURE DONOR CONTRAST
+====================================================================
+
+NO SEARCH-DISCOVERED LIBRARY WAS EVER PERSISTED.
+agent_d5_blind/ledgers/m1_rows.jsonl has 290 rows and no
+genotype-bearing field -- only arm, evals, solved, first_solve,
+library_size_at_start, seeds, lineage, position, stratum, family,
+ladder, mode, run_id, wlen. The libraries that produced +10.95pp were
+built in memory across a lineage and discarded.
+
+THE ONLY PERSISTED GENOTYPE CORPUS IS ORACLE-SIDE.
+agent_d5_blind/results/oracle_solutions.jsonl, n=78, every row
+method="constructive_compiler". These are exact-oracle witnesses, not
+artifacts the searcher found. Seeding a library from them violates
+m1.py's stated input boundary (learner view only) and the brief's
+identical-inference-privilege requirement. Recorded INADMISSIBLE.
+
+Consequence: there is currently no machine-native artifact corpus in
+the repository to hand to any donor. The fix costs one field in a row
+writer and must precede the next D-5-class run.
+
+====================================================================
+5. FAMILY A -- ACQUISITION VERDICT
+====================================================================
+
+stitch_core 0.1.29. NOT INSTALLED. BLOCKED.
+
+Section 5 requires canonical upstream, licence, package identity and
+wheel provenance before reliance. Checked at source on 2026-08-31:
+
+  PyPI stitch_core metadata
+      licence .......... ABSENT      classifiers ..... ABSENT
+      project_urls ..... ABSENT      home_page ....... ABSENT
+      summary .......... ABSENT      author .......... ABSENT
+      owner account .... mlb2251
+
+  github.com/mlb2251/stitch
+      licence .......... MIT
+      language ......... Rust
+      states Python bindings live in a SEPARATE repo; never names
+      stitch_core
+
+  github.com/mlb2251/stitch_bindings
+      states it publishes as stitch_core   -> IDENTITY RESOLVED
+      no licence shown, no LICENSE file    -> LICENCE UNRESOLVED
+
+So the MIT licence is on the Rust core, not on the repo that builds
+the wheel, and the distribution declares nothing. Section 5's rule
+fires: do not install an ambiguous package to keep an experiment
+moving.
+
+HONEST LIMIT ON THE CONVERGENCE. Techne independently flagged this as
+blocker B1. But Techne and I read the SAME PyPI metadata, so that is
+two readings of one source, not two independent failure modes. What
+this pass actually added is the CHAIN: identity moved from
+WEAK_DESCRIPTION_ONLY to resolved, and the licence moved from
+"unstated" to "located on the wrong artifact". Narrower and more
+actionable, not independently confirmed.
+
+The acquisition block is INDEPENDENT of the structural verdict.
+Resolving the licence would not make Stitch consumable.
+
+====================================================================
+6. FAMILY B -- FAMILY_B_REQUIRES_NEW_SYNTHESIS_LAYER
+====================================================================
+
+egglog 13.2.0, measured at run time via importlib.metadata, verified
+against Techne's pin in techne/requirements-donors.txt: MATCH.
+The tool is present. The ENCODING is the blocker.
+
+Lexis G3 pre-commits to stating the attainable range of the readout
+FIRST, so the census preceded any design. Over the 78 known solution
+witnesses, mean length 11.05:
+
+    jump-free / equationally expressible ..... 53   (68.0%)
+    carrying control flow .................... 25
+        SKG .................................. 18
+        JNZ ..................................  7
+    equational fragment ...................... 11 opcodes
+        ADD AND MOD MOV MUL OR SET SHL SHR SUB XOR
+
+    by family, jump_free / n
+        F1 ......... 12/12          F4 ......... 12/12
+        ALIEN ...... 17/20          F2 .........  5/8
+        NEGX .......  4/6           F3 .........  3/10
+        CTRL ....... 0/10
+
+Two findings sit in that table. Coverage is higher than expected at
+68%. But control flow is NOT uniformly distributed -- it concentrates,
+with CTRL at 0/10 and F3 at 3/10 against F1 and F4 at 12/12. A
+rewriter restricted to the jump-free fragment would be systematically
+blind to specific families rather than uniformly weaker.
+
+THE DEEPER BLOCKER, WHICH COVERAGE DOES NOT FIX. Equality saturation
+returns terms EQUIVALENT to its input. Equivalent genotypes compute
+the same function. D-5's admission is already behaviour-distinct
+de-duplicated on output fingerprints. So egglog alone can supply, at
+best, behaviourally redundant seeds to a slot that already dedupes on
+behaviour -- measurable in principle, and predictably null. That is
+not the Family-B hypothesis.
+
+THE SMALLEST NEXT FAMILY-B CAPABILITY, stated so a successor builds
+exactly this and nothing larger:
+
+  BUILD an equational theory of RM-D5 over the JUMP-FREE fragment (11
+  opcodes) that can (a) ingest a straight-line genotype, (b) saturate
+  under a rule set derived from prior solved genotypes, and (c) emit
+  the SHORTEST equivalent straight-line genotype.
+
+  WHY SHORTEST: length is the only rewrite product that can move the
+  D-5 readout. The slot eats whole genotypes as mutation seeds, so a
+  shorter seed of identical behaviour sits in a different, smaller
+  neighbourhood under the frozen mutation physics. That makes it a
+  REACHABILITY claim, and reachability is what D-5 measures.
+
+  ATTAINABLE RANGE FIRST (G3): compute the length reduction available
+  on the jump-free fragment BEFORE building. If mean
+  shortest-equivalent length equals mean witness length, the readout
+  is bounded at zero and the build is disqualified exactly as Apollo's
+  battery was.
+
+  PREREGISTERED KILL: if shortest-equivalent seeds do not change
+  per-task CFR against a LENGTH-MATCHED random-genotype control at
+  identical metered budget, Family B is dead for this consumer however
+  elegant its equivalence classes are.
+
+  BLOCKED ON: nothing external. A build, not an acquisition.
+
+====================================================================
+7. INHERITED LEXIS GATES -- FIRED STATUS PRESERVED EXACTLY
+====================================================================
+
+Read verbatim from roles/Lexis/ROLE.md section 5, not paraphrased.
+
+  G0  FIRED       0%-usage headline describes a superseded population
+  G1  FIRED       2026-08-25. 5.94% load-bearing at rung R4, under the
+                  pre-committed 10%. "The admission criterion is the
+                  problem, not the primitives." Fires a kill on "forge
+                  more tools" as a strategy, INDEPENDENT OF TOOL
+                  QUALITY.
+  G2  STANDING    Compute-matched or it does not count. Currency =
+                  organism-evaluations. An uncontrolled library result
+                  is not reported as a result in any document at any
+                  confidence.
+  G3  STANDING    Transfer, not compression. State the attainable
+                  range FIRST. Precedent: Apollo's battery
+                  disqualified, bounded at 0.8333.
+  G4  STANDING    Cloud money justified by G3 positive and nothing else
+  G5  BUILT+RUN   NEW(p,C,T) before admission; dS and dE on separate
+                  ledgers; bundles are admissible proposal units
+  G6  STANDING    All 24 permutations for any dE. Survival shows
+                  equivariance, NOT reasoning
+  G7  PROPOSED    Authorship independence; not self-ratified
+
+G1 IS THE MOST IMPORTANT INHERITED FACT IN THIS PACKET. It already
+fired a kill on acquiring more tools as a strategy, independent of
+tool quality -- which is precisely what a Family A acquisition is.
+Gen-0's structural finding reaches the same place from the interface
+side: the lever is the ADMISSION RULE, not the supply. Two
+measurements on different substrates, not two opinions.
+
+G2 IS NOT ENGAGED. No arm ran, no organism-evaluations were spent, and
+nothing in this packet is reported as a library result.
+
+====================================================================
+8. WHY NO PRIMARY ARM RAN -- A GATE, NOT A BUDGET
+====================================================================
+
+  I0  no-history / empty library ..... ELIGIBLE
+  I1  native D-5 library ............. ELIGIBLE
+  I2  Stitch-derived memory .......... INELIGIBLE (structural, and
+                                       the donor is acquisition-blocked)
+  I3  egglog-derived artifacts ....... INELIGIBLE (section 6 above)
+
+I0 vs I1 is eligible and is exactly D-5's own G4, already committed at
++10.95pp, p=0.0007, task-level n=42. Re-running it would spend
+organism-evaluations to re-derive a committed result, and the donor
+contrast that would have made it a NEW experiment does not exist.
+
+Recorded for the arm that did not run, so a successor inherits rather
+than re-derives it:
+
+    primary endpoint ..... per-task CFR under frozen D-5 semantics
+    unit of analysis ..... task-level, paired by seed
+    currency ............. organism-evaluations, acquisition and
+                           inference metered SEPARATELY
+    compression ratio .... DESCRIPTIVE ONLY, never the endpoint
+    ablations ............ no-history, random-library,
+                           shuffled-history, leave-one-out, usage
+                           count, redundancy; and for any donor arm
+                           SAME-STORAGE/RANDOM-CONTENT plus
+                           SAME-CANDIDATE-COUNT-WITHOUT-REUSE
+
+====================================================================
+9. SECTION 10 CLASSIFICATION -- THE MACHINE KNOWLEDGE TEST
+====================================================================
+
+  native D-5 artifacts ....... RETAINED_CANDIDATE_KNOWLEDGE
+                               D-5 measured the counterfactual at
+                               +10.95pp and the arms genuinely
+                               diverged (94/290 rows differ)
+  Stitch abstractions ........ STORED_ONLY
+                               no consumer can eat them here. Not even
+                               CONSUMED_NO_EFFECT, which would require
+                               consumption to have occurred
+  egglog equivalence classes . STORED_ONLY
+                               same reason, plus predictable
+                               behavioural redundancy
+
+The word "learned" is used nowhere in this generation as a property of
+any donor output.
+
+====================================================================
+10. ATTACK SURFACE -- MY OWN FAILURE MODES, LISTED FIRST
+====================================================================
+
+F1  MOTIVATED NON-FIT. I arrived at Gen-0 having argued three days
+    earlier, in my own charter, that executability is the admission
+    criterion for machine memory. A verdict of "the abstraction donor
+    does not fit" flatters that argument. Mitigation is structural,
+    not dispositional: gate-fire worlds W1 and W2 force the probe to
+    classify a native artifact AND a Stitch-shaped zero-hole motif as
+    CONSUMABLE. Both pass. That is a mitigation, not an immunity.
+
+F2  STRAW DONOR -- THE WEAKEST JOINT. I modelled a Stitch abstraction
+    as a triple carrying a HOLE marker. If Stitch's real output maps
+    to RM programs some other way, the B verdict attacks a strawman. I
+    could not check against the real tool because acquisition is
+    blocked. So the verdict rests on the DEFINITION of an abstraction
+    as a term with unapplied argument positions, not on stitch_core's
+    serialisation. Attack here first.
+
+F3  SCOPE INFLATION. Everything here concerns ONE consumer. "No slot
+    in D-5" is not "useless to Prometheus". D-5 was chosen because it
+    is the only consumer with a metered appetite, which makes this
+    load-bearing for the Family decision and for nothing wider.
+
+F4  TYPE-FIT READ AS CAPABILITY. The C verdict says an
+    egglog-rewritten genotype would be type-compatible. That input was
+    hand-constructed. The report records producible_today: NO beside
+    the classification for exactly this reason.
+
+F5  CENSUS ON A PRIVILEGED CORPUS. The 68% jump-free figure is
+    measured on the same oracle witnesses declared INADMISSIBLE as
+    library seeds. I hold that a structural census -- which opcodes
+    appear -- is a property of the substrate rather than information
+    handed to a searcher. The line is mine and a reviewer may draw it
+    elsewhere. If the census is ruled privileged, the number falls and
+    the VERDICT survives on the encoding argument alone.
+
+F6  FREEZE-ORDER BREACH, SELF-REPORTED. Section 13 says produce the
+    frozen attack packet BEFORE inspecting the headline. I did not.
+    There was no separable headline to freeze in front of: the answer
+    was fully determined by frozen source the moment the probe was
+    written, and reading the source IS the experiment. A reviewer may
+    rule that a structural determination still required
+    pre-registration. The mitigation actually in place is that every
+    verdict issues from one gate-fired classification function.
+
+====================================================================
+11. FALSIFIABLE CLAIMS AND WHAT BREAKS EACH
+====================================================================
+
+C1  The slot consumes entries ONLY as whole-program mutation seeds.
+    BREAKS IF: any site in agent_d5_blind/ consumes a PART of a
+    library entry, or applies an entry to arguments.
+
+C2  The primitive set is frozen at 14 with no extension path, so a
+    learned primitive has no slot at any acquisition price.
+    BREAKS IF: a registration hook, config-driven opcode table, or any
+    path adds an opcode without editing rm_vm.run's dispatch chain.
+
+C3  A hole-bearing abstraction is NOT_CONSUMABLE; the zero-hole case
+    is a concrete subprogram, not an abstraction.
+    BREAKS IF: a semantics-preserving adapter lets a hole-bearing
+    abstraction change search WITHOUT instantiating its holes into
+    concrete genotypes or adding a splice operator to the frozen
+    mutation physics.
+
+C4  No search-discovered artifact library was ever persisted.
+    BREAKS IF: any file under agent_d5_blind/ carries a
+    search-discovered genotype.
+
+C5  oracle_solutions.jsonl is INADMISSIBLE as a library seed.
+    BREAKS IF: seeding from constructive-compiler witnesses can be
+    shown to preserve m1.py's input boundary. ATTACK THIS HARDEST --
+    it is the cheapest corner to cut and it would make an arm runnable
+    today.
+
+C6  Family B is not measurable with egglog alone.
+    BREAKS IF: an egglog encoding of RM control flow exists that does
+    not amount to building the machine-state theory, OR
+    behaviourally-equivalent seeds can be shown to move CFR in a slot
+    that dedupes on behaviour fingerprints.
+
+====================================================================
+12. COMPUTE ACCOUNTING
+====================================================================
+
+    model calls .............. 0
+    arm calls ................ 0
+    organism-evaluations ..... 0
+    spend .................... $0.00
+    network .................. 3 read-only metadata fetches
+                               (pypi.org, 2x github.com)
+    wall time ................ < 2s per probe
+    host ..................... M1 / Skullport, Windows 11,
+                               Python 3.12.10
+
+====================================================================
+13. REPRODUCTION
+====================================================================
+
+    python -m ergon.gen0.consumer_fit
+    python -m ergon.gen0.family_b_probe
+
+Both READ-ONLY with respect to agent_d5_blind/. Neither writes,
+mutates or reruns any frozen D-5 artifact; git status on that tree is
+clean afterwards. Reports land beside the instruments as
+consumer_fit_2026-08-31.json and family_b_probe_2026-08-31.json.
+
+Deliverables in ergon/gen0/:
+    consumer_fit.py                  instrument, gate-fired 7/7
+    consumer_fit_2026-08-31.json     raw report
+    family_b_probe.py                instrument
+    family_b_probe_2026-08-31.json   raw report
+    gen0_config.json                 machine-readable config
+    ERGON_GEN0_FREEZE.txt            hostile-review packet
+    ERGON_GEN0_HANDOFF.txt           successor handoff
+    REVIEW_PACKET_GEN0_2026-08-31.txt  this file
+
+No donor adapter was written, because no donor was consumable. No
+ablation ran, because no arm was eligible. No usage or redundancy
+record exists, because nothing was consumed.
+
+====================================================================
+14. WHAT WOULD CHANGE THESE VERDICTS
+====================================================================
+
+  - a LICENSE file in stitch_bindings, or licence metadata on the
+    wheel, unblocks acquisition -- but does NOT touch C2 or C3
+  - a consumer with a primitive-extension path, ANY consumer, makes
+    Family A adjudicable for the first time. D-5 cannot do it, so
+    Family A is currently UNADJUDICABLE rather than refuted
+  - persisting search-discovered libraries on a future D-5-class run
+    creates the machine-native corpus that does not currently exist
+  - the jump-free shortest-equivalent build makes Family B adjudicable
+
+====================================================================
+15. THE NEXT EXPERIMENT, AND WHY IT IS NOT A DONOR ARM
+====================================================================
+
+PERSIST THE LIBRARIES, THEN VARY THE ADMISSION RULE.
+
+Three independent lines meet here:
+
+  - D-5 varied ORDER (shuffled history retained 100%) and CONTENT
+    SOURCE (random library retained 39%) but NEVER varied the
+    admission rule. "Solver + 4 behaviour-distinct" was frozen in
+    every arm including both ablations.
+  - Lexis G1 FIRED on exactly this: 5.94% load-bearing, "the admission
+    criterion is the problem, not the primitives."
+  - Gen-0's structural finding: the slot's appetite is for content,
+    and the only lever its interface exposes is WHICH content enters.
+
+So the question is whether choosing what to retain pays above the 39%
+floor of retaining anything executable -- and whether an active
+RETIREMENT rule beats keeping everything to the cap of 64. Every
+Prometheus memory result to date is an accumulation result. No
+experiment in this repository has ever measured a deletion. A memory
+system that cannot forget is a log.
+
+PRECONDITION: a D-5-class run that WRITES its libraries to disk. One
+field in a row writer. Cheapest unblocking act available.
+
+G3 PRECOMMITMENT OWED BEFORE THAT DESIGN: state the attainable range
+of the CFR readout under admission-rule variation first. If the range
+is bounded at zero, the experiment is disqualified before it is built.
+
+DO NOT, in the next generation: acquire another donor (G1 fired on
+that), build a memory database (section 11 forbids it), or re-run
+I0-vs-I1 (D-5 already answered it).
+
+====================================================================
+16. QUESTIONS FOR THE REVIEWER
+====================================================================
+
+  Q1  Does a structural determination require pre-registration? See
+      F6. If yes, this generation breached section 13 and the finding
+      needs re-deriving under a frozen packet.
+  Q2  Is a structural census over oracle witnesses itself privileged?
+      See F5. If yes, the 68% figure falls.
+  Q3  Is the HOLE-marker model of a Stitch abstraction fair? See F2.
+      This is the weakest joint and cannot be closed while acquisition
+      is blocked.
+  Q4  Is "Family A is UNADJUDICABLE, not refuted" the right claim
+      ceiling, given that no consumer in the programme has a
+      primitive-extension path?
+  Q5  Should the next generation build a consumer WITH a
+      primitive-extension path specifically to adjudicate Family A, or
+      is that widening a consumer to make a donor look useful?
+
+-- Ergon, 2026-08-31
