@@ -103,8 +103,49 @@ NO_EXPERIMENT_TYPES = {"review", "book", "book-chapter", "editorial", "letter",
                        "erratum", "paratext", "reference-entry"}
 
 
-def reports_an_experiment(title: str = "", work_type: str = None) -> tuple:
-    """(bool, reason). False for document types that cannot host a confounded experiment."""
+#: POSITIVE evidence that a paper ran an experiment. Requiring this inverts the earlier test,
+#: which only excluded document types it recognised as non-experimental and let everything else
+#: through by default.
+#:
+#: The inversion was forced by reading the surviving confounds at cycle 031. Of 5 CONFIRMED,
+#: 4 were false positives and the survey gate had caught none of them:
+#:   "Convergence analysis of canonical genetic algorithms" (Rudolph 1994) -- a THEOREM.
+#:       "It is proved by means of homogeneous finite Markov chain analysis that a CGA will
+#:        never converge to the global optimum." P4 fired on a mathematical proof.
+#:   "Probabilistic Lexicase Selection" -- "Due to its non-parametric and recursive nature,
+#:       calculating the probability ... has been proven to be an NP-hard problem." A causal
+#:       claim about a COMPLEXITY RESULT, not about an experimental outcome.
+#:   "Tool Wear Prediction via Stacked Sparse Autoencoders" -- "Inspired by the successful
+#:       application of deep learning..." A motivational sentence, in an application paper.
+#:
+#: A theory paper has no experiment to confound, exactly as a survey does not. Excluding
+#: document types one at a time as they are discovered is unbounded; requiring positive
+#: evidence of an experiment is bounded and fails safe -- it under-fires rather than over-fires,
+#: which is the correct direction for the campaign's priority lane.
+EXPERIMENTAL_EVIDENCE = re.compile(
+    r"\b(we (?:evaluate|test|compare|benchmark|measure|run|conduct|report)|"
+    r"experiment\w*|empirical\w*|our (?:results|experiments|evaluation)|"
+    r"results (?:show|demonstrate|indicate|suggest)|"
+    r"benchmark(?:s|ed|ing)?\b|test (?:suite|problems|set)|"
+    r"on (?:\w+ )?(?:datasets?|benchmarks?|problems|tasks)|"
+    r"outperform\w*|baseline\w*|ablation)\b", re.I)
+
+#: Signatures of a THEORY / PROOF paper. Used only to explain a refusal, never to cause one --
+#: the refusal comes from the absence of experimental evidence.
+THEORY_MARKER = re.compile(
+    r"\b(we prove|it is proved|proof|theorem|lemma|corollary|np-hard|np-complete|"
+    r"complexity (?:analysis|result)|convergence analysis|we show that .{0,40}converge|"
+    r"markov chain analysis|asymptotic\w*|upper bound|lower bound)\b", re.I)
+
+
+def reports_an_experiment(title: str = "", work_type: str = None,
+                          text: str = "") -> tuple:
+    """(bool, reason). True only with POSITIVE evidence that the paper ran an experiment.
+
+    P4 asks whether an attributed mechanism was isolated. That presupposes an experiment, so a
+    paper reporting none cannot host a confounded one -- whether it is a survey, a theorem, a
+    position paper or an editorial.
+    """
     if work_type and str(work_type).strip().lower() in NO_EXPERIMENT_TYPES:
         return False, "document type " + repr(work_type) + " reports no experiment of its own"
     m = NO_EXPERIMENT_TITLE.search(title or "")
@@ -112,7 +153,15 @@ def reports_an_experiment(title: str = "", work_type: str = None) -> tuple:
         return False, ("title marks a survey/review/tutorial (" + repr(m.group(0))
                        + ") -- it reports no experiment of its own, so 'the mechanism was not "
                          "isolated' is a category error rather than a finding")
-    return True, "appears to be a primary research report"
+    if not text:
+        return False, "no text: cannot establish that an experiment was run"
+    ev = EXPERIMENTAL_EVIDENCE.search(text)
+    if not ev:
+        th = THEORY_MARKER.search(text)
+        return False, ("no experimental language in the stored evidence"
+                       + (" (and theory markers present: " + repr(th.group(0)) + ")" if th
+                          else "") + " -- P4 presupposes an experiment")
+    return True, "experimental language present: " + repr(ev.group(0))
 
 
 def _spans_text(spans: list) -> str:
@@ -217,7 +266,7 @@ def confounded_mechanism_claim(spans: list, title: str = "", work_type: str = No
     text = _spans_text(spans)
     if not text:
         return "BLOCKED", "no stored evidence spans", []
-    is_primary, why = reports_an_experiment(title, work_type)
+    is_primary, why = reports_an_experiment(title, work_type, text)
     if not is_primary:
         return "REFUTED", "P4 not applicable: " + why, []
     causal = _quote(CAUSAL_CONNECTIVE, text)
