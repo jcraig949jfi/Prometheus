@@ -1,0 +1,132 @@
+=====================================================================
+HARMONIA A / GEN 1 -- HANDOFF
+Causal density and consequence geometry -- CLOSED
+Date: 2026-08-31   Repo: D:\Prometheus\genesis\harmonia_a\gen1\
+Freeze commit: 1950aa1df (hashes journaled at issuance)
+=====================================================================
+
+1. VERDICT (frozen gate, analyze1.py verbatim)
+
+     NO_LOW_DIMENSIONAL_TRANSFER_COORDINATE
+
+  The liveness ladder does not predict the SHAPE of realized
+  consequence movement. Primary endpoint LOCAL_SHARE =
+  P(d<=0.25 | d>0): eta2 = 0.044, perm p = 0.015 (gate 0.01),
+  per-seed eta2 = [0.086, 0.048, 0.239, 0.119, 0.064] -- 4/5 below
+  the 0.15 reliability bar, one seed carrying triple the signal.
+  Harness clean: G_HARNESS PASS (sham deltas <= 0.03 at both extreme
+  levels), G_LADDER PASS (realized bins ordered, non-overlapping),
+  G_SUPPORT PASS (298/300 objects retained; no fallback invoked).
+
+2. THE LAYERED RESULT (the actual product)
+
+  Layer 0 -- FORCED, declared before the run: d <= inf(target gate)
+  for every single-gate edit. Consequence: P(neutral) has an
+  arithmetic floor. MEASURED: corr(neutral, forced_neutral_floor)
+  = 0.928, mean gap 0.034. E2's spectacular eta2 = 0.714
+  (level means 0.913 -> 0.651) is this theorem restated through the
+  ladder. With forced quantities controlled, s_live's neutral
+  association collapses -0.423 -> +0.141. A design with P(neutral)
+  as primary would have promoted a theorem to a discovery; the
+  freeze was built to prevent exactly that, and did.
+
+  Layer 1 -- ACTIVITY vs SHAPE: liveness predicts HOW OFTEN an edit
+  does anything (forced) and weakly how MUCH (E3 median nonzero d:
+  eta2 = 0.176, means 0.294 -> 0.169), but NOT the local/far shape
+  of what it does (E1: 0.044). The Gen-0 exploratory gradient that
+  motivated this generation was a Layer-0 phenomenon in disguise.
+
+  Layer 2 -- WHERE SHAPE SIGNAL ACTUALLY LIVES (E4, object level,
+  n=298): balance_dev partial +0.521 (top predictor), inf_density
+  partial -0.493, s_live +0.081 (nothing), corr(s_live,b_live) =
+  0.935 (the A/B axes barely exist as separate coordinates in this
+  population -- reported per brief section 2).
+
+3. THE FINDING OF RECORD: THE RULER HAS A SEMANTIC DEFECT
+
+  Exploratory, labeled, and the most transportable output: the
+  Hamming LOCAL band conflates "small change" with "proportional
+  destruction of an unbalanced object". For 145/298 objects,
+  min(bal, 1-bal) <= 0.25 -- TOTAL DESTRUCTION of the function
+  (collapse to a constant) lands inside the LOCAL band. q90 of
+  nonzero displacement tracks min-mass at 0.596. The balance_dev ->
+  local_share association is therefore substantially ruler-mediated
+  (residual rho 0.467 survives in the stratum where destruction
+  cannot be local, so not a pure tautology). ANY consequence ruler
+  built on raw normalized Hamming inherits this defect, including
+  D-13's K_positive@0.25 channel: a system whose objects are
+  behaviorally unbalanced can score "local non-neutral movement" by
+  dying proportionally. A successor ruler should separate the two,
+  e.g. report d alongside distance-to-nearest-constant, or gate
+  "local" on preservation of non-trivial behavior.
+
+4. ANSWERS TO THE BRIEF'S HYPOTHESIS FAMILY
+
+  H0 vs H1: H1 rejected for the shape endpoint at the frozen bar.
+  H2: directionally favored over H1 (inf_density keeps -0.49 where
+      s_live keeps nothing) but the verdict gate failed first; no
+      supported-coordinate claim is made.
+  H3: FIRED -- balance_dev dominates both axes, and section 3 shows
+      it is substantially a property of the RULER, not the object.
+  H4: within-level spread is large everywhere (E1 level means span
+      only 0.63-0.76 while objects span 0-1); no measured scalar
+      organizes the shape. H4 is the standing description.
+
+5. LADDER REACHABILITY (brief section 13 report)
+
+  Census rule passed on the primary span: pooled n = 300,000,
+  s_live range [P1,P99] = [0.042, 0.500], 5 equal-width bins,
+  natural masses [0.398, 0.290, 0.184, 0.087, 0.037], all cells
+  filled well under the rejection cap. THE GENERATOR CANNOT REACH
+  s_live > 0.5: full/saturated liveness is not identifiable by
+  rejection from the uniform generator. Confound drift across the
+  ladder, disclosed pre-outcome: ANF support 2.9 -> 11.2, live vars
+  2.6 -> 5.5, inf_density 0.071 -> 0.199. Under this generator the
+  axis co-moves with complexity by construction; conclusions bind
+  to the achieved range and this entanglement.
+
+6. STOP CONDITION (brief section 21): ANSWER = NO
+
+  There is no reproducible mechanical coordinate in this substrate
+  that predicts representation-to-consequence transfer geometry
+  strongly enough to justify an out-of-sample test. Close is clean:
+  no D-14 recommendation, no scope widening, no tensor rescue.
+  One observation is recorded WITHOUT a recommendation, for whoever
+  designs D-14 someday: the forced layer suggests the D-13 stackvm
+  signature (neutral 0.915, kpos025 = 0) is equivalent to a GAPPED
+  per-site influence profile -- every byte position has influence
+  either 0 or > 0.25 under its operator family, with no graded
+  middle -- whereas these circuits show a graded profile. That is a
+  falsifiable, mechanistic reformulation writable without touching
+  StackVM, which this generation did not touch.
+
+7. WHAT A GEN 2 WOULD NEED (not a commitment)
+
+  - A ruler that separates displacement from proportional
+    destruction (section 3) BEFORE any new coordinate hunt;
+  - if the balance residual is pursued: balance as the STRATIFIED
+    axis with liveness matched, the mirror of this design;
+  - if saturated liveness is pursued: a constructive generator,
+    accepting that it changes the population (the section 13
+    trade this design refused).
+
+8. ARTIFACTS
+
+  HARMONIA_A_GEN1_FREEZE.txt        preregistration (pre-committed)
+  JOURNAL.jsonl                     hashes at issuance + run events
+  bench1.py / analyze1.py           census + assay + frozen analysis
+  results/census_gen1.json          ladder census, rejection report,
+                                    per-level covariates
+  results/objects.jsonl             300 objects with provenance,
+                                    influence profiles, covariates
+  results/objects_geometry.jsonl    MACHINE-USABLE per-object
+                                    geometry (brief section 16)
+  results/rows.jsonl.gz             53,760 per-edit rows
+  results/analysis_gen1.json        endpoints, E4 table, gates
+  hostile_review_gen1.md            attacks A-M answered
+
+=====================================================================
+END HANDOFF -- Harmonia A, Gen 1. The ladder predicted activity,
+not shape; the strongest "coordinate" was the ruler's own defect;
+and the freeze caught a theorem before it could become a headline.
+=====================================================================
