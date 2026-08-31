@@ -1,0 +1,46 @@
+=====================================================================
+GEN-3A FREEZE -- re-adjudicate Gen-1 under R_VEC2
+Date: 2026-08-31. Campaign: gen3/CAMPAIGN_CHARTER.txt rules R1-R7.
+=====================================================================
+QUESTION. Did Gen-1's negative (NO_LOW_DIMENSIONAL_TRANSFER_
+COORDINATE) survive fixing the ruler? Same objects (300), same
+ladder, same statistical machinery and thresholds as Gen-1's frozen
+analysis -- outcomes now the R_VEC2 class vector.
+
+DATA. gen2/results/gen1_rescored_v2.jsonl.gz (38,400 rows) +
+gen1/results/objects.jsonl. No new measurement; pure re-analysis.
+
+ENDPOINTS (object level, n = 300; support rule: conditional shares
+defined only with >= 5 non-neutral edits; every level must retain
+>= 60% of objects else that endpoint is INDETERMINATE):
+  E1  eta2(level -> SMALL_SHARE)  where SMALL_SHARE =
+      P(SMALL | non-neutral) -- the corrected analog of Gen-1's
+      LOCAL_SHARE. PRIMARY.
+  E2  eta2(level -> DESTR_SHARE)  destruction organization. NEW.
+  E3  eta2(level -> mass_N) -- carries the Gen-1 forced component
+      (declared; reported for continuity, cannot support a
+      TRANSFER verdict on its own).
+  E4  association table: covariates {s_live, inf_density, b_live,
+      balance_dev, live_vars, anf_support, depth,
+      forced_neutral_floor, forced_local_bound} vs SMALL_SHARE and
+      DESTR_SHARE; Spearman + partials exactly as Gen-1 E4. Key
+      declared comparison: does balance_dev's Gen-1 dominance
+      (+0.52 partial) survive the ruler fix?
+
+GATES (identical to Gen-1's frozen gate): pooled eta2 >= 0.25 AND
+per-seed eta2 >= 0.15 in 5/5 AND within-seed permutation p <= 0.01
+(1000 perms, stat seed 20260902).
+
+VERDICT (frozen):
+  TRANSFER_STRUCTURE_RECOVERED  iff E1 or E2 passes the full gate.
+  NO_TRANSFER_STRUCTURE         iff both fail with support intact.
+  INDETERMINATE                 iff a support rule fails.
+E3 is excluded from the verdict (forced component).
+
+CANDIDATE HANDOFF RULE (frozen; feeds 3B): the 3B candidate-
+coordinate list = every covariate with |Spearman| >= 0.3 against
+SMALL_SHARE or DESTR_SHARE in E4. Mechanical, not curated.
+
+CLAIM CEILING: same population and entanglement bounds as Gen-1
+(liveness range [0.042, 0.50], axis co-moves with complexity).
+=====================================================================
