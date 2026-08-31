@@ -497,7 +497,10 @@ def run_cycle(cycle: int, state: dict, max_new: int = 12) -> tuple:
                 # citation-weighted, so an uncapped query hands back the field's most famous
                 # papers instead. Cap it. Other lanes are left uncapped: the historical lane
                 # legitimately wants foundational work, which is highly cited.
-                cap = 100 if frontier["kind"] == "awkward" else None
+                # Both lanes that hunt buried literature need the cap. confound_hunt draws
+                # from the same AWKWARD_QUERIES pool and was missed by the cycle-025 fix --
+                # an incomplete repair that left half the defect in place.
+                cap = 100 if frontier["kind"] in ("awkward", "confound_hunt") else None
                 data = sources.openalex_search(query, per_page=max_new, cited_by_max=cap)
                 results = data.get("results", [])
                 att = RetrievalAttempt(
@@ -515,7 +518,7 @@ def run_cycle(cycle: int, state: dict, max_new: int = 12) -> tuple:
                     norm = sources.openalex_normalize(work)
                     norm["_index"] = "openalex"
                     if norm["source_id"] in known:
-                        rec.sources_rejected += 1
+                        rec.sources_already_known += 1
                         continue
                     dstat, dreas = domain.classify(
                         norm.get("concepts"),
@@ -570,6 +573,12 @@ def run_cycle(cycle: int, state: dict, max_new: int = 12) -> tuple:
         rec.claims_adjudicated = rec.claims_created
         if rec.genomes_created == 0 and rec.holes_killed == 0 and rec.status == "OK":
             rec.status = "NULL"
+            if rec.sources_already_known and not rec.sources_rejected:
+                rec.notes.append(
+                    "SATURATED: every result was already in the corpus (" 
+                    + str(rec.sources_already_known) + " re-encountered, 0 rejected). This "
+                    "query is exhausted, which is information about the frontier rather than "
+                    "a failed cycle.")
 
     except Exception as e:                                            # noqa: BLE001
         rec.status = "BLOCKED"
