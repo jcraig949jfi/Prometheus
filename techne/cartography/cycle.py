@@ -129,6 +129,7 @@ def compile_genome(norm: dict, cycle: int, request_url: Optional[str] = None) ->
         fulltext_available=False,           # we hold abstracts at best; say so
         abstract_available=bool(abstract),
         concepts=norm.get("concepts") or [],
+        work_type=norm.get("type"),
         domain_status=dstatus,
         domain_reason=dreason,
         bottleneck=bott,
@@ -182,10 +183,15 @@ def compile_genome(norm: dict, cycle: int, request_url: Optional[str] = None) ->
     return g, claims
 
 
-def hunt_confounds(gid: str, spans: list, cycle: int) -> list:
-    """STEP E (priority lane). Run P4 and P5 over stored evidence."""
+def hunt_confounds(gid: str, spans: list, cycle: int, title: str = "",
+                   work_type: str = None) -> list:
+    """STEP E (priority lane). Run P4 and P5 over stored evidence.
+
+    Title and document type are passed so P4 can refuse to run on surveys and reviews, which
+    report no experiment and therefore cannot host a confounded one.
+    """
     out = []
-    v4, r4, dims = P.confounded_mechanism_claim(spans)
+    v4, r4, dims = P.confounded_mechanism_claim(spans, title, work_type)
     if v4 == "CONFIRMED":
         v5, r5, migr = P.cost_migration(spans)
         out.append(ConfoundedClaim(
@@ -438,7 +444,8 @@ def run_cycle(cycle: int, state: dict, max_new: int = 12) -> tuple:
                         rec.claims_created += len(claims)
                         created += 1
                         for cf in hunt_confounds(genome.research_genome_id,
-                                                 genome.evidence_spans, cycle):
+                                                 genome.evidence_spans, cycle,
+                                                 genome.title, norm.get("type")):
                             store.append("confounds", cf)
                             rec.confounds_found += 1
                     except sources.SourceError as e:
@@ -506,7 +513,8 @@ def run_cycle(cycle: int, state: dict, max_new: int = 12) -> tuple:
                     rec.claims_created += len(claims)
                     created += 1
                     for cf in hunt_confounds(genome.research_genome_id,
-                                             genome.evidence_spans, cycle):
+                                             genome.evidence_spans, cycle,
+                                             genome.title, norm.get("type")):
                         store.append("confounds", cf)
                         rec.confounds_found += 1
                 rec.genomes_created = created

@@ -197,6 +197,9 @@ class ResearchGenome:
     #: Independent subject labels from the index (OpenAlex concepts), kept verbatim. These
     #: drive the domain gate precisely BECAUSE they are not produced by our vocabulary.
     concepts: list = dataclasses.field(default_factory=list)
+    #: The index's own document type (article / review / book-chapter / ...). Load-bearing for
+    #: P4: a review cannot host a confounded experiment because it runs none.
+    work_type: Optional[str] = None
     domain_status: Optional[str] = None
     domain_reason: Optional[str] = None
 

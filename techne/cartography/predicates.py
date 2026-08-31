@@ -83,6 +83,38 @@ COST_MIGRATION = {
 }
 
 
+#: Document types that report NO EXPERIMENT OF THEIR OWN. P4 asks "was the attributed mechanism
+#: isolated?" -- a question that presupposes an experiment. Asked of a survey it is a category
+#: error, not a finding: a survey's abstract naturally carries causal language ("X improves Y
+#: because Z") describing OTHER people's work, alongside many treatment dimensions, and no
+#: ablation. That is precisely P4's CONFIRMED signature, reached without any experiment
+#: existing.
+#:
+#: Measured cycle 022: surveys are 9.5% of the corpus (18/190) but 2 of 7 CONFIRMED confounds.
+#: With n=7 that enrichment is suggestive, not significant, and is reported as such -- the fix
+#: rests on the category error, which needs no statistics, not on the count.
+NO_EXPERIMENT_TITLE = re.compile(
+    r"\b(survey|review|tutorial|overview|introduction to|state of the art|a taxonomy of|"
+    r"perspectives on|advances in|handbook|encyclopedia|chapter|position paper|"
+    r"research agenda|roadmap|lessons learned|retrospective)\b", re.I)
+
+#: OpenAlex `type` values that are not primary research reports.
+NO_EXPERIMENT_TYPES = {"review", "book", "book-chapter", "editorial", "letter",
+                       "erratum", "paratext", "reference-entry"}
+
+
+def reports_an_experiment(title: str = "", work_type: str = None) -> tuple:
+    """(bool, reason). False for document types that cannot host a confounded experiment."""
+    if work_type and str(work_type).strip().lower() in NO_EXPERIMENT_TYPES:
+        return False, "document type " + repr(work_type) + " reports no experiment of its own"
+    m = NO_EXPERIMENT_TITLE.search(title or "")
+    if m:
+        return False, ("title marks a survey/review/tutorial (" + repr(m.group(0))
+                       + ") -- it reports no experiment of its own, so 'the mechanism was not "
+                         "isolated' is a category error rather than a finding")
+    return True, "appears to be a primary research report"
+
+
 def _spans_text(spans: list) -> str:
     """Concatenate stored evidence. Only what was persisted is visible to a predicate."""
     parts = []
@@ -171,7 +203,7 @@ def mechanism_isolated(spans: list, mechanism: Optional[str] = None) -> tuple:
 
 # --- P4: CONFOUNDED_MECHANISM_CLAIM ----------------------------------------------------------
 
-def confounded_mechanism_claim(spans: list) -> tuple:
+def confounded_mechanism_claim(spans: list, title: str = "", work_type: str = None) -> tuple:
     """A causal attribution where other treatment dimensions also moved and no control is shown.
 
     The signature: a causal connective, plus two or more distinct treatment dimensions named,
@@ -185,6 +217,9 @@ def confounded_mechanism_claim(spans: list) -> tuple:
     text = _spans_text(spans)
     if not text:
         return "BLOCKED", "no stored evidence spans", []
+    is_primary, why = reports_an_experiment(title, work_type)
+    if not is_primary:
+        return "REFUTED", "P4 not applicable: " + why, []
     causal = _quote(CAUSAL_CONNECTIVE, text)
     if not causal:
         return "REFUTED", "P4 no causal attribution language", []
