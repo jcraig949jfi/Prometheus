@@ -124,3 +124,26 @@ experience" test families — flagged, not promoted.
   validity constraints will).
 - P4's forced/empirical split → Gen-2 declares forced cells before running,
   as Gen-0/Gen-1 did.
+
+---
+
+## Correction (post-bootstrap, 2026-08-31)
+
+A completed background search identified a SECOND canonical repertoire that
+matches the brief's "approximately eighteen research strategies" more
+literally than the Aporia meta-studies: this seat's own April artifacts —
+`harmonia/memory/catalogs/` (PROBLEM_LENS_CATALOG family: per-problem
+disciplinary lens catalogs, Lehmer 28 lenses, Collatz ~18) and
+`harmonia/memory/methodology_multi_perspective_attack.md` +
+`methodology_toolkit.md`. Both repertoires are canonical; the meta-studies
+are strategy-level, the lens catalogs are problem-level.
+
+Two bootstrap problems (P2 Lehmer, P4 Collatz) have existing lens catalogs
+this bootstrap did not consult before working them. Spot-check afterwards:
+my P2 path (canonical forms + measure computation + detector calibration)
+corresponds to catalog Lenses 1/13/15; my P4 path (2-adic lift + variance
+decomposition) corresponds to the Collatz catalog's symbolic-dynamics
+lenses. Nothing in the bootstrap contradicts the catalogs; the overlap is
+evidence the catalogs encode real attack surfaces. Gen-5's hard-landscape
+environments should draw from `harmonia/memory/catalogs/` directly rather
+than re-deriving lens sets.
