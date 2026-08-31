@@ -48,11 +48,25 @@ Both are results.
 
 2. COMMITS AND CHANGED PATHS
 ---------------------------------------------------------------------
-CODE COMMIT:    35893e0e  (20 files, +3714 / -6)
+CODE COMMIT:    3e9c5b06  (20 files, +3714 / -6)
                 "TECHNE GEN-0: donor substrate + capability adapter
                  -- 5 donors wrapped, 1 redundant, D-5 slot fed by none"
-HANDOFF COMMIT: this file, committed immediately after 35893e0e
+HANDOFF COMMIT: d70a417c  (this file)
 PARENT AT WORK START: 16a1c829
+
+SHA CORRECTION, RECORDED RATHER THAN QUIETLY REWRITTEN. These commits were
+originally created locally as 35893e0e and 2c66b25b. An automatic
+pull/rebase against origin replayed them onto new parents while this
+generation was finishing, so those two SHAs are ORPHANED -- they are not
+ancestors of origin/main and `git show` on them will fail for anyone
+cloning fresh. The content is identical; only the hashes moved. If an
+earlier artifact or commit message cites 35893e0e or 2c66b25b, the live
+equivalents are 3e9c5b06 and d70a417c.
+
+The commit message of 3e9c5b06 itself still refers to the pre-rebase hash
+in its subject line for the handoff; that text is immutable and is left as
+it stands rather than being rewritten, because rewriting shared history to
+tidy a reference is worse than a stale reference.
 
 NEW FILES
   techne/lib/donors/__init__.py
@@ -121,6 +135,45 @@ by pytest.importorskip("tensorly") -- so all 25 of its tests were
 SKIPPING before this generation and now pass. A missing-dependency
 census built from FAILING tests cannot see a dependency whose absence
 SKIPS the test instead.
+
+
+3b. PORTABILITY -- WHAT ANOTHER MACHINE MUST DO FIRST
+---------------------------------------------------------------------
+Pulling this repo gives you the CODE, not the CAPABILITY. Gen-0 was
+committed with no dependency declaration, so on a fresh machine every
+adapter raises DonorError("... is not installed") and
+
+    python -c "from techne.lib import donors; print(donors.available())"
+
+returns []. That is the adapters degrading correctly, not a bug -- but it
+means the capability does not travel with the commit.
+
+FIXED BY: techne/requirements-donors.txt (pinned, with per-package
+portability notes).
+
+    python -m pip install -r techne/requirements-donors.txt
+    python -c "from techne.lib import donors; print(donors.available())"
+
+Expect: ['cvc5', 'discopy', 'egglog', 'pyribs', 'tensorly']
+
+PLATFORM NOTES:
+  tensorly / ribs / discopy   pure Python (0 compiled objects), install
+                              identically anywhere on Python >= 3.10
+  egglog / cvc5               platform wheels with compiled cores (1 and 6
+                              compiled objects). Wheels exist for Windows,
+                              macOS and Linux at these versions, but a
+                              different Python minor version needs the
+                              matching cp tag. egglog needs Python >= 3.11.
+
+Versions are PINNED, not floated, because the donor inventory records
+MEASURED behaviour -- determinism, capability surfaces, the cvc5-vs-z3
+redundancy verdict -- and a floated version silently invalidates those
+measurements without changing any file.
+
+Pre-existing programme dependencies the adapters and comparators assume,
+not pinned in that file because they are not Gen-0 acquisitions:
+numpy 2.2.6, scipy 1.17.1, z3-solver 5.0.0.0, quimb 1.15.0,
+hypothesis 6.165.10. If donors.available() is short, check these first.
 
 
 4. THE ADAPTER CONTRACT

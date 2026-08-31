@@ -92,6 +92,12 @@ these has been shown to earn rent in any experiment, and the benches decide that
 | **egglog** 13.2.0 | e-graphs / equality saturation | github.com/egraphs-good/egglog-python | ordering: extraction minimises a cost model -- the extracted form is egglog's choice, not canonical | Lexis / Harmonia | 🟢 OP |
 | **cvc5** 1.3.4 | SMT / counterexamples | github.com/cvc5/cvc5 | NONE (decision procedure) | Charon (Adversary) | 🟡 WIP — **REDUNDANT_AT_GEN0** vs installed z3 (6/6 verdict agreement); wrapped, not promoted to a dependency |
 
+**Reproducing this stack on another machine:** `pip install -r techne/requirements-donors.txt`
+(pinned; per-package portability notes in the file). `tensorly`, `ribs` and `discopy` are pure
+Python and install anywhere on 3.10+; `egglog` and `cvc5` need platform wheels for the target
+interpreter, and `egglog` requires Python >= 3.11. Committed code is not a portable capability
+until the target machine can be brought to the state the code assumes.
+
 **Inventory drift closed.** egglog 13.2.0 was installed and working on this machine but appeared
 nowhere in this roadmap. It is the only member of the UW PLSE e-graph lineage (egg / Ruler /
 babble / Enumo / ShapeCoder) with a maintained Python binding; the rest are Rust crates with no
