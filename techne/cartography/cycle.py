@@ -108,7 +108,7 @@ def compile_genome(norm: dict, cycle: int, request_url: Optional[str] = None) ->
                                   url=norm.get("source_url")).as_dict())
 
     blob = title + "\n" + (abstract or "")
-    mech = taxonomy.tag_mechanisms(blob)
+    mech = taxonomy.tag_all(blob, norm.get("concepts"))
     bott = taxonomy.assign_bottleneck(mech)
     desc = taxonomy.descriptors_from(mech)
 

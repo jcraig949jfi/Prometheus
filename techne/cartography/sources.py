@@ -294,11 +294,88 @@ def dblp_hits(data: dict) -> list:
     return out
 
 
+# --- Semantic Scholar --------------------------------------------------------------------
+#
+# KEY STATUS: PRESENT BUT REJECTED. The repo has one S2 credential, reachable through the
+# canonical accessor `keys.get_key("S2")` (which resolves S2_API_KEY from the repo-root .env
+# then agents/eos/.env). Measured 2026-08-31, 40-character key, correct format:
+#
+#     with x-api-key   -> HTTP 403 {"message":"Forbidden"}   <- credential rejected
+#     without a key    -> HTTP 429 (rate limited)
+#
+# 403 is rejection, not throttling: the key is expired, revoked, or was never activated. This
+# matches the programme's recorded pattern of lapsed third-party credentials. The client below
+# is wired anyway so the source activates the moment the key is renewed, with no code change --
+# and until then every call records the blocker rather than silently degrading.
+#
+# WHAT WE LOSE WHILE IT IS DEAD, stated because it bears directly on the campaign's current
+# bottleneck: S2 exposes `fieldsOfStudy` (a fourth independent domain signal), `tldr` (a
+# machine-written summary that would give title-only records real text to tag), and abstracts
+# for papers where OpenAlex has none. All three attack the 3.3%-classification problem head on.
+
+def s2_api_key() -> Optional[str]:
+    """Resolve the S2 key through the repository's canonical accessor. Never printed."""
+    try:
+        import sys
+        import pathlib as _pl
+        root = str(_pl.Path(__file__).resolve().parents[2])
+        if root not in sys.path:
+            sys.path.insert(0, root)
+        from keys import get_key
+        return get_key("S2") or None
+    except Exception:                                                 # noqa: BLE001
+        return None
+
+
+def semantic_scholar_search(query: str, limit: int = 10) -> dict:
+    """Search S2. Raises SourceError with the precise status so a dead key is recorded as a
+    dead key rather than as a generic failure."""
+    key = s2_api_key()
+    params = urllib.parse.urlencode({
+        "query": query, "limit": str(limit),
+        "fields": "title,year,abstract,tldr,fieldsOfStudy,externalIds,citationCount,venue",
+    })
+    url = "https://api.semanticscholar.org/graph/v1/paper/search?" + params
+    host = "api.semanticscholar.org"
+    _throttle(host)
+    headers = {"User-Agent": UA}
+    if key:
+        headers["x-api-key"] = key
+    try:
+        req = urllib.request.Request(url, headers=headers)
+        with urllib.request.urlopen(req, timeout=40) as r:
+            data = json.loads(r.read())
+        data["_request_url"] = url
+        data["_used_key"] = bool(key)
+        return data
+    except urllib.error.HTTPError as e:
+        if e.code == 403 and key:
+            raise SourceError(host, "HTTP 403 Forbidden WITH a key present -- the S2 "
+                                    "credential is rejected (expired/revoked/never "
+                                    "activated), not rate limited", 403)
+        raise SourceError(host, "HTTP " + str(e.code) + (" (no key)" if not key else ""), e.code)
+    except Exception as e:                                            # noqa: BLE001
+        raise SourceError(host, type(e).__name__ + ": " + str(e)[:120])
+
+
+def semantic_scholar_available() -> tuple:
+    """(usable, reason). Cheap liveness probe; callers record the reason as a blocker."""
+    try:
+        semantic_scholar_search("lexicase selection", limit=1)
+        return True, "S2 reachable"
+    except SourceError as e:
+        return False, str(e)
+
+
 #: Which sources are usable as INDEPENDENT retrieval formulations when trying to kill a
 #: coverage hole. Independence matters: four rephrasings against one index is one search.
+#: S2 is NOT in this tuple while its key is rejected -- a source that cannot answer cannot
+#: contribute to an absence claim.
 INDEPENDENT_SOURCES = ("openalex", "crossref", "arxiv", "dblp")
 
 KNOWN_BLOCKERS = {
-    "semanticscholar": "HTTP 429 without an API key (measured 2026-08-31). Best-effort only; "
-                       "never counted as an independent formulation for a hole promotion.",
+    "semanticscholar": "key PRESENT but REJECTED: HTTP 403 Forbidden with x-api-key, HTTP 429 "
+                       "without (measured 2026-08-31). Wired via keys.get_key('S2') and will "
+                       "activate on renewal with no code change. Never counted as an "
+                       "independent formulation while dead.",
 }

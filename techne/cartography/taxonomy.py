@@ -265,3 +265,84 @@ TAXONOMY_MUTATION_TESTS = (
     "contradiction_detection",       # does it surface genuine disagreements?
     "compression_without_loss",      # fewer categories, same predictive power
 )
+
+# --- SIGNAL 2 FOR MECHANISM TAGGING: index concept labels ----------------------------------
+#
+# The lexical tagger alone placed only 3.3% of abstract-bearing genomes on all three axes
+# (measured cycle 020, n=123). Per-axis unknown rates: evaluation_regime 79%, selection_family
+# 75%, representation_family 69%. OpenAlex assigns its own concept labels, and a survey of the
+# corpus shows they carry real mechanism signal independent of our vocabulary -- "Genetic
+# programming" (41 papers), "Selection (genetic algorithm)" (29), "Genetic algorithm" (25),
+# "Evolutionary algorithm" (21), "Symbolic regression" (9), "Genetic representation" (8).
+#
+# They are COARSER than our mechanisms -- OpenAlex does not distinguish lexicase from
+# tournament, or MAP-Elites from novelty search -- so this signal raises the floor without
+# reaching the ceiling. It is added as a second tagger, not a replacement, and its output is
+# PROPOSED exactly like the lexical one.
+CONCEPT_TO_MECHANISM = {
+    "genetic programming": "tree_gp",
+    "symbolic regression": "symbolic_regression",
+    "cartesian genetic programming": "cartesian_gp",
+    "grammatical evolution": "grammatical_evolution",
+    "linear genetic programming": "linear_gp",
+    "genetic representation": "tree_gp",
+    "artificial neural network": "neural_representation",
+    "deep learning": "neural_representation",
+    "autoencoder": "sparse_autoencoder",
+    "program synthesis": "enumerative_synthesis",
+    "automated theorem proving": "formal_verification",
+    "formal verification": "formal_verification",
+    "satisfiability": "constraint_solving",
+    "boolean satisfiability problem": "constraint_solving",
+    "constraint satisfaction": "constraint_solving",
+    "selection (genetic algorithm)": "tournament_selection",
+    "tournament selection": "tournament_selection",
+    "truncation selection": "tournament_selection",
+    "fitness proportionate selection": "tournament_selection",
+    "genetic algorithm": "tournament_selection",
+    "evolutionary algorithm": "tournament_selection",
+    "evolution strategy": "cmaes",
+    "cma-es": "cmaes",
+    "gradient descent": "gradient_descent",
+    "backpropagation": "gradient_descent",
+    "stochastic gradient descent": "gradient_descent",
+    "reinforcement learning": "gradient_descent",
+    "neural architecture search": "nas",
+    "coevolution": "coevolution",
+    "novelty search": "novelty_search",
+    "beam search": "beam_search",
+    "local search (optimization)": "beam_search",
+    "fitness function": "scalar_objective",
+    "fitness landscape": "scalar_objective",
+    "benchmark (surveying)": "test_suite",
+    "benchmark": "test_suite",
+    "test suite": "test_suite",
+    "overfitting": "test_suite",
+    "generalization": "test_suite",
+    "multi-objective optimization": "quality_diversity",
+    "pareto principle": "quality_diversity",
+}
+
+
+def tag_from_concepts(concepts) -> dict:
+    """Second, independent mechanism tagger driven by index concept labels."""
+    out = {}
+    for c in (concepts or []):
+        m = CONCEPT_TO_MECHANISM.get(str(c).strip().lower())
+        if m:
+            out.setdefault(m, []).append("concept:" + str(c))
+    return out
+
+
+def tag_all(text: str, concepts=None) -> dict:
+    """Union of the lexical and concept taggers.
+
+    Two weak signals that fail differently. The lexical tagger reads what the authors wrote;
+    the concept tagger reads what an independent classifier inferred. Neither is adjudication --
+    both feed records written as PROPOSED.
+    """
+    hits = tag_mechanisms(text)
+    for m, ev in tag_from_concepts(concepts).items():
+        hits.setdefault(m, []).extend(ev)
+    return {m: sorted(set(v)) for m, v in hits.items()}
+
