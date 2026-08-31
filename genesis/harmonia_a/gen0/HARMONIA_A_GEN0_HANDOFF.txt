@@ -1,0 +1,135 @@
+=====================================================================
+HARMONIA A / GEN 0 -- HANDOFF
+Representational reachability bench -- CLOSED
+Date: 2026-08-31   Repo: D:\Prometheus\genesis\harmonia_a\gen0\
+Freeze commit: 7ca9063f7 (hashes journaled at issuance, JOURNAL.jsonl)
+=====================================================================
+
+1. WHAT OBJECT WAS STUDIED
+
+  60 Boolean functions f: {0,1}^10 -> {0,1}, each generated as a
+  random 24-gate straight-line circuit over {AND,OR,XOR,NAND},
+  5 master seeds x 12 objects, census-screened for balance.
+  Population characterization (measured, post-census): these
+  objects are LOW-COMPLEXITY -- median 4 live variables (range
+  1-8), median ANF support 4 monomials, median TT max-rank 2.
+  Random straight-line circuits have small live cones. This bounds
+  the claim ceiling (section 6).
+
+2. WHICH REPRESENTATIONS WERE LEGITIMATE
+
+  Ran and harness-verified: NAT (circuit, 1-gate edits), SHAM
+  (relabeled circuit -- control), ANF (F2 polynomial, 1-monomial
+  toggle), ANF_SCR (bijection control), VT (truth table --
+  triviality ceiling), TT / TT_SCR (exact numpy TT-SVD, 1-core-entry
+  nudge, eps {0.125, 0.5, 2.0}, primary 0.5).
+  TOOL_NOT_APPLICABLE: tensorly, quimb, discopy, egglog -- no
+  Techne donor handoff exists in this tree and none is importable
+  here. Exact numpy TT-SVD substituted for the one donor surface
+  the design needed; no claim depends on a donor library.
+
+3. DID ALTERNATE REPRESENTATION CHANGE REACHABILITY: NO.
+
+  FROZEN VERDICT (gate G1): NO_REPRESENTATIONAL_REACHABILITY_EFFECT
+
+  The phenomenon this bench hunted -- native small moves
+  neutral/far/invalid while an alternate representation's small
+  moves open a non-neutral local band -- DOES NOT EXIST in this
+  tuple, because its premise fails: the native circuit tuple
+  already has substantial local mass.
+
+4. EXACT EFFECT SIZES / SUPPORT (pooled, 7,680 rows/cell; bands
+   NEUTRAL d=0, LOCAL 0<d<=0.25, FAR d>0.25; CI = cluster
+   bootstrap over 60 objects, 5000 resamples, seed 20260831)
+
+  arm            NEUTRAL   LOCAL    FAR    LOCAL CI95
+  NAT             0.836    0.119   0.045   [0.102, 0.137]
+  SHAM            0.848    0.109   0.044   [0.094, 0.125]  == NAT
+  ANF             0.000    0.989   0.011   [0.987, 0.991]  forced
+  ANF_SCR         0.000    0.990   0.010   [0.988, 0.992]  == ANF
+  VT              0.000    1.000   0.000   ceiling, forced
+  TT@0.125        1.000    0.000   0.000   fully absorbed
+  TT@0.5 (prim)   0.994    0.006   0.000   [0.002, 0.011]
+  TT@2.0          0.463    0.285   0.253   [0.245, 0.324]
+  TT_SCR@0.5      0.999    0.001   0.000   [0.000, 0.002]
+  TT_SCR@2.0      0.614    0.332   0.054   [0.320, 0.344]
+
+  Gates: G_HARNESS PASS (sham==native, machine-checked);
+  G_ANALYTIC PASS (ANF empirical 0.9887 vs forced 0.9893; scramble
+  invariance confirmed; VT exact); G_DOSE PASS (eps knob non-inert).
+  G1 failed at its FIRST clause: LOCAL(NAT)=0.119 > 0.05. No
+  one-seed pathology possible: all cells have identical row counts
+  by construction (D-13 B1 class structurally excluded).
+
+5. FAILURE CASES / SHAPES (what the distributions actually say)
+
+  a. The D-13 stackvm gap DID NOT TRANSPLANT. Native single-gate
+     edits give a graded profile (83.6% neutral / 11.9% local /
+     4.5% far), not stackvm's empty local band (kpos025 = 0.000,
+     505/505, verified against D:\ZeusE\d12\analysis\
+     p1_results.json before this bench froze). The locality wall
+     is a property of stackvm's byte-to-behavior map, not of
+     program-shaped representations generally.
+  b. EXPLORATORY (post-hoc, labeled): native local mass RISES with
+     object complexity -- ANF support 1-2: 0.074; 3-5: 0.118;
+     6-10: 0.165; 11+: 0.155. The gradient runs AGAINST the
+     "degenerate population hides the gap" rescue: denser objects
+     reach the local band MORE easily natively, within this family.
+  c. TT is decoder-smoothing-dominated at small doses: eps=0.125
+     is 100.0% absorbed by sign-rounding; the primary eps=0.5 is
+     99.4% absorbed. Only eps=2.0 moves behavior, and then spills
+     25% of moves into FAR. The TT small-move regime on exact
+     low-rank cores of these objects is essentially inert-or-blunt.
+  d. G2 structure observation (descriptive): at eps=2.0 the
+     SCRAMBLED TT has MORE local mass (0.332 vs 0.285) and 4.7x
+     LESS far mass than the structure-aligned TT. Alignment did
+     not help local reachability; full-rank scrambled cores spread
+     a fixed-rms nudge more diffusely. Cost is where alignment
+     shows: TT median 60 params vs TT_SCR 2,728 (45x), ANF median
+     4 vs ANF_SCR 512 (128x). REPRESENTATION STRUCTURE BOUGHT
+     COMPRESSION, NOT REACHABILITY, in this tuple.
+
+6. CLAIM CEILING
+
+  All claims conditional on: n=10, G=24 random straight-line
+  circuits (low-liveness population, median 4 live vars), the
+  frozen edit families, sign-rounding TT decode, the frozen eps
+  grid, and the full-domain Hamming ruler. Nothing here asserts
+  that representation cannot be a reachability lever elsewhere --
+  D-13's stackvm wall is real and verified; what died here is the
+  specific transplant "program-shaped native reps generically
+  lack a local consequence band." Nothing here evaluates search
+  either: this is a neighborhood-measurement bench, not a
+  search-improvement result.
+
+7. NEXT EXPERIMENT (one, concrete)
+
+  The live question D-13 + Gen 0 jointly sharpen: WHAT PROPERTY of
+  a native representation/operator tuple predicts an empty local
+  band? stackvm has one; circuits do not; circuit local mass grows
+  with liveness. Gen 1 should make LIVENESS/DENSITY the controlled
+  axis inside ONE substrate: circuits at matched size with forced
+  full-liveness (every gate on the output path, e.g. output = XOR
+  fold) vs natural dead-cone circuits, native band profile
+  measured under the same frozen edit family. If the local band
+  empties as liveness saturates, the D-13 wall becomes an instance
+  of a measurable one-parameter family -- and THAT parameter, not
+  representation swapping, is the diagnostic to feed back to the
+  Foundry as an M1 requirement. No M1 requirement is filed from
+  Gen 0 (escalation unjustified: effect absent).
+
+8. ARTIFACTS
+
+  HARMONIA_A_GEN0_FREEZE.txt      preregistration (pre-committed)
+  JOURNAL.jsonl                   hashes at issuance + run events
+  bench.py / analyze.py           census + assay + frozen analysis
+  results/census.json             C1/C2/C3/C5 PASS
+  results/rows.jsonl              84,480 per-pair rows
+  results/arm_meta.json           rep sizes, wall times
+  results/analysis.json           endpoints, gates, histograms
+  hostile_review.md               section-17 attacks, answered
+
+=====================================================================
+END HANDOFF -- Harmonia A, Gen 0. The effect was hunted, the
+premise measured, the kill is clean, and the next axis is named.
+=====================================================================
