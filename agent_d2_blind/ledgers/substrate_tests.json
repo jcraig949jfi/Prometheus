@@ -1,0 +1,189 @@
+{
+ "ST3_expressiveness_floor": {
+  "G1": {
+   "sub_size": 24,
+   "wrap_size": 27,
+   "sub": "(if (eq x (q x)) (cons (q head) (cons (q x) nil)) (if (atom x) x (if (null x) nil (cons (self (head x)) (self (tail x))))))",
+   "wrap": "(cons (q if) (cons (cons (q null) (cons (q x) nil)) (cons (q nil) (cons (cons (q cons) (cons x (cons (cons (q self) (cons (cons (q tail) (cons (q x) nil)) nil)) nil))) nil))))",
+   "results": [
+    {
+     "core": "x",
+     "M": "(if (null x) nil (cons (head x) (self (tail x))))",
+     "M_on_abc": "('ok', ('a', 'b', 'c'))",
+     "expected": "('a', 'b', 'c')",
+     "correct": true
+    },
+    {
+     "core": "(cons x nil)",
+     "M": "(if (null x) nil (cons (cons (head x) nil) (self (tail x))))",
+     "M_on_abc": "('ok', (('a',), ('b',), ('c',)))",
+     "expected": "(('a',), ('b',), ('c',))",
+     "correct": true
+    },
+    {
+     "core": "(if (eq x (q a)) (q c) x)",
+     "M": "(if (null x) nil (cons (if (eq (head x) (q a)) (q c) (head x)) (self (tail x))))",
+     "M_on_abc": "('ok', ('c', 'b', 'c'))",
+     "expected": "('c', 'b', 'c')",
+     "correct": true
+    }
+   ],
+   "pass": true
+  },
+  "G2": {
+   "sub_size": null,
+   "wrap_size": 17,
+   "sub": "inexpressible: G2 has no conditional, so a node cannot be rewritten only when it is the variable",
+   "wrap": "(at root (put (L4 (qq if) (L2 (qq null) (qq x)) (qq nil) (L3 (qq cons) here (L2 (qq self) (L2 (qq tail) (qq x)))))))",
+   "results": [
+    {
+     "core": "x",
+     "status": "SUB inexpressible"
+    },
+    {
+     "core": "(cons x nil)",
+     "status": "SUB inexpressible"
+    },
+    {
+     "core": "(if (eq x (q a)) (q c) x)",
+     "status": "SUB inexpressible"
+    }
+   ],
+   "pass": false
+  },
+  "G3": {
+   "sub_size": 6,
+   "wrap_size": 17,
+   "sub": "(r1 (rule (qp x) (L2 (qq head) (qq x))))",
+   "wrap": "(r1 (rule pv0 (L4 (qq if) (L2 (qq null) (qq x)) (qq nil) (L3 (qq cons) v0 (L2 (qq self) (L2 (qq tail) (qq x)))))))",
+   "results": [
+    {
+     "core": "x",
+     "status": "SUB failed: budget"
+    },
+    {
+     "core": "(cons x nil)",
+     "status": "SUB failed: budget"
+    },
+    {
+     "core": "(if (eq x (q a)) (q c) x)",
+     "status": "SUB failed: budget"
+    }
+   ],
+   "pass": false
+  },
+  "G3B": {
+   "sub_size": 6,
+   "wrap_size": 17,
+   "sub": "(r1 (rule (qp x) (L2 (qq head) (qq x))))",
+   "wrap": "(r1 (rule pv0 (L4 (qq if) (L2 (qq null) (qq x)) (qq nil) (L3 (qq cons) v0 (L2 (qq self) (L2 (qq tail) (qq x)))))))",
+   "results": [
+    {
+     "core": "x",
+     "M": "(if (null x) nil (cons (head x) (self (tail x))))",
+     "M_on_abc": "('ok', ('a', 'b', 'c'))",
+     "expected": "('a', 'b', 'c')",
+     "correct": true
+    },
+    {
+     "core": "(cons x nil)",
+     "M": "(if (null x) nil (cons (cons (head x) nil) (self (tail x))))",
+     "M_on_abc": "('ok', (('a',), ('b',), ('c',)))",
+     "expected": "(('a',), ('b',), ('c',))",
+     "correct": true
+    },
+    {
+     "core": "(if (eq x (q a)) (q c) x)",
+     "M": "(if (null x) nil (cons (if (eq (head x) (q a)) (q c) (head x)) (self (tail x))))",
+     "M_on_abc": "('ok', ('c', 'b', 'c'))",
+     "expected": "('c', 'b', 'c')",
+     "correct": true
+    }
+   ],
+   "pass": true
+  }
+ },
+ "ST1_homoiconicity": {
+  "G1": {
+   "pass": true,
+   "t1": "(cons (head x) (tail x))",
+   "t1_prime": "(tail (cons (head x) (tail x)))",
+   "t1_on_probe": "('ok', ('cons', ('q', 'a'), 'nil'))",
+   "t1prime_on_probe": "('invalid', (('q', 'a'), 'nil'))",
+   "behaviour_changed": true
+  },
+  "G2": {
+   "pass": false,
+   "why": "result is not a valid transform of the basis",
+   "result": "(at (d0 nil) (put (L2 (qq head) here)))"
+  },
+  "G3": {
+   "pass": true,
+   "t1": "(r1 (rule (qp a) (qq b)))",
+   "t1_prime": "(r1 (rule (qp c) (qq b)))",
+   "t1_on_probe": "('ok', ('cons', ('q', 'b'), 'nil'))",
+   "t1prime_on_probe": "('ok', ('cons', ('q', 'a'), 'nil'))",
+   "behaviour_changed": true
+  },
+  "G3B": {
+   "pass": true,
+   "t1": "(r1 (rule (qp a) (qq b)))",
+   "t1_prime": "(r1 (rule (qp c) (qq b)))",
+   "t1_on_probe": "('ok', ('cons', ('q', 'b'), 'nil'))",
+   "t1prime_on_probe": "('ok', ('cons', ('q', 'a'), 'nil'))",
+   "behaviour_changed": true
+  }
+ },
+ "ST2_determinism_totality": {
+  "G1": {
+   "pass": true,
+   "sampled": 4000,
+   "escaped_exceptions": 0,
+   "nondeterministic": 0
+  },
+  "G2": {
+   "pass": true,
+   "sampled": 4000,
+   "escaped_exceptions": 0,
+   "nondeterministic": 0
+  },
+  "G3": {
+   "pass": true,
+   "sampled": 4000,
+   "escaped_exceptions": 0,
+   "nondeterministic": 0
+  },
+  "G3B": {
+   "pass": true,
+   "sampled": 4000,
+   "escaped_exceptions": 0,
+   "nondeterministic": 0
+  }
+ },
+ "validity_filter": {
+  "G1": {
+   "programs": 904880,
+   "live_fraction": 0.046145345239147734,
+   "distinct_valid_artifacts_reached": 154,
+   "distinct_struct_classes": 138
+  },
+  "G2": {
+   "programs": 185640,
+   "live_fraction": 0.0016375781081663435,
+   "distinct_valid_artifacts_reached": 361,
+   "distinct_struct_classes": 230
+  },
+  "G3": {
+   "programs": 447678,
+   "live_fraction": 0.9348616639638312,
+   "distinct_valid_artifacts_reached": 876,
+   "distinct_struct_classes": 273
+  },
+  "G3B": {
+   "programs": 447678,
+   "live_fraction": 0.9350895062969367,
+   "distinct_valid_artifacts_reached": 1183,
+   "distinct_struct_classes": 310
+  }
+ }
+}

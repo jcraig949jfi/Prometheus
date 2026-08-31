@@ -1,0 +1,242 @@
+{
+ "S1_REG": {
+  "substrate": "S1_REG",
+  "n_parents": 1500,
+  "q1_operator_family_concentration": {
+   "0": {
+    "n": 998,
+    "top_family": "OPERAND_ONLY",
+    "top_share": 0.3196392785571142
+   },
+   "2": {
+    "n": 1880,
+    "top_family": "CONTROL_COUNT+IO_COUNT",
+    "top_share": 0.29840425531914894
+   },
+   "3": {
+    "n": 2812,
+    "top_family": "OPCODE_OTHER",
+    "top_share": 0.9989331436699858
+   },
+   "4": {
+    "n": 3953,
+    "top_family": "OPCODE_OTHER",
+    "top_share": 1.0
+   },
+   "1": {
+    "n": 1388,
+    "top_family": "OPCODE_OTHER",
+    "top_share": 0.30403458213256485
+   }
+  },
+  "q2_displacement_by_family": {
+   "OPCODE_OTHER": {
+    "n": 7806,
+    "d1_mean": 0.44080675121701257,
+    "d1_median": 0.375
+   },
+   "CONTROL_COUNT+IO_COUNT": {
+    "n": 798,
+    "d1_mean": 0.46293468045112784,
+    "d1_median": 0.40625
+   },
+   "IO_COUNT": {
+    "n": 1002,
+    "d1_mean": 0.41429640718562877,
+    "d1_median": 0.359375
+   },
+   "CONTROL_COUNT": {
+    "n": 1050,
+    "d1_mean": 0.4539285714285714,
+    "d1_median": 0.40625
+   },
+   "OPERAND_ONLY": {
+    "n": 375,
+    "d1_mean": 0.36354166666666665,
+    "d1_median": 0.25
+   }
+  },
+  "q3_large_displacement_share_by_family": {
+   "OPCODE_OTHER": 0.6991179353152565,
+   "CONTROL_COUNT+IO_COUNT": 0.07856909506697157,
+   "IO_COUNT": 0.09016661221822933,
+   "CONTROL_COUNT": 0.1035609278013721,
+   "OPERAND_ONLY": 0.028585429598170533
+  },
+  "reading": "adversarial only: high top_share for a menu operator, or IO_COUNT dominating large displacements, weakens a PASS narrative; nothing here strengthens any verdict"
+ },
+ "S2_STACK": {
+  "substrate": "S2_STACK",
+  "n_parents": 1500,
+  "q1_operator_family_concentration": {
+   "0": {
+    "n": 913,
+    "top_family": "OPCODE_OTHER",
+    "top_share": 0.27053669222343923
+   },
+   "1": {
+    "n": 906,
+    "top_family": "IO_COUNT",
+    "top_share": 0.29911699779249445
+   },
+   "3": {
+    "n": 2000,
+    "top_family": "OPCODE_OTHER",
+    "top_share": 0.996
+   },
+   "4": {
+    "n": 4342,
+    "top_family": "OPCODE_OTHER",
+    "top_share": 1.0
+   },
+   "2": {
+    "n": 1233,
+    "top_family": "CONTROL_COUNT+IO_COUNT",
+    "top_share": 0.3706407137064071
+   }
+  },
+  "q2_displacement_by_family": {
+   "CONTROL_COUNT+IO_COUNT": {
+    "n": 778,
+    "d1_mean": 0.47861102185089976,
+    "d1_median": 0.484375
+   },
+   "IO_COUNT": {
+    "n": 755,
+    "d1_mean": 0.3977649006622517,
+    "d1_median": 0.375
+   },
+   "OPCODE_OTHER": {
+    "n": 6943,
+    "d1_mean": 0.5721387548610111,
+    "d1_median": 0.59375
+   },
+   "OPERAND_ONLY": {
+    "n": 276,
+    "d1_mean": 0.3367300724637681,
+    "d1_median": 0.25
+   },
+   "CONTROL_COUNT": {
+    "n": 642,
+    "d1_mean": 0.41488999221183803,
+    "d1_median": 0.375
+   }
+  },
+  "q3_large_displacement_share_by_family": {
+   "CONTROL_COUNT+IO_COUNT": 0.0790145711281358,
+   "OPCODE_OTHER": 0.7824846026738771,
+   "OPERAND_ONLY": 0.017875920084121977,
+   "CONTROL_COUNT": 0.05528015622652847,
+   "IO_COUNT": 0.06534474988733664
+  },
+  "reading": "adversarial only: high top_share for a menu operator, or IO_COUNT dominating large displacements, weakens a PASS narrative; nothing here strengthens any verdict"
+ },
+ "S3_REWRITE": {
+  "substrate": "S3_REWRITE",
+  "n_parents": 1500,
+  "q1_operator_family_concentration": {
+   "0": {
+    "n": 1462,
+    "top_family": "OTHER_UNKNOWN",
+    "top_share": 0.844733242134063
+   },
+   "1": {
+    "n": 2208,
+    "top_family": "CONTROL_COUNT",
+    "top_share": 0.5964673913043478
+   },
+   "2": {
+    "n": 2231,
+    "top_family": "CONTROL_COUNT",
+    "top_share": 0.6095921111609144
+   },
+   "3": {
+    "n": 229,
+    "top_family": "OTHER_UNKNOWN",
+    "top_share": 1.0
+   },
+   "4": {
+    "n": 384,
+    "top_family": "OTHER_UNKNOWN",
+    "top_share": 1.0
+   }
+  },
+  "q2_displacement_by_family": {
+   "OTHER_UNKNOWN": {
+    "n": 3610,
+    "d1_mean": 0.108288608033241,
+    "d1_median": 0.09375
+   },
+   "CONTROL_COUNT": {
+    "n": 2904,
+    "d1_mean": 0.10360171315426997,
+    "d1_median": 0.078125
+   }
+  },
+  "q3_large_displacement_share_by_family": {
+   "OTHER_UNKNOWN": 0.5569620253164557,
+   "CONTROL_COUNT": 0.4430379746835443
+  },
+  "reading": "adversarial only: high top_share for a menu operator, or IO_COUNT dominating large displacements, weakens a PASS narrative; nothing here strengthens any verdict"
+ },
+ "S4_MEM": {
+  "substrate": "S4_MEM",
+  "n_parents": 1500,
+  "q1_operator_family_concentration": {
+   "0": {
+    "n": 937,
+    "top_family": "OPCODE_OTHER",
+    "top_share": 0.37246531483457845
+   },
+   "3": {
+    "n": 2547,
+    "top_family": "OPCODE_OTHER",
+    "top_share": 1.0
+   },
+   "4": {
+    "n": 4333,
+    "top_family": "OPCODE_OTHER",
+    "top_share": 1.0
+   },
+   "1": {
+    "n": 1300,
+    "top_family": "IO_COUNT",
+    "top_share": 0.33615384615384614
+   },
+   "2": {
+    "n": 1632,
+    "top_family": "CONTROL_COUNT+IO_COUNT",
+    "top_share": 0.36151960784313725
+   }
+  },
+  "q2_displacement_by_family": {
+   "OPCODE_OTHER": {
+    "n": 7813,
+    "d1_mean": 0.5900982337130424,
+    "d1_median": 0.65625
+   },
+   "CONTROL_COUNT": {
+    "n": 819,
+    "d1_mean": 0.37280601343101344,
+    "d1_median": 0.296875
+   },
+   "IO_COUNT": {
+    "n": 1092,
+    "d1_mean": 0.3890510531135531,
+    "d1_median": 0.359375
+   },
+   "CONTROL_COUNT+IO_COUNT": {
+    "n": 1025,
+    "d1_mean": 0.41791158536585366,
+    "d1_median": 0.375
+   }
+  },
+  "q3_large_displacement_share_by_family": {
+   "OPCODE_OTHER": 0.7872168284789643,
+   "CONTROL_COUNT": 0.05447680690399137,
+   "CONTROL_COUNT+IO_COUNT": 0.0784789644012945,
+   "IO_COUNT": 0.07982740021574973
+  },
+  "reading": "adversarial only: high top_share for a menu operator, or IO_COUNT dominating large displacements, weakens a PASS narrative; nothing here strengthens any verdict"
+ }
+}

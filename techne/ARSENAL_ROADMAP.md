@@ -74,6 +74,74 @@ Pip-installed already; just need facade work.
 
 ---
 
+## Tier 2b — Genesis donor stack (Techne Gen-0, 2026-08-31)
+
+Acquired to serve the Genesis benches (Worlds / Memory / Lensing / Adversary). Wrapped behind
+the common adapter contract at `techne/lib/donors/`, which requires every donor to declare its
+own `native_selection_relation` -- so a downstream experiment can tell a measured result from
+one inherited from the donor's objective. Full detail: `techne/DONOR_INVENTORY.md`.
+
+Status here means acquisition and wrapping only. **Installation is not adoption**: none of
+these has been shown to earn rent in any experiment, and the benches decide that, not Techne.
+
+| Tool | Category | Upstream | Native selection relation | Offered to | Status |
+|---|---|---|---|---|---|
+| **tensorly** 0.9.0 | tensor decomposition | github.com/tensorly/tensorly | objective: minimise reconstruction error at fixed rank | Compression; revives `prometheus_math.symbolic_tensor_decomp` | 🟢 OP |
+| **pyribs** (`ribs`) 0.12.0 | quality-diversity | github.com/icaros-usc/pyribs | objective supplied by the CALLER -- coverage measures the descriptor choice, not discovery | Ludus (Worlds) | 🟢 OP |
+| **DisCoPy** 1.2.2 | string diagrams / lensing | github.com/discopy/discopy | NONE (constructs and evaluates; ranks nothing) | Harmonia (Lensing) | 🟢 OP |
+| **egglog** 13.2.0 | e-graphs / equality saturation | github.com/egraphs-good/egglog-python | ordering: extraction minimises a cost model -- the extracted form is egglog's choice, not canonical | Lexis / Harmonia | 🟢 OP |
+| **cvc5** 1.3.4 | SMT / counterexamples | github.com/cvc5/cvc5 | NONE (decision procedure) | Charon (Adversary) | 🟡 WIP — **REDUNDANT_AT_GEN0** vs installed z3 (6/6 verdict agreement); wrapped, not promoted to a dependency |
+
+**Reproducing this stack on another machine:** `pip install -r techne/requirements-donors.txt`
+(pinned; per-package portability notes in the file). `tensorly`, `ribs` and `discopy` are pure
+Python and install anywhere on 3.10+; `egglog` and `cvc5` need platform wheels for the target
+interpreter, and `egglog` requires Python >= 3.11. Committed code is not a portable capability
+until the target machine can be brought to the state the code assumes.
+
+**Inventory drift closed.** egglog 13.2.0 was installed and working on this machine but appeared
+nowhere in this roadmap. It is the only member of the UW PLSE e-graph lineage (egg / Ruler /
+babble / Enumo / ShapeCoder) with a maintained Python binding; the rest are Rust crates with no
+Python distribution.
+
+**Identity caveat on egglog.** Its distribution declares no repository URL in structured PyPI
+metadata -- only a self-referential PyPI link -- so the upstream identity gate rates it
+`description_only`, weaker than the `declared_url` evidence behind the other four. Grandfathered
+because it was already installed; a fresh install on that evidence needs a maintainer check.
+
+### Deliberately deferred, with reasons
+
+| Tool | Reason class | Reason |
+|---|---|---|
+| **QDax** | platform + redundant | JAX-based; no JAX CUDA wheels on Windows, so CPU-only here, and pyribs already covers MAP-Elites in numpy |
+| **MiniZinc** | external binary | the `minizinc` distribution is a driver, not a solver; needs the MiniZinc bundle installed separately; no Gen-0 consumer |
+| **LeanDojo** | acquisition cost | needs elan + Lean toolchain + Mathlib build; already tracked as the Tier 3 Lean 4 gap |
+| **EvoTorch** | no consumer | torch-native evolutionary computation with nothing calling it |
+| **stitch_core** 0.1.29 | held pending a scientific decision | AVAILABLE_CONTESTANT: win_amd64 wheel exists, upstream github.com/mlb2251/stitch. Whether Family A (DreamCoder/Stitch) or Family B (Ruler/babble/Enumo) fits Prometheus better is Lexis's call — see `roles/Lexis/library_learning/notes/PASS_08_wider_tool_survey.md`. This seat must not settle it by acquiring one side |
+| **Ruler / babble / Enumo / ShapeCoder** | not distributed + build not wrap | Rust crates, no Python distribution; reaching them means building a rule-inference layer on egglog, which is a build and is deferred |
+| **DreamCoder / POET / PAIRED / ACCEL** | not distributed | research repositories with no Python distribution |
+
+### 🔴 SUPPLY-CHAIN RULE — never infer package identity from a project name
+
+Checked against PyPI on 2026-08-30/31. These project names resolve to **unrelated** published
+packages, so `pip install <name>` gets a stranger's code:
+
+| Intended project | `pip install <name>` actually gets |
+|---|---|
+| POET (open-ended world generation) | `poet` 0.1.0 — orbital evolution of a planet-star system |
+| PAIRED (regret-based env design) | `paired` 0.0.1 — sequence alignment of Python objects |
+| ACCEL (env curriculum) | `accel` 0.3.0 — conformer management for computational chemistry |
+| minimax (env design library) | `minimax` 0.0.2 — a generic configurable minimax package |
+| babble (library learning modulo theories) | `babble` 2020.1.6 — a PDF parser |
+| Ruler (rewrite-rule inference) | `ruler` 2.0.0 — a humane grammar library |
+| egg (e-graph library) | `egg` 0.2.0 — "This is a lonely egg." |
+| DreamCoder / Enumo / ShapeCoder | no such project (404) |
+
+The vetting harness enforces this: `python -m techne.scripts.dependency_vetting --set gen0_donors`
+resolves each donor's identity from the distribution's own declared URLs and refuses to download
+an artifact whose upstream could not be established (`DONOR_IDENTITY_UNRESOLVED`).
+
+---
+
 ## Tier 3 — Heavy native installs (queued; install one at a time)
 
 Native binaries on Windows; may install via installer or WSL2.

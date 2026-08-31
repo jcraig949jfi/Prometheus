@@ -1,0 +1,117 @@
+{
+ "discrepancies": [
+  {
+   "packet_text": "per-probe row: (output tuple <= 8 nibbles, log2-bucketed step count, log2-bucketed touched-locations count, halted flag, trace set of visited program locations)",
+   "correct_value": "True for S1/S2/S4, but for S3_REWRITE the third field is the log2-bucketed FINAL TAPE LENGTH (not a touched-locations count) and the trace is the set of FIRED RULE indices (not visited program locations); halted = converged before the 64-rewrite budget",
+   "source": "F:\\prometheus\\agent_d4_blind\\substrates\\vm_substrates.py, S3Rewrite._run_program (returns _bucket(len(tape)) and a fired-rule bitmask)",
+   "severity": "MINOR_WORDING",
+   "checker": 0
+  },
+  {
+   "packet_text": "All 23 confirmed defects were repaired before freeze. The most consequential: ... 6. Assorted: ... re-find ratio had a floor of 1/S because the qualifying seed counted itself (repaired: (k-1)/(S-1))",
+   "correct_value": "The refind repair does not trace to a confirmed defect. The only non-minor refind finding (ledgers/redteam_findings.json verified[15], 'G6 refind: attainable floor 0.2...') was REFUTED (verifier showed the operative floor is 0.25 conditional on the gate being live, and C6 correctly measured refind 0.2). The 1/S self-count issue appears only as MINOR unverified finding minor_unverified[0] ('Re-findability definition inflated by the qualifying seed'). The (k-1)/(S-1) repair itself is real (PREREG-INSTRUMENT.md amendment 14) but is not one of the 23 confirmed defects.",
+   "source": "ledgers/redteam_findings.json verified[15] (verdict REFUTED) and minor_unverified[0]; PREREG-INSTRUMENT.md amendment 14",
+   "severity": "MISLEADING",
+   "checker": 2
+  },
+  {
+   "packet_text": "4. Oracle attribution biases: ... episodes were credited only for their first start. All repaired. (listed among 'All 23 confirmed defects were repaired before freeze. The most consequential:')",
+   "correct_value": "The first-start crediting issue traces only to MINOR unverified finding minor_unverified[7] ('Oracle episode attribution biased toward ACCESSIBILITY_FRAGMENTED: only first start recorded, N4 crossover paths invisible'); no confirmed non-minor finding covers it. The repair is real (PREREG-INSTRUMENT.md amendment 12: 'episodes credited for ALL their starts (initial, restarts, fresh injections), not just the first') but it is not one of the 23 confirmed defects. The other two sub-items of packet item 4 (non-viable hit balls, target-generation edges) do match confirmed findings verified[18] and verified[5].",
+   "source": "ledgers/redteam_findings.json minor_unverified[7]; PREREG-INSTRUMENT.md amendment 12",
+   "severity": "MISLEADING",
+   "checker": 2
+  },
+  {
+   "packet_text": "Total memory after E1: ~0.5 GB across all four processes.",
+   "correct_value": "Not recorded in any artifact. The PREREG-PHASE1.md E1 section (the packet's claimed disclosure location, 'disclosed in full in the preregistration') contains no post-repair memory figure; it records only the pre-repair footprint (~8-14 GB per process). No log, ledger, verdict, or result file in agent_d4_blind/ records post-E1 memory. The number is plausible (100k-entry cache x ~1.5 KB fingerprints x 4 processes) but unverifiable.",
+   "source": "F:/prometheus/agent_d4_blind/PREREG-PHASE1.md lines 272-287 (E1 section); exhaustive grep of agent_d4_blind/ for GB/memory figures",
+   "severity": "MISLEADING",
+   "checker": 3
+  },
+  {
+   "packet_text": "Freeze commit: SHA-256 of 13 files ... recorded before any real-substrate measurement. ... Hashes re-recorded [after E1].",
+   "correct_value": "12 of the 13 recorded hashes verify byte-exact against the current files. The 13th, PREREG-PHASE1.md, records 75ba3975... but the committed file hashes 9759767c...: commit 3aecd7ed ('doc hash list refreshed post-E1') updated the hash list embedded inside the prereg doc itself, changing the doc's own hash, and the manifest's self-hash entry structurally cannot match the final doc (self-reference). The substantive prereg content is unchanged (diff is only the embedded hash list), and the hash did match at the E1 re-record commit b3f64f4b, but a reviewer verifying 'the 13 frozen files' against frozen_hashes.json gets one mismatch the packet does not disclose.",
+   "source": "F:/prometheus/agent_d4_blind/anti_cheat/frozen_hashes.json vs sha256 of F:/prometheus/agent_d4_blind/PREREG-PHASE1.md; git commits b3f64f4b, 3aecd7ed, 20adccd3",
+   "severity": "MINOR_WORDING",
+   "checker": 3
+  },
+  {
+   "packet_text": "Remote register-machine behaviors demonstrated to exist by the generation process were never re-reached by any generic navigator.",
+   "correct_value": "One far-stratum target WAS re-reached: N4_RECOMBINER hit far_c1dd0acbc456 (seed 2, hit_via=search, evals_to_hit 469), giving the N4 far rate 0.0167 (1/60) that the packet itself reports as 'N4 0.02' two lines earlier. 'Never re-reached by any generic navigator' contradicts both the row and the packet's own number.",
+   "source": "results/S1_REG_results.json nav_rows (navigator N4_RECOMBINER, target_id far_c1dd0acbc456, stratum far, seed 2, hit true, hit_via search) and nav_summary.per_navigator.N4_RECOMBINER.strata.far.hit_rate = 0.01667",
+   "severity": "MISLEADING",
+   "checker": 4
+  },
+  {
+   "packet_text": "S3's effective edits are mostly unclassifiable by this taxonomy (56-84% OTHER_UNKNOWN per mechanism)",
+   "correct_value": "Per-mechanism OTHER_UNKNOWN shares in S3_REWRITE are 84.5% (op0), 40.4% (op1), 39.0% (op2), 100% (op3), 100% (op4) \u2014 exactly derivable because S3 has only two families (q2: OTHER_UNKNOWN n=3610, CONTROL_COUNT n=2904). The true per-mechanism range is 39-100%, not 56-84%. The 56% endpoint appears to be the POOLED large-displacement OTHER_UNKNOWN share (q3 = 0.5570), not a per-mechanism value; ops 3 and 4 sit at 100% (above the claimed range) and ops 1-2 at ~39-40% (below it, majority CONTROL_COUNT).",
+   "source": "results/human_taxonomy_redteam.json S3_REWRITE q1_operator_family_concentration + q2_displacement_by_family + q3_large_displacement_share_by_family",
+   "severity": "WRONG_NUMBER",
+   "checker": 6
+  },
+  {
+   "packet_text": "substitution and copy are the count-changing mechanisms",
+   "correct_value": "Bitflip burst (op 0) is also a count-changing mechanism in the artifact: in S3, op0 transitions are 15.5% CONTROL_COUNT; in S1, op0's top family is OPERAND_ONLY at only 32.0%, so count-changing families (IO_COUNT/CONTROL_COUNT/combined) account for at least ~36% of op0 transitions. The enumeration as written implies only ops 1 (cell substitution) and 2 (block copy) change instruction-class counts.",
+   "source": "results/human_taxonomy_redteam.json q1_operator_family_concentration (S1 op0, S3 op0) + classifiers/human_taxonomy_redteam.py family() / substrates/vm_substrates.py mutate() op_index 0",
+   "severity": "MISLEADING",
+   "checker": 6
+  },
+  {
+   "packet_text": "Commit chain (short hashes): 927f17f8 instrument v1 + failed run 1; c9ff2b56 v3 valid on 7 controls; d3f8e8d0 v4 after the 23 confirmed review findings; 95d68549 CONSTITUTION FROZEN; b3f64f4b engineering amendment E1; 20adccd3 verdict with all rows in the same commit.",
+   "correct_value": "The repository history for agent_d4_blind contains SEVEN commits, not six: an unlisted commit 3aecd7ed ('D-4: freeze.py FROZEN-section regex fix + doc hash list refreshed post-E1') sits between b3f64f4b (E1) and 20adccd3 (verdict). It modified the freeze script and refreshed the recorded frozen-hash list after the constitution freeze, which is provenance-relevant to a section titled 'REPRODUCIBILITY AND PROVENANCE'. All six listed hashes exist and their subjects match.",
+   "source": "git -C F:/prometheus log --oneline -- agent_d4_blind",
+   "severity": "MISLEADING",
+   "checker": 7
+  },
+  {
+   "packet_text": "S3's effective edits are mostly unclassifiable by this taxonomy (56-84% OTHER_UNKNOWN per mechanism); recorded as unclassifiable.",
+   "correct_value": "Per results/human_taxonomy_redteam.json (S3), only two families exist (OTHER_UNKNOWN, CONTROL_COUNT); per-mechanism OTHER_UNKNOWN shares are OP0 84.5%, OP1 40.4%, OP2 39.0%, OP3 100%, OP4 100% (overall 55.4% = 3610/6514). The 56-84% range matches no mechanism: OP1/OP2 are majority-CLASSIFIABLE (CONTROL_COUNT ~60%) and OP3/OP4 are 100% unclassifiable. The 56 appears to be the q3 large-displacement OTHER_UNKNOWN share (55.7%), not a per-mechanism low. VERDICT-PHASE1.md repeats the same wrong range.",
+   "source": "F:/prometheus/agent_d4_blind/results/human_taxonomy_redteam.json (S3_REWRITE q1_operator_family_concentration, q2, q3)",
+   "severity": "WRONG_NUMBER",
+   "checker": 8
+  },
+  {
+   "packet_text": "The human-taxonomy red team independently notes OP1 is the mechanism whose edits most often change I/O-instruction counts (30% of its effective transitions). (Section 7, S2 DISCLOSURE 2)",
+   "correct_value": "The artifact records only each mechanism's MODAL family: IO_COUNT is OP1's top family at 29.9%. It does not establish the cross-mechanism superlative: OP2's modal family on S2 is CONTROL_COUNT+IO_COUNT at 37.1%, which also changes I/O-instruction counts, so OP2's I/O-count-changing share is at least 37% > OP1's documented 30%; full per-mechanism family distributions are not committed. Supported claim: OP1 is the only mechanism whose modal edit family is pure IO_COUNT (30%).",
+   "source": "F:/prometheus/agent_d4_blind/results/human_taxonomy_redteam.json (S2_STACK q1: op1 top_family IO_COUNT 0.2991; op2 top_family CONTROL_COUNT+IO_COUNT 0.3706)",
+   "severity": "MISLEADING",
+   "checker": 8
+  },
+  {
+   "packet_text": "Deep-rewrite phenotypes appear once on generation walks and are never reachable again -- one-off lottery phenotypes. (Section 7, S3 reading)",
+   "correct_value": "The rows support only: far-stratum hits 0/60 for every navigator and oracle far episode-reach 0.00 over the OBSERVED transition graph at the frozen 1,200-evaluation budget. 'Never reachable again' is an unbounded claim the artifacts cannot support (the packet's own S1 reading and Question 7 use the correct 'at this budget' scoping), and 'appear once' (multiplicity on walks) is not recorded anywhere.",
+   "source": "F:/prometheus/agent_d4_blind/results/S3_REWRITE_results.json (nav_summary far hit_rate 0.0 all navigators; gates.margins.oracle_far_reach 0.0; cfg.nav_budget 1200)",
+   "severity": "MISLEADING",
+   "checker": 8
+  },
+  {
+   "packet_text": "Strongest allowed claim ... asserted for S4_MEM and (with the two disclosures) S2_STACK: \"... without evidence that navigation is dominated by any single designer-privileged mutation mechanism or by the particular binary encoding.\"",
+   "correct_value": "For S2_STACK the committed margins contain sub-threshold evidence of exactly that dependence: removing OP1 collapses far-stratum hits 0.15 -> 0.042 (rel drop 0.722) at z = 1.85 vs the 1.96 gate, and the red team records OP1's IO_COUNT modal share at 30%. 'No gate-qualifying cell' is supported; 'without evidence' is stronger than the rows for S2 (fine for S4, whose worst cell is rel drop 0.14 at z = 0.77).",
+   "source": "F:/prometheus/agent_d4_blind/results/S2_STACK_results.json gates.margins.worst_ablation_drop (remove_op1, far, rel_drop 0.7222, z 1.8496); ablation.stratum_drops.remove_op1.far (0.15 -> 0.041667)",
+   "severity": "MISLEADING",
+   "checker": 8
+  },
+  {
+   "packet_text": "phenotype classes  9,575 combined (5,634 census + 4,043 pool) (Section 7, S4_MEM)",
+   "correct_value": "Both components are correct artifact values (census_classes 5,634; pool_classes 4,043) but they sum to 9,677, not 9,575 -- the combined figure is the deduplicated union (102 classes overlap). The '+' notation implies an additive decomposition that does not hold.",
+   "source": "F:/prometheus/agent_d4_blind/results/S4_MEM_results.json diversity (census_classes 5634, pool_classes 4043, combined_classes 9575)",
+   "severity": "MINOR_WORDING",
+   "checker": 8
+  },
+  {
+   "packet_text": "Budgets metered per component (census, operator census, reversibility, target generation, navigation, counterfactual, oracle) (Section 11)",
+   "correct_value": "The committed meter has exactly six evaluation components: census, operator_census, reversibility, target_generation, navigation, counterfactual. There is no 'oracle' meter component in any results file -- the oracle is analysis-only over recorded transitions and consumes no metered evaluate() calls.",
+   "source": "F:/prometheus/agent_d4_blind/results/S1_REG_results.json (and all four results files) meter.evals keys",
+   "severity": "MINOR_WORDING",
+   "checker": 8
+  },
+  {
+   "packet_text": "All 23 confirmed defects were repaired before freeze. The most consequential: ... 4. ... episodes were credited only for their first start. All repaired. ... 6. Assorted: ... re-find ratio had a floor of 1/S because the qualifying seed counted itself (repaired: (k-1)/(S-1))",
+   "correct_value": "Both repairs are real (PREREG-INSTRUMENT amendment items 12 and 14), but their ledger provenance is not a CONFIRMED finding: the first-start crediting issue is a MINOR unverified finding ('Oracle episode attribution biased ... only first start recorded'), and the refind 1/S floor is a MINOR finding ('Re-findability definition inflated by the qualifying seed') whose related verified finding was REFUTED on its load-bearing mechanism. Enumerating them under the 23 confirmed defects inflates the review's confirmation record.",
+   "source": "F:/prometheus/agent_d4_blind/ledgers/redteam_findings.json (minor_unverified entries; verified entry 'G6 refind: attainable floor 0.2 ...' verdict REFUTED)",
+   "severity": "MINOR_WORDING",
+   "checker": 8
+  }
+ ],
+ "claims_verified_ok": 527
+}

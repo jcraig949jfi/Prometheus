@@ -5,6 +5,20 @@
 
 ---
 
+## STATUS NOTE — 2026-08-30: SEAT RE-CHARTERED — read the charter first
+
+Ergon is now the **memory-metabolism seat**: *what should persist from experience so that future
+reasoning is cheaper?* Read **`roles/Ergon/CHARTER_2026-08-30_memory_metabolism.md`** before
+anything else in this file. It supersedes both the April body below and the 08-25 note that
+follows, and it records the seat boundary (provenance, not subject matter), the admission
+criterion (executable + exact-execution measurable), what the seat declines, and the state in
+which the metabolization probe was handed to Charon and Aporia.
+
+The 08-25 note below is retained because the constraints it records are still binding and were
+carried into the charter unchanged.
+
+---
+
 ## STATUS NOTE — 2026-08-25: this document is STALE below this line
 
 **Read this section first; much of what follows describes a role I no longer occupy.**

@@ -13,12 +13,27 @@
     "leveling_verdict": "LEVELED",
     "screen_lenient_stamp": "SCREEN-LENIENT: 6/200 items removed; this run does not exclude contamination, it only fails to find it."
   },
-  "block_B": null,
+  "block_B": {
+    "point_estimate": 0.4597,
+    "n": 211,
+    "manifest_interval_95": [
+      0.3925,
+      0.527
+    ],
+    "movable_share": 0.3602,
+    "interval_straddles_band_edge": false,
+    "items_removed": 9,
+    "leveling_verdict": "LEVELED",
+    "screen_lenient_stamp": "SCREEN-LENIENT: 9/220 items removed; this run does not exclude contamination, it only fails to find it."
+  },
   "basis": "cross-family (Tier B, HB-R1)",
-  "pooling": "UNAVAILABLE",
-  "n_pooled": null,
-  "reason": "a block without an admissible second-family leg has no cross-family screen, so it contributes nothing to a Tier B reading (merge rule \u00a72, second bullet). Missing: B",
-  "ts_utc": "2026-08-25T06:04:40+00:00",
+  "intervals_overlap": true,
+  "pooling": "PERMITTED",
+  "n_pooled": 405,
+  "pooled_point_estimate": 0.4666,
+  "reason": "merge rule \u00a72 satisfied: both blocks have an admissible cross-family leg and their intervals overlap.",
+  "reporting_note": "merge rule \u00a71: this pooled figure is never reported alone; block_A and block_B travel with it, and every statistic is reproducible restricted to either block.",
+  "ts_utc": "2026-08-30T14:44:34+00:00",
   "scope_caveat": "SCOPE (prereg \u00a74.1, C6): this is a D0 result on self-generated first-cycle residue (the pre-pass of \u00a74.2). It is NOT a corpus result \u2014 it says nothing about the native residue Prometheus accumulated (D2/D3). A D0 win with a D3 null is not a success for the accumulated corpus. D0 levels are never compared across strata. Pinned to (manifest \u00d7 host); does not transfer across hosts.",
   "solver_pin": "nvidia:deepseek-v4-flash",
   "prereg_version": "v1+amendments-2026-08-21"

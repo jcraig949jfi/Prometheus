@@ -1,0 +1,64 @@
+[C1_FRAGMENTED] census n=4000
+[C1_FRAGMENTED] operator causal census
+[C1_FRAGMENTED] target selection
+[C1_FRAGMENTED] navigation battery (18 targets)
+[C1_FRAGMENTED] coverage runs
+[C1_FRAGMENTED] ablation counterfactuals (navigator=N4_RECOMBINER)
+[C1_FRAGMENTED] oracle + graph analysis
+[C1_FRAGMENTED] PRIMARY: NAVIGATION_FAILURE  flags=['NAVIGATION_FAILURE']
+== C1_FRAGMENTED: got=NAVIGATION_FAILURE expected=['ACCESSIBILITY_FRAGMENTED'] MISMATCH (7.3s)
+[C2_IDENTITY] census n=4000
+[C2_IDENTITY] operator causal census
+[C2_IDENTITY] target selection
+[C2_IDENTITY] navigation battery (18 targets)
+[C2_IDENTITY] coverage runs
+[C2_IDENTITY] ablation counterfactuals (navigator=N4_RECOMBINER)
+[C2_IDENTITY] oracle + graph analysis
+[C2_IDENTITY] PRIMARY: DISPLACEMENT_COLLAPSE  flags=['DISPLACEMENT_COLLAPSE']
+== C2_IDENTITY: got=DISPLACEMENT_COLLAPSE expected=['DISPLACEMENT_COLLAPSE'] OK (1.1s)
+[C3_CORRIDOR] census n=4000
+[C3_CORRIDOR] operator causal census
+[C3_CORRIDOR] target selection
+[C3_CORRIDOR] navigation battery (18 targets)
+[C3_CORRIDOR] coverage runs
+[C3_CORRIDOR] ablation counterfactuals (navigator=N2_HILLCLIMB)
+[C3_CORRIDOR] oracle + graph analysis
+[C3_CORRIDOR] PRIMARY: PRIVILEGED_CORRIDOR  flags=['PRIVILEGED_CORRIDOR']
+== C3_CORRIDOR: got=PRIVILEGED_CORRIDOR expected=['PRIVILEGED_CORRIDOR'] OK (5.9s)
+[C4_TRAPPED] census n=4000
+[C4_TRAPPED] operator causal census
+[C4_TRAPPED] target selection
+[C4_TRAPPED] navigation battery (18 targets)
+[C4_TRAPPED] coverage runs
+[C4_TRAPPED] ablation counterfactuals (navigator=N4_RECOMBINER)
+[C4_TRAPPED] oracle + graph analysis
+[C4_TRAPPED] PRIMARY: PASS  flags=[]
+== C4_TRAPPED: got=PASS expected=['ACCESSIBILITY_FRAGMENTED', 'NAVIGATION_FAILURE', 'REFINDABILITY_FAILURE'] MISMATCH (7.4s)
+[C5_NAVIGABLE] census n=4000
+[C5_NAVIGABLE] operator causal census
+[C5_NAVIGABLE] target selection
+[C5_NAVIGABLE] navigation battery (18 targets)
+[C5_NAVIGABLE] coverage runs
+[C5_NAVIGABLE] ablation counterfactuals (navigator=N2_HILLCLIMB)
+[C5_NAVIGABLE] oracle + graph analysis
+[C5_NAVIGABLE] PRIMARY: PASS  flags=[]
+== C5_NAVIGABLE: got=PASS expected=['PASS'] OK (14.6s)
+[C6_CHAOS] census n=4000
+[C6_CHAOS] operator causal census
+[C6_CHAOS] target selection
+[C6_CHAOS] navigation battery (18 targets)
+[C6_CHAOS] coverage runs
+[C6_CHAOS] ablation counterfactuals (navigator=N2_HILLCLIMB)
+[C6_CHAOS] oracle + graph analysis
+[C6_CHAOS] PRIMARY: NAVIGATION_FAILURE  flags=['NAVIGATION_FAILURE']
+== C6_CHAOS: got=NAVIGATION_FAILURE expected=['NAVIGATION_FAILURE', 'REFINDABILITY_FAILURE'] OK (61.8s)
+[C7_TINY] census n=4000
+[C7_TINY] operator causal census
+[C7_TINY] target selection
+[C7_TINY] navigation battery (12 targets)
+[C7_TINY] coverage runs
+[C7_TINY] ablation counterfactuals (navigator=N2_HILLCLIMB)
+[C7_TINY] oracle + graph analysis
+[C7_TINY] PRIMARY: PHENOTYPE_POVERTY  flags=['PHENOTYPE_POVERTY']
+== C7_TINY: got=PHENOTYPE_POVERTY expected=['PHENOTYPE_POVERTY'] OK (1.3s)
+INSTRUMENT INVALID

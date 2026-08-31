@@ -1,0 +1,1075 @@
+{
+ "grammar": "gv2",
+ "grammar_hash": "f08eb560631a998e4cdd5877781491d5366cd79ec25dece53fdaaca357d87c06",
+ "horizon_L": 5,
+ "counts": {
+  "total_sequences": 4288305,
+  "typed_sequences": 744215,
+  "valid_programs": 28891,
+  "runtime_failed": 0,
+  "executed_ok": 28891,
+  "distinct_structural": 1584,
+  "distinct_semantic": 1296,
+  "identity": 1,
+  "noop_semantic": 0,
+  "destructive": 193,
+  "mixed": 238
+ },
+ "shape_counts": {
+  "quote": 1,
+  "identity": 1,
+  "perm": 5,
+  "dropfx": 2,
+  "take": 2,
+  "selfcat": 3,
+  "constant": 140,
+  "append": 139,
+  "prepend": 139,
+  "other": 811,
+  "mixed": 238,
+  "delete": 1,
+  "insert": 11,
+  "wrap": 91
+ },
+ "family_counts": {
+  "route_like": 369,
+  "append_like": 139,
+  "pre_like": 139,
+  "wrap_like": 91
+ },
+ "shape_min_lengths": {
+  "quote": 1,
+  "identity": 2,
+  "perm": 2,
+  "dropfx": 2,
+  "take": 2,
+  "selfcat": 2,
+  "constant": 2,
+  "append": 2,
+  "prepend": 2,
+  "other": 2,
+  "mixed": 4,
+  "delete": 4,
+  "insert": 4,
+  "wrap": 4
+ },
+ "route_like_min_length": 2,
+ "per_length_new_behaviors": {
+  "1": 1,
+  "2": 22,
+  "3": 48,
+  "4": 292,
+  "5": 1221
+ },
+ "gates": {
+  "CK1_single_token_button": {
+   "hits": [],
+   "kill": false
+  },
+  "CK2_cheap_region_share": {
+   "window_size": 200,
+   "legacy_count": 73,
+   "legacy_share": 0.365,
+   "threshold": 0.6,
+   "per_family_in_window": {
+    "append_like": 25,
+    "pre_like": 21,
+    "route_like": 26,
+    "wrap_like": 12
+   },
+   "kill": false
+  },
+  "CK3_shape_diversity_of_cheap_region": {
+   "shapes_in_window": [
+    "append",
+    "delete",
+    "dropfx",
+    "insert",
+    "mixed",
+    "other",
+    "perm",
+    "prepend",
+    "quote",
+    "selfcat",
+    "take",
+    "wrap"
+   ],
+   "n_shapes": 12,
+   "legacy_shapes_present": 4,
+   "non_legacy_shapes_present": 9,
+   "kill": false
+  },
+  "CK4_relative_cheapness": {
+   "shape_min_lengths": {
+    "quote": 1,
+    "perm": 2,
+    "dropfx": 2,
+    "take": 2,
+    "selfcat": 2,
+    "append": 2,
+    "prepend": 2,
+    "other": 2,
+    "mixed": 4,
+    "delete": 4,
+    "insert": 4,
+    "wrap": 4,
+    "route_like": 2
+   },
+   "median_min_length": 2,
+   "legacy_min_lengths": {
+    "append": 2,
+    "prepend": 2,
+    "wrap": 4,
+    "route_like": 2
+   },
+   "kill": false
+  },
+  "CK5_reachability": {
+   "missing": [],
+   "kill": false
+  },
+  "CK6_diversity_floors": {
+   "distinct_structural": 1584,
+   "executed_ok": 28891,
+   "distinct_ratio": 0.05483,
+   "distinct_semantic": 1296,
+   "kill": false
+  },
+  "CK7_mixed_density": {
+   "mixed": 238,
+   "distinct_non_identity": 1583,
+   "density": 0.15035,
+   "kill": false
+  }
+ },
+ "kills": [],
+ "verdict": "GRAMMAR_PASSED_CENSUS",
+ "timing": {
+  "enumeration_s": 0.8,
+  "classification_s": 0.2
+ },
+ "audit_head": [
+  {
+   "rank": 0,
+   "program": [
+    "d07"
+   ],
+   "shape": "quote",
+   "flags": [
+    "introduces_lit"
+   ],
+   "legacy": [],
+   "out_on_P3": "{[{o2 o0}]}"
+  },
+  {
+   "rank": 1,
+   "program": [
+    "d12",
+    "d04"
+   ],
+   "shape": "identity",
+   "flags": [],
+   "legacy": [],
+   "out_on_P3": "{o2 o0}"
+  },
+  {
+   "rank": 2,
+   "program": [
+    "d12",
+    "d15"
+   ],
+   "shape": "perm",
+   "flags": [
+    "reorders"
+   ],
+   "legacy": [],
+   "out_on_P3": "{o0 o2}"
+  },
+  {
+   "rank": 3,
+   "program": [
+    "d12",
+    "d14"
+   ],
+   "shape": "dropfx",
+   "flags": [
+    "removes_tokens"
+   ],
+   "legacy": [],
+   "out_on_P3": "{o0}"
+  },
+  {
+   "rank": 4,
+   "program": [
+    "d12",
+    "d02"
+   ],
+   "shape": "take",
+   "flags": [
+    "removes_tokens"
+   ],
+   "legacy": [],
+   "out_on_P3": "{o2}"
+  },
+  {
+   "rank": 5,
+   "program": [
+    "d00",
+    "d04"
+   ],
+   "shape": "selfcat",
+   "flags": [
+    "introduces_tokens"
+   ],
+   "legacy": [],
+   "out_on_P3": "{o2 o0 o2 o0}"
+  },
+  {
+   "rank": 9,
+   "program": [
+    "d02",
+    "t0"
+   ],
+   "shape": "constant",
+   "flags": [
+    "introduces_tokens",
+    "removes_tokens"
+   ],
+   "legacy": [],
+   "out_on_P3": "{o0}"
+  },
+  {
+   "rank": 10,
+   "program": [
+    "d02",
+    "t1"
+   ],
+   "shape": "constant",
+   "flags": [
+    "introduces_tokens",
+    "removes_tokens"
+   ],
+   "legacy": [],
+   "out_on_P3": "{o1}"
+  },
+  {
+   "rank": 11,
+   "program": [
+    "d02",
+    "t2"
+   ],
+   "shape": "constant",
+   "flags": [
+    "introduces_tokens",
+    "removes_tokens"
+   ],
+   "legacy": [],
+   "out_on_P3": "{o2}"
+  },
+  {
+   "rank": 12,
+   "program": [
+    "d02",
+    "t3"
+   ],
+   "shape": "constant",
+   "flags": [
+    "introduces_tokens",
+    "removes_tokens"
+   ],
+   "legacy": [],
+   "out_on_P3": "{o3}"
+  },
+  {
+   "rank": 13,
+   "program": [
+    "d02",
+    "t4"
+   ],
+   "shape": "constant",
+   "flags": [
+    "introduces_control",
+    "introduces_tokens",
+    "removes_tokens"
+   ],
+   "legacy": [
+    "route_like"
+   ],
+   "out_on_P3": "{o4}"
+  },
+  {
+   "rank": 14,
+   "program": [
+    "d02",
+    "d03"
+   ],
+   "shape": "constant",
+   "flags": [
+    "removes_tokens"
+   ],
+   "legacy": [],
+   "out_on_P3": "{}"
+  },
+  {
+   "rank": 15,
+   "program": [
+    "t0",
+    "d04"
+   ],
+   "shape": "append",
+   "flags": [
+    "introduces_tokens"
+   ],
+   "legacy": [
+    "append_like"
+   ],
+   "out_on_P3": "{o2 o0 o0}"
+  },
+  {
+   "rank": 16,
+   "program": [
+    "t0",
+    "d15"
+   ],
+   "shape": "prepend",
+   "flags": [
+    "introduces_tokens"
+   ],
+   "legacy": [
+    "pre_like"
+   ],
+   "out_on_P3": "{o0 o2 o0}"
+  },
+  {
+   "rank": 19,
+   "program": [
+    "t1",
+    "d04"
+   ],
+   "shape": "append",
+   "flags": [
+    "introduces_tokens"
+   ],
+   "legacy": [
+    "append_like"
+   ],
+   "out_on_P3": "{o2 o0 o1}"
+  },
+  {
+   "rank": 20,
+   "program": [
+    "t1",
+    "d15"
+   ],
+   "shape": "prepend",
+   "flags": [
+    "introduces_tokens"
+   ],
+   "legacy": [
+    "pre_like"
+   ],
+   "out_on_P3": "{o1 o2 o0}"
+  },
+  {
+   "rank": 23,
+   "program": [
+    "t2",
+    "d04"
+   ],
+   "shape": "append",
+   "flags": [
+    "introduces_tokens"
+   ],
+   "legacy": [
+    "append_like"
+   ],
+   "out_on_P3": "{o2 o0 o2}"
+  },
+  {
+   "rank": 24,
+   "program": [
+    "t2",
+    "d15"
+   ],
+   "shape": "prepend",
+   "flags": [
+    "introduces_tokens"
+   ],
+   "legacy": [
+    "pre_like"
+   ],
+   "out_on_P3": "{o2 o2 o0}"
+  },
+  {
+   "rank": 27,
+   "program": [
+    "t3",
+    "d04"
+   ],
+   "shape": "append",
+   "flags": [
+    "introduces_tokens"
+   ],
+   "legacy": [
+    "append_like"
+   ],
+   "out_on_P3": "{o2 o0 o3}"
+  },
+  {
+   "rank": 28,
+   "program": [
+    "t3",
+    "d15"
+   ],
+   "shape": "prepend",
+   "flags": [
+    "introduces_tokens"
+   ],
+   "legacy": [
+    "pre_like"
+   ],
+   "out_on_P3": "{o3 o2 o0}"
+  },
+  {
+   "rank": 31,
+   "program": [
+    "t4",
+    "d04"
+   ],
+   "shape": "append",
+   "flags": [
+    "introduces_control",
+    "introduces_tokens"
+   ],
+   "legacy": [
+    "append_like",
+    "route_like"
+   ],
+   "out_on_P3": "{o2 o0 o4}"
+  },
+  {
+   "rank": 32,
+   "program": [
+    "t4",
+    "d15"
+   ],
+   "shape": "prepend",
+   "flags": [
+    "introduces_control",
+    "introduces_tokens"
+   ],
+   "legacy": [
+    "pre_like",
+    "route_like"
+   ],
+   "out_on_P3": "{o4 o2 o0}"
+  },
+  {
+   "rank": 40,
+   "program": [
+    "d07",
+    "d07"
+   ],
+   "shape": "other",
+   "flags": [
+    "introduces_lit"
+   ],
+   "legacy": [],
+   "out_on_P3": "{[{[{o2 o0}]}]}"
+  },
+  {
+   "rank": 42,
+   "program": [
+    "d12",
+    "d15",
+    "d07"
+   ],
+   "shape": "other",
+   "flags": [
+    "introduces_lit",
+    "reorders"
+   ],
+   "legacy": [],
+   "out_on_P3": "{[{o0 o2}]}"
+  },
+  {
+   "rank": 43,
+   "program": [
+    "d12",
+    "d14",
+    "d07"
+   ],
+   "shape": "other",
+   "flags": [
+    "introduces_lit",
+    "removes_tokens"
+   ],
+   "legacy": [],
+   "out_on_P3": "{[{o0}]}"
+  },
+  {
+   "rank": 48,
+   "program": [
+    "d12",
+    "d02",
+    "d07"
+   ],
+   "shape": "other",
+   "flags": [
+    "introduces_lit",
+    "removes_tokens"
+   ],
+   "legacy": [],
+   "out_on_P3": "{[{o2}]}"
+  },
+  {
+   "rank": 50,
+   "program": [
+    "d12",
+    "d07",
+    "d04"
+   ],
+   "shape": "other",
+   "flags": [
+    "introduces_lit"
+   ],
+   "legacy": [],
+   "out_on_P3": "{o2 [{o0}]}"
+  },
+  {
+   "rank": 51,
+   "program": [
+    "d12",
+    "d07",
+    "d15"
+   ],
+   "shape": "other",
+   "flags": [
+    "introduces_lit",
+    "reorders"
+   ],
+   "legacy": [],
+   "out_on_P3": "{[{o0}] o2}"
+  },
+  {
+   "rank": 54,
+   "program": [
+    "d00",
+    "d04",
+    "d07"
+   ],
+   "shape": "other",
+   "flags": [
+    "introduces_lit",
+    "introduces_tokens"
+   ],
+   "legacy": [],
+   "out_on_P3": "{[{o2 o0 o2 o0}]}"
+  },
+  {
+   "rank": 63,
+   "program": [
+    "d00",
+    "d07",
+    "d04"
+   ],
+   "shape": "other",
+   "flags": [
+    "introduces_lit",
+    "introduces_tokens"
+   ],
+   "legacy": [],
+   "out_on_P3": "{o2 o0 [{o2 o0}]}"
+  },
+  {
+   "rank": 64,
+   "program": [
+    "d00",
+    "d07",
+    "d15"
+   ],
+   "shape": "other",
+   "flags": [
+    "introduces_lit",
+    "introduces_tokens"
+   ],
+   "legacy": [],
+   "out_on_P3": "{[{o2 o0}] o2 o0}"
+  },
+  {
+   "rank": 67,
+   "program": [
+    "d02",
+    "t0",
+    "d07"
+   ],
+   "shape": "constant",
+   "flags": [
+    "introduces_lit",
+    "introduces_tokens",
+    "removes_tokens"
+   ],
+   "legacy": [],
+   "out_on_P3": "{[{o0}]}"
+  },
+  {
+   "rank": 68,
+   "program": [
+    "d02",
+    "t1",
+    "d07"
+   ],
+   "shape": "constant",
+   "flags": [
+    "introduces_lit",
+    "introduces_tokens",
+    "removes_tokens"
+   ],
+   "legacy": [],
+   "out_on_P3": "{[{o1}]}"
+  },
+  {
+   "rank": 69,
+   "program": [
+    "d02",
+    "t2",
+    "d07"
+   ],
+   "shape": "constant",
+   "flags": [
+    "introduces_lit",
+    "introduces_tokens",
+    "removes_tokens"
+   ],
+   "legacy": [],
+   "out_on_P3": "{[{o2}]}"
+  },
+  {
+   "rank": 70,
+   "program": [
+    "d02",
+    "t3",
+    "d07"
+   ],
+   "shape": "constant",
+   "flags": [
+    "introduces_lit",
+    "introduces_tokens",
+    "removes_tokens"
+   ],
+   "legacy": [],
+   "out_on_P3": "{[{o3}]}"
+  },
+  {
+   "rank": 71,
+   "program": [
+    "d02",
+    "t4",
+    "d07"
+   ],
+   "shape": "constant",
+   "flags": [
+    "introduces_control",
+    "introduces_lit",
+    "introduces_tokens",
+    "removes_tokens"
+   ],
+   "legacy": [
+    "route_like"
+   ],
+   "out_on_P3": "{[{o4}]}"
+  },
+  {
+   "rank": 72,
+   "program": [
+    "d02",
+    "d03",
+    "d07"
+   ],
+   "shape": "constant",
+   "flags": [
+    "introduces_lit",
+    "removes_tokens"
+   ],
+   "legacy": [],
+   "out_on_P3": "{[{}]}"
+  },
+  {
+   "rank": 73,
+   "program": [
+    "t0",
+    "d04",
+    "d07"
+   ],
+   "shape": "other",
+   "flags": [
+    "introduces_lit",
+    "introduces_tokens"
+   ],
+   "legacy": [],
+   "out_on_P3": "{[{o2 o0 o0}]}"
+  },
+  {
+   "rank": 74,
+   "program": [
+    "t0",
+    "d15",
+    "d07"
+   ],
+   "shape": "other",
+   "flags": [
+    "introduces_lit",
+    "introduces_tokens"
+   ],
+   "legacy": [],
+   "out_on_P3": "{[{o0 o2 o0}]}"
+  },
+  {
+   "rank": 82,
+   "program": [
+    "t0",
+    "d07",
+    "d04"
+   ],
+   "shape": "append",
+   "flags": [
+    "introduces_lit",
+    "introduces_tokens"
+   ],
+   "legacy": [
+    "append_like"
+   ],
+   "out_on_P3": "{o2 o0 [{o0}]}"
+  },
+  {
+   "rank": 83,
+   "program": [
+    "t0",
+    "d07",
+    "d15"
+   ],
+   "shape": "prepend",
+   "flags": [
+    "introduces_lit",
+    "introduces_tokens"
+   ],
+   "legacy": [
+    "pre_like"
+   ],
+   "out_on_P3": "{[{o0}] o2 o0}"
+  },
+  {
+   "rank": 86,
+   "program": [
+    "t1",
+    "d04",
+    "d07"
+   ],
+   "shape": "other",
+   "flags": [
+    "introduces_lit",
+    "introduces_tokens"
+   ],
+   "legacy": [],
+   "out_on_P3": "{[{o2 o0 o1}]}"
+  },
+  {
+   "rank": 87,
+   "program": [
+    "t1",
+    "d15",
+    "d07"
+   ],
+   "shape": "other",
+   "flags": [
+    "introduces_lit",
+    "introduces_tokens"
+   ],
+   "legacy": [],
+   "out_on_P3": "{[{o1 o2 o0}]}"
+  },
+  {
+   "rank": 95,
+   "program": [
+    "t1",
+    "d07",
+    "d04"
+   ],
+   "shape": "append",
+   "flags": [
+    "introduces_lit",
+    "introduces_tokens"
+   ],
+   "legacy": [
+    "append_like"
+   ],
+   "out_on_P3": "{o2 o0 [{o1}]}"
+  },
+  {
+   "rank": 96,
+   "program": [
+    "t1",
+    "d07",
+    "d15"
+   ],
+   "shape": "prepend",
+   "flags": [
+    "introduces_lit",
+    "introduces_tokens"
+   ],
+   "legacy": [
+    "pre_like"
+   ],
+   "out_on_P3": "{[{o1}] o2 o0}"
+  },
+  {
+   "rank": 99,
+   "program": [
+    "t2",
+    "d04",
+    "d07"
+   ],
+   "shape": "other",
+   "flags": [
+    "introduces_lit",
+    "introduces_tokens"
+   ],
+   "legacy": [],
+   "out_on_P3": "{[{o2 o0 o2}]}"
+  },
+  {
+   "rank": 100,
+   "program": [
+    "t2",
+    "d15",
+    "d07"
+   ],
+   "shape": "other",
+   "flags": [
+    "introduces_lit",
+    "introduces_tokens"
+   ],
+   "legacy": [],
+   "out_on_P3": "{[{o2 o2 o0}]}"
+  },
+  {
+   "rank": 108,
+   "program": [
+    "t2",
+    "d07",
+    "d04"
+   ],
+   "shape": "append",
+   "flags": [
+    "introduces_lit",
+    "introduces_tokens"
+   ],
+   "legacy": [
+    "append_like"
+   ],
+   "out_on_P3": "{o2 o0 [{o2}]}"
+  },
+  {
+   "rank": 109,
+   "program": [
+    "t2",
+    "d07",
+    "d15"
+   ],
+   "shape": "prepend",
+   "flags": [
+    "introduces_lit",
+    "introduces_tokens"
+   ],
+   "legacy": [
+    "pre_like"
+   ],
+   "out_on_P3": "{[{o2}] o2 o0}"
+  },
+  {
+   "rank": 112,
+   "program": [
+    "t3",
+    "d04",
+    "d07"
+   ],
+   "shape": "other",
+   "flags": [
+    "introduces_lit",
+    "introduces_tokens"
+   ],
+   "legacy": [],
+   "out_on_P3": "{[{o2 o0 o3}]}"
+  },
+  {
+   "rank": 113,
+   "program": [
+    "t3",
+    "d15",
+    "d07"
+   ],
+   "shape": "other",
+   "flags": [
+    "introduces_lit",
+    "introduces_tokens"
+   ],
+   "legacy": [],
+   "out_on_P3": "{[{o3 o2 o0}]}"
+  },
+  {
+   "rank": 121,
+   "program": [
+    "t3",
+    "d07",
+    "d04"
+   ],
+   "shape": "append",
+   "flags": [
+    "introduces_lit",
+    "introduces_tokens"
+   ],
+   "legacy": [
+    "append_like"
+   ],
+   "out_on_P3": "{o2 o0 [{o3}]}"
+  },
+  {
+   "rank": 122,
+   "program": [
+    "t3",
+    "d07",
+    "d15"
+   ],
+   "shape": "prepend",
+   "flags": [
+    "introduces_lit",
+    "introduces_tokens"
+   ],
+   "legacy": [
+    "pre_like"
+   ],
+   "out_on_P3": "{[{o3}] o2 o0}"
+  },
+  {
+   "rank": 125,
+   "program": [
+    "t4",
+    "d04",
+    "d07"
+   ],
+   "shape": "other",
+   "flags": [
+    "introduces_control",
+    "introduces_lit",
+    "introduces_tokens"
+   ],
+   "legacy": [
+    "route_like"
+   ],
+   "out_on_P3": "{[{o2 o0 o4}]}"
+  },
+  {
+   "rank": 126,
+   "program": [
+    "t4",
+    "d15",
+    "d07"
+   ],
+   "shape": "other",
+   "flags": [
+    "introduces_control",
+    "introduces_lit",
+    "introduces_tokens"
+   ],
+   "legacy": [
+    "route_like"
+   ],
+   "out_on_P3": "{[{o4 o2 o0}]}"
+  },
+  {
+   "rank": 134,
+   "program": [
+    "t4",
+    "d07",
+    "d04"
+   ],
+   "shape": "append",
+   "flags": [
+    "introduces_control",
+    "introduces_lit",
+    "introduces_tokens"
+   ],
+   "legacy": [
+    "append_like",
+    "route_like"
+   ],
+   "out_on_P3": "{o2 o0 [{o4}]}"
+  },
+  {
+   "rank": 135,
+   "program": [
+    "t4",
+    "d07",
+    "d15"
+   ],
+   "shape": "prepend",
+   "flags": [
+    "introduces_control",
+    "introduces_lit",
+    "introduces_tokens"
+   ],
+   "legacy": [
+    "pre_like",
+    "route_like"
+   ],
+   "out_on_P3": "{[{o4}] o2 o0}"
+  },
+  {
+   "rank": 167,
+   "program": [
+    "d03",
+    "d07",
+    "d04"
+   ],
+   "shape": "append",
+   "flags": [
+    "introduces_lit"
+   ],
+   "legacy": [
+    "append_like"
+   ],
+   "out_on_P3": "{o2 o0 [{}]}"
+  },
+  {
+   "rank": 168,
+   "program": [
+    "d03",
+    "d07",
+    "d15"
+   ],
+   "shape": "prepend",
+   "flags": [
+    "introduces_lit"
+   ],
+   "legacy": [
+    "pre_like"
+   ],
+   "out_on_P3": "{[{}] o2 o0}"
+  },
+  {
+   "rank": 175,
+   "program": [
+    "d07",
+    "d00",
+    "d04"
+   ],
+   "shape": "other",
+   "flags": [
+    "introduces_lit",
+    "introduces_tokens"
+   ],
+   "legacy": [],
+   "out_on_P3": "{[{o2 o0}] [{o2 o0}]}"
+  }
+ ]
+}

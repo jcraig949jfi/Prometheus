@@ -1,0 +1,314 @@
+{
+  "experiment": "LOT-A2B-W5-REPAIR",
+  "intervention_class": "INSTRUMENT",
+  "is_null_result": false,
+  "positive_control_ran": true,
+  "branch_table_partitions": true,
+  "probe_modifies_measured_quantity": false,
+  "dropped_records": 0,
+  "contamination_disclosure": "The repaired rule was designed with the A2 world reading already in hand. Seeds 20260827/28/29/30 are burned. The verdict of record uses seeds 20260901-20260905, generated for the first time by this script.",
+  "rule": "perm_pvalue",
+  "perm_B": 1999,
+  "alpha": 0.05,
+  "p_attainable_lo": 0.0005,
+  "p_attainable_hi": 1.0,
+  "rule_fixtures": [
+    {
+      "fixture": "RULE_KNOWN_POSITIVE",
+      "asserted_on": "W5a",
+      "expected": true,
+      "observed": true,
+      "correct": true,
+      "p": 0.0005,
+      "gap": 1.0,
+      "W5": true
+    },
+    {
+      "fixture": "RULE_KNOWN_NEGATIVE",
+      "asserted_on": "W5a",
+      "expected": false,
+      "observed": false,
+      "correct": true,
+      "p": 1.0,
+      "gap": -0.0479,
+      "W5": false
+    },
+    {
+      "fixture": "RULE_CEILING_CHECK_killed_rule_on_known_positive",
+      "asserted_on": "W5a",
+      "expected": false,
+      "observed": false,
+      "correct": true,
+      "gap": 1.0,
+      "bar": 1.009,
+      "note": "the killed rule fails an input with PERFECT separation, because its bar is at the ceiling of a bounded statistic. This is the defect demonstrated on an input where the right answer is not in dispute."
+    }
+  ],
+  "closure": {
+    "candidates_expanded": 69738,
+    "distinct_signatures": 18224,
+    "budget_exhausted": false,
+    "max_size": 6,
+    "layer_widths": {
+      "0_V": 1,
+      "0_S": 0,
+      "1_V": 5,
+      "1_S": 2,
+      "2_V": 25,
+      "2_S": 5,
+      "3_V": 119,
+      "3_S": 23,
+      "4_V": 570,
+      "4_S": 76,
+      "5_V": 2782,
+      "5_S": 261,
+      "6_V": 13588,
+      "6_S": 767
+    }
+  },
+  "generator_fixtures": [
+    {
+      "fixture": "GEN_KNOWN_POSITIVE",
+      "asserted_on": "W5a",
+      "expected": true,
+      "observed": true,
+      "correct": true,
+      "p": 0.0005
+    },
+    {
+      "fixture": "GEN_KNOWN_NEGATIVE",
+      "asserted_on": "W5a",
+      "expected": false,
+      "observed": false,
+      "correct": true,
+      "p": 1.0
+    },
+    {
+      "fixture": "GEN_ALL_IDENTICAL",
+      "asserted_on": "W5a",
+      "expected": false,
+      "observed": false,
+      "correct": true,
+      "p": 1.0
+    }
+  ],
+  "interventional_sweep": [
+    {
+      "reuse_p": 0.0,
+      "contrast": -0.0139,
+      "p_W5a": 1.0,
+      "W5a": false
+    },
+    {
+      "reuse_p": 0.25,
+      "contrast": 0.25,
+      "p_W5a": 0.6365,
+      "W5a": false
+    },
+    {
+      "reuse_p": 0.5,
+      "contrast": 0.4792,
+      "p_W5a": 0.035,
+      "W5a": true
+    },
+    {
+      "reuse_p": 0.75,
+      "contrast": 0.7222,
+      "p_W5a": 0.0005,
+      "W5a": true
+    },
+    {
+      "reuse_p": 1.0,
+      "contrast": 0.9653,
+      "p_W5a": 0.0005,
+      "W5a": true
+    }
+  ],
+  "sweep_monotone_nondecreasing": true,
+  "sweep_verdict_flips": true,
+  "metamorphic_bit_identical": true,
+  "instrument_ok": true,
+  "fresh_seed_reads": [
+    {
+      "seed": 20260901,
+      "verdict": "WORLD_ADMISSIBLE",
+      "W1": 1.0,
+      "W2": 0.9618,
+      "W3": 899.8,
+      "W4_stat": 0.7616,
+      "W4_bar": 2.6976,
+      "W4": true,
+      "p_W5a": 0.0005,
+      "W5a": true,
+      "W5b": true,
+      "W5c": true,
+      "W5": true,
+      "rec_late": {
+        "REUSE": 1.0,
+        "NO_REUSE": 0.0208,
+        "DECOY_REUSE": 0.0208,
+        "LATE_REUSE": 1.0,
+        "CONTROL": 1.0
+      },
+      "rec_early": {
+        "REUSE": 1.0,
+        "NO_REUSE": 0.2014,
+        "DECOY_REUSE": 1.0,
+        "LATE_REUSE": 0.3056,
+        "CONTROL": 1.0
+      }
+    },
+    {
+      "seed": 20260902,
+      "verdict": "WORLD_ADMISSIBLE",
+      "W1": 1.0,
+      "W2": 0.9563,
+      "W3": 857.9,
+      "W4_stat": 0.7843,
+      "W4_bar": 2.7038,
+      "W4": true,
+      "p_W5a": 0.0005,
+      "W5a": true,
+      "W5b": true,
+      "W5c": true,
+      "W5": true,
+      "rec_late": {
+        "REUSE": 1.0,
+        "NO_REUSE": 0.0625,
+        "DECOY_REUSE": 0.0347,
+        "LATE_REUSE": 1.0,
+        "CONTROL": 1.0
+      },
+      "rec_early": {
+        "REUSE": 1.0,
+        "NO_REUSE": 0.1736,
+        "DECOY_REUSE": 1.0,
+        "LATE_REUSE": 0.2639,
+        "CONTROL": 1.0
+      }
+    },
+    {
+      "seed": 20260903,
+      "verdict": "WORLD_ADMISSIBLE",
+      "W1": 1.0,
+      "W2": 0.9521,
+      "W3": 874.5,
+      "W4_stat": 1.1695,
+      "W4_bar": 2.7048,
+      "W4": true,
+      "p_W5a": 0.0005,
+      "W5a": true,
+      "W5b": true,
+      "W5c": true,
+      "W5": true,
+      "rec_late": {
+        "REUSE": 1.0,
+        "NO_REUSE": 0.0347,
+        "DECOY_REUSE": 0.0417,
+        "LATE_REUSE": 0.7569,
+        "CONTROL": 1.0
+      },
+      "rec_early": {
+        "REUSE": 1.0,
+        "NO_REUSE": 0.1875,
+        "DECOY_REUSE": 1.0,
+        "LATE_REUSE": 0.2708,
+        "CONTROL": 1.0
+      }
+    },
+    {
+      "seed": 20260904,
+      "verdict": "WORLD_ADMISSIBLE",
+      "W1": 1.0,
+      "W2": 0.9556,
+      "W3": 856.9,
+      "W4_stat": 0.5303,
+      "W4_bar": 2.7355,
+      "W4": true,
+      "p_W5a": 0.0005,
+      "W5a": true,
+      "W5b": true,
+      "W5c": true,
+      "W5": true,
+      "rec_late": {
+        "REUSE": 1.0,
+        "NO_REUSE": 0.0208,
+        "DECOY_REUSE": 0.0347,
+        "LATE_REUSE": 0.9167,
+        "CONTROL": 1.0
+      },
+      "rec_early": {
+        "REUSE": 1.0,
+        "NO_REUSE": 0.1667,
+        "DECOY_REUSE": 1.0,
+        "LATE_REUSE": 0.2847,
+        "CONTROL": 1.0
+      }
+    },
+    {
+      "seed": 20260905,
+      "verdict": "WORLD_ADMISSIBLE",
+      "W1": 1.0,
+      "W2": 0.9472,
+      "W3": 878.0,
+      "W4_stat": 0.7074,
+      "W4_bar": 2.6437,
+      "W4": true,
+      "p_W5a": 0.0005,
+      "W5a": true,
+      "W5b": true,
+      "W5c": true,
+      "W5": true,
+      "rec_late": {
+        "REUSE": 1.0,
+        "NO_REUSE": 0.0278,
+        "DECOY_REUSE": 0.0208,
+        "LATE_REUSE": 1.0,
+        "CONTROL": 1.0
+      },
+      "rec_early": {
+        "REUSE": 1.0,
+        "NO_REUSE": 0.1667,
+        "DECOY_REUSE": 1.0,
+        "LATE_REUSE": 0.2917,
+        "CONTROL": 1.0
+      }
+    }
+  ],
+  "fresh_seed_unanimous": true,
+  "burned_seed_reread_CONTAMINATED": {
+    "seed": 20260827,
+    "verdict": "WORLD_ADMISSIBLE",
+    "p_W5a": 0.0005,
+    "W5a": true,
+    "W5b": true,
+    "W5c": true,
+    "note": "not part of the verdict; the rule was repaired with this reading in hand"
+  },
+  "readings": {
+    "rule_fixtures": {
+      "n": 3,
+      "attainable_lo": 0.0,
+      "attainable_hi": 1.0
+    },
+    "generator_fixtures": {
+      "n": 3,
+      "attainable_lo": 0.0,
+      "attainable_hi": 1.0
+    },
+    "sweep_contrast": {
+      "n": 5,
+      "attainable_lo": 0.0,
+      "attainable_hi": 1.0
+    },
+    "fresh_seeds": {
+      "n": 5,
+      "attainable_lo": 0.0,
+      "attainable_hi": 1.0
+    }
+  },
+  "verdict": "WORLD_ADMISSIBLE",
+  "verdict_rule_null_output": "Under a world with no class structure the rule returns p near 1 and the terminal is CLASSES_NOT_SEPARATED -- that exact input was RUN as GEN_ALL_IDENTICAL and landed there. Under a repaired rule that had been tuned to pass, RULE_KNOWN_NEGATIVE and GEN_KNOWN_NEGATIVE would also pass, and they do not. ADMISSIBLE is therefore not the rule's default output on any of the three nulls that were actually executed.",
+  "terminal_table_partitions": true,
+  "headline": "W5 repaired to a max-T permutation p-value with attainable range [0.0005, 1] and the bar strictly inside it. All six fixtures land as preregistered, including the killed rule failing a perfectly separated synthetic input. Verdict of record on five never-before-generated seeds: WORLD_ADMISSIBLE."
+}

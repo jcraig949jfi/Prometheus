@@ -1,0 +1,136 @@
+{
+  "candidates": {
+    "A native D-5 executable artifact": {
+      "classification": "CONSUMABLE_AS_IS",
+      "producible_today": "YES -- by the searcher itself; this is what m1.admissions already emits",
+      "reason": "seeded, mutated 32 times, all children executable"
+    },
+    "B Stitch-derived abstraction (with holes, its actual product)": {
+      "classification": "NOT_CONSUMABLE",
+      "producible_today": "N/A -- type-rejected before producibility matters",
+      "reason": "artifact carries unapplied argument positions. The slot consumes entries ONLY as whole-program mutation seeds (m1.m1_rx.fresh); there is no application, instantiation or splice site anywhere in the frozen search core, so an abstraction cannot be stored or used as an abstraction. Instantiating its holes would store a CONCRETE genotype, which changes what is being tested rather than adapting it"
+    },
+    "B* Stitch-derived abstraction, degenerate zero-hole motif": {
+      "classification": "CONSUMABLE_AS_IS",
+      "producible_today": "YES, but a zero-hole abstraction is a concrete subprogram. Stitch would be functioning as a SELECTOR over native artifacts, not as a supplier of abstractions, and the arm would test the admission rule rather than Stitch",
+      "reason": "seeded, mutated 32 times, all children executable"
+    },
+    "C egglog-derived rewritten genotype (hypothetical, RM theory absent)": {
+      "classification": "CONSUMABLE_AS_IS",
+      "producible_today": "NO, NOT TODAY -- this input was constructed by hand to test the TYPE. Producing it requires RM semantics (including JNZ/SKZ/SKG control flow) as an egglog theory; imperative sequences with jumps are not equational terms. That build is unstarted. The verdict below is about the type of the object, and is NOT evidence that egglog can emit one",
+      "reason": "seeded, mutated 32 times, all children executable"
+    }
+  },
+  "gate_fire": {
+    "holes": 0,
+    "rows": [
+      {
+        "expected": "CONSUMABLE_AS_IS",
+        "got": "CONSUMABLE_AS_IS",
+        "pass": true,
+        "reason": "seeded, mutated 32 times, all children executable",
+        "world": "W1 native D-5 genotype"
+      },
+      {
+        "expected": "CONSUMABLE_AS_IS",
+        "got": "CONSUMABLE_AS_IS",
+        "pass": true,
+        "reason": "seeded, mutated 32 times, all children executable",
+        "world": "W2 zero-hole motif (a fair Stitch degenerate case)"
+      },
+      {
+        "expected": "NOT_CONSUMABLE",
+        "got": "NOT_CONSUMABLE",
+        "pass": true,
+        "reason": "artifact carries unapplied argument positions. The slot consumes entries ONLY as whole-program mutation seeds (m1.m1_rx.fresh); there is no application, instantiation or splice site anywhere in the frozen search core, so an abstraction cannot be stored or used as an abstraction. Instantiating its holes would store a CONCRETE genotype, which changes what is being tested rather than adapting it",
+        "world": "W3 abstraction WITH a hole (Stitch proper)"
+      },
+      {
+        "expected": "TOOL_FIT_FAILURE",
+        "got": "TOOL_FIT_FAILURE",
+        "pass": true,
+        "reason": "artifact requires opcode(s) ['DOUBLE_AND_MASK']; the consumer has 14 frozen opcodes and no registration hook in the learner or the VM, so a learned primitive has no slot to enter",
+        "world": "W4 artifact needing a learned primitive"
+      },
+      {
+        "expected": "NOT_CONSUMABLE",
+        "got": "NOT_CONSUMABLE",
+        "pass": true,
+        "reason": "fails the library-entry contract: b operand 1.5 is not an int (a hole cannot be stored)",
+        "world": "W5 malformed: float operand"
+      },
+      {
+        "expected": "NOT_CONSUMABLE",
+        "got": "NOT_CONSUMABLE",
+        "pass": true,
+        "reason": "fails the library-entry contract: b out of palette range",
+        "world": "W6 malformed: const index out of palette"
+      },
+      {
+        "expected": "NOT_CONSUMABLE",
+        "got": "NOT_CONSUMABLE",
+        "pass": true,
+        "reason": "fails the library-entry contract: not a 1..24 tuple of instructions",
+        "world": "W7 over-length genotype"
+      }
+    ]
+  },
+  "inference_privilege": {
+    "admissible_as_library_seed": false,
+    "corpus_present": true,
+    "methods": [
+      "constructive_compiler"
+    ],
+    "n": 78,
+    "oracle_side": true,
+    "path": "agent_d5_blind/results/oracle_solutions.jsonl",
+    "reason": "these are exact-oracle witnesses produced by the constructive compiler, not artifacts the searcher found. m1.py states its input boundary as the learner view only; seeding the library from them hands the searcher answers it is being measured for finding, and the Gen-0 brief requires identical inference privilege across arms"
+  },
+  "search_discovered_corpus": {
+    "fields": [
+      "arm",
+      "evals",
+      "family",
+      "first_solve",
+      "ladder",
+      "library_size_at_start",
+      "lineage",
+      "mode",
+      "nav_seed",
+      "position",
+      "run_id",
+      "seed",
+      "solved",
+      "stratum",
+      "wlen"
+    ],
+    "genotype_bearing_fields": [],
+    "ledger": "agent_d5_blind/ledgers/m1_rows.jsonl",
+    "n_rows": 290,
+    "note": "m1.py builds the library in memory across a lineage and the row writer records only library_size_at_start plus outcome metadata. The libraries that produced the +10.95pp result were not saved.",
+    "search_discovered_library_persisted": false
+  },
+  "slot": {
+    "extension_path_exists": false,
+    "n_opcodes": 14,
+    "op_list_is_derived_from_literal_dict": true,
+    "opcodes": [
+      "ADD",
+      "AND",
+      "JNZ",
+      "MOD",
+      "MOV",
+      "MUL",
+      "OR",
+      "SET",
+      "SHL",
+      "SHR",
+      "SKG",
+      "SKZ",
+      "SUB",
+      "XOR"
+    ],
+    "registration_hooks_in_learner": [],
+    "registration_hooks_in_vm": []
+  }
+}

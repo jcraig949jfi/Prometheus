@@ -1,0 +1,149 @@
+{
+  "generated": "2026-08-31",
+  "question": "two independent TT implementations now coexist; do they agree, and does either supersede the other?",
+  "premise_correction": {
+    "brief_stated": "prometheus_math carries hand-rolled CP/Tucker; TT wrapped via quimb",
+    "verified_at_source": "symbolic_tensor_decomp.py is a pure tensorly wrapper that raises ImportError without it -- there is NO hand-rolled CP or Tucker to supersede. Installing tensorly revived a module that was dead in the default interpreter.",
+    "evidence": "prometheus_math/symbolic_tensor_decomp.py lines 42-55"
+  },
+  "cutoff": 1e-10,
+  "rows": [
+    {
+      "fixture": "rank1_outer",
+      "shape": [
+        4,
+        5,
+        3
+      ],
+      "expected_bond_ranks": [
+        1,
+        1
+      ],
+      "quimb_bond_ranks": [
+        1,
+        1
+      ],
+      "quimb_matches_truth": true,
+      "tensorly_bond_ranks": [
+        1,
+        1
+      ],
+      "tensorly_matches_truth": true,
+      "IMPLEMENTATIONS_AGREE": true,
+      "tensorly_relerr": 4.505495974896627e-16,
+      "quimb_relerr": 4.308460869477139e-16
+    },
+    {
+      "fixture": "rank2_sum",
+      "shape": [
+        4,
+        5,
+        3
+      ],
+      "expected_bond_ranks": [
+        2,
+        2
+      ],
+      "quimb_bond_ranks": [
+        2,
+        2
+      ],
+      "quimb_matches_truth": true,
+      "tensorly_bond_ranks": [
+        2,
+        2
+      ],
+      "tensorly_matches_truth": true,
+      "IMPLEMENTATIONS_AGREE": true,
+      "tensorly_relerr": 4.910761285045181e-16,
+      "quimb_relerr": 4.933456741416681e-16
+    },
+    {
+      "fixture": "rank1_order4",
+      "shape": [
+        3,
+        4,
+        3,
+        2
+      ],
+      "expected_bond_ranks": [
+        1,
+        1,
+        1
+      ],
+      "quimb_bond_ranks": [
+        1,
+        1,
+        1
+      ],
+      "quimb_matches_truth": true,
+      "tensorly_bond_ranks": [
+        1,
+        1,
+        1
+      ],
+      "tensorly_matches_truth": true,
+      "IMPLEMENTATIONS_AGREE": true,
+      "tensorly_relerr": 3.479358990205328e-16,
+      "quimb_relerr": 3.2454232945484867e-16
+    },
+    {
+      "fixture": "random_dense",
+      "shape": [
+        3,
+        4,
+        3
+      ],
+      "expected_bond_ranks": [
+        3,
+        3
+      ],
+      "quimb_bond_ranks": [
+        3,
+        3
+      ],
+      "quimb_matches_truth": true,
+      "tensorly_bond_ranks": [
+        3,
+        3
+      ],
+      "tensorly_matches_truth": true,
+      "IMPLEMENTATIONS_AGREE": true,
+      "tensorly_relerr": 7.662257301751575e-16,
+      "quimb_relerr": 7.662257301751575e-16
+    },
+    {
+      "fixture": "matrix_rank2",
+      "shape": [
+        6,
+        5
+      ],
+      "expected_bond_ranks": [
+        2
+      ],
+      "quimb_bond_ranks": [
+        2
+      ],
+      "quimb_matches_truth": true,
+      "tensorly_bond_ranks": [
+        2
+      ],
+      "tensorly_matches_truth": true,
+      "IMPLEMENTATIONS_AGREE": true,
+      "tensorly_relerr": 2.2640261709149096e-16,
+      "quimb_relerr": 2.2640261709149096e-16
+    }
+  ],
+  "n_fixtures": 5,
+  "n_comparable": 5,
+  "n_implementations_agree": 5,
+  "quimb_matches_truth": 5,
+  "tensorly_matches_truth": 5,
+  "CLASSIFICATION": "NATIVE_EARNS_DISTINCT_ROLE",
+  "rationale": "Both implementations recover the constructed bond ranks on every fixture and agree with each other, so neither is wrong and neither supersedes the other on correctness. They are kept for DIFFERENT questions: tensor_train.py answers 'what is the bond rank at a truncation cutoff', packaged with a fiber-shuffle null for coupling measurement; symbolic_tensor_decomp.tt_decompose answers 'factorise at a requested rank'. Deleting either would remove a capability, not a duplicate.",
+  "NON_CLAIMS": [
+    "no claim that any decomposition improves reasoning, transfer, or search",
+    "no claim that TT is the right substrate for anything",
+    "agreement between two implementations is a fact about the implementations only"
+  ]
+}

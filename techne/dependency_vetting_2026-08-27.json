@@ -1,0 +1,941 @@
+{
+  "protocol": "HITL #242",
+  "verifies": [
+    "pypi provenance",
+    "sha256 vs pypi digest",
+    "install-time code execution",
+    "pure-python payload patterns"
+  ],
+  "does_not_verify": [
+    "compiled extension source (GUDHI/shapely/matplotlib ship large C/C++ cores; evidence for those is provenance, not review)",
+    "a compromise of PyPI itself",
+    "a malicious release from a legitimate maintainer"
+  ],
+  "packages": [
+    {
+      "import_name": "gudhi",
+      "pypi_name": "gudhi",
+      "why_needed": "persistent homology: bottleneck distance + persistence images",
+      "red_nodes_it_should_clear": "prometheus_math/tests/test_edge_case_gallery.py (7 nodes)",
+      "version": "3.13.0",
+      "summary": "The Gudhi library is an open source library for Computational Topology and Topological Data Analysis (TDA).",
+      "provenance": {
+        "n_releases": 24,
+        "first_release": "2020-06-12T06:59:33.669620Z",
+        "home_page": "https://pypi.org/project/gudhi/",
+        "project_urls": {
+          "Bug Tracker": "https://github.com/GUDHI/gudhi-devel/issues",
+          "Documentation": "https://gudhi.inria.fr/python/latest/",
+          "License": "https://gudhi.inria.fr/licensing/",
+          "Source Code": "https://github.com/GUDHI/gudhi-devel"
+        },
+        "author": "GUDHI Editorial Board <https://gudhi.inria.fr/contact/>",
+        "license": "",
+        "requires_python": ">=3.10",
+        "YOUNG_PROJECT": false
+      },
+      "artifact": {
+        "filename": "gudhi-3.13.0-cp312-cp312-macosx_14_0_universal2.whl",
+        "packagetype": "bdist_wheel",
+        "size_bytes": 8594767,
+        "pypi_sha256": "3c8ff10b40f560222902112d6b4520a6d5aed11c8a6a0cc5409a4e9f2f9c6f68",
+        "downloaded_sha256": "3c8ff10b40f560222902112d6b4520a6d5aed11c8a6a0cc5409a4e9f2f9c6f68",
+        "DIGEST_MATCHES_PYPI": true
+      },
+      "runs_code_at_install": false,
+      "scan": {
+        "members": 83,
+        "python_like_files": 52,
+        "compiled_objects": 27,
+        "pattern_hits": {
+          "install_time_exec": [],
+          "network_call": [
+            {
+              "file": "gudhi/datasets/remote.py",
+              "line": 18,
+              "text": "from urllib.request import urlretrieve"
+            },
+            {
+              "file": "gudhi/datasets/remote.py",
+              "line": 117,
+              "text": "urlretrieve(url, file_path)"
+            }
+          ],
+          "process_spawn": [],
+          "dynamic_exec": [],
+          "opaque_blob": []
+        },
+        "pattern_counts": {
+          "install_time_exec": 0,
+          "network_call": 2,
+          "process_spawn": 0,
+          "dynamic_exec": 0,
+          "opaque_blob": 0
+        },
+        "very_long_lines": [
+          {
+            "file": "gudhi/cover_complex.py",
+            "line": 363,
+            "len": 401
+          },
+          {
+            "file": "gudhi/representations/kernel_methods.py",
+            "line": 66,
+            "len": 456
+          },
+          {
+            "file": "gudhi/representations/kernel_methods.py",
+            "line": 292,
+            "len": 460
+          },
+          {
+            "file": "gudhi/representations/metrics.py",
+            "line": 102,
+            "len": 446
+          },
+          {
+            "file": "gudhi/representations/metrics.py",
+            "line": 203,
+            "len": 503
+          },
+          {
+            "file": "gudhi/representations/metrics.py",
+            "line": 417,
+            "len": 456
+          },
+          {
+            "file": "gudhi/representations/preprocessing.py",
+            "line": 38,
+            "len": 494
+          },
+          {
+            "file": "gudhi/representations/preprocessing.py",
+            "line": 144,
+            "len": 425
+          }
+        ],
+        "n_very_long_lines": 21,
+        "top_level_names": [
+          "gudhi",
+          "gudhi-3.13.0.dist-info"
+        ]
+      }
+    },
+    {
+      "import_name": "chipfiring",
+      "pypi_name": "chipfiring",
+      "why_needed": "tropical rank / chip-firing games on graphs",
+      "red_nodes_it_should_clear": "techne/tests/test_tropical_rank.py (4) + composition tests",
+      "version": "1.1.4",
+      "summary": "A Python API for visualization and analysis of chip-firing games and related algorithms.",
+      "provenance": {
+        "n_releases": 10,
+        "first_release": "2025-03-24T15:38:25.732992Z",
+        "home_page": "https://github.com/DhyeyMavani2003/chipfiring",
+        "project_urls": {
+          "Homepage": "https://github.com/DhyeyMavani2003/chipfiring"
+        },
+        "author": "Dhyey Mavani",
+        "license": "MIT",
+        "requires_python": ">=3.8",
+        "YOUNG_PROJECT": false
+      },
+      "artifact": {
+        "filename": "chipfiring-1.1.4-py3-none-any.whl",
+        "packagetype": "bdist_wheel",
+        "size_bytes": 73109,
+        "pypi_sha256": "248f4221cabc18d6c676393ddf2c500ae2cf4cae54ea0b2aa853ef97019e2668",
+        "downloaded_sha256": "248f4221cabc18d6c676393ddf2c500ae2cf4cae54ea0b2aa853ef97019e2668",
+        "DIGEST_MATCHES_PYPI": true
+      },
+      "runs_code_at_install": false,
+      "scan": {
+        "members": 23,
+        "python_like_files": 18,
+        "compiled_objects": 0,
+        "pattern_hits": {
+          "install_time_exec": [],
+          "network_call": [],
+          "process_spawn": [],
+          "dynamic_exec": [],
+          "opaque_blob": []
+        },
+        "pattern_counts": {
+          "install_time_exec": 0,
+          "network_call": 0,
+          "process_spawn": 0,
+          "dynamic_exec": 0,
+          "opaque_blob": 0
+        },
+        "very_long_lines": [],
+        "n_very_long_lines": 0,
+        "top_level_names": [
+          "chipfiring",
+          "chipfiring-1.1.4.dist-info"
+        ]
+      }
+    },
+    {
+      "import_name": "cvxpy",
+      "pypi_name": "cvxpy",
+      "why_needed": "convex programs behind the QP edge tests",
+      "red_nodes_it_should_clear": "prometheus_math/tests/test_qp.py (2 nodes)",
+      "version": "1.9.2",
+      "summary": "A domain-specific language for modeling convex optimization problems in Python.",
+      "provenance": {
+        "n_releases": 148,
+        "first_release": "2014-05-05T21:49:17.917527Z",
+        "home_page": "https://pypi.org/project/cvxpy/",
+        "project_urls": {
+          "Homepage": "https://github.com/cvxpy/cvxpy"
+        },
+        "author": null,
+        "license": "",
+        "requires_python": ">=3.11",
+        "YOUNG_PROJECT": false
+      },
+      "artifact": {
+        "filename": "cvxpy-1.9.2-cp312-cp312-macosx_10_13_universal2.whl",
+        "packagetype": "bdist_wheel",
+        "size_bytes": 1635177,
+        "pypi_sha256": "bc9082110ac7f9d9a121f4dea73936f9b65ec043af91562677478edf4962905b",
+        "downloaded_sha256": "bc9082110ac7f9d9a121f4dea73936f9b65ec043af91562677478edf4962905b",
+        "DIGEST_MATCHES_PYPI": true
+      },
+      "runs_code_at_install": false,
+      "scan": {
+        "members": 534,
+        "python_like_files": 527,
+        "compiled_objects": 1,
+        "pattern_hits": {
+          "install_time_exec": [],
+          "network_call": [],
+          "process_spawn": [
+            {
+              "file": "setup/versioning.py",
+              "line": 55,
+              "text": "out = subprocess.Popen(cmd, stdout=subprocess.PIPE, env=env).communicate()[0]"
+            }
+          ],
+          "dynamic_exec": [
+            {
+              "file": "cvxpy/reductions/solvers/conic_solvers/highs_conif.py",
+              "line": 32,
+              "text": "PYTHON_LIST_SLICE_PATTERN = compile(r\", \\d+:\\d+\")"
+            },
+            {
+              "file": "cvxpy/reductions/solvers/conic_solvers/highs_conif.py",
+              "line": 33,
+              "text": "VALID_COLUMN_NAME_PATTERN = compile("
+            }
+          ],
+          "opaque_blob": [
+            {
+              "file": "cvxpy/tests/test_problem.py",
+              "line": 2130,
+              "text": "new_prob = pickle.loads(prob_str)"
+            }
+          ]
+        },
+        "pattern_counts": {
+          "install_time_exec": 0,
+          "network_call": 0,
+          "process_spawn": 1,
+          "dynamic_exec": 2,
+          "opaque_blob": 1
+        },
+        "very_long_lines": [],
+        "n_very_long_lines": 0,
+        "top_level_names": [
+          "_cvxcore.cpython-312-darwin.so",
+          "cvxpy",
+          "cvxpy-1.9.2.dist-info",
+          "setup"
+        ]
+      }
+    },
+    {
+      "import_name": "matplotlib",
+      "pypi_name": "matplotlib",
+      "why_needed": "figure rendering; 3 collection errors under viz/",
+      "red_nodes_it_should_clear": "prometheus_math/tests/test_viz.py + viz/tests/* (3 collection errors)",
+      "version": "3.11.1",
+      "summary": "Python plotting package",
+      "provenance": {
+        "n_releases": 142,
+        "first_release": "2006-01-09T14:02:01Z",
+        "home_page": "https://pypi.org/project/matplotlib/",
+        "project_urls": {
+          "Bug Tracker": "https://github.com/matplotlib/matplotlib/issues",
+          "Documentation": "https://matplotlib.org",
+          "Donate": "https://numfocus.org/donate-to-matplotlib",
+          "Download": "https://matplotlib.org/stable/install/index.html",
+          "Forum": "https://discourse.matplotlib.org/",
+          "Homepage": "https://matplotlib.org",
+          "Source Code": "https://github.com/matplotlib/matplotlib"
+        },
+        "author": "John D. Hunter, Michael Droettboom",
+        "license": "License agreement for matplotlib versions 1.3.0 and later\n         =============",
+        "requires_python": ">=3.11",
+        "YOUNG_PROJECT": false
+      },
+      "artifact": {
+        "filename": "matplotlib-3.11.1-cp312-cp312-macosx_10_13_x86_64.whl",
+        "packagetype": "bdist_wheel",
+        "size_bytes": 9453849,
+        "pypi_sha256": "e15ef41507f3d525f46154ac9e3ae785dacde9f20e593a25de8986267892ef74",
+        "downloaded_sha256": "e15ef41507f3d525f46154ac9e3ae785dacde9f20e593a25de8986267892ef74",
+        "DIGEST_MATCHES_PYPI": true
+      },
+      "runs_code_at_install": false,
+      "scan": {
+        "members": 602,
+        "python_like_files": 289,
+        "compiled_objects": 9,
+        "pattern_hits": {
+          "install_time_exec": [],
+          "network_call": [
+            {
+              "file": "matplotlib/backend_bases.py",
+              "line": 1675,
+              "text": "prepare_notifier : Callable[[socket.socket], object]"
+            },
+            {
+              "file": "matplotlib/backend_bases.py",
+              "line": 1685,
+              "text": "wsock, rsock = socket.socketpair()"
+            },
+            {
+              "file": "matplotlib/image.py",
+              "line": 1532,
+              "text": "``np.array(PIL.Image.open(urllib.request.urlopen(url)))``."
+            },
+            {
+              "file": "matplotlib/image.py",
+              "line": 1565,
+              "text": "elif hasattr(fname, 'geturl'):  # Returned by urlopen()."
+            },
+            {
+              "file": "matplotlib/image.py",
+              "line": 1569,
+              "text": "# urlopen(\"file:///...\") also has a name attribute (with the fixed"
+            },
+            {
+              "file": "matplotlib/image.py",
+              "line": 1585,
+              "text": "\"``np.array(PIL.Image.open(urllib.request.urlopen(url)))``.\""
+            },
+            {
+              "file": "matplotlib/__init__.py",
+              "line": 873,
+              "text": "with urllib.request.urlopen(fname, context=ssl_ctx) as f:"
+            },
+            {
+              "file": "matplotlib/tests/test_backends_interactive.py",
+              "line": 499,
+              "text": "with urllib.request.urlopen(url):"
+            },
+            {
+              "file": "matplotlib/tests/test_image.py",
+              "line": 884,
+              "text": "with urllib.request.urlopen(url) as file:"
+            }
+          ],
+          "process_spawn": [
+            {
+              "file": "matplotlib/animation.py",
+              "line": 324,
+              "text": "self._proc = subprocess.Popen("
+            },
+            {
+              "file": "matplotlib/cbook.py",
+              "line": 2277,
+              "text": "proc = subprocess.run(command, capture_output=True, **kwargs)"
+            },
+            {
+              "file": "matplotlib/dviread.py",
+              "line": 1259,
+              "text": "return subprocess.Popen("
+            },
+            {
+              "file": "matplotlib/font_manager.py",
+              "line": 257,
+              "text": "if b'--format' not in subprocess.check_output(['fc-list', '--help']):"
+            },
+            {
+              "file": "matplotlib/font_manager.py",
+              "line": 261,
+              "text": "out = subprocess.check_output(['fc-list', '--format=%{file}\\\\n'])"
+            },
+            {
+              "file": "matplotlib/font_manager.py",
+              "line": 272,
+              "text": "subprocess.check_output([\"system_profiler\", \"-xml\", \"SPFontsDataType\"]))"
+            },
+            {
+              "file": "matplotlib/rcsetup.py",
+              "line": 3389,
+              "text": "\"subprocess.Popen.\""
+            },
+            {
+              "file": "matplotlib/rcsetup.py",
+              "line": 3402,
+              "text": "\"resolved by subprocess.Popen, except that on Windows, we look up \""
+            },
+            {
+              "file": "matplotlib/texmanager.py",
+              "line": 258,
+              "text": "report = subprocess.check_output("
+            },
+            {
+              "file": "matplotlib/_internal_utils.py",
+              "line": 62,
+              "text": "subprocess.run("
+            },
+            {
+              "file": "matplotlib/__init__.py",
+              "line": 405,
+              "text": "output = subprocess.check_output("
+            },
+            {
+              "file": "matplotlib/backends/backend_pgf.py",
+              "line": 176,
+              "text": "return lambda pdffile, pngfile, dpi: subprocess.check_output("
+            }
+          ],
+          "dynamic_exec": [
+            {
+              "file": "matplotlib/rcsetup.py",
+              "line": 821,
+              "text": "without using eval()."
+            },
+            {
+              "file": "matplotlib/sphinxext/plot_directive.py",
+              "line": 368,
+              "text": "compile(text, '<string>', 'exec')"
+            },
+            {
+              "file": "matplotlib/sphinxext/plot_directive.py",
+              "line": 585,
+              "text": "exec('import numpy as np\\n'"
+            },
+            {
+              "file": "matplotlib/sphinxext/plot_directive.py",
+              "line": 588,
+              "text": "exec(str(setup.config.plot_pre_code), ns)"
+            },
+            {
+              "file": "matplotlib/sphinxext/plot_directive.py",
+              "line": 594,
+              "text": "exec(code, ns)"
+            },
+            {
+              "file": "matplotlib/sphinxext/plot_directive.py",
+              "line": 596,
+              "text": "exec(function_name + \"()\", ns)"
+            },
+            {
+              "file": "matplotlib/tests/test_patches.py",
+              "line": 475,
+              "text": "str(eval(str(p))) == str(p)"
+            },
+            {
+              "file": "matplotlib/tests/test_transforms.py",
+              "line": 878,
+              "text": "assert_bbox_eq(b, eval(repr(b), {'Bbox': mtransforms.Bbox}))"
+            },
+            {
+              "file": "matplotlib/tests/test_transforms.py",
+              "line": 879,
+              "text": "asdict = eval(str(b), {'Bbox': dict})"
+            },
+            {
+              "file": "matplotlib/tests/test_transforms.py",
+              "line": 883,
+              "text": "asdict = eval(format(b, fmt), {'Bbox': dict})"
+            },
+            {
+              "file": "matplotlib/tests/test_transforms.py",
+              "line": 885,
+              "text": "assert eval(format(getattr(b, k), fmt)) == v"
+            }
+          ],
+          "opaque_blob": [
+            {
+              "file": "matplotlib/tests/test_cbook.py",
+              "line": 228,
+              "text": "cb2 = pickle.loads(pickle.dumps(cb))"
+            },
+            {
+              "file": "matplotlib/tests/test_cbook.py",
+              "line": 445,
+              "text": "assert hasattr(pickle.loads(pickle.dumps(cbook.CallbackRegistry())),"
+            },
+            {
+              "file": "matplotlib/tests/test_figure.py",
+              "line": 1717,
+              "text": "fig2 = pickle.loads(pickle.dumps(fig))"
+            },
+            {
+              "file": "matplotlib/tests/test_pickle.py",
+              "line": 117,
+              "text": "loaded = pickle.loads(pkl)"
+            },
+            {
+              "file": "matplotlib/tests/test_pickle.py",
+              "line": 156,
+              "text": "loaded_fig = pickle.loads(ast.literal_eval(proc.stdout))"
+            },
+            {
+              "file": "matplotlib/tests/test_pickle.py",
+              "line": 172,
+              "text": "fig = pickle.loads(buf.getbuffer())"
+            },
+            {
+              "file": "matplotlib/tests/test_pickle.py",
+              "line": 209,
+              "text": "pickle.loads(pf)"
+            },
+            {
+              "file": "matplotlib/tests/test_pickle.py",
+              "line": 234,
+              "text": "obj = pickle.loads(pf)"
+            },
+            {
+              "file": "matplotlib/tests/test_pickle.py",
+              "line": 247,
+              "text": "pickle.loads(pickle.dumps(r))"
+            },
+            {
+              "file": "matplotlib/tests/test_pickle.py",
+              "line": 255,
+              "text": "fig = pickle.loads(pickle.dumps(fig))"
+            },
+            {
+              "file": "matplotlib/tests/test_pickle.py",
+              "line": 264,
+              "text": "pickle.loads(pickle.dumps(fig))"
+            },
+            {
+              "file": "matplotlib/tests/test_pickle.py",
+              "line": 285,
+              "text": "assert type(pickle.loads(pickle.dumps(ax))) == parasite_axes.HostAxes"
+            }
+          ]
+        },
+        "pattern_counts": {
+          "install_time_exec": 0,
+          "network_call": 9,
+          "process_spawn": 25,
+          "dynamic_exec": 11,
+          "opaque_blob": 16
+        },
+        "very_long_lines": [
+          {
+            "file": "matplotlib/tests/test_mathtext.py",
+            "line": 99,
+            "len": 456
+          },
+          {
+            "file": "matplotlib/tests/test_mathtext.py",
+            "line": 101,
+            "len": 635
+          }
+        ],
+        "n_very_long_lines": 2,
+        "top_level_names": [
+          "matplotlib",
+          "matplotlib-3.11.1.dist-info",
+          "mpl_toolkits",
+          "pylab.py"
+        ]
+      }
+    },
+    {
+      "import_name": "pysat",
+      "pypi_name": "python-sat",
+      "why_needed": "SAT solving behind the sat_solver arsenal tool",
+      "red_nodes_it_should_clear": "techne/tests/test_sat_solver.py (4 nodes)",
+      "version": "1.9.dev15",
+      "summary": "A Python library for prototyping with SAT oracles",
+      "provenance": {
+        "n_releases": 176,
+        "first_release": "2018-01-28T17:49:34.597810Z",
+        "home_page": "https://github.com/pysathq/pysat",
+        "project_urls": {
+          "Homepage": "https://github.com/pysathq/pysat"
+        },
+        "author": "Alexey Ignatiev, Joao Marques-Silva, Antonio Morgado",
+        "license": "MIT",
+        "requires_python": null,
+        "YOUNG_PROJECT": false
+      },
+      "artifact": {
+        "filename": "python_sat-1.9.dev15-cp312-cp312-macosx_10_13_x86_64.whl",
+        "packagetype": "bdist_wheel",
+        "size_bytes": 2574432,
+        "pypi_sha256": "76dad0755080f91f5b54d30fb608c647163a83a52ef592c79848e653fa883892",
+        "downloaded_sha256": "76dad0755080f91f5b54d30fb608c647163a83a52ef592c79848e653fa883892",
+        "DIGEST_MATCHES_PYPI": true
+      },
+      "runs_code_at_install": false,
+      "scan": {
+        "members": 50,
+        "python_like_files": 42,
+        "compiled_objects": 3,
+        "pattern_hits": {
+          "install_time_exec": [],
+          "network_call": [],
+          "process_spawn": [],
+          "dynamic_exec": [],
+          "opaque_blob": []
+        },
+        "pattern_counts": {
+          "install_time_exec": 0,
+          "network_call": 0,
+          "process_spawn": 0,
+          "dynamic_exec": 0,
+          "opaque_blob": 0
+        },
+        "very_long_lines": [],
+        "n_very_long_lines": 0,
+        "top_level_names": [
+          "pycard.cpython-312-darwin.so",
+          "pyformula.cpython-312-darwin.so",
+          "pysat",
+          "pysolvers.cpython-312-darwin.so",
+          "python_sat-1.9.dev15.data",
+          "python_sat-1.9.dev15.dist-info"
+        ]
+      }
+    },
+    {
+      "import_name": "pytest_benchmark",
+      "pypi_name": "pytest-benchmark",
+      "why_needed": "benchmark fixtures; Tier-2 promotion evidence",
+      "red_nodes_it_should_clear": "prometheus_math/benchmarks/tests/test_benchmark_smoke.py (1 node)",
+      "version": "5.3.0",
+      "summary": "A ``pytest`` fixture for benchmarking code. It will group the tests into rounds that are calibrated to the chosen timer.",
+      "provenance": {
+        "n_releases": 51,
+        "first_release": "2014-10-11T01:12:52.498560Z",
+        "home_page": "https://pypi.org/project/pytest-benchmark/",
+        "project_urls": {
+          "Changelog": "https://pytest-benchmark.readthedocs.io/en/latest/changelog.html",
+          "Documentation": "https://pytest-benchmark.readthedocs.io/",
+          "Issue Tracker": "https://github.com/ionelmc/pytest-benchmark/issues",
+          "Sources": "https://github.com/ionelmc/pytest-benchmark"
+        },
+        "author": null,
+        "license": "",
+        "requires_python": ">=3.10",
+        "YOUNG_PROJECT": false
+      },
+      "artifact": {
+        "filename": "pytest_benchmark-5.3.0-py3-none-any.whl",
+        "packagetype": "bdist_wheel",
+        "size_bytes": 48401,
+        "pypi_sha256": "920ab1dfcffa718d49aa15ba144c7e357bda59216a0dc308016cc1c7236f719d",
+        "downloaded_sha256": "920ab1dfcffa718d49aa15ba144c7e357bda59216a0dc308016cc1c7236f719d",
+        "DIGEST_MATCHES_PYPI": true
+      },
+      "runs_code_at_install": false,
+      "scan": {
+        "members": 24,
+        "python_like_files": 17,
+        "compiled_objects": 0,
+        "pattern_hits": {
+          "install_time_exec": [],
+          "network_call": [],
+          "process_spawn": [
+            {
+              "file": "pytest_benchmark/hookspec.py",
+              "line": 63,
+              "text": "return {'id': subprocess.check_output(['svnversion']).strip()}"
+            },
+            {
+              "file": "pytest_benchmark/hookspec.py",
+              "line": 74,
+              "text": "commit_info['message'] = subprocess.check_output(['git', 'log', '-1', '--pretty=%B']).strip()"
+            }
+          ],
+          "dynamic_exec": [],
+          "opaque_blob": []
+        },
+        "pattern_counts": {
+          "install_time_exec": 0,
+          "network_call": 0,
+          "process_spawn": 2,
+          "dynamic_exec": 0,
+          "opaque_blob": 0
+        },
+        "very_long_lines": [],
+        "n_very_long_lines": 0,
+        "top_level_names": [
+          "pytest_benchmark",
+          "pytest_benchmark-5.3.0.dist-info"
+        ]
+      }
+    },
+    {
+      "import_name": "shapely",
+      "pypi_name": "shapely",
+      "why_needed": "planar geometry for the Voronoi cell clipping",
+      "red_nodes_it_should_clear": "prometheus_math/tests/test_geometry_voronoi.py (6 nodes)",
+      "version": "2.1.2",
+      "summary": "Manipulation and analysis of geometric objects",
+      "provenance": {
+        "n_releases": 130,
+        "first_release": "2007-10-23T20:19:59Z",
+        "home_page": "https://pypi.org/project/shapely/",
+        "project_urls": {
+          "Documentation": "https://shapely.readthedocs.io/",
+          "Repository": "https://github.com/shapely/shapely"
+        },
+        "author": "Sean Gillies",
+        "license": "BSD 3-Clause",
+        "requires_python": ">=3.10",
+        "YOUNG_PROJECT": false
+      },
+      "artifact": {
+        "filename": "shapely-2.1.2-cp312-cp312-macosx_10_13_x86_64.whl",
+        "packagetype": "bdist_wheel",
+        "size_bytes": 1833550,
+        "pypi_sha256": "fe2533caae6a91a543dec62e8360fe86ffcdc42a7c55f9dfd0128a977a896b94",
+        "downloaded_sha256": "fe2533caae6a91a543dec62e8360fe86ffcdc42a7c55f9dfd0128a977a896b94",
+        "DIGEST_MATCHES_PYPI": true
+      },
+      "runs_code_at_install": false,
+      "scan": {
+        "members": 139,
+        "python_like_files": 126,
+        "compiled_objects": 5,
+        "pattern_hits": {
+          "install_time_exec": [],
+          "network_call": [],
+          "process_spawn": [
+            {
+              "file": "shapely/tests/test_strtree.py",
+              "line": 145,
+              "text": "proc = subprocess.Popen("
+            }
+          ],
+          "dynamic_exec": [],
+          "opaque_blob": [
+            {
+              "file": "shapely/tests/test_io.py",
+              "line": 1151,
+              "text": "assert_geometries_equal(pickle.loads(pickled), geom, tolerance=0)"
+            },
+            {
+              "file": "shapely/tests/test_io.py",
+              "line": 1157,
+              "text": "actual = pickle.loads(pickled)"
+            },
+            {
+              "file": "shapely/tests/test_io.py",
+              "line": 1172,
+              "text": "actual = pickle.loads(pickled)"
+            },
+            {
+              "file": "shapely/tests/test_io.py",
+              "line": 1186,
+              "text": "actual = pickle.loads(pickled)"
+            },
+            {
+              "file": "shapely/tests/test_io.py",
+              "line": 1197,
+              "text": "assert shapely.get_srid(pickle.loads(pickled)) == 4326"
+            },
+            {
+              "file": "shapely/tests/test_strtree.py",
+              "line": 134,
+              "text": "tree = pickle.loads(pickled_strtree)"
+            },
+            {
+              "file": "shapely/tests/legacy/test_persist.py",
+              "line": 15,
+              "text": "q = pickle.loads(data)"
+            }
+          ]
+        },
+        "pattern_counts": {
+          "install_time_exec": 0,
+          "network_call": 0,
+          "process_spawn": 1,
+          "dynamic_exec": 0,
+          "opaque_blob": 7
+        },
+        "very_long_lines": [
+          {
+            "file": "shapely/tests/test_io.py",
+            "line": 447,
+            "len": 557
+          },
+          {
+            "file": "shapely/tests/test_io.py",
+            "line": 449,
+            "len": 439
+          },
+          {
+            "file": "shapely/tests/test_io.py",
+            "line": 451,
+            "len": 661
+          },
+          {
+            "file": "shapely/tests/legacy/test_substring.py",
+            "line": 220,
+            "len": 13380
+          }
+        ],
+        "n_very_long_lines": 4,
+        "top_level_names": [
+          "shapely",
+          "shapely-2.1.2.dist-info"
+        ]
+      }
+    },
+    {
+      "import_name": "highspy",
+      "pypi_name": "highspy",
+      "why_needed": "MIP backend; solve_mip raises ValueError without one",
+      "red_nodes_it_should_clear": "prometheus_math/tests/test_edge_cases.py + test_composition.py (4 nodes)",
+      "version": "1.15.1",
+      "summary": "A thin set of pybind11 wrappers to HiGHS",
+      "provenance": {
+        "n_releases": 19,
+        "first_release": "2022-09-04T20:55:14.867281Z",
+        "home_page": "https://pypi.org/project/highspy/",
+        "project_urls": {
+          "Bug Tracker": "https://github.com/ERGO-Code/HiGHS/issues",
+          "Source Code": "https://github.com/ERGO-Code/HiGHS"
+        },
+        "author": null,
+        "license": "",
+        "requires_python": ">=3.9",
+        "YOUNG_PROJECT": false
+      },
+      "artifact": {
+        "filename": "highspy-1.15.1-cp312-cp312-macosx_10_13_x86_64.whl",
+        "packagetype": "bdist_wheel",
+        "size_bytes": 4878738,
+        "pypi_sha256": "a781dc8432568ea990fcdcc8d6e4365e67aa4848ca1f99275db096645b27cae3",
+        "downloaded_sha256": "a781dc8432568ea990fcdcc8d6e4365e67aa4848ca1f99275db096645b27cae3",
+        "DIGEST_MATCHES_PYPI": true
+      },
+      "runs_code_at_install": false,
+      "scan": {
+        "members": 15,
+        "python_like_files": 2,
+        "compiled_objects": 3,
+        "pattern_hits": {
+          "install_time_exec": [],
+          "network_call": [],
+          "process_spawn": [],
+          "dynamic_exec": [],
+          "opaque_blob": []
+        },
+        "pattern_counts": {
+          "install_time_exec": 0,
+          "network_call": 0,
+          "process_spawn": 0,
+          "dynamic_exec": 0,
+          "opaque_blob": 0
+        },
+        "very_long_lines": [],
+        "n_very_long_lines": 0,
+        "top_level_names": [
+          "highspy",
+          "highspy-1.15.1.dist-info"
+        ]
+      }
+    },
+    {
+      "import_name": "ot",
+      "pypi_name": "POT",
+      "why_needed": "optimal transport; gudhi.wasserstein imports it, so the whole persistent_homology recipe surface is gated on it",
+      "red_nodes_it_should_clear": "prometheus_math/recipes/persistent_homology/tests (35 nodes, previously skipped)",
+      "version": "0.9.7.post1",
+      "summary": "Python Optimal Transport Library",
+      "provenance": {
+        "n_releases": 33,
+        "first_release": "2016-10-28T15:50:03.411237Z",
+        "home_page": "https://github.com/PythonOT/POT",
+        "project_urls": {
+          "Download": "https://github.com/PythonOT/POT/archive/0.9.7.post1.tar.gz",
+          "Homepage": "https://github.com/PythonOT/POT"
+        },
+        "author": "Remi Flamary, Nicolas Courty, C\u00e9dric Vincent-Cuaz, POT Contributors",
+        "license": "MIT",
+        "requires_python": ">=3.7",
+        "YOUNG_PROJECT": false
+      },
+      "artifact": {
+        "filename": "pot-0.9.7.post1-cp312-cp312-macosx_10_13_universal2.whl",
+        "packagetype": "bdist_wheel",
+        "size_bytes": 1532951,
+        "pypi_sha256": "b549328f8f0049afd414e3aa544f20faca25edc8b386b278f06ea08dbcd96bf0",
+        "downloaded_sha256": "b549328f8f0049afd414e3aa544f20faca25edc8b386b278f06ea08dbcd96bf0",
+        "DIGEST_MATCHES_PYPI": true
+      },
+      "runs_code_at_install": false,
+      "scan": {
+        "members": 83,
+        "python_like_files": 75,
+        "compiled_objects": 3,
+        "pattern_hits": {
+          "install_time_exec": [],
+          "network_call": [],
+          "process_spawn": [
+            {
+              "file": "ot/helpers/openmp_helpers.py",
+              "line": 63,
+              "text": "output = subprocess.check_output(\"./test_program\")"
+            }
+          ],
+          "dynamic_exec": [],
+          "opaque_blob": []
+        },
+        "pattern_counts": {
+          "install_time_exec": 0,
+          "network_call": 0,
+          "process_spawn": 1,
+          "dynamic_exec": 0,
+          "opaque_blob": 0
+        },
+        "very_long_lines": [
+          {
+            "file": "ot/utils.py",
+            "line": 1413,
+            "len": 473
+          },
+          {
+            "file": "ot/utils.py",
+            "line": 1591,
+            "len": 473
+          },
+          {
+            "file": "ot/batch/_linear.py",
+            "line": 271,
+            "len": 565
+          },
+          {
+            "file": "ot/batch/_linear.py",
+            "line": 458,
+            "len": 565
+          },
+          {
+            "file": "ot/batch/_utils.py",
+            "line": 334,
+            "len": 406
+          }
+        ],
+        "n_very_long_lines": 5,
+        "top_level_names": [
+          "ot",
+          "pot-0.9.7.post1.dist-info"
+        ]
+      }
+    }
+  ]
+}

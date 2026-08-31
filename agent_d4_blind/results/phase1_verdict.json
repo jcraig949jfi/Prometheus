@@ -1,0 +1,396 @@
+{
+ "generation": "AGENT_D4_BLIND_PHASE1",
+ "date": "2026-08-27",
+ "overall_verdict": "ACCESSIBILITY_GEOMETRY_ESTABLISHED:S2_STACK,S4_MEM",
+ "substrates_passed": [
+  "S2_STACK",
+  "S4_MEM"
+ ],
+ "per_substrate": {
+  "S1_REG": {
+   "primary": "NAVIGATION_FAILURE",
+   "flags": [
+    "NAVIGATION_FAILURE"
+   ],
+   "witness_viable": true,
+   "viable_frac": 0.0931,
+   "combined_classes": 3452,
+   "pair_pooled_hits": [
+    0.31666666666666665,
+    0.28888888888888886
+   ],
+   "best_pair_nav": "N2_HILLCLIMB",
+   "margins": {
+    "viable_frac": {
+     "value": 0.0931,
+     "gate": 0.005,
+     "ci95": [
+      0.08755998336942661,
+      0.09895252598497978
+     ]
+    },
+    "n_classes": {
+     "value": 3452,
+     "gate": 250,
+     "census_only": 734
+    },
+    "pooled_identity": {
+     "value": 0.5189581095596133,
+     "gate": 0.85
+    },
+    "pooled_effective": {
+     "value": 0.2778732545649839,
+     "gate": 0.05
+    },
+    "n_alive_ops": {
+     "value": 5,
+     "gate": 3
+    },
+    "pair_pooled_hits": {
+     "value": [
+      0.31666666666666665,
+      0.28888888888888886
+     ],
+     "gate": 0.25
+    },
+    "best_far_hit": {
+     "value": 0.0,
+     "gate": 0.1
+    },
+    "oracle_far_reach": {
+     "value": 0.41111111111111115,
+     "gate": 0.2
+    },
+    "worst_ablation_drop": {
+     "value": {
+      "op": "remove_op2",
+      "stratum": "mid",
+      "rel_drop": 0.34523809523809523,
+      "z": 1.3665108758016564
+     },
+     "qualifying_cells": [],
+     "gate": 0.6,
+     "z_gate": 1.96
+    },
+    "identifiability_acc_DIAGNOSTIC": {
+     "value": 0.5014673514306677,
+     "chance": 0.3646368305209098,
+     "ci95": [
+      0.4827086274244987,
+      0.5202219455435446
+     ]
+    },
+    "anisotropy_top_share_DIAGNOSTIC": {
+     "value": 0.8168151153186549
+    },
+    "refind_ratio": {
+     "value": 0.7678571428571429,
+     "gate": 0.4
+    },
+    "representation_delta": {
+     "value": 0.013888888888888895,
+     "z": 0.17772415169356232,
+     "gate": 0.15,
+     "z_gate": 1.96
+    },
+    "counterfactual_worst_delta": {
+     "value": 0.04166666666666663,
+     "z": 0.5393598899705933,
+     "gate": 0.15,
+     "z_gate": 1.96
+    }
+   },
+   "meter_evals_total": 1816683,
+   "wall_seconds": 675.3,
+   "thresholds_status": "FROZEN-2026-08-27"
+  },
+  "S2_STACK": {
+   "primary": "PASS",
+   "flags": [],
+   "witness_viable": true,
+   "viable_frac": 0.5001,
+   "combined_classes": 7281,
+   "pair_pooled_hits": [
+    0.3333333333333333,
+    0.34444444444444444
+   ],
+   "best_pair_nav": "N4_RECOMBINER",
+   "margins": {
+    "viable_frac": {
+     "value": 0.5001,
+     "gate": 0.005,
+     "ci95": [
+      0.49030184363646045,
+      0.509898079561044
+     ]
+    },
+    "n_classes": {
+     "value": 7281,
+     "gate": 250,
+     "census_only": 4423
+    },
+    "pooled_identity": {
+     "value": 0.58975,
+     "gate": 0.85
+    },
+    "pooled_effective": {
+     "value": 0.29491666666666666,
+     "gate": 0.05
+    },
+    "n_alive_ops": {
+     "value": 5,
+     "gate": 3
+    },
+    "pair_pooled_hits": {
+     "value": [
+      0.3333333333333333,
+      0.34444444444444444
+     ],
+     "gate": 0.25
+    },
+    "best_far_hit": {
+     "value": 0.15,
+     "gate": 0.1
+    },
+    "oracle_far_reach": {
+     "value": 0.5,
+     "gate": 0.2
+    },
+    "worst_ablation_drop": {
+     "value": {
+      "op": "remove_op1",
+      "stratum": "far",
+      "rel_drop": 0.7222222222222223,
+      "z": 1.8496434469850387
+     },
+     "qualifying_cells": [],
+     "gate": 0.6,
+     "z_gate": 1.96
+    },
+    "identifiability_acc_DIAGNOSTIC": {
+     "value": 0.596562184024267,
+     "chance": 0.47152005392652513,
+     "ci95": [
+      0.5787955002571338,
+      0.6140791383637877
+     ]
+    },
+    "anisotropy_top_share_DIAGNOSTIC": {
+     "value": 0.8323491035276399
+    },
+    "refind_ratio": {
+     "value": 0.6111111111111112,
+     "gate": 0.4
+    },
+    "representation_delta": {
+     "value": 0.013888888888888895,
+     "z": 0.17424273674761295,
+     "gate": 0.15,
+     "z_gate": 1.96
+    },
+    "counterfactual_worst_delta": {
+     "value": 0.06944444444444448,
+     "z": 0.8575805098939397,
+     "gate": 0.15,
+     "z_gate": 1.96
+    }
+   },
+   "meter_evals_total": 1627181,
+   "wall_seconds": 538.2,
+   "thresholds_status": "FROZEN-2026-08-27"
+  },
+  "S3_REWRITE": {
+   "primary": "ACCESSIBILITY_FRAGMENTED",
+   "flags": [
+    "ACCESSIBILITY_FRAGMENTED"
+   ],
+   "witness_viable": true,
+   "viable_frac": 0.9961,
+   "combined_classes": 11717,
+   "pair_pooled_hits": [
+    0.37222222222222223,
+    0.43333333333333335
+   ],
+   "best_pair_nav": "N4_RECOMBINER",
+   "margins": {
+    "viable_frac": {
+     "value": 0.9961,
+     "gate": 0.005,
+     "ci95": [
+      0.9946733274415094,
+      0.9971456553780504
+     ]
+    },
+    "n_classes": {
+     "value": 11717,
+     "gate": 250,
+     "census_only": 9900
+    },
+    "pooled_identity": {
+     "value": 0.7053333333333334,
+     "gate": 0.85
+    },
+    "pooled_effective": {
+     "value": 0.29283333333333333,
+     "gate": 0.05
+    },
+    "n_alive_ops": {
+     "value": 5,
+     "gate": 3
+    },
+    "pair_pooled_hits": {
+     "value": [
+      0.37222222222222223,
+      0.43333333333333335
+     ],
+     "gate": 0.25
+    },
+    "best_far_hit": {
+     "value": 0.0,
+     "gate": 0.1
+    },
+    "oracle_far_reach": {
+     "value": 0.0,
+     "gate": 0.2
+    },
+    "worst_ablation_drop": {
+     "value": {
+      "op": "remove_op0",
+      "stratum": "mid",
+      "rel_drop": 0.4,
+      "z": 1.8135387300916528
+     },
+     "qualifying_cells": [],
+     "gate": 0.6,
+     "z_gate": 1.96
+    },
+    "identifiability_acc_DIAGNOSTIC": {
+     "value": 0.4470588235294118,
+     "chance": 0.33694117647058824,
+     "ci95": [
+      0.42603354500354274,
+      0.4682751720001086
+     ]
+    },
+    "anisotropy_top_share_DIAGNOSTIC": {
+     "value": 0.18108981927292514
+    },
+    "refind_ratio": {
+     "value": 0.725,
+     "gate": 0.4
+    },
+    "representation_delta": {
+     "value": 0.013888888888888895,
+     "z": 0.16864648052667802,
+     "gate": 0.15,
+     "z_gate": 1.96
+    },
+    "counterfactual_worst_delta": {
+     "value": 0.05555555555555558,
+     "z": 0.683763458757828,
+     "gate": 0.15,
+     "z_gate": 1.96
+    }
+   },
+   "meter_evals_total": 1545849,
+   "wall_seconds": 288.9,
+   "thresholds_status": "FROZEN-2026-08-27"
+  },
+  "S4_MEM": {
+   "primary": "PASS",
+   "flags": [],
+   "witness_viable": true,
+   "viable_frac": 0.5928,
+   "combined_classes": 9575,
+   "pair_pooled_hits": [
+    0.5222222222222223,
+    0.4888888888888889
+   ],
+   "best_pair_nav": "N2_HILLCLIMB",
+   "margins": {
+    "viable_frac": {
+     "value": 0.5928,
+     "gate": 0.005,
+     "ci95": [
+      0.5831364180992636,
+      0.6023923091848628
+     ]
+    },
+    "n_classes": {
+     "value": 9575,
+     "gate": 250,
+     "census_only": 5634
+    },
+    "pooled_identity": {
+     "value": 0.5217916666666667,
+     "gate": 0.85
+    },
+    "pooled_effective": {
+     "value": 0.38395833333333335,
+     "gate": 0.05
+    },
+    "n_alive_ops": {
+     "value": 5,
+     "gate": 3
+    },
+    "pair_pooled_hits": {
+     "value": [
+      0.5222222222222223,
+      0.4888888888888889
+     ],
+     "gate": 0.25
+    },
+    "best_far_hit": {
+     "value": 0.5333333333333333,
+     "gate": 0.1
+    },
+    "oracle_far_reach": {
+     "value": 0.7333333333333334,
+     "gate": 0.2
+    },
+    "worst_ablation_drop": {
+     "value": {
+      "op": "remove_op4",
+      "stratum": "far",
+      "rel_drop": 0.14062500000000003,
+      "z": 0.7745966692414835
+     },
+     "qualifying_cells": [],
+     "gate": 0.6,
+     "z_gate": 1.96
+    },
+    "identifiability_acc_DIAGNOSTIC": {
+     "value": 0.5124223602484472,
+     "chance": 0.39469226425748166,
+     "ci95": [
+      0.4959563798294837,
+      0.5288614236505138
+     ]
+    },
+    "anisotropy_top_share_DIAGNOSTIC": {
+     "value": 0.8616730969632586
+    },
+    "refind_ratio": {
+     "value": 0.69,
+     "gate": 0.4
+    },
+    "representation_delta": {
+     "value": 0.09722222222222221,
+     "z": 1.1667792086692113,
+     "gate": 0.15,
+     "z_gate": 1.96
+    },
+    "counterfactual_worst_delta": {
+     "value": 0.055555555555555525,
+     "z": 0.6669240172520736,
+     "gate": 0.15,
+     "z_gate": 1.96
+    }
+   },
+   "meter_evals_total": 1416705,
+   "wall_seconds": 459.4,
+   "thresholds_status": "FROZEN-2026-08-27"
+  }
+ },
+ "claim_ceiling": "P1-P4 properties of frozen computational substrates only; no P5/P6 claim under any outcome"
+}

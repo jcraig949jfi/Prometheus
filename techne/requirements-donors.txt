@@ -1,0 +1,61 @@
+# Techne Gen-0 donor stack -- pinned. 2026-08-31.
+#
+#     python -m pip install -r techne/requirements-donors.txt
+#     python -c "from techne.lib import donors; print(donors.available())"
+#
+# WHY THIS FILE EXISTS. The Gen-0 adapters were committed without any
+# declaration of what they need. A researcher pulling the repo onto another
+# machine got the CODE but not the CAPABILITY: every adapter would raise
+# DonorError("... is not installed") and donors.available() would return an
+# empty list. Committed code is not a portable capability until the machine
+# can be brought to the state the code assumes.
+#
+# Versions are the exact ones verified on the origin machine (Python 3.12.10,
+# Windows 11, win_amd64) and recorded in techne/donor_inventory.json with
+# their PyPI sha256 digests. They are pinned rather than floated because the
+# donor inventory records measured behaviour -- determinism, capability
+# surfaces, the cvc5/z3 redundancy verdict -- and a floated version silently
+# invalidates those measurements.
+#
+# PORTABILITY, honestly stated per package:
+#
+#   tensorly  0.9.0   py3-none-any   pure Python, 0 compiled objects
+#   ribs      0.12.0  py3-none-any   pure Python, 0 compiled objects
+#   discopy   1.2.2   py3-none-any   pure Python, 0 compiled objects
+#     -> these three install identically on any platform with Python >= 3.10.
+#
+#   egglog    13.2.0  cp312 wheel, 1 compiled object (Rust core)
+#   cvc5      1.3.4   cp312 wheel, 6 compiled objects (C++ core)
+#     -> these two need a platform wheel for the target interpreter. Wheels
+#        exist for Windows, macOS and Linux at these versions, but a machine
+#        on a different Python minor version needs the matching cp tag.
+#        egglog additionally requires Python >= 3.11.
+#
+# NOT INCLUDED, deliberately -- see techne/TECHNE_GEN0_DONOR_HANDOFF.txt:
+#   stitch_core   held as AVAILABLE_CONTESTANT pending the Family A vs B
+#                 decision, which belongs to Lexis, not to this seat
+#   qdax          JAX-based; no JAX CUDA wheels on Windows, and pyribs
+#                 already covers MAP-Elites in numpy
+#   minizinc      a Python driver, not a solver; needs an external binary
+#   lean-dojo     needs elan + a Lean toolchain + a Mathlib build
+#   evotorch      no caller in the programme
+#
+# ALREADY PRESENT ON THE ORIGIN MACHINE and assumed by the adapters and the
+# comparators, but NOT pinned here because they are pre-existing programme
+# dependencies rather than Gen-0 acquisitions:
+#   numpy 2.2.6   scipy 1.17.1   z3-solver 5.0.0.0   quimb 1.15.0
+#   hypothesis 6.165.10
+# If donors.available() is short on a fresh machine, check these first.
+#
+# INSTALLING THESE IS NOT ADOPTION. Nothing here has been shown to earn rent
+# in any experiment. The benches decide that.
+
+tensorly==0.9.0
+ribs==0.12.0
+discopy==1.2.2
+cvc5==1.3.4
+egglog==13.2.0
+
+# Transitive, pinned so a fresh install reproduces the verified environment.
+array-api-compat==1.15.0
+numpy-groupies==0.11.3

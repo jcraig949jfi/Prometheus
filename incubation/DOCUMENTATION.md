@@ -459,6 +459,28 @@ artifact exists without a consumer; total artifact count 4.
 
 ---
 
+## 6b. Addendum (2026-08-27): v3 — Lens Genesis
+
+Run after this document's first edition; full record in `v3/README.md` and
+`v3/results/lens_genesis_v1.json` (2,030 rows). One independent variable vs v2:
+learned artifacts change WHAT THE SOLVER REPRESENTS THE PROBLEM AS — a lens =
+partition-with-exclusions over the action alphabet, re-presenting one task as
+per-group subtasks solved by the UNCHANGED v2 downstream (which is also the R2
+control, so gains are attributable to the lens alone). Verdict:
+**RECURSIVE_REPRESENTATION_EFFECT** — all 21 gates, 5 seeds, anti-cheat clean.
+Headline numbers: the admissible lens class is a singleton (1 of 11,050, rank
+2,957); every seed constructed the identical true factorization; R3/R2 = 0.0008
+with capture 1.000; frozen transfer to permutation pairs at 0.0009; trap harm 9.37
+with 60/60 detection and 0/290 clean false-positives; revision to 1.0747; naive E
+construction failed at 1,500 candidates in 5/5 seeds while the experienced
+extension order (prior groups kept, prior exclusions pinned) found the answer at
+candidate 68. Census lineage: two rejected designs (transitivity absorbs light
+decoy displacement — the trap lever is one joint action = near-diameter block
+displacement; zero-luck feature bands are wrong in kind, cost-comparative bands
+are right). Scope: representation selection/construction within a designed typed
+family — the family's ontology remains experimenter-written, stated openly.
+Artifacts: p0001 bounded, p0002 admitted (`v3/ledger/`).
+
 ## 7. Open edges (not commitments)
 
 Recorded so the next seat starts where this one stopped; none of these are claims.

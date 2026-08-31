@@ -1,0 +1,91 @@
+{
+ "C1_FRAGMENTED": {
+  "primary": "ACCESSIBILITY_FRAGMENTED",
+  "flags": [
+   "ACCESSIBILITY_FRAGMENTED"
+  ],
+  "expected": [
+   "ACCESSIBILITY_FRAGMENTED"
+  ],
+  "ok": true,
+  "wall_s": 32.7
+ },
+ "C2_IDENTITY": {
+  "primary": "DISPLACEMENT_COLLAPSE",
+  "flags": [
+   "DISPLACEMENT_COLLAPSE"
+  ],
+  "expected": [
+   "DISPLACEMENT_COLLAPSE"
+  ],
+  "ok": true,
+  "wall_s": 3.2
+ },
+ "C3_CORRIDOR": {
+  "primary": "PRIVILEGED_CORRIDOR",
+  "flags": [
+   "PRIVILEGED_CORRIDOR"
+  ],
+  "expected": [
+   "PRIVILEGED_CORRIDOR"
+  ],
+  "ok": true,
+  "wall_s": 15.8
+ },
+ "C4_TRAPPED": {
+  "primary": "ACCESSIBILITY_FRAGMENTED",
+  "flags": [
+   "ACCESSIBILITY_FRAGMENTED"
+  ],
+  "expected": [
+   "ACCESSIBILITY_FRAGMENTED",
+   "NAVIGATION_FAILURE",
+   "REFINDABILITY_FAILURE"
+  ],
+  "ok": true,
+  "wall_s": 29.2
+ },
+ "C5_NAVIGABLE": {
+  "primary": "PASS",
+  "flags": [],
+  "expected": [
+   "PASS"
+  ],
+  "ok": true,
+  "wall_s": 27.6
+ },
+ "C6_CHAOS": {
+  "primary": "NAVIGATION_FAILURE",
+  "flags": [
+   "NAVIGATION_FAILURE"
+  ],
+  "expected": [
+   "ACCESSIBILITY_FRAGMENTED",
+   "NAVIGATION_FAILURE",
+   "REFINDABILITY_FAILURE"
+  ],
+  "ok": true,
+  "wall_s": 200.5
+ },
+ "C7_TINY": {
+  "primary": "PHENOTYPE_POVERTY",
+  "flags": [
+   "PHENOTYPE_POVERTY"
+  ],
+  "expected": [
+   "PHENOTYPE_POVERTY"
+  ],
+  "ok": true,
+  "wall_s": 1.9
+ },
+ "C8_SPARSE": {
+  "primary": "PASS",
+  "flags": [],
+  "expected": [
+   "PASS"
+  ],
+  "ok": true,
+  "wall_s": 19.0
+ },
+ "instrument_valid": true
+}

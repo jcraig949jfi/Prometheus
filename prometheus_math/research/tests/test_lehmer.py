@@ -30,8 +30,14 @@ from prometheus_math.research import lehmer
 
 @pytest.fixture(scope="module")
 def mossinghoff_snapshot() -> list[dict]:
-    """The 178-entry Mossinghoff snapshot, formatted as a Charon-style
-    scan output (each entry has degree, mahler_measure, coeffs)."""
+    """The FULL Mahler catalog, formatted as a Charon-style scan output.
+
+    HITL #341, fixed 2026-08-27 by Techne. This was documented as "the 178-entry Mossinghoff
+    snapshot" and has not been that for some time: `smallest_known(limit=10000)` returns every
+    row, and the catalog now holds 8,625 across 104 distinct degrees spanning 2-180. The 178 is
+    real, but it is the `phase1_curated` PROVENANCE TIER, not the table -- see
+    `phase1_curated_snapshot` below, which pins it.
+    """
     rows = _mahler_db.smallest_known(limit=10000)
     out = []
     for r in rows:
@@ -49,19 +55,71 @@ def mossinghoff_snapshot() -> list[dict]:
 # Authority tests (≥ 2)
 # ---------------------------------------------------------------------------
 
-def test_authority_mossinghoff_178_entries(mossinghoff_snapshot):
-    """The full Mossinghoff snapshot (178 entries) profiles into one
-    row per degree, total count == 178.
 
-    Reference: ``prometheus_math.databases.mahler.MAHLER_TABLE`` —
-    Phase-2 snapshot of Michael Mossinghoff's small-Mahler tables.
-    The catalog has 178 entries spread across degrees [2..30] ∪ {36}.
+@pytest.fixture(scope="module")
+def phase1_curated_snapshot(mossinghoff_snapshot) -> list[dict]:
+    """The `phase1_curated` provenance tier alone -- the population the original 178-entry
+    assertion was written against, recovered rather than discarded (HITL #341)."""
+    from prometheus_math.databases.mahler import MAHLER_TABLE
+    keep = {
+        (int(e["degree"]), tuple(e["coeffs"]))
+        for e in MAHLER_TABLE if e.get("provenance_tier") == "phase1_curated"
+    }
+    return [r for r in mossinghoff_snapshot
+            if (int(r["degree"]), tuple(r["coeffs"])) in keep]
+
+
+def test_authority_phase1_curated_is_still_178_entries(phase1_curated_snapshot):
+    """The ORIGINAL authority claim, preserved rather than overwritten (HITL #341).
+
+    Reference: ``prometheus_math.databases.mahler.MAHLER_TABLE``, rows tagged
+    ``provenance_tier == "phase1_curated"`` — the curated Phase-1 snapshot of Michael
+    Mossinghoff's small-Mahler tables: **178 entries across degrees [2..30] ∪ {36}**.
+
+    WHY THIS TEST STILL EXISTS. This assertion was failing as
+    ``assert 8625 == 178`` and was reported for two cycles as a stale literal needing an
+    update to 8,625. It is not stale. Measured 2026-08-27: the ``phase1_curated`` tier holds
+    **exactly 178** rows over **exactly** [2..30] ∪ {36}. What went stale was the FIXTURE --
+    it silently widened from the tier to the whole catalog as Phase-2 rows landed. Rewriting
+    the literal to 8,625, which is what I had proposed to the operator, would have destroyed a
+    live authority anchor to make a test green.
     """
-    assert len(mossinghoff_snapshot) == 178
+    assert len(phase1_curated_snapshot) == 178
+    profile = lehmer.degree_profile(phase1_curated_snapshot)
+    assert sum(row["count"] for row in profile) == 178
+    degrees = {int(r["degree"]) for r in phase1_curated_snapshot}
+    assert degrees == set(range(2, 31)) | {36}
+    for row in profile:
+        assert row["count"] >= 1
+
+
+def test_authority_full_catalog_is_8625_entries(mossinghoff_snapshot):
+    """The catalog as it now stands, with its provenance breakdown pinned.
+
+    Verified 2026-08-27 against ``MAHLER_TABLE``: **8,625 entries** across **104 distinct
+    degrees spanning 2-180**, composed of ``phase1_curated`` 178 + ``known180_2022`` 8,431 +
+    ``arxiv_promoted_2026`` 16.
+
+    The tier counts are asserted individually and their sum is asserted against the total, so
+    a future ingest that grows the table cannot pass by moving rows between tiers, and the
+    degree span is asserted so growth in COUNT cannot hide a change in RANGE.
+    """
+    import collections
+    from prometheus_math.databases.mahler import MAHLER_TABLE
+
+    assert len(mossinghoff_snapshot) == 8625
     profile = lehmer.degree_profile(mossinghoff_snapshot)
-    total = sum(row["count"] for row in profile)
-    assert total == 178
-    # Every degree present has ≥ 1 entry.
+    assert sum(row["count"] for row in profile) == 8625
+
+    degrees = {int(r["degree"]) for r in mossinghoff_snapshot}
+    assert len(degrees) == 104
+    assert min(degrees) == 2 and max(degrees) == 180
+
+    tiers = collections.Counter(e.get("provenance_tier") for e in MAHLER_TABLE)
+    assert tiers == {"phase1_curated": 178, "known180_2022": 8431,
+                     "arxiv_promoted_2026": 16}
+    assert sum(tiers.values()) == len(MAHLER_TABLE) == 8625
+
     for row in profile:
         assert row["count"] >= 1
 

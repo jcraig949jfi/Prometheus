@@ -1,0 +1,98 @@
+{
+  "protocol": "incubation_d meta-language census v1.1",
+  "date_frozen": "2026-08-27",
+  "protocol_repairs": [
+    {
+      "version": "1.1",
+      "date": "2026-08-27",
+      "defect": "v1.0 flag audit compared instruction multisets at TOP LEVEL only, so quote-nesting (input preserved inside a 'P' literal) was misread as removes_tokens+introduces_tokens and classified 'mixed'; alignment ambiguity also produced false 'reorders' on prepends. Exposed by census_gv0.protocol_v1.0.DEFECTIVE.json (preserved).",
+      "repair": "flags computed on RECURSIVE token streams (descend into 'P' literals; '#P' markers counted separately for introduces_lit); reorders = input's retained-common token sequence fails to embed order-preservingly in the output stream. Kill thresholds unchanged.",
+      "discipline": "spec section 32: defective run rejected and preserved; protocol repaired and refrozen; all grammar candidates rerun from scratch under v1.1"
+    }
+  ],
+  "applies_to": "every grammar candidate submitted, unchanged between candidates",
+  "purpose": "Attack the grammar: decide quantitatively whether it merely re-skins the four legacy mutation buttons (APPEND_MUTATION, PRE_TRANSFORM, CONTROL_WRAP, BRANCH_ROUTE), and whether its cheap region is rich enough to host non-human-taxonomy change.",
+  "enumeration": {
+    "order": "shortlex over the grammar's frozen token order; lengths 1..L",
+    "horizon_L": 5,
+    "validity": "abstract typing from initial type stack [B] with final type stack exactly [B]; runtime caps then apply during probe execution",
+    "rank": "index in shortlex enumeration restricted to typed-valid programs that execute without error on all structural probes",
+    "exactness": "full enumeration; all counts exact; all gates deterministic"
+  },
+  "probes": {
+    "structural_probe_artifacts": [
+      [],
+      ["o0"],
+      ["o2"],
+      ["o2", "o0"],
+      ["o3", "o1", "o4", "o0"],
+      ["o1", "o0", "o3", "o2", "o0"],
+      ["o4", "o2", "o0"]
+    ],
+    "semantic_probe_stacks": [[], [3], [5, 2], [0, 4, 1], [7, 7]],
+    "rationale": "empty probe pins constant payloads; equal-length content-differing probes (P1 vs P2) expose content sensitivity; o4 present so control-token handling is exercised"
+  },
+  "fingerprints": {
+    "structural": "tuple of canonical serializations of the single output Block per structural probe",
+    "semantic": "per structural probe, the output artifact executed on each semantic probe stack; result is final stack or error code; semantic fingerprint is the full tuple",
+    "categories": {
+      "identity": "output == input on all probes",
+      "noop": "semantically equal to input on all (probe, stack) pairs but structurally changed on at least one probe",
+      "destructive": "every (probe, stack) execution of every output errors"
+    }
+  },
+  "edit_shapes": {
+    "collapsed_classes": ["identity", "constant", "quote", "append", "prepend", "wrap", "insert", "take", "dropfx", "delete", "selfcat", "perm", "mixed", "other"],
+    "flags": ["introduces_tokens", "removes_tokens", "reorders", "introduces_control", "introduces_lit"],
+    "mixed_definition": "class 'other' AND at least two of {introduces_tokens, removes_tokens, reorders}",
+    "legacy4": {
+      "append_like": "class append",
+      "pre_like": "class prepend",
+      "wrap_like": "class wrap",
+      "route_like": "flag introduces_control (object conditional token newly present in output)"
+    },
+    "note": "shape classification is offline human audit only; never learner-visible (spec section 25)"
+  },
+  "kill_gates": {
+    "CK1_single_token_button": {
+      "rule": "KILL if any single grammar token, run as a complete transform, realizes a legacy4 family",
+      "rationale": "a one-token legacy family is literally a vending-machine button with a new label"
+    },
+    "CK2_cheap_region_share": {
+      "rule": "KILL if legacy4 behaviors (union) exceed 60% of the first 200 behaviorally distinct, non-identity, non-constant transforms in canonical rank order",
+      "rationale": "payload variety makes legacy families numerous in ANY concatenative editor; the kill is for a cheap region that is ESSENTIALLY ONLY the old buttons. 60% chosen so that a majority-legacy head with a substantial non-legacy minority survives, but a button-dominated head dies"
+    },
+    "CK3_shape_diversity_of_cheap_region": {
+      "rule": "KILL if the first 200 distinct behaviors contain fewer than 12 distinct collapsed edit shapes, or fewer than 2 non-legacy shapes per legacy shape present",
+      "rationale": "the cheap region must be a continuum of edit shapes in which the old buttons are unremarkable points"
+    },
+    "CK4_relative_cheapness": {
+      "rule": "KILL if any legacy4 family's minimal realizing program length <= (median minimal length over all reachable collapsed shapes) - 2",
+      "rationale": "grammar-relative version of 'trivial low-rank basin': legacy categories must not be systematically cheaper than typical categories"
+    },
+    "CK5_reachability": {
+      "rule": "KILL if any of {append, prepend, wrap, insert, take-or-dropfx-or-delete, selfcat, perm, route_like, mixed} is unreachable at the horizon",
+      "rationale": "a grammar that cannot express a family is not avoiding leakage, it is avoiding the hypothesis; mixed-pathology worlds will demand mixed edits"
+    },
+    "CK6_diversity_floors": {
+      "rule": "KILL if structurally distinct behaviors < 3% of valid programs at horizon, or total structurally distinct < 500, or semantically distinct < 300",
+      "rationale": "below these floors the space is mostly syntactic duplication and search has nothing to select among; structural counts are an upper bound on semantic diversity, so the semantic floor is the binding one"
+    },
+    "CK7_mixed_density": {
+      "rule": "KILL if mixed-shape behaviors < 1% of all distinct non-identity behaviors at horizon",
+      "rationale": "the experiment's target phenotypes are mixed; they must be reachable at more than trace density"
+    },
+    "CK8_world_target_template": {
+      "rule": "DEFERRED to world census: KILL the world (not the grammar) if its target is solvable by a <=3-token template from any single legacy family",
+      "rationale": "requires worlds; recorded here so it cannot be quietly dropped"
+    }
+  },
+  "reporting_requirements": [
+    "attainable ranges reported beside every gate so eligibility-to-fire is visible (a gate that cannot fire is not a gate)",
+    "per-length distinct-behavior counts and per-shape first-occurrence ranks",
+    "semantic/structural inflation ratio",
+    "identity, noop, destructive densities",
+    "rejected grammars preserved with full census output in rejected_grammars.jsonl"
+  ],
+  "verdict_codes": ["GRAMMAR_REJECTED_LEAKAGE", "GRAMMAR_REJECTED_POVERTY", "GRAMMAR_PASSED_CENSUS"]
+}

@@ -309,6 +309,67 @@ applies-to: claim classes this attack must be run against before the claim is be
 - **applies-to:** every permutation-null gate, every equivalence/absence claim, and any check
   whose pass condition is written as a single inequality against a null percentile.
 
+### ATK-019 documented hazard, unguarded code
+- **class:** ops-zombie (presents as measurement-confound when it fires)
+- **signature:** a docstring or comment states a limit, a hazard, or a vacuity condition
+  **correctly and specifically** — and no code enforces it. The author understood the failure
+  precisely enough to write it down, and the understanding stayed in prose. The tell is that the
+  bug report, when it finally arrives, can be answered by quoting the module's own comment.
+  Distinct from ordinary missing validation: here the knowledge is already present and
+  *localised*, so the defect is purely the gap between knowing and enforcing.
+- **probe:** DESCRIBED — for any module, extract quantitative or conditional claims from
+  docstrings and comments ("more than N", "must not", "causes X with 12+", "is now vacuous",
+  "only when") and assert that a guard, test, or refusal references the same quantity. Cheap
+  approximation available today: grep comments for a numeral-plus-hazard and check whether that
+  numeral appears anywhere in executable code in the same file.
+- **kills:** three in three days, all found by Techne, two in other seats' code and one in its
+  own — which is why this is a class and not an incident.
+  · 2026-08-25 — `techne/lib/claim_record.py`: the `Adjudicator` ordering's docstring rates
+  `DIFFERENTIAL_TEST` weak *"if implementations share an assumption"*, and nothing anywhere
+  checks whether they do. Logged as finding #21.
+  · 2026-08-25 — `ergon/probe/packet_invariants.py::check_invariant_7`: its docstring states
+  *"the adversarial gate is now VACUOUS on these packets ... a vacuous reading reported as a
+  passing one is its own defect class"*. Nothing enforced it; the gate went on emitting 12 PASS
+  verdicts against a permutation null with **zero variance**. See ATK-017.
+  · 2026-08-27 — `prometheus_math/lehmer_brute_force.py`: the worker-pool comment states that
+  each process allocates ~1 GB of PARI stack and that this "caus[es] memory exhaustion with 12+
+  workers", while the default resolved to `cpu_count - 1` = **15** on the machine it runs on.
+  The HITL #311 re-run died on `Unable to allocate 7.48 MiB`. Fixed by
+  `_cap_workers_by_memory`, which reads available memory and reduces the width rather than
+  failing.
+- **applies-to:** every module carrying a numeric limit, a resource cost, a vacuity condition or
+  a "must not" in prose. **Standing rule earned by the third kill: a hazard worth writing down
+  is a hazard worth a guard, in the same commit. If it cannot be guarded, the comment must say
+  why not — an unenforceable hazard is a finding, not a footnote.**
+
+
+### ATK-020 detector scored on planted positives only
+- **class:** vacuous-metric (sibling of ATK-018; there the *gate* was one-sided, here the
+  *detector's evaluation* is)
+- **signature:** a detection capability is measured by planting defects and counting catches, and
+  **no clean case is ever planted under the same suspicion**. Sensitivity is reported without
+  specificity, so the metric is maximised by flagging everything and cannot distinguish a
+  detector that works from one that has stopped trusting its inputs. The tell is a design
+  document that specifies an injection rate, a corruption taxonomy and a catch criterion, and
+  specifies **no zero-injection condition** — there is no false-alarm denominator anywhere in it.
+  Aggravated when the subject knows the harness exists: vigilance then inflates catch, so the
+  confound points at the flattering side and only an unfavourable result is readable.
+- **probe:** DESCRIBED — for any planted-defect harness, assert that the injection schedule
+  contains draws of **exactly zero**, that the ledger records flags raised on unplanted items,
+  and that the report carries `false_alarm_rate` beside `catch_rate`. Generalization: for any
+  claimed detection ability, ask what the detector said about the cases where there was nothing
+  to find; if that was never measured, the capability estimate is an upper bound only.
+- **kills:** 2026-08-27, Charon, on `techne/loop/HANDOFF_424_canary_harness_review.md` — the
+  blinded canary harness spec, reviewed before any code existed. It fixes eight corruption
+  families, asks for an injection rate, and defines `escape sensitivity = 1 - caught/planted`
+  with **no clean-claim condition at any point**. Rejected pre-build; the corrected design adds
+  zero-injection cycles as the specificity arm. Full adjudication:
+  `roles/Charon/reviews/REVIEW_2026-08-27_techne_424_canary_harness.md`.
+- **applies-to:** every canary, honeypot, mutation-assay, planted-bug and red-team harness; every
+  "the reviewer caught N of M" figure; every claim that a control, a model or an agent *detects*
+  something. **Standing rule: a detection rate without its false-alarm rate is an upper bound on
+  capability and nothing else, and must be reported as such.**
+
 ---
 
 ## Claim × attack coverage matrix
