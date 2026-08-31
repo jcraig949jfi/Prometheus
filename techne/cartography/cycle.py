@@ -222,9 +222,14 @@ def classification_rate() -> tuple:
     signal to place a paper on three mechanism axes, so counting them would blame the tagger
     for evidence it never had.
     """
+    # Duplicate versions are excluded from the denominator. OpenAlex indexes preprint and
+    # published versions as distinct works (7.9% of this corpus), and counting both inflates
+    # the denominator with rows that are not independent papers -- which would understate the
+    # classification rate and, worse, make it look like it was falling as duplicates accrued.
     rows = [g for g in store.current("genomes").values()
-            if any(sp.get("scope") == "abstract" and (sp.get("text") or "").strip()
-                   for sp in (g.get("evidence_spans") or []))]
+            if not g.get("duplicate_of")
+            and any(sp.get("scope") == "abstract" and (sp.get("text") or "").strip()
+                    for sp in (g.get("evidence_spans") or []))]
     if not rows:
         return 0.0, 0, 0
     ok = sum(1 for g in rows
