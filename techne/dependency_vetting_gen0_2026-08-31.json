@@ -1,0 +1,553 @@
+{
+  "protocol": "HITL #242",
+  "package_set": "gen0_donors",
+  "verifies": [
+    "pypi provenance",
+    "sha256 vs pypi digest",
+    "install-time code execution",
+    "pure-python payload patterns"
+  ],
+  "does_not_verify": [
+    "compiled extension source (GUDHI/shapely/matplotlib ship large C/C++ cores; evidence for those is provenance, not review)",
+    "a compromise of PyPI itself",
+    "a malicious release from a legitimate maintainer"
+  ],
+  "packages": [
+    {
+      "import_name": "tensorly",
+      "pypi_name": "tensorly",
+      "why_needed": "CP / Tucker / TT decompositions as contestant representations",
+      "red_nodes_it_should_clear": "revives prometheus_math.symbolic_tensor_decomp (hard ImportError without it)",
+      "version": "0.9.0",
+      "summary": "Tensor learning in Python.",
+      "provenance": {
+        "n_releases": 19,
+        "first_release": "2016-10-22T12:16:04.427482Z",
+        "home_page": "https://github.com/tensorly/tensorly",
+        "project_urls": {
+          "Download": "https://github.com/tensorly/tensorly/tarball/0.9.0",
+          "Homepage": "https://github.com/tensorly/tensorly"
+        },
+        "author": "Jean Kossaifi",
+        "license": "Modified BSD",
+        "requires_python": null,
+        "YOUNG_PROJECT": false
+      },
+      "upstream_identity": {
+        "expected_upstream": "github.com/tensorly/tensorly",
+        "declared_urls": {
+          "home_page": "https://github.com/tensorly/tensorly",
+          "project_url": "https://pypi.org/project/tensorly/",
+          "project_urls.Download": "https://github.com/tensorly/tensorly/tarball/0.9.0",
+          "project_urls.Homepage": "https://github.com/tensorly/tensorly"
+        },
+        "matched_in": [
+          "home_page",
+          "project_urls.Download",
+          "project_urls.Homepage"
+        ],
+        "matched_in_description_only": false,
+        "IDENTITY": "RESOLVED",
+        "author": "Jean Kossaifi",
+        "maintainer": null
+      },
+      "artifact": {
+        "filename": "tensorly-0.9.0-py3-none-any.whl",
+        "packagetype": "bdist_wheel",
+        "size_bytes": 7414316,
+        "pypi_sha256": "a393022ff1616a36c021496f46a955d94234d6bc8c42793f477a6be8849f4873",
+        "downloaded_sha256": "a393022ff1616a36c021496f46a955d94234d6bc8c42793f477a6be8849f4873",
+        "DIGEST_MATCHES_PYPI": true
+      },
+      "runs_code_at_install": false,
+      "scan": {
+        "members": 166,
+        "python_like_files": 154,
+        "compiled_objects": 0,
+        "pattern_hits": {
+          "install_time_exec": [],
+          "network_call": [
+            {
+              "file": "tensorly/datasets/data_imports.py",
+              "line": 7,
+              "text": "from urllib.request import urlopen"
+            }
+          ],
+          "process_spawn": [],
+          "dynamic_exec": [],
+          "opaque_blob": []
+        },
+        "pattern_counts": {
+          "install_time_exec": 0,
+          "network_call": 1,
+          "process_spawn": 0,
+          "dynamic_exec": 0,
+          "opaque_blob": 0
+        },
+        "very_long_lines": [],
+        "n_very_long_lines": 0,
+        "top_level_names": [
+          "tensorly",
+          "tensorly-0.9.0.dist-info"
+        ]
+      }
+    },
+    {
+      "import_name": "ribs",
+      "pypi_name": "ribs",
+      "why_needed": "MAP-Elites / quality-diversity archives, numpy-native (pyribs)",
+      "red_nodes_it_should_clear": "no red nodes; capability surface for a later Ludus experiment",
+      "version": "0.12.0",
+      "summary": "A bare-bones Python library for quality diversity optimization.",
+      "provenance": {
+        "n_releases": 23,
+        "first_release": "2021-01-29T13:14:27.329320Z",
+        "home_page": "https://pypi.org/project/ribs/",
+        "project_urls": {
+          "Documentation": "https://docs.pyribs.org",
+          "Homepage": "https://pyribs.org",
+          "Repository": "https://github.com/icaros-usc/pyribs"
+        },
+        "author": null,
+        "license": "",
+        "requires_python": ">=3.10.0",
+        "YOUNG_PROJECT": false
+      },
+      "upstream_identity": {
+        "expected_upstream": "github.com/icaros-usc/pyribs",
+        "declared_urls": {
+          "project_url": "https://pypi.org/project/ribs/",
+          "project_urls.Documentation": "https://docs.pyribs.org",
+          "project_urls.Homepage": "https://pyribs.org",
+          "project_urls.Repository": "https://github.com/icaros-usc/pyribs"
+        },
+        "matched_in": [
+          "project_urls.Repository"
+        ],
+        "matched_in_description_only": false,
+        "IDENTITY": "RESOLVED",
+        "author": "ICAROS Lab pyribs Team <team@pyribs.org>",
+        "maintainer": null
+      },
+      "artifact": {
+        "filename": "ribs-0.12.0-py3-none-any.whl",
+        "packagetype": "bdist_wheel",
+        "size_bytes": 230704,
+        "pypi_sha256": "ed2b7d0aef35b23410ebf9ca57e03173e3e1384ce7344a0b77e978f4f15321e6",
+        "downloaded_sha256": "ed2b7d0aef35b23410ebf9ca57e03173e3e1384ce7344a0b77e978f4f15321e6",
+        "DIGEST_MATCHES_PYPI": true
+      },
+      "runs_code_at_install": false,
+      "scan": {
+        "members": 66,
+        "python_like_files": 60,
+        "compiled_objects": 0,
+        "pattern_hits": {
+          "install_time_exec": [],
+          "network_call": [],
+          "process_spawn": [],
+          "dynamic_exec": [],
+          "opaque_blob": []
+        },
+        "pattern_counts": {
+          "install_time_exec": 0,
+          "network_call": 0,
+          "process_spawn": 0,
+          "dynamic_exec": 0,
+          "opaque_blob": 0
+        },
+        "very_long_lines": [],
+        "n_very_long_lines": 0,
+        "top_level_names": [
+          "ribs",
+          "ribs-0.12.0.dist-info"
+        ]
+      }
+    },
+    {
+      "import_name": "discopy",
+      "pypi_name": "discopy",
+      "why_needed": "string diagrams, functors, rewrites, tensor interpretation",
+      "red_nodes_it_should_clear": "no red nodes; lensing capability surface for Harmonia",
+      "version": "1.2.2",
+      "summary": "The Python toolkit for computing with string diagrams.",
+      "provenance": {
+        "n_releases": 48,
+        "first_release": "2019-12-03T18:44:30.814469Z",
+        "home_page": "https://pypi.org/project/discopy/",
+        "project_urls": {
+          "Documentation": "https://docs.discopy.org",
+          "Download": "https://pypi.org/project/discopy",
+          "Homepage": "https://discopy.org",
+          "Issue-Tracker": "https://github.com/discopy/discopy/issues",
+          "Repository": "https://github.com/discopy/discopy"
+        },
+        "author": "DisCoPy",
+        "license": "BSD 3-Clause License  Copyright (c) 2019-2022, DisCoPy All rights reserved.  Red",
+        "requires_python": ">=3.10",
+        "YOUNG_PROJECT": false
+      },
+      "upstream_identity": {
+        "expected_upstream": "github.com/discopy/discopy",
+        "declared_urls": {
+          "project_url": "https://pypi.org/project/discopy/",
+          "project_urls.Documentation": "https://docs.discopy.org",
+          "project_urls.Download": "https://pypi.org/project/discopy",
+          "project_urls.Homepage": "https://discopy.org",
+          "project_urls.Issue-Tracker": "https://github.com/discopy/discopy/issues",
+          "project_urls.Repository": "https://github.com/discopy/discopy"
+        },
+        "matched_in": [
+          "project_urls.Issue-Tracker",
+          "project_urls.Repository"
+        ],
+        "matched_in_description_only": false,
+        "IDENTITY": "RESOLVED",
+        "author": "DisCoPy",
+        "maintainer": null
+      },
+      "artifact": {
+        "filename": "discopy-1.2.2-py3-none-any.whl",
+        "packagetype": "bdist_wheel",
+        "size_bytes": 566629,
+        "pypi_sha256": "4ea88180844ba737f1c40ef6fc28dac2e191ec83ac285500cae5c5396f831b2c",
+        "downloaded_sha256": "4ea88180844ba737f1c40ef6fc28dac2e191ec83ac285500cae5c5396f831b2c",
+        "DIGEST_MATCHES_PYPI": true
+      },
+      "runs_code_at_install": false,
+      "scan": {
+        "members": 53,
+        "python_like_files": 46,
+        "compiled_objects": 0,
+        "pattern_hits": {
+          "install_time_exec": [],
+          "network_call": [
+            {
+              "file": "discopy/utils.py",
+              "line": 359,
+              "text": "fd, _ = urllib.urlretrieve(url)"
+            }
+          ],
+          "process_spawn": [],
+          "dynamic_exec": [
+            {
+              "file": "discopy/tensor.py",
+              "line": 407,
+              "text": "def eval(self, contractor: Callable = None, dtype: type = None) -> Tensor:"
+            },
+            {
+              "file": "discopy/quantum/circuit.py",
+              "line": 230,
+              "text": "def eval(self, *others, backend=None, mixed=False,"
+            },
+            {
+              "file": "discopy/quantum/circuit.py",
+              "line": 869,
+              "text": "def eval(self, backend=None, mixed=False, **params):"
+            },
+            {
+              "file": "discopy/quantum/pennylane.py",
+              "line": 43,
+              "text": "should be passed to `eval()`. If the circuit contains symbolic"
+            },
+            {
+              "file": "discopy/quantum/pennylane.py",
+              "line": 45,
+              "text": "associated weights should be passed to `eval()` as `symbols=` and"
+            },
+            {
+              "file": "discopy/quantum/pennylane.py",
+              "line": 464,
+              "text": "def eval(self):"
+            }
+          ],
+          "opaque_blob": []
+        },
+        "pattern_counts": {
+          "install_time_exec": 0,
+          "network_call": 1,
+          "process_spawn": 0,
+          "dynamic_exec": 6,
+          "opaque_blob": 0
+        },
+        "very_long_lines": [],
+        "n_very_long_lines": 0,
+        "top_level_names": [
+          "discopy",
+          "discopy-1.2.2.dist-info"
+        ]
+      }
+    },
+    {
+      "import_name": "cvc5",
+      "pypi_name": "cvc5",
+      "why_needed": "exact SMT counterexamples; comparator against installed z3",
+      "red_nodes_it_should_clear": "no red nodes; adversary capability surface for Charon",
+      "version": "1.3.4",
+      "summary": "Python bindings for cvc5 (BSD version)",
+      "provenance": {
+        "n_releases": 19,
+        "first_release": "2022-04-01T19:31:18.632430Z",
+        "home_page": "https://pypi.org/project/cvc5/",
+        "project_urls": {
+          "Changelog": "https://github.com/cvc5/cvc5/blob/main/NEWS.md",
+          "Documentation": "https://cvc5.github.io/docs/",
+          "Homepage": "https://cvc5.github.io/",
+          "Issues": "https://github.com/cvc5/cvc5/issues",
+          "Repository": "https://github.com/cvc5/cvc5"
+        },
+        "author": null,
+        "license": "",
+        "requires_python": null,
+        "YOUNG_PROJECT": false
+      },
+      "upstream_identity": {
+        "expected_upstream": "github.com/cvc5/cvc5",
+        "declared_urls": {
+          "project_url": "https://pypi.org/project/cvc5/",
+          "project_urls.Changelog": "https://github.com/cvc5/cvc5/blob/main/NEWS.md",
+          "project_urls.Documentation": "https://cvc5.github.io/docs/",
+          "project_urls.Homepage": "https://cvc5.github.io/",
+          "project_urls.Issues": "https://github.com/cvc5/cvc5/issues",
+          "project_urls.Repository": "https://github.com/cvc5/cvc5"
+        },
+        "matched_in": [
+          "project_urls.Changelog",
+          "project_urls.Issues",
+          "project_urls.Repository"
+        ],
+        "matched_in_description_only": false,
+        "IDENTITY": "RESOLVED",
+        "author": null,
+        "maintainer": null
+      },
+      "artifact": {
+        "filename": "cvc5-1.3.4-cp312-cp312-macosx_10_13_x86_64.whl",
+        "packagetype": "bdist_wheel",
+        "size_bytes": 11508795,
+        "pypi_sha256": "217e67ed2c4c912a7c417f63d2cde7743c8cae4add4f9b8bab5e00a4fdcf8b56",
+        "downloaded_sha256": "217e67ed2c4c912a7c417f63d2cde7743c8cae4add4f9b8bab5e00a4fdcf8b56",
+        "DIGEST_MATCHES_PYPI": true
+      },
+      "runs_code_at_install": false,
+      "scan": {
+        "members": 21,
+        "python_like_files": 4,
+        "compiled_objects": 6,
+        "pattern_hits": {
+          "install_time_exec": [],
+          "network_call": [],
+          "process_spawn": [],
+          "dynamic_exec": [
+            {
+              "file": "cvc5/pythonic/cvc5_pythonic.py",
+              "line": 6688,
+              "text": "def eval(self, t, model_completion=False):"
+            }
+          ],
+          "opaque_blob": []
+        },
+        "pattern_counts": {
+          "install_time_exec": 0,
+          "network_call": 0,
+          "process_spawn": 0,
+          "dynamic_exec": 1,
+          "opaque_blob": 0
+        },
+        "very_long_lines": [],
+        "n_very_long_lines": 0,
+        "top_level_names": [
+          "cvc5",
+          "cvc5-1.3.4.dist-info"
+        ]
+      }
+    },
+    {
+      "import_name": "egglog",
+      "pypi_name": "egglog",
+      "why_needed": "e-graphs / equality saturation (already installed; inventory reconcile)",
+      "red_nodes_it_should_clear": "no red nodes; reconciliation of an unrecorded existing install",
+      "version": "13.2.0",
+      "summary": "e-graphs in Python built around the the egglog rust library",
+      "provenance": {
+        "n_releases": 34,
+        "first_release": "2023-05-03T15:01:19.316322Z",
+        "home_page": "https://pypi.org/project/egglog/",
+        "project_urls": null,
+        "author": null,
+        "license": "MIT",
+        "requires_python": ">=3.11",
+        "YOUNG_PROJECT": false
+      },
+      "upstream_identity": {
+        "expected_upstream": "github.com/egraphs-good/egglog-python",
+        "declared_urls": {
+          "project_url": "https://pypi.org/project/egglog/"
+        },
+        "matched_in": [],
+        "matched_in_description_only": true,
+        "IDENTITY": "WEAK_DESCRIPTION_ONLY",
+        "author": null,
+        "maintainer": null
+      },
+      "artifact": {
+        "filename": "egglog-13.2.0-cp312-cp312-macosx_10_12_x86_64.macosx_11_0_arm64.macosx_10_12_universal2.whl",
+        "packagetype": "bdist_wheel",
+        "size_bytes": 10873370,
+        "pypi_sha256": "8c8e497659456af160d013fd58cf0c3bfc39355729dfa2aa2549bcc57b121ce6",
+        "downloaded_sha256": "8c8e497659456af160d013fd58cf0c3bfc39355729dfa2aa2549bcc57b121ce6",
+        "DIGEST_MATCHES_PYPI": true
+      },
+      "runs_code_at_install": false,
+      "scan": {
+        "members": 52,
+        "python_like_files": 39,
+        "compiled_objects": 1,
+        "pattern_hits": {
+          "install_time_exec": [],
+          "network_call": [],
+          "process_spawn": [],
+          "dynamic_exec": [
+            {
+              "file": "egglog/builtins.py",
+              "line": 101,
+              "text": "def eval(self) -> str:"
+            },
+            {
+              "file": "egglog/builtins.py",
+              "line": 139,
+              "text": "def eval(self) -> bool:"
+            },
+            {
+              "file": "egglog/builtins.py",
+              "line": 182,
+              "text": "def eval(self) -> int:"
+            },
+            {
+              "file": "egglog/builtins.py",
+              "line": 315,
+              "text": "def eval(self) -> float:"
+            },
+            {
+              "file": "egglog/builtins.py",
+              "line": 413,
+              "text": "def eval(self) -> dict[T, V]:"
+            },
+            {
+              "file": "egglog/builtins.py",
+              "line": 483,
+              "text": "def eval(self) -> set[T]:"
+            },
+            {
+              "file": "egglog/builtins.py",
+              "line": 551,
+              "text": "def eval(self) -> list[T]:"
+            },
+            {
+              "file": "egglog/builtins.py",
+              "line": 675,
+              "text": "def eval(self) -> Fraction:"
+            },
+            {
+              "file": "egglog/builtins.py",
+              "line": 759,
+              "text": "def eval(self) -> int:"
+            },
+            {
+              "file": "egglog/builtins.py",
+              "line": 886,
+              "text": "def eval(self) -> Fraction:"
+            },
+            {
+              "file": "egglog/builtins.py",
+              "line": 986,
+              "text": "def eval(self) -> tuple[T, ...]:"
+            },
+            {
+              "file": "egglog/builtins.py",
+              "line": 1095,
+              "text": "def eval(self) -> Callable[[Unpack[TS]], T]:"
+            }
+          ],
+          "opaque_blob": []
+        },
+        "pattern_counts": {
+          "install_time_exec": 0,
+          "network_call": 0,
+          "process_spawn": 0,
+          "dynamic_exec": 26,
+          "opaque_blob": 0
+        },
+        "very_long_lines": [],
+        "n_very_long_lines": 0,
+        "top_level_names": [
+          "egglog",
+          "egglog-13.2.0.dist-info"
+        ]
+      }
+    },
+    {
+      "import_name": "stitch_core",
+      "pypi_name": "stitch_core",
+      "why_needed": "RECON ONLY -- Family A abstraction mining; held pending Lexis",
+      "red_nodes_it_should_clear": "no red nodes; status AVAILABLE_CONTESTANT",
+      "version": "0.1.29",
+      "summary": "",
+      "provenance": {
+        "n_releases": 24,
+        "first_release": "2022-12-15T00:25:20.145121Z",
+        "home_page": "https://pypi.org/project/stitch-core/",
+        "project_urls": null,
+        "author": null,
+        "license": "",
+        "requires_python": ">=3.7",
+        "YOUNG_PROJECT": false
+      },
+      "upstream_identity": {
+        "expected_upstream": "github.com/mlb2251/stitch",
+        "declared_urls": {
+          "project_url": "https://pypi.org/project/stitch-core/"
+        },
+        "matched_in": [],
+        "matched_in_description_only": true,
+        "IDENTITY": "WEAK_DESCRIPTION_ONLY",
+        "author": null,
+        "maintainer": null
+      },
+      "artifact": {
+        "filename": "stitch_core-0.1.29-cp312-cp312-macosx_10_12_x86_64.macosx_11_0_arm64.macosx_10_12_universal2.whl",
+        "packagetype": "bdist_wheel",
+        "size_bytes": 1689865,
+        "pypi_sha256": "3a5949875cee452dd9b029f84b98753968048dd2783fbe1f5ba739da2e93684a",
+        "downloaded_sha256": "3a5949875cee452dd9b029f84b98753968048dd2783fbe1f5ba739da2e93684a",
+        "DIGEST_MATCHES_PYPI": true
+      },
+      "runs_code_at_install": false,
+      "scan": {
+        "members": 6,
+        "python_like_files": 1,
+        "compiled_objects": 1,
+        "pattern_hits": {
+          "install_time_exec": [],
+          "network_call": [],
+          "process_spawn": [],
+          "dynamic_exec": [],
+          "opaque_blob": []
+        },
+        "pattern_counts": {
+          "install_time_exec": 0,
+          "network_call": 0,
+          "process_spawn": 0,
+          "dynamic_exec": 0,
+          "opaque_blob": 0
+        },
+        "very_long_lines": [],
+        "n_very_long_lines": 0,
+        "top_level_names": [
+          "stitch_core",
+          "stitch_core-0.1.29.dist-info"
+        ]
+      }
+    }
+  ]
+}

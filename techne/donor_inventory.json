@@ -1,0 +1,357 @@
+{
+  "generated": "2026-08-31",
+  "generation": "Techne Gen-0 donor substrate",
+  "python": "3.12.10",
+  "adapters_registered": [
+    "cvc5",
+    "discopy",
+    "egglog",
+    "pyribs",
+    "tensorly"
+  ],
+  "adapters_available": [
+    "cvc5",
+    "discopy",
+    "egglog",
+    "pyribs",
+    "tensorly"
+  ],
+  "donors": [
+    {
+      "donor": "cvc5",
+      "distribution": "cvc5",
+      "version": "1.3.4",
+      "upstream": "github.com/cvc5/cvc5",
+      "license": "BSD-3-Clause",
+      "identity_evidence": "declared_url",
+      "identity_gate": "RESOLVED",
+      "status": "REDUNDANT_AT_GEN0",
+      "platform": "win_amd64 / cp312 (verified by import)",
+      "provenance": {
+        "pypi_sha256": "217e67ed2c4c912a7c417f63d2cde7743c8cae4add4f9b8bab5e00a4fdcf8b56",
+        "digest_matches_pypi": true,
+        "artifact": "cvc5-1.3.4-cp312-cp312-macosx_10_13_x86_64.whl",
+        "runs_code_at_install": false,
+        "n_releases": 19
+      },
+      "capabilities": [
+        "check_int_constraints"
+      ],
+      "capability_detail": [
+        {
+          "name": "check_int_constraints",
+          "summary": "decide a conjunction of linear integer constraints; return a model if sat",
+          "deterministic": true,
+          "inputs": "payload = {'vars': [names], 'constraints': [(lhs_terms, op, rhs)]} where lhs_terms maps var name -> integer coefficient and op is one of == != < <= > >=; config logic, produce_models, timeout_ms",
+          "outputs": "dict(result, model, n_vars, n_constraints)"
+        }
+      ],
+      "native_selection_relation": {
+        "kind": "none",
+        "direction": "none",
+        "over": "",
+        "supplied_by": "donor",
+        "note": "decision procedure: returns a verdict/model, imposes no preference order"
+      },
+      "accepted_config": [
+        "logic",
+        "produce_models",
+        "timeout_ms"
+      ],
+      "deterministic_replay": true,
+      "consumers": [
+        "techne.scripts.donor_smt_comparator (comparator only)"
+      ],
+      "known_limitations": [
+        "raising an error while a live TermManager/Solver is in the frame segfaults the interpreter at teardown on this platform (exit 139 AFTER all tests report PASS). The adapter validates its whole payload before constructing any cvc5 object, and drops native handles before returning. Any future cvc5 code must preserve that ordering.",
+        "REDUNDANT_AT_GEN0 against installed z3 5.0.0.0"
+      ]
+    },
+    {
+      "donor": "discopy",
+      "distribution": "discopy",
+      "version": "1.2.2",
+      "upstream": "github.com/discopy/discopy",
+      "license": "BSD-3-Clause",
+      "identity_evidence": "declared_url",
+      "identity_gate": "RESOLVED",
+      "status": "WRAPPED_AND_TESTED",
+      "platform": "win_amd64 / cp312 (verified by import)",
+      "provenance": {
+        "pypi_sha256": "4ea88180844ba737f1c40ef6fc28dac2e191ec83ac285500cae5c5396f831b2c",
+        "digest_matches_pypi": true,
+        "artifact": "discopy-1.2.2-py3-none-any.whl",
+        "runs_code_at_install": false,
+        "n_releases": 48
+      },
+      "capabilities": [
+        "compose",
+        "tensor_eval"
+      ],
+      "capability_detail": [
+        {
+          "name": "compose",
+          "summary": "build a monoidal diagram from a list of boxes composed in sequence",
+          "deterministic": true,
+          "inputs": "payload = {'boxes': [{'name','dom','cod'}, ...]}; config normal_form",
+          "outputs": "dict(dom, cod, boxes, n_layers, repr)"
+        },
+        {
+          "name": "tensor_eval",
+          "summary": "evaluate a matrix pipeline in the category of tensors (tensor-network semantics)",
+          "deterministic": true,
+          "inputs": "payload = {'factors': [2-D array-like, ...]} composed left to right",
+          "outputs": "dict(shape, array, dom, cod)"
+        }
+      ],
+      "native_selection_relation": {
+        "kind": "none",
+        "direction": "none",
+        "over": "",
+        "supplied_by": "donor",
+        "note": "decision procedure: returns a verdict/model, imposes no preference order"
+      },
+      "accepted_config": [
+        "dtype",
+        "normal_form"
+      ],
+      "deterministic_replay": true,
+      "consumers": [
+        "none yet -- capability surface offered to Harmonia (Lensing)"
+      ],
+      "known_limitations": [
+        "adapter covers monoidal composition and matrix-pipeline tensor evaluation only; the wider categorical surface is unwrapped"
+      ]
+    },
+    {
+      "donor": "egglog",
+      "distribution": "egglog",
+      "version": "13.2.0",
+      "upstream": "github.com/egraphs-good/egglog-python",
+      "license": "MIT",
+      "identity_evidence": "description_only",
+      "identity_gate": "WEAK_DESCRIPTION_ONLY",
+      "status": "WRAPPED_AND_TESTED",
+      "platform": "win_amd64 / cp312 (verified by import)",
+      "provenance": {
+        "pypi_sha256": "8c8e497659456af160d013fd58cf0c3bfc39355729dfa2aa2549bcc57b121ce6",
+        "digest_matches_pypi": true,
+        "artifact": "egglog-13.2.0-cp312-cp312-macosx_10_12_x86_64.macosx_11_0_arm64.macosx_10_12_universal2.whl",
+        "runs_code_at_install": false,
+        "n_releases": 34
+      },
+      "capabilities": [
+        "saturate_extract"
+      ],
+      "capability_detail": [
+        {
+          "name": "saturate_extract",
+          "summary": "build an e-graph over an arithmetic term, saturate under named rewrite rules, extract the minimum-cost representative",
+          "deterministic": true,
+          "inputs": "payload = nested term, e.g. ['*', ['+', 2, 3], 1]; config rules (subset of RULES), saturate, iterations",
+          "outputs": "dict(input_term, extracted, changed, rules_applied)"
+        }
+      ],
+      "native_selection_relation": {
+        "kind": "ordering",
+        "direction": "minimize",
+        "over": "extraction cost over members of an e-class (default: term size / DAG cost)",
+        "supplied_by": "donor",
+        "note": "equality saturation itself is order-free -- it holds all equivalent forms at once -- but EXTRACTION picks the cheapest under a cost model. The extracted form is therefore egglog's choice, not a canonical one."
+      },
+      "accepted_config": [
+        "iterations",
+        "rules",
+        "saturate"
+      ],
+      "deterministic_replay": true,
+      "consumers": [
+        "none yet -- capability surface offered to Lexis / Harmonia"
+      ],
+      "known_limitations": [
+        "upstream identity is description-only: the distribution declares NO repository URL in structured PyPI metadata, only a self-referential PyPI link. Grandfathered because it was already installed; a fresh install on that evidence would need a maintainer check first.",
+        "the adapter exposes a CLOSED menu of six rewrite rules; accepting arbitrary rule source would mean executing caller-supplied code behind a provenance record claiming a named configuration"
+      ]
+    },
+    {
+      "donor": "pyribs",
+      "distribution": "ribs",
+      "version": "0.12.0",
+      "upstream": "github.com/icaros-usc/pyribs",
+      "license": "MIT",
+      "identity_evidence": "declared_url",
+      "identity_gate": "RESOLVED",
+      "status": "WRAPPED_AND_TESTED",
+      "platform": "win_amd64 / cp312 (verified by import)",
+      "provenance": {
+        "pypi_sha256": "ed2b7d0aef35b23410ebf9ca57e03173e3e1384ce7344a0b77e978f4f15321e6",
+        "digest_matches_pypi": true,
+        "artifact": "ribs-0.12.0-py3-none-any.whl",
+        "runs_code_at_install": false,
+        "n_releases": 23
+      },
+      "capabilities": [
+        "archive_fill"
+      ],
+      "capability_detail": [
+        {
+          "name": "archive_fill",
+          "summary": "seeded MAP-Elites loop: GridArchive + GaussianEmitter + Scheduler",
+          "deterministic": true,
+          "inputs": "payload = {'objective': callable(X)->obj, 'measures': callable(X)->bd}; config solution_dim, dims, ranges, sigma, x0, batch_size, iterations",
+          "outputs": "dict(num_elites, cells, coverage, obj_max, obj_mean, occupied_indices)"
+        }
+      ],
+      "native_selection_relation": {
+        "kind": "objective",
+        "direction": "maximize",
+        "over": "per-cell elite objective within a discretised behaviour space",
+        "supplied_by": "caller",
+        "note": "pyribs imposes no objective of its own -- it maximises whatever the caller passes, per behavioural cell. Archive coverage therefore measures the caller's descriptor choice as much as the search; it is not evidence of discovery."
+      },
+      "accepted_config": [
+        "batch_size",
+        "dims",
+        "iterations",
+        "ranges",
+        "sigma",
+        "solution_dim",
+        "x0"
+      ],
+      "deterministic_replay": true,
+      "consumers": [
+        "none yet -- capability surface offered to Ludus (Worlds)"
+      ],
+      "known_limitations": [
+        "the objective and the behavioural descriptors are supplied by the CALLER, so archive coverage measures the caller's descriptor choice as much as the search; coverage is not discovery"
+      ]
+    },
+    {
+      "donor": "tensorly",
+      "distribution": "tensorly",
+      "version": "0.9.0",
+      "upstream": "github.com/tensorly/tensorly",
+      "license": "BSD-3-Clause (modified BSD)",
+      "identity_evidence": "declared_url",
+      "identity_gate": "RESOLVED",
+      "status": "WRAPPED_AND_TESTED",
+      "platform": "win_amd64 / cp312 (verified by import)",
+      "provenance": {
+        "pypi_sha256": "a393022ff1616a36c021496f46a955d94234d6bc8c42793f477a6be8849f4873",
+        "digest_matches_pypi": true,
+        "artifact": "tensorly-0.9.0-py3-none-any.whl",
+        "runs_code_at_install": false,
+        "n_releases": 19
+      },
+      "capabilities": [
+        "cp",
+        "tucker",
+        "tt"
+      ],
+      "capability_detail": [
+        {
+          "name": "cp",
+          "summary": "CANDECOMP/PARAFAC via alternating least squares",
+          "deterministic": true,
+          "inputs": "dense array-like tensor; config rank (required), init, n_iter_max, tol",
+          "outputs": "dict(weights, factors, fit_error, rank)"
+        },
+        {
+          "name": "tucker",
+          "summary": "Tucker via higher-order orthogonal iteration",
+          "deterministic": true,
+          "inputs": "dense array-like tensor; config ranks (required), init, n_iter_max, tol",
+          "outputs": "dict(core_shape, factor_shapes, fit_error, ranks)"
+        },
+        {
+          "name": "tt",
+          "summary": "Tensor-Train via successive SVD truncation (Oseledets)",
+          "deterministic": true,
+          "inputs": "dense array-like tensor; config rank (bond ranks or int)",
+          "outputs": "dict(core_shapes, bond_ranks, fit_error)"
+        }
+      ],
+      "native_selection_relation": {
+        "kind": "objective",
+        "direction": "minimize",
+        "over": "relative Frobenius reconstruction error at fixed rank",
+        "supplied_by": "donor",
+        "note": "tensorly optimises fit only. It has no notion of predictive or transfer value; a low fit error is not evidence that a representation is useful downstream."
+      },
+      "accepted_config": [
+        "init",
+        "n_iter_max",
+        "random_state",
+        "rank",
+        "ranks",
+        "tol"
+      ],
+      "deterministic_replay": true,
+      "consumers": [
+        "prometheus_math.symbolic_tensor_decomp (revived by this install)",
+        "techne.scripts.donor_tensor_parity"
+      ],
+      "known_limitations": [
+        "CP via ALS is only deterministic with init='svd' and a fixed random_state; the adapter defaults to both, and a random init would silently break the determinism claim in capabilities()"
+      ]
+    }
+  ],
+  "deferred": [
+    {
+      "donor": "QDax",
+      "reason_class": "platform+redundant",
+      "reason": "JAX-based; JAX ships no CUDA wheels for Windows, so it would run CPU-only here, and pyribs already covers MAP-Elites in numpy. Not complementary on this machine."
+    },
+    {
+      "donor": "MiniZinc",
+      "reason_class": "external binary",
+      "reason": "The `minizinc` distribution is a Python driver, not a solver; it requires the MiniZinc bundle installed separately. No Gen-0 consumer."
+    },
+    {
+      "donor": "LeanDojo",
+      "reason_class": "acquisition cost",
+      "reason": "Requires elan plus a Lean toolchain plus a Mathlib build (~5 GB). Already tracked as an open gap in techne/ARSENAL_ROADMAP.md. Most expensive item on the list, least Gen-0 return."
+    },
+    {
+      "donor": "EvoTorch",
+      "reason_class": "no consumer",
+      "reason": "Torch-native evolutionary computation with nothing in the programme calling it."
+    },
+    {
+      "donor": "DreamCoder",
+      "reason_class": "not distributed",
+      "reason": "Research repository, no Python distribution. The PyPI name `dreamcoder` does not exist."
+    },
+    {
+      "donor": "POET / PAIRED / ACCEL / minimax",
+      "reason_class": "not distributed + NAME COLLISION",
+      "reason": "Unmaintained JAX research repositories, no Python distributions. All four names are occupied on PyPI by unrelated projects: `poet` computes orbital evolution, `paired` aligns sequences, `accel` manages chemistry conformers, `minimax` is a generic minimax package. Installing by inferred name would install a stranger's code."
+    },
+    {
+      "donor": "Ruler / babble / Enumo / ShapeCoder",
+      "reason_class": "not distributed + NAME COLLISION + build not wrap",
+      "reason": "Rust crates from the UW PLSE e-graph lineage with no Python distribution. `babble` on PyPI is a PDF parser, `ruler` a grammar library, `egg` is 'a lonely egg'. Reaching this family from Python means building a rule-inference layer on egglog -- a build, not a wrap -- and the Gen-0 brief defers it pending the Family A vs B decision."
+    },
+    {
+      "donor": "stitch_core",
+      "reason_class": "held pending scientific decision",
+      "reason": "AVAILABLE_CONTESTANT. Acquisition facts recorded (v0.1.29, win_amd64 wheel present, upstream github.com/mlb2251/stitch, identity description-only). NOT installed: whether Family A (Stitch) or Family B (Ruler/babble/Enumo) fits Prometheus better is Lexis's call, and this seat must not settle it by acquiring one side."
+    }
+  ],
+  "reports": {
+    "vetting": "techne/dependency_vetting_gen0_2026-08-31.json",
+    "smt_comparison": "techne/donor_smt_comparison_2026-08-31.json",
+    "tensor_parity": "techne/donor_tensor_parity_2026-08-31.json",
+    "d5_consumer_compat": "techne/donor_d5_compat_2026-08-31.json"
+  },
+  "headline_findings": {
+    "tensor_parity": "NATIVE_EARNS_DISTINCT_ROLE",
+    "smt": "REDUNDANT_AT_GEN0",
+    "d5_compat": "NO_COMPATIBLE_CONSUMER"
+  },
+  "NON_CLAIMS": [
+    "installation is not adoption; a passing battery is engineering evidence only",
+    "no donor here has been shown to earn rent in any experiment",
+    "no scientific ranking of donors is stated or implied"
+  ]
+}

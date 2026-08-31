@@ -1,0 +1,139 @@
+{
+  "generated": "2026-08-31",
+  "read_only": true,
+  "source": "agent_d5_blind/ (frozen; imported read-only, nothing written or rerun)",
+  "why_this_consumer": {
+    "advantage": "+10.95pp CFR over the frozen empty-library comparator",
+    "p_value": 0.0007,
+    "unit": "task-level, n = 42",
+    "budget": "identical, metered both arms",
+    "ablation_shuffled_history_retained": "100%",
+    "ablation_random_library_retained": "39%",
+    "reading": "the effect is attributable to artifact CONTENT, not to ordering"
+  },
+  "consumer_contract": {
+    "artifact_type": "genotype = tuple of instruction tuples (OPCODE:str, a:int, b:int)",
+    "opcodes": [
+      "ADD",
+      "AND",
+      "JNZ",
+      "MOD",
+      "MOV",
+      "MUL",
+      "OR",
+      "SET",
+      "SHL",
+      "SHR",
+      "SKG",
+      "SKZ",
+      "SUB",
+      "XOR"
+    ],
+    "argument_typing": {
+      "MOV": "reg",
+      "SET": "const",
+      "ADD": "reg",
+      "SUB": "reg",
+      "MUL": "reg",
+      "AND": "reg",
+      "OR": "reg",
+      "XOR": "reg",
+      "SHL": "reg",
+      "SHR": "reg",
+      "MOD": "reg",
+      "SKZ": "none",
+      "SKG": "reg",
+      "JNZ": "jump"
+    },
+    "n_registers": 8,
+    "max_program_length": 24,
+    "constant_palette": [
+      0,
+      1,
+      2,
+      3,
+      5,
+      7,
+      11,
+      13,
+      16,
+      255
+    ],
+    "library_capacity": 64,
+    "library_policy": "most-recent-first eviction, genotype-deduped, cap LIB_CAP",
+    "admission_policy": "per task: the solving genotype if any, plus up to 4 behaviour-distinct best-scoring candidates from the last scored generation",
+    "seed_repertoire_size": 16,
+    "seed_repertoire_sample": [
+      [
+        [
+          "MOV",
+          0,
+          0
+        ]
+      ],
+      [
+        [
+          "SET",
+          0,
+          0
+        ]
+      ],
+      [
+        [
+          "SET",
+          0,
+          1
+        ]
+      ]
+    ]
+  },
+  "contract_is_checkable": {
+    "real_seed_artifact_validates": true,
+    "real_seed_message": "valid genotype",
+    "bad_constant_index_rejected": true,
+    "bad_constant_message": "instruction 0 second register out of range",
+    "float_triple_rejected": true,
+    "float_triple_message": "instruction 0 has unknown opcode 0.5"
+  },
+  "donor_assessments": [
+    {
+      "donor": "tensorly",
+      "native_output_type": "dict of float factor shapes / weights / fit error",
+      "verdict": "NO_COMPATIBLE_CONSUMER",
+      "reason": "Emits real-valued factor matrices. The slot takes variable-length instruction sequences over a 14-opcode alphabet with per-opcode argument typing. There is no type-preserving map; producing one would mean inventing a float-to-program encoding, which is a new bespoke component and would redefine what the library contains."
+    },
+    {
+      "donor": "pyribs",
+      "native_output_type": "fixed-length real-valued solution vectors in a behavioural archive",
+      "verdict": "NO_COMPATIBLE_CONSUMER",
+      "reason": "Two independent blockers. (1) Type: archive solutions are fixed-length real vectors; genotypes are variable-length discrete instruction tuples. (2) Semantics: pyribs needs a behavioural descriptor to index cells, and the D-5 slot has no notion of one. Choosing a behaviour space for programs IS the experiment, so supplying one here would embed the future experiment's answer in the wrapper."
+    },
+    {
+      "donor": "discopy",
+      "native_output_type": "string diagrams and tensor-network evaluations",
+      "verdict": "NO_COMPATIBLE_CONSUMER",
+      "reason": "Emits typed diagrams, not register-machine programs. A diagram could in principle be given RM semantics by a functor, but writing that functor is a build, not a wrap, and it has no Gen-0 consumer."
+    },
+    {
+      "donor": "cvc5",
+      "native_output_type": "sat/unsat verdicts plus integer models",
+      "verdict": "NO_COMPATIBLE_CONSUMER",
+      "reason": "Emits variable assignments, not programs. cvc5's SyGuS front end could synthesise program-shaped output, but that is a different capability class AND it would change the assay's meaning: D-5 measures findability F conditional on existence E and reachability R, and seeding the library from a complete decision procedure collapses that conditional structure. This is precisely the widening section 14 forbids."
+    },
+    {
+      "donor": "egglog",
+      "native_output_type": "extracted minimum-cost terms from an e-graph",
+      "verdict": "NO_COMPATIBLE_CONSUMER",
+      "reason": "Operates on algebraic terms. RM genotypes are imperative instruction sequences with jumps (JNZ, SKZ, SKG), which are not equational terms. Making egglog rewrite genotypes requires giving it the RM's semantics as a theory -- the 'Ruler on egglog' build the Gen-0 brief explicitly defers."
+    }
+  ],
+  "OVERALL": "NO_COMPATIBLE_CONSUMER",
+  "summary": "None of the five Gen-0 donors emits, natively, an artifact the D-5 library slot can accept. The slot's type is program-shaped: variable-length sequences over a fixed 14-opcode instruction set with typed arguments. The Gen-0 donors emit tensors, real vectors, diagrams, models and algebraic terms. No optional adapter path was implemented, because every route to one required either a bespoke encoder or a semantic widening of the assay.",
+  "what_would_be_compatible": "A donor whose native output is a program over the same instruction set -- which is exactly what the library-learning families produce: DreamCoder/Stitch (Family A) mine abstractions from program corpora, and Ruler/babble/Enumo (Family B) rewrite and abstract programs modulo a theory. That makes the Family A vs Family B decision -- which belongs to Lexis, not to this seat -- the gate on any donor-to-D-5 circulation. It is a scientific choice with an acquisition-cost asymmetry attached: Family A ships a working win_amd64 Python wheel (stitch_core 0.1.29); Family B has no Python distribution at all except egglog, so reaching it means building the rule-inference layer rather than wrapping it.",
+  "NON_CLAIMS": [
+    "no claim that the Gen-0 donors are useless -- only that none feeds THIS consumer",
+    "no claim about which library-learning family is scientifically preferable",
+    "no claim that feeding this slot is the only way a donor could earn rent",
+    "the D-5 result is quoted from its committed verdict; it was not recomputed here"
+  ]
+}

@@ -20,6 +20,9 @@ WHAT THIS ACTUALLY VERIFIES, stated precisely so nobody reads more into it than 
       overclaim this role exists to catch. For those packages the evidence is PROVENANCE and
       POPULARITY, not source review, and the report says so per package.
     - detect a compromise of PyPI itself, or a malicious release from a legitimate maintainer.
+    - establish that an upstream repository is TRUSTWORTHY. The identity gate added for the
+      Gen-0 donor set answers only "does this distribution claim the repo we intended?" -- it
+      defeats name collision, which is a real and demonstrated hazard, and nothing else.
 
     python -m techne.scripts.dependency_vetting --report techne/dependency_vetting_2026-08-27.json
 """
@@ -67,6 +70,83 @@ PACKAGES = [
                   "persistent_homology recipe surface is gated on it",
      "prometheus_math/recipes/persistent_homology/tests (35 nodes, previously skipped)"),
 ]
+
+#: GEN-0 DONOR SET (Techne Gen-0 assignment, 2026-08-31). Same tuple shape as PACKAGES with a
+#: FIFTH element: the canonical upstream repository this name is supposed to be. That field is
+#: the anti-name-collision gate. Five of eight donor names checked on 2026-08-30 resolved to
+#: unrelated projects on PyPI -- `babble` is a PDF parser, `ruler` a grammar library, `egg` is
+#: "a lonely egg", `poet` computes orbital evolution, `paired` aligns sequences. A raid that
+#: infers package identity from a project name installs a stranger's code. So identity is
+#: ESTABLISHED, never inferred: the distribution's own PyPI metadata must point at the
+#: repository we intended, or the donor is recorded DONOR_IDENTITY_UNRESOLVED and not installed.
+DONORS_GEN0 = [
+    ("tensorly", "tensorly", "CP / Tucker / TT decompositions as contestant representations",
+     "revives prometheus_math.symbolic_tensor_decomp (hard ImportError without it)",
+     "github.com/tensorly/tensorly"),
+    ("ribs", "ribs", "MAP-Elites / quality-diversity archives, numpy-native (pyribs)",
+     "no red nodes; capability surface for a later Ludus experiment",
+     "github.com/icaros-usc/pyribs"),
+    ("discopy", "discopy", "string diagrams, functors, rewrites, tensor interpretation",
+     "no red nodes; lensing capability surface for Harmonia",
+     "github.com/discopy/discopy"),
+    ("cvc5", "cvc5", "exact SMT counterexamples; comparator against installed z3",
+     "no red nodes; adversary capability surface for Charon",
+     "github.com/cvc5/cvc5"),
+    ("egglog", "egglog", "e-graphs / equality saturation (already installed; inventory reconcile)",
+     "no red nodes; reconciliation of an unrecorded existing install",
+     "github.com/egraphs-good/egglog-python"),
+    # RECONNAISSANCE ONLY -- acquisition facts recorded, NOT installed. The Family A vs Family B
+    # question (Stitch lineage vs Ruler/babble/Enumo lineage) is Lexis's scientific call, not
+    # this seat's. See roles/Lexis/library_learning/notes/PASS_08_wider_tool_survey.md.
+    ("stitch_core", "stitch_core", "RECON ONLY -- Family A abstraction mining; held pending Lexis",
+     "no red nodes; status AVAILABLE_CONTESTANT",
+     "github.com/mlb2251/stitch"),
+]
+
+PACKAGE_SETS = {"hitl242": PACKAGES, "gen0_donors": DONORS_GEN0}
+
+
+def upstream_identity(meta: dict, expected_repo: str) -> dict:
+    """The anti-name-collision gate. Section 2 of the Gen-0 assignment.
+
+    A PyPI NAME proves nothing about which project published it. This resolves identity from
+    the distribution's own metadata -- home_page, project_urls, and the long description --
+    and reports whether the intended upstream repository actually appears there.
+
+    RESOLVED means: the distribution itself claims the repo we expected. It does NOT mean the
+    repo is trustworthy, that the maintainer is who they say, or that PyPI was not compromised;
+    those limits are already stated in the report header and are unchanged.
+    """
+    info = meta["info"]
+    haystack_fields = {
+        "home_page": info.get("home_page") or "",
+        "project_url": info.get("project_url") or "",
+        "docs_url": info.get("docs_url") or "",
+    }
+    for k, v in (info.get("project_urls") or {}).items():
+        haystack_fields[f"project_urls.{k}"] = v or ""
+    # The long description is lower-evidence than a declared URL: a squatter can copy prose.
+    desc = (info.get("description") or "")[:20000]
+
+    want = expected_repo.lower().rstrip("/")
+    matched_in = [k for k, v in haystack_fields.items() if want in (v or "").lower()]
+    in_description_only = (not matched_in) and (want in desc.lower())
+
+    if matched_in:
+        verdict = "RESOLVED"
+    elif in_description_only:
+        verdict = "WEAK_DESCRIPTION_ONLY"
+    else:
+        verdict = "DONOR_IDENTITY_UNRESOLVED"
+    return {
+        "expected_upstream": expected_repo,
+        "declared_urls": {k: v for k, v in haystack_fields.items() if v},
+        "matched_in": matched_in,
+        "matched_in_description_only": in_description_only,
+        "IDENTITY": verdict,
+        "author": info.get("author") or info.get("author_email"),
+        "maintainer": info.get("maintainer") or info.get("maintainer_email"),
+    }
 
 #: Patterns that carry supply-chain payloads. Presence is a FLAG for reading, not a verdict --
 #: legitimate scientific packages use subprocess and eval. The report shows the hit in context.
@@ -180,7 +260,8 @@ def typosquat_risk(meta: dict) -> dict:
     }
 
 
-def vet(import_name: str, pypi_name: str, why: str, clears: str, workdir: pathlib.Path) -> dict:
+def vet(import_name: str, pypi_name: str, why: str, clears: str, workdir: pathlib.Path,
+        expected_repo: str | None = None) -> dict:
     rec = {"import_name": import_name, "pypi_name": pypi_name, "why_needed": why,
            "red_nodes_it_should_clear": clears}
     try:
@@ -191,6 +272,13 @@ def vet(import_name: str, pypi_name: str, why: str, clears: str, workdir: pathli
     rec["version"] = meta["info"]["version"]
     rec["summary"] = (meta["info"]["summary"] or "")[:160]
     rec["provenance"] = typosquat_risk(meta)
+    if expected_repo is not None:
+        rec["upstream_identity"] = upstream_identity(meta, expected_repo)
+        if rec["upstream_identity"]["IDENTITY"] == "DONOR_IDENTITY_UNRESOLVED":
+            # Hard gate: do not download an artifact whose project identity we could not
+            # establish. Recording the blocker is the deliverable; installing is not.
+            rec["GATE"] = "DONOR_IDENTITY_UNRESOLVED -- artifact not downloaded"
+            return rec
 
     art = pick_artifact(meta)
     if art is None:
@@ -217,8 +305,10 @@ def vet(import_name: str, pypi_name: str, why: str, clears: str, workdir: pathli
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--report", default="techne/dependency_vetting_2026-08-27.json")
+    ap.add_argument("--set", dest="pset", default="hitl242", choices=sorted(PACKAGE_SETS),
+                    help="which package set to vet; default preserves the original behaviour")
     a = ap.parse_args()
-    out = {"protocol": "HITL #242",
+    out = {"protocol": "HITL #242", "package_set": a.pset,
            "verifies": ["pypi provenance", "sha256 vs pypi digest", "install-time code execution",
                         "pure-python payload patterns"],
            "does_not_verify": ["compiled extension source (GUDHI/shapely/matplotlib ship large "
@@ -228,12 +318,16 @@ def main() -> int:
            "packages": []}
     with tempfile.TemporaryDirectory() as td:
         wd = pathlib.Path(td)
-        for imp, pypi, why, clears in PACKAGES:
+        for entry in PACKAGE_SETS[a.pset]:
+            imp, pypi, why, clears = entry[:4]
+            expected_repo = entry[4] if len(entry) > 4 else None
             print(f"vetting {pypi} ...", flush=True)
-            rec = vet(imp, pypi, why, clears, wd)
+            rec = vet(imp, pypi, why, clears, wd, expected_repo)
             out["packages"].append(rec)
-            flag = rec.get("ERROR") or ("sdist" if rec.get("runs_code_at_install") else "wheel")
-            print(f"  {pypi:18s} {rec.get('version','?'):12s} {flag}")
+            flag = (rec.get("ERROR") or rec.get("GATE")
+                    or ("sdist" if rec.get("runs_code_at_install") else "wheel"))
+            ident = (rec.get("upstream_identity") or {}).get("IDENTITY", "-")
+            print(f"  {pypi:18s} {rec.get('version','?'):12s} {ident:26s} {flag}")
     dest = pathlib.Path(a.report)
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text(json.dumps(out, indent=2), encoding="utf-8")

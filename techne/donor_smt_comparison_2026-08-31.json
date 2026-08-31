@@ -1,0 +1,82 @@
+{
+  "generated": "2026-08-31",
+  "question": "what Gen-0 capability, if any, does cvc5 expose that installed z3 does not?",
+  "z3_version": "5.0.0.0",
+  "cvc5_version": "1.3.4",
+  "problems": 6,
+  "verdicts_agree": 6,
+  "cvc5_correct": 6,
+  "z3_correct": 6,
+  "all_returned_models_valid": true,
+  "rows": [
+    {
+      "problem": "simple_sat",
+      "expected": "sat",
+      "cvc5": "sat",
+      "cvc5_correct_verdict": true,
+      "cvc5_model_valid": true,
+      "z3": "sat",
+      "z3_correct_verdict": true,
+      "z3_model_valid": true,
+      "VERDICTS_AGREE": true
+    },
+    {
+      "problem": "contradiction",
+      "expected": "unsat",
+      "cvc5": "unsat",
+      "cvc5_correct_verdict": true,
+      "z3": "unsat",
+      "z3_correct_verdict": true,
+      "VERDICTS_AGREE": true
+    },
+    {
+      "problem": "equality_chain",
+      "expected": "sat",
+      "cvc5": "sat",
+      "cvc5_correct_verdict": true,
+      "cvc5_model_valid": true,
+      "z3": "sat",
+      "z3_correct_verdict": true,
+      "z3_model_valid": true,
+      "VERDICTS_AGREE": true
+    },
+    {
+      "problem": "disequality",
+      "expected": "unsat",
+      "cvc5": "unsat",
+      "cvc5_correct_verdict": true,
+      "z3": "unsat",
+      "z3_correct_verdict": true,
+      "VERDICTS_AGREE": true
+    },
+    {
+      "problem": "bounded_box",
+      "expected": "sat",
+      "cvc5": "sat",
+      "cvc5_correct_verdict": true,
+      "cvc5_model_valid": true,
+      "z3": "sat",
+      "z3_correct_verdict": true,
+      "z3_model_valid": true,
+      "VERDICTS_AGREE": true
+    },
+    {
+      "problem": "negative_coeffs",
+      "expected": "sat",
+      "cvc5": "sat",
+      "cvc5_correct_verdict": true,
+      "cvc5_model_valid": true,
+      "z3": "sat",
+      "z3_correct_verdict": true,
+      "z3_model_valid": true,
+      "VERDICTS_AGREE": true
+    }
+  ],
+  "VERDICT": "REDUNDANT_AT_GEN0",
+  "rationale": "On every Gen-0 capability exercised -- QF_LIA decision plus model extraction -- cvc5 and the already-installed z3 agree on all 6 problems, both reach the hand-known verdict, and every returned model satisfies its own constraints. There is no Gen-0 capability cvc5 supplies that z3 does not. It is retained as VETTED and WRAPPED but NOT promoted to a dependency: the capabilities that could differentiate it (finite-field, sequence, bag and separation-logic theories; the SyGuS synthesis front end) have no consumer yet, and acquiring a second solver for capabilities nothing calls is how an arsenal accumulates weight without function.",
+  "not_measured": [
+    "wall-clock performance (these problems measure process startup, not solving)",
+    "theories exercised by neither solver here",
+    "cvc5 SyGuS synthesis -- a different capability class with no Gen-0 consumer"
+  ]
+}
