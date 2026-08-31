@@ -181,12 +181,39 @@ def tag_mechanisms(text: str) -> dict:
     return hits
 
 
-def assign_bottleneck(mech_hits: dict) -> str:
-    """Majority-vote the primary bottleneck from tagged mechanisms.
+#: Mechanisms that fire on almost every paper in this corpus and therefore carry almost no
+#: information about which bottleneck a paper loads on. Down-weighted rather than removed:
+#: they are still evidence, just weak evidence.
+#:
+#: Measured cycle 021: of 9 genomes with all three descriptor axes known, 5 lost their
+#: bottleneck to a TIE -- 56% of the otherwise-classifiable set. Every one of those ties was
+#: manufactured by a coarse tag. `tournament_selection` is the worst offender because the
+#: concept tagger added the previous cycle maps OpenAlex's "Selection (genetic algorithm)",
+#: "Genetic algorithm" and "Evolutionary algorithm" all onto it -- so it now fires on nearly
+#: every evolutionary paper and reliably ties against whatever specific mechanism the paper is
+#: actually about. Four canonical lexicase papers were unclassifiable for exactly this reason
+#: while carrying the tag `lexicase`.
+COARSE_MECHANISMS = {
+    "tournament_selection": 0.25,
+    "scalar_objective": 0.4,
+    "neural_representation": 0.4,
+    "tree_gp": 0.6,
+    "test_suite": 0.6,
+    "gradient_descent": 0.6,
+}
 
-    Ties and empties return B_UNASSIGNED rather than guessing. An unassigned genome is a
-    visible residual and residuals are what taxonomy mutation feeds on; a guessed assignment
-    would hide exactly the signal we want.
+
+def assign_bottleneck(mech_hits: dict) -> str:
+    """Weighted-vote the primary bottleneck from tagged mechanisms.
+
+    Specific mechanisms outweigh generic ones. `lexicase` is a claim about credit assignment;
+    `tournament_selection` inferred from a generic "Genetic algorithm" concept label is barely
+    a claim at all, and letting the two vote equally lets noise cancel signal.
+
+    Empties, and genuine ties between EQUALLY SPECIFIC mechanisms, still return B_UNASSIGNED.
+    That matters: an unassigned genome is a visible residual, and residuals are what taxonomy
+    mutation feeds on. The fix removes ties manufactured by coarse tags, not ties that reflect
+    a paper genuinely spanning two bottlenecks.
     """
     if not mech_hits:
         return "B_UNASSIGNED"
@@ -194,12 +221,19 @@ def assign_bottleneck(mech_hits: dict) -> str:
     for mech in mech_hits:
         b = MECHANISM_BOTTLENECK.get(mech)
         if b:
-            votes[b] = votes.get(b, 0) + 1
+            votes[b] = votes.get(b, 0.0) + COARSE_MECHANISMS.get(mech, 1.0)
     if not votes:
         return "B_UNASSIGNED"
     top = max(votes.values())
-    winners = [b for b, v in votes.items() if v == top]
-    return winners[0] if len(winners) == 1 else "B_UNASSIGNED"
+    # A margin is required, not just a maximum: 1.0 vs 0.95 is a tie in everything but
+    # arithmetic, and declaring a winner there would be false precision.
+    winners = [b for b, v in votes.items() if v >= top - 1e-9]
+    if len(winners) != 1:
+        return "B_UNASSIGNED"
+    runner_up = max([v for b, v in votes.items() if b != winners[0]], default=0.0)
+    if top - runner_up < 0.2:
+        return "B_UNASSIGNED"
+    return winners[0]
 
 
 def descriptors_from(mech_hits: dict) -> dict:
