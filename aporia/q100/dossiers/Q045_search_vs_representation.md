@@ -242,3 +242,105 @@ has been constructed, so the algebraic reading is **supported by a collapsing ma
 curve, not established** — the floor could still be a very slow decay. The cheap next check is
 the same sweep on a second removed primitive: if the yield collapse replicates across primitives
 with different loss fractions, the subalgebra reading strengthens considerably.
+
+---
+
+## 10. ADDENDUM 2 — where the world actually varies, and the certificate that falls out
+
+**Operator, 2026-08-31:** *"the world can vary vastly despite being made of similar parts."*
+
+Correct — and the measurement localises *where*. It is not where I expected.
+
+### 10.1 Varying the ring and the width barely moves anything
+
+Same ten primitive KINDS throughout; only the ring and vector width change. Label at depth 5
+with elementwise-multiply removed, verify at depth 8.
+
+    world     field?   full V    lost   lost%   recovered@8   FLOOR
+    Z5^4        yes     4,438   3,018   68.0%          3.7%   96.3%
+    Z6^4         no     3,502   2,136   61.0%          6.6%   93.4%
+    Z7^4        yes     4,847   3,206   66.1%          4.5%   95.5%
+    Z8^4         no     3,712   2,407   64.8%          4.2%   95.8%
+    Z9^4         no     4,850   3,109   64.1%          2.4%   97.6%
+    Z6^3         no     3,183   1,965   61.7%          3.9%   96.1%
+    Z6^5         no     3,637   2,295   63.1%          1.8%   98.2%
+    Z7^3        yes     4,627   3,076   66.5%          4.5%   95.5%
+
+    FLOOR spread 4.8pp (93.4-98.2).   mean prime 95.8% vs composite 96.2%.
+
+**A prediction of mine failed here and is recorded as such.** I expected the field/ring
+distinction to be the sharp lever — Z5 and Z7 have every nonzero element invertible, Z6/Z8/Z9
+have zero divisors, a categorical algebraic difference from a one-character change. It made
+**0.4 percentage points** of difference, inside the spread. The floor is invariant to the
+arithmetic.
+
+**And this strengthens §9 rather than weakening it:** the 89.6% floor was not a Z6 artifact. It
+replicates at 93-98% across eight worlds.
+
+### 10.2 Varying the operator inventory moves everything
+
+Z6^4 throughout; remove each primitive in turn.
+
+    removed   kind               lost   lost%   recovered@8   FLOOR
+    p00       rotate            2,013   57.5%          0.8%   99.2%
+    p05       vec multiply      2,136   61.0%          6.6%   93.4%
+    p01       reverse           1,565   44.7%          6.8%   93.2%
+    p06       sum->scalar       1,054   30.1%         17.7%   82.3%
+    p02       increment         1,498   42.8%         26.2%   73.8%
+    p04       vec add           1,450   41.4%         29.0%   71.0%
+    p07       product->scalar     669   19.1%         40.7%   59.3%
+    p08       scalar add          982   28.0%         69.7%   30.3%
+    p09       scalar multiply     656   18.7%         72.6%   27.4%
+    p03       double              615   17.6%         95.8%    4.2%
+
+    FLOOR spread 94.9pp (4.2-99.2), against 4.8pp for ring and width.
+
+**Twenty times the variation, from the same-sized parameter change.** The operator inventory is
+the world; the arithmetic is decoration.
+
+### 10.3 The variation is signal, not noise — and it is the missing certificate
+
+The floor is not scattered. It tracks whether the removed primitive was **definable from the
+rest**:
+
+- **`double` reads 4.2%.** `dbl(v) = 2v` and `vadd(v,v) = v+v = 2v` — identical by inspection of
+  `world3.py`. It is a composition wearing a primitive's name, and the instrument says so.
+- **`rotate` reads 99.2%.** Every other primitive is coordinate-wise or global; only `reverse`
+  also moves data between positions, and reverse alone generates an involution, not the cyclic
+  group. Rotation is structurally irreplaceable, and the instrument says that too.
+
+**So the leave-one-out floor is an operational non-redundancy certificate:**
+
+    floor ~ 0   the primitive is reproducible from the others   -> Level 0, a named composition
+    floor ~ 1   the primitive is a genuine generator            -> irreplaceable at any depth
+
+**This is the test Q060's T2 demands and that the entire library-learning literature has never
+executed** (`Q047_Q060_Q100_operator_invention.md`: novelty is asserted or replaced by a
+compression proxy in DreamCoder, Stitch, babble, LILO and ShapeCoder). It now arrives with a
+**positive control** — `double`, known-definable, reads 4.2% — and a **negative control** —
+`rotate`, structurally unique, reads 99.2%. Both recovered facts we already knew, which is what
+licenses using it on facts we do not.
+
+### 10.4 The limit, stated precisely
+
+`double` reads 4.2% rather than 0% because the enumerator counts **tree size**: `dbl(f(x))` costs
+`size(f)+1` while `vadd(f(x),f(x))` costs `2·size(f)+1`, since a shared subterm is paid for
+twice. So the floor conflates *"not definable"* with *"definable only at much greater tree
+cost."* It is a **cost-sensitive** non-redundancy measure, not a pure definability measure. For
+`rotate` this does not matter — no definition exists at any cost. For borderline primitives it
+does, and any use of this certificate must report the size convention alongside the number.
+
+### 10.5 What this settles for the operator's claim
+
+**Worlds made of similar parts do vary vastly — but along the operator axis, not the arithmetic
+axis, and by a factor of twenty.** Two consequences:
+
+1. **Q045's experiment is portable across rings and widths** (floor stable to 4.8pp) and
+   **must be stratified by removed primitive** (floor varies 94.9pp). Sampling one removal and
+   generalising would be exactly the prefix-sampling error this programme has committed before.
+2. **The ground-truth label noise is primitive-specific.** §9 quoted 10.4% from `p05`. For `p03`
+   it is **95.8%** — labels there are almost entirely wrong. Any Q045 task population built by
+   removing a low-floor primitive is measuring depth, not representation, and would produce a
+   diagnostic that appears to work while classifying nothing.
+
+Reproducible at `aporia/q100/probes/q45_world_variation.py` and `q45_per_primitive_floor.py`.
