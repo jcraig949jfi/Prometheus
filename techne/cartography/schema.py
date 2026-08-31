@@ -357,6 +357,11 @@ class CycleRecord:
     searches: list = dataclasses.field(default_factory=list)
     sources_new: int = 0
     sources_rejected: int = 0
+    #: Re-encountered, not rejected. Conflating the two made cycle 027 report "12 rejected"
+    #: when it wrote zero rejection records and had simply re-found 12 papers already in the
+    #: corpus. That is SATURATION -- a signal a query is exhausted -- and it is the opposite
+    #: of a rejection, which says a paper was examined and declined.
+    sources_already_known: int = 0
     genomes_created: int = 0
     claims_created: int = 0
     claims_adjudicated: int = 0

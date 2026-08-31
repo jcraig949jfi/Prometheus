@@ -329,21 +329,46 @@ def attack_hole(hole: dict, cycle: int) -> tuple:
             # RELEVANCE IS NOT RESULT COUNT. Every index returns something for every query.
             # A result counts as relevant only if its title carries mechanism vocabulary for
             # BOTH the representation and the selection axis of the cell.
-            n_rel = _count_relevant(src, data, cell)
+            n_full, n_partial, matched = _count_relevant(src, data, cell)
             att = RetrievalAttempt(query=f["query"], source=src, formulation=f["formulation"],
-                                   n_results=int(n_total), n_relevant=n_rel,
+                                   n_results=int(n_total), n_relevant=n_full,
                                    top_ids=[i for i in ids if i], url=url).as_dict()
+            # Partial occupancy is recorded but does NOT feed n_relevant, which is what P6
+            # reads to decide a kill. Evidence about two axes cannot retire a four-axis cell.
+            att["n_partial_occupancy"] = n_partial
+            att["axes_matched"] = matched
             attempts.append(att)
             store.append("retrieval", att)
-            if n_rel:
+            if n_full or n_partial:
                 found_ids.extend([i for i in ids if i][:3])
         except sources.SourceError as e:
             notes.append(str(e))
             continue
 
+    # PROMOTION IS GATED ON THE SAME CLASSIFICATION HEALTH AS PROPOSAL.
+    #
+    # Hole PROPOSAL has been blocked below a 25% classification rate since cycle 020, but
+    # PROMOTION had no such gate -- an inconsistency that let a cell reach
+    # PERSISTENT_COVERAGE_HOLE at a 3.5% rate. If the archive cannot place papers, it cannot
+    # establish that a cell is empty either, and an absence claim is far stronger than a
+    # presence claim. Gating proposal but not promotion had it exactly backwards.
+    rate, _ok, _tot = classification_rate()
+    if rate < MIN_CLASSIFICATION_RATE:
+        hole["retrieval_attempts"] = attempts
+        hole["n_formulations"] = len({a["formulation"] for a in attempts})
+        hole["confidence_in_absence"] = (
+            "PROMOTION BLOCKED: archive classification rate {:.1%} is below the {:.0%} "
+            "threshold. No absence claim is supportable when the instrument places almost "
+            "nothing.".format(rate, MIN_CLASSIFICATION_RATE))
+        hole["promotion_blocked_by_classification_rate"] = round(rate, 4)
+        return hole, notes
+
     verdict, reason = P.hole_is_persistent(attempts)
     hole["retrieval_attempts"] = attempts
     hole["n_formulations"] = len({a["formulation"] for a in attempts})
+    partial_total = sum(int(a.get("n_partial_occupancy", 0)) for a in attempts)
+    hole["partial_occupancy"] = partial_total
+    hole["axes_ever_matched"] = sorted({x for a in attempts for x in (a.get("axes_matched") or [])})
     if verdict == "REFUTED":
         hole["status"] = "KILLED_BY_RETRIEVAL"
         hole["killed_by"] = reason
@@ -358,32 +383,65 @@ def attack_hole(hole: dict, cycle: int) -> tuple:
     return hole, notes
 
 
-def _count_relevant(src: str, data: dict, cell: tuple) -> int:
-    """A result is relevant only if its title tags BOTH the cell's representation and its
-    selection mechanism. Counting raw hits would kill every hole instantly and counting zero
-    would preserve every hole forever; this is the discriminating middle."""
-    _b, rep, sel, _ev = cell
+def _count_relevant(src: str, data: dict, cell: tuple) -> tuple:
+    """Return (n_full_cell, n_partial, matched_axes).
+
+    A hole is defined on FOUR coordinates, so killing it honestly requires evidence that
+    occupies all four. The original rule checked only representation and selection -- 2 of 4 --
+    and killing is the DESIRABLE direction, which is exactly where a weak criterion goes
+    unchallenged. Cycle 026 caught it: cell
+    (B1, discrete_program, scalar_fitness, coevolved_moving) was killed by two arXiv hits found
+    under the formulation "program tournament selection", which drops the evaluation axis
+    entirely. The evidence never spoke to coevolved_moving at all.
+
+    So matches are now counted at two strengths. A FULL match occupies representation,
+    selection AND evaluation; a PARTIAL match occupies representation and selection only, and
+    is recorded as partial occupancy rather than counted as a kill.
+    """
+    _b, rep, sel, ev = cell
+    # TAG ON TITLE **PLUS ABSTRACT**. Tagging titles alone made the full-cell criterion
+    # structurally unsatisfiable: measured at cycle 033, ZERO of 258 papers in the corpus have
+    # a title from which all three descriptor axes can be recovered. So no hole could ever be
+    # killed, and every hole trended to PERSISTENT_COVERAGE_HOLE by default -- a "gap in the
+    # literature" manufactured by a detector that cannot see occupancy. That is the single most
+    # dangerous output this campaign can produce, and it had already fired once.
     titles = []
     if src == "openalex":
-        titles = [(r.get("title") or "") for r in data.get("results", [])]
+        titles = [((r.get("title") or "") + " "
+                   + (sources.usable_abstract(sources._invert_abstract(
+                       r.get("abstract_inverted_index"))) or ""))
+                  for r in data.get("results", [])]
     elif src == "crossref":
         for it in ((data.get("message") or {}).get("items") or []):
             t = it.get("title") or []
             titles.append(t[0] if t else "")
     elif src == "arxiv":
-        titles = [e.get("title") or "" for e in data.get("entries", [])]
+        titles = [(e.get("title") or "") + " " + (e.get("abstract") or "")
+                  for e in data.get("entries", [])]
     else:
         titles = [h.get("title") or "" for h in sources.dblp_hits(data)]
 
-    n = 0
+    n_full = n_partial = 0
+    axes = set()
     for t in titles:
         tags = taxonomy.tag_mechanisms(t)
         if not tags:
             continue
         d = taxonomy.descriptors_from(tags)
-        if d.get("representation_family") == rep and d.get("selection_family") == sel:
-            n += 1
-    return n
+        hit_rep = d.get("representation_family") == rep
+        hit_sel = d.get("selection_family") == sel
+        hit_ev = d.get("evaluation_regime") == ev
+        if hit_rep:
+            axes.add("representation_family")
+        if hit_sel:
+            axes.add("selection_family")
+        if hit_ev:
+            axes.add("evaluation_regime")
+        if hit_rep and hit_sel and hit_ev:
+            n_full += 1
+        elif hit_rep and hit_sel:
+            n_partial += 1
+    return n_full, n_partial, sorted(axes)
 
 
 def run_cycle(cycle: int, state: dict, max_new: int = 12) -> tuple:
@@ -462,7 +520,16 @@ def run_cycle(cycle: int, state: dict, max_new: int = 12) -> tuple:
                     store.upsert("genomes", g)
             else:
                 st["queries_used"].append(query)
-                data = sources.openalex_search(query, per_page=max_new)
+                # The awkward lane hunts negative results, replications and critiques --
+                # literature that is under-cited BY DEFINITION. Relevance ranking is
+                # citation-weighted, so an uncapped query hands back the field's most famous
+                # papers instead. Cap it. Other lanes are left uncapped: the historical lane
+                # legitimately wants foundational work, which is highly cited.
+                # Both lanes that hunt buried literature need the cap. confound_hunt draws
+                # from the same AWKWARD_QUERIES pool and was missed by the cycle-025 fix --
+                # an incomplete repair that left half the defect in place.
+                cap = 100 if frontier["kind"] in ("awkward", "confound_hunt") else None
+                data = sources.openalex_search(query, per_page=max_new, cited_by_max=cap)
                 results = data.get("results", [])
                 att = RetrievalAttempt(
                     query=query, source="openalex", formulation="seed_" + frontier["kind"],
@@ -479,7 +546,7 @@ def run_cycle(cycle: int, state: dict, max_new: int = 12) -> tuple:
                     norm = sources.openalex_normalize(work)
                     norm["_index"] = "openalex"
                     if norm["source_id"] in known:
-                        rec.sources_rejected += 1
+                        rec.sources_already_known += 1
                         continue
                     dstat, dreas = domain.classify(
                         norm.get("concepts"),
@@ -534,6 +601,12 @@ def run_cycle(cycle: int, state: dict, max_new: int = 12) -> tuple:
         rec.claims_adjudicated = rec.claims_created
         if rec.genomes_created == 0 and rec.holes_killed == 0 and rec.status == "OK":
             rec.status = "NULL"
+            if rec.sources_already_known and not rec.sources_rejected:
+                rec.notes.append(
+                    "SATURATED: every result was already in the corpus (" 
+                    + str(rec.sources_already_known) + " re-encountered, 0 rejected). This "
+                    "query is exhausted, which is information about the frontier rather than "
+                    "a failed cycle.")
 
     except Exception as e:                                            # noqa: BLE001
         rec.status = "BLOCKED"
