@@ -1,0 +1,24 @@
+=====================================================================
+GEN-3F-b FREEZE -- representation invariance, control repaired
+Date: 2026-08-31. Supersedes FREEZE_3F.txt after HARNESS_SUSPECT.
+=====================================================================
+WHAT CHANGED (only this): E-RELAB is now an EXACT ISOMORPHIC REPLAY
+of the E-ORIG edit rows through the relabeling map (same gate, same
+op change, rewire targets mapped through the input permutation).
+Under input permutation, d, minmass, surv_sym, the influence
+profile, and every model feature are invariant, so identical rows
+are a THEOREM; control tolerance tightens to 0.005. The prior
+implementation redrew edits independently, and its 0.02 tolerance
+was mis-calibrated for resampling noise -- the control tripped on
+its own variance (fold 44, |diff| = 0.0275). Journaled.
+DISCLOSURE: the E-NAND arm's fold AUCs were observed under the
+voided 3F run before this freeze was issued. The NAND arm, its
+streams, the model, and ALL gates/thresholds are byte-identical to
+FREEZE_3F.txt; nothing outcome-contingent was altered. The
+observation order is recorded in JOURNAL.jsonl and this packet
+line; reviewers should weigh it.
+GATES (unchanged except control tol): G_CONTROL |RELAB - ORIG| <=
+0.005 per fold; VERDICT on E-NAND: BEHAVIOR_TRACKING >= 0.65 in
+5/5; REPRESENTATION_SPECIFIC <= 0.55 any fold; else
+PARTIAL_INVARIANCE.
+=====================================================================
