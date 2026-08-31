@@ -345,6 +345,24 @@ def attack_hole(hole: dict, cycle: int) -> tuple:
             notes.append(str(e))
             continue
 
+    # PROMOTION IS GATED ON THE SAME CLASSIFICATION HEALTH AS PROPOSAL.
+    #
+    # Hole PROPOSAL has been blocked below a 25% classification rate since cycle 020, but
+    # PROMOTION had no such gate -- an inconsistency that let a cell reach
+    # PERSISTENT_COVERAGE_HOLE at a 3.5% rate. If the archive cannot place papers, it cannot
+    # establish that a cell is empty either, and an absence claim is far stronger than a
+    # presence claim. Gating proposal but not promotion had it exactly backwards.
+    rate, _ok, _tot = classification_rate()
+    if rate < MIN_CLASSIFICATION_RATE:
+        hole["retrieval_attempts"] = attempts
+        hole["n_formulations"] = len({a["formulation"] for a in attempts})
+        hole["confidence_in_absence"] = (
+            "PROMOTION BLOCKED: archive classification rate {:.1%} is below the {:.0%} "
+            "threshold. No absence claim is supportable when the instrument places almost "
+            "nothing.".format(rate, MIN_CLASSIFICATION_RATE))
+        hole["promotion_blocked_by_classification_rate"] = round(rate, 4)
+        return hole, notes
+
     verdict, reason = P.hole_is_persistent(attempts)
     hole["retrieval_attempts"] = attempts
     hole["n_formulations"] = len({a["formulation"] for a in attempts})
@@ -381,15 +399,25 @@ def _count_relevant(src: str, data: dict, cell: tuple) -> tuple:
     is recorded as partial occupancy rather than counted as a kill.
     """
     _b, rep, sel, ev = cell
+    # TAG ON TITLE **PLUS ABSTRACT**. Tagging titles alone made the full-cell criterion
+    # structurally unsatisfiable: measured at cycle 033, ZERO of 258 papers in the corpus have
+    # a title from which all three descriptor axes can be recovered. So no hole could ever be
+    # killed, and every hole trended to PERSISTENT_COVERAGE_HOLE by default -- a "gap in the
+    # literature" manufactured by a detector that cannot see occupancy. That is the single most
+    # dangerous output this campaign can produce, and it had already fired once.
     titles = []
     if src == "openalex":
-        titles = [(r.get("title") or "") for r in data.get("results", [])]
+        titles = [((r.get("title") or "") + " "
+                   + (sources.usable_abstract(sources._invert_abstract(
+                       r.get("abstract_inverted_index"))) or ""))
+                  for r in data.get("results", [])]
     elif src == "crossref":
         for it in ((data.get("message") or {}).get("items") or []):
             t = it.get("title") or []
             titles.append(t[0] if t else "")
     elif src == "arxiv":
-        titles = [e.get("title") or "" for e in data.get("entries", [])]
+        titles = [(e.get("title") or "") + " " + (e.get("abstract") or "")
+                  for e in data.get("entries", [])]
     else:
         titles = [h.get("title") or "" for h in sources.dblp_hits(data)]
 
