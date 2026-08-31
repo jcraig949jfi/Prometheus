@@ -76,6 +76,21 @@ MECHANISMS = {
                                "neural program", "soft execution", "relaxation"],
     "dsl_library": ["domain-specific language", "dsl", "library learning", "abstraction learning",
                     "refactoring", "compression"],
+    #: Plain program-synthesis vocabulary. Its absence meant an entire mandated collision
+    #: surface had NO representation coverage: measured cycle 034, "inductive program synthesis
+    #: from examples" and "syntax-guided synthesis of programs" both tagged
+    #: representation_family=unknown, as did every CEGIS and SyGuS paper found at cycle 033.
+    #: The table covered "genetic programming" and its variants and nothing else that produces
+    #: a program.
+    #:
+    #: DISCLOSURE: these surface forms were chosen from the field's standard terminology, but I
+    #: had just read CEGIS/SyGuS search results, so the choice is partly sample-informed. The
+    #: guard is downstream -- newly placed papers are read to confirm they are genuinely
+    #: program-synthesis work, rather than the placement count being taken at face value.
+    "program_synthesis": ["program synthesis", "programme synthesis", "synthesize programs",
+                          "synthesise programs", "program induction", "code synthesis",
+                          "program repair", "sketch synthesis", "specification-guided",
+                          "syntax-guided synthesis", "sygus", "inductive synthesis"],
     "egraph": ["e-graph", "egraph", "equality saturation", "rewrite rule", "term rewriting"],
 
     # B2 -- credit / search / selection
@@ -127,6 +142,7 @@ MECHANISM_BOTTLENECK = {
     "neural_representation": "B1_REPRESENTATION", "circuit_representation": "B1_REPRESENTATION",
     "sparse_autoencoder": "B1_REPRESENTATION", "differentiable_program": "B1_REPRESENTATION",
     "dsl_library": "B1_REPRESENTATION", "egraph": "B1_REPRESENTATION",
+    "program_synthesis": "B1_REPRESENTATION",
 
     "tournament_selection": "B2_CREDIT_SEARCH", "lexicase": "B2_CREDIT_SEARCH",
     "novelty_search": "B2_CREDIT_SEARCH", "map_elites": "B2_CREDIT_SEARCH",
@@ -246,6 +262,7 @@ def descriptors_from(mech_hits: dict) -> dict:
                    ("tree_gp", "discrete_program"), ("linear_gp", "discrete_program"),
                    ("push_gp", "discrete_program"), ("cartesian_gp", "graph_circuit"),
                    ("grammatical_evolution", "discrete_program"),
+                   ("program_synthesis", "discrete_program"),
                    ("dsl_library", "discrete_program"), ("egraph", "symbolic_expression"),
                    ("neural_representation", "continuous_neural")):
         if m in mech_hits:
