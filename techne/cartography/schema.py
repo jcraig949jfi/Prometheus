@@ -189,6 +189,10 @@ class ResearchGenome:
 
     open_access: Optional[bool] = None
     fulltext_available: bool = False
+    #: False for title-only records. These are ADMITTED to the archive because a cell they
+    #: occupy is genuinely occupied, but NO claim predicate may run on them: a title cannot
+    #: support CLAIM_PRESENT, CLAIM_SUPPORTED or MECHANISM_ISOLATED.
+    abstract_available: bool = False
 
     #: Independent subject labels from the index (OpenAlex concepts), kept verbatim. These
     #: drive the domain gate precisely BECAUSE they are not produced by our vocabulary.
@@ -290,6 +294,14 @@ class CoverageHole:
     killed_by: Optional[str] = None
     cheapest_falsification: Optional[str] = None
     confidence_in_absence: Optional[str] = None   # deliberately a word, not a number
+    #: The archive's classification health WHEN THIS HOLE WAS PROPOSED. Load-bearing: an empty
+    #: cell in an archive where 96.7% of papers could not be placed is a statement about the
+    #: tagger, not about the literature. Measured 2026-08-31 at cycle 020: 3.3% of
+    #: abstract-bearing genomes were fully classified and 49% carried zero mechanism tags.
+    #: Without this field a hole count reads as a gap count, which is the campaign's single
+    #: most dangerous misreading.
+    archive_classification_rate: Optional[float] = None
+    archive_size_at_proposal: Optional[int] = None
     cycle: Optional[int] = None
     created_at: str = dataclasses.field(default_factory=now_iso)
     schema_version: str = SCHEMA_VERSION

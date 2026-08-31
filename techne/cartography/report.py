@@ -120,6 +120,12 @@ def build_report(man: dict) -> str:
     A(_bar("archive cells (total possible)", taxonomy.total_cells()))
     A(_bar("cells occupied (any)", len(occupied)))
     A(_bar("cells occupied (fully classified)", len(real_cells)))
+    from .cycle import MIN_CLASSIFICATION_RATE, classification_rate
+    crate, cok, ctot = classification_rate()
+    A(_bar("classification rate (abstract-bearing)",
+           "{:.1f}% ({}/{})".format(100.0 * crate, cok, ctot)))
+    A(_bar("hole proposal", "BLOCKED (rate < {:.0f}%)".format(100.0 * MIN_CLASSIFICATION_RATE)
+           if crate < MIN_CLASSIFICATION_RATE else "allowed"))
     A(_bar("coverage holes CANDIDATE", s["holes_candidate"]))
     A(_bar("coverage holes PERSISTENT", s["holes_persistent"]))
     A(_bar("holes KILLED by retrieval", s["holes_killed"]))
@@ -144,6 +150,12 @@ def build_report(man: dict) -> str:
     A(_bar("torn lines across all stores", torn))
     A("  (a torn line is the expected signature of a kill mid-write; it is")
     A("   reported rather than swallowed so counts stay comparable)")
+    A("")
+    A("  READ THE CLASSIFICATION RATE BEFORE THE HOLE COUNT. An empty cell in")
+    A("  an archive where most papers could not be placed is a fact about the")
+    A("  tagger, not about the literature. Holes proposed while the rate was")
+    A("  below threshold are marked suspect_low_classification and must not be")
+    A("  reported as gaps.")
     A("")
     A("TOP PERSISTENT HOLES (absence under OUR protocol, nothing more)")
     if not persistent:
