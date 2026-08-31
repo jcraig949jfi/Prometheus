@@ -1,0 +1,349 @@
+=====================================================================
+PROMETHEUS / GENESIS ECOLOGY
+HARMONIA A GEN-0 -- REPRESENTATIONAL REACHABILITY BENCH
+FINAL EXTERNAL REVIEW PACKET
+=====================================================================
+Date: 2026-08-31
+Origin: Harmonia A seat, M2 host, repo D:\Prometheus, bench directory
+genesis/harmonia_a/gen0/. Companion upstream packet:
+REVIEW_PACKET_FINAL_D13 (Serendipity Foundry, D:\ZeusE), whose verdict
+INTERVENTION_DID_NOT_MOVE_TARGET_CHANNEL and D-14 prescription ("the
+honest next lever is a NEW operator family or encoding change") are
+this bench's mandate.
+Status: GEN-0 IS CLOSED with a final verdict (section 9). The
+generation ran freeze -> census -> assay -> frozen analysis ->
+hostile review -> post-verdict donor cross-check, all on 2026-08-31,
+all deterministic, no LLM anywhere in the measurement loop.
+
+---------------------------------------------------------------------
+0. SUMMARY FOR THE HURRIED REVIEWER
+---------------------------------------------------------------------
+The bench asked D-13's successor question: can an ALTERNATE
+REPRESENTATION of the same underlying object open a small-move
+consequence neighborhood (the non-neutral local band) that the
+native representation lacks?
+
+    FINAL VERDICT: NO_REPRESENTATIONAL_REACHABILITY_EFFECT
+                   (frozen gate G1, failed at its FIRST clause)
+
+The phenomenon's PREMISE is what died: the native circuit tuple does
+not have an empty local band. Single-gate edits on random 24-gate
+circuits over {0,1}^10 produce a graded profile -- 83.6% neutral,
+11.9% local (0 < d <= 0.25), 4.5% far -- where D-13's stackvm
+produced kpos025 = 0.000 over 505/505 clean pairs. The stackvm
+locality wall is therefore a property of THAT byte-to-behavior map,
+not of program-shaped representations generally. This NARROWS the
+D-13 representational claim rather than extending it.
+
+Three shapes survive as the actual product:
+  (1) the D-13 gap does not transplant to circuit-native tuples;
+  (2) representation structure bought COMPRESSION, NOT REACHABILITY
+      -- the structure-aligned tensor-train rep is 45x smaller than
+      its scrambled control and no more locally reachable at any
+      dose (the scrambled control actually has MORE local mass);
+  (3) tensor-train small moves are decoder-smoothing-dominated:
+      99.4-100% of primary-dose perturbations are absorbed by
+      sign-rounding; the surviving dose spills 25% of moves FAR.
+
+An exploratory (labeled) attack on the null's weakest point -- the
+low-complexity object population -- found the gradient runs the
+WRONG WAY for a rescue: native local mass RISES with object
+complexity (0.074 -> 0.165). Every harness gate passed, including a
+machine-implemented sham check, empirical reproduction of all
+analytically forced cells, and a dose-knob non-inertness gate. All
+five D-13 review lessons (B1, B4, B5, F1, G-1) were inherited
+STRUCTURALLY, not procedurally -- see section 6.
+
+---------------------------------------------------------------------
+1. PROVENANCE RULINGS (made before design, recorded in the freeze)
+---------------------------------------------------------------------
+R-1. At freeze time no Techne donor handoff existed in the tree and
+     none of tensorly/quimb/discopy/egglog was importable. Donors
+     were ruled TOOL_NOT_APPLICABLE; the one donor surface the
+     design needed (tensor-train decomposition) was implemented as
+     exact TT-SVD in numpy (SVD cutoff 1e-12), deterministic and
+     exact for these 1024-entry tensors.
+     POST-VERDICT UPDATE (journaled, commit 33d8c7eab): Techne's
+     pinned stack (techne/requirements-donors.txt, commit 231c1ea73)
+     later installed cleanly on M2; tensorly 0.9.0 tensor_train
+     reproduces the freeze-time implementation on all 60 frozen
+     objects -- 0/60 reconstruction mismatches (post-round), 0/60
+     bond-rank profile mismatches. Cores were NOT compared (gauge-
+     dependent; byte-equivalence discipline). R-1 is retired for
+     successors. Verdict unaffected.
+R-2. The motivating D-13 numbers were VERIFIED against the primary
+     artifact BEFORE freezing, not quoted from prose:
+       D:\ZeusE\d12\analysis\p1_results.json
+       channels.stackvm.I-L_strong.kpos025    = [0.0, 0.0, 0.0, 5]
+       channels.stackvm.I-L_strong.n_both_clean = 505
+       channels.stackvm.I-L_strong.induced_fault = 0.052
+     D-13 is motivation only; no baseline was imported.
+R-3. Per the kickoff, StackVM was NOT forced as the substrate:
+     mapping it into tensors/diagrams would require arbitrary
+     semantic choices dominating the experiment. Substrate chosen:
+     Boolean functions on {0,1}^10 with a straight-line-circuit
+     native representation -- the smallest exact substrate where a
+     program-shaped native rep and multiple semantic reps of the
+     SAME object coexist under a fully enumerated consequence ruler.
+R-4. Production M1 (Serendipity Foundry) untouched. The bench lives
+     entirely in genesis/harmonia_a/gen0/.
+
+---------------------------------------------------------------------
+2. PREREGISTRATION CHAIN (hashes journaled AT ISSUANCE)
+---------------------------------------------------------------------
+FREEZE (2026-08-31, commit 7ca9063f7, BEFORE any assay row):
+  HARMONIA_A_GEN0_FREEZE.txt
+    sha256 0558fe832e584a0423923048b1cee474268e71d3a225ce30465e7f977b0862da
+  bench.py (census + assay)
+    sha256 a28386bc3a78e9e77ba41f245671a2bec4eb7eaadcebc0d0c764fddbd1adaf76
+  analyze.py (frozen endpoints and gates, implemented verbatim)
+    sha256 7473430d13361bedbdcd2e06b6dc986499615874aa2f17fcf6f3f55e9af8963f
+All three hashes were written to the append-only JOURNAL.jsonl in the
+FREEZE_ISSUANCE entry, timestamped before the first assay row -- the
+D-13 G-1 defect (hashes not journaled at issuance) adopted as a
+remediation at issuance, not post-hoc. At analysis completion the
+journal's second entry re-verified bench.py and analyze.py against
+the issuance hashes: UNCHANGED. There are no amendments.
+
+---------------------------------------------------------------------
+3. DESIGN AS EXECUTED
+---------------------------------------------------------------------
+OBJECT. f: {0,1}^10 -> {0,1}, identified with its 1024-entry truth
+table. 60 objects = 5 master seeds (11,22,33,44,55) x 12, each a
+random 24-gate straight-line circuit over {AND,OR,XOR,NAND},
+census-screened for balance (resample cap 50; max attempts used: 2).
+Same-object invariant: every representation must decode to exactly
+f; violated assertions abort the run (none fired).
+
+CONSEQUENCE RULER. d(f,f') = Hamming(f,f')/1024 by FULL ENUMERATION.
+Exact, deterministic, defined with no reference to any edit metric.
+ONE battery serves census, channels, and claims -- the D-13 F1
+defect (channels measured on sibling terrains) cannot arise. Faults
+do not exist in this substrate; TT rounding absorption is measured
+AS the TT neutral rate rather than hidden (decoder-smoothing is a
+reported channel, not a confound).
+
+BANDS (frozen; aligned with D-13's K_positive@0.25 channel):
+  NEUTRAL d = 0;  LOCAL 0 < d <= 0.25;  FAR d > 0.25;
+  plus full dyadic histograms shipped per arm.
+
+ARMS. K = 128 edits/object/arm, uniform with replacement, all
+randomness from named SeedSequence spawns of the master seeds.
+  NAT      circuit; enumerated edit space (1-gate op change OR
+           1-input rewire; min 1056 edits/object), sampled.
+  SHAM     input-relabeled circuit, same edit class. Analytic
+           expectation: identical to NAT. Harness positive control,
+           MACHINE-CHECKED at analysis (D-13 B4 inherited).
+  ANF      exact F2 polynomial (Moebius); toggle 1 of 1024 monomial
+           coefficients. DECLARED FORCED in the freeze: d = 2^-deg,
+           LOCAL mass = 1 - 11/1024 = 0.9893 by arithmetic. Not a
+           discovery; a harness check.
+  ANF_SCR  ANF after a seeded input-space bijection. Analytic:
+           identical to ANF (displacement is bijection-invariant).
+  VT       truth table; flip 1 row. The TRIVIALITY CEILING, run as
+           an arm: local reachability per se is trivially available
+           at representation size 2^n, so NO claim may rest on
+           locality existing SOMEWHERE. Pre-registers the "cheap
+           deterministic algorithm" attack against the bench itself.
+  TT       exact TT-SVD cores of F = (-1)^f; add s*eps*rms(core) to
+           one uniformly chosen core entry, s in {+1,-1}; decode by
+           full contraction; sign-round. eps grid {0.125, 0.5, 2.0}
+           ALL RUN, primary eps = 0.5 named in the freeze before any
+           row (a dose-response report, not a selection pool).
+           EMPIRICAL CELL.
+  TT_SCR   TT after a seeded permutation of the 1024 tensor entries
+           (destroys variable-order structure, identical mechanics).
+           EMPIRICAL CELL.
+HONESTY DECLARATION (freeze section 4, verbatim intent): the band
+masses of ANF, ANF_SCR, VT, SHAM are forced by arithmetic. The only
+empirical unknowns were the NAT shape and the TT/TT_SCR shapes. The
+freeze says so, so no forced cell can be presented as a finding.
+
+---------------------------------------------------------------------
+4. CENSUS (bands frozen; a failed census rejects the DESIGN)
+---------------------------------------------------------------------
+C1 balance in [0.05,0.95]: PASS (min/med/max 0.125/0.500/0.938).
+C2 native edit space >= 500: PASS (min 1056).
+C3 TT exact roundtrip 60/60: PASS.
+C5 ANF analytic check, 100 sampled toggles d == 2^-deg: PASS 100/100.
+POPULATION CHARACTERIZATION (measured, disclosed): the objects are
+LOW-COMPLEXITY -- median 4 live variables (range 1-8), median ANF
+support 4 monomials, median TT max bond rank 2. Random straight-line
+circuits have small live cones. This bounds the claim ceiling
+(section 10) and motivated the exploratory check in section 7.
+
+---------------------------------------------------------------------
+5. RESULTS (pooled, 7,680 rows/cell, 84,480 rows total; CI = cluster
+   bootstrap over 60 objects, 5,000 resamples, seed 20260831)
+---------------------------------------------------------------------
+  arm            NEUTRAL   LOCAL    FAR    LOCAL CI95         status
+  NAT             0.8358   0.1189  0.0453  [0.1018, 0.1366]  empirical
+  SHAM            0.8477   0.1089  0.0435  [0.0936, 0.1250]  == NAT
+  ANF             0.0000   0.9887  0.0113  [0.9866, 0.9906]  forced
+  ANF_SCR         0.0000   0.9904  0.0096  [0.9882, 0.9924]  == ANF
+  VT              0.0000   1.0000  0.0000  [1.0000, 1.0000]  ceiling
+  TT@0.125        1.0000   0.0000  0.0000  [0.0000, 0.0000]  empirical
+  TT@0.5 (prim)   0.9944   0.0056  0.0000  [0.0017, 0.0113]  empirical
+  TT@2.0          0.4625   0.2848  0.2527  [0.2450, 0.3236]  empirical
+  TT_SCR@0.125    1.0000   0.0000  0.0000  [0.0000, 0.0000]  empirical
+  TT_SCR@0.5      0.9991   0.0009  0.0000  [0.0000, 0.0023]  empirical
+  TT_SCR@2.0      0.6143   0.3319  0.0538  [0.3195, 0.3443]  empirical
+
+Median nonzero displacement: NAT 0.1875, ANF 0.03125, VT 0.00098,
+TT@0.5 0.0156, TT@2.0 0.25.
+Per-seed NAT LOCAL: 0.1348 / 0.1204 / 0.1074 / 0.1159 / 0.1159 --
+five seeds, one story; no seed is doing the work.
+Representation sizes (min/med/max): NAT 72/72/72 ints; ANF 1/4/18
+monomials; ANF_SCR 373/512/585; VT 1024 bits; TT 20/60/196 floats;
+TT_SCR 2344/2728/2728. Wall time per arm: 0.02-5.3 s.
+
+GATES:
+  G_HARNESS  PASS  |LOCAL(SHAM)-LOCAL(NAT)| = 0.0100 (tol 0.03),
+                   |NEUTRAL delta| = 0.0118. Machine-implemented.
+  G_ANALYTIC PASS  ANF empirical vs forced: 0.00059; ANF_SCR vs
+                   ANF: 0.00169; VT vs 1.0: 0.0 (tol 0.02).
+  G_DOSE     PASS  fraction of matched eps-triples with bit-
+                   identical children = 0.4625 (inert cap 0.95).
+                   The eps knob is a real ladder (D-13 B5).
+  G1         NO_REPRESENTATIONAL_REACHABILITY_EFFECT. Failed at the
+                   first clause: LOCAL(NAT) = 0.1189 > 0.05. The
+                   remaining clauses were evaluated anyway for the
+                   record: TT@0.5 LOCAL = 0.0056 (< 0.25), per-seed
+                   consistency FALSE, CI separation FALSE -- the
+                   alternate would have failed its own bar even if
+                   the native gap had existed.
+  G2 (descriptive) TT_SCR LOCAL >= TT LOCAL at every dose (at 2.0:
+                   0.3319 vs 0.2848, with 4.7x LESS far mass).
+                   Structure alignment did not buy reachability.
+
+---------------------------------------------------------------------
+6. D-13 REVIEW LESSONS, INHERITED STRUCTURALLY
+---------------------------------------------------------------------
+B1 (one-seed pass behind a join filter): EXCLUDED BY CONSTRUCTION.
+   No join filter exists; every cell has identical row counts
+   (60 x 128); per-seed tables shipped.
+B4 (sham check never machine-implemented): G_HARNESS is executable
+   and gates the whole run (HARNESS_SUSPECT on failure).
+B5 (inert dose knob): G_DOSE measures non-inertness directly.
+F1 (channels measured off the claim battery): one exact full-domain
+   ruler serves everything; the defect cannot arise.
+G-1 (hashes not journaled at issuance): journaled at issuance;
+   re-verified unchanged at analysis.
+H-3 (underpowered null): pooled cells have 7,680 rows; binomial SE
+   near the G1 thresholds is ~0.005 and the cluster bootstrap over
+   60 objects governs the CIs. The 0.05-vs-0.25 gate separation is
+   ~40x that scale. This null is not a power artifact.
+
+---------------------------------------------------------------------
+7. HOSTILE REVIEW (kickoff section 17 + self-attacks)
+---------------------------------------------------------------------
+Ten preregistered attacks answered in hostile_review.md; the three
+that matter to an external reader:
+  DECODER SMOOTHING -- inverted into a measurement: TT neutral rate
+    IS the smoothing channel (100% absorption at eps=0.125, 99.4%
+    at 0.5). Since the verdict is a null, smoothing worked AGAINST
+    the alternate representation, not for it. Pre-round L2
+    displacement shipped per row.
+  RANDOM PROJECTION EXPLAINS IT -- confirmed and reported as the
+    G2 finding, not a defect: the scrambled control matches or
+    beats aligned TT on local mass while costing 45x the
+    parameters. Alignment bought compression, not reachability.
+  DEGENERATE POPULATION (self-attack, the null's weakest point) --
+    EXPLORATORY, labeled: NAT local mass stratified by ANF support:
+      support 1-2 (n=17): 0.074    support 3-5  (n=25): 0.118
+      support 6-10 (n=13): 0.165   support 11+  (n=5):  0.155
+    The gradient RISES with complexity -- the opposite of what the
+    "toy objects hide the gap" rescue predicts. OPEN at the family
+    boundary (saturated-liveness regime unmeasured; that is Gen 1),
+    closed within the measured family.
+Also conceded plainly: K=128 samples the >=1056-edit native space
+with replacement (CI covers it; verdict immovable at this scale);
+the TT eps scale is rms-relative by frozen choice (all three doses
+reported; nothing in the null depends on it).
+
+---------------------------------------------------------------------
+8. WHAT THIS GENERATION ACTUALLY LEARNED
+---------------------------------------------------------------------
+1. THE D-13 WALL IS NARROWER THAN ITS TEMPTING READING. "Program-
+   shaped representations lack a local consequence band" is FALSE
+   as a generalization: circuit tuples have a graded band (11.9%
+   local). The wall belongs to stackvm's byte-to-behavior map. The
+   productive question is no longer "which alternate representation
+   fixes it" but "WHAT PROPERTY of a native tuple predicts an empty
+   band" -- a one-parameter diagnostic, not a representation swap.
+2. STRUCTURE BOUGHT COMPRESSION, NOT REACHABILITY. Aligned reps are
+   45-128x smaller than scrambled controls (that is real, and it is
+   the storage story); their local reachability is equal or worse.
+   Independently, Ergon's Gen-0 (commit 503dd553) found the D-5
+   slot consumes CONTENT, not abstractions. Two seats, two
+   substrates, one shape: representational structure paying rent in
+   storage while the behavioral ledger stays empty.
+3. EXACT LOW-RANK TENSOR SMALL MOVES ARE INERT-OR-BLUNT. Sign-
+   rounding absorbs 99.4-100% of small perturbations; the first
+   dose that moves behavior spills 25% of moves FAR. If a successor
+   wants tensor reps as a search neighborhood, the lever is the
+   decode margin, not the core nudge size.
+4. FORCED CELLS, DECLARED AS FORCED, ARE WHAT MAKE A NULL LEGIBLE.
+   Four of seven arms had arithmetically forced outcomes; declaring
+   that in the freeze converted them into harness verification
+   (all reproduced to <= 0.002) instead of fake findings.
+
+---------------------------------------------------------------------
+9. FINAL VERDICT
+---------------------------------------------------------------------
+    NO_REPRESENTATIONAL_REACHABILITY_EFFECT     (frozen gate G1)
+
+The premise (an empty native local band) fails in this tuple, and
+the primary alternate would have failed its own bar regardless.
+The effect was hunted, not presumed; the kill is clean; scope was
+not widened after the null (kickoff section 12 discipline). No
+HARMONIA_A_M1_REQUIREMENTS.txt is filed: escalation on a null is
+unjustified.
+
+---------------------------------------------------------------------
+10. CLAIM CEILING
+---------------------------------------------------------------------
+All claims conditional on: n=10, 24-gate random straight-line
+circuits (low-liveness population, median 4 live variables), the
+frozen edit families, sign-rounding TT decode, the frozen eps grid,
+and the full-domain Hamming ruler. Nothing here asserts that
+representation cannot be a reachability lever elsewhere -- D-13's
+stackvm wall is real and was verified against its primary artifact.
+What died is the transplant "program-shaped native reps generically
+lack a local consequence band." Nothing here evaluates SEARCH: this
+is a neighborhood-measurement bench, not a search-improvement
+result.
+
+---------------------------------------------------------------------
+11. GEN-1 PRESCRIPTION (one experiment, named)
+---------------------------------------------------------------------
+Make LIVENESS/DENSITY the controlled axis inside one substrate:
+matched-size circuits with forced full liveness (every gate on the
+output path) vs natural dead-cone circuits, same frozen edit family,
+same ruler. If the local band empties as liveness saturates, the
+D-13 wall becomes one point on a measurable one-parameter family --
+and THAT parameter, not representation swapping, is what returns to
+the Foundry as an M1 requirement. Secondary: tensorly is now a
+first-class contestant surface (R-1 retired; parity 60/60); a
+decode-margin-aware TT move operator is the identified successor arm.
+
+---------------------------------------------------------------------
+12. PRIMARY ARTIFACT INDEX (all committed; repo main branch)
+---------------------------------------------------------------------
+genesis/harmonia_a/gen0/HARMONIA_A_GEN0_FREEZE.txt   preregistration
+genesis/harmonia_a/gen0/JOURNAL.jsonl                hashes at
+                                                     issuance + events
+genesis/harmonia_a/gen0/bench.py                     census + assay
+genesis/harmonia_a/gen0/analyze.py                   frozen analysis
+genesis/harmonia_a/gen0/results/census.json          C1/C2/C3/C5 PASS
+genesis/harmonia_a/gen0/results/rows.jsonl.gz        84,480 rows
+genesis/harmonia_a/gen0/results/arm_meta.json        sizes, timings
+genesis/harmonia_a/gen0/results/analysis.json        endpoints, gates
+genesis/harmonia_a/gen0/hostile_review.md            attacks answered
+genesis/harmonia_a/gen0/HARMONIA_A_GEN0_HANDOFF.txt  successor handoff
+Commits: 7ca9063f7 (freeze) -> e846d3570 (verdict) ->
+         33d8c7eab (donor addendum).
+Upstream verified artifact: D:\ZeusE\d12\analysis\p1_results.json.
+=====================================================================
+END OF FINAL HARMONIA A GEN-0 PACKET
+=====================================================================
