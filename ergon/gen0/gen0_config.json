@@ -1,0 +1,117 @@
+{
+  "generation": "ERGON_GEN0",
+  "date": "2026-08-31",
+  "seat": "Ergon (machine memory / metabolism)",
+  "question": "Does donor-derived accumulated structure produce future-task benefit under the existing compute-matched consumer?",
+  "outcome": "NO_ARM_RAN_BY_GATE -- the donor arms are structurally unconsumable and the Family-A donor is acquisition-BLOCKED. Both stops are results the brief names as valid.",
+
+  "consumer": {
+    "name": "D-5 M1 developmental library slot",
+    "source": "agent_d5_blind/learner/m1.py",
+    "frozen": true,
+    "entry_type": "genotype = tuple of (OPCODE:str, a:int, b:int), length 1..24",
+    "consumption_path": "m1_rx.fresh() -> mutate(entry, rng); whole-program mutation seed",
+    "application_site": null,
+    "splice_site": null,
+    "instantiation_site": null,
+    "library_cap": 64,
+    "eviction": "most-recent-first, genotype-deduped",
+    "admission": "solving genotype if any + up to 4 behaviour-distinct best-scoring candidates from the last scored generation",
+    "opcodes_frozen": 14,
+    "primitive_extension_path": false,
+    "primitive_extension_evidence": "OP_LIST = sorted(OPS) computed at import from a literal dict; rm_vm.run dispatches on a hardcoded if/elif chain; zero registration hooks found in learner or VM"
+  },
+
+  "d5_baseline_identity": {
+    "verdict": "HISTORY_FINDABILITY_ADVANTAGE",
+    "final_commit": "976d4a0d",
+    "cfr_advantage_pp": 10.95,
+    "p_value": 0.0007,
+    "test": "one-sided paired permutation",
+    "unit_of_analysis": "task-level",
+    "n": 42,
+    "shuffled_history_retention": 1.0,
+    "random_library_retention": 0.39,
+    "allowed_interpretation": "ecology-adapted executable CONTENT mattered; developmental ordering not load-bearing",
+    "quoted_not_recomputed": true
+  },
+
+  "inherited_lexis_gates": {
+    "source": "roles/Lexis/ROLE.md section 5, read verbatim; fired status preserved exactly",
+    "G0": {"status": "FIRED", "note": "0%-usage headline describes a superseded population; CONTROLS.md live-tree claim withdrawn"},
+    "G1": {"status": "FIRED", "date": "2026-08-25", "value": "5.94% load-bearing at rung R4", "threshold": "10%", "consequence": "the admission criterion is the problem, not the primitives; fires a kill on 'forge more tools' as a strategy INDEPENDENT OF TOOL QUALITY"},
+    "G2": {"status": "STANDING", "rule": "compute-matched or it does not count; currency = organism-evaluations, fixed in advance; an uncontrolled library result is not reported as a result in any document at any confidence"},
+    "G3": {"status": "STANDING", "rule": "transfer, not compression; PRE-COMMITTED: state the attainable range of the readout FIRST", "precedent": "Apollo's battery disqualified, dS bounded at 0.8333 exactly"},
+    "G5": {"status": "BUILT_AND_RUN", "rule": "NEW(p,C,T) evaluated before admission; dS and dE recorded on separate ledgers; bundles are admissible units of proposal"},
+    "G6": {"status": "STANDING", "rule": "no dE credited without surviving all 24 permutations; survival demonstrates equivariance, NOT reasoning"},
+    "G7": {"status": "PROPOSED_NOT_SELF_RATIFIED", "rule": "no dE credited toward admitting vocabulary unless measured on a blind-authored battery"},
+    "G4": {"status": "STANDING", "rule": "cloud money justified by G3 positive and nothing else"}
+  },
+
+  "consumer_fit": {
+    "instrument": "ergon/gen0/consumer_fit.py",
+    "report": "ergon/gen0/consumer_fit_2026-08-31.json",
+    "gate_fire": {"worlds": 7, "holes": 0},
+    "A_native_d5_artifact": "CONSUMABLE_AS_IS",
+    "B_stitch_abstraction_with_holes": "NOT_CONSUMABLE",
+    "B_star_stitch_zero_hole_motif": "CONSUMABLE_AS_IS but is a concrete subprogram, not an abstraction",
+    "C_egglog_rewritten_genotype": "CONSUMABLE_AS_IS by TYPE; NOT PRODUCIBLE TODAY",
+    "learned_primitive": "TOOL_FIT_FAILURE -- no primitive-extension path exists"
+  },
+
+  "corpus": {
+    "search_discovered_library_persisted": false,
+    "evidence": "agent_d5_blind/ledgers/m1_rows.jsonl carries library_size_at_start and outcome metadata only; no genotype-bearing field across 290 rows",
+    "only_persisted_genotypes": "agent_d5_blind/results/oracle_solutions.jsonl",
+    "n": 78,
+    "method": "constructive_compiler",
+    "admissible_as_library_seed": false,
+    "reason": "oracle-side witnesses; seeding the library from them violates the m1.py input boundary and the brief's identical-inference-privilege requirement"
+  },
+
+  "family_a": {
+    "donor": "stitch_core",
+    "version": "0.1.29",
+    "installed": false,
+    "structural_verdict": "NOT_CONSUMABLE / TOOL_FIT_FAILURE",
+    "acquisition_verdict": "BLOCKED",
+    "identity": "RESOLVED -- github.com/mlb2251/stitch_bindings states it publishes as stitch_core",
+    "license": "UNRESOLVED -- PyPI metadata carries no license field and no classifiers; mlb2251/stitch is MIT but that is the Rust core, and stitch_bindings (the repo that builds the wheel) shows no license and no LICENSE file",
+    "pypi_metadata": {"license": "absent", "classifiers": "absent", "project_urls": "absent", "home_page": "absent", "summary": "absent", "author": "absent", "owner_account": "mlb2251"}
+  },
+
+  "family_b": {
+    "donor": "egglog",
+    "version": "13.2.0",
+    "installed": true,
+    "instrument": "ergon/gen0/family_b_probe.py",
+    "report": "ergon/gen0/family_b_probe_2026-08-31.json",
+    "verdict": "FAMILY_B_REQUIRES_NEW_SYNTHESIS_LAYER",
+    "attainable_range_measured_first": true,
+    "jump_free_fraction": 0.68,
+    "n_witnesses": 78,
+    "n_jump_free": 53,
+    "control_flow_counts": {"SKG": 18, "JNZ": 7},
+    "equational_fragment_opcodes": 11
+  },
+
+  "compute_ledger": {
+    "model_calls": 0,
+    "arm_calls": 0,
+    "organism_evaluations": 0,
+    "spend_usd": 0.0,
+    "network": "two read-only metadata fetches (pypi.org, github.com) for the section-5 licence check",
+    "wall_time": "both probes complete in under 2 seconds on H:\\Python312\\python.exe",
+    "host": "M1 / Skullport, Windows 11, Python 3.12.10",
+    "note": "no organism-evaluations were spent because no arm was eligible to run; G2 is therefore not engaged, and nothing here is reported as a library result"
+  },
+
+  "forbidden_gen0_artifacts_not_built": [
+    "universal knowledge store",
+    "graph of all Prometheus knowledge",
+    "alien tensor memory",
+    "replacement promotion ledger",
+    "general fossil schema",
+    "new markdown knowledge hierarchy"
+  ]
+}

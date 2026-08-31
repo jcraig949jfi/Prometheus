@@ -1,0 +1,92 @@
+{
+  "census": {
+    "by_family": {
+      "ALIEN": {
+        "jump_free": 17,
+        "n": 20
+      },
+      "CTRL": {
+        "jump_free": 0,
+        "n": 10
+      },
+      "F1": {
+        "jump_free": 12,
+        "n": 12
+      },
+      "F2": {
+        "jump_free": 5,
+        "n": 8
+      },
+      "F3": {
+        "jump_free": 3,
+        "n": 10
+      },
+      "F4": {
+        "jump_free": 12,
+        "n": 12
+      },
+      "NEGX": {
+        "jump_free": 4,
+        "n": 6
+      }
+    },
+    "control_flow_opcode_counts": {
+      "JNZ": 7,
+      "SKG": 18
+    },
+    "control_flow_opcodes": [
+      "JNZ",
+      "SKG",
+      "SKZ"
+    ],
+    "equational_fragment": [
+      "ADD",
+      "AND",
+      "MOD",
+      "MOV",
+      "MUL",
+      "OR",
+      "SET",
+      "SHL",
+      "SHR",
+      "SUB",
+      "XOR"
+    ],
+    "jump_free_fraction": 0.6795,
+    "n_jump_free": 53,
+    "n_with_control_flow": 25,
+    "n_witnesses": 78,
+    "opcode_appearance_counts": {
+      "ADD": 34,
+      "AND": 27,
+      "JNZ": 7,
+      "MOD": 9,
+      "MOV": 47,
+      "MUL": 30,
+      "OR": 22,
+      "SET": 78,
+      "SHL": 20,
+      "SHR": 28,
+      "SKG": 18,
+      "SUB": 33,
+      "XOR": 32
+    },
+    "witness_len_mean": 11.05
+  },
+  "egglog_available": true,
+  "egglog_version": "unknown",
+  "reasoning": [
+    "egglog imports, so the tool is present. The binding constraint is not the tool, it is the SUBSTRATE ENCODING.",
+    "Attainable range, measured: 53 of 78 known solution witnesses (68.0%) are jump-free and therefore expressible as equational terms; 25 contain control flow ['JNZ', 'SKG'] and are not, absent a machine-state theory.",
+    "But coverage of the corpus is NOT the readout. The Gen-0 question is whether rewrite structure alters FUTURE SEARCH in the D-5 consumer, and consumer_fit establishes that the only thing the slot eats is a whole genotype used as a mutation seed. An equality-saturation engine returns a set of terms EQUIVALENT to its input. Equivalent genotypes compute the same function, so seeding the library with them adds no behaviour the library did not already have -- and D-5 admission is already behaviour-distinct-deduplicated (m1.admissions uses ft.outputs fingerprints).",
+    "So egglog alone can produce, at best, behaviourally redundant seeds for a slot that already de-duplicates on behaviour. That is measurable-in-principle and predictably null; it is not the Family-B hypothesis. The real Family-B claim -- that rewrite structure makes solutions CHEAPER TO REACH -- needs a rewriter that shortens or re-parameterises search, i.e. Ruler/babble/Enumo-style synthesis over a theory that includes RM control flow. That layer is unbuilt."
+  ],
+  "requirement": {
+    "attainable_range_first": "before that build, compute the length reduction available on the jump-free fragment. If mean shortest-equivalent length equals mean witness length, the readout is bounded at zero and the build is disqualified exactly as Lexis G3 disqualified Apollo's battery.",
+    "blocked_on": "nothing external. This is a build, not an acquisition, and it needs no donor licence question resolved.",
+    "preregistered_kill": "if shortest-equivalent seeds do not change per-task CFR against a length-matched random-genotype control at identical metered budget, Family B is dead for this consumer regardless of how elegant its equivalence classes are.",
+    "smallest_next_capability": "an equational theory of RM-D5 over the JUMP-FREE fragment (11 opcodes: ADD AND MOD MOV MUL OR SET SHL SHR SUB XOR) that can (a) ingest a straight-line genotype, (b) saturate under a rule set derived from prior solved genotypes, and (c) emit the SHORTEST equivalent straight-line genotype.",
+    "why_shortest_is_the_right_output": "length is the only rewrite product that can move the D-5 readout. The slot eats whole genotypes as mutation seeds; a shorter seed of identical behaviour occupies a different, smaller neighbourhood under the frozen mutation physics, so it is a REACHABILITY claim rather than an equivalence claim, and reachability is what D-5 measures."
+  },
+  "verdict": "FAMILY_B_REQUIRES_NEW_SYNTHESIS_LAYER"
+}
