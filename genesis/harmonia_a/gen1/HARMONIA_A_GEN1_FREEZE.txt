@@ -1,0 +1,229 @@
+=====================================================================
+HARMONIA A / GEN 1 -- PREREGISTRATION FREEZE
+Causal density and consequence geometry
+Date: 2026-08-31   Seat: Harmonia A (M2 host, D:\Prometheus)
+Predecessor: Gen 0, commits 7ca9063f7 / e846d3570 / 33d8c7eab
+=====================================================================
+
+0. QUESTION UNDER TEST
+
+  Within one frozen substrate family, does a controlled mechanical
+  property of an executable object predict the SHAPE of consequence-
+  space movement produced by a fixed native edit family?
+  Primary candidate coordinate: causal liveness / influence density.
+  This is a HYPOTHESIS inherited from a Gen-0 exploratory
+  stratification, not a finding. Any of H0-H4 (brief section 8) is
+  an acceptable answer. StackVM is HELD OUT: no StackVM artifact is
+  read, measured, or tuned against during this generation.
+
+1. WHAT IS CONTROLLED, MATCHED, STRATIFIED, MEASURED (declared now)
+
+  CONTROLLED (identical to Gen-0, bit-for-bit semantics):
+    substrate (f: {0,1}^10 via 24-gate straight-line circuits over
+    {AND,OR,XOR,NAND}); the GENERATOR (uniform Gen-0 generator --
+    the ladder is built by rejection only, never by a new wiring
+    rule); the EDIT FAMILY (the 1056-member single-gate op/rewire
+    space, whose size and per-gate weights are the same for every
+    24-gate circuit by construction -- the edit process cannot adapt
+    to liveness); the CONSEQUENCE RULER (exact full-domain Hamming
+    displacement d = Hamming(f,f')/1024).
+  STRATIFIED (the axis): structural liveness s_live = live gates/24,
+    5 ladder levels chosen by the frozen census rule of section 3.
+  MATCHED (band only): truth-table balance in [0.05, 0.95] (Gen-0
+    census band, applied identically at every level).
+  MEASURED ONLY (recorded per object, used as analysis controls,
+    never as acceptance criteria): b_live, inf_density, full 24-gate
+    influence profile, balance, live input variables, ANF support,
+    output-cone depth, forced_neutral_floor, forced_local_bound.
+  Rationale against over-matching (brief section 4): matching on
+  behavioral covariates could condition on the endpoint's causes;
+  they are measured and adjusted for in E4 instead, with residual
+  per-level imbalance disclosed in the census report.
+
+2. THE TWO COORDINATES, KEPT DISTINCT (brief section 2)
+
+  A. STRUCTURAL LIVENESS s_live: fraction of gates on a dependency
+     path to the output. Graph-only; no evaluation.
+  B. BEHAVIORAL INFLUENCE: per gate g, inf(g) = exact fraction of
+     the 1024 inputs on which negating g's wire (intervention,
+     propagated downstream) flips the output. Derived scalars:
+     b_live = fraction of gates with inf > 0; inf_density = mean
+     inf over all 24 gates.
+  Their empirical relationship is itself a reported quantity.
+
+3. THE FORCED LAYER, DECLARED BEFORE ANY OUTCOME (attack J)
+
+  THEOREM-LEVEL BOUND: for every single-gate edit at gate g,
+  d <= inf(g). Proof sketch: the edit changes g's output on some
+  input set A; the final output changes only on {x in A : the
+  negation intervention at g flips f(x)}, a subset of g's influence
+  set. Consequences, all declared FORCED, none claimable as
+  discovery:
+    - an edit at an influence-0 gate is neutral with probability 1;
+    - P(neutral) has the forced floor forced_neutral_floor =
+      edit-weighted share of influence-0 gates (weights
+      w_g = (3 + 2*(9+g))/1056, fixed for all objects);
+    - edits at gates with 0 < inf <= 0.25 can only be neutral or
+      local, never far (forced_local_bound = their weight share).
+  THEREFORE the primary endpoint is CONDITIONAL:
+      LOCAL_SHARE = P(d <= 0.25 | d > 0)
+  -- the shape of REALIZED non-neutral movement, which is where the
+  D-13 stackvm signature lived (zero local GIVEN non-neutral), and
+  which the bound does not fix (mass may fall anywhere below the
+  per-gate ceilings). forced_neutral_floor and forced_local_bound
+  enter the E4 confound set: if the "coordinate" is the influence
+  profile restated, the partials must expose that and the verdict
+  must carry the label.
+
+4. LADDER CONSTRUCTION (frozen RULE; bins are an outcome of the
+   rule, not a choice)
+
+  Graph-only census: 60,000 uniform circuits per master seed
+  (11,22,33,44,55; stream key (seed,100)), pooled n = 300,000.
+  Rule: span = [P1, P99] of pooled s_live; 5 equal-width bins over
+  the span; every bin requires natural mass >= 0.5%. If any bin
+  fails: one retry with span [P2.5, P97.5]. If still failing:
+      AXIS_NOT_IDENTIFIABLE_UNDER_CURRENT_GENERATOR
+  and the primary assay is NOT run.
+  Objects: 12 per (seed, level) cell = 300 total, by rejection from
+  the unchanged generator (stream (seed,101,level)); accept iff
+  s_live in bin AND balance in band; cap 400,000 draws per cell,
+  cap breach = the same axis-not-identifiable verdict. The census
+  report ships: natural distribution, bin edges/masses, per-cell
+  acceptance rates, per-level covariate means/sds (residual
+  imbalance, disclosed before outcome rows exist).
+
+5. ASSAY
+
+  NAT arm: K = 128 edits per object, uniform with replacement over
+  the object's 1056-edit space (stream (seed,102,level,obj)); per
+  row: displacement d, target gate, edit kind.
+  SHAM arm (harness positive control, machine-checked): at the two
+  extreme levels only, input-relabeled circuits + same edit class
+  (streams (seed,103/104,level,obj)); analytic expectation:
+  distribution identical to NAT. Same-object assertions abort on
+  violation.
+  Bands for comparability: NEUTRAL d=0; LOCAL 0<d<=0.25; FAR
+  d>0.25 -- AND the complete distribution ships per object (dyadic
+  histogram + 64-bin linear histogram + quantiles), because a
+  threshold can hide the phenomenon (brief section 5).
+
+6. ENDPOINTS, GATES, VERDICTS (implemented verbatim in analyze1.py)
+
+  Unit of independence: the OBJECT (n = 300). Mutations are
+  repeated observations within object. All statistics at object
+  level. Permutation/bootstrap seed 20260901.
+
+  E1 (PRIMARY): eta-squared of ladder level on object-level
+    LOCAL_SHARE. LOCAL_SHARE defined only for objects with >= 5
+    nonzero-d edits of 128; SUPPORT RULE: every level must retain
+    >= 60% of its objects, else the primary falls back to E2 (this
+    fallback chain is frozen here; no other reassignment allowed).
+    eta-squared is direction-free BY DESIGN: monotone, U, threshold
+    and discontinuous shapes all register (brief section 7); the
+    shape itself is reported descriptively via level means and the
+    full histograms.
+  E2: eta-squared of level on P(neutral) (forced component declared
+    in section 3; reported net of nothing, interpreted with it).
+  E3: eta-squared of level on median nonzero displacement.
+  Gate for a supported coordinate, applied to the primary endpoint:
+    pooled eta2 >= 0.25, per-seed eta2 >= 0.15 in 5/5 seeds,
+    within-seed permutation p <= 0.01 (1000 permutations of level
+    labels within seed). Bootstrap 95% CI (5000 resamples over
+    objects) shipped.
+  E4 (H1/H2/H3/H4 adjudication): object-level Spearman and partial
+    Spearman. Axis candidates: s_live (H1), inf_density (H2).
+    Partials control {other axis, balance_dev, live_vars,
+    anf_support, depth}, and a second partial additionally controls
+    the forced quantities. Confound dominance: each of {b_live,
+    balance_dev, live_vars, anf_support, depth,
+    forced_neutral_floor, forced_local_bound} partialled against
+    both axes. Thresholds: an axis KEEPS signal at |partial| >=
+    0.30 and LOSES it at |partial| < 0.15.
+
+  VERDICT FAMILY (frozen strings):
+    TRANSFER_COORDINATE_SUPPORTED
+      gate passes AND s_live keeps partial signal (mechanism field:
+      STRUCTURAL if inf_density loses, BOTH if both keep,
+      UNRESOLVED_COLLINEAR if neither keeps individually).
+    BEHAVIORAL_INFLUENCE_DOMINATES_LIVENESS
+      gate passes AND inf_density keeps while s_live loses.
+    ALTERNATE_COORDINATE_DOMINATES
+      gate passes AND both axes lose while a named confound keeps
+      (mechanism field CONFOUND:<name>).
+    NO_LOW_DIMENSIONAL_TRANSFER_COORDINATE
+      gate fails with census and harness clean.
+    AXIS_NOT_IDENTIFIABLE_UNDER_CURRENT_GENERATOR
+      census rule fails (assay not run).
+    HARNESS_SUSPECT
+      sham check or ladder-realization check fails.
+  H4 evidence (no scalar adequate) is reported through the E4 table
+  and within-level spread regardless of verdict.
+
+7. HARNESS REQUIREMENTS INHERITED (brief section 12 -> mechanism)
+
+  hashes journaled at issuance ......... JOURNAL.jsonl entry 1,
+                                         before any outcome row
+  no outcome before freeze ............. census produces coordinates
+                                         and covariates only; no
+                                         displacement row exists
+                                         before the freeze commit
+  machine-implemented sham ............. G_HARNESS (tol 0.03)
+  knob non-inertness ................... G_LADDER asserts realized
+                                         per-level s_live ranges are
+                                         ordered and non-overlapping
+  same terrain for measure and claim ... one exact full-domain ruler
+  no one-seed / one-stratum gate ....... fixed 12 objects/cell, per-
+                                         seed eta2 required 5/5, E1
+                                         support rule with frozen
+                                         fallback (no silent filter)
+  object-level uncertainty ............. object is the unit; 300 n
+  forced cells declared ................ section 3, before any run
+  provenance ........................... generator/edit/ruler are
+                                         Gen-0 verbatim; streams are
+                                         named SeedSequence spawns;
+                                         gates shipped per object
+  hostile review after frozen analysis . hostile_review_gen1.md
+  prereg vs exploratory labeling ....... explicit in all outputs
+  no post-null scope widening .......... stop condition, section 9
+
+8. MACHINE-USABLE OUTPUT (brief section 16)
+
+  results/objects_geometry.jsonl: one record per object carrying
+  identity/provenance (seed, level, obj; gates in objects.jsonl),
+  s_live, b_live, inf_density, full influence profile, all measured
+  covariates, forced quantities, edit-family id, neutral/local/far
+  masses, LOCAL_SHARE, median and quantiles of nonzero d, dyadic +
+  64-bin linear histograms, assay_version. No universal schema; the
+  record is what this assay measures.
+
+9. STOP CONDITION AND D-14 DISCIPLINE
+
+  If a verdict in the supported family is reached: freeze the
+  coordinate, its measurement procedure, and a written out-of-
+  sample prediction TEMPLATE for StackVM (region + predicted
+  consequence profile) WITHOUT reading any StackVM artifact; do not
+  run D-14. If no coordinate is supported: close cleanly, no D-14
+  recommendation, no scope widening. Tensors are not an arm; the
+  TT decoder observation from Gen-0 is revisited in writing only if
+  the discovered formalism happens to describe it (brief section 10).
+
+10. CLAIM CEILING (pre-committed)
+
+  Any result binds only: this circuit family (n=10, G=24, uniform
+  generator conditioned by rejection), this edit family, this ruler,
+  the achieved s_live range (which the census will show; the
+  generator cannot reach full liveness by rejection at feasible
+  rates -- if so, that bound is part of the claim). No claim about
+  universal representation laws, search, StackVM, tensors, or
+  intelligence. Transport is a later, frozen-prediction experiment.
+
+11. BINDING
+
+  sha256 of bench1.py and analyze1.py journaled at issuance in
+  JOURNAL.jsonl before any assay row exists. Later edits require a
+  journaled amendment BEFORE results are read.
+
+=====================================================================
+END FREEZE -- Harmonia A, Gen 1, 2026-08-31
+=====================================================================
