@@ -41,11 +41,37 @@ EQUATIONAL = sorted(set(OP_LIST) - CONTROL_FLOW)
 
 
 def egglog_available():
+    """Import AND report the distribution version.
+
+    Originally this fell back to 'unknown' via __version__, which egglog does
+    not expose -- while gen0_config.json asserted 13.2.0, a number taken from
+    Techne's inventory rather than measured here. Techne's pinned manifest
+    (techne/requirements-donors.txt, 231c1ea7) made the claim checkable, so it
+    is now measured at the point of use and the pin is verified against it.
+    """
     try:
         import egglog  # noqa: F401
-        return True, getattr(__import__('egglog'), '__version__', 'unknown')
     except Exception as exc:
-        return False, str(exc)
+        return False, str(exc), None
+    try:
+        import importlib.metadata as md
+        ver = md.version('egglog')
+    except Exception:
+        ver = getattr(__import__('egglog'), '__version__', 'unknown')
+    return True, ver, _pinned_version('egglog')
+
+
+def _pinned_version(dist):
+    """The version Techne pinned, read from the manifest, or None if absent."""
+    man = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..',
+                                       'techne', 'requirements-donors.txt'))
+    if not os.path.exists(man):
+        return None
+    for line in open(man, encoding='utf-8'):
+        line = line.split('#')[0].strip()
+        if line.lower().startswith(dist.lower()) and '==' in line:
+            return line.split('==', 1)[1].strip()
+    return None
 
 
 def load_witnesses():
@@ -166,10 +192,15 @@ def requirement(c):
 
 
 def main():
-    ok, ver = egglog_available()
+    ok, ver, pinned = egglog_available()
     print('ERGON GEN-0 -- FAMILY B PROBE (section 9)')
     print('=' * 68)
-    print('\n[TOOL] egglog importable: %s (%s)' % (ok, ver))
+    match = (pinned is None) or (str(ver) == str(pinned))
+    print('\n[TOOL] egglog importable: %s  version %s  (Techne pin: %s -> %s)'
+          % (ok, ver, pinned, 'MATCH' if match else 'MISMATCH'))
+    if pinned and not match:
+        print('  WARNING: the census below ran against a DIFFERENT egglog than the '
+              'pinned manifest declares; donor_inventory measurements do not transfer')
 
     c = census()
     print('\n[G3 ATTAINABLE RANGE] measured before any design, per inherited Lexis G3')
@@ -197,7 +228,10 @@ def main():
 
     out = os.path.join(os.path.dirname(__file__), 'family_b_probe_2026-08-31.json')
     with open(out, 'w', encoding='utf-8') as fh:
-        json.dump({'egglog_available': ok, 'egglog_version': ver, 'census': c,
+        json.dump({'egglog_available': ok, 'egglog_version': ver,
+                   'egglog_version_source': 'importlib.metadata, measured at run time',
+                   'techne_pinned_version': pinned, 'pin_matches_installed': match,
+                   'census': c,
                    'verdict': v, 'reasoning': why, 'requirement': req},
                   fh, indent=2, sort_keys=True)
     print('\nwrote %s' % out)

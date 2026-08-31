@@ -74,7 +74,9 @@
     "witness_len_mean": 11.05
   },
   "egglog_available": true,
-  "egglog_version": "unknown",
+  "egglog_version": "13.2.0",
+  "egglog_version_source": "importlib.metadata, measured at run time",
+  "pin_matches_installed": true,
   "reasoning": [
     "egglog imports, so the tool is present. The binding constraint is not the tool, it is the SUBSTRATE ENCODING.",
     "Attainable range, measured: 53 of 78 known solution witnesses (68.0%) are jump-free and therefore expressible as equational terms; 25 contain control flow ['JNZ', 'SKG'] and are not, absent a machine-state theory.",
@@ -88,5 +90,6 @@
     "smallest_next_capability": "an equational theory of RM-D5 over the JUMP-FREE fragment (11 opcodes: ADD AND MOD MOV MUL OR SET SHL SHR SUB XOR) that can (a) ingest a straight-line genotype, (b) saturate under a rule set derived from prior solved genotypes, and (c) emit the SHORTEST equivalent straight-line genotype.",
     "why_shortest_is_the_right_output": "length is the only rewrite product that can move the D-5 readout. The slot eats whole genotypes as mutation seeds; a shorter seed of identical behaviour occupies a different, smaller neighbourhood under the frozen mutation physics, so it is a REACHABILITY claim rather than an equivalence claim, and reachability is what D-5 measures."
   },
+  "techne_pinned_version": "13.2.0",
   "verdict": "FAMILY_B_REQUIRES_NEW_SYNTHESIS_LAYER"
 }
