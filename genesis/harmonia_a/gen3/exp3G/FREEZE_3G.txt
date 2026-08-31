@@ -1,0 +1,51 @@
+=====================================================================
+GEN-3G FREEZE -- validity boundary
+Date: 2026-08-31. Campaign rules R1-R7. Prerequisite: none
+(independent premise: the bootstrap P5 validity-coupling
+hypothesis). FAULT class goes live for the first time.
+=====================================================================
+QUESTION. In the smallest validity-constrained variant of the
+substrate, do faults, destruction, or large transitions ORGANIZE
+around distance to the validity boundary?
+
+SUBSTRATE. Window-constrained circuits: 24 gates over the same
+4-op alphabet, but a gate may reference an INPUT (always legal) or
+one of the W = 8 MOST RECENT gate wires only. Generator: uniform
+over legal wirings; census: balance band [0.05, 0.95], 12 objects
+x 5 seeds = 60. Edit family: op swaps (always valid) + rewires to
+ANY earlier wire -- a rewire to a gate wire older than the window
+is a FAULT (invalid program; no behavior).
+FORCED LAYER, DECLARED: FAULT iff age(target wire) > W is
+DEFINITIONAL -- fault rate and its location carry no empirical
+content. The EMPIRICAL question lives strictly among VALID edits:
+does boundary SLACK = W - age (age = how far back the new
+reference reaches among gate wires; input references get slack =
+W by convention, declared) predict the R_VEC2 class of valid
+non-neutral rewires?
+
+MEASUREMENTS (K = 128 edits/object, streams (seed, 108, level,
+obj), stat seed 20260908):
+  - class distribution vs slack bins (0..W), shipped in full;
+  - AUC(slack -> SMALL vs LARGE-or-DESTRUCTION) among valid
+    non-neutral REWIRES, LOSO by seed;
+  - AUC(inf_target) on the same rows (does the surviving 3B-3F
+    structure recur on the constrained substrate? bridge
+    measurement, reported for 3H's context);
+  - fault-adjacency probe: for valid rewires, does slack = 0
+    (boundary-hugging) differ in class mix from slack >= 4?
+    (two-proportion difference on SMALL rate, reported with a
+    seeded bootstrap CI.)
+
+GATES (frozen):
+  BOUNDARY_ORGANIZATION      AUC(slack) >= 0.60 in 5/5 LOSO folds.
+  NO_BOUNDARY_ORGANIZATION   AUC(slack) < 0.60 in any fold, with
+                             support intact.
+  INDETERMINATE              any fold < 300 evaluable rewires.
+The inf_target bridge measurement carries NO gate here (it informs
+3H's design, not 3G's verdict).
+
+CLAIM CEILING: one window size (W = 8), one constraint type
+(recency window), same behavior space. "Boundary" here is
+syntactic validity distance, not semantic; a different constraint
+family may organize differently.
+=====================================================================
