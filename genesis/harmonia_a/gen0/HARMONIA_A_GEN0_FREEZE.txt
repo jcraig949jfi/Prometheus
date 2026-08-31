@@ -1,0 +1,203 @@
+=====================================================================
+HARMONIA A / GEN 0 -- PREREGISTRATION FREEZE
+Representational reachability bench
+Date: 2026-08-31   Seat: Harmonia A (M2 host, D:\Prometheus)
+=====================================================================
+
+0. PROVENANCE RULINGS (made before design, recorded verbatim)
+
+  R-1. techne/TECHNE_GEN0_DONOR_HANDOFF.txt and
+       techne/donor_inventory.json DO NOT EXIST in this repo, and
+       tensorly / quimb / discopy / egglog are not importable in this
+       environment. Donor surfaces are TOOL_NOT_APPLICABLE this
+       generation. Where donor math is needed (tensor-train
+       decomposition), this bench implements exact TT-SVD in numpy
+       (cutoff 1e-12), which is deterministic and cutoff-0-exact for
+       these 1024-entry tensors. No scientific claim in this
+       generation depends on a donor library.
+
+  R-2. The motivating D-13 result was VERIFIED against the primary
+       artifact before this freeze:
+         D:\ZeusE\d12\analysis\p1_results.json
+         channels.stackvm.I-L_strong.kpos025 = [0.0, 0.0, 0.0, 5]
+         channels.stackvm.I-L_strong.n_both_clean = 505
+       The D-13 verdict (INTERVENTION_DID_NOT_MOVE_TARGET_CHANNEL)
+       and its D-14 prescription -- "the honest next lever is a NEW
+       operator family (or encoding change)" -- are the mandate for
+       this bench. D-13 numbers are motivation; this bench measures
+       its own native gap and imports no baseline.
+
+  R-3. Per kickoff section 3, StackVM is NOT the Gen-0 substrate:
+       mapping it into tensors/diagrams would require arbitrary
+       semantic choices that dominate the experiment. Substrate
+       chosen: Boolean functions on {0,1}^10 with a straight-line
+       circuit native representation -- the smallest exact substrate
+       where a program-shaped native rep and multiple semantic reps
+       of the SAME object coexist under a fully-enumerated exact
+       consequence ruler.
+
+  R-4. Production M1 (Serendipity Foundry, 192.168.1.202) is NOT
+       touched. This bench lives entirely in
+       D:\Prometheus\genesis\harmonia_a\gen0\.
+
+1. OBJECT AND SAME-OBJECT INVARIANT
+
+  Object: a Boolean function f: {0,1}^10 -> {0,1}, identified with
+  its 1024-entry truth table (canonical semantics).
+  Population: 60 objects = 5 master seeds (11,22,33,44,55) x 12,
+  each generated as a random 24-gate straight-line circuit over
+  {AND, OR, XOR, NAND}, resampled (cap 50) until census C1 passes.
+  Every representation must encode exactly f; decode == f is
+  asserted at encode time (SHAM, TT) or holds by construction
+  (ANF exactness verified by census C5). A violated assertion
+  aborts the run.
+
+2. CONSEQUENCE RULER (single, exact, independent)
+
+  d(f, f') = |{x : f(x) != f'(x)}| / 1024, computed by full
+  enumeration. Exact, deterministic, defined with no reference to
+  any representation's edit metric. One battery serves census,
+  channels, and claims (D-13 finding F1 cannot arise). No second
+  ruler: any subsampled ruler would be a dependent statistic of
+  this one, not independent information (kickoff section 10).
+  Faults do not exist in this substrate; validity is structural for
+  NAT/SHAM/ANF/VT, and for TT every perturbed decode sign-rounds to
+  some Boolean function (validity == 1; rounding absorption is
+  measured AS the TT neutral rate -- this is the decoder-smoothing
+  channel, reported, not hidden).
+
+3. BANDS (frozen; aligned with the D-13 K_positive@0.25 channel)
+
+  NEUTRAL: d = 0
+  LOCAL:   0 < d <= 0.25
+  FAR:     d > 0.25
+  Plus full dyadic histograms (failure-signature doctrine: shapes,
+  not verdict lines).
+
+4. ARMS AND FROZEN PERTURBATIONS (K = 128 edits/object/arm,
+   uniform with replacement, all streams named SeedSequence spawns)
+
+  NAT      circuit; edit space = {1-gate op change} U {1-input
+           rewire to any earlier wire}; enumerated, then sampled.
+  SHAM     input-relabeled circuit, same edit class. Control 11-D.
+           ANALYTIC EXPECTATION: distribution identical to NAT
+           (relabeling commutes with the edit class). Serves as the
+           harness positive control, machine-checked (D-13 B4).
+  ANF      exact F2 polynomial via Moebius transform; edit = toggle
+           one of 1024 monomial coefficients, uniform.
+           ANALYTIC EXPECTATION, declared NOT discovered:
+           d = 2^-deg(u) exactly; LOCAL mass forced =
+           P(deg >= 2) = 1 - 11/1024 = 0.9893; NEUTRAL = 0.
+  ANF_SCR  ANF after a seeded bijection of the input space.
+           Control 11-C. ANALYTIC EXPECTATION: identical to ANF
+           (displacement is bijection-invariant). Any deviation is
+           a harness bug, not a finding.
+  VT       truth table; edit = flip one row. The TRIVIALITY
+           CEILING: d == 1/1024 always, LOCAL == 1. Pre-registers
+           the "cheap deterministic algorithm" attack: local
+           reachability per se is trivially available at
+           representation size 2^n; therefore NO claim from this
+           bench rests on locality existing SOMEWHERE. Claims may
+           only rest on (a) the native gap and (b) non-forced
+           locality in succinct/structured contestants.
+  TT       exact TT-SVD cores of F = (-1)^f; edit = add
+           s*eps*rms(core_c) to one uniformly chosen entry of one
+           uniformly chosen core, s in {+1,-1}; decode by full
+           contraction; f' = (decoded < 0). eps grid {0.125, 0.5,
+           2.0} run in full, PRIMARY eps = 0.5 (named here, before
+           any run; the grid is a dose-response report, not a
+           selection pool -- kickoff section 8). EMPIRICAL CELL.
+  TT_SCR   TT after a seeded permutation of the 1024 tensor entries
+           (destroys variable-order structure; identical
+           mechanics/cost). EMPIRICAL CELL.
+
+  Honesty declaration: for ANF, ANF_SCR, VT, SHAM the band masses
+  are forced by arithmetic. The ONLY empirical unknowns are the NAT
+  shape (does the D-13 neutral/far gap replicate in this tuple?)
+  and the TT/TT_SCR shapes (rounding makes them non-analytic).
+  This freeze states that plainly so no forced cell can be
+  presented as a discovery afterwards.
+
+5. CENSUS (bands frozen; a failed census REJECTS the design)
+
+  C1 object balance in [0.05, 0.95]; resample cap 50 per object.
+  C2 native edit space >= 500 distinct edits per object.
+  C3 TT roundtrip: round(decode(encode(f))) == f, 60/60 objects.
+  C5 ANF analytic check: 100 sampled toggles, d == 2^-deg exactly,
+     100/100.
+  (C4, the sham check, runs at analysis time as G_HARNESS since it
+  needs assay rows.)
+
+6. ENDPOINTS AND GATES (implemented verbatim in analyze.py)
+
+  Per arm, per seed and pooled: NEUTRAL / LOCAL / FAR masses,
+  dyadic histogram, median nonzero d, cluster bootstrap 95% CI on
+  LOCAL mass (5000 resamples over objects, seed 20260831).
+
+  G_HARNESS  |LOCAL(SHAM)-LOCAL(NAT)| <= 0.03 and
+             |NEUTRAL(SHAM)-NEUTRAL(NAT)| <= 0.03, else
+             HARNESS_SUSPECT (whole run suspect).
+  G_ANALYTIC ANF LOCAL within 0.02 of 0.9893; ANF_SCR within 0.02
+             of ANF; VT LOCAL == 1 within 0.02. Else FAIL (harness).
+  G_DOSE     TT eps knob non-inert (D-13 B5): fraction of matched
+             perturbation triples whose three children are
+             bit-identical <= 0.95, else INERT (eps ladder claims
+             void).
+  G1         THE PHENOMENON. REACHABLE iff ALL of:
+               LOCAL(NAT) pooled <= 0.05           (native gap)
+               LOCAL(TT@0.5) pooled >= 0.25        (succinct alt
+                                                    fills the band)
+               per-seed LOCAL(TT@0.5) > LOCAL(NAT) in 5/5 seeds
+               bootstrap CIs separated (TT lower > NAT upper).
+             If native gap holds but TT fails its bar:
+               REACHABLE_ANALYTIC_ONLY (the gap exists; only
+               arithmetic-forced representations fill it; the
+               non-trivial contestant did not).
+             If LOCAL(NAT) > 0.05:
+               NO_REPRESENTATIONAL_REACHABILITY_EFFECT (the native
+               tuple already reaches locally; D-13's wall does not
+               transplant to this substrate).
+  G2         TT vs TT_SCR at primary eps: descriptive only, no
+             frozen gate; reported as the structure-alignment
+             observation.
+
+  Power note (D-13 H-3 inherited): each pooled cell has 7,680 rows
+  (60 objects x 128); binomial SE on a mass near 0.25 is ~0.005,
+  and the cluster bootstrap over 60 objects governs the CI. The
+  G1 thresholds (0.05 vs 0.25) are separated by ~40x that scale;
+  this design cannot produce a one-seed pass (no join filter
+  exists; every cell has identical row counts by construction --
+  D-13 B1 class excluded structurally).
+
+7. HOSTILE-REVIEW PREREGISTRATION (kickoff section 17 mapped)
+
+  circular smallness   edit spaces enumerated/defined above with no
+                       reference to consequences; eps grid fixed.
+  leakage              every rep is a pure function of f.
+  decoder smoothing    TT neutral rate IS the measurement; preround
+                       L2 displacement recorded per row.
+  lossy reconstruction census C3 requires exact roundtrip.
+  random projection    TT_SCR is the randomized-structure control;
+                       ANF_SCR the bijection control.
+  different objects    same-object assertions abort on violation.
+  more compute         per-arm wall time + rep sizes recorded.
+  hidden primitives    all reps decode through the same evaluator
+                       into the same 1024-vector; no rep receives
+                       information beyond f.
+  one seed             5 master seeds, per-seed tables mandatory.
+  cheap deterministic  VT arm IS that algorithm, run as the ceiling
+                       and excluded from claim-bearing status.
+
+8. STATUS VOCABULARY: as kickoff section 18. FORCED cells may only
+   ever be labeled REACHABLE(ANALYTIC); claim-bearing labels for
+   empirical cells only.
+
+9. BINDING: sha256 of bench.py and analyze.py are journaled in
+   JOURNAL.jsonl at freeze issuance, BEFORE any assay row exists
+   (D-13 G-1 remediation adopted at issuance, not post-hoc). Any
+   later edit to either file requires a journaled amendment entry
+   stating what changed and why, before results are read.
+
+=====================================================================
+END FREEZE -- Harmonia A, Gen 0, 2026-08-31
+=====================================================================
