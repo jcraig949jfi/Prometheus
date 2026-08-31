@@ -159,3 +159,86 @@ runnable on machinery that already exists and costs seconds per closure.
 to depth 8, restrict to the 93.4% stable class, and ask whether a trace-only diagnostic beats the
 base rate. This is a smaller and better-posed rung than A3, and it feeds A3 directly, because A3
 cannot interpret its own result without knowing which failure it is looking at.
+
+---
+
+## 9. ADDENDUM — does the unreachable class dissolve with scale? Measured to depth 10.
+
+**Operator intuition, 2026-08-31:** *"a 5 node graph, navigating a solution is impossible but a
+1000 node graph has many solutions"* — unreachability as an artifact of a small explored
+structure, evaporating as the structure grows.
+
+**Competing hypothesis:** `C \ {p}` generates a PROPER SUBALGEBRA. Then no depth recovers the
+missing behaviours and the recovery curve hits a floor rather than going to zero.
+
+These differ at the limit, so the limit was pushed. p05 removed, class labelled at depth 5
+(2,136 targets), enumerating the same impoverished set deeper:
+
+    depth   candidates    V-sigs    recovered   cum %   new
+      6         20,295     5,002           39    1.8%    39
+      7         83,549    17,768           71    3.3%    32
+      8        333,667    61,230          140    6.6%    69
+      9      1,296,241   204,506          199    9.3%    59
+     10      4,911,333   663,527          223   10.4%    24
+
+**Still unreachable after depth 10: 1,913 = 89.6%.**
+
+The decisive statistic is marginal yield, not cumulative recovery:
+
+    depth   new   marginal candidates   recoveries per million
+      6      39                20,295                  1,921.7
+      7      32                63,254                    505.9
+      8      69               250,118                    275.9
+      9      59               962,574                     61.3
+     10      24             3,615,092                      6.6
+
+**The reachable graph grew 133x and the search grew 242x, while marginal yield collapsed 291x.**
+New recoveries peaked at depth 8 and are falling while each level costs about 4x more. That is
+the signature of a floor, not of a threshold being approached.
+
+### The intuition is right about the mechanism and wrong at the limit
+
+**Right:** 10.4% of the class *was* a small-structure artifact — those depth-5 labels were simply
+wrong, which is exactly the failure mode the analogy names. It is real and now quantified.
+
+**Wrong at the limit:** 89.6% did not move, and marginal return is collapsing toward zero. The
+residue behaves like a genuine representation boundary that no search budget crosses.
+
+### Why the two look identical at small scale and diverge at large scale
+
+Different mathematical objects wearing the same clothes.
+
+- **Random-graph connectivity** is a *probabilistic* threshold. Adding nodes adds edges by
+  chance, a giant component almost surely appears, and as n grows the probability of a path goes
+  to one. **Size fixes it.**
+- **A generated subalgebra** is *closed under its generators*. `G(C \ {p})` contains exactly what
+  the nine primitives generate and never anything else, at any depth. **Size does not fix it —
+  only a new generator does.**
+
+At small scale both produce "no path found", which is why the analogy feels tight. They separate
+only when the budget is pushed and marginal yield is watched: percolation accelerates toward
+connection, a subalgebra decelerates toward a floor. This decelerated.
+
+This is the operational content of Amendment 1. The 89.6% residue is exactly the population on
+which `G(C ∪ {M}) = G(C)` bites — no macro built from the nine can reach it, because a macro is
+already an element of the closure that excludes it. Only a **Level 2** primitive can.
+
+### What this changes above
+
+- §4's trichotomy stands, measured to depth 10: **search failure / depth failure (10.4%) /
+  representation failure (89.6%)**.
+- §5's label-noise screen tightens rather than loosens. Ground-truth instability is **10.4% at
+  depth 10**, so Q045's ≥90% PASS threshold now sits *below* the label noise floor rather than
+  3.4 points above it. **As written, T1 cannot be passed by any diagnostic on this population.**
+- The §5 fix is unchanged but now mandatory: restrict scoring to the stable residue, or score
+  the trichotomy.
+- Reproducible at `aporia/q100/probes/q45_asymptote.py`.
+
+### Honest limits
+
+One removed primitive, one world, one probe set. A proper-subalgebra claim would be *proved* by
+exhibiting an invariant preserved by all nine primitives and violated by p05; no such invariant
+has been constructed, so the algebraic reading is **supported by a collapsing marginal-yield
+curve, not established** — the floor could still be a very slow decay. The cheap next check is
+the same sweep on a second removed primitive: if the yield collapse replicates across primitives
+with different loss fractions, the subalgebra reading strengthens considerably.
