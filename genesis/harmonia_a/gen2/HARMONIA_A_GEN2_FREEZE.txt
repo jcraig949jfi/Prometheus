@@ -1,0 +1,202 @@
+=====================================================================
+HARMONIA A / GEN 2 -- PREREGISTRATION FREEZE
+The ruler problem: what is small but meaningful consequence change?
+Date: 2026-08-31   Seat: Harmonia A (M2 host, D:\Prometheus)
+Expedition: Gen-2..5 brief; predecessors Gen-0 (7ca9063f7/e846d3570)
+and Gen-1 (1950aa1df/38d202a7e). Bootstrap notebook (exploratory
+only): genesis/harmonia_a/bootstrap/.
+=====================================================================
+
+0. QUESTION
+
+  Gen-1 proved the raw normalized-Hamming LOCAL band conflates small
+  change with proportional destruction of unbalanced objects. Before
+  any further coordinate hunt: WHAT SHOULD "SMALL BUT MEANINGFUL
+  CONSEQUENCE CHANGE" MEAN? This generation attacks the concept via
+  frozen soundness AXIOMS adjudicated on an adversarial battery,
+  with every kill that can be forced analytically declared here,
+  before execution. Prediction, declared: VECTOR_RULER_REQUIRED.
+
+1. SCOPE AND UNITS
+
+  Rulers are functions of BEHAVIOR PAIRS only: (f, f') with f, f':
+  {0,1}^10 -> {0,1} as 1024-bit tables (representation-blindness is
+  definitional; cells C5-class verify it). Classes: NEUTRAL, SMALL,
+  LARGE, DESTRUCTION, plus FAULT -- a declared class this substrate
+  CANNOT exercise (no invalid objects exist here); it is carried in
+  the ruler spec because Gen-3 substrates with validity constraints
+  (StackVM-likes; cf. bootstrap P5's validity-coupling observation)
+  will exercise it. NOVELTY is a separate REPORTED component
+  (min distance of a child to its sampled sibling neighborhood),
+  explicitly UNADJUDICATED this generation: novelty is baseline-
+  relative and these axioms cannot bind it.
+
+2. TRIVIALITY THRESHOLD, JUSTIFIED NOT CHOSEN
+
+  eps_triv = 0.025 = half the object-population balance-band floor
+  (0.05, the census band of Gen-0/Gen-1). A function with minority
+  mass <= eps_triv is behaviorally trivial for this population.
+  Justification standard per bootstrap P2's instrument lesson: a
+  threshold must be placed relative to the measured population and
+  the instrument's noise floor (here: measurement is exact, so the
+  population band alone governs). Worst-case check: an 8-flip child
+  of a band-floor object has minority mass >= 0.05 - 8/1024 = 0.042
+  > eps_triv -- small modifications cannot cross the line.
+
+3. AXIOMS (frozen; each cites the brief's section-5 distinctions)
+
+  AX1  (biconditional) NEUTRAL iff f' == f. Behavior-identical
+       transforms are NEUTRAL (C5 rep change, C8-equivalent);
+       nothing with d > 0 may be NEUTRAL (AX1c).
+  AX2  Collapse to a constant is DESTRUCTION at EVERY parent
+       balance (C2 balanced, C4 unbalanced -- the Gen-1 defect
+       cell).
+  AX3  A k-flip modification of a surviving object is SMALL:
+       k in {1,4,8,60} for balanced parents, k in {1,4,8} for
+       unbalanced parents (support intact, behavior nontrivial).
+  AX4  SEVERITY FLAG: any collapse cell classified SMALL is the
+       named Gen-1 pathology; counted and reported per ruler.
+  AX5  Representation-blindness: rulers consume behavior pairs
+       only (structural for all candidates; C5 verifies NEUTRAL
+       on a relabeled-circuit identity).
+  AX6  Flip-ladder monotonicity: along k = 1,4,8,60 the class may
+       only move NEUTRAL -> SMALL -> LARGE, never backward.
+       (Subsumed by AX3 for the tested ladder; retained for
+       future ladders.)
+  AX7  A transform to a HEALTHY function (minority mass >= 0.05)
+       is never DESTRUCTION (C10 replacement, C11 complement,
+       C9b input permutation).
+  AX8  A transform removing >= 3/4 of the parent's minority
+       support is never SMALL (C12) -- licensed verbatim by the
+       brief's definition: small meaningful movement must not
+       destroy the object's defining activity.
+  AX9  A transform with d >= 0.45 to a function sharing < 10%
+       minority-support overlap is never SMALL (N2_b).
+
+4. NECESSITY RESULTS (forced; the mathematical core)
+
+  N1: no sound ruler is a function of displacement d alone.
+      Proof by exchange pair at IDENTICAL d = m (m = minority mass
+      of a [0.055, 0.0625] object): N1_a = m*1024 flips of a
+      balanced object (required SMALL by AX3-extension: support
+      intact, healthy) vs N1_b = collapse of the unbalanced object
+      (required DESTRUCTION by AX2). Same d, different required
+      class. QED.
+  N2: no sound ruler is a function of the child f' alone.
+      Proof by exchange pair at IDENTICAL f' = g: N2_a = parent
+      one flip from g (required SMALL by AX3) vs N2_b = unrelated
+      balanced parent mapped to g (required not-SMALL by AX9,
+      not-NEUTRAL by AX1c, not-DESTRUCTION by AX7). QED.
+  Scope note: these prove >= 2 informationally independent inputs
+  are necessary. The constructive candidate below uses 3
+  components; MINIMALITY OF 3 IS NOT CLAIMED.
+
+5. CANDIDATE RULERS (frozen; classification rules verbatim in
+   bench2.py)
+
+  R_HAM  (banded scalar; the Gen-0/1 incumbent) NEUTRAL d=0;
+         SMALL 0<d<=0.25; LARGE d>0.25. Has no DESTRUCTION class.
+         DECLARED FORCED KILL: fails AX2 on C4 (classifies
+         unbalanced collapse SMALL -- the Gen-1 finding restated).
+         Runs as the battery's POSITIVE CONTROL (gate G_TEETH:
+         if the battery cannot kill R_HAM, HARNESS_SUSPECT).
+  R_REL  (banded scalar) s = d / max(minmass(f), 1/1024);
+         NEUTRAL d=0; SMALL s<=0.5; LARGE 0.5<s<1; DESTRUCTION
+         s>=1. DECLARED FORCED KILL: C11 complement of a balanced
+         parent gives s = 2 -> DESTRUCTION of a healthy function,
+         violating AX7. Deterministic (no noise dependence).
+  R_NMI  (banded scalar) u = 1 - I(f;f')/max(H(f),H(f'));
+         NEUTRAL u~0; SMALL u<=0.5; LARGE u<0.9; DESTRUCTION
+         u>=0.9. DECLARED FORCED KILL: C11 complement has u = 0
+         -> NEUTRAL with d = 1, violating AX1c. (Also expected to
+         violate AX7 on independent healthy replacements.)
+  R_VEC  (constructive vector; components d, surv, minmass(f')):
+         NEUTRAL iff f'==f; DESTRUCTION iff minmass(f') <=
+         eps_triv; SMALL iff d <= 0.25 AND surv >= 0.5; LARGE
+         otherwise. surv = Jaccard overlap of minority supports
+         (tie rule: mean <= 0.5 -> ones-support).
+         DECLARED ANALYTIC EXPECTATION: passes every axiom on
+         every cell class (worked case table: C1/C3 SMALL via
+         support-intact flips; C2/C4 DESTRUCTION via triviality;
+         C10/C11/C9b non-DESTRUCTION via healthy support, LARGE
+         via d or surv; C12 LARGE via surv < 0.5; N1_a SMALL /
+         N1_b DESTRUCTION; N2_a SMALL / N2_b LARGE).
+
+6. BATTERY (cells constructed on real Gen-1 circuit objects where
+   circuit structure matters; synthesized truth-table objects
+   where only behavior matters and the population is scarce --
+   representation-blindness makes this legitimate and it is
+   disclosed per cell)
+
+  20 balanced parents (bal in [0.45,0.55]) x {C1 flip ladder, C2
+  collapse, C10 healthy replacement, C11 complement, C9b input
+  permutation, C5 rep-identity (circuit-backed only)};
+  20 unbalanced parents (minority in [0.05,0.15]) x {C3 flip
+  ladder, C4 collapse, C12 partial support loss (where the child
+  stays nontrivial)}; plus necessity pairs N1_a/N1_b, N2_a/N2_b.
+  All randomness from named SeedSequence streams under master key
+  777. Every cell records (d, surv, minmass(f')) and all four
+  rulers' classes.
+
+7. GATES AND VERDICT (implemented verbatim in analyze2.py)
+
+  G_TEETH   R_HAM must incur >= 1 violation, else HARNESS_SUSPECT.
+  G_AX4     severity count (collapse->SMALL) reported per ruler.
+  Verdict rule:
+    if any banded-scalar candidate passes ALL axioms ->
+        SCALAR_RULER_SURVIVES
+    elif R_VEC passes ALL axioms -> VECTOR_RULER_REQUIRED
+        (scoped: among tested candidates, with N1/N2 proving >= 2
+        components necessary for ANY sound ruler)
+    else -> CONSEQUENCE_LOCALITY_NOT_WELL_DEFINED (within tested
+        class).
+  Any mismatch between a DECLARED FORCED outcome (section 5) and
+  the executed battery is an implementation defect ->
+  HARNESS_SUSPECT, not a finding.
+
+8. EMPIRICAL DELIVERABLE (descriptive, gate-free, statistic frozen)
+
+  Re-score ALL Gen-1 NAT rows (38,400) under R_VEC by regenerating
+  the Gen-1 edit streams deterministically (same named streams,
+  same edit spaces). Frozen headline statistics: the fraction of
+  Gen-1 old-LOCAL rows reclassified DESTRUCTION, LARGE, and
+  confirmed SMALL; the full old-band x new-class confusion table;
+  the novelty component's distribution (report-only). This
+  quantifies exactly how much of Gen-1's geometry the defective
+  ruler misread, and ships as the machine-usable artifact for
+  Gen-3 (results/gen1_rescored.jsonl: object identity, edit
+  identity, d, surv, minmass, old band, new class, novelty,
+  ruler version).
+
+9. STOP CONDITION AND ROUTE CHECK
+
+  Gen-2 closes when the verdict fires and the re-score ships.
+  Route check for Gen-3 (per expedition section 23): if
+  VECTOR_RULER_REQUIRED, Gen-3's mutation-geometry hunt must use
+  the vector ruler's class distribution (not scalar bands) as its
+  outcome object; if CONSEQUENCE_LOCALITY_NOT_WELL_DEFINED, Gen-3
+  as posed is malformed -> ROUTE_INVALIDATED and redesign.
+
+10. CLAIM CEILING
+
+  Binds to: this behavior space (1024-point Boolean functions),
+  the tested candidate class (three banded scalars + one
+  three-component vector), the frozen thresholds (0.25 band, 0.5
+  surv, eps_triv 0.025), and the population balance band. N1/N2
+  necessity results are theorems for ANY ruler satisfying the
+  axioms, but the axioms themselves encode this population's
+  notion of "defining activity" (minority support). No claim
+  about universal consequence semantics, other substrates'
+  ruler needs (Gen-3 will re-derive), or novelty adjudication.
+
+11. BINDING
+
+  sha256 of bench2.py and analyze2.py journaled at issuance in
+  JOURNAL.jsonl before any battery cell or re-score row exists.
+  Later edits require a journaled amendment before results are
+  read. Bootstrap artifacts are exploratory and carry no
+  evidential weight in this adjudication.
+
+=====================================================================
+END FREEZE -- Harmonia A, Gen 2, 2026-08-31
+=====================================================================

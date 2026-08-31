@@ -1,0 +1,111 @@
+=====================================================================
+HARMONIA A / GEN 2 + 2b -- HANDOFF
+The ruler problem -- CLOSED
+Date: 2026-08-31   Repo: D:\Prometheus\genesis\harmonia_a\gen2\
+Commits: b9f15eb9d (Gen-2 freeze) -> befb7d910 (Gen-2 verdict) ->
+Gen-2b freeze commit -> this close. Bootstrap (exploratory):
+genesis/harmonia_a/bootstrap/.
+=====================================================================
+
+1. FINAL VERDICT (Gen-2b frozen gate)
+
+     VECTOR_RULER_REQUIRED
+
+  No banded scalar survives the axioms; the surviving ruler is
+  R_VEC2, a three-component vector:
+      d         exact normalized Hamming displacement
+      surv_sym  min( J(ones,ones'), J(zeros,zeros') )
+      minmass'  triviality of the child
+  Classes: NEUTRAL iff f'==f; DESTRUCTION iff minmass' <= 0.025;
+  SMALL iff d <= 0.25 and surv_sym >= 0.5; LARGE otherwise; FAULT
+  declared but unexercisable in this substrate (live for Gen-3
+  substrates with validity constraints). NOVELTY remains a
+  reported, unadjudicated component.
+  0 violations over 291 cells. Necessity theorems N1/N2 (Gen-2,
+  forced): NO sound ruler is a function of d alone, or of the
+  child alone -- >= 2 components necessary for ANY ruler
+  satisfying the axioms. Minimality of 3 NOT claimed.
+
+2. THE SERIAL-REJECTION ARC (the method working as designed)
+
+  Gen-2: all four candidates KILLED. Scalars died on declared
+  forced kills (R_HAM: AX2 x40 + severity 21 collapse->SMALL --
+  the Gen-1 defect quantified; R_REL: complement of a healthy
+  object scored DESTRUCTION, AX7 x50; R_NMI: complement scored
+  NEUTRAL at d=1, AX1c x60). My own preferred R_VEC died where my
+  analytic table was wrong: minority-support identity flips
+  discontinuously when a child crosses balance 0.5, so survival
+  compared OPPOSITE support classes (32 AX3 violations, all
+  exactly-balanced parents). Implementation verified faithful;
+  the freeze declaration was the error; journaled as such; verdict
+  fired as frozen. No patching under that freeze.
+  Gen-2b: fresh freeze, repaired candidate (surv_sym: symmetric,
+  tie-rule-free, boundary-continuous), the killer transform class
+  promoted to first-class cells (C13), analytic table re-derived
+  WITH the boundary cases. G_TEETH_C13 verified the extended
+  battery kills the old R_VEC (27/27) before trusting it to clear
+  the new one. R_VEC2: 0/291.
+
+3. THE TRANSPORTED NUMBER: GEN-1 RE-SCORED UNDER R_VEC2
+
+  All 38,400 Gen-1 NAT rows re-scored by deterministic edit-stream
+  regeneration (results/gen1_rescored_v2.jsonl, ruler version
+  R_VEC2_gen2b -- the Gen-3 input artifact):
+    old-LOCAL rows confirmed SMALL:        67.7%
+    old-LOCAL rows actually LARGE:         30.7%  (support-shattered
+                                            moves inside the 0.25 band)
+    old-LOCAL rows actually DESTRUCTION:    1.7%
+  ONE THIRD of what Gen-1's ruler called "local" was not meaningful
+  small movement. Any Gen-1 statement about the local band carries
+  that correction; the Gen-1 E4 balance association should be
+  re-read against surv_sym rather than balance_dev by Gen-3.
+
+4. PROCESS DEFECT, DISCLOSED
+
+  The Gen-2b issuance journaling command failed (working-directory
+  error) and the run proceeded; the issuance entry is POST-HOC and
+  labeled so in JOURNAL.jsonl. Pre-outcome integrity for 2b rests
+  on commit ordering (freeze+code committed before any 2b cell or
+  re-score row; no results file in that commit) -- the D-13 G-1
+  posture, remediated the D-13 way.
+
+5. ROUTE CHECK FOR GEN-3 (expedition sections 8, 23)
+
+  The provisional Gen-3 (mutation geometry) STANDS, with one
+  binding modification: its outcome object is the VECTOR ruler's
+  class distribution -- (neutral, small, large, destruction[,
+  fault]) masses plus the underlying (d, surv_sym, minmass')
+  distributions -- never scalar displacement bands. The Gen-1
+  "gapped vs graded influence spectrum" conjecture remains H1
+  among rivals. Bootstrap P5's validity-coupling observation
+  (addition chains: one early substitution invalidates all later
+  sites) supplies a second candidate mechanistic variable and the
+  FAULT class becomes live once Gen-3 uses substrates with
+  validity constraints.
+
+6. CLAIM CEILING
+
+  Binds to 1024-point Boolean behavior space, the tested candidate
+  class (3 banded scalars + 2 vectors), frozen thresholds (0.25 /
+  0.5 / eps_triv 0.025 justified against the population band), and
+  this population's notion of defining activity (class supports).
+  Gen-3 substrates re-derive their ruler instances; the AXIOMS and
+  the necessity theorems are the transportable objects, not the
+  thresholds.
+
+7. ARTIFACTS
+
+  HARMONIA_A_GEN2_FREEZE.txt / HARMONIA_A_GEN2B_FREEZE.txt
+  JOURNAL.jsonl (issuance, verdicts, labeled post-hoc entry)
+  bench2.py / analyze2.py / bench2b.py / analyze2b.py
+  results/cells.jsonl (264) / cells_2b.jsonl (291)
+  results/analysis_gen2.json / analysis_gen2b.json
+  results/gen1_rescored.jsonl.gz / gen1_rescored_v2.jsonl.gz
+  ../bootstrap/BOOTSTRAP_NOTEBOOK.md + explore.py + results
+  (exploratory only)
+
+=====================================================================
+END HANDOFF -- the battery killed four rulers including mine, the
+repair survived 291 cells, and a third of Gen-1's "local" band
+turned out not to be local. The ruler now exists; Gen-3 can hunt.
+=====================================================================
