@@ -1,0 +1,52 @@
+=====================================================================
+GEN-3F FREEZE -- representation invariance
+Date: 2026-08-31. Campaign rules R1-R7. Prerequisite satisfied:
+surviving structural claim from 3D/3E (global operator-family-
+conditioned edit-consequence structure, held-out AUC ~0.835).
+=====================================================================
+QUESTION. Does the discovered structure track BEHAVIOR or
+REPRESENTATION? Construct behaviorally equivalent executables with
+deliberately different internal encodings, apply the analogous
+mutation class, and test the FROZEN model (fitted on original
+encodings, train seeds only) on the re-encoded held-out parents.
+
+ENCODINGS (deterministic; behavior equality asserted at build,
+abort on violation):
+  E-ORIG   the Gen-1 24-gate circuits (baseline).
+  E-RELAB  input-relabeled circuits (positive control: the edit
+           space is isomorphic; expected invariant).
+  E-NAND   gate-by-gate NAND expansion (AND -> 2 NANDs, OR -> 3,
+           XOR -> 4, NAND -> 1), 24 gates -> up to 96; same
+           4-op alphabet, same single-gate edit class; different
+           granularity, positions, influence profile.
+EDITS: K = 128 per re-encoded object, uniform over its own
+enumerated op/rewire space (streams (seed, 105|106, level, obj),
+stat seed 20260907). Features as 3D/3E: inf_target measured IN THE
+NEW ENCODING (influence is behavioral per site, but the SITES are
+representation objects -- that is exactly what makes this a real
+test), kind, gpos = gate_index / G_encoding, parent behavioral
+covariates (unchanged by construction).
+
+MODEL UNDER TEST (frozen): the 3E GLOBAL model, per-kind
+rank-linear, fitted per LOSO fold on E-ORIG train-seed edits only;
+evaluated on the held-out seed's E-NAND (and E-RELAB) edits.
+Non-neutral edits only (neutral exclusion declared forced, as
+before).
+
+GATES (frozen):
+  G_CONTROL   E-RELAB AUC within 0.02 of the E-ORIG held-out AUC
+              per fold (else HARNESS_SUSPECT -- the isomorphic
+              encoding must be invariant).
+  VERDICT on E-NAND AUC per fold:
+    BEHAVIOR_TRACKING          >= 0.65 in 5/5 folds
+    REPRESENTATION_SPECIFIC    <= 0.55 in any fold
+    PARTIAL_INVARIANCE         otherwise
+  (A structure labeled REPRESENTATION_SPECIFIC is not "reasoning
+  geometry" -- charter/brief wording -- and the campaign verdict
+  ceiling drops accordingly.)
+
+CLAIM CEILING: invariance tested across THESE encodings (relabel,
+NAND-granularity). Passing does not establish invariance across
+substrate families -- that is 3H. Failing here binds the claim to
+the encoding class immediately.
+=====================================================================
