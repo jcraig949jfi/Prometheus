@@ -1,0 +1,98 @@
+=====================================================================
+HARMONIA A / GEN 2b -- PREREGISTRATION FREEZE (repair adjudication)
+Date: 2026-08-31   Predecessor: Gen-2 freeze (commit b9f15eb9d),
+verdict CONSEQUENCE_LOCALITY_NOT_WELL_DEFINED at commit befb7d910.
+=====================================================================
+
+0. WHAT THIS IS
+
+  Gen-2's battery killed all four candidates, including my preferred
+  vector ruler, whose minority-support survival is DISCONTINUOUS at
+  balance 0.5 (a child crossing the boundary flips which class
+  counts as "defining activity"; survival then compares opposite
+  support classes). The implementation was verified faithful; the
+  freeze-time analytic table was the error, journaled as such.
+  Gen-2b adjudicates ONE repaired candidate under the SAME axioms
+  (Gen-2 freeze section 3, unchanged), the SAME cells (identical
+  streams, byte-identical), plus a new first-class cell family for
+  the discovered defect. Serial rejection, fresh freeze -- no
+  outcome-contingent patching under the old one.
+
+1. THE REPAIRED CANDIDATE
+
+  R_VEC2: components (d, surv_sym, minmass(f')) where
+      surv_sym = min( J(ones(f), ones(f')), J(zeros(f), zeros(f')) )
+  (J = Jaccard). No tie rule, no minority-class identity, symmetric
+  under complementation of the pair, continuous across balance 0.5.
+  Classification (verbatim in bench2b.py):
+      NEUTRAL iff f' == f
+      DESTRUCTION iff minmass(f') <= 0.025
+      SMALL iff d <= 0.25 AND surv_sym >= 0.5
+      LARGE otherwise
+
+2. NEW CELLS: C13 BOUNDARY-CROSSING FLIPS
+
+  10 balanced parents with mean <= 0.5; k in {1,4,8} zeros->ones
+  flips forced to push the child mean strictly past 0.5 (the exact
+  transform class that killed R_VEC). Required: SMALL (AX3).
+
+3. DECLARED ANALYTIC TABLE FOR R_VEC2 (checked cell-by-cell, with
+   the boundary cases this time)
+
+  C1/C3/C13 flips (k <= 8 unbal, k <= 64 bal): both Jaccards >=
+    (|class|-k)/(|class|+k); worst case unbalanced ones-side
+    |S|=51, k=8: 43/59 = 0.729 >= 0.5 -> SMALL. Boundary crossing
+    changes nothing: J(ones,ones') = |S|/(|S|+k) regardless of
+    which side of 0.5 the means sit. -> SMALL, all cells.
+  C2/C4/N1_b collapses: minmass(f') = 0 -> DESTRUCTION.
+  C5 identity: NEUTRAL.
+  C9b permutation: healthy (minmass preserved) -> never
+    DESTRUCTION; d>0 -> SMALL or LARGE (both admissible).
+  C10 healthy replacement: J(ones,ones') concentrates near 1/3 for
+    independent balanced supports -> LARGE (and d ~ 0.5 > 0.25
+    double-guards not-SMALL).
+  C11 complement: minmass preserved -> not DESTRUCTION; d = 1 ->
+    LARGE; not NEUTRAL.
+  C12 partial support loss: J(ones,ones') = 0.2 -> LARGE.
+  N1_a (60-flip balanced): min-J >= 0.88 -> SMALL.
+  N2_a: SMALL. N2_b: J ~ 1/3, d ~ 0.5 -> LARGE.
+  EXPECTATION: R_VEC2 passes every axiom on every cell. A mismatch
+  is an implementation defect (HARNESS_SUSPECT) unless diagnosis
+  shows the declaration wrong again, in which case the verdict rule
+  fires as written and the next repair gets its own freeze.
+
+4. GATES AND VERDICT (analyze2b.py verbatim)
+
+  G_TEETH      R_HAM must incur >= 1 violation (unchanged).
+  G_TEETH_C13  >= 5 C13 cells must exist AND the Gen-2 R_VEC must
+               fail on C13 (the new cells must reproduce the
+               discovered kill; a battery extension that cannot
+               kill the ruler it was built from is decoration).
+  Verdict rule: any scalar passes all -> SCALAR_RULER_SURVIVES;
+  elif R_VEC2 passes all -> VECTOR_RULER_REQUIRED (scoped to the
+  tested class; N1/N2 theorems from Gen-2 carry: >= 2 components
+  necessary for ANY sound ruler); else
+  CONSEQUENCE_LOCALITY_NOT_WELL_DEFINED.
+
+5. DELIVERABLE
+
+  Gen-1 re-scored under R_VEC2 (deterministic stream regeneration):
+  frozen headline = fractions of old-LOCAL rows reclassified
+  DESTRUCTION / LARGE / confirmed SMALL + full confusion table.
+  Ships as results/gen1_rescored_v2.jsonl with ruler version
+  R_VEC2_gen2b (the Gen-3 input artifact if the verdict supports
+  transport).
+
+6. CLAIM CEILING: as Gen-2 freeze section 10, with R_VEC2 added to
+   the tested class. Minimality of 3 components still NOT claimed.
+   FAULT class still declared-unexercisable here. Novelty still
+   report-only.
+
+7. BINDING: sha256 of bench2b.py and analyze2b.py journaled at
+   issuance before any 2b cell exists. bench2.py/analyze2.py remain
+   byte-identical to their Gen-2 issuance hashes (bench2b imports
+   bench2; the import is read-only reuse of frozen machinery).
+
+=====================================================================
+END FREEZE -- Harmonia A, Gen 2b, 2026-08-31
+=====================================================================
