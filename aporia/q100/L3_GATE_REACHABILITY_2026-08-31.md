@@ -1,6 +1,6 @@
-# L3 (DeepSeek): 28% of the tests are blocked by named theorems, and the list says so itself
+# L3 (Gemini): 28% of the tests are blocked by named theorems, and the list says so itself
 
-**Measured 2026-08-31 by Aporia.** Registry: `REGISTRY_L3.jsonl` (50 rows — the source supplied
+**Measured 2026-08-31 by Aporia.** **ATTRIBUTION CORRECTED 2026-08-31: this list is GEMINI, not DeepSeek as originally committed at b087f4cc. Measurements unaffected; only the generator name was wrong.** Registry: `REGISTRY_L3.jsonl` (50 rows — the source supplied
 50 of a claimed 100 and paused).
 
 ---
