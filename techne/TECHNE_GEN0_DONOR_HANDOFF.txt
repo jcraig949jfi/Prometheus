@@ -1,0 +1,671 @@
+=====================================================================
+TECHNE GEN-0 -- DONOR SUBSTRATE + CAPABILITY ADAPTER
+HANDOFF ARTIFACT
+Date: 2026-08-31
+Seat: Techne (toolsmith / capability acquisition)
+Audience: any autonomous agent or seat picking this up WITHOUT having
+          read the originating conversation
+=====================================================================
+
+0. WHAT THIS GENERATION WAS AND WAS NOT
+---------------------------------------------------------------------
+Techne was asked to make a donor ecosystem real and consumable. Not to
+decide which scientific ideas are correct.
+
+The governing rule for this seat, restated:
+
+    capability            != scientific value
+    installation          != adoption
+    benchmark success     != Prometheus usefulness
+    compression           != reasoning improvement
+    diversity             != useful diversity
+
+Nothing in this document is evidence that any donor is scientifically
+valuable. Every donor here is a CONTESTANT. Adjudication is downstream.
+
+
+1. HEADLINE DISPOSITION
+---------------------------------------------------------------------
+  tensorly  0.9.0    WRAPPED_AND_TESTED
+  pyribs    0.12.0   WRAPPED_AND_TESTED   (distribution name: ribs)
+  discopy   1.2.2    WRAPPED_AND_TESTED
+  egglog    13.2.0   WRAPPED_AND_TESTED   (was installed, unrecorded)
+  cvc5      1.3.4    REDUNDANT_AT_GEN0    (wrapped; z3 already covers it)
+
+  stitch_core 0.1.29 AVAILABLE_CONTESTANT (recon only, NOT installed)
+
+Three cross-cutting findings:
+
+  TENSOR PARITY        NATIVE_EARNS_DISTINCT_ROLE
+  SMT COMPARISON       REDUNDANT_AT_GEN0
+  D-5 CONSUMER COMPAT  NO_COMPATIBLE_CONSUMER
+
+The success criterion for this generation was less ambiguity about
+external capability, not more installed libraries. One donor came back
+redundant and one whole compatibility question came back negative.
+Both are results.
+
+
+2. COMMITS AND CHANGED PATHS
+---------------------------------------------------------------------
+CODE COMMIT:    35893e0e  (20 files, +3714 / -6)
+                "TECHNE GEN-0: donor substrate + capability adapter
+                 -- 5 donors wrapped, 1 redundant, D-5 slot fed by none"
+HANDOFF COMMIT: this file, committed immediately after 35893e0e
+PARENT AT WORK START: 16a1c829
+
+NEW FILES
+  techne/lib/donors/__init__.py
+  techne/lib/donors/contract.py
+  techne/lib/donors/tensorly_adapter.py
+  techne/lib/donors/pyribs_adapter.py
+  techne/lib/donors/discopy_adapter.py
+  techne/lib/donors/cvc5_adapter.py
+  techne/lib/donors/egglog_adapter.py
+  techne/tests/test_donor_adapters.py
+  techne/scripts/donor_tensor_parity.py
+  techne/scripts/donor_smt_comparator.py
+  techne/scripts/donor_d5_consumer_compat.py
+  techne/scripts/donor_inventory.py
+  techne/DONOR_INVENTORY.md
+  techne/donor_inventory.json
+  techne/dependency_vetting_gen0_2026-08-31.json
+  techne/donor_tensor_parity_2026-08-31.json
+  techne/donor_smt_comparison_2026-08-31.json
+  techne/donor_d5_compat_2026-08-31.json
+  techne/TECHNE_GEN0_DONOR_HANDOFF.txt   (this file)
+
+MODIFIED FILES
+  techne/scripts/dependency_vetting.py   (added package sets + the
+                                          upstream-identity gate;
+                                          default behaviour unchanged)
+  techne/ARSENAL_ROADMAP.md              (new Tier 2b section; closes
+                                          the egglog inventory drift)
+
+NOT TOUCHED, DELIBERATELY
+  agent_d5_blind/    read-only import only; git status clean afterwards
+  ludus/, roles/Ludus/, roles/Alethelia/, roles/Lexis/, charon/
+                     other seats' untracked work; not swept into this
+                     commit
+
+
+3. DEPENDENCY CHANGES
+---------------------------------------------------------------------
+Installed this generation (6 distributions; 2 are transitive):
+
+  tensorly          0.9.0
+  ribs              0.12.0
+  discopy           1.2.2
+  cvc5              1.3.4
+  array-api-compat  1.15.0   (transitive)
+  numpy-groupies    0.11.3   (transitive)
+
+Already present, unchanged and NOT replaced:
+
+  egglog   13.2.0     numpy    2.2.6      scipy   1.17.1
+  z3-solver 5.0.0.0   torch    2.11.0+cu128 (CUDA 12.8 available)
+  hypothesis 6.165.10 quimb    1.15.0
+
+Interpreter: Python 3.12.10 (H:\Python312\python.exe), Windows 11,
+win_amd64.
+
+A pip dry-run was taken before installing. No load-bearing dependency
+was upgraded, downgraded or replaced.
+
+SIDE EFFECT WORTH KNOWING: installing tensorly revived a module that
+was DEAD in the default interpreter. prometheus_math/
+symbolic_tensor_decomp.py opens with a hard
+`if not is_available("tensorly"): raise ImportError`. Its regression
+suite, prometheus_math/tests/test_tensor_decomposition.py, is guarded
+by pytest.importorskip("tensorly") -- so all 25 of its tests were
+SKIPPING before this generation and now pass. A missing-dependency
+census built from FAILING tests cannot see a dependency whose absence
+SKIPS the test instead.
+
+
+4. THE ADAPTER CONTRACT
+---------------------------------------------------------------------
+Location: techne/lib/donors/
+
+    from techne.lib import donors
+    donors.registry           # {name: adapter class}
+    donors.available()        # names whose donor actually imports here
+    ad = donors.get("tensorly")
+
+    ad.identity()             -> DonorIdentity(name, distribution,
+                                 version, upstream, license,
+                                 identity_evidence)
+    ad.capabilities()         -> [DonorCapability(name, summary,
+                                 deterministic, inputs, outputs)]
+    ad.manifest()             -> JSON-serialisable description
+    ad.propose(capability, payload, config=None, seed=None)
+                              -> DonorArtifact
+
+    art.provenance()          -> dict, small enough to store per row
+    art.replay_seed()         -> minimum needed to re-run the call
+    art.payload               -> the donor's actual output
+    art.native_score          -> the donor's own score, or None
+    art.native_selection_relation
+
+THE LOAD-BEARING FIELD
+
+Every adapter MUST declare `native_selection_relation`, a machine-
+readable SelectionRelation with fields:
+
+    kind        objective | ordering | constraint | none
+    direction   maximize | minimize | satisfy | none
+    over        what the relation ranks
+    supplied_by donor | caller
+    note        prose caveat
+
+The base class refuses to define a subclass without it -- the check
+runs at class-creation time, so an adapter missing the field cannot
+reach the registry at all.
+
+WHY. A donor arrives pre-committed to an objective. pyribs fills an
+archive by an objective; tensorly minimises reconstruction error;
+egglog's extraction minimises a cost model. If an experiment scores a
+donor's output with a Prometheus metric Z while the donor already
+ranked that output by Y, an apparent Z-result may be Y relabelled.
+Recording Y lets an experiment be designed to BREAK it rather than
+inherit it.
+
+NONE is a legitimate value and must be stated, never left blank and
+never fabricated for API uniformity. cvc5 and DisCoPy declare NONE.
+
+STRICTNESS. Unknown config keys raise. A wrapper that drops a key
+records a configuration that never took effect, which makes the
+provenance record a false statement.
+
+FAILURES. Donor failures raise DonorError carrying (donor, stage,
+cause). They are never converted into a successful empty result,
+because downstream that is indistinguishable from a genuine null.
+
+
+5. THE TEST BATTERY
+---------------------------------------------------------------------
+techne/tests/test_donor_adapters.py, parametrised over the registry so
+a new adapter is covered the moment it registers.
+
+  T1  IDENTITY       adapter names its upstream repo, not its PyPI name
+  T2  CONFIG ECHO    the artifact's recorded config is what was applied
+  T3  DETERMINISM    where determinism is claimed, digests match
+  T4  SEED SENSITIVITY  stochastic donors must actually use the seed
+  T5  PROVENANCE     artifact answers "what produced this?" alone
+  T6  REPLAY         replay record round-trips JSON and reruns
+  T7  STRICTNESS     unknown config key raises; unknown capability raises
+  T8  SELECTION      relation declared or explicitly NONE; and a subclass
+                     without it cannot be defined at all
+  T9  SEPARATION     no field on the artifact could be mistaken for an
+                     independent Prometheus score
+  T10 FAILURE        donor failure is typed, never an empty success
+
+RESULTS: 58 passed, 4 skipped, exit 0.
+
+The 4 skips are T4 for tensorly, discopy, cvc5 and egglog. Those donors
+are deterministic BY CONSTRUCTION -- a decomposition at a fixed init, a
+diagram, a decision procedure and a saturation are not stochastic -- so
+demanding seed sensitivity from them would be demanding a defect.
+
+RUN IT:
+    python -m pytest techne/tests/test_donor_adapters.py -q
+
+
+6. SUPPLY-CHAIN RULE -- READ THIS BEFORE INSTALLING ANYTHING
+---------------------------------------------------------------------
+NEVER infer package identity from a project name.
+
+Checked against PyPI 2026-08-30/31. These research-project names
+resolve to UNRELATED published packages:
+
+  POET       -> poet 0.1.0     orbital evolution of a planet-star system
+  PAIRED     -> paired 0.0.1   sequence alignment of Python objects
+  ACCEL      -> accel 0.3.0    chemistry conformer management
+  minimax    -> minimax 0.0.2  a generic configurable minimax package
+  babble     -> babble 2020.1.6  a PDF parser
+  Ruler      -> ruler 2.0.0    a humane grammar library
+  egg        -> egg 0.2.0      "This is a lonely egg."
+  DreamCoder -> no such project (404)
+  Enumo      -> no such project (404)
+  ShapeCoder -> no such project (404)
+  QuickSpec  -> no such project (404)
+  Twee       -> no such project (404)
+
+An autonomous RAID phase with pip access will install a stranger's
+code unless identity is ESTABLISHED rather than inferred.
+
+THE GATE IS NOW ENFORCED IN CODE:
+
+    python -m techne.scripts.dependency_vetting --set gen0_donors \
+        --report techne/dependency_vetting_gen0_2026-08-31.json
+
+Each donor entry carries an expected upstream repository. The gate
+resolves identity from the DISTRIBUTION'S OWN declared metadata
+(home_page, project_urls) and returns one of:
+
+    RESOLVED               declared metadata names the expected repo
+    WEAK_DESCRIPTION_ONLY  repo appears only in the long description
+    DONOR_IDENTITY_UNRESOLVED  -- artifact is NOT downloaded
+
+GEN-0 RESULTS:
+    tensorly     RESOLVED
+    ribs         RESOLVED
+    discopy      RESOLVED
+    cvc5         RESOLVED
+    egglog       WEAK_DESCRIPTION_ONLY
+    stitch_core  WEAK_DESCRIPTION_ONLY
+
+egglog and stitch_core declare NO repository URL in structured PyPI
+metadata -- only a self-referential PyPI link. egglog was grandfathered
+because it was already installed before this assignment and the task
+for it was inventory reconciliation, not acquisition. A FRESH install
+on description-only evidence should get a maintainer check first.
+
+WHAT THE GATE DOES NOT DO: it defeats name collision and nothing else.
+It does not establish that an upstream repository is trustworthy,
+detect a PyPI compromise, or catch a malicious release from a
+legitimate maintainer. Compiled extension source is not reviewed; for
+those the evidence is provenance, not source review.
+
+
+7. DONOR: tensorly 0.9.0
+---------------------------------------------------------------------
+upstream    github.com/tensorly/tensorly     licence  BSD-3 (modified)
+identity    RESOLVED (declared_url)
+status      WRAPPED_AND_TESTED
+capabilities  cp, tucker, tt
+selection   objective / minimize / relative Frobenius reconstruction
+            error at fixed rank / supplied_by donor
+config      rank, ranks, init, n_iter_max, tol, random_state
+
+LIMITATION: CP via ALS is deterministic ONLY with init='svd' and a
+fixed random_state. The adapter defaults to both. A random init would
+silently break the determinism claim that T3 verifies.
+
+CAVEAT THAT MUST TRAVEL WITH IT: tensorly optimises FIT. Fit is not
+predictive value. A representation can reconstruct a tensor beautifully
+and carry nothing a downstream task can use. Ranking representations by
+tensorly's own fit error and reporting the winner as "the better
+representation" measures tensorly's objective, not the bench's.
+
+
+8. DONOR: pyribs 0.12.0 (distribution: ribs)
+---------------------------------------------------------------------
+upstream    github.com/icaros-usc/pyribs     licence  MIT
+identity    RESOLVED (declared_url)
+status      WRAPPED_AND_TESTED
+capabilities  archive_fill
+selection   objective / maximize / per-cell elite objective within a
+            discretised behaviour space / supplied_by CALLER
+config      solution_dim, dims, ranges, sigma, x0, batch_size,
+            iterations
+
+CHOSEN OVER QDax because JAX ships no CUDA wheels for Windows; QDax
+would run CPU-only here and duplicate what pyribs does in numpy.
+
+SCOPE LIMIT, DELIBERATE: the adapter exposes archive MECHANICS only. It
+does not choose behavioural descriptors and must not. The descriptor
+choice IS the experiment, and the QD literature's documented failure
+mode sits exactly there -- novelty search maximising diversity along a
+trivial axis, and coverage numbers that are artefacts of a hand-picked
+descriptor.
+
+CAVEAT: pyribs has no objective of its own. It maximises whatever the
+caller passes. So the confound belongs to the experiment, not the
+donor, and "the archive found diverse high-performing solutions" means
+only "solutions that scored well on the function the experimenter
+wrote." Coverage is not discovery.
+
+
+9. DONOR: discopy 1.2.2
+---------------------------------------------------------------------
+upstream    github.com/discopy/discopy       licence  BSD-3
+identity    RESOLVED (declared_url)
+status      WRAPPED_AND_TESTED
+capabilities  compose, tensor_eval
+selection   NONE (constructs and evaluates; ranks nothing)
+config      normal_form, dtype
+
+WHAT IS MECHANICALLY AVAILABLE: a computation as a typed string diagram
+(boxes composed with >> and @), and the same diagram interpreted in a
+different category, e.g. evaluated as a tensor network. One structure,
+several interpretations, none privileged.
+
+WHAT IS NOT CLAIMED: nothing here is a "reasoning lens." Whether
+presenting a problem in an equivalent alternative form changes what a
+solver can reach is an empirical question and belongs to the Lensing
+bench. Type mismatches during composition raise rather than being
+patched with an inserted identity wire.
+
+LIMITATION: only monoidal composition and matrix-pipeline tensor
+evaluation are wrapped. The wider categorical surface is untouched.
+
+
+10. DONOR: egglog 13.2.0
+---------------------------------------------------------------------
+upstream    github.com/egraphs-good/egglog-python   licence  MIT
+            (Rust core: github.com/egraphs-good/egglog)
+identity    WEAK_DESCRIPTION_ONLY -- see section 6
+status      WRAPPED_AND_TESTED; was installed but ABSENT from
+            ARSENAL_ROADMAP.md until this generation
+capabilities  saturate_extract
+selection   ordering / minimize / extraction cost over members of an
+            e-class / supplied_by donor
+config      rules, iterations, saturate
+
+ACQUISITION FACT THAT MATTERS TO THE MEMORY BENCH: egglog is the ONLY
+member of the UW PLSE e-graph lineage with a maintained Python binding.
+Ruler, babble, Enumo and ShapeCoder are Rust crates with no Python
+distribution, and their names are occupied on PyPI by unrelated
+projects. Reaching that family from Python means BUILDING a rule-
+inference layer on egglog -- a build, not a wrap -- which the Gen-0
+brief explicitly defers.
+
+CAVEAT: equality saturation is order-free (it holds all equivalent
+forms at once), but EXTRACTION picks the cheapest under a cost model.
+The extracted form is egglog's choice, not a canonical one.
+
+LIMITATION: the adapter exposes a CLOSED menu of six rewrite rules
+(comm_add, comm_mul, assoc_add, mul_one, add_zero, distribute).
+Accepting arbitrary rule source would mean executing caller-supplied
+code behind a provenance record claiming a named configuration.
+
+
+11. DONOR: cvc5 1.3.4  -- REDUNDANT_AT_GEN0
+---------------------------------------------------------------------
+upstream    github.com/cvc5/cvc5             licence  BSD-3
+identity    RESOLVED (declared_url)
+status      wrapped and tested, but NOT promoted to a dependency
+capabilities  check_int_constraints
+selection   NONE (decision procedure)
+config      logic, produce_models, timeout_ms
+
+COMPARATOR RESULT (techne/donor_smt_comparison_2026-08-31.json):
+6 hand-checked QF_LIA problems, verdicts known in advance.
+
+    problem           expected  cvc5    z3      agree
+    simple_sat        sat       sat     sat     yes
+    contradiction     unsat     unsat   unsat   yes
+    equality_chain    sat       sat     sat     yes
+    disequality       unsat     unsat   unsat   yes
+    bounded_box       sat       sat     sat     yes
+    negative_coeffs   sat       sat     sat     yes
+
+6/6 agreement, both reached the hand-known verdict, and every returned
+model was checked against its own constraints and satisfied them.
+
+Models are NOT compared for equality: a satisfiable system generally
+has many models, and two solvers returning different witnesses is two
+arbitrary choices from the same solution set, not a disagreement.
+
+VERDICT: there is no Gen-0 capability cvc5 supplies that the already-
+installed z3 5.0.0.0 does not. Retained as vetted and wrapped, not
+promoted. The capabilities that could differentiate it -- finite-field,
+sequence, bag and separation-logic theories, and the SyGuS synthesis
+front end -- have no consumer yet.
+
+*** PLATFORM HAZARD -- ANY FUTURE cvc5 CODE MUST PRESERVE THIS ***
+
+Raising an exception while a live cvc5 TermManager/Solver is in the
+frame SEGFAULTS the interpreter at teardown on this platform. Observed
+as exit code 139 AFTER pytest reported all tests PASS, reproducible
+with the t9+t10 pair and absent from either test alone.
+
+The adapter therefore validates its ENTIRE payload -- variable names,
+constraint arity, operators, coefficient types -- BEFORE constructing
+any cvc5 object, and explicitly drops every native handle before
+returning. Nothing cvc5-owned escapes the frame.
+
+With that ordering: techne/tests/test_donor_adapters.py exits 0.
+Without it: exit 139.
+
+
+12. HELD: stitch_core 0.1.29 -- AVAILABLE_CONTESTANT
+---------------------------------------------------------------------
+NOT INSTALLED. Acquisition reconnaissance only, per instruction.
+
+    upstream       github.com/mlb2251/stitch
+    version        0.1.29
+    licence        unstated in PyPI metadata -- CONFIRM AT REPO before
+                   any use
+    wheels         win_amd64 wheel PRESENT (plus mac, purepy, sdist)
+    identity       WEAK_DESCRIPTION_ONLY (no declared repo URL)
+    releases       24
+    integration    low -- a real wheel exists; wrapping is days, not
+                   weeks
+
+WHY IT IS HELD. roles/Lexis/library_learning/notes/
+PASS_08_wider_tool_survey.md maps four families and judges Family B
+(egg / Ruler / babble / Enumo) as potentially a better fit for
+Prometheus than Family A (DreamCoder / LAPS / Stitch / LILO). That is a
+scientific judgement and it belongs to Lexis.
+
+The acquisition-cost asymmetry, which Lexis did not have and this seat
+does: Family A ships a working win_amd64 Python wheel. Family B has NO
+Python distribution except egglog. So the family Lexis ranks higher is
+the one that costs a BUILD, and the family it ranks lower is the one
+that costs a WRAP. That tension is a real input to the decision and it
+is not this seat's to resolve.
+
+DO NOT silently promote Stitch to foundation. DO NOT discard it.
+
+
+13. TENSOR PARITY -- NATIVE_EARNS_DISTINCT_ROLE
+---------------------------------------------------------------------
+Report: techne/donor_tensor_parity_2026-08-31.json
+Run:    python -m techne.scripts.donor_tensor_parity
+
+PREMISE CORRECTION FIRST. The assignment recorded, from a prior
+inventory, that prometheus_math carries HAND-ROLLED CP and Tucker with
+TT wrapped through quimb, in violation of Standing Order #1. Read at
+source on 2026-08-31 that is not what is there:
+
+  * prometheus_math/symbolic_tensor_decomp.py is ALREADY a pure
+    tensorly wrapper. Lines 42-55: it raises ImportError without
+    tensorly and routes every decomposition to
+    tensorly.decomposition.{parafac,tucker,tensor_train}. There is NO
+    hand-rolled CP or Tucker to supersede. What existed was a DEAD
+    MODULE.
+
+  * prometheus_math/tensor_train.py is a quimb wrapper and is NOT a
+    duplicate. It computes TT BOND RANKS at a truncation cutoff,
+    packaged with a fiber-shuffle null, for measuring cross-axis
+    coupling. symbolic_tensor_decomp.tt_decompose computes a TT
+    FACTORISATION at a requested rank. Different questions.
+
+So the real question was: two independent TT implementations now
+coexist -- do they agree on tensors whose bond ranks are known by
+construction?
+
+    fixture         shape       truth      quimb      tensorly   agree
+    rank1_outer     [4,5,3]     [1,1]      [1,1]      [1,1]      yes
+    rank2_sum       [4,5,3]     [2,2]      [2,2]      [2,2]      yes
+    rank1_order4    [3,4,3,2]   [1,1,1]    [1,1,1]    [1,1,1]    yes
+    random_dense    [3,4,3]     [3,3]      [3,3]      [3,3]      yes
+    matrix_rank2    [6,5]       [2]        [2]        [2]        yes
+
+5/5 agreement, and BOTH match ground truth on all five -- so two
+implementations agreeing on a wrong answer is excluded.
+
+CLASSIFICATION: NATIVE_EARNS_DISTINCT_ROLE. Neither supersedes the
+other on correctness; they answer different questions and deleting
+either removes a capability, not a duplicate.
+
+NON-CLAIM: agreement between two implementations is a fact about the
+implementations. Nothing here says any decomposition improves
+reasoning, transfer or search.
+
+
+14. D-5 CONSUMER COMPATIBILITY -- NO_COMPATIBLE_CONSUMER
+---------------------------------------------------------------------
+Report: techne/donor_d5_compat_2026-08-31.json
+Run:    python -m techne.scripts.donor_d5_consumer_compat
+READ-ONLY. agent_d5_blind/ was imported to read its contract. Nothing
+was written, modified or rerun there; git status was clean afterwards.
+
+WHY THIS CONSUMER. D-5 is the only component in the programme with a
+demonstrated appetite for accumulated experience AND a metered proof
+that eating changed its behaviour: +10.95pp CFR over the frozen
+empty-library comparator, p=0.0007, task-level n=42, identical metered
+budgets; shuffled-history ablation retained 100%, random-library 39%
+-- so the effect is attributable to artifact CONTENT, not ordering.
+(Quoted from the committed D-5 verdict; not recomputed here.)
+
+THE CONSUMER'S EXACT ARTIFACT CONTRACT, read from the frozen source:
+
+  artifact type   genotype = tuple of instruction tuples
+                  (OPCODE:str, a:int, b:int)
+  opcodes (14)    ADD AND JNZ MOD MOV MUL OR SET SHL SHR SKG SKZ SUB XOR
+  argument typing MOV/ADD/SUB/MUL/AND/OR/XOR/SHL/SHR/MOD/SKG -> reg
+                  SET -> const   SKZ -> none   JNZ -> jump
+  registers       NREG = 8
+  max length      MAX_LEN = 24
+  const palette   [0,1,2,3,5,7,11,13,16,255]
+  library         cap 64, most-recent-first eviction, genotype-deduped
+  admission       per task: the solving genotype if any, plus up to 4
+                  behaviour-distinct best-scoring candidates from the
+                  last scored generation
+
+The contract was verified checkable in both directions: a real seed
+artifact validates; a bad constant index and a float triple are both
+rejected.
+
+PER-DONOR VERDICT -- all five NO_COMPATIBLE_CONSUMER:
+
+  tensorly  emits real-valued factor matrices. No type-preserving map
+            to variable-length discrete instruction sequences.
+  pyribs    two blockers. (1) archive solutions are FIXED-LENGTH REAL
+            vectors; genotypes are variable-length discrete tuples.
+            (2) pyribs needs a behavioural descriptor and the D-5 slot
+            has no notion of one -- choosing a behaviour space for
+            programs IS the experiment.
+  discopy   emits typed diagrams, not register-machine programs.
+  cvc5      emits variable assignments. Its SyGuS front end could
+            synthesise program-shaped output, but seeding the library
+            from a COMPLETE DECISION PROCEDURE collapses the assay's
+            conditional structure: D-5 measures findability F given
+            existence E and reachability R.
+  egglog    operates on algebraic terms. RM genotypes are imperative
+            sequences with jumps (JNZ, SKZ, SKG), which are not
+            equational terms. Making egglog rewrite them requires
+            giving it RM semantics as a theory -- the deferred build.
+
+NO optional adapter path was implemented, because every route required
+either a bespoke encoder or a semantic widening of the assay. Section
+14 of the brief forbids widening the consumer to make a donor look
+useful, and that rule was followed rather than worked around.
+
+WHAT WOULD BE COMPATIBLE: a donor whose NATIVE output is a program over
+the same instruction set. That is exactly what the library-learning
+families produce. Which makes the Family A vs Family B decision -- the
+one held in section 12 -- the gate on any donor-to-D-5 circulation.
+
+
+15. WHAT THIS GENERATION DELIBERATELY DID NOT DO
+---------------------------------------------------------------------
+  - did not build a knowledge store, fossil schema, memory database,
+    knowledge graph, promotion ledger or ontology
+  - did not build "Ruler on egglog"
+  - did not decide Family A vs Family B
+  - did not choose behavioural descriptors for any bench
+  - did not modify or rerun any frozen D-5 artifact
+  - did not modify M1/M2 (Foundry/Experimenter) architecture
+  - did not run another broad literature review; the existing raid at
+    aporia/docs/deep_research_batch_2026-08-17/ (20 reports) and
+    roles/Lexis/library_learning/ (8 passes) was consumed instead
+  - did not widen a consumer to make a donor appear useful
+  - did not declare any donor scientifically superior to any other
+
+
+16. RECOMMENDED CONSUMERS -- WHO CAN NOW USE WHAT
+---------------------------------------------------------------------
+  LUDUS (Worlds)
+      pyribs archive_fill. Seeded, replayable MAP-Elites mechanics.
+      YOU choose the behavioural descriptors and the objective; the
+      adapter refuses to choose them for you, and the artifact records
+      that the selection relation was caller-supplied.
+
+  HARMONIA (Lensing / representation)
+      discopy compose + tensor_eval; egglog saturate_extract.
+      One structure, multiple interpretations, plus equivalence classes
+      that refuse to privilege a single form until extraction.
+
+  LEXIS (Memory / library learning)
+      egglog is the only Python-reachable member of Family B.
+      stitch_core is a vetted, uninstalled contestant for Family A with
+      a working wheel. Section 12 has the cost asymmetry you need for
+      the family decision. That decision is yours.
+
+  CHARON (Adversary)
+      cvc5 is wrapped but REDUNDANT_AT_GEN0 -- use the installed z3
+      unless you need a theory z3 lacks. If you do, say which, and the
+      redundancy verdict gets revisited with a consumer attached.
+
+  ANY BENCH
+      the adapter contract itself. If you consume a donor, consume it
+      through techne/lib/donors/ so the native selection relation
+      reaches your ledger and your result can be shown to be yours.
+
+
+17. UNRESOLVED BLOCKERS AND OPEN ITEMS
+---------------------------------------------------------------------
+  B1  stitch_core and egglog have NO declared licence / repo URL in
+      PyPI metadata. egglog's licence reads MIT from the installed
+      distribution; stitch_core's is unstated. CONFIRM BOTH AT THE
+      REPOSITORY before either is relied on.
+
+  B2  Family A vs Family B is undecided and gates Memory-bench
+      circulation. Owner: Lexis.
+
+  B3  cvc5's teardown segfault is worked around, not fixed upstream.
+      The workaround is a code-ordering discipline in one adapter; it
+      is not enforced by a test that would catch a regression in other
+      cvc5 code elsewhere in the tree.
+
+  B4  Three of the five Genesis benches have no demonstrated consumer
+      at all. D-5 is the only slot with a metered appetite, and section
+      14 shows nothing acquired this generation reaches it. The
+      metabolism problem is NOT solved by this generation and should
+      not be described as solved.
+
+  B5  pyribs, discopy and egglog have capability surfaces but zero
+      callers. If no bench consumes them within a generation or two,
+      they are arsenal weight and should be recorded as such.
+
+
+18. EXPLICIT NON-CLAIMS
+---------------------------------------------------------------------
+  - No donor here has been shown to earn rent in any experiment.
+  - Installation is not adoption. A passing battery is engineering
+    evidence about a wrapper, not evidence about a scientific idea.
+  - Tensor-implementation agreement says nothing about whether tensor
+    representations are useful.
+  - QD archive coverage is not discovery.
+  - Compression is not reasoning improvement.
+  - The D-5 numbers are quoted from a committed verdict and were not
+    recomputed in this generation.
+  - No scientific ranking of donors is stated or implied anywhere in
+    this document.
+
+
+19. HOW TO VERIFY EVERYTHING IN THIS DOCUMENT
+---------------------------------------------------------------------
+    python -m pytest techne/tests/test_donor_adapters.py -q
+    python -m pytest prometheus_math/tests/test_tensor_decomposition.py -q
+    python -m pytest prometheus_math/tests/test_tensor_train.py -q
+
+    python -m techne.scripts.dependency_vetting --set gen0_donors \
+        --report techne/dependency_vetting_gen0_2026-08-31.json
+    python -m techne.scripts.donor_tensor_parity
+    python -m techne.scripts.donor_smt_comparator
+    python -m techne.scripts.donor_d5_consumer_compat
+    python -m techne.scripts.donor_inventory
+
+    python -c "from techne.lib import donors; print(donors.available())"
+
+Machine-readable inventory: techne/donor_inventory.json
+Human-readable inventory:   techne/DONOR_INVENTORY.md
+
+=====================================================================
+END TECHNE GEN-0 DONOR HANDOFF
+=====================================================================
