@@ -148,13 +148,38 @@ def _invert_abstract(inv: Optional[dict]) -> Optional[str]:
 
 
 def openalex_search(query: str, per_page: int = 25, year_max: Optional[int] = None,
-                    cursor: Optional[str] = None) -> dict:
-    """Full-text search over works. `year_max` implements the historical-backtest cutoff --
-    the map must be buildable from information available before a date, or the backtest is
-    just retrospective storytelling."""
+                    cursor: Optional[str] = None, cited_by_max: Optional[int] = None) -> dict:
+    """Full-text search over works.
+
+    `year_max` implements the historical-backtest cutoff -- the map must be buildable from
+    information available before a date, or the backtest is just retrospective storytelling.
+
+    `cited_by_max` caps citation count, and exists because OpenAlex's relevance ranking is
+    heavily citation-weighted. Measured cycle 025:
+
+        "negative results evolutionary computation"   rank 1-8 cited_by:
+            4368, 1336, 4196, 1912, 46871, 2068, 1817, 1967
+        "replication study evolutionary algorithm"    rank 1-8 cited_by:
+            11822, 22339, 1208, 7119, 60622, 734, 865, 745
+
+    So a query FOR buried literature returns the most famous papers in the field that happen
+    to contain the words -- the exact inverse of the intent, and it had been doing so for 25
+    cycles. The default results were also mostly off-domain biology ("PhyloSuite",
+    "polyploidy", "Evolutionarily conserved elements in vertebrate"), so the lane was
+    popularity-biased AND wasting its budget on papers the domain gate would reject.
+
+    Sorting by date is not the fix -- it swaps a popularity prior for a recency one (every
+    result 2026, every result 0 citations). Capping citations targets the band where
+    negative results, replications and critiques actually live.
+    """
     params = {"search": query, "per-page": str(per_page), "mailto": MAILTO}
+    filters = []
     if year_max is not None:
-        params["filter"] = "publication_year:<" + str(year_max + 1)
+        filters.append("publication_year:<" + str(year_max + 1))
+    if cited_by_max is not None:
+        filters.append("cited_by_count:<" + str(cited_by_max))
+    if filters:
+        params["filter"] = ",".join(filters)
     if cursor:
         params["cursor"] = cursor
     url = "https://api.openalex.org/works?" + urllib.parse.urlencode(params)

@@ -462,7 +462,13 @@ def run_cycle(cycle: int, state: dict, max_new: int = 12) -> tuple:
                     store.upsert("genomes", g)
             else:
                 st["queries_used"].append(query)
-                data = sources.openalex_search(query, per_page=max_new)
+                # The awkward lane hunts negative results, replications and critiques --
+                # literature that is under-cited BY DEFINITION. Relevance ranking is
+                # citation-weighted, so an uncapped query hands back the field's most famous
+                # papers instead. Cap it. Other lanes are left uncapped: the historical lane
+                # legitimately wants foundational work, which is highly cited.
+                cap = 100 if frontier["kind"] == "awkward" else None
+                data = sources.openalex_search(query, per_page=max_new, cited_by_max=cap)
                 results = data.get("results", [])
                 att = RetrievalAttempt(
                     query=query, source="openalex", formulation="seed_" + frontier["kind"],
