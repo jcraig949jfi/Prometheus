@@ -1,0 +1,267 @@
+"""Gen-0 bottleneck taxonomy and the operational vocabulary, plus the rules a mutation must beat.
+
+THE TAXONOMY IS A HYPOTHESIS. B1/B2/B3 are a guess about where search physics actually has
+joints. The campaign is allowed -- encouraged -- to split, merge, add or delete them, but only
+against frozen held-out tests, and never after seeing the result it would flatter. A taxonomy
+that changes because a new one sounds more elegant is an ontology paying for itself with
+aesthetics.
+
+WHY LEXICAL MATCHING IS USED AND WHAT IT CANNOT DO. The mechanism vocabulary below drives
+regex-based tagging of titles and abstracts. That is deliberately a WEAK instrument: it finds
+the words, not the mechanisms. Its output is always adjudication=PROPOSED. It exists to
+generate candidates cheaply and to give the held-out semantic test something to fail against --
+if operational neighbours turn out to be exactly the papers sharing vocabulary, the Rosetta
+Stone is lexical and the campaign must say so rather than dress up a thesaurus as a map.
+"""
+from __future__ import annotations
+
+import re
+
+# --- the Gen-0 bottlenecks ----------------------------------------------------------------
+
+BOTTLENECKS = {
+    "B1_REPRESENTATION": {
+        "name": "syntax-to-semantics / representation",
+        "question": "what is legal to write, and how far does a legal edit move behaviour?",
+        "probes": [
+            "what fraction of local mutations remain semantically meaningful",
+            "how local is phenotype displacement under a single edit",
+            "how compositional is the representation",
+            "how much prior ontology is baked into the representation",
+            "at what complexity does semantic locality break",
+        ],
+    },
+    "B2_CREDIT_SEARCH": {
+        "name": "credit assignment / search / selection",
+        "question": "what receives credit, at what granularity, and does selection destroy "
+                    "the diversity the search needs?",
+        "probes": [
+            "is credit scalar, case-wise, gradient, causal, novelty or archive-relative",
+            "does selection collapse diversity or preserve specialists",
+            "is improvement limited by search, evaluation budget, or representation",
+            "is the archive preserving possibilities or reflecting a chosen descriptor ontology",
+        ],
+    },
+    "B3_TELEOLOGY_EVAL": {
+        "name": "teleology / evaluation / environment",
+        "question": "who defines success, and where does task information actually enter?",
+        "probes": [
+            "does the evaluator encode the target decomposition",
+            "is the landscape smooth, sparse, deceptive, discontinuous, adversarial or moving",
+            "are behavioural descriptors human-smuggled ontology",
+            "does self-play remove human teleology or relocate it",
+        ],
+    },
+}
+
+# --- mechanism vocabulary ------------------------------------------------------------------
+# Each entry maps a canonical mechanism to the surface forms different communities use for it.
+# The synonym lists are the Rosetta Stone's raw material AND its main failure risk: if two
+# communities use the same word for different mechanisms, this table will merge them wrongly,
+# and the held-out semantic test is what is supposed to catch that.
+
+MECHANISMS = {
+    # B1 -- representation
+    "tree_gp": ["genetic programming", "tree-based gp", "koza", "symbolic expression tree"],
+    "linear_gp": ["linear genetic programming", "register machine", "instruction sequence"],
+    "cartesian_gp": ["cartesian genetic programming", "cgp", "graph-based gp"],
+    "push_gp": ["pushgp", "push language", "stack-based genetic programming"],
+    "grammatical_evolution": ["grammatical evolution", "grammar-based", "grammar-guided",
+                              "context-free grammar"],
+    "symbolic_regression": ["symbolic regression", "equation discovery", "formula discovery"],
+    "neural_representation": ["neural network", "weight vector", "continuous parameterization"],
+    "circuit_representation": ["circuit", "subgraph", "computational subgraph", "sparse circuit"],
+    "sparse_autoencoder": ["sparse autoencoder", "sae", "dictionary learning", "feature basis"],
+    "differentiable_program": ["differentiable program", "differentiable interpreter",
+                               "neural program", "soft execution", "relaxation"],
+    "dsl_library": ["domain-specific language", "dsl", "library learning", "abstraction learning",
+                    "refactoring", "compression"],
+    "egraph": ["e-graph", "egraph", "equality saturation", "rewrite rule", "term rewriting"],
+
+    # B2 -- credit / search / selection
+    "tournament_selection": ["tournament selection", "truncation selection", "roulette"],
+    "lexicase": ["lexicase", "case-wise selection", "epsilon-lexicase", "down-sampled lexicase"],
+    "novelty_search": ["novelty search", "behavioral novelty", "novelty metric",
+                       "curiosity search"],
+    "map_elites": ["map-elites", "map elites", "illumination algorithm", "elite archive"],
+    "quality_diversity": ["quality diversity", "quality-diversity", "qd algorithm",
+                          "qd score", "behavioral repertoire"],
+    "cmaes": ["cma-es", "covariance matrix adaptation", "evolution strategy", "natural gradient"],
+    "gradient_descent": ["backpropagation", "gradient descent", "sgd", "adam optimizer"],
+    "enumerative_synthesis": ["enumerative search", "bottom-up synthesis", "top-down synthesis",
+                              "version space", "observational equivalence"],
+    "constraint_solving": ["smt solver", "sat solver", "constraint solving", "cegis",
+                           "counterexample-guided"],
+    "beam_search": ["beam search", "best-first", "a* search", "branch and bound"],
+    "coevolution": ["coevolution", "co-evolution", "competitive coevolution",
+                    "host-parasite", "arms race"],
+    "self_play": ["self-play", "selfplay", "population play", "league training"],
+    "causal_attribution": ["causal attribution", "causal tracing", "activation patching",
+                           "ablation study", "intervention", "path patching"],
+    "circuit_discovery": ["circuit discovery", "automated circuit", "acdc", "attribution patching",
+                          "mechanistic interpretability"],
+    "distillation": ["distillation", "student-teacher", "model compression", "pruning"],
+    "nas": ["neural architecture search", "architecture search", "supernet", "weight sharing"],
+
+    # B3 -- teleology / evaluation
+    "scalar_objective": ["fitness function", "objective function", "scalar reward",
+                         "single objective"],
+    "test_suite": ["test suite", "test cases", "input-output examples", "specification",
+                   "unit tests"],
+    "behavior_descriptor": ["behavior descriptor", "behavioural descriptor", "behavior space",
+                            "feature descriptor", "measure function", "niche"],
+    "adversarial_curriculum": ["curriculum", "environment generation", "poet", "paired",
+                               "regret-based", "unsupervised environment design"],
+    "open_endedness": ["open-ended", "open endedness", "endless novelty", "divergent search"],
+    "formal_verification": ["theorem prover", "proof assistant", "formal verification",
+                            "lean", "coq", "isabelle"],
+}
+
+#: Which bottleneck each mechanism primarily loads on. A mechanism can inform several; this is
+#: the PRIMARY assignment, and disagreement between this table and observed failure behaviour
+#: is exactly the residual signal taxonomy mutation should feed on.
+MECHANISM_BOTTLENECK = {
+    "tree_gp": "B1_REPRESENTATION", "linear_gp": "B1_REPRESENTATION",
+    "cartesian_gp": "B1_REPRESENTATION", "push_gp": "B1_REPRESENTATION",
+    "grammatical_evolution": "B1_REPRESENTATION", "symbolic_regression": "B1_REPRESENTATION",
+    "neural_representation": "B1_REPRESENTATION", "circuit_representation": "B1_REPRESENTATION",
+    "sparse_autoencoder": "B1_REPRESENTATION", "differentiable_program": "B1_REPRESENTATION",
+    "dsl_library": "B1_REPRESENTATION", "egraph": "B1_REPRESENTATION",
+
+    "tournament_selection": "B2_CREDIT_SEARCH", "lexicase": "B2_CREDIT_SEARCH",
+    "novelty_search": "B2_CREDIT_SEARCH", "map_elites": "B2_CREDIT_SEARCH",
+    "quality_diversity": "B2_CREDIT_SEARCH", "cmaes": "B2_CREDIT_SEARCH",
+    "gradient_descent": "B2_CREDIT_SEARCH", "enumerative_synthesis": "B2_CREDIT_SEARCH",
+    "constraint_solving": "B2_CREDIT_SEARCH", "beam_search": "B2_CREDIT_SEARCH",
+    "causal_attribution": "B2_CREDIT_SEARCH", "circuit_discovery": "B2_CREDIT_SEARCH",
+    "distillation": "B2_CREDIT_SEARCH", "nas": "B2_CREDIT_SEARCH",
+
+    "coevolution": "B3_TELEOLOGY_EVAL", "self_play": "B3_TELEOLOGY_EVAL",
+    "scalar_objective": "B3_TELEOLOGY_EVAL", "test_suite": "B3_TELEOLOGY_EVAL",
+    "behavior_descriptor": "B3_TELEOLOGY_EVAL", "adversarial_curriculum": "B3_TELEOLOGY_EVAL",
+    "open_endedness": "B3_TELEOLOGY_EVAL", "formal_verification": "B3_TELEOLOGY_EVAL",
+}
+
+#: QD archive axes over ResearchGenomes. The archive preserves NICHES, not winners -- the point
+#: is coverage of distinct experimental settings, and a "best paper" ranking would destroy
+#: exactly the information the map is for.
+QD_AXES = {
+    "bottleneck": list(BOTTLENECKS.keys()),
+    "representation_family": ["discrete_program", "graph_circuit", "continuous_neural",
+                              "hybrid_differentiable", "symbolic_expression", "unknown"],
+    "selection_family": ["scalar_fitness", "case_wise", "novelty", "archive_qd",
+                         "gradient", "exact_search", "adversarial", "unknown"],
+    "evaluation_regime": ["fixed_test_suite", "scalar_objective", "behavioral_descriptor",
+                          "coevolved_moving", "formal_verifier", "unknown"],
+}
+
+_COMPILED = {m: [re.compile(r"\b" + re.escape(s) + r"\b", re.I) for s in syns]
+             for m, syns in MECHANISMS.items()}
+
+
+def tag_mechanisms(text: str) -> dict:
+    """Lexical mechanism tagging. Returns {mechanism: [matched surface forms]}.
+
+    WEAK BY CONSTRUCTION. This finds vocabulary, not mechanisms, and everything it produces is
+    adjudication=PROPOSED. A paper that says "we do not use novelty search" tags for
+    novelty_search here; negation is not handled, and pretending otherwise with a bag of
+    hand-written negation patterns would give false precision.
+    """
+    if not text:
+        return {}
+    hits = {}
+    for mech, pats in _COMPILED.items():
+        found = []
+        for p in pats:
+            m = p.search(text)
+            if m:
+                found.append(m.group(0).lower())
+        if found:
+            hits[mech] = sorted(set(found))
+    return hits
+
+
+def assign_bottleneck(mech_hits: dict) -> str:
+    """Majority-vote the primary bottleneck from tagged mechanisms.
+
+    Ties and empties return B_UNASSIGNED rather than guessing. An unassigned genome is a
+    visible residual and residuals are what taxonomy mutation feeds on; a guessed assignment
+    would hide exactly the signal we want.
+    """
+    if not mech_hits:
+        return "B_UNASSIGNED"
+    votes = {}
+    for mech in mech_hits:
+        b = MECHANISM_BOTTLENECK.get(mech)
+        if b:
+            votes[b] = votes.get(b, 0) + 1
+    if not votes:
+        return "B_UNASSIGNED"
+    top = max(votes.values())
+    winners = [b for b, v in votes.items() if v == top]
+    return winners[0] if len(winners) == 1 else "B_UNASSIGNED"
+
+
+def descriptors_from(mech_hits: dict) -> dict:
+    """Project tagged mechanisms onto the QD axes. Unknown stays unknown."""
+    rep = "unknown"
+    for m, val in (("circuit_representation", "graph_circuit"),
+                   ("sparse_autoencoder", "graph_circuit"),
+                   ("differentiable_program", "hybrid_differentiable"),
+                   ("symbolic_regression", "symbolic_expression"),
+                   ("tree_gp", "discrete_program"), ("linear_gp", "discrete_program"),
+                   ("push_gp", "discrete_program"), ("cartesian_gp", "graph_circuit"),
+                   ("grammatical_evolution", "discrete_program"),
+                   ("dsl_library", "discrete_program"), ("egraph", "symbolic_expression"),
+                   ("neural_representation", "continuous_neural")):
+        if m in mech_hits:
+            rep = val
+            break
+    sel = "unknown"
+    for m, val in (("lexicase", "case_wise"), ("novelty_search", "novelty"),
+                   ("map_elites", "archive_qd"), ("quality_diversity", "archive_qd"),
+                   ("constraint_solving", "exact_search"),
+                   ("enumerative_synthesis", "exact_search"), ("beam_search", "exact_search"),
+                   ("gradient_descent", "gradient"), ("cmaes", "gradient"),
+                   ("coevolution", "adversarial"), ("self_play", "adversarial"),
+                   ("tournament_selection", "scalar_fitness")):
+        if m in mech_hits:
+            sel = val
+            break
+    ev = "unknown"
+    for m, val in (("formal_verification", "formal_verifier"),
+                   ("behavior_descriptor", "behavioral_descriptor"),
+                   ("adversarial_curriculum", "coevolved_moving"),
+                   ("coevolution", "coevolved_moving"), ("self_play", "coevolved_moving"),
+                   ("test_suite", "fixed_test_suite"),
+                   ("scalar_objective", "scalar_objective")):
+        if m in mech_hits:
+            ev = val
+            break
+    return {"representation_family": rep, "selection_family": sel, "evaluation_regime": ev}
+
+
+def cell_of(genome: dict) -> tuple:
+    """The QD cell a genome occupies. Cells, not scores -- the archive preserves niches."""
+    d = genome.get("descriptors") or {}
+    return (genome.get("bottleneck", "B_UNASSIGNED"),
+            d.get("representation_family", "unknown"),
+            d.get("selection_family", "unknown"),
+            d.get("evaluation_regime", "unknown"))
+
+
+def total_cells() -> int:
+    n = 1
+    for axis in QD_AXES.values():
+        n *= len(axis)
+    return n
+
+
+#: A taxonomy mutation must IMPROVE one of these on held-out data. Listed here so the bar is
+#: fixed before any mutation is proposed, rather than chosen afterwards to justify one.
+TAXONOMY_MUTATION_TESTS = (
+    "held_out_failure_prediction",   # does the split predict which failure mode appears?
+    "cross_field_retrieval",         # do operational neighbours cross vocabulary boundaries?
+    "contradiction_detection",       # does it surface genuine disagreements?
+    "compression_without_loss",      # fewer categories, same predictive power
+)

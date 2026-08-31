@@ -1,0 +1,165 @@
+{
+  "campaign_id": "techne-cartography-20260831T115446Z",
+  "mission": "build and adversarially test a machine-readable cartography of search physics across evolutionary computation, program synthesis, quality-diversity, mechanistic interpretability and neurosymbolic reasoning; find what researchers may have missed WITHOUT treating retrieval absence as discovery",
+  "start_iso": "2026-08-31T11:54:46Z",
+  "start_epoch": 1788177286.8128893,
+  "duration_hours": 48,
+  "planned_cycles": 96,
+  "cycle_interval_minutes": 30,
+  "report_every_hours": 4,
+  "deadline_epoch": 1788350086.8128893,
+  "schema_version": "cartography-0.1",
+  "taxonomy_gen0": {
+    "bottlenecks": [
+      "B1_REPRESENTATION",
+      "B2_CREDIT_SEARCH",
+      "B3_TELEOLOGY_EVAL"
+    ],
+    "qd_axes": {
+      "bottleneck": [
+        "B1_REPRESENTATION",
+        "B2_CREDIT_SEARCH",
+        "B3_TELEOLOGY_EVAL"
+      ],
+      "representation_family": [
+        "discrete_program",
+        "graph_circuit",
+        "continuous_neural",
+        "hybrid_differentiable",
+        "symbolic_expression",
+        "unknown"
+      ],
+      "selection_family": [
+        "scalar_fitness",
+        "case_wise",
+        "novelty",
+        "archive_qd",
+        "gradient",
+        "exact_search",
+        "adversarial",
+        "unknown"
+      ],
+      "evaluation_regime": [
+        "fixed_test_suite",
+        "scalar_objective",
+        "behavioral_descriptor",
+        "coevolved_moving",
+        "formal_verifier",
+        "unknown"
+      ]
+    },
+    "total_cells": 864,
+    "n_mechanisms": 34,
+    "mutation_tests": [
+      "held_out_failure_prediction",
+      "cross_field_retrieval",
+      "contradiction_detection",
+      "compression_without_loss"
+    ]
+  },
+  "seed_corpus": {
+    "core": [
+      "evolutionary computation",
+      "genetic programming",
+      "quality diversity map-elites",
+      "novelty search",
+      "lexicase selection",
+      "program synthesis",
+      "inductive program synthesis",
+      "symbolic regression",
+      "cartesian genetic programming",
+      "grammatical evolution",
+      "neuroevolution",
+      "neural architecture search",
+      "differentiable programming",
+      "neurosymbolic reasoning",
+      "mechanistic interpretability",
+      "circuit discovery neural network",
+      "sparse autoencoder feature",
+      "program distillation",
+      "self-play curriculum",
+      "coevolution competitive",
+      "automated theorem proving search"
+    ],
+    "collision": [
+      "quality diversity program synthesis",
+      "lexicase selection program synthesis",
+      "novelty search program space",
+      "map-elites discrete representation",
+      "circuit discovery search algorithm",
+      "evolutionary search neural network circuit",
+      "behavioral descriptor program semantics",
+      "semantic locality genetic programming mutation",
+      "archive based search theorem proving",
+      "coevolution program synthesis test cases",
+      "sparse circuit extraction optimization",
+      "library learning abstraction reuse",
+      "equality saturation program optimization",
+      "diversity preservation neural architecture search",
+      "counterexample guided inductive synthesis diversity"
+    ],
+    "awkward": [
+      "negative results evolutionary computation",
+      "failure modes genetic programming",
+      "replication study evolutionary algorithm",
+      "reproducibility crisis machine learning benchmark",
+      "ablation study reveals no improvement",
+      "premature convergence diversity loss",
+      "deceptive fitness landscape",
+      "benchmark overfitting evolutionary",
+      "baseline mismatch unfair comparison",
+      "compute matched comparison neural",
+      "hand-designed behavior descriptor limitation",
+      "does novelty search actually work",
+      "critique of quality diversity",
+      "when does genetic programming fail"
+    ],
+    "historical": [
+      "evolutionary programming Fogel",
+      "classifier system Holland",
+      "genetic algorithm schema theorem",
+      "evolution strategies Rechenberg Schwefel",
+      "automatic programming induction 1980s",
+      "inductive logic programming",
+      "learning classifier system credit assignment",
+      "bucket brigade algorithm",
+      "artificial life open ended evolution",
+      "Tierra Avida digital evolution"
+    ],
+    "total_seed_queries": 60
+  },
+  "sources": {
+    "primary": [
+      "openalex",
+      "crossref",
+      "arxiv",
+      "dblp"
+    ],
+    "blocked": {
+      "semanticscholar": "HTTP 429 without an API key (measured 2026-08-31); never counted as an independent formulation"
+    },
+    "politeness": "mailto identification, per-host minimum interval, 429 backoff, no scraping, no paywall circumvention, no auth defeat"
+  },
+  "adjudication_rule": "an LLM or heuristic may PROPOSE; only a deterministic predicate over stored evidence may write CONFIRMED. Predicates P1-P6 are frozen in techne/cartography/predicates.py at this digest.",
+  "hole_promotion_rule": "PERSISTENT_COVERAGE_HOLE requires >= 4 distinct formulations across >= 3 independent indexes with 0 relevant results. It means 'no matching experiment found under this protocol', never 'nobody has tried this'.",
+  "anti_goals": [
+    "no citation-count leaderboard",
+    "no generic literature summaries",
+    "absence is never reported as novelty",
+    "no imputed budgets or metrics",
+    "no algorithm names used as scientific coordinates",
+    "failed searches are recorded, never hidden"
+  ],
+  "charon_report_path": "charon/reports/techne_cartography_hourNN_<UTC>.txt",
+  "code_digests": {
+    "schema.py": "9b7dea5704020372945c0a21bf8bf3ffbf49a47e8ec0f0d2c8885e003a26284f",
+    "store.py": "98e6ada85edc9eb0b596cf1cc12a8aadf91efef42728e3847fe8078804e796f5",
+    "sources.py": "2693b1054b7a0e79079828d507794e46a23cb68506907ef237c7f990b400e72b",
+    "taxonomy.py": "668f9a9a52c2791234d7a4e2df6ae023223f2f4286698624f28b91220a18660c",
+    "predicates.py": "8351d1362dc928c256574191b52e9cdce22e94b8f7e3be7abeef0d3367f433b0",
+    "seeds.py": "3305c241b40f3dad883d6591022d96abb3ad1810cb640f9e2482656666ee3b1e",
+    "cycle.py": "4c70caff77f67ca370d9f22e8d86c04b6629367babdc60cd38c89dde2c61397f",
+    "report.py": "16620f188b0ca0fc8fa822043cc9e7a95c02bc37d16eb2954ceecb76a74cda3d"
+  },
+  "manifest_digest": "6e6b86c466ded586e2e2e286b322b9a46b753d808b2bf130e3a54ce3ceed9ab4"
+}
