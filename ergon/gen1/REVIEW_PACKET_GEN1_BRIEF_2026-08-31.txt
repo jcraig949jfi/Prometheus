@@ -1,0 +1,420 @@
+ERGON GEN-1 -- REVIEW PACKET FOR THE BRIEF (PRE-EXECUTION)
+2026-08-31. Written for an external reviewer who has not seen the
+originating conversation. Reviews the Gen-1 BRIEF and the two design
+findings that the brief itself requires be stated BEFORE running.
+
+Nothing in this packet is a scientific result. No arm has run. No
+organism-evaluations have been spent.
+
+====================================================================
+0. WHAT THIS GENERATION ASKS
+====================================================================
+
+DOES SELECTING WHAT EXPERIENCE PERSISTS CREATE ADDITIONAL FUTURE
+CAPABILITY BEYOND ACCUMULATION ITSELF?
+
+Operationally: given the same incoming stream of candidate artifacts,
+the same library cap, the same search budget and the same task
+lineage, does changing the admission/retirement policy change future
+CFR?
+
+This is memory SELECTION, not memory CAPACITY. It is the first
+generation in this programme to treat FORGETTING as a first-class
+treatment rather than a side effect of a cap.
+
+Brief committed verbatim at ergon/gen1/PROMPT_GEN1_2026-08-31.txt
+sha256 bba0e1d7195a763d338728d831174d8c3253774c7321a82228bd2147cb7c3b8e
+hashed at issuance, per section 19.
+
+====================================================================
+1. WHY THIS IS THE RIGHT NEXT QUESTION
+====================================================================
+
+Three independent lines converge on retention, and a reviewer should
+know they are independent rather than one argument restated.
+
+  1. D-5 varied ORDER (shuffled history retained 100% of the
+     advantage) and CONTENT SOURCE (random library retained 39%) but
+     NEVER varied the admission rule. "Solver + up to 4
+     behaviour-distinct candidates, cap 64, most-recent-first
+     eviction" was frozen in every arm INCLUDING both ablations.
+
+  2. Lexis G1 FIRED on 2026-08-25 at 5.94% load-bearing against a
+     pre-committed 10% floor, concluding "the admission criterion is
+     the problem, not the primitives", and firing a kill on acquiring
+     more tools as a strategy INDEPENDENT OF TOOL QUALITY.
+
+  3. Ergon Gen-0 established structurally that the D-5 slot consumes
+     whole executable genotypes as mutation seeds, with no
+     application site, no splice site and no primitive-extension
+     path. The only lever the interface exposes is WHICH content
+     enters and which leaves.
+
+Different substrates, different methods, same conclusion. That is
+convergent measurement, not convergent opinion.
+
+====================================================================
+2. INHERITED EVIDENCE, QUOTED NOT RECOMPUTED
+====================================================================
+
+D-5 (agent_d5_blind/, final commit 976d4a0d):
+
+    library cap ................. 64
+    CFR advantage ............... +10.95 percentage points
+    test ........................ one-sided paired permutation
+    p ........................... 0.0007
+    unit of analysis ............ task-level, n = 42
+    shuffled-history retention .. 100%
+    random-library retention .... 39%
+
+Allowed interpretation, and no more: ecology-adapted executable
+CONTENT mattered; developmental ordering did not appear load-bearing.
+
+Gen-0 (ergon/gen0/, commits 503dd553 and f97d1705):
+
+    Family A / Stitch ....... UNADJUDICABLE in this consumer. Not
+                              refuted -- no abstraction-application
+                              or primitive-extension path exists at
+                              any acquisition price. Separately
+                              acquisition-BLOCKED on an unresolved
+                              licence.
+    Family B / egglog ....... not yet a memory arm. Equality
+                              saturation returns behaviourally
+                              equivalent terms into a slot that
+                              already de-duplicates on behaviour
+                              fingerprints, so it is predictably
+                              redundant.
+    persistence hole ........ no search-discovered D-5 library was
+                              ever written to disk. The libraries
+                              behind +10.95pp were built in memory
+                              and discarded.
+
+====================================================================
+3. FINDING 1 -- ATTAINABLE RANGE IS NONTRIVIAL (SECTION 5 SATISFIED)
+====================================================================
+
+Section 5 requires, before any policy design, an answer to: CAN TWO
+LEGITIMATE POLICIES ACTUALLY PRODUCE DIFFERENT LIBRARIES? If all
+reasonable policies collapse to nearly the same 64 entries, Gen-1 is
+bounded at approximately zero and section 21 says STOP.
+
+Answered read-only from data already on disk, at zero compute cost,
+using library_size_at_start across the 290 committed M1 rows:
+
+    lineages .................................. 5
+    tasks per lineage ......................... 58
+    library starts ............................ EMPTY (size 0)
+    first saturated position, per lineage ..... 16, 15, 16, 16, 16
+    tasks post-saturation, per lineage ........ 42, 43, 42, 42, 42
+    admissions/task pre-saturation ............ 4.05 mean
+    tasks running saturated ................... 211 of 290 (72.8%)
+    eviction decisions per lineage, est ....... ~171
+    library turnover per lineage, est ......... ~2.67x
+
+Reading. The cap is reached about a quarter of the way through each
+lineage, with remarkable consistency across all five, and eviction is
+then live for the remaining three quarters. Roughly 171 eviction
+decisions occur against a 64-slot library, so the library turns over
+about 2.7 times. Two policies making different choices at those
+decision points have room to end up with substantially different
+libraries.
+
+VERDICT: RETENTION_READOUT_RANGE_NONTRIVIAL. The section 21 stop
+condition does not fire on this axis.
+
+CLAIM CEILING, and it matters. Turnover measures the OPPORTUNITY for
+divergence. It does NOT show that two legitimate policies will
+actually produce different libraries, and it does NOT show that
+different libraries move CFR. Two of the three links in that chain are
+untested. This is a pre-screen that clears a STOP condition; it is not
+a substitute for the full section 5 analysis over reuse, score,
+behaviour, age, redundancy and recurrence.
+
+Artifact: ergon/gen1/attainable_range_prescreen.json
+
+====================================================================
+4. FINDING 2 -- EXACT STREAM FREEZING IS ARCHITECTURALLY IMPOSSIBLE
+====================================================================
+
+Section 6 calls stream freezing load-bearing, states the preferred
+design as one canonical candidate stream replayed through several
+policies, and then says: if exact stream freezing is not possible,
+STATE THAT LIMITATION BEFORE RUNNING. This is that statement.
+
+It is not possible under the frozen D-5 search core, and the reason is
+mechanical rather than a matter of care.
+
+The library is read at exactly one place, m1_rx's fresh():
+
+    if extra_pool and rng.random() < 0.5:
+        return mutate(extra_pool[rng.randrange(len(extra_pool))], rng)
+    return mutate(rep[rng.randrange(len(rep))], rng)
+
+Two consequences follow immediately.
+
+  a. rng.randrange(len(extra_pool)) selects an index into the library.
+     Two policies holding different libraries return DIFFERENT
+     GENOTYPES from the same random draw.
+
+  b. mutate() consumes a VARIABLE number of rng values. The applicable
+     mutation classes are filtered by program length (INSERT and
+     DUP_BLOCK require len < MAX_LEN, DELETE requires len > 1, SWAP
+     requires len >= 2), and the classes themselves consume different
+     amounts -- OP_REPLACE draws an index, an opcode and a typed
+     operand, while DUP_BLOCK draws a block length and two positions.
+
+So a different seed genotype produces a different rng consumption
+count, the shared random stream desynchronises at the first divergent
+library draw, and every subsequent candidate in the run differs. The
+divergence is immediate and irrecoverable.
+
+CONSEQUENCE FOR THE DESIGN. The clean diagram in section 6 --
+
+    CANDIDATE STREAM
+          |
+          +--> policy A
+          +--> policy B
+
+-- is unavailable without modifying the frozen search core, which
+section 22 forbids and which would break the identity gate that makes
+M1 reproduce M0c-RX exactly on an empty library.
+
+Gen-1 therefore falls to the fallback the brief names: paired
+same-seed runs with demonstrated stream comparability. Attack F1
+(POLICY CHANGES INCOMING STREAM) is consequently NOT a risk to be
+mitigated but a CERTAINTY to be bounded. The honest framing is that
+attribution runs to the policy-plus-its-downstream-stream jointly, and
+the packet should say so rather than claim isolation it cannot have.
+
+What can still be done, and should be preregistered:
+
+  - report stream divergence as a measured quantity (first divergent
+    evaluation index, fraction of shared candidates) rather than
+    assuming it away
+  - pair on task and seed so the comparison is within-task
+  - treat the shuffled-history arm as the calibrator for how much CFR
+    moves under stream divergence WITHOUT a content difference, since
+    D-5 already showed that arm diverged (94/290 rows differ) and
+    re-converged to 100% retention of the advantage
+
+That last point is the strongest available control and it already
+exists in the inherited evidence.
+
+====================================================================
+5. FINDING 3 -- I2 AS SPECIFIED IS AGE-WEIGHTING, NOT UTILITY
+====================================================================
+
+Section 7's I2 is "USAGE-WEIGHTED RETENTION: prefer artifacts that
+have actually been reused by future mutation draws."
+
+Under the frozen draw rule, usage carries no quality signal, because
+the draw is UNIFORM:
+
+    extra_pool[rng.randrange(len(extra_pool))]
+
+Every resident entry is equally likely on every library draw. Usage
+count for each entry is therefore Binomial(n_draws, 1/64) -- the same
+distribution for every entry -- and the only systematic differentiator
+is RESIDENCE TIME.
+
+The arithmetic, from the frozen defaults psize=32, immigrant=0.10 and
+the top ladder rung of 30000 evaluations:
+
+    generations ..................... ~937
+    immigrant draws ................. ~3000   (32 x 0.10 per gen)
+    of which from the library ....... ~1500   (the 0.5 branch)
+    draws per resident entry ........ ~23     (1500 / 64)
+    noise on that count ............. ~5      (sqrt 23)
+
+So differences in usage between co-resident entries are roughly one
+standard deviation of pure multinomial noise. Usage separates entries
+only to the extent their residence times differ.
+
+CONSEQUENCE. I2 as literally specified is approximately AGE-WEIGHTED
+RETENTION, which is close to the INVERSE of I0's most-recent-first
+eviction. That may still be a worthwhile arm -- an inverted-age
+comparator is informative -- but it should be named for what it is,
+and it is not a utility signal.
+
+This is attack F5 (USAGE CIRCULARITY) arriving structurally rather
+than statistically, and it is better fixed in design than disclosed
+in analysis.
+
+TWO REPAIRS A REVIEWER SHOULD CHOOSE BETWEEN. Both stay inside the
+learner-visible boundary of section 13:
+
+  R1  redefine usage as EFFECTIVE usage -- draws whose mutated child
+      scored better than the parent population median, or better than
+      the drawn artifact itself. This is learner-visible at draw time
+      and does carry a quality signal.
+  R2  keep usage as drawn-count but rename the arm AGE-WEIGHTED and
+      pair it explicitly against I0 as an order-inversion control.
+
+R1 is the scientifically interesting one. R2 is the honest minimum. I
+would not run I2 as currently worded under either name.
+
+====================================================================
+6. FINDING 4 -- SECTION 8 HAS A LONG ENOUGH WINDOW TO TEST FORGETTING
+====================================================================
+
+Retirement needs a saturated library and enough subsequent
+opportunities for a never-reused rule to fire. The saturation profile
+in section 3 supplies both: saturation at position ~16 of 58 leaves
+42 tasks in which a retirement rule can act and its consequences can
+be observed.
+
+The brief's example rule -- retire never-reused artifacts after N
+future opportunities -- must have N preregistered before CFR is seen.
+Given ~23 draws per entry per task at the top rung, N should be
+expressed in DRAWS or in TASKS, not left ambiguous, because those two
+units differ by a factor of about 23 and the rule's aggressiveness is
+entirely determined by which is meant.
+
+====================================================================
+7. WHAT THE BRIEF GETS RIGHT, EXPLICITLY
+====================================================================
+
+Recorded because a review packet that only lists objections
+misrepresents the document.
+
+  - Persistence is correctly sequenced FIRST, and correctly specified
+    as OBSERVATIONAL ONLY with a named failure state
+    (PERSISTENCE_INSTRUMENT_SUSPECT). Same-seed parity plus round-trip
+    plus oracle-leakage checks is the right validation triple.
+  - Schema minimality (section 4D) is the correct instinct and the
+    opposite of the usual failure.
+  - Section 12's SAME-LIBRARY-SIZE control forecloses the most obvious
+    cheat, an arm winning by retaining more.
+  - Section 13 draws the online/retrospective line exactly where it
+    belongs: retrospective analysis may examine future reuse, the
+    online policy may not.
+  - Section 14's vocabulary includes CONSUMED_NO_EFFECT for an
+    artifact that is stored and repeatedly retrieved yet changes
+    nothing on removal. That distinction is the whole point of a
+    leave-one-out and most memory work elides it.
+  - Section 24 pre-commits to the negative result being equally
+    valuable, and says what it would mean: the signal is content
+    accumulation rather than memory management.
+
+====================================================================
+8. RISKS THE BRIEF DOES NOT YET COVER
+====================================================================
+
+  U1  ADMISSION AND EVICTION ARE CONFLATED. The brief calls the
+      treatment "admission/retirement policy" throughout, but these
+      are separable levers with different failure modes. D-5's
+      admission rule (solver + 4 behaviour-distinct) and its eviction
+      rule (most-recent-first) can be varied independently, and an
+      arm that changes both cannot attribute to either. Recommend a
+      factorial or an explicit statement that only eviction varies in
+      Gen-1.
+
+  U2  NO MDE IS STATED. Section 19 requires an MDE at freeze but the
+      brief does not supply one, and the inherited precedent is
+      unhelpful: D-5's G4 cleared its 10pp floor by 0.95pp against SE
+      3.4pp. A retention effect is plausibly SMALLER than the
+      accumulation effect it modulates, so the design may need more
+      lineages rather than more evaluations. Compute the SE before
+      choosing the line.
+
+  U3  FIVE LINEAGES MAY BE THE BINDING n. The pairing unit is the
+      task, but retention policy acts at the LIBRARY level, and the
+      library is a lineage-scoped object. If the true independent unit
+      is the lineage there are 5 of them, not 290 rows. This is the
+      same wrong-unit error that once inflated a precision estimate
+      57x elsewhere in this programme. Decide the unit before running.
+
+  U4  SECTION 17 IS CORRECTLY SEQUENCED BUT UNREACHABLE UNTIL
+      PERSISTENCE LANDS. The Family-B shortest-equivalent pre-screen
+      is to use "the admissible persisted search-discovered corpus
+      from Gen-1", which does not exist yet. That is the right
+      dependency; a reviewer should simply expect section 17 to be
+      the last thing in the generation, not a parallel track.
+
+  U5  CROSS-BENCH OUTPUT MAY LEAK SELECTION. Section 16's Harmonia
+      corpus would be emitted for artifacts found "consistently
+      retained, reused, load-bearing". Selecting the corpus on the
+      Gen-1 outcome and then handing it to another bench propagates
+      Gen-1's selection relation into Harmonia's population. If
+      Harmonia's question is representation-conditional reachability,
+      that could be exactly the wrong sample. Recommend emitting the
+      FULL persisted corpus with retention status as a FIELD, not a
+      filter.
+
+====================================================================
+9. STOP CONDITIONS -- CURRENT STATUS
+====================================================================
+
+Section 21's list, assessed against what is known today:
+
+    persistence changes search ................. UNKNOWN, untested
+    attainable policy range near zero .......... CLEARED (section 3)
+    policies cannot be compute-matched ......... UNKNOWN
+    streams cannot be made comparable .......... PARTIALLY FIRED.
+        Exact freezing is impossible (section 4). Whether paired
+        same-seed comparability is sufficient is a judgement the
+        reviewer and Charon should make, not the driver.
+    retention requires oracle leakage .......... NOT FIRED as
+        specified, provided I2 is repaired per section 5
+    endpoint cannot distinguish policies ....... UNKNOWN
+    persistence not exactly reconstructable .... UNKNOWN, untested
+
+One condition is cleared by measurement, one is partially fired by
+architecture, and five await the persistence instrument.
+
+====================================================================
+10. DECLARED CONFLICTS
+====================================================================
+
+The driver is a conflicted party in both directions and says so in
+writing, per standing Ergon constraint.
+
+  - Gen-1's central question is the one this seat proposed in its own
+    charter on 2026-08-30 and again at the end of Gen-0. A finding
+    that retention matters would vindicate a position taken before any
+    evidence was gathered.
+  - Equally, a STOP finding would end an expensive generation early
+    and is therefore also attractive. Both directions are declared.
+  - Mitigation is structural, not dispositional: section 3's
+    pre-screen was run read-only against committed data whose values
+    the driver did not choose, and it returned the answer that makes
+    the generation PROCEED -- which is the answer costing the most
+    work.
+
+====================================================================
+11. QUESTIONS FOR THE REVIEWER
+====================================================================
+
+  Q1  Given exact stream freezing is architecturally impossible, is
+      paired same-seed comparison with measured divergence sufficient
+      for attribution, or does Gen-1 need a different consumer?
+  Q2  Repair I2 as R1 (effective usage) or R2 (rename to
+      age-weighted)? Or drop it?
+  Q3  Is the independent unit the task (n=290) or the lineage (n=5)?
+      This decides whether the design is adequately powered or
+      hopeless.
+  Q4  Should Gen-1 vary eviction only, or admission and eviction
+      factorially?
+  Q5  Should the Harmonia corpus be filtered on retention outcome as
+      section 16 says, or emitted whole with retention as a field?
+  Q6  Is the 2.67x turnover pre-screen sufficient to clear section 5,
+      or does the full reuse/score/redundancy variation analysis have
+      to run before any policy is designed?
+
+====================================================================
+12. STATUS
+====================================================================
+
+    prompt committed and hashed ......... YES, f4579194
+    attainable-range pre-screen ......... DONE, NONTRIVIAL
+    persistence instrument .............. NOT STARTED
+    policies defined .................... NOT STARTED
+    preregistration frozen .............. NOT STARTED
+    organism-evaluations spent .......... 0
+    spend ............................... $0.00
+
+Nothing has run. This packet exists so the two design findings in
+sections 4 and 5 are on the record BEFORE anything does, which is
+what sections 6 and 19 require.
+
+-- Ergon, 2026-08-31
