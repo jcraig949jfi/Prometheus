@@ -329,13 +329,17 @@ def attack_hole(hole: dict, cycle: int) -> tuple:
             # RELEVANCE IS NOT RESULT COUNT. Every index returns something for every query.
             # A result counts as relevant only if its title carries mechanism vocabulary for
             # BOTH the representation and the selection axis of the cell.
-            n_rel = _count_relevant(src, data, cell)
+            n_full, n_partial, matched = _count_relevant(src, data, cell)
             att = RetrievalAttempt(query=f["query"], source=src, formulation=f["formulation"],
-                                   n_results=int(n_total), n_relevant=n_rel,
+                                   n_results=int(n_total), n_relevant=n_full,
                                    top_ids=[i for i in ids if i], url=url).as_dict()
+            # Partial occupancy is recorded but does NOT feed n_relevant, which is what P6
+            # reads to decide a kill. Evidence about two axes cannot retire a four-axis cell.
+            att["n_partial_occupancy"] = n_partial
+            att["axes_matched"] = matched
             attempts.append(att)
             store.append("retrieval", att)
-            if n_rel:
+            if n_full or n_partial:
                 found_ids.extend([i for i in ids if i][:3])
         except sources.SourceError as e:
             notes.append(str(e))
@@ -344,6 +348,9 @@ def attack_hole(hole: dict, cycle: int) -> tuple:
     verdict, reason = P.hole_is_persistent(attempts)
     hole["retrieval_attempts"] = attempts
     hole["n_formulations"] = len({a["formulation"] for a in attempts})
+    partial_total = sum(int(a.get("n_partial_occupancy", 0)) for a in attempts)
+    hole["partial_occupancy"] = partial_total
+    hole["axes_ever_matched"] = sorted({x for a in attempts for x in (a.get("axes_matched") or [])})
     if verdict == "REFUTED":
         hole["status"] = "KILLED_BY_RETRIEVAL"
         hole["killed_by"] = reason
@@ -358,11 +365,22 @@ def attack_hole(hole: dict, cycle: int) -> tuple:
     return hole, notes
 
 
-def _count_relevant(src: str, data: dict, cell: tuple) -> int:
-    """A result is relevant only if its title tags BOTH the cell's representation and its
-    selection mechanism. Counting raw hits would kill every hole instantly and counting zero
-    would preserve every hole forever; this is the discriminating middle."""
-    _b, rep, sel, _ev = cell
+def _count_relevant(src: str, data: dict, cell: tuple) -> tuple:
+    """Return (n_full_cell, n_partial, matched_axes).
+
+    A hole is defined on FOUR coordinates, so killing it honestly requires evidence that
+    occupies all four. The original rule checked only representation and selection -- 2 of 4 --
+    and killing is the DESIRABLE direction, which is exactly where a weak criterion goes
+    unchallenged. Cycle 026 caught it: cell
+    (B1, discrete_program, scalar_fitness, coevolved_moving) was killed by two arXiv hits found
+    under the formulation "program tournament selection", which drops the evaluation axis
+    entirely. The evidence never spoke to coevolved_moving at all.
+
+    So matches are now counted at two strengths. A FULL match occupies representation,
+    selection AND evaluation; a PARTIAL match occupies representation and selection only, and
+    is recorded as partial occupancy rather than counted as a kill.
+    """
+    _b, rep, sel, ev = cell
     titles = []
     if src == "openalex":
         titles = [(r.get("title") or "") for r in data.get("results", [])]
@@ -375,15 +393,27 @@ def _count_relevant(src: str, data: dict, cell: tuple) -> int:
     else:
         titles = [h.get("title") or "" for h in sources.dblp_hits(data)]
 
-    n = 0
+    n_full = n_partial = 0
+    axes = set()
     for t in titles:
         tags = taxonomy.tag_mechanisms(t)
         if not tags:
             continue
         d = taxonomy.descriptors_from(tags)
-        if d.get("representation_family") == rep and d.get("selection_family") == sel:
-            n += 1
-    return n
+        hit_rep = d.get("representation_family") == rep
+        hit_sel = d.get("selection_family") == sel
+        hit_ev = d.get("evaluation_regime") == ev
+        if hit_rep:
+            axes.add("representation_family")
+        if hit_sel:
+            axes.add("selection_family")
+        if hit_ev:
+            axes.add("evaluation_regime")
+        if hit_rep and hit_sel and hit_ev:
+            n_full += 1
+        elif hit_rep and hit_sel:
+            n_partial += 1
+    return n_full, n_partial, sorted(axes)
 
 
 def run_cycle(cycle: int, state: dict, max_new: int = 12) -> tuple:
