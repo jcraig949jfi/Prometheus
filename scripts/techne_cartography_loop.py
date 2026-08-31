@@ -162,6 +162,16 @@ def maybe_report(man: dict, state: dict, force: bool = False):
     if not due:
         return None
     p = rep.write_report(man)
+    # charon/reports/ is covered by .gitignore's `**/reports/` rule, so a report written there
+    # is invisible to everyone but this machine. Six reports were produced and none shipped
+    # before this was caught (LIM-005). Force-staging here makes delivery part of writing
+    # rather than a separate step someone has to remember.
+    try:
+        import subprocess
+        subprocess.run(["git", "add", "-f", str(p)], cwd=str(_REPO_ROOT),
+                       capture_output=True, timeout=30)
+    except Exception:                                                 # noqa: BLE001
+        pass
     state["last_report_epoch"] = time.time()
     state.setdefault("reports", []).append(str(p.relative_to(_REPO_ROOT)))
     return p
