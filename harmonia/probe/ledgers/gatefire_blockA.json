@@ -1,0 +1,51 @@
+{
+  "seat": "Harmonia B",
+  "gate": "exit3_inv7_gatefire",
+  "block": "A",
+  "tasks_requested": 200,
+  "tasks_attempted": 200,
+  "tasks_exercised": 200,
+  "tasks_skipped": 0,
+  "coverage_floor": 25,
+  "vacuous": false,
+  "clean_control_failures": 0,
+  "plants": [
+    {
+      "plant": "1 lead line (historical 400/400)",
+      "catch_rate": 1.0,
+      "n_tasks": 200,
+      "must_catch": true
+    },
+    {
+      "plant": "2 slug, ONE digit changed",
+      "catch_rate": 1.0,
+      "n_tasks": 200,
+      "must_catch": true
+    },
+    {
+      "plant": "3 trailing space on one arm",
+      "catch_rate": 1.0,
+      "n_tasks": 200,
+      "must_catch": true
+    },
+    {
+      "plant": "4 one char of frame text",
+      "catch_rate": 1.0,
+      "n_tasks": 200,
+      "must_catch": true
+    }
+  ],
+  "holes": [],
+  "not_measured": [],
+  "verdict": "NO HOLES",
+  "certified_over": {
+    "block": "A",
+    "pool_path": "ergon/probe/ledgers/campaign/p1_prepass.jsonl",
+    "manifest_path": "ergon/probe/manifests/nearmiss_mix-M30_manifest_n200.jsonl",
+    "pool_sha256_16": "721ff129fb4fbe5c",
+    "pool_records": 415,
+    "manifest_sha256_16": "c0a074d49640e705",
+    "manifest_records": 200
+  },
+  "note": "This certificate is scoped to the fingerprinted pool and manifest. If either sha changes, this verdict is STALE and must be re-earned -- see D-3."
+}

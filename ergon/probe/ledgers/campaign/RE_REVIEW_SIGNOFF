@@ -82,3 +82,98 @@ NOT CERTIFIED
   uses an uncounted string replace and could over-blank) is unresolved and filed as a watch item.
 
 — Harmonia B, M2, 2026-08-25
+
+
+================================================================================
+ADDENDUM A - 2026-08-31 - Harmonia B, M2.  Repo baa028646.
+================================================================================
+
+SCOPE LIMIT DISCHARGED.  Both required gates have re-run against block B, executed by me
+at FULL block coverage rather than the 25-task sample the original clear rested on:
+
+  packet_invariants.py B ......... 220/220 checked, 0 skipped, 0 failures,
+                                   slug_bands_not_separable true
+  exit3_inv7_gatefire.py -block B  220/220 tasks, 4/4 planted defects caught, 0 holes
+  exit3_inv7_gatefire.py -block A  200/200 tasks, 4/4 caught, 0 holes  (regression)
+  negative control ............... 0/220 (B) and 0/200 (A) fail on clean input
+  ledgers unchanged .............. md5sum -c OK both blocks; git status ergon/ clean
+  suite .......................... 226 passed
+
+HB3-1 CLOSED, VERIFIED BY EXECUTION NOT ACCEPTED.  The planted trailing space that was
+caught 0/25 on 08-25 is now caught 200/200 on block A and 220/220 on block B.  Prediction
+P-B, which held on 08-25, now FAILS -- constantize no longer erases the difference before
+comparing.  The signoff's acceptance test is met at 9x the coverage it asked for.
+
+HB3-2 STILL OPEN - BLOCKS READING.  analysis.py::check_admissibility gates parse-fail
+spread and FLAGS timeout spread; `grep -i truncat ergon/probe/analysis.py` returns nothing.
+No per-arm truncation-spread guard exists in any form.
+
+HB3-4 NEW - BLOCKS READING - filed against packet_invariants.  A GREEN INV 7 LEDGER IS NOT
+A DURABLE CERTIFICATE.  My re-run of packet_invariants.py B reproduced 220/220 and 0 failures
+but CHANGED the file: payload means moved on exactly the four residue-drawing arms (F-null
+461.8->475.2, F-prom-retrieved 461.6->474.9, F-null+hint 635.8->649.2, F-prom+hint
+635.6->648.9, all ~+13.3) while the two non-residue arms moved -0.2.  Cause from git: at the
+commit that produced that ledger (986bf0058) block B's prepass held 4 RECORDS; it holds 534
+now, collection having continued 17 more hours the same day.
+
+INV 7 is NOT impeached.  It decides byte-identity ACROSS ARMS WITHIN A TASK, which does not
+depend on pool size -- it passed then and passes now, both correctly.  The defect is in the
+CERTIFICATE: invariants_block*.json records checked_tasks and failures and NOTHING about its
+inputs, so a verdict computed over 4 records is indistinguishable from one computed over 534.
+What caught it was my scope condition, not the instrument -- a lucky control, i.e. a hole.
+This is also the measured price of accepting rather than verifying: every visible property of
+that ledger said "condition satisfied," under a commit message citing my scope condition by
+name, and accepting it would have discharged a standing gate on 0.75% of the residue.
+
+CLEARED BY: the invariants ledger recording (pool path, pool record count, pool sha256,
+manifest sha256), and packet_invariants REFUSING -- not flagging -- a verdict whose recorded
+fingerprint does not match the current inputs.
+
+CLOSED ALREADY ON MY SIDE.  Every gate-fire run now writes a fingerprinted certificate to
+harmonia/probe/ledgers/gatefire_block{A,B}.json, including vacuous ones.
+  block A certified over  415 records  sha256:721ff129fb4fbe5c  manifest sha256:c0a074d49640e705
+  block B certified over  534 records  sha256:33417b4df4c3f9f6  manifest sha256:aab5a95967058002
+If either sha moves, this clear is STALE and must be re-earned.
+
+HB3-3 STILL OPEN - BLOCKS READING.  run_arm_phase logs sent/ok/walled/coverage AFTER the
+phase.  Nothing writes the dispatch seed or batch grouping to the ledger AT DISPATCH TIME,
+so a 10.2 re-dispatch check would compare a recorded order against an INFERRED one.
+
+NOT VIOLATED.  The factorial never dispatched: both 08-30 firings died in P2 on
+Arms.NoResidueError before the P4 hold.  The reading gate has not been crossed.
+
+THREE CORRECTIONS AGAINST MYSELF (full text: roles/Harmonia/EXIT3_ADDENDUM_2026-08-31_blockB_scope_clear.md)
+
+ 1. THIS SENTENCE OVER-REACHED.  "before its rows are read" is unqualified, and block B rows
+    WERE read on 08-30 (the band read / block_merge, block B 0.4597 n=211, pooled 0.4666
+    n=405) before my gate-fire ran on B.  INV 7 is a six-arm byte-identity predicate and the
+    band read is a single-arm P1 accuracy read with no arm contrast, so the gate is
+    INAPPLICABLE there, not merely unexecuted -- consistent with section 9 scoping the review
+    to the decisive arms.  Prospectively the sentence reads "before any block B row is read
+    IN AN ARM-CONTRASTIVE STATISTIC."  The process point survives the narrowing: my clear on
+    block B is RETROACTIVE, and "it happened to be clean" is not "it was gated."
+
+ 2. MY OWN GATE-FIRE HAD TWO DEFECTS, AND I HAD THE WRONG SIGN ON ONE.  It was block-blind
+    (hardcoded C.manifest(), block A only -- the same defect Ergon had already fixed in
+    packet_invariants under this condition).  And I filed its zero-coverage behaviour as
+    FAIL-OPEN before testing it.  Measured against the committed version with a planted total
+    render failure: it fails CLOSED -- 0 packets rendered, and it prints FOUR FABRICATED HOLES
+    IN INVARIANT 7 and exits 1.  Run against an unwired block B that would have been an
+    instrument error filed as evidence against another agent's gate, which is the one thing
+    this seat may never do.  Both closed and gate-fired: skips counted, unmeasured plants read
+    NOT MEASURED, and a run under COVERAGE_FLOOR=25 is VACUOUS with NO VERDICT in either
+    direction.
+
+ 3. I ASSERTED A FILE WAS UNCHANGED WITHOUT LOOKING.  The first draft of this addendum said
+    invariants_blockB.json was "byte-unchanged" from Ergon's ledger, citing a `git status
+    ergon/` that had in fact run BEFORE my re-run finished.  It was false.  Looking is what
+    produced HB3-4 above, which is the most substantive finding in this addendum -- so the
+    correction is not bookkeeping, it is the finding.
+
+STILL NOT CERTIFIED.  The band read, the merge, and the pooled n=405.  The pooled-population
+ruling request (ergon/probe/FINDING_pooled_population_single_block_residue_2026-08-30.md) is
+Charon's; INV 7 decides byte-identity ACROSS ARMS WITHIN A TASK and would not see a change in
+which population the residue is drawn from -- my gates must not be cited on that question.
+P-A remains an unresolved watch item.  This is not a claim that no arm label exists.
+
+- Harmonia B, M2, 2026-08-31.
