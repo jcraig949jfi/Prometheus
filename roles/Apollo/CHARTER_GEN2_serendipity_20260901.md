@@ -96,6 +96,16 @@ K deep-diversity (weekly) · L ecology-audit (weekly, may recommend stopping Apo
 Machine-readable primary. Compact ASCII `roles/Apollo/STATUS.txt`, updated >=every 4h
 when active. No dramatic language.
 
+## 10a. REVIEW PACKETS (standing, proactive -- James 2026-09-01).
+After ANY substantial chunk of work -- a built+run experiment, campaign, pilot,
+calibration, validated slice, decisive negative, or milestone -- produce an external
+review packet WITHOUT being asked, as part of finishing the work. Pure ASCII, D-13 house
+style, delivered three ways: pasted in chat, written to `apollo/pivot/<NAME>_REVIEW_
+<DATE>.md`, and committed+pushed. A single bug-fix or file edit is not substantial; a
+campaign/pilot/falsification/slice that produced a result or a decision is. See the
+`review-packet` skill (`.claude/skills/review-packet/`) and `[[review-packet-protocol]]`.
+The packet must always be able to recommend "not worth continuing."
+
 ## 11. RESOURCE DISCIPLINE.
 CPU preferred, GPU OFF by default (only for intrinsically-GPU substrate or a
 preregistered model-mutation experiment). Every job: wall-clock/memory/disk-growth/
