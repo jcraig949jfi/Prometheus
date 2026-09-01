@@ -1,0 +1,355 @@
+================================================================================
+ERGON - GEN-1A: CAUSAL DESIGN CLOSURE + PERSISTENCE GATE
+
+Issued by James, 2026-09-01, together with rulings on the six questions raised
+in ergon/gen1/REVIEW_PACKET_GEN1_BRIEF_2026-08-31.txt.
+Committed verbatim as the authoritative brief. Where this file and any later
+summary disagree, this file wins.
+================================================================================
+
+RULINGS ON THE SIX GEN-1 QUESTIONS
+
+Q1 - paired same-seed is sufficient, with a narrower estimand. Gen-1 may
+causally ask whether a retention policy changes future capability. It may NOT
+claim it isolated library contents from the downstream search trajectory.
+Measure first-divergence index / shared-candidate fraction and explicitly call
+the treatment "policy + induced trajectory."
+
+Q2 - use R1 effective usage. Raw retrieval count is mostly residence-time noise
+under uniform sampling. An artifact earns credit only after a draw produces a
+predefined measurable improvement. The age-weighted version can survive as a
+cheap diagnostic/control, not as "utility."
+
+Q3 - lineage is the independent unit. The library persists across tasks, so
+treating 290 task rows as 290 independent treatments would be
+pseudo-replication. Five lineages is therefore almost certainly the real power
+problem. Ergon should calculate the required number of paired independent
+lineages before anything expensive runs.
+
+Q4 - vary eviction only. Freeze D-5 admission exactly. Otherwise Gen-1
+confounds "what gets remembered" with "what gets forgotten." Admission
+deserves its own generation later.
+
+Q5 - emit the entire persisted corpus to Harmonia, with
+retention/reuse/load-bearing status as fields. Do not outcome-filter the
+corpus.
+
+Q6 - run the full attainable-range analysis first. The 2.67x turnover proves
+opportunity for policy divergence, not actual divergence. The remaining
+reuse/score/redundancy/age/recurrence analysis is cheap and could kill bad
+policy choices before compute is spent.
+
+================================================================================
+
+You are NOT yet authorized to run the Gen-1 retention experiment.
+
+Your next block is to make Gen-1 scientifically executable. Resolve the
+remaining causal-design questions, build and falsify the persistence
+instrument, determine whether the experiment is actually powered at the
+correct independent unit, and return a frozen preregistration or a STOP
+verdict.
+
+CENTRAL QUESTION
+
+Does selecting which already-admitted executable experience persists create
+additional future capability beyond accumulation itself?
+
+For Gen-1, freeze the existing D-5 admission mechanism. The only treatment
+lever is RETENTION / EVICTION.
+
+Do not widen the generation into admission-policy search.
+
+RULINGS
+
+1. EXACT STREAM FREEZING
+
+Exact candidate-stream replay is architecturally impossible under the frozen
+D-5 consumer. Accept this.
+
+The estimand is therefore:
+
+    causal effect of RETENTION POLICY,
+    including the downstream search trajectory that policy induces.
+
+It is NOT:
+
+    causal effect of library composition while holding all subsequent
+    candidate generation fixed.
+
+Use paired same-task / same-seed policy runs.
+
+Instrument and report:
+
+  - first divergent candidate/evaluation index;
+  - fraction of candidate genotypes shared before and after divergence;
+  - trajectory overlap where definable;
+  - library-composition divergence through time;
+  - CFR endpoint difference.
+
+Use the inherited shuffled-history result only as a calibration showing that
+stream divergence need not itself destroy the D-5 advantage. Do not treat it
+as proof that arbitrary stream divergence is harmless.
+
+2. INDEPENDENT UNIT
+
+Treat LINEAGE as the presumptive independent experimental unit because the
+retention policy operates on a lineage-scoped persistent library.
+
+Tasks within a lineage are repeated measurements, not independent treatment
+assignments.
+
+Before spending scored compute:
+
+  - estimate within-lineage dependence / ICC or its nonparametric equivalent
+    from inherited data;
+  - reconstruct the D-5 uncertainty using lineage-respecting resampling;
+  - perform paired cluster/bootstrap/permutation power calculations;
+  - state the minimum detectable Gen-1 effect under plausible lineage counts;
+  - determine how many independent paired lineages would be required for the
+    preregistered MDE.
+
+Do not choose n by convenience.
+
+If the affordable number of independent lineages cannot distinguish a
+scientifically meaningful retention effect, return:
+
+    GEN1_UNDERPOWERED_AT_CORRECT_UNIT
+
+and STOP.
+
+Increasing evaluations inside five lineages is not an acceptable substitute
+for increasing independent lineages.
+
+3. POLICY SCOPE
+
+Gen-1 varies EVICTION ONLY.
+
+Freeze:
+
+  - D-5 admission rule;
+  - library cap = 64;
+  - search core;
+  - search budget;
+  - task corpus;
+  - scoring;
+  - mutation operators;
+  - all other inherited mechanics required for identity.
+
+Do not run an admission x eviction factorial in this generation.
+
+If eviction proves consequential, admission becomes a later independent
+question.
+
+4. USAGE POLICY
+
+Do not use raw retrieval count as "utility."
+
+Implement EFFECTIVE USAGE.
+
+An artifact receives retention credit only when a mutation draw descending
+from it satisfies a frozen, learner-visible improvement criterion.
+
+Before choosing that criterion, compare legitimate candidates such as:
+
+  - child > contemporaneous population median;
+  - child > source artifact;
+  - normalized score improvement where score scales differ.
+
+Select ONE primary credit definition before outcome inspection and justify why
+it is mechanically available online without future leakage.
+
+Raw draw-count / residence-time weighting may be retained only as an
+explicitly named AGE/RESIDENCE control if it is cheap enough. It must never be
+described as learned utility.
+
+5. ATTAINABLE POLICY RANGE
+
+Complete the full read-only Section-5 analysis before policy freeze.
+
+Using already committed data, characterize variation in:
+
+  - artifact age;
+  - subsequent reuse;
+  - artifact score;
+  - behavioural redundancy;
+  - recurrence/reappearance;
+  - lineage;
+  - admission position;
+  - residence duration.
+
+Then simulate the proposed eviction rules over the historical admissible
+sequence wherever this can be done without pretending the counterfactual
+search trajectory is known.
+
+For each proposed policy report at minimum:
+
+  - fraction of eviction decisions differing from baseline;
+  - expected library Jaccard overlap through time;
+  - terminal library overlap;
+  - age distribution;
+  - behavioural-diversity distribution;
+  - score distribution;
+  - effective-usage distribution if reconstructable.
+
+The existing ~2.67x turnover result establishes opportunity for divergence
+only. It does not by itself clear this gate.
+
+If legitimate policies still produce nearly identical retained sets, STOP:
+
+    RETENTION_POLICY_RANGE_EFFECTIVELY_ZERO
+
+6. PERSISTENCE INSTRUMENT
+
+Build persistence before policy experimentation.
+
+Required gate:
+
+  A. A search-discovered library can be serialized.
+  B. It can be destroyed from memory.
+  C. It can be reloaded exactly.
+  D. Reloaded execution is identical under same seed where no policy
+     intervention occurs.
+  E. Behaviour fingerprints survive round-trip.
+  F. Artifact identity survives round-trip.
+  G. No oracle/future information is serialized into learner-visible fields.
+  H. Schema is sufficient to reconstruct every admission, use, credit,
+     retirement and reload decision.
+
+Hash the persisted representation and prove deterministic round-trip
+reconstruction.
+
+Run adversarial tests including:
+
+  - reordered serialization;
+  - missing artifact;
+  - duplicate artifact;
+  - corrupted fingerprint;
+  - stale score;
+  - unknown opcode/version;
+  - partial write;
+  - interrupted write;
+  - duplicate admission;
+  - reload after process restart.
+
+Fail closed.
+
+If persistence measurably changes the control search trajectory beyond the
+preregistered tolerance, return:
+
+    PERSISTENCE_INSTRUMENT_SUSPECT
+
+and do not run Gen-1.
+
+7. PRIMARY POLICY ARMS
+
+Do not maximize arm count.
+
+Design the smallest set capable of answering the question. At minimum
+consider:
+
+I0 - inherited D-5 retention/eviction baseline.
+
+I1 - a genuinely selective learner-visible eviction policy based on a
+non-oracular property justified by the attainable-range analysis.
+
+I2 - EFFECTIVE-USAGE retention as defined above.
+
+Include a random-eviction or age-inversion comparator only if it materially
+improves interpretation relative to its compute cost.
+
+Every arm must:
+
+  - retain exactly the same maximum number of artifacts;
+  - receive the same admission stream mechanics;
+  - receive the same search budget;
+  - use no retrospective information;
+  - have deterministic tie-breaking.
+
+8. RETIREMENT / FORGETTING
+
+Specify forgetting explicitly.
+
+Any rule such as "retire after N opportunities without effective reuse" must
+define N in an unambiguous unit.
+
+Prefer mutation/library-draw opportunities over vague task counts if that is
+the causal exposure being modeled.
+
+Before running, produce the implied expected retirement-time distribution
+under the frozen search parameters so we know whether the rule is active
+rather than ceremonial.
+
+9. DOWNSTREAM CORPUS
+
+For Harmonia or any other consumer, emit the FULL admissible persisted corpus.
+
+Attach fields including, where available:
+
+  - retained / retired;
+  - policy;
+  - residence interval;
+  - draw count;
+  - effective-use count;
+  - behavioural fingerprint;
+  - score at admission;
+  - retirement reason;
+  - leave-one-out status;
+  - load-bearing status.
+
+Do not select only "successful," retained, reused or load-bearing artifacts
+for export.
+
+Selection status is DATA, not an export filter.
+
+10. PRE-REGISTRATION
+
+Only after the preceding work, freeze:
+
+  - estimand;
+  - independent unit;
+  - primary endpoint;
+  - MDE;
+  - number of lineages;
+  - seeds;
+  - task allocation;
+  - policy definitions;
+  - effective-use definition;
+  - retirement thresholds;
+  - statistical test;
+  - multiple-arm correction if applicable;
+  - stream-divergence readouts;
+  - persistence tolerances;
+  - stopping rules;
+  - compute ceiling.
+
+Hash the preregistration before the first experimental organism-evaluation.
+
+DELIVERABLE
+
+Return one self-contained review packet containing:
+
+  1. persistence implementation and falsification results;
+  2. full attainable-range analysis;
+  3. lineage-level dependence and power analysis;
+  4. exact proposed policy definitions;
+  5. simulated policy-divergence/readout estimates using existing data;
+  6. frozen statistical design;
+  7. frozen schema;
+  8. explicit claim ceiling;
+  9. exact estimated experimental spend;
+ 10. one of:
+
+     GEN1_READY_TO_RUN
+     GEN1_UNDERPOWERED_AT_CORRECT_UNIT
+     PERSISTENCE_INSTRUMENT_SUSPECT
+     RETENTION_POLICY_RANGE_EFFECTIVELY_ZERO
+     OTHER_STOP - with mechanical justification.
+
+Do not spend the Gen-1 experimental budget merely because implementation
+succeeds.
+
+The purpose of this block is to determine whether we possess an experiment
+capable of answering the question.
+
+================================================================================
+END ERGON GEN-1A PROMPT
