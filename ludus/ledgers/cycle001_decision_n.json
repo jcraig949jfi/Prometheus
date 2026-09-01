@@ -1,0 +1,55 @@
+{
+  "purpose": "items required for a DECISION-grade reading at each rung, given the cheap floor it must clear; screening n=30 is not decision-n",
+  "power": 0.8,
+  "alpha_two_sided": 0.05,
+  "rungs": {
+    "LOOM:R0": {
+      "cheap_floor": 0.655,
+      "n_required": {
+        "floor+0.05": 692,
+        "floor+0.10": 168,
+        "perfect-0.02": 11
+      }
+    },
+    "LOOM:R2": {
+      "cheap_floor": 1.0,
+      "n_required": {
+        "floor+0.05": null,
+        "floor+0.10": null,
+        "perfect-0.02": null
+      }
+    },
+    "WEIR:R0": {
+      "cheap_floor": 0.4013,
+      "n_required": {
+        "floor+0.05": 761,
+        "floor+0.10": 191,
+        "perfect-0.02": 4
+      }
+    },
+    "WEIR:R2": {
+      "cheap_floor": 0.8567,
+      "n_required": {
+        "floor+0.05": 347,
+        "floor+0.10": 74,
+        "perfect-0.02": 43
+      }
+    },
+    "TITHE:R0": {
+      "cheap_floor": 1.0,
+      "n_required": {
+        "floor+0.05": null,
+        "floor+0.10": null,
+        "perfect-0.02": null
+      }
+    },
+    "TITHE:R2": {
+      "cheap_floor": 0.85,
+      "n_required": {
+        "floor+0.05": 363,
+        "floor+0.10": 78,
+        "perfect-0.02": 40
+      }
+    }
+  }
+}

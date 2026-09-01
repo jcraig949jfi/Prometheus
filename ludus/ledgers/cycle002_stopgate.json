@@ -1,0 +1,216 @@
+{
+  "purpose": "GATE-W1 applied to charter v2 \u00a717's stochastic-stopping family",
+  "no_model_calls": true,
+  "preregistered_criteria": {
+    "not_measurable_if_best_cheap_EV_retention_ge": 0.98,
+    "r0001_comparable_bar_action_gap_ge": 0.2,
+    "weighting": "visitation probability under optimal play; uniform reported beside it, never instead of it"
+  },
+  "ts_utc": "2026-08-26T23:09:42+00:00",
+  "FLIP7": {
+    "optimal_ev": 18.5652,
+    "policies": {
+      "always_flip": {
+        "ev": 5.7433,
+        "ev_retention": 0.3094,
+        "action_gap_uniform": 0.5718,
+        "action_gap_visitation": 0.1773
+      },
+      "myopic_one_step": {
+        "ev": 18.5494,
+        "ev_retention": 0.9991,
+        "action_gap_uniform": 0.187,
+        "action_gap_visitation": 0.0024
+      },
+      "threshold_10": {
+        "ev": 12.9582,
+        "ev_retention": 0.698,
+        "action_gap_uniform": 0.4121,
+        "action_gap_visitation": 0.3952
+      },
+      "threshold_15": {
+        "ev": 16.6056,
+        "ev_retention": 0.8944,
+        "action_gap_uniform": 0.376,
+        "action_gap_visitation": 0.2202
+      },
+      "threshold_20": {
+        "ev": 18.2451,
+        "ev_retention": 0.9828,
+        "action_gap_uniform": 0.2988,
+        "action_gap_visitation": 0.0853
+      },
+      "threshold_25": {
+        "ev": 18.4061,
+        "ev_retention": 0.9914,
+        "action_gap_uniform": 0.199,
+        "action_gap_visitation": 0.0505
+      },
+      "threshold_30": {
+        "ev": 17.1389,
+        "ev_retention": 0.9232,
+        "action_gap_uniform": 0.2405,
+        "action_gap_visitation": 0.1372
+      },
+      "threshold_35": {
+        "ev": 14.704,
+        "ev_retention": 0.792,
+        "action_gap_uniform": 0.2559,
+        "action_gap_visitation": 0.1756
+      },
+      "count_3": {
+        "ev": 17.6637,
+        "ev_retention": 0.9514,
+        "action_gap_uniform": 0.4067,
+        "action_gap_visitation": 0.1113
+      },
+      "count_4": {
+        "ev": 16.7568,
+        "ev_retention": 0.9026,
+        "action_gap_uniform": 0.3687,
+        "action_gap_visitation": 0.1391
+      },
+      "count_5": {
+        "ev": 13.0521,
+        "ev_retention": 0.703,
+        "action_gap_uniform": 0.3806,
+        "action_gap_visitation": 0.1722
+      },
+      "count_6": {
+        "ev": 8.4079,
+        "ev_retention": 0.4529,
+        "action_gap_uniform": 0.521,
+        "action_gap_visitation": 0.178
+      }
+    },
+    "best_cheap_retention": 0.9991,
+    "measurable_at_stopping_decision": false
+  },
+  "MARTIAN_DICE": {
+    "optimal_ev": 2.0938,
+    "policies": {
+      "most+stop_at_2": {
+        "ev": 1.7607,
+        "ev_retention": 0.8409
+      },
+      "most+stop_at_3": {
+        "ev": 1.7822,
+        "ev_retention": 0.8512
+      },
+      "most+stop_at_4": {
+        "ev": 1.6297,
+        "ev_retention": 0.7783
+      },
+      "most+stop_at_5": {
+        "ev": 1.4256,
+        "ev_retention": 0.6809
+      },
+      "most+stop_at_6": {
+        "ev": 1.266,
+        "ev_retention": 0.6046
+      },
+      "most+stop_dice<=0": {
+        "ev": 0.5306,
+        "ev_retention": 0.2534
+      },
+      "most+stop_dice<=2": {
+        "ev": 1.7204,
+        "ev_retention": 0.8217
+      },
+      "most+stop_dice<=4": {
+        "ev": 1.7278,
+        "ev_retention": 0.8252
+      },
+      "most+stop_dice<=6": {
+        "ev": 1.6549,
+        "ev_retention": 0.7904
+      },
+      "rays_first+stop_at_2": {
+        "ev": 1.5704,
+        "ev_retention": 0.75
+      },
+      "rays_first+stop_at_3": {
+        "ev": 1.5939,
+        "ev_retention": 0.7612
+      },
+      "rays_first+stop_at_4": {
+        "ev": 1.427,
+        "ev_retention": 0.6815
+      },
+      "rays_first+stop_at_5": {
+        "ev": 1.2293,
+        "ev_retention": 0.5871
+      },
+      "rays_first+stop_at_6": {
+        "ev": 1.116,
+        "ev_retention": 0.533
+      },
+      "rays_first+stop_dice<=0": {
+        "ev": 0.4398,
+        "ev_retention": 0.21
+      },
+      "rays_first+stop_dice<=2": {
+        "ev": 1.5076,
+        "ev_retention": 0.7201
+      },
+      "rays_first+stop_dice<=4": {
+        "ev": 1.5349,
+        "ev_retention": 0.7331
+      },
+      "rays_first+stop_dice<=6": {
+        "ev": 1.4616,
+        "ev_retention": 0.6981
+      },
+      "most+MYOPIC_TRANSPLANT": {
+        "ev": 1.9043,
+        "ev_retention": 0.9095
+      },
+      "rays_until_safe+MYOPIC_TRANSPLANT": {
+        "ev": 1.7556,
+        "ev_retention": 0.8385
+      },
+      "score_max+MYOPIC_TRANSPLANT": {
+        "ev": 1.0191,
+        "ev_retention": 0.4867
+      },
+      "score_max+stop_at_2_or_dice<=2": {
+        "ev": 1.0188,
+        "ev_retention": 0.4866
+      },
+      "score_max+stop_at_2_or_dice<=4": {
+        "ev": 1.0188,
+        "ev_retention": 0.4866
+      },
+      "score_max+stop_at_3_or_dice<=2": {
+        "ev": 1.0196,
+        "ev_retention": 0.487
+      },
+      "score_max+stop_at_3_or_dice<=4": {
+        "ev": 1.0196,
+        "ev_retention": 0.487
+      }
+    },
+    "best_cheap_retention": 0.9095,
+    "measurable_at_stopping_decision": true
+  },
+  "rules_audit": {
+    "epistemic_state": "HYPOTHESIZED \u2014 reconstructed from memory, no rulebook consulted",
+    "why_it_matters": "charter v2 \u00a74: the operator can cheaply detect fabricated rules; every cycle-002 verdict is conditional on this sheet",
+    "FLIP7": [
+      "deck: rank r appears r times for r in 1..12, rank 0 appears once (79 cards)",
+      "flipping a rank you already hold BUSTS you; the round scores 0",
+      "banking scores the sum of held ranks",
+      "holding 7 distinct ranks scores +15 and ends your round immediately",
+      "SCOPE CUT (not a rule claim): action cards (Freeze, Flip Three, Second Chance) and modifier cards (+2/+4/+6/+8/+10/x2) are NOT implemented"
+    ],
+    "MARTIAN_DICE": [
+      "13 dice; each die has faces tank, ray, ray, human, cow, chicken (the DOUBLED RAY FACE is the highest-leverage constant here)",
+      "all tanks rolled are set aside compulsorily",
+      "you must then claim ALL dice of exactly one symbol you have not claimed before this turn; if you cannot, the turn ends scoring 0",
+      "after claiming you may stop or reroll the remaining dice",
+      "scoring: rays must be >= tanks or the turn scores 0; otherwise score is humans + cows + chickens",
+      "+3 bonus for holding at least one human AND one cow AND one chicken"
+    ],
+    "SOLITAIRE_SCOPE": "both worlds are single-player; opponent interaction (Incan Gold's splitting, Can't Stop's race) is out of scope for this cut and is stated as a limitation"
+  }
+}

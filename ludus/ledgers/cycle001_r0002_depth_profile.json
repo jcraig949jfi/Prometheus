@@ -1,0 +1,56 @@
+{
+  "primitive": "r0002 depth profile",
+  "why": "r0001 admits a false positive: a world whose score function is a poor proxy shows a large one-ply gap while still being shallow. Admission must use the gap at depth, not at k=1.",
+  "cutoff_eval": "world.result(s) read early -- the most favourable heuristic available to the cheap player",
+  "seed": 20260826,
+  "sample_n": 250,
+  "max_depth": 4,
+  "ts_utc": "2026-08-26T22:24:10+00:00",
+  "worlds": {
+    "LOOM": {
+      "world": "LOOM",
+      "sampled": 250,
+      "eligible_states": 528,
+      "gaps": {
+        "k=1": 0.0,
+        "k=2": 0.0,
+        "k=3": 0.0,
+        "k=4": 0.0
+      },
+      "r0001_greedy_own_score_gap": 0.0,
+      "gap_at_max_depth": 0.0,
+      "survives_depth": false,
+      "collapse_ratio": null
+    },
+    "WEIR": {
+      "world": "WEIR",
+      "sampled": 250,
+      "eligible_states": 41152,
+      "gaps": {
+        "k=1": 0.144,
+        "k=2": 0.112,
+        "k=3": 0.04,
+        "k=4": 0.012
+      },
+      "r0001_greedy_own_score_gap": 0.144,
+      "gap_at_max_depth": 0.012,
+      "survives_depth": false,
+      "collapse_ratio": 0.0833
+    },
+    "TITHE": {
+      "world": "TITHE",
+      "sampled": 250,
+      "eligible_states": 1288,
+      "gaps": {
+        "k=1": 0.156,
+        "k=2": 0.144,
+        "k=3": 0.056,
+        "k=4": 0.04
+      },
+      "r0001_greedy_own_score_gap": 0.156,
+      "gap_at_max_depth": 0.04,
+      "survives_depth": false,
+      "collapse_ratio": 0.2564
+    }
+  }
+}

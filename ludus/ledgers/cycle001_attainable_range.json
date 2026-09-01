@@ -1,0 +1,112 @@
+{
+  "purpose": "attainable-range map for the LUDUS ladder, computed with zero model calls; determines which rungs are eligible to carry a ceiling reading",
+  "seed": 20260826,
+  "sample_n": 300,
+  "min_branching": 2,
+  "ts_utc": "2026-08-26T21:57:25+00:00",
+  "worlds": {
+    "LOOM": {
+      "world": "LOOM",
+      "reachable_nonterminal": 539,
+      "eligible_states_branching_ge_2": 528,
+      "sampled": 300,
+      "action_vocabulary": 4,
+      "branching": {
+        "mean": 2.62,
+        "min": 2,
+        "max": 4
+      },
+      "optimal_set_size_mean": 1.36,
+      "R0_random_legal_rate": 0.655,
+      "R2_random_legal_player": 0.5614,
+      "R2_greedy_1ply": 1.0,
+      "R2_majority_class": 0.3933,
+      "R2_majority_action": "CLIMB",
+      "R3_value_spread": {
+        "min": -10,
+        "max": 10,
+        "distinct": 11
+      },
+      "R3_majority_class": 0.2767,
+      "R3_majority_value": 0,
+      "headroom": {
+        "R2_cheap_floor": 1.0,
+        "R2_headroom_to_perfect": 0.0,
+        "R0_headroom_to_perfect": 0.345,
+        "eligible": false,
+        "notes": [
+          "R2 DEGENERATE: cheap floor 1.00 leaves <0.20 headroom to perfect play."
+        ]
+      }
+    },
+    "WEIR": {
+      "world": "WEIR",
+      "reachable_nonterminal": 53928,
+      "eligible_states_branching_ge_2": 41152,
+      "sampled": 300,
+      "action_vocabulary": 10,
+      "branching": {
+        "mean": 4.013,
+        "min": 2,
+        "max": 9
+      },
+      "optimal_set_size_mean": 1.1,
+      "R0_random_legal_rate": 0.4013,
+      "R2_random_legal_player": 0.3191,
+      "R2_greedy_1ply": 0.8567,
+      "R2_majority_class": 0.5333,
+      "R2_majority_action": "YIELD",
+      "R3_value_spread": {
+        "min": -14,
+        "max": 11,
+        "distinct": 26
+      },
+      "R3_majority_class": 0.09,
+      "R3_majority_value": 1,
+      "headroom": {
+        "R2_cheap_floor": 0.8567,
+        "R2_headroom_to_perfect": 0.1433,
+        "R0_headroom_to_perfect": 0.5987,
+        "eligible": false,
+        "notes": [
+          "R2 DEGENERATE: cheap floor 0.86 leaves <0.20 headroom to perfect play."
+        ]
+      }
+    },
+    "TITHE": {
+      "world": "TITHE",
+      "reachable_nonterminal": 1656,
+      "eligible_states_branching_ge_2": 1288,
+      "sampled": 300,
+      "action_vocabulary": 2,
+      "branching": {
+        "mean": 2,
+        "min": 2,
+        "max": 2
+      },
+      "optimal_set_size_mean": 1.023,
+      "R0_random_legal_rate": 1.0,
+      "R2_random_legal_player": 0.5117,
+      "R2_greedy_1ply": 0.85,
+      "R2_majority_class": 0.6933,
+      "R2_majority_action": "CLAIM",
+      "R3_value_spread": {
+        "min": -22,
+        "max": 20,
+        "distinct": 43
+      },
+      "R3_majority_class": 0.0667,
+      "R3_majority_value": 3,
+      "headroom": {
+        "R2_cheap_floor": 0.85,
+        "R2_headroom_to_perfect": 0.15,
+        "R0_headroom_to_perfect": 0.0,
+        "eligible": false,
+        "notes": [
+          "R0 DEGENERATE: a state-blind guess is legal >=75% of the time; this world cannot carry a legality ceiling.",
+          "R2 DEGENERATE: cheap floor 0.85 leaves <0.20 headroom to perfect play."
+        ]
+      }
+    }
+  }
+}

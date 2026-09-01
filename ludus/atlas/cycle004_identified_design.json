@@ -1,0 +1,67 @@
+{
+  "design": "identified (p_bust varied)",
+  "n_cells": 400,
+  "decomposition": {
+    "grand_mean": 0.444048,
+    "total_ss": 60.841192,
+    "variance_share": {
+      "circuit": 0.0998,
+      "partner": 0.1645,
+      "world": 0.3497,
+      "circuit x partner": 0.0307,
+      "circuit x world": 0.1692,
+      "partner x world": 0.1026,
+      "circuit x partner x world": 0.0834
+    },
+    "S_circuit": 0.2605,
+    "S_circuit_meaning": "share of a circuit's OWN variance that is marginal rather than conditional on partner/world",
+    "main_effects_circuit": {
+      "r0003": 0.1177,
+      "r0004": -0.1261,
+      "r0005": -0.1606,
+      "r0007": 0.0292,
+      "r0015": 0.1397
+    },
+    "main_effects_partner": {
+      "r0010": 0.2272,
+      "r0011": -0.1499,
+      "r0012": 0.1501,
+      "r0013": -0.0775,
+      "r0014": -0.1499
+    }
+  },
+  "rank_stability": {
+    "mean_tau_across_partner_pairs": 0.9721,
+    "per_world": {
+      "FOUNDRY[gate=0,decay=0,k=3,cap=4,h=6]|pb=0.1": 1.0,
+      "FOUNDRY[gate=0,decay=0,k=3,cap=4,h=6]|pb=0.25": 1.0,
+      "FOUNDRY[gate=0,decay=0,k=3,cap=4,h=6]|pb=0.5": 1.0,
+      "FOUNDRY[gate=0,decay=0,k=3,cap=4,h=6]|pb=0.7": 1.0,
+      "FOUNDRY[gate=0,decay=0,k=3,cap=4,h=6,decoy=1]|pb=0.1": 1.0,
+      "FOUNDRY[gate=0,decay=0,k=3,cap=4,h=6,decoy=1]|pb=0.25": 0.7333,
+      "FOUNDRY[gate=0,decay=0,k=3,cap=4,h=6,decoy=1]|pb=0.5": 1.0,
+      "FOUNDRY[gate=0,decay=0,k=3,cap=4,h=6,decoy=1]|pb=0.7": 1.0,
+      "FOUNDRY[gate=1,decay=0,k=3,cap=4,h=6]|pb=0.1": 1.0,
+      "FOUNDRY[gate=1,decay=0,k=3,cap=4,h=6]|pb=0.25": 0.9,
+      "FOUNDRY[gate=1,decay=0,k=3,cap=4,h=6]|pb=0.5": 0.96,
+      "FOUNDRY[gate=1,decay=0,k=3,cap=4,h=6]|pb=0.7": 0.96,
+      "FOUNDRY[gate=1,decay=0,k=3,cap=4,h=6,decoy=1]|pb=0.1": 1.0,
+      "FOUNDRY[gate=1,decay=0,k=3,cap=4,h=6,decoy=1]|pb=0.25": 1.0,
+      "FOUNDRY[gate=1,decay=0,k=3,cap=4,h=6,decoy=1]|pb=0.5": 1.0,
+      "FOUNDRY[gate=1,decay=0,k=3,cap=4,h=6,decoy=1]|pb=0.7": 1.0
+    },
+    "min_world": "FOUNDRY[gate=0,decay=0,k=3,cap=4,h=6,decoy=1]|pb=0.25"
+  },
+  "leave_one_out": {
+    "leave_one_partner_out": {
+      "mean_abs_error": 0.3424,
+      "max_abs_error": 0.7415,
+      "n": 400
+    },
+    "leave_one_world_out": {
+      "mean_abs_error": 0.3353,
+      "max_abs_error": 0.751,
+      "n": 400
+    }
+  }
+}

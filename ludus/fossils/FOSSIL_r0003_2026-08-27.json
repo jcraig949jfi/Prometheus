@@ -1,0 +1,94 @@
+{
+  "fossil_id": "FOSSIL-r0003-2026-08-27",
+  "frozen_utc": "2026-08-27T08:20:46+00:00",
+  "why": "r0003 read 0.0000 in gated k=3 FOUNDRY worlds and in both new real worlds, which looked like a clean kill of its scope. It was not. The zero was produced by the PARTNER, not the world. Frozen before repair so the record shows what was believed, not what was concluded.",
+  "r0003_definition_verbatim": "STOP iff not (e_gain > p_dead * pot), where pot = cw.pot[s], p_dead = sum of draw probabilities whose option list is empty, and e_gain = sum over live draws of p * (cw.pot[select(cw,s,opts)] - pot). Unchanged since registration; NOT rewritten as part of this freeze.",
+  "registered_prediction": {
+    "where": "roles/Ludus/CYCLE_002_stochastic_stopping.md \u00a78.1",
+    "registered_before": "INCAN_GOLD and CANT_STOP were implemented",
+    "text": "retention >= 0.97 with a competent partner on the SELECT axis; residual localises OFF the stop axis",
+    "status_at_freeze": "PASSED and re-verified under three partners"
+  },
+  "measurements_at_freeze": {
+    "single_partner_optimal_select_ONLY": {
+      "note": "the original, defective measurement protocol",
+      "FLIP7": 0.9998,
+      "INCAN_GOLD": 1.0,
+      "MARTIAN_DICE": 0.9872,
+      "CANT_STOP": 1.0,
+      "FOUNDRY[gate=1,decay=0,k=3,cap=2,h=6]": 0.0,
+      "FOUNDRY[gate=1,decay=0,k=3,cap=4,h=6]": 0.0,
+      "FOUNDRY[gate=1,decay=0,k=2,cap=2,h=6]": 1.0,
+      "FOUNDRY[gate=1,decay=0,k=2,cap=4,h=6]": 1.0,
+      "LUCKY_NUMBERS": 0.0,
+      "COLORETTO": 0.0
+    },
+    "re_paired": {
+      "note": "same worlds, same circuit, three different SELECT partners",
+      "FLIP7": {
+        "optimal": 0.9998,
+        "greedy": 0.9998,
+        "one_ply": 0.9998
+      },
+      "INCAN_GOLD": {
+        "optimal": 1.0,
+        "greedy": 1.0,
+        "one_ply": 1.0
+      },
+      "MARTIAN_DICE": {
+        "optimal": 0.9872,
+        "greedy": 0.8655,
+        "one_ply": 0.9656
+      },
+      "CANT_STOP": {
+        "optimal": 1.0,
+        "greedy": 0.8983,
+        "one_ply": 0.9278
+      },
+      "FOUNDRY[gate=1,k=3,cap=4]": {
+        "optimal": 0.0,
+        "greedy": 1.0,
+        "one_ply": 0.0
+      },
+      "FOUNDRY[gate=1,k=2,cap=4]": {
+        "optimal": 1.0,
+        "greedy": 0.937,
+        "one_ply": 0.9669
+      },
+      "FOUNDRY[gate=0,k=3,cap=4]": {
+        "optimal": 1.0,
+        "greedy": 1.0,
+        "one_ply": 1.0
+      },
+      "LUCKY_NUMBERS": {
+        "optimal": 0.0,
+        "greedy": 0.6667,
+        "one_ply": 0.6312
+      },
+      "COLORETTO": {
+        "optimal": 0.0,
+        "greedy": 0.0429,
+        "one_ply": 0.0
+      }
+    }
+  },
+  "disposition_under_preregistered_semantics": {
+    "registered_kill_condition": "retention materially below 0.97 in any world exposing a total-loss STOP interface, with a COMPETENT SELECT partner",
+    "did_it_fire": "NO, and the reason is the clause 'with a competent partner'. Gated k=3 worlds read 0.0000 beside optimal-select and 1.0000 beside greedy-select. A condition naming a single partner would have fired on an artifact.",
+    "verdict": "UNRESOLVED, not killed and not confirmed. The measurement protocol that produced the 0.0000 is invalid, so the reading is void rather than negative. r0003's SCOPE IS NOT WEAKENED and the circuit IS NOT RENAMED as part of this freeze.",
+    "what_is_newly_established": "r0003's measured value is NOT a function of (circuit, world) alone. It depends on the partner. That is a fact about the CONSTRUCT, and it is what cycle 004 is about."
+  },
+  "repair_ordering_disclosure": "The pairing-envelope repair to run.py was applied BEFORE the instruction to freeze arrived. The single-partner protocol is therefore not the code's current default. It remains exactly reproducible -- evaluate any STOP circuit against optimal_select alone -- and every number it produced is recorded above rather than being recoverable only by re-running. This disclosure exists because a fossil that quietly post-dates its own repair is worth less than one that says so.",
+  "code_hashes_sha256_16": {
+    "ludus/bench/core.py": "9cca6fc9f1a339e1",
+    "ludus/bench/compiled.py": "7391e6e232e12888",
+    "ludus/bench/circuits.py": "504caee956670bc7",
+    "ludus/bench/worlds.py": "b2e02031e28a1310",
+    "ludus/bench/worlds2.py": "04df5d1e07b38153",
+    "ludus/bench/run.py": "b9285798de9ed1e0",
+    "ludus/bench/ledger.py": "0b07791c8f89e28c",
+    "ludus/bench/verify.py": "4dccc2e2aa26344c",
+    "ludus/bench/audit.py": "9fcda13b08ea3c04"
+  },
+  "reproduce": "python -m ludus.bench.run  (current, pairing envelope) | for the defective protocol, evaluate(cw, optimal_select(V,W), stop_myopic)"
+}

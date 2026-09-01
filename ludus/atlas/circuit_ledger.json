@@ -1,0 +1,216 @@
+{
+  "schema": [
+    "circuit_id",
+    "invented_on",
+    "tuned_on",
+    "predicted_worlds",
+    "predicted_direction",
+    "kill_condition",
+    "first_failure",
+    "split_history",
+    "current_scope"
+  ],
+  "created_utc": "2026-08-27T00:40:52+00:00",
+  "circuits": {
+    "r0003": {
+      "circuit_id": "r0003",
+      "english": "myopic one-step stopping rule",
+      "definition": "STOP iff P(death | continue) * pot >= E[immediate gain | continue]",
+      "axis": "STOP",
+      "invented_on": [
+        "FLIP7",
+        "MARTIAN_DICE"
+      ],
+      "tuned_on": [],
+      "provenance_note": "NOT invented from the seat's own vocabulary. It is the textbook one-step rule; it was written down because Flip 7's exact DP table was already sitting there to check it against, not because a concept suggested it.",
+      "predicted_worlds": [
+        "INCAN_GOLD",
+        "CANT_STOP"
+      ],
+      "predicted_direction": "retention >= 0.97 with a competent partner on the SELECT axis; registered in CYCLE_002 \u00a78.1 before either world was built",
+      "kill_condition": "retention materially below 0.97 in any world exposing a total-loss STOP interface, with a competent SELECT partner",
+      "first_failure": null,
+      "split_history": [],
+      "current_scope": "worlds with an accumulate-or-bank decision where death forfeits the ENTIRE pot. Untested where loss is partial - see BACKLOG item 2 (Coloretto), which was chosen to attack exactly this precondition.",
+      "registered_utc": "2026-08-27T00:40:52+00:00",
+      "prospective_result": {
+        "registered_before": "INCAN_GOLD and CANT_STOP were built",
+        "predicted": "retention >= 0.97 with a competent SELECT partner, and the residual localises OFF the stop axis",
+        "observed": {
+          "INCAN_GOLD": 1.0,
+          "CANT_STOP": 1.0,
+          "CANT_STOP_axis_decomposition": "SELECT +0.0611, STOP +0.0000"
+        },
+        "verdict": "PASSED on both halves. Two untouched test worlds, both exactly 1.0000.",
+        "beats_fitted_per_world_baseline_in_all_four": true,
+        "fitted_baselines": {
+          "FLIP7": 0.9976,
+          "INCAN_GOLD": 0.9223,
+          "MARTIAN_DICE": 0.9448,
+          "CANT_STOP": 0.9405
+        },
+        "restraint": "Four worlds, ONE family. This is not a universal stopping rule; it is a rule that has survived four push-your-luck worlds and has never met a world where loss is partial rather than total.",
+        "when": "2026-08-27T01:53:26+00:00"
+      }
+    },
+    "r0010": {
+      "circuit_id": "r0010",
+      "english": "greedy immediate pot",
+      "definition": "take the option with the highest immediate pot",
+      "axis": "SELECT",
+      "invented_on": [
+        "MARTIAN_DICE"
+      ],
+      "tuned_on": [],
+      "provenance_note": "the null-ish obvious baseline; no ontology in it",
+      "predicted_worlds": [],
+      "predicted_direction": "unregistered - this is a baseline, not a claim",
+      "kill_condition": "n/a; retained as a floor",
+      "first_failure": null,
+      "split_history": [],
+      "current_scope": "baseline only",
+      "registered_utc": "2026-08-27T00:40:52+00:00"
+    },
+    "r0011": {
+      "circuit_id": "r0011",
+      "english": "minimum consumption / capacity preservation",
+      "definition": "take the option consuming least irreversible capacity",
+      "axis": "SELECT",
+      "invented_on": [
+        "MARTIAN_DICE"
+      ],
+      "tuned_on": [],
+      "provenance_note": "CONTAMINATION FLAG. This circuit was NOT suggested by data. It was written because charter v1 \u00a723 talks about 'option preservation' and the seat reached for its own vocabulary. It then scored 0.2501 in Martian Dice - far below the null circuit r0013 at 0.7398. Recorded because a concept-seeded circuit that FAILS is the cheapest possible evidence about how much the seat's vocabulary is worth.",
+      "predicted_worlds": [],
+      "predicted_direction": "unregistered before first run - a retrospective number, and it must not be read as a test",
+      "kill_condition": "already below the null circuit in its only world",
+      "first_failure": "MARTIAN_DICE (retention 0.2501, below the null circuit r0013 at 0.7398) [recorded 2026-08-26]",
+      "split_history": [],
+      "current_scope": "world-dependent. Best available SELECT circuit in ungated worlds; catastrophic in gated ones. Scope is now defined by the world property w0001, not by genre.",
+      "registered_utc": "2026-08-27T00:40:52+00:00",
+      "reversal": {
+        "MARTIAN_DICE": {
+          "retention": 0.2501,
+          "null_circuit": 0.7398,
+          "rank": "LAST"
+        },
+        "CANT_STOP": {
+          "retention": 0.9389,
+          "null_circuit": 0.7864,
+          "rank": "FIRST"
+        },
+        "note": "Same declared interface. Opposite ordering. The circuit is the worst available in one world and the best available in another.",
+        "consequence": "The CONTAMINATION FLAG stands as provenance, but the earlier reading -- 'concept-seeded circuit, therefore worthless' -- was WRONG. The concept is world-dependent, which is a more useful finding than either 'it works' or 'it fails'.",
+        "when": "2026-08-27T01:53:26+00:00"
+      }
+    },
+    "r0012": {
+      "circuit_id": "r0012",
+      "english": "one-ply lookahead select",
+      "definition": "take the option whose single next draw has the best greedy expected pot",
+      "axis": "SELECT",
+      "invented_on": [
+        "MARTIAN_DICE"
+      ],
+      "tuned_on": [],
+      "provenance_note": "shallow-search baseline, not a concept",
+      "predicted_worlds": [
+        "FOR_SALE"
+      ],
+      "predicted_direction": "retention >= 0.90 in For Sale, and r0011 stays near the bottom. Registered in BACKLOG.md before For Sale exists.",
+      "kill_condition": "the ORDERING of SELECT circuits reverses outside push-your-luck - that would mean SELECT circuits are genre-mediated, not interface-mediated",
+      "first_failure": null,
+      "split_history": [],
+      "current_scope": "ungated push-your-luck worlds. Rank 1 in Martian Dice, rank 3 in Can't Stop -- it did not reverse, but it did not lead either.",
+      "registered_utc": "2026-08-27T00:40:52+00:00",
+      "kill_condition_audit": {
+        "as_registered": "the ORDERING of SELECT circuits reverses OUTSIDE push-your-luck",
+        "what_happened": "the ordering reversed INSIDE push-your-luck (Martian Dice vs Can't Stop), which is stronger evidence against the interface bet than the condition I wrote, yet does not literally trigger it",
+        "verdict": "MIS-SPECIFIED. Registering it in advance is what made that visible; had it been written afterwards the reversal would have been folded in as confirmation. The condition is REPLACED, not reinterpreted.",
+        "replacement": "kill if the SELECT ordering reverses between ANY two worlds sharing a declared interface, inside or outside the family",
+        "when": "2026-08-27T01:53:26+00:00"
+      }
+    },
+    "r0014": {
+      "circuit_id": "r0014",
+      "english": "pot gain per unit capacity",
+      "definition": "maximise pot gain divided by capacity consumed",
+      "axis": "SELECT",
+      "invented_on": [
+        "MARTIAN_DICE"
+      ],
+      "tuned_on": [],
+      "provenance_note": "CONTAMINATION FLAG. Same origin as r0011 - written from the seat's own 'spend capacity only when it pays' intuition, not from any observation.",
+      "predicted_worlds": [],
+      "predicted_direction": "unregistered before first run",
+      "kill_condition": "fails to beat the null circuit r0013 in any world with a live SELECT axis",
+      "first_failure": null,
+      "split_history": [],
+      "current_scope": "provisional; one world, retrospective number",
+      "registered_utc": "2026-08-27T00:40:52+00:00"
+    },
+    "r0015": {
+      "circuit_id": "r0015",
+      "english": "two-ply myopic stopping",
+      "definition": "stop iff continuing two draws under greedy play has negative expected change",
+      "axis": "STOP",
+      "invented_on": [
+        "FLIP7",
+        "MARTIAN_DICE"
+      ],
+      "tuned_on": [],
+      "provenance_note": "depth variant of r0003, written to test whether depth buys anything on the STOP axis",
+      "predicted_worlds": [],
+      "predicted_direction": "unregistered",
+      "kill_condition": "COLLISION RISK: if r0015 never separates from r0003 in any world, one of them is redundant and the bench must hunt a world that separates them or retire one.",
+      "first_failure": null,
+      "split_history": [],
+      "current_scope": "provisional",
+      "registered_utc": "2026-08-27T00:40:52+00:00"
+    },
+    "r0007": {
+      "circuit_id": "r0007",
+      "english": "survival-rate stopping",
+      "definition": "stop once P(surviving one more draw) falls below 1/2",
+      "axis": "STOP",
+      "invented_on": [
+        "FLIP7"
+      ],
+      "tuned_on": [],
+      "provenance_note": "pot-blind control: it reads the risk and ignores the stake. Its whole job is to show whether the stake matters.",
+      "predicted_worlds": [],
+      "predicted_direction": "predicted to underperform r0003 wherever pot varies",
+      "kill_condition": "n/a; retained as a control",
+      "first_failure": null,
+      "split_history": [],
+      "current_scope": "control only",
+      "registered_utc": "2026-08-27T00:40:52+00:00"
+    }
+  },
+  "updated_utc": "2026-08-27T01:53:26+00:00",
+  "world_properties": {
+    "w0001": {
+      "id": "w0001",
+      "english": "gating fraction",
+      "definition": "share of reachable non-initial states whose pot is exactly 0 despite capacity already spent; equivalently, the world contains prerequisite options that consume capacity, yield NO immediate pot, and are required for terminal pot to be non-zero at all",
+      "measured": {
+        "FLIP7": 0.0002,
+        "INCAN_GOLD": 0.0001,
+        "MARTIAN_DICE": 0.4272,
+        "CANT_STOP": 0.0
+      },
+      "zero_pot_gain_option_share": {
+        "FLIP7": 0.0,
+        "INCAN_GOLD": 0.0,
+        "MARTIAN_DICE": 0.5132,
+        "CANT_STOP": 0.0
+      },
+      "separates": "MARTIAN_DICE from the other three, with no threshold tuning (0.4272 against ~0.0000)",
+      "why_it_was_proposed": "to explain r0011's reversal. A minimise-consumption circuit starves the prerequisite: in Martian Dice the rays consume dice and score nothing, so refusing to claim them leaves rays < tanks and the pot at zero.",
+      "refuted_first_attempt": "the FIRST proposed mechanism was 'preserving capacity costs pot', predicting a positive consumption/pot-gain correlation in Martian Dice and none in Can't Stop. Measured the opposite sign (-0.0623 vs +0.2390). That story is dead; w0001 is its replacement.",
+      "prospective_test": "For Sale and Coloretto are already queued and unbuilt. w0001 is computed BEFORE any circuit runs on them. PREDICTION: r0011 fails badly only where w0001 is high. If a world with w0001 ~ 0 also breaks r0011, w0001 is wrong.",
+      "not_a_patch": "this is not a Martian Dice special case. It is a world property computed identically for every world, with a prediction attached for worlds that do not exist yet.",
+      "registered": "2026-08-27T01:53:26+00:00"
+    }
+  }
+}
