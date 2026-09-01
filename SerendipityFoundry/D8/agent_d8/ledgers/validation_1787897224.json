@@ -1,0 +1,46 @@
+{
+ "when": "2026-08-28 02:06:41",
+ "budget": 10000,
+ "checks": [
+  {
+   "name": "V1-artifact-reuse",
+   "passed": true,
+   "detail": "d=0.60 bag_retention=1.00"
+  },
+  {
+   "name": "V2-shuffle-false-positive",
+   "passed": true,
+   "detail": "d=-0.10"
+  },
+  {
+   "name": "V3-diversity-injection",
+   "passed": false,
+   "detail": "d=-0.15"
+  },
+  {
+   "name": "V4-memorization-flagged",
+   "passed": true,
+   "detail": "solved=12 flagged_identical=10"
+  },
+  {
+   "name": "V5-useless-object-rejected",
+   "passed": true,
+   "detail": "ablation_delta=-0.15 (must not qualify)"
+  },
+  {
+   "name": "V6-budget-cheat-flagged",
+   "passed": true,
+   "detail": "3/5 rows exceed declared budget"
+  },
+  {
+   "name": "V7-structureless-zero",
+   "passed": true,
+   "detail": "rates 0.00/0.00"
+  },
+  {
+   "name": "V8-sensitivity",
+   "passed": false,
+   "detail": "gain=0.00 ablation_loss=0.08"
+  }
+ ]
+}

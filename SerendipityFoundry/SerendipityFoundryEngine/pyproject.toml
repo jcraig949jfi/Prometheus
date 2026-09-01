@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "serendipity-foundry-engine"
+version = "2.0.0"
+description = "Serendipity Foundry Engine - durable multi-world research runtime (Prometheus)"
+requires-python = ">=3.10"
+dependencies = ["fastapi", "uvicorn"]
+
+[tool.setuptools]
+packages = ["sfe"]
