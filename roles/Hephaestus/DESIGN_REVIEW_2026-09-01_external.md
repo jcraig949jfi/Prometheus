@@ -383,7 +383,7 @@ The documented routine (`agents/hephaestus/README.md:11-33`) says: read `STATUS.
 
 **4. Work under authority.** Autonomous: run instruments, write fixtures under `agents/hephaestus/ablation/` and docs under `roles/Hephaestus/`, update the station file. Ask James: start/stop daemons; commit/push; edit agent source (`hephaestus.py`, `composer.py`, `blackboard_adapter.py`, `forge/tester.py`); change battery categories. Never: own a gate on the forge's own mint.
 
-**5. Session end.** Append a dated section to `stations/M3_STATUS.md` reporting *failure shapes, not pass/fail*; update memory; stage; ask for commit; push when authorized. A session that produced no typed object (artifact, fixture, card, ruling request) produced nothing — say so.
+**5. Session end.** Append a dated section to `stations/M3_STATUS.md` reporting *failure shapes, not pass/fail*; update memory; stage; ask for commit; push when authorized. A session that produced no typed object (artifact, fixture, card, ruling request) produced nothing — say so. **Then, unprompted, produce the ASCII review package in the chat and commit it** (standing order, charter amendment Addendum 2; skill `roles/Hephaestus/skills/review-packet/SKILL.md`).
 
 ---
 
