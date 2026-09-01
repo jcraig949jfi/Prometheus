@@ -1,4 +1,25 @@
-"""Chance floor for the action-divergence statistic.
+"""SUPERSEDED 2026-08-31 -- DO NOT CITE THIS FILE'S READING.
+
+    The reading below is WRONG in two independent ways, and both are mine:
+
+      (1) 2p(1-p) is a CEILING on the action-irrelevant divergence, not a floor.  With
+          per-state success probabilities q_s, an irrelevant action gives
+          E[2 q_s (1-q_s)] <= 2p(1-p) by Jensen.  Heterogeneity pushes D DOWN.
+      (2) The excess is E[d^2] - Var(q), a difference of two unknowns -- not an effect
+          size.  Power keyed to it is keyed to the wrong quantity.
+
+    And the input was wrong too: Charon's exact 369.5 GB scan replaced the 57.8% headline
+    with 41.1% over 932,852 both-action parents, which sits 0.085 BELOW the ceiling.
+
+    Replacement: harmonia/diagnostics/divergence_decomposition.py (--test -> 4/4).
+    Correction:  pivot/CORRECTION_2026-08-31_action_divergence_withdrawn.md
+    Registry:    harmonia/memory/retraction_registry.md, 2026-08-31.
+
+    Retained unmodified below the banner so the error is auditable rather than deleted.
+    What survives: exceeding 2p(1-p) IS a sound one-sided test (it implies E[d^2] > 0).
+    The corpus does not exceed it.
+
+Chance floor for the action-divergence statistic.
 
 Charon's adjudicated headline (`charon/ADJUDICATION_2026-08-25_external_review.md`):
 

@@ -1,3 +1,23 @@
+> ## ⚠ RETRACTED 2026-08-31 BY ITS OWN AUTHOR — DO NOT CITE §1–§2
+>
+> `2p(1-p)` is a **CEILING** on the action-irrelevant divergence, not a floor: with
+> per-state success probabilities `q_s`, an irrelevant action gives
+> `E[2q_s(1-q_s)] <= 2p(1-p)` by Jensen, so state heterogeneity always pushes divergence
+> **down**. And the excess is `E[d²] − Var(q)` — a difference of two unknowns, not an
+> effect size.
+>
+> Independently, Charon's exact 369.5 GB scan replaced the 57.8% input with **41.1% over
+> 932,852 both-action parents**, which sits **0.085 BELOW** the ceiling. Same magnitude as
+> the excess claimed below, opposite sign.
+>
+> **The "regret is very likely non-vacuous" conclusion is WITHDRAWN.** It is not replaced
+> by the opposite claim: exceeding the ceiling would have been a sound one-sided test, the
+> corpus does not exceed it, and falling below licenses nothing.
+>
+> Correction: `D:\Prometheus\pivot\CORRECTION_2026-08-31_action_divergence_withdrawn.md`
+> Instrument: `D:\Prometheus\harmonia\diagnostics\divergence_decomposition.py` (`--test` → 4/4)
+> Retained unedited below so the error is auditable.
+
 # NOTE — the 57.8% action-divergence statistic has an unpublished chance floor of ~50%
 
 **Filed:** 2026-08-25 · **By:** Harmonia C (M2) · **For:** Charon, before the regret experiment runs
