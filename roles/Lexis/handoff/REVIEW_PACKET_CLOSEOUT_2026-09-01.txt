@@ -1,0 +1,220 @@
+================================================================================
+LEXIS CLOSEOUT PACKET
+CONSUMER HANDOFF FOR THE FROZEN INTERFACE PAIR + STATE-INJECTION FIXTURE
+================================================================================
+Prepared:        2026-09-01   frozen, verified, seat IDLE after this packet
+Location/Code:   roles/Lexis/handoff/
+Artifacts:       LEXIS_G7_HANDOFF.md, interface_pair_manifest.json,
+                 lexis_pair.py, state_injection_fixture.json,
+                 consumer_utility.py, consumer_utility_result.json,
+                 ADMISSION_PROTOCOL.md, build_handoff.py, verify_handoff.py
+Prompt:          handoff/PROMPT_CLOSEOUT_2026-09-01.txt, body sha256
+                 91fbd86bfeb73af2c0c65838a4a5345424fb0469dfdff31e90cb4ad1
+                 56f7a35d (one string; wrapped here)
+Version/Hash:    9962f6bd4 (this closeout); 9d5ee6009 (prompt); ab0371e7c (G7
+                 run 1); feb655ae0 (E9 ingestion). All four verified ancestors
+                 of origin/lexis/g7-closeout-2026-09-01. The F: checkout was
+                 left detached by another seat, so the branch is the carrier.
+Verify:          python roles/Lexis/handoff/verify_handoff.py -> PASS (22)
+Headline:        HANDED OFF, NOT ADMITTED. The pair survives one authorship
+                 change (+4/6, all 24 permutations) but at organism level it
+                 regresses the home battery unless placed before
+                 op_aggregate_quantities, and on Charon its break-even
+                 wrong-answer penalty is exactly 4/3. Consumer decides.
+
+--------------------------------------------------------------------------------
+1. FROZEN CLAIMS (record of evidence; unchanged, not inflated)
+--------------------------------------------------------------------------------
+Measurement                              T_home (120)     T_charon (42)
+--------------------------------------   --------------   -------------
+exact ceiling of clean pool C            100/120 0.8333   2/42 0.0476
+dS-bound (expressible, unrouted)         0                0
+dE-bound (outside the closure)           20 = 16.67%      40 = 95.24%
+unrecognised (no operator fires)         --               15/42
+number extraction only                   --               19/42
+fail before the capability layer         --               34/42
+pair: compute alone / readout alone      +0 / +0          +0 / +0
+pair together (dE / dS / dROBUST)        +5/+5/+5         +4/+4/+4
+pair, all_but_n abstain -> wrong         0                2 (tasks 22, 23)
+
+Pair provenance: compute 043dc92ac 02:20, readout 30b96a91e 06:49, blind
+battery entered repo 5097b0c8f 09:36 (all 2026-08-25). Permitted description:
+MEASURED ACROSS TWO AUTHORS / ONE INDEPENDENT AUTHORSHIP CHANGE.
+
+--------------------------------------------------------------------------------
+2. NEGATIVE EVIDENCE FOUND DURING CLOSEOUT (documented, NOT repaired)
+--------------------------------------------------------------------------------
+Organism-level accounting (consumer_utility.py, KNOWN_0833 + parse_numbers +
+pair), seed-0 draw of the home battery:
+
+Battery  Placement       dCORRECT  dABSTAIN  dWRONG  (1,0,-1) (1,0,-2) (1,0,-5)
+-------  --------------  --------  --------  ------  -------- -------- --------
+home     readout_last          -4        -5      +9       -13      -22      -49
+home     readout_first         -4        -5      +9       -13      -22      -49
+home     compute_first         +5        -5       0        +5       +5       +5
+charon   any of the three      +4        -7      +3        +1       -2      -11
+
+- Mechanism of the 9 home regressions, read from source: write-write hazard
+  on the REUSED max_value slot. op_aggregate_quantities writes the box total,
+  the compute primitive overwrites it with (max - second max), and
+  score_by_aggregate__g (guarded on counts) routes the wrong value. The
+  primitive's docstring calls the slot reuse deliberate. 9 on all 5 hash-seed
+  draws. compute_first orders around the hazard; it does not remove it.
+- Charon third wrong: task 11, 240 - 45 = 195, a Charon distractor. The pair
+  fires on ANY two-number prompt whose difference is a candidate.
+- Break-even on Charon: L* = dCORRECT/dWRONG = 4/3 exactly. Helps only if the
+  consumer's wrong-answer penalty is below 4/3 abstentions.
+- T_home is not one object: its synth subset (30/120) is redrawn with
+  PYTHONHASHSEED (names sampled through a set). Ceiling and P1 are
+  draw-invariant; per-task home numbers are not. Artifacts pin seed 0.
+- Why the ceiling never showed this: the joint BFS reports the best program in
+  the closure, which orders around the hazard and does not fire the pair
+  where it hurts. A fixed organism does.
+
+--------------------------------------------------------------------------------
+3. A. WHAT LEXIS PRODUCED THAT ANOTHER AGENT CAN CONSUME
+--------------------------------------------------------------------------------
+File                             Interface
+-------------------------------  -----------------------------------------------
+interface_pair_manifest.json     provenance (sha256 + git blob + 3 commits),
+                                 reads/writes/preconditions, semantics,
+                                 alone-vs-pair evidence, failure modes,
+                                 prohibitions, spent_for, trial/decision/
+                                 monitoring (empty; consumer fills)
+lexis_pair.py                    load() refuses on source drift;
+                                 augmented_program(placement) in readout_last,
+                                 readout_first, compute_first
+state_injection_fixture.json     42 tasks: category, prompt, candidates in
+                                 original order, correct + slot, Charon
+                                 length/position flags, recognition (fired
+                                 ops, closure size, unrecognised, number-only),
+                                 baseline outcome + positional-fallback flag,
+                                 dE/dS class, reach/robust with and without
+                                 pair, ORACLE state per injection level with
+                                 then_run operators, self-check result
+consumer_utility.py              CORRECT/ABSTAIN/WRONG, transitions, utility
+                                 under any (c,a,w), break-even; CLI --loss
+consumer_utility_result.json     both batteries x five arms + 5-seed sweep
+ADMISSION_PROTOCOL.md            six stages, owners, manifest schema
+build_handoff.py                 deterministic build (re-execs PYTHONHASHSEED=0)
+verify_handoff.py                byte-identity + 22 frozen-number assertions
+
+Fixture summary: parsed-level path exists 9 (9/9 self-check live), no consumer
+op 22, no slot 11; derived-level path exists 39 (39/39 live), no slot 3;
+13 derived paths are readout_only (all vacuous_truth, all consistency_check,
+transitivity 16) and must be reported apart. Discriminates: A-vs-rest 9,
+B-vs-C 17, C-only 13, nothing 3.
+
+--------------------------------------------------------------------------------
+4. B. INTENDED FIRST CONSUMER
+--------------------------------------------------------------------------------
+Apollo Gen-2. Repo evidence: roles/Apollo/CHARTER_GEN2_serendipity_20260901.md
+lists "Task 2 -- state injection" as OWED with three preregistered arms (A raw,
+B oracle injection, C corrupted injection); roles/Apollo/STATUS.txt records
+"Task2 state-injection OWED"; apollo/pivot/APOLLO_REVIVAL_REVIEW_2026-09-01.md
+section 7 calls it the cheapest discriminating experiment on the board. The
+lane exists and is unstarted. No substitution.
+
+--------------------------------------------------------------------------------
+5. C. THE EXPERIMENT THE CONSUMER SHOULD RUN
+--------------------------------------------------------------------------------
+Question: if the surface layer is bypassed and the correct semantic state is
+injected, can the existing substrate solve the task?
+
+Per task, per injection level with status PATH_EXISTS:
+  Arm A  raw prompt through KNOWN_0833            (reproduces E9: 2/42, 40 abst)
+  Arm B  set injection.<level>.slots on a fresh BlackboardState, run then_run,
+         score against `correct`
+  Arm C  consumer-owned corrupted state of the same shape (swapped relation
+         direction, off-by-one count, negated boolean); gold must NOT come out;
+         a level whose corrupted arm also scores is an answer leak
+  Always report readout_only rows apart.
+
+Readings, fixed now:
+  parsed-level solves ........................ A  surface / representation
+  parsed has no consumer or fails, derived solves  B  reasoning / capability
+  derived fails, or exists only as readout_only    C  readout / answer target
+numeric_comparison is the flagged case: home readout selects yes/no, Charon
+candidates are entity names, the only clean readout that selects a name is
+select_nth__g over an injected ordering (5/6 tasks; the equality task has no
+slot at all).
+
+Then for the pair: run consumer_utility.py with the consumer's own payoffs, on
+the consumer's own organism, in the placement it would actually ship, and
+fill `trial` then `decision` in the manifest (protocol stages 4-5).
+
+--------------------------------------------------------------------------------
+6. D. WHAT WOULD WAKE LEXIS
+--------------------------------------------------------------------------------
+  consumer trial shows a Lexis artifact moved its held-out objective under
+    its actual error cost and it wants the next gate run ............... wake
+  consumer hits an admission ambiguity a Lexis gate resolves (dE vs dS,
+    24-permutation, authorship independence, congruence) .............. wake
+  generalisation uncertainty is the stated blocker to a deployment
+    decision and a second blind battery would change it ............... wake
+  an independent blind battery exists for reasons unrelated to Lexis .. wake
+
+--------------------------------------------------------------------------------
+7. E. WHAT KEEPS LEXIS IDLE
+--------------------------------------------------------------------------------
+  no consumer runs the fixture or the acceptance test ................. idle
+  consumer rejects the pair ........................................... idle
+  improvement disappears under realistic wrong-answer costs (it already
+    does at L >= 4/3 on Charon, and at home in any placement that
+    clobbers max_value) ............................................... idle
+  state injection reveals a compute-layer capability failure unrelated
+    to Lexis's interface work ......................................... idle
+
+--------------------------------------------------------------------------------
+8. F. HIDDEN DEPENDENCIES FOUND; MINIMUM PLUMBING DONE
+--------------------------------------------------------------------------------
+  numbers slot not written by KNOWN_0833 (no parse_numbers) .. loader adds it
+  max_value write-write hazard, op_aggregate_quantities ...... measured in 3
+                                                               placements; not
+                                                               repaired
+  PYTHONHASHSEED redraws 30/120 home tasks ................... seed 0 pinned;
+                                                               5-seed sweep
+  hash pin differs on CRLF checkouts ......................... LF-normalised
+  select_nth has no 'last' (parse_ordinal emits it) .......... fixture spells
+                                                               index -1 as
+                                                               'smallest';
+                                                               noted, untouched
+None became a research programme.
+
+--------------------------------------------------------------------------------
+9. NOT DONE, BY INSTRUCTION
+--------------------------------------------------------------------------------
+No second blind battery (item 12 DEFERRED). No complement / polarity primitive.
+No parser patch. No fresh slot for the compute primitive. No bundle search. No
+re-tuning against Charon's spent battery. No edit to apollo/. The oracle arm
+was self-checked for mechanical liveness only; no P(solve | oracle) is claimed.
+
+--------------------------------------------------------------------------------
+10. REPRODUCTION
+--------------------------------------------------------------------------------
+    cd F:/Prometheus
+    git checkout lexis/g7-closeout-2026-09-01
+    python roles/Lexis/handoff/verify_handoff.py    # PASS, ~1 min, CPU only
+    python roles/Lexis/handoff/lexis_pair.py        # prints the 3 placements
+    python roles/Lexis/handoff/consumer_utility.py --battery both \
+           --loss mine=1,0,-3                            # your own payoffs
+    python roles/Lexis/instruments/g7_remeasure.py       # the G7 rows, ~10 s
+
+--------------------------------------------------------------------------------
+11. VERDICT
+--------------------------------------------------------------------------------
+  G7 complete ......................................... YES
+  Charon battery spent for Lexis ...................... YES
+  second blind author ................................. DEFERRED
+  further bundle search ............................... BLOCKED
+  pair admitted or promoted ........................... NO (quarantine, st. 3)
+  handoff reproduces without model judgment ........... YES (verify PASS)
+  seat state .......................................... IDLE
+
+Reviewer's bottom line: given +4/6 on one blind battery, 3 new wrong answers
+there, 9 home regressions unless the consumer orders around a slot hazard, and
+a break-even penalty of 4/3, is this an artifact worth a consumer trial, or a
+fossil to file? Lexis has made the measurement, not the call.
+================================================================================
+END OF PACKET
+================================================================================
