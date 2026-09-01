@@ -1,0 +1,1734 @@
+{
+ "losses": {
+  "symmetric_1": [
+   1,
+   0,
+   -1
+  ],
+  "asymmetric_2": [
+   1,
+   0,
+   -2
+  ],
+  "fail_closed_5": [
+   1,
+   0,
+   -5
+  ],
+  "answer_rate": [
+   1,
+   0,
+   0
+  ]
+ },
+ "batteries": {
+  "home": {
+   "baseline_counts": {
+    "CORRECT": 100,
+    "ABSTAIN": 20,
+    "WRONG": 0
+   },
+   "arms": {
+    "+parse_numbers only": {
+     "n": 120,
+     "baseline": {
+      "CORRECT": 100,
+      "ABSTAIN": 20,
+      "WRONG": 0
+     },
+     "candidate": {
+      "CORRECT": 100,
+      "ABSTAIN": 20,
+      "WRONG": 0
+     },
+     "delta": {
+      "CORRECT": 0,
+      "ABSTAIN": 0,
+      "WRONG": 0
+     },
+     "transitions": {
+      "ABSTAIN->ABSTAIN": 20,
+      "CORRECT->CORRECT": 100
+     },
+     "per_loss": {
+      "symmetric_1": {
+       "payoffs": [
+        1,
+        0,
+        -1
+       ],
+       "baseline": 100,
+       "candidate": 100,
+       "delta": 0,
+       "helps": false
+      },
+      "asymmetric_2": {
+       "payoffs": [
+        1,
+        0,
+        -2
+       ],
+       "baseline": 100,
+       "candidate": 100,
+       "delta": 0,
+       "helps": false
+      },
+      "fail_closed_5": {
+       "payoffs": [
+        1,
+        0,
+        -5
+       ],
+       "baseline": 100,
+       "candidate": 100,
+       "delta": 0,
+       "helps": false
+      },
+      "answer_rate": {
+       "payoffs": [
+        1,
+        0,
+        0
+       ],
+       "baseline": 100,
+       "candidate": 100,
+       "delta": 0,
+       "helps": false
+      }
+     },
+     "break_even_wrong_penalty": 0.0,
+     "break_even_note": "candidate helps iff wrong-answer penalty L < dCORRECT/dWRONG = 0.0 (payoffs (1, 0, -L))",
+     "program": [
+      "parse_comparison",
+      "parse_which_extreme",
+      "parse_box_items",
+      "op_aggregate_quantities",
+      "parse_rules",
+      "parse_ordinal",
+      "forward_chain",
+      "parse_names_and_relations",
+      "relations_from_facts",
+      "op_build_ordering",
+      "parse_numbers",
+      "score_by_extreme_number__g",
+      "score_by_aggregate__g",
+      "score_by_derivability__g",
+      "score_by_comparison__g",
+      "select_nth__g"
+     ],
+     "changed_tasks": []
+    },
+    "+parse_numbers +compute": {
+     "n": 120,
+     "baseline": {
+      "CORRECT": 100,
+      "ABSTAIN": 20,
+      "WRONG": 0
+     },
+     "candidate": {
+      "CORRECT": 91,
+      "ABSTAIN": 20,
+      "WRONG": 9
+     },
+     "delta": {
+      "CORRECT": -9,
+      "ABSTAIN": 0,
+      "WRONG": 9
+     },
+     "transitions": {
+      "ABSTAIN->ABSTAIN": 20,
+      "CORRECT->CORRECT": 91,
+      "CORRECT->WRONG": 9
+     },
+     "per_loss": {
+      "symmetric_1": {
+       "payoffs": [
+        1,
+        0,
+        -1
+       ],
+       "baseline": 100,
+       "candidate": 82,
+       "delta": -18,
+       "helps": false
+      },
+      "asymmetric_2": {
+       "payoffs": [
+        1,
+        0,
+        -2
+       ],
+       "baseline": 100,
+       "candidate": 73,
+       "delta": -27,
+       "helps": false
+      },
+      "fail_closed_5": {
+       "payoffs": [
+        1,
+        0,
+        -5
+       ],
+       "baseline": 100,
+       "candidate": 46,
+       "delta": -54,
+       "helps": false
+      },
+      "answer_rate": {
+       "payoffs": [
+        1,
+        0,
+        0
+       ],
+       "baseline": 100,
+       "candidate": 91,
+       "delta": -9,
+       "helps": false
+      }
+     },
+     "break_even_wrong_penalty": -1.0,
+     "break_even_note": "candidate helps iff wrong-answer penalty L < dCORRECT/dWRONG = -1.0 (payoffs (1, 0, -L))",
+     "program": [
+      "parse_comparison",
+      "parse_which_extreme",
+      "parse_box_items",
+      "op_aggregate_quantities",
+      "parse_rules",
+      "parse_ordinal",
+      "forward_chain",
+      "parse_names_and_relations",
+      "relations_from_facts",
+      "op_build_ordering",
+      "parse_numbers",
+      "lexis_op_subtract",
+      "score_by_extreme_number__g",
+      "score_by_aggregate__g",
+      "score_by_derivability__g",
+      "score_by_comparison__g",
+      "select_nth__g"
+     ],
+     "changed_tasks": [
+      {
+       "i": 65,
+       "base": "CORRECT",
+       "cand": "WRONG",
+       "selected": "4"
+      },
+      {
+       "i": 70,
+       "base": "CORRECT",
+       "cand": "WRONG",
+       "selected": "15"
+      },
+      {
+       "i": 71,
+       "base": "CORRECT",
+       "cand": "WRONG",
+       "selected": "33"
+      },
+      {
+       "i": 72,
+       "base": "CORRECT",
+       "cand": "WRONG",
+       "selected": "25"
+      },
+      {
+       "i": 75,
+       "base": "CORRECT",
+       "cand": "WRONG",
+       "selected": "25"
+      },
+      {
+       "i": 76,
+       "base": "CORRECT",
+       "cand": "WRONG",
+       "selected": "25"
+      },
+      {
+       "i": 77,
+       "base": "CORRECT",
+       "cand": "WRONG",
+       "selected": "26"
+      },
+      {
+       "i": 78,
+       "base": "CORRECT",
+       "cand": "WRONG",
+       "selected": "36"
+      },
+      {
+       "i": 79,
+       "base": "CORRECT",
+       "cand": "WRONG",
+       "selected": "8"
+      }
+     ]
+    },
+    "+parse_numbers +readout": {
+     "n": 120,
+     "baseline": {
+      "CORRECT": 100,
+      "ABSTAIN": 20,
+      "WRONG": 0
+     },
+     "candidate": {
+      "CORRECT": 100,
+      "ABSTAIN": 20,
+      "WRONG": 0
+     },
+     "delta": {
+      "CORRECT": 0,
+      "ABSTAIN": 0,
+      "WRONG": 0
+     },
+     "transitions": {
+      "ABSTAIN->ABSTAIN": 20,
+      "CORRECT->CORRECT": 100
+     },
+     "per_loss": {
+      "symmetric_1": {
+       "payoffs": [
+        1,
+        0,
+        -1
+       ],
+       "baseline": 100,
+       "candidate": 100,
+       "delta": 0,
+       "helps": false
+      },
+      "asymmetric_2": {
+       "payoffs": [
+        1,
+        0,
+        -2
+       ],
+       "baseline": 100,
+       "candidate": 100,
+       "delta": 0,
+       "helps": false
+      },
+      "fail_closed_5": {
+       "payoffs": [
+        1,
+        0,
+        -5
+       ],
+       "baseline": 100,
+       "candidate": 100,
+       "delta": 0,
+       "helps": false
+      },
+      "answer_rate": {
+       "payoffs": [
+        1,
+        0,
+        0
+       ],
+       "baseline": 100,
+       "candidate": 100,
+       "delta": 0,
+       "helps": false
+      }
+     },
+     "break_even_wrong_penalty": 0.0,
+     "break_even_note": "candidate helps iff wrong-answer penalty L < dCORRECT/dWRONG = 0.0 (payoffs (1, 0, -L))",
+     "program": [
+      "parse_comparison",
+      "parse_which_extreme",
+      "parse_box_items",
+      "op_aggregate_quantities",
+      "parse_rules",
+      "parse_ordinal",
+      "forward_chain",
+      "parse_names_and_relations",
+      "relations_from_facts",
+      "op_build_ordering",
+      "parse_numbers",
+      "score_by_extreme_number__g",
+      "score_by_aggregate__g",
+      "score_by_derivability__g",
+      "score_by_comparison__g",
+      "select_nth__g",
+      "lexis_score_by_value_match__g"
+     ],
+     "changed_tasks": []
+    },
+    "+bundle readout_last": {
+     "n": 120,
+     "baseline": {
+      "CORRECT": 100,
+      "ABSTAIN": 20,
+      "WRONG": 0
+     },
+     "candidate": {
+      "CORRECT": 96,
+      "ABSTAIN": 15,
+      "WRONG": 9
+     },
+     "delta": {
+      "CORRECT": -4,
+      "ABSTAIN": -5,
+      "WRONG": 9
+     },
+     "transitions": {
+      "ABSTAIN->ABSTAIN": 15,
+      "ABSTAIN->CORRECT": 5,
+      "CORRECT->CORRECT": 91,
+      "CORRECT->WRONG": 9
+     },
+     "per_loss": {
+      "symmetric_1": {
+       "payoffs": [
+        1,
+        0,
+        -1
+       ],
+       "baseline": 100,
+       "candidate": 87,
+       "delta": -13,
+       "helps": false
+      },
+      "asymmetric_2": {
+       "payoffs": [
+        1,
+        0,
+        -2
+       ],
+       "baseline": 100,
+       "candidate": 78,
+       "delta": -22,
+       "helps": false
+      },
+      "fail_closed_5": {
+       "payoffs": [
+        1,
+        0,
+        -5
+       ],
+       "baseline": 100,
+       "candidate": 51,
+       "delta": -49,
+       "helps": false
+      },
+      "answer_rate": {
+       "payoffs": [
+        1,
+        0,
+        0
+       ],
+       "baseline": 100,
+       "candidate": 96,
+       "delta": -4,
+       "helps": false
+      }
+     },
+     "break_even_wrong_penalty": -0.4444444444444444,
+     "break_even_note": "candidate helps iff wrong-answer penalty L < dCORRECT/dWRONG = -0.4444444444444444 (payoffs (1, 0, -L))",
+     "program": [
+      "parse_comparison",
+      "parse_which_extreme",
+      "parse_box_items",
+      "op_aggregate_quantities",
+      "parse_rules",
+      "parse_ordinal",
+      "forward_chain",
+      "parse_names_and_relations",
+      "relations_from_facts",
+      "op_build_ordering",
+      "parse_numbers",
+      "lexis_op_subtract",
+      "score_by_extreme_number__g",
+      "score_by_aggregate__g",
+      "score_by_derivability__g",
+      "score_by_comparison__g",
+      "select_nth__g",
+      "lexis_score_by_value_match__g"
+     ],
+     "changed_tasks": [
+      {
+       "i": 30,
+       "base": "ABSTAIN",
+       "cand": "CORRECT",
+       "selected": "14 precisely by defi"
+      },
+      {
+       "i": 31,
+       "base": "ABSTAIN",
+       "cand": "CORRECT",
+       "selected": "48 in this case exac"
+      },
+      {
+       "i": 32,
+       "base": "ABSTAIN",
+       "cand": "CORRECT",
+       "selected": "3 by definition unam"
+      },
+      {
+       "i": 33,
+       "base": "ABSTAIN",
+       "cand": "CORRECT",
+       "selected": "5 precisely precisel"
+      },
+      {
+       "i": 34,
+       "base": "ABSTAIN",
+       "cand": "CORRECT",
+       "selected": "2 specifically as st"
+      },
+      {
+       "i": 65,
+       "base": "CORRECT",
+       "cand": "WRONG",
+       "selected": "4"
+      },
+      {
+       "i": 70,
+       "base": "CORRECT",
+       "cand": "WRONG",
+       "selected": "15"
+      },
+      {
+       "i": 71,
+       "base": "CORRECT",
+       "cand": "WRONG",
+       "selected": "33"
+      },
+      {
+       "i": 72,
+       "base": "CORRECT",
+       "cand": "WRONG",
+       "selected": "25"
+      },
+      {
+       "i": 75,
+       "base": "CORRECT",
+       "cand": "WRONG",
+       "selected": "25"
+      },
+      {
+       "i": 76,
+       "base": "CORRECT",
+       "cand": "WRONG",
+       "selected": "25"
+      },
+      {
+       "i": 77,
+       "base": "CORRECT",
+       "cand": "WRONG",
+       "selected": "26"
+      },
+      {
+       "i": 78,
+       "base": "CORRECT",
+       "cand": "WRONG",
+       "selected": "36"
+      },
+      {
+       "i": 79,
+       "base": "CORRECT",
+       "cand": "WRONG",
+       "selected": "8"
+      }
+     ]
+    },
+    "+bundle readout_first": {
+     "n": 120,
+     "baseline": {
+      "CORRECT": 100,
+      "ABSTAIN": 20,
+      "WRONG": 0
+     },
+     "candidate": {
+      "CORRECT": 96,
+      "ABSTAIN": 15,
+      "WRONG": 9
+     },
+     "delta": {
+      "CORRECT": -4,
+      "ABSTAIN": -5,
+      "WRONG": 9
+     },
+     "transitions": {
+      "ABSTAIN->ABSTAIN": 15,
+      "ABSTAIN->CORRECT": 5,
+      "CORRECT->CORRECT": 91,
+      "CORRECT->WRONG": 9
+     },
+     "per_loss": {
+      "symmetric_1": {
+       "payoffs": [
+        1,
+        0,
+        -1
+       ],
+       "baseline": 100,
+       "candidate": 87,
+       "delta": -13,
+       "helps": false
+      },
+      "asymmetric_2": {
+       "payoffs": [
+        1,
+        0,
+        -2
+       ],
+       "baseline": 100,
+       "candidate": 78,
+       "delta": -22,
+       "helps": false
+      },
+      "fail_closed_5": {
+       "payoffs": [
+        1,
+        0,
+        -5
+       ],
+       "baseline": 100,
+       "candidate": 51,
+       "delta": -49,
+       "helps": false
+      },
+      "answer_rate": {
+       "payoffs": [
+        1,
+        0,
+        0
+       ],
+       "baseline": 100,
+       "candidate": 96,
+       "delta": -4,
+       "helps": false
+      }
+     },
+     "break_even_wrong_penalty": -0.4444444444444444,
+     "break_even_note": "candidate helps iff wrong-answer penalty L < dCORRECT/dWRONG = -0.4444444444444444 (payoffs (1, 0, -L))",
+     "program": [
+      "parse_comparison",
+      "parse_which_extreme",
+      "parse_box_items",
+      "op_aggregate_quantities",
+      "parse_rules",
+      "parse_ordinal",
+      "forward_chain",
+      "parse_names_and_relations",
+      "relations_from_facts",
+      "op_build_ordering",
+      "parse_numbers",
+      "lexis_op_subtract",
+      "lexis_score_by_value_match__g",
+      "score_by_extreme_number__g",
+      "score_by_aggregate__g",
+      "score_by_derivability__g",
+      "score_by_comparison__g",
+      "select_nth__g"
+     ],
+     "changed_tasks": [
+      {
+       "i": 30,
+       "base": "ABSTAIN",
+       "cand": "CORRECT",
+       "selected": "14 precisely by defi"
+      },
+      {
+       "i": 31,
+       "base": "ABSTAIN",
+       "cand": "CORRECT",
+       "selected": "48 in this case exac"
+      },
+      {
+       "i": 32,
+       "base": "ABSTAIN",
+       "cand": "CORRECT",
+       "selected": "3 by definition unam"
+      },
+      {
+       "i": 33,
+       "base": "ABSTAIN",
+       "cand": "CORRECT",
+       "selected": "5 precisely precisel"
+      },
+      {
+       "i": 34,
+       "base": "ABSTAIN",
+       "cand": "CORRECT",
+       "selected": "2 specifically as st"
+      },
+      {
+       "i": 65,
+       "base": "CORRECT",
+       "cand": "WRONG",
+       "selected": "4"
+      },
+      {
+       "i": 70,
+       "base": "CORRECT",
+       "cand": "WRONG",
+       "selected": "15"
+      },
+      {
+       "i": 71,
+       "base": "CORRECT",
+       "cand": "WRONG",
+       "selected": "33"
+      },
+      {
+       "i": 72,
+       "base": "CORRECT",
+       "cand": "WRONG",
+       "selected": "25"
+      },
+      {
+       "i": 75,
+       "base": "CORRECT",
+       "cand": "WRONG",
+       "selected": "25"
+      },
+      {
+       "i": 76,
+       "base": "CORRECT",
+       "cand": "WRONG",
+       "selected": "25"
+      },
+      {
+       "i": 77,
+       "base": "CORRECT",
+       "cand": "WRONG",
+       "selected": "26"
+      },
+      {
+       "i": 78,
+       "base": "CORRECT",
+       "cand": "WRONG",
+       "selected": "36"
+      },
+      {
+       "i": 79,
+       "base": "CORRECT",
+       "cand": "WRONG",
+       "selected": "8"
+      }
+     ]
+    },
+    "+bundle compute_first": {
+     "n": 120,
+     "baseline": {
+      "CORRECT": 100,
+      "ABSTAIN": 20,
+      "WRONG": 0
+     },
+     "candidate": {
+      "CORRECT": 105,
+      "ABSTAIN": 15,
+      "WRONG": 0
+     },
+     "delta": {
+      "CORRECT": 5,
+      "ABSTAIN": -5,
+      "WRONG": 0
+     },
+     "transitions": {
+      "ABSTAIN->ABSTAIN": 15,
+      "ABSTAIN->CORRECT": 5,
+      "CORRECT->CORRECT": 100
+     },
+     "per_loss": {
+      "symmetric_1": {
+       "payoffs": [
+        1,
+        0,
+        -1
+       ],
+       "baseline": 100,
+       "candidate": 105,
+       "delta": 5,
+       "helps": true
+      },
+      "asymmetric_2": {
+       "payoffs": [
+        1,
+        0,
+        -2
+       ],
+       "baseline": 100,
+       "candidate": 105,
+       "delta": 5,
+       "helps": true
+      },
+      "fail_closed_5": {
+       "payoffs": [
+        1,
+        0,
+        -5
+       ],
+       "baseline": 100,
+       "candidate": 105,
+       "delta": 5,
+       "helps": true
+      },
+      "answer_rate": {
+       "payoffs": [
+        1,
+        0,
+        0
+       ],
+       "baseline": 100,
+       "candidate": 105,
+       "delta": 5,
+       "helps": true
+      }
+     },
+     "break_even_wrong_penalty": Infinity,
+     "break_even_note": "candidate helps iff wrong-answer penalty L < dCORRECT/dWRONG = inf (payoffs (1, 0, -L))",
+     "program": [
+      "parse_numbers",
+      "lexis_op_subtract",
+      "parse_comparison",
+      "parse_which_extreme",
+      "parse_box_items",
+      "op_aggregate_quantities",
+      "parse_rules",
+      "parse_ordinal",
+      "forward_chain",
+      "parse_names_and_relations",
+      "relations_from_facts",
+      "op_build_ordering",
+      "score_by_extreme_number__g",
+      "score_by_aggregate__g",
+      "score_by_derivability__g",
+      "score_by_comparison__g",
+      "select_nth__g",
+      "lexis_score_by_value_match__g"
+     ],
+     "changed_tasks": [
+      {
+       "i": 30,
+       "base": "ABSTAIN",
+       "cand": "CORRECT",
+       "selected": "14 precisely by defi"
+      },
+      {
+       "i": 31,
+       "base": "ABSTAIN",
+       "cand": "CORRECT",
+       "selected": "48 in this case exac"
+      },
+      {
+       "i": 32,
+       "base": "ABSTAIN",
+       "cand": "CORRECT",
+       "selected": "3 by definition unam"
+      },
+      {
+       "i": 33,
+       "base": "ABSTAIN",
+       "cand": "CORRECT",
+       "selected": "5 precisely precisel"
+      },
+      {
+       "i": 34,
+       "base": "ABSTAIN",
+       "cand": "CORRECT",
+       "selected": "2 specifically as st"
+      }
+     ]
+    }
+   }
+  },
+  "charon": {
+   "baseline_counts": {
+    "CORRECT": 2,
+    "ABSTAIN": 40,
+    "WRONG": 0
+   },
+   "arms": {
+    "+parse_numbers only": {
+     "n": 42,
+     "baseline": {
+      "CORRECT": 2,
+      "ABSTAIN": 40,
+      "WRONG": 0
+     },
+     "candidate": {
+      "CORRECT": 2,
+      "ABSTAIN": 40,
+      "WRONG": 0
+     },
+     "delta": {
+      "CORRECT": 0,
+      "ABSTAIN": 0,
+      "WRONG": 0
+     },
+     "transitions": {
+      "ABSTAIN->ABSTAIN": 40,
+      "CORRECT->CORRECT": 2
+     },
+     "per_loss": {
+      "symmetric_1": {
+       "payoffs": [
+        1,
+        0,
+        -1
+       ],
+       "baseline": 2,
+       "candidate": 2,
+       "delta": 0,
+       "helps": false
+      },
+      "asymmetric_2": {
+       "payoffs": [
+        1,
+        0,
+        -2
+       ],
+       "baseline": 2,
+       "candidate": 2,
+       "delta": 0,
+       "helps": false
+      },
+      "fail_closed_5": {
+       "payoffs": [
+        1,
+        0,
+        -5
+       ],
+       "baseline": 2,
+       "candidate": 2,
+       "delta": 0,
+       "helps": false
+      },
+      "answer_rate": {
+       "payoffs": [
+        1,
+        0,
+        0
+       ],
+       "baseline": 2,
+       "candidate": 2,
+       "delta": 0,
+       "helps": false
+      }
+     },
+     "break_even_wrong_penalty": 0.0,
+     "break_even_note": "candidate helps iff wrong-answer penalty L < dCORRECT/dWRONG = 0.0 (payoffs (1, 0, -L))",
+     "program": [
+      "parse_comparison",
+      "parse_which_extreme",
+      "parse_box_items",
+      "op_aggregate_quantities",
+      "parse_rules",
+      "parse_ordinal",
+      "forward_chain",
+      "parse_names_and_relations",
+      "relations_from_facts",
+      "op_build_ordering",
+      "parse_numbers",
+      "score_by_extreme_number__g",
+      "score_by_aggregate__g",
+      "score_by_derivability__g",
+      "score_by_comparison__g",
+      "select_nth__g"
+     ],
+     "changed_tasks": []
+    },
+    "+parse_numbers +compute": {
+     "n": 42,
+     "baseline": {
+      "CORRECT": 2,
+      "ABSTAIN": 40,
+      "WRONG": 0
+     },
+     "candidate": {
+      "CORRECT": 2,
+      "ABSTAIN": 40,
+      "WRONG": 0
+     },
+     "delta": {
+      "CORRECT": 0,
+      "ABSTAIN": 0,
+      "WRONG": 0
+     },
+     "transitions": {
+      "ABSTAIN->ABSTAIN": 40,
+      "CORRECT->CORRECT": 2
+     },
+     "per_loss": {
+      "symmetric_1": {
+       "payoffs": [
+        1,
+        0,
+        -1
+       ],
+       "baseline": 2,
+       "candidate": 2,
+       "delta": 0,
+       "helps": false
+      },
+      "asymmetric_2": {
+       "payoffs": [
+        1,
+        0,
+        -2
+       ],
+       "baseline": 2,
+       "candidate": 2,
+       "delta": 0,
+       "helps": false
+      },
+      "fail_closed_5": {
+       "payoffs": [
+        1,
+        0,
+        -5
+       ],
+       "baseline": 2,
+       "candidate": 2,
+       "delta": 0,
+       "helps": false
+      },
+      "answer_rate": {
+       "payoffs": [
+        1,
+        0,
+        0
+       ],
+       "baseline": 2,
+       "candidate": 2,
+       "delta": 0,
+       "helps": false
+      }
+     },
+     "break_even_wrong_penalty": 0.0,
+     "break_even_note": "candidate helps iff wrong-answer penalty L < dCORRECT/dWRONG = 0.0 (payoffs (1, 0, -L))",
+     "program": [
+      "parse_comparison",
+      "parse_which_extreme",
+      "parse_box_items",
+      "op_aggregate_quantities",
+      "parse_rules",
+      "parse_ordinal",
+      "forward_chain",
+      "parse_names_and_relations",
+      "relations_from_facts",
+      "op_build_ordering",
+      "parse_numbers",
+      "lexis_op_subtract",
+      "score_by_extreme_number__g",
+      "score_by_aggregate__g",
+      "score_by_derivability__g",
+      "score_by_comparison__g",
+      "select_nth__g"
+     ],
+     "changed_tasks": []
+    },
+    "+parse_numbers +readout": {
+     "n": 42,
+     "baseline": {
+      "CORRECT": 2,
+      "ABSTAIN": 40,
+      "WRONG": 0
+     },
+     "candidate": {
+      "CORRECT": 2,
+      "ABSTAIN": 40,
+      "WRONG": 0
+     },
+     "delta": {
+      "CORRECT": 0,
+      "ABSTAIN": 0,
+      "WRONG": 0
+     },
+     "transitions": {
+      "ABSTAIN->ABSTAIN": 40,
+      "CORRECT->CORRECT": 2
+     },
+     "per_loss": {
+      "symmetric_1": {
+       "payoffs": [
+        1,
+        0,
+        -1
+       ],
+       "baseline": 2,
+       "candidate": 2,
+       "delta": 0,
+       "helps": false
+      },
+      "asymmetric_2": {
+       "payoffs": [
+        1,
+        0,
+        -2
+       ],
+       "baseline": 2,
+       "candidate": 2,
+       "delta": 0,
+       "helps": false
+      },
+      "fail_closed_5": {
+       "payoffs": [
+        1,
+        0,
+        -5
+       ],
+       "baseline": 2,
+       "candidate": 2,
+       "delta": 0,
+       "helps": false
+      },
+      "answer_rate": {
+       "payoffs": [
+        1,
+        0,
+        0
+       ],
+       "baseline": 2,
+       "candidate": 2,
+       "delta": 0,
+       "helps": false
+      }
+     },
+     "break_even_wrong_penalty": 0.0,
+     "break_even_note": "candidate helps iff wrong-answer penalty L < dCORRECT/dWRONG = 0.0 (payoffs (1, 0, -L))",
+     "program": [
+      "parse_comparison",
+      "parse_which_extreme",
+      "parse_box_items",
+      "op_aggregate_quantities",
+      "parse_rules",
+      "parse_ordinal",
+      "forward_chain",
+      "parse_names_and_relations",
+      "relations_from_facts",
+      "op_build_ordering",
+      "parse_numbers",
+      "score_by_extreme_number__g",
+      "score_by_aggregate__g",
+      "score_by_derivability__g",
+      "score_by_comparison__g",
+      "select_nth__g",
+      "lexis_score_by_value_match__g"
+     ],
+     "changed_tasks": []
+    },
+    "+bundle readout_last": {
+     "n": 42,
+     "baseline": {
+      "CORRECT": 2,
+      "ABSTAIN": 40,
+      "WRONG": 0
+     },
+     "candidate": {
+      "CORRECT": 6,
+      "ABSTAIN": 33,
+      "WRONG": 3
+     },
+     "delta": {
+      "CORRECT": 4,
+      "ABSTAIN": -7,
+      "WRONG": 3
+     },
+     "transitions": {
+      "ABSTAIN->ABSTAIN": 33,
+      "ABSTAIN->CORRECT": 4,
+      "ABSTAIN->WRONG": 3,
+      "CORRECT->CORRECT": 2
+     },
+     "per_loss": {
+      "symmetric_1": {
+       "payoffs": [
+        1,
+        0,
+        -1
+       ],
+       "baseline": 2,
+       "candidate": 3,
+       "delta": 1,
+       "helps": true
+      },
+      "asymmetric_2": {
+       "payoffs": [
+        1,
+        0,
+        -2
+       ],
+       "baseline": 2,
+       "candidate": 0,
+       "delta": -2,
+       "helps": false
+      },
+      "fail_closed_5": {
+       "payoffs": [
+        1,
+        0,
+        -5
+       ],
+       "baseline": 2,
+       "candidate": -9,
+       "delta": -11,
+       "helps": false
+      },
+      "answer_rate": {
+       "payoffs": [
+        1,
+        0,
+        0
+       ],
+       "baseline": 2,
+       "candidate": 6,
+       "delta": 4,
+       "helps": true
+      }
+     },
+     "break_even_wrong_penalty": 1.3333333333333333,
+     "break_even_note": "candidate helps iff wrong-answer penalty L < dCORRECT/dWRONG = 1.3333333333333333 (payoffs (1, 0, -L))",
+     "program": [
+      "parse_comparison",
+      "parse_which_extreme",
+      "parse_box_items",
+      "op_aggregate_quantities",
+      "parse_rules",
+      "parse_ordinal",
+      "forward_chain",
+      "parse_names_and_relations",
+      "relations_from_facts",
+      "op_build_ordering",
+      "parse_numbers",
+      "lexis_op_subtract",
+      "score_by_extreme_number__g",
+      "score_by_aggregate__g",
+      "score_by_derivability__g",
+      "score_by_comparison__g",
+      "select_nth__g",
+      "lexis_score_by_value_match__g"
+     ],
+     "changed_tasks": [
+      {
+       "i": 0,
+       "base": "ABSTAIN",
+       "cand": "CORRECT",
+       "selected": "46"
+      },
+      {
+       "i": 1,
+       "base": "ABSTAIN",
+       "cand": "CORRECT",
+       "selected": "25"
+      },
+      {
+       "i": 2,
+       "base": "ABSTAIN",
+       "cand": "CORRECT",
+       "selected": "93"
+      },
+      {
+       "i": 3,
+       "base": "ABSTAIN",
+       "cand": "CORRECT",
+       "selected": "14"
+      },
+      {
+       "i": 4,
+       "base": "ABSTAIN",
+       "cand": "WRONG",
+       "selected": "214"
+      },
+      {
+       "i": 5,
+       "base": "ABSTAIN",
+       "cand": "WRONG",
+       "selected": "73"
+      },
+      {
+       "i": 23,
+       "base": "ABSTAIN",
+       "cand": "WRONG",
+       "selected": "195"
+      }
+     ]
+    },
+    "+bundle readout_first": {
+     "n": 42,
+     "baseline": {
+      "CORRECT": 2,
+      "ABSTAIN": 40,
+      "WRONG": 0
+     },
+     "candidate": {
+      "CORRECT": 6,
+      "ABSTAIN": 33,
+      "WRONG": 3
+     },
+     "delta": {
+      "CORRECT": 4,
+      "ABSTAIN": -7,
+      "WRONG": 3
+     },
+     "transitions": {
+      "ABSTAIN->ABSTAIN": 33,
+      "ABSTAIN->CORRECT": 4,
+      "ABSTAIN->WRONG": 3,
+      "CORRECT->CORRECT": 2
+     },
+     "per_loss": {
+      "symmetric_1": {
+       "payoffs": [
+        1,
+        0,
+        -1
+       ],
+       "baseline": 2,
+       "candidate": 3,
+       "delta": 1,
+       "helps": true
+      },
+      "asymmetric_2": {
+       "payoffs": [
+        1,
+        0,
+        -2
+       ],
+       "baseline": 2,
+       "candidate": 0,
+       "delta": -2,
+       "helps": false
+      },
+      "fail_closed_5": {
+       "payoffs": [
+        1,
+        0,
+        -5
+       ],
+       "baseline": 2,
+       "candidate": -9,
+       "delta": -11,
+       "helps": false
+      },
+      "answer_rate": {
+       "payoffs": [
+        1,
+        0,
+        0
+       ],
+       "baseline": 2,
+       "candidate": 6,
+       "delta": 4,
+       "helps": true
+      }
+     },
+     "break_even_wrong_penalty": 1.3333333333333333,
+     "break_even_note": "candidate helps iff wrong-answer penalty L < dCORRECT/dWRONG = 1.3333333333333333 (payoffs (1, 0, -L))",
+     "program": [
+      "parse_comparison",
+      "parse_which_extreme",
+      "parse_box_items",
+      "op_aggregate_quantities",
+      "parse_rules",
+      "parse_ordinal",
+      "forward_chain",
+      "parse_names_and_relations",
+      "relations_from_facts",
+      "op_build_ordering",
+      "parse_numbers",
+      "lexis_op_subtract",
+      "lexis_score_by_value_match__g",
+      "score_by_extreme_number__g",
+      "score_by_aggregate__g",
+      "score_by_derivability__g",
+      "score_by_comparison__g",
+      "select_nth__g"
+     ],
+     "changed_tasks": [
+      {
+       "i": 0,
+       "base": "ABSTAIN",
+       "cand": "CORRECT",
+       "selected": "46"
+      },
+      {
+       "i": 1,
+       "base": "ABSTAIN",
+       "cand": "CORRECT",
+       "selected": "25"
+      },
+      {
+       "i": 2,
+       "base": "ABSTAIN",
+       "cand": "CORRECT",
+       "selected": "93"
+      },
+      {
+       "i": 3,
+       "base": "ABSTAIN",
+       "cand": "CORRECT",
+       "selected": "14"
+      },
+      {
+       "i": 4,
+       "base": "ABSTAIN",
+       "cand": "WRONG",
+       "selected": "214"
+      },
+      {
+       "i": 5,
+       "base": "ABSTAIN",
+       "cand": "WRONG",
+       "selected": "73"
+      },
+      {
+       "i": 23,
+       "base": "ABSTAIN",
+       "cand": "WRONG",
+       "selected": "195"
+      }
+     ]
+    },
+    "+bundle compute_first": {
+     "n": 42,
+     "baseline": {
+      "CORRECT": 2,
+      "ABSTAIN": 40,
+      "WRONG": 0
+     },
+     "candidate": {
+      "CORRECT": 6,
+      "ABSTAIN": 33,
+      "WRONG": 3
+     },
+     "delta": {
+      "CORRECT": 4,
+      "ABSTAIN": -7,
+      "WRONG": 3
+     },
+     "transitions": {
+      "ABSTAIN->ABSTAIN": 33,
+      "ABSTAIN->CORRECT": 4,
+      "ABSTAIN->WRONG": 3,
+      "CORRECT->CORRECT": 2
+     },
+     "per_loss": {
+      "symmetric_1": {
+       "payoffs": [
+        1,
+        0,
+        -1
+       ],
+       "baseline": 2,
+       "candidate": 3,
+       "delta": 1,
+       "helps": true
+      },
+      "asymmetric_2": {
+       "payoffs": [
+        1,
+        0,
+        -2
+       ],
+       "baseline": 2,
+       "candidate": 0,
+       "delta": -2,
+       "helps": false
+      },
+      "fail_closed_5": {
+       "payoffs": [
+        1,
+        0,
+        -5
+       ],
+       "baseline": 2,
+       "candidate": -9,
+       "delta": -11,
+       "helps": false
+      },
+      "answer_rate": {
+       "payoffs": [
+        1,
+        0,
+        0
+       ],
+       "baseline": 2,
+       "candidate": 6,
+       "delta": 4,
+       "helps": true
+      }
+     },
+     "break_even_wrong_penalty": 1.3333333333333333,
+     "break_even_note": "candidate helps iff wrong-answer penalty L < dCORRECT/dWRONG = 1.3333333333333333 (payoffs (1, 0, -L))",
+     "program": [
+      "parse_numbers",
+      "lexis_op_subtract",
+      "parse_comparison",
+      "parse_which_extreme",
+      "parse_box_items",
+      "op_aggregate_quantities",
+      "parse_rules",
+      "parse_ordinal",
+      "forward_chain",
+      "parse_names_and_relations",
+      "relations_from_facts",
+      "op_build_ordering",
+      "score_by_extreme_number__g",
+      "score_by_aggregate__g",
+      "score_by_derivability__g",
+      "score_by_comparison__g",
+      "select_nth__g",
+      "lexis_score_by_value_match__g"
+     ],
+     "changed_tasks": [
+      {
+       "i": 0,
+       "base": "ABSTAIN",
+       "cand": "CORRECT",
+       "selected": "46"
+      },
+      {
+       "i": 1,
+       "base": "ABSTAIN",
+       "cand": "CORRECT",
+       "selected": "25"
+      },
+      {
+       "i": 2,
+       "base": "ABSTAIN",
+       "cand": "CORRECT",
+       "selected": "93"
+      },
+      {
+       "i": 3,
+       "base": "ABSTAIN",
+       "cand": "CORRECT",
+       "selected": "14"
+      },
+      {
+       "i": 4,
+       "base": "ABSTAIN",
+       "cand": "WRONG",
+       "selected": "214"
+      },
+      {
+       "i": 5,
+       "base": "ABSTAIN",
+       "cand": "WRONG",
+       "selected": "73"
+      },
+      {
+       "i": 23,
+       "base": "ABSTAIN",
+       "cand": "WRONG",
+       "selected": "195"
+      }
+     ]
+    }
+   }
+  }
+ },
+ "home_hashseed_sweep": {
+  "note": "the home synth subset (tasks 50-79) is redrawn with PYTHONHASHSEED; each seed is a different draw of 30 tasks; the artifacts above use seed 0",
+  "seeds": {
+   "0": {
+    "+parse_numbers +compute": {
+     "delta": {
+      "CORRECT": -9,
+      "ABSTAIN": 0,
+      "WRONG": 9
+     },
+     "transitions": {
+      "ABSTAIN->ABSTAIN": 20,
+      "CORRECT->CORRECT": 91,
+      "CORRECT->WRONG": 9
+     }
+    },
+    "+bundle readout_last": {
+     "delta": {
+      "CORRECT": -4,
+      "ABSTAIN": -5,
+      "WRONG": 9
+     },
+     "transitions": {
+      "ABSTAIN->ABSTAIN": 15,
+      "ABSTAIN->CORRECT": 5,
+      "CORRECT->CORRECT": 91,
+      "CORRECT->WRONG": 9
+     }
+    },
+    "+bundle compute_first": {
+     "delta": {
+      "CORRECT": 5,
+      "ABSTAIN": -5,
+      "WRONG": 0
+     },
+     "transitions": {
+      "ABSTAIN->ABSTAIN": 15,
+      "ABSTAIN->CORRECT": 5,
+      "CORRECT->CORRECT": 100
+     }
+    }
+   },
+   "1": {
+    "+parse_numbers +compute": {
+     "delta": {
+      "CORRECT": -9,
+      "ABSTAIN": 0,
+      "WRONG": 9
+     },
+     "transitions": {
+      "ABSTAIN->ABSTAIN": 20,
+      "CORRECT->CORRECT": 91,
+      "CORRECT->WRONG": 9
+     }
+    },
+    "+bundle readout_last": {
+     "delta": {
+      "CORRECT": -4,
+      "ABSTAIN": -5,
+      "WRONG": 9
+     },
+     "transitions": {
+      "ABSTAIN->ABSTAIN": 15,
+      "ABSTAIN->CORRECT": 5,
+      "CORRECT->CORRECT": 91,
+      "CORRECT->WRONG": 9
+     }
+    },
+    "+bundle compute_first": {
+     "delta": {
+      "CORRECT": 5,
+      "ABSTAIN": -5,
+      "WRONG": 0
+     },
+     "transitions": {
+      "ABSTAIN->ABSTAIN": 15,
+      "ABSTAIN->CORRECT": 5,
+      "CORRECT->CORRECT": 100
+     }
+    }
+   },
+   "2": {
+    "+parse_numbers +compute": {
+     "delta": {
+      "CORRECT": -9,
+      "ABSTAIN": 0,
+      "WRONG": 9
+     },
+     "transitions": {
+      "ABSTAIN->ABSTAIN": 20,
+      "CORRECT->CORRECT": 91,
+      "CORRECT->WRONG": 9
+     }
+    },
+    "+bundle readout_last": {
+     "delta": {
+      "CORRECT": -4,
+      "ABSTAIN": -5,
+      "WRONG": 9
+     },
+     "transitions": {
+      "ABSTAIN->ABSTAIN": 15,
+      "ABSTAIN->CORRECT": 5,
+      "CORRECT->CORRECT": 91,
+      "CORRECT->WRONG": 9
+     }
+    },
+    "+bundle compute_first": {
+     "delta": {
+      "CORRECT": 5,
+      "ABSTAIN": -5,
+      "WRONG": 0
+     },
+     "transitions": {
+      "ABSTAIN->ABSTAIN": 15,
+      "ABSTAIN->CORRECT": 5,
+      "CORRECT->CORRECT": 100
+     }
+    }
+   },
+   "3": {
+    "+parse_numbers +compute": {
+     "delta": {
+      "CORRECT": -9,
+      "ABSTAIN": 0,
+      "WRONG": 9
+     },
+     "transitions": {
+      "ABSTAIN->ABSTAIN": 20,
+      "CORRECT->CORRECT": 91,
+      "CORRECT->WRONG": 9
+     }
+    },
+    "+bundle readout_last": {
+     "delta": {
+      "CORRECT": -4,
+      "ABSTAIN": -5,
+      "WRONG": 9
+     },
+     "transitions": {
+      "ABSTAIN->ABSTAIN": 15,
+      "ABSTAIN->CORRECT": 5,
+      "CORRECT->CORRECT": 91,
+      "CORRECT->WRONG": 9
+     }
+    },
+    "+bundle compute_first": {
+     "delta": {
+      "CORRECT": 5,
+      "ABSTAIN": -5,
+      "WRONG": 0
+     },
+     "transitions": {
+      "ABSTAIN->ABSTAIN": 15,
+      "ABSTAIN->CORRECT": 5,
+      "CORRECT->CORRECT": 100
+     }
+    }
+   },
+   "4": {
+    "+parse_numbers +compute": {
+     "delta": {
+      "CORRECT": -9,
+      "ABSTAIN": 0,
+      "WRONG": 9
+     },
+     "transitions": {
+      "ABSTAIN->ABSTAIN": 20,
+      "CORRECT->CORRECT": 91,
+      "CORRECT->WRONG": 9
+     }
+    },
+    "+bundle readout_last": {
+     "delta": {
+      "CORRECT": -4,
+      "ABSTAIN": -5,
+      "WRONG": 9
+     },
+     "transitions": {
+      "ABSTAIN->ABSTAIN": 15,
+      "ABSTAIN->CORRECT": 5,
+      "CORRECT->CORRECT": 91,
+      "CORRECT->WRONG": 9
+     }
+    },
+    "+bundle compute_first": {
+     "delta": {
+      "CORRECT": 5,
+      "ABSTAIN": -5,
+      "WRONG": 0
+     },
+     "transitions": {
+      "ABSTAIN->ABSTAIN": 15,
+      "ABSTAIN->CORRECT": 5,
+      "CORRECT->CORRECT": 100
+     }
+    }
+   }
+  },
+  "compute_only_CORRECT_to_WRONG_range": [
+   9
+  ],
+  "compute_first_WRONG_range": [
+   0
+  ],
+  "compute_first_CORRECT_range": [
+   5
+  ]
+ }
+}

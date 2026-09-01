@@ -1,0 +1,149 @@
+{
+ "artifact": "lexis_interface_pair",
+ "version": 1,
+ "status": "QUARANTINED_CANDIDATE",
+ "status_meaning": "frozen, hash-pinned, importable, NOT admitted, NOT promoted, NOT registered in apollo/. Admission is the consumer's decision.",
+ "claim_ceiling": "MEASURED ACROSS TWO AUTHORS / ONE INDEPENDENT AUTHORSHIP CHANGE. Not 'generally transferable', not 'generally useful'.",
+ "source": {
+  "file": "roles/Lexis/instruments/candidate_primitives.py",
+  "sha256": "ad294a0df5f771bf48a69a9bcc8e4f5905db038fa775e2866603b6a1f2f4f3ec",
+  "git_blob": "c349b0a9f709c0c64171af1e83abd4a224cb1951",
+  "commits": {
+   "compute_added": {
+    "sha": "043dc92ac",
+    "when": "2026-08-25 02:20:49 -0400"
+   },
+   "readout_added": {
+    "sha": "30b96a91e",
+    "when": "2026-08-25 06:49:52 -0400"
+   },
+   "blind_battery_entered_repo": {
+    "sha": "5097b0c8f",
+    "when": "2026-08-25 09:36:44 -0400"
+   },
+   "lexis_first_read_battery": "2026-08-27"
+  },
+  "loader": "roles/Lexis/handoff/lexis_pair.py"
+ },
+ "primitives": {
+  "compute": {
+   "name": "lexis_op_subtract",
+   "reads": [
+    "numbers"
+   ],
+   "writes": [
+    "max_value"
+   ],
+   "precondition": "len(state.numbers) >= 2",
+   "semantics": "max_value := (largest parsed number) - (second largest)",
+   "required_upstream": "parse_numbers (Apollo registry; NOT in KNOWN_0833)",
+   "alone": {
+    "home_dE": 0,
+    "home_dS": 0,
+    "home_dROBUST": 0,
+    "charon_dE": 0,
+    "charon_dS": 0,
+    "charon_dROBUST": 0,
+    "why": "the only clean-pool reader of max_value, score_by_aggregate__g, is guarded on len(counts) > 0, which this primitive does not write"
+   },
+   "source": "@blackboard_op(reads=[\"numbers\"], writes=[\"max_value\"],\n               precondition=lambda s: len(s.numbers) >= 2,\n               name=\"lexis_op_subtract\")\ndef op_subtract(state: BlackboardState) -> BlackboardState:\n    \"\"\"Write the difference of the two largest parsed numbers into max_value, so the\n    existing score_by_max_value can route it. Deliberately reuses an existing slot rather\n    than adding one: adding a slot would change the substrate, not the vocabulary.\"\"\"\n    ns = sorted(state.numbers, reverse=True)\n    state.max_value = ns[0] - ns[1]\n    return state"
+  },
+  "readout": {
+   "name": "lexis_score_by_value_match__g",
+   "reads": [
+    "candidates",
+    "max_value"
+   ],
+   "writes": [
+    "selected_answer"
+   ],
+   "precondition": "max_value is not None and candidates non-empty",
+   "semantics": "select the candidate whose LEADING integer equals round(max_value); content match, hence permutation-equivariant",
+   "alone": {
+    "home_dE": 0,
+    "home_dS": 0,
+    "home_dROBUST": 0,
+    "charon_dE": 0,
+    "charon_dS": 0,
+    "charon_dROBUST": 0,
+    "why": "nothing in the clean pool writes max_value on these tasks"
+   },
+   "source": "@blackboard_op(reads=[\"candidates\", \"max_value\"], writes=[\"selected_answer\"],\n               precondition=lambda s: s.max_value is not None and len(s.candidates) > 0,\n               on_fail=\"skip\", name=\"lexis_score_by_value_match__g\")\ndef score_by_value_match(state: BlackboardState) -> BlackboardState:\n    \"\"\"Select the candidate whose leading integer equals max_value.\"\"\"\n    try:\n        target = int(round(float(state.max_value)))\n    except (TypeError, ValueError):\n        return state\n    for c in state.candidates:\n        m = re.match(r\"\\s*(-?\\d+)\", c)\n        if m and int(m.group(1)) == target:\n            state.selected_answer = c\n            return state\n    return state"
+  },
+  "complementarity": "each alone moves nothing on either battery; together +5/5 (home all_but_n) and +4/6 (Charon all_but_n), both permutation-robust. A wrong value cannot be rescued by a reader, so the pair rules out dead computation."
+ },
+ "evidence": {
+  "home_T_home_120": {
+   "pair_dE": 5,
+   "pair_dS": 5,
+   "pair_dROBUST": 5,
+   "source": "roles/Lexis/notes/bundle_test_result.json"
+  },
+  "charon_T_charon_42": {
+   "pair_dE": 4,
+   "pair_dS": 4,
+   "pair_dROBUST": 4,
+   "all_but_n_correct": 4,
+   "all_but_n_wrong_guess": 2,
+   "wrong_guess_tasks_all_but_n": [
+    22,
+    23
+   ],
+   "wrong_guess_mechanism": "prompts ask for the COMPLEMENT ('how many failed?'); the pair answers N-K and the distractor set contains it; the organism ABSTAINED here",
+   "organism_level_whole_battery": {
+    "ABSTAIN_to_CORRECT": 4,
+    "ABSTAIN_to_WRONG": 3,
+    "third_wrong_task": 11,
+    "third_wrong_mechanism": "numeric_stated_premise '240 per minute, 45 seconds': 240-45=195 and Charon placed 195 among the distractors; the pair fires on ANY two-number prompt whose difference is a candidate",
+    "break_even_wrong_penalty": "4/3 -- helps under (1,0,-1), hurts under (1,0,-2) and fail-closed"
+   },
+   "source": "roles/Lexis/notes/g7_charon_result.json and roles/Lexis/handoff/consumer_utility_result.json"
+  },
+  "home_organism_level_regression": {
+   "finding": "inserted into the production organism AFTER its transformers (readout_last / readout_first), the COMPUTE primitive alone flips 9 home synth two_stage_count tasks CORRECT->WRONG on the seed-0 draw (range over 5 hash-seed draws in consumer_utility_result.json)",
+   "mechanism": "write-write hazard on the REUSED slot max_value: op_aggregate_quantities writes the box total, the compute primitive overwrites it with (max - second max), and score_by_aggregate__g (guarded on counts) routes the wrong value. The primitive's own docstring says it 'deliberately reuses an existing slot'; that reuse is the defect.",
+   "placement_that_avoids_it": "compute_first (parse_numbers, compute, T..., S..., readout): +5 CORRECT, 0 WRONG on the seed-0 draw; op_aggregate_quantities then overwrites the compute value on box tasks. The hazard is not removed, it is ordered around. Placement is the consumer's decision and must be re-measured on the consumer's organism.",
+   "why_the_ceiling_did_not_show_it": "the joint BFS reports the best program in the closure, which orders around the hazard; a fixed organism does not",
+   "source": "roles/Lexis/handoff/consumer_utility_result.json"
+  },
+  "permutation_robustness": "all 24 orderings of the 4 candidates (G6); passing proves equivariance, NOT reasoning",
+  "gates_cleared": [
+   "G5 NEW=1 (not representable by existing vocabulary)",
+   "G6 all-24-permutation on every credited dE",
+   "G7 authorship independence, by git timestamp",
+   "congruence audit (no aliasing / hidden state)"
+  ],
+  "gates_NOT_cleared": [
+   "consumer trial under the consumer's loss function",
+   "admission",
+   "post-admission monitoring"
+  ]
+ },
+ "failure_modes": [
+  "asks for the complement / a quantity other than (max - second max): answers WRONG, does not abstain (Charon 22, 23)",
+  "any two-number prompt whose (max - second max) appears among the candidates: answers WRONG (Charon 11: 240-45=195)",
+  "WRITE-WRITE HAZARD on max_value with op_aggregate_quantities when placed after it in a pipeline that carries parse_box_items: 9 home regressions on the seed-0 draw; see evidence.home_organism_level_regression",
+  "the home battery's synth subset depends on PYTHONHASHSEED: any per-task home number is a property of a draw; artifacts here pin seed 0 and report a sweep",
+  "three or more numbers in the prompt: subtracts the two largest regardless of role (untested outside 2-number prompts)",
+  "candidates that do not begin with an integer: readout abstains",
+  "max_value written by another operator (op_aggregate_quantities) before the readout: the readout will route THAT value (placement-dependent; measured in consumer_utility_result.json)"
+ ],
+ "prohibitions": [
+  "do not describe as admitted, promoted, transferable, or generally useful",
+  "do not modify or re-tune against Charon's battery (spent for Lexis 2026-09-01)",
+  "do not register in apollo/ without a consumer trial and an operator decision"
+ ],
+ "consumer_acceptance": "roles/Lexis/handoff/consumer_utility.py -- CORRECT / ABSTAIN / WRONG under the consumer's own payoffs",
+ "spent_for": [
+  {
+   "seat": "Lexis",
+   "battery": "roles/Charon/apollo_e9/charon_battery_E9.json",
+   "read": "2026-08-27",
+   "measured": "2026-09-01"
+  }
+ ],
+ "trial": [],
+ "decision": [],
+ "monitoring": [],
+ "protocol": "roles/Lexis/handoff/ADMISSION_PROTOCOL.md (stage 3 of 6)"
+}
