@@ -35,7 +35,11 @@ ecology_peers             : D-12/D-13 (ZeusE), Harmonia A (genesis/harmonia_a/d1
 blockers                  : /v0/search is synchronous+slow (~60-75s per 300-eval burst); size
                             budgets modestly on the shared host. New Foundry release expected
                             ~2026-09-02 -> revise FOUNDRY_API_NOTES.md + PIN then.
-last_job                  : slice_pilot (budget 300)
-next_job                  : [HITL steer] scale burst budget for a real solve attempt; OR Task2
-                            state-injection; OR build cron JOB A/B skeleton on this proven loop.
-errors                    : none
+last_job                  : S1 solvability calibration (stackvm + treegp + pyshgp)
+S1_status                 : harness VALIDATED; transfer primary NOT constructible on any
+                            working engine at feasible budget (reachable set = {identity,x+1}).
+                            treegp-deap uniformly 0.000 = suspected adapter defect (filed).
+                            Prereg UNFROZEN, unscored. Blocked at SUBSTRATE, not Apollo.
+next_job                  : [HITL] (a) re-calibrate on ~2026-09-02 Foundry release [Apollo lean],
+                            (b) large-budget frontier probe, or (c) accept as hold/scale-down.
+errors                    : treegp-deap suspected mis-wired for integer-induction tasks (0.000)

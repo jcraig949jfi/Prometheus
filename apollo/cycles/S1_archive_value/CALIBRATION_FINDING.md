@@ -53,9 +53,49 @@ Three live options, ordered by what Apollo should try first:
      here. That is the reviewer's pre-authorised retire outcome — but it is premature on
      one engine, hence option 1 first.
 
-## Status
-- Harness: validated (pilot).
-- stackvm-v1: reachable-solve set ~= {identity, x+1}; transfer primary not viable here.
-- Next: cross-engine solvability calibration (treegp-deap, push-pyshgp). The scored S1
-  campaign is NOT launched and the prereg stays UNFROZEN until an engine that can host a
-  non-degenerate transfer test is found — or all three are ruled out.
+## Cross-engine calibration (ADDED 2026-09-01, all engines, budget 600, seed 20260901)
+
+    function      stackvm-v1   treegp-deap   push-pyshgp
+    identity (x)  SOLVED 1.0   0.000         SOLVED 1.0
+    x+1           SOLVED 1.0   0.000         0.083
+    x+5           0.083        0.000         0.083
+    2x            0.083        0.000         0.083
+    3x+1          0.083        0.000         0.083
+
+- **treegp-deap: uniformly 0.000, cannot solve the identity the other two solve.**
+  This is a SUSPECTED INSTRUMENT DEFECT (adapter/representation/fitness-scale mismatch
+  in the treegp-deap task binding), run identically to the working engines, so the
+  difference is treegp-side. Filed for the Foundry operator; NOT used as difficulty
+  evidence. Cause not yet verified (would need to inspect a treegp organism's output
+  type on an identity task).
+- **The two WORKING engines converge:** union reachable-solve set at feasible budget =
+  {identity, x+1}. Nothing with a genuine constant (x+5) or a multiplier (2x, 3x+1)
+  solves on stackvm OR pyshgp.
+
+## Conclusion (option 1 exhausted)
+
+S1's cross-world transfer-of-useful-organisms primary is **not constructible on any
+available engine at feasible budget**, because the substrate hosts no non-trivial
+functional organisms to transfer. This is engine-independent (holds on both working
+engines), not a harness bug, and not small-budget tuning (x+5 floors as hard as 3x+1).
+
+**What this does NOT establish:** that much larger budgets (10-100x, expensive and
+uncertain — x+5 floored badly at 600) wouldn't move the frontier; that a DIFFERENT world
+type (the Foundry may gain richer worlds/oracles in the ~2026-09-02 release) wouldn't
+host it; that partial-credit/behavioural transfer shows nothing.
+
+## Recommendation to HITL
+
+The S1 value test is currently **blocked at the SUBSTRATE, not at Apollo's machinery**
+(the machinery is built and validated). The decision is which of:
+  (a) WAIT for the imminent Foundry release, re-run this cheap ladder on its new worlds
+      before any endpoint pivot or retire call. CHEAP, and the substrate is about to
+      change anyway. Apollo's lean.
+  (b) LARGE-BUDGET probe of whether the solve frontier moves (expensive, uncertain).
+  (c) ACCEPT as the S1 result: on the current substrate MAP-Elites has no transferable
+      structure to mine because the substrate hosts none at feasible cost — a hold/
+      scale-down, keeping the validated adapter/replay/fossil infrastructure. This is
+      the reviewer's pre-authorised "good instrument, no research program" outcome, and
+      it would be premature only because the substrate is about to change (hence (a)).
+
+Prereg stays UNFROZEN and unscored. No scored cell has been run.
