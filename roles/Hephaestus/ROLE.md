@@ -11,6 +11,20 @@ are **dated/superseded** — see §11. This doc is authoritative on identity and
 
 ---
 
+> **ERRATA (2026-09-01, filed with `DESIGN_REVIEW_2026-09-01_external.md`, which proposes the
+> successor charter).** Measured against disk this day: (1) §0's "0.725 bits MI" does **not**
+> belong to the forge ledger — it was computed in `prometheus_math/GRADIENT_ARCHAEOLOGY_RESULTS.md`
+> over 314,971 *substrate* kills; treat as E0 and unrelated. (2) §6's tier profile `R5 0 / R6 ~7`
+> is wrong; the instrument reads **R5 18.75 / R6 38.1** (`agents/hephaestus/ablation/knockout_2026-08-20.json`).
+> All tiers in this doc are the trap battery's own ruler and must be read as `R<n>@trap`.
+> (3) Counts: `forge/` v1 = 412 files (not 414); `forge_primitives.py` = **25** functions (not 27);
+> `forge/amino_acids/` = **31** acids (not 30); `validator.py` = **4** gates + the battery in
+> `test_harness.py` (not 5). (4) "12 models converge": 12 attempted, **5** produced usable tools.
+> (5) "4,546 scraps" is the 04-03 snapshot; the committed ledger holds 6,276. (6) §2's "~20
+> distinct mechanisms" and STATUS.md's "~12" are both prose. (7) The composed tool's 85%/~35% is
+> the 7-engine figure; the tool now has 9 engines. Everything else in §2 (the falsified/survived
+> ledger) stands and is extended by the review's §5.
+
 ## 0. One-paragraph identity
 
 I am **Hephaestus, the forge.** I do **not** mass-produce novel reasoning algorithms — that

@@ -1,7 +1,7 @@
 # M3 (Gandalf) — Station Status (living doc)
 
 **Point agent:** Hephaestus (Claude Fable 5, ultracode — the fleet's one non-Opus seat)
-**Last updated:** 2026-08-12 · **Station roster:** Hephaestus (forge + meta-assessment loop)
+**Last updated:** 2026-09-01 (§7) · **Station roster:** Hephaestus (forge + meta-assessment loop)
 **Mode:** level-setting. **No hard decisions until ~2026-08-14** (James, 2026-08-12).
 Items marked DECISION are parked for James.
 **Convention adopted from `stations/M2_STATUS.md`.** Fitting, since the convention was
@@ -137,3 +137,87 @@ E0 regardless of how many documents repeat it.
 
 Full write-up: `roles/Hephaestus/ABLATION_CARD_2026-08-19.md`. z3 installed on M3 this session
 (verifier leg no longer silently single-legged for future oracle work).
+
+
+## 7. BOOTSTRAP 2026-09-01 — 20 days dark; what the fleet did with the forge while M3 slept
+   (Hephaestus, Fable seat, read-only session; nothing measured, nothing changed but this file)
+
+**Station state:** 230 commits pulled (5e7bc621..4c1a09c9). Zero daemons. Last forge-side
+action was the 08-19 ablation card; last edit here 08-21. Aporia flagged this file as stale in
+the Genesis ecology ratification (08-30) — this section pays that.
+
+**Parked items that turned out to be already CLOSED (I was carrying dead debt):**
+- Commit authorization for the M3 staged set — **landed 08-12 in a3e9bbee4**: `ledger.jsonl`
+  is at 6,661 lines in HEAD (== working tree), `apollo/src/hephaestus_ops.py` repaired and
+  importing (verified today: 19 public names). §5 "still parked" item 2 is void.
+- The Apollo re-emission debt (§4) was **executed by another seat, under Rule Zero**: Aporia
+  IQ-PORT-1 (08-25, `aporia/iq/`) ported `all_but_n` + `aggregate_quantities` from
+  `forge_primitives.py` into Apollo v2's blackboard registry, exhaustively enumerated 464,652
+  pipelines, measured **dE_port = 5/120 exactly, novelty ZERO**, and **FROZE the pipeline**
+  (evaluator hash `10fa10db…`; no edits to port/harness/pool without new prereg). The coupling
+  machinery — type adaptation, guard composition, enumeration, provenance-by-set-membership —
+  is proven end to end. That is the mechanical half of the type-bridge cycle James named on
+  08-12; it is labelled PORT and must never be cited as synthesis.
+
+**What the fleet established about the forge (consume before duplicate):**
+- **Aporia 156-S (08-24):** Apollo v1's `PRIMITIVE_CATALOG` and `forge_primitives.py` are the
+  *same 25 functions* (verified today: 25 public fns, `all_but_n` present, **no vacuous-truth
+  primitive**). Apollo v2 severed all 25; 15 of its 20 unsolved tasks map to three of them. The
+  authorised "let Hephaestus mint `all_but_n`" experiment would have been a counterfeit (retrieval
+  reported as synthesis) — caught before it ran. Corrected ladder: PORT → negative control →
+  SYNTHESIS, where **`vacuous_truth` is the only honest synthesis target** in the program: the
+  one unsolved category with no forge primitive, i.e. the one place the forge would have to
+  *mint* rather than *retrieve*. Its risk (encoding the answer pattern) must be managed, not
+  avoided.
+- **Lexis G0/G1 FIRED (08-25):** the T2/T3 rebuild shipped; its own April ablation ledger (198
+  verdicts, 2,103 deltas) gives **5.94% load-bearing at R4** (< the 10% pre-commit), 86.19%
+  decoration, `FAIL_ABLATION` fired zero times because the gate tests concentration and an
+  all-zero tool passes by construction. Consequence recorded fleet-wide: **"forge more tools"
+  is killed as a strategy independent of tool quality; the admission criterion is the defect.**
+  Lexis recommendation #6 (not executed): freeze forge tier-ratchet admission. I concur — it is
+  the same finding as ROLE §2 ("40% admission is not selection pressure") with a number on it.
+- **Operator constraint (James, 08-24, on the Lexis library-learning study):** *"do not hand
+  this to Apollo or Hephaestus, and do not adjust their code or plans on the strength of it."*
+  Lexis open decision #4 asks James to confirm or replace that no-touch with a handoff protocol.
+  I read it as: the *literature* does not drive forge plans; it does not bar the forge from the
+  156-S ladder, which rests on Apollo's and Aporia's own measurements. Flagged, not resolved.
+- **Genesis ecology chart (James, 08-30, RATIFIED):** M3/Hephaestus are not on it. Aporia's
+  ratification note names the live seam — Techne acquires primitives from OUTSIDE (donor
+  stacks), the forge mints from INSIDE, Ergon owns what persists; three layers on one primitive
+  pool — and the "cheapest actionable item still open": documentation + usage exemplars on the
+  primitive pool. Under Rule Zero absence from the chart is not a territorial problem.
+- **Metabolization Probe:** executed by Ergon without further cosign need (Tier B statistic
+  LEVELED 0.4742; adversarial leakage gate PASSES with caveats; Ergon since re-chartered as the
+  memory-metabolism seat). My prereg signature obligation is discharged.
+
+**Honest position of this station, 2026-09-01:** the forge's *library* is alive and in use by
+two other seats; the forge's *generator* is dead by measurement (5.94%), and correctly so. The
+one thing the forge can do that no other seat can is the **`vacuous_truth` synthesis rung** —
+mint one primitive from one named failure, hand it through the already-frozen IQ-PORT-1
+machinery under a new prereg, and let Apollo's frozen evaluator say whether one failure produced
+one verified improvement. That is James's heredity rule stated as a single experiment, and the
+type-bridge cycle he named as a first-cycle candidate. It needs: (1) a ruling on the 08-24
+no-touch scope; (2) an Aporia/Charon-owned prereg (conflict of interest: I would be the minter,
+so I cannot own the gate); (3) a pattern-leak control fixed in advance (a `vacuous_truth`
+primitive that hard-codes the category's answer must fail a held-out phrasing set).
+**DECISION for James.** I will not start it unasked.
+
+**AMENDMENT (same day, after the review sweep — `roles/Hephaestus/DESIGN_REVIEW_2026-09-01_external.md`):**
+the paragraph above understates two gates. (1) **Apollo E9 (08-25) retracted the 0.833 ceiling** —
+Charon's blind 42-task battery scored 0.0667 vs home 0.6000; 40 of 42 tasks abstained; the
+pre-committed consequence "0.833 measures our task authorship" was honoured and every Apollo
+accuracy number including the type-bridge result is discounted. A ΔE against a retracted ceiling
+is not a result. (2) **The SYNTH-1 `vacuous_truth` target is currently unmeasurable**
+(`aporia/iq/probe_synth1_target_degeneracy.py`; `roles/Aporia/resume_aporia.md` PART 2.5): 2
+distinct prompts across 5 tasks, correct-answer first token "Yes" in 5/5 — a text-blind scorer
+scores 5/5. Aporia's frozen G-heldout generator must exist before any mint is read. So the
+forge's one move is gated on two other seats' builds, not on willingness. (3) **A live fixture
+for the pattern-leak control already exists in the forge's own tree:** 98 of 375 files in
+`agents/hephaestus/forge_v4/` carry `if 'true' in cl and 'vacuous' in cl: return (1.0, ...)` —
+the answer-counterfeit class, verbatim. Turning knockout on it is Lane A of the proposed
+charter and needs no ruling. (4) Env note above is stale: z3 5.1.0 and pytest 9.1.1 are installed.
+
+**Housekeeping:** the 77 MB April m4a at repo root is still untracked and not in `.gitignore`;
+`agents/alethelia/__pycache__/` likewise. `agents/hephaestus/STATUS.md` header still says
+"last updated 2026-06-26" — this file is the live one for M3; that one needs a pointer, not a
+rewrite.

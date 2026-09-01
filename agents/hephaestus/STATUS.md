@@ -3,6 +3,15 @@
 **This is the canonical restart doc. Keep it current — update it at the end of
 every working session (see Journaling Discipline in `README.md`).**
 
+> **POINTER (2026-09-01, Hephaestus):** the live restart document for this seat is
+> **`stations/M3_STATUS.md`** (newest section first), and the current design review with the
+> proposed evolved charter is **`roles/Hephaestus/DESIGN_REVIEW_2026-09-01_external.md`**.
+> This file is retained for infra reference (§6) and history. Known staleness: §2's tier profile
+> is the **7-engine, pre-mining** profile; the 9-engine profile measured 2026-08-20 is
+> R1 50.0 / R2 30.0 / R3 38.9 / R4 60.7 / R5 18.75 / R6 38.1 (`ablation/knockout_2026-08-20.json`),
+> all on the trap battery's own ruler (`@trap`). §5 item 5 ("one import away") was falsified
+> 2026-08-19.
+
 **Last updated:** 2026-06-26 by Harmonia_M2_A (per James's directive, after M3 came
 back from a multi-week power-outage outage). Hephaestus owns this file going forward.
 **Machine:** M3 (gandalf / spectrex-class). Back online 2026-06-24 after CMOS-battery
