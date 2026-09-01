@@ -96,3 +96,34 @@ across all three reviews.
    estimates -- their honest final role.
 3. B1 bridge: 1,000 pairs, 2x2 table, kappa >= 0.8, false-zero <= 10%.
 4. D-15 (causal encoding) follows a confirmed A3, not A2.
+
+---
+
+# Meta-review (reviewer 1 assessing reviewer 3) — dispositions (2026-09-01)
+
+This round corrects TWO of my own earlier adoptions and settles sequencing.
+
+| item | meta-review position | disposition |
+|---|---|---|
+| A2 grading | Not "pilot data only": "A2 is confirmatory FOR THE AMENDED A2 ESTIMAND, with reduced evidential novelty because A1's void spectrum was already observed." The dangerous case (see prediction losing -> change threshold/statistic/comparator to win) is exactly what did NOT happen; amendments were instrument-failure-triggered with formula/bins/threshold/battery/eligibility invariant. | **ADOPTED — SUPERSEDES my review-3 disposition.** A2's verdict will be recorded as: confirmatory for its own narrow estimand; reduced novelty (A1 observation disclosed); NOT population-confirmatory. The word "pilot" is retired from the verdict wording; A1/A2 still supply overdispersion/exclusion estimates for successor power analysis. |
+| "Collider bias" terminology | Requires a causal graph not established; the sufficient criticism is: A2 estimates a CONDITIONAL OPERATOR-WEIGHTED MUTATION DISTRIBUTION, not a uniform site distribution | **ADOPTED — terminology corrected** in all forward wording. The substance (sampling measure != site population) stands. |
+| DeepThink's 5%-per-bin support gate | "An outright methodological error: a support condition cannot require the phenomenon under test to be present" — it would invalidate the strongest possible confirmation (middle mass 0.001) | **ACCEPTED — AND THIS CORRECTS MY OWN ERROR**: I had adopted that gate into the A3 spec. STRUCK. Non-vacuity gates for successors concern overall support only (minimum distinct influence values; both neutral and non-neutral present), never forced middle-bin occupancy. |
+| Statistics split | Frozen empirical verdict is EXACT for the measured set (no CI needed for the sample quantity); the population-generalization interval is a separate, secondary statement (cluster bootstrap by parent, simpler and more transparent than mixed models here) | **ADOPTED** — matches the standing plan (frozen rule + labeled post-hoc UCB), now with the two boxed statements kept explicitly separate in the packet. |
+| Sequencing: monolithic A3 vs one-axis translation ladder | A3 combines release+endpoint+sampler+battery+comparator+statistics+population changes at once: "if A3 disagreed with A2 you would have no idea which change caused it." Instead: A2 -> SAME PAIRS at 64-case output -> SAME PAIRS 64-case trajectory -> uniform site-addressed sites; each difference attributable. | **ADOPTED — SUPERSEDES the monolithic-A3 plan.** Successor program renamed: D-14B = ruler-translation ladder (the B1/B2 assays become its first two rungs, on common interventions); D-15 = controlled encoding intervention; D-16 = acquisition/reachability consequence. Phase-0 instrument work still gates the uniform-site rung only. |
+| Endpoint contract refinement | Site-intervention endpoint should return RAW EVIDENCE (per-case outputs/hashes/trajectory addresses), not only a server-computed scalar, so multiple frozen rulers can consume the same evidence | **MERGED into R2** of D14_M1_REQUIREMENTS. |
+| Language discipline | "8-case empirical influence spectrum"; "prediction test / site-resolved geometry / candidate mechanism"; never "mechanism demonstrated" | **ADOPTED** for all forward documents. |
+| SURVIVES meaning | P_A2( 0 < I8_output <= .25 ) <= .05 under the frozen default-mutator-conditioned single-site sampling process — then three increasingly strong questions: survives 64 cases? survives trajectory? survives uniform sites? | **ADOPTED verbatim** as the final packet's verdict-scope sentence and the D-14B ladder definition. |
+
+## FINAL SYNTHESIS ACROSS THE FOUR REVIEW DOCUMENTS (binding)
+1. Finish A2. Adjudicate the frozen observable exactly. State the estimand
+   precisely. No restart.
+2. Verdict scope: confirmatory for the amended estimand; reduced novelty;
+   substrate property, not reasoning property.
+3. Successors: D-14B ruler-translation ladder (same-pairs 64-case output ->
+   same-pairs trajectory -> uniform site-addressed), then D-15 encoding
+   intervention, then D-16 reach consequence. One axis at a time.
+4. Upstream: requested-vs-effective config integrity is release-blocking;
+   site-intervention endpoint returns raw evidence; release hash on every
+   response; opt-in SP-pair persistence.
+5. The reviews themselves became the measurement ladder — the criticisms
+   are now the experiment sequence, not reasons to discard the science.
