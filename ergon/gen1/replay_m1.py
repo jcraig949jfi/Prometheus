@@ -22,6 +22,7 @@ import time
 
 import d5_paths
 from persistence import LibraryRecorder, genotype_hash, _canon
+import input_fingerprint
 
 from families import gen_task, learner_view
 from m1 import m1_rx, admissions, update_library
@@ -131,7 +132,9 @@ def main():
     all_rows = []
     t0 = time.time()
     for j in lineages:
-        rec = LibraryRecorder(args.run_id, j) if args.persist else None
+        rec = (LibraryRecorder(args.run_id, j,
+                              input_fingerprint=input_fingerprint.compute())
+               if args.persist else None)
         lib, rows = replay_lineage(j, dev, rec, args.run_id)
         all_rows.extend(rows)
         if rec is not None:

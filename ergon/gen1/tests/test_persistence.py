@@ -201,3 +201,55 @@ def test_readmission_is_flagged_not_counted_as_eviction():
     ev = rec.events[0]
     assert ev['admissions'][0]['readmission'] is True
     assert ev['eviction_count'] == 0
+
+
+# ------------------------------------------------- input fingerprint (C1)
+import input_fingerprint as FP                              # noqa: E402
+
+
+def test_fingerprint_covers_every_pinned_source():
+    fp = FP.compute()
+    paths = {e['path'] for e in fp['frozen_sources']}
+    assert paths == set(FP.PINNED_SOURCES)
+    assert all(len(e['sha']) == 64 for e in fp['frozen_sources'])
+
+
+def test_fingerprint_paths_are_values_not_keys():
+    """'exact_oracle/oracle.py' as a dict KEY would trip the oracle-leakage
+    scan. It must be a value, and the scan must NOT be exempted."""
+    fp = FP.compute()
+    assert isinstance(fp['frozen_sources'], list)
+    rec = P.LibraryRecorder('t', 0, input_fingerprint=fp)
+    rec.observe_final([(('MOV', 0, 0),)])
+    scan = P.scan_oracle_leakage(rec.to_dict())
+    assert scan['forbidden_fields_found'] == []
+
+
+def test_fingerprint_detects_a_moved_source():
+    fp = FP.compute()
+    moved = copy.deepcopy(fp)
+    moved['frozen_sources'][0]['sha'] = '0' * 64
+    drift = FP.compare(moved)
+    assert len(drift) == 1 and moved['frozen_sources'][0]['path'] in drift[0]
+
+
+def test_fingerprint_detects_a_changed_battery():
+    fp = FP.compute()
+    moved = copy.deepcopy(fp)
+    moved['battery_content_hash'] = 'deadbeef'
+    assert any('battery_content_hash' in d for d in FP.compare(moved))
+
+
+def test_unfingerprinted_artifact_raises_rather_than_reading_clean():
+    """Charon C1: an artifact with no record of its inputs must not pass."""
+    with pytest.raises(ValueError):
+        FP.compare({})
+    with pytest.raises(ValueError):
+        FP.compare(None)
+
+
+def test_record_carries_its_own_coverage_counts():
+    rec = P.LibraryRecorder('t', 0, input_fingerprint=FP.compute())
+    rec.observe_final([(('MOV', 0, 0),), (('SET', 1, 2),)])
+    d = rec.to_dict()
+    assert d['n_final_library'] == 2 and d['n_events'] == 0

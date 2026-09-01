@@ -3,6 +3,41 @@
  "run_id": "gen1-fidelity-v1",
  "lineage": 2,
  "policy": "I0-current-d5",
+ "input_fingerprint": {
+  "fingerprint_version": "ergon-gen1-inputs-v1",
+  "hash_normalization": "LF",
+  "frozen_sources": [
+   {
+    "path": "learner/m1.py",
+    "sha": "a203a6ecc5a0e6b20b8cc66961f840e59823a76ee83d13faa846c526fd1c65c4"
+   },
+   {
+    "path": "mutation/physics.py",
+    "sha": "d17d5db28c8a0e920dd547a16624a3bc2eb6e03be64a657ab98573d610b2bbe2"
+   },
+   {
+    "path": "substrate/rm_vm.py",
+    "sha": "c8535f6e0e598cef941f2553714ad4deded298b0f96c7f23dbcebdf16b23737e"
+   },
+   {
+    "path": "substrate/rm_fast.py",
+    "sha": "5ebd449055b77b2d67cc190208a79d7fcfc295650f783fbf2a8e7b076307b3a0"
+   },
+   {
+    "path": "task_generators/families.py",
+    "sha": "327a6161d772762d5c2f8c17d7c51ac95402f06dbd79b90a97a747ac68b28421"
+   },
+   {
+    "path": "exact_oracle/oracle.py",
+    "sha": "2a6a785494027d520a27ce7ed7a5258bc18cad8b6bd7e7fd56e229d32dcac060"
+   }
+  ],
+  "battery_task_count": 58,
+  "battery_content_hash": "d899d3bbc43d48191a9487b5083b300fbbd7cba92c1176928fcb19ede7d35b6a",
+  "manifest_file_sha": "6a1ba6ca33ed0342267a70b737cacd6a83f766de97b1c4fd36459f58fb18f2f6"
+ },
+ "n_events": 58,
+ "n_final_library": 64,
  "events": [
   {
    "schema": "ergon-gen1-libpersist-v1",

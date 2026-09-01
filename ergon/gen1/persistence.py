@@ -28,6 +28,11 @@ import json
 SCHEMA_VERSION = 'ergon-gen1-libpersist-v1'
 
 # Field-name fragments that must NEVER appear in a persisted record, any depth.
+# Declared top-level record fields (brief 4D). Kept here so the schema and its
+# enforcement cannot drift apart.
+TOP_FIELDS = ('schema', 'run_id', 'lineage', 'policy', 'input_fingerprint',
+              'n_events', 'n_final_library', 'events', 'final_library')
+
 ORACLE_FORBIDDEN = ('witness', 'wlen', 'stratum', 'reachable', 'reachability',
                     'path_len', 'expressibility', 'solved', 'first_solve',
                     'oracle', 'domain_size')
@@ -48,12 +53,16 @@ def _canon(g):
 class LibraryRecorder:
     """Pure observer. Every method takes objects the caller already has."""
 
-    def __init__(self, run_id, lineage, policy='I0-current-d5'):
+    def __init__(self, run_id, lineage, policy='I0-current-d5',
+                 input_fingerprint=None):
         self.run_id = run_id
         self.lineage = lineage
         self.policy = policy
         self.events = []
         self.final = []
+        # Charon C1 (2026-09-01): an artifact that does not record what it was
+        # computed over cannot be checked later, and must not read as clean.
+        self.input_fingerprint = input_fingerprint
 
     def observe_task(self, position, family, seed, nav_seed, library_before,
                      res, admitted, library_after, fingerprints, scores):
@@ -113,6 +122,9 @@ class LibraryRecorder:
     def to_dict(self):
         return {'schema': SCHEMA_VERSION, 'run_id': self.run_id,
                 'lineage': self.lineage, 'policy': self.policy,
+                'input_fingerprint': self.input_fingerprint,
+                'n_events': len(self.events),
+                'n_final_library': len(self.final),
                 'events': self.events, 'final_library': self.final}
 
     def write(self, path):

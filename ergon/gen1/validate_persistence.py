@@ -26,9 +26,11 @@ import random
 import sys
 
 import d5_paths
+import input_fingerprint
 import replay_m1
 from persistence import (LibraryRecorder, reconstruct_library,
-                         scan_oracle_leakage, genotype_hash, _canon)
+                         scan_oracle_leakage, genotype_hash, _canon,
+                         TOP_FIELDS as P_TOP_FIELDS)
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 FIXTURE_TASKS = 6          # cheap deterministic fixture for checks A-D
@@ -45,8 +47,7 @@ EVENT_FIELDS = {'schema', 'run_id', 'lineage', 'policy', 'position', 'family',
                 'library_after_size'}
 ADMISSION_FIELDS = {'artifact_hash', 'genotype', 'length', 'admission_reason',
                     'source_score', 'behavior_fingerprint', 'readmission'}
-TOP_FIELDS = {'schema', 'run_id', 'lineage', 'policy', 'events',
-              'final_library'}
+TOP_FIELDS = set(P_TOP_FIELDS)
 FINAL_FIELDS = {'position_in_library', 'artifact_hash', 'genotype'}
 
 results = []
@@ -78,7 +79,9 @@ def run_fixture(persist, rng_factory=None):
     if rng_factory is not None:
         replay_m1.RNG_FACTORY = rng_factory
     try:
-        rec = LibraryRecorder('validate-v1', 0) if persist else None
+        rec = (LibraryRecorder('validate-v1', 0,
+                              input_fingerprint=input_fingerprint.compute())
+               if persist else None)
         lib, rows = replay_lineage_guarded(0, dev, rec)
     finally:
         replay_m1.RNG_FACTORY = saved
@@ -209,7 +212,8 @@ def check_E(lineages):
 
     dev = replay_m1.load_dev_battery()
     for j in lineages:
-        rec = LibraryRecorder('gen1-fidelity-v1', j)
+        rec = LibraryRecorder('gen1-fidelity-v1', j,
+                              input_fingerprint=input_fingerprint.compute())
         lib, rows = replay_m1.replay_lineage(j, dev, rec, 'gen1-fidelity-v1')
 
         mism = []
@@ -239,6 +243,33 @@ def check_E(lineages):
         rec.write(os.path.join(outdir, 'library_lineage_%d.json' % j))
 
 
+def check_F(rec, lineages):
+    """Charon C1, applied to this seat's own artifact. A certificate that does
+    not record its inputs is a claim about a moment."""
+    fp = rec.to_dict().get('input_fingerprint')
+    report('F record fingerprinted', 'real', True, bool(fp),
+           '%d frozen sources + battery hash' % len(fp['frozen_sources'])
+           if fp else 'ABSENT')
+    report('F inputs undrifted', 'real', 0, len(input_fingerprint.compare(fp)),
+           ';'.join(input_fingerprint.compare(fp)))
+
+    # F-fire: an artifact whose inputs moved must NOT read as clean.
+    moved = copy.deepcopy(fp)
+    moved['frozen_sources'][0]['sha'] = '0' * 64
+    report('F inputs undrifted', 'GATE-FIRE (m1.py moved)', 1,
+           len(input_fingerprint.compare(moved)),
+           ';'.join(input_fingerprint.compare(moved)))
+
+    # F-fire: an artifact with NO fingerprint must raise, not pass.
+    try:
+        input_fingerprint.compare({})
+        caught = False
+    except ValueError:
+        caught = True
+    report('F unfingerprinted raises', 'GATE-FIRE (no fingerprint)', True,
+           caught, 'an artifact without a fingerprint cannot read as clean')
+
+
 def main():
     lineages = [int(x) for x in (sys.argv[1].split(',')
                                  if len(sys.argv) > 1 else ['0'])]
@@ -247,6 +278,7 @@ def main():
     check_B(rec, lib_on)
     check_C(rec)
     check_D(rec)
+    check_F(rec, lineages)
     print()
     check_E(lineages)
 
@@ -261,7 +293,13 @@ def main():
     with open(out, 'w', encoding='utf-8') as f:
         json.dump({'verdict': verdict, 'n_checks': len(results),
                    'n_failed': n_fail, 'n_gate_fires': n_fire,
-                   'lineages_checked': lineages, 'results': results},
+                   # Charon C1: a certificate states its own coverage, so a
+                   # run over 1 lineage cannot be read as a run over 5.
+                   'lineages_checked': lineages,
+                   'n_lineages_checked': len(lineages),
+                   'fixture_tasks_per_lineage': FIXTURE_TASKS,
+                   'input_fingerprint': input_fingerprint.compute(),
+                   'results': results},
                   f, indent=1)
         f.flush()
     print('wrote', out)
