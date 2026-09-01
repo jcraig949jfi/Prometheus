@@ -1,0 +1,490 @@
+======================================================================
+ERGON - GEN-1B PRE-FLIGHT, EXECUTION, AND MEMORY-MECHANISM AUTOPSY
+
+Issued by James, 2026-09-01. Committed verbatim as the authoritative brief.
+Where this file and any later summary disagree, this file wins.
+======================================================================
+
+You are authorized to complete the remaining Gen-1 pre-flight work and, if all
+gates remain green, execute the frozen retention-policy experiment at n = 30
+paired lineages.
+
+This assignment has three purposes:
+
+1. verify that the proposed REDUNDANCY and EFFECTIVE_USAGE policies are
+   measuring what their names imply;
+2. run Gen-1 under the already accepted causal design;
+3. determine WHY any retention-policy effect occurs, rather than merely
+   ranking policies.
+
+Do not reopen design questions already resolved in Gen-1A unless new evidence
+mechanically invalidates them.
+
+The standing estimand remains:
+
+    the causal effect of RETENTION POLICY,
+    including the downstream search trajectory induced by that policy.
+
+The independent experimental unit remains:
+
+    LINEAGE.
+
+Admission remains frozen to D-5.
+Library cap remains 64.
+The treatment is eviction/retention only.
+
+Exact stream freezing remains architecturally unavailable and is an accepted
+limitation, not a defect to "fix" by altering the frozen search core.
+
+======================================================================
+PHASE 1 - MUTATIONAL REDUNDANCY AUDIT
+======================================================================
+
+Gen-1A found:
+
+    834 admitted artifacts
+    347 distinct behaviour fingerprints
+    58% of artifacts behaviourally duplicate another admitted artifact
+
+This is sufficient to establish CURRENT-BEHAVIOUR redundancy.
+It is NOT sufficient to establish EVOLUTIONARY redundancy.
+
+The library contains executable genotypes that are later used as mutation
+seeds. Two artifacts with identical present behaviour may expose very
+different future mutation neighborhoods.
+
+Therefore test:
+
+    SAME PHENOTYPE != SAME MUTATIONAL AFFORDANCES?
+
+For pairs or groups sharing an identical behaviour fingerprint, measure their
+controlled mutation neighborhoods.
+
+Use matched mutation budgets and controlled/randomness-preserving procedures
+wherever mechanically possible.
+
+At minimum report pairwise/group similarity in:
+
+  - offspring behaviour fingerprints;
+  - number of distinct offspring behaviours;
+  - offspring score distributions;
+  - probability of producing a strict improvement;
+  - probability of producing an effective-use event;
+  - reachable novel behaviours;
+  - operator-specific offspring differences;
+  - genotype/edit distance;
+  - offspring overlap as mutation radius/budget increases.
+
+Define and justify a quantitative measure of:
+
+    MUTATIONAL REDUNDANCY
+
+The purpose is to distinguish:
+
+    behaviourally equivalent AND evolutionarily redundant
+
+from:
+
+    behaviourally equivalent BUT evolutionarily distinct.
+
+Report what fraction of the apparent 58% redundancy survives this stronger
+test.
+
+If behavioural duplicates routinely expose different mutation neighborhoods,
+do not silently treat them as disposable.
+
+In that case either:
+
+A. redefine I1 REDUNDANCY so eviction requires both behavioural redundancy and
+   sufficient mutational-neighborhood redundancy;
+
+or
+
+B. retain simple behavioural redundancy as the arm but explicitly classify it
+   as a test of phenotype-level compression, not genuine evolutionary
+   redundancy.
+
+Simulate the final I1 policy against the recorded admission stream before
+preregistration.
+
+Report:
+
+  - fraction of eviction decisions differing from baseline;
+  - mean and terminal library Jaccard overlap;
+  - behavioural diversity;
+  - mutational-neighborhood diversity;
+  - age distribution;
+  - effective-use distribution;
+  - fraction of unique mutation neighborhoods removed.
+
+If I1 does not create meaningful policy divergence, drop it rather than
+running a ceremonial arm.
+
+======================================================================
+PHASE 2 - EFFECTIVE-USAGE OPPORTUNITY AUDIT
+======================================================================
+
+Gen-1A established that raw draw count is non-discriminating and that
+effective uses are much more dispersed:
+
+    median raw draws ............ 286
+    zero raw draws .............. 4%
+    median effective uses ....... 1
+    zero effective uses ......... 42%
+
+That establishes a sorting signal.
+
+It does NOT yet establish that absolute effective-use count is free of
+exposure/residence bias.
+
+Test whether EFFECTIVE_USAGE itself is substantially an artifact-age or
+opportunity signal.
+
+Using the existing baseline corpus, analyze relationships among:
+
+  - effective-use count;
+  - total draw opportunities;
+  - residence duration;
+  - admission position;
+  - genotype length;
+  - task family;
+  - behaviour fingerprint;
+  - artifact age;
+  - score at admission.
+
+At minimum compare:
+
+1. absolute effective-use count;
+2. effective uses / draw opportunity;
+3. probability of at least one effective use after matched opportunity counts;
+4. a reasonable shrinkage/Bayesian or empirical-Bayes estimate of
+   effective-use rate, if useful and implementable without oracle leakage.
+
+Pay particular attention to artifacts with ZERO effective uses.
+
+Determine whether they are:
+
+    genuinely inert
+
+or disproportionately:
+
+    young / underexposed / rarely drawn.
+
+Do not optimize the policy retrospectively for CFR.
+
+The purpose is diagnostic: determine whether the current I2 semantics match
+the name EFFECTIVE_USAGE.
+
+If absolute counts remain defensible, retain them.
+
+If opportunity-normalized credit is clearly more faithful and can be
+maintained ONLINE using learner-visible information only, propose the minimal
+repair BEFORE viewing Gen-1 policy outcomes.
+
+Any repair changes the preregistration and therefore must be frozen and hashed
+before Gen-1 begins.
+
+======================================================================
+PHASE 3 - FINAL FREEZE
+======================================================================
+
+If Phases 1 and 2 do not fire a stop condition:
+
+Freeze and hash the complete Gen-1 design.
+
+Primary arms should remain minimal.
+
+Expected set:
+
+    I0  D5_BASELINE_MRU
+    I1  REDUNDANCY          exact definition determined by Phase 1
+    I2  EFFECTIVE_USAGE     exact credit definition determined by Phase 2
+    I3  RANDOM              arbitrary-memory comparator
+
+LRU_DRAW / raw draw-count remains diagnostic only unless a pre-existing reason
+requires a scored arm.
+
+Every scored arm must have:
+
+  - identical library cap;
+  - identical admission mechanics;
+  - identical task corpus;
+  - identical evaluation budget;
+  - identical search core;
+  - deterministic tie-breaking except where RANDOM is the defined treatment;
+  - no retrospective/future information;
+  - n = 30 paired independent lineages.
+
+Primary endpoint:
+
+    future CFR under the frozen Gen-1 definition.
+
+Unit of inference:
+
+    lineage.
+
+Primary statistical procedure:
+
+    the previously frozen lineage-respecting paired/sign-flip procedure.
+
+Do not alter analysis after viewing outcomes.
+
+Record the preregistration hash before the first experimental
+organism-evaluation.
+
+======================================================================
+PHASE 4 - RUN GEN-1
+======================================================================
+
+Execute Gen-1 at n = 30 paired lineages.
+
+Instrument every arm sufficiently to reconstruct:
+
+  - admission;
+  - eviction;
+  - retirement;
+  - artifact draws;
+  - effective-use credit;
+  - library contents through time;
+  - first candidate-stream divergence;
+  - candidate overlap;
+  - library-composition divergence;
+  - CFR trajectory.
+
+Report primary endpoint results before performing exploratory mechanism
+analysis.
+
+For every primary contrast give:
+
+  - paired lineage-level deltas;
+  - mean effect;
+  - uncertainty;
+  - exact/precommitted p-value;
+  - effect relative to the preregistered MDE;
+  - all 30 lineage-level observations or sufficient machine-readable
+    equivalent.
+
+Do not convert a small statistically detectable difference into a capability
+claim without reporting its absolute magnitude.
+
+======================================================================
+PHASE 5 - MEMORY MECHANISM AUTOPSY
+======================================================================
+
+Regardless of whether Gen-1 is positive, negative, or mixed, perform the same
+mechanistic analysis.
+
+Do NOT stop at:
+
+    "Policy X won."
+
+Ask:
+
+    WHAT DID THE POLICY ACTUALLY CHANGE?
+
+For every arm measure trajectories of:
+
+  - behavioural diversity;
+  - mutational-neighborhood diversity;
+  - library age distribution;
+  - effective-use concentration;
+  - effective-use rate;
+  - duplicate suppression;
+  - artifact recurrence;
+  - retirement rate;
+  - resurrection of old artifacts;
+  - fraction of the library ever producing an effective descendant;
+  - successful descendants per unit compute;
+  - successful descendants per library draw;
+  - task-family-specific effects;
+  - library divergence versus CFR divergence;
+  - genotype-length distribution;
+  - concentration of contribution across artifacts.
+
+Where possible test whether the CFR effect is statistically associated with
+these intermediate properties across lineages.
+
+This analysis is explanatory and exploratory.
+
+Do not rewrite the primary causal result based on it.
+
+======================================================================
+PHASE 6 - RESULT CLASSIFICATION
+======================================================================
+
+Classify the outcome using the strongest mechanically defensible category.
+
+Candidate categories include:
+
+SELECTIVE_MEMORY_EFFECT
+    A retention policy changes future CFR and the retained population
+    demonstrably contains more reusable/effective capability.
+
+DIVERSITY_PRESERVATION_EFFECT
+    A policy changes CFR primarily by preserving behavioural or
+    mutational-neighborhood diversity.
+
+REDUNDANCY_COMPRESSION_EFFECT
+    Removing genuinely redundant artifacts creates measurable future
+    capability or compute efficiency without sacrificing reach.
+
+AGE_OR_RESIDENCE_EFFECT
+    Apparent memory-quality effects are predominantly explained by
+    artifact age/exposure.
+
+TRAJECTORY_EFFECT_UNRESOLVED
+    CFR changes but measured retained-library properties cannot explain
+    the effect; policy-induced search trajectory remains the leading
+    unresolved mechanism.
+
+POLICY_DIFFERENCE_NO_CAPABILITY_EFFECT
+    Policies produce substantially different libraries and trajectories
+    but no meaningful CFR difference.
+
+RETENTION_POLICY_EFFECT_NEAR_ZERO
+    Gen-1 is adequately powered and places a useful upper bound on
+    retention-policy value.
+
+Do not force the result into one of these names if another description is more
+mechanically accurate.
+
+======================================================================
+PHASE 7 - EXPERIENCE HALF-LIFE
+======================================================================
+
+Use the new persistence ledger to produce the first empirical
+survival/recurrence analysis of executable experience.
+
+For each artifact determine, where observable:
+
+  - admission time;
+  - draw opportunities;
+  - first effective use;
+  - last effective use;
+  - time between effective uses;
+  - whether usefulness recurs after long dormancy;
+  - age at retirement;
+  - whether a retired artifact would later have become useful under another
+    observed policy/counterfactual replay where legitimately measurable;
+  - task-family distance between uses.
+
+Estimate quantities of the form:
+
+    P(future effective reuse |
+      artifact age,
+      previous effective uses,
+      draw opportunities,
+      behaviour family,
+      genotype properties,
+      task distance)
+
+Produce an empirical EXPERIENCE HALF-LIFE or, if the distribution does not
+admit a meaningful half-life, a survival/hazard representation that does.
+
+Ask specifically whether usefulness has:
+
+  - short-lived decay;
+  - heavy tails;
+  - resurrection events;
+  - distinct artifact subpopulations.
+
+Do not fit an elaborate learned eviction policy in this generation.
+
+The objective is to determine whether forgetting could eventually be based on
+an empirically measured hazard rather than a hand-selected retirement
+threshold.
+
+======================================================================
+PHASE 8 - MEMORY TRANSPLANT DESIGN
+======================================================================
+
+Do NOT automatically spend another large experimental budget.
+
+Instead, based on Gen-1 results, design the next falsification experiment:
+
+    MEMORY TRANSPLANT / RESIDUAL CAPABILITY TEST
+
+Concept:
+
+Take mature libraries produced under the competing Gen-1 retention policies.
+Freeze them.
+Expose them to a fresh held-out challenge battery under otherwise matched
+conditions.
+
+Ask whether libraries created by a superior retention policy carry
+transferable future capability when separated from the exact developmental
+trajectory that created them.
+
+The intended distinction is:
+
+    GOOD POLICY -> LUCKY DEVELOPMENTAL TRAJECTORY
+
+versus
+
+    GOOD POLICY -> BETTER PERSISTENT SUBSTRATE
+                   -> FUTURE TRANSFERABLE CAPABILITY
+
+Return a concrete design, power estimate, stop conditions and expected cost.
+
+Do not execute this follow-on unless it is extremely cheap and unambiguously
+authorized by an existing budget. The deliverable for this phase is primarily
+the design.
+
+======================================================================
+CLAIM DISCIPLINE
+======================================================================
+
+Maintain the existing Ergon standard.
+
+In particular:
+
+  - A behaviour fingerprint is not automatically an evolvability fingerprint.
+  - Dispersion is not automatically utility.
+  - Retention is not automatically memory quality.
+  - Correlation between a mechanism variable and CFR does not establish
+    mediation.
+  - Policy-induced trajectory differences remain part of the causal treatment.
+  - A null at n = 30 means something very different from the previously
+    rejected null at n = 5.
+  - A policy can generate radically different libraries while leaving
+    capability unchanged.
+  - A winning policy need not imply that the selected artifacts themselves
+    carry portable capability.
+
+Negative results are first-class results.
+
+======================================================================
+DELIVERABLE
+======================================================================
+
+Return one self-contained external-review packet with:
+
+ 1. MUTATIONAL REDUNDANCY audit;
+ 2. EFFECTIVE-USAGE opportunity audit;
+ 3. final policy definitions;
+ 4. final preregistration hash;
+ 5. Gen-1 primary results;
+ 6. lineage-level statistical analysis;
+ 7. stream/library divergence measurements;
+ 8. mechanism autopsy;
+ 9. result classification;
+10. experience-half-life / recurrence analysis;
+11. Memory Transplant follow-on design;
+12. exact compute and storage spent;
+13. exact claim ceiling;
+14. all deviations from preregistration;
+15. recommendation for Ergon's next generation.
+
+The central question remains simple:
+
+    DOES CHOOSING WHAT EXPERIENCE SURVIVES CREATE ADDITIONAL
+    FUTURE CAPABILITY?
+
+But do not merely tell us whether the answer is yes or no.
+
+Tell us what "survival," "redundancy," "usefulness," and "forgetting"
+actually mean in this executable ecology once they are subjected to
+measurement.
+
+======================================================================
+END ERGON GEN-1B PROMPT

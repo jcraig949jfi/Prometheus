@@ -1,0 +1,555 @@
+ERGON GEN-1B -- RETENTION, FORGETTING, AND A MEMORY-MECHANISM AUTOPSY
+2026-09-01. Self-contained external-review packet. Written for a reviewer who
+has not seen the originating conversation.
+
+HEADLINE
+
+    Choosing what experience survives DID change future capability.
+    A preregistered retention policy beat the inherited one by +2.78 pp
+    (p = 0.0008, Holm 0.0040, n = 30 paired lineages), above the
+    preregistered 1.9 pp MDE.
+
+    It did NOT beat ARBITRARY memory after correction (+1.51 pp,
+    Holm 0.0912). The design set that second bar precisely to separate
+    "better than history" from "better than arbitrary", and it was not
+    cleared.
+
+    The strongest defensible statement is that THE INHERITED MRU POLICY IS
+    THE WORST OF THE FOUR TESTED, not that principled selection beats
+    arbitrary eviction.
+
+======================================================================
+1. MUTATIONAL REDUNDANCY AUDIT (Phase 1)
+======================================================================
+
+Gen-1A reported 487 of 834 artifacts (58%) duplicating another artifact's
+behaviour fingerprint. The brief asked whether that is EVOLUTIONARY
+redundancy. It is not.
+
+PRECONDITION FIRST, AND IT COULD HAVE VOIDED THE NUMBER. A fingerprint is the
+program's output over the task's input domain, so cross-task comparison is
+meaningful only if the domain is shared. Verified: every D-5 task in F1-F4 uses
+the identical 64-point domain (0..63). Had it not, the 58% figure would have
+been an artifact of comparing different domains and would have been withdrawn.
+
+MUTATIONAL REDUNDANCY, defined and preregistered before use:
+
+    MR(a,b) = Jaccard( N_K(a), N_K(b) )
+
+N_K(x) is the set of distinct offspring behaviour fingerprints from K = 120
+MATCHED mutations of x -- every artifact receives the same seed and therefore
+the same random stream, so differences are attributable to the genotype.
+
+RESULT over 6,505 same-fingerprint pairs (585 artifacts in duplicate groups):
+
+    MR   min 0.029   p25 0.200   median 0.333   p75 0.429   max 1.000
+    median genotype edit distance between duplicates ...... 20 of max 24
+    operator-matched neighbourhood Jaccard (median) ....... 0.500
+    distinct offspring behaviours per artifact (median) ... 6
+    offspring behaviourally NOVEL vs parent (median) ...... 83.3%
+    P(strict improvement) on an 8-task panel (median) ..... 0.0344
+
+    threshold sweep -- duplicates that are ALSO evolutionarily redundant
+        tau 0.20 -> 81.5%      tau 0.50 -> 23.0%  (preregistered)
+        tau 0.30 -> 52.2%      tau 0.70 ->  4.1%
+        tau 0.40 -> 34.5%      tau 0.90 ->  2.7%
+
+SO: 77% of the apparent redundancy does NOT survive the stronger test.
+Behavioural duplicates are typically near-maximally different PROGRAMS that
+happen to compute the same function, and they open onto substantially
+different futures. Evicting one destroys roughly two thirds of a distinct
+mutation neighbourhood.
+
+    SAME PHENOTYPE != SAME MUTATIONAL AFFORDANCES.  Confirmed.
+
+I1 therefore took the brief's option A and was REPAIRED to require redundancy
+BOTH behaviourally AND mutationally, using a 32-mutation offspring sketch
+cached at admission. Had Phase 1 been skipped, the arm would have run under a
+name it did not deserve.
+
+I1 SIMULATED BEFORE FREEZE (Phase 1b), so it was not a ceremonial arm:
+    terminal Jaccard vs baseline 0.664 (pure-behavioural variant 0.546)
+    MRU-fallback rate 0.597
+    terminal behavioural diversity 0.878 (behav-only 1.000, MRU 0.706)
+    distinct reachable offspring behaviours 176 (behav-only 187, MRU 144)
+
+======================================================================
+2. EFFECTIVE-USAGE OPPORTUNITY AUDIT (Phase 2)
+======================================================================
+
+Is the credit counter secretly an exposure counter?
+
+    Spearman  effective uses vs draw opportunities ....... +0.350
+              effective uses vs residence .............. +0.373
+              effective uses vs admission position ..... -0.339
+              draws          vs residence .............. +0.792
+              RATE           vs draw opportunities ..... +0.230
+
+Moderate, not dominant. And the zero population is mostly real:
+
+    zero-effective-use artifacts ......................... 352 of 843 (42%)
+    of those, WITH >= 100 draw opportunities ............. 227 (64%)
+    median draws   zero-credit 206   vs   nonzero-credit 302
+    median residence  zero 12.0 tasks  vs  nonzero 15.0 tasks
+
+So 64% of the zero population is well exposed and still produced nothing --
+genuinely inert, not merely young.
+
+EXPOSURE STILL MATTERS, and the gradient is steep:
+
+    draw bin      n     P(>=1 effective use)   median rate
+    0             31         0.000               0.0000
+    1-49          51         0.020               0.0000
+    50-149        91         0.253               0.0000
+    150-299      313         0.671               0.0056
+    300-599      320         0.706               0.0033
+    600+          37         0.838               0.0039
+
+DECISIVE FOR THE EVICTION MARGIN. Eviction only ever touches the bottom of the
+ranking, and there:
+
+    bottom-64 by COUNT vs by RATE ............ overlap 64 / 64
+    bottom-64 by COUNT vs by empirical-Bayes . overlap 50 / 64
+
+Count and rate select the IDENTICAL eviction set, because zero is zero under
+either definition. Opportunity normalisation would not change a single
+eviction, so none was adopted -- the minimal repair is no repair.
+
+ONE GUARD WAS ADDED. Because P(>=1 effective use) is 0.02-0.25 below 150 draws,
+I2 evicts only among residents with >= 100 draw opportunities, falling back to
+the whole library if none qualify. GRACE = 100 was read off the exposure curve
+above, not off CFR, and was frozen before the run.
+
+======================================================================
+3. FINAL POLICY DEFINITIONS
+======================================================================
+
+Eviction is the ONLY treatment. Admission (m1.admissions), search core
+(m1.m1_rx), mutation operators, cap 64, task corpus, budget and scoring are
+frozen and identical in every arm.
+
+I0  D5_BASELINE_MRU
+    Evict the oldest resident. Inherited semantics.
+
+I1  MUT_REDUNDANT
+    Evict a resident redundant BOTH behaviourally (identical fingerprint to
+    another resident) AND mutationally (offspring-sketch Jaccard >= 0.50),
+    older first. Fall back to MRU when no pair qualifies.
+    Sketch: 32 matched mutations, seed 4242, computed once at admission.
+
+I2  EFFECTIVE_USAGE
+    Evict the resident with fewest effective uses among those with >= 100 draw
+    opportunities; if none qualify, minimise over all. Ties by insertion order.
+
+I3  RANDOM
+    Evict a uniformly random resident. The arbitrary-memory comparator.
+
+EFFECTIVE USE, frozen: a library draw is credited when the child it produced
+scores strictly better than the median of the last 32 scored candidates.
+Online, learner-visible, no oracle field, no future information. Credit is
+linked by observing three points the frozen core keeps apart -- library draw,
+mutate(parent -> child), FastTask.dist(child) -- with no change to control
+flow, randomness or the evaluation counter.
+
+======================================================================
+4. PREREGISTRATION
+======================================================================
+
+    brief   ergon/gen1b/PROMPT_GEN1B_2026-09-01.txt
+            blob 33386a2a58fee45ccb77384872b8b3eb1fc57d21
+    prereg  ergon/gen1b/PREREG_GEN1_2026-09-01.txt
+            blob 570835d473e23cf78dfaeba78dacf39edbe74c88
+    runner  ergon/gen1b/gen1_run.py
+            blob 577125847aabf6a3087d06935e39701cffc751be
+    analysis script committed at a762ffffd BEFORE any summary file was opened
+
+======================================================================
+5. GEN-1 PRIMARY RESULTS
+======================================================================
+
+30 paired lineages per arm. Lineage L uses the same nav-seed base in every
+arm. 42 non-control tasks, 30,000 evaluations each, cap 64 in all arms
+(verified: every one of the 120 arm-lineages ends with exactly 64 artifacts).
+
+ARM MEANS, CFR = fraction of 42 tasks solved within budget
+
+    arm  policy              mean     sd      min     max
+    I0   D5_BASELINE_MRU    0.2857  0.0433  0.214   0.381
+    I1   MUT_REDUNDANT      0.3135  0.0370  0.262   0.405
+    I2   EFFECTIVE_USAGE    0.3000  0.0431  0.238   0.405
+    I3   RANDOM             0.2984  0.0423  0.214   0.405
+
+PRIMARY CONTRASTS -- two-sided paired sign-flip permutation, 20,000 draws,
+seed 424242, Holm-Bonferroni across the five preregistered contrasts
+
+    contrast   mean       SE      90% CI              p       Holm     vs MDE
+    I1-I0    +2.78 pp  0.0072  [+1.59, +3.97] pp  0.0008  0.0040 *  >= 1.9
+    I2-I0    +1.43 pp  0.0073  [+0.24, +2.54] pp  0.0515  0.1545     < 1.9
+    I3-I0    +1.27 pp  0.0066  [+0.16, +2.30] pp  0.0540  0.1545     < 1.9
+    I1-I3    +1.51 pp  0.0059  [+0.56, +2.46] pp  0.0228  0.0912     < 1.9
+    I2-I3    +0.16 pp  0.0066  [-0.87, +1.19] pp  0.7779  0.7779     < 1.9
+
+    * the only contrast surviving Holm
+
+SIGN STRUCTURE
+    I1-I0   21 positive, 6 negative, 3 tied of 30
+    I1-I3   15 positive, 4 negative, 11 tied of 30
+
+ABSOLUTE MAGNITUDE, since a small detectable difference is not a capability
+claim: I1 solves 13.2 of 42 tasks where I0 solves 12.0. Roughly one extra task
+in forty-two.
+
+======================================================================
+6. LINEAGE-LEVEL ANALYSIS
+======================================================================
+
+All 30 paired deltas for the one surviving contrast, I1 - I0 (CFR units,
+1/42 = 0.0238 per task):
+
+  -0.0238  +0.0238  +0.0714  +0.0476   0.0000  +0.0714  +0.0952  +0.0476
+  +0.0476  +0.0714  -0.0238  -0.0238  -0.0238  +0.0476  +0.0238  +0.0238
+  -0.0714  -0.0238  +0.0952  +0.0476  +0.0238  +0.0476   0.0000  +0.0476
+  +0.0238  +0.0238  +0.0476  +0.0238   0.0000  +0.0714
+
+Machine-readable: ergon/gen1b/gen1_primary_results.json carries every arm's
+per-lineage CFR and every contrast's per-lineage deltas.
+
+The unit of inference is the LINEAGE throughout, per the Gen-1A ruling. No
+task-level statistic is used for inference anywhere in this packet.
+
+======================================================================
+7. STREAM AND LIBRARY DIVERGENCE -- THE MOST IMPORTANT NEGATIVE
+======================================================================
+
+MEASURED TERMINAL LIBRARY OVERLAP between arms, 30 lineages, Jaccard on
+artifact identity:
+
+    I0-I1  0.003     I1-I2  0.005
+    I0-I2  0.006     I1-I3  0.003
+    I0-I3  0.003     I2-I3  0.045
+
+Essentially disjoint. But the control that matters:
+
+    SAME ARM, DIFFERENT LINEAGE
+    I0 0.002    I1 0.003    I2 0.005    I3 0.002
+
+BETWEEN-POLICY divergence is INDISTINGUISHABLE FROM WITHIN-POLICY divergence.
+Two libraries built by the same policy on different seeds share as little as
+two libraries built by different policies. At the level of artifact IDENTITY,
+the retained library is essentially unique to a run and carries no recoverable
+policy signature.
+
+This is why the estimand was narrowed in Gen-1A to "policy + induced
+trajectory". The measurement now shows that narrowing was not a formality: the
+trajectory component dominates identity-level composition completely.
+
+WHAT DOES CARRY A POLICY SIGNATURE is the DISTRIBUTION, not the identities --
+see section 8. The libraries share no artifacts but differ systematically in
+their statistics.
+
+DECLARED GAP. The brief's Phase 4 asked for first candidate-stream divergence
+index and candidate overlap. The frozen runner records per-artifact and
+per-library state, NOT per-candidate genotypes, and it was hashed before the
+run, so adding that logging mid-experiment was not available. Library-level
+divergence is reported; candidate-level divergence is NOT measured. Listed
+again in section 14.
+
+======================================================================
+8. MECHANISM AUTOPSY
+======================================================================
+
+Means over 30 lineages.
+
+    measure                                  I0       I1       I2       I3
+    terminal distinct behaviours            44.1     54.8     45.3     46.3
+    terminal reachable offspring behaviours   --    165.4      --       --
+    evictions                              102.2    102.8    102.1    101.4
+    MRU fallbacks                            0.0     62.0      0.0      0.0
+    library draws                          47868    47052    47955    47628
+    total effective uses                   385.3    417.9    421.7    403.9
+    artifacts with >= 1 effective use       92.8     91.7     72.9     84.1
+    distinct artifacts admitted            165.9    166.6    166.0    165.1
+    terminal median artifact age (tasks)     8.0      8.9     15.3     11.3
+    top-artifact share of terminal credit   0.158    0.149    0.087    0.161
+
+EVERY POLICY DID WHAT IT WAS DESIGNED TO DO.
+  - I1 raised terminal behavioural diversity from 44.1 to 54.8 distinct
+    behaviours, using its redundancy rule on about 40% of evictions (62 of 103
+    fell back to MRU because no pair met both criteria).
+  - I2 more than doubled terminal artifact age, 15.3 tasks against 8.0, and cut
+    credit concentration nearly in half (0.087 vs 0.158).
+  - Admission was untouched: all four arms admit ~166 distinct artifacts and
+    perform ~102 evictions. The treatment really was eviction only.
+
+BUT MEDIATION IS NOT ESTABLISHED. Across lineages, the association between a
+mechanism delta and the CFR delta:
+
+    I1 - I0                                  I2 - I0
+    terminal distinct behaviours  r +0.159   terminal behaviours   r +0.212
+    terminal median age           r +0.134   terminal median age   r +0.123
+    artifacts with >=1 eff use    r +0.026   artifacts w/ eff use  r +0.010
+    total effective uses          r -0.168   total effective uses  r -0.491
+    library draws                 r -0.697   library draws         r -0.837
+
+The property I1 was built to change -- behavioural diversity -- moved
+decisively in the mean but correlates only r = +0.16 with the CFR gain across
+lineages. Diversity preservation is the confirmed PROXIMATE change; it is not
+shown to be the MECHANISM.
+
+THE STRONGEST CORRELATE IS AN ARTEFACT, AND IS REPORTED AS ONE. Library draws
+correlate at r = -0.70 and -0.84 with the CFR delta. That is reverse causation:
+solving a task early terminates the run and therefore consumes fewer draws.
+Fewer draws is an OUTCOME of solving, not a cause of it. It is the largest
+number in the autopsy and it means nothing.
+
+======================================================================
+9. RESULT CLASSIFICATION
+======================================================================
+
+No single listed category is accurate, so a compound classification is given,
+as the brief permits.
+
+PRIMARY, vs the inherited policy:
+    SELECTIVE_MEMORY_EFFECT (established, bounded)
+    A preregistered retention policy changed future CFR by +2.78 pp above a
+    1.9 pp MDE with Holm-corrected p = 0.0040.
+
+PRIMARY, vs arbitrary memory:
+    NOT ESTABLISHED
+    I1 - I3 is +1.51 pp, Holm 0.0912, below MDE. The evidence does not support
+    "principled selection beats arbitrary eviction". It supports "the
+    inherited MRU rule is the worst of the four tested."
+
+MECHANISM:
+    TRAJECTORY_EFFECT_UNRESOLVED, with a qualification.
+    Identity-level library composition carries NO policy signature at all
+    (section 7), and the one distributional property the winning policy was
+    built to move correlates only r = +0.16 with the gain. What changed
+    capability is not resolved by anything measured here, and the induced
+    search trajectory remains the leading unresolved candidate.
+    The qualification: this is NOT the case where library properties were
+    measured and found unchanged. They changed exactly as designed. They just
+    do not track the outcome across lineages.
+
+NOT SUPPORTED by this evidence: REDUNDANCY_COMPRESSION_EFFECT (the winning arm
+does not remove genuine redundancy -- Phase 1 showed most behavioural
+duplicates are not redundant, and the arm falls back to MRU 60% of the time);
+AGE_OR_RESIDENCE_EFFECT (the age-maximising arm, I2, did not separate from
+random); RETENTION_POLICY_EFFECT_NEAR_ZERO (one contrast cleared decisively).
+
+======================================================================
+10. EXPERIENCE HALF-LIFE
+======================================================================
+
+Separate observational pass, baseline policy, 5 lineages x 42 tasks, 827
+artifacts, 2,045 timestamped effective-use events. Not part of the Gen-1
+analysis set.
+
+THERE IS NO HALF-LIFE. Usefulness does not decay with use; the discrete
+hazard RISES and then plateaus.
+
+    h(j) = P(reach use j+1 | reached use j)
+
+    j     risk set   continued   h(j)
+    0        827        460      0.556
+    1        460        324      0.704
+    2        324        244      0.753
+    3        244        177      0.725
+    4        177        146      0.825
+    5        146        117      0.801
+    6        117         94      0.803
+    7         94         73      0.777
+    8         73         58      0.795
+    9         58         49      0.845
+
+The only steep transition is the FIRST one: 44% of artifacts never earn a
+single credit, but an artifact that has earned two has a ~75-85% chance of
+earning another, indefinitely. This is a threshold-then-plateau structure, not
+exponential decay.
+
+    CORRECTION, disclosed. A first version of this estimator binned artifacts
+    by their FINAL use count and asked whether they had "more", which is
+    definitionally zero in every bin and manufactured a spurious step at j = 2.
+    It was rewritten as the risk-set hazard above before anything was reported.
+
+TIMING AND RESURRECTION
+
+    ever effectively used ............................. 460 of 827 (56%)
+    lag admission -> first effective use ........ median 5 tasks, p90 12, max 18
+    gap between consecutive uses ................ median 0, p90 3, max 15
+    gaps of 0 tasks (same-task bursts) ............... 76.5%
+    gaps >= 5 tasks (dormant, then revived) ........... 7.2%
+    artifacts showing a revival after >= 5 dormant tasks  111 (24% of used)
+
+SUBPOPULATIONS -- three, not a continuum
+    never used ....... 367 (44%)  median 210 draws  -- well exposed, inert
+    used once ........ 136 (16%)  median 307 draws
+    used 5+ times .... 146 (18%)  median 329 draws, median span 6 tasks
+    top 10% of artifacts hold 53% of all effective uses
+
+WHAT FORGETTING SHOULD MEAN HERE, empirically. Evict on ZERO credit after
+adequate exposure: h(0) = 0.556 means 44% never start, and they are exposed
+enough to be judged. Do NOT evict on dormancy: once an artifact has been useful
+twice its hazard is ~0.8 and stays there, and 24% of used artifacts revive
+after five or more silent tasks. A hand-picked "retire after N idle" rule would
+delete exactly the wrong population.
+
+======================================================================
+11. MEMORY TRANSPLANT -- FOLLOW-ON DESIGN (not executed)
+======================================================================
+
+WHY. Gen-1's estimand includes the induced trajectory, so a winning policy may
+mean a better persistent substrate OR a luckier path. Section 7 makes this
+urgent rather than theoretical: retained libraries carry no identity-level
+policy signature at all.
+
+DESIGN. Freeze each arm's terminal library. Disable admission and eviction
+entirely. Hand it to a fresh searcher on 20 held-out ALIEN tasks no lineage
+ever developed against. Same searcher, same budget, same tasks, same fresh
+stream; the only difference is which 64 artifacts it starts with. No trajectory
+remains to take credit.
+
+    unit          library (one per lineage per arm), paired by lineage index
+    n             30 per arm
+    battery       20 held-out ALIEN tasks
+    endpoint      held-out CFR
+    contrasts     I1 - I0, I1 - I3, each arm - EMPTY, each arm - RANDOM_LIBRARY
+    test          paired sign-flip permutation, Holm
+    controls      EMPTY library; RANDOM-GENOTYPE library size-matched to 64;
+                  SHUFFLED-CONTENT library sampled across arms to break the
+                  policy-content relation while holding size fixed
+    cost          ~20 minutes wall, ~72M organism-evaluations, $0
+
+PRIOR, STATED BEFORE RUNNING: D-5's G7 measured frozen alien transfer at +5 pp,
+p = 0.26, NOT ESTABLISHED. The transplant runs on an axis where the
+accumulation effect itself did not transfer. A null is the most likely outcome
+and should be powered for.
+
+STOP CONDITIONS: if no arm separates from I0 there is no superior policy to
+transplant and the design collapses to a re-test of G7; if held-out CFR is at
+floor or ceiling for every arm including the empty control, report
+ALIEN_BATTERY_UNINFORMATIVE.
+
+A transplant null would NOT show the Gen-1 effect was unreal. It would show the
+effect did not survive separation from its trajectory. Narrower, different.
+
+======================================================================
+12. COMPUTE AND STORAGE SPENT
+======================================================================
+
+    Gen-1 experiment      151,200,000 organism-evaluations
+                          (4 arms x 30 lineages x 42 tasks x 30,000)
+                          48.6 minutes of arm wall time
+    library draws         5,715,088
+    evictions             12,258
+    I1 policy compute     159,904 sketch mutations + fingerprint evaluations
+                          (charged, not free -- ~1,332 per lineage)
+    Phase 1 audit         585 artifacts x 120 matched mutations, plus operator
+                          classes and an 8-task improvement panel
+    Phase 7 pass          5 lineages x 42 tasks x 30,000 = 6,300,000 evals
+    Gen-1A corpus         5 lineages (already committed)
+
+    money                 $0.00, local CPU, no API call anywhere
+    storage               3.8 MB Gen-1 results + 13 MB Gen-1A corpus
+
+======================================================================
+13. CLAIM CEILING
+======================================================================
+
+  - +2.78 pp is one extra task in forty-two. It is a real, preregistered,
+    Holm-surviving effect and it is small in absolute terms. Both halves of
+    that sentence travel together.
+  - "Selective retention beats arbitrary retention" IS NOT SHOWN. I1 - I3 does
+    not survive correction. Only "beats the inherited MRU rule" is shown.
+  - Mechanism is unresolved. Diversity preservation is the confirmed proximate
+    change, not a demonstrated mediator (r = +0.16).
+  - Identity-level library composition carries no policy signature: within-arm
+    divergence equals between-arm divergence. Any future claim that a policy
+    produces "a better library" must be made about DISTRIBUTIONS, never about
+    which artifacts are in it.
+  - The treatment is policy PLUS its induced trajectory. Nothing here isolates
+    library content. That is what section 11 exists to test.
+  - Everything is measured on one consumer, one substrate, one 42-task battery
+    with a shared 64-point domain, at one budget. No claim of generality.
+  - The hazard analysis is descriptive, from a single-policy observational
+    pass, and is not a causal claim about what retirement rules would do.
+  - No capability, cognition or intelligence claim is made anywhere. What was
+    measured is the probability that a fixed search finds exact solutions
+    within a metered budget.
+
+======================================================================
+14. DEVIATIONS FROM PREREGISTRATION
+======================================================================
+
+  1. CANDIDATE-STREAM DIVERGENCE NOT MEASURED. The brief's Phase 4 asked for
+     first-divergence index and candidate overlap. The frozen runner logs
+     library state, not per-candidate genotypes, and its hash was fixed before
+     the run, so this could not be added mid-experiment. Library-level
+     divergence is reported instead. This is the one substantive instrumentation
+     gap and it should be built into the next runner.
+  2. PHASE 7 HAZARD ESTIMATOR CORRECTED before reporting (section 10).
+  3. ENGINEERING SHAKEDOWN of 2 lineages at 3,000 evaluations ran before the
+     freeze to a separate directory; outputs discarded. Disclosed in prereg
+     section 9.
+  4. PHASE 7 IS A SEPARATE OBSERVATIONAL PASS, not part of the analysis set,
+     because timestamped credit events are absent from the frozen runner.
+  5. PHASES 1, 1b AND 2 used the Gen-1A baseline corpus (5 lineages, I0 only),
+     not the Gen-1 run, because they had to precede the freeze.
+
+  ALSO CORRECTED THIS SESSION, and it touches two earlier committed packets:
+  Gen-0 claim C4 and the Gen-1A packet both asserted that no search-discovered
+  D-5 library was ever persisted. FALSE. agent_d5_blind/developmental_history/
+  final_libraries/lineage_{0..4}.json have been tracked since 2026-08-27 and
+  hold the actual terminal libraries. I had enumerated ledgers/ and results/ and
+  never looked in developmental_history/ -- a scope claim treated as a
+  measurement. What survives is narrower and still true: the TRAJECTORY was
+  never persisted, which is why the Gen-1A instrument was necessary.
+
+  Separately, .gitignore carried a blanket **/results/ that silently excluded
+  agent_d5_blind/results/, including compute_gates.py and gates_verdict.json --
+  the very files D-5's VERDICT.md cites as its pre-committed analysis script and
+  machine verdict. A committed verdict pointed at files no clone contained.
+  Fixed with a narrow exception.
+
+======================================================================
+15. RECOMMENDATION FOR THE NEXT GENERATION
+======================================================================
+
+RUN THE TRANSPLANT, BUT NOT FIRST. It is cheap (~20 min) and it targets the
+right confound, but section 7 has already shown that identity-level library
+content carries no policy signature, so a transplant null is likely and would
+be hard to interpret against an inherited alien-transfer null.
+
+FIRST, CLOSE THE ARBITRARY-MEMORY GAP. The single most valuable cheap
+experiment is a powered rerun of I1 vs I3 alone. That contrast sits at +1.51 pp
+with Holm 0.0912 -- suggestive, underpowered, and it is the contrast that
+decides whether ANY of this is about selection rather than about churn. Two
+arms at n = 60 lineages costs about 55 minutes and roughly halves the MDE.
+Until it is settled, the honest summary of Gen-1 is "MRU is the worst rule we
+have tried."
+
+SECOND, INSTRUMENT THE TRAJECTORY. The one thing Gen-1 could not see is the
+mechanism it most needs: what the induced candidate stream actually did
+differently. The next runner should log first-divergence index and candidate
+overlap, which this one could not.
+
+THIRD, BUILD THE HAZARD-BASED RETIREMENT RULE, because Phase 7 now supplies the
+empirical shape rather than a guess: evict on zero credit after adequate
+exposure, never on dormancy. That is a policy derived from measurement, and it
+is the first one in this programme that would be.
+
+DO NOT: acquire another donor (Lexis G1 is fired), widen the consumer, build a
+memory database, or promote +2.78 pp into a capability narrative.
+
+REPRODUCE
+
+    python -m ergon.gen1b.phase1_mutational_redundancy
+    python -m ergon.gen1b.phase2_effective_usage_audit
+    python -m ergon.gen1b.phase1b_i1_simulation
+    python -m ergon.gen1b.gen1_run --arms I0,I1,I2,I3 --lineages 30
+    python -m ergon.gen1b.gen1_analyze
+    python -m ergon.gen1b.phase7_halflife --lineages 5
+
+agent_d5_blind/ is imported read-only and is untouched throughout.
+
+-- Ergon, 2026-09-01

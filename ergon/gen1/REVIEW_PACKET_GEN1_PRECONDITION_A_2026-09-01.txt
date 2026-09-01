@@ -1,0 +1,801 @@
+ERGON GEN-1 -- REVIEW PACKET: PRECONDITION A (LIBRARY PERSISTENCE)
+2026-09-01. Written for an external reviewer who has not seen the
+originating conversation. ASCII. Executed on M2 because M1's session
+was out of tokens.
+
+Commits: 1acd0f4b7 (precondition A), 22f08b72e (C1 remediation),
+ddabc738a (this packet). Pushed to origin/main.
+
+READ THIS FIRST -- CONCURRENCY. A SECOND ERGON INSTANCE ran Gen-1A and
+Gen-1B in parallel, on a different machine, during the same window. It
+built an equivalent persistence instrument (ergon/gen1a/), took it
+further, and has already frozen a preregistration. Its work is the
+PRIMARY line; this packet is a SECOND, INDEPENDENT implementation that
+did not see it until after both were committed. Section 19 states the
+overlap precisely and withdraws one claim of mine that its work
+falsifies.
+
+That is not wasted: this seat's own standing rule is that a statistic it
+implements cannot trigger a terminal verdict until an INDEPENDENT
+implementation has exercised the exact inference path. Two instruments,
+built without contact, agreeing that the precondition is clean, is
+stronger than either alone. It was nevertheless accidental duplication,
+and section 19 says what it cost.
+
+STATUS IN ONE LINE: the precondition is complete and clean under two
+independent implementations; no policy arm has run here; zero scientific
+organism-evaluations spent by this instance; and three findings in this
+packet are not covered by the primary line.
+
+====================================================================
+0. WHAT THIS PACKET IS, AND WHAT IT IS NOT
+====================================================================
+
+This is an INSTRUMENT report, not a scientific result. Nothing here is
+evidence about memory, retention, or forgetting. It reports:
+
+  - an instrument built to the brief's Precondition A and its validation
+  - four findings that fell out of building it, two of which correct
+    documents that this seat itself wrote
+  - two defects caught in this seat's own instrument, both recorded
+    rather than quietly fixed
+
+A reviewer with time for one section should read section 6. It is the
+finding that changes what the generation is asking, and it is not
+covered by the primary Gen-1A line.
+
+====================================================================
+1. THE GENERATION, AND WHERE THIS SITS IN IT
+====================================================================
+
+ERGON's seat question: what should persist from experience so that
+future reasoning becomes cheaper, stronger, or more transferable?
+
+Gen-1's question, issued by James on 2026-08-31 and committed verbatim
+as the authoritative brief (ergon/gen1/PROMPT_GEN1_2026-08-31.txt,
+sha256 bba0e1d7195a763d338728d831174d8c3253774c7321a82228bd2147cb7c3b8e,
+hashed at issuance):
+
+    DOES SELECTING WHAT EXPERIENCE PERSISTS CREATE ADDITIONAL FUTURE
+    CAPABILITY BEYOND ACCUMULATION ITSELF?
+
+Operationally: given the same incoming stream of candidate artifacts,
+the same library cap, the same search budget and the same task lineage,
+does changing the admission/retirement policy change future CFR?
+
+The brief sequences a precondition ahead of any science (section 3):
+
+    "The successful D-5 libraries existed only in memory. Fix this
+    BEFORE the retention experiment. Persistence must be OBSERVATIONAL
+    ONLY."
+
+That is what this packet reports. It was executed while the six
+questions from the 2026-08-31 review packet were outstanding, because
+those questions gate POLICY DESIGN and preregistration, not persistence.
+They still gate everything after this.
+
+====================================================================
+2. INHERITED EVIDENCE -- QUOTED HERE, RECOMPUTED ELSEWHERE
+====================================================================
+
+From agent_d5_blind/VERDICT.md:
+
+    library cap ................. 64
+    CFR advantage ............... +10.95 percentage points
+    test ........................ one-sided paired permutation
+    p ........................... 0.0007
+    unit of analysis ............ task-level, n = 42
+    shuffled-history retention .. 100%
+    random-library retention .... 39%
+
+The 2026-08-31 packet headed this section "QUOTED NOT RECOMPUTED" as an
+honesty label. It has since been RECOMPUTED, by the parallel Gen-1A
+instance, which re-derived the frozen G4 statistic exactly (+0.1095,
+n=42, SE 0.0342) before pointing its machinery at anything new -- the
+right order. An earlier draft of this packet claimed the figure was not
+reproducible. That claim is WITHDRAWN; see section 8.4.
+
+Allowed interpretation, unchanged: ecology-adapted executable CONTENT
+mattered; developmental ordering did not appear load-bearing. Section 6
+bounds the second half of that sentence.
+
+====================================================================
+3. THE INSTRUMENT, AND WHY ITS PARITY CLAIM IS STRUCTURAL
+====================================================================
+
+The brief requires persistence that does not alter admission, eviction,
+ordering, mutation, candidate evaluation, library lookup, random draws,
+budget, or timing-sensitive search semantics.
+
+DESIGN. The recorder does not import, wrap, patch or subclass anything
+in agent_d5_blind/learner/m1.py. It observes objects the frozen learner
+ALREADY returns -- res['scored'], res['solver'] -- and the library list
+the frozen driver ALREADY owns.
+
+In replay_m1.replay_lineage, `recorder=None` is the ONLY difference
+between persistence-off and persistence-on. These are not two functions
+kept in sync; they are the same instructions. Parity is therefore a
+property of the code rather than a promise about it.
+
+Parity is nevertheless MEASURED, on the standing principle that a check
+which has never been shown to fail is not evidence -- it is an untested
+function whose return value happens to be True.
+
+DELIVERED:
+
+  persistence.py .............. recorder, round-trip reconstructor,
+                                oracle-leakage scan
+  replay_m1.py ................ M1 lineage replay, persistence ON/OFF,
+                                one code path
+  validate_persistence.py ..... section-4 validation, every check paired
+                                with a constructed failure
+  input_fingerprint.py ........ input pinning (section 9)
+  verify_d5_freeze.py ......... a reader for D-5's unread freeze record
+  tests/test_persistence.py ... 28 unit tests
+  persisted/ .................. 5 lineage records, full trajectory
+  analyze_trajectory.py ....... measured trajectory vs the 08-31 estimates
+  window_depth.py ............. memory depth of the frozen policy
+
+====================================================================
+4. VALIDATION RESULT, WITH GATE-FIRES
+====================================================================
+
+Every check was run twice: once on the real artifact, and once on a
+constructed world where FAILURE is the conclusion known in advance.
+
+  CHECK                        REAL         CONSTRUCTED-FAILURE WORLD
+  --------------------------   ----------   --------------------------
+  A same-seed parity           PASS         rng burned by one draw
+                                            -> caught at position 0
+  A library identity ON/OFF    PASS (24)    --
+  B round-trip exact           PASS (24)    one instruction argument +1
+                                            -> hash mismatch raised
+  C oracle leakage             0 hits       wlen + solved_by_oracle
+                               (6098 nodes) planted -> both found
+  C scan non-vacuous           PASS         --
+  D schema minimality          0 extra      undeclared field added
+                               0 unused     -> detected
+  F record fingerprinted       PASS         --
+  F inputs undrifted           0 drift      m1.py hash moved -> detected
+  F unfingerprinted raises     --           no fingerprint -> RAISES,
+                                            does not read clean
+  E ledger fidelity            0 mismatch   --
+  E terminal library           5/5 exact    --
+
+  TOTAL: 25 checks, 0 failed, 6 of them constructed gate-fires.
+         28 unit tests, all passing.
+         VERDICT: PERSISTENCE_INSTRUMENT_CLEAN
+
+Parity compares nine fields per task, including an rng STATE hash and a
+digest of the full scored candidate list. The state hash is what makes
+the check strong: it asserts the two runs consumed the same NUMBER of
+random values, not merely that outcomes agreed.
+
+====================================================================
+5. CHECK E -- THE PART THAT IS NOT SELF-GRADED
+====================================================================
+
+Checks A-D and F are this seat marking its own work. Check E is not:
+its comparators were written by a different agent weeks earlier and
+cannot be tuned by this seat.
+
+  committed evidence ledger (m1_rows.jsonl) ... 290/290 rows reproduced
+  committed terminal libraries (5 files) ...... 5/5 byte-exact, in order
+
+STRENGTH, DISCOUNTED HONESTLY. 210 of the 290 rows are unsolved
+(solved=False, first_solve=None, evals=30000). Agreement on those is
+nearly free -- most arms would produce it. The informative parts are:
+
+  80 solved rows, first_solve matched as an EXACT integer, range 9..29820
+  320 ordered genotypes / 5425 instructions across the five libraries
+
+The terminal libraries are load-bearing. They match only if every
+mutation draw, crossover cut, immigrant branch, admission and eviction
+decision agreed across 58 tasks x 30000 evaluations x 5 lineages. One
+divergent draw anywhere would propagate and destroy the match.
+
+A reviewer should note what this buys: the D-5 search core is verified
+frozen BY EXECUTION, which is a stronger guarantee than the hash list
+that was supposed to provide it (section 8).
+
+====================================================================
+6. FINDING 1 -- THE LIBRARY IS A 16-TASK ROLLING WINDOW
+====================================================================
+
+This is the finding that changes the framing, and it was invisible
+before the trajectory existed.
+
+No artifact in any lineage survived longer than 18 tasks. Tracing the
+admission position of every artifact in each terminal library:
+
+  lineage 0: terminal library spans admission positions 42..57
+  lineage 1:                                            40..57
+  lineage 2:                                            42..57
+  lineage 3:                                            42..57
+  lineage 4:                                            41..57
+
+  memory depth ............... 16, 18, 16, 16, 17 tasks (mean 16.6 of 58)
+  history absent at endpoint . 69% - 72% (mean 71%)
+
+The arithmetic is elementary once the trajectory exists: 64 slots
+divided by 4.03 admissions per task is 15.9 tasks.
+
+Under the frozen policy the library is a ROLLING RECENCY WINDOW over
+roughly the last 16 tasks. It is not an accumulation over 58.
+
+PRIOR ART, STATED SO THIS IS NOT OVERSOLD. D-5 flagged this
+qualitatively. Its own note to a successor reads: "design task ecologies
+where library content cannot saturate." Nothing quantified the depth.
+This is the depth. It is a refinement of a known limitation, not a new
+discovery, and it is reported as one.
+
+TWO CONSEQUENCES, DISCLOSED FOR ADJUDICATION. These are not asserted as
+reinterpretations of another agent's verdict, which is not this seat's
+to rewrite.
+
+  C1  The alien zero-shot arm (gate G7, claim P5 NOT ESTABLISHED, +5pp
+      at p=0.26) loads final_libraries/lineage_j.json -- the TERMINAL
+      library. That library holds artifacts from the last ~16 tasks
+      only. G7 therefore measured transfer from a 16-task window, not
+      from 58 tasks of development.
+
+  C2  The shuffled-history arm (gate G9, retained 100% of the advantage)
+      is position-matched, so at every position BOTH arms hold a ~16-task
+      window and the contrast is which tasks fill it. The comparison is
+      real AT WINDOW SCALE. What the design cannot detect is a
+      developmental ordering effect at any scale LONGER than the window,
+      because no such history is ever resident. "Developmental order is
+      not the mechanism" is sound as measured, and bounded to ~16 tasks.
+
+====================================================================
+7. FINDING 2 -- TWO DOCUMENTS THIS SEAT WROTE ARE WRONG
+====================================================================
+
+7.1 AGAINST MY OWN CHARTER
+
+My charter of 2026-08-30 section 4.1 states: "Every memory result in
+Prometheus to date is an accumulation result... No experiment in this
+repo has ever measured a DELETION... A memory system that cannot forget
+is a log."
+
+The narrow claim survives: no deletion was ever MEASURED, because the
+trajectory was never persisted. The framing does not. D-5 executed
+approximately 843 evictions across five lineages (168.6 x 5) and
+discarded 71% of its own developmental history before the endpoint was
+read. D-5 forgets aggressively -- by recency, blindly, and without
+record.
+
+Gen-1's real contrast is therefore NOT accumulation versus forgetting.
+It is RECENCY-forgetting versus SELECTIVE-forgetting, at a cap that is
+already binding for 43 of 58 tasks. That is a better-posed question than
+the one I wrote into my own charter.
+
+7.2 AGAINST THE BRIEF -- ARTIFACT WINS
+
+Brief section 0 states: "No search-discovered D-5 library was persisted
+to disk. That persistence hole is the first thing Gen-1 must repair."
+
+agent_d5_blind/developmental_history/final_libraries/lineage_{0..4}.json
+are committed, tracked, and hold the 64 ordered genotypes of each
+terminal library. run_alien_and_ablations.py depends on them.
+
+The corrected statement of the hole, which is what was actually
+repaired:
+
+  terminal library state ..... WAS persisted (5 files, committed)
+  the TRAJECTORY ............. was NOT: no admission events, no eviction
+                               events, no per-position snapshots, no
+                               provenance, no scores, no fingerprints
+  the M1 dev driver .......... was NOT committed (run_m1_lineage.py
+                               exposes run_lineage(), and no committed
+                               caller invokes it for arm 'M1')
+  the task manifest .......... was NOT committed and was absent on disk
+
+The corrected hole is larger than the stated one in two of four respects
+and smaller in one. It matters because the terminal libraries are what
+made check E possible: the strongest validation available to this
+precondition exists BECAUSE the brief's premise was wrong.
+
+The task manifest was recovered, not lost: regenerated deterministically
+from compose_evidence.py (seeds 3000/6000, frozen shuffle 31337) in
+7.7 seconds, then verified against the committed evidence rows on all 58
+dev tasks for (position, family, seed, stratum, wlen).
+
+====================================================================
+8. FINDING 3 -- D-5's FREEZE RECORD IS UNREAD BY ANY CODE
+====================================================================
+
+Filed as ergon/gen1/FINDING_d5_reproducibility_2026-09-01.md for Charon
+and Aporia. Severity MEDIUM: a bookkeeping gap, NOT a validity finding.
+Found while establishing that the core this generation builds on is
+actually frozen. Sections 8.1-8.3 stand and are not covered by the
+primary line. Section 8.4 is a WITHDRAWN claim of my own, retained
+because the withdrawal is the instructive part.
+
+8.1 NOTHING VERIFIES THE FREEZE RECORD
+
+anti_cheat/frozen_hashes.json records sha256 for 31 files across five
+freeze points. anti_cheat/static_checks.py implements A1, A3 and A5 and
+NEVER READS IT. No other code in the campaign reads it either.
+
+8.2 THE RECORD IS BYTE-INOPERATIVE ON A WINDOWS CHECKOUT
+
+18 of 31 entries fail a byte-level check here. SEVENTEEN are explained
+entirely by core.autocrlf=true rewriting LF to CRLF on checkout. They
+are not violations and nobody touched those files.
+
+This is a trap worth generalizing: a byte-level freeze check on this
+repo reports 17 false violations on any Windows machine, and a check
+that cries wolf 17 times gets switched off. Future freeze records should
+hash LINE-ENDING-NORMALIZED content. The validator shipped with this
+finding normalizes, then asks git which revision the content matches,
+which SEPARATES the two confounds instead of estimating between them.
+
+8.3 ONE GENUINE POST-FREEZE EDIT: THE ANTI-CHEAT SCRIPT ITSELF
+
+After normalization exactly one mismatch survives:
+
+  anti_cheat/static_checks.py
+    frozen hash matches commit ... 1c68630da  (Phase 1 apparatus)
+    edited after the freeze in ... b503c5cfd  (INTERIM EVIDENCE: G4 PASS
+                                               +10.95pp)
+
+The file was changed in the same commit that reported the headline
+result. The diff adds an exemption to its own oracle-field scan:
+
+    HARNESS_EXEMPT = {'run_arm.py'}
+    ...
+    if not fn.endswith('.py') or fn in HARNESS_EXEMPT:
+        continue
+
+This is the defect class this campaign is named for -- a check that
+removes a region before inspecting it -- arriving in another agent's
+codebase. It is why the file was inspected.
+
+ASSESSMENT, LARGELY EXCULPATORY. The exemption is documented in the diff
+and in BUILD_LOG. Its stated mitigation is that the logic modules m0.py
+and m1.py remain scanned, and that mitigation HOLDS: m0.py indexes no
+oracle field (its only matches are docstring prose and the legitimate
+exact-match verifier both arms use for scoring). The anti-cheat battery
+passes today -- A1 over 60 tasks, A3 zero hits, A5 zero overlap.
+
+Two residuals a reviewer should still weigh:
+
+  - run_arm.py line 37 passes the FULL task object into the M0
+    navigator, where the M1 path (run_m1_lineage.py line 53) correctly
+    passes learner_view(t). A token scan would not catch this either
+    way -- it is argument passing, not a name reference -- and it is
+    closed in practice by m0.py reading no oracle field. But the
+    asymmetry between the two arms' input boundaries is real and was
+    never stated.
+  - THE DIRECTION IS CONSERVATIVE. Any residual oracle access here
+    strengthens M0, the COMPARATOR, which SHRINKS the +10.95pp M1
+    advantage. It cannot inflate the headline. This is the main reason
+    the finding is graded MEDIUM rather than HIGH.
+
+8.4 WITHDRAWN -- "THE ANALYSIS SCRIPT WAS LOST"
+
+An earlier draft of this packet claimed that results/compute_gates.py --
+the pre-committed hashed script VERDICT.md attributes all analysis to --
+was LOST, and therefore that +10.95pp could be re-derived but never
+reproduced. THAT CLAIM IS WITHDRAWN. It was wrong.
+
+WHAT I OBSERVED. agent_d5_blind/results/ was absent from my checkout,
+and `git log --all` showed no commit had ever touched any file under it.
+
+WHAT I INFERRED. That the files were lost.
+
+WHY THAT WAS WRONG. "Absent from my checkout with no git history" is
+equally consistent with "excluded by a gitignore rule and sitting on
+another machine's disk," which is what had actually happened: .gitignore
+carried a blanket **/results/ that silently ate agent_d5_blind/results/.
+The parallel Gen-1A instance found the same absence from the opposite
+direction -- a fresh worktree could not run its Phase 1 script --
+diagnosed it correctly, and committed the directory behind a narrow
+exception (commit 8e7a6f505).
+
+This is feedback_instrument_error_is_not_evidence, committed by the seat
+that carries the rule: a DISCOVERY-PATH failure is not a fact about the
+world. I had two hypotheses and the evidence separated neither, and I
+reported the more dramatic one. The correct move was available and cheap
+-- read .gitignore.
+
+WHAT THE CORRECTED FACTS BUY, WHICH IS MORE THAN THE ERROR COST. With
+results/ now committed, the freeze record covers 33 entries with none
+absent, and compute_gates.py and gates_verdict.json BOTH MATCH their
+frozen hashes -- hashes recorded before any M1 row was read. So the
+pre-commitment is not merely intact, it is now VERIFIED, by a reader
+(verify_d5_freeze.py) that did not exist this morning. Independently,
+the Gen-1A instance re-derived the G4 statistic exactly. The headline is
+reproducible on two counts.
+
+WHAT SURVIVES FROM THE ORIGINAL FINDING: 8.1, 8.2 and 8.3. Nothing reads
+the freeze record; a byte-level check reports 17 false violations on a
+Windows checkout; and one genuine post-freeze edit exists, to the
+anti-cheat script, in the commit that reported the headline. None of
+those three is covered by the primary line.
+
+====================================================================
+9. FINDING 4 -- A BLOCKING CONDITION APPLIED TO MY OWN ARTIFACT,
+   AND THE CHEAP FIX REFUSED
+====================================================================
+
+Charon ruled on this seat's 2026-08-30 pooled-residue request on the
+morning of 2026-09-01. The ruling grants form (b), block-scoped pools,
+subject to two conditions that OUTRANK it and block collection. C1
+reads: the manifest is sha-pinned and refuses on mismatch, but the
+residue pool that renders every arm is not pinned or fingerprinted.
+
+The artifacts in section 4 had exactly that exposure, shipped hours
+earlier. persistence_validation.json asserted PERSISTENCE_INSTRUMENT_CLEAN
+with no record of WHAT it was computed over, and the lineage records
+carried no fingerprint of the frozen sources that produced them. A
+certificate computed over one lineage would have been indistinguishable
+from one computed over five -- the defect Harmonia B measured on
+2026-08-31, a green certificate computed over 4 records.
+
+REMEDIED before being asked. input_fingerprint.py pins the six frozen
+sources the replay path executes, the battery by CONTENT (the ordered
+position/family/seed sequence, not file bytes), and the manifest hash.
+Every record now carries the fingerprint plus its own n_events and
+n_final_library counts. The certificate carries lineages_checked,
+n_lineages_checked and fixture_tasks_per_lineage. Check F was added,
+with two gate-fires.
+
+Hashing is LF-normalized, applying section 8.2's own lesson rather than
+merely reporting it.
+
+9.1 THE FIX THAT WAS REFUSED
+
+Adding the fingerprint made the oracle-leakage scan FAIL, with two hits.
+One pinned source is 'exact_oracle/oracle.py', and as a dict KEY that
+correctly trips a scan matching forbidden substrings in field names.
+
+The cheap fix is to exempt the fingerprint block from the scan. That is
+precisely the defect filed against D-5 in section 8.3 -- exempting a
+region before inspecting it -- and it was refused on those grounds, one
+hour after filing it against someone else.
+
+The fix taken changes the DATA SHAPE instead: frozen_sources became a
+list of {path, sha} records, so the path is a VALUE rather than a field
+name. The scan remains unexempted and still inspects every one of 6098
+nodes.
+
+This is recorded rather than quietly fixed because the two options are
+OBSERVATIONALLY IDENTICAL in the certificate: both produce a green C.
+The only thing separating them is which one is taken when nobody is
+checking.
+
+BOUNDARY, STATED EXPLICITLY: this did NOT discharge Charon's C1. That
+condition is about ergon/probe's residue pool. The LESSON was applied to
+a different instrument. The probe's C1 and C2 remain open and still
+block collection there.
+
+====================================================================
+10. TWO DEFECTS CAUGHT IN THIS SEAT'S OWN INSTRUMENT
+====================================================================
+
+Reported because an instrument report listing only successes
+misrepresents how the instrument was built.
+
+10.1 A VACUITY GUARD THAT VIOLATED THE RULE IT ENFORCED
+
+The first version of the leakage scan's vacuity guard counted the ROOT
+node, so seen==1 for any input whatsoever. scan_oracle_leakage(None)
+therefore returned a GREEN "no forbidden fields" verdict over a
+non-record. It was written to enforce ATK-013 -- a lookup that finds
+zero rows must raise, never return a renderable value -- and it violated
+ATK-013 itself.
+
+Caught by test_leakage_scan_refuses_to_pass_vacuously, a test written
+for exactly that class, before any real record was scanned. The guard
+now checks record SHAPE first and requires descent beyond the root.
+
+10.2 SEE SECTION 9.1
+
+====================================================================
+11. COMPUTE LEDGER
+====================================================================
+
+  battery regeneration .................... 7.7 s
+  validation, 5 lineages .................. ~160 s
+  unit tests .............................. ~6 s
+  scientific organism-evaluations ......... 0
+  API spend ............................... $0.00
+
+  replay cost, measured ................... ~0.5 s per task
+                                            ~30 s per 58-task lineage
+                                            ~150 s per full 5-lineage arm
+
+That last line sizes the generation: a policy arm over five lineages
+costs about two and a half minutes of wall time. Compute-matching across
+policies is therefore not a budget problem, and the brief's stop
+condition "policies cannot be compute-matched" does not fire on cost.
+Policy-computation cost must still be metered separately.
+
+====================================================================
+12. STOP CONDITIONS (BRIEF SECTION 21) -- CURRENT STATUS
+====================================================================
+
+  persistence changes search ............. CLEARED. Structural, and
+                                           measured with a fired gate.
+  persistence not reconstructable ....... CLEARED. Round-trip exact, and
+                                           5/5 terminal libraries match
+                                           another agent's artifacts.
+  attainable policy range near zero ..... CLEARED. Estimated 08-31,
+                                           now confirmed by direct
+                                           measurement (section 13).
+  policies cannot be compute-matched .... does not fire on cost.
+  streams cannot be made comparable ..... STILL PARTIALLY FIRED. Exact
+                                           stream freezing is
+                                           architecturally impossible
+                                           (08-31 FINDING 2), unchanged
+                                           by this work. Reviewer and
+                                           Charon judgement, not the
+                                           driver's.
+  retention requires oracle leakage ..... NOT FIRED, provided I2 is
+                                           repaired (08-31 FINDING 3).
+  endpoint cannot distinguish policies .. UNKNOWN. Untested.
+
+====================================================================
+13. THE 08-31 PRE-SCREEN WAS AN ESTIMATE; HERE IS THE MEASUREMENT
+====================================================================
+
+The pre-screen inferred the trajectory from the evidence ledger's
+library_size_at_start column. The trajectory is now recorded directly,
+so the estimate is checkable. It survives, slightly high in every term:
+
+                          08-31 ESTIMATE      MEASURED 2026-09-01
+  saturation position     15-16               14-15 (14,15,15,15,15)
+  admissions per task     ~4.05               4.03
+  evictions per lineage   ~171                168.6
+  turnover                ~2.67x              2.63x
+
+Newly measurable, and not estimable from the ledger at all:
+
+  distinct artifacts admitted ....... 1137 across 5 lineages
+  readmissions (dedup hits) ......... 7 total -- near-zero re-encounter
+  admitted-artifact score ........... min 0 / median 109 / max 928
+  admitted-artifact length .......... min 1 / median 21 / max 24
+  artifact lifetime (tasks) ......... min 0 / median 15 / MAX 18
+
+====================================================================
+14. WHAT IS NOT CLAIMED
+====================================================================
+
+  - Nothing about whether retention policy matters. No policy has been
+    defined, let alone run.
+  - No reinterpretation of D-5's verdict. Sections 6 C1 and C2 are
+    disclosures for Charon and Aporia to rule on.
+  - No claim that D-5's result is wrong. Section 8 is a bookkeeping
+    finding; the evidence rows are intact and now more verified than
+    before, and the one real freeze deviation runs in the conservative
+    direction.
+  - NOT claimed: that D-5's headline is unreproducible. That claim was
+    made in an earlier draft and is withdrawn in section 8.4.
+  - No priority claim over the parallel Gen-1A instance. On the
+    precondition itself that line got there first and went further;
+    see section 19.
+  - No discharge of Charon's C1 or C2 on the metabolization probe
+    (section 9, boundary).
+  - The forbidden vocabulary is not used: this packet claims nothing
+    about intelligence, cognition, understanding, or AGI.
+
+====================================================================
+15. DECLARED CONFLICTS
+====================================================================
+
+The driver is a conflicted party in both directions and says so in
+writing, per standing constraint.
+
+  - Gen-1's central question is the one this seat proposed in its own
+    charter on 2026-08-30. A finding that retention matters would
+    vindicate a position taken before evidence was gathered.
+  - A STOP finding would end an expensive generation early and is also
+    attractive.
+  - Section 7.1 reframes the generation in a way that makes it
+    BETTER-POSED, which is the outcome that keeps my own work running.
+    That reframing is nevertheless forced by measurement, and the
+    measurement is a deterministic function of committed artifacts.
+  - Section 8's exculpatory reading protects the substrate this seat
+    depends on. It rests on byte-exact replay of artifacts written by
+    another agent before this seat existed, which is the least tunable
+    evidence available to me. The parts that cut the other way --
+    sections 8.3 and 8.4 -- are filed rather than resolved, and I am
+    not the one who should grade them.
+
+MITIGATION IS STRUCTURAL, NOT DISPOSITIONAL. Check E's comparators, the
+frozen battery and the terminal libraries were all authored elsewhere.
+Six of 25 checks are constructed worlds where failure is the required
+outcome.
+
+====================================================================
+16. QUESTIONS FOR THE REVIEWER
+====================================================================
+
+Q1-Q6 were filed 2026-08-31. THREE HAVE SINCE BEEN ANSWERED by the
+parallel Gen-1A instance, which this instance did not see until after
+committing; they are marked ANSWERED below and left in place so a
+reviewer can see what was asked and what settled it. The rest stand.
+
+  Q1  Exact stream freezing is architecturally impossible. Is paired
+      same-seed comparison with measured divergence sufficient for
+      attribution, or does Gen-1 need a different consumer?
+      [Unchanged by this work.]
+
+  Q2  Repair I2 as effective-usage, rename it age-weighted, or drop it?
+      [Sharpened: usage is unobservable without a probe INSIDE the
+      frozen search core -- see Q7.]
+
+  Q3  ANSWERED -- and it was the decisive question. Gen-1A: the
+      treatment is ASSIGNED at the lineage, so n=5, not 290. Simulating
+      the frozen sign-flip test at sigma 0.0412 gives MDE 10.1pp at n=5
+      -- exceeding the 6.7pp content-adaptedness component it would
+      modulate and nearly equalling the whole 10.9pp effect. Verdict
+      GEN1_READY_TO_RUN at n=30 (n>=20 minimum). Between-lineage
+      variance is only 1.8% of cell variance, so lineages are nearly
+      exchangeable and the n=5 penalty is mostly sign-flip DISCRETENESS
+      (2^5 = 32 patterns), not heterogeneity. A lineage costs 27 s, so
+      30 lineages x 4 arms is under an hour.
+      My section 6 sharpens this but did not answer it, and my own
+      replay cost measurement (~30 s per lineage) independently agrees
+      that n is cheap to raise.
+
+  Q4  Vary eviction only, or admission and eviction factorially?
+      [Sharpened: the two levers are now measured separately -- 4.03
+      admissions and ~2.9 evictions per task -- so they are
+      demonstrably separable.]
+
+  Q5  Harmonia corpus filtered on retention outcome, or emitted whole
+      with retention as a field?
+
+  Q6  ANSWERED. Gen-1A replayed one admission stream through five
+      eviction rules: EFFUSE and LRU_DRAW end at terminal Jaccard 0.000
+      against baseline -- not one shared artifact -- with RANDOM 0.461
+      and RETIRE_N 0.113, and RETIRE_N firing 53 retirements per
+      lineage. RETENTION_POLICY_RANGE_NONTRIVIAL, and forgetting is
+      active rather than ceremonial. Section 6 of this packet explains
+      WHY disjointness is easy to reach: the library turns over 2.6x, so
+      a policy difference washes the entire library well before the
+      endpoint.
+
+NEW, ARISING FROM THIS WORK:
+
+  Q7  SUPERSEDED IN PRACTICE. This instance deferred the usage probe on
+      the grounds that it modifies frozen code and should be validated
+      separately. Gen-1A went ahead and captured draws
+      (corpus/lineage_*_draws.jsonl) with parity passing. The residual
+      question is therefore not "is it possible" but whether the draw
+      probe's parity was validated as its OWN step, so that a future
+      parity failure is attributable to it rather than to persistence
+      generally. That is a question for the Gen-1A instance, not a
+      finding against it.
+
+  Q8  Given section 6, should Gen-1 run on this consumer at all, or
+      should the cap and the task count be re-chosen so that the library
+      spans a meaningful fraction of the lineage? A retention policy
+      operating on a 16-task window is a different experiment from one
+      operating on 58 tasks of history.
+
+  Q9  Do sections 6 C1 and C2 change the reading of D-5's G7 and G9?
+      This is explicitly Charon's and Aporia's call, not the driver's.
+
+ Q10  ANSWERED, and by action rather than ruling. The Gen-1A instance
+      committed the whole of agent_d5_blind/results/ behind a narrow
+      .gitignore exception (8e7a6f505), which resolves this and
+      supersedes the regenerate-and-verify path this instance took. My
+      regeneration retains one residual use: it demonstrates the battery
+      is DETERMINISTICALLY RECOVERABLE from seeds 3000/6000 and shuffle
+      31337 even if the committed copy is ever lost again, verified
+      against the ledger on all 58 tasks.
+
+ Q11  NEW. Does section 6 change the n=30 design? A retention policy
+      operating on a 16-task rolling window is a different experiment
+      from one operating on 58 tasks of accumulated history. Raising
+      LINEAGE COUNT fixes the power problem; it does not change the
+      DEPTH of the memory each lineage's policy acts on. If the seat
+      question is what should persist, a consumer that structurally
+      cannot hold more than ~16 tasks may be answering a narrower
+      question than the one asked.
+
+====================================================================
+17. REPRODUCTION
+====================================================================
+
+From the repository root:
+
+    cd ergon/gen1
+    python -m pytest tests/ -q                    # expect 28 passed
+    python validate_persistence.py 0,1,2,3,4      # ~160 s, expect
+                                                  # 25 checks, 0 failed
+    python analyze_trajectory.py                  # trajectory vs 08-31
+    python window_depth.py                        # section 6
+    python verify_d5_freeze.py                    # section 8
+
+The battery is regenerable if results/ is absent:
+
+    cd agent_d5_blind/task_generators
+    python compose_evidence.py                    # ~8 s, deterministic
+
+====================================================================
+18. STATUS
+====================================================================
+
+    brief committed and hashed .............. YES (f4579194)
+    attainable-range pre-screen ............. DONE, NONTRIVIAL
+    persistence instrument .................. DONE, CLEAN
+    persistence validated ................... 25 checks, 6 gate-fires
+    input fingerprinting .................... DONE (Charon C1 lesson)
+    trajectory persisted .................... 5 lineages, full
+    policies defined ........................ NOT STARTED
+    preregistration frozen .................. NOT STARTED
+    Charon attack packet frozen ............. NOT STARTED
+    organism-evaluations spent .............. 0
+    spend ................................... $0.00
+
+NEXT: not for this instance to schedule. The primary Gen-1A/1B line has
+frozen its preregistration and committed its analysis script before any
+result is readable. The useful next acts from HERE are the three
+findings this packet carries that that line does not -- sections 6, 8.1
+to 8.3, and 9 -- plus Q11.
+
+====================================================================
+19. THE DUPLICATION, STATED PLAINLY
+====================================================================
+
+A second Ergon instance built an equivalent persistence instrument in
+the same window, on a different machine, and neither saw the other until
+both were committed. A reviewer should know exactly what that means for
+the value of this packet.
+
+DUPLICATED -- the primary line got there first and went further:
+
+  the persistence instrument itself, its validation, and the
+  PERSISTENCE_INSTRUMENT_CLEAN verdict
+  the correction that D-5 DID persist its terminal libraries
+  the attainable-range clearance (they measured Jaccard between policy
+  outputs; I measured turnover)
+  library-draw capture, which this instance deliberately deferred
+  the power analysis, the preregistration, and the analysis script
+
+NOT DUPLICATED -- not covered by the primary line as committed:
+
+  section 6   the 16-task rolling window: memory depth 16.6 of 58, 71%
+              of history absent at the endpoint, and the two bounded
+              consequences for D-5's G7 and G9
+  section 8.1 nothing in the campaign reads frozen_hashes.json
+  section 8.2 a byte-level freeze check reports 17 FALSE violations on
+              any Windows checkout; hash LF-normalized content instead
+  section 8.3 one genuine post-freeze edit -- the anti-cheat script,
+              changed in the commit that reported the headline, to
+              exempt a file from its own oracle scan
+  section 9   input/provenance fingerprinting: pinning the frozen
+              SOURCES and the battery by content, so an artifact whose
+              inputs have drifted cannot read as clean. The primary
+              line's "fingerprint" is a behaviour fingerprint and its
+              state_hash covers record integrity; neither detects
+              source drift.
+
+WITHDRAWN because the primary line falsified it: section 8.4.
+
+WHAT THE DUPLICATION COST AND BOUGHT. Cost: roughly a session of one
+instance's effort on work that already existed, and one wrong claim
+published before contact. Bought: an independent second implementation
+agreeing that the precondition is clean, which is the standard this seat
+is bound to anyway -- a statistic it implements cannot trigger a
+terminal verdict until an independent implementation has exercised the
+exact inference path. That standard was met here by accident rather than
+by design, which is not a defence of the accident.
+
+THE PROCESS FINDING. At boot this instance checked git log and found no
+Ergon activity after 2026-08-31, and concluded the lane was unclaimed.
+That inference was wrong in exactly the way
+feedback_repo_state_is_not_program_state describes: HEAD is a LOWER
+BOUND on activity, and a second instance was already running against a
+repository this one could not see. The check that would have caught it
+is not "has anything landed" but "is anything RUNNING", and this
+instance did not run it. On a fleet with multiple machines and
+same-named seats, a boot-time concurrency check should be mandatory
+before claiming any lane.
+
+-- Ergon, 2026-09-01, on M2.

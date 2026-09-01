@@ -1,0 +1,997 @@
+{
+ "mode": "evidence",
+ "seed_base": 2000,
+ "targets": 30,
+ "budget": 8000,
+ "assays": {
+  "PF1": {
+   "walks": 200,
+   "walk_len": 150,
+   "distinct_classes": 164
+  },
+  "PF2": {
+   "navigator": "NAV-POP",
+   "reach_rate": 0.4,
+   "rows": [
+    {
+     "target": "b2e57a80e6e95a04",
+     "solved": true,
+     "evals_to_solve": 157,
+     "evals_used": 157
+    },
+    {
+     "target": "767817c7cfd668d7",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "e118a9250100d9ba",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "417e132803b802aa",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "79f20f030f289203",
+     "solved": true,
+     "evals_to_solve": 2359,
+     "evals_used": 2359
+    },
+    {
+     "target": "95a5eff9eebd5596",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "9d9a6deaa80b1281",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "6cdb3c426442d583",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "dc3ab475e77097cc",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "55ccd8a50722c6f0",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "18a55784f2a5fa7c",
+     "solved": true,
+     "evals_to_solve": 4697,
+     "evals_used": 4697
+    },
+    {
+     "target": "50a914b0f89b5d1c",
+     "solved": true,
+     "evals_to_solve": 2139,
+     "evals_used": 2139
+    },
+    {
+     "target": "8baac2b58d653650",
+     "solved": true,
+     "evals_to_solve": 25,
+     "evals_used": 25
+    },
+    {
+     "target": "104b73c3978f54ba",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "8e08a508f5975945",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "de6024ba34dda3a3",
+     "solved": true,
+     "evals_to_solve": 1375,
+     "evals_used": 1375
+    },
+    {
+     "target": "c5e4dc14e126dc04",
+     "solved": true,
+     "evals_to_solve": 4824,
+     "evals_used": 4824
+    },
+    {
+     "target": "73297fad7c61991c",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "e28b4ddb645431ef",
+     "solved": true,
+     "evals_to_solve": 6840,
+     "evals_used": 6840
+    },
+    {
+     "target": "0a52407d55543393",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "aa3c1dfaea724d62",
+     "solved": true,
+     "evals_to_solve": 3200,
+     "evals_used": 3200
+    },
+    {
+     "target": "2e79e3ca8d17c14d",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "a1dfa546397c5aa9",
+     "solved": true,
+     "evals_to_solve": 275,
+     "evals_used": 275
+    },
+    {
+     "target": "b7d0bfeb9ddd8f81",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "7e96364d9dfd9a40",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "78328fd31ed0b5bf",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "622a8ee856a9c571",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "2a743195aa547405",
+     "solved": true,
+     "evals_to_solve": 224,
+     "evals_used": 224
+    },
+    {
+     "target": "dca2641833fe4068",
+     "solved": true,
+     "evals_to_solve": 1892,
+     "evals_used": 1892
+    },
+    {
+     "target": "f3713d7ed2bc3e10",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    }
+   ]
+  },
+  "PF3": {
+   "navigators": [
+    {
+     "navigator": "NAV-POP",
+     "reach_rate": 0.4
+    },
+    {
+     "navigator": "NAV-HC",
+     "reach_rate": 0.23333333333333334
+    },
+    {
+     "navigator": "NAV-RX",
+     "reach_rate": 0.5666666666666667
+    }
+   ],
+   "rows": [
+    {
+     "navigator": "NAV-POP",
+     "reach_rate": 0.4,
+     "rows": [
+      {
+       "target": "b2e57a80e6e95a04",
+       "solved": true,
+       "evals_to_solve": 157,
+       "evals_used": 157
+      },
+      {
+       "target": "767817c7cfd668d7",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "e118a9250100d9ba",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "417e132803b802aa",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "79f20f030f289203",
+       "solved": true,
+       "evals_to_solve": 2359,
+       "evals_used": 2359
+      },
+      {
+       "target": "95a5eff9eebd5596",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "9d9a6deaa80b1281",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "6cdb3c426442d583",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "dc3ab475e77097cc",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "55ccd8a50722c6f0",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "18a55784f2a5fa7c",
+       "solved": true,
+       "evals_to_solve": 4697,
+       "evals_used": 4697
+      },
+      {
+       "target": "50a914b0f89b5d1c",
+       "solved": true,
+       "evals_to_solve": 2139,
+       "evals_used": 2139
+      },
+      {
+       "target": "8baac2b58d653650",
+       "solved": true,
+       "evals_to_solve": 25,
+       "evals_used": 25
+      },
+      {
+       "target": "104b73c3978f54ba",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "8e08a508f5975945",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "de6024ba34dda3a3",
+       "solved": true,
+       "evals_to_solve": 1375,
+       "evals_used": 1375
+      },
+      {
+       "target": "c5e4dc14e126dc04",
+       "solved": true,
+       "evals_to_solve": 4824,
+       "evals_used": 4824
+      },
+      {
+       "target": "73297fad7c61991c",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "e28b4ddb645431ef",
+       "solved": true,
+       "evals_to_solve": 6840,
+       "evals_used": 6840
+      },
+      {
+       "target": "0a52407d55543393",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "aa3c1dfaea724d62",
+       "solved": true,
+       "evals_to_solve": 3200,
+       "evals_used": 3200
+      },
+      {
+       "target": "2e79e3ca8d17c14d",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "a1dfa546397c5aa9",
+       "solved": true,
+       "evals_to_solve": 275,
+       "evals_used": 275
+      },
+      {
+       "target": "b7d0bfeb9ddd8f81",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "7e96364d9dfd9a40",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "78328fd31ed0b5bf",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "622a8ee856a9c571",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "2a743195aa547405",
+       "solved": true,
+       "evals_to_solve": 224,
+       "evals_used": 224
+      },
+      {
+       "target": "dca2641833fe4068",
+       "solved": true,
+       "evals_to_solve": 1892,
+       "evals_used": 1892
+      },
+      {
+       "target": "f3713d7ed2bc3e10",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      }
+     ]
+    },
+    {
+     "navigator": "NAV-HC",
+     "reach_rate": 0.23333333333333334,
+     "rows": [
+      {
+       "target": "b2e57a80e6e95a04",
+       "solved": true,
+       "evals_to_solve": 2333,
+       "evals_used": 2333
+      },
+      {
+       "target": "767817c7cfd668d7",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "e118a9250100d9ba",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "417e132803b802aa",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "79f20f030f289203",
+       "solved": true,
+       "evals_to_solve": 410,
+       "evals_used": 410
+      },
+      {
+       "target": "95a5eff9eebd5596",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "9d9a6deaa80b1281",
+       "solved": true,
+       "evals_to_solve": 4997,
+       "evals_used": 4997
+      },
+      {
+       "target": "6cdb3c426442d583",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "dc3ab475e77097cc",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "55ccd8a50722c6f0",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "18a55784f2a5fa7c",
+       "solved": true,
+       "evals_to_solve": 626,
+       "evals_used": 626
+      },
+      {
+       "target": "50a914b0f89b5d1c",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "8baac2b58d653650",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "104b73c3978f54ba",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "8e08a508f5975945",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "de6024ba34dda3a3",
+       "solved": true,
+       "evals_to_solve": 4700,
+       "evals_used": 4700
+      },
+      {
+       "target": "c5e4dc14e126dc04",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "73297fad7c61991c",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "e28b4ddb645431ef",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "0a52407d55543393",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "aa3c1dfaea724d62",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "2e79e3ca8d17c14d",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "a1dfa546397c5aa9",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "b7d0bfeb9ddd8f81",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "7e96364d9dfd9a40",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "78328fd31ed0b5bf",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "622a8ee856a9c571",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "2a743195aa547405",
+       "solved": true,
+       "evals_to_solve": 4780,
+       "evals_used": 4780
+      },
+      {
+       "target": "dca2641833fe4068",
+       "solved": true,
+       "evals_to_solve": 5108,
+       "evals_used": 5108
+      },
+      {
+       "target": "f3713d7ed2bc3e10",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      }
+     ]
+    },
+    {
+     "navigator": "NAV-RX",
+     "reach_rate": 0.5666666666666667,
+     "rows": [
+      {
+       "target": "b2e57a80e6e95a04",
+       "solved": true,
+       "evals_to_solve": 11,
+       "evals_used": 11
+      },
+      {
+       "target": "767817c7cfd668d7",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "e118a9250100d9ba",
+       "solved": true,
+       "evals_to_solve": 4835,
+       "evals_used": 4835
+      },
+      {
+       "target": "417e132803b802aa",
+       "solved": true,
+       "evals_to_solve": 2528,
+       "evals_used": 2528
+      },
+      {
+       "target": "79f20f030f289203",
+       "solved": true,
+       "evals_to_solve": 20,
+       "evals_used": 20
+      },
+      {
+       "target": "95a5eff9eebd5596",
+       "solved": true,
+       "evals_to_solve": 5529,
+       "evals_used": 5529
+      },
+      {
+       "target": "9d9a6deaa80b1281",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "6cdb3c426442d583",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "dc3ab475e77097cc",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "55ccd8a50722c6f0",
+       "solved": true,
+       "evals_to_solve": 4687,
+       "evals_used": 4687
+      },
+      {
+       "target": "18a55784f2a5fa7c",
+       "solved": true,
+       "evals_to_solve": 885,
+       "evals_used": 885
+      },
+      {
+       "target": "50a914b0f89b5d1c",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "8baac2b58d653650",
+       "solved": true,
+       "evals_to_solve": 1165,
+       "evals_used": 1165
+      },
+      {
+       "target": "104b73c3978f54ba",
+       "solved": true,
+       "evals_to_solve": 2881,
+       "evals_used": 2881
+      },
+      {
+       "target": "8e08a508f5975945",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "de6024ba34dda3a3",
+       "solved": true,
+       "evals_to_solve": 67,
+       "evals_used": 67
+      },
+      {
+       "target": "c5e4dc14e126dc04",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "73297fad7c61991c",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "e28b4ddb645431ef",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "0a52407d55543393",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "aa3c1dfaea724d62",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "2e79e3ca8d17c14d",
+       "solved": true,
+       "evals_to_solve": 7079,
+       "evals_used": 7079
+      },
+      {
+       "target": "a1dfa546397c5aa9",
+       "solved": true,
+       "evals_to_solve": 840,
+       "evals_used": 840
+      },
+      {
+       "target": "b7d0bfeb9ddd8f81",
+       "solved": true,
+       "evals_to_solve": 3468,
+       "evals_used": 3468
+      },
+      {
+       "target": "7e96364d9dfd9a40",
+       "solved": true,
+       "evals_to_solve": 1953,
+       "evals_used": 1953
+      },
+      {
+       "target": "78328fd31ed0b5bf",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      },
+      {
+       "target": "622a8ee856a9c571",
+       "solved": true,
+       "evals_to_solve": 35,
+       "evals_used": 35
+      },
+      {
+       "target": "2a743195aa547405",
+       "solved": true,
+       "evals_to_solve": 50,
+       "evals_used": 50
+      },
+      {
+       "target": "dca2641833fe4068",
+       "solved": true,
+       "evals_to_solve": 6607,
+       "evals_used": 6607
+      },
+      {
+       "target": "f3713d7ed2bc3e10",
+       "solved": false,
+       "evals_to_solve": null,
+       "evals_used": 8000
+      }
+     ]
+    }
+   ]
+  },
+  "PF4": {
+   "best_navigator": "NAV-RX",
+   "ablations": [
+    {
+     "ablated": "OP_REPLACE",
+     "navigator": "NAV-RX",
+     "reach_rate": 0.5666666666666667
+    },
+    {
+     "ablated": "ARG_TWEAK",
+     "navigator": "NAV-RX",
+     "reach_rate": 0.5
+    },
+    {
+     "ablated": "INSERT",
+     "navigator": "NAV-RX",
+     "reach_rate": 0.3333333333333333
+    },
+    {
+     "ablated": "DELETE",
+     "navigator": "NAV-RX",
+     "reach_rate": 0.5333333333333333
+    },
+    {
+     "ablated": "SWAP",
+     "navigator": "NAV-RX",
+     "reach_rate": 0.36666666666666664
+    },
+    {
+     "ablated": "DUP_BLOCK",
+     "navigator": "NAV-RX",
+     "reach_rate": 0.5333333333333333
+    }
+   ]
+  },
+  "PF5": {
+   "navigator": "NAV-POP",
+   "reach_rate": 0.2,
+   "rows": [
+    {
+     "target": "b2e57a80e6e95a04",
+     "solved": true,
+     "evals_to_solve": 318,
+     "evals_used": 318
+    },
+    {
+     "target": "767817c7cfd668d7",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "e118a9250100d9ba",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "417e132803b802aa",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "79f20f030f289203",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "95a5eff9eebd5596",
+     "solved": true,
+     "evals_to_solve": 808,
+     "evals_used": 808
+    },
+    {
+     "target": "9d9a6deaa80b1281",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "6cdb3c426442d583",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "dc3ab475e77097cc",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "55ccd8a50722c6f0",
+     "solved": true,
+     "evals_to_solve": 4301,
+     "evals_used": 4301
+    },
+    {
+     "target": "18a55784f2a5fa7c",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "50a914b0f89b5d1c",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "8baac2b58d653650",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "104b73c3978f54ba",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "8e08a508f5975945",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "de6024ba34dda3a3",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "c5e4dc14e126dc04",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "73297fad7c61991c",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "e28b4ddb645431ef",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "0a52407d55543393",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "aa3c1dfaea724d62",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "2e79e3ca8d17c14d",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "a1dfa546397c5aa9",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "b7d0bfeb9ddd8f81",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "7e96364d9dfd9a40",
+     "solved": true,
+     "evals_to_solve": 7000,
+     "evals_used": 7000
+    },
+    {
+     "target": "78328fd31ed0b5bf",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "622a8ee856a9c571",
+     "solved": true,
+     "evals_to_solve": 5313,
+     "evals_used": 5313
+    },
+    {
+     "target": "2a743195aa547405",
+     "solved": true,
+     "evals_to_solve": 306,
+     "evals_used": 306
+    },
+    {
+     "target": "dca2641833fe4068",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    },
+    {
+     "target": "f3713d7ed2bc3e10",
+     "solved": false,
+     "evals_to_solve": null,
+     "evals_used": 8000
+    }
+   ]
+  }
+ },
+ "wall_seconds": 1363.3
+}
