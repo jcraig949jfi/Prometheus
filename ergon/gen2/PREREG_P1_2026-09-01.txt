@@ -1,0 +1,149 @@
+======================================================================
+ERGON PROJECT 1 -- ARBITRARY-MEMORY DECISION
+PREREGISTRATION, frozen before the first experimental organism-evaluation.
+======================================================================
+
+Governing brief: ergon/gen2/PROMPT_NEXT_QUEUE_2026-09-01.txt
+
+THE QUESTION
+
+    DOES PRINCIPLED SELECTION BEAT ARBITRARY CHURN?
+
+I1 MUT_REDUNDANT versus I3 RANDOM, and nothing else.
+
+----------------------------------------------------------------------
+1. WHY GEN-1B DID NOT ANSWER IT -- AND IT WAS NOT SAMPLE SIZE
+----------------------------------------------------------------------
+Gen-1B measured I1 - I3 at +1.51 pp with UNCORRECTED p = 0.0228, which clears
+0.05. It failed only after Holm correction across the five preregistered
+contrasts (adjusted 0.0912).
+
+Recomputing power from the observed per-lineage SD of that contrast
+(sigma = 0.03218, n = 30):
+
+    n=30   MDE80 1.65 pp   MDE90 1.90 pp
+    n=60   MDE80 1.16 pp   MDE90 1.35 pp
+    n=100  MDE80 0.90 pp   MDE90 1.04 pp
+    n=120  MDE80 0.82 pp   MDE90 0.95 pp
+
+So n = 30 ALREADY had 90% power against a 2.0 pp effect. The binding
+constraint in Gen-1B was multiplicity, not lineage count. Project 1 has ONE
+preregistered contrast and therefore takes NO multiplicity correction, which
+is a design change, not an analysis change, and is recorded here in advance.
+
+This matters for honesty about what Project 1 is: it is not a rescue of an
+underpowered test. It is the isolation of a contrast that was diluted by
+being run alongside four others.
+
+----------------------------------------------------------------------
+2. THE MEANINGFULNESS THRESHOLD -- FROZEN BEFORE DATA
+----------------------------------------------------------------------
+The brief forbids using the observed +1.51 pp as the success threshold, and
+requires a threshold answering: how small can the advantage become before
+"selection beats churn" ceases to be strategically meaningful?
+
+    THRESHOLD  T = 2.00 pp
+
+Three independent justifications, all fixed before the run:
+
+  a. GRANULARITY. The endpoint is CFR over 42 tasks, so one task is
+     1/42 = 2.38 pp. An effect below T cannot reliably move even one task in
+     forty-two within a lineage; it can only appear as a fraction of lineages
+     gaining a single task.
+  b. PROPORTION OF THE PHENOMENON. The whole accumulation effect (library vs
+     no library) is 10.95 pp and its content-adaptedness component is 6.7 pp.
+     T = 2.00 pp is ~18% of the former and ~30% of the latter. Below that, the
+     choice of retention rule is a second-order tweak on top of simply having
+     a library.
+  c. DECISION RELEVANCE. Nothing downstream in the queue -- forgetting rules,
+     compression, transplant -- is worth building on a selection effect that
+     cannot clear one task in forty-two.
+
+T is a STRATEGIC threshold, not a statistical one. A real effect below T is
+reported as real and below scale, not as absent.
+
+----------------------------------------------------------------------
+3. DESIGN
+----------------------------------------------------------------------
+arms                I1 MUT_REDUNDANT, I3 RANDOM. No other arm.
+n                   100 FRESH paired lineages per arm
+battery             the frozen 42 non-control D-5 tasks (F1-F4)
+budget              30,000 evaluations per task
+cap                 64
+admission           frozen m1.admissions
+search core         frozen m1.m1_rx
+policy code         ergon/gen1b/gen1_run.py, UNCHANGED (same blob as Gen-1B:
+                    577125847aabf6a3087d06935e39701cffc751be)
+pairing             lineage L uses the same nav-seed base in both arms
+
+SEED SPACE IS DISJOINT FROM GEN-1B. Gen-1B used nav bases 200000+1000L for
+L in 0..29. Project 1 uses L in 100..199, giving nav bases 300000..399000 via
+the same formula shifted, and a policy rng base likewise shifted. No lineage
+from Gen-1B is reused.
+
+WHY FRESH LINEAGES RATHER THAN EXTENDING GEN-1B'S 30. Adding lineages to a
+set whose result has already been seen is optional stopping, and it would
+make the final p-value uninterpretable. Project 1 is an INDEPENDENT
+REPLICATION at larger n. Gen-1B's 30 lineages are not pooled in, and are not
+used in the primary analysis at all.
+
+n = 100 chosen for MDE90 = 1.04 pp, comfortably under T, and for a 95% CI
+half-width of about 0.63 pp so that a null can be reported as a bounded null
+rather than an absence of evidence.
+
+----------------------------------------------------------------------
+4. ANALYSIS -- FIXED HERE
+----------------------------------------------------------------------
+endpoint            per-lineage CFR (fraction of 42 tasks solved in budget)
+unit of inference   LINEAGE
+contrast            mean of the 100 paired deltas, I1 - I3
+test                two-sided paired sign-flip permutation, 50,000 draws,
+                    seed 909090
+multiplicity        NONE. One preregistered contrast.
+CI                  95% percentile bootstrap resampling LINEAGES, 20,000 draws
+secondary reported  per-arm mean and SD, sign split, per-lineage deltas in full
+
+No subgroup analysis will be used to rescue a failing contrast. No task-level,
+family-level or stratum-level breakdown enters the decision.
+
+----------------------------------------------------------------------
+5. DECISION RULE -- COMPLETE AND EXHAUSTIVE
+----------------------------------------------------------------------
+Let d = observed mean delta (I1 - I3), p = permutation p-value,
+and [lo, hi] the 95% bootstrap CI.
+
+    SELECTION_BEATS_CHURN
+        p < 0.05  AND  d >= T
+
+    SELECTION_EFFECT_BELOW_USEFUL_SCALE
+        p < 0.05  AND  0 < d < T
+
+    SELECTION_NOT_DISTINGUISHABLE_FROM_CHURN
+        p >= 0.05  AND  hi < T
+        (a bounded null: the data exclude a strategically meaningful effect)
+
+    UNDERPOWERED
+        p >= 0.05  AND  hi >= T
+        (the data cannot exclude a meaningful effect)
+
+A negative d with p < 0.05 would be reported as CHURN_BEATS_SELECTION, which
+is not among the brief's four labels but is a possible outcome and is named
+here in advance rather than improvised later.
+
+----------------------------------------------------------------------
+6. STOPPING
+----------------------------------------------------------------------
+Fixed length: 100 lineages per arm. No interim analysis, no extension, no
+early stop. If the run cannot complete, the completed lineages are reported
+with their count and the result is declared UNDERPOWERED rather than
+reinterpreted.
+
+----------------------------------------------------------------------
+7. WHAT WOULD MAKE THIS RUN UNINTERPRETABLE
+----------------------------------------------------------------------
+  - any arm ending a lineage with other than 64 artifacts (asserted in code)
+  - either arm using a different admission call (both use m1.admissions)
+  - broken pairing (nav base is a pure function of lineage index)
+  - reuse of a Gen-1B lineage seed (seed spaces are disjoint by construction)
+
+-- Ergon, 2026-09-01, before the first experimental organism-evaluation.
