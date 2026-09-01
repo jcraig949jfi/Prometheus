@@ -1,0 +1,36 @@
+{
+  "adversarial": {
+    "atomic_write_no_tmp_left": "clean",
+    "corrupted_fingerprint_hash": "rejected (ValueError)",
+    "duplicate_admission_dedupes": "ok",
+    "duplicate_artifact": "rejected (ValueError)",
+    "missing_artifact": "rejected (ValueError)",
+    "partial_write": "rejected (JSONDecodeError)",
+    "reordered_serialization": "rejected (ValueError)",
+    "stale_size_field": "rejected (ValueError)",
+    "unknown_opcode": "rejected (ValueError)",
+    "unknown_schema_version": "rejected (ValueError)"
+  },
+  "budget": 3000,
+  "gate": {
+    "A_serialised": true,
+    "B_destroyed_and_restored": true,
+    "C_roundtrip_exact": true,
+    "D_parity_library": true,
+    "D_parity_rows": true,
+    "E_fingerprints_present": true,
+    "G_hits": [],
+    "G_no_oracle_fields": true,
+    "H_replayable": true,
+    "final_library_size": 64,
+    "n_admissions": 81,
+    "n_draws_observed": 2941,
+    "n_events": 117,
+    "n_evictions": 16,
+    "n_tasks": 20,
+    "state_hash": "d3a2dfca82de484d713aa8d6e4cfdde2bbc203ff5920d2c66ed312ce3770cc68"
+  },
+  "holes": 0,
+  "n_tasks": 20,
+  "verdict": "PERSISTENCE_INSTRUMENT_CLEAN"
+}
