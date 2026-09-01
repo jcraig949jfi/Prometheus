@@ -41,7 +41,7 @@ def score_of(cand, tgt):
 def main():
     OUT.mkdir(exist_ok=True)
     tok = open(r"C:\ZeusD-var\harmonia\sfe_token.txt").read().strip()
-    c = EngineClient(BASE, token=tok, cafile=CA)
+    c = EngineClient(BASE, token=tok, cafile=CA, timeout=120.0)
     v = c.version()
     assert v["engine_source_hash"] == PIN, "release pin mismatch - STOP"
     log = (OUT / "dryrun_log.jsonl").open("a")
@@ -69,10 +69,22 @@ def main():
         engine=v)
 
     results = {}
-    late_pred_probe_done = False
+    done_cells = set()
+    logp = OUT / "dryrun_log.jsonl"
+    if logp.exists():
+        for line in open(logp):
+            r0 = json.loads(line)
+            if r0.get("kind") == "cell_done":
+                done_cells.add((r0["arm"], r0["seed"]))
+                results[f"{r0['arm']}-{r0['seed']}"] = r0["bests"]
+    if done_cells:
+        print(f"RESUME: {len(done_cells)} cells done", flush=True)
+    late_pred_probe_done = bool(done_cells)
     t0 = time.time()
     for arm in ARMS:
         for seed in SEEDS:
+            if (arm, seed) in done_cells:
+                continue
             grp = (c.create_topology_group(note=f"dryrun-{arm}-{seed}")
                    if arm != "A1" else None)
             policy = {"A1": "ISOLATED", "A2": "FAILURES_ONLY",
