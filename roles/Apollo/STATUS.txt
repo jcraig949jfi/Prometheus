@@ -1,0 +1,32 @@
+APOLLO SERENDIPITY STATUS  (ASCII; charter S10)
+timestamp                 : 2026-09-01 (Gen-2 first boot)
+foundry_version           : 50b5c2327c64bf11 (git 71b29593, 211 files) LIVE, auth OK
+apollo_version            : gen2-boot
+charter                   : roles/Apollo/CHARTER_GEN2_serendipity_20260901.md
+active_namespace_count    : 0 (no experiments driven yet)
+worlds_seen               : 0
+worlds_explored           : 0
+micro_runs                : 0
+organisms_evaluated       : 0
+new_archive_cells         : 0
+new_boundary_pairs        : 0
+new_failure_classes       : 0
+new_transfer_events       : 0
+new_recurring_motifs      : 0
+new_fossils               : 0
+replay_success_rate       : n/a
+representation_survival   : n/a
+lane_d_compute_fraction   : 0.00
+lane_d_novel_events       : 0
+queue_depth               : 0
+--
+legacy_cleanup            : Task1 E9-scorer DONE (repro 0.0667 exact). Task2 state-injection OWED.
+adapter_boundary          : FoundryClient(creds) SEEDED + probed read-only OK.
+                            WorldAdapter/EvaluationAdapter/FossilEmitter/ProvenanceAdapter NOT built.
+ecology_peers             : D-12/D-13 (ZeusE console; objective+random drivers),
+                            Harmonia A (genesis/harmonia_a/d14; Foundry client). Do not collide.
+blockers                  : (1) thin vertical slice held pending ~2026-09-02 Foundry release.
+last_job                  : probe_version (read-only /v0/version)
+next_job                  : [awaiting HITL] Task2 state-injection (Foundry-independent) OR
+                            build adapter+pilot against next release.
+errors                    : none
