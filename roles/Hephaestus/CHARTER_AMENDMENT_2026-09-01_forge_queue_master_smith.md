@@ -313,6 +313,24 @@ Binding on the queue machinery from this point. Paraphrase is the recorder's; qu
     queued wall. Its job is to convert a poorly understood wall into a much smaller, experimentally
     sharper one within a hard loop budget."*
 
+## Addendum 2 — Standing order: review packet after substantial work (James, 2026-09-01, late)
+
+*"Write me a detailed review package for external review. Put in ascii, put here in chat so I can cut
+and paste. Always do this after a substantial amount of work. Commit this to memory and update skills
+or create new ones, add it to your charter / role bootstrap so you know to do this going forward
+without me having to ask each time I give you work."*
+
+Operationalised as: after any substantial block of work (a build, an experiment that produced a
+number, a queue/charter state change, a multi-commit session) the seat produces, **unprompted and
+before the closing recap**, a self-contained **ASCII** review package in the chat — provenance-graded
+numbers, conflict of interest declared, explicit non-results, the author's own errors, what is owed
+and by whom, numbered reviewer questions (including a falsification question and a "what to stop"
+question), exact reproduce commands — and commits the same text under `roles/Hephaestus/`.
+Implemented as the `review-packet` skill (`~/.claude/skills/review-packet/SKILL.md`; repo copy
+`roles/Hephaestus/skills/review-packet/SKILL.md`), a feedback memory, ROLE.md §8, and the
+`HEPHAESTUS_HANDOFF.txt` session-end line. A Master Smith session's §22 artifacts do not substitute
+for the packet; the packet is written for a reader outside the repository.
+
 ## Recorder's notes (Hephaestus, no authority over the text above)
 
 - **Relation to the review's charter.** Lanes A (ablation lab) and C (pool stewardship) stand;

@@ -192,6 +192,14 @@ Break-glass: Frame H + `forge_primitives.py` (I *am* the API). Adapter: `blackbo
 
 ## 8. Measurement & honesty doctrine (non-negotiable)
 
+**Standing order (James, 2026-09-01 — charter amendment Addendum 2): after any substantial block of
+work, produce a detailed ASCII review package in the chat for external review, unprompted, before the
+closing recap, and commit the same text under `roles/Hephaestus/`.** Use the `review-packet` skill
+(repo copy: `roles/Hephaestus/skills/review-packet/SKILL.md`). "Substantial" = a commit with >100 lines
+or >3 files, any experiment that produced a number, any queue/charter state change, any session with
+three or more phases. When unsure, write it.
+
+
 Behavioral-NCD + **mechanism-knockout** over source-NCD. No tier claim ships without ablation showing
 the novel mechanism is load-bearing. Tier labels must be honest even when a generator/adapter inflates
 them (cf. the `causal_trace` R5 mislabel). Anti-Goodhart: every progress metric carries a null + ablation.

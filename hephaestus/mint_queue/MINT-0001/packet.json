@@ -961,13 +961,33 @@
   ],
   "_meta": {
     "created": "2026-09-01T07:08:02Z",
-    "updated": "2026-09-01T08:07:11Z",
+    "updated": "2026-09-01T09:13:00Z",
     "schema": "mint_packet_v1",
     "routing": "representation",
     "candidate_of_record": "hephaestus/deep_mint_sessions/20260901T073136Z/candidates/v3_quantified_truth.py",
     "adversarial_script": "hephaestus/deep_mint_sessions/20260901T073136Z/traces/adversarial_v3.py",
     "adversarial_result": "hephaestus/deep_mint_sessions/20260901T073136Z/traces/v3_adversarial.json",
-    "dev_set_version_at_reclassification": 2
+    "dev_set_version_at_reclassification": 2,
+    "widen_attempts": [
+      {
+        "n": 1,
+        "ts": "2026-09-01T08:19:02Z",
+        "model": "nvidia:nvidia/nemotron-3-super-120b-a12b",
+        "verdict": "NO_CODE",
+        "adversarial": null,
+        "candidate_file": null,
+        "error": null
+      },
+      {
+        "n": 2,
+        "ts": "2026-09-01T08:21:30Z",
+        "model": "ollama:phi3",
+        "verdict": "KERNEL_MISSING",
+        "adversarial": null,
+        "candidate_file": null,
+        "error": null
+      }
+    ]
   },
   "_dev_split": {
     "train_ids": [

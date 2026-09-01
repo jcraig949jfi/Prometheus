@@ -1,0 +1,341 @@
+================================================================================
+REVIEW PACKET -- ADDENDUM 1 APPLIED: THE SEMANTIC-ONLY CLOSURE TEST RECLASSIFIES
+MINT-0001, AND THE FORGE QUEUE GAINS THE SEMANTIC-INJECTION QUESTION
+Prometheus program, seat Hephaestus (M3). 2026-09-01, late.
+Commits of record: af31ddcda (this block), 3c0f37a4c / ff3209995 (this packet
+  and the standing order), f0f6fe2ec (an unattended scheduled tick).
+Earlier commits it follows: 5c70c8aa5 (the smith session), 7b55e8423 (the queue).
+Author: Hephaestus, Claude Code / claude-fable-5.
+Invoked by: James (operator), rulings on Q1-Q7 of the previous packet, plus
+  "Do not summon Claude again yet ... give the work back to the unattended
+  ecology."
+================================================================================
+
+0. WHAT THIS PACKET IS
+
+  The record of one block of work: applying the operator's seven rulings on the
+  first Master Smith session, and running the one experiment those rulings said
+  to run before anything else -- a parsing-free test of whether the frozen
+  primitive set can already compute the "vacuous truth" kernel. The experiment
+  changed the classification of the queue's only wall. Every number was produced
+  by executing committed code. Grades: E3 = executed this session; E1 =
+  regenerable by a committed command; E0 = prose.
+
+  Conflict of interest, declared: the same seat authored the dev harness, the
+  candidate under test, the closure test, and this packet. Section 6 lists what
+  that leaves unestablished; section 7 lists the author's own errors.
+
+--------------------------------------------------------------------------------
+1. CONTEXT (for a reader with no prior exposure)
+--------------------------------------------------------------------------------
+  - Prometheus is a one-human, multi-agent research program; ~22 LLM "seats"
+    coordinate through committed Markdown. Thesis: a dirty reasoner inside a
+    clean-enough selection environment.
+  - Hephaestus ("the forge") was re-chartered on 2026-09-01 as a queue: cheap
+    models scout unattended (Apprentice Forge); a capable agent mints only when
+    the operator invokes it (Master Smith); the smith has no admission
+    authority.
+  - Earlier the same day the first Master Smith session (5 cycles) produced a
+    candidate for the queue's one wall, MINT-0001 "vacuous_truth" (the truth of
+    a quantified claim over a domain the premises state is empty vs non-empty):
+    dev pass 1.000 on an 88-example harness; 4/20 on adversarial phrasings with
+    0 false commits; a component knockout showed one decorative component.
+  - The operator answered that packet's seven questions. This block applies
+    them.
+
+--------------------------------------------------------------------------------
+2. THE QUESTIONS THIS BLOCK WAS ANSWERING (operator's words)
+--------------------------------------------------------------------------------
+  Q1  "The cheapest decisive test is to strip parsing away completely. Give a
+      typed enumerator (domain_size, satisfier_count, quantifier) and ask
+      whether the frozen primitive closure can synthesize the truth mapping ...
+      If enumeration synthesizes an equivalent expression cheaply, reclassify:
+      Level 2 -> Level 1 composition."
+  Q7  Three arms: A = frozen Prometheus primitives + generic composition; B =
+      generic boolean/comparison/count language; C = the v3 kernel. "If A
+      synthesizes it, MINT-0001 was misclassified. Apollo/Hephaestus had a
+      routing/search problem. If A cannot represent it but B immediately can,
+      that's good evidence you've located an actual missing operator family."
+  Q2  Represent results as (coverage, conditional correctness); do not reward
+      abstention in the scalar.
+  Q3  MECHANISM COVERAGE: a dev harness may not certify a component that has
+      no opportunity to matter; v3 should have been
+      PASS_DEV_WITH_UNTESTED_COMPONENT.
+  Q4  Keep five cycles; a cycle ends in at least one new executed
+      discriminating observation; record the accounting.
+  Q5  CANDIDATE-PRODUCED is legitimate; conflict metadata travels with it.
+  Q6  Stopping at D1 was correct; D1 becomes evidence for the unattended forge.
+  +   Add SEMANTIC_KERNEL_SPEC and REPRESENTATION_ADAPTER_SPEC to every packet;
+      triage must ask "if perfect semantic state were injected, what
+      computation would still be missing?" If "almost nothing", do not send it
+      to the smith.
+
+--------------------------------------------------------------------------------
+3. WHAT WAS DONE, STEP BY STEP
+--------------------------------------------------------------------------------
+  3.1  Semantic-only closure test (hephaestus/src/semantic_closure.py)     [E3]
+       Inputs: q in {universal, negative_universal, existential}; d = domain
+       size >= 0; s = satisfier count, 0 <= s <= d. Target: the operator's
+       nine-row truth table with "n > 0" instantiated at n in {1, 2, 3, 5} ->
+       48 rows over 16 distinct (d, s) points. Interpretation rule fixed BEFORE
+       running (section 2, Q7). Arm A's rules, fixed before running:
+         - operators: only the integer-typed functions of the frozen library
+           agents/hephaestus/src/forge_primitives.py -- all_but_n(a,b) = a-b,
+           pigeonhole_check(a,b) = a>b, fencepost_count, modular_arithmetic,
+           coin_flip_independence(n,k) = comb(n,k)/2^n, information_sufficiency
+           (returns strings), parity_check (returns strings);
+         - terminals: d, s, 0, 1;
+         - composition: application, bottom-up, depth <= 3, observational
+           equivalence on raw values;
+         - output coercion: Python truthiness ONLY (no "== constant" granted);
+         - routing: A0 = none (one expression must fit all quantifiers);
+           A1 = one expression per quantifier (what Apollo's guarded ops give).
+       Arm B: ==, <, <=, >, >=, not, and, or, +, -, constants 0/1, same routing.
+       Arm C: the 10-line kernel from the smith session's candidate v3.
+       Budget accounting: distinct expressions evaluated.
+
+  3.2  Rulings turned into machinery                                        [E3]
+       - Packet schema: SEMANTIC_KERNEL_SPEC and REPRESENTATION_ADAPTER_SPEC
+         added to the field list and to the set required before
+         READY-FOR-DEEP-MINT.
+       - Metrics: coverage and conditional_correctness added; never combined.
+       - Runner: a candidate may declare ABLATIONS = {component: {attr: patch}};
+         each is applied and the holdout delta measured; verdicts PASS_DEV /
+         PASS_DEV_WITH_UNTESTED_COMPONENT / PASS_DEV_UNVERIFIED_COVERAGE.
+       - Dev set v2: two kinds added -- NONEMPTY_OTHER_PREDICATE (the "k of
+         them are Q" clause names a different predicate; gold = abstain; the
+         P4 fixture) and PREDICATE_EXTENSION_EMPTY ("there are no P X, but
+         there are exactly k X"; gold = no; adversarial item D1). 88 -> 104
+         examples, 11 -> 13 kinds, 8 train / 96 holdout, DEV_SET_VERSION = 2.
+       - Refinement job: PASS_DEV* variants count as passes; the qualifier
+         travels with the record.
+       - Apprentice job: a "widen" mode -- cheap models are shown the candidate
+         of record and the phrasings on which it abstained, and asked to extend
+         the ADAPTER only (kernel byte-identical); measured on dev v2 and the
+         20 adversarial phrasings; labelled REPRESENTATION work, never a mint.
+         Runs on the existing 4-hourly task when nothing is in
+         APPRENTICE-TESTING.
+       - Session manifest: verdict relabelled PASS_DEV_WITH_UNTESTED_COMPONENT;
+         accounting fields added.
+       - Charter amendment: Addendum 1 (the rulings, quoted) and Addendum 2
+         (the standing order to produce review packets like this one,
+         unprompted, after every substantial block of work).
+
+  3.3  v3 re-graded on dev set v2                                           [E3]
+
+--------------------------------------------------------------------------------
+4. RESULTS
+--------------------------------------------------------------------------------
+  4.1  Closure test (48 rows; 16 points)
+
+  arm  operators                    found (depth)                        evals
+  ---  ---------------------------  -----------------------------------  -----
+  A0   frozen prims, no routing     impossible by arity: one f(d,s)          0
+                                    yields one column; the three
+                                    quantifier columns differ at
+                                    (d,s) = (0,0): T, T, F
+  A1   frozen prims + routing       existential   = s                (1)   156
+                                    neg-universal = pigeonhole_check
+                                                    (1, s)           (1)
+                                    universal     = coin_flip_
+                                                    independence
+                                                    (s, d)           (1)
+  B    generic boolean language     eq(d,s); eq(s,0); s              (1)   152
+  C    v3 kernel (10 lines)         48 / 48 correct                        --
+
+  Reading of A1's universal solution: comb(s, d) / 2^s is non-zero exactly when
+  s >= d, and s <= d always, so its truthiness equals "s == d" on the table,
+  and it is 1.0 at (0, 0). This is a truthiness COINCIDENCE, not a mechanism --
+  but it lies inside the closure G(C) of the frozen set, which is the question
+  that was asked. The mechanism form, pigeonhole_check(s, all_but_n(d, 1)),
+  i.e. s >= d, is depth 2 and also inside G(C).
+
+  VERDICT (by the rule fixed in advance): A1 synthesises the table => the
+  kernel is a LEVEL-1 COMPOSITION of frozen primitives under per-quantifier
+  routing. MINT-0001 was a routing / representation problem, not a missing
+  operator. What was actually missing: (a) routing on a quantifier slot; (b) a
+  semantic state that carries domain_size and satisfier_count at all. The
+  "fourth kernel rule" suggested by adversarial item D1 ("there are no chipped
+  marbles" with a non-empty domain) is an ADAPTER mapping (satisfier_count :=
+  0), not a kernel rule.
+
+  4.2  v3 on dev set v2 (96 holdout)        for comparison: dev v1 (80 holdout)
+       verdict                 FAIL_DEV       PASS_DEV_WITH_UNTESTED_COMPONENT
+       accuracy (decidable)    0.9125         1.000
+       coverage                0.9125         1.000
+       conditional correctness 1.000          1.000
+       boundary false-commit   0.000          0.000
+       falsifiers              8/8 8/8 80/88 8/8     8/8 8/8 80/80 8/8
+       kinds below 1.0         PREDICATE_EXTENSION_EMPTY 0.0      (none)
+       NONEMPTY_OTHER_PREDICATE (the P4 fixture): 1.0 -- v3 abstains correctly,
+       so the predicate check in its cardinality reader is now load-bearing on
+       the dev set (it read 0.000 in the v1 knockout).
+
+  4.3  Queue after this block
+       MINT-0001  vacuous_truth      DORMANT, routing = representation
+                                     (was CANDIDATE-PRODUCED)
+       MINT-0002  all_but_n          SCRAPPED (already ported; dE 5/120)
+       MINT-0003  temporal_ordering  DORMANT (parser gap; routed to Apollo)
+       MINT-0004  consistency_check  COMPOSITION-SUSPECTED; must answer the
+                                     semantic-injection question before it can
+                                     advance (prior: "almost nothing" missing,
+                                     since check_transitivity exists)
+       READY-FOR-DEEP-MINT: 0.  No Master Smith invoked or scheduled.
+
+  4.4  First unattended tick after this block (08:21Z, commit f0f6fe2ec)  [E3]
+       The 4-hourly job found nothing in APPRENTICE-TESTING and ran the widen
+       mode on v3's adapter: nemotron -> NO_CODE (deliberated, emitted no
+       code); phi3 -> KERNEL_MISSING (returned code without the frozen kernel,
+       rejected). Zero cost. Recorded in the packet's event log. This is what
+       "give the work back to the unattended ecology" looks like on day one:
+       two cheap failures, correctly classified, nobody woken.
+
+--------------------------------------------------------------------------------
+5. WHAT CHANGED IN THE REPOSITORY (commit af31ddcda unless noted)
+--------------------------------------------------------------------------------
+  hephaestus/src/semantic_closure.py                new; the experiment
+  hephaestus/mint_queue/MINT-0001/
+    semantic_closure_result.json                    new; full result
+    packet.json / packet.md                         two new specs filled;
+                                                    STATUS -> DORMANT;
+                                                    _meta.routing =
+                                                    representation
+    events.jsonl                                    transitions appended
+  hephaestus/mint_queue/MINT-0002..0004/packet.*    two new fields; honest
+                                                    placeholders
+  hephaestus/src/packet.py                          two fields; READY set
+  hephaestus/src/wall_vacuous_truth.py              dev set v2; two-coordinate
+                                                    metrics
+  hephaestus/src/run_candidate.py                   mechanism-coverage verdicts
+  hephaestus/src/refine.py                          PASS_DEV* handling
+  hephaestus/src/apprentice.py                      widen mode
+  hephaestus/src/triage.py                          new fields populated
+  hephaestus/src/handoff.py; HEPHAESTUS_HANDOFF.txt standing-rulings block;
+                                                    session-end packet rule
+  hephaestus/deep_mint_sessions/20260901T073136Z/
+    manifest.json                                   verdict relabelled;
+                                                    accounting; post-session
+    traces/v3_result_devset_v2.json                 new
+  hephaestus/historical_walls/README.md             HW-004 reclassified
+  roles/Hephaestus/CHARTER_AMENDMENT_2026-09-01_... Addendum 1; Addendum 2
+  roles/Hephaestus/ROLE.md; DESIGN_REVIEW ... s9    standing-order lines
+  roles/Hephaestus/skills/review-packet/SKILL.md    new (3c0f37a4c)
+  roles/Hephaestus/REVIEW_PACKET_2026-09-01_...txt  this file
+  stations/M3_STATUS.md                             section 10
+  Scheduled tasks: unchanged (apprentice 4 h, refine 3 h, rank daily; no
+  Claude task). Cost: $0 API; local CPU; one Claude Code subscription session.
+  Not touched: agents/hephaestus/*, apollo/*, aporia/*, roles/Charon/*.
+
+--------------------------------------------------------------------------------
+6. WHAT THIS DID NOT ESTABLISH
+--------------------------------------------------------------------------------
+  - That the frozen set can compute the kernel FROM TEXT. Arm A was handed
+    semantic state (d, s, q). Nothing in the frozen set produces that state
+    from natural language; that is the representation problem now routed out.
+  - That v3's adapter generalizes. On dev v2 it abstains on the entire
+    PREDICATE_EXTENSION_EMPTY kind and on 16 of 20 adversarial phrasings. Its
+    conditional correctness stays 1.000: it does not guess.
+  - That the A1 depth-1 "universal" solution is a mechanism. It is a truthiness
+    coincidence of a probability primitive. The classification rests on the
+    closure question ("is the function in G(C)?"), which it answers; it does
+    not rest on that expression being sensible.
+  - Anything about Apollo's post-E9 evaluator, which is still unnamed; nothing
+    here was run inside Apollo's blackboard.
+  - Anything measured on an independent held-out. Charon's six blind items were
+    not read by any code under hephaestus/.
+  - That MINT-0004 is a composition; that is a prior. The semantic-injection
+    question has not yet been put to it by execution.
+
+--------------------------------------------------------------------------------
+7. AUTHOR'S OWN ERRORS IN THIS BLOCK, AND WHAT THEY COST
+--------------------------------------------------------------------------------
+  - A multi-step shell command mixing two Python heredocs failed to parse; no
+    step ran. Cost: one turn. Fix adopted: closing scripts are written to files
+    first, then executed.
+  - Earlier in the day (repeated here because the rule matters): a candidate
+    generated through a string template turned a regex word-boundary escape
+    into a literal backspace byte, so the candidate silently never stripped the
+    container while my debug harness did. Cost: one smith cycle. Rule: write
+    candidates directly.
+  - The A1 arm's stopping condition ("all quantifiers found") halted the
+    enumeration at depth 1, so the depth-2 mechanism form was verified
+    analytically rather than enumerated. It is checkable in one line (section
+    10) but is not machine-listed in the result file.
+  - The first version of this packet was auto-wrapped to 80 columns and left
+    orphaned fragments; it was rewritten by hand (ff3209995 -> this text).
+
+--------------------------------------------------------------------------------
+8. WHAT IS OWED, AND BY WHOM
+--------------------------------------------------------------------------------
+  Unattended ecology (this seat's scheduled jobs; cheap; no ruling needed):
+    1. Put the semantic-injection question to MINT-0004 by execution, the same
+       way: typed inputs (a relation set), frozen primitives, enumerate.
+    2. Keep running the widen mode on v3's adapter with cheap models; record
+       coverage per idiom, never a scalar; report (coverage, conditional
+       correctness). First tick: 0/2 usable candidates (section 4.4).
+    3. Re-run the v1 component knockout on dev v2 so P4's delta is on record.
+  Other seats (these gate a READ of any future result, not an attempt):
+    4. Aporia / Charon: an independent held-out generator for vacuous_truth, if
+       the representation problem is pursued at all; a post-E9 Apollo evaluator
+       of record.
+    5. Ludus / Foundry: semantic-state worlds exposed directly, so kernels can
+       be tested without a language adapter (operator's Foundry principle).
+  Operator:
+    6. Whether MINT-0001's representation problem is worth anyone's time now,
+       or parks until semantic-state worlds exist.
+
+--------------------------------------------------------------------------------
+9. QUESTIONS FOR THE EXTERNAL REVIEWER
+--------------------------------------------------------------------------------
+  Q1  Is "inside G(C) under truthiness coercion" the right criterion for
+      "already expressible"? A1's universal solution is a numerical accident of
+      a probability primitive. Would you require the mechanism form (depth 2,
+      also found in G(C)) before reclassifying, or is membership enough?
+  Q2  Arm A was granted per-quantifier routing on the grounds that Apollo's
+      guarded operators provide it. Is that a fair grant, or does it smuggle in
+      the very "if-then-else" that Arm B has and Arm A should not?
+  Q3  The reclassification moves the whole wall to "representation". What
+      would falsify THAT -- what observation would show a reasoning kernel is
+      still missing once semantic state is supplied?
+  Q4  Dev set v2 was authored by the same seat that authored the candidate. It
+      failed the candidate (0.9125). Does that failure make the harness more
+      credible, or is it still inadmissible as evidence about the candidate?
+  Q5  The (coverage, conditional correctness) split reports v3 as (0.9125,
+      1.000) on dev v2 and (0.20, 1.000) on adversarial phrasings. What should
+      the queue DO with a candidate of that shape -- keep widening the adapter
+      with cheap models, or stop and wait for semantic-state worlds?
+  Q6  Mechanism coverage now depends on candidates declaring their own
+      ABLATIONS. A lazy or dishonest candidate declares none and receives
+      PASS_DEV_UNVERIFIED_COVERAGE. Should unverified coverage block any state
+      change?
+  Q7  What in this block should we STOP doing? Candidates: the adapter-widening
+      mode (it improves a parser for a wall no longer classed as reasoning);
+      the 4-hourly cheap-model attempts (nothing is in APPRENTICE-TESTING);
+      maintaining the historical-walls replay before a second wall exists.
+  Q8  Is one wall, fully anatomised and reclassified, a sufficient first test
+      of the Forge Queue process, or should a second wall of a different shape
+      go through triage before any process conclusion is drawn?
+
+--------------------------------------------------------------------------------
+10. HOW TO REPRODUCE (Windows, repo root, Python 3.11; deterministic; offline)
+--------------------------------------------------------------------------------
+  set PYTHONPATH=C:\prometheus
+  python -m hephaestus.src.semantic_closure 200000
+      -> A1 found: existential "s"; negative_universal "pigeonhole_check(1, s)";
+         universal "coin_flip_independence(s, d)"; evaluated 156. B: evaluated
+         152. C: 48/48. verdict "A1 SYNTHESISES THE TABLE ..."
+  python -c "import sys; sys.path.insert(0,'agents/hephaestus/src');
+      import forge_primitives as fp;
+      print(all(fp.pigeonhole_check(s, fp.all_but_n(d,1)) == (s==d)
+                for d in range(0,6) for s in range(0,d+1)))"
+      -> True   (the depth-2 mechanism form, verified analytically in 3.1)
+  python -m hephaestus.src.wall_vacuous_truth
+      -> "104 examples; 8 train / 96 holdout"   (DEV_SET_VERSION 2)
+  python -m hephaestus.src.run_candidate vacuous_truth ^
+      hephaestus\deep_mint_sessions\20260901T073136Z\candidates\v3_quantified_truth.py out.json
+      -> verdict FAIL_DEV; holdout accuracy_decidable 0.9125; coverage 0.9125;
+         conditional_correctness 1.0; by_kind PREDICATE_EXTENSION_EMPTY 0.0
+  type hephaestus\TOP_READY_MINTS.txt
+      -> "READY-FOR-DEEP-MINT: 0"; MINT-0001 DORMANT with the reclassification
+         rationale
+================================================================================
