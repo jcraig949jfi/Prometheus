@@ -99,3 +99,7 @@ The S1 value test is currently **blocked at the SUBSTRATE, not at Apollo's machi
       it would be premature only because the substrate is about to change (hence (a)).
 
 Prereg stays UNFROZEN and unscored. No scored cell has been run.
+
+
+## CORRECTION 2026-09-01 (Source Viability Gate, broader op ladder)
+The 'reachable-solve set = {identity, x+1}' above was measured on AFFINE functions only and is too narrow. The gate's ladder tested distinct operations, and the substrate reaches PARTIAL functional fitness on a rectifier-like capability that affine-only calibration missed: **abs and threshold both 0.583 (7/12 cases, verified pop_mass 2), modular 0.417** (stackvm-v1, budget 300). These are partial-fitness, not solves (still no exact solve beyond identity/x+1). The Source Viability Gate still returns **FAIL** on G1 (only 2 distinct nontrivial ops reach the 0.5 threshold, need >=3; and abs+threshold likely reflect ONE rectifier capability, agreeing on the same non-negative cases), and on G2 (abs mass 2 < 3). Disposition unchanged (mining suspended). A bug was caught in the gate's mass extraction (fitness is top-level in ARTIFACT_EXECUTED, not nested) -- fixed and verified. Gate artifact: apollo/cycles/S1_archive_value/gate/gate_stackvm-v1_50b5c2327c64.json.

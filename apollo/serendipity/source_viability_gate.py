@@ -67,7 +67,10 @@ def _pop_mass(c, s0, s1, theta):
         if e.get("kind") == "ARTIFACT_EXECUTED":
             p = e.get("payload", {})
             aid = p.get("artifact_id")
-            fit = (p.get("result") or {}).get("fitness")
+            # fitness is a TOP-LEVEL field of the ARTIFACT_EXECUTED payload, not nested
+            # under "result" (verified against the live ledger 2026-09-01; the earlier
+            # nested path made pop_mass read 0 even when abs reached 0.583/7-of-12).
+            fit = p.get("fitness")
             if aid is not None and fit is not None:
                 seen[aid] = max(seen.get(aid, 0.0), fit)
     return sum(1 for f in seen.values() if f >= theta)
