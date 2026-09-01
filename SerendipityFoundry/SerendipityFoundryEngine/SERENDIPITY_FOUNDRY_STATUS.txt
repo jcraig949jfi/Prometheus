@@ -1,0 +1,54 @@
+GEN2 STATUS
+============
+(facts below are sourced from the gen2 test battery and the canary run; not
+ aspirational. Re-derive with: .venv/Scripts/python -m pytest gen2/tests -q)
+
+API:                    PASS   (gen2/tests/test_gen2_api.py, OpenAPI at /v2/openapi.json)
+DURABILITY:             PASS   (T4 client death, T6 foundry restart)
+WORLD ISOLATION:        PASS   (T1, T8 over-HTTP, T9)
+FORKING:                PASS   (T9 fork isolation; shared prefix by reference)
+LEASE RECOVERY:         PASS   (T5 worker death, T6 restart reclaim)
+WORK QUEUE EXACTLY-ONCE:PASS   (T7 duplicate completion, concurrent claim)
+EVENT INTEGRITY:        PASS   (T15 tamper + delete detected)
+FAILURE LINEAGE:        PASS   (T13 failure->consume->mutation->experiment)
+PREDICTION ORDERING:    PASS   (T11 post-hoc laundering detected/blocked)
+SHARING TOPOLOGY:       PASS   (T14 + canary; policy-gated, provenance-visible)
+CONCURRENCY:            PASS   (T3, T7, T18 threaded)
+RESOURCE ACCOUNTING:    PARTIAL (T12: enforceable limits enforced + BUDGET_EXHAUSTED;
+                                 wall/cpu/mem/token auto-metering NOT implemented)
+REPLAY:                 PARTIAL (T16 bit-deterministic executor + idempotent commit;
+                                 T17 nondeterministic honestly labelled; full world
+                                 re-execution/restore NOT implemented)
+
+tests:                  30 passed / 0 failed / 0 skipped   (gen2/tests)
+world stress test:      27 worlds created across 3 sessions (T2); 20 in load test (T18)
+concurrent workers:     10 (T18)   |  8 (T7 concurrent claim)
+load ceiling (basement):~387 work-units/s, 300 units / 10 workers / 20 worlds, 0 double-commits
+ledger violations:      0   (all world chains verify(); tamper detected in T15)
+
+storage:                one SQLite database (WAL, foreign_keys=ON) + content-addressed
+                        blobs; cross-store atomic commit (event + state + work claim
+                        in one transaction); per-world hash-chained ledger.
+
+safety:                 gen2/ is OUTSIDE the release allowlist, so building it did NOT
+                        change source_tree_hash. The live D-13 service (50b5c232 on
+                        192.168.1.202:8799) and M2's release pin are UNAFFECTED. Gen-2
+                        runs as a separate process on a separate port with its own DB.
+
+known limitations:
+  - Resource accounting meters only what a caller explicitly reports via
+    consume_budget; enforceable limits are enforced, but executors do not yet
+    auto-measure wall/cpu/mem/tokens (those remain 'measured'/'estimated'/
+    'unavailable' -- never fabricated as enforced).
+  - No full replay/restore engine: checkpoints capture chain position + state
+    hash + object counts; fork inherits the EVENT history by reference but does
+    NOT re-execute. A world cannot yet be re-run from a checkpoint.
+  - Single machine only (SQLite by design); no distributed mode.
+  - DELAYED_SHARING is a named policy but is delivered as immediate policy-gated
+    import; there is no background sharing scheduler.
+  - Auth is token->client ownership; there is no finer per-session scope model.
+  - The canary driver exercises imports + all object types + accounting; the
+    failure-metabolization CONSUMED_BY edges are exercised by T13, not by the
+    canary run (imported failures are recorded, not claimed-consumed there).
+  - executor isolation: reference executors run in-process; subprocess/remote
+    executor isolation is not implemented.

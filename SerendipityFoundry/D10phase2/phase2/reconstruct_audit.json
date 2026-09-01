@@ -1,0 +1,51 @@
+{
+ "n_corpus": 4110,
+ "feature_dim": 293,
+ "genotype_length": {
+  "kind": "regression",
+  "r2": 0.8628,
+  "baseline_r2": 0.0,
+  "note": "INTRINSIC after D1: word COUNT and zero-padding remain"
+ },
+ "source_family": {
+  "kind": "classification",
+  "n": 2180,
+  "n_classes": 8,
+  "accuracy": 0.3138,
+  "majority_baseline": 0.1289,
+  "lift_over_baseline": 0.1849
+ },
+ "source_hist_task": {
+  "kind": "classification",
+  "n": 2180,
+  "n_classes": 32,
+  "accuracy": 0.9193,
+  "majority_baseline": 0.033,
+  "lift_over_baseline": 0.8862
+ },
+ "restart_phase": {
+  "kind": "classification",
+  "n": 2180,
+  "n_classes": 3,
+  "accuracy": 0.3592,
+  "majority_baseline": 0.3344,
+  "lift_over_baseline": 0.0248
+ },
+ "corpus_admission_source": {
+  "kind": "classification",
+  "n": 4110,
+  "n_classes": 3,
+  "accuracy": 0.3625,
+  "majority_baseline": 0.5268,
+  "lift_over_baseline": -0.1642
+ },
+ "is_solver": {
+  "kind": "classification",
+  "n": 4110,
+  "n_classes": 2,
+  "accuracy": 0.9961,
+  "majority_baseline": 0.9964,
+  "lift_over_baseline": -0.0002
+ },
+ "source_family_from_length_only": 0.1055
+}
