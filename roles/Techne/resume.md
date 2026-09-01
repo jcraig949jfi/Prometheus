@@ -8,9 +8,9 @@
 ## Live right now: the cartography campaign
 
 48-hour campaign `techne-cartography-20260831T115446Z`, started 2026-08-31T11:54Z, deadline
-2026-09-02T11:54Z. Manifest: `D:\Prometheus	echne\cartography\CAMPAIGN_MANIFEST.json`.
-State: `D:\Prometheus	echne\cartography\campaign_state.json` (last_cycle 38).
-Store: `D:\Prometheus	echne\cartography\store\*.jsonl` — 304 genomes, 301 claims,
+2026-09-02T11:54Z. Manifest: `D:\Prometheus\techne\cartography\CAMPAIGN_MANIFEST.json`.
+State: `D:\Prometheus\techne\cartography\campaign_state.json` (last_cycle 38).
+Store: `D:\Prometheus\techne\cartography\store\*.jsonl` — 304 genomes, 301 claims,
 135 holes, 22 taxonomy events.
 
 **Read the campaign's own verdict on itself first.** TRAJ-001 (cycle 032, in
@@ -19,7 +19,7 @@ Store: `D:\Prometheus	echne\cartography\store\*.jsonl` — 304 genomes, 301 clai
 least useful. Cycle 038 acted on that; cycles 033-037 did not.
 
 ### Cycle 038 (this session) — the two frozen tests, run
-`D:\Prometheusoles\Techne\CARTOGRAPHY_FROZEN_TESTS_2026-09-01.md` is the findings doc.
+`D:\Prometheus\roles\Techne\CARTOGRAPHY_FROZEN_TESTS_2026-09-01.md` is the findings doc.
 Harness `techne/cartography/frozen_tests.py` was committed (ff9165705) BEFORE it was run.
 
 - **TX-001 (partial cells) PASSES** both frozen clauses. Placement 13/218 → 125/218 LOO;
