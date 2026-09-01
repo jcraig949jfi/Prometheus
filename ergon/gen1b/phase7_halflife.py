@@ -173,18 +173,27 @@ def main():
     print('   artifacts showing a REVIVAL after >=5 dormant tasks: %d (%.1f%%)'
           % (dormancy_revivals, 100 * dormancy_revivals / max(1, ever)))
 
-    print('\n2. HAZARD: P(at least one FURTHER effective use | uses so far)')
-    by_uses = collections.defaultdict(lambda: [0, 0])
-    for r in per_art:
-        k = min(r['n_eff'], 6)
-        by_uses[k][1] += 1
-        if r['n_eff'] > k or (r['n_eff'] >= 1 and r['span'] > 0):
-            by_uses[k][0] += 1
-    for k in sorted(by_uses):
-        hit, n = by_uses[k]
-        if n >= 10:
-            print('   uses so far %d%s : n %4d   P(further) %.3f'
-                  % (k, '+' if k == 6 else ' ', n, hit / n))
+    # DISCRETE SURVIVAL HAZARD, computed correctly.
+    # An earlier version binned artifacts by their FINAL use count and asked
+    # whether they had "more", which is definitionally zero in every bin and
+    # manufactured a spurious step at 2 uses. The right quantity is
+    #     h(j) = P(n_eff >= j+1 | n_eff >= j)
+    # estimated over the risk set that actually reached j uses.
+    print('\n2. DISCRETE HAZARD  h(j) = P(reach use j+1 | reached use j)')
+    counts = [r['n_eff'] for r in per_art]
+    hazard = {}
+    for j in range(0, 10):
+        at_risk = sum(1 for c in counts if c >= j)
+        went_on = sum(1 for c in counts if c >= j + 1)
+        if at_risk >= 10:
+            hazard[j] = {'at_risk': at_risk, 'continued': went_on,
+                         'hazard': round(went_on / at_risk, 4)}
+            print('   reached %d uses: risk set %4d -> continued %4d   '
+                  'h(%d) = %.3f' % (j, at_risk, went_on, j, went_on / at_risk))
+    inc = (hazard.get(4, {}).get('hazard', 0) >
+           hazard.get(0, {}).get('hazard', 1))
+    print('   -> hazard is %s in j: usefulness does NOT decay with use'
+          % ('INCREASING' if inc else 'NOT increasing'))
 
     print('\n3. SUBPOPULATIONS')
     zero = [r for r in per_art if r['n_eff'] == 0]
@@ -218,6 +227,7 @@ def main():
                                     if gaps else None),
            'artifacts_with_revival': dormancy_revivals,
            'subpop': {'never': len(zero), 'once': len(one), 'five_plus': len(many)},
+           'hazard': hazard,
            'top10pct_share_of_uses': (round(sum(sorted(n_uses, reverse=True)[:max(1, len(n_uses)//10)])
                                             / max(1, sum(n_uses)), 4) if n_uses else None)}
     json.dump(out, open(os.path.join(HERE, 'phase7_halflife.json'), 'w',
