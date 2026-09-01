@@ -1,0 +1,80 @@
+=====================================================================
+HARMONIA B GEN-3B -- FREEZE E8 (THE RESERVED SLOT): DOES THE
+GEOMETRY DECOMPOSITION SURVIVE ON SEARCH?
+Issued 2026-09-01, BEFORE any E8 evidence exists. This is the eighth
+and FINAL experiment. There is no ninth.
+=====================================================================
+
+WHY THIS QUESTION GOT THE RESERVED SLOT
+  The charter allocated E8 after E1-E7 to the sharpest surviving
+  question. E3 and E5 disagree, and the disagreement is the sharpest
+  thing this campaign found:
+    E3 (GEOMETRY):  on the crossed 3x3, eta2 on the band rate is
+                    substrate 0.9752, operator 0.0002. The operator is
+                    ~5000x smaller. Substrate owns the geometry.
+    E5 (SEARCH):    CIRCUIT|M-UNIFORM improves 0.339 while
+                    CIRCUIT|M-OPONLY improves 0.193. SAME substrate,
+                    1.76x, from an operator E3 says barely moves the
+                    band.
+  Either the operator matters much more for search than for geometry,
+  or one of the two decompositions is an artefact of its own scale. E8
+  runs the SAME two-way decomposition on SEARCH OUTCOME over the
+  IDENTICAL crossed design, so the two are directly comparable
+  numbers rather than two anecdotes.
+
+HYPOTHESIS
+  The substrate/operator decomposition is NOT invariant to what is
+  measured: eta2_operator is materially larger on search outcome than
+  on the geometry coordinates, on the same cells.
+
+NULL / COMPETING EXPLANATIONS
+  N-a  It IS invariant: eta2_operator stays negligible on search too,
+       and the CIRCUIT contrast in E5 was a single-substrate accident
+       or a different-operator-set artefact (E5 used M-OPONLY, which
+       is substrate-typed and NOT in the crossed design).
+  N-b  Scale artefact: both decompositions are dominated by the
+       between-substrate spread and eta2 is simply the wrong summary.
+       Tested by reporting, alongside eta2, the WITHIN-SUBSTRATE
+       operator range for both geometry and search -- the same
+       diagnostic already journaled against my own E3 headline.
+
+INTERVENTION
+  Exactly the E3 crossed design: {CIRCUIT, BYTEVM, DNF} x
+  {M-UNIFORM, M-UNIFORM2, M-TAILSITE}, the three SUBSTRATE-AGNOSTIC
+  operators. Compute-matched (1+1) search, 800 phenotype evaluations,
+  10 targets, 15 seeds, both acceptance modes. Same budget and same
+  harness as E5, so E5's controls carry over.
+  NOTE ON BUDGET FAIRNESS, declared: M-UNIFORM2 spends TWO elementary
+  edits per evaluation while the other two spend one. Evaluations are
+  matched, elementary edits are not, and that asymmetry is intrinsic
+  to a budget arm. Both accountings are reported; neither is hidden.
+
+FROZEN METRIC
+  eta2_substrate / eta2_operator / eta2_interaction on mean normalised
+  improvement, per acceptance mode, computed by the identical two-way
+  routine E3 used, with the seed as the replication unit.
+  Reported beside E3's geometry eta2 for the same cells, and beside
+  the within-substrate operator RANGE for both.
+
+GATES
+  E8-G1  DISSOCIATION CONFIRMED iff eta2_operator on search exceeds
+         eta2_operator on the band rate by a factor >= 10 in at least
+         one acceptance mode.
+  E8-G2  The within-substrate operator range on search must exceed
+         0.05 absolute normalised improvement in at least one
+         substrate, or the dissociation is a ratio between two small
+         numbers and is reported as such.
+
+KILL CONDITION
+  If eta2_operator on search is also negligible (< 0.01) then N-a
+  holds, the E5 CIRCUIT contrast was operator-set-specific, and the
+  campaign reports the substrate framing as SURVIVING on both
+  measurements -- which would strengthen A's programme, not mine.
+
+WHAT THE RESULT CHANGES
+  It decides which sentence goes in the final packet: whether
+  "substrate geometry" is a sufficient object of study for
+  navigability, or whether the operator has to be carried in every
+  claim. It is the last experiment; whatever it says, the campaign
+  closes on it.
+=====================================================================
