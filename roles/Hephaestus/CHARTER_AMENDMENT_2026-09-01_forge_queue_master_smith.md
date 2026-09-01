@@ -259,6 +259,60 @@ afterward: **do not ask the smith whether the blade is good. Test the blade.**
 
 ---
 
+## Addendum 1 — Operator rulings on the first Master Smith session (James, 2026-09-01, evening)
+
+Issued in reply to the review packet for session `hephaestus/deep_mint_sessions/20260901T073136Z`.
+Binding on the queue machinery from this point. Paraphrase is the recorder's; quoted lines are verbatim.
+
+1. **The important output was the anatomy, not the pass.** *"vacuous-truth problem = small truth
+   kernel (possibly substrate) + large semantic extraction problem (mostly perception)."* Cycle 4
+   *"prevented the 1.000 from becoming another Apollo-style home-battery illusion. That's exactly
+   how the new Forge should behave."*
+2. **Q1 (Level 2?) — not established by closure-on-examples.** The decisive test strips parsing:
+   give a typed enumerator `(quantifier, domain_size, satisfier_count)` and ask whether the frozen
+   primitive closure synthesises the truth mapping. *"If enumeration synthesizes an equivalent
+   expression cheaply, reclassify: Level 2 → Level 1 composition."* Run this before any further
+   Master Smith touch on MINT-0001. → Implemented as `hephaestus/src/semantic_closure.py`.
+3. **Q2 (zero false-commit) — reward as a safety/instrumentation property, not generalization.**
+   Represent results as two coordinates, **(coverage, conditional correctness)**; *"Don't reward
+   abstention in the scalar fitness. Preserve it as a separate coordinate."*
+4. **Q3 (PASS_DEV after P4) — MECHANISM COVERAGE.** A dev harness may not certify a mechanism
+   unless every semantically claimed component has an opportunity to matter: for each component
+   c_i, some example or intervention with Δ(c_i) ≠ 0, else mark `UNTESTED_COMPONENT`. v3 should
+   have been **`PASS_DEV_WITH_UNTESTED_COMPONENT`**. *"Code coverage isn't enough. You want causal
+   mechanism coverage."*
+5. **Q4 (budget) — keep both.** Keep the five-cycle constraint; define a cycle as ending in *"at
+   least one new executed discriminating observation."* Record per session: `smith_cycles,
+   executed_falsifications, candidate_revisions, process_failures, adversarial_cycles,
+   ablation_cycles`. Do not optimise the number before there is data.
+6. **Q5 (CANDIDATE-PRODUCED) — legitimate.** It means *"the smith produced an executable object
+   sufficiently interesting to hand to independent machinery,"* not admission-worthy. Preserve
+   `READY-FOR-DEEP-MINT → CANDIDATE-PRODUCED → INDEPENDENT-EVAL → REJECTED / ADMITTED`; the
+   conflict-of-interest metadata travels with the packet.
+7. **Q6 (D1) — stopping was correct.** *"The smith shouldn't finish the sword every time it's
+   summoned. It should move the epistemic state."* D1 becomes evidence for the unattended forge.
+8. **Q7 (archaeology test)** — the same semantic-only enumeration, three arms: A frozen Prometheus
+   primitives + generic composition; B a generic small boolean/comparison/count language; C the v3
+   kernel. *"If A synthesizes it, MINT-0001 was misclassified. Apollo/Hephaestus had a
+   routing/search problem. If A cannot represent it but B immediately can, that's good evidence
+   you've located an actual missing operator family."*
+9. **The hidden result:** *"v3 = ~120 lines; kernel = 10 lines; the rest is parser"* ≈ 8% reasoning
+   kernel + 92% representation adapter by bulk. Foundry principle: *"Serendipity should increasingly
+   expose semantic-state worlds directly. Natural language should be one representation layer, not
+   the substrate itself."* Hephaestus mints against the second arrow (semantic state → new state).
+10. **Immediate queue change:** every Mint Packet gains **`SEMANTIC_KERNEL_SPEC`** and
+    **`REPRESENTATION_ADAPTER_SPEC`**, and triage must ask: *"If perfect semantic state were
+    injected, what computation would still be missing?"* If the answer is "almost nothing", do not
+    send it to the Master Smith as a Level-2 reasoning mint; route the representation problem
+    elsewhere.
+11. **Do not summon Claude again yet.** The process test succeeded (cheap models 0/6; smith found an
+    executable candidate in 3 build cycles; adversarial cycle destroyed apparent generalization;
+    knockout separated real from decorative; budget held). Give the work back to the unattended
+    ecology: semantic-only closure test → P4 fixture → D1 investigation → parser widening with
+    cheap models → independent held-out construction. *"Claude's job isn't necessarily to solve the
+    queued wall. Its job is to convert a poorly understood wall into a much smaller, experimentally
+    sharper one within a hard loop budget."*
+
 ## Recorder's notes (Hephaestus, no authority over the text above)
 
 - **Relation to the review's charter.** Lanes A (ablation lab) and C (pool stewardship) stand;

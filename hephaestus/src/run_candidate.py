@@ -85,7 +85,31 @@ def main() -> int:
     result.update({"train": tr["metrics"], "holdout": ho["metrics"], "input_mutants": mut,
                    "holdout_records": ho["records"]})
     m = ho["metrics"]
+    result["dev_set_version"] = getattr(wall, "DEV_SET_VERSION", 1)
     mut_ok = all(v["passed"] == v["of"] for v in mut.values())
+    # ── Mechanism coverage (Addendum 1, Q3). A candidate may declare
+    #      ABLATIONS = {"component name": {"module_attr": replacement, ...}, ...}
+    #    Each ablation is applied in turn and the holdout delta measured. A component whose
+    #    ablation changes nothing is UNTESTED by this dev set (decorative until proven otherwise).
+    coverage = None
+    abl = getattr(mod, "ABLATIONS", None)
+    if isinstance(abl, dict) and abl:
+        coverage = {}
+        for cname, patch in abl.items():
+            saved = {k: getattr(mod, k, None) for k in patch}
+            try:
+                for k, v in patch.items():
+                    setattr(mod, k, v)
+                acc = wall.evaluate(op, hold)["metrics"]["accuracy_decidable"]
+            except Exception as e:  # noqa: BLE001
+                acc = None; coverage[cname] = {"error": f"{type(e).__name__}: {str(e)[:80]}"}
+            finally:
+                for k, v in saved.items():
+                    setattr(mod, k, v)
+            if acc is not None:
+                coverage[cname] = {"delta_acc": round(acc - m["accuracy_decidable"], 4)}
+        result["mechanism_coverage"] = coverage
+    untested = [c for c, v in (coverage or {}).items() if v.get("delta_acc") == 0.0]
     iv = sum(1 for r in ho["records"] if (r.get("error") or "").startswith("InterfaceViolation"))
     if iv == len(hold):
         result["verdict"] = "INTERFACE_VIOLATION"
@@ -94,7 +118,13 @@ def main() -> int:
         result["verdict"] = "RUNTIME_ERROR_ALL"
         result["failure_families"] = ["runtime_error:" + (ho["records"][0].get("error") or "")[:60]]
     elif m["accuracy_decidable"] >= 0.95 and m["boundary_false_commit_rate"] == 0 and mut_ok:
-        result["verdict"] = "PASS_DEV"
+        if coverage is None:
+            result["verdict"] = "PASS_DEV_UNVERIFIED_COVERAGE"     # no ABLATIONS declared
+        elif untested:
+            result["verdict"] = "PASS_DEV_WITH_UNTESTED_COMPONENT"
+            result["untested_components"] = untested
+        else:
+            result["verdict"] = "PASS_DEV"
     else:
         fams = []
         if m["accuracy_decidable"] < 0.5:

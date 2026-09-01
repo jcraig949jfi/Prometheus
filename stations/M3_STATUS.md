@@ -1,7 +1,7 @@
 # M3 (Gandalf) — Station Status (living doc)
 
 **Point agent:** Hephaestus (Claude Fable 5, ultracode — the fleet's one non-Opus seat)
-**Last updated:** 2026-09-01 (§9) · **Station roster:** Hephaestus (forge + meta-assessment loop)
+**Last updated:** 2026-09-01 (§10) · **Station roster:** Hephaestus (forge + meta-assessment loop)
 **Mode:** level-setting. **No hard decisions until ~2026-08-14** (James, 2026-08-12).
 Items marked DECISION are parked for James.
 **Convention adopted from `stations/M2_STATUS.md`.** Fitting, since the convention was
@@ -318,3 +318,54 @@ in-blackboard knockout are all still owed by other seats. Packet → `CANDIDATE-
 **Owed back to the apprentice side:** two new dev kinds (`NONEMPTY_OTHER_PREDICATE` to make the
 decorative component measurable; `PREDICATE_EXTENSION_EMPTY`, a fourth kernel rule v3 lacks) and the
 16 adversarial idioms as parser-widening work for cheap models — apprentice work, not smith work.
+
+
+## 10. OPERATOR RULINGS ON THE SMITH SESSION, AND THE WALL RECLASSIFIED BY EXECUTION (2026-09-01, late)
+
+James answered Q1–Q7 of the review packet (recorded verbatim-where-quoted as **Addendum 1** of the
+charter amendment). Headline: *"Claude's job isn't necessarily to solve the queued wall. Its job is to
+convert a poorly understood wall into a much smaller, experimentally sharper one within a hard loop
+budget."* And: do not summon Claude again yet; give the work back to the unattended ecology.
+
+**The decisive test he asked for (Q1/Q7) was run — `hephaestus/src/semantic_closure.py`.** Parsing
+stripped; inputs = (quantifier, domain_size, satisfier_count); target = the 9-row truth table (48 rows
+with n∈{1,2,3,5} instantiated).
+
+| arm | operators | result |
+|---|---|---|
+| A0 frozen primitives, no routing | — | impossible by arity: the three quantifier columns differ at (0,0) |
+| **A1 frozen primitives + per-quantifier routing** (what Apollo's guards provide; truthiness the only coercion) | `all_but_n`, `pigeonhole_check`, `fencepost_count`, `modular_arithmetic`, `coin_flip_independence`, `information_sufficiency`, `parity_check` | **all three columns at depth 1, 156 evaluations**: existential = `s`; negative-universal = `pigeonhole_check(1, s)`; universal = `coin_flip_independence(s, d)` (a truthiness coincidence — comb(s,d)=0 iff s<d — inside G(C) but not a mechanism; the mechanism form `pigeonhole_check(s, all_but_n(d,1))` = s≥d is depth 2 and also inside G(C)) |
+| B generic boolean/comparison language | ==, <, ≤, >, ≥, not, and, or, +, − | depth 1, 152 evaluations (`eq(d,s)`, `eq(s,0)`, `s`) |
+| C v3 kernel | 10 lines | 48/48 |
+
+**Verdict, per the rule fixed in advance:** *A1 synthesises the table ⇒ the kernel is a Level-1
+composition; MINT-0001 was a routing/search/representation problem, not a missing operator.*
+What was actually missing: (a) routing on a quantifier slot, (b) a semantic state that carries
+`domain_size` / `satisfier_count` at all. **MINT-0001 → DORMANT, `routing = representation`.** D1's
+"fourth rule" is likewise an adapter mapping ("no P X" → satisfiers = 0), not a kernel rule.
+
+**Structural changes landed (all from Addendum 1):**
+- Packet schema: `SEMANTIC_KERNEL_SPEC`, `REPRESENTATION_ADAPTER_SPEC` (required before READY); triage
+  must answer *"if perfect semantic state were injected, what computation would still be missing?"*
+- Metrics are two coordinates — `coverage` and `conditional_correctness` — never one scalar.
+- Runner: mechanism coverage via a candidate-declared `ABLATIONS` map → `PASS_DEV` /
+  `PASS_DEV_WITH_UNTESTED_COMPONENT` / `PASS_DEV_UNVERIFIED_COVERAGE`. v3 relabelled
+  `PASS_DEV_WITH_UNTESTED_COMPONENT` in the session manifest.
+- Dev set **v2** (104 examples / 13 kinds): `NONEMPTY_OTHER_PREDICATE` (the P4 fixture — the predicate
+  check is now load-bearing) and `PREDICATE_EXTENSION_EMPTY` (D1). v3 on v2: **FAIL_DEV 0.9125 —
+  coverage 0.9125, conditional correctness 1.000**, `PREDICATE_EXTENSION_EMPTY` 0.0 as predicted.
+- Manifest accounting: smith_cycles 5 · candidate executions 3 · adversarial phrasings 20 · component
+  ablations 9 · candidate revisions 3 · process failures 1 · adversarial cycles 1 · ablation cycles 1.
+- Apprentice job: a `widen` mode (cheap models extend v3's *adapter* only, kernel frozen; measured on
+  dev v2 + the 20 adversarial phrasings; labelled REPRESENTATION work, never a mint). It runs on the
+  existing 4-hourly task whenever nothing is in APPRENTICE-TESTING.
+
+**The queue now:** 0 READY; MINT-0004 `consistency_check` COMPOSITION-SUSPECTED is the only live
+candidate and must pass the semantic-injection question before it can advance; MINT-0001/2/3 closed
+or routed. The forge's first full cycle produced no primitive and one reclassification — which is the
+intended output shape.
+
+**Foundry principle recorded (Addendum 1 §9):** v3 was ~8% kernel / ~92% adapter by bulk; Apollo E9
+found the same boundary from the other side. *Serendipity should increasingly expose semantic-state
+worlds directly; natural language is one representation layer, not the substrate.* Hephaestus mints
+against the second arrow (semantic state → new state).

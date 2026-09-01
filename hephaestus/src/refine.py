@@ -28,16 +28,19 @@ def _executed(a: dict) -> bool:
     fence) are kept in the record but excluded from the exhaustion count."""
     if a.get("harness_fault"):
         return False
-    return a.get("verdict") in {"PASS_DEV", "FAIL_DEV", "STATIC_REJECT", "IMPORT_ERROR", "NO_OP_FUNCTION",
-                                "RUNTIME_ERROR_ALL", "INTERFACE_VIOLATION", "TIMEOUT", "NO_CODE"}
+    v = str(a.get("verdict", ""))
+    return v.startswith("PASS_DEV") or v in {"FAIL_DEV", "STATIC_REJECT", "IMPORT_ERROR", "NO_OP_FUNCTION",
+                                             "RUNTIME_ERROR_ALL", "INTERFACE_VIOLATION", "TIMEOUT", "NO_CODE"}
 
 
 def refine_packet(p: dict) -> dict:
     mint = p["MINT_ID"]
     attempts = p.get("CHEAP_MODEL_ATTEMPTS") or []
     executed = [a for a in attempts if _executed(a)]
-    fails = [a for a in executed if a.get("verdict") != "PASS_DEV"]
-    passes = [a for a in executed if a.get("verdict") == "PASS_DEV"]
+    # PASS_DEV, PASS_DEV_WITH_UNTESTED_COMPONENT, PASS_DEV_UNVERIFIED_COVERAGE all count as dev passes
+    # for state purposes; the qualifier travels with the record (Addendum 1, Q3).
+    fails = [a for a in executed if not str(a.get("verdict", "")).startswith("PASS_DEV")]
+    passes = [a for a in executed if str(a.get("verdict", "")).startswith("PASS_DEV")]
     fam = Counter()
     for a in fails:
         for f in a.get("failure_families") or [a.get("verdict")]:

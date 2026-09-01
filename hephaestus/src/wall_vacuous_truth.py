@@ -35,6 +35,10 @@ from blackboard import BlackboardState  # noqa: E402
 
 WALL_ID = "vacuous_truth"
 SEED = 20260901
+# v1 = 88 examples / 11 kinds (graded the first Master Smith session).
+# v2 = 104 examples / 13 kinds: + NONEMPTY_OTHER_PREDICATE (P4 fixture), + PREDICATE_EXTENSION_EMPTY (D1).
+# Any number quoted against this wall must carry the version.
+DEV_SET_VERSION = 2
 
 # ── example construction ─────────────────────────────────────────────────────────────────
 
@@ -128,6 +132,13 @@ def build_examples(seed: int = SEED) -> list[dict]:
         # near-miss: the word 'vacuous' appears, domain non-empty, claim false -> no
         ex.append(_mk(rng, "NEARMISS_VACUOUS_WORD", f"The label 'vacuous' is printed on {c}. It holds exactly {k} {pl}, and {j} of them are {P}. Consider the claim: {_fill(rng.choice(UNIV_CLAIMS), d)}. Is the claim true?", "no", d,
                       note="kills the 'vacuous' keyword shortcut (forge_v4, 98 files)"))
+        # ── DEV SET v2 (Addendum 1, after Master Smith session 20260901T073136Z) ──
+        # P4 fixture: the "k of them are Q" clause is about a DIFFERENT predicate -> no information -> abstain.
+        ex.append(_mk(rng, "NONEMPTY_OTHER_PREDICATE", f"There are exactly {k} {pl} in {c}, and exactly {j} of them are {Q}. Consider the claim: {_fill(rng.choice(UNIV_CLAIMS), d)}. Is the claim true?", "und", d,
+                      note="makes the predicate check in a cardinality reader load-bearing (knockout P4 was 0.000 without this kind)"))
+        # D1 fixture: the PREDICATE's extension is stated empty while the domain is non-empty -> universal false.
+        ex.append(_mk(rng, "PREDICATE_EXTENSION_EMPTY", f"There are no {P} {pl} in {c}, but there are exactly {k} {pl} in {c}. Consider the claim: {_fill(rng.choice(UNIV_CLAIMS), d)}. Is the claim true?", "no", d,
+                      note="adversarial D1 from the smith session; an ADAPTER mapping ('no P X' -> satisfiers=0), not a kernel rule"))
     for n, e in enumerate(ex):
         e["id"] = f"vt-{n:03d}"
     return ex
@@ -182,9 +193,13 @@ def metrics(records: list[dict]) -> dict:
     dec = [r for r in records if r["gold"] != "und"]
     und = [r for r in records if r["gold"] == "und"]
     n_dec = len(dec) or 1
+    committed = [r for r in dec if r["comparison"] is not None and not r["error"]]
     return {
         "n": len(records),
         "accuracy_decidable": round(sum(r["ok"] for r in dec) / n_dec, 4),
+        # Addendum 1, Q2: two coordinates, never folded into one scalar.
+        "coverage": round(len(committed) / n_dec, 4),
+        "conditional_correctness": round(sum(r["ok"] for r in committed) / len(committed), 4) if committed else None,
         "abstain_rate_decidable": round(sum(r["comparison"] is None and not r["error"] for r in dec) / n_dec, 4),
         "boundary_false_commit_rate": round(sum(not r["ok"] for r in und) / (len(und) or 1), 4),
         "errors": sum(1 for r in records if r["error"]),
