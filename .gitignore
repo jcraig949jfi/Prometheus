@@ -396,3 +396,11 @@ ergon/probe_logs/*.log
 !incubation/results/
 !incubation/v2/results/
 !incubation/v3/results/
+
+# 2026-09-01 (per repo owner): prometheus_math DB dumps / stale corpora are not
+# source and should not be version-controlled. knots.json.gz is a compressed DB
+# dump (belongs in Postgres, not git); the fuzz-failure JSONs are old/unused.
+# Left on disk for the DBA to decide whether to ingest into Postgres, then delete.
+prometheus_math/databases/*.gz
+prometheus_math/tests/canonicalization_fuzz_failures.json
+prometheus_math/tests/killvector_fuzz_failures.json
