@@ -1,0 +1,79 @@
+{
+  "n": 6,
+  "ts": "2026-09-01T07:20:16Z",
+  "model": "ollama:phi3",
+  "prompt_sha": "05639b313f04",
+  "regime": "apprentice",
+  "cost": 0.0,
+  "latency_s": 27.1,
+  "model_served": "phi3",
+  "llm_ok": true,
+  "hypothesis": "The truth value of a quantified claim in the vacuous_truth function is determined by analyzing keywords and sentence structure that indicate an empty domain (universal/negative-universal claims with 'each' or explicit negation, existential claims mentioning zero items). If such indicators are present without counterexamples for universal statements, it returns True. For existential claims stating the existence of at least one item satisfying a predicate in an empty set, it returns False. Otherwise, if no clear information is provided about domain emptiness or presence of counterexamples, it abstains from assigning any truth value by returning None.",
+  "substrate_suffices_claim": "NO, existing primitives alone cannot express the nuanced understanding required to handle vacuous claims as they lack context and reasoning capabilities beyond basic logical operations.",
+  "self_counterexamples": "- [NONEMPTY_UNIV_ALL] PROMPT: There are exactly 5 electric cars in the garage, all of which are blue. Consider the claim: each electric car is not red. Is this claim true? (Expects False)\n- [EXIST_EMPTY] PROMPT: The number of people taller than two metres in a room with exactly one person that tall is zero. Consider the claim: there exists someone who weighs more than 200 kilograms and is asleep, given no information about weight or sleeping habits. Is this claim true? (Expects None)\n- [NEARMISS_NO_KEYWORD] PROMPT: There are exactly three red marbles in the jar with a total of 15 items; two blue and one green. Consider the claim: some item is both chipped and heavier than ten grams, assuming no explicit mention about chip status or weight but implying non-empty domain for these properties. Is this claim true? (Expects None)",
+  "verdict": "FAIL_DEV",
+  "failure_families": [
+    "below_chance_or_abstaining",
+    "quantifier_blind",
+    "candidate_order_dependent",
+    "surface_form_of_emptiness",
+    "weak_kinds:EXIST_EMPTY,NEARMISS_NO_KEYWORD,NEARMISS_VACUOUS_WORD,NONEMPTY_EXIST_TRUE,NONEMPTY_UNIV_ALL,NONEMPTY_UNIV_COUNTEREX,VAC_COND_EMPTY,VAC_NEGUNIV_EMPTY,VAC_UNIV_EMPTY,VAC_UNIV_EMPTY_ORDER",
+    "runtime_errors:76"
+  ],
+  "static_gate": [],
+  "holdout": {
+    "n": 80,
+    "accuracy_decidable": 0.0,
+    "abstain_rate_decidable": 0.0548,
+    "boundary_false_commit_rate": 0.0,
+    "errors": 76,
+    "by_kind": {
+      "EXIST_EMPTY": 0.0,
+      "NEARMISS_NO_KEYWORD": 0.0,
+      "NEARMISS_VACUOUS_WORD": 0.0,
+      "NONEMPTY_EXIST_TRUE": 0.0,
+      "NONEMPTY_UNIV_ALL": 0.0,
+      "NONEMPTY_UNIV_COUNTEREX": 0.0,
+      "NONEMPTY_UNKNOWN": 1.0,
+      "VAC_COND_EMPTY": 0.0,
+      "VAC_NEGUNIV_EMPTY": 0.0,
+      "VAC_UNIV_EMPTY": 0.0,
+      "VAC_UNIV_EMPTY_ORDER": 0.0
+    }
+  },
+  "train": {
+    "n": 8,
+    "accuracy_decidable": 0.0,
+    "abstain_rate_decidable": 0.1429,
+    "boundary_false_commit_rate": 0.0,
+    "errors": 7,
+    "by_kind": {
+      "EXIST_EMPTY": 0.0,
+      "NEARMISS_NO_KEYWORD": 0.0,
+      "NONEMPTY_UNIV_ALL": 0.0,
+      "NONEMPTY_UNKNOWN": 1.0,
+      "VAC_UNIV_EMPTY": 0.0,
+      "VAC_UNIV_EMPTY_ORDER": 0.0
+    }
+  },
+  "input_mutants": {
+    "emptiness_removed_should_not_commit_yes": {
+      "passed": 8,
+      "of": 8
+    },
+    "every_to_some_should_flip_to_no": {
+      "passed": 0,
+      "of": 8
+    },
+    "candidate_order_invariance": {
+      "passed": 0,
+      "of": 80
+    },
+    "no_to_exactly_zero_same_answer": {
+      "passed": 0,
+      "of": 8
+    }
+  },
+  "candidate_file": "hephaestus\\mint_queue\\MINT-0001\\attempts\\0006_20260901T072016Z_ollama-phi3.py",
+  "result_file": "hephaestus\\mint_queue\\MINT-0001\\attempts\\0006_20260901T072016Z_ollama-phi3_result.json"
+}

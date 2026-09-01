@@ -1,0 +1,57 @@
+{
+  "MINT_ID": "MINT-0002",
+  "STATUS": "SCRAPPED",
+  "PRIORITY": {
+    "score": 0.188,
+    "dimensions": {
+      "evidence_current_set_cannot_express": 0.0,
+      "frequency_across_worlds": 0.25,
+      "number_of_independent_origins": 0.25,
+      "potential_cross_world_utility": 0.5,
+      "quality_of_reproducer": 0.0,
+      "quality_of_falsifier": 0.0,
+      "cheap_search_exhaustion": 0.0,
+      "minimality_of_required_extension": 0.5
+    },
+    "rationale": "Closed: retrieval, not synthesis. Consume before duplicate."
+  },
+  "SOURCE_WORLD": "Apollo canary, category all_but_n",
+  "SOURCE_AGENT": "Apollo / Aporia",
+  "FAILURE_FAMILY": "all_but_n (arithmetic difference)",
+  "WHAT_FAILED": "Apollo v2 registry had no subtraction; forge_primitives.all_but_n existed since v1.",
+  "WHAT_SHOULD_HAVE_HAPPENED": null,
+  "MINIMAL_REPRODUCER": null,
+  "POSITIVE_EXAMPLES": [],
+  "NEGATIVE_EXAMPLES": [],
+  "BOUNDARY_EXAMPLES": [],
+  "CURRENT_PRIMITIVES": [],
+  "PRIMITIVE_SET_HASH": null,
+  "WHY_COMPOSITION_APPEARS_INSUFFICIENT": null,
+  "CLOSURE_EVIDENCE": [],
+  "SEARCH_ALREADY_ATTEMPTED": [
+    "Aporia IQ-PORT-1 (2026-08-25): ported; dE_port = +5/120 exactly; pipeline frozen."
+  ],
+  "CHEAP_MODEL_ATTEMPTS": [],
+  "CHEAP_MODEL_FAILURES": [],
+  "BEST_FAILED_CANDIDATE": null,
+  "KNOCKOUT_RESULTS": [],
+  "COUNTERFEIT_TESTS": [],
+  "KNOWN_SHORTCUTS": [],
+  "FORBIDDEN_SHORTCUTS": [],
+  "REPRESENTATION_PERTURBATIONS": [],
+  "DESIRED_TYPED_INTERFACE": null,
+  "RESOURCE_CONSTRAINTS": null,
+  "INDEPENDENT_EVALUATOR": null,
+  "SUCCESS_CRITERION": null,
+  "KILL_CRITERION": null,
+  "PROVENANCE": [
+    {
+      "ref": "aporia/iq/FINDINGS_IQ_PORT_1_2026-08-25.md"
+    }
+  ],
+  "_meta": {
+    "created": "2026-09-01T07:08:02Z",
+    "updated": "2026-09-01T07:21:44Z",
+    "schema": "mint_packet_v1"
+  }
+}
