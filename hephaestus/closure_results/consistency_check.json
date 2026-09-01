@@ -1,0 +1,104 @@
+{
+  "spec": "consistency_check",
+  "notes": "consistency_check: is a set of strict-order relations acyclic? Independent DFS target; frozen primitives take edge lists.",
+  "route_keys": [
+    "consistent"
+  ],
+  "n_search_points": 64,
+  "n_verify_points": 4096,
+  "target_type": "bool",
+  "generated": "2026-09-01T10:45:17Z",
+  "A0_frozen_no_routing": {
+    "evaluated": 55,
+    "distinct": 14,
+    "depth": 3,
+    "seconds": 0.05,
+    "budget": 300000,
+    "per_route": {
+      "consistent": {
+        "mechanism_bearing": [],
+        "coerced_only_aliases": [],
+        "n_mechanism": 0,
+        "n_alias": 0
+      }
+    },
+    "all_routes_mechanism_bearing": false,
+    "all_routes_coerced": false
+  },
+  "A1_frozen_with_routing": {
+    "evaluated": 55,
+    "distinct": 14,
+    "depth": 3,
+    "seconds": 0.05,
+    "budget": 300000,
+    "per_route": {
+      "consistent": {
+        "mechanism_bearing": [],
+        "coerced_only_aliases": [],
+        "n_mechanism": 0,
+        "n_alias": 0
+      }
+    },
+    "all_routes_mechanism_bearing": false,
+    "all_routes_coerced": false
+  },
+  "A2_frozen_routing_generic": {
+    "evaluated": 353,
+    "distinct": 103,
+    "depth": 3,
+    "seconds": 0.31,
+    "budget": 300000,
+    "per_route": {
+      "consistent": {
+        "mechanism_bearing": [
+          {
+            "expr": "pigeonhole_check(1, self_reach(check_transitivity(rels)))",
+            "depth": 3,
+            "static_type": "bool",
+            "coerced_match_search": true,
+            "typed": true,
+            "verify_match": true,
+            "mechanism_bearing": true
+          }
+        ],
+        "coerced_only_aliases": [],
+        "n_mechanism": 1,
+        "n_alias": 0
+      }
+    },
+    "all_routes_mechanism_bearing": true,
+    "all_routes_coerced": true
+  },
+  "B_generic_language": {
+    "evaluated": 20,
+    "distinct": 12,
+    "depth": 3,
+    "seconds": 0.09,
+    "budget": 300000,
+    "per_route": {
+      "consistent": {
+        "mechanism_bearing": [
+          {
+            "expr": "not(has_cycle_dfs(rels))",
+            "depth": 2,
+            "static_type": "bool",
+            "coerced_match_search": true,
+            "typed": true,
+            "verify_match": true,
+            "mechanism_bearing": true
+          }
+        ],
+        "coerced_only_aliases": [],
+        "n_mechanism": 1,
+        "n_alias": 0
+      }
+    },
+    "all_routes_mechanism_bearing": true,
+    "all_routes_coerced": true
+  },
+  "classification": {
+    "class": "SEARCH_ROUTING",
+    "why": "target is mechanism-bearing inside G(C|R,gen): the frozen set computes it; the system does not route to it",
+    "representation_debt": "Moderate: parse 'A > B and B > C and C > A' into (a,b) pairs. Apollo's REGISTRY already has parse_names_and_relations / relations_from_facts writing the `relations` slot; the missing piece was never the parse, it was that no op turns `relations` into a consistency verdict."
+  }
+}

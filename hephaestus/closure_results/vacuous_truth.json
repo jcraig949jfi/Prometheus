@@ -1,0 +1,395 @@
+{
+  "spec": "vacuous_truth",
+  "notes": "vacuous_truth kernel; typed membership + counterfactual verification (Addendum 3).",
+  "route_keys": [
+    "universal",
+    "negative_universal",
+    "existential"
+  ],
+  "n_search_points": 16,
+  "n_verify_points": 75,
+  "target_type": "bool",
+  "generated": "2026-09-01T10:42:59Z",
+  "A0_frozen_no_routing": {
+    "possible": false,
+    "note": "route columns differ -> no routing-free expression can fit; routing R is a required resource"
+  },
+  "A1_frozen_with_routing": {
+    "evaluated": 300000,
+    "distinct": 199817,
+    "depth": 3,
+    "seconds": 51.27,
+    "budget": 300000,
+    "per_route": {
+      "universal": {
+        "mechanism_bearing": [
+          {
+            "expr": "pigeonhole_check(s, all_but_n(d, 1))",
+            "depth": 2,
+            "static_type": "bool",
+            "coerced_match_search": true,
+            "typed": true,
+            "verify_match": true,
+            "mechanism_bearing": true
+          }
+        ],
+        "coerced_only_aliases": [
+          {
+            "expr": "coin_flip_independence(s, d)",
+            "depth": 1,
+            "static_type": "float",
+            "coerced_match_search": true,
+            "typed": false,
+            "verify_match": true,
+            "mechanism_bearing": false
+          },
+          {
+            "expr": "coin_flip_independence(0, all_but_n(d, s))",
+            "depth": 2,
+            "static_type": "float",
+            "coerced_match_search": true,
+            "typed": false,
+            "verify_match": true,
+            "mechanism_bearing": false
+          },
+          {
+            "expr": "coin_flip_independence(1, all_but_n(s, d))",
+            "depth": 2,
+            "static_type": "float",
+            "coerced_match_search": true,
+            "typed": false,
+            "verify_match": true,
+            "mechanism_bearing": false
+          }
+        ],
+        "n_mechanism": 1,
+        "n_alias": 14
+      },
+      "negative_universal": {
+        "mechanism_bearing": [
+          {
+            "expr": "pigeonhole_check(1, s)",
+            "depth": 1,
+            "static_type": "bool",
+            "coerced_match_search": true,
+            "typed": true,
+            "verify_match": true,
+            "mechanism_bearing": true
+          }
+        ],
+        "coerced_only_aliases": [
+          {
+            "expr": "coin_flip_independence(0, s)",
+            "depth": 1,
+            "static_type": "float",
+            "coerced_match_search": true,
+            "typed": false,
+            "verify_match": true,
+            "mechanism_bearing": false
+          },
+          {
+            "expr": "coin_flip_independence(d, all_but_n(0, s))",
+            "depth": 2,
+            "static_type": "float",
+            "coerced_match_search": true,
+            "typed": false,
+            "verify_match": true,
+            "mechanism_bearing": false
+          },
+          {
+            "expr": "coin_flip_independence(1, all_but_n(0, s))",
+            "depth": 2,
+            "static_type": "float",
+            "coerced_match_search": true,
+            "typed": false,
+            "verify_match": true,
+            "mechanism_bearing": false
+          }
+        ],
+        "n_mechanism": 1,
+        "n_alias": 13
+      },
+      "existential": {
+        "mechanism_bearing": [
+          {
+            "expr": "pigeonhole_check(s, 0)",
+            "depth": 1,
+            "static_type": "bool",
+            "coerced_match_search": true,
+            "typed": true,
+            "verify_match": true,
+            "mechanism_bearing": true
+          }
+        ],
+        "coerced_only_aliases": [
+          {
+            "expr": "s",
+            "depth": 0,
+            "static_type": "int",
+            "coerced_match_search": true,
+            "typed": false,
+            "verify_match": true,
+            "mechanism_bearing": false
+          },
+          {
+            "expr": "all_but_n(0, s)",
+            "depth": 1,
+            "static_type": "int",
+            "coerced_match_search": true,
+            "typed": false,
+            "verify_match": true,
+            "mechanism_bearing": false
+          },
+          {
+            "expr": "coin_flip_independence(s, 1)",
+            "depth": 1,
+            "static_type": "float",
+            "coerced_match_search": true,
+            "typed": false,
+            "verify_match": true,
+            "mechanism_bearing": false
+          }
+        ],
+        "n_mechanism": 1,
+        "n_alias": 6912
+      }
+    },
+    "all_routes_mechanism_bearing": true,
+    "all_routes_coerced": true
+  },
+  "A2_frozen_routing_generic": {
+    "evaluated": 300000,
+    "distinct": 199819,
+    "depth": 3,
+    "seconds": 51.77,
+    "budget": 300000,
+    "per_route": {
+      "universal": {
+        "mechanism_bearing": [
+          {
+            "expr": "pigeonhole_check(s, all_but_n(d, 1))",
+            "depth": 2,
+            "static_type": "bool",
+            "coerced_match_search": true,
+            "typed": true,
+            "verify_match": true,
+            "mechanism_bearing": true
+          }
+        ],
+        "coerced_only_aliases": [
+          {
+            "expr": "coin_flip_independence(s, d)",
+            "depth": 1,
+            "static_type": "float",
+            "coerced_match_search": true,
+            "typed": false,
+            "verify_match": true,
+            "mechanism_bearing": false
+          },
+          {
+            "expr": "coin_flip_independence(0, all_but_n(d, s))",
+            "depth": 2,
+            "static_type": "float",
+            "coerced_match_search": true,
+            "typed": false,
+            "verify_match": true,
+            "mechanism_bearing": false
+          },
+          {
+            "expr": "coin_flip_independence(1, all_but_n(s, d))",
+            "depth": 2,
+            "static_type": "float",
+            "coerced_match_search": true,
+            "typed": false,
+            "verify_match": true,
+            "mechanism_bearing": false
+          }
+        ],
+        "n_mechanism": 1,
+        "n_alias": 14
+      },
+      "negative_universal": {
+        "mechanism_bearing": [
+          {
+            "expr": "pigeonhole_check(1, s)",
+            "depth": 1,
+            "static_type": "bool",
+            "coerced_match_search": true,
+            "typed": true,
+            "verify_match": true,
+            "mechanism_bearing": true
+          }
+        ],
+        "coerced_only_aliases": [
+          {
+            "expr": "coin_flip_independence(0, s)",
+            "depth": 1,
+            "static_type": "float",
+            "coerced_match_search": true,
+            "typed": false,
+            "verify_match": true,
+            "mechanism_bearing": false
+          },
+          {
+            "expr": "coin_flip_independence(d, all_but_n(0, s))",
+            "depth": 2,
+            "static_type": "float",
+            "coerced_match_search": true,
+            "typed": false,
+            "verify_match": true,
+            "mechanism_bearing": false
+          },
+          {
+            "expr": "coin_flip_independence(1, all_but_n(0, s))",
+            "depth": 2,
+            "static_type": "float",
+            "coerced_match_search": true,
+            "typed": false,
+            "verify_match": true,
+            "mechanism_bearing": false
+          }
+        ],
+        "n_mechanism": 1,
+        "n_alias": 13
+      },
+      "existential": {
+        "mechanism_bearing": [
+          {
+            "expr": "pigeonhole_check(s, 0)",
+            "depth": 1,
+            "static_type": "bool",
+            "coerced_match_search": true,
+            "typed": true,
+            "verify_match": true,
+            "mechanism_bearing": true
+          }
+        ],
+        "coerced_only_aliases": [
+          {
+            "expr": "s",
+            "depth": 0,
+            "static_type": "int",
+            "coerced_match_search": true,
+            "typed": false,
+            "verify_match": true,
+            "mechanism_bearing": false
+          },
+          {
+            "expr": "all_but_n(0, s)",
+            "depth": 1,
+            "static_type": "int",
+            "coerced_match_search": true,
+            "typed": false,
+            "verify_match": true,
+            "mechanism_bearing": false
+          },
+          {
+            "expr": "coin_flip_independence(s, 1)",
+            "depth": 1,
+            "static_type": "float",
+            "coerced_match_search": true,
+            "typed": false,
+            "verify_match": true,
+            "mechanism_bearing": false
+          }
+        ],
+        "n_mechanism": 1,
+        "n_alias": 6912
+      }
+    },
+    "all_routes_mechanism_bearing": true,
+    "all_routes_coerced": true
+  },
+  "B_generic_language": {
+    "evaluated": 107629,
+    "distinct": 2106,
+    "depth": 3,
+    "seconds": 11.62,
+    "budget": 300000,
+    "per_route": {
+      "universal": {
+        "mechanism_bearing": [
+          {
+            "expr": "eq(d, s)",
+            "depth": 1,
+            "static_type": "bool",
+            "coerced_match_search": true,
+            "typed": true,
+            "verify_match": true,
+            "mechanism_bearing": true
+          }
+        ],
+        "coerced_only_aliases": [],
+        "n_mechanism": 1,
+        "n_alias": 0
+      },
+      "negative_universal": {
+        "mechanism_bearing": [
+          {
+            "expr": "eq(s, 0)",
+            "depth": 1,
+            "static_type": "bool",
+            "coerced_match_search": true,
+            "typed": true,
+            "verify_match": true,
+            "mechanism_bearing": true
+          }
+        ],
+        "coerced_only_aliases": [],
+        "n_mechanism": 1,
+        "n_alias": 0
+      },
+      "existential": {
+        "mechanism_bearing": [
+          {
+            "expr": "lt(0, s)",
+            "depth": 1,
+            "static_type": "bool",
+            "coerced_match_search": true,
+            "typed": true,
+            "verify_match": true,
+            "mechanism_bearing": true
+          }
+        ],
+        "coerced_only_aliases": [
+          {
+            "expr": "s",
+            "depth": 0,
+            "static_type": "int",
+            "coerced_match_search": true,
+            "typed": false,
+            "verify_match": true,
+            "mechanism_bearing": false
+          },
+          {
+            "expr": "add(s, s)",
+            "depth": 1,
+            "static_type": "int",
+            "coerced_match_search": true,
+            "typed": false,
+            "verify_match": true,
+            "mechanism_bearing": false
+          },
+          {
+            "expr": "sub(0, s)",
+            "depth": 1,
+            "static_type": "int",
+            "coerced_match_search": true,
+            "typed": false,
+            "verify_match": true,
+            "mechanism_bearing": false
+          }
+        ],
+        "n_mechanism": 1,
+        "n_alias": 15
+      }
+    },
+    "all_routes_mechanism_bearing": true,
+    "all_routes_coerced": true
+  },
+  "classification": {
+    "class": "SEARCH_ROUTING",
+    "why": "target is mechanism-bearing inside G(C|R): the frozen set computes it; the system does not route to it",
+    "representation_debt": "Large: extracting (quantifier, domain noun phrase, predicate, domain_size, satisfier_count) from text with domain EQUALITY as the acceptance rule; measured adapter v3 covers 0.9125 of author-adversarial dev v2 and 0.20 of out-of-template phrasings, conditional correctness 1.0."
+  }
+}

@@ -1,0 +1,334 @@
+================================================================================
+REVIEW PACKET -- ADDENDUM 3 APPLIED: THE FUNNEL RE-ORDERED, AND TWO WALLS THROUGH
+THE SEMANTIC-INJECTION CLOSURE GAUNTLET
+Prometheus program, seat Hephaestus (M3). 2026-09-01, night.
+Commit of record: see git log for "Addendum 3" (this block); it follows
+  af31ddcda (Addendum 1 block), 5c70c8aa5 (smith session), 7b55e8423 (queue).
+Author: Hephaestus, Claude Code / claude-fable-5.
+Invoked by: James (operator), rulings on Q1-Q8 of the Addendum-1 packet:
+  "machine-enumerate the depth-2 MINT-0001 mechanism ... execute MINT-0004
+  semantic injection ... then take one genuinely different third wall."
+================================================================================
+
+0. WHAT THIS PACKET IS
+
+  The record of applying the operator's Addendum-3 rulings: (1) replacing the
+  MINT-0001 evidence of record with a typed, counterfactually verified
+  enumeration; (2) running the second queued wall, MINT-0004, through the same
+  gauntlet with an independently defined target; (3) re-ordering the Forge
+  funnel so the closure test comes BEFORE any cheap-model or smith work and so
+  only OPERATOR-class walls can reach a smith; (4) retiring clock-driven
+  compute. Every number below was produced by executing committed code.
+  Grades: E3 = executed this session; E1 = regenerable; E0 = prose.
+
+  Conflict of interest, declared: the same seat authored the specs, the
+  enumerator, the targets' independent definitions, and this packet. The
+  MINT-0004 target is an independent DFS in the sense of sharing no code with
+  the frozen primitives, not in the sense of a different author.
+
+--------------------------------------------------------------------------------
+1. CONTEXT (for a reader with no prior exposure)
+--------------------------------------------------------------------------------
+  - Hephaestus ("the forge") is a queue: cheap models scout unattended; a
+    capable agent (Master Smith) mints only when the operator invokes it; the
+    smith has no admission authority.
+  - Earlier today a Master Smith session produced a candidate for MINT-0001
+    (vacuous truth) that passed its dev set, failed 16/20 out-of-template
+    phrasings by abstaining, and was then reclassified: a parsing-free test
+    showed the frozen primitives already compose the kernel. The operator
+    accepted the reclassification but rejected its evidence -- the depth-1
+    match was a numerical accident (a probability primitive that happens to
+    be zero when s < d) -- and asked for the mechanism form to be enumerated
+    by machine, for routing to be an explicit resource, for verification
+    outside the search points, and for a second wall of different anatomy.
+
+--------------------------------------------------------------------------------
+2. THE QUESTIONS THIS BLOCK WAS ANSWERING (operator's words)
+--------------------------------------------------------------------------------
+  Q1  "Require mechanism-compatible membership, not accidental observational
+      membership ... Machine-enumerate that depth-2 expression and make that
+      the evidence of record."
+  Q2  "Representational reach should probably be expressed as G(C | R), where
+      R is the permitted routing structure. A0 and A1 answer genuinely
+      different questions. Don't collapse them."
+  Q3  "Freeze and bypass the first arrow. If the second arrow still cannot be
+      synthesized, you have a kernel candidate."
+  Q4  "Label it something like AUTHOR-ADVERSARIAL rather than independent."
+  Q5  "Stop spending meaningful effort widening this adapter."
+  Q6  "UNVERIFIED_COVERAGE should block positive promotion-like transitions."
+  Q7  "Stop three things ... adapter widening as Forge research ... firing the
+      Apprentice every four hours merely because the clock says so ...
+      replay/maintenance cost for historical-wall machinery."
+  Q8  "Run MINT-0004 through the semantic-injection gauntlet ... A0 / A1 / A2
+      / B / C ... A successful synthesis must survive semantic counterfactuals
+      outside the enumeration points used during search."
+  +   Three destinations: SEARCH/ROUTING, REPRESENTATION, OPERATOR. "Only the
+      third category belongs in Master Smith."
+
+--------------------------------------------------------------------------------
+3. WHAT WAS DONE, STEP BY STEP
+--------------------------------------------------------------------------------
+  3.1  A generic closure gauntlet (hephaestus/src/closure_test.py)        [E3]
+       Typed bottom-up enumeration over a spec's terminals and operators,
+       depth <= 3, observational-equivalence pruning on raw values. Every hit
+       is recorded twice: COERCED (Python truthiness matches the target on the
+       search points) and MECHANISM-BEARING (the expression's static return
+       type equals the target type -- no coercion -- AND it matches on the
+       VERIFY points, a larger domain disjoint from the search points). Arms:
+         A0  frozen primitives, no routing            G(C)
+         A1  frozen primitives + operational routing  G(C | R)
+         A2  A1 + bounded generic composition         G(C | R, gen)
+         B   small generic boolean/comparison language (control)
+         C   a candidate primitive -- only if A and B disagree diagnostically
+       Classification, fixed before running: SEARCH_ROUTING if A1 or A2 has a
+       mechanism-bearing hit for every route; OPERATOR if only B does and A has
+       not even an alias; "SEARCH_ROUTING (alias only)" in between;
+       INCONCLUSIVE otherwise. REPRESENTATION debt is asserted by the spec and
+       measured elsewhere (it is the first arrow, which this test bypasses).
+
+  3.2  Specimen 1: MINT-0001 vacuous_truth, re-run typed / verified         [E3]
+       Search: the operator's table at n in {1,2,3,5} (16 points).
+       Verify: exhaustive 0 <= s <= d <= 12 minus the search points (75).
+       Frozen ops carry declared static types: pigeonhole_check -> bool,
+       all_but_n -> int, coin_flip_independence -> float, etc.
+
+  3.3  Specimen 2: MINT-0004 consistency_check                              [E3]
+       Semantic state: a strict-order relation set as (a, b) pairs.
+       Target, defined independently: acyclic, by a three-colour DFS sharing
+       no code with the frozen primitives.
+       Search: all 64 digraphs on 3 nodes (no self-loops).
+       Verify: all 4,096 digraphs on 4 nodes -- exhaustive, disjoint, larger.
+       Single route key, so A0 == A1 (routing is not a resource this wall
+       needs). Frozen ops: topological_sort (list | None), check_transitivity
+       (dict), pigeonhole_check, all_but_n. A2 generic: is_none, not,
+       len_edges, len_dict, self_reach (count of nodes in their own closure).
+       B: has_cycle_dfs, not, eq, len_edges.
+
+  3.4  Protocol changes                                                    [E3]
+       - Packet fields CLOSURE_TEST and ROUTE_CLASS, required before READY.
+       - Refine guards: a packet cannot be in APPRENTICE-TESTING unless
+         ROUTE_CLASS == OPERATOR (or the gauntlet is recorded as not
+         constructible, with the reason); SEARCH_ROUTING / REPRESENTATION
+         packets are routed to DORMANT; PASS_DEV_UNVERIFIED_COVERAGE never
+         advances state.
+       - Runner: the obligation set is DERIVED -- every module-level function
+         other than the entry op is stubbed, every module-level list/tuple
+         constant emptied, each delta measured; declared ABLATIONS are hints
+         merged in. Result carries harness_authorship = AUTHOR-ADVERSARIAL.
+       - Apprentice: adapter-widening mode sleeps unless HEPHAESTUS_WIDEN=1.
+       - Scheduling: Hephaestus_Apprentice (4-hourly) and Hephaestus_Rank
+         (daily) DELETED. One sentinel remains, Hephaestus_Refine (3-hourly):
+         refine -> apprentice ONLY if a packet is in APPRENTICE-TESTING ->
+         rank -> handoff. Cheap-model calls now happen only when work exists.
+       - Historical-wall replay marked DORMANT (kept as a record; no job).
+       - Charter amendment: Addendum 3 (the rulings, quoted).
+
+--------------------------------------------------------------------------------
+4. RESULTS
+--------------------------------------------------------------------------------
+  4.1  Specimen 1 -- MINT-0001 vacuous_truth (search 16 pts; verify 75 pts)
+
+  arm   evals   mechanism-bearing (typed bool, verified)      coerced aliases
+  ----  ------  --------------------------------------------  ------------------
+  A0    --      impossible by arity: route columns differ     --
+                at (0,0) = T,T,F -> routing R is required
+  A1    300000  universal      pigeonhole_check(s,            coin_flip_
+                                 all_but_n(d, 1))    depth 2    independence(s,d)
+                neg-universal  pigeonhole_check(1, s)  d 1    coin_flip_
+                                                               independence(0,s)
+                existential    pigeonhole_check(s, 0)  d 1    s ; all_but_n(0,s)
+  A2    300000  same three                                    same
+  B     107629  eq(d,s) d1 ; eq(s,0) d1 ; lt(0,s) d1          s ; add(s,s)
+
+       Evidence of record (replaces the depth-1 alias):
+         universal          = pigeonhole_check(s, all_but_n(d, 1))   i.e. s >= d
+         negative_universal = pigeonhole_check(1, s)                 i.e. s == 0
+         existential        = pigeonhole_check(s, 0)                 i.e. s >= 1
+       Verified on all 75 out-of-search points. Classification of the kernel:
+       SEARCH_ROUTING inside G(C|R) at depth <= 2. ROUTE_CLASS of the packet:
+       REPRESENTATION (kernel SEARCH_ROUTING) -- the wall's substance is the
+       first arrow. State: DORMANT.
+
+  4.2  Specimen 2 -- MINT-0004 consistency_check (search 64; verify 4,096)
+
+  arm   evals   result
+  ----  ------  ----------------------------------------------------------------
+  A0=A1     55  NOTHING -- not even a coerced alias. topological_sort returns
+                [] on the empty relation set (falsy, yet consistent) and None
+                on cycles, so its truthiness is not the target;
+                check_transitivity returns a dict.
+  A2       353  MECHANISM-BEARING at depth 3:
+                  pigeonhole_check(1, self_reach(check_transitivity(rels)))
+                i.e. "fewer than one node reaches itself". The observationally
+                equivalent not(is_none(topological_sort(rels))) exists at the
+                same depth and was pruned as a duplicate of the same value
+                vector. Verified on all 4,096 four-node digraphs.
+  B         20  not(has_cycle_dfs(rels)) at depth 2 (the control).
+
+       Classification: SEARCH_ROUTING via bounded generic composition.
+       Routed to Apollo: a typed is_consistent(relations) -> bool wrapper over
+       the existing closure / toposort -- a Level-1 composition, not a mint.
+       State: DORMANT. Caveat, recorded in the packet: A2's generic set
+       includes a reflexive-membership count over the closure dict; under A1
+       alone the reading would be OPERATOR-adjacent. Both readings are on
+       record; neither sends the wall to a smith.
+
+  4.3  The two specimens separate
+       MINT-0001  REPRESENTATION (kernel reachable with routing R)
+       MINT-0004  SEARCH_ROUTING (kernel reachable with generic composition)
+       Different resources were the missing ingredient in each: routing on a
+       quantifier slot vs a structural predicate over an existing closure.
+       No OPERATOR-class wall has been found. READY-FOR-DEEP-MINT: 0.
+       Live packets: 0.
+
+  4.4  Diagnostic worth one line
+       forge_primitives.topological_sort: [] for no edges, ['a','b'] for a>b,
+       None for a>b,b>a, None for a>b,c>d,d>c. A usable acyclicity oracle
+       exists in the frozen set; it is one is-not-None away from a predicate
+       and nothing in the operational registry takes that step.
+
+--------------------------------------------------------------------------------
+5. WHAT CHANGED IN THE REPOSITORY
+--------------------------------------------------------------------------------
+  hephaestus/src/closure_test.py                     new; the gauntlet
+  hephaestus/src/closure_specs/{__init__,            new; typed specs with
+    vacuous_truth, consistency_check}.py             independent targets
+  hephaestus/closure_results/{vacuous_truth,         new; full results
+    consistency_check}.json
+  hephaestus/mint_queue/MINT-0001/packet.*           CLOSURE_TEST; ROUTE_CLASS;
+                                                     evidence of record replaced
+  hephaestus/mint_queue/MINT-0004/packet.*           full spec, gauntlet, route;
+                                                     STATUS -> DORMANT
+  hephaestus/mint_queue/MINT-0002,0003/packet.*      ROUTE_CLASS recorded
+  hephaestus/src/packet.py                           two fields; READY set
+  hephaestus/src/refine.py                           Addendum-3 guards
+  hephaestus/src/run_candidate.py                    derived obligation set;
+                                                     authorship label
+  hephaestus/src/apprentice.py                       widen mode gated
+  hephaestus/src/wall_vacuous_truth.py               HARNESS_AUTHORSHIP
+  hephaestus/jobs/refine.cmd                         the sentinel
+  hephaestus/jobs/register_tasks.ps1                 one task; two retired
+  hephaestus/historical_walls/README.md              DORMANT; specimen 2 noted
+  hephaestus/TOP_READY_MINTS.*, HEPHAESTUS_HANDOFF   regenerated
+  roles/Hephaestus/CHARTER_AMENDMENT_...md           Addendum 3
+  roles/Hephaestus/REVIEW_PACKET_2026-09-01_         this file
+    addendum3_closure_gauntlet.txt
+  stations/M3_STATUS.md                              section 11
+  Scheduled tasks on M3: Hephaestus_Refine only (3-hourly sentinel). Deleted:
+  Hephaestus_Apprentice, Hephaestus_Rank. Cost of this block: $0 API; CPU only
+  (each gauntlet run < 1 min); one Claude Code subscription session.
+  Not touched: agents/hephaestus/*, apollo/*, aporia/*, roles/Charon/*.
+
+--------------------------------------------------------------------------------
+6. WHAT THIS DID NOT ESTABLISH
+--------------------------------------------------------------------------------
+  - That any wall in this queue is OPERATOR-class. Two specimens, two
+    non-operator classes. The Forge has not yet been shown a case where a
+    smith is the right tool.
+  - That the gauntlet's generic op set (A2) is the right size. It is
+    hand-chosen per spec; a too-generous A2 would classify real operator gaps
+    as SEARCH_ROUTING, a too-stingy one the reverse. MINT-0004's caveat shows
+    the classification can move between A1 and A2.
+  - Anything about the first arrow. REPRESENTATION debt is asserted per spec
+    from earlier measurements (v3 adapter: coverage 0.9125 on author-
+    adversarial dev v2, 0.20 on out-of-template phrasings, conditional
+    correctness 1.000 on both); this block did not measure it further.
+  - Independence. Specs, targets, enumerator and packets share an author.
+    "Independent DFS" means code-independent from the primitives, not
+    author-independent.
+  - That the sentinel is truly work-triggered. Time still wakes it every
+    three hours; only the expensive step is gated on work. A file-watch or
+    event trigger was not built.
+  - Anything measured inside Apollo's blackboard or against a post-E9
+    evaluator; Charon's blind battery remains unread by this code.
+
+--------------------------------------------------------------------------------
+7. AUTHOR'S OWN ERRORS IN THIS BLOCK, AND WHAT THEY COST
+--------------------------------------------------------------------------------
+  - The Addendum-1 block presented coin_flip_independence(s, d) as the depth-1
+    solution without flagging that its static type is float and that
+    truthiness was doing the work. The operator caught it. Cost: one round of
+    rulings; fixed here by making typed membership a first-class output.
+  - Observational-equivalence pruning keeps only the first expression per
+    value vector, so not(is_none(topological_sort(rels))) is absent from the
+    MINT-0004 result file although it exists at the same depth. It is stated
+    in the packet from a hand check (section 4.4), which is exactly the kind
+    of hand step the operator asked to be replaced by enumeration. Owed:
+    record all expressions per equivalence class up to a small cap.
+  - "Work triggers compute" was implemented as a gate inside a clock-driven
+    sentinel, not as an event trigger. Honest description in section 6.
+
+--------------------------------------------------------------------------------
+8. WHAT IS OWED, AND BY WHOM
+--------------------------------------------------------------------------------
+  This seat (unattended or next session, no ruling needed):
+    1. The third specimen: a wall that LOOKS compositional but may fail
+       closure. Candidates: Aporia's Q045 "unreachable class" in the register-
+       machine world (89.6% representation failures at depth 10) -- a typed
+       spec is constructible from its probes; or a Ludus world once semantic-
+       state worlds exist. Run it through the funnel before anything else.
+    2. Record all expressions per equivalence class (cap 5) in the gauntlet.
+    3. Make the generic A2 op set a declared, versioned resource per spec,
+       reported in the packet next to the classification it produced.
+  Apollo:
+    4. A typed is_consistent(relations) -> bool op over check_transitivity /
+       topological_sort (MINT-0004's route), and a quantifier slot + guard
+       routing for MINT-0001's kernel if that wall is ever pursued.
+  Aporia / Charon:
+    5. Independent held-out generation for any wall that ever reaches
+       CANDIDATE-PRODUCED again; the dev harness is AUTHOR-ADVERSARIAL only.
+  Ludus / Foundry:
+    6. Semantic-state worlds exposed directly, so the first arrow can be
+       studied on its own and the Forge can mint against the second.
+  Operator:
+    7. Whether the third specimen should come from Q045 (available now) or
+       wait for a Ludus world.
+
+--------------------------------------------------------------------------------
+9. QUESTIONS FOR THE EXTERNAL REVIEWER
+--------------------------------------------------------------------------------
+  Q1  Is "static return type equals target type" the right operationalisation
+      of mechanism-compatible membership, or should it require that each
+      sub-expression's declared semantics (comparison vs probability) match
+      its role? Under the current rule pigeonhole_check(1, s) counts; under a
+      stricter one it might not ("pigeonhole" is not "equals zero").
+  Q2  A2's generic op set is chosen per spec by the author. What discipline
+      would stop that choice from deciding the classification? A fixed,
+      versioned generic library shared by all specs? A2 reported at several
+      sizes?
+  Q3  MINT-0004 reads SEARCH_ROUTING under A2 and OPERATOR-adjacent under A1.
+      Which reading should drive routing, and should a wall that flips between
+      arms be its own category?
+  Q4  Two specimens, zero OPERATOR-class walls. What would falsify the claim
+      that the funnel can ever produce an OPERATOR-class wall at all -- i.e.
+      how many non-operator specimens before "the frozen set is complete for
+      this task family" becomes the finding?
+  Q5  The counterfactual verification domain is exhaustive for small sizes
+      (d <= 12; 4 nodes). Is exhaustiveness at small size the right standard,
+      or should verification include a structurally different domain (e.g.
+      relation sets with isolated nodes, or duplicate edges)?
+  Q6  What should we STOP? Candidates now: the widen mode entirely (delete,
+      not sleep); the 3-hourly sentinel (replace with an on-commit trigger);
+      the historical-walls table (it records one seat's day).
+  Q7  Is READY-FOR-DEEP-MINT: 0 with two walls routed elsewhere a result about
+      the Forge, or a result about the two easiest walls in Apollo's canary
+      having been chosen first?
+
+--------------------------------------------------------------------------------
+10. HOW TO REPRODUCE (Windows, repo root, Python 3.11; deterministic; offline)
+--------------------------------------------------------------------------------
+  set PYTHONPATH=C:\prometheus
+  python -m hephaestus.src.closure_test vacuous_truth 300000
+      -> A1 mechanism-bearing: universal pigeonhole_check(s, all_but_n(d, 1))
+         (d2); negative_universal pigeonhole_check(1, s) (d1); existential
+         pigeonhole_check(s, 0) (d1); aliases coin_flip_independence(...);
+         classification SEARCH_ROUTING
+  python -m hephaestus.src.closure_test consistency_check 300000
+      -> A0/A1 evaluated 55, no hits; A2 evaluated 353, mechanism-bearing
+         pigeonhole_check(1, self_reach(check_transitivity(rels))) (d3);
+         B not(has_cycle_dfs(rels)) (d2); verify points 4096;
+         classification SEARCH_ROUTING
+  type hephaestus\closure_results\consistency_check.json
+  type hephaestus\TOP_READY_MINTS.txt      -> READY-FOR-DEEP-MINT: 0
+  schtasks /Query /FO LIST | findstr Hephaestus   -> Hephaestus_Refine only
+================================================================================

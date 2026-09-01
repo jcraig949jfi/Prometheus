@@ -1,11 +1,11 @@
-# Register the Apprentice Forge scheduled jobs on M3 (Windows Task Scheduler).
-# Charter cadences: apprentice 19 */4 * * *   refine 31 */3 * * *   rank 13 5 * * *
-# The mutation job (47 */6) is NOT registered yet -- charter s25: build after one full cycle.
-# NO Claude/premium job is registered, by policy (charter s20).
+# Register the Forge Queue's scheduled job on M3 (Windows Task Scheduler).
+# Addendum 3 (2026-09-01, Q7): ONE sentinel task only. Time wakes the sentinel; WORK triggers compute.
+#   Hephaestus_Refine  every 3 h at :31  -> refine; apprentice ONLY if a packet is in APPRENTICE-TESTING;
+#                                          rank; handoff. Cheap-model calls happen only when work exists.
+# Retired (do not re-create): Hephaestus_Apprentice (4-hourly, clock-driven), Hephaestus_Rank (daily) --
+# both folded into the sentinel. NO Claude/premium job, by policy (charter s20).
 $root = "C:\prometheus\hephaestus\jobs"
-schtasks /Create /F /TN "Hephaestus_Apprentice" /TR "cmd /c `"$root\apprentice.cmd`"" /SC HOURLY /MO 4 /ST 00:19 | Out-Null
-schtasks /Create /F /TN "Hephaestus_Refine"     /TR "cmd /c `"$root\refine.cmd`""     /SC HOURLY /MO 3 /ST 00:31 | Out-Null
-schtasks /Create /F /TN "Hephaestus_Rank"       /TR "cmd /c `"$root\rank.cmd`""       /SC DAILY        /ST 05:13 | Out-Null
-schtasks /Query /TN "Hephaestus_Apprentice" /FO LIST | Select-String "TaskName|Next Run Time|Status"
-schtasks /Query /TN "Hephaestus_Refine"     /FO LIST | Select-String "TaskName|Next Run Time|Status"
-schtasks /Query /TN "Hephaestus_Rank"       /FO LIST | Select-String "TaskName|Next Run Time|Status"
+schtasks /Delete /F /TN "Hephaestus_Apprentice" 2>$null | Out-Null
+schtasks /Delete /F /TN "Hephaestus_Rank"       2>$null | Out-Null
+schtasks /Create /F /TN "Hephaestus_Refine" /TR "cmd /c `"$root\refine.cmd`"" /SC HOURLY /MO 3 /ST 00:31 | Out-Null
+schtasks /Query /TN "Hephaestus_Refine" /FO LIST | Select-String "TaskName|Next Run Time|Status"

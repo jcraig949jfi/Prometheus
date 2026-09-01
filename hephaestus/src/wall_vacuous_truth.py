@@ -39,6 +39,8 @@ SEED = 20260901
 # v2 = 104 examples / 13 kinds: + NONEMPTY_OTHER_PREDICATE (P4 fixture), + PREDICATE_EXTENSION_EMPTY (D1).
 # Any number quoted against this wall must carry the version.
 DEV_SET_VERSION = 2
+# Addendum 3 (Q4): this harness and its candidates share an author. Diagnostic evidence only.
+HARNESS_AUTHORSHIP = "AUTHOR-ADVERSARIAL"
 
 # ── example construction ─────────────────────────────────────────────────────────────────
 
