@@ -2,6 +2,7 @@
   "experiment": "E9",
   "battery": "roles/Charon/apollo_e9/charon_battery_E9.json",
   "n": 42,
+  "organism": "KNOWN_0833",
   "per_category": {
     "numeric_comparison": {
       "correct": 0,
@@ -67,9 +68,12 @@
   "coprimary_verdict": "FAIL",
   "charon_trivial_floor": {
     "longest": 0.2599,
-    "shortest": 0.256
+    "shortest": 0.256,
+    "chance": 0.25
   },
   "home_trivial_floor": 0.342,
+  "home_trivial_floor_note": "recorded prior (2026-08-23 benchmark_attack); not recomputed here -- a different length estimator gives 0.42, which is the estimator, not a drift in the data",
   "scored": "once, no tuning",
-  "date": "2026-08-25"
+  "date": "2026-08-25",
+  "regenerated_by": "apollo/scripts/e9_score.py (2026-09-01)"
 }

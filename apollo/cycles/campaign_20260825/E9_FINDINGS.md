@@ -98,6 +98,8 @@ What survives, and why:
 
 ## Owed
 
+> **Update 2026-09-01 (Gen-2 first boot):** items 2 and 3 discharged. Item 2 -- O1 FINDINGS.md now carries the E9 correction (commit e367307d). Item 3 -- claim registry already at VALUE-INTACT-INTERPRETATION-KILLED. Additionally the missing E9 SCORER was rebuilt and committed as `apollo/scripts/e9_score.py`; it reproduces raw 0.0476 / mix 0.0667 / home 0.6000 and the 40-abstained/2-correct/0-guessed shape exactly from source. Two reproduction discrepancies were found and resolved: the abstain sentinel is the empty string (not None), and Charon's trivial floors are tie-aware expected scores read from her metadata (not a naive first-match heuristic). Item 1 (semantic re-key) remains OWED and is gated behind the state-injection experiment (charter Task 2) so the re-key is not fitted to Charon's spent battery.
+
 1. Re-key transformer preconditions to semantic tests rather than surface templates, and
    re-run E9 on the same Charon battery. That is a genuine before/after with an independent
    instrument, and it directly answers parser-vs-capability.
