@@ -1,0 +1,75 @@
+{
+  "bottom64_overlap": {
+    "count_vs_eb": 50,
+    "count_vs_rate": 64,
+    "rate_vs_eb": 50
+  },
+  "empirical_bayes": {
+    "prior_rate": 0.0086,
+    "pseudo_count": 288.0
+  },
+  "n_records": 843,
+  "opportunity_bins": [
+    {
+      "hi": 0,
+      "lo": 0,
+      "median_rate": 0.0,
+      "n": 31,
+      "p_any_effective": 0.0
+    },
+    {
+      "hi": 49,
+      "lo": 1,
+      "median_rate": 0.0,
+      "n": 51,
+      "p_any_effective": 0.0196
+    },
+    {
+      "hi": 149,
+      "lo": 50,
+      "median_rate": 0.0,
+      "n": 91,
+      "p_any_effective": 0.2527
+    },
+    {
+      "hi": 299,
+      "lo": 150,
+      "median_rate": 0.00559,
+      "n": 313,
+      "p_any_effective": 0.6709
+    },
+    {
+      "hi": 599,
+      "lo": 300,
+      "median_rate": 0.00327,
+      "n": 320,
+      "p_any_effective": 0.7063
+    },
+    {
+      "hi": 1000000000,
+      "lo": 600,
+      "median_rate": 0.00389,
+      "n": 37,
+      "p_any_effective": 0.8378
+    }
+  ],
+  "spearman": {
+    "draws_vs_residence": 0.7916,
+    "eff_vs_admit_position": -0.3387,
+    "eff_vs_draws": 0.3496,
+    "eff_vs_residence": 0.373,
+    "rate_vs_draws": 0.2302,
+    "rate_vs_residence": 0.2944
+  },
+  "verdict": "EFFECTIVE_USE_COUNT_DEFENSIBLE",
+  "zero_effective": {
+    "frac": 0.4176,
+    "median_draws": 206.0,
+    "median_draws_nonzero": 302,
+    "median_residence": 12.0,
+    "median_residence_nonzero": 15,
+    "n": 352,
+    "well_exposed_count": 227,
+    "well_exposed_frac": 0.6449
+  }
+}

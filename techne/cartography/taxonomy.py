@@ -108,28 +108,53 @@ MECHANISMS = {
     "constraint_solving": ["smt solver", "sat solver", "constraint solving", "cegis",
                            "counterexample-guided"],
     "beam_search": ["beam search", "best-first", "a* search", "branch and bound"],
-    "coevolution": ["coevolution", "co-evolution", "competitive coevolution",
-                    "host-parasite", "arms race"],
+    # BARE "coevolution" measured at precision 0.06 (1 in-scope fire against 17 out-of-scope)
+    # by vocab_audit: biology, hydrology, virology and astronomy all use it natively. This is
+    # the contamination first seen at cycle 020 and it survived the cycle-042 pass because I
+    # judged the term "genuinely technical" by reading rather than by measuring. Qualified.
+    "coevolution": ["coevolutionary algorithm", "competitive coevolution",
+                    "cooperative coevolution", "host-parasite coevolution",
+                    "coevolutionary search", "arms race"],
     "self_play": ["self-play", "selfplay", "population play", "league training"],
+    # "intervention" removed as a bare form: in medicine and social science it is the
+    # standard word for a treatment, and this corpus already leaks clinical papers.
     "causal_attribution": ["causal attribution", "causal tracing", "activation patching",
-                           "ablation study", "intervention", "path patching"],
+                           "ablation study", "causal intervention", "path patching"],
     "circuit_discovery": ["circuit discovery", "automated circuit", "acdc", "attribution patching",
                           "mechanistic interpretability"],
-    "distillation": ["distillation", "student-teacher", "model compression", "pruning"],
+    # "distillation" is CHEMISTRY and "pruning" is horticulture. Both qualified.
+    "distillation": ["knowledge distillation", "model distillation", "student-teacher",
+                     "model compression", "network pruning", "weight pruning"],
     "nas": ["neural architecture search", "architecture search", "supernet", "weight sharing"],
 
     # B3 -- teleology / evaluation
     "scalar_objective": ["fitness function", "objective function", "scalar reward",
                          "single objective"],
-    "test_suite": ["test suite", "test cases", "input-output examples", "specification",
-                   "unit tests"],
+    # "specification" removed as a bare form -- it is generic engineering vocabulary.
+    "test_suite": ["test suite", "test cases", "input-output examples",
+                   "formal specification", "input-output specification", "unit tests"],
+    # "niche" removed as a bare form: it is core ECOLOGY vocabulary and this corpus has
+    # already admitted ecology papers on exactly that word.
     "behavior_descriptor": ["behavior descriptor", "behavioural descriptor", "behavior space",
-                            "feature descriptor", "measure function", "niche"],
-    "adversarial_curriculum": ["curriculum", "environment generation", "poet", "paired",
-                               "regret-based", "unsupervised environment design"],
-    "open_endedness": ["open-ended", "open endedness", "endless novelty", "divergent search"],
+                            "feature descriptor", "measure function", "behavioral niche",
+                            "niche archive"],
+    # "curriculum", "poet" and "paired" were BARE surface forms here. Measured cycle 042:
+    # 4 of the 5 papers carrying this tag were education/pediatrics -- "The Power of Play: A
+    # Pediatric Role", "Inquiry-Based Learning", "Preventing conduct problems and improving
+    # school readiness" -- because "curriculum" in education means a syllabus. "paired" also
+    # matches "paired t-test" and "poet" matches literature. 80% false-positive rate on one
+    # mechanism.
+    "adversarial_curriculum": ["curriculum learning", "automatic curriculum",
+                               "curriculum generation", "environment generation",
+                               "paired open-ended trailblazer", "regret-based",
+                               "unsupervised environment design"],
+    # "open-ended" matches "open-ended questions" throughout survey methodology. Qualified.
+    "open_endedness": ["open-ended evolution", "open-ended search", "open-ended learning",
+                       "open endedness", "endless novelty", "divergent search"],
+    # "lean" is an ordinary English adjective and "coq" is a French noun. Qualified.
     "formal_verification": ["theorem prover", "proof assistant", "formal verification",
-                            "lean", "coq", "isabelle"],
+                            "lean 4", "lean theorem prover", "coq proof assistant",
+                            "isabelle/hol", "isabelle theorem"],
 }
 
 #: Which bottleneck each mechanism primarily loads on. A mechanism can inform several; this is

@@ -1,0 +1,156 @@
+======================================================================
+ERGON GEN-1 -- PREREGISTRATION
+Frozen 2026-09-01, BEFORE the first experimental organism-evaluation.
+======================================================================
+
+Governing brief: ergon/gen1b/PROMPT_GEN1B_2026-09-01.txt
+    git blob 33386a2a58fee45ccb77384872b8b3eb1fc57d21
+    sha256 (LF)  2e88d0b2da60638139252f4ab401c9315607b3a73437870c3553e5420bd30308
+
+Prior design closure: ergon/gen1a/REVIEW_PACKET_GEN1A_2026-09-01.txt
+Runner frozen at:     ergon/gen1b/gen1_run.py
+
+----------------------------------------------------------------------
+1. ESTIMAND
+----------------------------------------------------------------------
+The causal effect of a RETENTION (eviction) POLICY on future capability,
+INCLUDING the downstream search trajectory that the policy induces.
+
+NOT the effect of library composition holding candidate generation fixed.
+Exact stream freezing is architecturally impossible under the frozen D-5
+consumer; this is an accepted limitation, established in Gen-1 and ruled on
+in Gen-1A.
+
+----------------------------------------------------------------------
+2. INDEPENDENT UNIT AND DESIGN
+----------------------------------------------------------------------
+Unit of inference        LINEAGE
+n                        30 paired lineages per arm
+Pairing                  lineage L uses nav_seed base 200000 + 1000*L in
+                         EVERY arm, so arms are paired on starting stream
+Task corpus              the 42 non-control D-5 tasks (families F1-F4),
+                         identical and in identical order in every arm
+Budget                   30,000 evaluations per task, every arm
+Library cap              64, every arm
+Admission                frozen m1.admissions (solver + up to 4
+                         behaviour-distinct), every arm
+Search core              frozen m1.m1_rx, imported unmodified
+Mutation operators       frozen physics.mutate
+
+----------------------------------------------------------------------
+3. ARMS -- EVICTION IS THE ONLY TREATMENT
+----------------------------------------------------------------------
+I0  D5_BASELINE_MRU
+    Evict the oldest resident (list position 0). Inherited semantics.
+
+I1  MUT_REDUNDANT
+    Evict a resident that is redundant BOTH behaviourally AND mutationally:
+    it shares an exact behaviour fingerprint with another resident AND their
+    offspring-behaviour sketches have Jaccard >= 0.50. Among qualifying
+    residents evict the older. If none qualify, fall back to MRU.
+    Sketch: 32 matched mutations (seed 4242) evaluated on the shared 64-point
+    domain, computed ONCE at admission and cached.
+    REPAIRED after Phase 1: behavioural duplicates are usually NOT
+    evolutionarily redundant (median MR 0.333; only 23% of duplicate pairs
+    reach tau=0.50; median genotype edit distance 20 of 24).
+
+I2  EFFECTIVE_USAGE
+    Evict the resident with fewest EFFECTIVE USES among residents with >= 100
+    draw opportunities; if none qualify, minimise over all residents.
+    Ties broken by insertion order.
+    GRACE = 100 draws, taken from the Phase 2 exposure curve, where
+    P(>=1 effective use) is 0.02-0.25 below 150 draws and 0.67+ above.
+
+I3  RANDOM
+    Evict a uniformly random resident. The arbitrary-memory comparator.
+
+DIAGNOSTIC ONLY, NOT SCORED: raw draw-count / LRU_DRAW, and pure behavioural
+redundancy. Both are reported in simulation only.
+
+----------------------------------------------------------------------
+4. EFFECTIVE USE -- FROZEN DEFINITION
+----------------------------------------------------------------------
+A library draw is CREDITED to the drawn artifact when the child produced by
+mutating it scores strictly better (lower distance) than the MEDIAN of the
+last 32 scored candidates.
+
+Online, learner-visible, no oracle field, no future information. The window
+matches the frozen psize. Credit is linked by observing three points --
+library draw, mutate(parent -> child), FastTask.dist(child) -- with no change
+to control flow, randomness or the evaluation counter.
+
+----------------------------------------------------------------------
+5. PRIMARY ENDPOINT AND ANALYSIS
+----------------------------------------------------------------------
+Primary endpoint     per-lineage CFR = fraction of the 42 tasks solved
+                     within the 30,000-evaluation budget
+Primary contrasts    I1 - I0, I2 - I0, I3 - I0   (vs inherited policy)
+                     I1 - I3, I2 - I3            (vs arbitrary memory)
+Test                 two-sided paired sign-flip permutation on the 30
+                     lineage-level deltas, 20000 permutations, seed 424242
+Uncertainty          lineage-level SD and SE; 90% percentile bootstrap CI
+                     resampling LINEAGES
+Preregistered MDE    1.9 pp at n=30 (Gen-1A power analysis, sigma 0.0412)
+Multiplicity         5 contrasts; Holm-Bonferroni across the five, reported
+                     alongside uncrorrected p-values. A contrast is called
+                     ONLY if it survives Holm.
+
+Analysis is fixed here and will not be altered after outcomes are seen.
+
+----------------------------------------------------------------------
+6. SECONDARY / MECHANISM MEASURES (exploratory, never promoted)
+----------------------------------------------------------------------
+terminal behavioural diversity; terminal distinct offspring behaviours;
+eviction count; MRU-fallback rate; total library draws; effective-use total;
+artifacts with >=1 effective use; final library median age; effective-use
+concentration; per-artifact draw/credit/admission records; eviction log with
+age, draws and credit at eviction.
+
+Compression, diversity and divergence measures are DESCRIPTIVE. None may be
+promoted to the primary endpoint if the primary is null.
+
+----------------------------------------------------------------------
+7. COMPUTE ACCOUNTING
+----------------------------------------------------------------------
+Scientific budget is identical across arms: 42 tasks x 30,000 evaluations x
+30 lineages = 37,800,000 organism-evaluations per arm, 151,200,000 total.
+
+POLICY COMPUTE, charged separately and NOT free:
+  I0, I3   negligible (index selection)
+  I2       two integer counters per artifact
+  I1       32 mutations + 32 fingerprint evaluations per admitted artifact,
+           measured at ~5,395 extra mutations per lineage in simulation.
+           This is reported, not hidden, per the no-free-intelligence rule.
+
+----------------------------------------------------------------------
+8. STOPPING RULES
+----------------------------------------------------------------------
+The run is fixed-length: 30 lineages x 4 arms. There is no interim look, no
+optional stopping, and no extension of n after seeing results. If the run
+cannot complete, whatever lineages have completed are reported with their
+count, and the primary analysis is declared underpowered rather than
+reinterpreted.
+
+----------------------------------------------------------------------
+9. DECLARED DEVIATIONS AND SHAKEDOWN
+----------------------------------------------------------------------
+A 2-lineage, 3000-evaluation engineering shakedown of the runner was executed
+before this freeze, to a SEPARATE output directory (_smoke), to confirm the
+four arms execute and produce differing CFR. It is not part of the analysis
+set and its outputs are discarded. Disclosed rather than omitted.
+
+The corpus used for Phases 1, 1b and 2 is the Gen-1A baseline corpus over the
+same 42 tasks, 5 lineages, generated under I0 only.
+
+----------------------------------------------------------------------
+10. WHAT WOULD MAKE THIS RUN UNINTERPRETABLE
+----------------------------------------------------------------------
+  - if any arm's admission stream mechanics differ from I0 (checked in code:
+    admission is the same frozen call in every arm)
+  - if an arm retains more than 64 artifacts (checked: single shared cap)
+  - if effective-use credit consults any future or oracle information
+    (checked: credit uses only the trailing 32-candidate window)
+  - if the pairing is broken (checked: nav_seed base is a function of lineage
+    index only)
+
+-- Ergon, 2026-09-01, before the first experimental organism-evaluation.

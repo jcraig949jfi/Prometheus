@@ -1,0 +1,131 @@
+{
+  "experiment": "EXP2_EVIDENCE_x_GEOMETRY",
+  "sample": {
+    "n_papers_in_sample": 54,
+    "n_with_fulltext": 54,
+    "n_used_in_all_four_arms": 54,
+    "strata": [
+      "evolutionary_computation",
+      "program_synthesis",
+      "quality_diversity",
+      "mechanistic_interpretability",
+      "neurosymbolic",
+      "symbolic_regression"
+    ],
+    "limits": [
+      "full text truncated at 12 pages -- appendices excluded",
+      "PDF extraction is lossy on tables, equations and multi-column layout",
+      "arXiv only: this sample is preprint-biased and excludes venues that do not post to arXiv"
+    ]
+  },
+  "arms": {
+    "A_abstract_4tuple": {
+      "n": 54,
+      "placed": 0,
+      "placement_rate": 0.0,
+      "placement_ci95": [
+        0.0,
+        0.066
+      ],
+      "abstention_by_coordinate": {
+        "selection_family": 45,
+        "evaluation_regime": 50,
+        "representation_family": 22,
+        "bottleneck": 14
+      },
+      "mechanism_isolated": 2,
+      "mechanism_isolation_rate": 0.037037037037037035,
+      "neighbour_rate": 0.0,
+      "cross_field_rate": 0.0
+    },
+    "B_abstract_3tuple": {
+      "n": 54,
+      "placed": 0,
+      "placement_rate": 0.0,
+      "placement_ci95": [
+        0.0,
+        0.066
+      ],
+      "abstention_by_coordinate": {
+        "selection_family": 45,
+        "evaluation_regime": 50,
+        "representation_family": 22
+      },
+      "mechanism_isolated": 2,
+      "mechanism_isolation_rate": 0.037037037037037035,
+      "neighbour_rate": 0.0,
+      "cross_field_rate": 0.0
+    },
+    "C_fulltext_4tuple": {
+      "n": 54,
+      "placed": 12,
+      "placement_rate": 0.2222222222222222,
+      "placement_ci95": [
+        0.132,
+        0.349
+      ],
+      "abstention_by_coordinate": {
+        "evaluation_regime": 31,
+        "selection_family": 25,
+        "representation_family": 8,
+        "bottleneck": 6
+      },
+      "mechanism_isolated": 25,
+      "mechanism_isolation_rate": 0.46296296296296297,
+      "neighbour_rate": 1.0,
+      "cross_field_rate": 1.0
+    },
+    "D_fulltext_3tuple": {
+      "n": 54,
+      "placed": 12,
+      "placement_rate": 0.2222222222222222,
+      "placement_ci95": [
+        0.132,
+        0.349
+      ],
+      "abstention_by_coordinate": {
+        "evaluation_regime": 31,
+        "selection_family": 25,
+        "representation_family": 8
+      },
+      "mechanism_isolated": 25,
+      "mechanism_isolation_rate": 0.46296296296296297,
+      "neighbour_rate": 1.0,
+      "cross_field_rate": 1.0
+    }
+  },
+  "marginal_gain_evidence_pp": 22.22,
+  "marginal_gain_geometry_pp": 0.0,
+  "material_threshold_pp": 5.0,
+  "mechanism_isolation_gain_from_fulltext_pp": 42.59,
+  "corrections": {
+    "coordinates_changed": {
+      "selection_family": 25,
+      "evaluation_regime": 20,
+      "representation_family": 21,
+      "bottleneck": 16
+    },
+    "gaps_FILLED": {
+      "selection_family": 20,
+      "evaluation_regime": 19,
+      "representation_family": 14,
+      "bottleneck": 9
+    },
+    "values_CONTRADICTED": {
+      "representation_family": 7,
+      "bottleneck": 6,
+      "selection_family": 5,
+      "evaluation_regime": 1
+    },
+    "abstract_placements_contradicted_by_fulltext": 0,
+    "examples": [],
+    "note": "FILLED means the abstract said unknown and the full text supplied a value -- enrichment. CONTRADICTED means both said something and they disagree -- error. Only the second impugns the abstract-only arm."
+  },
+  "ATTRIBUTION": "EVIDENCE-BOUND",
+  "caveats": [
+    "arXiv-only sample: preprint-biased, excludes venues that do not post to arXiv",
+    "full text truncated at 12 pages; appendices excluded",
+    "PDF extraction is lossy on tables, equations and multi-column layout",
+    "the same lexical tagger is used in every arm -- this measures what EVIDENCE and GEOMETRY contribute given that tagger, and cannot exonerate the tagger itself"
+  ]
+}

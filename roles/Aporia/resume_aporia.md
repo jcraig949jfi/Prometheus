@@ -43,6 +43,81 @@ the block.**
 
 ---
 
+## PART -0.4 — CURRENT POSITION AS OF 2026-09-01 P177. READ THIS FIRST OF ALL.
+
+**Context reset at operator request, 2026-09-01. Everything below is committed and pushed.**
+
+### The one thing to know
+
+**The leave-one-out floor over an extensional-signature closure is an operational NON-REDUNDANCY
+CERTIFICATE**, and it is the test Q060's T2 demands that DreamCoder, Stitch, babble, LILO and
+ShapeCoder have never executed. Remove primitive p, enumerate the closure of `C \ {p}` deeper,
+and measure what fraction of the lost behaviours never comes back.
+
+    floor ~ 0   the primitive was a NAMED COMPOSITION (Level 0)
+    floor ~ 1   the primitive was a GENUINE GENERATOR
+
+Validated with controls that recovered known facts: `double` reads **4.2%** and `dbl(v)=2v`
+equals `vadd(v,v)` by inspection; `rotate` reads **99.2%** and is the only coordinate-permutation
+generator beyond an involution.
+
+**Limit that must travel with every use:** the enumerator counts TREE size, so a shared subterm
+is paid for twice. This is a **cost-sensitive** non-redundancy measure, not pure definability.
+
+### Q100 loop — state
+
+`aporia/q100/` holds four registries of operator-supplied frontier lists, machine-readable,
+question and test text FROZEN as operator input, only underscore triage fields writable.
+
+    L1  operator/GPT     100 rows   capability, classical-AI lineage
+    L2  Claude agent     100 rows   instrument validity, empirical-ML lineage
+    L3  GEMINI            50 rows   28.0% theorem-blocked, 84% unreachable as written
+    L4  DeepSeek         100 rows   16.0% blocked, 76% reachable -- best-posed of the four
+
+**L1 vs L2 agree on about a third** (strong counterpart for 32 and 37 of 100), and the
+disagreement is structured by lineage. Neither is a survey of the field; each is a survey of a
+lineage. Three screens now gate entry to any dossier: attainable-range, conjunction (a PASS
+condition conjoining two properties a theorem forbids), and **label-noise** (measure the ground
+truth's own instability first; require PASS to clear chance by 2x it).
+
+Dossiers written: `Q047_Q060_Q100_operator_invention.md`, `Q045_search_vs_representation.md`.
+Tier A = 7 questions with an instrument AND a bearing result; Tier B = 13; **Tier C = 80 and
+should get ONE bulk prerequisite pass, never eighty dossiers** (the 30-paradigm-tree failure).
+
+### What the operator asked for next
+
+`roles/Aporia/work queue.md` (operator-supplied) ranks ten projects. Its top two:
+
+1. **A3 — does reification actually earn its keep?** TINYPROG is admissible; A3 is the first rung
+   that tests the hypothesis. Charge execution at the fully expanded primitive cost and search
+   decisions separately. Promotion on early episodes, benefit measured only on later unseen ones.
+   Include random and frequency-matched macro controls plus NO_REUSE/DECOY/LATE.
+2. **Turn Q045 into a depth-independent oracle.** Stop using finite depth as ground truth —
+   TINYPROG has finite extensional signatures, so investigate closure to a FIXED POINT and a true
+   subalgebra membership certificate rather than a depth-8 proxy.
+
+**Both are already prepared for by P177 and item 2 is the natural continuation of the certificate
+above.** Do not re-derive the four registries or the Q045 measurements; read the dossier.
+
+### Prediction discipline, current record
+
+- L4 gate reachability was **preregistered** (`cad23ffd`) before classification: **2 of 3 held**;
+  THEOREM_BLOCKED <10% FAILED at 16.0%. The failure taught more than the passes — a well-formed
+  falsifier does not rescue a question impossible at T1.
+- The field-versus-ring prediction on the Q045 floor **FAILED**: 0.4 points of difference where a
+  categorical algebraic split was expected.
+- L3's classification was **not** a fired prediction and says so in its own document.
+
+### Standing corrections made this pass
+
+- **L3 is GEMINI, not DeepSeek.** Mis-attributed at `b087f4cc`, corrected at `cad23ffd`.
+  Measurements unaffected; provenance is part of the evidence.
+- Three model syntheses were **adjudicated, not adopted** — each described a DIFFERENT corpus and
+  none said so. The one that agreed with the charter is the one to be most careful with; it
+  closes by restating the programme's own thesis in the programme's own vocabulary.
+
+---
+
 ## PART -0.5 — CURRENT POSITION AS OF 2026-08-27 P176. READ THIS BEFORE PART 0.
 
 **A1, A2 and A2b are CLOSED. TINYPROG is WORLD_ADMISSIBLE. The next rung is A3.**

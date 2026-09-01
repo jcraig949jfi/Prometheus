@@ -306,6 +306,7 @@ Aporia maintains a **ranked queue of open problems** and systematically works th
 | `aporia/scripts/triage_classifier.py` | Reproducible classification logic |
 | `aporia/scripts/build_frontier_tensor.py` | Frontier geometry builder |
 | `roles/Aporia/RESPONSIBILITIES.md` | This document |
+| `roles/Aporia/work queue.md` | Informal work queue of things that can be worked on or distributed to others |
 
 ---
 
@@ -321,5 +322,5 @@ Aporia maintains a **ranked queue of open problems** and systematically works th
 ---
 
 ## Machine: M1 (Skullport)
-## Communication: Redis streams via Agora (AGORA_REDIS_PASSWORD env var)
+## Communication: Redis streams via Agora (AGORA_REDIS_PASSWORD env var) (Note - Redis is broken - too difficult to keep it running on Windows due to auto-reboots from updates)
 ## Status: Online — Void detection active

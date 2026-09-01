@@ -1,0 +1,126 @@
+{
+  "contrasts": {
+    "M1 - M0c-RX": {
+      "label": "library vs none (D-5 headline)",
+      "mean": 0.1095,
+      "per_lineage": [
+        0.119,
+        0.119,
+        0.0952,
+        0.0238,
+        0.1905
+      ],
+      "sd": 0.0598,
+      "se": 0.0267
+    },
+    "M1 - M1-frozen-half": {
+      "label": "library vs half-frozen",
+      "mean": 0.0286,
+      "per_lineage": [
+        0,
+        0.0476,
+        0.0476,
+        -0.0238,
+        0.0714
+      ],
+      "sd": 0.0391,
+      "se": 0.0175
+    },
+    "M1 - M1-random-library": {
+      "label": "adapted vs random content",
+      "mean": 0.0667,
+      "per_lineage": [
+        0.0238,
+        0.0476,
+        0.0952,
+        0.0476,
+        0.119
+      ],
+      "sd": 0.0391,
+      "se": 0.0175
+    },
+    "M1 - M1-shuffled-history": {
+      "label": "library vs library, TRUE NULL",
+      "mean": 0.0,
+      "per_lineage": [
+        0,
+        -0.0238,
+        -0.0238,
+        -0.0238,
+        0.0714
+      ],
+      "sd": 0.0412,
+      "se": 0.0184
+    },
+    "M1-shuffled-history - M1-random-library": {
+      "label": "adapted vs random",
+      "mean": 0.0667,
+      "per_lineage": [
+        0.0238,
+        0.0714,
+        0.119,
+        0.0714,
+        0.0476
+      ],
+      "sd": 0.0353,
+      "se": 0.0158
+    }
+  },
+  "mde": {
+    "5": {
+      "sigma_headline": 0.1418,
+      "sigma_null": 0.1014
+    },
+    "8": {
+      "sigma_headline": 0.0615,
+      "sigma_null": 0.041
+    },
+    "10": {
+      "sigma_headline": 0.0527,
+      "sigma_null": 0.0352
+    },
+    "15": {
+      "sigma_headline": 0.041,
+      "sigma_null": 0.0299
+    },
+    "20": {
+      "sigma_headline": 0.0352,
+      "sigma_null": 0.0234
+    },
+    "25": {
+      "sigma_headline": 0.0305,
+      "sigma_null": 0.0211
+    },
+    "30": {
+      "sigma_headline": 0.0287,
+      "sigma_null": 0.0193
+    },
+    "40": {
+      "sigma_headline": 0.024,
+      "sigma_null": 0.0164
+    },
+    "50": {
+      "sigma_headline": 0.0223,
+      "sigma_null": 0.0152
+    }
+  },
+  "n_lineages_available": 5,
+  "n_tasks": 42,
+  "reference_effects": {
+    "content-adaptedness component (M1 - random-library)": 0.0667,
+    "full accumulation effect (M1-M0)": 0.1095,
+    "order component (M1 - shuffled), measured zero": 0.0
+  },
+  "task_level": {
+    "delta": 0.1095,
+    "n": 42,
+    "se": 0.0342
+  },
+  "variance": {
+    "between_lineage": 0.00286,
+    "between_task": 0.048,
+    "lineage_share": 0.0185,
+    "per_cell": 0.15467,
+    "task_share": 0.3104
+  }
+}

@@ -1,0 +1,131 @@
+{
+  "experiment": "EXP3_PREDICTIVE_TAXONOMY",
+  "seed": 20260901,
+  "n_papers": 54,
+  "k_neighbours": 5,
+  "leakage_check": {
+    "target": "REPLICATES",
+    "target_terms_found_in_mechanism_vocabulary": [],
+    "CLEAN": true,
+    "note": "checked against the RETAINED target only. ISOLATION was dropped after this check failed on it -- see degenerate_targets()."
+  },
+  "excluded_targets": {
+    "ISOLATION": {
+      "positives": 25,
+      "n": 54,
+      "rate": 0.46296296296296297,
+      "excluded_because": "LEAKAGE -- 'ablation study' is a surface form of the causal_attribution mechanism, so the target vocabulary helps build the coordinates"
+    },
+    "MATCHED_BUDGET": {
+      "positives": 0,
+      "n": 54,
+      "rate": 0.0,
+      "excluded_because": "DEGENERATE -- zero positives in 54 papers; a target every paper shares cannot discriminate",
+      "substantive_note": "not one paper in a stratified sample of 54 reports a compute- or evaluation-matched comparison"
+    }
+  },
+  "targets_note": "both targets are read from FULL TEXT by predicates.py -- a different instrument from the taxonomy that builds the coordinates, with different patterns written for a different purpose",
+  "results": {
+    "REPLICATES": {
+      "positive_rate": 0.18518518518518517,
+      "majority_baseline": 0.8148148148148148,
+      "majority_baseline_ci95": [
+        0.692,
+        0.896
+      ],
+      "arms": {
+        "four_tuple": {
+          "representation": "four_tuple",
+          "n": 54,
+          "answered": 52,
+          "abstained": 2,
+          "coverage": 0.9629629629629629,
+          "correct": 34,
+          "accuracy_overall": 0.6296296296296297,
+          "accuracy_when_answering": 0.6538461538461539,
+          "accuracy_ci95": [
+            0.496,
+            0.746
+          ]
+        },
+        "three_tuple": {
+          "representation": "three_tuple",
+          "n": 54,
+          "answered": 51,
+          "abstained": 3,
+          "coverage": 0.9444444444444444,
+          "correct": 32,
+          "accuracy_overall": 0.5925925925925926,
+          "accuracy_when_answering": 0.6274509803921569,
+          "accuracy_ci95": [
+            0.46,
+            0.713
+          ]
+        },
+        "pairwise": {
+          "representation": "pairwise",
+          "n": 54,
+          "answered": 32,
+          "abstained": 22,
+          "coverage": 0.5925925925925926,
+          "correct": 23,
+          "accuracy_overall": 0.42592592592592593,
+          "accuracy_when_answering": 0.71875,
+          "accuracy_ci95": [
+            0.303,
+            0.558
+          ]
+        },
+        "lexical": {
+          "representation": "lexical",
+          "n": 54,
+          "answered": 54,
+          "abstained": 0,
+          "coverage": 1.0,
+          "correct": 38,
+          "accuracy_overall": 0.7037037037037037,
+          "accuracy_when_answering": 0.7037037037037037,
+          "accuracy_ci95": [
+            0.572,
+            0.809
+          ]
+        },
+        "random": {
+          "representation": "random",
+          "n": 54,
+          "answered": 54,
+          "abstained": 0,
+          "coverage": 1.0,
+          "correct": 45,
+          "accuracy_overall": 0.8333333333333334,
+          "accuracy_when_answering": 0.8333333333333334,
+          "accuracy_ci95": [
+            0.713,
+            0.91
+          ]
+        }
+      },
+      "verdicts": {
+        "four_tuple": "NOT_PROMOTABLE",
+        "three_tuple": "NOT_PROMOTABLE",
+        "pairwise": "NOT_PROMOTABLE",
+        "lexical": "NOT_PROMOTABLE",
+        "random": "NOT_PROMOTABLE"
+      },
+      "bottleneck_retention": {
+        "four_tuple_accuracy": 0.6296296296296297,
+        "three_tuple_accuracy": 0.5925925925925926,
+        "delta_from_dropping_bottleneck_pp": -3.7,
+        "destroys_information": true,
+        "note": "a coordinate earns retention only if REMOVING it measurably destroys held-out predictive information. A non-negative delta means it did not."
+      }
+    }
+  },
+  "ANY_REPRESENTATION_PROMOTABLE": false,
+  "retention_rule": "beat BOTH the majority baseline (with the accuracy CI lower bound above it) AND the lexical token-overlap baseline. Beating random is not an achievement.",
+  "caveats": [
+    "n=54, so intervals are wide and only large effects are visible",
+    "targets are regex-derived from full text and are themselves lexical instruments -- they measure whether ablation LANGUAGE is present, not whether an ablation was correctly performed",
+    "arXiv-only, preprint-biased sample; 12-page truncation"
+  ]
+}

@@ -26,6 +26,12 @@ ignis/results/*/checkpoints/
 # Results and reports (large, local only)
 **/results/
 **/reports/
+# EXCEPTION 2026-09-01 (Ergon): D-5's VERDICT.md cites results/compute_gates.py
+# as the pre-committed hashed analysis script and results/gates_verdict.json as
+# the machine verdict. The blanket **/results/ rule silently excluded BOTH, so a
+# committed verdict pointed at files no clone contained. 151KB. Un-ignored.
+!agent_d5_blind/results/
+!agent_d5_blind/results/**
 
 # Logs
 *.log
@@ -390,3 +396,4 @@ ergon/probe_logs/*.log
 !incubation/results/
 !incubation/v2/results/
 !incubation/v3/results/
+ergon/gen1b/gen1_results/
