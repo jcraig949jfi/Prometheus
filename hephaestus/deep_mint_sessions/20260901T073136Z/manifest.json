@@ -90,5 +90,29 @@
     "candidates/",
     "failed/",
     "traces/"
-  ]
+  ],
+  "verdict_relabelled": "PASS_DEV_WITH_UNTESTED_COMPONENT (Addendum 1, Q3; untested component = predicate check in cardinality reader, knockout P4 delta 0.000 on dev v1)",
+  "accounting": {
+    "smith_cycles": 5,
+    "executed_falsifications": {
+      "candidate_executions_on_dev": 3,
+      "input_mutant_falsifiers_per_execution": 4,
+      "adversarial_phrasings": 20,
+      "component_ablations": 9
+    },
+    "candidate_revisions": 3,
+    "process_failures": 1,
+    "adversarial_cycles": 1,
+    "ablation_cycles": 1
+  },
+  "post_session": {
+    "semantic_only_closure": "A1 SYNTHESISES THE TABLE: the kernel is a Level-1 COMPOSITION of frozen primitives (pigeonhole_check / all_but_n / constants) under per-quantifier routing. MINT-0001 was a routing/search/representation problem, NOT a missing operator. Reclassify.",
+    "v3_on_dev_v2": {
+      "verdict": "FAIL_DEV",
+      "holdout": 0.9125,
+      "coverage": 0.9125,
+      "conditional_correctness": 1.0
+    },
+    "packet_state": "DORMANT / routing=representation"
+  }
 }

@@ -73,6 +73,13 @@ def make_vacuous_truth() -> dict:
                                "IQ-PORT-1 frozen evaluator (aporia/iq)": "10fa10db9989eb3a79c2039d18b748a83e93f751578ec6d0a0e12717eb0fa5ae"},
         "WHY_COMPOSITION_APPEARS_INSUFFICIENT": closure.get("reading", "") + " " + closure.get("forge_primitives_reading", ""),
         "CLOSURE_EVIDENCE": [closure],
+        # Addendum 1 §10 — the triage question. For this wall the answer was found by execution on
+        # 2026-09-01 (hephaestus/src/semantic_closure.py): almost nothing is missing once semantic state
+        # (quantifier, domain_size, satisfier_count) exists; the frozen primitives compose the kernel at
+        # depth 1 under per-quantifier routing. New packets must fill these two fields BEFORE any state
+        # beyond TRIAGE; "almost nothing" routes the packet out of the mint path.
+        "SEMANTIC_KERNEL_SPEC": "run: PYTHONPATH=. python -m hephaestus.src.semantic_closure  (fills mint_queue/MINT-0001/semantic_closure_result.json)",
+        "REPRESENTATION_ADAPTER_SPEC": "extraction of (quantifier, domain noun phrase, predicate, domain_size, satisfier_count) with domain EQUALITY as the acceptance rule; see adversarial idioms after a smith session",
         "SEARCH_ALREADY_ATTEMPTED": [
             "Apollo O1 exhaustive enumeration over 1.74M type-correct pipelines: vacuous_truth 0/5 (ceiling 0.833; number later retracted by E9, but the abstention on this category is structural).",
             "Aporia SELECTOR pre-flight over the frozen 27-candidate pool: zero capability-related dE movers.",

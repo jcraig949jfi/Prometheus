@@ -1,5 +1,5 @@
 # MINT-0001 — vacuous_truth — truth value of a quantified claim (universal / negative-universal / conditional / existential) over a domain the premises state is EMPTY, versus the same claim over a non-empty domain with or without a counterexample.
-**STATUS:** `CANDIDATE-PRODUCED` · **updated** 2026-09-01T07:40:17Z · missing-for-READY: none
+**STATUS:** `DORMANT` · **updated** 2026-09-01T08:07:11Z · missing-for-READY: none
 
 ## PRIORITY
 - **score**: 0.812
@@ -13,7 +13,7 @@
 - **quality_of_reproducer**: 1.0
 - **quality_of_falsifier**: 1.0
 - **minimality_of_required_extension**: 0.5
-- **rationale**: 
+- **rationale**: RECLASSIFIED 2026-09-01: kernel is a Level-1 composition of frozen primitives (semantic-only closure test); the wall's substance is a REPRESENTATION adapter. Not a Master Smith target. Apprentice 'widen' mode may keep measuring adapter coverage.
 
 ## SOURCE_WORLD
 Apollo typed-blackboard canary (apollo/data/clean_canary_v01.json, category vacuous_truth) and Charon's blind E9 battery (roles/Charon/apollo_e9/charon_battery_E9.json, 6 items).
@@ -192,11 +192,75 @@ No registered transformer writes `comparison` on any vacuous_truth prompt; the o
 - aporia/docs/CYCLE_155S_FOUR_ARE_NOT_FOUR_2026-08-24.md:72-75: vacuous_truth = GENUINE capability gap, 'no vacuous-implication semantics'.
 - apollo/cycles/campaign_20260825/E9_RESULT.json: Apollo scored 0/6 on Charon's blind vacuous_truth items (abstained).
 
+## SEMANTIC_KERNEL_SPEC
+- **inputs**: - **quantifier**: universal | negative_universal | existential
+- **domain_size**: int >= 0 (0 = empty)
+- **satisfier_count**: int, 0..domain_size, or unknown
+- **output**: truth value; undetermined when a count is unknown
+- **truth_table**: every/0/0 T; no/0/0 T; some/0/0 F; every/n/n T; every/n/<n F; no/n/0 T; no/n/>0 F; some/n/>0 T; some/n/0 F
+- **semantic_only_closure_test**: - **script**: hephaestus/src/semantic_closure.py
+- **result**: hephaestus/mint_queue/MINT-0001/semantic_closure_result.json
+- **A0_frozen_no_routing**: impossible by arity: the three columns differ at (0,0)
+- **A1_frozen_with_routing**: - **found**: - **existential**: - s
+- 1
+- **negative_universal**: - pigeonhole_check(1, s)
+- 1
+- **universal**: - coin_flip_independence(s, d)
+- 1
+- **evaluated**: 156
+- **depth**: 1
+- **B_generic_language**: - **found**: - **existential**: - s
+- 1
+- **universal**: - eq(d, s)
+- 1
+- **negative_universal**: - eq(s, 0)
+- 1
+- **evaluated**: 152
+- **depth**: 1
+- **C_v3_kernel**: - **rows**: 48
+- **correct**: 48
+- **kernel_lines**: 10
+- **principled_depth2_form**: universal = pigeonhole_check(s, all_but_n(d, 1))  i.e. s >= d; negative_universal = pigeonhole_check(1, s); existential = s
+- **caveat**: A1's depth-1 universal solution coin_flip_independence(s, d) is a truthiness coincidence (comb(s,d)=0 iff s<d); it is inside G(C) but is not a mechanism. The depth-2 form is the mechanism and is also inside G(C).
+- **CLASSIFICATION**: LEVEL 1 — a composition of frozen primitives under per-quantifier routing. NOT a missing operator. What was missing: (a) routing on a quantifier slot, (b) a semantic state that carries domain_size / satisfier_count at all.
+- **what_is_still_missing_if_perfect_semantic_state_were_injected**: almost nothing (three depth<=2 compositions + one guard per quantifier)
+
+## REPRESENTATION_ADAPTER_SPEC
+- **problem**: From natural-language premises + a quantified claim, produce (quantifier, domain noun phrase, predicate, domain_size, satisfier_count) where facts are accepted only if their noun phrase EQUALS the claim's domain.
+- **measured_adapter**: deep_mint_sessions/20260901T073136Z/candidates/v3_quantified_truth.py (~110 of ~120 lines are this adapter)
+- **coverage_on_dev_v2**: - **holdout_accuracy**: 0.9125
+- **coverage**: 0.9125
+- **conditional_correctness**: 1.0
+- **boundary_false_commit**: 0.0
+- **coverage_on_adversarial_20**: - **correct**: 4
+- **n**: 20
+- **false_commits**: 0
+- **abstentions**: 16
+- **idioms_not_covered**: - aren't any
+- zero X are
+- has no
+- empty of
+- lives in (verb)
+- Is it true that ...?
+- Claim: ... True or false?
+- every one of the
+- there exists
+- semicolon counts
+- none of them
+- all of them (no count)
+- number words
+- singular '1 of them is'
+- restrictive relative 'that is P is also Q'
+- **D1_mapping_owed**: 'there are no <P> <X>' with non-empty <X> domain  ->  satisfier_count = 0 (an adapter mapping, not a kernel rule)
+- **untested_component_now_tested**: predicate check in the cardinality reader: knockout P4 was 0.000 on dev v1; dev v2 adds NONEMPTY_OTHER_PREDICATE (gold abstain) so it is now load-bearing
+- **ROUTING**: REPRESENTATION problem. Per Addendum 1 §10 this is not sent to the Master Smith as a Level-2 reasoning mint. Candidates: Apollo (parser ops on the blackboard), Ludus/Foundry (expose semantic-state worlds directly so the kernel can be tested without language), cheap-model parser widening (apprentice 'widen' mode, labelled representation work).
+
 ## SEARCH_ALREADY_ATTEMPTED
 - Apollo O1 exhaustive enumeration over 1.74M type-correct pipelines: vacuous_truth 0/5 (ceiling 0.833; number later retracted by E9, but the abstention on this category is structural).
 - Aporia SELECTOR pre-flight over the frozen 27-candidate pool: zero capability-related dE movers.
 - Apollo E9 blind battery: 0/6, all abstained.
 - Master Smith (Claude Code / Fable, operator-invoked, 5 cycles, 2026-09-01): kernel+parser candidate v3 passes dev; 4/20 on out-of-template phrasings with 0 false commits; see deep_mint_sessions/20260901T073136Z/
+- semantic_closure.py (2026-09-01): frozen primitives + routing synthesise the kernel at depth 1 (156 evaluations) -> Level-1 composition; wall reclassified as representation.
 
 ## CHEAP_MODEL_ATTEMPTS
 - **n**: 1; **ts**: 2026-09-01T07:08:12Z; **model**: nvidia:nvidia/nemotron-3-super-120b-a12b; **verdict**: NO_CODE; **holdout_acc**: _(missing)_; **boundary_false_commit**: _(missing)_; **failure_families**: _(none yet)_; **latency_s**: 39.9; **file**: _(missing)_; **harness_fault**: True; **note**: max_tokens=1800 truncated a reasoning model before its code fence; harness fixed (6000, code-first)
@@ -255,6 +319,7 @@ No registered transformer writes `comparison` on any vacuous_truth prompt; the o
 - **P3 no cardinality reader**: -0.5068
 - **P4 cardinality reader ignores predicate**: 0.0
 - **P5 no stemming**: -0.6301; **decorative_on_dev**: - P4 cardinality reader ignores predicate
+- **semantic_only_closure**: A1 SYNTHESISES THE TABLE: the kernel is a Level-1 COMPOSITION of frozen primitives (pigeonhole_check / all_but_n / constants) under per-quantifier routing. MINT-0001 was a routing/search/representation problem, NOT a missing operator. Reclassify.
 
 ## COUNTERFEIT_TESTS
 - **shortcut**: constant_yes; **accuracy_decidable**: 0.6; **boundary_false_commit_rate**: 1.0
@@ -323,3 +388,4 @@ Three consecutive deep mints that pass dev but do not move the independent held-
 - **ref**: aporia/iq/probe_synth1_target_degeneracy.py
 - **ref**: apollo/cycles/campaign_20260825/E9_FINDINGS.md
 - **ts**: 2026-09-01T07:40:16Z; **by**: Master Smith session 20260901T073136Z; **note**: candidate produced; author of dev set == author of candidate; Charon E9 untouched
+- **ts**: 2026-09-01T08:07:10Z; **by**: hephaestus.src.semantic_closure + operator Addendum 1; **note**: reclassified Level 2 -> Level 1 composition; routed as representation problem
