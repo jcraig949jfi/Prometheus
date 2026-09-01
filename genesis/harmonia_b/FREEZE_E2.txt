@@ -1,0 +1,75 @@
+=====================================================================
+HARMONIA B GEN-3B -- FREEZE E2: ARENA CHARACTERISATION
+Issued 2026-09-01, BEFORE any E2 evidence exists. E1 verdict at
+issuance: ASSAY_QUALIFIED (all four gates passed).
+=====================================================================
+
+HYPOTHESIS
+  None adjudicated here. E2 is DESCRIPTIVE by design: it measures the
+  frozen Q vector on every (substrate x operator) cell so that E3-E7
+  have one common table to argue over. Publishing a descriptive stage
+  as a descriptive stage is deliberate -- the campaign's later claims
+  are about relationships between these numbers, and a stage that
+  quietly adjudicated something would contaminate them.
+
+NULL / COMPETING EXPLANATION
+  Not applicable. The only failure mode E2 can have is a cell that
+  cannot be measured, which is recorded as such.
+
+INTERVENTION -- THE FULL MATRIX (22 cells)
+  CIRCUIT   x SWEEP-ALL (uncapped, 1056 edits/object)
+  CIRCUIT   x M-UNIFORM
+  CIRCUIT   x M-OPONLY
+  CIRCUIT   x M-WIREONLY
+  BYTEVM    x SWEEP-ALL (capped 16 alternatives/site -- an unbiased
+            sample of the 255 available, recorded as
+            estimand=site_population_capped)
+  BYTEVM    x M-UNIFORM
+  BYTEVM    x M-RAWBYTE
+  BYTEVM    x M-INSTR
+  DNF       x SWEEP-ALL (uncapped)
+  DNF       x M-UNIFORM
+  RELAX(tau) x M-GAUSS[sigma] for tau in {0.1, 0.5, 2.0}
+            and sigma in {0.25, 1.0, 4.0}          -- 9 cells
+  P1-BLOCKS x SWEEP-ALL
+  N1-SMOOTH-UNREACHABLE x SWEEP-ALL
+  N2-HASH   x SWEEP-ALL (capped 8)
+
+  60 objects per cell, seeds 5000..5059 -- the SAME objects E1 used and
+  disjoint from the bootstrap, so that operator contrasts within a
+  substrate are paired on identical parents rather than confounded with
+  a fresh population draw.
+  Operator cells draw 400 edits per object, so every operator cell
+  carries a MATCHED INTERVENTION BUDGET of one elementary edit per
+  draw and a matched draw count. Sweep cells are a different estimand
+  and are labelled as such on every row; they are never compared with
+  operator cells as if they were the same quantity.
+
+FROZEN METRIC
+  The Q vector of charter section 4, unchanged, plus the per-target
+  rows. Every ratio ships with the counts it was computed from.
+
+CONTROLS
+  P1 / N1 / N2 are re-measured here under identical machinery so the
+  arena table contains its own calibration rows rather than importing
+  E1's.
+
+GATES (measurability only; nothing scientific is decided)
+  E2-G1  Every cell returns a Q with n_edits >= 1000, or the cell is
+         recorded UNMEASURABLE with its reason.
+  E2-G2  Declines are counted and reported per cell; a decline is data
+         about an operator, never a silent skip.
+  E2-G3  RELAX cells must show q12 = null (its neighbourhood is not
+         enumerable), and that null must be REPORTED rather than
+         imputed. An imputed q12 would be a fabricated coordinate.
+
+KILL CONDITION
+  None. E2 cannot kill a hypothesis because it tests none. If a cell is
+  unmeasurable the dependent comparisons in E3-E7 lose that cell and
+  say so.
+
+WHAT THE RESULT CHANGES
+  Supplies the single table on which E3 (substrate vs operator
+  decomposition), E4 (smoothness vs navigability), E5 (search
+  prediction), E6 (transfer) and E7 (cheapness) are computed.
+=====================================================================
