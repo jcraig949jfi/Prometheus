@@ -32,8 +32,24 @@ def provenance_hash(fossil: dict) -> str:
     return "sha256:" + hashlib.sha256(blob).hexdigest()
 
 
+# The provenance of a specimen is structural, not a footnote (reviewer 2026-09-01, Q1):
+# a fossil MUST declare how its organism came to exist, so no downstream consumer can
+# read a create_random specimen as a search discovery. Any new source name must be added
+# here deliberately.
+ORGANISM_SOURCES = {"create_random", "search", "map_elites", "random", "mutate",
+                    "recombine", "transfer", "archive_member"}
+
+
 def emit(fossil: dict, out_dir: str) -> str:
-    """Write one fossil JSON, stamped with an emit time and a provenance hash."""
+    """Write one fossil JSON, stamped with an emit time and a provenance hash.
+
+    Requires `organism_source` in ORGANISM_SOURCES -- the create_random-vs-search
+    distinction is enforced at write time so it cannot be lost later."""
+    src = fossil.get("organism_source")
+    if src not in ORGANISM_SOURCES:
+        raise ValueError(
+            f"fossil.organism_source={src!r} must be one of {sorted(ORGANISM_SOURCES)}; "
+            f"the specimen's provenance is mandatory, not optional")
     d = Path(out_dir)
     d.mkdir(parents=True, exist_ok=True)
     fossil["emitted_utc"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())

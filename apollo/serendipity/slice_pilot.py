@@ -111,6 +111,7 @@ def main():
     # 7. EMIT the fossil
     fossil = {
         "run_id": run_id, "kind": "serendipity_slice_v0", "foundry_pin": PIN,
+        "organism_source": "create_random",  # structural: NOT a search discovery
         "world": {"task_id": task, "rule": "f(x)=3x+1", "engine_id": args.engine},
         "budget": args.budget, "seed": args.seed,
         "science": {
