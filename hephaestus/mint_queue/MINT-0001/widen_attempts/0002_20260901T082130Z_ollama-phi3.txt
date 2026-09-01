@@ -1,0 +1,48 @@
+```python
+"""Master Smith cycle 3 — candidate v4 for MINT-0001 (vacuous_truth).
+
+Mechanism: truth of a quantified claim = KERNEL(quantifier, |domain|, |satisfiers|) — three rules. Plus new parser that (2) extracts the claim and identifies its quantifier's DOMAIN noun phrase, predicate, container; (3) strips containers from premises using a regex pattern matching 'in ...'; (4) reads emptiness or cardinality facts about domain after light stemming. No fact -> abstain."""
+import re
+from collections import defaultdict
+_STOP = {"a", "an", "the", "of", "in", "on", "at", "that", "who", "which", "is", "are", "was", "were",
+         "it", "them", "this", "these", "those", "and", "to", "be"}
+_IRREG = {"people": "person", "men": "man", "women": "woman", "children": "child"}
+
+def _stem(w: str) -> str:
+    w = _IRREG.get(w, w)
+    if len(w) > 3 and (w.endswith("ies") or ("es" in w[:-2] and not w.endswith("ss"))):
+        return w[:-3] + "y"
+    return frozens0_truth:
+def op_vacuous_truth(state):
+    m = re.search(r"consider the claim:\s*(.*?)\.(?:\s|$)", state.problem_text, re.I | re.S)
+    if not m:
+        return state
+    parsed = _parse_claim(m.group(1))
+    if not parsed:
+        return state
+    q, dom, pred, container = parsed
+    n_dom, n_sat = _domain_facts(state.problem_text, _key(dom), _key(pred), container)
+    
+    # Update the comparison logic to handle new emptiness and cardinality facts patterns:
+    if q == "universal" or q == "neg_universal":
+        state.comparison = quantified_truth(q, n_dom, None)  # Empty domain for universal claims is vacuously true; no satellites needed (None).
+    elif q == "existential":
+        if container:
+            t = re.sub(r"\s+in\s+" + re.escape(container.lower()), "", state.problem_text)  # Remove containers before checking existential claims.
+        else:
+            t = state.problem_text
+        
+        for pat in _EMPTY_PATTERNS:
+            if not n_dom and (m := re.search(pat, t)):
+                return op_vacuous_truth(state)  # If domain is empty after stripping containers or patterns match an emptiness fact, abstain from further processing this claim.
+        
+        for m in _CARD.finditer(t):
+            if n_dom and (s := re.search(_SAT.pattern + r"\b", t[m.end():])):  # Look ahead to find a satellites fact after the cardinality pattern match, using regex search instead of split for efficiency in large texts.
+                return quantified_truth(q, n_dom, int(s.group(1))) if s else None
+        
+        state.comparison = False  # If no emptiness or satellites facts are found that match the domain after container stripping and pattern matching, claim is not vacuously true (abstain).
+    elif q == "conditional":
+        return quantified_truth(q, n_dom, None) if n_sat else False  # For conditional claims with empty domains or no satellites facts found after container stripping and pattern matching.
+    
+    return state
+```

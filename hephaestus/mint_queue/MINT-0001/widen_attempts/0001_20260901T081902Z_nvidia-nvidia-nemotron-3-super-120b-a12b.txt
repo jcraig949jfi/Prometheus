@@ -1,0 +1,276 @@
+We need to extend parser to handle emptiness idioms, claim framings, cardinality phrasings. The current code already has patterns for emptiness and cardinality but fails on some examples. Need to adjust patterns to capture more phrasings.
+
+Specifically, we need to handle:
+
+- "There aren't any green bottles on the wall." (emptiness with negative contraction)
+- "Zero silver coins are in the chest." (emptiness with "Zero")
+- "The chest has no silver coins." (emptiness with "has no")
+- "The pond is empty of frogs." (emptiness with "empty of")
+- "No frog lives in the pond." (emptiness with "No ... lives")
+- "There are no red marbles in the jar." (already covered)
+- "There are no red marbles in the jar. Claim: every red marble in the jar is chipped. True or false?" (need to parse claim after "Claim:" maybe)
+- "There are no red marbles in the jar. Consider the claim: every one of the red marbles in the jar is chipped." (need to handle "every one of")
+- "There are no red marbles in the jar. Consider the claim: any red marble in the jar that is chipped is also heavy." (conditional with "any ... that is ...")
+- "There are no red marbles in the jar. Consider the claim: there exists a red marble in the jar that is chipped." (existential with "there exists")
+- "The jar holds 6 red marbles; 2 are chipped." (cardinality with "holds ... ;")
+- "There are exactly 6 red marbles in the jar, and none of them are chipped." (cardinality + emptiness of subset)
+- "There are exactly 6 red marbles in the jar, and all of them are chipped." (cardinality + all)
+- "There are exactly 6 red marbles in the jar, and two of them are chipped." (cardinality + some)
+- "There are no chipped marbles in the jar, but there are exactly 6 red marbles in the jar and 2 of them are heavy." (complex)
+- "There are no red marbles in the jar. There are exactly 3 blue marbles in the jar and 1 of them is chipped." (multiple sentences)
+
+We need to adjust parsing of claim and premise extraction.
+
+Current claim parsing: _parse_claim extracts claim from "consider the claim:" pattern. It expects claim ends with '.' maybe. It uses regex to find claim. It then lowercases and strips period.
+
+It then matches conditional pattern _COND: "(?:if|whenever)\s+an?\s+(.+?)\s+is\s+(.+?),\s*(?:then\s+)?it\s+is\s+(.+)$". This expects "if ..." etc. For "any red marble in the jar that is chipped is also heavy." That's not conditional; it's universal with "any". Actually "any red marble in the jar that is chipped is also heavy." This matches universal pattern? The pattern for universal: "(?:every|each|any)\s+(.+?)\s+is\s+(.+)$". It expects "any ..." then "is". The claim: "any red marble in the jar that is chipped is also heavy." The domain phrase includes "red marble in the jar that is chipped". The pattern will capture group1: "red marble in the jar that is chipped"? Actually pattern: "(?:every|each|any)\s+(.+?)\s+is\s+(.+)$". The .+? is non-greedy up to first "is". So it will match "any red marble in the jar that is chipped is also heavy." The first "is" after "any" is after "chipped"? Actually phrase: "any red marble in the jar that is chipped is also heavy." The first "is" appears after "chipped". So group1 = "red marble in the jar that is chipped". group2 = "also heavy". That seems fine. So universal pattern works.
+
+But we need to handle "every one of the red marbles in the jar is chipped." That's "every one of". Our universal pattern expects "every" directly followed by noun phrase. "every one of the red marbles in the jar" includes "one of". We need to allow optional "one of" after "every". Similarly "each" maybe.
+
+Also need to handle existential with "there exists". Currently existential patterns: "(?:some|at least one)\s+(.+?)\s+(?:is|are)\s+(.+)$" and "there (?:is|are)\s+(?:an?\s+)?(.+?)\s+that (?:is|are)\s+(.+)$". Need to add pattern for "there exists\s+(.+?)\s+(?:is|are)\s+(.+)$". Also maybe "there is a ... that ..."? Already covered.
+
+Also need to handle claim like "Claim: every red marble in the jar is chipped. True or false?" The extraction currently looks for "consider the claim:" only. Need to also accept "claim:" (case-insensitive) maybe preceded by newline. We'll adjust the regex in op_vacuous_truth to find claim after "consider the claim:" or "claim:" maybe.
+
+Also need to handle claim with "Is the claim true?" after period; we already strip trailing period.
+
+Now emptiness patterns: Need to capture more variations:
+
+- "There aren't any green bottles on the wall." -> pattern for "there aren't any" maybe.
+- "Zero silver coins are in the chest." -> "Zero ..." maybe "zero\s+(.+?)\s+are" or "zero\s+(.+?)\s+is".
+- "The chest has no silver coins." -> pattern: "has no\s+(.+?)".
+- "The pond is empty of frogs." -> pattern: "is empty of\s+(.+?)".
+- "No frog lives in the pond." -> pattern: "^no\s+(.+?)\s+lives\s+in\s+"? Actually we have pattern for "No X is Q." but not "No frog lives in the pond." That's "No frog lives in the pond." This is a negated existential? Actually it's stating zero frogs live in pond. Equivalent to "There are no frogs that live in the pond." So we need pattern for "no\s+(.+?)\s+lives\s+in\s+"? But we can treat as "No frog lives in the pond." as "No frog is living in the pond." Not exactly. Simpler: we can add pattern: r"no\s+(.+?)\s+lives\s+in\s+"? But we need to extract domain phrase that matches claim's domain. Claim domain: "frog in the pond". The premise "No frog lives in the pond." domain phrase should be "frog that lives in the pond"? Actually claim: "every frog in the pond is green." Domain: frog in the pond. Premise: "No frog lives in the pond." This says there are zero frogs that live in the pond. That's emptiness of frogs that live in pond. So we need to map phrase "frog lives in the pond" to domain "frog in the pond". Our current splitting of container: we strip container from text before matching emptiness patterns. The container is the last "in ..." phrase. For claim domain "frog in the pond", container is "the pond". So after stripping container, we have text with "in the pond" removed. Then we look for emptiness patterns matching domain phrase without container. For premise "No frog lives in the pond." After stripping container "in the pond", we get "No frog lives". That's not matching our emptiness patterns. We need pattern that matches "no\s+(.+?)\s+lives" and then we can treat the phrase as domain (maybe with a predicate "lives"? Actually we need to map to domain key that equals claim's domain key after stemming and stopwords removal. Claim domain key: from "frog in the pond": tokens: frog, pond (stopwords removed? "in" is stopword, "the" stopword). So key = {frog, pond}. After stemming: frog, pond.
+
+Premise phrase after stripping container: we removed "in the pond". So we have "No frog lives". Tokens: frog, lives. Stopwords removed: none. Key = {frog, lives}. Not equal.
+
+Thus we need to adjust premise extraction to not strip container when the premise includes a verb like "lives". Actually the container stripping is meant to remove prepositional phrases like "in the archive" that are not part of domain. But in "No frog lives in the pond.", the "in the pond" is part of the predicate (lives in). The container stripping incorrectly removes it, causing mismatch.
+
+We need to improve container stripping: only strip container if it's a prepositional phrase that is not part of a verb phrase? Hard.
+
+Alternative: adjust emptiness patterns to also match patterns where the container appears after a verb like "lives in". Instead of stripping container globally, we could keep container and adjust patterns to allow optional container after verb.
+
+Simpler: modify _domain_facts to not strip container at all? But earlier comments said container-strip regex had bug; they fixed it. The container is supposed to be stripped from premises before matching emptiness/cardinality patterns. The idea: premises may contain container phrase like "in the archive" that is not part of domain; we strip it to compare domain. For "No frog lives in the pond.", the container "in the pond" is actually part of the predicate, not just a location modifier. However claim domain also includes "in the pond". So we should not strip it because it's part of domain. The rule: container is always the LAST 'in ...' in the noun phrase. In claim parsing, we split domain phrase at last "in ..." to get domain_noun_phrase and container. For claim "every frog in the pond is green.", domain_noun_phrase = "frog", container = "the pond". Wait, the claim's domain noun phrase is "frog in the pond". The split_domain function splits at last "in ..." giving domain_phrase = "frog", container = "the pond". Then they reconstruct domain phrase for key? Actually they use _key(dom) where dom is the domain phrase after splitting? In _parse_claim they return d (domain phrase) which is the part before container (i.e., noun phrase without container). Then they compute _key(dom) where dom is that phrase. So domain key excludes container. That seems wrong: they intend domain to be the noun phrase without container, and container is separate. Then they compare premise noun phrase (after stripping container) to domain key. So they treat container as separate location modifier that should be ignored for equality. For claim "every frog in the pond is green.", domain noun phrase without container = "frog". Container = "the pond". So they compare premise noun phrase (after stripping container) to "frog". Premise "No frog lives in the pond." After stripping container "in the pond", we get "No frog lives". The noun phrase is "frog". Actually we need to extract just the noun phrase from premise ignoring verbs. Our emptiness patterns currently capture phrase like "no\s+(.+?)\s+is\s+(.+?)" etc. For "No frog lives in the pond." we don't have a pattern.
+
+Thus we need to add pattern for "no\s+(.+?)\s+lives\s+in\s+"? But after stripping container, the "in the pond" is removed, leaving "No frog lives". We could match pattern "no\s+(.+?)\s+lives" and treat captured phrase as domain noun phrase (maybe with a verb). But we need to ignore verb "lives". Could treat pattern "no\s+(.+?)\s+lives" and then apply _key to the captured phrase (which includes "frog lives"? Actually pattern "no\s+(.+?)\s+lives" would capture "frog". Because .+? stops before "lives". Good. So we can add pattern r"no\s+(.+?)\s+lives\s+in\s+"? But after stripping container, the "in the pond" is gone, so we just need pattern r"no\s+(.+?)\s+lives". However we need to ensure we don't accidentally match other things.
+
+Similarly "There aren't any green bottles on the wall." After stripping container? Claim domain: "green bottle on the wall". Container = "the wall"? Actually "on the wall" not "in". Our container detection only looks for "in ...". So container empty. So we need pattern for "there aren't any\s+(.+?)" maybe.
+
+"Zero silver coins are in the chest." Container = "the chest"? Actually "in the chest". So container = "the chest". After stripping container, we have "Zero silver coins are". Need pattern for zero.
+
+"The chest has no silver coins." Container? No "in". So container empty. Need pattern "has no\s+(.+?)".
+
+"The pond is empty of frogs." Container? No "in". Need pattern "is empty of\s+(.+?)".
+
+Now also need to handle claim patterns like "every one of the red marbles in the jar is chipped." We'll adjust universal pattern to allow optional "one of" after every/each.
+
+Also need to handle claim "any red marble in the jar that is chipped is also heavy." Already works.
+
+Need to handle existential "there exists a red marble in the jar that is chipped." Add pattern.
+
+Also need to handle claim extraction after "Claim:" or "consider the claim:" maybe also after "Is it true that". We'll adjust regex in op_vacuous_truth to find claim after "consider the claim:" or "claim:" (case-insensitive) maybe preceded by newline or space.
+
+Also need to handle claim that ends with a question mark? We'll strip trailing punctuation.
+
+Now adjust _EMPTY_PATTERNS list to include new patterns.
+
+We must keep quantified_truth unchanged.
+
+We must not change function signatures.
+
+We'll modify _EMPTY_PATTERNS list and maybe add new patterns.
+
+Also need to adjust _split_domain to only split on "in" not "on". That's fine.
+
+Now let's design patterns.
+
+We'll keep existing patterns and add:
+
+1. r"there are no\s+(.+?)[.,]" already there.
+2. r"contains no\s+(.+?)[.,]" already.
+3. r"not a single\s+(.+?)\s+is[.,]" already.
+4. r"the number of\s+(.+?)\s+is zero[.,]" already.
+5. r"nobody has ever found an?\s+(.+?),\s*and there are none now[.,]" already.
+6. r"there are exactly zero\s+(.+?)[.,]" already.
+7. r"contains exactly zero\s+(.+?)[.,]" already.
+8. r"(?:^|[.,]\s*)no\s+(.+?)\s+is\s+(.+?)[.,]" already.
+
+Add:
+
+- r"there aren't any\s+(.+?)[.,]" (case-insensitive, we lowercased text)
+- r"there is no\s+(.+?)[.,]" maybe.
+- r"zero\s+(.+?)\s+are[.,]" and r"zero\s+(.+?)\s+is[.,]" (but we need to capture domain noun phrase before verb). Actually "Zero silver coins are in the chest." After lowercasing: "zero silver coins are in the chest". We want to capture "silver coins". Pattern: r"zero\s+(.+?)\s+(?:are|is)[.,]" maybe.
+
+- r"has no\s+(.+?)[.,]" (for "The chest has no silver coins.") Actually "has no" maybe preceded by subject. We'll just search for "has no\s+(.+?)[.,]".
+
+- r"is empty of\s+(.+?)[.,]" (for "The pond is empty of frogs.") Actually "is empty of\s+(.+?)[.,]".
+
+- r"no\s+(.+?)\s+lives\s+in\s+"? But we strip container, so after stripping container we have "no\s+(.+?)\s+lives". We'll add pattern r"no\s+(.+?)\s+lives[.,]" maybe.
+
+- r"there is no\s+(.+?)\s+that\s+(?:is|are)\s+(.+?)[.,]" similar to existing pattern for "no X is Q". Already we have pattern for "no\s+(.+?)\s+is\s+(.+?)" which captures two groups; we need to handle case where only one group (domain) and we treat as emptiness. That pattern currently returns phrase = group1 + " that is " + group2 when two groups; else group1. For "No frog lives in the pond." after stripping container we have "no frog lives". This pattern expects "is". Not match.
+
+Thus we add pattern for verb "lives". Could also generalize to any verb? But we can add specific patterns for common verbs: lives, are, is, exist, etc.
+
+Simplify: add pattern r"no\s+(.+?)\s+(?:lives|exists|are|is)[.,]" capturing domain noun phrase before verb. But need to ensure we don't swallow too much. We'll use r"no\s+(.+?)\s+(?:lives|exists|are|is)[.,]".
+
+But note that after stripping container, we might have "no frog lives". This matches pattern with verb "lives". Good.
+
+Now also need to handle "There aren't any green bottles on the wall." After lowercasing: "there aren't any green bottles on the wall". Pattern r"there aren't any\s+(.+?)[.,]" will capture "green bottles". Good.
+
+Now "Zero silver coins are in the chest." After stripping container "in the chest": we have "zero silver coins are". Pattern r"zero\s+(.+?)\s+(?:are|is)[.,]" will capture "silver coins". Good.
+
+Now "The chest has no silver coins." No container. Pattern r"has no\s+(.+?)[.,]" will capture "silver coins". Good.
+
+Now "The pond is empty of frogs." Pattern r"is empty of\s+(.+?)[.,]" will capture "frogs". Good.
+
+Now "No frog lives in the pond." After stripping container "in the pond": we have "no frog lives". Pattern r"no\s+(.+?)\s+(?:lives|exists|are|is)[.,]" will capture "frog". Good.
+
+Now also need to handle "There are no red marbles in the jar." Already covered by existing pattern "there are no\s+(.+?)[.,]" (note we have that). Good.
+
+Now need to handle claim patterns.
+
+Update _CLAIM_FORMS:
+
+Add patterns for universal with "every one of" and "each one of". Also maybe "any one of".
+
+Pattern: r"(?:every|each|any)\s+(?:one\s+of\s+)?(.+?)\s+is\s+(.+)$" but need to ensure we capture domain after optional "one of". Actually "every one of the red marbles in the jar is chipped." After lowercasing: "every one of the red marbles in the jar is chipped." We want domain phrase = "one of the red marbles in the jar"? Actually we want domain noun phrase after stripping container: we split at last "in ...". The container is "the jar". So before container we have "every one of the red marbles". We want domain noun phrase = "one of the red marbles"? But our key extraction will stem and remove stopwords: tokens: one, red, marbles. Stopwords: "one" maybe not in stoplist; it's not. So key = {one, red, marble}. Claim domain key from "every red marble in the jar" would be {red, marble}. Not equal. So we need to treat "one of" as not part of domain; we should ignore "one of". So we need to allow optional "one of" after quantifier and not include it in domain phrase. So pattern should capture domain after optional "one of ". Eg: r"(?:every|each|any)\s+(?:one\s+of\s+)?(.+?)\s+is\s+(.+)$". This will capture domain after the optional "one of ". For "every one of the red marbles in the jar is chipped.", after "every " we have optional "one of " matched, then .+? captures "the red marbles in the jar". Then we split domain at last "in ..." to get domain phrase = "the red marbles", container = "the jar". Good.
+
+Similarly for "each one of". Also "any one of".
+
+Now also need to handle universal with "all of the". Already we have "all\s+(.+?)\s+are". That captures "all of the red marbles"? Actually pattern "all\s+(.+?)\s+are" will capture "of the red marbles"? Because .+? stops before "are". So "all of the red marbles are". That includes "of the". We need to maybe allow optional "of the". But we can keep as is; after splitting container, domain phrase = "of the red marbles". Key will include "of" (stopword removed) and "the" (stopword removed) leaving "red marbles". Good. So fine.
+
+Now existential patterns: add pattern for "there exists\s+(.+?)\s+(?:is|are)\s+(.+)$". Also maybe "there exist\s+(.+?)\s+(?:is|are)\s+(.+)$" (plural). But we can just use exists.
+
+Also need to handle "there is a ... that ..." already covered.
+
+Now also need to handle claim like "Claim: every red marble in the jar is chipped. True or false?" We'll adjust op_vacuous_truth to find claim after "consider the claim:" or "claim:" (case-insensitive). We'll also allow maybe "Claim:" followed by newline.
+
+We'll implement regex: r"(?:consider\s+the\s+claim:|claim:)\s*(.*?)(?:\s*[.?]\s*(?:Is|is|True|true)?)"? Simpler: find after "consider the claim:" or "claim:" up to next period (.) maybe. We'll use re.search with pattern r"(?:consider\s+the\s+claim:|claim:)\s*(.+?)(?:\.|\s*$)" but need to capture until period or end. We'll then strip trailing spaces and period.
+
+We'll keep existing m = re.search(r"consider the claim:\s*(.*?)\.(?:\s|$)", ...) but also add alternative.
+
+We'll do:
+
+m = re.search(r"(?:consider\s+the\s+claim:|claim:)\s*(.*?)(?:\.|\s*$)", state.problem_text, re.I | re.S)
+
+If not m, return state.
+
+Now need to ensure we don't capture too much; using non-greedy .*? up to first '.' or end.
+
+Now adjust _parse_claim to handle new patterns.
+
+We'll modify _CLAIM_FORMS list to include new patterns.
+
+Let's list patterns:
+
+Universal:
+- r"(?:every|each|any)\s+(?:one\s+of\s+)?(.+?)\s+is\s+(.+)$"
+- r"all\s+(.+?)\s+are\s+(.+)$"
+- r"all\s+(.+?)\s+is\s+(.+)$" maybe? Not needed.
+
+Neg universal:
+- r"no\s+(.+?)\s+is\s+(.+)$"
+- r"none\s+of\s+the\s+(.+?)\s+are\s+(.+)$"
+- r"none\s+of\s+the\s+(.+?)\s+is\s+(.+)$" maybe.
+
+Existential:
+- r"(?:some|at least one)\s+(.+?)\s+(?:is|are)\s+(.+)$"
+- r"there\s+(?:is|are)\s+(?:an?\s+)?(.+?)\s+that\s+(?:is|are)\s+(.+)$"
+- r"there\s+exists\s+(.+?)\s+(?:is|are)\s+(.+)$"
+- r"there\s+exist\s+(.+?)\s+(?:is|are)\s+(.+)$" (maybe)
+
+Conditional pattern stays.
+
+Now also need to handle claim like "any red marble in the jar that is chipped is also heavy." Already matches universal pattern with optional "one of"? Not needed.
+
+Now we need to adjust _split_domain to only split on "in" not "on". Already.
+
+Now adjust _EMPTY_PATTERNS.
+
+We'll add patterns as described.
+
+Now also need to adjust _domain_facts to handle patterns with two groups (like "no X is Q") where we return phrase = group1 + " that is " + group2. That's already there.
+
+Now we need to ensure that patterns like "there aren't any" etc only have one group.
+
+Now we need to ensure that after lowercasing, patterns match.
+
+Now we need to test mentally with examples.
+
+Let's go through each gold example.
+
+1. "There aren't any green bottles on the wall. Consider the claim: every green bottle on the wall is cracked. Is the claim true?"
+
+- Claim extraction: after "consider the claim:" we get "every green bottle on the wall is cracked". Good.
+- Parse claim: universal pattern matches: quantifier universal, domain phrase = "green bottle on the wall", predicate = "cracked". container split: last "in ..."? none, so container = "".
+- Domain key: tokens: green, bottle, wall (stopwords removed none). Stem: green, bottle, wall.
+- Premise text: "There aren't any green bottles on the wall." Lowercase.
+- Container empty, so t unchanged.
+- _EMPTY_PATTERNS includes new pattern r"there aren't any\s+(.+?)[.,]". Matches: captures "green bottles". phrase = "green bottles". _key(phrase) -> tokens: green, bottles (stem bottle) -> green, bottle. Wait "bottles" stems to "bottle". So key = {green, bottle}. Missing "wall". Because we stripped "on the wall"? Actually premise includes "on the wall". Our pattern captured only up to first punctuation or space? pattern r"there aren't any\s+(.+?)[.,]" captures until next '.' or ','. The text: "there aren't any green bottles on the wall." After lowercasing, there is a period at end. The .+? will match "green bottles on the wall" because it stops before the '.' at end. So phrase = "green bottles on the wall". Good. Key = {green, bottle, wall}. matches domain key. So returns n_dom=0. Good.
+
+Thus quantifier universal -> vacuously true -> True.
+
+2. "Zero silver coins are in the chest. Consider the claim: each silver coin in the chest is counterfeit. Is the claim true?"
+
+- Claim: "each silver coin in the chest is counterfeit". universal pattern matches (each). domain phrase = "silver coin in the chest". container = "the chest". domain key: silver, coin (stopwords removed: the). Actually tokens: silver, coin, chest. Stopwords: "the" removed. So key = {silver, coin, chest}. Wait container removed? Actually we split domain at last "in ...": domain phrase = "silver coin", container = "the chest". So domain key from domain phrase only: silver, coin. Good.
+
+- Premise: "Zero silver coins are in the chest." Lowercase. Container = "the chest" (detected by _split_domain? Actually we strip container from text before matching emptiness patterns: t = re.sub(r"\s+in\s+" + re.escape(container.lower()) + r"\b", "", t). So we remove " in the chest". So t becomes "zero silver coins are". Pattern r"zero\s+(.+?)\s+(?:are|is)[.,]" matches: captures "silver coins". phrase = "silver coins". key = silver, coin (stem coins->coin). matches domain key. n_dom = 0. Good.
+
+Thus universal -> true.
+
+3. "The chest has no silver coins. Consider the claim: some silver coin in the chest is counterfeit. Is the claim true?"
+
+- Claim: existential "some silver coin in the chest is counterfeit". domain phrase = "silver coin in the chest". container = "the chest". domain key = silver, coin.
+
+- Premise: "The chest has no silver coins." No container. t unchanged. Pattern r"has no\s+(.+?)[.,]" matches: captures "silver coins". phrase = "silver coins". key = silver, coin. matches domain key. n_dom=0. Existential quantifier -> vacuously false? According to kernel: if n_dom == 0, return q != "existential". For existential, returns False. So gold says no (false). Good.
+
+4. "The pond is empty of frogs. Consider the claim: every frog in the pond is green. Is the claim true?"
+
+- Claim: universal "every frog in the pond is green". domain phrase = "frog in the pond". container = "the pond". domain key = frog.
+
+- Premise: "The pond is empty of frogs." No container. Pattern r"is empty of\s+(.+?)[.,]" matches: captures "frogs". phrase = "frogs". key = frog (stem frogs->frog). matches. n_dom=0. universal -> true.
+
+5. "No frog lives in the pond. Consider the claim: all frogs in the pond are green. Is the claim true?"
+
+- Claim: universal "all frogs in the pond are green". domain phrase = "frogs in the pond". container = "the pond". domain key = frogs (stem frog).
+
+- Premise: "No frog lives in the pond." Container = "the pond". Strip container: remove " in the pond". t becomes "no frog lives". Pattern r"no\s+(.+?)\s+(?:lives|exists|are|is)[.,]" matches: captures "frog". phrase = "frog". key = frog. matches domain key. n_dom=0. universal -> true.
+
+6. "There are no red marbles in the jar. Is it true that every red marble in the jar is chipped?" (no "consider the claim:" but we need to detect claim after "Is it true that". Our new regex only looks for "consider the claim:" or "claim:". This example lacks those. We need to also support claim after "Is it true that". The prompt says we need to extend parser to handle claim framings. So we need to adjust claim detection to also capture claim after phrases like "Is it true that", "True or false?", "Claim:" etc.
+
+We can broaden: look for pattern after "consider the claim:" or "claim:" or "is it true that" or "true or false?" maybe.
+
+Simpler: we can search for claim after "consider the claim:" or "claim:" or "is it true that" (case-insensitive) up to a question mark or period.
+
+We'll implement regex: r"(?:consider\s+the\s+claim:|claim:|is\s+it\s+true\s+that)\s*(.*?)(?:\?|\.|\s*$)" with re.I.
+
+But need to ensure we don't capture too much.
+
+Test: "Is it true that every red marble in the jar is chipped?" After lowercasing, matches "is it true that" then captures "every red marble in the jar is chipped" up to "?".
+
+Good.
+
+Also need to handle "Consider the claim: every red marble in the jar is chipped. True or false?" The phrase after claim includes ". True or false?" Our pattern will stop at first '.' after claim? Actually we have non-greedy .*? up to first '?' or '.' or end. The claim ends with '.' before " True". So it will capture up to that '.' (the period after chipped). Good.
+
+Now also need to handle "There are no red marbles in the jar. Claim: every red marble in the jar is chipped. True or false?" Our pattern will find "claim:" after "Consider the claim:" or "claim:" . Good.
+
+Now also need to handle "There are no red marbles in the jar. Consider the claim: every one of the red marbles in the jar is chipped. Is the claim true?" Already works.
+
+Now need to handle "There are no red marbles in the jar. Consider the claim: any red marble in the jar that is chipped is also heavy. Is the claim true?" Already works.
+
+Now need to handle "There are no red marbles in the jar. Consider the claim: there exists a red marble in the jar that is chipped. Is the claim true?" Need existential pattern with "there exists". We'll add.
+
+Now need to handle cardinality examples.
+
+Let's test: "The jar holds 6 red marbles; 2 are chipped. Consider the claim: every red marble in the jar is chipped. Is the claim true?"
+
+- Claim: universal as before. domain key = red, marble (container jar removed). Actually domain phrase = "red marble in the jar". container = "the jar". domain key = red, marble.
+
+- Premise: "The jar holds 6 red marbles; 2 are chipped." Container = "the jar". Strip container: remove " the jar". t becomes "holds 6 red marbles; 2 are chipped." Need to extract cardinality: pattern _CARD = re.compile(r"(?:there are|holds|contains)\s+exactly\s+(\d+)\s+(.+?)(?=,|\.|\s+and\b)"). This matches "holds exactly 6 red marbles"? Actually text: "holds 6 red marbles;". No "exactly". So pattern fails. Need to also match "holds\s+(\d+)\s+(.+?)" without "exactly". The existing _CARD only matches "exactly". We need to also match plain number.
+
+We can adjust _CARD to optionally include "exactly". Let's change pattern to r"(?:there are|holds|contains)\s+(?:exactly\s+)?(\d+)\s+(.+?)(?=,|\.|\s+and\b)". This will capture number and noun phrase.
+
+Now after stripping container, we have "holds 6 red marbles; 2 are chipped." The pattern will match "holds 6 red marbles" capturing n_dom=6, phrase="red marbles". Good.
+
+Then we look for _SAT after that: _SAT = re.compile(r"\b(?:and\s+)?(?:exactly\s+|only\s+)?(?:all\s+)?(\d+)\s+of them are\s+(.+?)[.,]"). After the match, we search s in t[m.end():] which is "; 2 are chipped." The pattern expects "of them are". Not match. So n_sat stays None. Then _domain_facts returns (n_dom, None). Kernel: if n_dom and n_sat is None -> return None (undetermined). But gold answer is no (false) because we know 2 out of 6 are chipped, so universal claim false. We need to capture the sat cardinality from phrase "2 are chipped" without "of them". Actually we need to capture cardinality of satisfiers directly: "2 are chipped". So we need a pattern to capture number of satisfiers when we have a statement like "X are Y". The existing _SAT pattern expects "of them are". We need to also handle plain "X are Y" after a cardinality statement.
+
+We can adjust: after we find a cardinality match for domain, we can look for a pattern that gives number of satisfiers for a predicate, possibly preceded by "and" or ";". Eg pattern: r"(?:;|\s+and\s+

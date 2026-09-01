@@ -1,5 +1,5 @@
 # MINT-0001 — vacuous_truth — truth value of a quantified claim (universal / negative-universal / conditional / existential) over a domain the premises state is EMPTY, versus the same claim over a non-empty domain with or without a counterexample.
-**STATUS:** `DORMANT` · **updated** 2026-09-01T08:07:11Z · missing-for-READY: none
+**STATUS:** `DORMANT` · **updated** 2026-09-01T09:13:00Z · missing-for-READY: none
 
 ## PRIORITY
 - **score**: 0.812

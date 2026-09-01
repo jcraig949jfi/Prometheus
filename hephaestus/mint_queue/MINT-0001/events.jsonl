@@ -19,3 +19,5 @@
 {"ts": "2026-09-01T07:31:36Z", "event": "status", "frm": "READY-FOR-DEEP-MINT", "to": "DEEP-MINTING", "reason": "operator invoked Master Smith (Claude Code / Fable), max 5 cycles"}
 {"ts": "2026-09-01T07:40:16Z", "event": "status", "frm": "DEEP-MINTING", "to": "CANDIDATE-PRODUCED", "reason": "Master Smith session 20260901T073136Z: v3 PASS_DEV; adversarial 4/20 with 0 false commits; component knockout attached; NOT admitted"}
 {"ts": "2026-09-01T08:07:10Z", "event": "status", "frm": "CANDIDATE-PRODUCED", "to": "DORMANT", "reason": "reclassified by semantic-only closure test: Level-1 composition + representation problem; routed out of the mint path (Addendum 1 s10)"}
+{"ts": "2026-09-01T08:21:30Z", "event": "widen_attempt", "n": 1, "model": "nvidia:nvidia/nemotron-3-super-120b-a12b", "verdict": "NO_CODE", "adversarial": null}
+{"ts": "2026-09-01T08:22:12Z", "event": "widen_attempt", "n": 2, "model": "ollama:phi3", "verdict": "KERNEL_MISSING", "adversarial": null}
