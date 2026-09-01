@@ -1,0 +1,183 @@
+{
+ "verdict": "PERSISTENCE_INSTRUMENT_CLEAN",
+ "n_checks": 21,
+ "n_failed": 0,
+ "n_gate_fires": 4,
+ "lineages_checked": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "results": [
+  {
+   "check": "A same-seed parity",
+   "world": "real (ON vs OFF)",
+   "expected": true,
+   "observed": true,
+   "pass": true,
+   "detail": "all 6 rows identical on 9 fields"
+  },
+  {
+   "check": "A library identity",
+   "world": "real (ON vs OFF)",
+   "expected": true,
+   "observed": true,
+   "pass": true,
+   "detail": "final libraries 24 entries"
+  },
+  {
+   "check": "A same-seed parity",
+   "world": "GATE-FIRE (rng burned)",
+   "expected": false,
+   "observed": false,
+   "pass": true,
+   "detail": "pos 0 field rng_state_hash: '1568d5acf201300b' vs '1b532c208d2f8bec'"
+  },
+  {
+   "check": "B round-trip exact",
+   "world": "real",
+   "expected": true,
+   "observed": true,
+   "pass": true,
+   "detail": "24 genotypes, order and hash checked"
+  },
+  {
+   "check": "B round-trip exact",
+   "world": "GATE-FIRE (1 arg changed)",
+   "expected": true,
+   "observed": true,
+   "pass": true,
+   "detail": "hash mismatch at 0"
+  },
+  {
+   "check": "C oracle leakage",
+   "world": "real",
+   "expected": 0,
+   "observed": 0,
+   "pass": true,
+   "detail": "6071 nodes inspected"
+  },
+  {
+   "check": "C scan non-vacuous",
+   "world": "real",
+   "expected": true,
+   "observed": true,
+   "pass": true,
+   "detail": "6071 nodes"
+  },
+  {
+   "check": "C oracle leakage",
+   "world": "GATE-FIRE (wlen+solved planted)",
+   "expected": 2,
+   "observed": 2,
+   "pass": true,
+   "detail": "$.events[0].wlen,$.events[1].admissions[0].solved_by_oracle"
+  },
+  {
+   "check": "D schema minimality",
+   "world": "real (no extra field)",
+   "expected": 0,
+   "observed": 0,
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "D schema minimality",
+   "world": "real (all declared used)",
+   "expected": 0,
+   "observed": 0,
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "D schema minimality",
+   "world": "GATE-FIRE (extra field)",
+   "expected": 1,
+   "observed": 1,
+   "pass": true,
+   "detail": "event.might_be_useful_someday"
+  },
+  {
+   "check": "E ledger fidelity",
+   "world": "lineage 0",
+   "expected": 0,
+   "observed": 0,
+   "pass": true,
+   "detail": "58 rows compared; "
+  },
+  {
+   "check": "E terminal library",
+   "world": "lineage 0",
+   "expected": true,
+   "observed": true,
+   "pass": true,
+   "detail": "replay 64 vs committed 64 entries"
+  },
+  {
+   "check": "E ledger fidelity",
+   "world": "lineage 1",
+   "expected": 0,
+   "observed": 0,
+   "pass": true,
+   "detail": "58 rows compared; "
+  },
+  {
+   "check": "E terminal library",
+   "world": "lineage 1",
+   "expected": true,
+   "observed": true,
+   "pass": true,
+   "detail": "replay 64 vs committed 64 entries"
+  },
+  {
+   "check": "E ledger fidelity",
+   "world": "lineage 2",
+   "expected": 0,
+   "observed": 0,
+   "pass": true,
+   "detail": "58 rows compared; "
+  },
+  {
+   "check": "E terminal library",
+   "world": "lineage 2",
+   "expected": true,
+   "observed": true,
+   "pass": true,
+   "detail": "replay 64 vs committed 64 entries"
+  },
+  {
+   "check": "E ledger fidelity",
+   "world": "lineage 3",
+   "expected": 0,
+   "observed": 0,
+   "pass": true,
+   "detail": "58 rows compared; "
+  },
+  {
+   "check": "E terminal library",
+   "world": "lineage 3",
+   "expected": true,
+   "observed": true,
+   "pass": true,
+   "detail": "replay 64 vs committed 64 entries"
+  },
+  {
+   "check": "E ledger fidelity",
+   "world": "lineage 4",
+   "expected": 0,
+   "observed": 0,
+   "pass": true,
+   "detail": "58 rows compared; "
+  },
+  {
+   "check": "E terminal library",
+   "world": "lineage 4",
+   "expected": true,
+   "observed": true,
+   "pass": true,
+   "detail": "replay 64 vs committed 64 entries"
+  }
+ ]
+}
