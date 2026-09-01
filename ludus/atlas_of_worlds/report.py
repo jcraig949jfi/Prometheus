@@ -129,20 +129,29 @@ def build(con):
     # defect in the vocabulary -- no classifier rule could ever set it. A value
     # that cannot be reached makes the coverage grid lie, so it is surfaced
     # here rather than left to be rediscovered.
+    # Covers EVERY field the classifier has rules for, not just the eight scalar
+    # declared-vector ones. Restricting it to those hid most of the problem:
+    # the multi-valued fields (strategies, algorithms, media) carry the bulk of
+    # the dead vocabulary, and it never showed up because those fields are not
+    # in DECLARED_VECTOR.
     unreachable = []
-    for field in T.DECLARED_VECTOR:
-        rules = classify.RULES.get(field)
-        if not rules:
-            continue
-        settable = {v for v, _, _ in rules}
+    for field in sorted(classify.RULES):
+        settable = {v for v, _, _ in classify.RULES[field]}
         for value in T.VOCAB.get(field, []):
             if value not in settable:
                 unreachable.append((field, value))
     if unreachable:
+        by_field = collections.Counter(f for f, _ in unreachable)
         L += ["## Unreachable vocabulary (defect, not a gap)", "",
               "No classifier rule can set these, so they can never leave the",
-              "'empty values' column. Either add a rule or drop the value.", "",
-              _tab(unreachable, ["field", "value"]), ""]
+              "'empty values' column and any coverage figure computed against the",
+              "full vocabulary understates itself. Either add a rule, drop the",
+              "value, or fill it by hand review — but do not read it as a gap in",
+              "what the atlas knows.", "",
+              _tab([[f, n] for f, n in by_field.most_common()],
+                   ["field", "unreachable values"]), "",
+              "<details><summary>full list</summary>", "",
+              _tab(unreachable, ["field", "value"]), "", "</details>", ""]
 
     # The source ceiling. 'Unclassified' conflates two very different things:
     # a world waiting its turn for enrichment, and a world that can NEVER be

@@ -54,7 +54,17 @@ RULES = {
         ("DECK_DEPLETING", 2, r"\bwithout replacement|deck (is )?depleted|as the deck|remaining cards"),
         ("SPINNER", 2, r"\bspinner|teetotum|dreidel|spinning top"),
         ("TILE_BAG", 2, r"\bfrom a bag|tile bag|drawn from the bag"),
-        ("REAL_TIME_PHYSICAL", 2, r"\breal-?time|as fast as|timer|sand timer|reflex"),
+        # A clock is a CONSTRAINT, not a chance device. The old rule matched the
+        # bare word "timer", so Bejeweled's timer bar and Perfection's 60-second
+        # dial were filed as randomness -- which then contradicted their correct
+        # information=PERFECT. Real-time play belongs in turn_structure, and a
+        # time limit in horizon=CLOCK_LIMITED; both fields already exist.
+        # What IS genuinely stochastic in this family is physical execution: a
+        # flicked disc or a tottering tower does not land where it was aimed.
+        ("PHYSICAL_EXECUTION", 2,
+         r"\bflick(ing|ed|s)?\b|\bdexterity\b|stack(ing)? blocks|\btopple|"
+         r"\bcollaps(e|es|ing)\b|\btumbl|\bbalanc(e|ing) (the|a|blocks|pieces)|"
+         r"\bsteady hand\b|\bthrow(ing|n)? (the )?(disc|ring|beanbag|hoop)"),
         ("NONE", 2, r"\bno (element of )?(luck|chance)|perfect information|purely (abstract|strategic)|no randomness"),
         ("PROCEDURAL_GENERATION", 2, r"\bprocedural(ly)? generat|randomly generated (level|world|map)"),
     ],

@@ -194,6 +194,11 @@ EXCLUDE_SECTIONS = (
     "digital", "app", "tournament", "championship", "notable", "record",
     "see also", "reference", "external link", "further reading", "bibliograph",
     "note", "variant", "variation", "related game", "trivia", "controvers",
+    # Software/online sections list OTHER games and leak their structure into
+    # this one: GNOME Chess picked up "real-time" from a sentence naming
+    # Warzone 2100, and Oware from a PlayOK online-play line.
+    "online", "software", "implementation", "computer version", "website",
+    "mobile", "port", "release", "series", "franchise", "merchandis",
 )
 
 

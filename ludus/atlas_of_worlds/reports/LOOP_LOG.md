@@ -612,3 +612,78 @@ before and a **more honest** one.
 one class. The more useful target is the `information=PERFECT but randomness
 present` remainder (4) — likely `REAL_TIME_PHYSICAL` firing on the word "timer"
 in chess-clock contexts, which is a clock, not a randomiser.
+
+---
+
+## Iteration 10 — 2026-09-01 ~18:45 UTC (tick 16)
+
+**Harvest.** 1188 → 1338 worlds. 715 deepened, 2864 artifacts, 984 conditions.
+
+**Improvement made: `REAL_TIME_PHYSICAL` → `PHYSICAL_EXECUTION`, completing the
+randomness-vocabulary cleanup begun in iteration 9.**
+
+Printing the actual evidence behind each remaining contradiction showed four
+distinct causes converging on one defect:
+
+| world | matched text | verdict |
+| --- | --- | --- |
+| Bejeweled | "prevent a **timer** bar from reaching the end" | a clock, not chance |
+| Perfection | "the **timer** dial is set to 60 seconds" | a clock, not chance |
+| GNOME Chess | "Warzone 2100 (a **real-time** strategy game)" | a *different game*, named in passing |
+| Oware | "PlayOK. Multiplayer, **real-time** Oware game" | an online-implementation line |
+
+`REAL_TIME_PHYSICAL` matched the bare word "timer". A clock **constrains** play;
+it does not randomise it — and `turn_structure=REAL_TIME` and
+`horizon=CLOCK_LIMITED` already carry that meaning. Same error class as
+HIDDEN_INFO and SIMULTANEOUS_CHOICE last iteration: an information or timing
+property filed as a chance device.
+
+Replaced with `PHYSICAL_EXECUTION`, matched only on genuine execution variance —
+flicking, toppling, dexterity, steady hand. That *is* stochastic: a flicked disc
+does not land where it was aimed. Verified: rejects "timer dial" and "real-time
+strategy game", matches "flick a disc" and "the tower may topple". 15 worlds now
+carry it, Crokinole among them, which is correct.
+
+**Also fixed: cross-article contamination.** GNOME Chess and Oware inherited
+structure from *other games mentioned in their own articles* — a software
+listing and an online-play line. Added `online`, `software`, `implementation`,
+`port`, `series`, `franchise` and similar to the excluded-section list.
+
+**Second finding: the reachability check was itself too narrow.**
+
+Iteration 5 added a check for vocabulary no rule can set, after `CONTINUOUS` sat
+empty for four iterations while being a defect rather than a gap. But it only
+iterated `DECLARED_VECTOR` — the eight scalar fields. Extending it to every field
+the classifier has rules for surfaced **30 more unreachable values**:
+
+| field | unreachable |
+| --- | --- |
+| strategies | 15 |
+| algorithms | 10 |
+| media | 2 (LARP, ESCAPE_ROOM) |
+| solved_status | 2 (UNSOLVED, NOT_APPLICABLE) |
+| randomness_sources | 1 (EXTERNAL_WORLD) |
+
+The check that was meant to stop this class of problem had the same blind spot
+as the thing it was checking. It now covers every field with rules, and the
+report says plainly that these must not be read as gaps in what the atlas knows.
+
+**Effect:**
+
+| metric | before | after |
+| --- | --- | --- |
+| `information=PERFECT but randomness` | 4 | **1** |
+| Bejeweled / Perfection randomness | REAL_TIME_PHYSICAL | **[]** (correct) |
+| unreachable values surfaced | 0 (check too narrow) | **30** |
+
+**A known limit, stated.** Three worlds still carry dead vocabulary
+(HIDDEN_INFO ×3, REAL_TIME_PHYSICAL ×1, SIMULTANEOUS_CHOICE ×1) because they are
+`method='reviewed'` and reclassify correctly refuses to touch them. The ladder is
+working as designed; the cost is that a vocabulary change cannot reach reviewed
+rows without a human. That is the right trade, but it should not be mistaken for
+a clean sweep.
+
+**Next iteration's target.** Decide the 30 unreachable values: add rules for the
+ones worth having (`UNSOLVED` and `NOT_APPLICABLE` are cheap and would complete
+`solved_status`), drop the aspirational strategy/algorithm tags that no source
+text will ever contain, and mark the rest as hand-review-only.

@@ -85,8 +85,15 @@ def age_band_for(min_age):
 # -------------------------------------------------------------- chance/skill
 RANDOMNESS_SOURCES = [
     "NONE", "DICE", "DECK_SHUFFLE", "DECK_DEPLETING", "SPINNER", "TILE_BAG",
-    "REAL_TIME_PHYSICAL", "EXTERNAL_WORLD", "PROCEDURAL_GENERATION",
+    "PHYSICAL_EXECUTION", "EXTERNAL_WORLD", "PROCEDURAL_GENERATION",
 ]
+# REAL_TIME_PHYSICAL was replaced by PHYSICAL_EXECUTION 2026-09-01. It matched
+# the bare word "timer", so Bejeweled's timer bar and Perfection's 60-second
+# dial were recorded as chance. A clock constrains play; it does not randomise
+# it, and turn_structure=REAL_TIME and horizon=CLOCK_LIMITED already carry that
+# meaning. The replacement matches only genuine physical execution variance --
+# flicking, toppling, dexterity -- which really is an outcome the player does
+# not fully control. Same error class as the two values removed below.
 # HIDDEN_INFO and SIMULTANEOUS_CHOICE were removed 2026-09-01. Neither is a
 # chance device. Not knowing your opponent's hand is an INFORMATION property,
 # and choosing at the same time as someone else is a TURN STRUCTURE property --
