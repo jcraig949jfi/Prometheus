@@ -83,9 +83,42 @@ file:line, and the protocol: flip Status to DONE, Mnemosyne sweeps
 all seats flip (row-for-row verification first). Charon's note was REVISED
 mid-session when the inventory showed her main repoint already landed.
 
+---
+
+# Addendum 2 (same session): EVIDENCE WIKI V0 BUILT — role expansion executed
+
+James issued the MNEMOSYNE ROLE EXPANSION + EVIDENCE WIKI / EVIDENCE TENSOR
+V0 charter (committed verbatim at
+`roles/Mnemosyne/prompts/CHARTER_EVIDENCE_WIKI_V0_2026-09-01.txt`, sha256
+c81a21278fd084b4e40a2ef4403f422043599cc5fe000c631dacbaa758ba0ead).
+V0 was built and adjudicated in-session. Everything lives under
+`evidence_wiki/`; full verdict in its README + `benchmarks/results_v0.json`.
+
+Headlines:
+- Canonical substrate: schema `ew` in prometheus_fire (append-only, staged
+  writes, content-addressed IDs, derived-view quarantine). 81 real findings
+  from 9 seats ingested with verbatim quotes + spans + commits; 46 negative.
+- REST service live on 0.0.0.0:8377 (firewall rule scoped to LAN), wiki UI
+  at /wiki, agent skill `.claude/skills/evidence-wiki/`.
+- Gates G1-G5, G7-G18 PASS (incl. 4-machine-identity demo, concurrent-writer
+  single-record, idempotent retries, contamination quarantine,
+  delete+rebuild hash-stable). G11 cross-host pending peers online.
+- **G6 = TENSOR_NOT_YET_JUSTIFIED**: curated canonical labels beat
+  everything on held-out cross-vocabulary pairs (MRR 0.605 vs CP 0.023);
+  marginal baseline beats CP/Tucker/TT on missing cells; CP seed-unstable.
+  The tensor thesis was allowed to lose, per charter §28.
+- North-star loop closed once: A-003 x B-015 x C-004 cross-link produced a
+  registered falsifiable Gen-2 experiment candidate (H-9b0a7922015e,
+  HYPOTHESIZED).
+
+Service ops note: no watchdog yet; restart by hand after reboot
+(`python -m ew.service` in evidence_wiki/). V1 list in the review packet.
+
 ## Files changed this session
 - `mnemosyne/STATE.md` — full rewrite (2026-09-01 snapshot) + legacy-store section
 - `roles/Mnemosyne/SESSION_JOURNAL_20260901.md` — this file (NEW)
 - `mnemosyne/data_existence_audit_20260901.py` + `.jsonl` +
   `mnemosyne/DATA_EXISTENCE_AUDIT_2026-09-01.md` (NEW)
 - `roles/{Charon,CrossDomainCartographer,Harmonia,Koios,Ergon}/todo_20260901.md` (NEW)
+- `evidence_wiki/**` (NEW subsystem) + `.claude/skills/evidence-wiki/SKILL.md`
+- `roles/Mnemosyne/prompts/CHARTER_EVIDENCE_WIKI_V0_2026-09-01.txt` (NEW)

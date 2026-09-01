@@ -1,0 +1,511 @@
+"""Mnemosyne Evidence Wiki — network service (charter A1/A6/A7/A9).
+
+REST is the only contract; the database is never exposed to the LAN.
+V0 auth: shared bearer token + mandatory X-Prometheus-Machine and
+X-Prometheus-Agent headers (attribution recorded on every write; documented
+V1 upgrade: per-machine tokens + TLS). Run:  python -m ew.service
+"""
+import json
+import time
+
+from fastapi import Depends, FastAPI, HTTPException, Query, Request
+from fastapi.responses import HTMLResponse, JSONResponse
+from pydantic import BaseModel
+
+from . import ONTOLOGY_VERSION, SCHEMA_VERSION
+from . import db as ewdb
+from . import compiler, coords, store, wiki
+
+app = FastAPI(title="Mnemosyne Evidence Wiki", version="0.1")
+CFG = ewdb.load_config()
+_INDEX = None
+
+
+def get_conn():
+    conn = ewdb.connect()
+    try:
+        yield conn
+    finally:
+        conn.close()
+
+
+def get_index(conn):
+    """Search index cached per canonical revision (staleness-safe)."""
+    global _INDEX
+    from .search import SearchIndex
+    with conn.cursor() as cur:
+        rev = ewdb.canonical_revision(cur)
+    if _INDEX is None or _INDEX.canonical_revision != rev:
+        _INDEX = SearchIndex(conn)
+    else:
+        _INDEX.conn = conn  # reuse indexes, fresh connection
+    return _INDEX
+
+
+def identity(request: Request, write: bool = False):
+    tok = request.headers.get("authorization", "")
+    if tok != f"Bearer {CFG['auth_token']}":
+        raise HTTPException(401, "bad or missing bearer token")
+    machine = request.headers.get("x-prometheus-machine")
+    agent = request.headers.get("x-prometheus-agent")
+    if write and (not machine or not agent):
+        raise HTTPException(400, "writes require X-Prometheus-Machine and X-Prometheus-Agent")
+    return {"machine": machine or "unknown", "agent": agent or "unknown"}
+
+
+def log_read(conn, endpoint, ident, query, n, t0):
+    with conn.cursor() as cur:
+        cur.execute(
+            "INSERT INTO ew.read_log(endpoint, machine, agent, query, "
+            "result_count, latency_ms) VALUES (%s,%s,%s,%s,%s,%s)",
+            (endpoint, ident["machine"], ident["agent"], json.dumps(query),
+             n, (time.time() - t0) * 1000))
+    conn.commit()
+
+
+def revisions(conn):
+    with ewdb.dict_cur(conn) as cur:
+        rev = ewdb.canonical_revision(cur)
+        cur.execute("SELECT kind, max(canonical_revision) r FROM "
+                    "ew.derived_artifacts GROUP BY kind")
+        derived = {r["kind"]: {"revision": r["r"], "behind": rev - r["r"]}
+                   for r in cur.fetchall()}
+    return {"canonical_revision": rev, "derived": derived}
+
+
+# ------------------------------------------------------------------ meta
+@app.get("/api/v1/health")
+def health():
+    return {"service": CFG["service_name"], "status": "ok",
+            "schema_version": SCHEMA_VERSION, "ontology_version": ONTOLOGY_VERSION}
+
+
+@app.get("/api/v1/version")
+def version(conn=Depends(get_conn)):
+    return revisions(conn)
+
+
+@app.get("/api/v1/schema")
+def schema(conn=Depends(get_conn)):
+    with ewdb.dict_cur(conn) as cur:
+        cur.execute("SELECT domain, array_agg(term ORDER BY term) terms "
+                    "FROM ew.vocab WHERE NOT retired GROUP BY domain")
+        vocab = {r["domain"]: r["terms"] for r in cur.fetchall()}
+    return {"schema_version": SCHEMA_VERSION,
+            "ontology_version": ONTOLOGY_VERSION, "vocab": vocab,
+            "views": {k: {"version": v["version"], "modes": v["modes"]}
+                      for k, v in coords.VIEWS.items()}}
+
+
+# ---------------------------------------------------------------- search
+@app.get("/api/v1/search")
+def search(request: Request, q: str, mode: str = "hybrid", k: int = 10,
+           status: str | None = None, conn=Depends(get_conn)):
+    ident = identity(request)
+    t0 = time.time()
+    ix = get_index(conn)
+    fn = {"lexical": ix.lexical, "semantic": ix.semantic, "hybrid": ix.hybrid}
+    if mode not in fn:
+        raise HTTPException(400, f"mode must be one of {list(fn)}")
+    results = fn[mode](q, k=k)
+    if status:
+        wanted = set(status.split(","))
+        with ewdb.dict_cur(conn) as cur:
+            keep = []
+            for r in results:
+                cur.execute("SELECT status FROM ew.claims WHERE claim_id=%s "
+                            "ORDER BY version DESC LIMIT 1", (r["claim_id"],))
+                row = cur.fetchone()
+                if row and row["status"] in wanted:
+                    keep.append(r)
+            results = keep
+    # attach titles + epistemic labels
+    with ewdb.dict_cur(conn) as cur:
+        for r in results:
+            cur.execute("SELECT text_canonical, status, agent_id FROM ew.claims "
+                        "WHERE claim_id=%s ORDER BY version DESC LIMIT 1",
+                        (r["claim_id"],))
+            row = cur.fetchone() or {}
+            r.update({"title": row.get("text_canonical"),
+                      "status": row.get("status"), "agent": row.get("agent_id")})
+    log_read(conn, "search", ident, {"q": q, "mode": mode}, len(results), t0)
+    return {"query": q, "mode": mode, **revisions(conn), "results": results}
+
+
+# ---------------------------------------------------------------- claims
+class ClaimIn(BaseModel):
+    text_canonical: str
+    status: str
+    creation_method: str = "MODEL_EXTRACTED"
+    source_wording: str | None = None
+    claim_ceiling: str | None = None
+    agent: str | None = None
+    experiment_id: str | None = None
+    packet_id: str | None = None
+    source_span: str | None = None
+    write_stage: str = "SUBMITTED"
+    idempotency_key: str | None = None
+
+
+@app.get("/api/v1/claims/{claim_id}")
+def get_claim(claim_id: str, request: Request, conn=Depends(get_conn)):
+    ident = identity(request)
+    t0 = time.time()
+    out = store.get_claim(conn, claim_id)
+    if out is None:
+        raise HTTPException(404, "unknown claim")
+    log_read(conn, "claims.get", ident, {"id": claim_id}, 1, t0)
+    return JSONResponse(json.loads(json.dumps({**out, **revisions(conn)},
+                                              default=str)))
+
+
+@app.post("/api/v1/claims")
+def post_claim(body: ClaimIn, request: Request, conn=Depends(get_conn)):
+    ident = identity(request, write=True)
+    try:
+        cid = store.submit_claim(
+            conn, body.text_canonical, body.status, body.creation_method,
+            ident["agent"], ident["machine"], source_wording=body.source_wording,
+            claim_ceiling=body.claim_ceiling, agent=body.agent,
+            experiment_id=body.experiment_id, packet_id=body.packet_id,
+            source_span=body.source_span, write_stage=body.write_stage,
+            idempotency_key=body.idempotency_key)
+    except store.RejectedWrite as e:
+        raise HTTPException(422, e.reason)
+    return {"claim_id": cid, "write_stage": body.write_stage}
+
+
+class PacketIn(BaseModel):
+    uri: str
+    kind: str
+    git_commit: str | None = None
+    idempotency_key: str | None = None
+
+
+@app.post("/api/v1/packets")
+def post_packet(body: PacketIn, request: Request, conn=Depends(get_conn)):
+    ident = identity(request, write=True)
+    try:
+        pid = store.register_packet(conn, body.uri, body.kind, ident["agent"],
+                                    ident["machine"], git_commit=body.git_commit,
+                                    idempotency_key=body.idempotency_key)
+    except store.RejectedWrite as e:
+        raise HTTPException(422, e.reason)
+    return {"packet_id": pid}
+
+
+class EvidenceIn(BaseModel):
+    packet_id: str
+    source_quote: str
+    evidence_type: str
+    claim_id: str | None = None
+    verdict_source: str | None = None
+    outcome_canonical: str | None = None
+    metric_text: str | None = None
+    gate: str | None = None
+    negative: bool = False
+    substrate: str | None = None
+    source_span: str | None = None
+    experiment_id: str | None = None
+    agent: str | None = None
+    creation_method: str = "MODEL_EXTRACTED"
+    write_stage: str = "SUBMITTED"
+    idempotency_key: str | None = None
+
+
+@app.post("/api/v1/evidence")
+def post_evidence(body: EvidenceIn, request: Request, conn=Depends(get_conn)):
+    ident = identity(request, write=True)
+    try:
+        eid = store.submit_evidence(
+            conn, body.packet_id, body.source_quote, body.evidence_type,
+            ident["agent"], ident["machine"], claim_id=body.claim_id,
+            verdict_source=body.verdict_source,
+            outcome_canonical=body.outcome_canonical,
+            metric_text=body.metric_text, gate=body.gate,
+            negative=body.negative, substrate=body.substrate,
+            source_span=body.source_span, experiment_id=body.experiment_id,
+            agent=body.agent, creation_method=body.creation_method,
+            write_stage=body.write_stage, idempotency_key=body.idempotency_key)
+    except store.RejectedWrite as e:
+        raise HTTPException(422, e.reason)
+    return {"evidence_id": eid}
+
+
+@app.get("/api/v1/evidence/{evidence_id}")
+def get_evidence(evidence_id: str, request: Request, conn=Depends(get_conn)):
+    identity(request)
+    with ewdb.dict_cur(conn) as cur:
+        cur.execute("SELECT * FROM ew.evidence WHERE evidence_id=%s",
+                    (evidence_id,))
+        row = cur.fetchone()
+    if not row:
+        raise HTTPException(404, "unknown evidence")
+    return JSONResponse(json.loads(json.dumps(dict(row), default=str)))
+
+
+class RelationIn(BaseModel):
+    src_type: str
+    src_id: str
+    relation_type: str
+    dst_type: str
+    dst_id: str
+    epistemic_class: str
+    creation_method: str
+    confidence: float | None = None
+    rationale: str | None = None
+    packet_id: str | None = None
+    source_span: str | None = None
+    derived_artifact_id: str | None = None
+    idempotency_key: str | None = None
+
+
+@app.post("/api/v1/relations")
+def post_relation(body: RelationIn, request: Request, conn=Depends(get_conn)):
+    ident = identity(request, write=True)
+    try:
+        rid = store.submit_relation(
+            conn, body.src_type, body.src_id, body.relation_type, body.dst_type,
+            body.dst_id, body.epistemic_class, body.creation_method,
+            ident["agent"], ident["machine"], confidence=body.confidence,
+            rationale=body.rationale, packet_id=body.packet_id,
+            source_span=body.source_span,
+            derived_artifact_id=body.derived_artifact_id,
+            idempotency_key=body.idempotency_key)
+    except store.RejectedWrite as e:
+        raise HTTPException(422, e.reason)
+    return {"relation_id": rid}
+
+
+@app.get("/api/v1/relations")
+def get_relations(request: Request, claim_id: str | None = None,
+                  relation_type: str | None = None,
+                  epistemic_class: str | None = None, conn=Depends(get_conn)):
+    identity(request)
+    q, args = "SELECT * FROM ew.relations WHERE true", []
+    if claim_id:
+        q += " AND (src_id=%s OR dst_id=%s)"
+        args += [claim_id, claim_id]
+    if relation_type:
+        q += " AND relation_type=%s"
+        args.append(relation_type)
+    if epistemic_class:
+        q += " AND epistemic_class=%s"
+        args.append(epistemic_class)
+    with ewdb.dict_cur(conn) as cur:
+        cur.execute(q + " ORDER BY created_at", args)
+        rows = cur.fetchall()
+    return JSONResponse(json.loads(json.dumps(
+        {"relations": rows, **revisions(conn)}, default=str)))
+
+
+class ExperimentIn(BaseModel):
+    agent: str
+    project: str
+    title: str
+    substrate: str | None = None
+    packet_id: str | None = None
+    git_commit: str | None = None
+    run_ref: str | None = None
+    idempotency_key: str | None = None
+
+
+@app.post("/api/v1/experiments")
+def post_experiment(body: ExperimentIn, request: Request, conn=Depends(get_conn)):
+    ident = identity(request, write=True)
+    xid = store.submit_experiment(
+        conn, body.agent, body.project, body.title, body.substrate,
+        ident["agent"], ident["machine"], packet_id=body.packet_id,
+        git_commit=body.git_commit, run_ref=body.run_ref,
+        idempotency_key=body.idempotency_key)
+    return {"experiment_id": xid}
+
+
+# --------------------------------------------------- epistemic queries
+@app.get("/api/v1/counterevidence/{claim_id}")
+def get_counter(claim_id: str, request: Request,
+                include_qualifications: bool = True, conn=Depends(get_conn)):
+    identity(request)
+    return JSONResponse(json.loads(json.dumps(
+        store.counterevidence(conn, claim_id, include_qualifications),
+        default=str)))
+
+
+@app.get("/api/v1/contradictions")
+@app.get("/api/v1/contradictions/{claim_id}")
+def get_contradictions(request: Request, claim_id: str | None = None,
+                       conn=Depends(get_conn)):
+    identity(request)
+    return JSONResponse(json.loads(json.dumps(
+        {"contradictions": store.contradictions(conn, claim_id)}, default=str)))
+
+
+@app.get("/api/v1/dependencies/{claim_id}")
+def get_dependencies(claim_id: str, request: Request, conn=Depends(get_conn)):
+    identity(request)
+    return JSONResponse(json.loads(json.dumps(
+        store.dependencies(conn, claim_id), default=str)))
+
+
+@app.get("/api/v1/provenance/{object_id}")
+def get_provenance(object_id: str, request: Request, conn=Depends(get_conn)):
+    identity(request)
+    chain = store.provenance_chain(conn, object_id)
+    if not chain:
+        raise HTTPException(404, "unknown object")
+    return JSONResponse(json.loads(json.dumps({"chain": chain}, default=str)))
+
+
+@app.get("/api/v1/related/{claim_id}")
+def get_related(claim_id: str, request: Request, k: int = 10,
+                include_inferred: bool = True, conn=Depends(get_conn)):
+    """Graph + semantic neighbors, each labeled with its method and
+    epistemic class. Tensor neighbors come via /api/v1/tensor/related."""
+    identity(request)
+    ix = get_index(conn)
+    graph, edges = ix.graph_neighbors(claim_id, hops=2,
+                                      include_inferred=include_inferred)
+    sem = ix.semantic_related(claim_id, k=k)
+    return JSONResponse(json.loads(json.dumps(
+        {"claim_id": claim_id, "graph": graph[:k], "semantic": sem,
+         "graph_edges": edges,
+         "note": "semantic results are similarity, not evidence",
+         **revisions(conn)}, default=str)))
+
+
+@app.get("/api/v1/consumers")
+def get_consumers(request: Request, conn=Depends(get_conn)):
+    """Producer -> consumer flow; claims with no CONSUMED_BY/DEPENDS_ON
+    inbound edge are ORPHANED (charter §14)."""
+    identity(request)
+    with ewdb.dict_cur(conn) as cur:
+        cur.execute(
+            "SELECT c.claim_id, c.text_canonical, c.agent_id, c.status, "
+            "EXISTS (SELECT 1 FROM ew.relations r WHERE "
+            " r.relation_type IN ('CONSUMED_BY','DEPENDS_ON','REUSES_NEGATIVE_EVIDENCE') "
+            " AND (r.src_id=c.claim_id OR r.dst_id=c.claim_id)) AS has_consumer_link "
+            "FROM ew.claims c JOIN (SELECT claim_id, max(version) v FROM ew.claims "
+            "GROUP BY claim_id) m ON m.claim_id=c.claim_id AND m.v=c.version")
+        rows = cur.fetchall()
+    orphaned = [r for r in rows if not r["has_consumer_link"]]
+    return JSONResponse(json.loads(json.dumps(
+        {"total_claims": len(rows), "orphaned_count": len(orphaned),
+         "orphaned": orphaned}, default=str)))
+
+
+@app.get("/api/v1/hypotheses")
+def get_hypotheses(request: Request, conn=Depends(get_conn)):
+    identity(request)
+    with ewdb.dict_cur(conn) as cur:
+        cur.execute("SELECT * FROM ew.hypotheses ORDER BY score DESC NULLS LAST")
+        rows = cur.fetchall()
+    return JSONResponse(json.loads(json.dumps(
+        {"hypotheses": rows,
+         "epistemic_warning": "HYPOTHESIZED objects are not evidence"},
+        default=str)))
+
+
+# ----------------------------------------------------------- tensor ops
+class CompileIn(BaseModel):
+    view: str = "evidence_v1"
+    filters: dict = {}
+
+
+@app.post("/api/v1/tensor/compile")
+def tensor_compile(body: CompileIn, request: Request, conn=Depends(get_conn)):
+    identity(request, write=True)
+    coords.generate(conn, body.view)
+    return compiler.compile(conn, body.view, body.filters)
+
+
+class FactorIn(BaseModel):
+    snapshot_id: str
+    method: str = "cp"
+    rank: int = 4
+    seed: int = 0
+
+
+@app.post("/api/v1/tensor/factor")
+def tensor_factor(body: FactorIn, request: Request, conn=Depends(get_conn)):
+    identity(request, write=True)
+    res = compiler.factor(conn, body.snapshot_id, body.method, body.rank,
+                          seed=body.seed)
+    return {k: v for k, v in res.items() if not k.startswith("_")}
+
+
+class ContractIn(BaseModel):
+    snapshot_id: str
+    marginalize: list[str] = []
+    retain: list[str] = []
+
+
+@app.post("/api/v1/tensor/contract")
+def tensor_contract(body: ContractIn, request: Request, conn=Depends(get_conn)):
+    identity(request)
+    return compiler.contract(conn, body.snapshot_id, body.marginalize,
+                             body.retain)
+
+
+class GapsIn(BaseModel):
+    snapshot_id: str
+    method: str = "cp"
+    rank: int = 4
+    top_k: int = 10
+
+
+@app.post("/api/v1/tensor/gaps")
+def tensor_gaps(body: GapsIn, request: Request, conn=Depends(get_conn)):
+    """Missing-cell candidates. Persisted as ew.hypotheses (HYPOTHESIZED),
+    never as evidence."""
+    ident = identity(request, write=True)
+    res = compiler.score_missing(conn, body.snapshot_id, method=body.method,
+                                 rank=body.rank, top_k=body.top_k)
+    stored = []
+    for cell in res["missing_cells"]:
+        hid = store.record_hypothesis(
+            conn, "MISSING_CELL",
+            f"Untested combination: {json.dumps(cell['coords'], sort_keys=True)}",
+            res["method"], ident["agent"], ident["machine"],
+            view_name="evidence_v1", coords=cell["coords"],
+            score=cell["score"], derived_artifact_id=res["artifact_id"])
+        stored.append({**cell, "hypothesis_id": hid})
+    return {"artifact_id": res["artifact_id"],
+            "epistemic_class": "HYPOTHESIZED",
+            "warning": "predicted cells are experiment candidates, not findings",
+            "missing_cells": stored}
+
+
+class TensorRelatedIn(BaseModel):
+    claim_id: str
+    snapshot_id: str
+    method: str = "cp"
+    rank: int = 4
+    k: int = 10
+
+
+@app.post("/api/v1/tensor/related")
+def tensor_related(body: TensorRelatedIn, request: Request,
+                   conn=Depends(get_conn)):
+    identity(request)
+    ix = get_index(conn)
+    fr = compiler.factor(conn, body.snapshot_id, body.method, body.rank)
+    out = ix.tensor_related(body.claim_id, fr, k=body.k)
+    return {"claim_id": body.claim_id, "results": out,
+            "artifact_id": fr["artifact_id"],
+            "epistemic_warning": "latent association is not evidence"}
+
+
+# ---------------------------------------------------------------- wiki
+@app.get("/wiki", response_class=HTMLResponse)
+@app.get("/wiki/{page:path}", response_class=HTMLResponse)
+def wiki_pages(page: str = "", conn=Depends(get_conn)):
+    return wiki.render(conn, page)
+
+
+def main():
+    import uvicorn
+    uvicorn.run(app, host=CFG["bind_host"], port=CFG["port"])
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,13 @@
+{
+  "bind_host": "0.0.0.0",
+  "port": 8377,
+  "service_name": "mnemosyne-evidence-wiki",
+  "api_version": "v1",
+  "db_host": "localhost",
+  "db_name": "prometheus_fire",
+  "db_user": "postgres",
+  "db_password": "prometheus",
+  "auth_token": "prometheus-ew-v0-shared-token",
+  "derived_dir": "derived",
+  "note": "V0 auth = single shared bearer token on trusted LAN + mandatory machine/agent headers; TLS and per-machine tokens are the documented V1 upgrade. DB is never exposed to the LAN; only the service port is."
+}
