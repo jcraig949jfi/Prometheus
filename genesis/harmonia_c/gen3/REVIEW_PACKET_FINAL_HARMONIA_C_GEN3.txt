@@ -1,0 +1,611 @@
+================================================================================
+EXTERNAL REVIEW PACKET -- HARMONIA C, GEN-3
+COMPOSITION AND CAPABILITY ACQUISITION: A FALSIFICATION CAMPAIGN
+Author: Harmonia C (M2, Prometheus/Genesis)   Date: 2026-09-01
+Self-contained. No repository access required to read this document.
+================================================================================
+
+--------------------------------------------------------------------------------
+0. SUMMARY FOR THE HURRIED REVIEWER
+--------------------------------------------------------------------------------
+
+HYPOTHESIS UNDER ATTACK (H): Useful new computational capabilities are more
+readily accumulated through composition, encapsulation and reuse of previously
+viable behaviors than through undirected local mutation alone.
+
+VERDICT: H IS NOT SUPPORTED IN THIS ARENA, and the reason is specific and
+measured rather than a null: composition pays a large, quantified interference
+cost and buys almost no discovery in return.
+
+  WHAT DIED
+  * Direct composition (arm C) acquired the target capability 0 times out of 36
+    (arm, world) runs. Compose-then-refine (arm E) acquired it once in 36.
+  * At real composition joins, the child LOST a capability that a parent had in
+    78.3 percent (C) and 82.6 percent (E) of 14,400 joins each.
+  * Composition produced a capability that NEITHER parent had in 0 of 14,400
+    joins (C) and 0 of 14,400 (E). Encapsulation (D) managed 402 of 14,400
+    = 2.8 percent.
+  * Capability RETENTION across a single modification: local mutation 1.000
+    (95% CI 0.9997-1.0), structured mutation 0.991, versus composition arms
+    0.577 / 0.608 / 0.680. Composition is roughly as destructive as random
+    replacement (0.527).
+  * Causal ablation of every composition crossing: 3,395 crossings, composition
+    was causal for 20 of them (0.59 percent). In 3,379 of 3,395 (99.5 percent)
+    the capability ALREADY EXISTED IN A PARENT. This is retrospective
+    storytelling caught mechanically.
+  * Nothing resisted interpretation. Of 15,768 promoted mechanism readings,
+    13,257 were behaviorally equivalent to a single known operation and 2,511
+    were novel compositions of known operations. ZERO resisted compression.
+
+  WHAT SURVIVED, AND IT IS NOT WHAT I EXPECTED
+  * The ONLY reuse mechanism with a causal signal is ENCAPSULATION (arm D), not
+    composition: 19 of the 20 causally-verified compositions came from D, and 19
+    of 20 were in W1 -- the world I DECLARED composition-favourable in advance,
+    before any measurement. That is a positive control firing, not evidence.
+  * The single significant between-arm result in the campaign was STRUCTURED
+    MUTATION beating everything in W2 (10/12 vs A_LOCAL 3/12, Fisher p=0.0123;
+    vs random control p=0.0006). Under radius matching it collapses to 1/12.
+    So the one strong effect I found is EXPLAINED BY EDIT RADIUS -- the same
+    confound the pre-registration named for composition, firing on the winner.
+
+  DEFECTS I FOUND IN MY OWN CAMPAIGN AND REPORT HERE RATHER THAN SMOOTH OVER
+  * Arm C is OPERATOR-DEGENERATE: 20,000 evaluations produced only 24 distinct
+    behaviors (B_STRUCT: 1,177; E_COMP_REF: 1,297). Arm C's zero is therefore
+    NOT evidence about composition. Arm E, with matched exploration diversity,
+    is the fair test and it still loses 1/36 to 14/36.
+  * My E2 goal metric for W3 was WRONG: it took the union of capabilities over a
+    whole run instead of requiring ONE candidate to hold all three at once. The
+    corrected W3 result is 0/12 for EVERY arm; no candidate in 13,982 adjudicated
+    W3 claims ever held all three simultaneously.
+  * My E4 accumulation field is INVALID (its first-N-by-id rule sampled only
+    bootstrap-phase genomes; identical 51/0 for all six arms gives it away). It
+    is recomputed from Court rows in section 9 and the original is discarded.
+  * My first E3 run was invalid twice over -- once because the radius statistic
+    pooled the shared bootstrap (making local mutation read 6.46 when its true
+    radius is 0.89), once because the radius cap was applied during the shared
+    bootstrap and destroyed the archive. Both fixed; both disclosed.
+
+  THE LIMIT THAT MATTERS MOST (section 10): in this arena the primitives are
+  2-to-5 instruction motifs. They are CHEAPER TO REDISCOVER THAN TO SPLICE. That
+  is a regime in which reuse has nothing to buy, and it may be the whole story.
+  This campaign cannot distinguish "composition does not help" from "composition
+  does not help WHEN COMPONENTS ARE CHEAP." I regard that as the single most
+  likely way this result is misleading.
+
+--------------------------------------------------------------------------------
+1. HYPOTHESIS AND COMPETING EXPLANATIONS
+--------------------------------------------------------------------------------
+
+The pre-registration named eight competing explanations before any measurement,
+each with the mechanism intended to exclude it. Outcome of each:
+
+ X1 composition wins via larger effective mutation radius
+    -> DID NOT ARISE (composition never won). Tested anyway, and it fired on the
+       WINNER instead: structured mutation's advantage is radius-explained.
+ X2 composition wins via more compute
+    -> DID NOT ARISE. Compute is reported both ways (section 6). Encapsulation
+       used the most VM instructions (12.4M vs 5.4M for arm E) and this is
+       disclosed beside its only positive result.
+ X3 task decomposition built to match composition
+    -> CONTROLLED by declaring W1 composition-favourable IN ADVANCE. 19 of the 20
+       causal compositions are in W1. Reported as a control reading, not evidence.
+ X4 brute-force expressivity (bigger programs)
+    -> Length cap identical (48) for all arms; expressed length reported. Arm E
+       ran the SHORTEST programs (7.99) and arm B the longest (24.78).
+ X5 novelty is unseen syntax, not competence
+    -> EXCLUDED BY CONSTRUCTION: capability is exact match against a reference
+       function on 64 held-out probes, plus an EXHAUSTIVE check over all 65,536
+       input pairs. A novel output hash is never a capability.
+ X6 the capability already existed in an ancestor
+    -> THE DOMINANT EXPLANATION. 3,379 of 3,395 composition crossings (99.5%),
+       and 14,615 of 14,690 Court claims, had the capability in an ancestor.
+ X7 duplicate programs counted as distinct discoveries
+    -> Canonicalised by behavioral signature. 1,064,029 duplicate claims were
+       collapsed. Arm C's degeneracy was found by this instrument.
+ X8 human interpretation contaminated promotion
+    -> The Court is deterministic code. No LLM is in the promotion path anywhere
+       in this campaign. Interpretation (E7) runs only AFTER promotion and cannot
+       promote or demote.
+
+--------------------------------------------------------------------------------
+2. WORLD AND TASK CONSTRUCTION
+--------------------------------------------------------------------------------
+
+SUBSTRATE ("SlotVM"). 8 registers over Z_256. R0-R1 inputs, R2-R4 scratch,
+R5-R7 outputs (3 capability slots). Straight-line programs only: no loops, no
+branches. Every program is therefore a TOTAL deterministic function, so
+capability is decidable by exact equality -- no halting problem, no timeouts, no
+"novelty" that is really a crash. Registers are shared and inputs are not
+write-protected, which is what makes interference REAL rather than assumed:
+concatenating two viable programs genuinely clobbers state.
+
+12 opcodes, each instruction a triple (op, a, b):
+  0 ADD  a b  R[a]=R[a]+R[b]        6 NOT  a .  R[a]=~R[a]
+  1 SUB  a b  R[a]=R[a]-R[b]        7 SHL  a k  R[a]=R[a]<<(k&7)
+  2 MUL  a b  R[a]=R[a]*R[b]        8 SHR  a k  R[a]=R[a]>>(k&7)
+  3 XOR  a b  R[a]=R[a]^R[b]        9 MOV  a b  R[a]=R[b]
+  4 AND  a b  R[a]=R[a]&R[b]       10 SETC a k  R[a]=k*17
+  5 OR   a b  R[a]=R[a]|R[b]       11 SWAP a b  swap R[a],R[b]
+All arithmetic mod 256. Expressed length cap 48, identical for every arm.
+
+THE THREE WORLDS SHARE THE SAME PRIMITIVES and differ ONLY in the rule combining
+them, so any between-world difference is a property of the combination rule and
+not of primitive difficulty:
+  A = bit7(x0)    B = bit7(x1)    C = bit3(x0)
+
+  W1_PIPELINE     slots [A, B, T=A+B].   Goal: T.
+                  DECLARED COMPOSITION-FAVOURABLE IN ADVANCE. T is correlated
+                  with each primitive, so partial solutions earn partial credit:
+                  there is both a gradient AND an obvious composition route. A
+                  win here is a POSITIVE CONTROL READING, not evidence for H.
+  W2_DECEPTIVE    slots [A, B, T=A XOR B]. Goal: T.
+                  T is statistically INDEPENDENT of A and of B, so holding either
+                  primitive scores exactly chance on the target. There is no
+                  gradient into the optimum. The routes are a lucky structural
+                  jump or crossing the valley by composing two viable behaviors.
+                  THIS IS THE LOAD-BEARING WORLD: it is where H makes a real,
+                  non-trivial, falsifiable claim.
+  W3_INTERFERENCE slots [A, B, C]. Goal: hold ALL THREE SIMULTANEOUSLY.
+                  Shared scratch and adjacent output registers. Composition is
+                  PREDICTED TO LOSE here and is allowed to.
+
+PRE-REGISTERED DIRECTIONAL PREDICTIONS (written to allow embarrassment):
+  W1: C,D,E > A.   W2: no arm separates from B.   W3: C < E, and C may lose to A.
+OUTCOME: W1 partially fired (D>A, but C and E did not). W2 fired in the sense
+that no composition arm separated -- but B separated from everything, which I
+did not predict. W3 fired: C lost, and everything lost.
+
+--------------------------------------------------------------------------------
+3. CONTAMINATION CONTROLS
+--------------------------------------------------------------------------------
+
+ (a) HELD-OUT PROBES ARE NEVER VISIBLE TO ANY ARM. TRAIN (16 probes) drives
+     fitness; HELDOUT (64) is drawn from a disjoint RNG stream and used only by
+     the measuring instrument. Verified disjoint: overlap 0.
+ (b) THE TARGET IS HELD OUT OF THE BOOTSTRAP. Bootstrap fitness scores PRIMITIVE
+     slots only. Measured goal contamination at bootstrap: 0 of 12 seeds, in
+     every arm and every world.
+ (c) NO LABEL TELLS THE SEARCH WHICH PRIMITIVES BELONG TOGETHER. The archive is
+     keyed by capability SET, which is behavioral, and the operators never see a
+     world name, a slot name, or a target.
+ (d) LEAKAGE CONTROLS (kill condition K2). Constant-output programs (all 16
+     constants x 3 worlds), 4,000 input-ignoring programs per world (scratch
+     registers only), and the empty program: NONE held any capability.
+     K2 PASS, zero violations.
+ (e) ARENA-TOO-EASY CONTROL (kill condition K1). Random search acquired the W1
+     goal in 0 of 12 seeds (threshold was >=20%). K1 PASS.
+ (f) CHANCE FLOORS MEASURED, NOT ASSUMED. Majority-class rate per slot 0.4375 to
+     0.625. Probability a random program holds a given capability, over 20,000
+     random programs: 0.0004 (slot 0), 0.0006 (slot 1), 0.0000 (slot 2).
+ (g) BOOTSTRAP PARITY. All six arms execute an identical operator on an RNG
+     stream keyed to the seed alone for the first 20,000 evaluations. Verified
+     byte-identical archives across all six arms in all three worlds.
+ (h) DETERMINISM. Two independent executions of the same (arm, world, seed)
+     produced identical summaries. Court replay failures: 0 of 14,690.
+
+--------------------------------------------------------------------------------
+4. EXACT DEFINITION OF CAPABILITY (FROZEN BEFORE SEARCH)
+--------------------------------------------------------------------------------
+
+Candidate P HOLDS capability k in world W if and only if:
+
+    for EVERY probe x in HELDOUT(W):  run(P,x)[5+k] == f_k(x)     (all 64, exact)
+
+  * A previously-unseen output hash is NOT a capability. Novel output is not
+    useful capability. This is enforced structurally: the criterion is agreement
+    with an externally specified reference function, never surprise.
+  * PERTURBATION: a second 64-probe stream from a DIFFERENT input distribution
+    (low-entropy, byte-aligned, adversarial constants). Reported separately.
+  * EXHAUSTIVE: the Court additionally checks all 65,536 input pairs. This is a
+    Class I machine check, not a sample.
+  * TRANSFER: the candidate is run with its two input registers swapped while the
+    reference is evaluated on the original inputs. Recorded; NOT a promotion
+    blocker, because these references are deliberately position-specific.
+  * CAPABILITY SET K(P) is the set of slots held. Accumulation is measured on K.
+
+--------------------------------------------------------------------------------
+5. GENERATIVE ARMS
+--------------------------------------------------------------------------------
+
+One engine, one code path. The arms differ ONLY in the variation operator;
+initial population, selection, archive-write rule, budget and RNG discipline are
+identical by construction.
+
+  A_LOCAL     point mutation: one instruction's opcode OR one operand
+  B_STRUCT    segment mutation: insert / delete / duplicate / move a block
+  C_COMPOSE   graft of two DISTINCT viable archive members, no follow-up mutation
+  D_ENCAPS    archive members become callable macros; mutation over the
+              macro-extended alphabet (one CALL token expands to a whole body)
+  E_COMP_REF  arm C followed by one arm-A mutation
+  F_RANDOM    uniform random program of matched expressed length (control)
+
+FAIRNESS RULES: all arms seeded from the same initial population and the same
+post-bootstrap archive; all arms WRITE to the archive under the same rule, only
+C/D/E READ it; budget matched on evaluations; fallback rate recorded (measured
+0.000 everywhere -- no composition arm was ever running as a disguised mutation
+arm).
+
+SELECTION: replace-worst-if-not-worse, with behavioral-duplicate rejection.
+
+BUDGET: 40,000 evaluations per run = 20,000 shared bootstrap + 20,000 arm phase.
+12 seeds per (arm, world), fixed in advance. No optional stopping. 216 runs.
+
+--------------------------------------------------------------------------------
+6. COMPUTE ACCOUNTING
+--------------------------------------------------------------------------------
+
+Budget is matched on EVALUATIONS. VM instructions executed are reported because
+macro expansion inflates them and that asymmetry must not hide inside a win.
+
+  arm          arm-phase   median   mean VM instr    mean expressed
+               mean radius radius   (W2, per seed)   program length
+  A_LOCAL         0.89       1.0       7,982,136         12.88
+  B_STRUCT       10.19       9.0      10,008,616         24.78
+  C_COMPOSE       9.92       9.0       5,847,480         10.97
+  D_ENCAPS        8.77       1.0      12,417,280          9.93
+  E_COMP_REF      7.84       6.5       5,425,066          7.99
+  F_RANDOM       12.38      12.5       7,823,744         12.43
+
+READ THIS BEFORE READING ANY RESULT: arm D consumed 2.3x the VM instructions of
+arm E and 1.6x those of arm A. Arm D is also the only reuse arm with a positive
+causal result. THE ASYMMETRY FAVOURS THE ARM THAT WON, and I have not separated
+the two. This is an open confound, stated in section 10, not resolved.
+
+CAPABILITIES PER UNIT COMPUTE (promoted Court claims per 1e6 VM instructions,
+summed over three worlds):
+  B_STRUCT 326.5 | E_COMP_REF 110.3 | D_ENCAPS 39.0 | A_LOCAL 30.1 |
+  F_RANDOM 7.9 | C_COMPOSE 6.0
+Structured mutation dominates on this measure by 3x over the best reuse arm.
+
+--------------------------------------------------------------------------------
+7. ANCESTRY REPRESENTATION
+--------------------------------------------------------------------------------
+
+Provenance is WRITTEN AS IT HAPPENS, never inferred afterwards. Every candidate
+gets a row: (id, parent_a, parent_b, operator, evaluation index, exact-slot
+count, graded fitness, viability flag, behavioral signature). Genomes are
+persisted for every node on a recorded lineage, which is what makes exact replay
+possible; replay was verified and failed 0 times in 14,690 Court adjudications.
+Reused components are recorded by operator and by parent id, so "which archive
+members went into this child" is a stored fact rather than a reconstruction.
+
+DISCLOSED LIMIT: non-viable dead-end candidates are counted but their genomes are
+not persisted (4.3M candidates across the campaign would not fit). Every node on
+every reported lineage is stored.
+
+--------------------------------------------------------------------------------
+8. EXPERIMENT RESULTS
+--------------------------------------------------------------------------------
+
+E1 -- ARENA ADMISSIBILITY. K1 PASS, K2 PASS. Details in section 3. The
+A5 blind-spot re-check (heldout gated on train-viability) found 0 mismatches in
+18 ungated re-checks.
+
+E2 -- SIX-ARM DISCOVERY HEAD-TO-HEAD. Goal acquisition in the ARM PHASE, k/12,
+with exact Clopper-Pearson 95% intervals.
+
+  W1_PIPELINE (composition-favourable positive control; goal = slot T)
+    A_LOCAL      2/12  [0.021,0.484]      D_ENCAPS     5/12  [0.152,0.723]
+    B_STRUCT     1/12  [0.002,0.385]      E_COMP_REF   1/12  [0.002,0.385]
+    C_COMPOSE    0/12  [0.000,0.265]      F_RANDOM     0/12  [0.000,0.265]
+
+  W2_DECEPTIVE (load-bearing; goal = slot T = A XOR B)
+    A_LOCAL      3/12  [0.055,0.572]      D_ENCAPS     1/12  [0.002,0.385]
+    B_STRUCT    10/12  [0.516,0.979]      E_COMP_REF   0/12  [0.000,0.265]
+    C_COMPOSE    0/12  [0.000,0.265]      F_RANDOM     1/12  [0.002,0.385]
+
+  W3_INTERFERENCE  CORRECTED: 0/12 FOR EVERY ARM.
+    The originally computed 1/12, 3/12, 2/12 figures are WITHDRAWN. They used a
+    union of capabilities over a whole run rather than requiring ONE candidate to
+    hold all three at once. Under the correct per-candidate reading, across
+    13,982 adjudicated W3 claims the maximum simultaneous capability-set size
+    reached was 2 for every arm except F_RANDOM (1). Nothing ever held three.
+
+  Fisher exact, two-sided, seed-level:
+    W2  B_STRUCT vs F_RANDOM   p = 0.0006
+    W2  B_STRUCT vs A_LOCAL    p = 0.0123
+    W1  D_ENCAPS vs F_RANDOM   p = 0.0373
+    W1  D_ENCAPS vs A_LOCAL    p = 0.3707   (not significant)
+    NO COMPOSITION ARM SIGNIFICANTLY BEAT ANY REFERENCE IN ANY WORLD.
+
+  Median evaluations to acquisition (arm phase begins at 20,000):
+    D_ENCAPS 20,855 (W1) / 20,057 (W2) -- earliest;  A_LOCAL ~21,300-21,900;
+    B_STRUCT 21,864 (W1) / 25,239 (W2); F_RANDOM 38,304 (W2) -- latest.
+
+E3 -- MUTATION-RADIUS AND COMPUTE CONFOUND. Radii and compute in section 6.
+Radius-matched re-run, cap = 6 = the composition arms' own median arm-phase
+radius, applied in the ARM PHASE ONLY:
+
+  world              A_LOCAL  B_STRUCT  C_COMPOSE  D_ENCAPS  E_COMP_REF  F_RANDOM
+  W1_PIPELINE          2/12     3/12      0/12       0/12       0/12      0/12*
+  W2_DECEPTIVE         3/12     1/12      0/12       3/12       0/12      0/12*
+  W3_INTERFERENCE      1/12     1/12      0/12       0/12       0/12      0/12*
+  (* F_RANDOM is RADIUS-STARVED: its natural radius 12.4 always exceeds the cap,
+     so it cannot operate at all and its zeros here carry no information.)
+
+  THE DECISIVE LINE: B_STRUCT in W2 falls from 10/12 to 1/12 under radius
+  matching. The only significant effect in the campaign is EXPLAINED BY EDIT
+  RADIUS. A_LOCAL is unaffected (0 rejections; its radius is 0.89, below the cap)
+  and its numbers reproduce E2 exactly, which is the internal consistency check
+  on this control.
+
+E4 -- ACCUMULATION AND RETENTION.
+  Retention across a single modification, arm-phase parent->child edges where the
+  parent held at least one capability. n = 14,400 edges per arm (911 for
+  F_RANDOM, which rarely produces a viable parent).
+
+  arm          retained   lost   gained   retention rate   exact 95% CI
+  A_LOCAL        14400       0        2      1.000        [0.9997, 1.0000]
+  B_STRUCT       14545     133        2      0.991        [0.9893, 0.9924]
+  D_ENCAPS       11899    5601     7597      0.680        [0.6730, 0.6869]
+  E_COMP_REF     11574    7476     5331      0.608        [0.6006, 0.6145]
+  C_COMPOSE      10320    7560     7125      0.577        [0.5699, 0.5844]
+  F_RANDOM         480     431      425      0.527        [0.4939, 0.5597]
+
+  READ THE "gained" COLUMN CAREFULLY -- it is the trap in this table. Composition
+  arms appear to gain enormously (5,331-7,597 versus 2). But "gained" here is
+  relative to PARENT A only, and for a graft the other parent's capability
+  arrives as an apparent gain. The honest measure is E6's gained_new, relative to
+  BOTH parents, which is 0.
+
+  Accumulation (simultaneous capability-set size), recomputed from Court rows
+  because the original E4 accumulation field is invalid:
+  arm          promoted  |K|=1   |K|=2  |K|=3   multi-capability fraction
+  D_ENCAPS       1484     1132     348      4        0.237
+  C_COMPOSE       106       94      12      0        0.113
+  B_STRUCT       9948     8983     963      2        0.097
+  E_COMP_REF     1805     1675     129      1        0.072
+  A_LOCAL         719      669      47      3        0.070
+  F_RANDOM        187      187       0      0        0.000
+  Encapsulation IS the best accumulator on this measure, by 2.4x over structured
+  mutation. This is the strongest single piece of evidence FOR any part of H, and
+  it is about encapsulation, not composition.
+
+E5 -- CAUSAL ABLATION OF SUCCESSFUL COMPOSITIONS (mandatory).
+  Every composition/reuse crossing received the eight interventions: remove A,
+  remove B, replace A with a behavioral control, replace B with a behavioral
+  control, sever the interface (scratch-clobbering instructions at the splice
+  point), scramble structure off the causal path, replay A and B independently,
+  and compare against ancestors.
+
+  Composition is scored CAUSAL for capability g only if g is in the child, in
+  NEITHER parent alone, and dies when either parent's contribution is removed.
+
+    composition/reuse crossings adjudicated        3,395
+    composition CAUSAL                                20   (0.59 percent)
+    capability ALREADY PRESENT IN A PARENT          3,379   (99.5 percent)
+
+  The 20 causal cases: 19 from D_ENCAPS, 1 from E_COMP_REF, 0 from C_COMPOSE.
+  By world: 19 in W1 (the declared-favourable positive control), 1 in W2.
+  Example row: W1, D_ENCAPS, seed 20260906, parent A alone holds {1}, parent B
+  alone holds {0}, child holds {0,1,2}, composition causal for {2}, minimal core
+  8 instructions, 11 dead instructions. That is a genuine compositional
+  acquisition, and there are twenty of them in the entire campaign.
+
+E6 -- INTERFERENCE BOUNDARY. Measured at 14,400 real composition joins per arm.
+
+  arm          joins    destroyed a parent   kept both   gained NEW
+                        capability                        (in neither parent)
+  C_COMPOSE    14400    11277  (78.3%)         3123       0      (0.00%)
+  E_COMP_REF   14400    11892  (82.6%)         2508       0      (0.00%)
+  D_ENCAPS     14400     9315  (64.7%)         5085     402      (2.79%)
+
+  Composing two viable behaviors destroys one of them about four times in five,
+  and yields something neither parent had essentially never. Encapsulation is
+  meaningfully less destructive and is the only arm with a non-zero productive
+  rate. THE BOUNDARY CONDITION IS THE INTERFACE: arms that splice raw instruction
+  sequences into shared registers (C, E) interfere; the arm that invokes a stored
+  body through a call site (D) interferes less and occasionally produces
+  something new.
+
+E7 -- ONTOLOGY-BLIND LANE AND POST-HOC COMPRESSION. Promotion depended only on
+external causal competence; internal mechanics were never required to map onto
+the human operation vocabulary. Interpretation ran only AFTER promotion.
+
+  behaviorally equivalent to a known operation   13,257
+  novel composition of known operations           2,511
+  resists current compression                         0
+
+  Most common equivalences: bit7(x0) 10,690; bit7(x1) 4,115; bit3(x0) 480;
+  bit7(x0)+bit7(x1) 303; bit7(x0)^bit7(x1) 180.
+  VERDICT: APPARENT_NOVELTY_REDUCES_TO_KNOWN_OPERATIONS. Nothing alien was found.
+  I note explicitly that "resists interpretation" would NOT have been evidence of
+  novelty had it occurred; it did not occur, so the question is moot here.
+
+E8 -- NOVELTY COURT. Deterministic, independent of the generator, no LLM.
+    claims adjudicated                                14,690
+    promoted                                          14,249
+    refused                                              441
+    replay failures                                        0
+    capability pre-existed in an ancestor              14,615
+    survives perturbation (different input distribution) 14,249  (100%)
+    survives exhaustive check (all 65,536 inputs)      14,249  (100%)
+    survives transfer (inputs swapped)                    232  (1.6%)
+    duplicate claims collapsed by behavioral signature 1,064,029
+  By arm: B_STRUCT 9,948 | E_COMP_REF 1,805 | D_ENCAPS 1,484 | A_LOCAL 719 |
+          F_RANDOM 187 | C_COMPOSE 106.
+  Transfer survival is low BY DESIGN -- the references are position-specific
+  (bit7 of x0 versus bit7 of x1), so swapping inputs should break them. This is
+  recorded as a property of the references, not as a defect in the candidates.
+
+--------------------------------------------------------------------------------
+9. CAPABILITY ACQUISITION AND RETENTION, SEPARATED
+--------------------------------------------------------------------------------
+
+DISCOVERY (can an arm produce a candidate exhibiting a new capability?)
+  Composition: NO, essentially never. C 0/36 runs, E 1/36. Encapsulation 6/36,
+  concentrated 5/6 in the world declared favourable in advance.
+  Structured mutation 14/36 -- and radius-explained.
+
+RETENTION (can descendants preserve previous capabilities while acquiring more?)
+  Mutation: YES, near-perfectly (0.991-1.000).
+  Composition: NO (0.577-0.680), statistically indistinguishable in kind from
+  random replacement's 0.527 and separated from mutation by more than 30
+  percentage points with non-overlapping exact intervals at n=14,400.
+
+  THIS IS THE CLEANEST RESULT IN THE CAMPAIGN and it runs directly against the
+  part of H that the assignment flagged as mattering more. A process that
+  composes viable behaviors in this substrate does not accumulate; it churns.
+
+--------------------------------------------------------------------------------
+10. NEGATIVE RESULTS, DEFECTS, AND WHAT WOULD MAKE THIS WRONG
+--------------------------------------------------------------------------------
+
+DEFECTS IN MY OWN CAMPAIGN, ALL SELF-CAUGHT, ALL DISCLOSED:
+ D1 Arm C is operator-degenerate: 24 distinct behaviors from 20,000 evaluations.
+    Its reachable set is |archive|^2 x cut-points, and the archive holds 3
+    members. C's 0/36 IS NOT EVIDENCE ABOUT COMPOSITION. Arm E, with 1,297
+    distinct behaviors against B_STRUCT's 1,177, is the fair test.
+ D2 E2's W3 goal metric was wrong (union over a run instead of one candidate
+    holding all three). Corrected to 0/12 for every arm.
+ D3 E4's accumulation field is invalid (sampled bootstrap genomes only).
+    Recomputed from Court rows.
+ D4 E3 was invalid twice: radius pooled across the shared bootstrap, then the
+    radius cap applied during the bootstrap and destroyed the archive. Both
+    fixed; the corrected control is the one reported.
+ D5 The exact-CI implementation overflowed at n in the thousands and was replaced
+    with a continued-fraction incomplete beta.
+
+THE LIMITATION THAT MOST THREATENS THE CONCLUSION:
+  The primitives here are 2-to-5 instruction motifs. Random sampling finds them
+  12 times out of 12. In such a regime a component is CHEAPER TO REDISCOVER THAN
+  TO SPLICE, and reuse has nothing to buy -- it can only pay interference costs.
+  H is a claim about accumulating DEEP capability, and this arena has no depth.
+  I could not distinguish "composition does not help" from "composition does not
+  help when components are cheap," and I regard the second as the more likely
+  reading. THE SINGLE HIGHEST-VALUE FOLLOW-UP IS TO RAISE COMPONENT COST until
+  rediscovery is expensive, and re-run this identical harness unchanged.
+
+OTHER THREATS, STATED PLAINLY:
+  * 12 seeds. Several cells are 0/12 with an upper bound of 0.265 -- consistent
+    with a real rate as high as one in four.
+  * The archive keys on capability set, admitting at most 2^3 = 8 niches, so the
+    composition arms had at most 3 things to compose. A richer niche space might
+    change the interference/production balance.
+  * Arm D's compute advantage (2.3x arm E) is unresolved and it is the arm with
+    the positive result.
+  * Straight-line programs only. No control flow means no subroutine can be
+    conditionally invoked, which is a real restriction on what encapsulation can
+    mean.
+  * All three worlds share two primitives. That was deliberate (it isolates the
+    combination rule) but it means the campaign tested three combination rules,
+    not three independent domains.
+
+--------------------------------------------------------------------------------
+11. SKIPPED EXPERIMENTS
+--------------------------------------------------------------------------------
+None. All eight ran. No prerequisite failed, so nothing was skipped, and there
+was no ninth experiment. Kill conditions K1, K2 and K3 were all evaluated and all
+PASSED (that is, none fired to halt the campaign). K4 FIRED in an inverted form:
+the radius confound was confirmed, but for structured mutation rather than for
+composition. K5 FIRED: 99.5 percent of composition crossings had the capability
+already present in a parent, which is the condition the pre-registration named
+for APPARENT_NOVELTY_REDUCES_TO_KNOWN_OPERATIONS. K6 did not fire: 0 replay
+failures.
+
+--------------------------------------------------------------------------------
+12. FINAL VERDICT
+--------------------------------------------------------------------------------
+
+Primary, in the pre-registered vocabulary:
+
+  COMPOSITION_CAUSES_EXCESS_INTERFERENCE
+      78-83 percent of composition joins destroy a parent capability; retention
+      0.577-0.680 against mutation's 0.991-1.000, non-overlapping at n=14,400.
+
+  COMPOSITION_ONLY_HELPS_UNDER_SPECIFIC_INTERFACE_CONDITIONS
+      The 20 causally-verified compositions are 19/20 encapsulation (call-site
+      reuse), not raw splicing, and 19/20 in the world declared favourable in
+      advance. The boundary condition is the INTERFACE: invoking a stored body
+      interferes less than splicing instructions into shared registers.
+
+  APPARENT_NOVELTY_REDUCES_TO_KNOWN_OPERATIONS
+      0 of 15,768 promoted mechanisms resisted compression.
+
+  NO_CUMULATIVE_CAPABILITY_ACQUISITION_OBSERVED   (W3 only)
+      No candidate, in any arm, ever held all three capabilities at once.
+
+  COMPOSITION_ADVANTAGE_EXPLAINED_BY_MUTATION_RADIUS -- INVERTED AND CONFIRMED
+      There was no composition advantage to explain. The confound fired on the
+      winner instead: structured mutation's 10/12 collapses to 1/12 at matched
+      radius.
+
+--------------------------------------------------------------------------------
+13. STRONGEST CONCLUSION WARRANTED / NOT WARRANTED
+--------------------------------------------------------------------------------
+
+WARRANTED:
+  In a substrate where viable components are cheap to rediscover, composition and
+  reuse of previously viable behaviors do NOT improve capability acquisition over
+  mutation, and they measurably DEGRADE capability retention. Of every apparent
+  compositional acquisition, 99.5 percent is the capability arriving intact from
+  one parent -- exactly the retrospective-storytelling failure the campaign was
+  built to detect, and it is detectable ONLY by causal ablation. Where reuse does
+  help, the mechanism that helps is ENCAPSULATION THROUGH A CALL SITE, not
+  splicing, and the difference between them is interference at the interface.
+
+NOT WARRANTED:
+  * "Composition is not useful for capability acquisition." The arena has no
+    depth; components cost 2-5 instructions. This tests one regime.
+  * "Structured mutation is the better mechanism." Its only significant win is
+    radius-explained.
+  * Any claim from arm C. It is operator-degenerate and its zeros are artifacts.
+  * "Encapsulation improves accumulation." It leads on that measure (0.237 versus
+    0.097) but it also used 2.3x the compute of arm E, and I did not separate
+    those. PROVISIONAL, one falsification family only.
+  * Any generalisation from W1. I declared it composition-favourable before
+    measuring precisely so that a win there could not be counted as evidence, and
+    19 of the 20 causal compositions are in it.
+
+--------------------------------------------------------------------------------
+14. IMPLICATIONS FOR THE NEXT PROMETHEUS / FOUNDRY ITERATION
+--------------------------------------------------------------------------------
+
+ 1. RAISE COMPONENT COST. The decisive experiment is this identical harness with
+    primitives expensive enough that rediscovery is not free. Until then no
+    composition result from this program means much in either direction.
+ 2. MEASURE RETENTION, NOT JUST DISCOVERY. Retention separated the arms by 30-40
+    points at n=14,400 while discovery separated them by a few counts out of 12.
+    It is the higher-powered instrument and this program has not been using it.
+ 3. ABLATE EVERY COMPOSITION CLAIM. 99.5 percent of them dissolved. Any pipeline
+    that reports "composition produced X" without the remove-a-parent test is
+    reporting inheritance.
+ 4. PREFER CALL-SITE REUSE TO SPLICING. This is the one actionable design
+    difference the campaign found, and it is a mechanism, not a preference.
+ 5. RADIUS-MATCH BEFORE BELIEVING ANY OPERATOR COMPARISON. The single significant
+    effect here evaporated under matching, and it would have been published
+    without the control.
+
+--------------------------------------------------------------------------------
+15. ARTIFACT AND REPLAY INDEX
+--------------------------------------------------------------------------------
+All under D:\Prometheus\genesis\harmonia_c\gen3\
+
+  PREREGISTRATION.md      hypothesis, arms, frozen capability definition, kill
+                          conditions, and the five pre-E1 amendments with their
+                          diagnostic evidence
+  arena.py                SlotVM, worlds, references, probe streams  (--test)
+  arms.py                 six operators + the single shared engine    (--test)
+  court.py                Novelty Court, ablation battery, interpreter (--test)
+  campaign.py             E1, E2, exact statistics
+  experiments.py          E3 through E8
+  calibrate_difficulty.py the pre-E1 difficulty ladder (auditable calibration)
+  results/e1.json         admissibility, leakage, chance floors
+  results/e2.json         216 runs, per-seed rows, aggregates, Fisher tests
+  results/e3.json         radius, compute, radius-matched re-run
+  results/e4_e8.json      retention, interference, 3,395 ablations, Court rows
+
+  Reproduce: python arena.py --test && python arms.py --test &&
+             python court.py && python campaign.py e1 && python campaign.py e2 &&
+             python experiments.py e3 && python experiments.py e4_e8
+  Deterministic at seeds 20260901..20260912. Total runtime about 70 minutes.
+
+================================================================================
+The campaign is not successful because composition lost. It is successful
+because the question is answered with a mechanism attached: composition provides
+causal leverage in 0.59 percent of the cases where it appears to, the other 99.5
+percent is inheritance misread as creation, and the one place reuse genuinely
+paid was a call site rather than a splice. The result that would overturn this is
+named and cheap: make the components expensive.
+                                              -- Harmonia C, M2, 2026-09-01
+================================================================================

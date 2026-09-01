@@ -194,6 +194,8 @@ class Run:
         self.fallbacks = 0
         self.truncations = 0
         self.radii = []
+        self.radii_arm = []   # arm-phase only; pooling the shared bootstrap made
+                              # A_LOCAL read 6.46 when its true radius is ~1
         self.rejected_by_radius = 0
         self.crossings = []   # (id, capset, gen, evals_at)
         self.best = (-1, -1.0, None)
@@ -278,15 +280,29 @@ class Run:
             if not expressed:
                 expressed = [(9, OUT_LO, 0)]
 
-            if self.radius_cap is not None:
+            # The cap must NOT apply during the shared bootstrap: bootstrap children are
+            # fresh random programs whose radius always exceeds a small cap, so capping
+            # there rejects ~85% of the budget and destroys the archive every arm
+            # inherits.  Found by inspecting E3b's first run, in which W2's B_STRUCT
+            # collapsed 10/12 -> 0/12 for that reason and not for a radius reason.
+            if self.radius_cap is not None and not in_bootstrap:
                 p_expr, _ = expand(parent, macros)
                 r = edit_radius(p_expr, expressed)
                 if r > self.radius_cap:
                     self.rejected_by_radius += 1
+                    # A rejected child costs no evaluation, so an arm whose natural
+                    # radius greatly exceeds the cap can spin.  Bound the spin and
+                    # REPORT it: an arm that exhausts this budget is radius-starved,
+                    # which is itself the measurement E3 wants.
+                    if self.rejected_by_radius > 20 * self.evals:
+                        break
                     continue
 
             p_expr, _ = expand(parent, macros)
-            self.radii.append(edit_radius(p_expr, expressed))
+            _r = edit_radius(p_expr, expressed)
+            self.radii.append(_r)
+            if not in_bootstrap:
+                self.radii_arm.append(_r)
 
             exact, frac, tcap = self._evaluate(
                 expressed, self.world.boot_slots if in_bootstrap else None)
@@ -369,6 +385,10 @@ class Run:
             archive_size=len(self.archive), fallbacks=self.fallbacks,
             truncations=self.truncations, rejected_by_radius=self.rejected_by_radius,
             mean_radius=(sum(self.radii) / len(self.radii)) if self.radii else 0.0,
+            mean_radius_arm=(sum(self.radii_arm) / len(self.radii_arm))
+            if self.radii_arm else 0.0,
+            median_radius_arm=(sorted(self.radii_arm)[len(self.radii_arm) // 2]
+                               if self.radii_arm else 0.0),
             n_candidates=self.next_id, n_viable=sum(r[7] for r in self.rows),
             best_exact=self.best[0], best_frac=round(self.best[1], 6),
             heldout_slots=sorted(held), n_crossings=len(self.crossings),
