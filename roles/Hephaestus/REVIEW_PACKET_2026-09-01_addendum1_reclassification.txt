@@ -2,10 +2,14 @@
 REVIEW PACKET -- ADDENDUM 1 APPLIED: THE SEMANTIC-ONLY CLOSURE TEST RECLASSIFIES
 MINT-0001, AND THE FORGE QUEUE GAINS THE SEMANTIC-INJECTION QUESTION
 Prometheus program, seat Hephaestus (M3). 2026-09-01, late.
-Commits of record: af31ddcda (this work); 5c70c8aa5 (the smith session it follows);
-7b55e8423 (the queue it runs in). Author: Hephaestus, Claude Code / claude-fable-5.
-Invoked by: James (operator), rulings on Q1-Q7 of the previous review packet, plus
-"Do not summon Claude again yet ... give the work back to the unattended ecology."
+Commits of record: af31ddcda (this work); 5c70c8aa5 (the smith session it
+  follows);
+7b55e8423 (the queue it runs in). Author: Hephaestus, Claude Code /
+  claude-fable-5.
+Invoked by: James (operator), rulings on Q1-Q7 of the previous review packet,
+  plus
+"Do not summon Claude again yet ... give the work back to the unattended
+  ecology."
 ================================================================================
 
 0. WHAT THIS PACKET IS
@@ -30,7 +34,8 @@ Invoked by: James (operator), rulings on Q1-Q7 of the previous review packet, pl
     clean-enough selection environment.
   - Hephaestus ("the forge") was re-chartered on 2026-09-01 as a queue: cheap
     models scout unattended (Apprentice Forge); a capable agent mints only when
-    the operator invokes it (Master Smith); the smith has no admission authority.
+    the operator invokes it (Master Smith); the smith has no admission
+      authority.
   - Earlier the same day, the first Master Smith session (5 cycles) produced a
     candidate for the queue's one wall, MINT-0001 "vacuous_truth" (truth of a
     quantified claim over a domain the premises state is empty vs non-empty):
@@ -42,7 +47,8 @@ Invoked by: James (operator), rulings on Q1-Q7 of the previous review packet, pl
 2. THE QUESTIONS THIS BLOCK WAS ANSWERING (operator's words)
 --------------------------------------------------------------------------------
   Q1  "The cheapest decisive test is to strip parsing away completely. Give a
-      typed enumerator (domain_size, satisfier_count, quantifier) and ask whether
+      typed enumerator (domain_size, satisfier_count, quantifier) and ask
+        whether
       the frozen primitive closure can synthesize the truth mapping ... If
       enumeration synthesizes an equivalent expression cheaply, reclassify:
       Level 2 -> Level 1 composition."
@@ -54,7 +60,8 @@ Invoked by: James (operator), rulings on Q1-Q7 of the previous review packet, pl
   Q2  Represent results as (coverage, conditional correctness); do not reward
       abstention in the scalar.
   Q3  MECHANISM COVERAGE: a dev harness may not certify a component that has no
-      opportunity to matter; v3 should have been PASS_DEV_WITH_UNTESTED_COMPONENT.
+      opportunity to matter; v3 should have been
+        PASS_DEV_WITH_UNTESTED_COMPONENT.
   Q4  Keep five cycles; a cycle ends in at least one new executed discriminating
       observation; record the accounting.
   Q5  CANDIDATE-PRODUCED is legitimate; conflict metadata travels with it.
@@ -69,7 +76,8 @@ Invoked by: James (operator), rulings on Q1-Q7 of the previous review packet, pl
   3.1  Semantic-only closure test  (hephaestus/src/semantic_closure.py)   [E3]
        Inputs: q in {universal, negative_universal, existential}; d = domain
        size >= 0; s = satisfier count, 0 <= s <= d. Target: the operator's nine-
-       row truth table, with "n > 0" instantiated at n in {1, 2, 3, 5} -> 48 rows
+       row truth table, with "n > 0" instantiated at n in {1, 2, 3, 5} -> 48
+         rows
        over 16 distinct (d, s) points. Interpretation rule fixed BEFORE running
        (section 2, Q7). Arm A's rules, fixed before running:
          - operators: only the integer-typed functions of the frozen library
@@ -97,7 +105,8 @@ Invoked by: James (operator), rulings on Q1-Q7 of the previous review packet, pl
        - Dev set v2: two kinds added -- NONEMPTY_OTHER_PREDICATE (the "k of them
          are Q" clause names a different predicate; gold = abstain; this is the
          P4 fixture) and PREDICATE_EXTENSION_EMPTY ("there are no P X, but there
-         are exactly k X"; gold = no; this is adversarial D1). 88 -> 104 examples,
+         are exactly k X"; gold = no; this is adversarial D1). 88 -> 104
+           examples,
          11 -> 13 kinds, 8 train / 96 holdout, DEV_SET_VERSION = 2.
        - Refinement job: PASS_DEV* variants count as passes; the qualifier
          travels with the record.
@@ -111,7 +120,8 @@ Invoked by: James (operator), rulings on Q1-Q7 of the previous review packet, pl
        - Charter amendment: Addendum 1 (the rulings, quoted) and Addendum 2 (the
          standing order to produce review packets like this one, unprompted).
 
-  3.3  v3 re-graded on dev set v2                                            [E3]
+  3.3  v3 re-graded on dev set v2
+    [E3]
 
 --------------------------------------------------------------------------------
 4. RESULTS
@@ -124,18 +134,21 @@ Invoked by: James (operator), rulings on Q1-Q7 of the previous review packet, pl
                                             f(d,s) yields one column; the
                                             three quantifier columns differ
                                             at (d,s)=(0,0): T, T, F
-       A1   frozen primitives + routing     existential      = s             (1)  156
+       A1   frozen primitives + routing     existential      = s
+         (1)  156
                                             negative_univ.   = pigeonhole_
                                                                check(1, s)   (1)
                                             universal        = coin_flip_
                                                                independence
                                                                (s, d)        (1)
-       B    generic boolean language        eq(d,s); eq(s,0); s            (1)  152
+       B    generic boolean language        eq(d,s); eq(s,0); s            (1)
+         152
        C    v3 kernel (10 lines)            48 / 48 correct                 --
 
        Reading of A1's universal solution: comb(s, d) / 2^s is non-zero exactly
        when s >= d, and s <= d always, so its truthiness equals "s == d" on the
-       table, and it returns 1.0 at (0, 0). This is a truthiness COINCIDENCE, not
+       table, and it returns 1.0 at (0, 0). This is a truthiness COINCIDENCE,
+         not
        a mechanism -- but it is inside the closure G(C) of the frozen set, which
        is the question asked. The mechanism form, pigeonhole_check(s,
        all_but_n(d, 1)) i.e. s >= d, is depth 2 and also inside G(C).
@@ -150,7 +163,8 @@ Invoked by: James (operator), rulings on Q1-Q7 of the previous review packet, pl
        ADAPTER mapping (satisfier_count := 0), not a kernel rule.
 
   4.2  v3 on dev set v2 (96 holdout)            v1 (80 holdout), for comparison
-       verdict                 FAIL_DEV          PASS_DEV_WITH_UNTESTED_COMPONENT
+       verdict                 FAIL_DEV
+         PASS_DEV_WITH_UNTESTED_COMPONENT
        accuracy (decidable)    0.9125            1.000
        coverage                0.9125            1.000
        conditional correctness 1.000             1.000
@@ -256,7 +270,8 @@ Invoked by: James (operator), rulings on Q1-Q7 of the previous review packet, pl
     4. Aporia / Charon: an independent held-out generator for vacuous_truth, if
        the representation problem is pursued at all; and a post-E9 Apollo
        evaluator of record.
-    5. Ludus / Foundry: semantic-state worlds exposed directly, so kernels can be
+    5. Ludus / Foundry: semantic-state worlds exposed directly, so kernels can
+      be
        tested without a language adapter (operator's Foundry principle).
   Operator:
     6. Whether MINT-0001's representation problem is worth anyone's time now, or
@@ -295,7 +310,8 @@ Invoked by: James (operator), rulings on Q1-Q7 of the previous review packet, pl
       run through triage before drawing any process conclusion?
 
 --------------------------------------------------------------------------------
-10. HOW TO REPRODUCE (Windows, repo root, Python 3.11; deterministic; no network)
+10. HOW TO REPRODUCE (Windows, repo root, Python 3.11; deterministic; no
+  network)
 --------------------------------------------------------------------------------
   set PYTHONPATH=C:\prometheus
   python -m hephaestus.src.semantic_closure 200000
@@ -303,13 +319,15 @@ Invoked by: James (operator), rulings on Q1-Q7 of the previous review packet, pl
          universal "coin_flip_independence(s, d)"; evaluated 156; B evaluated
          152; C 48/48; verdict "A1 SYNTHESISES THE TABLE ..."
   python -c "import sys; sys.path.insert(0,'agents/hephaestus/src'); import
-      forge_primitives as fp; print(all(fp.pigeonhole_check(s, fp.all_but_n(d,1))
+      forge_primitives as fp; print(all(fp.pigeonhole_check(s,
+        fp.all_but_n(d,1))
       == (s==d) for d in range(0,6) for s in range(0,d+1)))"
       -> True   (the depth-2 mechanism form, checked analytically in 3.1)
   python -m hephaestus.src.wall_vacuous_truth
       -> "104 examples; 8 train / 96 holdout" (DEV_SET_VERSION 2)
   python -m hephaestus.src.run_candidate vacuous_truth ^
-      hephaestus\deep_mint_sessions\20260901T073136Z\candidates\v3_quantified_truth.py out.json
+      hephaestus\deep_mint_sessions\20260901T073136Z\candidates\v3_quantified_truth.py
+        out.json
       -> verdict FAIL_DEV; holdout accuracy_decidable 0.9125; coverage 0.9125;
          conditional_correctness 1.0; by_kind PREDICATE_EXTENSION_EMPTY 0.0
   type hephaestus\TOP_READY_MINTS.txt
