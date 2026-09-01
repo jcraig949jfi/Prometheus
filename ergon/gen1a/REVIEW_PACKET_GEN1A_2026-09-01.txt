@@ -1,0 +1,401 @@
+ERGON GEN-1A -- CAUSAL DESIGN CLOSURE + PERSISTENCE GATE
+2026-09-01. Self-contained review packet for an external reviewer who has not
+seen the originating conversation.
+
+VERDICT: GEN1_READY_TO_RUN at n = 30 paired lineages.
+         NOT ready at the inherited n = 5, where the MDE (10.1 pp) exceeds the
+         entire effect a retention policy could modulate (6.7 pp).
+
+Brief: ergon/gen1a/PROMPT_GEN1A_2026-09-01.txt
+       sha256 (git-stored LF bytes)
+       81d38ae864693424fdd98ae92eb6f75a8efe01cdb9f8a761270049eed1db301a
+       hashed at issuance, before any analysis in this packet was run.
+
+====================================================================
+1. PERSISTENCE INSTRUMENT -- PERSISTENCE_INSTRUMENT_CLEAN
+====================================================================
+
+The libraries behind D-5's +10.95 pp were built in memory and discarded. That
+hole is now closed.
+
+DESIGN CHOICE THAT MATTERS. The instrument is observational BY CONSTRUCTION,
+not by care. The frozen search core touches the library through exactly two
+surfaces:
+
+    m1_rx.fresh()      extra_pool[rng.randrange(len(extra_pool))]
+    m1.update_library  admission and most-recent-first eviction
+
+So a list SUBCLASS whose __getitem__ is overridden observes every draw, and a
+thin wrapper observes admissions while the FROZEN update_library performs the
+actual mutation. m1.py is imported unmodified. No randomness is consumed, no
+branch is taken differently, no evaluation counter moves. Forking m1_rx to add
+hooks was rejected: a forked core cannot be shown identical to the one that
+produced the inherited result.
+
+GATE RESULTS, all PASS:
+
+    A  serialise a search-discovered library
+    B  destroy from memory and restore
+    C  reload exactly
+    D  same-seed parity: ROWS identical, persistence on vs off
+    D  same-seed parity: LIBRARY CONTENTS identical
+    E  behaviour fingerprints survive round-trip
+    G  no oracle or future field persisted anywhere
+    H  schema replays the event log to the identical final library
+
+    fixture: 20 tasks, budget 3000/task, final library 64,
+             81 admissions, 16 evictions, 2941 draws observed
+
+ADVERSARIAL BATTERY, 10 of 10 REJECTED (the loader fails closed):
+
+    reordered serialization ....... rejected  ValueError
+    missing artifact .............. rejected  ValueError
+    duplicate artifact ............ rejected  ValueError
+    corrupted fingerprint hash .... rejected  ValueError
+    unknown opcode ................ rejected  ValueError
+    stale size field .............. rejected  ValueError
+    unknown schema version ........ rejected  ValueError
+    partial / interrupted write ... rejected  JSONDecodeError
+    atomic write leaves no .tmp ... clean
+    duplicate admission ........... dedupes, no duplicate library entry
+
+====================================================================
+2. THE THREE-POINT WRAP -- WHY EFFECTIVE USAGE IS IMPLEMENTABLE
+====================================================================
+
+James's Q2 ruling requires credit only when a draw produces a measurable
+improvement. That fact is split across three places in the frozen core that do
+not talk to each other:
+
+    which artifact was drawn   RecordingLibrary.__getitem__
+    what it became             physics.mutate(parent) -> child
+    how good the child was     FastTask.dist(child)
+
+Linking all three by observation is what makes an EFFECTIVE-USAGE eviction
+policy implementable at all without forking the search core. This is a
+feasibility finding, and it was not obvious in advance.
+
+CREDIT RULE, preregistered in code before any outcome was inspected: a draw is
+credited if the child it produced scores strictly better than the median of the
+last 32 scored candidates. The window matches the frozen psize, uses no future
+information, and needs no oracle field.
+
+====================================================================
+3. THE CORPUS THAT HAS NEVER EXISTED
+====================================================================
+
+Baseline policy only. No policy was varied. This is instrument output, not the
+experiment.
+
+    5 lineages x 42 non-control tasks, budget 30000, policy D5_BASELINE_MRU
+    ~170 artifacts admitted per lineage, 834 distinct artifacts total
+    ~46,000 library draws per lineage
+    27.2 seconds per lineage
+
+DISCLOSED DEVIATION: the corpus runs the 42 non-control tasks that G4 analyses,
+not D-5's full 58-task dev battery, and uses fresh nav seeds. Solve rates here
+(12-15 of 42) are therefore NOT a replication of D-5 and are not offered as one.
+
+====================================================================
+4. JAMES'S Q2 RULING, NOW VINDICATED BY MEASUREMENT
+====================================================================
+
+The Gen-1 packet argued from the uniform-draw rule that raw retrieval count
+would be residence-time noise. The corpus settles it with data:
+
+    property           min   median   max    mean     zero
+    raw draws            0      286   1208   276.75   31  ( 4%)
+    effective uses       0        1     30     2.37   351 (42%)
+    genotype length      1       21     24    17.88     0  ( 0%)
+
+Raw draws are non-discriminating: only 4% of artifacts are never drawn, and the
+median artifact is drawn 286 times. Effective uses discriminate hard: 42% earn
+ZERO credit. A retention policy built on raw draws would be sorting noise; one
+built on effective usage has a real signal to sort.
+
+A SECOND PROPERTY WORTH A POLICY. 834 artifacts carry only 347 distinct
+behaviour fingerprints, so 487 (58%) are behaviourally redundant with another
+admitted artifact. D-5's admission rule dedupes on behaviour WITHIN a task;
+across tasks the redundancy accumulates unchecked. That is a large, cheap,
+learner-visible target that no current policy exploits.
+
+====================================================================
+5. ATTAINABLE POLICY RANGE -- RETENTION_POLICY_RANGE_NONTRIVIAL
+====================================================================
+
+Method: replay the SAME recorded admission stream through different eviction
+rules and measure library divergence.
+
+    admission stream   170 artifacts/lineage
+    evictions          105/lineage
+    turnover           1.63x the 64-slot cap on this battery
+
+    terminal Jaccard overlap with the inherited MRU baseline
+    (1.00 = identical library, 0.00 = disjoint)
+
+        policy       terminal    mean trajectory
+        RANDOM         0.461         0.702
+        RETIRE_N       0.113         0.464
+        LRU_DRAW       0.000         0.504
+        EFFUSE         0.000         0.575
+
+Two policies end with libraries sharing NOT ONE artifact with the baseline.
+The gate does not merely clear, it clears by a wide margin.
+
+HONEST LIMIT, stated rather than buried. All policies share the baseline's
+admission stream. In a live run each policy induces its own trajectory (see
+section 6), so these divergences are the SHARED-STREAM component only and are a
+LOWER BOUND on how different the libraries would actually become.
+
+SECOND LIMIT. The EFFUSE simulation applies effective-use credit pro rata from
+each artifact's observed baseline effective/draw ratio. The live policy would
+accumulate credit directly. The simulated arm is therefore a proxy for arm
+DIVERGENCE, not an estimate of arm PERFORMANCE.
+
+====================================================================
+6. THE ESTIMAND, AND WHY IT IS NARROWER THAN IT LOOKS
+====================================================================
+
+Exact candidate-stream replay is architecturally impossible under the frozen
+consumer, established in Gen-1 and accepted in the Gen-1A ruling. Two policies
+holding different libraries return different genotypes from the same draw, and
+mutate() consumes a variable number of rng values, so the shared stream
+desynchronises at the first divergent draw and never recovers.
+
+    THE ESTIMAND IS: the causal effect of a RETENTION POLICY, including the
+    downstream search trajectory that policy induces.
+
+    IT IS NOT: the causal effect of library composition holding subsequent
+    candidate generation fixed.
+
+Gen-1 must report first-divergence index, shared-candidate fraction, and
+library-composition divergence through time, so the size of the trajectory
+component is measured rather than assumed.
+
+CALIBRATION AVAILABLE, and its limit. M1 vs M1-shuffled-history already shows
+that stream divergence alone need not destroy the advantage: those arms
+genuinely diverged (94 of 290 rows differ) and re-converged to 100% retention.
+That is one calibration point, not a proof that arbitrary divergence is
+harmless.
+
+====================================================================
+7. LINEAGE DEPENDENCE AND POWER -- THE DECIDING SECTION
+====================================================================
+
+REPRODUCTION CHECK FIRST. Re-deriving the frozen statistic from committed rows
+gives delta +0.1095, n = 42, SE 0.0342, matching D-5's published values
+exactly. The re-derivation is therefore trustworthy before it is used to say
+anything new.
+
+THE SAME EVIDENCE AT THE LINEAGE UNIT
+
+    contrast                              mean      SD      SE(n=5)
+    library vs none (D-5 headline)      +0.1095   0.0598   0.0267
+    library vs library, TRUE NULL       +0.0000   0.0412   0.0184
+    adapted vs random content           +0.0667   0.0391   0.0175
+    library vs half-frozen              +0.0286   0.0391   0.0175
+
+VARIANCE DECOMPOSITION of the per-cell delta
+
+    between-LINEAGE variance   0.00286    1.8% of cell variance
+    between-TASK    variance   0.04800   31.0% of cell variance
+    per-cell        variance   0.15467
+
+So lineages are nearly exchangeable: the lineage component is SMALLER than the
+task component, and the lineage-level SE (0.0267) is smaller than the
+task-level SE (0.0342). The pseudo-replication worry that motivated Q3 does not
+inflate the inherited D-5 uncertainty.
+
+BUT THE RULING STILL BINDS, AND IT STILL COSTS. In Gen-1 the treatment is
+ASSIGNED at the lineage, so the lineage is the unit regardless of how small its
+variance component is. What changes is n: 5, not 290.
+
+THE SIGMA THAT MATTERS is a library-vs-library contrast, not library-vs-none.
+M1 vs M1-shuffled-history is the pure case: identical content, different
+accumulation order, true effect zero. SD 0.0412 is the noise floor a retention
+experiment must beat.
+
+MDE AT 80% POWER, simulating the FROZEN one-sided sign-flip permutation test
+
+    n_lineages    MDE (sigma 0.0412)    MDE (sigma 0.0598, conservative)
+        5             10.1 pp                   14.2 pp
+        8              4.1 pp                    6.2 pp
+       10              3.5 pp                    5.3 pp
+       15              3.0 pp                    4.1 pp
+       20              2.3 pp                    3.5 pp
+       25              2.1 pp                    3.0 pp
+       30              1.9 pp                    2.9 pp
+       40              1.6 pp                    2.4 pp
+       50              1.5 pp                    2.2 pp
+
+READ AGAINST THE EFFECTS A RETENTION POLICY WOULD BE MODULATING
+
+    full accumulation effect (M1 - M0)                    +10.9 pp
+    content-adaptedness component (M1 - random library)    +6.7 pp
+    order component (M1 - shuffled), measured              +0.0 pp
+
+At n = 5 the MDE of 10.1 pp EXCEEDS the entire content-adaptedness component
+and nearly equals the whole accumulation effect. A retention experiment at the
+inherited five lineages could only detect a policy that recovers essentially
+all of memory's value. It cannot answer the question.
+
+The n = 5 penalty is mostly DISCRETENESS, not heterogeneity: a sign-flip test
+on five pairs has only 2^5 = 32 sign patterns, so the attainable p-value grid
+is coarse. This is why the MDE falls so sharply from n=5 to n=8.
+
+THE FINDING IS NOT FATAL, BECAUSE LINEAGES ARE CHEAP. Measured throughput is
+about 38,000 evaluations/second, and one instrumented 42-task lineage at the
+30k rung costs 27.2 seconds. Thirty lineages is minutes, not months. The
+correct unit costs power; buying the power back costs an hour.
+
+====================================================================
+8. PROPOSED POLICY ARMS
+====================================================================
+
+Eviction only. D-5 admission, cap 64, search core, budget, task corpus,
+scoring and mutation operators all frozen. Deterministic tie-break by
+insertion order in every arm. Identical cap in every arm.
+
+    I0  D5_BASELINE_MRU     inherited: evict the oldest resident.
+                            SIMULATED, the reference.
+
+    I1  REDUNDANCY          evict a resident whose behaviour fingerprint
+                            duplicates another resident, oldest first;
+                            fall back to MRU when none.
+                            Justified by the 58% redundancy finding in
+                            section 4. NOT YET SIMULATED -- owed before
+                            freeze.
+
+    I2  EFFECTIVE_USAGE     evict the resident with fewest effective uses.
+                            SIMULATED: terminal Jaccard 0.000 vs baseline.
+
+    I3  RANDOM              evict a uniformly random resident. The
+                            "better than arbitrary memory" comparator.
+                            SIMULATED: terminal Jaccard 0.461.
+
+    diagnostic  LRU_DRAW    evict fewest raw draws. Retained ONLY as the
+                            age/residence control James allowed, never
+                            described as utility. SIMULATED: 0.000.
+
+RETIREMENT, as a first-class treatment. RETIRE_N: retire a resident with zero
+effective uses after N = 200 DRAW OPPORTUNITIES (unit stated in draws, not
+tasks, because draws are the causal exposure). Under the frozen search
+parameters it fired 53 retirements per lineage in simulation, so the rule is
+ACTIVE rather than ceremonial. N was fixed before any CFR was inspected.
+
+====================================================================
+9. FROZEN SCHEMA
+====================================================================
+
+    schema id      ergon-gen1a-lib-1
+    snapshot       schema, run_id, lineage, policy, task_index, size,
+                   entries[{pos, hash, genotype}], state_hash
+    events         admit {i, hash, genotype, len, fingerprint, readmission}
+                   evict {i, hash, reason, policy, residence_tasks}
+                   task_begin {i, family, seed, library_size_at_start}
+    draws          {i, pos, hash}
+    artifacts      {hash, genotype, len, first_admit_task,
+                    first_admit_family, fingerprint, was_solver,
+                    draws, effective_uses, lineage}
+
+    artifact identity  sha256 of the canonical genotype JSON, first 16 hex
+    integrity          state_hash over the whole snapshot; load fails closed
+                       on hash mismatch, non-contiguous positions, size
+                       disagreement, duplicate artifact, or unknown opcode
+
+DOWNSTREAM CORPUS. Per the Q5 ruling the FULL persisted corpus is exported
+with retention, reuse and load-bearing status as FIELDS. Selection status is
+data, never an export filter.
+
+====================================================================
+10. CLAIM CEILING
+====================================================================
+
+  - Nothing here is a retention result. No policy was compared on CFR. No
+    Gen-1 arm has run.
+  - Policy divergence is measured on a SHARED admission stream and is a lower
+    bound; live divergence would be larger and is not estimated.
+  - The EFFUSE simulation uses pro-rata baseline credit ratios, so it estimates
+    DIVERGENCE, not performance.
+  - Sigma is estimated from D-5 ablation arms at n = 5 lineages, so sigma
+    itself carries meaningful uncertainty, and every MDE inherits it. The
+    conservative column exists for that reason.
+  - The corpus covers 42 non-control tasks with fresh nav seeds; it is not a
+    replication of D-5 and its solve rates should not be read as one.
+  - The parity fixture ran 20 tasks at budget 3000. Parity is a determinism
+    claim and that is adequate for it, but it is not a claim about behaviour
+    at the 30k rung.
+  - "Lineages are nearly exchangeable" is measured on the headline contrast in
+    the inherited data. It is not guaranteed to hold for policy contrasts.
+
+====================================================================
+11. ESTIMATED EXPERIMENTAL SPEND
+====================================================================
+
+    measured throughput           ~38,000 evaluations/second
+    instrumented lineage          27.2 s   (42 tasks x 30,000 budget)
+    proposed design               4 arms x 30 paired lineages
+
+    organism-evaluations          4 x 30 x 42 x 30,000 = 151,200,000
+    wall time, arms               4 x 30 x 27.2 s = 54 minutes
+    wall time incl. analysis      ~1.5 hours
+    money                         $0.00   (local CPU, no API)
+    storage                       ~13 MB per 5 lineages of full corpus,
+                                  so ~310 MB at 4 arms x 30 lineages;
+                                  reducible by dropping the raw draw log
+
+Compute is not the binding constraint on this experiment. It never was.
+
+====================================================================
+12. STOP CONDITIONS -- FINAL STATUS
+====================================================================
+
+    persistence changes search .............. CLEARED, parity exact
+    attainable policy range near zero ....... CLEARED, two policies disjoint
+    policies cannot be compute-matched ...... CLEARED, all arms same cap,
+                                              same budget, same admission
+    streams cannot be made comparable ....... ACCEPTED AS A LIMIT, estimand
+                                              narrowed accordingly
+    retention requires oracle leakage ....... CLEARED, credit rule is online
+    endpoint cannot distinguish policies .... NOT CLEARED AT n=5;
+                                              CLEARED at n >= 20
+    persistence not reconstructable ......... CLEARED, gate H replays exactly
+
+====================================================================
+13. VERDICT AND WHAT I RECOMMEND
+====================================================================
+
+    GEN1_READY_TO_RUN, at n = 30 paired lineages.
+
+Three conditions I would attach, and the first is not negotiable:
+
+  1. n >= 20 lineages, and 30 preferred. At the inherited n = 5 the experiment
+     is not capable of answering its own question, and running it there would
+     produce a null that means nothing.
+  2. Simulate I1 REDUNDANCY before the freeze. It is the arm most likely to
+     matter, justified by the largest structural finding in the corpus, and it
+     is the one arm whose divergence is not yet measured.
+  3. Preregister and hash the design before the first experimental
+     organism-evaluation, with the estimand written as "policy + induced
+     trajectory", the unit as the lineage, and MDE 1.9 pp at n = 30.
+
+DECLARED CONFLICTS. This seat proposed the retention question in its own
+charter before any evidence existed, and a GEN1_READY verdict authorises its
+own expensive run. The countervailing pressure is also declared: a STOP verdict
+would have been cheap and defensible. The mitigations are structural. The
+power analysis first reproduced the frozen statistic exactly, so the machinery
+was validated against a known answer before being pointed at a new one. The
+attainable-range gate could have returned near-identical libraries and did not.
+The n = 5 finding is the one this seat least wanted, and it is reported as the
+headline of section 7 rather than a footnote.
+
+REPRODUCE
+
+    python -m ergon.gen1a.validate_persistence
+    python -m ergon.gen1a.corpus_run --lineages 5 --budget 30000
+    python -m ergon.gen1a.attainable_range
+    python -m ergon.gen1a.power_analysis
+
+agent_d5_blind/ is imported read-only and is untouched throughout.
+
+-- Ergon, 2026-09-01
