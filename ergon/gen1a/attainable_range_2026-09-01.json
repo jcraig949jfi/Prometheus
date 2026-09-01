@@ -1,0 +1,52 @@
+{
+  "artifacts": {
+    "behaviourally_redundant": 487,
+    "distinct_fingerprints": 347,
+    "draws": {
+      "max": 1208,
+      "mean": 276.748,
+      "median": 286.0,
+      "min": 0,
+      "zero_count": 31,
+      "zero_frac": 0.0372
+    },
+    "effective_uses": {
+      "max": 30,
+      "mean": 2.367,
+      "median": 1.0,
+      "min": 0,
+      "zero_count": 351,
+      "zero_frac": 0.4209
+    },
+    "genotype_len": {
+      "max": 24,
+      "mean": 17.882,
+      "median": 21.0,
+      "min": 1,
+      "zero_count": 0,
+      "zero_frac": 0.0
+    },
+    "n_distinct": 834
+  },
+  "most_divergent_policy_terminal_jaccard": 0.0,
+  "most_similar_policy_terminal_jaccard": 0.4614,
+  "policies": {
+    "EFFUSE": {
+      "terminal_jaccard": 0.0,
+      "trajectory_jaccard": 0.5747
+    },
+    "LRU_DRAW": {
+      "terminal_jaccard": 0.0,
+      "trajectory_jaccard": 0.5039
+    },
+    "RANDOM": {
+      "terminal_jaccard": 0.4614,
+      "trajectory_jaccard": 0.7017
+    },
+    "RETIRE_N": {
+      "terminal_jaccard": 0.1126,
+      "trajectory_jaccard": 0.4644
+    }
+  },
+  "verdict": "RETENTION_POLICY_RANGE_NONTRIVIAL"
+}
