@@ -122,27 +122,33 @@ class WorkerLoop:
         if claim is None:
             return False
         wid, work_id = claim["world_id"], claim["work_id"]
+        # H1: the server-issued fencing token for THIS attempt; required on
+        # every subsequent call so a stale attempt can never act.
+        claim_id = claim["claim_id"]
         w = self.f.get_world(wid)
         ex = self.executors.get(claim["kind"])
         if ex is None:
             self.f.fail_work(work_id, self.worker_id,
                              f"no executor for kind {claim['kind']!r}",
-                             retry=False)
+                             retry=False, claim_id=claim_id)
             return True
-        self.f.start_work(work_id, self.worker_id)
+        self.f.start_work(work_id, self.worker_id, claim_id=claim_id)
         wp = WorkPackage(work_id=work_id, world_id=wid, kind=claim["kind"],
                          payload=claim["payload"], seed_root=w["seed_root"])
         try:
             r = ex.execute(wp)
         except Exception as e:                       # noqa: BLE001
-            self.f.fail_work(work_id, self.worker_id, f"executor raised: {e}")
+            self.f.fail_work(work_id, self.worker_id, f"executor raised: {e}",
+                             claim_id=claim_id)
             return True
         if r.status == "COMPLETED":
             self.f.complete_work(work_id, self.worker_id,
                                  {**r.result,
-                                  "reproducibility": r.reproducibility})
+                                  "reproducibility": r.reproducibility},
+                                 claim_id=claim_id)
         else:
-            self.f.fail_work(work_id, self.worker_id, r.error or "failed")
+            self.f.fail_work(work_id, self.worker_id, r.error or "failed",
+                             claim_id=claim_id)
         return True
 
     def run_until_idle(self, world_id: Optional[str] = None,

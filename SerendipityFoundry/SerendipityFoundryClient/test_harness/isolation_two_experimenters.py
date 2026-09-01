@@ -65,9 +65,12 @@ def build(base_url, cafile, insecure, name, n_worlds, n_rounds):
     sid = c.create_session(f"iso-{name}-session")
     worlds, enq = [], 0
     for w in range(n_worlds):
-        # identical world NAMES across A and B on purpose: names must not collide
+        # identical world NAMES across A and B on purpose: names must not collide.
+        # experiments budget is generous (commit now debits it); a separate
+        # "compute" resource is used for the budget-separation isolation check.
         world = c.create_world(sid, f"world-{w}", budget={
-            "experiments": {"limit": 3, "enforcement": "enforceable"}})
+            "experiments": {"limit": 1000, "enforcement": "enforceable"},
+            "compute": {"limit": 3, "enforcement": "enforceable"}})
         wid = world["world_id"]
         c.start(wid)
         worlds.append(wid)
@@ -184,17 +187,17 @@ def main() -> int:
 
     # 6. budget separation
     def cap_budget():
-        # A drives world wa[0]'s experiments budget (limit 3) to exhaustion
+        # A drives world wa[0]'s "compute" budget (limit 3) to exhaustion
         for _ in range(3):
-            A.consume_budget(wa[0], "experiments", 1)
+            A.consume_budget(wa[0], "compute", 1)
         try:
-            A.consume_budget(wa[0], "experiments", 1)
+            A.consume_budget(wa[0], "compute", 1)
             raise AssertionError("A over-budget consume allowed")
         except EngineError as e:
             assert e.status == 409
         # B's same-named world must be completely unaffected
         rb = B.resources(wb[0])
-        assert rb["consumed"].get("experiments", 0) == 0, \
+        assert rb["consumed"].get("compute", 0) == 0, \
             "B's budget moved when A consumed"
         assert rb["exhausted"] is False, "B's world exhausted by A's consumption"
     check("budget separation (A's exhaustion does not touch B)", cap_budget)

@@ -14,11 +14,12 @@ from __future__ import annotations
 import base64
 import hashlib
 import secrets
-from typing import Any, Optional
+from typing import Any, Literal, Optional
 
 from fastapi import Depends, FastAPI, Header, HTTPException
 from pydantic import BaseModel, ConfigDict, Field
 
+from sfe import release
 from sfe.errors import FoundryError
 from sfe.runtime import Foundry
 
@@ -41,12 +42,20 @@ class SessionCreate(_Body):
     name: str
 
 
+class BudgetSpec(_Body):
+    """Scientific CONTROL configuration -- strict recursively (DFX-4): an
+    unknown key here is a 422, never silently ignored."""
+    limit: Optional[float] = None
+    enforcement: Literal["enforceable", "measured", "estimated",
+                         "unavailable"] = "measured"
+
+
 class WorldCreate(_Body):
     session_id: str
     name: str
     sharing_policy: str = "ISOLATED"
     topology_group: Optional[str] = None
-    budget: dict[str, Any] = Field(default_factory=dict)
+    budget: dict[str, BudgetSpec] = Field(default_factory=dict)
     seed_root: Optional[int] = None
 
 
@@ -60,9 +69,19 @@ class PredictionCreate(_Body):
 
 
 class ExperimentCreate(_Body):
+    # spec is the experimenter's own payload: FREEFORM BY DESIGN (opaque to the
+    # Engine, sealed by spec_hash at registration and frozen at commit).
     spec: dict[str, Any]
     hyp_id: Optional[str] = None
     pred_id: Optional[str] = None
+    commit: bool = True         # False = register only (planning; no budget,
+                                # window open, non-executable)
+    enqueue: bool = False       # requires commit
+    kind: str = "experiment"
+    priority: int = 100
+
+
+class ExperimentCommit(_Body):
     enqueue: bool = False
     kind: str = "experiment"
     priority: int = 100
@@ -73,6 +92,10 @@ class ObservationCreate(_Body):
     content: dict[str, Any]
     outcome: str
     pred_id: Optional[str] = None
+    work_id: Optional[str] = None      # bind the authoritative work result
+                                       # -> evidence_class ENGINE_WORK_RESULT
+    retrospective: bool = False        # required to bind a post-commit
+                                       # prediction (never prospective)
 
 
 class FailureCreate(_Body):
@@ -102,14 +125,29 @@ class ImportArtifact(_Body):
     source_artifact: str
 
 
+class ForkChild(_Body):
+    """One fork child. Strict (DFX-4) except `interventions`, which is the
+    experimenter's freeform payload BY DESIGN (recorded verbatim in the child's
+    WORLD_FORKED event, never interpreted by the Engine)."""
+    name: str = "fork"
+    sharing_policy: Optional[str] = None
+    topology_group: Optional[str] = None
+    seed_root: Optional[int] = None
+    interventions: dict[str, Any] = Field(default_factory=dict)
+
+
 class ForkRequest(_Body):
     checkpoint_id: str
-    children: list
+    children: list[ForkChild]
 
 
 class ConsumeBudget(_Body):
     resource: str
     amount: float
+
+
+class TopologyGroupCreate(_Body):
+    note: Optional[str] = None
 
 
 class WorkClaim(_Body):
@@ -120,25 +158,31 @@ class WorkClaim(_Body):
 
 class WorkHeartbeat(_Body):
     worker_id: str
+    claim_id: str               # H1 fencing token from the claim response
     lease_s: float = 30.0
 
 
 class WorkComplete(_Body):
     worker_id: str
+    claim_id: str               # H1 fencing token from the claim response
     result: dict[str, Any]
 
 
 class WorkFail(_Body):
     worker_id: str
+    claim_id: str               # H1 fencing token from the claim response
     error: str
     retry: bool = True
 
 
-def create_app(db_path: str) -> FastAPI:
+def create_app(db_path: str, *, registration_open: bool = True) -> FastAPI:
     app = FastAPI(title="Serendipity Foundry Gen-2",
-                  version="2.0.0", openapi_url="/v2/openapi.json",
+                  version="2.1.0", openapi_url="/v2/openapi.json",
                   docs_url="/v2/docs")
     app.state.db_path = db_path
+    # after-bootstrap hardening: the operator can close unauthenticated client
+    # registration (serve.py --registration closed); existing tokens still work.
+    app.state.registration_open = registration_open
     # one Foundry to run the schema migration + resolve tokens (short-lived use)
     boot = Foundry(db_path)
     boot.close()
@@ -173,6 +217,11 @@ def create_app(db_path: str) -> FastAPI:
     # -- identity ----------------------------------------------------------
     @app.post("/v2/clients")
     def create_client(body: ClientCreate, f: Foundry = Depends(get_foundry)):
+        if not app.state.registration_open:
+            raise HTTPException(status_code=403, detail={
+                "error": "registration_closed",
+                "message": "client registration is operator-gated on this "
+                           "Engine; ask the operator for a token"})
         tok = "gen2_" + secrets.token_urlsafe(24)
         cid = f.create_client(body.name, token_hash=_token_hash(tok))
         return {"client_id": cid, "token": tok,
@@ -183,11 +232,24 @@ def create_app(db_path: str) -> FastAPI:
                        f: Foundry = Depends(get_foundry)):
         return {"session_id": f.create_session(cid, body.name)}
 
+    @app.post("/v2/topology-groups")
+    def topology_group(body: TopologyGroupCreate, cid: str = Depends(auth),
+                       f: Foundry = Depends(get_foundry)):
+        # a server-issued UNGUESSABLE capability (H5): cross-client sharing
+        # requires both worlds to carry a REGISTERED group id, transferred
+        # deliberately between the consenting clients.
+        return {"group_id": f.create_topology_group(cid, note=body.note)}
+
     @app.get("/v2/version")
     def version(f: Foundry = Depends(get_foundry)):
         from sfe.store import SCHEMA_VERSION
+        # DFX-3: identify the EXACT running instrument, not the product family.
+        # engine_source_hash is computed from the loaded source at process
+        # start (build-derived, not operator-attested).
         return {"api": API_VERSION, "schema_version": SCHEMA_VERSION,
-                "runtime": "serendipity-foundry-sfe"}
+                "runtime": "serendipity-foundry-sfe",
+                "registration_open": bool(app.state.registration_open),
+                **release.identity()}
 
     # -- worlds ------------------------------------------------------------
     @app.post("/v2/worlds")
@@ -203,7 +265,9 @@ def create_app(db_path: str) -> FastAPI:
         return f.create_world(body.session_id, body.name,
                               sharing_policy=body.sharing_policy,
                               topology_group=body.topology_group,
-                              seed_root=body.seed_root, budget=body.budget)
+                              seed_root=body.seed_root,
+                              budget={k: v.model_dump()
+                                      for k, v in body.budget.items()})
 
     @app.get("/v2/worlds")
     def list_worlds(cid: str = Depends(auth), f: Foundry = Depends(get_foundry)):
@@ -232,7 +296,11 @@ def create_app(db_path: str) -> FastAPI:
     @app.post("/v2/worlds/{wid}/fork")
     def fork(wid: str, body: ForkRequest, cid: str = Depends(auth),
              f: Foundry = Depends(get_foundry)):
-        return {"children": f.fork(wid, body.checkpoint_id, body.children,
+        # drop unset optionals so the runtime's parent-inheritance defaults
+        # apply; strictness already enforced by the ForkChild model (DFX-4)
+        children = [{k: v for k, v in c.model_dump().items() if v is not None}
+                    for c in body.children]
+        return {"children": f.fork(wid, body.checkpoint_id, children,
                                    client_id=cid)}
 
     @app.get("/v2/worlds/{wid}/events")
@@ -283,14 +351,27 @@ def create_app(db_path: str) -> FastAPI:
                     f: Foundry = Depends(get_foundry)):
         return f.create_experiment(wid, body.spec, client_id=cid,
                                    hyp_id=body.hyp_id, pred_id=body.pred_id,
+                                   commit=body.commit,
+                                   enqueue=body.enqueue, kind=body.kind,
+                                   priority=body.priority)
+
+    @app.post("/v2/worlds/{wid}/experiments/{eid}/commit")
+    def commit_experiment(wid: str, eid: str, body: ExperimentCommit,
+                          cid: str = Depends(auth),
+                          f: Foundry = Depends(get_foundry)):
+        # the irreversible boundary: freezes spec, closes the prospective
+        # window, debits budget, records release identity, authorizes execution
+        return f.commit_experiment(wid, eid, client_id=cid,
                                    enqueue=body.enqueue, kind=body.kind,
                                    priority=body.priority)
 
     @app.post("/v2/worlds/{wid}/observations")
     def observations(wid: str, body: ObservationCreate, cid: str = Depends(auth),
                      f: Foundry = Depends(get_foundry)):
-        return {"obs_id": f.record_observation(wid, body.exp_id, body.content,
-                body.outcome, client_id=cid, pred_id=body.pred_id)}
+        return {"obs_id": f.record_observation(
+            wid, body.exp_id, body.content, body.outcome, client_id=cid,
+            pred_id=body.pred_id, work_id=body.work_id,
+            retrospective=body.retrospective)}
 
     @app.post("/v2/worlds/{wid}/failures")
     def record_failure(wid: str, body: FailureCreate, cid: str = Depends(auth),
@@ -341,19 +422,21 @@ def create_app(db_path: str) -> FastAPI:
                   f: Foundry = Depends(get_foundry)):
         # ownership is enforced at the runtime layer (client_id), where the
         # ledger write actually happens -- not only here at the API wrapper.
+        # claim_id is the H1 fencing token: a stale attempt cannot act.
         return f.heartbeat(work_id, body.worker_id, lease_s=body.lease_s,
-                           client_id=cid)
+                           claim_id=body.claim_id, client_id=cid)
 
     @app.post("/v2/work/{work_id}/complete")
     def complete(work_id: str, body: WorkComplete, cid: str = Depends(auth),
                  f: Foundry = Depends(get_foundry)):
         return f.complete_work(work_id, body.worker_id, body.result,
-                               client_id=cid)
+                               claim_id=body.claim_id, client_id=cid)
 
     @app.post("/v2/work/{work_id}/fail")
     def fail(work_id: str, body: WorkFail, cid: str = Depends(auth),
              f: Foundry = Depends(get_foundry)):
         return f.fail_work(work_id, body.worker_id, body.error,
-                           retry=body.retry, client_id=cid)
+                           retry=body.retry, claim_id=body.claim_id,
+                           client_id=cid)
 
     return app

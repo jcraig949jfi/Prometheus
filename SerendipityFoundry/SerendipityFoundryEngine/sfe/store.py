@@ -31,7 +31,7 @@ import time
 from pathlib import Path
 from typing import Any, Iterator, Optional
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
 
 # The schema is intentionally explicit and constrained: NOT NULLs, CHECK
 # enumerations on lifecycle columns, and foreign keys, so a bad transition or a
@@ -73,6 +73,10 @@ CREATE TABLE IF NOT EXISTS worlds (
     seed_root       INTEGER NOT NULL,
     next_index      INTEGER NOT NULL DEFAULT 0,   -- next world event index
     head_hash       TEXT NOT NULL DEFAULT '',     -- entry_hash of last event
+    budget_root     TEXT,               -- world whose budget row is AUTHORITATIVE
+                                        -- for this lineage (self for roots; a
+                                        -- fork child inherits the parent's root
+                                        -- so forking cannot mint fresh budget)
     created_ts      REAL NOT NULL,
     terminated_ts   REAL
 );
@@ -132,6 +136,10 @@ CREATE TABLE IF NOT EXISTS work_items (
     max_attempts  INTEGER NOT NULL DEFAULT 3,
     dedup_key     TEXT,
     claimed_by    TEXT,
+    claim_id      TEXT,                -- server-issued FENCING token for the
+                                       -- current claim attempt; cleared on
+                                       -- reclaim so a stale attempt can never
+                                       -- complete the current one
     lease_expires REAL,
     heartbeat_ts  REAL,
     result        TEXT,
@@ -183,6 +191,12 @@ CREATE TABLE IF NOT EXISTS experiments (
     work_id     TEXT REFERENCES work_items(work_id),
     state       TEXT NOT NULL DEFAULT 'CREATED'
                 CHECK (state IN ('CREATED','RUNNING','OBSERVED','ABANDONED')),
+    committed_seq INTEGER,             -- event_seq of EXPERIMENT_COMMITTED: the
+                                       -- irreversible boundary that freezes the
+                                       -- prospective-prediction window, debits
+                                       -- budget and authorizes execution.
+                                       -- NULL = REGISTERED (non-executable).
+    committed_ts  REAL,
     created_ts  REAL NOT NULL,
     created_seq INTEGER NOT NULL
 );
@@ -196,6 +210,13 @@ CREATE TABLE IF NOT EXISTS observations (
     content      TEXT NOT NULL,
     outcome      TEXT NOT NULL
                  CHECK (outcome IN ('FALSIFIED','SURVIVED','INCONCLUSIVE')),
+    pred_prospective INTEGER,          -- 1 iff the bound prediction preceded the
+                                       -- experiment's COMMIT (mechanical; NULL
+                                       -- when no prediction is bound)
+    evidence_class TEXT NOT NULL DEFAULT 'CLIENT_ASSERTED'
+                 CHECK (evidence_class IN ('ENGINE_WORK_RESULT',
+                                           'CLIENT_ASSERTED')),
+    work_id      TEXT REFERENCES work_items(work_id),
     created_ts   REAL NOT NULL,
     created_seq  INTEGER NOT NULL
 );
@@ -268,6 +289,17 @@ CREATE TABLE IF NOT EXISTS budgets (
     updated_ts  REAL NOT NULL
 );
 
+-- Registered cross-client sharing groups (H5). A group id is a server-issued
+-- UNGUESSABLE capability: two clients share it only by deliberate transfer, so
+-- matching topology_group strings alone can never manufacture "bilateral
+-- consent" -- the group must exist here for a cross-client crossing.
+CREATE TABLE IF NOT EXISTS topology_groups (
+    group_id    TEXT PRIMARY KEY,
+    created_by  TEXT NOT NULL REFERENCES clients(client_id),
+    note        TEXT,
+    created_ts  REAL NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS checkpoints (
     checkpoint_id TEXT PRIMARY KEY,
     world_id      TEXT NOT NULL REFERENCES worlds(world_id),
@@ -327,10 +359,50 @@ class Store:
             if row is None:
                 cx.execute("INSERT INTO meta(key,value) VALUES(?,?)",
                            ("schema_version", str(SCHEMA_VERSION)))
-            elif int(row["value"]) != SCHEMA_VERSION:
-                raise RuntimeError(
-                    f"db schema version {row['value']} != {SCHEMA_VERSION}; "
-                    f"refusing to run against a mismatched database")
+                return
+            have = int(row["value"])
+            if have == SCHEMA_VERSION:
+                return
+            if have == 1:
+                self._migrate_1_to_2(cx)
+                cx.execute("UPDATE meta SET value=? WHERE key='schema_version'",
+                           (str(SCHEMA_VERSION),))
+                return
+            raise RuntimeError(
+                f"db schema version {have} != {SCHEMA_VERSION} and no "
+                f"migration path exists; refusing to run against a "
+                f"mismatched database")
+
+    @staticmethod
+    def _migrate_1_to_2(cx) -> None:
+        """v1 -> v2: the requalification-hardening columns. Additive only; no
+        rows are rewritten except the budget_root backfill. Pre-v2 worlds become
+        their OWN budget root (their historical world-local semantics are
+        preserved, never silently reinterpreted); lineage budget inheritance
+        applies to forks created from v2 onward."""
+        have = {r["name"] for r in cx.execute(
+            "PRAGMA table_info(worlds)").fetchall()}
+        if "budget_root" not in have:
+            cx.execute("ALTER TABLE worlds ADD COLUMN budget_root TEXT")
+        have = {r["name"] for r in cx.execute(
+            "PRAGMA table_info(work_items)").fetchall()}
+        if "claim_id" not in have:
+            cx.execute("ALTER TABLE work_items ADD COLUMN claim_id TEXT")
+        have = {r["name"] for r in cx.execute(
+            "PRAGMA table_info(experiments)").fetchall()}
+        if "committed_seq" not in have:
+            cx.execute("ALTER TABLE experiments ADD COLUMN committed_seq INTEGER")
+            cx.execute("ALTER TABLE experiments ADD COLUMN committed_ts REAL")
+        have = {r["name"] for r in cx.execute(
+            "PRAGMA table_info(observations)").fetchall()}
+        if "evidence_class" not in have:
+            cx.execute("ALTER TABLE observations ADD COLUMN "
+                       "pred_prospective INTEGER")
+            cx.execute("ALTER TABLE observations ADD COLUMN evidence_class "
+                       "TEXT NOT NULL DEFAULT 'CLIENT_ASSERTED'")
+            cx.execute("ALTER TABLE observations ADD COLUMN work_id TEXT")
+        cx.execute("UPDATE worlds SET budget_root=world_id "
+                   "WHERE budget_root IS NULL")
 
     # -- transactions ------------------------------------------------------
     @contextlib.contextmanager

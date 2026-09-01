@@ -38,6 +38,10 @@ def main() -> int:
     ap.add_argument("--tls-key", default=None)
     ap.add_argument("--insecure", action="store_true",
                     help="allow a non-loopback bind without TLS (tokens in clear)")
+    ap.add_argument("--registration", choices=("open", "closed"),
+                    default="open",
+                    help="closed = POST /v2/clients is operator-gated (403); "
+                         "existing tokens keep working. Use after bootstrap.")
     args = ap.parse_args()
 
     if _unspecified(args.host):
@@ -53,7 +57,8 @@ def main() -> int:
         return 2
 
     import uvicorn
-    app = create_app(args.db)
+    app = create_app(args.db,
+                     registration_open=(args.registration == "open"))
     scheme = "https" if tls else "http"
     print(f"Serendipity Foundry Engine listening on {scheme}://{args.host}:"
           f"{args.port}  db={args.db}")

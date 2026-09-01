@@ -89,13 +89,21 @@ def test_work_lifecycle_over_http(client):
                         json={"worker_id": "wk", "world_id": wid},
                         headers=_h(tok)).json()["work"]
     assert claim is not None and claim["work_id"] == e["work_id"]
+    assert claim["claim_id"]              # H1: server-issued fencing token
     hb = client.post(f"/v2/work/{claim['work_id']}/heartbeat",
-                     json={"worker_id": "wk"}, headers=_h(tok))
+                     json={"worker_id": "wk", "claim_id": claim["claim_id"]},
+                     headers=_h(tok))
     assert hb.status_code == 200
     done = client.post(f"/v2/work/{claim['work_id']}/complete",
-                       json={"worker_id": "wk", "result": {"score": 1.0}},
+                       json={"worker_id": "wk", "claim_id": claim["claim_id"],
+                             "result": {"score": 1.0}},
                        headers=_h(tok))
     assert done.status_code == 200 and done.json()["status"] == "COMPLETED"
+    # a completion WITHOUT the fencing token is a validation failure
+    bare = client.post(f"/v2/work/{claim['work_id']}/complete",
+                       json={"worker_id": "wk", "result": {"score": 1.0}},
+                       headers=_h(tok))
+    assert bare.status_code == 422
 
 
 def test_extra_field_rejected(client):
@@ -109,9 +117,10 @@ def test_openapi_is_generated(client):
     r = client.get("/v2/openapi.json")
     assert r.status_code == 200
     spec = r.json()
-    assert spec["info"]["version"] == "2.0.0"
+    assert spec["info"]["version"] == "2.1.0"
     assert "/v2/worlds/{wid}/fork" in spec["paths"]
     assert "/v2/work/claim" in spec["paths"]
+    assert "/v2/worlds/{wid}/experiments/{eid}/commit" in spec["paths"]
 
 
 def test_work_claim_is_client_scoped(client):

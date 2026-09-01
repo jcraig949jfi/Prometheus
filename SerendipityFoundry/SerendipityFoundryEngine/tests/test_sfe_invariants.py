@@ -143,11 +143,14 @@ def test_t5_worker_death_reclaim(foundry):
     assert reclaim["work_id"] == work
     assert reclaim["claimed_by"] == "live-worker"
     assert reclaim["attempts"] == 2        # a retry, tracked honestly
-    done = foundry.complete_work(work, "live-worker", {"ok": True})
+    done = foundry.complete_work(work, "live-worker", {"ok": True},
+                                 claim_id=reclaim["claim_id"])
     assert done["status"] == "COMPLETED"
-    # the dead worker's late completion is rejected
+    # the dead worker's late completion is rejected: its fencing token went
+    # stale at reclaim (H1) -- even presenting it changes nothing
     with pytest.raises(ConflictError):
-        foundry.complete_work(work, "dead-worker", {"ok": False})
+        foundry.complete_work(work, "dead-worker", {"ok": False},
+                              claim_id=claim["claim_id"])
 
 
 # ---- T6: Foundry restart during active experiment --------------------------
@@ -161,8 +164,8 @@ def test_t6_foundry_restart_recovery(db_path):
     w1 = f1.enqueue_work(wid, "job", {"x": 1}, client_id=c)
     w2 = f1.enqueue_work(wid, "job", {"x": 2}, client_id=c)
     done = f1.claim_work("wk", world_id=wid, lease_s=0.05)  # in-flight, short lease
-    f1.complete_work(w1, "wk", {"r": 1}) if done["work_id"] == w1 else \
-        f1.complete_work(done["work_id"], "wk", {"r": 1})
+    f1.complete_work(done["work_id"], "wk", {"r": 1},
+                     claim_id=done["claim_id"])
     # a second item is left claimed with a short lease, then the Foundry dies
     inflight = f1.claim_work("wk", world_id=wid, lease_s=0.05)
     f1.close()
@@ -173,7 +176,8 @@ def test_t6_foundry_restart_recovery(db_path):
         # the in-flight item's lease has expired: it is reclaimable
         reclaim = f2.claim_work("wk2", world_id=wid, lease_s=5.0)
         assert reclaim["work_id"] == inflight["work_id"]
-        f2.complete_work(reclaim["work_id"], "wk2", {"r": 2})
+        f2.complete_work(reclaim["work_id"], "wk2", {"r": 2},
+                         claim_id=reclaim["claim_id"])
         counts = {r["status"]: r["n"] for r in f2.store.read().execute(
             "SELECT status, COUNT(*) n FROM work_items WHERE world_id=? "
             "GROUP BY status", (wid,)).fetchall()}
@@ -187,10 +191,12 @@ def test_t6_foundry_restart_recovery(db_path):
 def test_t7_duplicate_completion(foundry):
     c, wid = _mkworld(foundry, "c")
     work = foundry.enqueue_work(wid, "job", {}, client_id=c)
-    foundry.claim_work("w1", world_id=wid, lease_s=5.0)
-    r1 = foundry.complete_work(work, "w1", {"answer": 1})
+    cl = foundry.claim_work("w1", world_id=wid, lease_s=5.0)
+    r1 = foundry.complete_work(work, "w1", {"answer": 1},
+                               claim_id=cl["claim_id"])
     with pytest.raises(ConflictError):
-        foundry.complete_work(work, "w2", {"answer": 2})
+        foundry.complete_work(work, "w2", {"answer": 2},
+                              claim_id=cl["claim_id"])
     # the authoritative result is w1's, unchanged
     assert foundry.get_work(work)["result"] == {"answer": 1}
     assert foundry.get_work(work)["result_hash"] == r1["result_hash"]
@@ -214,7 +220,8 @@ def test_t7_concurrent_claim_is_exclusive(db_path):
                     return
                 with lock:
                     claimed_by.setdefault(cl["work_id"], []).append(name)
-                f.complete_work(cl["work_id"], name, {"i": cl["payload"]["i"]})
+                f.complete_work(cl["work_id"], name, {"i": cl["payload"]["i"]},
+                                claim_id=cl["claim_id"])
         finally:
             f.close()
 
@@ -480,9 +487,9 @@ def test_t16_deterministic_replay(foundry):
     # and idempotent completion returns the same authoritative result hash
     work = foundry.enqueue_work(wid, ex.kind, {"bits": "0101010101010101"},
                                 client_id=c)
-    foundry.claim_work("w1", world_id=wid, lease_s=30)
-    a = foundry.complete_work(work, "w1", r1.result)
-    b = foundry.complete_work(work, "w1", r1.result)
+    cl = foundry.claim_work("w1", world_id=wid, lease_s=30)
+    a = foundry.complete_work(work, "w1", r1.result, claim_id=cl["claim_id"])
+    b = foundry.complete_work(work, "w1", r1.result, claim_id=cl["claim_id"])
     assert a["result_hash"] == b["result_hash"]
 
 

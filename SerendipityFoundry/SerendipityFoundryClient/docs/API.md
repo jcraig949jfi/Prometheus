@@ -8,8 +8,12 @@ requires `Authorization: Bearer gen2_…` (see
 [CONNECTING.md](CONNECTING.md#3-getting-a-token-authentication)). Missing/unknown
 token → `401`. A world you don't own → `403`.
 
-**Request bodies** are JSON and **fail closed**: unknown fields are rejected
-(`422`), because a scientific request must not carry silently-ignored parameters.
+**Request bodies** are JSON and **fail closed recursively**: unknown fields are
+rejected (`422`) at every level of scientific/control configuration — including
+nested budget specs, fork-child specs, and an artifact's `info_kind` — because a
+scientific request must not carry silently-ignored parameters. Three payloads are
+freeform **by design** and documented as such: an experiment's `spec`, a
+fork-child's `interventions`, and an artifact's `meta` (except its `info_kind`).
 
 **Errors** come back as `{"detail": {"error": "<code>", "message": "...", ...}}`
 with an HTTP status:
@@ -29,9 +33,15 @@ The examples show `curl` (with `--cacert`) and the equivalent `sfclient` call.
 ## Identity & liveness
 
 ### `GET /v2/version` — identity, no auth
+Reports the **exact running build**: `engine_source_hash` is computed from the
+loaded source at process start (build-derived, not operator-attested) and is also
+stamped into every `EXPERIMENT_COMMITTED` event, so a result can be bound to the
+instrument that produced it. Pin this hash when you qualify.
 ```bash
 curl --cacert config/m1.crt https://192.168.1.202:8811/v2/version
-# → {"api":"v2","schema_version":1,"runtime":"serendipity-foundry-sfe"}
+# → {"api":"v2","schema_version":2,"runtime":"serendipity-foundry-sfe",
+#    "registration_open":true,
+#    "engine_source_hash":"sha256:…","source_commit":"…"}
 ```
 ```python
 c.version()
@@ -182,9 +192,25 @@ c.lineage(wid, "hypothesis", hyp_id, direction="descendants")
 
 ## Epistemic protocol
 
-Honest ordering is enforced: a prediction registered **after** an observation
-cannot claim to have predicted it (the Engine records real sequence numbers; a
-back-dating attempt is rejected `409 prediction_ordering`).
+**The experiment COMMIT boundary is the load-bearing invariant.** An experiment
+is first *registered* (a plan: editable, non-executable, no budget) and then
+*committed*. Commit is irreversible and atomic: it freezes the spec, **closes the
+prospective-prediction window**, debits the experiment budget, stamps the running
+release identity, and (optionally) releases the experiment for execution.
+
+Honest ordering is enforced **at commit, not at observation** — this matters
+because work is executed remotely under a lease, so a worker can know the outcome
+before the server sees an observation. A prediction is **prospective** for an
+experiment iff it was registered *before that experiment's commit*
+(`prediction.created_seq < experiment.committed_seq`). A prediction registered
+after commit is refused (`409 prediction_ordering_error`) unless you pass
+`retrospective=true`, and is then recorded but **never** counted as prospective.
+Observations are only accepted on committed experiments.
+
+Evidence carries provenance: an observation is `ENGINE_WORK_RESULT` when bound to
+a verified completed work item (pass `work_id`), else `CLIENT_ASSERTED`. The class
+is immutable and travels into the `CLAIM_SURVIVED` / `CLAIM_FALSIFIED` event — a
+client assertion can never masquerade as an engine-attested result.
 
 ### `POST /v2/worlds/{wid}/hypotheses`
 ```python
@@ -197,19 +223,32 @@ p = c.prediction(wid, h, {"expected_score": 1.0})     # → pred_id
 ```
 
 ### `POST /v2/worlds/{wid}/experiments`
-Body: `spec` (opaque to the Engine), optional `hyp_id`/`pred_id`, and
-`enqueue`/`kind`/`priority` to also queue it as work.
+Body: `spec` (freeform, opaque to the Engine), optional `hyp_id`/`pred_id`,
+`commit` (default `true` — register **and** commit atomically), and
+`enqueue`/`kind`/`priority` (enqueue requires commit). `commit:false` registers a
+plan only.
 ```python
-e = c.experiment(wid, {"bits": "1111"}, hyp_id=h, pred_id=p)          # record only
-e = c.experiment(wid, {"bits": "1111"}, enqueue=True, kind="evaluate") # + queue work
-# → {"exp_id":"exp_…", "work_id":"wrk_…"?}   (work_id present iff enqueue=True)
+e = c.experiment(wid, {"bits": "1111"}, hyp_id=h, pred_id=p)        # register+commit
+plan = c.experiment(wid, {"bits": "1111"}, commit=False)           # plan only
+e = c.experiment(wid, {"bits": "1111"}, enqueue=True, kind="evaluate")  # +release work
+# → {"exp_id":"exp_…", "work_id":"wrk_…"?, "committed_seq":N?}
+```
+
+### `POST /v2/worlds/{wid}/experiments/{eid}/commit`
+Cross the irreversible boundary for a previously registered plan.
+```python
+c.commit_experiment(wid, plan["exp_id"], enqueue=True, kind="evaluate")
 ```
 
 ### `POST /v2/worlds/{wid}/observations`
-`outcome` is your verdict string (e.g. `SURVIVED` / `FALSIFIED`). Pass `pred_id`
-to bind the observation to a pre-registered prediction.
+On a **committed** experiment. `outcome` ∈ `SURVIVED`/`FALSIFIED`/`INCONCLUSIVE`.
+`pred_id` binds a prediction (prospective iff it preceded commit); a post-commit
+prediction needs `retrospective=true`. `work_id` binds the authoritative work
+result (→ `ENGINE_WORK_RESULT`).
 ```python
-o = c.observation(wid, e["exp_id"], {"score": 1.0}, "SURVIVED", pred_id=p)  # → obs_id
+o = c.observation(wid, e["exp_id"], {"score": 1.0}, "SURVIVED", pred_id=p)
+o = c.observation(wid, e["exp_id"], {"score": 1.0}, "SURVIVED",
+                  work_id=e["work_id"])              # engine-attested evidence
 ```
 
 ### `POST /v2/worlds/{wid}/failures` — record a first-class failure
@@ -233,10 +272,22 @@ art = c.artifact(wid, "best", b"discovered-bytes", {"info_kind": "artifact"})
 # → {"artifact_id":"art_…","blob_hash":"…","origin":"NATIVE"}
 ```
 
+### `POST /v2/topology-groups` — mint a registered sharing capability
+Cross-**client** sharing requires a **registered** `topology_group` — an
+unguessable, server-issued capability. Mint one, then hand its id to the other
+client out of band and set it on both worlds. (Matching a fabricated or
+self-minted group id grants nothing.)
+```python
+gid = c.create_topology_group(note="A<->B share")   # → "grp_…"
+```
+
 ### `POST /v2/worlds/{wid}/import` — import from another world (provenance kept)
-Allowed only when source and destination share a `topology_group` and the
-destination policy admits that `info_kind`; otherwise `403`. The imported copy
-records `origin: IMPORTED` and `source_world`.
+Same-client import: allowed when both worlds share a `topology_group` and the
+destination policy admits the `info_kind`. **Cross-client** import additionally
+requires that shared group to be **registered**, the source policy to emit the
+kind, and the source artifact to be a **NATIVE origin** (no transitive re-export
+of an imported copy — H6). Otherwise `403`. The copy records `origin: IMPORTED`
+plus full source lineage.
 ```python
 imp = c.import_artifact(dst_wid, src_wid, art["artifact_id"])
 # → {"artifact_id":"art_…","origin":"IMPORTED","source_world":"wld_…", …}
@@ -258,31 +309,35 @@ c.consume_budget(wid, "experiments", 1)
 ## Work queue (for workers)
 
 A **RemoteWorker** claims work, runs a local executor, heartbeats, and commits.
-Claims can be scoped to one world (ownership checked) or left open to any world
-the token owns. Completion is idempotent exactly-once; an expired lease is
-reclaimed for another worker.
+Claims are always scoped to the caller's own worlds; passing `world_id` narrows to
+one. Completion is idempotent exactly-once; an expired lease is reclaimed.
+
+**Lease fencing:** a claim returns a server-issued **`claim_id`** that identifies
+*this claim attempt*. It is **required** on heartbeat/complete/fail, and is
+invalidated the moment the lease is reclaimed — so a stale attempt can never
+complete the current one, *even from the same `worker_id`*. (`sfclient`'s
+`RemoteWorker` threads it for you.)
 
 ### `POST /v2/work/claim`
 ```bash
-curl --cacert config/m1.crt -X POST https://192.168.1.202:8811/v2/work/claim \
-     -H "authorization: Bearer $TOKEN" -H 'content-type: application/json' \
-     -d '{"worker_id":"w1","world_id":"wld_…","lease_s":30}'
-# → {"work": {"work_id":"wrk_…","kind":"evaluate","payload":{…}} }   (or {"work":null})
+curl … -d '{"worker_id":"w1","world_id":"wld_…","lease_s":30}'
+# → {"work": {"work_id":"wrk_…","claim_id":"clm_…","kind":"evaluate",
+#             "payload":{…}} }   (or {"work":null})
 ```
 
 ### `POST /v2/work/{work_id}/heartbeat` — extend the lease
 ```bash
--d '{"worker_id":"w1","lease_s":30}'
+-d '{"worker_id":"w1","claim_id":"clm_…","lease_s":30}'
 ```
 
 ### `POST /v2/work/{work_id}/complete` — commit the result (authoritative)
 ```bash
--d '{"worker_id":"w1","result":{"score":1.0,"solved":true}}'
+-d '{"worker_id":"w1","claim_id":"clm_…","result":{"score":1.0}}'
 ```
 
 ### `POST /v2/work/{work_id}/fail` — report failure (optionally requeue)
 ```bash
--d '{"worker_id":"w1","error":"executor blew up","retry":true}'
+-d '{"worker_id":"w1","claim_id":"clm_…","error":"…","retry":true}'
 ```
 
 All four in Python are wrapped by `RemoteWorker`:
