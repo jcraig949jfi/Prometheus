@@ -199,3 +199,72 @@ def canonical_mutators(sub_name):
     if sub_name == "RELAX":
         out = [GaussianStep(0.25), GaussianStep(1.0), GaussianStep(4.0)]
     return out
+
+
+# ============================================================ AMENDMENT A-B1
+# Added 2026-09-01 AFTER E2 ran, BEFORE E3 was frozen. Journaled as an
+# amendment naming the affected experiments (E3 onward); E1 and E2 are
+# unaffected because nothing above this line was edited -- these are additions.
+#
+# WHY, and the disclosure that goes with it. E2 made an IDENTIFICATION problem
+# explicit: every operator except M-UNIFORM is substrate-typed (a byte scramble
+# has no meaning on a DNF, a wire rewire none on a byte string), so the matrix
+# as built is NESTED, not crossed, and a nested design cannot separate a
+# substrate main effect from an operator main effect -- which is precisely the
+# separation this campaign's third mandate calls mandatory.
+#
+# The two operators below are SUBSTRATE-AGNOSTIC by construction: they use only
+# the Substrate interface (sites / alternatives / apply) and know nothing about
+# what a site means. With M-UNIFORM they give three shared operators across
+# three discrete substrates: a real 3x3 crossed factorial.
+#
+# DISCLOSED: I had seen E2's Q table before writing these. They are motivated by
+# the identification problem, not by any measured value -- neither one is tuned
+# to move any coordinate, and both are defined without reference to the ruler.
+# The reader should weigh the ordering; it is recorded rather than hidden.
+
+
+class UniformDouble(Mutator):
+    """TWO independent uniform single-site edits. Substrate-agnostic.
+
+    The intervention-BUDGET arm: identical in every respect to M-UNIFORM except
+    that the budget is 2 rather than 1. It is what makes "is brittleness a
+    property of the map or of how far we stepped" a measurable question instead
+    of an assumption.
+    """
+    name = "M-UNIFORM2"
+
+    def __call__(self, sub, g, rng):
+        cur = g
+        sites = []
+        for _ in range(2):
+            ss = sub.sites(cur)
+            site = ss[int(rng.integers(len(ss)))]
+            alts = sub.alternatives(cur, site)
+            if not alts:
+                return None
+            cur = sub.apply(cur, site, alts[int(rng.integers(len(alts)))])
+            sites.append(site)
+        return cur, tuple(sites), {"kind": "uniform2", "budget": 2}
+
+
+class TailSite(Mutator):
+    """Uniform alternative, but only at sites in the LAST THIRD of the genotype.
+
+    Substrate-agnostic: it reads position in the site list and nothing else. A
+    positional bias is the weakest possible way to make an operator differ from
+    uniform, which is the point -- if even this moves a Q coordinate more than
+    the substrate does, operator-dominance is not a subtle claim.
+    """
+    name = "M-TAILSITE"
+
+    def __call__(self, sub, g, rng):
+        ss = sub.sites(g)
+        lo = (2 * len(ss)) // 3
+        pool = ss[lo:] or ss
+        site = pool[int(rng.integers(len(pool)))]
+        alts = sub.alternatives(g, site)
+        if not alts:
+            return None
+        return sub.apply(g, site, alts[int(rng.integers(len(alts)))]), site, \
+            {"kind": "tailsite"}
