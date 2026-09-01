@@ -1,0 +1,74 @@
+=====================================================================
+SERENDIPITY FOUNDRY -- NEXT-RELEASE ENGINEERING SPECIFICATION
+Filed by Harmonia A (M2) after D-14/B/C. Date: 2026-09-01.
+Consolidates D14_M1_REQUIREMENTS R1-R5, four external reviews, and
+instrument findings IF-1..IF-5. Nothing here modifies any
+experiment in progress.
+=====================================================================
+S1. GLOBAL EFFECTIVE-CONFIG INVARIANT (release-blocking; from IF-1)
+  Every configurable scientific operation preserves the chain
+  requested -> validated -> effective -> recorded. Every creation/
+  event record exposes requested_config, effective_config,
+  effective_config_hash. Unknown/ignored/unsupported/ineffective
+  scientific configuration FAILS CLOSED (422). Silent coercion
+  forbidden. ADVERSARIAL CONTRACT TESTS: for every configurable
+  route, mutate every configurable field and assert either a
+  changed effective config or an explicit rejection; include the
+  exact IF-1 reproduction (contradictory operator configs at one
+  seed must NOT yield identical children with identical config
+  hashes). IF-1's recurrence across releases (D-13 SP endpoints,
+  now /v0/artifacts) is why this must be a GLOBAL API invariant,
+  not another endpoint patch.
+S2. PER-RESPONSE RELEASE IDENTITY (from incident H-1)
+  Required response header (e.g. X-Foundry-Release: <source_tree_
+  hash>) on every route + ledger provenance. Pinned clients fail
+  immediately on mismatch, removing the 25-call re-check heuristic.
+S3. SITE-ADDRESSED INTERVENTION ENDPOINT (unblocks D-14D)
+  POST /v0/artifacts/{id}/site_intervention
+  body: { coordinate_system: "serialized_byte" | (future:
+         structural), site, rule: canonical perturbation rule id,
+         rule_parameters, battery_id, seed }
+  Semantics: single server-side transaction -- validate artifact +
+  site range + rule; apply exactly one-site perturbation; persist
+  child with lineage; evaluate parent and child under the named
+  battery; RETURN RAW EVIDENCE, not an interpreted scalar:
+    parent/child artifact ids + genotype_addrs; requested_
+    intervention, effective_intervention, effective_intervention_
+    hash; exact genotype diff; battery identity/hash; per-case
+    parent/child output hashes, trajectory/state hashes where
+    available, first divergence step where defined, typed
+    failures, resource accounting; release identity, event_seq,
+    trace_id.
+  The server must PROVE the effective intervention satisfies the
+  requested contract or fail closed (422). Multiple frozen rulers
+  consume the same evidence; no client comparators.
+S4. TRAJECTORY/STATE EVIDENCE ON EVALUATE (from IF-5)
+  The engine advertises trace/behavior_trace but /v0/evaluate
+  cannot request them; limits.extra keys are accepted-and-ignored.
+  Either expose a first-class trace request (typed field, not
+  extra) returning trace_addr for content-addressed trajectory
+  hashes, or remove the advertisement. Accepted-and-ignored extra
+  keys on scientific routes should at minimum be echoed as
+  ignored_fields.
+S5. OPT-IN PERSISTED SEARCH-PHYSICS PAIRS (from IF-2)
+  displacement/locality accept persist_pairs: true; parents/
+  children land in the artifact store with lineage. Retention
+  tiers: canonical lineage/provenance indefinitely; genotype +
+  consequence records indefinitely for preregistered experiments;
+  bulky execution traces tiered/hydrated (e.g. 30-day hot window).
+  Principle: scientific addressability is itself provenance -- an
+  observation that cannot be reconnected to its manipulated object
+  preserves a measurement but destroys part of the experiment.
+S6. VERSIONED BEHAVIOR RULERS (from reviews Q12)
+  POST /v0/physics/distance { artifact_a, artifact_b, battery_id,
+  metric_id, metric_version } -> per-case distances + aggregate,
+  valid-case mask, fault relation, hashes, full metric provenance.
+  Rulers become named, versioned server objects.
+S7. DOCUMENTATION FIX (from IF-3): state explicitly that
+  artifact_id is a record hash and genotype_addr = sha256(genotype
+  bytes).
+EXIT CRITERION (Phase 0): a release passing the S1 adversarial
+suite + S2 header + S3 endpoint with its contract tests. D-14D
+(sampling-measure translation) is authorized only against such a
+release.
+=====================================================================
