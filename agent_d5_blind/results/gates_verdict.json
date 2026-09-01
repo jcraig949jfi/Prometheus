@@ -1,0 +1,75 @@
+{
+ "gates": {
+  "G1": {
+   "pass": true,
+   "value": [
+    58,
+    20
+   ]
+  },
+  "G2": {
+   "pass": true,
+   "note": "R==E theorem; uninformative"
+  },
+  "G3": {
+   "value": 0.22380952380952382,
+   "band": [
+    0.08,
+    0.7
+   ],
+   "pass": true
+  },
+  "G4": {
+   "delta": 0.10952380952380954,
+   "p_one_sided": 0.0006999300069993001,
+   "n_tasks": 42,
+   "se": 0.03421757327263441,
+   "margin": 0.1,
+   "alpha": 0.05,
+   "pass": true,
+   "weakly_informative": true,
+   "per_family": {
+    "F1": 0.05,
+    "F2": 0.0,
+    "F3": 0.12,
+    "F4": 0.2333
+   }
+  },
+  "G5": {
+   "hacr": 2.1348949919224554,
+   "ci90": [
+    0.9338868388683886,
+    3.6985802693847836
+   ],
+   "n_joint": 13,
+   "pass": false
+  },
+  "G6": {
+   "late_minus_early": -0.0009090909090909011,
+   "p": 0.48565143485651435,
+   "pass": false
+  },
+  "G8": {
+   "ctrl_delta": 0.06000000000000001,
+   "n": 10,
+   "pass": true
+  },
+  "G7": {
+   "delta": 0.05,
+   "p": 0.25637436256374363,
+   "n": 20,
+   "se": 0.040717253552297765,
+   "pass": false
+  },
+  "G9": {
+   "retention": {
+    "M1-random-library": 0.3913043478260869,
+    "M1-shuffled-history": 1.0
+   },
+   "g4_adv": 0.10952380952380954,
+   "pass": false
+  }
+ },
+ "notes": [],
+ "verdict": "HISTORY_FINDABILITY_ADVANTAGE"
+}

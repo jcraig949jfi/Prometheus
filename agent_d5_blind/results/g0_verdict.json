@@ -1,0 +1,43 @@
+{
+ "gates": {
+  "G0a": true,
+  "G0b": true,
+  "G0c": true,
+  "G0d": true,
+  "G0e": true
+ },
+ "inputs": {
+  "PF1_classes": 164,
+  "PF2_reach": 0.4,
+  "PF3_reach": {
+   "NAV-POP": 0.4,
+   "NAV-HC": 0.23333333333333334,
+   "NAV-RX": 0.5666666666666667
+  },
+  "PF3_ratio": 2.429,
+  "PF4_base": {
+   "NAV-RX": 0.5666666666666667
+  },
+  "PF4_rel_drops": {
+   "OP_REPLACE": 0.0,
+   "ARG_TWEAK": 0.118,
+   "INSERT": 0.412,
+   "DELETE": 0.059,
+   "SWAP": 0.353,
+   "DUP_BLOCK": 0.059
+  },
+  "PF5_reach": 0.2
+ },
+ "G0": true,
+ "verdict": "G0_PASS",
+ "frozen_gates": {
+  "G0a_min_classes": 120,
+  "G0b_min_pf2_reach": 0.3,
+  "G0c_min_navigators": 2,
+  "G0c_nav_reach": 0.25,
+  "G0c_max_ratio": 3.0,
+  "G0d_max_rel_drop": 0.8,
+  "G0e_max_pp_delta": 0.25
+ },
+ "main_comparator_frozen": "NAV-RX"
+}
