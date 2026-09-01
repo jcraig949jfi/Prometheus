@@ -1,0 +1,72 @@
+=====================================================================
+HARMONIA B GEN-3B -- FREEZE E6: CROSS-SUBSTRATE PREDICTOR TRANSFER
+Issued 2026-09-01, BEFORE any E6 analysis is run.
+Prior state: E5 CURRENT_RULER_DOES_NOT_PREDICT_SEARCH. PC-4 falsified
+(rho 0.20 / -0.01). PC-3a falsified in A's favour (middle mass reaches
+0.600 on real substrates). Neither family reaches 0.70.
+=====================================================================
+
+HYPOTHESIS
+  Some property measured BEFORE search, on k-1 substrate families,
+  predicts search outcome on a HELD-OUT family it was never fitted to.
+  This is the campaign's strongest possible positive result and it is
+  deliberately the hardest thing here to obtain.
+
+NULL / COMPETING EXPLANATIONS
+  N-a  NO_TRANSFERABLE_NAVIGABILITY_COORDINATE. Nothing transfers; each
+       family needs its own ruler. A FIRST-CLASS outcome, not a failure.
+  N-b  Transfer is really baseline-difficulty transfer: q13 (starting
+       distance) does the work and the geometry adds nothing. Tested by
+       including q13 as a competing single predictor and by requiring
+       any winner to beat it.
+  N-c  n is too small and any apparent transfer is noise. Tested by a
+       label-permutation null.
+
+UNIT OF ANALYSIS -- and why it changed from the charter's wording
+  The charter said "leave one substrate out" over cells. With nine real
+  cells that is a 9-point regression and it is not adjudicable. The
+  assay already computes the target-relative coordinates PER TARGET, and
+  E5 already produced outcomes PER (cell, target). So the unit here is
+  the (cell x target) pair: 9 real cells x 10 targets = 90 rows, with
+  folds still cut BY SUBSTRATE FAMILY so that no row of a held-out
+  family is ever in train. This is a resolution change, not a bar
+  change, and it is declared before any E6 number exists.
+
+INTERVENTION
+  Families: CIRCUIT (3 cells), BYTEVM (2), DNF (1), RELAX (3).
+  Leave-one-FAMILY-out, 4 folds. Train on all rows of the other three
+  families; predict held-out rows. Both acceptance modes, separately.
+  PREDICTORS, each evaluated ALONE (no multivariate fit at this n):
+     q1, q2, q3, q4, q5, q10(target), q11(target), q13(target)
+  and the frozen composite  C = q4 * (1 - q2)   declared here, before
+  looking: graded consequence discounted by destruction. It is the
+  simplest two-term combination the campaign's own results motivate and
+  it is fixed now so it cannot be tuned later.
+
+FROZEN METRIC AND GATES
+  E6-G1  TRANSFER iff some single predictor achieves held-out Spearman
+         rho >= 0.50 in ALL FOUR folds, in at least one acceptance mode.
+  E6-G2  It must BEAT the difficulty null: that predictor's mean
+         held-out rho must exceed q13's by >= 0.10.
+  E6-G3  It must beat a label-permutation null: mean held-out rho above
+         the 99th percentile of 200 within-train label permutations.
+  All three -> TRANSFERABLE. Any failure -> NO_TRANSFERABLE_
+  NAVIGABILITY_COORDINATE, reported as a first-class result with the
+  achieved numbers.
+
+CONTROLS
+  The three designed controls are EXCLUDED from E6 entirely. They are
+  constructions, they are not a substrate family, and including them
+  would let a designed landscape decide a transfer claim. Their effect
+  on transfer is instead reported separately as a sensitivity note.
+
+KILL CONDITION
+  DNF is a single-cell family; its fold predicts 10 rows from one cell
+  and is UNDERPOWERED BY CONSTRUCTION. If the verdict turns on the DNF
+  fold alone, E6 reports INSUFFICIENTLY_ADJUDICATED for that fold rather
+  than counting it as a pass or a fail.
+
+WHAT THE RESULT CHANGES
+  A pass licenses a SUBSTRATE QUALIFICATION GATE recommendation with a
+  named coordinate. A failure means the final packet recommends against
+  any prospective gate that assumes one ruler crosses families.
