@@ -353,3 +353,82 @@ printing sampled rows and reading them before acting. That is §35's cheating as
 turned inward: the seat's flattering account of its own state was wrong more often than
 it was right. The standing rule the build produced is **prefer NULL to a fabricated
 cell** — a coverage grid is only worth reading if its cells mean something.
+
+## 10. The library mandate — standing, from 2026-09-01
+
+**Operator instruction:** *"It'll be your role going forward to keep building
+this library of games out. Breadth and depthwise, and making it robust for
+computational accessibility."*
+
+This is now the seat's continuing work, alongside §0's bench mandate rather
+than in place of it. Three axes, and they are not interchangeable:
+
+**BREADTH** — `ludus/atlas_of_worlds/`. 1,338 worlds catalogued. Breadth is
+graded by coverage of the declared grid, never by row count: a thousand more
+push-your-luck dice games raise the count and teach nothing. The crawler is
+built, tested and idle; restart it when a structural cell is empty, not on a
+schedule. ~41% of catalogued worlds sit above the English-Wikipedia source
+ceiling and cannot be deepened further from that source.
+
+**DEPTH** — `ludus/arena/`. Five worlds executable and verified against external
+ground truth, plus a synthetic epistemic laboratory. Depth means a world that
+travels the whole ladder: authoritative rules → audited model → executable
+simulator → baseline players → deterministic replay. One world that travels it
+is worth more than a thousand shallow dossiers. **No world has passed W3
+(rule-audited); no rulebook has been consulted for anything, in the atlas or the
+arena or the bench.** That gate has been untouched since the seat opened and it
+is the single largest standing weakness.
+
+**COMPUTATIONAL ACCESSIBILITY** — the third axis, and the reason the first two
+matter. A world is accessible when a program that has never seen it can obtain
+its state, its legal actions, its observation function and its outcome through
+one interface, run it deterministically, and replay it. Everything under
+`ludus/arena/core.py` serves this. It is also where the epistemic constraints
+live: the environment holds objective truth, the player receives only what it
+is lawfully entitled to, and leakage is a verification failure rather than a
+code smell.
+
+### Standing rules this seat has earned
+
+1. **Print the rows.** Every correct diagnosis across sixteen ticks and three
+   architectures came from reading concrete output. None came from reasoning
+   about what the system probably did. Four consecutive predicted fixes were
+   wrong.
+2. **A green check can be green for the wrong reason.** Test [6] of the
+   epistemic suite passed because an information set was *empty*. Read the
+   detail column, not the PASS.
+3. **Prefer NULL to a fabricated cell.** Withdraw a value rather than invent
+   one. `luck_factor` returning 0.35 for worlds where nothing was observed, and
+   `interaction=COMPETITIVE` guessed because SOLITAIRE was disproved, are the
+   same error.
+4. **Contradiction is not uncertainty.** An empty information set means the
+   model is wrong, not that the answer is unknown. Never pay for humility about
+   a world that cannot exist.
+5. **Instrumentation is not identity.** Record timing; keep it out of whatever
+   answers "is this the same episode?".
+6. **Substring matching cannot find a leak.** Only a differential test can:
+   hold everything fixed, change the secret, see whether anything moves.
+7. **The environment may never consult a player.** A search oracle that needs
+   privileged state is a defect in the search, not a licence to widen the
+   observation.
+
+### Next, in order
+
+1. **Hanabi** — the next interface breaker. A player sees every hand but its
+   own, so `observation(i)` is not a subset of public state, and hints almost
+   certainly make the current observation insufficient without history. That is
+   the minimum-sufficient-state question hitting the design directly.
+2. **Cross-validate against OpenSpiel** — the only step that stops the arena
+   grading itself. All five current worlds have counterparts.
+3. **Fix D13** — `year_created` conflates setting with creation date, which
+   corrupts precisely the oldest-N ordering a historical claim would rest on.
+4. **Join arena to atlas** — each arena world hand-declares a structural vector;
+   nothing reconciles it against the catalogued row for the same game, and
+   disagreement is currently silent.
+5. **Measure classifier accuracy** — hand-label a stratified sample and report
+   per-field precision and recall. Thirteen defects are known anecdotally
+   against no denominator.
+
+Session record: `SESSION_LOG_2026-08-31_to_09-01.md`. Build records:
+`ATLAS_OF_WORLDS.md`, `REVIEW_PACKET_3_2026-09-01.md` (breadth),
+`REVIEW_PACKET_4_2026-09-01_arena.md` (execution).
