@@ -154,9 +154,9 @@ def main():
                     if arm in ("A2", "A3", "A4") and cand not in s["exported"]:
                         exp_score = (score_of(cand, dtgt) if arm == "A4"
                                      else sc)
-                        kind_ = ("success" if (arm == "A3"
-                                               and sc >= s["best"])
-                                 else "failure")
+                        kind_ = ("artifact" if (arm == "A3"
+                                                and sc >= s["best"])
+                                 else "failure")   # DR-2: no "success" info_kind
                         blob = json.dumps({"candidate": cand,
                                            "score": exp_score}).encode()
                         art = c.artifact(s["wid"], "cand", blob,
