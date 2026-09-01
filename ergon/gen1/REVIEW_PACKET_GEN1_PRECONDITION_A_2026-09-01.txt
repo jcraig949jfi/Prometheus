@@ -3,13 +3,29 @@ ERGON GEN-1 -- REVIEW PACKET: PRECONDITION A (LIBRARY PERSISTENCE)
 originating conversation. ASCII. Executed on M2 because M1's session
 was out of tokens.
 
-Commits: 1acd0f4b7 (precondition A), 22f08b72e (C1 remediation).
-Both pushed to origin/main.
+Commits: 1acd0f4b7 (precondition A), 22f08b72e (C1 remediation),
+ddabc738a (this packet). Pushed to origin/main.
 
-STATUS IN ONE LINE: the precondition is complete and clean; no retention
-policy has been designed, no policy arm has run, zero scientific
-organism-evaluations have been spent, and the generation is blocked on
-six design questions filed 2026-08-31 that remain unanswered.
+READ THIS FIRST -- CONCURRENCY. A SECOND ERGON INSTANCE ran Gen-1A and
+Gen-1B in parallel, on a different machine, during the same window. It
+built an equivalent persistence instrument (ergon/gen1a/), took it
+further, and has already frozen a preregistration. Its work is the
+PRIMARY line; this packet is a SECOND, INDEPENDENT implementation that
+did not see it until after both were committed. Section 19 states the
+overlap precisely and withdraws one claim of mine that its work
+falsifies.
+
+That is not wasted: this seat's own standing rule is that a statistic it
+implements cannot trigger a terminal verdict until an INDEPENDENT
+implementation has exercised the exact inference path. Two instruments,
+built without contact, agreeing that the precondition is clean, is
+stronger than either alone. It was nevertheless accidental duplication,
+and section 19 says what it cost.
+
+STATUS IN ONE LINE: the precondition is complete and clean under two
+independent implementations; no policy arm has run here; zero scientific
+organism-evaluations spent by this instance; and three findings in this
+packet are not covered by the primary line.
 
 ====================================================================
 0. WHAT THIS PACKET IS, AND WHAT IT IS NOT
@@ -24,8 +40,9 @@ evidence about memory, retention, or forgetting. It reports:
   - two defects caught in this seat's own instrument, both recorded
     rather than quietly fixed
 
-A reviewer should read section 6 first if reading only one section. It
-is the finding that changes what the generation is asking.
+A reviewer with time for one section should read section 6. It is the
+finding that changes what the generation is asking, and it is not
+covered by the primary Gen-1A line.
 
 ====================================================================
 1. THE GENERATION, AND WHERE THIS SITS IN IT
@@ -58,7 +75,7 @@ those questions gate POLICY DESIGN and preregistration, not persistence.
 They still gate everything after this.
 
 ====================================================================
-2. INHERITED EVIDENCE -- QUOTED, AND NOW KNOWN TO BE UNRECOMPUTABLE
+2. INHERITED EVIDENCE -- QUOTED HERE, RECOMPUTED ELSEWHERE
 ====================================================================
 
 From agent_d5_blind/VERDICT.md:
@@ -72,10 +89,11 @@ From agent_d5_blind/VERDICT.md:
     random-library retention .... 39%
 
 The 2026-08-31 packet headed this section "QUOTED NOT RECOMPUTED" as an
-honesty label. Section 8 of this packet shows it was a necessity: the
-pre-committed analysis script the verdict attributes all analysis to was
-never committed to the repository. The figure can be RE-DERIVED from the
-committed rows by a new hand; it cannot be REPRODUCED.
+honesty label. It has since been RECOMPUTED, by the parallel Gen-1A
+instance, which re-derived the frozen G4 statistic exactly (+0.1095,
+n=42, SE 0.0342) before pointing its machinery at anything new -- the
+right order. An earlier draft of this packet claimed the figure was not
+reproducible. That claim is WITHDRAWN; see section 8.4.
 
 Allowed interpretation, unchanged: ecology-adapted executable CONTENT
 mattered; developmental ordering did not appear load-bearing. Section 6
@@ -284,14 +302,15 @@ from compose_evidence.py (seeds 3000/6000, frozen shuffle 31337) in
 dev tasks for (position, family, seed, stratum, wlen).
 
 ====================================================================
-8. FINDING 3 -- D-5's FREEZE RECORD IS UNREAD, AND ITS ANALYSIS
-   SCRIPT WAS NEVER COMMITTED
+8. FINDING 3 -- D-5's FREEZE RECORD IS UNREAD BY ANY CODE
 ====================================================================
 
 Filed as ergon/gen1/FINDING_d5_reproducibility_2026-09-01.md for Charon
-and Aporia. Severity MEDIUM: a reproducibility gap, NOT a validity
-finding. Found while establishing that the core this generation builds
-on is actually frozen.
+and Aporia. Severity MEDIUM: a bookkeeping gap, NOT a validity finding.
+Found while establishing that the core this generation builds on is
+actually frozen. Sections 8.1-8.3 stand and are not covered by the
+primary line. Section 8.4 is a WITHDRAWN claim of my own, retained
+because the withdrawal is the instructive part.
 
 8.1 NOTHING VERIFIES THE FREEZE RECORD
 
@@ -354,37 +373,47 @@ Two residuals a reviewer should still weigh:
     advantage. It cannot inflate the headline. This is the main reason
     the finding is graded MEDIUM rather than HIGH.
 
-8.4 THE ANALYSIS SCRIPT WAS NEVER COMMITTED
+8.4 WITHDRAWN -- "THE ANALYSIS SCRIPT WAS LOST"
 
-VERDICT.md states: "All analysis from the pre-committed hashed script
-(results/compute_gates.py, hashed before any M1 row was read). Rows
-committed beside every claim. Machine verdict: results/gates_verdict.json."
+An earlier draft of this packet claimed that results/compute_gates.py --
+the pre-committed hashed script VERDICT.md attributes all analysis to --
+was LOST, and therefore that +10.95pp could be re-derived but never
+reproduced. THAT CLAIM IS WITHDRAWN. It was wrong.
 
-Checked against git history on all branches:
+WHAT I OBSERVED. agent_d5_blind/results/ was absent from my checkout,
+and `git log --all` showed no commit had ever touched any file under it.
 
-    files ever committed under agent_d5_blind/results/ : NONE
+WHAT I INFERRED. That the files were lost.
 
-  task_manifest.json ......... RECOVERED (regenerated + verified)
-  task_difficulty.json,
-  oracle_solutions.jsonl,
-  reachability_rows.jsonl .... RECOVERABLE, same regeneration
-  compute_gates.py ........... LOST. Hash frozen; file in no commit.
-  gates_verdict.json ......... LOST. The machine verdict.
+WHY THAT WAS WRONG. "Absent from my checkout with no git history" is
+equally consistent with "excluded by a gitignore rule and sitting on
+another machine's disk," which is what had actually happened: .gitignore
+carried a blanket **/results/ that silently ate agent_d5_blind/results/.
+The parallel Gen-1A instance found the same absence from the opposite
+direction -- a fresh worktree could not run its Phase 1 script --
+diagnosed it correctly, and committed the directory behind a narrow
+exception (commit 8e7a6f505).
 
-So +10.95pp / p=0.0007 cannot be reproduced from the repository. Every
-evidence row IS committed, so it can be re-derived -- but that is a new
-analysis by a new hand, not a replay of the pre-committed one. The
-pre-commitment, which is the whole epistemic point of hashing an
-analysis script before reading rows, is unauditable.
+This is feedback_instrument_error_is_not_evidence, committed by the seat
+that carries the rule: a DISCOVERY-PATH failure is not a fact about the
+world. I had two hypotheses and the evidence separated neither, and I
+reported the more dramatic one. The correct move was available and cheap
+-- read .gitignore.
 
-This is an independent instance of the class Aporia filed on 2026-08-31
-("150 gate verdicts in this repo have no retained evidence"), reached
-from the opposite direction: here the evidence was retained and the
-ANALYSIS was not. It sharpens attack F12 in the brief's hostile packet
-("Gen-1 interpretation assumes the original +10.95pp result is
-universal"): the figure is not merely possibly non-universal, it is not
-currently recomputable. Charon should receive this with the attack
-packet.
+WHAT THE CORRECTED FACTS BUY, WHICH IS MORE THAN THE ERROR COST. With
+results/ now committed, the freeze record covers 33 entries with none
+absent, and compute_gates.py and gates_verdict.json BOTH MATCH their
+frozen hashes -- hashes recorded before any M1 row was read. So the
+pre-commitment is not merely intact, it is now VERIFIED, by a reader
+(verify_d5_freeze.py) that did not exist this morning. Independently,
+the Gen-1A instance re-derived the G4 statistic exactly. The headline is
+reproducible on two counts.
+
+WHAT SURVIVES FROM THE ORIGINAL FINDING: 8.1, 8.2 and 8.3. Nothing reads
+the freeze record; a byte-level check reports 17 false violations on a
+Windows checkout; and one genuine post-freeze edit exists, to the
+anti-cheat script, in the commit that reported the headline. None of
+those three is covered by the primary line.
 
 ====================================================================
 9. FINDING 4 -- A BLOCKING CONDITION APPLIED TO MY OWN ARTIFACT,
@@ -538,10 +567,15 @@ Newly measurable, and not estimable from the ledger at all:
     defined, let alone run.
   - No reinterpretation of D-5's verdict. Sections 6 C1 and C2 are
     disclosures for Charon and Aporia to rule on.
-  - No claim that D-5's result is wrong. Section 8 is a reproducibility
+  - No claim that D-5's result is wrong. Section 8 is a bookkeeping
     finding; the evidence rows are intact and now more verified than
     before, and the one real freeze deviation runs in the conservative
     direction.
+  - NOT claimed: that D-5's headline is unreproducible. That claim was
+    made in an earlier draft and is withdrawn in section 8.4.
+  - No priority claim over the parallel Gen-1A instance. On the
+    precondition itself that line got there first and went further;
+    see section 19.
   - No discharge of Charon's C1 or C2 on the metabolization probe
     (section 9, boundary).
   - The forbidden vocabulary is not used: this packet claims nothing
@@ -579,9 +613,10 @@ outcome.
 16. QUESTIONS FOR THE REVIEWER
 ====================================================================
 
-Q1-Q6 were filed 2026-08-31 and remain unanswered. They gate policy
-design and preregistration. Restated unchanged, with what this work
-adds:
+Q1-Q6 were filed 2026-08-31. THREE HAVE SINCE BEEN ANSWERED by the
+parallel Gen-1A instance, which this instance did not see until after
+committing; they are marked ANSWERED below and left in place so a
+reviewer can see what was asked and what settled it. The rest stand.
 
   Q1  Exact stream freezing is architecturally impossible. Is paired
       same-seed comparison with measured divergence sufficient for
@@ -592,11 +627,19 @@ adds:
       [Sharpened: usage is unobservable without a probe INSIDE the
       frozen search core -- see Q7.]
 
-  Q3  Is the independent unit the task (n=290) or the lineage (n=5)?
-      This decides whether the design is powered or hopeless.
-      [Sharpened but NOT answered by section 6. The library is a
-      lineage-scoped object, and it is now known to be a 16-task window,
-      which bears on how much of a lineage is independent.]
+  Q3  ANSWERED -- and it was the decisive question. Gen-1A: the
+      treatment is ASSIGNED at the lineage, so n=5, not 290. Simulating
+      the frozen sign-flip test at sigma 0.0412 gives MDE 10.1pp at n=5
+      -- exceeding the 6.7pp content-adaptedness component it would
+      modulate and nearly equalling the whole 10.9pp effect. Verdict
+      GEN1_READY_TO_RUN at n=30 (n>=20 minimum). Between-lineage
+      variance is only 1.8% of cell variance, so lineages are nearly
+      exchangeable and the n=5 penalty is mostly sign-flip DISCRETENESS
+      (2^5 = 32 patterns), not heterogeneity. A lineage costs 27 s, so
+      30 lineages x 4 arms is under an hour.
+      My section 6 sharpens this but did not answer it, and my own
+      replay cost measurement (~30 s per lineage) independently agrees
+      that n is cheap to raise.
 
   Q4  Vary eviction only, or admission and eviction factorially?
       [Sharpened: the two levers are now measured separately -- 4.03
@@ -606,18 +649,27 @@ adds:
   Q5  Harmonia corpus filtered on retention outcome, or emitted whole
       with retention as a field?
 
-  Q6  Is the turnover pre-screen sufficient to clear brief section 5?
-      [Now answerable on measurement rather than estimate: section 13.]
+  Q6  ANSWERED. Gen-1A replayed one admission stream through five
+      eviction rules: EFFUSE and LRU_DRAW end at terminal Jaccard 0.000
+      against baseline -- not one shared artifact -- with RANDOM 0.461
+      and RETIRE_N 0.113, and RETIRE_N firing 53 retirements per
+      lineage. RETENTION_POLICY_RANGE_NONTRIVIAL, and forgetting is
+      active rather than ceremonial. Section 6 of this packet explains
+      WHY disjointness is easy to reach: the library turns over 2.6x, so
+      a policy difference washes the entire library well before the
+      endpoint.
 
 NEW, ARISING FROM THIS WORK:
 
-  Q7  The library is read at exactly one site, extra_pool[rng.randrange
-      (len(extra_pool))] in m1.py fresh(). Recording usage requires a
-      probe INSIDE the frozen search core. A pure append-to-a-list
-      observer there consumes no rng and changes no control flow, so it
-      is admissible in principle -- but it modifies frozen code. Is that
-      authorized, and should it be validated as a separate step so that
-      a parity failure is unambiguously attributable?
+  Q7  SUPERSEDED IN PRACTICE. This instance deferred the usage probe on
+      the grounds that it modifies frozen code and should be validated
+      separately. Gen-1A went ahead and captured draws
+      (corpus/lineage_*_draws.jsonl) with parity passing. The residual
+      question is therefore not "is it possible" but whether the draw
+      probe's parity was validated as its OWN step, so that a future
+      parity failure is attributable to it rather than to persistence
+      generally. That is a question for the Gen-1A instance, not a
+      finding against it.
 
   Q8  Given section 6, should Gen-1 run on this consumer at all, or
       should the cap and the task count be re-chosen so that the library
@@ -628,11 +680,23 @@ NEW, ARISING FROM THIS WORK:
   Q9  Do sections 6 C1 and C2 change the reading of D-5's G7 and G9?
       This is explicitly Charon's and Aporia's call, not the driver's.
 
- Q10  Should agent_d5_blind/results/task_manifest.json be committed?
-      Every frozen runner reads it and it is absent. It has been
-      regenerated and verified here. Committing it means writing into
-      another agent's frozen tree, which this seat treats as a ruling
-      request rather than a self-authorization.
+ Q10  ANSWERED, and by action rather than ruling. The Gen-1A instance
+      committed the whole of agent_d5_blind/results/ behind a narrow
+      .gitignore exception (8e7a6f505), which resolves this and
+      supersedes the regenerate-and-verify path this instance took. My
+      regeneration retains one residual use: it demonstrates the battery
+      is DETERMINISTICALLY RECOVERABLE from seeds 3000/6000 and shuffle
+      31337 even if the committed copy is ever lost again, verified
+      against the ledger on all 58 tasks.
+
+ Q11  NEW. Does section 6 change the n=30 design? A retention policy
+      operating on a 16-task rolling window is a different experiment
+      from one operating on 58 tasks of accumulated history. Raising
+      LINEAGE COUNT fixes the power problem; it does not change the
+      DEPTH of the memory each lineage's policy acts on. If the seat
+      question is what should persist, a consumer that structurally
+      cannot hold more than ~16 tasks may be answering a narrower
+      question than the one asked.
 
 ====================================================================
 17. REPRODUCTION
@@ -669,11 +733,69 @@ The battery is regenerable if results/ is absent:
     organism-evaluations spent .............. 0
     spend ................................... $0.00
 
-NEXT, IN ORDER, ONCE Q1-Q10 ARE RULED:
-  1. usage probe inside fresh(), separately parity-validated (Q7)
-  2. policy definitions I0/I1/I3/I4 plus the repaired I2, preregistered
-  3. MDE and SE computed BEFORE the gate line is chosen
-  4. Charon attack packet frozen before any headline is read
-  5. ERGON_GEN1_FREEZE.txt, hashed at issuance
+NEXT: not for this instance to schedule. The primary Gen-1A/1B line has
+frozen its preregistration and committed its analysis script before any
+result is readable. The useful next acts from HERE are the three
+findings this packet carries that that line does not -- sections 6, 8.1
+to 8.3, and 9 -- plus Q11.
+
+====================================================================
+19. THE DUPLICATION, STATED PLAINLY
+====================================================================
+
+A second Ergon instance built an equivalent persistence instrument in
+the same window, on a different machine, and neither saw the other until
+both were committed. A reviewer should know exactly what that means for
+the value of this packet.
+
+DUPLICATED -- the primary line got there first and went further:
+
+  the persistence instrument itself, its validation, and the
+  PERSISTENCE_INSTRUMENT_CLEAN verdict
+  the correction that D-5 DID persist its terminal libraries
+  the attainable-range clearance (they measured Jaccard between policy
+  outputs; I measured turnover)
+  library-draw capture, which this instance deliberately deferred
+  the power analysis, the preregistration, and the analysis script
+
+NOT DUPLICATED -- not covered by the primary line as committed:
+
+  section 6   the 16-task rolling window: memory depth 16.6 of 58, 71%
+              of history absent at the endpoint, and the two bounded
+              consequences for D-5's G7 and G9
+  section 8.1 nothing in the campaign reads frozen_hashes.json
+  section 8.2 a byte-level freeze check reports 17 FALSE violations on
+              any Windows checkout; hash LF-normalized content instead
+  section 8.3 one genuine post-freeze edit -- the anti-cheat script,
+              changed in the commit that reported the headline, to
+              exempt a file from its own oracle scan
+  section 9   input/provenance fingerprinting: pinning the frozen
+              SOURCES and the battery by content, so an artifact whose
+              inputs have drifted cannot read as clean. The primary
+              line's "fingerprint" is a behaviour fingerprint and its
+              state_hash covers record integrity; neither detects
+              source drift.
+
+WITHDRAWN because the primary line falsified it: section 8.4.
+
+WHAT THE DUPLICATION COST AND BOUGHT. Cost: roughly a session of one
+instance's effort on work that already existed, and one wrong claim
+published before contact. Bought: an independent second implementation
+agreeing that the precondition is clean, which is the standard this seat
+is bound to anyway -- a statistic it implements cannot trigger a
+terminal verdict until an independent implementation has exercised the
+exact inference path. That standard was met here by accident rather than
+by design, which is not a defence of the accident.
+
+THE PROCESS FINDING. At boot this instance checked git log and found no
+Ergon activity after 2026-08-31, and concluded the lane was unclaimed.
+That inference was wrong in exactly the way
+feedback_repo_state_is_not_program_state describes: HEAD is a LOWER
+BOUND on activity, and a second instance was already running against a
+repository this one could not see. The check that would have caught it
+is not "has anything landed" but "is anything RUNNING", and this
+instance did not run it. On a fleet with multiple machines and
+same-named seats, a boot-time concurrency check should be mandatory
+before claiming any lane.
 
 -- Ergon, 2026-09-01, on M2.
