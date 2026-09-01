@@ -379,6 +379,60 @@ Implemented as `hephaestus/src/closure_test.py` + `closure_specs/`, packet field
 `ROUTE_CLASS`, refine guards, runner auto-derived ablation obligations, the single sentinel task,
 and the widen mode gated behind `HEPHAESTUS_WIDEN=1`.
 
+## Addendum 4 — Operator rulings on the Addendum-3 packet: A2 must not become an explanation machine (James, 2026-09-01, late night)
+
+*"I'm worried that A2 itself can become an unfalsifiable explanation machine."* Binding.
+
+1. **Q1 — mechanism compatibility is extensional, not nominal.** Static type equality is necessary,
+   not sufficient; do not require primitive *names* to match human descriptions ("pigeonhole" vs
+   "equals zero" reintroduces ontology-by-author). Require: correct type, correct behaviour under
+   counterfactual intervention, no dependence on accidental coercion or irrelevant input
+   correlations. The re-enumerated MINT-0001 evidence is legitimate.
+2. **Q2 — the most important methodological problem.** A per-spec, author-selected A2 makes the
+   classification ≈ *"does the author know which combinator makes this expressible?"* **Freeze a
+   versioned global composition basis, A2-GENERIC-v1, before the third specimen** — boring,
+   substrate-independent machinery (boolean combinators, equality/order, option predicates, bounded
+   counting/folding, projection, membership); every wall gets exactly that library; do not tune A2
+   to the wall. Changing the basis is an experimental intervention whose effect on previous
+   classifications must be reported.
+3. **Q3 — record `CLOSURE_MARGIN`** (A0 / A1 / A2_ONLY / NONE) rather than inventing a category.
+   MINT-0004's cleanest witness is `not(is_none(topological_sort(rels)))`, not the `self_reach`
+   form; that observational pruning hid it is a tooling defect to fix before specimen 3.
+4. **Q4 — preregister a wall taxonomy** (scalar predicate; quantified predicate; relational/global
+   invariant; recursive/transitive; stateful/temporal; constructive transformation; new
+   state/memory). The legitimate negative result is *"no OPERATOR gap across X preregistered
+   families under frozen A2-GENERIC-v1 and budget Y"*; if the whole taxonomy closes, the Forge's
+   premise comes under review.
+5. **Q5 — two verification columns:** `VERIFY_EXHAUSTIVE_SMALL` and `VERIFY_STRUCTURAL_SHIFT`; a
+   mechanism-bearing hit should survive both. Note that isolated nodes and duplicate edges expose
+   *representation semantics* (an edge set alone cannot represent isolated nodes) — the funnel
+   should surface exactly that.
+6. **Q6 — stop more:** delete adapter widening as Forge research; **kill the clock sentinel** rather
+   than polishing it into an event system; keep historical walls as inert evidence at zero compute.
+   **Stop improving the Forge machinery until specimen 3 runs.**
+7. **Q7 — READY=0 says little globally**; MINT-0001/0004 were the easiest canaries. **Run Q045
+   next**, not Ludus, under three conditions: (a) freeze A2-GENERIC-v1 *before* inspecting Q045's
+   desired mechanism; (b) define the target extensionally from the existing Q045 probe, not by
+   reverse-engineering an implementation; (c) inject valid semantic state past arrow one and ask
+   whether arrow two closes.
+8. **Equivalence pruning:** value-vector → up to 5 structurally distinct expressions (by operator
+   tree shape), so *closure existence* and *closure explanation* are both recorded.
+9. **The bigger result.** The emerging role: *given an apparent reasoning wall, determine the minimum
+   resource whose addition makes the wall disappear* — `G(C) → G(C|R) → G(C|R,A2) → G(C|R,A2,O)`,
+   the first successful transition naming the missing resource. A reasoning-gap discriminator,
+   not an operator factory. If Q045 and several heterogeneous walls also close under a frozen
+   basis, the finding is: *Prometheus's observed walls are predominantly failures of
+   representation, routing, or composition rather than absence of primitive reasoning operators.*
+10. **Immediate sequence:** fix equivalence-class recording → freeze A2-GENERIC-v1 → preregister
+    Q045 → semantic-inject Q045 → run the identical gauntlet → stop and interpret before building
+    anything else.
+
+Implemented: `closure_specs/generic_basis.py` (A2-GENERIC-v1, hash `7f2ef69196e7f128`),
+`closure_test.py` (equivalence classes ≤5 by tree shape; CLOSURE_MARGIN; two verify columns; per-spec
+generic ops refused), `WALL_TAXONOMY_v1.md`, widen mode deleted, sentinel task deleted.
+Basis intervention reported: MINT-0001 SEARCH_ROUTING margin A1 (unchanged; all witnesses robust);
+MINT-0004 SEARCH_ROUTING margin A2_ONLY (unchanged; witness now `is_some(topological_sort(rels))` d2).
+
 ## Recorder's notes (Hephaestus, no authority over the text above)
 
 - **Relation to the review's charter.** Lanes A (ablation lab) and C (pool stewardship) stand;

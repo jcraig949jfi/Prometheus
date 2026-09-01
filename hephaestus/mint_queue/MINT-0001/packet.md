@@ -1,5 +1,5 @@
 # MINT-0001 — vacuous_truth — truth value of a quantified claim (universal / negative-universal / conditional / existential) over a domain the premises state is EMPTY, versus the same claim over a non-empty domain with or without a counterexample.
-**STATUS:** `DORMANT` · **updated** 2026-09-01T10:48:55Z · missing-for-READY: none
+**STATUS:** `DORMANT` · **updated** 2026-09-01T11:20:23Z · missing-for-READY: none
 
 ## PRIORITY
 - **score**: 0.812
@@ -258,61 +258,142 @@ No registered transformer writes `comparison` on any vacuous_truth prompt; the o
 ## CLOSURE_TEST
 - **script**: hephaestus/src/closure_test.py vacuous_truth
 - **result**: hephaestus/closure_results/vacuous_truth.json
+- **basis**: - **version**: A2-GENERIC-v1
+- **hash**: 7f2ef69196e7f128
+- **family**: F2 quantified predicate
+- **max_depth**: 3
 - **search_points**: 16
-- **verify_points**: 75
-- **verify_domain**: exhaustive 0<=s<=d<=12 minus search points
+- **verify_exhaustive_small_points**: 75
+- **verify_structural_shift_points**: 105
+- **verify_shift**: domain sizes 40..60 with boundary rows s in {0, 1, d-1, d} and a mid row
 - **A0**: - **possible**: False
 - **note**: route columns differ -> no routing-free expression can fit; routing R is a required resource
 - **A1**: - **evaluated**: 300000
-- **depth**: 3
-- **all_routes_mechanism_bearing**: True
-- **per_route**: - **universal**: - **mechanism_bearing**: - pigeonhole_check(s, all_but_n(d, 1)) (depth 2)
-- **coerced_only_aliases**: - coin_flip_independence(s, d) (depth 1)
-- coin_flip_independence(0, all_but_n(d, s)) (depth 2)
-- coin_flip_independence(1, all_but_n(s, d)) (depth 2)
-- **negative_universal**: - **mechanism_bearing**: - pigeonhole_check(1, s) (depth 1)
-- **coerced_only_aliases**: - coin_flip_independence(0, s) (depth 1)
-- coin_flip_independence(d, all_but_n(0, s)) (depth 2)
-- coin_flip_independence(1, all_but_n(0, s)) (depth 2)
-- **existential**: - **mechanism_bearing**: - pigeonhole_check(s, 0) (depth 1)
-- **coerced_only_aliases**: - s (depth 0)
-- all_but_n(0, s) (depth 1)
-- coin_flip_independence(s, 1) (depth 1)
+- **all_mech**: True
+- **all_robust**: True
+- **witnesses**: - **universal**: - **mechanism_bearing**: - pigeonhole_check(s, all_but_n(d, 1)) (d2)
+- pigeonhole_check(fencepost_count_T(s), d) (d2)
+- pigeonhole_check(all_but_n(s, d), all_but_n(0, 1)) (d2)
+- **coerced_only_aliases**: - coin_flip_independence(s, d) (d1)
+- coin_flip_independence(d, all_but_n(s, d)) (d2)
+- coin_flip_independence(0, all_but_n(d, s)) (d2)
+- coin_flip_independence(all_but_n(s, d), 0) (d2)
+- coin_flip_independence(1, all_but_n(s, d)) (d2)
+- **n_mechanism**: 3
+- **n_robust**: 3
+- **n_alias**: 22
+- **negative_universal**: - **mechanism_bearing**: - pigeonhole_check(1, s) (d1)
+- pigeonhole_check(0, all_but_n(s, 1)) (d2)
+- pigeonhole_check(all_but_n(1, s), s) (d2)
+- pigeonhole_check(all_but_n(d, s), all_but_n(d, 1)) (d2)
+- pigeonhole_check(all_but_n(1, s), modular_arithmetic(d, d, s)) (d2)
+- **coerced_only_aliases**: - coin_flip_independence(0, s) (d1)
+- coin_flip_independence(s, all_but_n(0, s)) (d2)
+- coin_flip_independence(all_but_n(0, s), s) (d2)
+- coin_flip_independence(d, all_but_n(0, s)) (d2)
+- coin_flip_independence(all_but_n(d, s), d) (d2)
+- **n_mechanism**: 5
+- **n_robust**: 5
+- **n_alias**: 27
+- **existential**: - **mechanism_bearing**: - pigeonhole_check(s, 0) (d1)
+- pigeonhole_check(d, all_but_n(d, s)) (d2)
+- pigeonhole_check(fencepost_count_T(s), 1) (d2)
+- pigeonhole_check(s, modular_arithmetic(d, d, s)) (d2)
+- pigeonhole_check(all_but_n(s, d), all_but_n(0, d)) (d2)
+- **coerced_only_aliases**: - s (d0)
+- all_but_n(s, 0) (d1)
+- all_but_n(0, s) (d1)
+- coin_flip_independence(s, 1) (d1)
+- all_but_n(d, all_but_n(d, s)) (d2)
+- **n_mechanism**: 5
+- **n_robust**: 5
+- **n_alias**: 8239
 - **A2**: - **evaluated**: 300000
-- **depth**: 3
-- **all_routes_mechanism_bearing**: True
-- **per_route**: - **universal**: - **mechanism_bearing**: - pigeonhole_check(s, all_but_n(d, 1)) (depth 2)
-- **coerced_only_aliases**: - coin_flip_independence(s, d) (depth 1)
-- coin_flip_independence(0, all_but_n(d, s)) (depth 2)
-- coin_flip_independence(1, all_but_n(s, d)) (depth 2)
-- **negative_universal**: - **mechanism_bearing**: - pigeonhole_check(1, s) (depth 1)
-- **coerced_only_aliases**: - coin_flip_independence(0, s) (depth 1)
-- coin_flip_independence(d, all_but_n(0, s)) (depth 2)
-- coin_flip_independence(1, all_but_n(0, s)) (depth 2)
-- **existential**: - **mechanism_bearing**: - pigeonhole_check(s, 0) (depth 1)
-- **coerced_only_aliases**: - s (depth 0)
-- all_but_n(0, s) (depth 1)
-- coin_flip_independence(s, 1) (depth 1)
+- **all_mech**: True
+- **all_robust**: True
+- **witnesses**: - **universal**: - **mechanism_bearing**: - eq(d, s) (d1)
+- le(d, s) (d1)
+- pigeonhole_check(s, all_but_n(d, 1)) (d2)
+- pigeonhole_check(fencepost_count_T(s), d) (d2)
+- pigeonhole_check(all_but_n(s, d), all_but_n(0, 1)) (d2)
+- **coerced_only_aliases**: - coin_flip_independence(s, d) (d1)
+- coin_flip_independence(d, all_but_n(s, d)) (d2)
+- coin_flip_independence(0, all_but_n(d, s)) (d2)
+- coin_flip_independence(all_but_n(s, d), 0) (d2)
+- coin_flip_independence(1, all_but_n(s, d)) (d2)
+- **n_mechanism**: 5
+- **n_robust**: 5
+- **n_alias**: 22
+- **negative_universal**: - **mechanism_bearing**: - eq(s, 0) (d1)
+- lt(s, 1) (d1)
+- le(s, 0) (d1)
+- pigeonhole_check(1, s) (d1)
+- pigeonhole_check(0, all_but_n(s, 1)) (d2)
+- **coerced_only_aliases**: - coin_flip_independence(0, s) (d1)
+- coin_flip_independence(s, all_but_n(0, s)) (d2)
+- coin_flip_independence(all_but_n(0, s), s) (d2)
+- coin_flip_independence(d, all_but_n(0, s)) (d2)
+- coin_flip_independence(all_but_n(d, s), d) (d2)
+- **n_mechanism**: 5
+- **n_robust**: 5
+- **n_alias**: 27
+- **existential**: - **mechanism_bearing**: - lt(0, s) (d1)
+- le(1, s) (d1)
+- pigeonhole_check(s, 0) (d1)
+- pigeonhole_check(d, all_but_n(d, s)) (d2)
+- pigeonhole_check(s, modular_arithmetic(d, d, s)) (d2)
+- **coerced_only_aliases**: - s (d0)
+- all_but_n(s, 0) (d1)
+- all_but_n(0, s) (d1)
+- coin_flip_independence(s, 1) (d1)
+- all_but_n(d, all_but_n(d, s)) (d2)
+- **n_mechanism**: 5
+- **n_robust**: 5
+- **n_alias**: 8239
 - **B**: - **evaluated**: 107629
-- **depth**: 3
-- **all_routes_mechanism_bearing**: True
-- **per_route**: - **universal**: - **mechanism_bearing**: - eq(d, s) (depth 1)
+- **witnesses**: - **universal**: - **mechanism_bearing**: - eq(d, s) (d1)
+- le(d, s) (d1)
+- ge(s, d) (d1)
+- eq(0, sub(d, s)) (d2)
+- eq(add(d, d), add(d, s)) (d2)
 - **coerced_only_aliases**: _(none yet)_
-- **negative_universal**: - **mechanism_bearing**: - eq(s, 0) (depth 1)
+- **n_mechanism**: 5
+- **n_robust**: 5
+- **n_alias**: 0
+- **negative_universal**: - **mechanism_bearing**: - eq(s, 0) (d1)
+- lt(s, 1) (d1)
+- le(s, 0) (d1)
+- gt(1, s) (d1)
+- ge(0, s) (d1)
 - **coerced_only_aliases**: _(none yet)_
-- **existential**: - **mechanism_bearing**: - lt(0, s) (depth 1)
-- **coerced_only_aliases**: - s (depth 0)
-- add(s, s) (depth 1)
-- sub(0, s) (depth 1)
-- **evidence_of_record**: - **universal**: pigeonhole_check(s, all_but_n(d, 1))  [depth 2, typed bool, verified]
+- **n_mechanism**: 5
+- **n_robust**: 5
+- **n_alias**: 0
+- **existential**: - **mechanism_bearing**: - lt(0, s) (d1)
+- le(1, s) (d1)
+- gt(s, 0) (d1)
+- ge(s, 1) (d1)
+- lt(d, add(d, s)) (d2)
+- **coerced_only_aliases**: - s (d0)
+- add(s, 0) (d1)
+- sub(s, 0) (d1)
+- add(s, s) (d1)
+- sub(0, s) (d1)
+- **n_mechanism**: 5
+- **n_robust**: 5
+- **n_alias**: 64
+- **classification**: - **class**: SEARCH_ROUTING
+- **CLOSURE_MARGIN**: A1
+- **why**: target is mechanism-bearing inside G(C|R); the frozen set computes it and the system does not route to it
+- **robust_at_margin**: True
+- **representation_debt**: Large: extracting (quantifier, domain noun phrase, predicate, domain_size, satisfier_count) from text with domain EQUALITY as the acceptance rule; measured adapter v3 covers 0.9125 of author-adversarial dev v2 and 0.20 of out-of-template phrasings, conditional correctness 1.0.
+- **basis_intervention_report**: Addendum 4: per-spec generic ops replaced by frozen A2-GENERIC-v1. Classification unchanged. Evidence of record unchanged: pigeonhole_check(s, all_but_n(d,1)); pigeonhole_check(1, s); pigeonhole_check(s, 0); all robust under structural shift (d in 40..60).
+- **previous_evidence_of_record**: - **universal**: pigeonhole_check(s, all_but_n(d, 1))  [depth 2, typed bool, verified]
 - **negative_universal**: pigeonhole_check(1, s)  [depth 1, typed bool, verified]
 - **existential**: pigeonhole_check(s, 0)  [depth 1, typed bool, verified]
-- **aliases_demoted**: - coin_flip_independence(s, d)
-- coin_flip_independence(0, s)
-- s (bare int under truthiness)
 
 ## ROUTE_CLASS
-REPRESENTATION (kernel: SEARCH_ROUTING -- mechanism-bearing in G(C|R) at depth <= 2; routing R on a quantifier slot is a required resource)
+REPRESENTATION (closure test: SEARCH_ROUTING; CLOSURE_MARGIN=A1; robust=True; basis A2-GENERIC-v1)
 
 ## SEARCH_ALREADY_ATTEMPTED
 - Apollo O1 exhaustive enumeration over 1.74M type-correct pipelines: vacuous_truth 0/5 (ceiling 0.833; number later retracted by E9, but the abstention on this category is structural).
@@ -449,3 +530,4 @@ Three consecutive deep mints that pass dev but do not move the independent held-
 - **ts**: 2026-09-01T07:40:16Z; **by**: Master Smith session 20260901T073136Z; **note**: candidate produced; author of dev set == author of candidate; Charon E9 untouched
 - **ts**: 2026-09-01T08:07:10Z; **by**: hephaestus.src.semantic_closure + operator Addendum 1; **note**: reclassified Level 2 -> Level 1 composition; routed as representation problem
 - **ts**: 2026-09-01T10:48:54Z; **by**: hephaestus.src.closure_test (Addendum 3); **note**: typed + counterfactually verified enumeration replaces the depth-1 alias as evidence of record
+- **ts**: 2026-09-01T11:20:23Z; **by**: hephaestus.src.closure_test under A2-GENERIC-v1 (Addendum 4); **note**: re-run under the frozen basis; equivalence classes recorded; two verify columns

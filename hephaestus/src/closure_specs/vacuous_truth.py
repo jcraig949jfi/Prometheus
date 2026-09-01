@@ -21,7 +21,13 @@ ROUTE_KEYS = ["universal", "negative_universal", "existential"]
 TARGET_TYPE = "bool"
 
 SEARCH_POINTS = [(0, 0)] + [(n, s) for n in (1, 2, 3, 5) for s in range(0, n + 1)]
+# VERIFY_EXHAUSTIVE_SMALL: every (d, s) with 0 <= s <= d <= 12, minus the search points.
 VERIFY_POINTS = [(d, s) for d in range(0, 13) for s in range(0, d + 1) if (d, s) not in set(SEARCH_POINTS)]
+# VERIFY_STRUCTURAL_SHIFT (Addendum 4, Q5): a different regime -- large domains far from the search
+# sizes, including the boundary rows s = d, s = d-1, s = 0, s = 1 at every size 40..60. An alias that
+# exploits small-number arithmetic (e.g. a probability that underflows, a modulus coincidence) fails here.
+VERIFY_SHIFT_DESCRIPTION = "domain sizes 40..60 with boundary rows s in {0, 1, d-1, d} and a mid row"
+VERIFY_SHIFT_POINTS = [(d, s) for d in range(40, 61) for s in sorted({0, 1, d // 2, d - 1, d})]
 
 
 def target(q, pt):
@@ -49,12 +55,8 @@ FROZEN_OPS = {
     "information_sufficiency": (("int", "int"), "str",  lambda a, b: fp.information_sufficiency(a, b)),
     "parity_check_pair":      (("int", "int"), "str",   lambda a, b: fp.parity_check([a, b])),
 }
-# A2 bounded generic composition
-GENERIC_OPS = {
-    "not":     (("bool",), "bool", lambda a: not a),
-    "is_zero": (("int",), "bool", lambda a: a == 0),
-}
-# B: small generic language
+# A2 uses the FROZEN global basis (closure_specs/generic_basis.py); per-spec generic ops are forbidden.
+# B: small generic language (the control)
 B_OPS = {
     "eq":  (("int", "int"), "bool", lambda a, b: a == b),
     "lt":  (("int", "int"), "bool", lambda a, b: a < b),

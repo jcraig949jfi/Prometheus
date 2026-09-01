@@ -154,93 +154,8 @@ def summarize(rec: dict) -> dict:
             "file": rec.get("candidate_file")}
 
 
-# ── Parser-widening mode (Addendum 1 §11: "parser widening with cheap models"). ────────────────
-# Applies to packets that carry a candidate of record and are marked as a REPRESENTATION problem.
-# The cheap model is shown the candidate and the phrasings on which it abstained, and asked to widen
-# the ADAPTER only (the kernel is frozen). Measured on dev v2 + the adversarial set. This is
-# representation work, labelled as such; it is never reported as a mint.
-
-def build_widen_prompt(p: dict, cand_src: str, failing: list[dict]) -> str:
-    rows = "\n".join(f"- gold {r['gold']}: {r['prompt']}" for r in failing[:16])
-    return f"""You are widening the PARSER of an existing, working Python function. Do NOT change the
-function `quantified_truth` (the kernel). Only extend how the text is read: emptiness idioms, claim
-framings, cardinality phrasings. Keep the domain-equality rule (a premise counts only if its noun
-phrase equals the claim's domain). If you cannot parse a sentence, ABSTAIN (leave comparison None);
-never guess.
-
-CURRENT CODE:
-```python
-{cand_src}
-```
-
-PHRASINGS ON WHICH IT CURRENTLY ABSTAINS (gold answer shown):
-{rows}
-
-Return ONLY the complete revised code in one ```python block, defining op_vacuous_truth and keeping
-quantified_truth byte-identical."""
-
-
-def run_widen_attempt(p: dict, wall, target: str, timeout: int) -> dict:
-    _assert_cheap(target)
-    import os
-    from prometheus_llm import complete
-    mint = p["MINT_ID"]
-    cand_path = ROOT / p["_meta"]["candidate_of_record"]
-    adv_path = ROOT / p["_meta"]["adversarial_script"]
-    adir = P.packet_dir(mint) / "widen_attempts"; adir.mkdir(parents=True, exist_ok=True)
-    n = len([f for f in adir.glob("*.json") if not f.name.endswith("_result.json")]) + 1
-    stamp = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
-    base = adir / f"{n:04d}_{stamp}_{re.sub(r'[^A-Za-z0-9]+', '-', target)[:40]}"
-    prev = json.loads((ROOT / p["_meta"]["adversarial_result"]).read_text(encoding="utf-8"))
-    failing = [{"prompt": r.get("prompt", ""), "gold": r["gold"]} for r in prev["records"] if not r["ok"]]
-    if not failing or not failing[0]["prompt"]:
-        # adversarial records store ids only; recover prompts from the script's literal ADV list
-        # (a list of tuples of string literals — evaluated with ast.literal_eval, never exec).
-        import ast
-        src = adv_path.read_text(encoding="utf-8")
-        adv_literal = src.split("ADV = ", 1)[1].split("\nrecs = []", 1)[0]
-        byid = {i: (pr, g) for i, pr, g, _ in ast.literal_eval(adv_literal)}
-        failing = [{"prompt": byid[r["id"]][0], "gold": byid[r["id"]][1]} for r in prev["records"] if not r["ok"] and r["id"] in byid]
-    prompt = build_widen_prompt(p, cand_path.read_text(encoding="utf-8"), failing)
-    rec = {"n": n, "ts": P.now_iso(), "model": target, "regime": "apprentice-widen", "cost": 0.0, "kind": "REPRESENTATION (not a mint)"}
-    t0 = time.time()
-    r = complete(prompt, target=target, max_tokens=8000, temperature=0.2, timeout=timeout, retries=1)
-    rec["latency_s"] = round(time.time() - t0, 1); rec["llm_ok"] = bool(r.ok)
-    if not r.ok:
-        rec["verdict"] = "NO_RESPONSE"; base.with_suffix(".json").write_text(json.dumps(rec, indent=2)); return rec
-    base.with_suffix(".txt").write_text(r.text, encoding="utf-8")
-    code = extract_code(r.text)
-    if not code or "def quantified_truth" not in code:
-        rec["verdict"] = "NO_CODE" if not code else "KERNEL_MISSING"; base.with_suffix(".json").write_text(json.dumps(rec, indent=2)); return rec
-    cand = base.with_suffix(".py"); cand.write_text(code, encoding="utf-8")
-    out = base.with_name(base.name + "_result.json"); advout = base.with_name(base.name + "_adv.json")
-    env = {**os.environ, "PYTHONPATH": str(ROOT)}
-    subprocess.run([sys.executable, "-m", "hephaestus.src.run_candidate", wall.WALL_ID, str(cand), str(out)], cwd=str(ROOT), timeout=180, capture_output=True, env=env, check=False)
-    subprocess.run([sys.executable, str(adv_path), str(cand), str(advout)], cwd=str(ROOT), timeout=180, capture_output=True, env=env, check=False)
-    res = json.loads(out.read_text(encoding="utf-8")) if out.exists() else {"verdict": "RUNNER_NO_OUTPUT"}
-    adv = json.loads(advout.read_text(encoding="utf-8")) if advout.exists() else {}
-    rec.update({"verdict": res.get("verdict"), "holdout": res.get("holdout"), "failure_families": res.get("failure_families", []),
-                "adversarial": {"ok": adv.get("ok"), "n": adv.get("n")}, "candidate_file": str(cand.relative_to(ROOT))})
-    base.with_suffix(".json").write_text(json.dumps(rec, indent=2), encoding="utf-8")
-    return rec
-
-
-def widen(models: list[tuple[str, int]]) -> None:
-    import importlib
-    todo = [p for p in P.iter_packets() if p.get("_meta", {}).get("routing") == "representation"
-            and p.get("_meta", {}).get("candidate_of_record")][:MAX_PACKETS_PER_RUN]
-    for p in todo:
-        wall = importlib.import_module("hephaestus.src.wall_vacuous_truth")
-        for target, timeout in models:
-            try:
-                rec = run_widen_attempt(p, wall, target, timeout)
-            except Exception as e:  # noqa: BLE001
-                rec = {"ts": P.now_iso(), "model": target, "verdict": "JOB_ERROR", "error": f"{type(e).__name__}: {str(e)[:200]}"}
-            p = P.load(p["MINT_ID"])
-            p["_meta"].setdefault("widen_attempts", []).append({k: rec.get(k) for k in ("n", "ts", "model", "verdict", "adversarial", "candidate_file", "error")})
-            P.log_event(p["MINT_ID"], "widen_attempt", **{k: rec.get(k) for k in ("n", "model", "verdict", "adversarial")})
-            P.save(p)
-            print(p["MINT_ID"], "widen", target, "->", rec.get("verdict"), rec.get("adversarial"))
+# Parser-widening mode DELETED (Addendum 4, Q6): adapter widening is representation engineering,
+# not Forge research. History: commits af31ddcda..b801ad3bd.
 
 
 def main(models: list[tuple[str, int]] | None = None) -> None:
@@ -248,14 +163,7 @@ def main(models: list[tuple[str, int]] | None = None) -> None:
     models = models or APPRENTICE_MODELS
     todo = [p for p in P.iter_packets() if p["STATUS"] == "APPRENTICE-TESTING"][:MAX_PACKETS_PER_RUN]
     if not todo:
-        print("apprentice: nothing in APPRENTICE-TESTING")
-        # Addendum 3 (Q5/Q7): adapter widening is representation engineering, not Forge research.
-        # It sleeps unless explicitly enabled; it never runs on the clock.
-        import os
-        if os.environ.get("HEPHAESTUS_WIDEN") == "1":
-            widen(models)
-        else:
-            print("apprentice: widen mode asleep (set HEPHAESTUS_WIDEN=1 to run it deliberately)")
+        print("apprentice: nothing in APPRENTICE-TESTING (a packet reaches it only with ROUTE_CLASS == OPERATOR)")
         return
     for p in todo:
         wall_id = "vacuous_truth" if p["MINT_ID"] == "MINT-0001" else None

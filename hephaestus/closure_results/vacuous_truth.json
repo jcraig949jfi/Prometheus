@@ -8,17 +8,24 @@
   ],
   "n_search_points": 16,
   "n_verify_points": 75,
+  "n_verify_shift_points": 105,
+  "verify_shift_description": "domain sizes 40..60 with boundary rows s in {0, 1, d-1, d} and a mid row",
   "target_type": "bool",
-  "generated": "2026-09-01T10:42:59Z",
+  "basis": {
+    "version": "A2-GENERIC-v1",
+    "hash": "7f2ef69196e7f128"
+  },
+  "max_depth": 3,
+  "generated": "2026-09-01T11:15:20Z",
   "A0_frozen_no_routing": {
     "possible": false,
     "note": "route columns differ -> no routing-free expression can fit; routing R is a required resource"
   },
   "A1_frozen_with_routing": {
     "evaluated": 300000,
-    "distinct": 199817,
+    "distinct_classes": 199817,
     "depth": 3,
-    "seconds": 51.27,
+    "seconds": 65.43,
     "budget": 300000,
     "per_route": {
       "universal": {
@@ -27,10 +34,31 @@
             "expr": "pigeonhole_check(s, all_but_n(d, 1))",
             "depth": 2,
             "static_type": "bool",
-            "coerced_match_search": true,
             "typed": true,
-            "verify_match": true,
-            "mechanism_bearing": true
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          },
+          {
+            "expr": "pigeonhole_check(fencepost_count_T(s), d)",
+            "depth": 2,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          },
+          {
+            "expr": "pigeonhole_check(all_but_n(s, d), all_but_n(0, 1))",
+            "depth": 2,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
           }
         ],
         "coerced_only_aliases": [
@@ -38,32 +66,56 @@
             "expr": "coin_flip_independence(s, d)",
             "depth": 1,
             "static_type": "float",
-            "coerced_match_search": true,
             "typed": false,
-            "verify_match": true,
-            "mechanism_bearing": false
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": false,
+            "robust": false
+          },
+          {
+            "expr": "coin_flip_independence(d, all_but_n(s, d))",
+            "depth": 2,
+            "static_type": "float",
+            "typed": false,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": false,
+            "robust": false
           },
           {
             "expr": "coin_flip_independence(0, all_but_n(d, s))",
             "depth": 2,
             "static_type": "float",
-            "coerced_match_search": true,
             "typed": false,
-            "verify_match": true,
-            "mechanism_bearing": false
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": false,
+            "robust": false
+          },
+          {
+            "expr": "coin_flip_independence(all_but_n(s, d), 0)",
+            "depth": 2,
+            "static_type": "float",
+            "typed": false,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": false,
+            "robust": false
           },
           {
             "expr": "coin_flip_independence(1, all_but_n(s, d))",
             "depth": 2,
             "static_type": "float",
-            "coerced_match_search": true,
             "typed": false,
-            "verify_match": true,
-            "mechanism_bearing": false
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": false,
+            "robust": false
           }
         ],
-        "n_mechanism": 1,
-        "n_alias": 14
+        "n_mechanism": 3,
+        "n_robust": 3,
+        "n_alias": 22
       },
       "negative_universal": {
         "mechanism_bearing": [
@@ -71,10 +123,51 @@
             "expr": "pigeonhole_check(1, s)",
             "depth": 1,
             "static_type": "bool",
-            "coerced_match_search": true,
             "typed": true,
-            "verify_match": true,
-            "mechanism_bearing": true
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          },
+          {
+            "expr": "pigeonhole_check(0, all_but_n(s, 1))",
+            "depth": 2,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          },
+          {
+            "expr": "pigeonhole_check(all_but_n(1, s), s)",
+            "depth": 2,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          },
+          {
+            "expr": "pigeonhole_check(all_but_n(d, s), all_but_n(d, 1))",
+            "depth": 2,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          },
+          {
+            "expr": "pigeonhole_check(all_but_n(1, s), modular_arithmetic(d, d, s))",
+            "depth": 2,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
           }
         ],
         "coerced_only_aliases": [
@@ -82,32 +175,56 @@
             "expr": "coin_flip_independence(0, s)",
             "depth": 1,
             "static_type": "float",
-            "coerced_match_search": true,
             "typed": false,
-            "verify_match": true,
-            "mechanism_bearing": false
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": false,
+            "robust": false
+          },
+          {
+            "expr": "coin_flip_independence(s, all_but_n(0, s))",
+            "depth": 2,
+            "static_type": "float",
+            "typed": false,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": false,
+            "robust": false
+          },
+          {
+            "expr": "coin_flip_independence(all_but_n(0, s), s)",
+            "depth": 2,
+            "static_type": "float",
+            "typed": false,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": false,
+            "robust": false
           },
           {
             "expr": "coin_flip_independence(d, all_but_n(0, s))",
             "depth": 2,
             "static_type": "float",
-            "coerced_match_search": true,
             "typed": false,
-            "verify_match": true,
-            "mechanism_bearing": false
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": false,
+            "robust": false
           },
           {
-            "expr": "coin_flip_independence(1, all_but_n(0, s))",
+            "expr": "coin_flip_independence(all_but_n(d, s), d)",
             "depth": 2,
             "static_type": "float",
-            "coerced_match_search": true,
             "typed": false,
-            "verify_match": true,
-            "mechanism_bearing": false
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": false,
+            "robust": false
           }
         ],
-        "n_mechanism": 1,
-        "n_alias": 13
+        "n_mechanism": 5,
+        "n_robust": 5,
+        "n_alias": 27
       },
       "existential": {
         "mechanism_bearing": [
@@ -115,10 +232,51 @@
             "expr": "pigeonhole_check(s, 0)",
             "depth": 1,
             "static_type": "bool",
-            "coerced_match_search": true,
             "typed": true,
-            "verify_match": true,
-            "mechanism_bearing": true
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          },
+          {
+            "expr": "pigeonhole_check(d, all_but_n(d, s))",
+            "depth": 2,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          },
+          {
+            "expr": "pigeonhole_check(fencepost_count_T(s), 1)",
+            "depth": 2,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          },
+          {
+            "expr": "pigeonhole_check(s, modular_arithmetic(d, d, s))",
+            "depth": 2,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          },
+          {
+            "expr": "pigeonhole_check(all_but_n(s, d), all_but_n(0, d))",
+            "depth": 2,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
           }
         ],
         "coerced_only_aliases": [
@@ -126,185 +284,67 @@
             "expr": "s",
             "depth": 0,
             "static_type": "int",
-            "coerced_match_search": true,
             "typed": false,
-            "verify_match": true,
-            "mechanism_bearing": false
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": false,
+            "robust": false
+          },
+          {
+            "expr": "all_but_n(s, 0)",
+            "depth": 1,
+            "static_type": "int",
+            "typed": false,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": false,
+            "robust": false
           },
           {
             "expr": "all_but_n(0, s)",
             "depth": 1,
             "static_type": "int",
-            "coerced_match_search": true,
             "typed": false,
-            "verify_match": true,
-            "mechanism_bearing": false
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": false,
+            "robust": false
           },
           {
             "expr": "coin_flip_independence(s, 1)",
             "depth": 1,
             "static_type": "float",
-            "coerced_match_search": true,
             "typed": false,
-            "verify_match": true,
-            "mechanism_bearing": false
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": false,
+            "robust": false
+          },
+          {
+            "expr": "all_but_n(d, all_but_n(d, s))",
+            "depth": 2,
+            "static_type": "int",
+            "typed": false,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": false,
+            "robust": false
           }
         ],
-        "n_mechanism": 1,
-        "n_alias": 6912
+        "n_mechanism": 5,
+        "n_robust": 5,
+        "n_alias": 8239
       }
     },
     "all_routes_mechanism_bearing": true,
+    "all_routes_robust": true,
     "all_routes_coerced": true
   },
   "A2_frozen_routing_generic": {
     "evaluated": 300000,
-    "distinct": 199819,
+    "distinct_classes": 198292,
     "depth": 3,
-    "seconds": 51.77,
-    "budget": 300000,
-    "per_route": {
-      "universal": {
-        "mechanism_bearing": [
-          {
-            "expr": "pigeonhole_check(s, all_but_n(d, 1))",
-            "depth": 2,
-            "static_type": "bool",
-            "coerced_match_search": true,
-            "typed": true,
-            "verify_match": true,
-            "mechanism_bearing": true
-          }
-        ],
-        "coerced_only_aliases": [
-          {
-            "expr": "coin_flip_independence(s, d)",
-            "depth": 1,
-            "static_type": "float",
-            "coerced_match_search": true,
-            "typed": false,
-            "verify_match": true,
-            "mechanism_bearing": false
-          },
-          {
-            "expr": "coin_flip_independence(0, all_but_n(d, s))",
-            "depth": 2,
-            "static_type": "float",
-            "coerced_match_search": true,
-            "typed": false,
-            "verify_match": true,
-            "mechanism_bearing": false
-          },
-          {
-            "expr": "coin_flip_independence(1, all_but_n(s, d))",
-            "depth": 2,
-            "static_type": "float",
-            "coerced_match_search": true,
-            "typed": false,
-            "verify_match": true,
-            "mechanism_bearing": false
-          }
-        ],
-        "n_mechanism": 1,
-        "n_alias": 14
-      },
-      "negative_universal": {
-        "mechanism_bearing": [
-          {
-            "expr": "pigeonhole_check(1, s)",
-            "depth": 1,
-            "static_type": "bool",
-            "coerced_match_search": true,
-            "typed": true,
-            "verify_match": true,
-            "mechanism_bearing": true
-          }
-        ],
-        "coerced_only_aliases": [
-          {
-            "expr": "coin_flip_independence(0, s)",
-            "depth": 1,
-            "static_type": "float",
-            "coerced_match_search": true,
-            "typed": false,
-            "verify_match": true,
-            "mechanism_bearing": false
-          },
-          {
-            "expr": "coin_flip_independence(d, all_but_n(0, s))",
-            "depth": 2,
-            "static_type": "float",
-            "coerced_match_search": true,
-            "typed": false,
-            "verify_match": true,
-            "mechanism_bearing": false
-          },
-          {
-            "expr": "coin_flip_independence(1, all_but_n(0, s))",
-            "depth": 2,
-            "static_type": "float",
-            "coerced_match_search": true,
-            "typed": false,
-            "verify_match": true,
-            "mechanism_bearing": false
-          }
-        ],
-        "n_mechanism": 1,
-        "n_alias": 13
-      },
-      "existential": {
-        "mechanism_bearing": [
-          {
-            "expr": "pigeonhole_check(s, 0)",
-            "depth": 1,
-            "static_type": "bool",
-            "coerced_match_search": true,
-            "typed": true,
-            "verify_match": true,
-            "mechanism_bearing": true
-          }
-        ],
-        "coerced_only_aliases": [
-          {
-            "expr": "s",
-            "depth": 0,
-            "static_type": "int",
-            "coerced_match_search": true,
-            "typed": false,
-            "verify_match": true,
-            "mechanism_bearing": false
-          },
-          {
-            "expr": "all_but_n(0, s)",
-            "depth": 1,
-            "static_type": "int",
-            "coerced_match_search": true,
-            "typed": false,
-            "verify_match": true,
-            "mechanism_bearing": false
-          },
-          {
-            "expr": "coin_flip_independence(s, 1)",
-            "depth": 1,
-            "static_type": "float",
-            "coerced_match_search": true,
-            "typed": false,
-            "verify_match": true,
-            "mechanism_bearing": false
-          }
-        ],
-        "n_mechanism": 1,
-        "n_alias": 6912
-      }
-    },
-    "all_routes_mechanism_bearing": true,
-    "all_routes_coerced": true
-  },
-  "B_generic_language": {
-    "evaluated": 107629,
-    "distinct": 2106,
-    "depth": 3,
-    "seconds": 11.62,
+    "seconds": 66.39,
     "budget": 300000,
     "per_route": {
       "universal": {
@@ -313,14 +353,395 @@
             "expr": "eq(d, s)",
             "depth": 1,
             "static_type": "bool",
-            "coerced_match_search": true,
             "typed": true,
-            "verify_match": true,
-            "mechanism_bearing": true
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          },
+          {
+            "expr": "le(d, s)",
+            "depth": 1,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          },
+          {
+            "expr": "pigeonhole_check(s, all_but_n(d, 1))",
+            "depth": 2,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          },
+          {
+            "expr": "pigeonhole_check(fencepost_count_T(s), d)",
+            "depth": 2,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          },
+          {
+            "expr": "pigeonhole_check(all_but_n(s, d), all_but_n(0, 1))",
+            "depth": 2,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          }
+        ],
+        "coerced_only_aliases": [
+          {
+            "expr": "coin_flip_independence(s, d)",
+            "depth": 1,
+            "static_type": "float",
+            "typed": false,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": false,
+            "robust": false
+          },
+          {
+            "expr": "coin_flip_independence(d, all_but_n(s, d))",
+            "depth": 2,
+            "static_type": "float",
+            "typed": false,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": false,
+            "robust": false
+          },
+          {
+            "expr": "coin_flip_independence(0, all_but_n(d, s))",
+            "depth": 2,
+            "static_type": "float",
+            "typed": false,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": false,
+            "robust": false
+          },
+          {
+            "expr": "coin_flip_independence(all_but_n(s, d), 0)",
+            "depth": 2,
+            "static_type": "float",
+            "typed": false,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": false,
+            "robust": false
+          },
+          {
+            "expr": "coin_flip_independence(1, all_but_n(s, d))",
+            "depth": 2,
+            "static_type": "float",
+            "typed": false,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": false,
+            "robust": false
+          }
+        ],
+        "n_mechanism": 5,
+        "n_robust": 5,
+        "n_alias": 22
+      },
+      "negative_universal": {
+        "mechanism_bearing": [
+          {
+            "expr": "eq(s, 0)",
+            "depth": 1,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          },
+          {
+            "expr": "lt(s, 1)",
+            "depth": 1,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          },
+          {
+            "expr": "le(s, 0)",
+            "depth": 1,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          },
+          {
+            "expr": "pigeonhole_check(1, s)",
+            "depth": 1,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          },
+          {
+            "expr": "pigeonhole_check(0, all_but_n(s, 1))",
+            "depth": 2,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          }
+        ],
+        "coerced_only_aliases": [
+          {
+            "expr": "coin_flip_independence(0, s)",
+            "depth": 1,
+            "static_type": "float",
+            "typed": false,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": false,
+            "robust": false
+          },
+          {
+            "expr": "coin_flip_independence(s, all_but_n(0, s))",
+            "depth": 2,
+            "static_type": "float",
+            "typed": false,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": false,
+            "robust": false
+          },
+          {
+            "expr": "coin_flip_independence(all_but_n(0, s), s)",
+            "depth": 2,
+            "static_type": "float",
+            "typed": false,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": false,
+            "robust": false
+          },
+          {
+            "expr": "coin_flip_independence(d, all_but_n(0, s))",
+            "depth": 2,
+            "static_type": "float",
+            "typed": false,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": false,
+            "robust": false
+          },
+          {
+            "expr": "coin_flip_independence(all_but_n(d, s), d)",
+            "depth": 2,
+            "static_type": "float",
+            "typed": false,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": false,
+            "robust": false
+          }
+        ],
+        "n_mechanism": 5,
+        "n_robust": 5,
+        "n_alias": 27
+      },
+      "existential": {
+        "mechanism_bearing": [
+          {
+            "expr": "lt(0, s)",
+            "depth": 1,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          },
+          {
+            "expr": "le(1, s)",
+            "depth": 1,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          },
+          {
+            "expr": "pigeonhole_check(s, 0)",
+            "depth": 1,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          },
+          {
+            "expr": "pigeonhole_check(d, all_but_n(d, s))",
+            "depth": 2,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          },
+          {
+            "expr": "pigeonhole_check(s, modular_arithmetic(d, d, s))",
+            "depth": 2,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          }
+        ],
+        "coerced_only_aliases": [
+          {
+            "expr": "s",
+            "depth": 0,
+            "static_type": "int",
+            "typed": false,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": false,
+            "robust": false
+          },
+          {
+            "expr": "all_but_n(s, 0)",
+            "depth": 1,
+            "static_type": "int",
+            "typed": false,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": false,
+            "robust": false
+          },
+          {
+            "expr": "all_but_n(0, s)",
+            "depth": 1,
+            "static_type": "int",
+            "typed": false,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": false,
+            "robust": false
+          },
+          {
+            "expr": "coin_flip_independence(s, 1)",
+            "depth": 1,
+            "static_type": "float",
+            "typed": false,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": false,
+            "robust": false
+          },
+          {
+            "expr": "all_but_n(d, all_but_n(d, s))",
+            "depth": 2,
+            "static_type": "int",
+            "typed": false,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": false,
+            "robust": false
+          }
+        ],
+        "n_mechanism": 5,
+        "n_robust": 5,
+        "n_alias": 8239
+      }
+    },
+    "all_routes_mechanism_bearing": true,
+    "all_routes_robust": true,
+    "all_routes_coerced": true
+  },
+  "B_generic_language": {
+    "evaluated": 107629,
+    "distinct_classes": 2106,
+    "depth": 3,
+    "seconds": 13.04,
+    "budget": 300000,
+    "per_route": {
+      "universal": {
+        "mechanism_bearing": [
+          {
+            "expr": "eq(d, s)",
+            "depth": 1,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          },
+          {
+            "expr": "le(d, s)",
+            "depth": 1,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          },
+          {
+            "expr": "ge(s, d)",
+            "depth": 1,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          },
+          {
+            "expr": "eq(0, sub(d, s))",
+            "depth": 2,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          },
+          {
+            "expr": "eq(add(d, d), add(d, s))",
+            "depth": 2,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
           }
         ],
         "coerced_only_aliases": [],
-        "n_mechanism": 1,
+        "n_mechanism": 5,
+        "n_robust": 5,
         "n_alias": 0
       },
       "negative_universal": {
@@ -329,14 +750,56 @@
             "expr": "eq(s, 0)",
             "depth": 1,
             "static_type": "bool",
-            "coerced_match_search": true,
             "typed": true,
-            "verify_match": true,
-            "mechanism_bearing": true
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          },
+          {
+            "expr": "lt(s, 1)",
+            "depth": 1,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          },
+          {
+            "expr": "le(s, 0)",
+            "depth": 1,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          },
+          {
+            "expr": "gt(1, s)",
+            "depth": 1,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          },
+          {
+            "expr": "ge(0, s)",
+            "depth": 1,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
           }
         ],
         "coerced_only_aliases": [],
-        "n_mechanism": 1,
+        "n_mechanism": 5,
+        "n_robust": 5,
         "n_alias": 0
       },
       "existential": {
@@ -345,10 +808,51 @@
             "expr": "lt(0, s)",
             "depth": 1,
             "static_type": "bool",
-            "coerced_match_search": true,
             "typed": true,
-            "verify_match": true,
-            "mechanism_bearing": true
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          },
+          {
+            "expr": "le(1, s)",
+            "depth": 1,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          },
+          {
+            "expr": "gt(s, 0)",
+            "depth": 1,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          },
+          {
+            "expr": "ge(s, 1)",
+            "depth": 1,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          },
+          {
+            "expr": "lt(d, add(d, s))",
+            "depth": 2,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
           }
         ],
         "coerced_only_aliases": [
@@ -356,40 +860,67 @@
             "expr": "s",
             "depth": 0,
             "static_type": "int",
-            "coerced_match_search": true,
             "typed": false,
-            "verify_match": true,
-            "mechanism_bearing": false
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": false,
+            "robust": false
+          },
+          {
+            "expr": "add(s, 0)",
+            "depth": 1,
+            "static_type": "int",
+            "typed": false,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": false,
+            "robust": false
+          },
+          {
+            "expr": "sub(s, 0)",
+            "depth": 1,
+            "static_type": "int",
+            "typed": false,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": false,
+            "robust": false
           },
           {
             "expr": "add(s, s)",
             "depth": 1,
             "static_type": "int",
-            "coerced_match_search": true,
             "typed": false,
-            "verify_match": true,
-            "mechanism_bearing": false
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": false,
+            "robust": false
           },
           {
             "expr": "sub(0, s)",
             "depth": 1,
             "static_type": "int",
-            "coerced_match_search": true,
             "typed": false,
-            "verify_match": true,
-            "mechanism_bearing": false
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": false,
+            "robust": false
           }
         ],
-        "n_mechanism": 1,
-        "n_alias": 15
+        "n_mechanism": 5,
+        "n_robust": 5,
+        "n_alias": 64
       }
     },
     "all_routes_mechanism_bearing": true,
+    "all_routes_robust": true,
     "all_routes_coerced": true
   },
   "classification": {
     "class": "SEARCH_ROUTING",
-    "why": "target is mechanism-bearing inside G(C|R): the frozen set computes it; the system does not route to it",
+    "CLOSURE_MARGIN": "A1",
+    "why": "target is mechanism-bearing inside G(C|R); the frozen set computes it and the system does not route to it",
+    "robust_at_margin": true,
     "representation_debt": "Large: extracting (quantifier, domain noun phrase, predicate, domain_size, satisfier_count) from text with domain EQUALITY as the acceptance rule; measured adapter v3 covers 0.9125 of author-adversarial dev v2 and 0.20 of out-of-template phrasings, conditional correctness 1.0."
   }
 }
