@@ -23,6 +23,7 @@ PREFIX = {
     "prediction": "prd", "experiment": "exp", "observation": "obs",
     "failure": "fai", "artifact": "art", "checkpoint": "ckp", "edge": "edg",
     "measurement": "mea", "import": "imp", "erratum": "err",
+    "claim": "clm", "group": "grp",
 }
 
 

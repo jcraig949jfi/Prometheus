@@ -95,6 +95,13 @@ class EngineClient:
     def create_session(self, name: str) -> str:
         return self._req("POST", "/v2/sessions", {"name": name})["session_id"]
 
+    def create_topology_group(self, note: Optional[str] = None) -> str:
+        """Mint a REGISTERED sharing group (an unguessable server-issued
+        capability). Cross-client sharing requires both worlds to carry this id,
+        which you share with the other client by DELIBERATE transfer."""
+        return self._req("POST", "/v2/topology-groups",
+                         {"note": note})["group_id"]
+
     # -- worlds ------------------------------------------------------------
     def create_world(self, session_id: str, name: str, *,
                      sharing_policy: str = "ISOLATED",
@@ -160,17 +167,40 @@ class EngineClient:
                          {"hyp_id": hyp_id, "content": content})["pred_id"]
 
     def experiment(self, wid, spec: dict, *, hyp_id=None, pred_id=None,
-                   enqueue: bool = False, kind: str = "experiment",
-                   priority: int = 100) -> dict:
+                   commit: bool = True, enqueue: bool = False,
+                   kind: str = "experiment", priority: int = 100) -> dict:
+        """Register an experiment. commit=True (default) crosses the irreversible
+        COMMIT boundary in the same call: it freezes the spec, CLOSES the
+        prospective-prediction window, debits the experiment budget, and (with
+        enqueue) releases it for execution. commit=False registers a plan only
+        (no budget, window still open, non-executable) -- commit it later with
+        commit_experiment()."""
         return self._req("POST", f"/v2/worlds/{wid}/experiments", {
             "spec": spec, "hyp_id": hyp_id, "pred_id": pred_id,
-            "enqueue": enqueue, "kind": kind, "priority": priority})
+            "commit": commit, "enqueue": enqueue, "kind": kind,
+            "priority": priority})
+
+    def commit_experiment(self, wid, exp_id: str, *, enqueue: bool = False,
+                          kind: str = "experiment", priority: int = 100) -> dict:
+        """Cross the irreversible commit boundary for a previously registered
+        experiment (see experiment(commit=False))."""
+        return self._req("POST",
+                         f"/v2/worlds/{wid}/experiments/{exp_id}/commit",
+                         {"enqueue": enqueue, "kind": kind, "priority": priority})
 
     def observation(self, wid, exp_id: str, content: dict, outcome: str,
-                    pred_id: Optional[str] = None) -> str:
+                    pred_id: Optional[str] = None,
+                    work_id: Optional[str] = None,
+                    retrospective: bool = False) -> str:
+        """Record an outcome on a COMMITTED experiment. A bound prediction is
+        prospective only if it preceded the commit; a post-commit prediction
+        needs retrospective=True and is never prospective. Pass work_id to bind
+        the authoritative completed work result (evidence_class
+        ENGINE_WORK_RESULT); otherwise the evidence is CLIENT_ASSERTED."""
         return self._req("POST", f"/v2/worlds/{wid}/observations", {
             "exp_id": exp_id, "content": content, "outcome": outcome,
-            "pred_id": pred_id})["obs_id"]
+            "pred_id": pred_id, "work_id": work_id,
+            "retrospective": retrospective})["obs_id"]
 
     def failure(self, wid, *, failure_type: str, falsifier: str, violated: str,
                 **kw) -> str:
@@ -199,18 +229,23 @@ class EngineClient:
             "worker_id": worker_id, "world_id": world_id,
             "lease_s": lease_s})["work"]
 
-    def heartbeat(self, work_id: str, worker_id: str, lease_s: float = 30.0):
+    def heartbeat(self, work_id: str, worker_id: str, claim_id: str,
+                  lease_s: float = 30.0):
         return self._req("POST", f"/v2/work/{work_id}/heartbeat",
-                         {"worker_id": worker_id, "lease_s": lease_s})
+                         {"worker_id": worker_id, "claim_id": claim_id,
+                          "lease_s": lease_s})
 
-    def complete(self, work_id: str, worker_id: str, result: dict):
+    def complete(self, work_id: str, worker_id: str, claim_id: str,
+                 result: dict):
         return self._req("POST", f"/v2/work/{work_id}/complete",
-                         {"worker_id": worker_id, "result": result})
+                         {"worker_id": worker_id, "claim_id": claim_id,
+                          "result": result})
 
-    def fail(self, work_id: str, worker_id: str, error: str,
+    def fail(self, work_id: str, worker_id: str, claim_id: str, error: str,
              retry: bool = True):
         return self._req("POST", f"/v2/work/{work_id}/fail",
-                         {"worker_id": worker_id, "error": error, "retry": retry})
+                         {"worker_id": worker_id, "claim_id": claim_id,
+                          "error": error, "retry": retry})
 
 
 class RemoteWorker:
@@ -232,11 +267,14 @@ class RemoteWorker:
         if claim is None:
             return False
         wid = claim["work_id"]
+        # H1: the server-issued fencing token for THIS attempt; every follow-up
+        # call must present it, so a stale (reclaimed) attempt cannot act.
+        claim_id = claim["claim_id"]
         try:
             result = self.executor(claim["kind"], claim["payload"])
-            self.c.complete(wid, self.worker_id, result)
+            self.c.complete(wid, self.worker_id, claim_id, result)
         except Exception as e:                       # noqa: BLE001
-            self.c.fail(wid, self.worker_id, f"executor error: {e}")
+            self.c.fail(wid, self.worker_id, claim_id, f"executor error: {e}")
         return True
 
     def run(self, world_id: Optional[str] = None, *, poll_s: float = 0.2,

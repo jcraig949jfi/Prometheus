@@ -14,11 +14,20 @@ import random
 from typing import Any, Optional
 
 from sfe import events
+from sfe import release
 from sfe.errors import (AccessDenied, BudgetExhausted, ConflictError,
                          InvalidTransition, IsolationViolation, NotFound,
                          PredictionOrderingError, ValidationError)
 from sfe.ids import content_hash, new_id
 from sfe.store import Store, now
+
+# information kinds the sharing machinery understands; an artifact's meta may
+# carry arbitrary freeform user metadata, but info_kind is CONTROL configuration
+# and must come from this closed vocabulary (DFX-4 discipline).
+INFO_KINDS = frozenset({"artifact", "failure", "hypothesis", "observation"})
+
+# evidence provenance classes (H4): what stands behind an observation.
+EVIDENCE_CLASSES = ("ENGINE_WORK_RESULT", "CLIENT_ASSERTED")
 
 # world lifecycle transitions that are allowed (fail-closed otherwise)
 _WORLD_TRANSITIONS = {
@@ -81,6 +90,54 @@ class Foundry:
                                   payload={"name": name, "client_id": client_id})
         return sid
 
+    def revoke_token(self, client_id: str) -> None:
+        """Operator-controlled revocation: the client's current token stops
+        authenticating immediately (its stored hash is cleared, so no bearer
+        token can resolve to this client until one is reissued). The client
+        IDENTITY -- and every provenance record bound to it -- is unchanged."""
+        with self.store.write() as cx:
+            if cx.execute("SELECT 1 FROM clients WHERE client_id=?",
+                          (client_id,)).fetchone() is None:
+                raise NotFound("unknown client", client_id=client_id)
+            cx.execute("UPDATE clients SET token_hash=NULL WHERE client_id=?",
+                       (client_id,))
+            events.append_foundry(cx, "CLIENT_TOKEN_REVOKED", actor="operator",
+                                  scope_kind="client", scope_id=client_id,
+                                  payload={})
+
+    def reissue_token(self, client_id: str, token_hash: str) -> None:
+        """Operator-controlled rotation: bind a NEW token to the SAME client
+        identity. The old token (any prior hash) stays dead; history and
+        provenance remain bound to the unchanged client_id."""
+        with self.store.write() as cx:
+            if cx.execute("SELECT 1 FROM clients WHERE client_id=?",
+                          (client_id,)).fetchone() is None:
+                raise NotFound("unknown client", client_id=client_id)
+            cx.execute("UPDATE clients SET token_hash=? WHERE client_id=?",
+                       (token_hash, client_id))
+            events.append_foundry(cx, "CLIENT_TOKEN_REISSUED", actor="operator",
+                                  scope_kind="client", scope_id=client_id,
+                                  payload={})
+
+    def create_topology_group(self, client_id: str, *,
+                              note: Optional[str] = None) -> str:
+        """Mint a REGISTERED sharing group (H5). The returned id is a server-
+        issued unguessable capability: cross-client sharing works only when
+        both worlds carry this id, which two clients can share only by
+        deliberate out-of-band transfer -- string-guessing can never
+        manufacture bilateral consent."""
+        gid = new_id("group")
+        with self.store.write() as cx:
+            if cx.execute("SELECT 1 FROM clients WHERE client_id=?",
+                          (client_id,)).fetchone() is None:
+                raise NotFound("unknown client", client_id=client_id)
+            cx.execute("INSERT INTO topology_groups(group_id,created_by,note,"
+                       "created_ts) VALUES(?,?,?,?)",
+                       (gid, client_id, note, now()))
+            events.append_foundry(cx, "TOPOLOGY_GROUP_CREATED", actor=client_id,
+                                  scope_kind="group", scope_id=gid, payload={})
+        return gid
+
     # ================= world lifecycle ==================================
     def create_world(self, session_id: str, name: str, *,
                      sharing_policy: str = "ISOLATED",
@@ -103,10 +160,10 @@ class Foundry:
             cid = s["client_id"]
             cx.execute(
                 "INSERT INTO worlds(world_id,session_id,client_id,name,state,"
-                "sharing_policy,topology_group,seed_root,created_ts) "
-                "VALUES(?,?,?,?,'CREATED',?,?,?,?)",
+                "sharing_policy,topology_group,seed_root,budget_root,"
+                "created_ts) VALUES(?,?,?,?,'CREATED',?,?,?,?,?)",
                 (wid, session_id, cid, name, sharing_policy, topology_group,
-                 int(seed_root), now()))
+                 int(seed_root), wid, now()))
             self._init_budget(cx, wid, budget or {})
             events.append(cx, wid, "WORLD_CREATED", actor=cid, payload={
                 "name": name, "sharing_policy": sharing_policy,
@@ -221,8 +278,13 @@ class Foundry:
             (t,)).fetchall()
         for r in rows:
             newst = "RETRYABLE" if r["attempts"] < r["max_attempts"] else "EXPIRED"
+            # claim_id is CLEARED on reclaim (H1): the old attempt's fencing
+            # token becomes permanently stale, so a delayed result from the
+            # expired attempt can never complete the current one -- even from
+            # the SAME worker_id.
             cx.execute("UPDATE work_items SET status=?, claimed_by=NULL, "
-                       "lease_expires=NULL, updated_ts=? WHERE work_id=?",
+                       "claim_id=NULL, lease_expires=NULL, updated_ts=? "
+                       "WHERE work_id=?",
                        (newst, t, r["work_id"]))
             events.append(cx, r["world_id"], "WORK_EXPIRED",
                           actor="foundry", refs={"work_id": r["work_id"]},
@@ -259,21 +321,29 @@ class Foundry:
             if cand is None:
                 return None
             t = now()
+            # server-issued FENCING token for THIS claim attempt (H1). It is
+            # required on heartbeat/complete/fail and is invalidated on reclaim,
+            # so an expired attempt's result can never become authoritative.
+            claim_id = new_id("claim")
             cx.execute(
                 "UPDATE work_items SET status='CLAIMED', claimed_by=?, "
-                "lease_expires=?, heartbeat_ts=?, attempts=attempts+1, "
-                "updated_ts=? WHERE work_id=? AND status IN "
-                "('QUEUED','RETRYABLE')",
-                (worker_id, t + lease_s, t, t, cand["work_id"]))
+                "claim_id=?, lease_expires=?, heartbeat_ts=?, "
+                "attempts=attempts+1, updated_ts=? WHERE work_id=? AND "
+                "status IN ('QUEUED','RETRYABLE')",
+                (worker_id, claim_id, t + lease_s, t, t, cand["work_id"]))
             events.append(cx, cand["world_id"], "WORK_CLAIMED", actor=worker_id,
-                          refs={"work_id": cand["work_id"]})
+                          refs={"work_id": cand["work_id"],
+                                "claim_id": claim_id})
             row = cx.execute("SELECT * FROM work_items WHERE work_id=?",
                              (cand["work_id"],)).fetchone()
             return _work_dict(row)
 
-    def start_work(self, work_id: str, worker_id: str) -> dict:
+    def start_work(self, work_id: str, worker_id: str, *,
+                   claim_id: Optional[str] = None,
+                   client_id: Optional[str] = None) -> dict:
         with self.store.write() as cx:
-            r = self._owned_claim(cx, work_id, worker_id, {"CLAIMED"})
+            r = self._owned_claim(cx, work_id, worker_id, {"CLAIMED"},
+                                  client_id=client_id, claim_id=claim_id)
             cx.execute("UPDATE work_items SET status='RUNNING', updated_ts=? "
                        "WHERE work_id=?", (now(), work_id))
             events.append(cx, r["world_id"], "WORK_STARTED", actor=worker_id,
@@ -283,10 +353,11 @@ class Foundry:
 
     def heartbeat(self, work_id: str, worker_id: str,
                   lease_s: float = DEFAULT_LEASE_S, *,
+                  claim_id: Optional[str] = None,
                   client_id: Optional[str] = None) -> dict:
         with self.store.write() as cx:
             r = self._owned_claim(cx, work_id, worker_id, {"CLAIMED", "RUNNING"},
-                                  client_id=client_id)
+                                  client_id=client_id, claim_id=claim_id)
             t = now()
             cx.execute("UPDATE work_items SET lease_expires=?, heartbeat_ts=?, "
                        "updated_ts=? WHERE work_id=?",
@@ -296,7 +367,7 @@ class Foundry:
             return {"work_id": work_id, "lease_expires": t + lease_s}
 
     def _owned_claim(self, cx, work_id, worker_id, allowed_states,
-                     client_id=None):
+                     client_id=None, claim_id=None):
         r = cx.execute("SELECT * FROM work_items WHERE work_id=?",
                        (work_id,)).fetchone()
         if r is None:
@@ -305,18 +376,31 @@ class Foundry:
         # client_id=None is an internal/system worker (mirrors _authorize).
         if client_id is not None:
             self._authorize(cx, r["world_id"], client_id)
-        if r["status"] not in allowed_states or r["claimed_by"] != worker_id:
+        # H1 lease fencing: the caller must present the server-issued token of
+        # the CURRENT claim attempt. worker_id alone is caller-supplied and is
+        # NOT sufficient identity; a reclaim clears claim_id, so a stale attempt
+        # (even from the same worker_id) can never act on the current one.
+        if claim_id is None:
             raise ConflictError(
-                "work not held by this worker in an allowed state",
+                "claim_id (the fencing token issued at claim) is required",
+                work_id=work_id)
+        if (r["status"] not in allowed_states or r["claimed_by"] != worker_id
+                or r["claim_id"] != claim_id):
+            raise ConflictError(
+                "work not held under this claim attempt (stale lease, foreign "
+                "worker, or disallowed state)",
                 work_id=work_id, status=r["status"], claimed_by=r["claimed_by"],
                 worker_id=worker_id)
         return r
 
     def complete_work(self, work_id: str, worker_id: str, result: dict, *,
+                      claim_id: Optional[str] = None,
                       client_id: Optional[str] = None) -> dict:
-        """Idempotent, exactly-once completion (I3, T7). If already completed by
-        THIS worker, the stored result is returned; a second DISTINCT worker is
-        rejected -- exactly one authoritative result."""
+        """Idempotent, exactly-once completion (I3, T7). If already completed
+        under THIS claim attempt, the stored result is returned; any other
+        attempt -- a distinct worker, or a STALE lease whose claim_id was
+        invalidated by reclaim (H1) -- is rejected. Exactly one authoritative
+        result, provably from the current claim attempt."""
         with self.store.write() as cx:
             r = cx.execute("SELECT * FROM work_items WHERE work_id=?",
                            (work_id,)).fetchone()
@@ -324,16 +408,24 @@ class Foundry:
                 raise NotFound("unknown work item", work_id=work_id)
             if client_id is not None:                 # defense-in-depth (I5)
                 self._authorize(cx, r["world_id"], client_id)
+            if claim_id is None:                      # H1: fencing is mandatory
+                raise ConflictError(
+                    "claim_id (the fencing token issued at claim) is required",
+                    work_id=work_id)
             if r["status"] == "COMPLETED":
-                if r["claimed_by"] == worker_id:
+                if r["claimed_by"] == worker_id and r["claim_id"] == claim_id:
                     return _work_dict(r)          # idempotent replay
-                raise ConflictError("work already completed by another worker",
-                                    work_id=work_id, claimed_by=r["claimed_by"])
-            if r["claimed_by"] != worker_id or r["status"] not in (
-                    "CLAIMED", "RUNNING"):
-                raise ConflictError("cannot complete work not held by worker",
-                                    work_id=work_id, status=r["status"],
+                raise ConflictError("work already completed by another claim "
+                                    "attempt", work_id=work_id,
                                     claimed_by=r["claimed_by"])
+            if (r["claimed_by"] != worker_id or r["claim_id"] != claim_id
+                    or r["status"] not in ("CLAIMED", "RUNNING")):
+                raise ConflictError(
+                    "cannot complete: not held under this claim attempt "
+                    "(stale lease after reclaim, foreign worker, or "
+                    "disallowed state)",
+                    work_id=work_id, status=r["status"],
+                    claimed_by=r["claimed_by"])
             rhash = content_hash(result)
             cx.execute("UPDATE work_items SET status='COMPLETED', result=?, "
                        "result_hash=?, completed_ts=?, updated_ts=? "
@@ -345,15 +437,17 @@ class Foundry:
                                          "work_id=?", (work_id,)).fetchone())
 
     def fail_work(self, work_id: str, worker_id: str, error: str, *,
-                  retry: bool = True, client_id: Optional[str] = None) -> dict:
+                  retry: bool = True, claim_id: Optional[str] = None,
+                  client_id: Optional[str] = None) -> dict:
         with self.store.write() as cx:
             r = self._owned_claim(cx, work_id, worker_id, {"CLAIMED", "RUNNING"},
-                                  client_id=client_id)
+                                  client_id=client_id, claim_id=claim_id)
             retryable = retry and r["attempts"] < r["max_attempts"]
             newst = "RETRYABLE" if retryable else "FAILED"
             cx.execute("UPDATE work_items SET status=?, claimed_by=NULL, "
-                       "lease_expires=NULL, error=?, updated_ts=? "
-                       "WHERE work_id=?", (newst, error, now(), work_id))
+                       "claim_id=NULL, lease_expires=NULL, error=?, "
+                       "updated_ts=? WHERE work_id=?",
+                       (newst, error, now(), work_id))
             events.append(cx, r["world_id"], "WORK_FAILED", actor=worker_id,
                           refs={"work_id": work_id},
                           payload={"error": error[:500], "next": newst})
@@ -384,67 +478,112 @@ class Foundry:
                    "VALUES(?,?,?,?)",
                    (world_id, json.dumps(limits), json.dumps({}), now()))
 
-    def consume_budget(self, world_id: str, resource: str, amount: float, *,
-                       client_id: Optional[str] = None) -> dict:
-        """Account resource use and enforce the world's limit. Exceeding an
-        ENFORCEABLE limit raises BudgetExhausted and emits BUDGET_EXHAUSTED; a
-        MEASURED/ESTIMATED limit is recorded but not blocked (section 12: never
-        fabricate enforcement you do not have)."""
-        # The exhaustion TRANSITION (flag + event) must COMMIT even though the
-        # call ultimately raises -- so we record it inside the transaction and
-        # raise only AFTER the commit. Raising inside the write() block would
-        # roll the transition back.
-        blocked = False
-        with self.store.write() as cx:
-            self._authorize(cx, world_id, client_id)
-            b = cx.execute("SELECT * FROM budgets WHERE world_id=?",
-                           (world_id,)).fetchone()
-            limits = json.loads(b["limits"]); consumed = json.loads(b["consumed"])
+    def _budget_rows(self, cx, world_row):
+        """The budget rows governing `world_row`: its own LOCAL row and, for a
+        fork child, the LINEAGE root's row -- the authoritative campaign budget
+        that forking cannot multiply (H3). Pre-v2 worlds are their own root."""
+        wid = world_row["world_id"]
+        root = world_row["budget_root"] or wid
+        out = []
+        local = cx.execute("SELECT * FROM budgets WHERE world_id=?",
+                           (wid,)).fetchone()
+        if local is not None:
+            out.append(("local", local))
+        if root != wid:
+            rb = cx.execute("SELECT * FROM budgets WHERE world_id=?",
+                            (root,)).fetchone()
+            if rb is not None:
+                out.append(("lineage", rb))
+        return root, out
+
+    def _debit_budget(self, cx, world_row, resource: str, amount: float,
+                      actor: str):
+        """Debit `resource` on EVERY governing budget row (local safety cap AND
+        lineage root) inside the caller's transaction. Returns (blocked, info).
+        When any enforceable limit blocks: the exhaustion flag and (on the
+        transition) a BUDGET_EXHAUSTED event are written durably, NOTHING is
+        debited, and the caller must not proceed with the act this budget would
+        have paid for (section 12: never fabricate enforcement)."""
+        wid = world_row["world_id"]
+        root, rows = self._budget_rows(cx, world_row)
+        parsed, blocking = [], None
+        for scope, b in rows:
+            limits = json.loads(b["limits"])
+            consumed = json.loads(b["consumed"])
             spec = limits.get(resource)
             prospective = consumed.get(resource, 0) + amount
-            over_enforced = (spec and spec.get("limit") is not None
-                             and spec["enforcement"] == "enforceable"
-                             and prospective > spec["limit"])
-            if over_enforced:
-                # an enforceable limit BLOCKS the use: consumed is NOT advanced
-                # past the limit for the blocked amount; the world is marked
-                # exhausted and the transition is recorded.
-                blocked = True
-                cur = consumed.get(resource, 0)
-                if not b["exhausted"]:
-                    cx.execute("UPDATE budgets SET exhausted=1, updated_ts=? "
-                               "WHERE world_id=?", (now(), world_id))
-                    events.append(cx, world_id, "BUDGET_EXHAUSTED",
-                                  actor="foundry",
-                                  payload={"resource": resource,
-                                           "limit": spec["limit"],
-                                           "consumed": cur, "requested": amount})
-                lim = spec["limit"]
-            else:
-                consumed[resource] = prospective
-                events.append(cx, world_id, "BUDGET_CONSUMED",
-                              actor=client_id or "foundry",
-                              payload={"resource": resource, "amount": amount,
-                                       "total": prospective})
-                cx.execute("UPDATE budgets SET consumed=?, updated_ts=? "
-                           "WHERE world_id=?",
-                           (json.dumps(consumed), now(), world_id))
-                cur, lim = prospective, (spec.get("limit") if spec else None)
+            over = (spec and spec.get("limit") is not None
+                    and spec["enforcement"] == "enforceable"
+                    and prospective > spec["limit"])
+            parsed.append((scope, b, consumed, spec, prospective))
+            if over and blocking is None:
+                blocking = (scope, b, spec, consumed.get(resource, 0))
+        if blocking is not None:
+            scope, b, spec, cur = blocking
+            if not b["exhausted"]:
+                cx.execute("UPDATE budgets SET exhausted=1, updated_ts=? "
+                           "WHERE world_id=?", (now(), b["world_id"]))
+                events.append(cx, wid, "BUDGET_EXHAUSTED", actor="foundry",
+                              payload={"resource": resource,
+                                       "limit": spec["limit"], "consumed": cur,
+                                       "requested": amount, "scope": scope,
+                                       "budget_root": root})
+            return True, {"resource": resource, "limit": spec["limit"],
+                          "consumed": cur, "scope": scope}
+        total, lim = None, None
+        for scope, b, consumed, spec, prospective in parsed:
+            consumed[resource] = prospective
+            cx.execute("UPDATE budgets SET consumed=?, updated_ts=? "
+                       "WHERE world_id=?",
+                       (json.dumps(consumed), now(), b["world_id"]))
+            if scope == "local":
+                total = prospective
+                lim = spec.get("limit") if spec else None
+        events.append(cx, wid, "BUDGET_CONSUMED", actor=actor,
+                      payload={"resource": resource, "amount": amount,
+                               "total": total, "budget_root": root})
+        return False, {"resource": resource, "consumed": total, "limit": lim}
+
+    def consume_budget(self, world_id: str, resource: str, amount: float, *,
+                       client_id: Optional[str] = None) -> dict:
+        """Account resource use and enforce limits at BOTH governing scopes:
+        the world's local cap and its lineage root (H3). Exceeding an
+        enforceable limit raises BudgetExhausted after durably recording the
+        exhaustion (COMMIT-THEN-RAISE: raising inside the write() block would
+        roll the transition back)."""
+        with self.store.write() as cx:
+            w = self._authorize(cx, world_id, client_id)
+            blocked, info = self._debit_budget(cx, w, resource, amount,
+                                               client_id or "foundry")
         if blocked:
             raise BudgetExhausted(
-                "world resource budget exhausted", world_id=world_id,
-                resource=resource, limit=lim, consumed=cur)
-        return {"resource": resource, "consumed": cur, "limit": lim,
-                "exhausted": bool(blocked)}
+                "world resource budget exhausted", world_id=world_id, **info)
+        return {**info, "exhausted": False}
 
     def budget_status(self, world_id: str) -> dict:
-        b = self.store.read().execute("SELECT * FROM budgets WHERE world_id=?",
-                                      (world_id,)).fetchone()
-        if b is None:
+        cx = self.store.read()
+        w = cx.execute("SELECT world_id, budget_root FROM worlds WHERE "
+                       "world_id=?", (world_id,)).fetchone()
+        if w is None:
             raise NotFound("unknown world", world_id=world_id)
-        return {"limits": json.loads(b["limits"]),
-                "consumed": json.loads(b["consumed"]),
-                "exhausted": bool(b["exhausted"])}
+        b = cx.execute("SELECT * FROM budgets WHERE world_id=?",
+                       (world_id,)).fetchone()
+        if b is None:
+            raise NotFound("world has no budget row", world_id=world_id)
+        root = w["budget_root"] or world_id
+        out = {"limits": json.loads(b["limits"]),
+               "consumed": json.loads(b["consumed"]),
+               "exhausted": bool(b["exhausted"]),
+               "budget_root": root,
+               "scope": "LINEAGE_ROOT" if root == world_id else "FORK_LOCAL"}
+        if root != world_id:
+            rb = cx.execute("SELECT * FROM budgets WHERE world_id=?",
+                            (root,)).fetchone()
+            if rb is not None:
+                out["lineage"] = {"limits": json.loads(rb["limits"]),
+                                  "consumed": json.loads(rb["consumed"]),
+                                  "exhausted": bool(rb["exhausted"])}
+        return out
 
     # ================= research objects ==================================
     def propose_hypothesis(self, world_id: str, statement: str, *,
@@ -494,12 +633,28 @@ class Foundry:
                           client_id: Optional[str] = None,
                           hyp_id: Optional[str] = None,
                           pred_id: Optional[str] = None,
+                          commit: bool = True,
                           enqueue: bool = False, kind: str = "experiment",
                           priority: int = 100) -> dict:
+        """REGISTER an experiment and (by default) COMMIT it atomically in the
+        same transaction. Registration alone (commit=False) is PLANNING: the
+        experiment exists but is non-executable, consumes no budget, and its
+        prospective-prediction window is still open. `enqueue` requires commit
+        -- nothing is ever released for execution without crossing the commit
+        boundary (see commit_experiment for the governing rule)."""
+        if enqueue and not commit:
+            raise ValidationError(
+                "enqueue requires commit: an experiment cannot be released for "
+                "execution without crossing the commit boundary")
         eid = new_id("experiment")
-        wk = None
+        out = {"exp_id": eid, "work_id": None, "committed_seq": None}
+        blocked_info = None
         with self.store.write() as cx:
             r = self._authorize(cx, world_id, client_id)
+            if pred_id is not None and cx.execute(
+                    "SELECT 1 FROM predictions WHERE pred_id=? AND world_id=?",
+                    (pred_id, world_id)).fetchone() is None:
+                raise NotFound("prediction not in this world", pred_id=pred_id)
             ev = events.append(cx, world_id, "EXPERIMENT_CREATED",
                                actor=r["client_id"],
                                refs={"exp_id": eid, "hyp_id": hyp_id,
@@ -512,26 +667,121 @@ class Foundry:
             if hyp_id:
                 self._edge(cx, world_id, r["client_id"], "hypothesis", hyp_id,
                            "experiment", eid, "TESTS")
-            if enqueue:
-                wk = new_id("work")
-                cx.execute(
-                    "INSERT INTO work_items(work_id,world_id,kind,payload,"
-                    "priority,created_ts,updated_ts) VALUES(?,?,?,?,?,?,?)",
-                    (wk, world_id, kind, json.dumps({"exp_id": eid, **spec}),
-                     priority, now(), now()))
-                cx.execute("UPDATE experiments SET work_id=? WHERE exp_id=?",
-                           (wk, eid))
-                events.append(cx, world_id, "WORK_ENQUEUED", actor=r["client_id"],
-                              refs={"work_id": wk, "exp_id": eid})
-        return {"exp_id": eid, "work_id": wk}
+            if commit:
+                blocked_info, commit_out = self._commit_core(
+                    cx, r, eid, enqueue=enqueue, kind=kind, priority=priority)
+                if blocked_info is None:
+                    out.update(commit_out)
+        if blocked_info is not None:
+            # COMMIT-THEN-RAISE: the registration and the durable exhaustion
+            # record persist; the experiment remains REGISTERED, non-executable.
+            raise BudgetExhausted(
+                "experiment registered but NOT committed: budget exhausted",
+                world_id=world_id, exp_id=eid, **blocked_info)
+        return out
+
+    def _commit_core(self, cx, world_row, exp_id: str, *, enqueue: bool,
+                     kind: str, priority: int):
+        """The REGISTERED -> COMMITTED transition, inside the caller's open
+        transaction. Returns (blocked_info, out): blocked_info is not None when
+        the budget blocked the commit (exhaustion markers written durably;
+        nothing else changed); otherwise out carries committed_seq / work_id.
+        Idempotent: an already-committed experiment returns its recorded
+        boundary with NO second debit (D2-03)."""
+        wid = world_row["world_id"]
+        ex = cx.execute("SELECT * FROM experiments WHERE exp_id=? AND "
+                        "world_id=?", (exp_id, wid)).fetchone()
+        if ex is None:
+            raise NotFound("experiment not in this world", exp_id=exp_id)
+        if ex["committed_seq"] is not None:
+            return None, {"committed_seq": ex["committed_seq"],
+                          "work_id": ex["work_id"], "already_committed": True}
+        if world_row["state"] != "RUNNING":
+            raise InvalidTransition(
+                "world must be RUNNING to commit an experiment",
+                world_id=wid, state=world_row["state"])
+        blocked, info = self._debit_budget(cx, world_row, "experiments", 1,
+                                           world_row["client_id"])
+        if blocked:
+            return info, None
+        ev = events.append(
+            cx, wid, "EXPERIMENT_COMMITTED", actor=world_row["client_id"],
+            refs={"exp_id": exp_id, "hyp_id": ex["hyp_id"],
+                  "pred_id": ex["pred_id"]},
+            payload={"spec_hash": ex["spec_hash"],
+                     "engine_source_hash": release.ENGINE_SOURCE_HASH,
+                     "budget_resource": "experiments",
+                     "prospective_rule":
+                         "predictions with created_seq < committed_seq"})
+        cx.execute("UPDATE experiments SET committed_seq=?, committed_ts=? "
+                   "WHERE exp_id=?", (ev["event_seq"], now(), exp_id))
+        wk = None
+        if enqueue:
+            wk = new_id("work")
+            cx.execute(
+                "INSERT INTO work_items(work_id,world_id,kind,payload,"
+                "priority,created_ts,updated_ts) VALUES(?,?,?,?,?,?,?)",
+                (wk, wid, kind,
+                 json.dumps({"exp_id": exp_id, **json.loads(ex["spec"])}),
+                 priority, now(), now()))
+            cx.execute("UPDATE experiments SET work_id=? WHERE exp_id=?",
+                       (wk, exp_id))
+            events.append(cx, wid, "WORK_ENQUEUED",
+                          actor=world_row["client_id"],
+                          refs={"work_id": wk, "exp_id": exp_id})
+        return None, {"committed_seq": ev["event_seq"], "work_id": wk}
+
+    def commit_experiment(self, world_id: str, exp_id: str, *,
+                          client_id: Optional[str] = None,
+                          enqueue: bool = False, kind: str = "experiment",
+                          priority: int = 100) -> dict:
+        """The IRREVERSIBLE scientific boundary (the governing GEN-2 lifecycle
+        invariant). In ONE atomic transaction this: freezes the experiment's
+        specification (spec_hash sealed in the event), CLOSES the prospective-
+        prediction window -- only predictions with created_seq < committed_seq
+        can EVER be prospective for this experiment -- debits the authoritative
+        experiment budget at both governing scopes (local + lineage root),
+        records EXPERIMENT_COMMITTED stamped with the exact running engine
+        source hash, and optionally releases the experiment for execution by
+        enqueuing work. After this transaction commits, hindsight cannot
+        acquire prospective status: a worker may learn the outcome, but the
+        window closed BEFORE execution became possible.
+
+        Idempotent (no second debit). A budget block leaves the experiment
+        REGISTERED and non-executable, with the exhaustion durably recorded
+        (COMMIT-THEN-RAISE)."""
+        with self.store.write() as cx:
+            r = self._authorize(cx, world_id, client_id)
+            blocked_info, out = self._commit_core(
+                cx, r, exp_id, enqueue=enqueue, kind=kind, priority=priority)
+        if blocked_info is not None:
+            raise BudgetExhausted(
+                "experiment NOT committed: budget exhausted",
+                world_id=world_id, exp_id=exp_id, **blocked_info)
+        return {"exp_id": exp_id, **out}
 
     def record_observation(self, world_id: str, exp_id: str, content: dict,
                            outcome: str, *, client_id: Optional[str] = None,
-                           pred_id: Optional[str] = None) -> str:
-        """Record an observation. If it references a prediction, the prediction
-        MUST have been registered earlier in the event order (I6, T11) -- a
-        prediction whose registration event does not precede this observation is
-        rejected as post-hoc laundering."""
+                           pred_id: Optional[str] = None,
+                           work_id: Optional[str] = None,
+                           retrospective: bool = False) -> str:
+        """Record an observation on a COMMITTED experiment.
+
+        PROSPECTIVE RULE (DFX-1): a bound prediction is prospective iff it was
+        registered BEFORE the experiment's commit (pred.created_seq <
+        exp.committed_seq). The commit closed the window BEFORE execution
+        became possible, so neither a prior observation nor a worker's local
+        knowledge of the outcome can be laundered into foresight. A post-commit
+        prediction may be recorded only when the caller EXPLICITLY marks it
+        retrospective=True -- it is preserved, but excluded from prospective
+        status forever (D1-03/D1-08). No later observation reopens the window.
+
+        EVIDENCE AUTHORITY (H4): pass work_id to bind this observation to the
+        authoritative completed work result (verified: same world, COMPLETED,
+        enqueued for THIS experiment) -> evidence_class ENGINE_WORK_RESULT.
+        Otherwise the class is CLIENT_ASSERTED, and that class is recorded on
+        the observation, the event, and any CLAIM_* adjudication -- a client
+        assertion can never masquerade as an engine-attested result."""
         if outcome not in ("FALSIFIED", "SURVIVED", "INCONCLUSIVE"):
             raise ValidationError("bad outcome", outcome=outcome)
         oid = new_id("observation")
@@ -541,11 +791,31 @@ class Foundry:
                             "world_id=?", (exp_id, world_id)).fetchone()
             if ex is None:
                 raise NotFound("experiment not in this world", exp_id=exp_id)
-            ev = events.append(cx, world_id, "OBSERVATION_RECORDED",
-                               actor=r["client_id"],
-                               refs={"obs_id": oid, "exp_id": exp_id,
-                                     "pred_id": pred_id},
-                               payload={"outcome": outcome})
+            if ex["committed_seq"] is None:
+                raise InvalidTransition(
+                    "experiment is not committed; the commit boundary must "
+                    "close the prospective window before any outcome can be "
+                    "recorded", exp_id=exp_id)
+            evidence_class, ev_work_refs = "CLIENT_ASSERTED", {}
+            if work_id is not None:
+                wrow = cx.execute("SELECT * FROM work_items WHERE work_id=?",
+                                  (work_id,)).fetchone()
+                if (wrow is None or wrow["world_id"] != world_id
+                        or wrow["status"] != "COMPLETED"):
+                    raise ValidationError(
+                        "work_id does not name a COMPLETED work item of this "
+                        "world; refusing ENGINE_WORK_RESULT evidence class",
+                        work_id=work_id)
+                wpayload = json.loads(wrow["payload"])
+                if wpayload.get("exp_id") != exp_id and ex["work_id"] != work_id:
+                    raise ValidationError(
+                        "work item was not enqueued for this experiment; "
+                        "refusing ENGINE_WORK_RESULT evidence class",
+                        work_id=work_id, exp_id=exp_id)
+                evidence_class = "ENGINE_WORK_RESULT"
+                ev_work_refs = {"work_id": work_id,
+                                "result_hash": wrow["result_hash"]}
+            prospective = None
             if pred_id is not None:
                 p = cx.execute("SELECT created_seq FROM predictions WHERE "
                                "pred_id=? AND world_id=?",
@@ -553,19 +823,32 @@ class Foundry:
                 if p is None:
                     raise NotFound("prediction not in this world",
                                    pred_id=pred_id)
-                if p["created_seq"] >= ev["event_seq"]:
+                prospective = (1 if p["created_seq"] < ex["committed_seq"]
+                               else 0)
+                if not prospective and not retrospective:
                     raise PredictionOrderingError(
-                        "prediction did not precede observation; refusing to "
-                        "record it as preregistered", pred_id=pred_id,
+                        "prediction was registered AFTER the experiment's "
+                        "commit closed the prospective window; it can only be "
+                        "recorded with retrospective=true and is never "
+                        "prospective", pred_id=pred_id,
                         prediction_seq=p["created_seq"],
-                        observation_seq=ev["event_seq"])
+                        committed_seq=ex["committed_seq"])
                 cx.execute("UPDATE predictions SET state='OBSERVED' WHERE "
                            "pred_id=?", (pred_id,))
+            ev = events.append(cx, world_id, "OBSERVATION_RECORDED",
+                               actor=r["client_id"],
+                               refs={"obs_id": oid, "exp_id": exp_id,
+                                     "pred_id": pred_id, **ev_work_refs},
+                               payload={"outcome": outcome,
+                                        "prospective": prospective,
+                                        "evidence_class": evidence_class})
             cx.execute("INSERT INTO observations(obs_id,world_id,exp_id,pred_id,"
-                       "content,outcome,created_ts,created_seq) "
-                       "VALUES(?,?,?,?,?,?,?,?)",
+                       "content,outcome,pred_prospective,evidence_class,"
+                       "work_id,created_ts,created_seq) "
+                       "VALUES(?,?,?,?,?,?,?,?,?,?,?)",
                        (oid, world_id, exp_id, pred_id, json.dumps(content),
-                        outcome, now(), ev["event_seq"]))
+                        outcome, prospective, evidence_class, work_id, now(),
+                        ev["event_seq"]))
             cx.execute("UPDATE experiments SET state='OBSERVED' WHERE exp_id=?",
                        (exp_id,))
             if ex["hyp_id"]:
@@ -574,10 +857,14 @@ class Foundry:
                 if st:
                     cx.execute("UPDATE hypotheses SET state=? WHERE hyp_id=?",
                                (st, ex["hyp_id"]))
+                    # provenance SURVIVES adjudication (H4): the claim event
+                    # carries the evidence class and prospective status.
                     events.append(cx, world_id,
                                   "CLAIM_FALSIFIED" if outcome == "FALSIFIED"
                                   else "CLAIM_SURVIVED", actor=r["client_id"],
-                                  refs={"hyp_id": ex["hyp_id"], "obs_id": oid})
+                                  refs={"hyp_id": ex["hyp_id"], "obs_id": oid},
+                                  payload={"prospective": prospective,
+                                           "evidence_class": evidence_class})
         return oid
 
     def record_failure(self, world_id: str, *, failure_type: str,
@@ -653,6 +940,13 @@ class Foundry:
     def create_artifact(self, world_id: str, kind: str, data: bytes, *,
                         client_id: Optional[str] = None,
                         meta: Optional[dict] = None) -> dict:
+        # meta is freeform USER metadata BY DESIGN -- except info_kind, which is
+        # CONTROL configuration for the sharing machinery and must come from the
+        # closed vocabulary (DFX-4: scientific config fails closed recursively).
+        ik = (meta or {}).get("info_kind")
+        if ik is not None and ik not in INFO_KINDS:
+            raise ValidationError("unknown info_kind", info_kind=ik,
+                                  allowed=sorted(INFO_KINDS))
         with self.store.write() as cx:
             r = self._authorize(cx, world_id, client_id)
             blob = self.store.put_blob(data if isinstance(data, bytes)
@@ -718,15 +1012,26 @@ class Foundry:
             src = self._world_row(cx, src_world)
             same_client = (client_id is None
                            or src["client_id"] == client_id)
-            # A CROSS-client import requires an explicit bilateral topology share.
-            # Deny (uniformly, BEFORE the artifact is looked up) otherwise, so a
-            # non-owner can neither pull a foreign artifact's bytes nor probe
-            # which artifact ids exist in another experimenter's world (I5).
+            # A CROSS-client import requires an explicit bilateral topology
+            # share. Deny (uniformly, BEFORE the artifact is looked up)
+            # otherwise, so a non-owner can neither pull a foreign artifact's
+            # bytes nor probe which artifact ids exist in another
+            # experimenter's world (I5).
             if not same_client:
                 dg, sg = dst["topology_group"], src["topology_group"]
                 if dg is None or sg is None or dg != sg:
                     raise AccessDenied(
                         "cross-world import requires a shared topology group",
+                        dst_world=dst_world, src_world=src_world)
+                # H5: matching STRINGS are not consent. The shared group must be
+                # a server-issued, unguessable REGISTERED capability -- two
+                # clients hold the same group id only by deliberate transfer.
+                if cx.execute("SELECT 1 FROM topology_groups WHERE group_id=?",
+                              (sg,)).fetchone() is None:
+                    raise AccessDenied(
+                        "cross-world import requires a REGISTERED topology "
+                        "group (create one via create_topology_group and share "
+                        "its id deliberately)",
                         dst_world=dst_world, src_world=src_world)
             srow = cx.execute("SELECT * FROM artifacts WHERE world_id=? AND "
                               "artifact_id=?",
@@ -734,6 +1039,16 @@ class Foundry:
             if srow is None:
                 raise NotFound("source artifact not found",
                                src_artifact_id=src_artifact_id)
+            # H6: no TRANSITIVE re-export across clients. A cross-client import
+            # must draw from the artifact's ORIGIN (a NATIVE row); an IMPORTED
+            # copy held by an intermediary cannot be re-exported to a third
+            # client -- A sharing with B never implicitly authorizes B->C.
+            if not same_client and srow["origin"] != "NATIVE":
+                raise AccessDenied(
+                    "cross-client import of an IMPORTED artifact is not "
+                    "allowed; import from the origin world (redistribution "
+                    "requires the original owner's own share)",
+                    dst_world=dst_world, src_world=src_world)
             # The information KIND (failure / hypothesis / artifact / ...) the
             # artifact represents governs whether policy lets it cross; a
             # "success" carries kind 'artifact', a shared failure carries
@@ -836,15 +1151,22 @@ class Foundry:
                     raise ValidationError("unknown sharing policy",
                                           sharing_policy=pol)
                 sroot = spec.get("seed_root", parent["seed_root"])
+                # H3: a fork INHERITS its parent's budget_root, so the whole
+                # lineage draws from ONE authoritative campaign budget --
+                # forking cannot mint fresh scientific budget. The child's own
+                # budgets row (limits copied, consumed reset) is a LOCAL safety
+                # cap only; authoritative consumption debits the root too.
                 cx.execute(
                     "INSERT INTO worlds(world_id,session_id,client_id,name,"
                     "state,parent_world_id,fork_point,sharing_policy,"
-                    "topology_group,seed_root,next_index,head_hash,created_ts) "
-                    "VALUES(?,?,?,?,'CREATED',?,?,?,?,?,?,?,?)",
+                    "topology_group,seed_root,budget_root,next_index,"
+                    "head_hash,created_ts) "
+                    "VALUES(?,?,?,?,'CREATED',?,?,?,?,?,?,?,?,?)",
                     (cwid, parent["session_id"], parent["client_id"],
                      spec.get("name", "fork"), world_id, fork_point, pol,
                      spec.get("topology_group", parent["topology_group"]),
-                     int(sroot), fork_point + 1, fork_head, now()))
+                     int(sroot), parent["budget_root"] or world_id,
+                     fork_point + 1, fork_head, now()))
                 cx.execute("INSERT INTO budgets(world_id,limits,consumed,"
                            "updated_ts) VALUES(?,?,?,?)",
                            (cwid, plimits["limits"], json.dumps({}), now()))
@@ -903,8 +1225,18 @@ class Foundry:
         return {k: r[k] for k in r.keys()}
 
     # ================= observability + accounting ======================
-    def verify_world(self, world_id: str) -> dict:
-        return events.verify_world(self.store.read(), world_id)
+    def verify_world(self, world_id: str, *,
+                     client_id: Optional[str] = None) -> dict:
+        """Recompute + verify the world's hash chain. Ownership is enforced
+        like every other world-scoped read: client_id=None is an INTERNAL call
+        from an already-authorized path (world_status); any external caller
+        must pass a client_id and owns the world or is denied (closes the
+        latent authorization gap flagged in review -- a future route wired to
+        this method fails closed by construction)."""
+        cx = self.store.read()
+        if client_id is not None:
+            self._authorize(cx, world_id, client_id)
+        return events.verify_world(cx, world_id)
 
     def world_events(self, world_id: str, *, client_id: Optional[str] = None,
                      limit: int = 100) -> list:
@@ -932,7 +1264,17 @@ class Foundry:
         hyp = one("SELECT COUNT(*) FROM hypotheses WHERE world_id=?")
         preds = one("SELECT COUNT(*) FROM predictions WHERE world_id=?")
         exps = one("SELECT COUNT(*) FROM experiments WHERE world_id=?")
+        committed = one("SELECT COUNT(*) FROM experiments WHERE world_id=? "
+                        "AND committed_seq IS NOT NULL")
         obs = one("SELECT COUNT(*) FROM observations WHERE world_id=?")
+        obs_prosp = one("SELECT COUNT(*) FROM observations WHERE world_id=? "
+                        "AND pred_prospective=1")
+        obs_retro = one("SELECT COUNT(*) FROM observations WHERE world_id=? "
+                        "AND pred_id IS NOT NULL AND pred_prospective=0")
+        obs_engine = one("SELECT COUNT(*) FROM observations WHERE world_id=? "
+                         "AND evidence_class='ENGINE_WORK_RESULT'")
+        obs_asserted = one("SELECT COUNT(*) FROM observations WHERE world_id=? "
+                           "AND evidence_class='CLIENT_ASSERTED'")
         fals = one("SELECT COUNT(*) FROM hypotheses WHERE world_id=? AND "
                    "state='FALSIFIED'")
         surv = one("SELECT COUNT(*) FROM hypotheses WHERE world_id=? AND "
@@ -948,7 +1290,12 @@ class Foundry:
             "dst_kind IN ('hypothesis','experiment')")
         return {
             "hypotheses_proposed": hyp, "predictions_registered": preds,
-            "experiments_created": exps, "observations_recorded": obs,
+            "experiments_created": exps, "experiments_committed": committed,
+            "observations_recorded": obs,
+            "observations_prospectively_predicted": obs_prosp,
+            "observations_with_retrospective_binding": obs_retro,
+            "observations_engine_attested": obs_engine,
+            "observations_client_asserted": obs_asserted,
             "claims_falsified": fals, "claims_surviving": surv,
             "failures_generated": fails, "failures_consumed": consumed,
             "failure_consumption_rate": (consumed / fails) if fails else 0.0,
@@ -1000,6 +1347,7 @@ class Foundry:
             "epistemics": self.epistemic_accounting(world_id),
             "ledger_integrity_ok": integrity_ok,
             "head_hash": r["head_hash"],
+            "engine": release.identity(),      # exact running build (DFX-3)
         }
 
     # ================= lineage / failure queries ========================
@@ -1081,6 +1429,7 @@ def _work_dict(r) -> dict:
             "payload": json.loads(r["payload"]), "status": r["status"],
             "priority": r["priority"], "attempts": r["attempts"],
             "max_attempts": r["max_attempts"], "claimed_by": r["claimed_by"],
+            "claim_id": r["claim_id"],
             "lease_expires": r["lease_expires"], "heartbeat_ts": r["heartbeat_ts"],
             "result": json.loads(r["result"]) if r["result"] else None,
             "result_hash": r["result_hash"], "error": r["error"],

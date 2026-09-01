@@ -110,7 +110,13 @@ A token *is* a client identity. The Engine binds every object you create
 **another client cannot read, drive, or fish the work queue of your worlds, even
 if it learns their ids** — the attempt returns `403`. An unauthenticated call
 returns `401`. Guard the token like a password; anyone holding it acts as you.
-There is no expiry and no refresh; to rotate, register a new client and migrate.
+
+Tokens do not expire on their own, but the operator can **revoke** a token
+(it returns `401` thereafter) and **reissue** a new token bound to the *same*
+`client_id` — so you can rotate a credential without losing your identity or
+provenance (operator tool: `manage_client.py`). After bootstrap the operator may
+also close open registration (`serve.py --registration closed`), in which case
+`POST /v2/clients` returns `403` and you obtain a token from the operator.
 
 ---
 
