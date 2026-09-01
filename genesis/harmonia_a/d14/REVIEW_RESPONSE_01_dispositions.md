@@ -62,3 +62,37 @@ the reviewers conflict, the freeze and the declared estimand govern.
 3. Requested-vs-executed configuration integrity is release-blocking upstream.
 4. The interesting successor is causal encoding intervention, not a fourth
    observational substrate.
+
+---
+
+# D-14 external review #3 (third reviewer) — dispositions (2026-09-01)
+
+The most demanding review; two findings are accepted as defects in MY freeze,
+one claim is partially rebutted, and the run-grading question is resolved
+across all three reviews.
+
+| item | reviewer-3 position | disposition |
+|---|---|---|
+| 2.1 "Site identity fatal for variable-length programs" | byte offsets are not semantic loci across parents | **PARTIALLY REBUTTED, CONCESSION EXTRACTED**: the frozen estimand is over (parent, site) PAIRS — the freeze never claims cross-parent site identity or aligned loci, and the packet's ceiling already binds to that. Not fatal. BUT the embedded collider objection is CORRECT and is the review's real payload (next row). |
+| 2.1b COLLIDER BIAS in A2 sampling | filtering default-operator outcomes on "single-site change" conditions on a post-mutation outcome; sampled sites may differ systematically from the site population | **ACCEPTED — the sharpest new objection across all three reviews.** Under the original I-L_strong sampler this could not arise (site chosen, then value); under default-operator filtering it does. Consequence: A2's estimand is conditioned on a collider, which grades A2 BELOW "narrow replication" — to PILOT grade. Adopted into the verdict wording (below). |
+| 2.3 NO STATISTICAL INFERENCE PLAN | frozen rule is a point-estimate line in the sand; no CI, no parent clustering, ~8 sites/parent are not independent | **ACCEPTED AS A DEFECT IN MY FREEZE.** Gen-1/2/3 all used cluster bootstraps; D-14's freeze did not. Handling: the frozen A2 rule adjudicates as written (no-rescue cuts both ways — the adjudication cannot be changed after data in EITHER direction), and a cluster-bootstrap upper confidence bound is reported alongside as a labeled POST_HOC_DIAGNOSTIC. The A3 spec adopts the UCB rule (SURVIVES iff 95% cluster-robust UCB < 0.05; FALSIFIED iff LCB > 0.05; else INDETERMINATE) as its PRIMARY. |
+| 2.4 "A2 contaminated; run a fresh A3; A1/A2 are pilots" | | **ADOPTED AS GRADING, DECLINED AS ABORT.** All disclosed facts support pilot-grading: A2's sampler was re-declared after observing A1, and the void A1 spectrum was seen. But aborting the 75%-complete frozen run buys nothing: its adjudication is legitimate FOR ITS OWN ESTIMAND, and reviewer-1 directed completion. RESOLUTION: A2 completes and adjudicates as frozen; its verdict is RECORDED AS PILOT-GRADE, not confirmatory; the confirmatory experiment is A3 on a repaired instrument (Phase 0-4), which requires M1 capability this seat can only file requirements for. |
+| 2.5 threshold 0.05 / bin (0,0.25] untheorized | | **CONCEDED**; the numbers came from the D-13 channel convention (0.25) and a conventional margin (0.05). Full distribution ships regardless; A3's spec requires either a mechanistic derivation of the edges or shape-based reporting with the UCB rule. |
+| 2.6 "influence must vary" gate too weak | degenerate distributions could pass | **CONCEDED for A3** (bin-occupancy gates >= 5% per bin adopted there); A2's frozen gate stands for A2. |
+| 3.x A3 protocol (fixed-length parents or structural coordinates; 64-case battery; server-side comparator; exhaustive + uniform site sampling via site-addressed endpoint; mixed model / cluster bootstrap; power analysis via pilot overdispersion; bridging kappa >= 0.8 gate) | | **ADOPTED WHOLESALE as the A3 specification** (filed as D14_A3_PROTOCOL_SPEC; cannot run until Phase 0 instrument work lands upstream). |
+| Roadmap Phases 0-6 | instrument hardening -> protocol freeze -> pilot calibration -> main run -> adjudication -> causal encoding (D-15) -> spectrum-to-search | **ADOPTED as the program roadmap**, merged with reviews 1-2 (D-15 candidate family: synthetic encodings / CA rule-radius / graded-opcode StackVM variant). Phase 6 is where the north star becomes operational; until then, spectrum results are substrate properties, not reasoning properties — wording adopted verbatim into the claim ceiling. |
+| Q1 bridge minimum (50 pairs, kappa, false-zero rate; >10% false-zero disqualifies output hash) | vs review-2's 1,000 | B1 keeps the 1,000-pair size (strictest), ADDS the kappa >= 0.8 and false-zero <= 10% acceptance criteria. |
+| "Connection to north star is rhetorical, not operational" | | **CONCEDED AND ALREADY BOUND**: the packet's own ceiling says a verdict "says nothing about reasoning, search improvement, or cross-substrate transfer". The operationalization is exactly reviewer-1/3's court-for-operators (reach expansion under matched compute with ablation) — recorded as the Gen-4 spec. |
+
+## Tri-review synthesis (now binding)
+1. A2 completes under its freeze and adjudicates its own narrow, collider-
+   conditioned, quantized, comparator-unbridged estimand. Its verdict is
+   PILOT-GRADE by unanimous reviewer weighting.
+2. The confirmatory experiment is A3: repaired instrument (Phase 0 = the
+   D14_M1_REQUIREMENTS, now release-blocking), fixed-length or structurally
+   addressed sites, 64-case battery, server-side comparator, uniform +
+   exhaustive site sampling, cluster-robust UCB adjudication, powered via
+   pilot overdispersion. A1/A2 supply the overdispersion and exclusion-rate
+   estimates -- their honest final role.
+3. B1 bridge: 1,000 pairs, 2x2 table, kappa >= 0.8, false-zero <= 10%.
+4. D-15 (causal encoding) follows a confirmed A3, not A2.
