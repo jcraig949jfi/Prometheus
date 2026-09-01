@@ -1,0 +1,101 @@
+{
+  "run_id": "slice-20260901T073947Z",
+  "charter": "gen2-slice",
+  "client_id": "apollo",
+  "foundry_pin": "50b5c2327c64bf112c635ca1487f2b1a8fd64e1b7faade9476d5dfa7215fd492",
+  "engine_id": "stackvm-v1",
+  "seed": 20260901,
+  "budget": 300,
+  "steps": [
+    {
+      "step": "world",
+      "t": "07:39:47Z",
+      "task_id": "sha256:84133b8b5593dec7...",
+      "rule": "f(x)=3x+1"
+    },
+    {
+      "step": "burst:random",
+      "t": "07:41:02Z",
+      "solved": false,
+      "best_fitness": 0.1,
+      "evals": 300,
+      "archive": "{}",
+      "wall_s": 75.2
+    },
+    {
+      "step": "burst:map_elites",
+      "t": "07:42:00Z",
+      "solved": false,
+      "best_fitness": 0.1,
+      "evals": 300,
+      "archive": "{\"size\": 11, \"cells_total\": 64, \"coverage\": 0.171875, \"qd_score\": 0.4, \"best_fitness\": 0.1}",
+      "wall_s": 58.1
+    },
+    {
+      "step": "baseline_compare",
+      "t": "07:42:00Z",
+      "map_elites_best": 0.1,
+      "random_best": 0.1,
+      "map_elites_coverage": 0.171875,
+      "map_elites_qd": 0.4
+    },
+    {
+      "step": "artifact",
+      "t": "07:42:01Z",
+      "id": "sha256:9af9ef380",
+      "genotype_bytes": 40,
+      "creation_event_seq": 93756
+    },
+    {
+      "step": "evaluate",
+      "t": "07:42:01Z",
+      "event_seq": 93757,
+      "result_hash": "sha256:abb9aaea6dc4e09"
+    },
+    {
+      "step": "capture",
+      "t": "07:42:02Z",
+      "have": [
+        "artifact",
+        "genotype",
+        "lineage"
+      ]
+    },
+    {
+      "step": "replay",
+      "t": "07:42:03Z",
+      "event_seq": 93757,
+      "match": true,
+      "engine_version_mismatch": false
+    },
+    {
+      "step": "fossil",
+      "t": "07:42:03Z",
+      "path": "slice-20260901T073947Z_d94a88cb5130.json",
+      "provenance": "sha256:d94a88cb51300"
+    }
+  ],
+  "task_id": "sha256:84133b8b5593dec7a5d41b7fba6265453911670bc2dde49551baf35e2008d035",
+  "replay": {
+    "schema_version": "0.1.0",
+    "event_seq_replayed": 93757,
+    "original_result_hash": "sha256:abb9aaea6dc4e09aba77807b5d39d38ab8a1950c2da38811691a400c3bf85cb9",
+    "replayed_result_hash": "sha256:abb9aaea6dc4e09aba77807b5d39d38ab8a1950c2da38811691a400c3bf85cb9",
+    "match": true,
+    "engine_version_mismatch": false,
+    "recorded_engine_version": {
+      "engine_id": "stackvm-v1",
+      "donor": "in_house",
+      "donor_version": "0.1.0",
+      "adapter_version": "0.1.0"
+    },
+    "current_engine_version": {
+      "engine_id": "stackvm-v1",
+      "donor": "in_house",
+      "donor_version": "0.1.0",
+      "adapter_version": "0.1.0"
+    },
+    "trace_id": "m2-2acec0acdb704944b82a4c87873a8c76"
+  },
+  "fossil_path": "D:\\Prometheus\\apollo\\cycles\\serendipity_slice\\slice-20260901T073947Z_d94a88cb5130.json"
+}
