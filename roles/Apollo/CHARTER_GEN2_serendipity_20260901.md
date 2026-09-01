@@ -13,6 +13,21 @@ never hard-code today's API.
 
 ---
 
+## 0a. STANDING DISPOSITION (HITL ruling 2026-09-01) — READ FIRST
+**Apollo scheduled evolutionary mining is SUSPENDED.** S1 returned
+`S1 BLOCKED: NO NONTRIVIAL SOURCE POPULATION AT FEASIBLE COST` — the current Foundry
+cannot instantiate a nontrivial source population, so there is nothing worth mining.
+Apollo receives **zero routine evolutionary-mining compute** on the current substrate.
+- **No new campaign, no behavioural-endpoint pivot, no larger budgets** (budget rescue is
+  explicitly PROHIBITED).
+- The ONLY authorized action is ONE cheap **Source Viability Gate** probe against the next
+  Foundry release (`apollo/serendipity/source_viability_gate.py`; machine-enforced — the
+  scored campaign refuses to run without a PASS artifact).
+- Gate FAIL, or the Q4 conditions unmet -> **retire scheduled mining; preserve the
+  adapter/replay/fossil/ledger/gate infrastructure as dormant on-demand instrumentation.**
+- Full ruling + decision tree: `apollo/cycles/S1_archive_value/RULING_2026-09-01.md`.
+  Lanes A-D and the cron jobs below stay DORMANT until the gate passes.
+
 ## 0. MISSION
 Apollo is reassigned from "prove evolutionary search discovers intelligence" (Gen-1,
 an important NEGATIVE result -- retained, not explained away) to **substrate miner**:

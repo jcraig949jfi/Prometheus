@@ -86,9 +86,29 @@ def _extract(events):
             "meta": meta}
 
 
+def _require_gate_pass(engine):
+    """Machine-enforced admission (HITL ruling 2026-09-01): no scored archive-value run
+    against an engine/release that has not PASSED the Source Viability Gate. Absolute
+    calibration before relative comparison."""
+    import source_viability_gate as svg
+    art = svg.gate_artifact_path(engine, PIN)
+    if not art.exists():
+        raise SystemExit(
+            f"REFUSED: no Source Viability Gate artifact for {engine} @ {PIN[:12]}. "
+            f"Run: python apollo/serendipity/source_viability_gate.py --engine {engine}")
+    g = json.loads(art.read_text(encoding="utf-8"))
+    if g.get("verdict") != "PASS":
+        raise SystemExit(
+            f"REFUSED: {engine} @ {PIN[:12]} gate verdict = {g.get('verdict')} "
+            f"({g.get('gates')}). The substrate does not admit an archive-value campaign; "
+            f"per the ruling this retires scheduled mining rather than running degenerate.")
+
+
 def phase_search(cfg):
     runs = ROOT / "runs"
     runs.mkdir(parents=True, exist_ok=True)
+    if cfg is SCORED:
+        _require_gate_pass(cfg["engine"])
     c = fc.make_client(expected_release_hash=PIN, timeout_s=400.0)
     worlds = sw.scored_worlds()
     for w in worlds:

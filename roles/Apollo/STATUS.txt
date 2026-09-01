@@ -35,11 +35,15 @@ ecology_peers             : D-12/D-13 (ZeusE), Harmonia A (genesis/harmonia_a/d1
 blockers                  : /v0/search is synchronous+slow (~60-75s per 300-eval burst); size
                             budgets modestly on the shared host. New Foundry release expected
                             ~2026-09-02 -> revise FOUNDRY_API_NOTES.md + PIN then.
-last_job                  : S1 solvability calibration (stackvm + treegp + pyshgp)
-S1_status                 : harness VALIDATED; transfer primary NOT constructible on any
-                            working engine at feasible budget (reachable set = {identity,x+1}).
-                            treegp-deap uniformly 0.000 = suspected adapter defect (filed).
-                            Prereg UNFROZEN, unscored. Blocked at SUBSTRATE, not Apollo.
-next_job                  : [HITL] (a) re-calibrate on ~2026-09-02 Foundry release [Apollo lean],
-                            (b) large-budget frontier probe, or (c) accept as hold/scale-down.
+last_job                  : Source Viability Gate build + validation run (stackvm)
+S1_status                 : BLOCKED / UNSCORED -- 'NO NONTRIVIAL SOURCE POPULATION AT
+                            FEASIBLE COST' (HITL ruling 2026-09-01).
+apollo_mining             : SUSPENDED. Zero routine search compute on current substrate.
+                            No new campaign / no behavioural pivot / NO budget rescue.
+gate                      : source_viability_gate.py built + machine-enforced in s1_campaign
+                            (scored run REFUSED without a PASS artifact for engine+release).
+authorized_next           : ONE Source Viability Gate probe vs the next Foundry release.
+                            Gate FAIL or Q4 unmet -> RETIRE scheduled mining; keep infra dormant.
+ruling                    : apollo/cycles/S1_archive_value/RULING_2026-09-01.md (decision tree)
+program_lesson            : diversity/archive-coverage are UNSAFE observables (dead world = 19% cov)
 errors                    : treegp-deap suspected mis-wired for integer-induction tasks (0.000)
