@@ -215,12 +215,15 @@ def run_tx001(seeds=(20260901,), holdout_frac: float = 0.25) -> dict:
         train = [pool[i] for i in idx[n_hold:]]
 
         res = {"seed": seed, "n_pool": len(pool), "n_train": len(train), "n_held": len(hold)}
+        hits_by_arm = {}
         for arm, min_known in (("four_tuple", 4), ("pairwise", 2), ("marginal", 1)):
             placed = [h for h in hold if len(known(coords(h))) >= min_known]
             # neighbours are drawn only from training genomes the same archive would place
             tr = [t for t in train if len(known(coords(t))) >= min_known]
-            cf = sum(1 for h in placed
-                     if cross_field_hit(h, neighbours_of(h, tr, mutated=False)))
+            hits = {h["research_genome_id"]: cross_field_hit(
+                h, neighbours_of(h, tr, mutated=False)) for h in placed}
+            hits_by_arm[arm] = hits
+            cf = sum(1 for v in hits.values() if v)
             floor = null_floor(placed, tr, random.Random(seed + 7))
             res[arm] = {
                 "placed": len(placed),
@@ -233,22 +236,127 @@ def run_tx001(seeds=(20260901,), holdout_frac: float = 0.25) -> dict:
                                  else (cf / len(placed)) > floor["p95"]),
                 "train_archive_size": len(tr),
             }
+        res["non_degradation_paired"] = _paired(hits_by_arm["four_tuple"],
+                                                hits_by_arm["pairwise"])
         per_seed.append(res)
-    return {"test_id": "TX-001-partial-cells", "arms": per_seed}
+    out = {"test_id": "TX-001-partial-cells", "arms": per_seed}
+    out["non_degradation_loo"] = _tx001_loo(pool)
+    out["ceiling"] = satisfiability_ceiling(pool, pool)
+    return out
+
+
+def _paired(four: dict, pair: dict) -> dict:
+    """The frozen non-degradation clause, read as it is written.
+
+    "not degrade the cross-field neighbour quality of THOSE IT ALREADY PLACED" is a PAIRED
+    comparison on the papers the 4-tuple archive places, not a comparison of two marginal
+    rates over two different paper sets. The first pass of this harness computed the marginal
+    version, which is a different and easier question. This is the paired one.
+    """
+    shared = sorted(set(four) & set(pair))
+    lost = [i for i in shared if four[i] and not pair[i]]
+    gained = [i for i in shared if pair[i] and not four[i]]
+    return {"n_comparable": len(shared),
+            "degraded": len(lost), "improved": len(gained),
+            "verdict": ("NO_DEGRADATION" if shared and not lost
+                        else "DEGRADED" if lost
+                        else "UNDERPOWERED_n0"),
+            "power_note": ("n_comparable is the number of papers the 4-tuple archive places "
+                           "at all. Below roughly 10 this clause cannot distinguish "
+                           "no-degradation from no-information.")}
+
+
+def _tx001_loo(pool: list) -> dict:
+    """SUPPLEMENT, not the frozen test: leave-one-out to recover power on the paired clause.
+
+    The frozen protocol holds out 25%, which leaves the 4-tuple arm with a single-digit
+    comparable set and therefore no ability to detect degradation either way. Leave-one-out
+    uses the same predicate and the same neighbour rule over the whole abstract-bearing pool,
+    so every paper the 4-tuple archive can place enters the paired comparison. It is reported
+    as a power-recovery supplement and makes NO pass claim of its own; the frozen 25% result
+    above remains the adjudicated one.
+    """
+    res = {}
+    hits_by_arm = {}
+    for arm, min_known in (("four_tuple", 4), ("pairwise", 2)):
+        hits = {}
+        for h in pool:
+            if len(known(coords(h))) < min_known:
+                continue
+            tr = [t for t in pool
+                  if t["research_genome_id"] != h["research_genome_id"]
+                  and len(known(coords(t))) >= min_known]
+            hits[h["research_genome_id"]] = cross_field_hit(
+                h, neighbours_of(h, tr, mutated=False))
+        hits_by_arm[arm] = hits
+        res[arm] = {"placed": len(hits),
+                    "placement_rate": round(len(hits) / len(pool), 4) if pool else None,
+                    "cross_field_hits": sum(1 for v in hits.values() if v),
+                    "cross_field_rate": (round(sum(1 for v in hits.values() if v) / len(hits), 4)
+                                         if hits else None)}
+    res["paired"] = _paired(hits_by_arm["four_tuple"], hits_by_arm["pairwise"])
+    return res
 
 
 # ------------------------------------------------------------------------------------ TX-003
+
+def satisfiability_ceiling(held: list, pool: list) -> dict:
+    """How many held-out papers COULD pass the cross-field criterion, under any archive?
+
+    A metric needs a ceiling as much as it needs a floor. The frozen criterion requires a
+    shared mechanism tag that is absent from the held-out paper's own title -- but the tagger
+    is lexical, so a paper whose every tag came from its title has no eligible tag at all, and
+    a paper whose only eligible tags appear on no retrievable paper has no eligible partner.
+    Neither case is reachable by improving the archive, the axes, or the mutation. If the
+    ceiling sits below the pass threshold the test cannot be passed, and its failure is a fact
+    about the test rather than about the papers.
+
+    This is the LIM-003 error class -- a kill made structurally impossible reads as a
+    confirmed absence -- and the campaign has already been bitten by it once.
+    """
+    tag_pop = {}
+    for g in pool:
+        for m in set(g.get("claimed_mechanism") or []):
+            tag_pop[m] = tag_pop.get(m, 0) + 1
+    detail, n_eligible_tag, n_usable = [], 0, 0
+    for g in held:
+        title = g.get("title") or ""
+        abs_only = [m for m in (g.get("claimed_mechanism") or [])
+                    if not title_contains_mechanism(title, m)]
+        usable = [m for m in abs_only if tag_pop.get(m, 0) > 0]
+        n_eligible_tag += 1 if abs_only else 0
+        n_usable += 1 if usable else 0
+        detail.append({"id": g["research_genome_id"], "title": title[:80],
+                       "tags": g.get("claimed_mechanism") or [],
+                       "abstract_only_tags": abs_only, "usable_tags": usable,
+                       "can_ever_pass": bool(usable)})
+    return {"n_held": len(held),
+            "with_any_abstract_only_tag": n_eligible_tag,
+            "SATISFIABILITY_CEILING": n_usable,
+            "ceiling_rate": round(n_usable / len(held), 4) if held else None,
+            "detail": detail}
+
 
 def run_tx003(seed: int = 20260901) -> dict:
     corpus = load_corpus()
     mi = [g for g in corpus if is_mi(g)]
     non_mi = [g for g in corpus if not is_mi(g)]
     out = {"test_id": "TX-003-coordinates-cannot-express-MI",
-           "n_mi": len(mi), "n_non_mi": len(non_mi), "seed": seed, "arms": {}}
-    for arm, mutated in (("current_axes", False), ("mutated_axes", True)):
-        placed = [h for h in mi if len(known(coords(h, mutated))) >= 4]
+           "n_mi": len(mi), "n_non_mi": len(non_mi), "seed": seed,
+           "ceiling": satisfiability_ceiling(mi, non_mi),
+           "pass_threshold_papers": len(mi) // 2 + 1,
+           "arms": {}}
+    # The last two arms are a DIAGNOSTIC, not part of the frozen test and making no pass
+    # claim. They exist because the frozen arms cannot separate two very different failures:
+    # "MI is inexpressible in these coordinates" (TX-003's thesis) and "the 4-tuple archive
+    # has almost no occupants to retrieve, so nothing can be retrieved from it" (TX-001's
+    # thesis). Re-running the same predicate under the pairwise geometry answers that.
+    for arm, mutated, min_known in (("current_axes", False, 4), ("mutated_axes", True, 4),
+                                    ("DIAG_current_pairwise", False, 2),
+                                    ("DIAG_mutated_pairwise", True, 2)):
+        placed = [h for h in mi if len(known(coords(h, mutated))) >= min_known]
         # cross-field: neighbours must be NON-MI papers -- that is what "cross-field" means here
-        tr = [t for t in non_mi if len(known(coords(t, mutated))) >= 4]
+        tr = [t for t in non_mi if len(known(coords(t, mutated))) >= min_known]
         cf = 0
         detail = []
         for h in mi:
@@ -261,6 +369,8 @@ def run_tx003(seed: int = 20260901) -> dict:
                            "neighbours": [(n.get("title") or "")[:60] for n in nb[:3]]})
         floor = null_floor(mi, tr, random.Random(seed + 11), require_non_mi=True)
         out["arms"][arm] = {
+            "is_frozen_test_arm": not arm.startswith("DIAG_"),
+            "min_known_coords": min_known,
             "placed_on_4_tuple": len(placed),
             "placement_rate": round(len(placed) / len(mi), 4) if mi else None,
             "cross_field_hits": cf,

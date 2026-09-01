@@ -1,0 +1,4849 @@
+{
+  "ran_at": "2026-09-01T06:02:04Z",
+  "seeds": [
+    20260901,
+    20260902,
+    20260903
+  ],
+  "corpus_size": 304,
+  "abstract_bearing_by_evidence": 218,
+  "abstract_bearing_by_flag": 95,
+  "k_neighbours": 5,
+  "null_resamples": 200,
+  "tx001": {
+    "test_id": "TX-001-partial-cells",
+    "arms": [
+      {
+        "seed": 20260901,
+        "n_pool": 218,
+        "n_train": 164,
+        "n_held": 54,
+        "four_tuple": {
+          "placed": 1,
+          "placement_rate": 0.0185,
+          "cross_field_hits": 1,
+          "cross_field_rate": 1.0,
+          "chance_floor_p95": 1.0,
+          "chance_floor_mean": 1.0,
+          "beats_chance": false,
+          "train_archive_size": 12
+        },
+        "pairwise": {
+          "placed": 28,
+          "placement_rate": 0.5185,
+          "cross_field_hits": 23,
+          "cross_field_rate": 0.8214,
+          "chance_floor_p95": 0.75,
+          "chance_floor_mean": 0.6423,
+          "beats_chance": true,
+          "train_archive_size": 97
+        },
+        "marginal": {
+          "placed": 31,
+          "placement_rate": 0.5741,
+          "cross_field_hits": 25,
+          "cross_field_rate": 0.8065,
+          "chance_floor_p95": 0.6774,
+          "chance_floor_mean": 0.5885,
+          "beats_chance": true,
+          "train_archive_size": 101
+        },
+        "non_degradation_paired": {
+          "n_comparable": 1,
+          "degraded": 0,
+          "improved": 0,
+          "verdict": "NO_DEGRADATION",
+          "power_note": "n_comparable is the number of papers the 4-tuple archive places at all. Below roughly 10 this clause cannot distinguish no-degradation from no-information."
+        }
+      },
+      {
+        "seed": 20260902,
+        "n_pool": 218,
+        "n_train": 164,
+        "n_held": 54,
+        "four_tuple": {
+          "placed": 3,
+          "placement_rate": 0.0556,
+          "cross_field_hits": 2,
+          "cross_field_rate": 0.6667,
+          "chance_floor_p95": 0.6667,
+          "chance_floor_mean": 0.6667,
+          "beats_chance": false,
+          "train_archive_size": 10
+        },
+        "pairwise": {
+          "placed": 30,
+          "placement_rate": 0.5556,
+          "cross_field_hits": 25,
+          "cross_field_rate": 0.8333,
+          "chance_floor_p95": 0.7,
+          "chance_floor_mean": 0.6175,
+          "beats_chance": true,
+          "train_archive_size": 95
+        },
+        "marginal": {
+          "placed": 32,
+          "placement_rate": 0.5926,
+          "cross_field_hits": 25,
+          "cross_field_rate": 0.7812,
+          "chance_floor_p95": 0.6562,
+          "chance_floor_mean": 0.5667,
+          "beats_chance": true,
+          "train_archive_size": 100
+        },
+        "non_degradation_paired": {
+          "n_comparable": 3,
+          "degraded": 0,
+          "improved": 1,
+          "verdict": "NO_DEGRADATION",
+          "power_note": "n_comparable is the number of papers the 4-tuple archive places at all. Below roughly 10 this clause cannot distinguish no-degradation from no-information."
+        }
+      },
+      {
+        "seed": 20260903,
+        "n_pool": 218,
+        "n_train": 164,
+        "n_held": 54,
+        "four_tuple": {
+          "placed": 3,
+          "placement_rate": 0.0556,
+          "cross_field_hits": 3,
+          "cross_field_rate": 1.0,
+          "chance_floor_p95": 1.0,
+          "chance_floor_mean": 1.0,
+          "beats_chance": false,
+          "train_archive_size": 10
+        },
+        "pairwise": {
+          "placed": 26,
+          "placement_rate": 0.4815,
+          "cross_field_hits": 21,
+          "cross_field_rate": 0.8077,
+          "chance_floor_p95": 0.7308,
+          "chance_floor_mean": 0.625,
+          "beats_chance": true,
+          "train_archive_size": 99
+        },
+        "marginal": {
+          "placed": 30,
+          "placement_rate": 0.5556,
+          "cross_field_hits": 23,
+          "cross_field_rate": 0.7667,
+          "chance_floor_p95": 0.6333,
+          "chance_floor_mean": 0.5522,
+          "beats_chance": true,
+          "train_archive_size": 102
+        },
+        "non_degradation_paired": {
+          "n_comparable": 3,
+          "degraded": 0,
+          "improved": 0,
+          "verdict": "NO_DEGRADATION",
+          "power_note": "n_comparable is the number of papers the 4-tuple archive places at all. Below roughly 10 this clause cannot distinguish no-degradation from no-information."
+        }
+      }
+    ],
+    "non_degradation_loo": {
+      "four_tuple": {
+        "placed": 13,
+        "placement_rate": 0.0596,
+        "cross_field_hits": 12,
+        "cross_field_rate": 0.9231
+      },
+      "pairwise": {
+        "placed": 125,
+        "placement_rate": 0.5734,
+        "cross_field_hits": 104,
+        "cross_field_rate": 0.832
+      },
+      "paired": {
+        "n_comparable": 13,
+        "degraded": 0,
+        "improved": 1,
+        "verdict": "NO_DEGRADATION",
+        "power_note": "n_comparable is the number of papers the 4-tuple archive places at all. Below roughly 10 this clause cannot distinguish no-degradation from no-information."
+      }
+    },
+    "ceiling": {
+      "n_held": 218,
+      "with_any_abstract_only_tag": 111,
+      "SATISFIABILITY_CEILING": 111,
+      "ceiling_rate": 0.5092,
+      "detail": [
+        {
+          "id": "RG-00eba76d031ede11",
+          "title": "Problem-Independent Handling of Constraints by Use of Metric Penalty Functions.",
+          "tags": [
+            "cmaes"
+          ],
+          "abstract_only_tags": [
+            "cmaes"
+          ],
+          "usable_tags": [
+            "cmaes"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-0201f9abc86bd263",
+          "title": "Fitness Distance Correlation as a Measure of Problem Difficulty for Genetic Algo",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-08142cc4fd734f2b",
+          "title": "DISTRIBUTION OF EIGENVALUES FOR SOME SETS OF RANDOM MATRICES",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-086e5eb5396ceb11",
+          "title": "Edge Impulse: An MLOps Platform for Tiny Machine Learning",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-08846597e1a5890a",
+          "title": "Hierarchical String Cuts: A Translation, Rotation, Scale, and Mirror Invariant D",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-09a2a06ebd258346",
+          "title": "Genetic Algorithms and Genetic Programming",
+          "tags": [
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "abstract_only_tags": [
+            "tournament_selection"
+          ],
+          "usable_tags": [
+            "tournament_selection"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-09dce8e87a9f3db9",
+          "title": "Metabolic Coevolution in the Bacterial Symbiosis of Whiteflies and Related Plant",
+          "tags": [
+            "coevolution"
+          ],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-0a74522eb956cbc7",
+          "title": "Deceptiveness and neutrality the ND family of fitness landscapes",
+          "tags": [
+            "tournament_selection"
+          ],
+          "abstract_only_tags": [
+            "tournament_selection"
+          ],
+          "usable_tags": [
+            "tournament_selection"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-0b01782bbdc1746e",
+          "title": "A Survey on IoT Security: Application Areas, Security Threats, and Solution Arch",
+          "tags": [
+            "causal_attribution"
+          ],
+          "abstract_only_tags": [
+            "causal_attribution"
+          ],
+          "usable_tags": [
+            "causal_attribution"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-0b051ca3e86f169c",
+          "title": "Genetic effects on gene expression across human tissues",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-0ecfe48d439a7506",
+          "title": "Mathematical discoveries from program search with large language models",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-104501971a3a8bd8",
+          "title": "Towards Automated Circuit Discovery for Mechanistic Interpretability",
+          "tags": [
+            "causal_attribution",
+            "circuit_discovery",
+            "circuit_representation",
+            "neural_representation"
+          ],
+          "abstract_only_tags": [
+            "causal_attribution",
+            "neural_representation"
+          ],
+          "usable_tags": [
+            "causal_attribution",
+            "neural_representation"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-11742d82d878c491",
+          "title": "Strength Through Diversity",
+          "tags": [
+            "test_suite",
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "abstract_only_tags": [
+            "test_suite",
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "usable_tags": [
+            "test_suite",
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-12863cc24259d65d",
+          "title": "Survey on the Role of Mechanistic Interpretability in Generative AI",
+          "tags": [
+            "circuit_discovery"
+          ],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-1310a46054d09830",
+          "title": "A simulation comparison of phylogeny algorithms under equal and unequal evolutio",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-14e65af0e0b445d1",
+          "title": "The CMA Evolution Strategy: A Tutorial",
+          "tags": [
+            "cmaes",
+            "tournament_selection"
+          ],
+          "abstract_only_tags": [
+            "tournament_selection"
+          ],
+          "usable_tags": [
+            "tournament_selection"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-1628d8c4a64fbef8",
+          "title": "Overfitting, Model Tuning, and Evaluation of Prediction Performance",
+          "tags": [
+            "test_suite"
+          ],
+          "abstract_only_tags": [
+            "test_suite"
+          ],
+          "usable_tags": [
+            "test_suite"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-196808e6a649f9a9",
+          "title": "Reproducibility in machine‐learning‐based research: Overview, barriers, and driv",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-19ecbeb74e182689",
+          "title": "TrakEM2 Software for Neural Circuit Reconstruction",
+          "tags": [
+            "circuit_representation"
+          ],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-1a9e238915855f30",
+          "title": "A Survey of Sparse Representation: Algorithms and Applications",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-1b46c7e74a87cd7e",
+          "title": "A Hermeneutic Approach for Conducting Literature Reviews and Literature Searches",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-1bd288fd6d968564",
+          "title": "FlashMeta: a framework for inductive program synthesis",
+          "tags": [
+            "dsl_library",
+            "program_synthesis"
+          ],
+          "abstract_only_tags": [
+            "dsl_library"
+          ],
+          "usable_tags": [
+            "dsl_library"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-1d659cbb3f075c6d",
+          "title": "Solving Uncompromising Problems With Lexicase Selection",
+          "tags": [
+            "lexicase",
+            "symbolic_regression",
+            "test_suite",
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "abstract_only_tags": [
+            "symbolic_regression",
+            "test_suite",
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "usable_tags": [
+            "symbolic_regression",
+            "test_suite",
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-234bc7c529c5827b",
+          "title": "A survey of decision tree classifier methodology",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-247dd70c049526ff",
+          "title": "A Comprehensive Survey of Neural Architecture Search: Challenges and Solutions",
+          "tags": [
+            "causal_attribution",
+            "nas",
+            "neural_representation"
+          ],
+          "abstract_only_tags": [
+            "causal_attribution",
+            "neural_representation"
+          ],
+          "usable_tags": [
+            "causal_attribution",
+            "neural_representation"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-26a02fe8e374c5f8",
+          "title": "From Representation to Emergence: Complexity's challenge to the epistemology of ",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-26c533619f543edf",
+          "title": "A Rapid Bootstrap Algorithm for the RAxML Web Servers",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-2845039b3c4653d8",
+          "title": "Explainability of Machine Learning Models for Bankruptcy Prediction",
+          "tags": [
+            "test_suite"
+          ],
+          "abstract_only_tags": [
+            "test_suite"
+          ],
+          "usable_tags": [
+            "test_suite"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-28b01e4f711275a3",
+          "title": "Death and Progress: How Evolvability is Influenced by Intrinsic Mortality",
+          "tags": [
+            "scalar_objective"
+          ],
+          "abstract_only_tags": [
+            "scalar_objective"
+          ],
+          "usable_tags": [
+            "scalar_objective"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-2ae5974d0438f5a0",
+          "title": "Holland classifier systems",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-2b2c0788192f7c8a",
+          "title": "Holland classifier systems",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-2b31f66d7d09da1c",
+          "title": "Cartesian genetic programming",
+          "tags": [
+            "cartesian_gp",
+            "tree_gp"
+          ],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-2c753336d618a157",
+          "title": "General Program Synthesis Benchmark Suite",
+          "tags": [
+            "enumerative_synthesis",
+            "push_gp",
+            "test_suite",
+            "tree_gp"
+          ],
+          "abstract_only_tags": [
+            "enumerative_synthesis",
+            "push_gp",
+            "test_suite",
+            "tree_gp"
+          ],
+          "usable_tags": [
+            "enumerative_synthesis",
+            "push_gp",
+            "test_suite",
+            "tree_gp"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-2d160cc0e2d5650d",
+          "title": "Adaptive probabilities of crossover and mutation in genetic algorithms",
+          "tags": [
+            "scalar_objective",
+            "tournament_selection"
+          ],
+          "abstract_only_tags": [
+            "scalar_objective",
+            "tournament_selection"
+          ],
+          "usable_tags": [
+            "scalar_objective",
+            "tournament_selection"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-31a7485aee5679cf",
+          "title": "A benchmark dataset for machine learning in ecotoxicology",
+          "tags": [
+            "test_suite"
+          ],
+          "abstract_only_tags": [
+            "test_suite"
+          ],
+          "usable_tags": [
+            "test_suite"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-32c2f3d2e79f8701",
+          "title": "MEGA3: Integrated software for Molecular Evolutionary Genetics Analysis and sequ",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-32ef0a5f694872b5",
+          "title": "Mechanistic Interpretability for AI Safety -- A Review",
+          "tags": [
+            "circuit_discovery"
+          ],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-349aebfee01a31a3",
+          "title": "Competitive Coevolution through Evolutionary Complexification",
+          "tags": [
+            "coevolution",
+            "neural_representation",
+            "open_endedness"
+          ],
+          "abstract_only_tags": [
+            "neural_representation",
+            "open_endedness"
+          ],
+          "usable_tags": [
+            "neural_representation",
+            "open_endedness"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-355b664c86311380",
+          "title": "A comparative study of the Bees Algorithm as a tool for function optimisation",
+          "tags": [
+            "scalar_objective",
+            "test_suite"
+          ],
+          "abstract_only_tags": [
+            "scalar_objective",
+            "test_suite"
+          ],
+          "usable_tags": [
+            "scalar_objective",
+            "test_suite"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-3697e1ea520f1b1c",
+          "title": "Resource Management in Wireless Networks via Multi-Agent Deep Reinforcement Lear",
+          "tags": [
+            "gradient_descent"
+          ],
+          "abstract_only_tags": [
+            "gradient_descent"
+          ],
+          "usable_tags": [
+            "gradient_descent"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-37019651048481f5",
+          "title": "Evolutionary Computation: Towards a New Philosophy of Machine Intelligence",
+          "tags": [
+            "tournament_selection"
+          ],
+          "abstract_only_tags": [
+            "tournament_selection"
+          ],
+          "usable_tags": [
+            "tournament_selection"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-37a66b95abeb8ad5",
+          "title": "AI-Assisted Pipeline for Dynamic Generation of Trustworthy Health Supplement Con",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-385beea569bf9236",
+          "title": "Texture Feature Extraction Methods: A Survey",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-38727f640e02a05e",
+          "title": "Effects of Lexicase and Tournament Selection on Diversity Recovery and Maintenan",
+          "tags": [
+            "lexicase",
+            "program_synthesis",
+            "test_suite",
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "abstract_only_tags": [
+            "program_synthesis",
+            "test_suite",
+            "tree_gp"
+          ],
+          "usable_tags": [
+            "program_synthesis",
+            "test_suite",
+            "tree_gp"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-38872e1afb2c7d7e",
+          "title": "Scikit-learn: Machine Learning in Python",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-39dfeee11e7e7f79",
+          "title": "Detecting Coevolution in and among Protein Domains",
+          "tags": [
+            "coevolution"
+          ],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-3b3da7672892785f",
+          "title": "The CMA Evolution Strategy: A Tutorial",
+          "tags": [
+            "cmaes"
+          ],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-3cdee0ffe77a6a71",
+          "title": "Cartesian genetic programming: its status and future",
+          "tags": [
+            "cartesian_gp",
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "abstract_only_tags": [
+            "tournament_selection"
+          ],
+          "usable_tags": [
+            "tournament_selection"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-3e1b053b4b6c7beb",
+          "title": "Sparse Overcomplete Word Vector Representations",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-3e730a5a67f6c41b",
+          "title": "Redundancy and computational efficiency in Cartesian genetic programming",
+          "tags": [
+            "cartesian_gp",
+            "tree_gp"
+          ],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-408b20065e764528",
+          "title": "Evolutionary many-objective optimisation: Many once or one many?",
+          "tags": [
+            "quality_diversity",
+            "scalar_objective",
+            "tournament_selection"
+          ],
+          "abstract_only_tags": [
+            "quality_diversity",
+            "scalar_objective",
+            "tournament_selection"
+          ],
+          "usable_tags": [
+            "quality_diversity",
+            "scalar_objective",
+            "tournament_selection"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-412d4c4877a028f3",
+          "title": "From federated learning to federated neural architecture search: a survey",
+          "tags": [
+            "gradient_descent",
+            "nas",
+            "neural_representation"
+          ],
+          "abstract_only_tags": [
+            "gradient_descent",
+            "neural_representation"
+          ],
+          "usable_tags": [
+            "gradient_descent",
+            "neural_representation"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-41a9c8cda8ace128",
+          "title": "Information, Physics, Quantum: The Search for Links",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-4210013c03fa1ac4",
+          "title": "The Impact of Hyperselection on Lexicase Selection",
+          "tags": [
+            "lexicase",
+            "program_synthesis",
+            "test_suite",
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "abstract_only_tags": [
+            "program_synthesis",
+            "test_suite",
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "usable_tags": [
+            "program_synthesis",
+            "test_suite",
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-42cd49c5cfa2c7d9",
+          "title": "A Fast and Elitist Multiobjective Genetic Algorithm: NSGA-II",
+          "tags": [
+            "cmaes",
+            "quality_diversity",
+            "tournament_selection"
+          ],
+          "abstract_only_tags": [
+            "cmaes",
+            "quality_diversity",
+            "tournament_selection"
+          ],
+          "usable_tags": [
+            "cmaes",
+            "quality_diversity",
+            "tournament_selection"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-4375134c6b4f37c6",
+          "title": "SREBPs: activators of the complete program of cholesterol and fatty acid synthes",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-43947d1355e34f5e",
+          "title": "New Algorithms and Methods to Estimate Maximum-Likelihood Phylogenies: Assessing",
+          "tags": [
+            "distillation"
+          ],
+          "abstract_only_tags": [
+            "distillation"
+          ],
+          "usable_tags": [
+            "distillation"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-44debad5b5819560",
+          "title": "Genetic Programming: On the Programming of Computers by Means of Natural Selecti",
+          "tags": [
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "abstract_only_tags": [
+            "tournament_selection"
+          ],
+          "usable_tags": [
+            "tournament_selection"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-468d864afaadc21c",
+          "title": "Borg: An Auto-Adaptive Many-Objective Evolutionary Computing Framework",
+          "tags": [
+            "test_suite",
+            "tournament_selection"
+          ],
+          "abstract_only_tags": [
+            "test_suite",
+            "tournament_selection"
+          ],
+          "usable_tags": [
+            "test_suite",
+            "tournament_selection"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-46a1fef53b6d81fc",
+          "title": "Regularized Evolution for Image Classifier Architecture Search",
+          "tags": [
+            "gradient_descent",
+            "nas",
+            "neural_representation",
+            "tournament_selection"
+          ],
+          "abstract_only_tags": [
+            "gradient_descent",
+            "neural_representation",
+            "tournament_selection"
+          ],
+          "usable_tags": [
+            "gradient_descent",
+            "neural_representation",
+            "tournament_selection"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-48a0a947c3ebd6f5",
+          "title": "Epsilon-Lexicase Selection for Regression",
+          "tags": [
+            "lexicase",
+            "symbolic_regression",
+            "test_suite",
+            "tournament_selection"
+          ],
+          "abstract_only_tags": [
+            "symbolic_regression",
+            "test_suite",
+            "tournament_selection"
+          ],
+          "usable_tags": [
+            "symbolic_regression",
+            "test_suite",
+            "tournament_selection"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-4b660b3a9de9c5a1",
+          "title": "A Probabilistic and Multi-Objective Analysis of Lexicase Selection and ε-Lexicas",
+          "tags": [
+            "lexicase",
+            "quality_diversity",
+            "symbolic_regression",
+            "tournament_selection"
+          ],
+          "abstract_only_tags": [
+            "quality_diversity",
+            "symbolic_regression",
+            "tournament_selection"
+          ],
+          "usable_tags": [
+            "quality_diversity",
+            "symbolic_regression",
+            "tournament_selection"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-4cb64a4b28fba692",
+          "title": "Using semantics in the selection mechanism in Genetic Programming: A simple meth",
+          "tags": [
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "abstract_only_tags": [
+            "tournament_selection"
+          ],
+          "usable_tags": [
+            "tournament_selection"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-4d6dc5a62cc447bd",
+          "title": "Implications of Recent Clinical Trials for the National Cholesterol Education Pr",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-4effab891ba9f25c",
+          "title": "Machine Learning for Fluid Mechanics",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-4f4fdcfedcbd438f",
+          "title": "The Unfairness of Fair Machine Learning: Levelling down and strict egalitarianis",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-4fb2401febe35429",
+          "title": "The re‐emergence of “emergence”: A venerable concept in search of a theory",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-507bd78848bf8d9f",
+          "title": "Behavioral programming",
+          "tags": [
+            "scalar_objective",
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "abstract_only_tags": [
+            "scalar_objective",
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "usable_tags": [
+            "scalar_objective",
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-525aecb87819b964",
+          "title": "Quantum information processing with superconducting circuits: a review",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-54b113d852fdabb9",
+          "title": "Seeing Is Believing: Brain-Inspired Modular Training for Mechanistic Interpretab",
+          "tags": [
+            "circuit_discovery",
+            "gradient_descent"
+          ],
+          "abstract_only_tags": [
+            "gradient_descent"
+          ],
+          "usable_tags": [
+            "gradient_descent"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-552c14bd252a569c",
+          "title": "X. On the criterion that a given system of deviations from the probable in the c",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-55b148c749fcf5a5",
+          "title": "Review of deep learning: concepts, CNN architectures, challenges, applications, ",
+          "tags": [
+            "neural_representation"
+          ],
+          "abstract_only_tags": [
+            "neural_representation"
+          ],
+          "usable_tags": [
+            "neural_representation"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-55b1b07646a50d34",
+          "title": "Probabilistic Lexicase Selection",
+          "tags": [
+            "lexicase",
+            "symbolic_regression",
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "abstract_only_tags": [
+            "symbolic_regression",
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "usable_tags": [
+            "symbolic_regression",
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-5654a390586cf51a",
+          "title": "Program synthesis by sketching",
+          "tags": [
+            "constraint_solving",
+            "enumerative_synthesis",
+            "program_synthesis",
+            "test_suite"
+          ],
+          "abstract_only_tags": [
+            "constraint_solving",
+            "enumerative_synthesis",
+            "test_suite"
+          ],
+          "usable_tags": [
+            "constraint_solving",
+            "enumerative_synthesis",
+            "test_suite"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-5760f1775bafffc7",
+          "title": "Dimensions in program synthesis",
+          "tags": [
+            "enumerative_synthesis",
+            "program_synthesis"
+          ],
+          "abstract_only_tags": [
+            "enumerative_synthesis"
+          ],
+          "usable_tags": [
+            "enumerative_synthesis"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-590296ec82bfb342",
+          "title": "Lexicase selection of specialists",
+          "tags": [
+            "lexicase",
+            "tournament_selection"
+          ],
+          "abstract_only_tags": [
+            "tournament_selection"
+          ],
+          "usable_tags": [
+            "tournament_selection"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-5b8698b7fdbbbb55",
+          "title": "Comparison of Semantic-aware Selection Methods in Genetic Programming",
+          "tags": [
+            "lexicase",
+            "test_suite",
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "abstract_only_tags": [
+            "lexicase",
+            "test_suite",
+            "tournament_selection"
+          ],
+          "usable_tags": [
+            "lexicase",
+            "test_suite",
+            "tournament_selection"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-5ba79e795863f088",
+          "title": "The neighbor-joining method: a new method for reconstructing phylogenetic trees.",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-5c99683ee251a0f0",
+          "title": "Adam: A Method for Stochastic Optimization",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-5cadef33b38bfafc",
+          "title": "A classification system for seed dormancy",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-5d0dd26d2e2fcc8b",
+          "title": "From program verification to program synthesis",
+          "tags": [
+            "enumerative_synthesis",
+            "program_synthesis",
+            "test_suite"
+          ],
+          "abstract_only_tags": [
+            "enumerative_synthesis",
+            "test_suite"
+          ],
+          "usable_tags": [
+            "enumerative_synthesis",
+            "test_suite"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-5f0a38e1d4e007e9",
+          "title": "Matching 3D face scans using interest points and local histogram descriptors",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-5f4459d0af006f44",
+          "title": "Program Synthesis",
+          "tags": [
+            "constraint_solving",
+            "enumerative_synthesis",
+            "program_synthesis",
+            "test_suite"
+          ],
+          "abstract_only_tags": [
+            "constraint_solving",
+            "enumerative_synthesis",
+            "test_suite"
+          ],
+          "usable_tags": [
+            "constraint_solving",
+            "enumerative_synthesis",
+            "test_suite"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-5f53568b972cad55",
+          "title": "Effective Feature Extraction via Stacked Sparse Autoencoder to Improve Intrusion",
+          "tags": [
+            "neural_representation",
+            "sparse_autoencoder"
+          ],
+          "abstract_only_tags": [
+            "neural_representation"
+          ],
+          "usable_tags": [
+            "neural_representation"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-60052b6e33a97d4f",
+          "title": "On the automatic parallelization of the Perfect Benchmarks(R)",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-606ea7d58905ff6b",
+          "title": "THE COEVOLUTION OF HUMAN HANDS AND FEET",
+          "tags": [
+            "coevolution",
+            "tournament_selection"
+          ],
+          "abstract_only_tags": [
+            "tournament_selection"
+          ],
+          "usable_tags": [
+            "tournament_selection"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-62b271718860e171",
+          "title": "Detecting the number of clusters of individuals using the software structure : a",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-6364a4b9d70e6108",
+          "title": "Hepatitis C virus versus innate and adaptive immune responses: a tale of coevolu",
+          "tags": [
+            "coevolution"
+          ],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-650ada2b4a564600",
+          "title": "Joint Optimization of Radio and Computational Resources for Multicell Mobile-Edg",
+          "tags": [
+            "scalar_objective"
+          ],
+          "abstract_only_tags": [
+            "scalar_objective"
+          ],
+          "usable_tags": [
+            "scalar_objective"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-66e1cf7088a139fa",
+          "title": "Parameter Estimation in Biochemical Pathways: A Comparison of Global Optimizatio",
+          "tags": [
+            "test_suite"
+          ],
+          "abstract_only_tags": [
+            "test_suite"
+          ],
+          "usable_tags": [
+            "test_suite"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-66ed53b58aa31235",
+          "title": "A Review of Constraint-Handling Techniques for Evolution Strategies",
+          "tags": [
+            "cmaes"
+          ],
+          "abstract_only_tags": [
+            "cmaes"
+          ],
+          "usable_tags": [
+            "cmaes"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-6b3c02989f807f89",
+          "title": "Genetic algorithm approaches for the phylogenetic analysis of large biological s",
+          "tags": [
+            "tournament_selection"
+          ],
+          "abstract_only_tags": [
+            "tournament_selection"
+          ],
+          "usable_tags": [
+            "tournament_selection"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-6b3c3b02b72251ea",
+          "title": "Learning Classifier Systems: A Complete Introduction, Review, and Roadmap",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-6ff9de12a007ef3c",
+          "title": "Non-elitist evolutionary algorithms excel in fitness landscapes with sparse dece",
+          "tags": [
+            "scalar_objective",
+            "tournament_selection"
+          ],
+          "abstract_only_tags": [
+            "scalar_objective",
+            "tournament_selection"
+          ],
+          "usable_tags": [
+            "scalar_objective",
+            "tournament_selection"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-70fb1826e14a7b53",
+          "title": "Gradient-based learning applied to document recognition",
+          "tags": [
+            "neural_representation"
+          ],
+          "abstract_only_tags": [
+            "neural_representation"
+          ],
+          "usable_tags": [
+            "neural_representation"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-7258e12b17bbaa99",
+          "title": "A new crossover technique for Cartesian genetic programming",
+          "tags": [
+            "cartesian_gp",
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "abstract_only_tags": [
+            "tournament_selection"
+          ],
+          "usable_tags": [
+            "tournament_selection"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-725de196666b44c1",
+          "title": "Promoting novelty, rigor, and style in energy social science: Towards codes of p",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-7313087ddd96af1c",
+          "title": "Detection and Classification of Transmission Line Faults Based on Unsupervised F",
+          "tags": [
+            "sparse_autoencoder"
+          ],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-7322c687cd92e600",
+          "title": "The Geometry of Concepts: Sparse Autoencoder Feature Structure",
+          "tags": [
+            "sparse_autoencoder"
+          ],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-7587059652925c47",
+          "title": "Sparse Autoencoder-Based Feature Transfer Learning for Speech Emotion Recognitio",
+          "tags": [
+            "sparse_autoencoder"
+          ],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-75adbec2cd2afa53",
+          "title": "Design and analysis of machine learning exchange-correlation functionals via rot",
+          "tags": [
+            "neural_representation"
+          ],
+          "abstract_only_tags": [
+            "neural_representation"
+          ],
+          "usable_tags": [
+            "neural_representation"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-7638fa4d5c327b93",
+          "title": "Mathematical modeling analysis of genetic algorithms under schema theorem",
+          "tags": [
+            "tournament_selection"
+          ],
+          "abstract_only_tags": [
+            "tournament_selection"
+          ],
+          "usable_tags": [
+            "tournament_selection"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-76fe72465d3bec85",
+          "title": "Discrimination by Comparison",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-7a193b239d7a12f5",
+          "title": "Breaking the size limitation of nonadiabatic molecular dynamics in condensed mat",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-7a3641a6218ac45c",
+          "title": "Locally geometric semantic crossover: a study on the roles of semantics and homo",
+          "tags": [
+            "test_suite",
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "abstract_only_tags": [
+            "test_suite",
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "usable_tags": [
+            "test_suite",
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-7ac14415298b9ab0",
+          "title": "The influence of induction programs on beginning teachers'well-being and profess",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-7b02f7570fdce8ba",
+          "title": "Exploring Mechanistic Interpretability in Large Language Models: Challenges, App",
+          "tags": [
+            "causal_attribution",
+            "circuit_discovery",
+            "circuit_representation"
+          ],
+          "abstract_only_tags": [
+            "causal_attribution",
+            "circuit_representation"
+          ],
+          "usable_tags": [
+            "causal_attribution",
+            "circuit_representation"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-7bf1d2bc78539e2a",
+          "title": "FedMultimodal: A Benchmark for Multimodal Federated Learning",
+          "tags": [
+            "test_suite"
+          ],
+          "abstract_only_tags": [
+            "test_suite"
+          ],
+          "usable_tags": [
+            "test_suite"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-7c376ad7c29b5b2c",
+          "title": "A survey on Image Data Augmentation for Deep Learning",
+          "tags": [
+            "adversarial_curriculum",
+            "neural_representation",
+            "test_suite"
+          ],
+          "abstract_only_tags": [
+            "adversarial_curriculum",
+            "neural_representation",
+            "test_suite"
+          ],
+          "usable_tags": [
+            "adversarial_curriculum",
+            "neural_representation",
+            "test_suite"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-7d9ba3d482253c67",
+          "title": "Evolutionary computation: comments on the history and current state",
+          "tags": [
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "abstract_only_tags": [
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "usable_tags": [
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-7e106068ae371008",
+          "title": "Leveraging machine learning in porous media",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-7ed96a483077ab18",
+          "title": "The Push3 execution stack and the evolution of control",
+          "tags": [
+            "push_gp",
+            "tree_gp"
+          ],
+          "abstract_only_tags": [
+            "push_gp",
+            "tree_gp"
+          ],
+          "usable_tags": [
+            "push_gp",
+            "tree_gp"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-7ede95a74af45efd",
+          "title": "A Survey on Evolutionary Computation Approaches to Feature Selection",
+          "tags": [
+            "tournament_selection"
+          ],
+          "abstract_only_tags": [
+            "tournament_selection"
+          ],
+          "usable_tags": [
+            "tournament_selection"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-80d541f2bd92f5d8",
+          "title": "Usability of Three Electroencephalogram Headsets for Brain–Computer Interfaces: ",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-813865a08d5b83a1",
+          "title": "A practical schema theorem for genetic algorithm design and tuning",
+          "tags": [
+            "tournament_selection"
+          ],
+          "abstract_only_tags": [
+            "tournament_selection"
+          ],
+          "usable_tags": [
+            "tournament_selection"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-818bbedac5c91caf",
+          "title": "The Automatic Acquisition, Evolution and Reuse of Modules in Cartesian Genetic P",
+          "tags": [
+            "cartesian_gp",
+            "circuit_representation",
+            "symbolic_regression",
+            "test_suite",
+            "tree_gp"
+          ],
+          "abstract_only_tags": [
+            "circuit_representation",
+            "symbolic_regression",
+            "test_suite"
+          ],
+          "usable_tags": [
+            "circuit_representation",
+            "symbolic_regression",
+            "test_suite"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-8694871abc0a6379",
+          "title": "One foot in, one foot out: how does individuals' external search breadth affect ",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-870323593fc071b3",
+          "title": "Optimal Design of Microarray Immunoassays to Compensate for Kinetic Limitations",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-877cb84fbde3e2b5",
+          "title": "An exhaustive review of the metaheuristic algorithms for search and optimization",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-87aa3ab3a7fc1d0a",
+          "title": "Deceptiveness and Neutrality The ND Family of Fitness Landscapes",
+          "tags": [
+            "scalar_objective"
+          ],
+          "abstract_only_tags": [
+            "scalar_objective"
+          ],
+          "usable_tags": [
+            "scalar_objective"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-891fdd1f2b78ee2c",
+          "title": "Visualizing Data using t-SNE",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-8a3071ce7e4abb7a",
+          "title": "Sparse matrix test problems",
+          "tags": [
+            "test_suite"
+          ],
+          "abstract_only_tags": [
+            "test_suite"
+          ],
+          "usable_tags": [
+            "test_suite"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-8b6bbaf963e15071",
+          "title": "Human-competitive results produced by genetic programming",
+          "tags": [
+            "symbolic_regression",
+            "tree_gp"
+          ],
+          "abstract_only_tags": [
+            "symbolic_regression"
+          ],
+          "usable_tags": [
+            "symbolic_regression"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-8c3f712a64024fd2",
+          "title": "Dynamic Searchable Encryption via Blind Storage",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-8cc6829f4e15e54e",
+          "title": "Recent Developments in the Econometrics of Program Evaluation",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-8cf4da0ab6e13fa9",
+          "title": "",
+          "tags": [
+            "neural_representation"
+          ],
+          "abstract_only_tags": [
+            "neural_representation"
+          ],
+          "usable_tags": [
+            "neural_representation"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-8e15db1fa164c1fe",
+          "title": "Random subsampling improves performance in lexicase selection",
+          "tags": [
+            "lexicase",
+            "program_synthesis",
+            "test_suite",
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "abstract_only_tags": [
+            "program_synthesis",
+            "test_suite",
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "usable_tags": [
+            "program_synthesis",
+            "test_suite",
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-8f06867a76ae6695",
+          "title": "Rank and relevance in novelty and diversity metrics for recommender systems",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-8f8ecb22e50aa800",
+          "title": "Fitness sharing and niching methods revisited",
+          "tags": [
+            "scalar_objective",
+            "tournament_selection"
+          ],
+          "abstract_only_tags": [
+            "scalar_objective",
+            "tournament_selection"
+          ],
+          "usable_tags": [
+            "scalar_objective",
+            "tournament_selection"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-936515048c7f60be",
+          "title": "Coincidence, coevolution, or causation? DNA content, cellsize, and the C‐value e",
+          "tags": [
+            "coevolution"
+          ],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-96976827c0dab01d",
+          "title": "Toward automatic program synthesis",
+          "tags": [
+            "enumerative_synthesis",
+            "formal_verification",
+            "program_synthesis"
+          ],
+          "abstract_only_tags": [
+            "enumerative_synthesis",
+            "formal_verification"
+          ],
+          "usable_tags": [
+            "enumerative_synthesis",
+            "formal_verification"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-972fdf2c0ee94df6",
+          "title": "Grammar defined introns: an investigation into grammars, introns, and bias in Gr",
+          "tags": [
+            "grammatical_evolution"
+          ],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-97a14aa0d3c2a30e",
+          "title": "An overview of clinical decision support systems: benefits, risks, and strategie",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-97fd751040481a74",
+          "title": "Comprehensive benchmarking and ensemble approaches for metagenomic classifiers",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-992aa307f3b74469",
+          "title": "Standing on the Shoulders of Giants: Challenges and Recommendations of Literatur",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-9a56477ec3babfa6",
+          "title": "A survey of uncertainty in deep neural networks",
+          "tags": [
+            "neural_representation"
+          ],
+          "abstract_only_tags": [
+            "neural_representation"
+          ],
+          "usable_tags": [
+            "neural_representation"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-9c735e274130bc8d",
+          "title": "Artificial Neural Networks Based Optimization Techniques: A Review",
+          "tags": [
+            "neural_representation",
+            "tournament_selection"
+          ],
+          "abstract_only_tags": [
+            "neural_representation",
+            "tournament_selection"
+          ],
+          "usable_tags": [
+            "neural_representation",
+            "tournament_selection"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-9e3187bd1a6c112a",
+          "title": "Explaining AI through mechanistic interpretability",
+          "tags": [
+            "circuit_discovery"
+          ],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-a09dd1691160d6e6",
+          "title": "Assessment of problem modality by differential performance of lexicase selection",
+          "tags": [
+            "lexicase",
+            "symbolic_regression",
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "abstract_only_tags": [
+            "symbolic_regression",
+            "tournament_selection"
+          ],
+          "usable_tags": [
+            "symbolic_regression",
+            "tournament_selection"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-a13fe11f1d3f60ce",
+          "title": "Object based image analysis for remote sensing",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-a16e5bc914a02f51",
+          "title": "Accurate structure prediction of biomolecular interactions with AlphaFold 3",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-a250839d8505b77a",
+          "title": "A Survey of Advances in Landscape Analysis for Optimisation",
+          "tags": [
+            "scalar_objective",
+            "tournament_selection"
+          ],
+          "abstract_only_tags": [
+            "scalar_objective",
+            "tournament_selection"
+          ],
+          "usable_tags": [
+            "scalar_objective",
+            "tournament_selection"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-a2895c3a69386ee8",
+          "title": "Genetic Algorithms in Search, Optimization and Machine Learning",
+          "tags": [
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "abstract_only_tags": [
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "usable_tags": [
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-a29f623655b5c9ec",
+          "title": "A Field Guide to Genetic Programming",
+          "tags": [
+            "dsl_library",
+            "grammatical_evolution",
+            "linear_gp",
+            "push_gp",
+            "scalar_objective",
+            "symbolic_regression",
+            "tree_gp"
+          ],
+          "abstract_only_tags": [
+            "dsl_library",
+            "grammatical_evolution",
+            "linear_gp",
+            "push_gp",
+            "scalar_objective",
+            "symbolic_regression"
+          ],
+          "usable_tags": [
+            "dsl_library",
+            "grammatical_evolution",
+            "linear_gp",
+            "push_gp",
+            "scalar_objective",
+            "symbolic_regression"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-a3583893692d0a59",
+          "title": "SREBPs: activators of the complete program of cholesterol and fatty acid synthes",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-a46ffa8dcd221335",
+          "title": "Convergence analysis of canonical genetic algorithms",
+          "tags": [
+            "scalar_objective",
+            "tournament_selection"
+          ],
+          "abstract_only_tags": [
+            "scalar_objective",
+            "tournament_selection"
+          ],
+          "usable_tags": [
+            "scalar_objective",
+            "tournament_selection"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-a489e2bf27dc19a3",
+          "title": "Robust phase-based texture descriptor for classification of breast ultrasound im",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-a6a3a3cf65eb4cbe",
+          "title": "40 years of cognitive architectures: core cognitive abilities and practical appl",
+          "tags": [
+            "tournament_selection"
+          ],
+          "abstract_only_tags": [
+            "tournament_selection"
+          ],
+          "usable_tags": [
+            "tournament_selection"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-a8114ac8d407830b",
+          "title": "Estimation of Distribution Algorithms: A New Tool for Evolutionary Computation",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-a811fa9beb73ee81",
+          "title": "Additive logistic regression: a statistical view of boosting (With discussion an",
+          "tags": [
+            "beam_search"
+          ],
+          "abstract_only_tags": [
+            "beam_search"
+          ],
+          "usable_tags": [
+            "beam_search"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-a8242bf292985d65",
+          "title": "A Critical Assessment of Benchmark Comparison in Planning",
+          "tags": [
+            "test_suite"
+          ],
+          "abstract_only_tags": [
+            "test_suite"
+          ],
+          "usable_tags": [
+            "test_suite"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-afd90b9dc79e7365",
+          "title": "Causal Abstraction: A Theoretical Foundation for Mechanistic Interpretability",
+          "tags": [
+            "causal_attribution",
+            "circuit_discovery",
+            "circuit_representation"
+          ],
+          "abstract_only_tags": [
+            "causal_attribution",
+            "circuit_representation"
+          ],
+          "usable_tags": [
+            "causal_attribution",
+            "circuit_representation"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-b0e4fe2963cd802f",
+          "title": "Evolutionary many-objective optimisation: an exploratory analysis",
+          "tags": [
+            "tournament_selection"
+          ],
+          "abstract_only_tags": [
+            "tournament_selection"
+          ],
+          "usable_tags": [
+            "tournament_selection"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-b123c0e580ad7e3e",
+          "title": "Quantum circuit optimizations for NISQ architectures",
+          "tags": [
+            "circuit_representation"
+          ],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-b148dcb85cc022f9",
+          "title": "Lexicase selection in learning classifier systems",
+          "tags": [
+            "lexicase",
+            "scalar_objective",
+            "test_suite",
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "abstract_only_tags": [
+            "scalar_objective",
+            "test_suite",
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "usable_tags": [
+            "scalar_objective",
+            "test_suite",
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-b2191b9244715a3f",
+          "title": "Reactivity descriptors for sulfur redox kinetics in lithium–sulfur batteries: fr",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-b253a26bb84a1bcc",
+          "title": "A Deductive Approach to Program Synthesis",
+          "tags": [
+            "enumerative_synthesis",
+            "formal_verification",
+            "program_synthesis",
+            "test_suite"
+          ],
+          "abstract_only_tags": [
+            "enumerative_synthesis",
+            "formal_verification",
+            "test_suite"
+          ],
+          "usable_tags": [
+            "enumerative_synthesis",
+            "formal_verification",
+            "test_suite"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-b469cdcdf66ab390",
+          "title": "Standardized benchmarking in the quest for orthologs",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-b5d65b96301d84dd",
+          "title": "Machine learning for condensed matter physics",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-b7706a9e8fb9a45c",
+          "title": "Memetic algorithms for combinatorial optimization problems : fitness landscapes ",
+          "tags": [
+            "beam_search",
+            "test_suite",
+            "tournament_selection"
+          ],
+          "abstract_only_tags": [
+            "beam_search",
+            "test_suite",
+            "tournament_selection"
+          ],
+          "usable_tags": [
+            "beam_search",
+            "test_suite",
+            "tournament_selection"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-bae51f483d5d6c39",
+          "title": "The Role of Microbial Electron Transfer in the Coevolution of the Biosphere and ",
+          "tags": [
+            "circuit_representation",
+            "coevolution"
+          ],
+          "abstract_only_tags": [
+            "circuit_representation"
+          ],
+          "usable_tags": [
+            "circuit_representation"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-bbf167d0b80ef191",
+          "title": "Genetic Algorithms: A 30-Year Perspective",
+          "tags": [
+            "tournament_selection"
+          ],
+          "abstract_only_tags": [
+            "tournament_selection"
+          ],
+          "usable_tags": [
+            "tournament_selection"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-bc2cb988207e3f86",
+          "title": "An empirical study of the efficiency of learning boolean functions using a Carte",
+          "tags": [
+            "cartesian_gp",
+            "tree_gp"
+          ],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-bc9b65250d1a35c4",
+          "title": "Where do resources come from? The role of idiosyncratic situations",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-bc9bba70228574be",
+          "title": "Effects of the Training Set Size: A Comparison of Standard and Down-Sampled Lexi",
+          "tags": [
+            "grammatical_evolution",
+            "lexicase",
+            "test_suite",
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "abstract_only_tags": [
+            "grammatical_evolution",
+            "test_suite",
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "usable_tags": [
+            "grammatical_evolution",
+            "test_suite",
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-bcd30828702d1904",
+          "title": "Tool Wear Prediction via Multidimensional Stacked Sparse Autoencoders With Featu",
+          "tags": [
+            "neural_representation"
+          ],
+          "abstract_only_tags": [
+            "neural_representation"
+          ],
+          "usable_tags": [
+            "neural_representation"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-c0c1460956a4eb21",
+          "title": "A Complexity Measure",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-c0c235cd19422797",
+          "title": "Heterogeneous Network Representation Learning: A Unified Framework With Survey a",
+          "tags": [
+            "test_suite"
+          ],
+          "abstract_only_tags": [
+            "test_suite"
+          ],
+          "usable_tags": [
+            "test_suite"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-c480c3e46e1a0149",
+          "title": "A review of the tools and techniques used in the digital preservation of archite",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-c4a67f4f7c071131",
+          "title": "Plant trait responses to grazing – a global synthesis",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-c51feae0a165028c",
+          "title": "Evolutionary Undersampling for Classification with Imbalanced Datasets: Proposal",
+          "tags": [
+            "scalar_objective",
+            "tournament_selection"
+          ],
+          "abstract_only_tags": [
+            "scalar_objective",
+            "tournament_selection"
+          ],
+          "usable_tags": [
+            "scalar_objective",
+            "tournament_selection"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-c7c15d4d88be5232",
+          "title": "Exploiting Generative AI to Scale up Intelligent Tutoring Systems",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-cc58fbbce233f3bc",
+          "title": "Optimization of a GCaMP Calcium Indicator for Neural Activity Imaging",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-cd6c9c528da6bcd3",
+          "title": "Overcoming Deceptiveness in Fitness Optimization with Unsupervised Quality-Diver",
+          "tags": [
+            "quality_diversity",
+            "scalar_objective"
+          ],
+          "abstract_only_tags": [
+            "scalar_objective"
+          ],
+          "usable_tags": [
+            "scalar_objective"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-cd948caf926d1259",
+          "title": "Benchmarking of protein descriptor sets in proteochemometric modeling (part 2): ",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-d0ebd6f5833a98f2",
+          "title": "MOTChallenge 2015: Towards a Benchmark for Multi-Target Tracking",
+          "tags": [
+            "test_suite"
+          ],
+          "abstract_only_tags": [
+            "test_suite"
+          ],
+          "usable_tags": [
+            "test_suite"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-d247e011c050a2be",
+          "title": "CrisisBench: Benchmarking Crisis-related Social Media Datasets for Humanitarian ",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-d302932e1edd80e3",
+          "title": "A critical moment in machine learning in medicine: on reproducible and interpret",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-d34bbc5d21946453",
+          "title": "Probing the Coevolution of Supermassive Black Holes and Galaxies Using Gravitati",
+          "tags": [
+            "coevolution"
+          ],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-d399e6c40c7b3421",
+          "title": "A Survey of Uncertainty in Deep Neural Networks",
+          "tags": [
+            "neural_representation"
+          ],
+          "abstract_only_tags": [
+            "neural_representation"
+          ],
+          "usable_tags": [
+            "neural_representation"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-d39f61e90a17897f",
+          "title": "A Theoretical Framework for Lagrangian Descriptors",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-d6390a2497869d5f",
+          "title": "Natural Evolution Strategies",
+          "tags": [
+            "cmaes",
+            "scalar_objective"
+          ],
+          "abstract_only_tags": [
+            "cmaes",
+            "scalar_objective"
+          ],
+          "usable_tags": [
+            "cmaes",
+            "scalar_objective"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-daa32973cbf4e2cd",
+          "title": "The 2003 Genetic and Evolutionary Computation Conference",
+          "tags": [
+            "tournament_selection"
+          ],
+          "abstract_only_tags": [
+            "tournament_selection"
+          ],
+          "usable_tags": [
+            "tournament_selection"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-dd1212fdb3477eab",
+          "title": "Oracle-guided component-based program synthesis",
+          "tags": [
+            "constraint_solving",
+            "enumerative_synthesis",
+            "program_synthesis"
+          ],
+          "abstract_only_tags": [
+            "constraint_solving",
+            "enumerative_synthesis"
+          ],
+          "usable_tags": [
+            "constraint_solving",
+            "enumerative_synthesis"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-de454927b7ba6ba9",
+          "title": "Evolutionary computation",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-de7d12c754cf2a85",
+          "title": "Discriminant analysis of principal components: a new method for the analysis of ",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-de989dcb3a344d37",
+          "title": "Program Synthesis",
+          "tags": [
+            "constraint_solving",
+            "enumerative_synthesis",
+            "program_synthesis"
+          ],
+          "abstract_only_tags": [
+            "constraint_solving",
+            "enumerative_synthesis"
+          ],
+          "usable_tags": [
+            "constraint_solving",
+            "enumerative_synthesis"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-e007833c318c1962",
+          "title": "On the Easiest and Hardest Fitness Functions",
+          "tags": [
+            "scalar_objective"
+          ],
+          "abstract_only_tags": [
+            "scalar_objective"
+          ],
+          "usable_tags": [
+            "scalar_objective"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-e1890b653a6895dc",
+          "title": "Optimizing taxonomic classification of marker-gene amplicon sequences with QIIME",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-e2a24c33721bfdba",
+          "title": "Robust Tactile Descriptors for Discriminating Objects From Textural Properties v",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-e339e952bd1485b6",
+          "title": "Unsupervised Spectral–Spatial Feature Learning With Stacked Sparse Autoencoder f",
+          "tags": [
+            "sparse_autoencoder"
+          ],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-e4fbc8887eb4de8b",
+          "title": "Time scale interactions and the coevolution of humans and water",
+          "tags": [
+            "coevolution"
+          ],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-e523e3d381da67c1",
+          "title": "Information theoretic measures for clusterings comparison",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-e562f7ef864a6e46",
+          "title": "THE GENERALISED PRODUCT MOMENT DISTRIBUTION IN SAMPLES FROM A NORMAL MULTIVARIAT",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-e8643966b28fd37c",
+          "title": "Genetic Programming With Lexicase Selection for Large-Scale Dynamic Flexible Job",
+          "tags": [
+            "lexicase",
+            "program_synthesis",
+            "tree_gp"
+          ],
+          "abstract_only_tags": [
+            "program_synthesis"
+          ],
+          "usable_tags": [
+            "program_synthesis"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-e8a7d721b33902fc",
+          "title": "Functional interpretation of single cell similarity maps",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-ea915ebe77b2d013",
+          "title": "Search Algorithms for Regression Test Case Prioritization",
+          "tags": [
+            "scalar_objective",
+            "test_suite"
+          ],
+          "abstract_only_tags": [
+            "scalar_objective",
+            "test_suite"
+          ],
+          "usable_tags": [
+            "scalar_objective",
+            "test_suite"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-eaa520211777958a",
+          "title": "Multisensor Feature Fusion for Bearing Fault Diagnosis Using Sparse Autoencoder ",
+          "tags": [
+            "neural_representation",
+            "sparse_autoencoder"
+          ],
+          "abstract_only_tags": [
+            "neural_representation"
+          ],
+          "usable_tags": [
+            "neural_representation"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-eaf4eef5d61a8e3f",
+          "title": "Toward a mechanistic psychology of dialogue",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-ec3b0985485f6a43",
+          "title": "MatInspector and beyond: promoter analysis based on transcription factor binding",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-ece406a01eb9c059",
+          "title": "A New Benchmark on Machine Learning Methodologies for Hydrological Processes Mod",
+          "tags": [
+            "test_suite"
+          ],
+          "abstract_only_tags": [
+            "test_suite"
+          ],
+          "usable_tags": [
+            "test_suite"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-eea69b6b0d7b2b5d",
+          "title": "From Mechanistic Interpretability to Mechanistic Biology: Training, Evaluating, ",
+          "tags": [
+            "circuit_discovery",
+            "sparse_autoencoder"
+          ],
+          "abstract_only_tags": [
+            "sparse_autoencoder"
+          ],
+          "usable_tags": [
+            "sparse_autoencoder"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-f0591083fdf0ef7d",
+          "title": "Evolutionary game dynamics",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-f084580f4e7f7509",
+          "title": "Handbook of Evolutionary Computation",
+          "tags": [
+            "tree_gp"
+          ],
+          "abstract_only_tags": [
+            "tree_gp"
+          ],
+          "usable_tags": [
+            "tree_gp"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-f1ecba689fed9366",
+          "title": "Proceedings of the Genetic and Evolutionary Computation Conference, GECCO 2019",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-f2ab39c09c7a3be1",
+          "title": "Evolutionary Dynamics of Biological Games",
+          "tags": [
+            "coevolution",
+            "tournament_selection"
+          ],
+          "abstract_only_tags": [
+            "coevolution",
+            "tournament_selection"
+          ],
+          "usable_tags": [
+            "coevolution",
+            "tournament_selection"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-f3cbf7693e7af1ad",
+          "title": "Quantifying causal emergence shows that macro can beat micro",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-f3ff7d2f2770e4b5",
+          "title": "Benchmarking parent selection for program synthesis by genetic programming",
+          "tags": [
+            "lexicase",
+            "program_synthesis",
+            "tournament_selection",
+            "tree_gp"
+          ],
+          "abstract_only_tags": [
+            "lexicase",
+            "tournament_selection"
+          ],
+          "usable_tags": [
+            "lexicase",
+            "tournament_selection"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-f4abe3a954343913",
+          "title": "Neural Architecture Search with Progressive Evaluation and Subpopulation Preserv",
+          "tags": [
+            "nas",
+            "neural_representation"
+          ],
+          "abstract_only_tags": [
+            "neural_representation"
+          ],
+          "usable_tags": [
+            "neural_representation"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-f54c7a3b1d71bb8e",
+          "title": "Open Problems in Mechanistic Interpretability",
+          "tags": [
+            "circuit_discovery"
+          ],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-f66b4f095efb3207",
+          "title": "Image Matching from Handcrafted to Deep Features: A Survey",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-f6d05cdaf0072fa8",
+          "title": "Enriching Location Representation with Detailed Semantic Information",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-fb6429cf281d8910",
+          "title": "The Problem of Pattern and Scale in Ecology: The Robert H. MacArthur Award Lectu",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-fbbe32c49adafcea",
+          "title": "Evaluating Novelty: The Role of Panels in the Selection of R&D Projects",
+          "tags": [
+            "tournament_selection"
+          ],
+          "abstract_only_tags": [
+            "tournament_selection"
+          ],
+          "usable_tags": [
+            "tournament_selection"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-fc03c0aea4caf033",
+          "title": "Measuring exposure to misinformation from political elites on Twitter",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-fc18674b849a6ff4",
+          "title": "Comparing and combining lexicase selection and novelty search",
+          "tags": [
+            "lexicase",
+            "novelty_search",
+            "program_synthesis",
+            "tournament_selection"
+          ],
+          "abstract_only_tags": [
+            "program_synthesis",
+            "tournament_selection"
+          ],
+          "usable_tags": [
+            "program_synthesis",
+            "tournament_selection"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-fd116d7f807e8e97",
+          "title": "On theorem prover-based testing",
+          "tags": [
+            "formal_verification",
+            "test_suite"
+          ],
+          "abstract_only_tags": [
+            "test_suite"
+          ],
+          "usable_tags": [
+            "test_suite"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-fdebbaeb93147d97",
+          "title": "Novelty or Surprise?",
+          "tags": [],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        }
+      ]
+    }
+  },
+  "tx003": {
+    "test_id": "TX-003-coordinates-cannot-express-MI",
+    "n_mi": 23,
+    "n_non_mi": 281,
+    "seed": 20260901,
+    "ceiling": {
+      "n_held": 23,
+      "with_any_abstract_only_tag": 12,
+      "SATISFIABILITY_CEILING": 7,
+      "ceiling_rate": 0.3043,
+      "detail": [
+        {
+          "id": "RG-0b01782bbdc1746e",
+          "title": "A Survey on IoT Security: Application Areas, Security Threats, and Solution Arch",
+          "tags": [
+            "causal_attribution"
+          ],
+          "abstract_only_tags": [
+            "causal_attribution"
+          ],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-104501971a3a8bd8",
+          "title": "Towards Automated Circuit Discovery for Mechanistic Interpretability",
+          "tags": [
+            "causal_attribution",
+            "circuit_discovery",
+            "circuit_representation",
+            "neural_representation"
+          ],
+          "abstract_only_tags": [
+            "causal_attribution",
+            "neural_representation"
+          ],
+          "usable_tags": [
+            "neural_representation"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-12863cc24259d65d",
+          "title": "Survey on the Role of Mechanistic Interpretability in Generative AI",
+          "tags": [
+            "circuit_discovery"
+          ],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-19ecbeb74e182689",
+          "title": "TrakEM2 Software for Neural Circuit Reconstruction",
+          "tags": [
+            "circuit_representation"
+          ],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-247dd70c049526ff",
+          "title": "A Comprehensive Survey of Neural Architecture Search: Challenges and Solutions",
+          "tags": [
+            "causal_attribution",
+            "nas",
+            "neural_representation"
+          ],
+          "abstract_only_tags": [
+            "causal_attribution",
+            "neural_representation"
+          ],
+          "usable_tags": [
+            "neural_representation"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-32ef0a5f694872b5",
+          "title": "Mechanistic Interpretability for AI Safety -- A Review",
+          "tags": [
+            "circuit_discovery"
+          ],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-54b113d852fdabb9",
+          "title": "Seeing Is Believing: Brain-Inspired Modular Training for Mechanistic Interpretab",
+          "tags": [
+            "circuit_discovery",
+            "gradient_descent"
+          ],
+          "abstract_only_tags": [
+            "gradient_descent"
+          ],
+          "usable_tags": [
+            "gradient_descent"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-5f53568b972cad55",
+          "title": "Effective Feature Extraction via Stacked Sparse Autoencoder to Improve Intrusion",
+          "tags": [
+            "neural_representation",
+            "sparse_autoencoder"
+          ],
+          "abstract_only_tags": [
+            "neural_representation"
+          ],
+          "usable_tags": [
+            "neural_representation"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-7313087ddd96af1c",
+          "title": "Detection and Classification of Transmission Line Faults Based on Unsupervised F",
+          "tags": [
+            "sparse_autoencoder"
+          ],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-7322c687cd92e600",
+          "title": "The Geometry of Concepts: Sparse Autoencoder Feature Structure",
+          "tags": [
+            "sparse_autoencoder"
+          ],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-7587059652925c47",
+          "title": "Sparse Autoencoder-Based Feature Transfer Learning for Speech Emotion Recognitio",
+          "tags": [
+            "sparse_autoencoder"
+          ],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-7b02f7570fdce8ba",
+          "title": "Exploring Mechanistic Interpretability in Large Language Models: Challenges, App",
+          "tags": [
+            "causal_attribution",
+            "circuit_discovery",
+            "circuit_representation"
+          ],
+          "abstract_only_tags": [
+            "causal_attribution",
+            "circuit_representation"
+          ],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-818bbedac5c91caf",
+          "title": "The Automatic Acquisition, Evolution and Reuse of Modules in Cartesian Genetic P",
+          "tags": [
+            "cartesian_gp",
+            "circuit_representation",
+            "symbolic_regression",
+            "test_suite",
+            "tree_gp"
+          ],
+          "abstract_only_tags": [
+            "circuit_representation",
+            "symbolic_regression",
+            "test_suite"
+          ],
+          "usable_tags": [
+            "symbolic_regression",
+            "test_suite"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-9e3187bd1a6c112a",
+          "title": "Explaining AI through mechanistic interpretability",
+          "tags": [
+            "circuit_discovery"
+          ],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-afd90b9dc79e7365",
+          "title": "Causal Abstraction: A Theoretical Foundation for Mechanistic Interpretability",
+          "tags": [
+            "causal_attribution",
+            "circuit_discovery",
+            "circuit_representation"
+          ],
+          "abstract_only_tags": [
+            "causal_attribution",
+            "circuit_representation"
+          ],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-b123c0e580ad7e3e",
+          "title": "Quantum circuit optimizations for NISQ architectures",
+          "tags": [
+            "circuit_representation"
+          ],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-bae51f483d5d6c39",
+          "title": "The Role of Microbial Electron Transfer in the Coevolution of the Biosphere and ",
+          "tags": [
+            "circuit_representation",
+            "coevolution"
+          ],
+          "abstract_only_tags": [
+            "circuit_representation"
+          ],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-c0d763c1ca2ecb8f",
+          "title": "Towards Automated Circuit Discovery for Mechanistic Interpretability",
+          "tags": [
+            "circuit_discovery",
+            "circuit_representation"
+          ],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-e339e952bd1485b6",
+          "title": "Unsupervised Spectral–Spatial Feature Learning With Stacked Sparse Autoencoder f",
+          "tags": [
+            "sparse_autoencoder"
+          ],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-eaa520211777958a",
+          "title": "Multisensor Feature Fusion for Bearing Fault Diagnosis Using Sparse Autoencoder ",
+          "tags": [
+            "neural_representation",
+            "sparse_autoencoder"
+          ],
+          "abstract_only_tags": [
+            "neural_representation"
+          ],
+          "usable_tags": [
+            "neural_representation"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-eea69b6b0d7b2b5d",
+          "title": "From Mechanistic Interpretability to Mechanistic Biology: Training, Evaluating, ",
+          "tags": [
+            "circuit_discovery",
+            "sparse_autoencoder"
+          ],
+          "abstract_only_tags": [
+            "sparse_autoencoder"
+          ],
+          "usable_tags": [],
+          "can_ever_pass": false
+        },
+        {
+          "id": "RG-f134979ea1c2fa68",
+          "title": "Prediction of aptamer–protein interacting pairs based on sparse autoencoder feat",
+          "tags": [
+            "neural_representation",
+            "sparse_autoencoder"
+          ],
+          "abstract_only_tags": [
+            "neural_representation"
+          ],
+          "usable_tags": [
+            "neural_representation"
+          ],
+          "can_ever_pass": true
+        },
+        {
+          "id": "RG-f54c7a3b1d71bb8e",
+          "title": "Open Problems in Mechanistic Interpretability",
+          "tags": [
+            "circuit_discovery"
+          ],
+          "abstract_only_tags": [],
+          "usable_tags": [],
+          "can_ever_pass": false
+        }
+      ]
+    },
+    "pass_threshold_papers": 12,
+    "arms": {
+      "current_axes": {
+        "is_frozen_test_arm": true,
+        "min_known_coords": 4,
+        "placed_on_4_tuple": 0,
+        "placement_rate": 0.0,
+        "cross_field_hits": 2,
+        "cross_field_rate": 0.087,
+        "chance_floor_p95": 0.2609,
+        "chance_floor_mean": 0.1839,
+        "majority_pass": false,
+        "beats_chance": false,
+        "non_mi_archive_size": 15,
+        "detail": [
+          {
+            "id": "RG-0b01782bbdc1746e",
+            "title": "A Survey on IoT Security: Application Areas, Security Threats, and Solution Architectures",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "unknown",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Epsilon-Lexicase Selection for Regression",
+              "Program synthesis by sketching",
+              "Comparison of Semantic-aware Selection Methods in Genetic Pr"
+            ]
+          },
+          {
+            "id": "RG-104501971a3a8bd8",
+            "title": "Towards Automated Circuit Discovery for Mechanistic Interpretability",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Epsilon-Lexicase Selection for Regression",
+              "Program synthesis by sketching",
+              "Comparison of Semantic-aware Selection Methods in Genetic Pr"
+            ]
+          },
+          {
+            "id": "RG-12863cc24259d65d",
+            "title": "Survey on the Role of Mechanistic Interpretability in Generative AI",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "unknown",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Epsilon-Lexicase Selection for Regression",
+              "Program synthesis by sketching",
+              "Comparison of Semantic-aware Selection Methods in Genetic Pr"
+            ]
+          },
+          {
+            "id": "RG-19ecbeb74e182689",
+            "title": "TrakEM2 Software for Neural Circuit Reconstruction",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Solving Uncompromising Problems With Lexicase Selection",
+              "General Program Synthesis Benchmark Suite",
+              "Effects of Lexicase and Tournament Selection on Diversity Re"
+            ]
+          },
+          {
+            "id": "RG-247dd70c049526ff",
+            "title": "A Comprehensive Survey of Neural Architecture Search: Challenges and Solutions",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "continuous_neural",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": true,
+            "neighbours": [
+              "Competitive Coevolution through Evolutionary Complexificatio",
+              "Epsilon-Lexicase Selection for Regression",
+              "Program synthesis by sketching"
+            ]
+          },
+          {
+            "id": "RG-32ef0a5f694872b5",
+            "title": "Mechanistic Interpretability for AI Safety -- A Review",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "unknown",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Epsilon-Lexicase Selection for Regression",
+              "Program synthesis by sketching",
+              "Comparison of Semantic-aware Selection Methods in Genetic Pr"
+            ]
+          },
+          {
+            "id": "RG-54b113d852fdabb9",
+            "title": "Seeing Is Believing: Brain-Inspired Modular Training for Mechanistic Interpretability",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "unknown",
+              "selection_family": "gradient",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Epsilon-Lexicase Selection for Regression",
+              "Program synthesis by sketching",
+              "Comparison of Semantic-aware Selection Methods in Genetic Pr"
+            ]
+          },
+          {
+            "id": "RG-5f53568b972cad55",
+            "title": "Effective Feature Extraction via Stacked Sparse Autoencoder to Improve Intrusion Detection",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Solving Uncompromising Problems With Lexicase Selection",
+              "General Program Synthesis Benchmark Suite",
+              "Effects of Lexicase and Tournament Selection on Diversity Re"
+            ]
+          },
+          {
+            "id": "RG-7313087ddd96af1c",
+            "title": "Detection and Classification of Transmission Line Faults Based on Unsupervised Feature Lea",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Solving Uncompromising Problems With Lexicase Selection",
+              "General Program Synthesis Benchmark Suite",
+              "Effects of Lexicase and Tournament Selection on Diversity Re"
+            ]
+          },
+          {
+            "id": "RG-7322c687cd92e600",
+            "title": "The Geometry of Concepts: Sparse Autoencoder Feature Structure",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Solving Uncompromising Problems With Lexicase Selection",
+              "General Program Synthesis Benchmark Suite",
+              "Effects of Lexicase and Tournament Selection on Diversity Re"
+            ]
+          },
+          {
+            "id": "RG-7587059652925c47",
+            "title": "Sparse Autoencoder-Based Feature Transfer Learning for Speech Emotion Recognition",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Solving Uncompromising Problems With Lexicase Selection",
+              "General Program Synthesis Benchmark Suite",
+              "Effects of Lexicase and Tournament Selection on Diversity Re"
+            ]
+          },
+          {
+            "id": "RG-7b02f7570fdce8ba",
+            "title": "Exploring Mechanistic Interpretability in Large Language Models: Challenges, Approaches, a",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Epsilon-Lexicase Selection for Regression",
+              "Program synthesis by sketching",
+              "Comparison of Semantic-aware Selection Methods in Genetic Pr"
+            ]
+          },
+          {
+            "id": "RG-818bbedac5c91caf",
+            "title": "The Automatic Acquisition, Evolution and Reuse of Modules in Cartesian Genetic Programming",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "fixed_test_suite"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": true,
+            "neighbours": [
+              "Solving Uncompromising Problems With Lexicase Selection",
+              "General Program Synthesis Benchmark Suite",
+              "Effects of Lexicase and Tournament Selection on Diversity Re"
+            ]
+          },
+          {
+            "id": "RG-9e3187bd1a6c112a",
+            "title": "Explaining AI through mechanistic interpretability",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "unknown",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Epsilon-Lexicase Selection for Regression",
+              "Program synthesis by sketching",
+              "Comparison of Semantic-aware Selection Methods in Genetic Pr"
+            ]
+          },
+          {
+            "id": "RG-afd90b9dc79e7365",
+            "title": "Causal Abstraction: A Theoretical Foundation for Mechanistic Interpretability",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Epsilon-Lexicase Selection for Regression",
+              "Program synthesis by sketching",
+              "Comparison of Semantic-aware Selection Methods in Genetic Pr"
+            ]
+          },
+          {
+            "id": "RG-b123c0e580ad7e3e",
+            "title": "Quantum circuit optimizations for NISQ architectures",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Solving Uncompromising Problems With Lexicase Selection",
+              "General Program Synthesis Benchmark Suite",
+              "Effects of Lexicase and Tournament Selection on Diversity Re"
+            ]
+          },
+          {
+            "id": "RG-bae51f483d5d6c39",
+            "title": "The Role of Microbial Electron Transfer in the Coevolution of the Biosphere and Geosphere",
+            "cell": {
+              "bottleneck": "B_UNASSIGNED",
+              "representation_family": "graph_circuit",
+              "selection_family": "adversarial",
+              "evaluation_regime": "coevolved_moving"
+            },
+            "n_neighbours": 1,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Competitive Coevolution through Evolutionary Complexificatio"
+            ]
+          },
+          {
+            "id": "RG-c0d763c1ca2ecb8f",
+            "title": "Towards Automated Circuit Discovery for Mechanistic Interpretability",
+            "cell": {
+              "bottleneck": "B_UNASSIGNED",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 0,
+            "cross_field_hit": false,
+            "neighbours": []
+          },
+          {
+            "id": "RG-e339e952bd1485b6",
+            "title": "Unsupervised Spectral–Spatial Feature Learning With Stacked Sparse Autoencoder for Hypersp",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Solving Uncompromising Problems With Lexicase Selection",
+              "General Program Synthesis Benchmark Suite",
+              "Effects of Lexicase and Tournament Selection on Diversity Re"
+            ]
+          },
+          {
+            "id": "RG-eaa520211777958a",
+            "title": "Multisensor Feature Fusion for Bearing Fault Diagnosis Using Sparse Autoencoder and Deep B",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Solving Uncompromising Problems With Lexicase Selection",
+              "General Program Synthesis Benchmark Suite",
+              "Effects of Lexicase and Tournament Selection on Diversity Re"
+            ]
+          },
+          {
+            "id": "RG-eea69b6b0d7b2b5d",
+            "title": "From Mechanistic Interpretability to Mechanistic Biology: Training, Evaluating, and Interp",
+            "cell": {
+              "bottleneck": "B_UNASSIGNED",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 0,
+            "cross_field_hit": false,
+            "neighbours": []
+          },
+          {
+            "id": "RG-f134979ea1c2fa68",
+            "title": "Prediction of aptamer–protein interacting pairs based on sparse autoencoder feature extrac",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Solving Uncompromising Problems With Lexicase Selection",
+              "General Program Synthesis Benchmark Suite",
+              "Effects of Lexicase and Tournament Selection on Diversity Re"
+            ]
+          },
+          {
+            "id": "RG-f54c7a3b1d71bb8e",
+            "title": "Open Problems in Mechanistic Interpretability",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "unknown",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Epsilon-Lexicase Selection for Regression",
+              "Program synthesis by sketching",
+              "Comparison of Semantic-aware Selection Methods in Genetic Pr"
+            ]
+          }
+        ]
+      },
+      "mutated_axes": {
+        "is_frozen_test_arm": true,
+        "min_known_coords": 4,
+        "placed_on_4_tuple": 4,
+        "placement_rate": 0.1739,
+        "cross_field_hits": 2,
+        "cross_field_rate": 0.087,
+        "chance_floor_p95": 0.2609,
+        "chance_floor_mean": 0.1839,
+        "majority_pass": false,
+        "beats_chance": false,
+        "non_mi_archive_size": 15,
+        "detail": [
+          {
+            "id": "RG-0b01782bbdc1746e",
+            "title": "A Survey on IoT Security: Application Areas, Security Threats, and Solution Architectures",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "unknown",
+              "selection_family": "causal_intervention",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Epsilon-Lexicase Selection for Regression",
+              "Program synthesis by sketching",
+              "Comparison of Semantic-aware Selection Methods in Genetic Pr"
+            ]
+          },
+          {
+            "id": "RG-104501971a3a8bd8",
+            "title": "Towards Automated Circuit Discovery for Mechanistic Interpretability",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "graph_circuit",
+              "selection_family": "causal_intervention",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Epsilon-Lexicase Selection for Regression",
+              "Program synthesis by sketching",
+              "Comparison of Semantic-aware Selection Methods in Genetic Pr"
+            ]
+          },
+          {
+            "id": "RG-12863cc24259d65d",
+            "title": "Survey on the Role of Mechanistic Interpretability in Generative AI",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "unknown",
+              "selection_family": "causal_intervention",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Epsilon-Lexicase Selection for Regression",
+              "Program synthesis by sketching",
+              "Comparison of Semantic-aware Selection Methods in Genetic Pr"
+            ]
+          },
+          {
+            "id": "RG-19ecbeb74e182689",
+            "title": "TrakEM2 Software for Neural Circuit Reconstruction",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Solving Uncompromising Problems With Lexicase Selection",
+              "General Program Synthesis Benchmark Suite",
+              "Effects of Lexicase and Tournament Selection on Diversity Re"
+            ]
+          },
+          {
+            "id": "RG-247dd70c049526ff",
+            "title": "A Comprehensive Survey of Neural Architecture Search: Challenges and Solutions",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "continuous_neural",
+              "selection_family": "causal_intervention",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": true,
+            "neighbours": [
+              "Competitive Coevolution through Evolutionary Complexificatio",
+              "Epsilon-Lexicase Selection for Regression",
+              "Program synthesis by sketching"
+            ]
+          },
+          {
+            "id": "RG-32ef0a5f694872b5",
+            "title": "Mechanistic Interpretability for AI Safety -- A Review",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "unknown",
+              "selection_family": "causal_intervention",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Epsilon-Lexicase Selection for Regression",
+              "Program synthesis by sketching",
+              "Comparison of Semantic-aware Selection Methods in Genetic Pr"
+            ]
+          },
+          {
+            "id": "RG-54b113d852fdabb9",
+            "title": "Seeing Is Believing: Brain-Inspired Modular Training for Mechanistic Interpretability",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "unknown",
+              "selection_family": "gradient",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Epsilon-Lexicase Selection for Regression",
+              "Program synthesis by sketching",
+              "Comparison of Semantic-aware Selection Methods in Genetic Pr"
+            ]
+          },
+          {
+            "id": "RG-5f53568b972cad55",
+            "title": "Effective Feature Extraction via Stacked Sparse Autoencoder to Improve Intrusion Detection",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Solving Uncompromising Problems With Lexicase Selection",
+              "General Program Synthesis Benchmark Suite",
+              "Effects of Lexicase and Tournament Selection on Diversity Re"
+            ]
+          },
+          {
+            "id": "RG-7313087ddd96af1c",
+            "title": "Detection and Classification of Transmission Line Faults Based on Unsupervised Feature Lea",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Solving Uncompromising Problems With Lexicase Selection",
+              "General Program Synthesis Benchmark Suite",
+              "Effects of Lexicase and Tournament Selection on Diversity Re"
+            ]
+          },
+          {
+            "id": "RG-7322c687cd92e600",
+            "title": "The Geometry of Concepts: Sparse Autoencoder Feature Structure",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Solving Uncompromising Problems With Lexicase Selection",
+              "General Program Synthesis Benchmark Suite",
+              "Effects of Lexicase and Tournament Selection on Diversity Re"
+            ]
+          },
+          {
+            "id": "RG-7587059652925c47",
+            "title": "Sparse Autoencoder-Based Feature Transfer Learning for Speech Emotion Recognition",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Solving Uncompromising Problems With Lexicase Selection",
+              "General Program Synthesis Benchmark Suite",
+              "Effects of Lexicase and Tournament Selection on Diversity Re"
+            ]
+          },
+          {
+            "id": "RG-7b02f7570fdce8ba",
+            "title": "Exploring Mechanistic Interpretability in Large Language Models: Challenges, Approaches, a",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "graph_circuit",
+              "selection_family": "causal_intervention",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Epsilon-Lexicase Selection for Regression",
+              "Program synthesis by sketching",
+              "Comparison of Semantic-aware Selection Methods in Genetic Pr"
+            ]
+          },
+          {
+            "id": "RG-818bbedac5c91caf",
+            "title": "The Automatic Acquisition, Evolution and Reuse of Modules in Cartesian Genetic Programming",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "fixed_test_suite"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": true,
+            "neighbours": [
+              "Solving Uncompromising Problems With Lexicase Selection",
+              "General Program Synthesis Benchmark Suite",
+              "Effects of Lexicase and Tournament Selection on Diversity Re"
+            ]
+          },
+          {
+            "id": "RG-9e3187bd1a6c112a",
+            "title": "Explaining AI through mechanistic interpretability",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "unknown",
+              "selection_family": "causal_intervention",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Epsilon-Lexicase Selection for Regression",
+              "Program synthesis by sketching",
+              "Comparison of Semantic-aware Selection Methods in Genetic Pr"
+            ]
+          },
+          {
+            "id": "RG-afd90b9dc79e7365",
+            "title": "Causal Abstraction: A Theoretical Foundation for Mechanistic Interpretability",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "graph_circuit",
+              "selection_family": "causal_intervention",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Epsilon-Lexicase Selection for Regression",
+              "Program synthesis by sketching",
+              "Comparison of Semantic-aware Selection Methods in Genetic Pr"
+            ]
+          },
+          {
+            "id": "RG-b123c0e580ad7e3e",
+            "title": "Quantum circuit optimizations for NISQ architectures",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Solving Uncompromising Problems With Lexicase Selection",
+              "General Program Synthesis Benchmark Suite",
+              "Effects of Lexicase and Tournament Selection on Diversity Re"
+            ]
+          },
+          {
+            "id": "RG-bae51f483d5d6c39",
+            "title": "The Role of Microbial Electron Transfer in the Coevolution of the Biosphere and Geosphere",
+            "cell": {
+              "bottleneck": "B_UNASSIGNED",
+              "representation_family": "graph_circuit",
+              "selection_family": "adversarial",
+              "evaluation_regime": "coevolved_moving"
+            },
+            "n_neighbours": 1,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Competitive Coevolution through Evolutionary Complexificatio"
+            ]
+          },
+          {
+            "id": "RG-c0d763c1ca2ecb8f",
+            "title": "Towards Automated Circuit Discovery for Mechanistic Interpretability",
+            "cell": {
+              "bottleneck": "B_UNASSIGNED",
+              "representation_family": "graph_circuit",
+              "selection_family": "causal_intervention",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 0,
+            "cross_field_hit": false,
+            "neighbours": []
+          },
+          {
+            "id": "RG-e339e952bd1485b6",
+            "title": "Unsupervised Spectral–Spatial Feature Learning With Stacked Sparse Autoencoder for Hypersp",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Solving Uncompromising Problems With Lexicase Selection",
+              "General Program Synthesis Benchmark Suite",
+              "Effects of Lexicase and Tournament Selection on Diversity Re"
+            ]
+          },
+          {
+            "id": "RG-eaa520211777958a",
+            "title": "Multisensor Feature Fusion for Bearing Fault Diagnosis Using Sparse Autoencoder and Deep B",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Solving Uncompromising Problems With Lexicase Selection",
+              "General Program Synthesis Benchmark Suite",
+              "Effects of Lexicase and Tournament Selection on Diversity Re"
+            ]
+          },
+          {
+            "id": "RG-eea69b6b0d7b2b5d",
+            "title": "From Mechanistic Interpretability to Mechanistic Biology: Training, Evaluating, and Interp",
+            "cell": {
+              "bottleneck": "B_UNASSIGNED",
+              "representation_family": "graph_circuit",
+              "selection_family": "causal_intervention",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 0,
+            "cross_field_hit": false,
+            "neighbours": []
+          },
+          {
+            "id": "RG-f134979ea1c2fa68",
+            "title": "Prediction of aptamer–protein interacting pairs based on sparse autoencoder feature extrac",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Solving Uncompromising Problems With Lexicase Selection",
+              "General Program Synthesis Benchmark Suite",
+              "Effects of Lexicase and Tournament Selection on Diversity Re"
+            ]
+          },
+          {
+            "id": "RG-f54c7a3b1d71bb8e",
+            "title": "Open Problems in Mechanistic Interpretability",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "unknown",
+              "selection_family": "causal_intervention",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Epsilon-Lexicase Selection for Regression",
+              "Program synthesis by sketching",
+              "Comparison of Semantic-aware Selection Methods in Genetic Pr"
+            ]
+          }
+        ]
+      },
+      "DIAG_current_pairwise": {
+        "is_frozen_test_arm": false,
+        "min_known_coords": 2,
+        "placed_on_4_tuple": 16,
+        "placement_rate": 0.6957,
+        "cross_field_hits": 3,
+        "cross_field_rate": 0.1304,
+        "chance_floor_p95": 0.2174,
+        "chance_floor_mean": 0.15,
+        "majority_pass": false,
+        "beats_chance": false,
+        "non_mi_archive_size": 156,
+        "detail": [
+          {
+            "id": "RG-0b01782bbdc1746e",
+            "title": "A Survey on IoT Security: Application Areas, Security Threats, and Solution Architectures",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "unknown",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Problem-Independent Handling of Constraints by Use of Metric",
+              "Deceptiveness and neutrality the ND family of fitness landsc",
+              "The CMA Evolution Strategy: A Tutorial"
+            ]
+          },
+          {
+            "id": "RG-104501971a3a8bd8",
+            "title": "Towards Automated Circuit Discovery for Mechanistic Interpretability",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Problem-Independent Handling of Constraints by Use of Metric",
+              "Deceptiveness and neutrality the ND family of fitness landsc",
+              "The CMA Evolution Strategy: A Tutorial"
+            ]
+          },
+          {
+            "id": "RG-12863cc24259d65d",
+            "title": "Survey on the Role of Mechanistic Interpretability in Generative AI",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "unknown",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Problem-Independent Handling of Constraints by Use of Metric",
+              "Deceptiveness and neutrality the ND family of fitness landsc",
+              "The CMA Evolution Strategy: A Tutorial"
+            ]
+          },
+          {
+            "id": "RG-19ecbeb74e182689",
+            "title": "TrakEM2 Software for Neural Circuit Reconstruction",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Evolutionary Algorithms for Solving Multi-Objective Problems",
+              "Genetic Algorithms and Genetic Programming",
+              "FlashMeta: a framework for inductive program synthesis"
+            ]
+          },
+          {
+            "id": "RG-247dd70c049526ff",
+            "title": "A Comprehensive Survey of Neural Architecture Search: Challenges and Solutions",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "continuous_neural",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": true,
+            "neighbours": [
+              "From federated learning to federated neural architecture sea",
+              "Regularized Evolution for Image Classifier Architecture Sear",
+              "Neural Architecture Search with Progressive Evaluation and S"
+            ]
+          },
+          {
+            "id": "RG-32ef0a5f694872b5",
+            "title": "Mechanistic Interpretability for AI Safety -- A Review",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "unknown",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Problem-Independent Handling of Constraints by Use of Metric",
+              "Deceptiveness and neutrality the ND family of fitness landsc",
+              "The CMA Evolution Strategy: A Tutorial"
+            ]
+          },
+          {
+            "id": "RG-54b113d852fdabb9",
+            "title": "Seeing Is Believing: Brain-Inspired Modular Training for Mechanistic Interpretability",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "unknown",
+              "selection_family": "gradient",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": true,
+            "neighbours": [
+              "Problem-Independent Handling of Constraints by Use of Metric",
+              "The CMA Evolution Strategy: A Tutorial",
+              "Classifier systems and genetic algorithms"
+            ]
+          },
+          {
+            "id": "RG-5f53568b972cad55",
+            "title": "Effective Feature Extraction via Stacked Sparse Autoencoder to Improve Intrusion Detection",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Evolutionary Algorithms for Solving Multi-Objective Problems",
+              "Genetic Algorithms and Genetic Programming",
+              "FlashMeta: a framework for inductive program synthesis"
+            ]
+          },
+          {
+            "id": "RG-7313087ddd96af1c",
+            "title": "Detection and Classification of Transmission Line Faults Based on Unsupervised Feature Lea",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Evolutionary Algorithms for Solving Multi-Objective Problems",
+              "Genetic Algorithms and Genetic Programming",
+              "FlashMeta: a framework for inductive program synthesis"
+            ]
+          },
+          {
+            "id": "RG-7322c687cd92e600",
+            "title": "The Geometry of Concepts: Sparse Autoencoder Feature Structure",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Evolutionary Algorithms for Solving Multi-Objective Problems",
+              "Genetic Algorithms and Genetic Programming",
+              "FlashMeta: a framework for inductive program synthesis"
+            ]
+          },
+          {
+            "id": "RG-7587059652925c47",
+            "title": "Sparse Autoencoder-Based Feature Transfer Learning for Speech Emotion Recognition",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Evolutionary Algorithms for Solving Multi-Objective Problems",
+              "Genetic Algorithms and Genetic Programming",
+              "FlashMeta: a framework for inductive program synthesis"
+            ]
+          },
+          {
+            "id": "RG-7b02f7570fdce8ba",
+            "title": "Exploring Mechanistic Interpretability in Large Language Models: Challenges, Approaches, a",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Problem-Independent Handling of Constraints by Use of Metric",
+              "Deceptiveness and neutrality the ND family of fitness landsc",
+              "The CMA Evolution Strategy: A Tutorial"
+            ]
+          },
+          {
+            "id": "RG-818bbedac5c91caf",
+            "title": "The Automatic Acquisition, Evolution and Reuse of Modules in Cartesian Genetic Programming",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "fixed_test_suite"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": true,
+            "neighbours": [
+              "Solving Uncompromising Problems With Lexicase Selection",
+              "General Program Synthesis Benchmark Suite",
+              "Effects of Lexicase and Tournament Selection on Diversity Re"
+            ]
+          },
+          {
+            "id": "RG-9e3187bd1a6c112a",
+            "title": "Explaining AI through mechanistic interpretability",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "unknown",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Problem-Independent Handling of Constraints by Use of Metric",
+              "Deceptiveness and neutrality the ND family of fitness landsc",
+              "The CMA Evolution Strategy: A Tutorial"
+            ]
+          },
+          {
+            "id": "RG-afd90b9dc79e7365",
+            "title": "Causal Abstraction: A Theoretical Foundation for Mechanistic Interpretability",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Problem-Independent Handling of Constraints by Use of Metric",
+              "Deceptiveness and neutrality the ND family of fitness landsc",
+              "The CMA Evolution Strategy: A Tutorial"
+            ]
+          },
+          {
+            "id": "RG-b123c0e580ad7e3e",
+            "title": "Quantum circuit optimizations for NISQ architectures",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Evolutionary Algorithms for Solving Multi-Objective Problems",
+              "Genetic Algorithms and Genetic Programming",
+              "FlashMeta: a framework for inductive program synthesis"
+            ]
+          },
+          {
+            "id": "RG-bae51f483d5d6c39",
+            "title": "The Role of Microbial Electron Transfer in the Coevolution of the Biosphere and Geosphere",
+            "cell": {
+              "bottleneck": "B_UNASSIGNED",
+              "representation_family": "graph_circuit",
+              "selection_family": "adversarial",
+              "evaluation_regime": "coevolved_moving"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Metabolic Coevolution in the Bacterial Symbiosis of Whitefli",
+              "Competitive Coevolution through Evolutionary Complexificatio",
+              "Detecting Coevolution in and among Protein Domains"
+            ]
+          },
+          {
+            "id": "RG-c0d763c1ca2ecb8f",
+            "title": "Towards Automated Circuit Discovery for Mechanistic Interpretability",
+            "cell": {
+              "bottleneck": "B_UNASSIGNED",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 0,
+            "cross_field_hit": false,
+            "neighbours": []
+          },
+          {
+            "id": "RG-e339e952bd1485b6",
+            "title": "Unsupervised Spectral–Spatial Feature Learning With Stacked Sparse Autoencoder for Hypersp",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Evolutionary Algorithms for Solving Multi-Objective Problems",
+              "Genetic Algorithms and Genetic Programming",
+              "FlashMeta: a framework for inductive program synthesis"
+            ]
+          },
+          {
+            "id": "RG-eaa520211777958a",
+            "title": "Multisensor Feature Fusion for Bearing Fault Diagnosis Using Sparse Autoencoder and Deep B",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Evolutionary Algorithms for Solving Multi-Objective Problems",
+              "Genetic Algorithms and Genetic Programming",
+              "FlashMeta: a framework for inductive program synthesis"
+            ]
+          },
+          {
+            "id": "RG-eea69b6b0d7b2b5d",
+            "title": "From Mechanistic Interpretability to Mechanistic Biology: Training, Evaluating, and Interp",
+            "cell": {
+              "bottleneck": "B_UNASSIGNED",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 0,
+            "cross_field_hit": false,
+            "neighbours": []
+          },
+          {
+            "id": "RG-f134979ea1c2fa68",
+            "title": "Prediction of aptamer–protein interacting pairs based on sparse autoencoder feature extrac",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Evolutionary Algorithms for Solving Multi-Objective Problems",
+              "Genetic Algorithms and Genetic Programming",
+              "FlashMeta: a framework for inductive program synthesis"
+            ]
+          },
+          {
+            "id": "RG-f54c7a3b1d71bb8e",
+            "title": "Open Problems in Mechanistic Interpretability",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "unknown",
+              "selection_family": "unknown",
+              "evaluation_regime": "unknown"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Problem-Independent Handling of Constraints by Use of Metric",
+              "Deceptiveness and neutrality the ND family of fitness landsc",
+              "The CMA Evolution Strategy: A Tutorial"
+            ]
+          }
+        ]
+      },
+      "DIAG_mutated_pairwise": {
+        "is_frozen_test_arm": false,
+        "min_known_coords": 2,
+        "placed_on_4_tuple": 23,
+        "placement_rate": 1.0,
+        "cross_field_hits": 3,
+        "cross_field_rate": 0.1304,
+        "chance_floor_p95": 0.2174,
+        "chance_floor_mean": 0.1452,
+        "majority_pass": false,
+        "beats_chance": false,
+        "non_mi_archive_size": 157,
+        "detail": [
+          {
+            "id": "RG-0b01782bbdc1746e",
+            "title": "A Survey on IoT Security: Application Areas, Security Threats, and Solution Architectures",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "unknown",
+              "selection_family": "causal_intervention",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "New Algorithms and Methods to Estimate Maximum-Likelihood Ph",
+              "Problem-Independent Handling of Constraints by Use of Metric",
+              "Deceptiveness and neutrality the ND family of fitness landsc"
+            ]
+          },
+          {
+            "id": "RG-104501971a3a8bd8",
+            "title": "Towards Automated Circuit Discovery for Mechanistic Interpretability",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "graph_circuit",
+              "selection_family": "causal_intervention",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "New Algorithms and Methods to Estimate Maximum-Likelihood Ph",
+              "Problem-Independent Handling of Constraints by Use of Metric",
+              "Deceptiveness and neutrality the ND family of fitness landsc"
+            ]
+          },
+          {
+            "id": "RG-12863cc24259d65d",
+            "title": "Survey on the Role of Mechanistic Interpretability in Generative AI",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "unknown",
+              "selection_family": "causal_intervention",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "New Algorithms and Methods to Estimate Maximum-Likelihood Ph",
+              "Problem-Independent Handling of Constraints by Use of Metric",
+              "Deceptiveness and neutrality the ND family of fitness landsc"
+            ]
+          },
+          {
+            "id": "RG-19ecbeb74e182689",
+            "title": "TrakEM2 Software for Neural Circuit Reconstruction",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Evolutionary Algorithms for Solving Multi-Objective Problems",
+              "Genetic Algorithms and Genetic Programming",
+              "FlashMeta: a framework for inductive program synthesis"
+            ]
+          },
+          {
+            "id": "RG-247dd70c049526ff",
+            "title": "A Comprehensive Survey of Neural Architecture Search: Challenges and Solutions",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "continuous_neural",
+              "selection_family": "causal_intervention",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": true,
+            "neighbours": [
+              "New Algorithms and Methods to Estimate Maximum-Likelihood Ph",
+              "From federated learning to federated neural architecture sea",
+              "Regularized Evolution for Image Classifier Architecture Sear"
+            ]
+          },
+          {
+            "id": "RG-32ef0a5f694872b5",
+            "title": "Mechanistic Interpretability for AI Safety -- A Review",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "unknown",
+              "selection_family": "causal_intervention",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "New Algorithms and Methods to Estimate Maximum-Likelihood Ph",
+              "Problem-Independent Handling of Constraints by Use of Metric",
+              "Deceptiveness and neutrality the ND family of fitness landsc"
+            ]
+          },
+          {
+            "id": "RG-54b113d852fdabb9",
+            "title": "Seeing Is Believing: Brain-Inspired Modular Training for Mechanistic Interpretability",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "unknown",
+              "selection_family": "gradient",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": true,
+            "neighbours": [
+              "Problem-Independent Handling of Constraints by Use of Metric",
+              "The CMA Evolution Strategy: A Tutorial",
+              "Classifier systems and genetic algorithms"
+            ]
+          },
+          {
+            "id": "RG-5f53568b972cad55",
+            "title": "Effective Feature Extraction via Stacked Sparse Autoencoder to Improve Intrusion Detection",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Evolutionary Algorithms for Solving Multi-Objective Problems",
+              "Genetic Algorithms and Genetic Programming",
+              "FlashMeta: a framework for inductive program synthesis"
+            ]
+          },
+          {
+            "id": "RG-7313087ddd96af1c",
+            "title": "Detection and Classification of Transmission Line Faults Based on Unsupervised Feature Lea",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Evolutionary Algorithms for Solving Multi-Objective Problems",
+              "Genetic Algorithms and Genetic Programming",
+              "FlashMeta: a framework for inductive program synthesis"
+            ]
+          },
+          {
+            "id": "RG-7322c687cd92e600",
+            "title": "The Geometry of Concepts: Sparse Autoencoder Feature Structure",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Evolutionary Algorithms for Solving Multi-Objective Problems",
+              "Genetic Algorithms and Genetic Programming",
+              "FlashMeta: a framework for inductive program synthesis"
+            ]
+          },
+          {
+            "id": "RG-7587059652925c47",
+            "title": "Sparse Autoencoder-Based Feature Transfer Learning for Speech Emotion Recognition",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Evolutionary Algorithms for Solving Multi-Objective Problems",
+              "Genetic Algorithms and Genetic Programming",
+              "FlashMeta: a framework for inductive program synthesis"
+            ]
+          },
+          {
+            "id": "RG-7b02f7570fdce8ba",
+            "title": "Exploring Mechanistic Interpretability in Large Language Models: Challenges, Approaches, a",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "graph_circuit",
+              "selection_family": "causal_intervention",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "New Algorithms and Methods to Estimate Maximum-Likelihood Ph",
+              "Problem-Independent Handling of Constraints by Use of Metric",
+              "Deceptiveness and neutrality the ND family of fitness landsc"
+            ]
+          },
+          {
+            "id": "RG-818bbedac5c91caf",
+            "title": "The Automatic Acquisition, Evolution and Reuse of Modules in Cartesian Genetic Programming",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "fixed_test_suite"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": true,
+            "neighbours": [
+              "Solving Uncompromising Problems With Lexicase Selection",
+              "General Program Synthesis Benchmark Suite",
+              "Effects of Lexicase and Tournament Selection on Diversity Re"
+            ]
+          },
+          {
+            "id": "RG-9e3187bd1a6c112a",
+            "title": "Explaining AI through mechanistic interpretability",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "unknown",
+              "selection_family": "causal_intervention",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "New Algorithms and Methods to Estimate Maximum-Likelihood Ph",
+              "Problem-Independent Handling of Constraints by Use of Metric",
+              "Deceptiveness and neutrality the ND family of fitness landsc"
+            ]
+          },
+          {
+            "id": "RG-afd90b9dc79e7365",
+            "title": "Causal Abstraction: A Theoretical Foundation for Mechanistic Interpretability",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "graph_circuit",
+              "selection_family": "causal_intervention",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "New Algorithms and Methods to Estimate Maximum-Likelihood Ph",
+              "Problem-Independent Handling of Constraints by Use of Metric",
+              "Deceptiveness and neutrality the ND family of fitness landsc"
+            ]
+          },
+          {
+            "id": "RG-b123c0e580ad7e3e",
+            "title": "Quantum circuit optimizations for NISQ architectures",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Evolutionary Algorithms for Solving Multi-Objective Problems",
+              "Genetic Algorithms and Genetic Programming",
+              "FlashMeta: a framework for inductive program synthesis"
+            ]
+          },
+          {
+            "id": "RG-bae51f483d5d6c39",
+            "title": "The Role of Microbial Electron Transfer in the Coevolution of the Biosphere and Geosphere",
+            "cell": {
+              "bottleneck": "B_UNASSIGNED",
+              "representation_family": "graph_circuit",
+              "selection_family": "adversarial",
+              "evaluation_regime": "coevolved_moving"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Metabolic Coevolution in the Bacterial Symbiosis of Whitefli",
+              "Competitive Coevolution through Evolutionary Complexificatio",
+              "Detecting Coevolution in and among Protein Domains"
+            ]
+          },
+          {
+            "id": "RG-c0d763c1ca2ecb8f",
+            "title": "Towards Automated Circuit Discovery for Mechanistic Interpretability",
+            "cell": {
+              "bottleneck": "B_UNASSIGNED",
+              "representation_family": "graph_circuit",
+              "selection_family": "causal_intervention",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 1,
+            "cross_field_hit": false,
+            "neighbours": [
+              "New Algorithms and Methods to Estimate Maximum-Likelihood Ph"
+            ]
+          },
+          {
+            "id": "RG-e339e952bd1485b6",
+            "title": "Unsupervised Spectral–Spatial Feature Learning With Stacked Sparse Autoencoder for Hypersp",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Evolutionary Algorithms for Solving Multi-Objective Problems",
+              "Genetic Algorithms and Genetic Programming",
+              "FlashMeta: a framework for inductive program synthesis"
+            ]
+          },
+          {
+            "id": "RG-eaa520211777958a",
+            "title": "Multisensor Feature Fusion for Bearing Fault Diagnosis Using Sparse Autoencoder and Deep B",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Evolutionary Algorithms for Solving Multi-Objective Problems",
+              "Genetic Algorithms and Genetic Programming",
+              "FlashMeta: a framework for inductive program synthesis"
+            ]
+          },
+          {
+            "id": "RG-eea69b6b0d7b2b5d",
+            "title": "From Mechanistic Interpretability to Mechanistic Biology: Training, Evaluating, and Interp",
+            "cell": {
+              "bottleneck": "B_UNASSIGNED",
+              "representation_family": "graph_circuit",
+              "selection_family": "causal_intervention",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 1,
+            "cross_field_hit": false,
+            "neighbours": [
+              "New Algorithms and Methods to Estimate Maximum-Likelihood Ph"
+            ]
+          },
+          {
+            "id": "RG-f134979ea1c2fa68",
+            "title": "Prediction of aptamer–protein interacting pairs based on sparse autoencoder feature extrac",
+            "cell": {
+              "bottleneck": "B1_REPRESENTATION",
+              "representation_family": "graph_circuit",
+              "selection_family": "unknown",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "Evolutionary Algorithms for Solving Multi-Objective Problems",
+              "Genetic Algorithms and Genetic Programming",
+              "FlashMeta: a framework for inductive program synthesis"
+            ]
+          },
+          {
+            "id": "RG-f54c7a3b1d71bb8e",
+            "title": "Open Problems in Mechanistic Interpretability",
+            "cell": {
+              "bottleneck": "B2_CREDIT_SEARCH",
+              "representation_family": "unknown",
+              "selection_family": "causal_intervention",
+              "evaluation_regime": "faithfulness_to_reference"
+            },
+            "n_neighbours": 5,
+            "cross_field_hit": false,
+            "neighbours": [
+              "New Algorithms and Methods to Estimate Maximum-Likelihood Ph",
+              "Problem-Independent Handling of Constraints by Use of Metric",
+              "Deceptiveness and neutrality the ND family of fitness landsc"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "_digest": "381f191bfd185603046523713b65e9620c36a54e9a47f38ffc3586cc000fc835"
+}
