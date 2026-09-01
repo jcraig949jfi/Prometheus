@@ -181,3 +181,83 @@ FINDING, not a licence to redesign and re-run.
   explicitly, and E1 exists to measure the chance floor rather than assume it.
 
 — Harmonia C, M2, frozen 2026-09-01
+
+---
+
+# AMENDMENTS — all made 2026-09-01, BEFORE experiment E1 ran
+
+Every change below was forced by a *measured* defect in the substrate, found while
+building it and before any arm comparison was scored. None of them was made after
+seeing a between-arm result. The distinction that matters: **calibration happens before
+the first experiment; rescue happens after a result you dislike.** This section exists so
+a reviewer can check which one this was, and the campaign's no-rescue rule (section 6)
+binds from here on with no further amendments permitted.
+
+Calibration discipline: the arena was tuned against arms **A_LOCAL and B_STRUCT** -- the
+arms the hypothesis is NOT about. Tuning against a composition arm would have rigged the
+arena toward the answer.
+
+### AMENDMENT 1 — fitness gradient: byte-exact -> per-probe exact-match fraction
+
+**Defect measured.** With byte-valued references, `frac` was flat at ~0.5 everywhere:
+every wrong program sits at chance bit-similarity, so the landscape is a plateau with a
+needle and *every arm is doing blind search*. Diagnostic: a ONE-instruction target
+(`T = x0`) was cracked 5/6, while a TWO-instruction target (`T = x0 ^ x1`) was cracked
+1/6 and the failures never rose above 0.55 -- no climbing at all.
+**Change.** References are LOW-CARDINALITY (0/1-valued); `frac` is the per-probe
+exact-match fraction. Partial credit now lives over probes, not over bits.
+**Not changed.** The promotion criterion: still exact match on all 64 HELDOUT probes.
+
+### AMENDMENT 2 — worlds rebuilt on shared primitives; machine shrunk
+
+**Defect measured.** At 16 registers / 12 opcodes the per-instruction space is 3072, so a
+two-instruction motif is ~1e-6 per draw and no composite target was ever acquired by any
+arm at 60,000 evaluations (0/6 across all six arms and all three worlds).
+**Change.** 8 registers (2 inputs, 3 scratch, 3 output slots). The three worlds now share
+the SAME primitives `A = bit7(x0)`, `B = bit7(x1)`, `C = bit3(x0)` and differ only in the
+combination rule -- so any between-world difference is a property of the rule, not of
+primitive difficulty. `W2_ENTANGLED` is renamed `W2_DECEPTIVE` and given `T = A XOR B`,
+which is statistically independent of both primitives: zero gradient, and the load-bearing
+world of the campaign.
+
+### AMENDMENT 3 — selection: accept ties, and reject behavioral duplicates
+
+**Defect measured.** Every population-based arm was beaten by pure random sampling
+(F_RANDOM 12/12 primitives; A_LOCAL 0-2/12). Cause: the population collapsed onto one
+plateau program and point mutation became a random walk it could not escape.
+**Change.** Replace-worst-if-NOT-WORSE (neutral drift), plus rejection of children whose
+behavioral signature already sits in the population. Identical rule, identical code path,
+every arm.
+
+### AMENDMENT 4 — shared bootstrap phase, with the target held out of it
+
+**Defect measured.** Two problems at once. (a) Arms differed mostly in their ability to
+*bootstrap primitives from nothing*, which is not the hypothesis -- H is about reuse of
+PREVIOUSLY VIABLE behaviors. (b) Worse, the bootstrap was itself acquiring the target
+slot (W2 slot 2 crossed during bootstrap), so the arm phase would have measured nothing.
+**Change.** Each run is `BOOTSTRAP = 20,000` evaluations in which **every arm executes the
+identical operator on an RNG stream keyed to the seed alone** -- verified byte-identical
+across all six arms -- followed by `20,000` evaluations of the arm's own operator.
+Bootstrap fitness scores **primitive slots only**, so the target capability is held out
+from the machinery that builds the archive (assignment section 5). Crossings are
+attributed to `bootstrap` or `arm` phase and only arm-phase acquisitions count.
+Verified after the change: archive after bootstrap = `{A}, {B}`, goal contamination
+**0/6 in every arm and every world**.
+**Budget.** `EVALS = 40,000` per run (20,000 shared + 20,000 arm). `n_seeds = 12`.
+
+### AMENDMENT 5 — HELDOUT check gated on train-viability
+
+**Reason.** A 64-probe heldout check on every candidate costs 4x the search itself.
+**Change.** The heldout capability test runs when a candidate holds >= 1 TRAIN slot.
+**Disclosed blind spot.** A program matching all 64 HELDOUT probes exactly while failing a
+TRAIN probe would be missed. That requires an input-dependent split between two disjoint
+uniform streams. E1 re-checks the final best program of every run without the gate.
+
+### Post-amendment operating point (measured, 6 seeds, before E1)
+
+Arm-phase goal acquisition ranged 0/6 to 5/6 across arms and worlds, with zero bootstrap
+contamination -- a measurable band with room to move in both directions. **The arena is
+locked here.** No further amendment is permitted; from this point the no-rescue rule in
+section 6 binds absolutely.
+
+*Frozen 2026-09-01 by Harmonia C. Nothing below this line changed after E1.*
