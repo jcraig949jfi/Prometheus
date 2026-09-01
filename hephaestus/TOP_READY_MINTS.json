@@ -1,46 +1,6 @@
 {
-  "generated": "2026-09-01T09:13:00Z",
+  "generated": "2026-09-01T10:48:55Z",
   "walls": [
-    {
-      "MINT_ID": "MINT-0004",
-      "STATUS": "COMPOSITION-SUSPECTED",
-      "score": 0.219,
-      "family": "consistency_check (PARSER gap + missing consistency predicate over an existing structure)",
-      "missing_for_ready": [
-        "WHAT_SHOULD_HAVE_HAPPENED",
-        "MINIMAL_REPRODUCER",
-        "POSITIVE_EXAMPLES",
-        "NEGATIVE_EXAMPLES",
-        "BOUNDARY_EXAMPLES",
-        "CURRENT_PRIMITIVES",
-        "PRIMITIVE_SET_HASH",
-        "WHY_COMPOSITION_APPEARS_INSUFFICIENT",
-        "CLOSURE_EVIDENCE",
-        "CHEAP_MODEL_ATTEMPTS",
-        "CHEAP_MODEL_FAILURES",
-        "COUNTERFEIT_TESTS",
-        "KNOWN_SHORTCUTS",
-        "FORBIDDEN_SHORTCUTS",
-        "REPRESENTATION_PERTURBATIONS",
-        "DESIRED_TYPED_INTERFACE",
-        "INDEPENDENT_EVALUATOR",
-        "SUCCESS_CRITERION",
-        "KILL_CRITERION"
-      ],
-      "attempts": 0,
-      "best_failed": null,
-      "dimensions": {
-        "evidence_current_set_cannot_express": 0.0,
-        "frequency_across_worlds": 0.25,
-        "number_of_independent_origins": 0.5,
-        "potential_cross_world_utility": 0.5,
-        "quality_of_reproducer": 0.0,
-        "quality_of_falsifier": 0.0,
-        "cheap_search_exhaustion": 0.0,
-        "minimality_of_required_extension": 0.5
-      },
-      "rationale": "Likely Level 0/1 (composition of existing primitives + a parser). Not a Level-2 candidate until closure evidence says otherwise. Held until MINT-0001 completes one cycle (charter \u00a725)."
-    },
     {
       "MINT_ID": "MINT-0001",
       "STATUS": "DORMANT",
@@ -78,6 +38,26 @@
         "minimality_of_required_extension": 0.5
       },
       "rationale": "RECLASSIFIED 2026-09-01: kernel is a Level-1 composition of frozen primitives (semantic-only closure test); the wall's substance is a REPRESENTATION adapter. Not a Master Smith target. Apprentice 'widen' mode may keep measuring adapter coverage."
+    },
+    {
+      "MINT_ID": "MINT-0004",
+      "STATUS": "DORMANT",
+      "score": 0.219,
+      "family": "consistency_check (PARSER gap + missing consistency predicate over an existing structure)",
+      "missing_for_ready": [],
+      "attempts": 0,
+      "best_failed": null,
+      "dimensions": {
+        "evidence_current_set_cannot_express": 0.0,
+        "frequency_across_worlds": 0.25,
+        "number_of_independent_origins": 0.5,
+        "potential_cross_world_utility": 0.5,
+        "quality_of_reproducer": 0.0,
+        "quality_of_falsifier": 0.0,
+        "cheap_search_exhaustion": 0.0,
+        "minimality_of_required_extension": 0.5
+      },
+      "rationale": "Closure gauntlet: SEARCH_ROUTING. Routed to Apollo: add a typed is_consistent(relations)->bool op over check_transitivity/topological_sort. Not a mint."
     },
     {
       "MINT_ID": "MINT-0003",

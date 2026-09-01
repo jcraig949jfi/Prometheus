@@ -63,10 +63,27 @@ def refine_packet(p: dict) -> dict:
         "cheap_search_exhaustion": round(min(1.0, len(executed) / max(EXHAUST_MIN_ATTEMPTS, 1)), 2),
         "distinct_models": len(models), "distinct_failure_families": len(fam),
     })
+    # ── Addendum 3 guards ─────────────────────────────────────────────────────────────────
+    # (1) Closure before Apprentice: nothing enters APPRENTICE-TESTING / smith states unless the
+    #     closure gauntlet classified the wall OPERATOR (or recorded that no typed spec is
+    #     constructible, with the reason). SEARCH_ROUTING / REPRESENTATION are routed out.
+    route = str(p.get("ROUTE_CLASS") or "")
+    if p["STATUS"] in ("OBSERVED", "TRIAGE", "COMPOSITION-SUSPECTED", "EXPRESSIVITY-SUSPECTED"):
+        if route.startswith("SEARCH_ROUTING") or route.startswith("REPRESENTATION"):
+            P.set_status(p, "DORMANT", f"closure gauntlet: {route}; routed out of the mint path (Addendum 3)")
+            p["_meta"]["routing"] = route.split()[0].lower()
+    # (2) Unverified mechanism coverage never advances a candidate (Q6).
+    def _promotable(a):
+        return str(a.get("verdict", "")) in ("PASS_DEV", "PASS_DEV_WITH_UNTESTED_COMPONENT")
     # transitions
+    if p["STATUS"] == "APPRENTICE-TESTING" and not (route == "OPERATOR" or p.get("CLOSURE_TEST") in (None, [], {}) and "not constructible" in str(p.get("ROUTE_CLASS"))):
+        P.set_status(p, "TRIAGE", "Addendum 3: closure gauntlet must classify the wall OPERATOR before apprentice exploration")
     if p["STATUS"] == "APPRENTICE-TESTING":
-        if passes:
-            P.set_status(p, "CANDIDATE-PRODUCED", f"attempt {passes[0]['n']} ({passes[0]['model']}) passed dev; NOT admitted; independent eval required")
+        promotable = [a for a in passes if _promotable(a)]
+        if passes and not promotable:
+            P.log_event(mint, "blocked_promotion", reason="PASS_DEV_UNVERIFIED_COVERAGE does not advance state (Addendum 3, Q6)")
+        if promotable:
+            P.set_status(p, "CANDIDATE-PRODUCED", f"attempt {promotable[0]['n']} ({promotable[0]['model']}) passed dev with verified coverage; NOT admitted; independent eval required")
         elif len(executed) >= EXHAUST_MIN_ATTEMPTS and len(models) >= EXHAUST_MIN_MODELS and len(fam) >= EXHAUST_MIN_FAMILIES:
             P.set_status(p, "APPRENTICE-EXHAUSTED",
                          f"{len(executed)} executed attempts across {len(models)} cheap models, {len(fam)} failure families, no dev pass")

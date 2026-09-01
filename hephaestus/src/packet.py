@@ -26,6 +26,10 @@ FIELDS: list[str] = [
     # Addendum 1 (2026-09-01): the triage question "if perfect semantic state were injected, what
     # computation would still be missing?" is answered here, BEFORE anything goes to a smith.
     "SEMANTIC_KERNEL_SPEC", "REPRESENTATION_ADAPTER_SPEC",
+    # Addendum 3: the closure gauntlet's verdict and the three-destination route. A packet may not
+    # enter APPRENTICE-TESTING or any smith state unless ROUTE_CLASS == "OPERATOR" (or the gauntlet
+    # is recorded as not constructible for this wall, with the reason).
+    "CLOSURE_TEST", "ROUTE_CLASS",
     "SEARCH_ALREADY_ATTEMPTED",
     "CHEAP_MODEL_ATTEMPTS", "CHEAP_MODEL_FAILURES", "BEST_FAILED_CANDIDATE",
     "KNOCKOUT_RESULTS", "COUNTERFEIT_TESTS", "KNOWN_SHORTCUTS", "FORBIDDEN_SHORTCUTS",
@@ -50,6 +54,7 @@ READY_REQUIRED = [
     "MINIMAL_REPRODUCER", "POSITIVE_EXAMPLES", "NEGATIVE_EXAMPLES", "BOUNDARY_EXAMPLES",
     "CURRENT_PRIMITIVES", "PRIMITIVE_SET_HASH", "WHY_COMPOSITION_APPEARS_INSUFFICIENT",
     "CLOSURE_EVIDENCE", "SEMANTIC_KERNEL_SPEC", "REPRESENTATION_ADAPTER_SPEC",
+    "CLOSURE_TEST", "ROUTE_CLASS",
     "CHEAP_MODEL_ATTEMPTS", "CHEAP_MODEL_FAILURES", "COUNTERFEIT_TESTS",
     "KNOWN_SHORTCUTS", "FORBIDDEN_SHORTCUTS", "REPRESENTATION_PERTURBATIONS",
     "DESIRED_TYPED_INTERFACE", "INDEPENDENT_EVALUATOR", "SUCCESS_CRITERION", "KILL_CRITERION",

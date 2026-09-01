@@ -1,5 +1,5 @@
 # MINT-0001 — vacuous_truth — truth value of a quantified claim (universal / negative-universal / conditional / existential) over a domain the premises state is EMPTY, versus the same claim over a non-empty domain with or without a counterexample.
-**STATUS:** `DORMANT` · **updated** 2026-09-01T09:13:00Z · missing-for-READY: none
+**STATUS:** `DORMANT` · **updated** 2026-09-01T10:48:55Z · missing-for-READY: none
 
 ## PRIORITY
 - **score**: 0.812
@@ -222,7 +222,7 @@ No registered transformer writes `comparison` on any vacuous_truth prompt; the o
 - **kernel_lines**: 10
 - **principled_depth2_form**: universal = pigeonhole_check(s, all_but_n(d, 1))  i.e. s >= d; negative_universal = pigeonhole_check(1, s); existential = s
 - **caveat**: A1's depth-1 universal solution coin_flip_independence(s, d) is a truthiness coincidence (comb(s,d)=0 iff s<d); it is inside G(C) but is not a mechanism. The depth-2 form is the mechanism and is also inside G(C).
-- **CLASSIFICATION**: LEVEL 1 — a composition of frozen primitives under per-quantifier routing. NOT a missing operator. What was missing: (a) routing on a quantifier slot, (b) a semantic state that carries domain_size / satisfier_count at all.
+- **CLASSIFICATION**: LEVEL 1 -- mechanism-bearing composition of frozen primitives under per-quantifier routing, verified on 0<=s<=d<=12 outside the search points. Evidence of record: pigeonhole_check(s, all_but_n(d,1)); pigeonhole_check(1, s); pigeonhole_check(s, 0). The coin_flip_independence forms are coerced-only aliases and carry nothing.
 - **what_is_still_missing_if_perfect_semantic_state_were_injected**: almost nothing (three depth<=2 compositions + one guard per quantifier)
 
 ## REPRESENTATION_ADAPTER_SPEC
@@ -254,6 +254,65 @@ No registered transformer writes `comparison` on any vacuous_truth prompt; the o
 - **D1_mapping_owed**: 'there are no <P> <X>' with non-empty <X> domain  ->  satisfier_count = 0 (an adapter mapping, not a kernel rule)
 - **untested_component_now_tested**: predicate check in the cardinality reader: knockout P4 was 0.000 on dev v1; dev v2 adds NONEMPTY_OTHER_PREDICATE (gold abstain) so it is now load-bearing
 - **ROUTING**: REPRESENTATION problem. Per Addendum 1 §10 this is not sent to the Master Smith as a Level-2 reasoning mint. Candidates: Apollo (parser ops on the blackboard), Ludus/Foundry (expose semantic-state worlds directly so the kernel can be tested without language), cheap-model parser widening (apprentice 'widen' mode, labelled representation work).
+
+## CLOSURE_TEST
+- **script**: hephaestus/src/closure_test.py vacuous_truth
+- **result**: hephaestus/closure_results/vacuous_truth.json
+- **search_points**: 16
+- **verify_points**: 75
+- **verify_domain**: exhaustive 0<=s<=d<=12 minus search points
+- **A0**: - **possible**: False
+- **note**: route columns differ -> no routing-free expression can fit; routing R is a required resource
+- **A1**: - **evaluated**: 300000
+- **depth**: 3
+- **all_routes_mechanism_bearing**: True
+- **per_route**: - **universal**: - **mechanism_bearing**: - pigeonhole_check(s, all_but_n(d, 1)) (depth 2)
+- **coerced_only_aliases**: - coin_flip_independence(s, d) (depth 1)
+- coin_flip_independence(0, all_but_n(d, s)) (depth 2)
+- coin_flip_independence(1, all_but_n(s, d)) (depth 2)
+- **negative_universal**: - **mechanism_bearing**: - pigeonhole_check(1, s) (depth 1)
+- **coerced_only_aliases**: - coin_flip_independence(0, s) (depth 1)
+- coin_flip_independence(d, all_but_n(0, s)) (depth 2)
+- coin_flip_independence(1, all_but_n(0, s)) (depth 2)
+- **existential**: - **mechanism_bearing**: - pigeonhole_check(s, 0) (depth 1)
+- **coerced_only_aliases**: - s (depth 0)
+- all_but_n(0, s) (depth 1)
+- coin_flip_independence(s, 1) (depth 1)
+- **A2**: - **evaluated**: 300000
+- **depth**: 3
+- **all_routes_mechanism_bearing**: True
+- **per_route**: - **universal**: - **mechanism_bearing**: - pigeonhole_check(s, all_but_n(d, 1)) (depth 2)
+- **coerced_only_aliases**: - coin_flip_independence(s, d) (depth 1)
+- coin_flip_independence(0, all_but_n(d, s)) (depth 2)
+- coin_flip_independence(1, all_but_n(s, d)) (depth 2)
+- **negative_universal**: - **mechanism_bearing**: - pigeonhole_check(1, s) (depth 1)
+- **coerced_only_aliases**: - coin_flip_independence(0, s) (depth 1)
+- coin_flip_independence(d, all_but_n(0, s)) (depth 2)
+- coin_flip_independence(1, all_but_n(0, s)) (depth 2)
+- **existential**: - **mechanism_bearing**: - pigeonhole_check(s, 0) (depth 1)
+- **coerced_only_aliases**: - s (depth 0)
+- all_but_n(0, s) (depth 1)
+- coin_flip_independence(s, 1) (depth 1)
+- **B**: - **evaluated**: 107629
+- **depth**: 3
+- **all_routes_mechanism_bearing**: True
+- **per_route**: - **universal**: - **mechanism_bearing**: - eq(d, s) (depth 1)
+- **coerced_only_aliases**: _(none yet)_
+- **negative_universal**: - **mechanism_bearing**: - eq(s, 0) (depth 1)
+- **coerced_only_aliases**: _(none yet)_
+- **existential**: - **mechanism_bearing**: - lt(0, s) (depth 1)
+- **coerced_only_aliases**: - s (depth 0)
+- add(s, s) (depth 1)
+- sub(0, s) (depth 1)
+- **evidence_of_record**: - **universal**: pigeonhole_check(s, all_but_n(d, 1))  [depth 2, typed bool, verified]
+- **negative_universal**: pigeonhole_check(1, s)  [depth 1, typed bool, verified]
+- **existential**: pigeonhole_check(s, 0)  [depth 1, typed bool, verified]
+- **aliases_demoted**: - coin_flip_independence(s, d)
+- coin_flip_independence(0, s)
+- s (bare int under truthiness)
+
+## ROUTE_CLASS
+REPRESENTATION (kernel: SEARCH_ROUTING -- mechanism-bearing in G(C|R) at depth <= 2; routing R on a quantifier slot is a required resource)
 
 ## SEARCH_ALREADY_ATTEMPTED
 - Apollo O1 exhaustive enumeration over 1.74M type-correct pipelines: vacuous_truth 0/5 (ceiling 0.833; number later retracted by E9, but the abstention on this category is structural).
@@ -389,3 +448,4 @@ Three consecutive deep mints that pass dev but do not move the independent held-
 - **ref**: apollo/cycles/campaign_20260825/E9_FINDINGS.md
 - **ts**: 2026-09-01T07:40:16Z; **by**: Master Smith session 20260901T073136Z; **note**: candidate produced; author of dev set == author of candidate; Charon E9 untouched
 - **ts**: 2026-09-01T08:07:10Z; **by**: hephaestus.src.semantic_closure + operator Addendum 1; **note**: reclassified Level 2 -> Level 1 composition; routed as representation problem
+- **ts**: 2026-09-01T10:48:54Z; **by**: hephaestus.src.closure_test (Addendum 3); **note**: typed + counterfactually verified enumeration replaces the depth-1 alias as evidence of record

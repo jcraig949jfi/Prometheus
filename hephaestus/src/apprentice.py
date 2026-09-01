@@ -249,7 +249,13 @@ def main(models: list[tuple[str, int]] | None = None) -> None:
     todo = [p for p in P.iter_packets() if p["STATUS"] == "APPRENTICE-TESTING"][:MAX_PACKETS_PER_RUN]
     if not todo:
         print("apprentice: nothing in APPRENTICE-TESTING")
-        widen(models)
+        # Addendum 3 (Q5/Q7): adapter widening is representation engineering, not Forge research.
+        # It sleeps unless explicitly enabled; it never runs on the clock.
+        import os
+        if os.environ.get("HEPHAESTUS_WIDEN") == "1":
+            widen(models)
+        else:
+            print("apprentice: widen mode asleep (set HEPHAESTUS_WIDEN=1 to run it deliberately)")
         return
     for p in todo:
         wall_id = "vacuous_truth" if p["MINT_ID"] == "MINT-0001" else None

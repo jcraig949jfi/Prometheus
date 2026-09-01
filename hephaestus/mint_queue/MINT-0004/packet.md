@@ -1,5 +1,5 @@
 # MINT-0004 — consistency_check (PARSER gap + missing consistency predicate over an existing structure)
-**STATUS:** `COMPOSITION-SUSPECTED` · **updated** 2026-09-01T09:13:00Z · missing-for-READY: WHAT_SHOULD_HAVE_HAPPENED, MINIMAL_REPRODUCER, POSITIVE_EXAMPLES, NEGATIVE_EXAMPLES, BOUNDARY_EXAMPLES, CURRENT_PRIMITIVES, PRIMITIVE_SET_HASH, WHY_COMPOSITION_APPEARS_INSUFFICIENT, CLOSURE_EVIDENCE, CHEAP_MODEL_ATTEMPTS, CHEAP_MODEL_FAILURES, COUNTERFEIT_TESTS, KNOWN_SHORTCUTS, FORBIDDEN_SHORTCUTS, REPRESENTATION_PERTURBATIONS, DESIRED_TYPED_INTERFACE, INDEPENDENT_EVALUATOR, SUCCESS_CRITERION, KILL_CRITERION
+**STATUS:** `DORMANT` · **updated** 2026-09-01T10:48:55Z · missing-for-READY: MINIMAL_REPRODUCER, POSITIVE_EXAMPLES, NEGATIVE_EXAMPLES, BOUNDARY_EXAMPLES, PRIMITIVE_SET_HASH, CLOSURE_EVIDENCE, CHEAP_MODEL_ATTEMPTS, CHEAP_MODEL_FAILURES, COUNTERFEIT_TESTS, KNOWN_SHORTCUTS, FORBIDDEN_SHORTCUTS, REPRESENTATION_PERTURBATIONS, DESIRED_TYPED_INTERFACE, INDEPENDENT_EVALUATOR, SUCCESS_CRITERION, KILL_CRITERION
 
 ## PRIORITY
 - **score**: 0.219
@@ -13,7 +13,7 @@
 - **quality_of_reproducer**: 0.0
 - **quality_of_falsifier**: 0.0
 - **minimality_of_required_extension**: 0.5
-- **rationale**: Likely Level 0/1 (composition of existing primitives + a parser). Not a Level-2 candidate until closure evidence says otherwise. Held until MINT-0001 completes one cycle (charter §25).
+- **rationale**: Closure gauntlet: SEARCH_ROUTING. Routed to Apollo: add a typed is_consistent(relations)->bool op over check_transitivity/topological_sort. Not a mint.
 
 ## SOURCE_WORLD
 Apollo canary, category consistency_check
@@ -28,7 +28,7 @@ consistency_check (PARSER gap + missing consistency predicate over an existing s
 check_transitivity / solve_constraints exist; no parser feeds them a cycle-detection question; no predicate 'is this relation set consistent' is exposed as an op.
 
 ## WHAT_SHOULD_HAVE_HAPPENED
-_(missing)_
+A boolean verdict: the strict-order relation set is consistent iff its directed graph is acyclic.
 
 ## MINIMAL_REPRODUCER
 _(missing)_
@@ -43,25 +43,68 @@ _(none yet)_
 _(none yet)_
 
 ## CURRENT_PRIMITIVES
-_(none yet)_
+- topological_sort
+- check_transitivity
+- pigeonhole_check
+- all_but_n
+- Apollo REGISTRY: parse_names_and_relations, relations_from_facts, op_transitive_closure (no consistency predicate)
 
 ## PRIMITIVE_SET_HASH
 _(missing)_
 
 ## WHY_COMPOSITION_APPEARS_INSUFFICIENT
-_(missing)_
+It is not insufficient: composition suffices at depth 3 with generic structural ops. The system never routed `relations` to a consistency verdict.
 
 ## CLOSURE_EVIDENCE
 _(none yet)_
 
 ## SEMANTIC_KERNEL_SPEC
-unknown — not yet asked; likely 'cycle detection over a relation set' which check_transitivity already computes
+- **inputs**: - **relations**: tuple of (a, b) pairs over a small universe (a > b)
+- **output**: bool: consistent (acyclic)
+- **independent_target**: DFS three-colour cycle detection in closure_specs/consistency_check.py; shares no code with forge_primitives
+- **CLASSIFICATION**: SEARCH_ROUTING via bounded generic composition. Frozen primitives alone (A0 == A1; no route key) reach NOTHING -- not even a coerced alias: topological_sort returns [] on the empty set (falsy, but consistent) and None on cycles, so its truthiness is not the target; check_transitivity returns a dict. With generic structural ops (is_none / not / len / reflexive-membership count) the target is mechanism-bearing at depth 3: pigeonhole_check(1, self_reach(check_transitivity(rels))); the observationally equivalent not(is_none(topological_sort(rels))) exists at the same depth and was pruned as a duplicate. Verified on all 4,096 four-node digraphs.
+- **what_is_still_missing_if_perfect_semantic_state_were_injected**: a typed boolean wrapper `is_consistent(relations)` over the existing closure/toposort -- a Level-1 composition, not a mint
+- **caveat**: A2's generic op set includes a reflexive-membership count over the closure dict (self_reach). Without any dict-structural generic op only B reaches the target; the classification is SEARCH_ROUTING under A2 and would read OPERATOR-adjacent under A1 alone. Both are recorded; neither is a Master Smith target.
 
 ## REPRESENTATION_ADAPTER_SPEC
-parser: recognise a consistency question and feed relations to the existing structure
+Moderate and largely paid: Apollo's REGISTRY already parses 'A > B' relations into the `relations` slot (parse_names_and_relations, relations_from_facts). What was missing is the consistency predicate op, not the parse.
+
+## CLOSURE_TEST
+- **script**: hephaestus/src/closure_test.py consistency_check
+- **result**: hephaestus/closure_results/consistency_check.json
+- **search_points**: 64
+- **verify_points**: 4096
+- **verify_domain**: all digraphs on 4 nodes without self-loops (exhaustive)
+- **A0**: - **evaluated**: 55
+- **depth**: 3
+- **all_routes_mechanism_bearing**: False
+- **per_route**: - **consistent**: - **mechanism_bearing**: _(none yet)_
+- **coerced_only_aliases**: _(none yet)_
+- **A1**: - **evaluated**: 55
+- **depth**: 3
+- **all_routes_mechanism_bearing**: False
+- **per_route**: - **consistent**: - **mechanism_bearing**: _(none yet)_
+- **coerced_only_aliases**: _(none yet)_
+- **A2**: - **evaluated**: 353
+- **depth**: 3
+- **all_routes_mechanism_bearing**: True
+- **per_route**: - **consistent**: - **mechanism_bearing**: - pigeonhole_check(1, self_reach(check_transitivity(rels))) (depth 3)
+- **coerced_only_aliases**: _(none yet)_
+- **B**: - **evaluated**: 20
+- **depth**: 3
+- **all_routes_mechanism_bearing**: True
+- **per_route**: - **consistent**: - **mechanism_bearing**: - not(has_cycle_dfs(rels)) (depth 2)
+- **coerced_only_aliases**: _(none yet)_
+- **classification**: - **class**: SEARCH_ROUTING
+- **why**: target is mechanism-bearing inside G(C|R,gen): the frozen set computes it; the system does not route to it
+- **representation_debt**: Moderate: parse 'A > B and B > C and C > A' into (a,b) pairs. Apollo's REGISTRY already has parse_names_and_relations / relations_from_facts writing the `relations` slot; the missing piece was never the parse, it was that no op turns `relations` into a consistency verdict.
+
+## ROUTE_CLASS
+SEARCH_ROUTING (mechanism-bearing in G(C|gen) at depth 3; needs a typed is_consistent wrapper in Apollo's registry, not a primitive)
 
 ## SEARCH_ALREADY_ATTEMPTED
-_(none yet)_
+- Apollo O1 exhaustive enumeration over the v2 registry: consistency_check 0/5 (no op writes a consistency verdict).
+- closure_test.py (2026-09-01): A0/A1 nothing; A2 depth 3 mechanism-bearing; B depth 2.
 
 ## CHEAP_MODEL_ATTEMPTS
 _(none yet)_
@@ -105,3 +148,4 @@ _(missing)_
 ## PROVENANCE
 - **ref**: aporia/docs/CYCLE_155S_FOUR_ARE_NOT_FOUR_2026-08-24.md:72-75
 - **ref**: aporia/docs/CYCLE_156S_SEVERED_LIBRARY_2026-08-24.md
+- **ts**: 2026-09-01T10:48:54Z; **by**: hephaestus.src.closure_test (Addendum 3); **note**: second specimen through the funnel; classified before any apprentice or smith work

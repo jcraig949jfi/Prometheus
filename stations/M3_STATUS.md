@@ -1,7 +1,7 @@
 # M3 (Gandalf) — Station Status (living doc)
 
 **Point agent:** Hephaestus (Claude Fable 5, ultracode — the fleet's one non-Opus seat)
-**Last updated:** 2026-09-01 (§10) · **Station roster:** Hephaestus (forge + meta-assessment loop)
+**Last updated:** 2026-09-01 (§11) · **Station roster:** Hephaestus (forge + meta-assessment loop)
 **Mode:** level-setting. **No hard decisions until ~2026-08-14** (James, 2026-08-12).
 Items marked DECISION are parked for James.
 **Convention adopted from `stations/M2_STATUS.md`.** Fitting, since the convention was
@@ -369,3 +369,51 @@ intended output shape.
 found the same boundary from the other side. *Serendipity should increasingly expose semantic-state
 worlds directly; natural language is one representation layer, not the substrate.* Hephaestus mints
 against the second arrow (semantic state → new state).
+
+
+## 11. ADDENDUM 3 — THE FUNNEL RE-ORDERED; TWO SPECIMENS THROUGH THE CLOSURE GAUNTLET (2026-09-01, night)
+
+James's rulings on the Addendum-1 packet (recorded as **Addendum 3**): mechanism-bearing membership,
+not aliases; routing as an explicit resource G(C|R); the semantic-injection test as *the* standard
+Forge test, run **before** Apprentice exploration; dev v2 is AUTHOR-ADVERSARIAL, not independent;
+stop widening the adapter; unverified coverage blocks promotion; work triggers compute, not time;
+three destinations (SEARCH/ROUTING · REPRESENTATION · OPERATOR) and only OPERATOR reaches a smith.
+
+**Built:** `hephaestus/src/closure_test.py` (generic typed enumerator; arms A0/A1/A2/B; two kinds
+of membership — *coerced* vs *mechanism-bearing* = static type equals target type AND verified on a
+larger, disjoint domain) with specs under `closure_specs/`.
+
+**Specimen 1 — MINT-0001 vacuous_truth, re-run typed/verified** (search 16 points; verify exhaustive
+0≤s≤d≤12 minus search): evidence of record is now machine-enumerated —
+universal `pigeonhole_check(s, all_but_n(d, 1))` (d2), negative-universal `pigeonhole_check(1, s)`
+(d1), existential `pigeonhole_check(s, 0)` (d1); `coin_flip_independence(...)` and bare `s` demoted to
+coerced-only aliases. ROUTE_CLASS = REPRESENTATION (kernel: SEARCH_ROUTING in G(C|R)). A0 impossible
+by arity — routing is a required resource.
+
+**Specimen 2 — MINT-0004 consistency_check** (target = independent DFS; search = all 64 three-node
+digraphs; verify = all 4,096 four-node digraphs): **A0 = A1: nothing — not even an alias**
+(`topological_sort` returns `[]` on the empty set and `None` on cycles, so its truthiness is not the
+target; `check_transitivity` returns a dict). **A2** (frozen + bounded generic structural ops):
+mechanism-bearing at depth 3, `pigeonhole_check(1, self_reach(check_transitivity(rels)))`
+(`not(is_none(topological_sort(rels)))` is observationally equivalent at the same depth, pruned as a
+duplicate). B depth 2. **ROUTE_CLASS = SEARCH_ROUTING → DORMANT, routed to Apollo:** a typed
+`is_consistent(relations) -> bool` wrapper over the existing closure, a Level-1 composition — not a
+mint. Caveat recorded: A2's generic set includes a reflexive-membership count; under A1 alone the
+reading would be OPERATOR-adjacent. Different anatomy from specimen 1 (needed composition, not
+routing) — which is what Q8 asked for.
+
+**Protocol changes landed:** packet fields `CLOSURE_TEST` / `ROUTE_CLASS` (required); refine guards
+(no APPRENTICE-TESTING unless ROUTE_CLASS == OPERATOR; `PASS_DEV_UNVERIFIED_COVERAGE` never
+advances state); runner derives an auto obligation set (every module-level function and list
+constant is ablated; declared ABLATIONS are hints); `HARNESS_AUTHORSHIP = AUTHOR-ADVERSARIAL` on the
+dev harness; widen mode asleep unless `HEPHAESTUS_WIDEN=1`; **one scheduled task remains**
+(`Hephaestus_Refine`, 3-hourly sentinel: refine → apprentice *only if* a packet is in
+APPRENTICE-TESTING → rank → handoff); `Hephaestus_Apprentice` and `Hephaestus_Rank` deleted;
+historical-wall replay marked DORMANT.
+
+**Queue:** READY 0; live 0. MINT-0001 REPRESENTATION, MINT-0002 SEARCH_ROUTING (ported),
+MINT-0003 REPRESENTATION, MINT-0004 SEARCH_ROUTING. Two specimens separate into two of the three
+destinations; **no OPERATOR-class wall has yet been found** — the third specimen (Addendum 3 §11)
+should be chosen to look compositional but possibly fail closure. Candidates: Aporia's Q045
+"unreachable class" (89.6% representation failures in the register-machine world) or a Ludus world
+once semantic-state worlds exist.

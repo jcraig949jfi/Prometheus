@@ -93,9 +93,25 @@ def main() -> int:
     #    ablation changes nothing is UNTESTED by this dev set (decorative until proven otherwise).
     coverage = None
     abl = getattr(mod, "ABLATIONS", None)
-    if isinstance(abl, dict) and abl:
+    # Addendum 3 (Q6): self-declared ablations are hints, not the obligation set. The harness derives
+    # a minimum obligation set from externally visible components: every module-level function other
+    # than the entry op is stubbed to return None; every module-level list/tuple constant is emptied.
+    auto = {}
+    import types as _types
+    for name, val in vars(mod).items():
+        if name.startswith("__") or name == f"op_{wall_id}":
+            continue
+        if isinstance(val, _types.FunctionType) and val.__module__ == mod.__name__:
+            auto[f"auto:fn:{name}"] = {name: (lambda *a, **k: None)}
+        elif isinstance(val, (list, tuple)) and val and not isinstance(val, str):
+            auto[f"auto:const:{name}"] = {name: type(val)()}
+    merged = dict(auto)
+    if isinstance(abl, dict):
+        merged.update({f"declared:{k}": v for k, v in abl.items()})
+    result["harness_authorship"] = "AUTHOR-ADVERSARIAL (dev set and harness authored by the forge seat; not independent)"
+    if merged:
         coverage = {}
-        for cname, patch in abl.items():
+        for cname, patch in merged.items():
             saved = {k: getattr(mod, k, None) for k in patch}
             try:
                 for k, v in patch.items():

@@ -331,6 +331,54 @@ Implemented as the `review-packet` skill (`~/.claude/skills/review-packet/SKILL.
 `HEPHAESTUS_HANDOFF.txt` session-end line. A Master Smith session's §22 artifacts do not substitute
 for the packet; the packet is written for a reader outside the repository.
 
+## Addendum 3 — Operator rulings on the Addendum-1 packet: the funnel is re-ordered (James, 2026-09-01, night)
+
+*"The most important result is not that MINT-0001 failed; it's that the Forge successfully discovered
+that there was nothing to mint."* Binding on the queue machinery.
+
+1. **Q1 — mechanism-compatible membership, not accidental observational membership.** The
+   `coin_flip_independence(s,d)` alias may not carry a reclassification. Machine-enumerate the
+   depth-2 form `pigeonhole_check(s, all_but_n(d,1)) ≡ s == d` and make it the evidence of record.
+   Distinguish **closure membership** (coerced) from **mechanism-bearing closure membership**
+   (static return type equals the target type; verified outside the search points).
+2. **Q2 — routing is an explicit resource.** Reach is **G(C | R)**; A0 and A1 answer different
+   questions and are never collapsed. Add **A2** = frozen primitives + bounded generic composition.
+3. **Q3 — the standard Forge test.** `text → semantic state → computation → answer`: freeze and
+   bypass the first arrow; a missing kernel exists iff the target remains outside the
+   mechanism-compatible closure under the actual routing/composition budget.
+4. **Q4 — dev v2 is AUTHOR-ADVERSARIAL**, not independent; useful diagnostic evidence, not
+   certification. Charon/Aporia blind generation remains necessary for promotion.
+5. **Q5 — stop spending meaningful effort widening the adapter.** (0.20, 1.00) is a nice
+   scientific object; the north star is not a vacuous-truth NLP parser. Park MINT-0001 until
+   semantic-state worlds exist; cheap attempts only if essentially free and producing reusable
+   representation-failure data.
+6. **Q6 — `PASS_DEV_UNVERIFIED_COVERAGE` blocks positive promotion-like transitions.**
+   Self-declared ablations are hints; the harness derives a minimum obligation set from externally
+   visible components. Omission is not a loophole.
+7. **Q7 — stop three things (keep the infrastructure, let it sleep):** adapter widening as Forge
+   research; firing the Apprentice every four hours because the clock says so (*"work should
+   trigger compute, not time"*); paying replay/maintenance cost on historical walls before there
+   are enough heterogeneous walls for replay to mean anything.
+8. **Q8 — one wall validates plumbing, not the hypothesis.** Run MINT-0004 through the
+   semantic-injection gauntlet (A0 / A1 / A2 / B / C), with the target defined independently, and
+   with a new requirement: **a successful synthesis must survive semantic counterfactuals outside
+   the enumeration points used during search.** Then a genuinely different third wall.
+9. **Three destinations, not two:** **SEARCH/ROUTING** (target in mechanism-compatible G(C|R), the
+   system doesn't find/use it) · **REPRESENTATION** (computable once semantic state exists; the
+   system cannot construct that state) · **OPERATOR** (outside G(C|R) even with perfect state and
+   legitimate routing). **Only OPERATOR belongs in Master Smith.** This prevents Hephaestus from
+   manufacturing primitives to compensate for failures elsewhere in the architecture.
+10. **Funnel re-ordered:** `wall → semantic specification → closure test → classify → route`, with
+    the semantic-injection test **before** Apprentice exploration whenever a typed spec can be
+    cheaply constructed, and the Master Smith extremely far downstream.
+11. **Immediate sequence:** machine-enumerate the depth-2 MINT-0001 mechanism; execute MINT-0004
+    semantic injection; take one genuinely different third wall through the funnel. *"READY-FOR-
+    DEEP-MINT: 0 ... The queue prevented an unnecessary primitive from entering Prometheus."*
+
+Implemented as `hephaestus/src/closure_test.py` + `closure_specs/`, packet fields `CLOSURE_TEST` /
+`ROUTE_CLASS`, refine guards, runner auto-derived ablation obligations, the single sentinel task,
+and the widen mode gated behind `HEPHAESTUS_WIDEN=1`.
+
 ## Recorder's notes (Hephaestus, no authority over the text above)
 
 - **Relation to the review's charter.** Lanes A (ablation lab) and C (pool stewardship) stand;
