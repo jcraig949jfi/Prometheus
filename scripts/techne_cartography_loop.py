@@ -229,7 +229,10 @@ def main() -> int:
         save_state(state)
         return 0
 
-    n = int(state.get("last_cycle", -1)) + 1
+    # LIM-011 REPAIR: the number is RESERVED by exclusive file creation, not derived from
+    # local state. Two concurrent workers cannot receive the same number even with no shared
+    # memory, no lock file and no agreed clock.
+    n, _reserved_path = store.allocate_cycle(int(state.get("last_cycle", -1)) + 1)
     rec, state = cyc.run_cycle(n, state, max_new=a.max_new)
     p = maybe_report(man, state)
     save_state(state)

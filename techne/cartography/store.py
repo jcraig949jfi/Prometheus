@@ -160,6 +160,12 @@ def known_source_ids() -> set:
     return ids
 
 
+def allocate_cycle(start_hint=None):
+    """Reserve a collision-proof cycle number (LIM-011 repair). See allocator.py."""
+    from .allocator import allocate
+    return allocate(start_hint)
+
+
 def write_cycle(record: Any) -> pathlib.Path:
     """Persist one cycle fossil as its own file, in addition to the rolling log.
 
@@ -170,6 +176,13 @@ def write_cycle(record: Any) -> pathlib.Path:
     obj = record.as_dict() if hasattr(record, "as_dict") else dict(record)
     obj["_digest"] = digest(obj)
     p = CYCLE_DIR / ("cycle_{:03d}.json".format(int(obj["cycle"])))
+    # Stamp the writer so a fork is visible in the record itself rather than being
+    # reconstructed from a merge conflict afterwards (LIM-011).
+    try:
+        from .allocator import worker_id
+        obj.setdefault("written_by", worker_id())
+    except Exception:                                                 # noqa: BLE001
+        pass
     p.write_text(json.dumps(obj, indent=2, ensure_ascii=False, default=str), encoding="utf-8")
     return p
 

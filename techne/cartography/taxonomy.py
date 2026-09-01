@@ -108,8 +108,13 @@ MECHANISMS = {
     "constraint_solving": ["smt solver", "sat solver", "constraint solving", "cegis",
                            "counterexample-guided"],
     "beam_search": ["beam search", "best-first", "a* search", "branch and bound"],
-    "coevolution": ["coevolution", "co-evolution", "competitive coevolution",
-                    "host-parasite", "arms race"],
+    # BARE "coevolution" measured at precision 0.06 (1 in-scope fire against 17 out-of-scope)
+    # by vocab_audit: biology, hydrology, virology and astronomy all use it natively. This is
+    # the contamination first seen at cycle 020 and it survived the cycle-042 pass because I
+    # judged the term "genuinely technical" by reading rather than by measuring. Qualified.
+    "coevolution": ["coevolutionary algorithm", "competitive coevolution",
+                    "cooperative coevolution", "host-parasite coevolution",
+                    "coevolutionary search", "arms race"],
     "self_play": ["self-play", "selfplay", "population play", "league training"],
     # "intervention" removed as a bare form: in medicine and social science it is the
     # standard word for a treatment, and this corpus already leaks clinical papers.

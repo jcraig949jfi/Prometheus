@@ -1,0 +1,114 @@
+{
+  "experiment": "EXP1_TX004",
+  "seed": 20260901,
+  "n_pool": 239,
+  "C1_placement": {
+    "n": 239,
+    "placed_4tuple": 11,
+    "rate_4tuple": 0.04602510460251046,
+    "placed_3tuple": 18,
+    "rate_3tuple": 0.07531380753138076,
+    "PASS": true
+  },
+  "C2_distinctions_erased": {
+    "cells3_merging_multiple_4cells": 3,
+    "total_disjoint_mechanism_pairs_merged": 0,
+    "PASS": true,
+    "proxy_note": "observed_failures is empty across this corpus, so 'different observed failure behaviour' is proxied by DISJOINT MECHANISM SETS. Weaker than the frozen test specified; reported as such.",
+    "detail": [
+      {
+        "cell3": [
+          "symbolic_expression",
+          "case_wise",
+          "fixed_test_suite"
+        ],
+        "n_members": 2,
+        "distinct_4cells_merged": 2,
+        "bottlenecks_merged": [
+          "B1_REPRESENTATION",
+          "B2_CREDIT_SEARCH"
+        ],
+        "n_pairs_with_disjoint_mechanisms": 0,
+        "example_pairs": []
+      },
+      {
+        "cell3": [
+          "discrete_program",
+          "exact_search",
+          "fixed_test_suite"
+        ],
+        "n_members": 3,
+        "distinct_4cells_merged": 3,
+        "bottlenecks_merged": [
+          "B1_REPRESENTATION",
+          "B2_CREDIT_SEARCH",
+          "B_UNASSIGNED"
+        ],
+        "n_pairs_with_disjoint_mechanisms": 0,
+        "example_pairs": []
+      },
+      {
+        "cell3": [
+          "discrete_program",
+          "case_wise",
+          "fixed_test_suite"
+        ],
+        "n_members": 6,
+        "distinct_4cells_merged": 2,
+        "bottlenecks_merged": [
+          "B1_REPRESENTATION",
+          "B2_CREDIT_SEARCH"
+        ],
+        "n_pairs_with_disjoint_mechanisms": 0,
+        "example_pairs": []
+      }
+    ]
+  },
+  "C3_C4_quality": {
+    "four_tuple": {
+      "n_placed": 11,
+      "had_any_neighbour": 11,
+      "neighbour_rate": 1.0,
+      "cross_field_hits": 11,
+      "cross_field_rate": 1.0
+    },
+    "three_tuple": {
+      "n_placed": 18,
+      "had_any_neighbour": 18,
+      "neighbour_rate": 1.0,
+      "cross_field_hits": 18,
+      "cross_field_rate": 1.0
+    },
+    "paired": {
+      "n_comparable": 11,
+      "neighbour_degraded": 0,
+      "cross_field_degraded": 0,
+      "PASS": true,
+      "power_note": "with n_comparable this small, 0 degraded is consistent with a real degradation rate of up to roughly 3/n by the rule of three. Reported, not hidden."
+    }
+  },
+  "C5_predictability": {
+    "n": 11,
+    "distribution": {
+      "B1_REPRESENTATION": 6,
+      "B3_TELEOLOGY_EVAL": 1,
+      "B2_CREDIT_SEARCH": 4
+    },
+    "lookup_accuracy_overall": 0.36363636363636365,
+    "lookup_coverage": 0.9090909090909091,
+    "lookup_accuracy_when_it_answers": 0.4,
+    "majority_class_baseline": 0.5454545454545454,
+    "random_draw_baseline": 0.36363636363636365,
+    "beats_majority": false,
+    "PREDICTABLE": false,
+    "note": "PREDICTABLE means a lookup table over the other three coordinates reproduces the bottleneck on >=90% of the cases it can answer, while answering >=80% of them. That is the operational form of 'carries no independent information'."
+  },
+  "RULING": "NOT_ADJUDICABLE",
+  "rationale": "insufficient placed papers. C3/C4 rest on n_comparable=11 and C5 on n=11, against a minimum of 30. By the rule of three, 0 degraded out of 11 is consistent with a true degradation rate up to 27%, and the C5 accuracy interval overlaps its own majority baseline. No clause can be resolved.",
+  "power_gate": {
+    "n_paired": 11,
+    "n_c5": 11,
+    "minimum_required": 30,
+    "binding_constraint": "the 4-tuple places only 11 of 239 papers"
+  }
+}
