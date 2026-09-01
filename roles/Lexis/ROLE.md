@@ -66,11 +66,22 @@ Full record: `SESSION_2026-08-25.md`. Notes: `notes/G0_FORGE_RATCHET_2026-08-25.
 `notes/G1_ABLATION_2026-08-25.md`, `notes/STEP1_CEILING_CLOSED_2026-08-25.md`,
 `notes/G5_LEDGER_2026-08-25.md`. External review round 2: `REVIEW_RESPONSE_2026-08-25_R2.md`.
 
+> **POPULATION, added 2026-08-27 — read this before any number below.** Every accuracy figure in
+> §4a is measured over `T_home`, the 120-task battery returned by `o1_enumerate.build_battery()`.
+> Apollo's **E9** (2026-08-25) scored a 42-task battery **authored blind by Charon** and returned
+> mix-adjusted **0.0667** against home 0.6000 — **40 of 42 abstained, zero guesses** — with the
+> mechanism located in source (`blackboard_ops_compare.py` preconditions on
+> `problem_text.startswith("is ")`). `T_home` is co-adapted with its own parsers. The closure
+> mathematics is unaffected; the *external validity* of every accuracy number here is.
+> Full disposition, item by item: `notes/E9_INGESTION_2026-08-27.md`.
+
 - **Apollo's ceiling is EXACT, not sampled [M].** Joint product BFS over the 120-task battery
   **exhausted** — 484,218 joint states, frontier empty at depth 23. **100/120 = 0.8333 is the exact
-  optimum of Apollo's admissible program language at every depth, with every repetition, in every
-  order, with every tail.** The per-task upper bound is the same number, so the bounds meet. O1's
-  "well-supported but not proven" is discharged, and the k≤10 / no-repeat qualifier is gone.
+  optimum of Apollo's admissible program language over `T_home`, at every depth, with every
+  repetition, in every order, with every tail.** The per-task upper bound is the same number, so the
+  bounds meet. O1's "well-supported but not proven" is discharged, and the k≤10 / no-repeat
+  qualifier is gone. **Both nouns are now bounded:** the pool, by my own measurement; the battery,
+  by Charon's (2026-08-27).
 - **The noun matters and the wider one is FALSE [M].** *"The substrate's ceiling is 0.8333"* is
   **retracted**: with the unrestricted 27-operator pool an **11-transformer** program reaches
   **107/120 = 0.8917**, so O1's `max_k = 10` was one operator short. It wins by unconditional
@@ -92,7 +103,9 @@ Full record: `SESSION_2026-08-25.md`. Notes: `notes/G0_FORGE_RATCHET_2026-08-25.
   alone `0`; **the pair `+5 / +5 / +5`** — exactly the five `all_but_n` tasks. A wrong value cannot
   be rescued by a reader, so this rules out dead computation and makes "readout bottleneck" a
   measurement. **Any generator proposing one operator at a time scores zero here regardless of
-  operator quality.**
+  operator quality.** *Qualified 2026-08-27:* those five tasks are home-authored, and Charon's six
+  `all_but_n` tasks scored **0/6 with 6 abstentions**. The `+5` is `T_home`-bound; the interface-pair
+  claim is untouched in mechanism but is now an **untested generalisation** until re-run under G7.
 - **Two of Apollo's 27 operators are provably decorative [M].** `distribution_reducer` and
   `evidence_updater` write only slots outside `D`; they cannot change any answer in any pipeline at
   any depth.
@@ -196,6 +209,22 @@ demonstrates unacceptable order sensitivity; survival demonstrates *equivariance
 — "choose the shortest string" passes. Two permutations remain a cheap canary; 24 is the standard
 for a claim.
 
+**G7 — Authorship independence. Added 2026-08-27 after Apollo E9. Proposed, not self-ratified.**
+No ΔE is credited toward **admitting** vocabulary unless it is measured on a battery whose tasks
+were authored **blind, by a seat that did not write the operator or the parser under test**. The
+home battery may be used for closure, diagnosis and exhaustion; it may not be used for admission.
+Rationale: `T_home` and Apollo's parsers were drawn from the same selection relation, so measuring
+one against the other is not a control (`feedback_control_must_break_the_selection_relation`), and
+a candidate can score ΔE > 0 by fitting the authorship regularity while passing G5, G6 and the
+congruence audit. **Directionality — and it differs from G6's.** G6 is a null within a fixed
+population and can only lower a claim. **G7 is a population change, not a null**: it removes the
+co-adaptation advantage but is a different distribution, so it is not monotone and could in
+principle raise a number. It is a **generalisation test**, and surviving it is not the same kind of
+evidence as surviving a permutation null. **Reachable today at zero model cost** —
+`roles/Charon/apollo_e9/charon_battery_E9.json`, 42 tasks, identical `{prompt, candidates, correct,
+category}` schema, and every Lexis instrument reaches its battery through the single
+`build_battery()` seam.
+
 **G4 — Spend.** Cloud money is justified by G3 returning positive, and by nothing else. Not by
 accuracy, not by archive coverage, not by a faster rediscovery of the same five structures. This
 matches the operator's own stated bar and the advisor's, independently.
@@ -207,7 +236,16 @@ G6 added, and the congruence precondition established. Items 1–2 of the previo
 item 5 (widen the reads/writes audit) was absorbed into `congruence_audit.py`, which audits reads,
 writes, aliasing and hidden state together.
 
-1. **Re-specify STEP 3 around BUNDLES, then run it.** The deciding experiment — can Prometheus
+0. **Re-measure the slice on an independently-authored battery (G7). Inserted 2026-08-27, ahead of
+   everything.** Re-run the closure, the ΔE/ΔS diagnosis and the bundle arms against Charon's E9
+   battery under the same clean-routing pool and the same 24-permutation standard. Pre-committed
+   readings are fixed in `notes/E9_INGESTION_2026-08-27.md` §7 — including that a zero for the pair
+   retracts the G5 ledger's only positive to *home-battery only* and is reported as the headline.
+   Cheap, local, deterministic, no model in the loop. **Item 1 is blocked behind this**: STEP 3
+   admits vocabulary by ΔE on the battery, and on a co-adapted battery that admission is unsafe.
+
+1. **Re-specify STEP 3 around BUNDLES, then run it.** *(BLOCKED on item 0 as of 2026-08-27.)*
+   The deciding experiment — can Prometheus
    manufacture vocabulary without an LLM — is not cancelled, it is mis-aimed as written. Two
    measured reasons: singletons score zero on this substrate by construction (§4a), and the
    generator premise must be tested per generator (§7). Every arm proposes compute+readout pairs.
@@ -304,6 +342,13 @@ that strictly dominates a coverage trace.
     computes and already stores, instead of the inverted concentration predicate. Under the no-touch
     constraint I have not applied it.
 
+**Added 2026-08-27, from Apollo's E9:**
+
+11. **Ratify G7** — authorship independence on any ΔE credited toward admission. Note the wider
+    version, which is a program-level call and not mine: *no capability number is quoted from a
+    battery authored by the seat that wrote the parsers.* E9 halted Apollo's campaign under exactly
+    this finding; the same defect is available to every seat that authors its own evaluation.
+
 ## 9. Artifacts
 
 - `roles/Lexis/library_learning/README.md` — study index
@@ -321,6 +366,12 @@ that strictly dominates a coverage trace.
 - `notes/G0_FORGE_RATCHET_2026-08-25.md`, `notes/G1_ABLATION_2026-08-25.md`,
   `notes/STEP1_CEILING_CLOSED_2026-08-25.md`, `notes/G5_LEDGER_2026-08-25.md`,
   `notes/PROVENANCE_2026-08-25.md`
+
+**Added 2026-08-27.**
+
+- `notes/E9_INGESTION_2026-08-27.md` — the disposition of Apollo's E9 against this slice's written
+  claims: what it leaves standing, what it confirms from an independent author, the three claims it
+  narrows, gate G7, and the pre-committed readings for the re-measurement
 
 **Instruments** (`instruments/`, all deterministic, all repo-relative, all read-only on `apollo/`):
 
