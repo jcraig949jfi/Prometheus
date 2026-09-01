@@ -11,6 +11,34 @@ these two lists retained their test text.
 
 ---
 
+## 0. Addendum, same day: a scope claim I made on evidence I had not gathered
+
+The preregistration says *"the raw L3 and L4 lists exist nowhere in the repository; `grep -rl`
+over the tree finds them only inside the two findings documents."* **The grep I had actually run
+covered five directories — `aporia/ docs/ engine/ pivot/ stoa/` — and searched only for the
+`L3-`/`L4-` ids I assigned myself, which a raw supplied list would not carry.** The claim was
+tree-wide; the measurement was not. That is the `ENUMERATE THE INVENTORY FIRST` rule in
+`resume_aporia.md`, which records seven previous scope claims of mine failing. This is the eighth
+occasion and the first where I caught it after committing rather than before.
+
+**Re-run properly, and the claim holds.** Over all **34,060 tracked files** for the id pattern,
+and over all **24,098 tracked `.md`/`.txt`/`.json`/`.jsonl` files** for four content strings taken
+from L3 and L4 why-columns (`Gibbard-Satterthwaite`, `Subgraph Isomorphism`, `non-Abelian group
+topology`, `Petri-net reachability`):
+
+    ids          5 files, all of them q100 registries and findings documents
+    content      6 files, the same five plus docs/notebook_lm/notebooklm_dark_matter_illuminated.md,
+                 which mentions Gibbard-Satterthwaite in an unrelated impossibility discussion
+    untracked    0 text files in the working tree
+
+**Residual scope limits, stated rather than implied:** four content strings, not an exhaustive
+fingerprint of either list; gitignored paths not searched; binary and notebook formats not
+searched. The conclusion is that the raw lists are absent from the repository, not that no copy
+exists anywhere — the operator's original messages are the remaining source and recovering them
+is the repair.
+
+---
+
 ## 1. The scorecard
 
     L1  NO_GATE          < 5%        measured   0%        HELD
