@@ -1,7 +1,7 @@
 # M3 (Gandalf) — Station Status (living doc)
 
 **Point agent:** Hephaestus (Claude Fable 5, ultracode — the fleet's one non-Opus seat)
-**Last updated:** 2026-09-01 (§8) · **Station roster:** Hephaestus (forge + meta-assessment loop)
+**Last updated:** 2026-09-01 (§9) · **Station roster:** Hephaestus (forge + meta-assessment loop)
 **Mode:** level-setting. **No hard decisions until ~2026-08-14** (James, 2026-08-12).
 Items marked DECISION are parked for James.
 **Convention adopted from `stations/M2_STATUS.md`.** Fitting, since the convention was
@@ -292,3 +292,29 @@ begin forging."
 
 **Still true and still gating a READ of any mint (not an attempt):** no independent held-out
 generator for `vacuous_truth` (Aporia); no post-E9 Apollo evaluator of record; 08-24 no-touch scope.
+
+
+## 9. FIRST MASTER SMITH SESSION — operator-invoked, 5 cycles, closed (Hephaestus/Fable, 2026-09-01)
+
+James: *"Run a loop. Test the forge from here, claude code running fable. Only run 5 loop cycles max."*
+Minimum increment used: one hypothesis → minimal candidate → execute (88 dev + 4 falsifiers) →
+inspect failure positions. Session dir `hephaestus/deep_mint_sessions/20260901T073136Z/` (manifest,
+candidates, failed, traces, counterexamples.md, knockout.json, RECOMMENDED_NEXT_STATE.txt).
+
+| cycle | what | result |
+|---|---|---|
+| 1 | v1: 3-rule kernel `quantified_truth(q, |domain|, |satisfiers|)` + parser keyed on the claim's own domain noun phrase (token-set **equality**) | FAIL_DEV 0.945, 0 false commits — domain split at first " in " broke "letter written in Latin" |
+| 2 | v2: last-" in " split, container stripped from premises | FAIL_DEV 0.877 — a string-templated file carried a literal backspace where a word boundary was meant; optional "in…" groups truncated noun phrases |
+| 3 | v3: hand-written | **PASS_DEV** holdout 1.00, boundary 0, mutants 8/8 · 8/8 · 80/80 · 8/8 |
+| 4 | 20 adversarial phrasings outside the dev templates (none from Charon E9) | **4/20, 0 false commits, 16 abstentions** — kernel general, parser template-bound |
+| 5 | component knockout | kernel rules −0.32…−0.59; equality domain match −0.10; container strip −0.89; stemming −0.63; cardinality reader −0.51; **predicate check decorative on dev (0.000)** |
+
+**Smith's diagnosis (§15):** the wall is real but small — the missing operation is a three-rule kernel
+nothing in `forge_primitives.py` or Apollo's REGISTRY computes; most of the difficulty is parse. Declared
+class: dE_synth (kernel) + Level-0 adapter (parser). **Not admitted** (§14): dev set and candidate share
+an author; independent prereg, held-out generator, post-E9 evaluator, mechanical absence check and
+in-blackboard knockout are all still owed by other seats. Packet → `CANDIDATE-PRODUCED`.
+
+**Owed back to the apprentice side:** two new dev kinds (`NONEMPTY_OTHER_PREDICATE` to make the
+decorative component measurable; `PREDICATE_EXTENSION_EMPTY`, a fourth kernel rule v3 lacks) and the
+16 adversarial idioms as parser-widening work for cheap models — apprentice work, not smith work.

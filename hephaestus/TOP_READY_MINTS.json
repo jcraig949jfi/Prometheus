@@ -1,28 +1,31 @@
 {
-  "generated": "2026-09-01T07:21:44Z",
+  "generated": "2026-09-01T07:40:17Z",
   "walls": [
     {
       "MINT_ID": "MINT-0001",
-      "STATUS": "READY-FOR-DEEP-MINT",
+      "STATUS": "CANDIDATE-PRODUCED",
       "score": 0.812,
       "family": "vacuous_truth \u2014 truth value of a quantified claim (universal / negative-universal / conditional / existential) over a domain the premises state is EMPTY, versus the same claim over a non-empty domain with or without a counterexample.",
       "missing_for_ready": [],
       "attempts": 6,
       "best_failed": {
-        "attempt": 4,
-        "model": "nvidia:nvidia/nemotron-3-super-120b-a12b",
-        "holdout_acc": 0.3288,
-        "boundary_false_commit": 1.0,
-        "failure_families": [
-          "below_chance_or_abstaining",
-          "commits_without_information",
-          "keys_on_claim_form_not_domain_emptiness",
-          "quantifier_blind",
-          "candidate_order_dependent",
-          "surface_form_of_emptiness",
-          "weak_kinds:EXIST_EMPTY,NEARMISS_NO_KEYWORD,NEARMISS_VACUOUS_WORD,NONEMPTY_EXIST_TRUE,NONEMPTY_UNIV_COUNTEREX,NONEMPTY_UNKNOWN,VAC_COND_EMPTY"
-        ],
-        "file": "hephaestus\\mint_queue\\MINT-0001\\attempts\\0004_20260901T071019Z_nvidia-nvidia-nemotron-3-super-120b-a12b.py"
+        "note": "superseded by a dev-passing candidate: deep_mint_sessions/20260901T073136Z/candidates/v3_quantified_truth.py",
+        "apprentice_best": {
+          "attempt": 4,
+          "model": "nvidia:nvidia/nemotron-3-super-120b-a12b",
+          "holdout_acc": 0.3288,
+          "boundary_false_commit": 1.0,
+          "failure_families": [
+            "below_chance_or_abstaining",
+            "commits_without_information",
+            "keys_on_claim_form_not_domain_emptiness",
+            "quantifier_blind",
+            "candidate_order_dependent",
+            "surface_form_of_emptiness",
+            "weak_kinds:EXIST_EMPTY,NEARMISS_NO_KEYWORD,NEARMISS_VACUOUS_WORD,NONEMPTY_EXIST_TRUE,NONEMPTY_UNIV_COUNTEREX,NONEMPTY_UNKNOWN,VAC_COND_EMPTY"
+          ],
+          "file": "hephaestus\\mint_queue\\MINT-0001\\attempts\\0004_20260901T071019Z_nvidia-nvidia-nemotron-3-super-120b-a12b.py"
+        }
       },
       "dimensions": {
         "evidence_current_set_cannot_express": 1.0,

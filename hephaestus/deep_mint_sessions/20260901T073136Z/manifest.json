@@ -1,0 +1,94 @@
+{
+  "session": "20260901T073136Z",
+  "smith": "Claude Code, claude-fable-5 (Hephaestus seat, M3)",
+  "invoked_by": "James (operator), explicit: 'Run a loop. Test the forge from here'",
+  "budget": "5 cycles max",
+  "target": "MINT-0001",
+  "cycle_definition": "hypothesis -> minimal candidate -> execute (88 dev + 4 input-mutant falsifiers) -> inspect failure positions",
+  "status": "CLOSED",
+  "cycles": [
+    {
+      "n": 1,
+      "hypothesis": "3-rule kernel over (quantifier,|domain|,|satisfiers|) + parser keyed on the claim's own domain noun phrase (token-set equality)",
+      "candidate": "candidates/v1_quantified_truth.py",
+      "verdict": "FAIL_DEV",
+      "holdout": 0.9452,
+      "bnd_fc": 0.0,
+      "failure_position": "domain split at FIRST ' in ' broke 'letter written in Latin'; plural existential unparsed"
+    },
+    {
+      "n": 2,
+      "hypothesis": "same; split at LAST ' in ', strip container from premises, plural existentials",
+      "candidate": "candidates/v2_quantified_truth.py",
+      "verdict": "FAIL_DEV",
+      "holdout": 0.8767,
+      "bnd_fc": 0.0,
+      "failure_position": "template-generated file carried a literal backspace where \\b was meant (container never stripped); optional 'in ...' groups truncated noun phrases"
+    },
+    {
+      "n": 3,
+      "hypothesis": "same; hand-written file; premise patterns without optional 'in' groups",
+      "candidate": "candidates/v3_quantified_truth.py",
+      "verdict": "PASS_DEV",
+      "holdout": 1.0,
+      "bnd_fc": 0.0,
+      "mutants": {
+        "emptiness_removed_should_not_commit_yes": {
+          "passed": 8,
+          "of": 8
+        },
+        "every_to_some_should_flip_to_no": {
+          "passed": 8,
+          "of": 8
+        },
+        "candidate_order_invariance": {
+          "passed": 80,
+          "of": 80
+        },
+        "no_to_exactly_zero_same_answer": {
+          "passed": 8,
+          "of": 8
+        }
+      }
+    },
+    {
+      "n": 4,
+      "hypothesis": "adversarial: 20 phrasings outside the dev templates (none from Charon E9)",
+      "trace": "traces/v3_adversarial.json",
+      "result": "4/20 correct, 0 false commits, 16 abstentions",
+      "reading": "kernel general, parser template-bound"
+    },
+    {
+      "n": 5,
+      "hypothesis": "component knockout on holdout",
+      "trace": "knockout.json",
+      "result": {
+        "K1 kernel:=constant True": -0.3973,
+        "K2 kernel: drop empty-domain rule": -0.4932,
+        "K3 kernel: existential-blind on empty": -0.589,
+        "K4 kernel: counterexample-blind": -0.3151,
+        "P1 domain match: equality -> containment": -0.0959,
+        "P2 no container strip": -0.8904,
+        "P3 no cardinality reader": -0.5068,
+        "P4 cardinality reader ignores predicate": 0.0,
+        "P5 no stemming": -0.6301
+      },
+      "reading": "all kernel rules load-bearing; equality domain match load-bearing; predicate check in cardinality reader DECORATIVE on dev (0.000)"
+    }
+  ],
+  "closed": "2026-09-01T07:40:16Z",
+  "candidate_of_record": "candidates/v3_quantified_truth.py",
+  "verdict": "CANDIDATE-PRODUCED (dev pass; NOT admitted; independent eval required)",
+  "delta_class": "dE_synth (kernel) + Level-0 parser adapter",
+  "conflict_note": "dev set and candidate share an author (this seat); dev pass is not evidence",
+  "cost": "$0 API; ~40 min wall-clock; Claude Code subscription session",
+  "artifacts": [
+    "manifest.json",
+    "counterexamples.md",
+    "knockout.json",
+    "RECOMMENDED_NEXT_STATE.txt",
+    "candidates/",
+    "failed/",
+    "traces/"
+  ]
+}

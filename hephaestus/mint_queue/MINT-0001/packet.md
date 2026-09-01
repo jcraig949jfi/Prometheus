@@ -1,5 +1,5 @@
 # MINT-0001 — vacuous_truth — truth value of a quantified claim (universal / negative-universal / conditional / existential) over a domain the premises state is EMPTY, versus the same claim over a non-empty domain with or without a counterexample.
-**STATUS:** `READY-FOR-DEEP-MINT` · **updated** 2026-09-01T07:21:44Z · missing-for-READY: none
+**STATUS:** `CANDIDATE-PRODUCED` · **updated** 2026-09-01T07:40:17Z · missing-for-READY: none
 
 ## PRIORITY
 - **score**: 0.812
@@ -196,6 +196,7 @@ No registered transformer writes `comparison` on any vacuous_truth prompt; the o
 - Apollo O1 exhaustive enumeration over 1.74M type-correct pipelines: vacuous_truth 0/5 (ceiling 0.833; number later retracted by E9, but the abstention on this category is structural).
 - Aporia SELECTOR pre-flight over the frozen 27-candidate pool: zero capability-related dE movers.
 - Apollo E9 blind battery: 0/6, all abstained.
+- Master Smith (Claude Code / Fable, operator-invoked, 5 cycles, 2026-09-01): kernel+parser candidate v3 passes dev; 4/20 on out-of-template phrasings with 0 false commits; see deep_mint_sessions/20260901T073136Z/
 
 ## CHEAP_MODEL_ATTEMPTS
 - **n**: 1; **ts**: 2026-09-01T07:08:12Z; **model**: nvidia:nvidia/nemotron-3-super-120b-a12b; **verdict**: NO_CODE; **holdout_acc**: _(missing)_; **boundary_false_commit**: _(missing)_; **failure_families**: _(none yet)_; **latency_s**: 39.9; **file**: _(missing)_; **harness_fault**: True; **note**: max_tokens=1800 truncated a reasoning model before its code fence; harness fixed (6000, code-first)
@@ -229,7 +230,8 @@ No registered transformer writes `comparison` on any vacuous_truth prompt; the o
 - **family**: runtime_errors; **count**: 1
 
 ## BEST_FAILED_CANDIDATE
-- **attempt**: 4
+- **note**: superseded by a dev-passing candidate: deep_mint_sessions/20260901T073136Z/candidates/v3_quantified_truth.py
+- **apprentice_best**: - **attempt**: 4
 - **model**: nvidia:nvidia/nemotron-3-super-120b-a12b
 - **holdout_acc**: 0.3288
 - **boundary_false_commit**: 1.0
@@ -244,6 +246,15 @@ No registered transformer writes `comparison` on any vacuous_truth prompt; the o
 
 ## KNOCKOUT_RESULTS
 - **note**: Baseline (no op) = Apollo's current behaviour: abstain on every item; accuracy_decidable 0.0. Any candidate's holdout accuracy is therefore its own knockout delta.; **n_executed_attempts**: 5; **n_pass_dev**: 0
+- **session**: deep_mint_sessions/20260901T073136Z; **candidate**: v3_quantified_truth.py; **baseline_holdout**: 1.0; **component_deltas**: - **K1 kernel:=constant True**: -0.3973
+- **K2 kernel: drop empty-domain rule**: -0.4932
+- **K3 kernel: existential-blind on empty**: -0.589
+- **K4 kernel: counterexample-blind**: -0.3151
+- **P1 domain match: equality -> containment**: -0.0959
+- **P2 no container strip**: -0.8904
+- **P3 no cardinality reader**: -0.5068
+- **P4 cardinality reader ignores predicate**: 0.0
+- **P5 no stemming**: -0.6301; **decorative_on_dev**: - P4 cardinality reader ignores predicate
 
 ## COUNTERFEIT_TESTS
 - **shortcut**: constant_yes; **accuracy_decidable**: 0.6; **boundary_false_commit_rate**: 1.0
@@ -271,6 +282,7 @@ No registered transformer writes `comparison` on any vacuous_truth prompt; the o
 - claim stated before vs after the emptiness fact
 - distractor 'no' on a different noun phrase than the claim's domain (NEARMISS_NO_KEYWORD)
 - candidate order shuffled; candidate wording varied (yes / yes, it is true / yes, the claim holds)
+- OWED (from cycle 4): aren't any / zero X are / has no / empty of / lives in / 'Is it true that' / 'Claim: ... True or false?' / every one of the / there exists / semicolon counts / none of them / all of them / number words / singular '1 of them is'
 
 ## DESIRED_TYPED_INTERFACE
 - **signature**: op_vacuous_truth(state: BlackboardState) -> BlackboardState
@@ -310,3 +322,4 @@ Three consecutive deep mints that pass dev but do not move the independent held-
 - **ref**: apollo/scripts/gen_clean_canary_v01.py:191-208 (degenerate generator)
 - **ref**: aporia/iq/probe_synth1_target_degeneracy.py
 - **ref**: apollo/cycles/campaign_20260825/E9_FINDINGS.md
+- **ts**: 2026-09-01T07:40:16Z; **by**: Master Smith session 20260901T073136Z; **note**: candidate produced; author of dev set == author of candidate; Charon E9 untouched

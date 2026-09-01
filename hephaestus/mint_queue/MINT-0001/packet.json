@@ -1,6 +1,6 @@
 {
   "MINT_ID": "MINT-0001",
-  "STATUS": "READY-FOR-DEEP-MINT",
+  "STATUS": "CANDIDATE-PRODUCED",
   "PRIORITY": {
     "score": 0.812,
     "dimensions": {
@@ -642,7 +642,8 @@
   "SEARCH_ALREADY_ATTEMPTED": [
     "Apollo O1 exhaustive enumeration over 1.74M type-correct pipelines: vacuous_truth 0/5 (ceiling 0.833; number later retracted by E9, but the abstention on this category is structural).",
     "Aporia SELECTOR pre-flight over the frozen 27-candidate pool: zero capability-related dE movers.",
-    "Apollo E9 blind battery: 0/6, all abstained."
+    "Apollo E9 blind battery: 0/6, all abstained.",
+    "Master Smith (Claude Code / Fable, operator-invoked, 5 cycles, 2026-09-01): kernel+parser candidate v3 passes dev; 4/20 on out-of-template phrasings with 0 false commits; see deep_mint_sessions/20260901T073136Z/"
   ],
   "CHEAP_MODEL_ATTEMPTS": [
     {
@@ -782,26 +783,48 @@
     }
   ],
   "BEST_FAILED_CANDIDATE": {
-    "attempt": 4,
-    "model": "nvidia:nvidia/nemotron-3-super-120b-a12b",
-    "holdout_acc": 0.3288,
-    "boundary_false_commit": 1.0,
-    "failure_families": [
-      "below_chance_or_abstaining",
-      "commits_without_information",
-      "keys_on_claim_form_not_domain_emptiness",
-      "quantifier_blind",
-      "candidate_order_dependent",
-      "surface_form_of_emptiness",
-      "weak_kinds:EXIST_EMPTY,NEARMISS_NO_KEYWORD,NEARMISS_VACUOUS_WORD,NONEMPTY_EXIST_TRUE,NONEMPTY_UNIV_COUNTEREX,NONEMPTY_UNKNOWN,VAC_COND_EMPTY"
-    ],
-    "file": "hephaestus\\mint_queue\\MINT-0001\\attempts\\0004_20260901T071019Z_nvidia-nvidia-nemotron-3-super-120b-a12b.py"
+    "note": "superseded by a dev-passing candidate: deep_mint_sessions/20260901T073136Z/candidates/v3_quantified_truth.py",
+    "apprentice_best": {
+      "attempt": 4,
+      "model": "nvidia:nvidia/nemotron-3-super-120b-a12b",
+      "holdout_acc": 0.3288,
+      "boundary_false_commit": 1.0,
+      "failure_families": [
+        "below_chance_or_abstaining",
+        "commits_without_information",
+        "keys_on_claim_form_not_domain_emptiness",
+        "quantifier_blind",
+        "candidate_order_dependent",
+        "surface_form_of_emptiness",
+        "weak_kinds:EXIST_EMPTY,NEARMISS_NO_KEYWORD,NEARMISS_VACUOUS_WORD,NONEMPTY_EXIST_TRUE,NONEMPTY_UNIV_COUNTEREX,NONEMPTY_UNKNOWN,VAC_COND_EMPTY"
+      ],
+      "file": "hephaestus\\mint_queue\\MINT-0001\\attempts\\0004_20260901T071019Z_nvidia-nvidia-nemotron-3-super-120b-a12b.py"
+    }
   },
   "KNOCKOUT_RESULTS": [
     {
       "note": "Baseline (no op) = Apollo's current behaviour: abstain on every item; accuracy_decidable 0.0. Any candidate's holdout accuracy is therefore its own knockout delta.",
       "n_executed_attempts": 5,
       "n_pass_dev": 0
+    },
+    {
+      "session": "deep_mint_sessions/20260901T073136Z",
+      "candidate": "v3_quantified_truth.py",
+      "baseline_holdout": 1.0,
+      "component_deltas": {
+        "K1 kernel:=constant True": -0.3973,
+        "K2 kernel: drop empty-domain rule": -0.4932,
+        "K3 kernel: existential-blind on empty": -0.589,
+        "K4 kernel: counterexample-blind": -0.3151,
+        "P1 domain match: equality -> containment": -0.0959,
+        "P2 no container strip": -0.8904,
+        "P3 no cardinality reader": -0.5068,
+        "P4 cardinality reader ignores predicate": 0.0,
+        "P5 no stemming": -0.6301
+      },
+      "decorative_on_dev": [
+        "P4 cardinality reader ignores predicate"
+      ]
     }
   ],
   "COUNTERFEIT_TESTS": [
@@ -866,7 +889,8 @@
     "claim forms: every/all/each/any X is P; no X is P; if an X is Q then P; whenever; some/there is/at least one X is P",
     "claim stated before vs after the emptiness fact",
     "distractor 'no' on a different noun phrase than the claim's domain (NEARMISS_NO_KEYWORD)",
-    "candidate order shuffled; candidate wording varied (yes / yes, it is true / yes, the claim holds)"
+    "candidate order shuffled; candidate wording varied (yes / yes, it is true / yes, the claim holds)",
+    "OWED (from cycle 4): aren't any / zero X are / has no / empty of / lives in / 'Is it true that' / 'Claim: ... True or false?' / every one of the / there exists / semicolon counts / none of them / all of them / number words / singular '1 of them is'"
   ],
   "DESIRED_TYPED_INTERFACE": {
     "signature": "op_vacuous_truth(state: BlackboardState) -> BlackboardState",
@@ -919,11 +943,16 @@
     },
     {
       "ref": "apollo/cycles/campaign_20260825/E9_FINDINGS.md"
+    },
+    {
+      "ts": "2026-09-01T07:40:16Z",
+      "by": "Master Smith session 20260901T073136Z",
+      "note": "candidate produced; author of dev set == author of candidate; Charon E9 untouched"
     }
   ],
   "_meta": {
     "created": "2026-09-01T07:08:02Z",
-    "updated": "2026-09-01T07:21:44Z",
+    "updated": "2026-09-01T07:40:17Z",
     "schema": "mint_packet_v1"
   },
   "_dev_split": {
