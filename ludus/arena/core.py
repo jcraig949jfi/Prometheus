@@ -322,6 +322,41 @@ class Replay:
         """Full record INCLUDING timing -- for observability (mandate 18)."""
         return json.dumps(self._payload(timing=True), sort_keys=True, default=str)
 
+    def redacted_for(self, player, observed_steps=None):
+        """The replay as ONE PLAYER could lawfully have seen it.
+
+        The full replay is an omniscient record: it names chance outcomes in
+        plaintext, so a Kuhn episode literally contains "chance:dealt card K".
+        That is correct for an experimenter's log and a disclosure channel the
+        moment a replay is handed to an agent -- which mandate section 26 names
+        explicitly as a path to test.
+
+        This view removes what `player` never observed: chance outcomes are
+        reduced to the fact that a draw occurred, other players' actions keep
+        their action but lose any privileged description, and per-step reward
+        vectors are narrowed to this player's entry.
+        """
+        out = []
+        for s in self.steps:
+            row = {"t": s.t, "actor": s.actor}
+            if s.actor == CHANCE:
+                row["action"] = "<chance>"
+                row["desc"] = "a chance event occurred"
+            elif s.actor == SIMULTANEOUS:
+                row["action"] = "<simultaneous>"
+                row["desc"] = "all players acted"
+            else:
+                row["action"] = s.action
+                row["desc"] = s.action_desc if s.actor == player else "<opponent action>"
+            row["reward"] = (s.rewards[player]
+                             if isinstance(s.rewards, list)
+                             and player < len(s.rewards) else None)
+            out.append(row)
+        return {"world": self.world, "player": player, "seed": "<withheld>",
+                "n_steps": self.n_steps, "terminated": self.terminated,
+                "my_return": (self.returns[player] if self.returns else None),
+                "steps": out}
+
     def digest(self):
         """Replay IDENTITY, excluding wall-clock timing.
 
