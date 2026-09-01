@@ -45,7 +45,22 @@ python -m hephaestus.src.rank          # TOP_READY_MINTS
 python -m hephaestus.src.handoff       # HEPHAESTUS_HANDOFF.txt
 ```
 
+## The funnel as of Addendum 4 (2026-09-01)
+
+```
+wall -> typed semantic spec (closure_specs/<wall>.py; target defined extensionally from the probe)
+     -> closure gauntlet (src/closure_test.py; frozen basis A2-GENERIC-v1; A0/A1/A2/B)
+     -> ROUTE_CLASS + CLOSURE_MARGIN   (SEARCH_ROUTING | REPRESENTATION | OPERATOR)
+     -> route: only OPERATOR may reach APPRENTICE-TESTING or a Master Smith
+```
+Wall families are preregistered in `WALL_TAXONOMY_v1.md`. **No scheduled tasks** (`jobs/register_tasks.ps1`
+only verifies that none exist): work triggers compute; jobs are run by hand. Adapter widening was deleted.
+
 ## Rules this code enforces mechanically
+
+- `closure_test.py` refuses a spec that defines its own generic ops; A2 is the frozen global basis.
+- `refine.py` routes SEARCH_ROUTING / REPRESENTATION packets to DORMANT and refuses APPRENTICE-TESTING unless
+  ROUTE_CLASS == OPERATOR; `PASS_DEV_UNVERIFIED_COVERAGE` never advances state.
 
 - `apprentice.py` refuses any premium target (`claude*`, `anthropic*`, `openai:gpt-5*`, `openai:o*`).
 - A packet reaches `READY-FOR-DEEP-MINT` only when every `READY_REQUIRED` field is non-empty **and** the

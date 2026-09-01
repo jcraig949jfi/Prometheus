@@ -33,7 +33,28 @@ def _digraphs(n):
 
 
 SEARCH_POINTS = list(_digraphs(3))
+# VERIFY_EXHAUSTIVE_SMALL: all 4,096 digraphs on 4 nodes.
 VERIFY_POINTS = list(_digraphs(4))
+# VERIFY_STRUCTURAL_SHIFT (Addendum 4, Q5): 5- and 6-node digraphs sampled deterministically, half of
+# them with DUPLICATE edges (rels is a tuple, so duplicates are representable) and with node labels
+# drawn from a larger universe (isolated nodes are NOT representable by an edge set alone -- a
+# representation-semantics fact this spec records rather than hides).
+import random as _random
+_rng = _random.Random(20260901)
+def _shift():
+    pts = []
+    for n in (5, 6):
+        pairs = [(a, b) for a in range(n) for b in range(n) if a != b]
+        for _ in range(150):
+            k = _rng.randint(0, len(pairs))
+            edges = _rng.sample(pairs, k)
+            if _rng.random() < 0.5 and edges:
+                edges = edges + _rng.sample(edges, max(1, len(edges) // 3))   # duplicates
+            off = _rng.choice([0, 10, 100])                                    # larger label universe
+            pts.append(tuple((a + off, b + off) for a, b in edges))
+    return pts
+VERIFY_SHIFT_DESCRIPTION = "300 sampled 5/6-node digraphs, half with duplicate edges, labels offset into a larger universe"
+VERIFY_SHIFT_POINTS = _shift()
 
 
 def _acyclic(edges):
@@ -78,14 +99,8 @@ FROZEN_OPS = {
     "pigeonhole_check":   (("int", "int"), "bool", lambda a, b: fp.pigeonhole_check(a, b)),
     "all_but_n":          (("int", "int"), "int",  lambda a, b: fp.all_but_n(a, b)),
 }
-# A2 bounded generic composition: structural, not arithmetic-logical
-GENERIC_OPS = {
-    "is_none":       (("opt_list",), "bool", lambda x: x is None),
-    "not":           (("bool",), "bool",     lambda a: not a),
-    "len_edges":     (("edges",), "int",     lambda e: len(e)),
-    "len_dict":      (("dict",), "int",      lambda d: len(d)),
-    "self_reach":    (("dict",), "int",      lambda d: sum(1 for k, v in d.items() if k in v)),  # nodes that reach themselves
-}
+# A2 uses the FROZEN global basis (closure_specs/generic_basis.py). The per-spec `self_reach` op that
+# produced the first MINT-0004 witness is GONE (Addendum 4, Q2): that op was tuned to this wall.
 B_OPS = {
     "has_cycle_dfs": (("edges",), "bool", lambda e: not _acyclic(e)),   # the generic control: any small program can
     "not":           (("bool",), "bool", lambda a: not a),
