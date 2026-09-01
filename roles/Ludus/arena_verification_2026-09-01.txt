@@ -1,0 +1,41 @@
+==============================================================================
+ARENA W6 VERIFICATION   (400 episodes per cell, arena 0.1.0)
+==============================================================================
+
+[1] INVARIANTS -- random play, every world
+  TIC_TAC_TOE: no violations, all terminate      PASS  steps~7.6 mean_p0=+0.215
+  NIM: no violations, all terminate              PASS  steps~6.2 mean_p0=-0.010
+  PIG: no violations, all terminate              PASS  steps~186.1 mean_p0=+0.010
+  ROCK_PAPER_SCISSORS: no violations, all terminate PASS  steps~1.0 mean_p0=+0.068
+  KUHN_POKER: no violations, all terminate       PASS  steps~4.3 mean_p0=+0.150
+
+[2] DETERMINISM -- same seed reproduces the same replay
+  TIC_TAC_TOE: replay digest identical           PASS  e6eb10384b392fe8
+  NIM: replay digest identical                   PASS  71c99672e09b8f14
+  PIG: replay digest identical                   PASS  c65eaeb85fd24843
+  ROCK_PAPER_SCISSORS: replay digest identical   PASS  6a037ca4a7934d0b
+  KUHN_POKER: replay digest identical            PASS  258b28bb02112546
+
+[3] TIC_TAC_TOE -- perfect play must draw
+  minimax vs minimax always draws                PASS  20/20 draws
+
+[4] NIM -- Bouton's XOR theorem
+  (3,4,5) XOR=2 nonzero -> p0 optimal always wins PASS  mean_p0=+1.000
+  (1,2,3) XOR=0 -> player to move loses          PASS  mean_p0=-1.000
+
+[5] PIG -- chance nodes and the STOP axis
+  hold-at-25 beats hold-at-1                     PASS  mean_p0=+0.965 steps~138
+  mirror match is near-even (first-player edge only) PASS  mean_p0=+0.015
+  die is fair: P(bust face) ~ 1/6                PASS  observed 0.1679 over 15970 rolls
+
+[6] ROCK_PAPER_SCISSORS -- simultaneous action
+  uniform vs uniform has value ~ 0               PASS  mean_p0=+0.0025
+  constant 'rock' vs uniform also ~ 0 (NE is unexploitable) PASS  mean_p0=+0.0210
+
+[7] KUHN_POKER -- private observation, value -1/18
+  observation(0) does not expose opponent card   PASS  o0 keys=['bets', 'cards_dealt', 'done', 'my_card', 'pot', 'to_move']
+  NE pair yields -1/18 = -0.0556                 PASS  mean_p0=-0.0535 (n=12000)
+
+==============================================================================
+OVERALL: ALL CHECKS PASS
+==============================================================================
