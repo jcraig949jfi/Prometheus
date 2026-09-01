@@ -1,7 +1,7 @@
 # M3 (Gandalf) — Station Status (living doc)
 
 **Point agent:** Hephaestus (Claude Fable 5, ultracode — the fleet's one non-Opus seat)
-**Last updated:** 2026-09-01 (§7) · **Station roster:** Hephaestus (forge + meta-assessment loop)
+**Last updated:** 2026-09-01 (§9) · **Station roster:** Hephaestus (forge + meta-assessment loop)
 **Mode:** level-setting. **No hard decisions until ~2026-08-14** (James, 2026-08-12).
 Items marked DECISION are parked for James.
 **Convention adopted from `stations/M2_STATUS.md`.** Fitting, since the convention was
@@ -221,3 +221,100 @@ charter and needs no ruling. (4) Env note above is stale: z3 5.1.0 and pytest 9.
 `agents/alethelia/__pycache__/` likewise. `agents/hephaestus/STATUS.md` header still says
 "last updated 2026-06-26" — this file is the live one for M3; that one needs a pointer, not a
 rewrite.
+
+
+## 8. CHARTER AMENDMENT RECEIVED AND THE FIRST LOOP BUILT (Hephaestus, 2026-09-01 PM)
+
+**Ruling received:** James issued the **Forge Queue + Master Smith** amendment in reply to the
+design review — `roles/Hephaestus/CHARTER_AMENDMENT_2026-09-01_forge_queue_master_smith.md`
+(governing; supersedes the model-generation portions of Hephaestus II). Two regimes, never
+mixed: the **Apprentice Forge** (cheap/free/local models + enumeration, unattended, produces
+Mint Packets) and the **Master Smith** (a capable Claude Code agent, invoked ONLY by the
+operator, no admission authority). No premium escalation, no Claude cron. §25: build exactly
+one loop first, stop, observe.
+
+**Built (`hephaestus/`, tracked):** packet schema (§5 fields, §7 states), `triage` (Apollo
+canary + E9 + Aporia 155-S/156-S → 4 packets: MINT-0001 `vacuous_truth` EXPRESSIVITY-SUSPECTED →
+APPRENTICE-TESTING; MINT-0002 `all_but_n` SCRAPPED as already-ported; MINT-0003
+`temporal_ordering` DORMANT/routed to Apollo as a parser gap; MINT-0004 `consistency_check`
+COMPOSITION-SUSPECTED, held), the `vacuous_truth` wall module (88 Hephaestus-authored dev
+examples over 11 kinds incl. two near-miss kinds that kill the `no`→yes and `vacuous`→yes
+shortcuts; 8 train / 80 holdout; counterfeit battery — best semantics-blind shortcut 0.60 with
+100% boundary false-commit; four input-mutant falsifiers; closure evidence: all 15 Apollo
+registry transformers run on every example, **zero commit a `comparison`**, and the only
+primitive touching predicates is `solve_constraints`, which nothing feeds from text),
+`run_candidate` (AST allowlist + subprocess), `apprentice` (refuses premium targets
+mechanically), `refine` (state transitions only from executed evidence), `rank`, `handoff`,
+counterfeit museum (7 exhibits), historical walls (HW-001..004), job scripts.
+
+**Charon's E9 battery is the independent held-out and is read by nothing under `hephaestus/`.**
+Apollo's canary is degenerate (Yes 5/5) and is not used as an evaluator.
+
+**Cheap endpoints on M3 (verified):** NVIDIA NIM free tier `nvidia/nemotron-3-super-120b-a12b`
+(~1–40 s) and local `ollama/phi3` (~30–60 s). Dead here: gemini 403, groq/openrouter/deepseek
+401, GitHub Models hostname gone, anthropic/openai unfunded. A gitignored `keys.py` shim at
+repo root lets `prometheus_llm` read the forge's `.env`.
+
+**First apprentice run (executed, recorded under `mint_queue/MINT-0001/attempts/`):**
+phi3 → `RUNTIME_ERROR_ALL` (no `import re`, undefined helper, phantom `state.domain`) — genuine
+scrap, kept. nemotron → `NO_CODE` — **my harness's fault**: a reasoning model spent the whole
+1,800-token budget planning aloud; budget raised to 6,000 and the code block moved first.
+Second run results are appended below.
+
+**Second and third runs (harness fixed; all recorded, nothing trusted):**
+
+| # | model | verdict | holdout acc | boundary false-commit | failure families |
+|---|---|---|---|---|---|
+| 1 | nemotron | NO_CODE (harness fault, annotated, excluded from exhaustion count) | – | – | – |
+| 2 | phi3 | RUNTIME_ERROR_ALL | 0.00 | – | `NameError: re`; undefined helper; phantom `state.domain` |
+| 4 | nemotron | **FAIL_DEV** | **0.329** | **1.00** | keys on claim form not domain emptiness; commits without information; quantifier-blind (every→some flip 1/8); candidate-order dependent (28/80); weak on EXIST_EMPTY, NEARMISS_*, NONEMPTY_UNIV_COUNTEREX |
+| 5 | nemotron | NO_CODE | – | – | **deliberates_without_emitting** — 23 KB of planning at a 6,000-token budget, no code |
+| 6 | phi3 | FAIL_DEV | 0.00 | 0.00 | `return True` instead of the state (interface violation, 76/80 runtime errors) |
+
+`refine`: 5 executed attempts, 2 models, 10 failure families, no dev pass → **APPRENTICE-EXHAUSTED →
+READY-FOR-DEEP-MINT** (packet complete; every §5 field non-empty). Best failed candidate = attempt 4
+(0.329): it finds the emptiness sentence with regexes keyed to the parsed subject, so it passes
+plain VAC_UNIV_EMPTY (0.86) and fails everything that needs the *domain of the claim* rather than
+the *form of the claim*. That is the wall's shape, written by a cheap model's failure — exactly
+what §16 wants the Master Smith to see.
+
+**Harness defects the scrap exposed and fixed in-session (recorded in events.jsonl):** token budget
+truncating a reasoning model before its code fence; `run_op` accepting a `bool` return as the new
+state; attempt numbering counting result files; best-failed ordering rewarding all-error candidates
+for their trivially-zero false-commit rate.
+
+**Scheduled (schtasks, M3, no Claude job):** `Hephaestus_Apprentice` every 4 h at :19 ·
+`Hephaestus_Refine` every 3 h at :31 · `Hephaestus_Rank` daily 05:13. The queue now improves
+unattended at ~$0 (NIM free tier + local phi3). Per §25 nothing further is built until the
+operator has invoked one Master Smith session against MINT-0001 and its result has been consumed
+by a scheduled cycle. **Invocation:** "Claude Code: read `hephaestus/HEPHAESTUS_HANDOFF.txt` and
+begin forging."
+
+**Still true and still gating a READ of any mint (not an attempt):** no independent held-out
+generator for `vacuous_truth` (Aporia); no post-E9 Apollo evaluator of record; 08-24 no-touch scope.
+
+
+## 9. FIRST MASTER SMITH SESSION — operator-invoked, 5 cycles, closed (Hephaestus/Fable, 2026-09-01)
+
+James: *"Run a loop. Test the forge from here, claude code running fable. Only run 5 loop cycles max."*
+Minimum increment used: one hypothesis → minimal candidate → execute (88 dev + 4 falsifiers) →
+inspect failure positions. Session dir `hephaestus/deep_mint_sessions/20260901T073136Z/` (manifest,
+candidates, failed, traces, counterexamples.md, knockout.json, RECOMMENDED_NEXT_STATE.txt).
+
+| cycle | what | result |
+|---|---|---|
+| 1 | v1: 3-rule kernel `quantified_truth(q, |domain|, |satisfiers|)` + parser keyed on the claim's own domain noun phrase (token-set **equality**) | FAIL_DEV 0.945, 0 false commits — domain split at first " in " broke "letter written in Latin" |
+| 2 | v2: last-" in " split, container stripped from premises | FAIL_DEV 0.877 — a string-templated file carried a literal backspace where a word boundary was meant; optional "in…" groups truncated noun phrases |
+| 3 | v3: hand-written | **PASS_DEV** holdout 1.00, boundary 0, mutants 8/8 · 8/8 · 80/80 · 8/8 |
+| 4 | 20 adversarial phrasings outside the dev templates (none from Charon E9) | **4/20, 0 false commits, 16 abstentions** — kernel general, parser template-bound |
+| 5 | component knockout | kernel rules −0.32…−0.59; equality domain match −0.10; container strip −0.89; stemming −0.63; cardinality reader −0.51; **predicate check decorative on dev (0.000)** |
+
+**Smith's diagnosis (§15):** the wall is real but small — the missing operation is a three-rule kernel
+nothing in `forge_primitives.py` or Apollo's REGISTRY computes; most of the difficulty is parse. Declared
+class: dE_synth (kernel) + Level-0 adapter (parser). **Not admitted** (§14): dev set and candidate share
+an author; independent prereg, held-out generator, post-E9 evaluator, mechanical absence check and
+in-blackboard knockout are all still owed by other seats. Packet → `CANDIDATE-PRODUCED`.
+
+**Owed back to the apprentice side:** two new dev kinds (`NONEMPTY_OTHER_PREDICATE` to make the
+decorative component measurable; `PREDICATE_EXTENSION_EMPTY`, a fourth kernel rule v3 lacks) and the
+16 adversarial idioms as parser-widening work for cheap models — apprentice work, not smith work.

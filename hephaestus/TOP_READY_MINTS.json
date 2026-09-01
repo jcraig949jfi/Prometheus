@@ -1,0 +1,123 @@
+{
+  "generated": "2026-09-01T07:40:17Z",
+  "walls": [
+    {
+      "MINT_ID": "MINT-0001",
+      "STATUS": "CANDIDATE-PRODUCED",
+      "score": 0.812,
+      "family": "vacuous_truth \u2014 truth value of a quantified claim (universal / negative-universal / conditional / existential) over a domain the premises state is EMPTY, versus the same claim over a non-empty domain with or without a counterexample.",
+      "missing_for_ready": [],
+      "attempts": 6,
+      "best_failed": {
+        "note": "superseded by a dev-passing candidate: deep_mint_sessions/20260901T073136Z/candidates/v3_quantified_truth.py",
+        "apprentice_best": {
+          "attempt": 4,
+          "model": "nvidia:nvidia/nemotron-3-super-120b-a12b",
+          "holdout_acc": 0.3288,
+          "boundary_false_commit": 1.0,
+          "failure_families": [
+            "below_chance_or_abstaining",
+            "commits_without_information",
+            "keys_on_claim_form_not_domain_emptiness",
+            "quantifier_blind",
+            "candidate_order_dependent",
+            "surface_form_of_emptiness",
+            "weak_kinds:EXIST_EMPTY,NEARMISS_NO_KEYWORD,NEARMISS_VACUOUS_WORD,NONEMPTY_EXIST_TRUE,NONEMPTY_UNIV_COUNTEREX,NONEMPTY_UNKNOWN,VAC_COND_EMPTY"
+          ],
+          "file": "hephaestus\\mint_queue\\MINT-0001\\attempts\\0004_20260901T071019Z_nvidia-nvidia-nemotron-3-super-120b-a12b.py"
+        }
+      },
+      "dimensions": {
+        "evidence_current_set_cannot_express": 1.0,
+        "frequency_across_worlds": 0.5,
+        "number_of_independent_origins": 1.0,
+        "potential_cross_world_utility": 0.5,
+        "quality_of_reproducer": 1.0,
+        "quality_of_falsifier": 1.0,
+        "cheap_search_exhaustion": 1.0,
+        "minimality_of_required_extension": 0.5
+      },
+      "rationale": ""
+    },
+    {
+      "MINT_ID": "MINT-0004",
+      "STATUS": "COMPOSITION-SUSPECTED",
+      "score": 0.219,
+      "family": "consistency_check (PARSER gap + missing consistency predicate over an existing structure)",
+      "missing_for_ready": [
+        "WHAT_SHOULD_HAVE_HAPPENED",
+        "MINIMAL_REPRODUCER",
+        "POSITIVE_EXAMPLES",
+        "NEGATIVE_EXAMPLES",
+        "BOUNDARY_EXAMPLES",
+        "CURRENT_PRIMITIVES",
+        "PRIMITIVE_SET_HASH",
+        "WHY_COMPOSITION_APPEARS_INSUFFICIENT",
+        "CLOSURE_EVIDENCE",
+        "CHEAP_MODEL_ATTEMPTS",
+        "CHEAP_MODEL_FAILURES",
+        "COUNTERFEIT_TESTS",
+        "KNOWN_SHORTCUTS",
+        "FORBIDDEN_SHORTCUTS",
+        "REPRESENTATION_PERTURBATIONS",
+        "DESIRED_TYPED_INTERFACE",
+        "INDEPENDENT_EVALUATOR",
+        "SUCCESS_CRITERION",
+        "KILL_CRITERION"
+      ],
+      "attempts": 0,
+      "best_failed": null,
+      "dimensions": {
+        "evidence_current_set_cannot_express": 0.0,
+        "frequency_across_worlds": 0.25,
+        "number_of_independent_origins": 0.5,
+        "potential_cross_world_utility": 0.5,
+        "quality_of_reproducer": 0.0,
+        "quality_of_falsifier": 0.0,
+        "cheap_search_exhaustion": 0.0,
+        "minimality_of_required_extension": 0.5
+      },
+      "rationale": "Likely Level 0/1 (composition of existing primitives + a parser). Not a Level-2 candidate until closure evidence says otherwise. Held until MINT-0001 completes one cycle (charter \u00a725)."
+    },
+    {
+      "MINT_ID": "MINT-0003",
+      "STATUS": "DORMANT",
+      "score": 0.188,
+      "family": "temporal_ordering (PARSER gap)",
+      "missing_for_ready": [],
+      "attempts": 0,
+      "best_failed": null,
+      "dimensions": {
+        "evidence_current_set_cannot_express": 0.0,
+        "frequency_across_worlds": 0.25,
+        "number_of_independent_origins": 0.25,
+        "potential_cross_world_utility": 0.5,
+        "quality_of_reproducer": 0.0,
+        "quality_of_falsifier": 0.0,
+        "cheap_search_exhaustion": 0.0,
+        "minimality_of_required_extension": 0.5
+      },
+      "rationale": "Routed to Apollo: a parser, not a primitive. Doubly contaminated as a mint demonstration (156-S). Positive control only."
+    },
+    {
+      "MINT_ID": "MINT-0002",
+      "STATUS": "SCRAPPED",
+      "score": 0.188,
+      "family": "all_but_n (arithmetic difference)",
+      "missing_for_ready": [],
+      "attempts": 0,
+      "best_failed": null,
+      "dimensions": {
+        "evidence_current_set_cannot_express": 0.0,
+        "frequency_across_worlds": 0.25,
+        "number_of_independent_origins": 0.25,
+        "potential_cross_world_utility": 0.5,
+        "quality_of_reproducer": 0.0,
+        "quality_of_falsifier": 0.0,
+        "cheap_search_exhaustion": 0.0,
+        "minimality_of_required_extension": 0.5
+      },
+      "rationale": "Closed: retrieval, not synthesis. Consume before duplicate."
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+HYPOTHESIS: The truth value of a universal/negative-universal or conditional claim over an empty domain is always True (vacuous truth), while for existential claims it's False if the domain is stated as empty, and None abstains when there isn't enough information. For non-empty domains with counterexamples to universally quantified statements, we return False; otherwise, a universal claim without explicit negation or contradiction in context holds true (based on problem_text).
+SUBSTRATE_SUFFICES: NO - The existing primitives alone cannot determine the truth value of vacuous claims as they do not inherently understand domain emptiness.
+COUNTEREXAMPLES: 
+- [NONEMPTY_UNIV_ALL] PROMPT: There are exactly 5 electric cars in the garage, and all 5 of them are blue. Consider the claim: each electric car in the garage is red. Is the claim true?
+- [EXIST_EMPTY] WITHOANDRING CLAIM: The number of people taller than two metres in a room full of basketball players, where everyone's height exceeds that threshold, considering the claim about an asleep person being tall is irrelevant. Consider the claim: there is at least one sleeping person over 2 meters tall in this group. Is the claim true?
+- [NONEMPTY_UNIV_ALL] PROMPT with a twist on context and negation to test understanding of vacuous truths, such as considering if all blue cars are electric or not when given an explicit statement about non-blue cars being irrelevant for universal claims. Consider the claim: each car in the garage is red. Is this true?
+```python
+def op_vacuous_truth(state):
+    # Extract problem text from state and split into sentences/claims if necessary (assuming a simple structure)
+    premises = re.split(r'(?<=[^.])\.\s+', state.problem_text)  # Split on periods followed by whitespace, assuming end of sentence claims
+    
+    for claim in premises:
+        quantifier, predicate, _ = extract_claim_components(claim)  # Define this function to parse the structure (universal/existential and subject matter)
+        
+        if 'empty' in state.domain or not any([predicate]):
+            continue  # Skip claims that are vacuous due to domain emptiness, as they inherently hold true by definition of truth value for empty domains
+        
+        elif quantifier == 'exists':
+            return False  # Existential claim with an empty domain is false; no counterexample exists in the non-existent set.
+        
+        else:
+            if state.domain != ['empty'] and not any([predicate]):
+                continue  # Skip universal claims without explicit negation or contradiction, as they hold true by default (vacuous truth)
+            
+            elif 'counterexample' in claim:
+                return False  # A counterexample to a universally quantified statement overrides the vacuous truth.
+    
+    if not any([predicate]):
+        state.comparison = None  # Abstain when no information is available about predicate within premises text, as per instruction boundary case handling.
+        
+# Note: This code assumes a function `extract_claim_components` exists to parse the quantifier and subject matter from claims in problem_text; this would need implementation based on expected input format. 
+```

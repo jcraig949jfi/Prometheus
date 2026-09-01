@@ -1,0 +1,122 @@
+We need to design a deterministic function that reads state.problem_text and sets state.comparison accordingly.
+
+We need to parse the problem text to detect:
+
+- Claim type: universal (each, every, all, any? Actually universal claim: "each X is Y", "all X are Y", "any X is Y"? Usually "any" can be universal or existential depending context. But we can rely on patterns.
+
+- Negative-universal: "no X is Y" or "none of the X are Y"? That's a universal negative (i.e., "all X are not Y").
+
+- Conditional: "if X then Y"? Might be phrased as "any X that ... is Y"? Actually conditional claim: "any item weighing more than two kilograms in the box is fragile." That's universal conditional: For all items, if weight>2 then fragile. So treat as universal.
+
+- Existential: "there is a ...", "some ...", "there exists ...".
+
+We need to detect domain emptiness: statements like "There are no X in the Y", "The number of X in Y is zero", "There are zero X", "There are no X", "There are no X ...". Also "There are exactly 0 X". Also "There are no items weighing more than two kilograms in the box." Also "The number of people taller than two metres in the room is zero."
+
+If domain empty, then universal/negative-universal/conditional claim is vacuously true -> comparison = True.
+
+If domain empty and claim existential -> false -> comparison = False.
+
+If domain non-empty: need to check if claim holds given premises about all members? The premises may state that all members satisfy predicate (e.g., "all 5 of them are blue") or that none satisfy, or some satisfy, etc. We need to determine truth value based on given info.
+
+Simplify: We can extract numeric counts and statements about properties.
+
+Given limited time, we can implement a heuristic: If problem text contains a statement that directly confirms the claim (e.g., "all X are Y", "each X is Y", "every X is Y", "all X are Y") then set True. If contains a statement that directly contradicts claim (e.g., "no X is Y", "none of the X are Y", "some X are not Y", "there is an X that is not Y") then set False. If no info, set None.
+
+But need to handle empty domain detection overriding.
+
+Thus algorithm:
+
+1. Lowercase problem_text.
+
+2. Detect domain emptiness: Look for patterns indicating zero count of the subject set.
+
+   Subject set: we need to extract the noun phrase that the claim quantifies over. For simplicity, we can detect emptiness by phrases like "there are no", "there are zero", "the number of ... is zero", "there are exactly 0". We'll assume that if any such phrase appears, domain empty = True.
+
+   However need to ensure it's about the same set as claim. But we can approximate: if emptiness phrase appears anywhere, treat as empty.
+
+   Might cause false positives but maybe okay.
+
+3. Determine claim type: Look for cue words:
+
+   - Existential: "there is a", "there exists", "some", "there is at least one", "there is a ... that", "there is a ...", "there is a ...", "there is a ...", "there is a ...". Also "there is a person taller than two metres in the room that is asleep." That's existential with extra condition.
+
+   - Universal: "each", "every", "all", "any" (when used in conditional sense). Also "any item ... is ...".
+
+   - Negative-universal: "no", "none of the", "not any". Eg "no items weighing more than two kilograms ... are fragile". Or "there are no items ... that are fragile"? Actually negative-universal claim: "no X are Y". We'll detect "no X are Y" or "no X is Y".
+
+   - Conditional: "if ... then ..." or "any X that ... is Y". We'll treat any universal conditional as universal.
+
+Simplify: We'll just detect claim type by looking for cue words near the claim phrase after "Consider the claim:" or "Consider the claim:" etc. The problem text includes a claim description after "Consider the claim:" or "Consider the claim:" maybe.
+
+We can extract the claim sentence: after "Consider the claim:" up to question mark or period.
+
+Then analyze that claim sentence.
+
+Implementation steps:
+
+- Find index of "Consider the claim:" (case-insensitive). If not found, maybe "Consider the claim:" variations. We'll assume present.
+
+- Extract substring after that until a question mark '.' or maybe end.
+
+- Claim_text = substring stripped.
+
+- Determine if claim contains existential cue: "there is a", "there exists", "some", "there is at least one". Also "there is a ... that". We'll use regex.
+
+- Determine if claim contains universal cue: "each", "every", "all", "any". Also "any ... is". We'll treat "any" as universal if followed by noun and verb "is". But we can just treat any occurrence of "each", "every", "all", "any" as universal unless we also see existential cues.
+
+- Determine if claim contains negative-universal cue: "no", "none of the". Also "not any". We'll treat "no" as negative-universal.
+
+- If both existential and universal cues present, need to decide based on structure. But we can prioritize: if claim starts with "There is" or "There exists" or "Some", treat existential. Else treat universal/negative-universal.
+
+Simplify: We'll check for existential pattern first: if re.search(r'\bthere is a\b|\bthere exists\b|\bsome\b', claim_text): existential = True.
+
+Else if re.search(r'\bno\b|\bnone of the\b', claim_text): negative_universal = True.
+
+Else if re.search(r'\beach\b|\bevery\b|\ball\b|\bany\b', claim_text): universal = True.
+
+Else default to universal? But we can set unknown.
+
+Now domain emptiness detection:
+
+We need to detect statements indicating zero count of the domain set. The domain set is the subject of the claim (the X). We can extract the noun phrase after quantifiers.
+
+Simplify: We'll just look for any zero-count statement in the problem text: patterns like:
+
+- "there are no"
+- "there are zero"
+- "there are exactly 0"
+- "the number of ... is zero"
+- "the number of ... equals 0"
+- "there are no ..."
+- "there are zero ..."
+- "there are exactly 0 ..."
+
+We'll use regex to capture.
+
+If any such pattern appears, set empty_domain = True.
+
+Now decision:
+
+If empty_domain:
+
+   If existential claim: comparison = False (since existential over empty domain false).
+
+   Else (universal, negative-universal, conditional): comparison = True (vacuous true).
+
+Else (non-empty or unknown):
+
+   We need to evaluate truth based on premises.
+
+   We can attempt to see if premises directly support or contradict claim.
+
+   Approach: Extract statements about the property of the domain items.
+
+   For simplicity, we can look for phrases that indicate all items have property, none have property, some have property, etc.
+
+   For universal claim (each X is Y): If text contains "all X are Y", "every X is Y", "each X is Y", "any X is Y", "all of the X are Y", then True.
+
+   If text contains "no X are Y", "none of the X are Y", "not all X are Y", "some X are not Y", "there is an X that is not Y", then False.
+
+   For negative-universal claim (no X are Y): Equivalent to universal claim that all X are not Y. So we can treat similarly: If text says "no X are Y", "none of the X are Y", "all X are not Y", then True. If text says "some X are Y", "there is an X that is Y", "all X are Y", then False.
+
+   For existential claim (there is an X that is Y): If text says "there is an X that is Y", "some X are Y", "

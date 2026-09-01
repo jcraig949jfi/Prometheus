@@ -1,0 +1,75 @@
+{
+  "n": 6,
+  "ts": "2026-09-01T07:12:44Z",
+  "model": "ollama:phi3",
+  "prompt_sha": "3bdd5a800c25",
+  "regime": "apprentice",
+  "cost": 0.0,
+  "latency_s": 59.7,
+  "model_served": "phi3",
+  "llm_ok": true,
+  "hypothesis": "The function `op_vacuous_truth` decides the truth value of quantified claims by analyzing specific keywords and phrases within the problem text. It identifies universal, negative-universal, or conditional statements about an empty domain as vacuously true (thus returning True). For non-empty domains with counterexamples to a universal claim, it returns False; otherwise, if no information is provided regarding all items in question, it abstains from assigning any truth value.",
+  "substrate_suffices_claim": "NO, the existing primitives alone cannot express this reasoning as they do not provide mechanisms for understanding quantifiers or vacuous truths without additional logic to interpret domain emptiness and claim types explicitly within text analysis.",
+  "self_counterexamples": "",
+  "verdict": "RUNTIME_ERROR_ALL",
+  "failure_families": [
+    "runtime_error:InterfaceViolation: op returned bool instead of BlackboardSt"
+  ],
+  "static_gate": [],
+  "holdout": {
+    "n": 80,
+    "accuracy_decidable": 0.0,
+    "abstain_rate_decidable": 0.0,
+    "boundary_false_commit_rate": 0.0,
+    "errors": 80,
+    "by_kind": {
+      "EXIST_EMPTY": 0.0,
+      "NEARMISS_NO_KEYWORD": 0.0,
+      "NEARMISS_VACUOUS_WORD": 0.0,
+      "NONEMPTY_EXIST_TRUE": 0.0,
+      "NONEMPTY_UNIV_ALL": 0.0,
+      "NONEMPTY_UNIV_COUNTEREX": 0.0,
+      "NONEMPTY_UNKNOWN": 1.0,
+      "VAC_COND_EMPTY": 0.0,
+      "VAC_NEGUNIV_EMPTY": 0.0,
+      "VAC_UNIV_EMPTY": 0.0,
+      "VAC_UNIV_EMPTY_ORDER": 0.0
+    }
+  },
+  "train": {
+    "n": 8,
+    "accuracy_decidable": 0.0,
+    "abstain_rate_decidable": 0.0,
+    "boundary_false_commit_rate": 0.0,
+    "errors": 8,
+    "by_kind": {
+      "EXIST_EMPTY": 0.0,
+      "NEARMISS_NO_KEYWORD": 0.0,
+      "NONEMPTY_UNIV_ALL": 0.0,
+      "NONEMPTY_UNKNOWN": 1.0,
+      "VAC_UNIV_EMPTY": 0.0,
+      "VAC_UNIV_EMPTY_ORDER": 0.0
+    }
+  },
+  "input_mutants": {
+    "emptiness_removed_should_not_commit_yes": {
+      "passed": 8,
+      "of": 8
+    },
+    "every_to_some_should_flip_to_no": {
+      "passed": 0,
+      "of": 8
+    },
+    "candidate_order_invariance": {
+      "passed": 0,
+      "of": 80
+    },
+    "no_to_exactly_zero_same_answer": {
+      "passed": 0,
+      "of": 8
+    }
+  },
+  "candidate_file": "hephaestus\\mint_queue\\MINT-0001\\attempts\\0006_20260901T071244Z_ollama-phi3.py",
+  "result_file": "hephaestus\\mint_queue\\MINT-0001\\attempts\\0006_20260901T071244Z_ollama-phi3_result.json",
+  "rescored": "2026-09-01T07:15:09Z"
+}

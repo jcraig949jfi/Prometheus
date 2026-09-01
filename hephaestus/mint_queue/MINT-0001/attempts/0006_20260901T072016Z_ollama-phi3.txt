@@ -1,0 +1,30 @@
+```python
+import re
+from collections import Counter
+
+def op_vacuous_truth(state):
+    problem_text = state.problem_text
+    
+    # Check for universal/negative-universal claims with empty domain using keywords and structure of the sentence
+    if "each" in problem_text or "no" in problems:  # Assuming 'problems' is a list extracted from text containing negative statements, not provided here.
+        words = re.findall(r'\b\w+\b', problem_text)
+        word_count = Counter(words)
+        
+        if "no" in state.candidates or ("each" in problem_text and len(word_count) == 1):
+            return True
+    
+    # Check for existential claims with empty domain using keywords like 'some' or explicit mention of zero items satisfying the predicate
+    elif any(keyword in problem_text.lower() for keyword in ["some", "at least one"]):
+        if state.candidates == []:
+            return False
+    
+    # Default to abstain when no clear information about domain or counterexample is provided
+    else:
+        return None
+```
+HYPOTHESIS: The truth value of a quantified claim in the vacuous_truth function is determined by analyzing keywords and sentence structure that indicate an empty domain (universal/negative-universal claims with 'each' or explicit negation, existential claims mentioning zero items). If such indicators are present without counterexamples for universal statements, it returns True. For existential claims stating the existence of at least one item satisfying a predicate in an empty set, it returns False. Otherwise, if no clear information is provided about domain emptiness or presence of counterexamples, it abstains from assigning any truth value by returning None.
+SUBSTRATE_SUFFICES: NO, existing primitives alone cannot express the nuanced understanding required to handle vacuous claims as they lack context and reasoning capabilities beyond basic logical operations.
+COUNTEREXAMPLES: 
+- [NONEMPTY_UNIV_ALL] PROMPT: There are exactly 5 electric cars in the garage, all of which are blue. Consider the claim: each electric car is not red. Is this claim true? (Expects False)
+- [EXIST_EMPTY] PROMPT: The number of people taller than two metres in a room with exactly one person that tall is zero. Consider the claim: there exists someone who weighs more than 200 kilograms and is asleep, given no information about weight or sleeping habits. Is this claim true? (Expects None)
+- [NEARMISS_NO_KEYWORD] PROMPT: There are exactly three red marbles in the jar with a total of 15 items; two blue and one green. Consider the claim: some item is both chipped and heavier than ten grams, assuming no explicit mention about chip status or weight but implying non-empty domain for these properties. Is this claim true? (Expects None)
