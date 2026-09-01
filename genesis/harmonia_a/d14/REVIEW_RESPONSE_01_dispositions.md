@@ -33,3 +33,32 @@ R3 Opt-in persisted search-physics pairs; 3-tier retention (lineage forever;
 R4 Per-response release identity header + ledger events.
 R5 behavior_distance(artifact_a, artifact_b, battery_id, metric_id,
    metric_version) as a versioned first-class primitive.
+
+---
+
+# D-14 external review #2 (second reviewer) — dispositions (2026-09-01)
+
+Received via operator. Adjudicated against review #1 and the freeze; where
+the reviewers conflict, the freeze and the declared estimand govern.
+
+| item | reviewer-2 position | disposition |
+|---|---|---|
+| "Epistemically compromised; demand 64-case battery now; exhaustive coverage mandatory" | Abort/upgrade mid-experiment | **DECLINED for D-14, ADOPTED for weight**: changing battery or sampler mid-run is exactly the outcome-contingent modification the no-rescue rule forbids. A2 completes as frozen; its verdict is BOUND to the narrow estimand (review-1 Q4 wording) and its evidential weight is explicitly conditioned on B1+B2. Reviewer-2's demands are the B1/B2 acceptance criteria, not amendments. |
+| Comparator "strictly a lower bound; middle mass artificially depressed" | | **PARTIALLY CORRECTED, then adopted**: pointwise I_final <= I_traj is TRUE (final-differs implies trajectory-differs). But the induced bias on middle_mass is NOT signed a priori: true-middle sites can read 0 under I_final (depressing) AND true-high sites can read middle (inflating). The 2x2 bridge table measures both flows; the dangerous cell stays traj-changed/final-unchanged. Recorded precisely. |
+| 8-case quantization ("binomially, low-p sites often read 0") | | **ADOPTED** into the final packet's caveat wording (sampling, not rounding — but the practical point stands). B2 measures bin migration directly. |
+| B1 size: 1,000 pairs + false-negative rate < threshold margin | vs reviewer-1's >=300 | **ADOPTED the stricter**: B1 = 1,000 paired artifacts, both comparators, 2x2 table + FN rate vs the 0.05 margin. FEASIBILITY GATE: trajectory comparison for PERSISTED artifacts must first be shown obtainable from the instrument (trace/limits/behavior-vector probe); if not obtainable, B1 is BLOCKED and that fact itself goes upstream (R5/behavior_distance + trace requirement) — a blocked bridge caps any SURVIVES at "comparator-relative". |
+| Wasserstein vs matched synthetic control; trace-divergence depth | future statistic | **RECORDED** for successor prereg alongside review-1's G(t). |
+| Q5 cellular-automaton controlled-spectrum family | vs review-1's three encodings | **MERGED**: CA is a legitimate (cheaper, analytically controlled) instantiation of the same causal design; D-15 candidate family = {CA rule-radius family, three-encoding family}; choice belongs to the D-15 freeze, not to taste today. |
+| Q7 continuous relaxation / latent walks (incl. tensor-train genotype maps) | | **RECORDED**. Note for the record: Gen-0 killed tensor reps as a *reachability rescue on the existing substrate*; using them as a *designed encoding* is a different, legitimately motivated hypothesis and is not barred by that null. |
+| Q13 temperature prediction (relaxation -> 0 collapses the band) | | **RECORDED** — a genuinely frozen-prediction-shaped successor claim. |
+| Q14 leave-one-out operator court; Q15 D-9 as compression ratio (description-length accounting); Q16 internal-state hooks | | **RECORDED**; Q16 merges with review-1's injected-ladder into a two-sided calibration doctrine: prove the ruler sees a millimeter (injection) AND check internal-state shift vs output-identity (blunt-ruler detector). |
+| Backend: /v0/artifacts/{id}/perturb single-transaction contract; divergence_step; X-Foundry-Release header with client fatal-on-deviation; 30-day trace-prune tier; /v0/physics/distance | | **MERGED into D14_M1_REQUIREMENTS** (R2 gains divergence_step + single-transaction wording; R3 gains the 30-day trace tier; R4 gains the header name and client fatal behavior; R5 gains the metric enum + divergence index). |
+
+## Where the two reviewers agree (binding on the final packet)
+1. Finish A2 under the freeze; the verdict adjudicates the frozen statistic
+   under the default-operator estimand, nothing more.
+2. A SURVIVES is weak/narrow until B1 (comparator bridge) and B2 (resolution)
+   pass; a FALSIFICATION is informative as-is.
+3. Requested-vs-executed configuration integrity is release-blocking upstream.
+4. The interesting successor is causal encoding intervention, not a fourth
+   observational substrate.
