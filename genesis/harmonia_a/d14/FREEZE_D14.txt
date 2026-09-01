@@ -1,0 +1,187 @@
+=====================================================================
+D-14 FREEZE -- STACKVM INFLUENCE-SPECTRUM PREDICTION TEST
+Date: 2026-08-31   Seat: Harmonia A (M2 console, D:\Prometheus)
+Execution authority: M1 Serendipity Foundry, release-pinned.
+This freeze precedes every influence measurement. No D-15 is
+authorized. No LLM adjudicates any behavior, influence value, or
+gate; all measurement and verdict logic is deterministic.
+=====================================================================
+
+1. HYPOTHESIS (frozen verbatim from the Gen-3 campaign, written
+   before any StackVM spectrum existed)
+
+  StackVM's per-site influence spectrum is GAPPED:
+      middle_mass = P(site influence in (0, 0.25]) <= 0.05.
+  Interval (0, 0.25], threshold 0.05, both FROZEN. No alternative
+  threshold, interval, classifier, statistic, or subgroup may
+  adjudicate. Primary verdict mapping:
+      middle_mass <= 0.05  ->  D14_PREDICTION_SURVIVES
+      middle_mass  > 0.05  ->  D14_MECHANISM_FALSIFIED
+  The exact measured value accompanies either verdict.
+
+2. HONESTY CONDITIONS (two, both declared before measurement)
+
+  2a (from the task charter): D-13 already established StackVM's
+  empty local band (kpos025 = 0.000, 505/505 clean pairs). D-14
+  does NOT claim to have predicted that. The novel object is the
+  per-site influence SPECTRUM.
+  2b (DISCOVERED DURING RECONSTRUCTION, declared here): under the
+  inherited canonical intervention (section 6), a site's influence
+  is the displacement of a native single-point mutation at that
+  site, measured by the same comparator and battery family as
+  D-13's kpos025 channel. The primary statistic is therefore
+  CLOSELY RELATED to a channel D-13 already measured at 0.000 over
+  505 pairs: the prediction is riskier than a retrodiction but
+  less risky than the Gen-3 packet's framing implied. It fails
+  only if D-13's pair sample was unrepresentative of fresh
+  parents/seeds/sites. The genuinely novel content of D-14 is:
+  (i) a fresh sample at preregistered unused seeds; (ii) SITE
+  RESOLUTION (which byte positions carry which influence);
+  (iii) the zero-vs-high decomposition of the spectrum, never
+  measured; (iv) per-site coverage and position structure. This
+  paragraph exists so no reviewer has to discover the overlap.
+
+3. SUBSTRATE AND PROVENANCE (reconstructed from D:\ZeusE, the
+   authority; no conversational memory used)
+
+  Execution authority: Foundry at https://192.168.1.202:8799,
+  release pin 50b5c2327c64bf112c635ca1487f2b1a8fd64e1b7faade947
+  6d5dfa7215fd492 (D-13's pin; verified MATCH before this freeze:
+  git_commit 71b29593..., n_files 211, schema 0.1.0).
+  Client: D:\ZeusE\d12\client\remote.py (canonical; release pin +
+  transport-indeterminate discipline) via d12_session.py
+  conventions; token from the operator credential kit mechanism
+  (C:\ZeusD-var\d11\remote\token.txt -> env FOUNDRY_ADMIN_TOKEN;
+  cert m1.crt -> env FOUNDRY_M1_CERT). The credential is never
+  displayed, committed, or journaled; only the mechanism is.
+  Release-pin re-verified every 25 calls (D-13 H-1 policy).
+  StackVM: system_id stackvm-v1. Object = engine genotype (byte
+  sequence) served by GET /v0/artifacts/{id}/genotype; artifacts
+  are content-addressed (sha256 of genotype).
+  World/battery/limits inherited from D-13 FROZEN v1.0
+  (d13_frozen_config.json): world seq_transducer_v1, horizon 4,
+  oracle affine_residual; battery kind x_uniform, size 8, seed =
+  call seed (D-13 battery-A convention); max_steps 2000; metric =
+  the displacement endpoint's default (trajectory_disagreement),
+  identical to P1 (verified from P1 result files' metric field at
+  runtime and recorded).
+
+4. SITE DEFINITION (inherited)
+
+  A site is one position in the native serialized genotype
+  sequence returned by /v0/artifacts/{id}/genotype -- the unit the
+  native point mutation (stackvm.point_indel.v1, p_point=1.0,
+  max_point_sites=1, inserts/deletes/dup off) perturbs. Site
+  identity of a mutation is recovered by exact positional diff of
+  parent vs child genotypes (equal lengths required; guaranteed by
+  the operator config, verified per pair).
+
+5. MEASUREMENT PLAN
+
+  Ten calls to POST /v0/search-physics/displacement, one per
+  frozen seed in {900001 .. 900010} (disjoint from every D-13/D-12
+  seed), each with: system stackvm-v1, the section-3 world/battery/
+  limits, operator = D-13's I-L_strong config verbatim, n_parents
+  = 32, mutations_per_parent = 16 (the server maxima). Parents are
+  server-generated per call seed exactly as in D-13 P1. For every
+  pair: fetch parent and child genotypes, diff.
+
+6. CANONICAL INTERVENTION AND SELECTION RULE (frozen)
+
+  The canonical single-site intervention at site s of parent P is
+  the native single-point mutation that D-13's I-L_strong family
+  itself produces at s (exactly one site perturbed; execution
+  proceeds normally; consequence measured by the inherited
+  comparator over the inherited battery -- all server-side).
+  Because the native family draws the replacement value from its
+  own RNG, several samples may hit the same site. FROZEN
+  DETERMINISTIC SELECTION RULE: influence(P, s) = the displacement
+  of the FIRST pair, in server-returned pair order within the
+  lowest-seed call, whose diff is exactly site s of parent P and
+  which is ELIGIBLE under section 7. All other samples of (P, s)
+  are preserved raw and may appear only in post-hoc descriptive
+  analysis. No averaging enters the primary statistic.
+
+7. ELIGIBILITY, EXCLUSIONS, DENOMINATOR (frozen)
+
+  A pair is ELIGIBLE iff: genotype lengths equal AND positional
+  diff count == 1 AND parent clean AND child clean (both_clean --
+  the D-13 kpos025 channel's own convention). Exclusions, each
+  counted and reported: diff==0 (value-identical redraw; also
+  serves as the no-op control class), diff>1 (locality violation
+  -- must be ~0 given max_point_sites=1; any nonzero rate is
+  investigated before the verdict), child faulted (FAULT-class
+  intervention: influence undefined under the inherited clean-pair
+  convention; rate reported).
+  DENOMINATOR (explicit): all measured sites = distinct (parent_id,
+  site) pairs with at least one ELIGIBLE sample. Sites never hit
+  by the native sampler are unmeasured and outside the
+  denominator; per-parent coverage (measured sites / genotype
+  length) is reported. Site sampling follows the NATIVE operator's
+  site distribution; its observed position histogram is reported.
+
+8. SUPPORT AND VACUITY GATES (before the verdict may fire)
+
+  - >= 100 distinct parents; >= 1000 measured sites;
+  - influence variance check: >= 3 distinct influence values AND
+    not all values identical;
+  - locality violations (diff>1) == 0, else investigate; if
+    unresolved, D14_INDETERMINATE;
+  - every control in section 9 passes.
+  Any failure -> D14_INDETERMINATE with the exact reason. A
+  harness/infrastructure failure is never mapped to a scientific
+  verdict. If the service or release pin fails mid-run and cannot
+  be restored: D14_INFRASTRUCTURE_BLOCKED.
+
+9. CONTROLS (instrument tests; may not move the threshold)
+
+  C1 REPLAY DETERMINISM: seed 900001's call issued twice; the
+     displacement vectors and pair id sequences must be identical.
+  C2 NO-OP CLASS: every diff==0 pair must have displacement == 0
+     and exact_behavior_match true.
+  C3 INTERVENTION LOCALITY: diff-count histogram reported;
+     included pairs are exactly diff==1 by rule.
+  C4 COMPARATOR INHERITANCE: displacement values are computed by
+     the same server endpoint, metric, battery family, and
+     max_steps as D-13 P1; the response's metric and battery_hash
+     fields are recorded per call and the metric must equal P1's.
+  C5 CONTENT-ADDRESS HAND-CHECK: for >= 5 pairs, sha256 of the
+     fetched genotype bytes must equal the artifact id -- an
+     independent integrity check of the genotype channel.
+
+10. NO-RESCUE RULE
+
+  If middle_mass > 0.05 the prediction fails:
+  D14_MECHANISM_FALSIFIED, softened by nothing. No alternative
+  interval/cutoff/intervention/statistic/subgroup/classifier, no
+  post-hoc exclusion of site classes, no opcode conditioning, no
+  appeal to the known empty band, may modify the verdict.
+  Post-verdict descriptive analyses are labeled POST_HOC_
+  DIAGNOSTIC and adjudicate nothing.
+
+11. METHODOLOGICAL-INSPECTION BOUNDARY (journaled)
+
+  Before this freeze, the following were inspected: ZeusE reports,
+  client code, OpenAPI capture, d13_frozen_config.json, P1 result
+  files' STRUCTURE and their already-published channel values
+  (kpos025 et al.), and the release endpoint. NO per-site
+  influence value was computed or read anywhere; the dependent
+  measurement does not yet exist. Section 2b records the one
+  respect in which prior knowledge bears on the prediction's risk.
+
+12. ARTIFACTS
+
+  genesis/harmonia_a/d14/: this freeze; run_d14.py (measurement);
+  analyze_d14.py (frozen verdict logic); results/pairs_raw.jsonl
+  (every pair: ids, site, displacement, eligibility, exclusion
+  reason); results/influence_sites.json (per-site primary values);
+  results/analysis_d14.json (spectrum, gates, verdict);
+  JOURNAL.jsonl (issuance hashes, connection identity, per-call
+  battery hashes, disclosures); PROVENANCE.json (hashes of
+  remote.py, d12_session.py, d13_frozen_config.json, openapi.json,
+  m1client kit FILENAMES only); final external review packet.
+  Commit order must show freeze before measurement.
+
+=====================================================================
+END FREEZE -- D-14, Harmonia A, 2026-08-31
+=====================================================================

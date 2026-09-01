@@ -1,0 +1,65 @@
+=====================================================================
+GEN-3C FREEZE -- geometry kill-pair search
+Date: 2026-08-31. Campaign rules R1-R7. Prerequisite satisfied:
+3B TRANSPORT_CONFIRMED. Coordinates under attack: (i) the
+edit-level scalar inf_target (AUC ~0.77 alone, transported); (ii)
+the parent-level rank-linear composite (rho 0.58-0.71 held out).
+=====================================================================
+QUESTION. Do the surviving coordinates survive ADVERSARIAL exchange
+pairs, or do they merely achieve good aggregate scores? A geometry
+claim requires (approximate) level sets: nearly-equal coordinate ->
+nearly-equal consequence. Kill-pairs attack exactly that.
+
+PAIR FAMILIES (constructed from the existing edit rows; cross-
+parent only; deterministic sampling, stat seed 20260904):
+  KP1  matched-coordinate discordant: |delta inf_target| <= 0.02,
+       both edits non-neutral, R_VEC2 classes DIFFER (SMALL vs
+       LARGE-or-DESTRUCTION).
+  KP2  (converse) far-coordinate concordant: |delta inf_target|
+       >= 0.30, classes IDENTICAL.
+  KP3  parent-level: matched composite prediction (|delta yhat|
+       <= 0.05 on the [0,1] scale) with |delta small_share| >=
+       0.30 -- parents the surface says are alike but are not.
+Sampling: 200,000 seeded cross-parent candidate pairs; family
+membership counted exactly on the sample.
+
+STATISTICS AND GATES (frozen):
+  DISC = P(classes differ | matched coordinate) from KP1 sampling;
+  BASE = P(classes differ | random cross-parent pair).
+  FAMILY EXISTENCE bar: a family "exists in force" iff >= 100
+  pairs spanning >= 20 parents and >= 3 seeds.
+  RESIDUAL TEST: among KP1 pairs, predict WHICH member is SMALL
+  from auxiliary difference-features only (delta balance_dev,
+  delta s_live, delta inf_density, delta kind, delta target-gate
+  position/24) -- coordinate itself excluded by construction
+  (matched). LOSO folds by held-out seed (a pair is in a test
+  fold iff either member's parent has that seed; train pairs must
+  touch neither). Gate: AUC >= 0.65 in 5/5 folds.
+
+VERDICTS (frozen):
+  COORDINATE_SUFFICIENT            DISC <= 0.05 (near-pure level
+                                   sets; KP1 fails to exist in
+                                   force).
+  COORDINATE_INSUFFICIENT_RICHER_STRUCTURE
+                                   KP1 exists in force AND the
+                                   residual test passes (the
+                                   discordance is SYSTEMATIC --
+                                   other measured variables carry
+                                   it; 3D must include richer-
+                                   than-scalar families, which it
+                                   already does by charter).
+  COORDINATE_PLUS_IRREDUCIBLE_NOISE
+                                   KP1 exists in force AND the
+                                   residual test fails (the scalar
+                                   is the best available level;
+                                   discordance looks stochastic
+                                   w.r.t. everything measured).
+  INDETERMINATE                    sampling/support defects.
+KP2 and KP3 are reported descriptively (no gate): KP2 calibrates
+how non-injective the coordinate is; KP3 bounds the parent
+surface's pointwise (not aggregate) reliability.
+
+NO-RESCUE NOTE: whichever verdict fires, the 3B transport result
+stands at its own scope (aggregate, held-out). 3C adjudicates the
+GEOMETRY reading of that result, not its existence.
+=====================================================================

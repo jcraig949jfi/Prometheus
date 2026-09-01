@@ -1,0 +1,63 @@
+{
+ "baseline": {
+  "acc": 1.0,
+  "bnd_fc": 0.0,
+  "abstain": 0.0
+ },
+ "ablations": {
+  "K1 kernel:=constant True": {
+   "acc": 0.6027,
+   "bnd_fc": 1.0,
+   "abstain": 0.0,
+   "delta_acc": -0.3973
+  },
+  "K2 kernel: drop empty-domain rule": {
+   "acc": 0.5068,
+   "bnd_fc": 0.0,
+   "abstain": 0.4932,
+   "delta_acc": -0.4932
+  },
+  "K3 kernel: existential-blind on empty": {
+   "acc": 0.411,
+   "bnd_fc": 0.0,
+   "abstain": 0.0,
+   "delta_acc": -0.589
+  },
+  "K4 kernel: counterexample-blind": {
+   "acc": 0.6849,
+   "bnd_fc": 0.0,
+   "abstain": 0.0,
+   "delta_acc": -0.3151
+  },
+  "P1 domain match: equality -> containment": {
+   "acc": 0.9041,
+   "bnd_fc": 0.0,
+   "abstain": 0.0,
+   "delta_acc": -0.0959
+  },
+  "P2 no container strip": {
+   "acc": 0.1096,
+   "bnd_fc": 0.0,
+   "abstain": 0.8904,
+   "delta_acc": -0.8904
+  },
+  "P3 no cardinality reader": {
+   "acc": 0.4932,
+   "bnd_fc": 0.0,
+   "abstain": 0.5068,
+   "delta_acc": -0.5068
+  },
+  "P4 cardinality reader ignores predicate": {
+   "acc": 1.0,
+   "bnd_fc": 0.0,
+   "abstain": 0.0,
+   "delta_acc": 0.0
+  },
+  "P5 no stemming": {
+   "acc": 0.3699,
+   "bnd_fc": 0.0,
+   "abstain": 0.6301,
+   "delta_acc": -0.6301
+  }
+ }
+}

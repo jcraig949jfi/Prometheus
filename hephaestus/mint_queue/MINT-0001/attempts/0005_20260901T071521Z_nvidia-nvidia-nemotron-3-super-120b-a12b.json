@@ -1,0 +1,19 @@
+{
+  "n": 5,
+  "ts": "2026-09-01T07:15:21Z",
+  "model": "nvidia:nvidia/nemotron-3-super-120b-a12b",
+  "prompt_sha": "cedc21c9d541",
+  "regime": "apprentice",
+  "cost": 0.0,
+  "latency_s": 294.6,
+  "model_served": "nvidia/nemotron-3-super-120b-a12b",
+  "llm_ok": true,
+  "hypothesis": "",
+  "substrate_suffices_claim": "",
+  "self_counterexamples": "",
+  "verdict": "NO_CODE",
+  "note": "6000-token budget, code-first instruction: 23 KB of deliberation, no code emitted. Model failure family: deliberates_without_emitting.",
+  "failure_families": [
+    "deliberates_without_emitting"
+  ]
+}

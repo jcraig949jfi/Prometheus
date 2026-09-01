@@ -1,33 +1,16 @@
 {
   "cycle": 38,
-  "started_at": "2026-09-01T16:01:46Z",
-  "ended_at": "2026-09-01T16:01:47Z",
-  "frontier_kind": "historical",
-  "frontier_target": "artificial life open ended evolution",
-  "searches": [
-    {
-      "query": "artificial life open ended evolution",
-      "source": "openalex",
-      "formulation": "seed_historical",
-      "n_results": 422406,
-      "n_relevant": 12,
-      "top_ids": [
-        "https://openalex.org/W2981731882",
-        "https://openalex.org/W2151083897",
-        "https://openalex.org/W2315240907",
-        "https://openalex.org/W4386958277",
-        "https://openalex.org/W2935444922"
-      ],
-      "issued_at": "2026-09-01T16:01:47Z",
-      "url": "https://api.openalex.org/works?search=artificial+life+open+ended+evolution&per-page=12&mailto=jcraig949%40gmail.com"
-    }
-  ],
-  "sources_new": 11,
-  "sources_rejected": 1,
+  "started_at": "2026-09-01T05:54:00Z",
+  "ended_at": "2026-09-01T06:04:01Z",
+  "frontier_kind": "frozen_test",
+  "frontier_target": "TX-001-partial-cells and TX-003-coordinates-cannot-express-MI",
+  "searches": [],
+  "sources_new": 0,
+  "sources_rejected": 0,
   "sources_already_known": 0,
-  "genomes_created": 11,
-  "claims_created": 10,
-  "claims_adjudicated": 10,
+  "genomes_created": 0,
+  "claims_created": 0,
+  "claims_adjudicated": 0,
   "holes_proposed": 0,
   "holes_killed": 0,
   "confounds_found": 0,
@@ -35,9 +18,15 @@
   "taxonomy_changes_proposed": 0,
   "failures": [],
   "blockers": [],
-  "notes": [],
-  "artifact_digest": "45f80cd897c82738fff0c1f2f50971588855ac51caec09b44f7ffcd7ca4cb19a",
+  "notes": [
+    "NO ACQUISITION. This cycle spent on the frozen tests TX-001 and TX-003 already owed, as TRAJ-001 recommended at cycle 032 and cycles 033-037 did not do. Zero papers retrieved by design; corpus size is unchanged at 304.",
+    "TX-001 PASSES both clauses of its cycle-021 frozen condition. Placement 6.0% -> 57.3% leave-one-out (13/218 -> 125/218); paired non-degradation 0 degraded of 13 comparable. NOT APPLIED -- application is a separate reviewable act.",
+    "TX-003 is NOT ADJUDICABLE. Its cycle-028 frozen test needs 12 of 23 MI papers to pass; at most 7 can ever pass and random neighbours already reach 6. The observed 2 is a fact about the test, not about mechanistic interpretability. LIM-003 error class.",
+    "Three limitations filed: LIM-009 (abstract flag stale before cycle 019, no live consumer), LIM-010 (cross-field metric has no dynamic range -- publish a satisfiability ceiling before freezing any test that uses it), and new evidence escalating LIM-004 (polysemy contaminates the MI POPULATION, not just query results; roughly 12 of 23 tagged-MI papers are not MI papers).",
+    "Result artifact digest 381f191bfd185603046523713b65e9620c36a54e9a47f38ffc3586cc000fc835."
+  ],
+  "artifact_digest": "119643f0bc69e57629930c32f6c081b0aa4a3e0ff6104baa4266eb62a612ae7e",
   "status": "OK",
   "schema_version": "cartography-0.1",
-  "_digest": "a382c2d7d2b738be8b64ea9309d48f00a4b9c4e232d5ca3018cf9cb3e722a2a5"
+  "_digest": "563138627e0198e1a770eea17df919745de0918a0bbe7ce23d413b3749db0c91"
 }

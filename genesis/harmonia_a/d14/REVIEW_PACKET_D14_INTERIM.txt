@@ -1,0 +1,456 @@
+=====================================================================
+PROMETHEUS / SERENDIPITY FOUNDRY
+D-14 -- STACKVM INFLUENCE-SPECTRUM PREDICTION TEST
+INTERIM EXTERNAL REVIEW PACKET (measurement parked mid-run)
+=====================================================================
+Date: 2026-09-01
+Origin: Harmonia A seat on the M2 research console, repo
+D:\Prometheus (experiment directory genesis/harmonia_a/d14/),
+operating the M1 Foundry instrument over TLS-pinned, token-
+authenticated HTTPS. Predecessor artifacts under D:\ZeusE (D-12/
+D-13) and D:\ZeusD (D-11, foundry source 0.1.1).
+Status: D-14 is FROZEN, partially measured, and PARKED after two
+external stops of the measurement job. No scientific verdict has
+been reached. This packet is written for a FIRST-TIME reviewer: it
+explains the instrument, its architecture, the experiment lineage,
+the D-14 design, everything measured so far, and then asks the
+reviewer a set of genuine questions. Nothing in here requires
+conversational context to audit; every claim names an artifact.
+
+---------------------------------------------------------------------
+0. SUMMARY FOR THE HURRIED REVIEWER
+---------------------------------------------------------------------
+D-14 tests a prediction written before its measurement existed:
+
+  StackVM's per-site influence spectrum is GAPPED --
+  the fraction of sites with influence in (0, 0.25] is <= 0.05.
+
+The prediction came from a prior campaign (Harmonia Gen-3) that
+measured two other substrates and found gapped-versus-graded
+influence spectra aligning with absence-versus-presence of a
+"local consequence band" under mutation. StackVM is the third,
+out-of-sample case, on the real D-13 substrate lineage, executed
+by the same release-pinned instrument.
+
+Where it stands today:
+  - The freeze demonstrably precedes all measurement (commit
+    chain, section 8).
+  - Two instrument facts were discovered and banked en route,
+    independent of any verdict (section 7): the artifacts-route
+    mutate op SILENTLY IGNORES its operator config on release
+    50b5c232 (the same defect class D-13 filed against the
+    search-physics endpoints of the previous release), and
+    artifact ids are not genotype hashes (genotype_addr is).
+  - The first measurement pass adjudicated D14_INDETERMINATE on
+    support grounds -- correctly, by its own frozen gates.
+  - The repaired, resumable second pass has measured 45 of 200
+    parents (364 site rows persisted) and was externally stopped
+    twice; it resumes at one-parent granularity whenever the
+    operator authorizes.
+No spectrum number in this packet is a verdict. The only reported
+spectrum (section 6, A1) is VOID for adjudication and is disclosed
+because hiding it would be worse than reporting it.
+
+---------------------------------------------------------------------
+1. WHAT THE SERENDIPITY FOUNDRY IS (first-time explainer)
+---------------------------------------------------------------------
+The Foundry is Prometheus's instrument for doing falsification-
+grade science on EXECUTABLE EVOLUTIONARY SUBSTRATES -- small
+program-like organisms (stack-machine programs, GP trees, Push
+programs) that are randomly created, mutated, recombined, executed,
+and selected. Its design premise, in two lines from its own README:
+
+  Discovery fails OPEN: useless artifacts, failed programs, dead
+  code and unexplained traces are preserved, never deleted for
+  being currently useless.
+  Adjudication fails CLOSED: no claim is earned by novelty,
+  clustering, frequency, or surprise -- only by frozen causal
+  tests (absence, provenance, ablation, matched random controls,
+  transfer, hostile intervention); anything less is FOSSIL_ONLY.
+
+It exists because Prometheus's north star is not a better archive
+or benchmark but a machine that can acquire NEW REASONING
+OPERATIONS whose future use measurably expands what it can reach.
+The Foundry is where candidate mechanisms for that claim get
+executed, measured, and mostly killed.
+
+Physically: two machines. M1 (192.168.1.202) runs the instrument
+-- the single EXECUTION AND PROVENANCE AUTHORITY. M2 (the research
+console, this repo) holds preregistrations, drives experiments
+through a thin client, and performs statistics over M1-produced
+canonical artifacts. M2 never executes substrate code locally; a
+locally improvised substrate is constitutionally forbidden as a
+replacement for the instrument.
+
+---------------------------------------------------------------------
+2. BACKEND ARCHITECTURE (what a reviewer should picture)
+---------------------------------------------------------------------
+From the release source (D:\ZeusD\serendipity-foundry-0.1.1) and
+the captured OpenAPI surface (39 routes):
+
+  donor ecosystems (pyribs, PyshGP, QDax, ...)
+      | isolated adapters, semantics preserved, contract-tested
+      v
+  EngineAdapter / Archive / SearchDriver --> APPEND-ONLY EVENT
+      |                                      LEDGER (hash chain)
+      v                                          |
+  FOSSIL STORE (content-addressed, tiered)       v
+      |                              analytics projection
+      v
+  FrozenCorpus --> competing IndexBuilders (raw ... low-rank)
+      |            queries consume raw TaskEvidence ONLY
+      v
+  downstream acquisition --> specimen nomination --> COURT
+                                               (fail-closed)
+
+Key properties, each load-bearing for D-14:
+  RELEASE IDENTITY. /v0/version reports a source_tree_hash; every
+    client pins it and refuses a mismatched instrument. D-14 runs
+    against 50b5c232... (git 71b29593, 211 files), the release
+    D-13 closed on.
+  CONTENT-ADDRESSED ARTIFACTS. Programs are artifacts with sha256
+    ids; genotypes are fetchable (base64) with their own
+    genotype_addr = sha256(genotype bytes). Creation is recorded
+    with op, seed, config hash, event_seq -- full lineage.
+  ENGINES. stackvm-v1 (in-house metered stack VM; the D-14
+    subject), treegp-deap, push-pyshgp. Capabilities are
+    manifested per engine (create_random, mutate, recombine,
+    evaluate, trace, step_meter, behavior...).
+  WORLDS AND BATTERIES. Registry-validated causal worlds (D-12/13
+    used seq_transducer_v1 with an affine_residual oracle at
+    horizon 4) and evaluation batteries (x_uniform / x_ecological
+    / x_interventional, sizes <= 64).
+  SEARCH PHYSICS (observer side). Endpoints that measure
+    variation->consequence physics without driving search:
+    displacement, locality, heritability, improvement, trace.
+    D-13's channels (neutral fraction, K_positive@0.25, induced
+    fault rate, decoupled retention) came from here.
+  SEARCH DRIVERS own selection (random, objective, novelty,
+    map_elites); native engine selection is disabled -- selection
+    provenance is driver-side by design.
+  TASKS AND EVALUATE. Content-addressed IO-example tasks; evaluate
+    returns fitness, per-run output_hash, a behavior descriptor,
+    resource accounting, and a typed failure record.
+  EVIDENCE FIREWALL. Index queries may consume raw machine task
+    evidence ONLY -- oracle distances, target diffs, subgoals,
+    semantic embeddings and problem NAMES are forbidden by
+    construction (the "D-7 firewall").
+  COURT. Fail-closed adjudication of nominated specimens with
+    frozen causal tests. Not exercised by D-14.
+  ADMIN. Health, events, per-trace lookup, environment; an
+    append-only ledger with event_seq underpins /v0/replay.
+
+---------------------------------------------------------------------
+3. THE CLIENT, AND WHY IT LOOKS PARANOID
+---------------------------------------------------------------------
+M2 drives M1 through one stdlib-only file, remote.py (sha256
+bdd6f077...), whose two invariants are constitutional:
+  1. RELEASE PIN: refuse to run against any other instrument
+     identity; D-13 policy re-verifies the pin every 25 calls
+     (adopted after incident H-1, when M1 hot-swapped releases
+     mid-campaign and a runner served 221 calls under a stale pin).
+  2. THE NETWORK IS NEVER A SCIENTIFIC RESULT: timeouts and 5xx
+     raise TransportIndeterminate carrying a trace id; the caller
+     reconciles against the server ledger to learn whether the
+     operation committed. Only a fully received 2xx is a result.
+Credentials: a bearer token and a private CA cert live in an
+operator kit outside every repo (C:\ZeusD-var\d11\remote\), loaded
+as environment variables; values are never journaled or committed.
+D-14 recovered this mechanism from D-13's own bootstrap report
+rather than from memory, and used it unchanged.
+
+---------------------------------------------------------------------
+4. THE D-LINEAGE IN ONE PAGE (progression and trend)
+---------------------------------------------------------------------
+The D-experiments are Prometheus's numbered falsification
+generations on this instrument lineage. Reconstructed from
+committed artifacts (earlier generations are summarized only where
+their fossils were inspected):
+
+  D-1..D-10  Built and hardened the instrument and its epistemic
+             machinery: the ledger/fossil/court architecture, the
+             evidence firewall ("D-7"), and D-9's framing question
+             -- can machine-created ORGANIZATION of accumulated
+             executable experience beat raw storage and human-
+             generic indexing for future problem acquisition?
+  D-11       "Endogenous memory structure without a human
+             ontology" -- assay construction plus adversarial
+             attack phase (565/565 reproduction gates, information-
+             boundary specs); Phase 1 closed with no main run.
+  D-12       Failure-surface CARTOGRAPHY: a shared Search-Physics
+             observer mapped where three GP systems break along
+             variation -> consequence -> selection. Verdict
+             REVISE_CARTOGRAPHY. Standing results: stackvm/pushgp
+             variation is neutral-or-far with an empty-to-thin
+             local band; the "fault wall" is mostly INHERITED
+             population non-viability, not mutation-induced.
+  D-13       Failure-DIRECTED INTERVENTION: do channel diagnoses
+             predict which mechanical repair helps which system?
+             Verdict INTERVENTION_DID_NOT_MOVE_TARGET_CHANNEL --
+             a reachability result: the admissible operator family
+             cannot move the diagnosed channels; stackvm's empty
+             local band (kpos025 = 0.000, 505/505) is OPERATOR-
+             FAMILY-ROBUST, sharpening it into a representational
+             claim about the byte-to-behavior map.
+  (parallel) Harmonia Gen-0..3 on the M2 side built a consequence
+             RULER from axioms, killed several coordinate
+             hypotheses, and produced the gapped-vs-graded
+             influence-spectrum mechanism with a frozen StackVM
+             prediction -- without touching StackVM.
+  D-14       The prediction meets the untouched measurement
+             (this packet).
+
+TREND: build the instrument -> harden it against its own operators
+-> map failure terrain -> intervene on diagnoses (and learn the
+levers don't reach) -> mechanistic prediction across substrates.
+Verdicts have gotten smaller and sharper each generation; most
+value has come from what the hostile reviews killed.
+
+---------------------------------------------------------------------
+5. D-14 DESIGN (frozen 2026-08-31, commit 67a295618)
+---------------------------------------------------------------------
+PRIMARY: middle_mass = P(site influence in (0, 0.25]) over all
+measured sites; <= 0.05 -> D14_PREDICTION_SURVIVES; > 0.05 ->
+D14_MECHANISM_FALSIFIED; exact value reported either way; no
+alternative statistic, interval, threshold, subgroup, or
+classifier may adjudicate (no-rescue, frozen).
+HONESTY CONDITIONS (both in the freeze): (a) D-13's empty local
+band is known context, not a D-14 prediction; (b) DECLARED at
+freeze time: under the inherited intervention the primary
+statistic is closely related to D-13's kpos025 channel, so the
+prediction is riskier than retrodiction but less risky than the
+Gen-3 packet implied; the genuinely novel content is the fresh
+sample, SITE RESOLUTION, and the zero-vs-high decomposition.
+SITE: one position of the native serialized genotype (stackvm
+programs are byte sequences, observed length 84).
+CANONICAL INTERVENTION: the native single-byte point change, with
+a frozen first-hit selection rule per (parent, site); influence =
+changed_cases / evaluable_cases over a frozen 8-case battery
+(the task charter's exact formula), all execution and output
+hashing server-side; the client compares hashes only.
+CONTROLS: replay determinism (evaluate and mutate), no-op class
+(zero-diff children must be behaviorally identical), intervention
+locality (per-pair genotype diff == 1), comparator provenance,
+content-address hand-check. SUPPORT GATES: >= 100 clean parents,
+>= 1000 measured sites, influence must vary; any failure ->
+D14_INDETERMINATE, never a scientific verdict.
+
+---------------------------------------------------------------------
+6. EXECUTION RECORD (what actually happened; all journaled)
+---------------------------------------------------------------------
+CONNECTION. Recovered from ZeusE artifacts only: base URL, token/
+cert mechanism, pin, client. Release check PASSED before the
+freeze and at every runner start; pin re-verified every 25 calls.
+PATH 1 (voided). The frozen plan used the D-13 displacement
+endpoint (server-measured consequence) plus genotype diff for site
+identity. Measured fact: all 5,120 collected pairs returned 404
+unknown_artifact -- displacement parents/children are EPHEMERAL
+(computed, never persisted). A seed-mapping probe found no
+correspondence to create_random ids. AMENDMENT A1 (commit
+b97355b76, disclosed) moved to persisted artifacts:
+create_random parents, mutate children, per-case tasks, influence
+from output-hash comparisons -- and DECLARED the comparator
+deviation (final-output change on native evaluation cases vs
+D-13's trajectory metric over world probes).
+PATH 2 / RUN A1. 100 parent seeds x 64 mutation draws. The frozen
+gates fired D14_INDETERMINATE, correctly: only 56 clean parents
+and 567 measured sites; 1,680 children changed LENGTH and 1,219
+changed MULTIPLE sites despite point-only/max_point_sites=1
+config; the content-address hand-check failed. Diagnosis
+(deterministic probes, journaled): the /v0/artifacts mutate op
+IGNORES its config -- two contradictory configs at the same seed
+produce the IDENTICAL child and identical creation_config_hash
+(d0a4949f...). The hand-check compared the wrong field (my error):
+artifact_id is not sha256(genotype); genotype_addr is (verified
+exactly). VOID-FOR-ADJUDICATION spectrum observed on those 567
+sites -- zero 0.892 / middle 0.0035 / high 0.104 -- disclosed here
+and in the journal so issuance order can be weighed; it decided
+nothing.
+AMENDMENT A2 (commit baa028646). Sampler re-declared as the
+engine's DEFAULT mutate operator filtered to its single-site
+outcomes (the same eligibility rule; multi-site/indel draws become
+expected, counted exclusion classes); C5 fixed to genotype_addr;
+scale raised to 200 parent seeds x 96 draws. Influence formula,
+bins, threshold, battery, eligibility: byte-identical to A1.
+RUN A2 (in progress, PARKED). First launch externally stopped at
+parent 120/200 with rows only in memory -- my runner design flaw;
+rewritten resumable with per-parent persistence (commit
+c8a267471; a botched intermediate sed patch is journaled too).
+Second launch externally stopped at parent 45/200 with 45 parents
+/ 364 site rows PERSISTED. Two external stops in a row were
+treated as a possible operator signal: the lane is parked pending
+authorization rather than relaunched a third time unilaterally.
+RESUME COST: zero re-work; the runner skips completed parents.
+
+---------------------------------------------------------------------
+7. INSTRUMENT FINDINGS BANKED REGARDLESS OF VERDICT
+---------------------------------------------------------------------
+  IF-1  /v0/artifacts op=mutate silently ignores its config on
+        release 50b5c232 (proof: identical child + identical
+        creation_config_hash under contradictory configs). Same
+        defect CLASS as D-13's reports/08 finding against the
+        previous release's SP endpoints (which that release fixed
+        with strict 422s). Recommended upstream repair: reject
+        unknown/uneffective config with 422, echo effective
+        operator config in artifact creation records -- exactly
+        the remedy that worked last time.
+  IF-2  Displacement-endpoint pairs are ephemeral; there is no
+        path from the (excellent) server-side displacement
+        comparator to site identity. Any future per-site science
+        needs either persisted SP pairs or a site-addressed
+        intervention endpoint (see questions).
+  IF-3  artifact_id != sha256(genotype); genotype_addr is the
+        genotype hash. Worth one line in the API docs.
+  IF-4  ~44% of random stackvm parents fault on an 8-case uniform
+        raw-input battery -- consistent with D-12's inherited-
+        non-viability finding, now measured on the evaluate path.
+
+---------------------------------------------------------------------
+8. COMMIT CHAIN (freeze demonstrably precedes measurement)
+---------------------------------------------------------------------
+  67a295618  FREEZE_D14 + PROVENANCE (pre-measurement)
+  b97355b76  AMENDMENT A1 (ephemerality wall; disclosed)
+  df161aa37  A1 runner + frozen A1 analyzer (pre-run)
+  baa028646  AMENDMENT A2 (config-ignore defect; C5 fix; scale;
+             A1 observation disclosed)
+  c8a267471  resumable A2 runner (post-kill; mechanical only)
+  JOURNAL.jsonl carries issuance hashes, the methodological-vs-DV
+  boundary declaration, every disclosure, and both kill events.
+  Upstream hashes pinned in PROVENANCE.json (remote.py,
+  d12_session.py, d13_frozen_config.json, openapi.json,
+  p1_results.json).
+
+---------------------------------------------------------------------
+9. CURRENT STATUS AND CLAIM CEILING
+---------------------------------------------------------------------
+STATUS: D14 measurement 22.5% complete under A2; no scientific
+verdict exists; the only verdict rendered anywhere is
+D14_INDETERMINATE (support) on the A1 pass, which is exactly what
+its gates were built to say. The frozen prediction remains
+unadjudicated and unmodified.
+CLAIM CEILING (already binding on any eventual verdict): one
+substrate (stackvm-v1, release 50b5c232), one battery family
+(8 uniform raw-input cases at horizon length), the default-
+operator single-site sampler, the output-hash comparator, and the
+declared overlap with D-13's kpos025 channel. A surviving
+prediction would make three substrates align -- interest, not a
+law. A falsified one kills the simple correspondence as
+preregistered. Neither outcome says anything about reasoning,
+search improvement, or cross-substrate transfer.
+
+---------------------------------------------------------------------
+10. QUESTIONS FOR THE REVIEWER (genuine asks, not rhetoric)
+---------------------------------------------------------------------
+ON D-14 ITSELF:
+  Q1  The comparator deviation (final-output change vs D-13's
+      trajectory disagreement) is declared. Would you require a
+      bridging measurement (both comparators on a common pair
+      set) before accepting a SURVIVES verdict, and if so, what
+      is the smallest one you would trust?
+  Q2  Given the declared overlap with kpos025 (freeze s.2b), how
+      much evidential weight would you assign a SURVIVES verdict?
+      Is there a sharper preregisterable statistic that separates
+      "spectrum is gapped" from "displacements avoid the middle
+      band" better than our zero-vs-high decomposition?
+  Q3  The influence battery is 8 cases (native size). Middle-band
+      resolution is therefore eighths: influence values of 1/8
+      and 2/8 land IN (0, 0.25]. Would you demand a larger
+      battery (the instrument caps at 64) to de-quantize the
+      middle band, at 8x the call cost?
+  Q4  Is the default-operator site-sampling distribution (unknown,
+      observed histogram reported) an acceptable sampler for a
+      spectrum claim, or would you require site-exhaustive
+      coverage before either verdict?
+
+ON FUTURE TESTS:
+  Q5  What is the cheapest experiment that could BREAK the
+      gapped-spectrum <-> empty-local-band correspondence? Our
+      candidate: construct a substrate with a deliberately graded
+      spectrum and test whether a local band appears. Better
+      ideas?
+  Q6  The Gen-3 result that global structure beat each parent's
+      own within-parent model suggests mutation response is
+      carried by shared mechanism, not object identity. What
+      would you measure on the Foundry substrates to test that
+      transfer directly?
+  Q7  D-13 showed the admissible operators cannot reach the
+      diagnosed channels. If D-14 survives, the mechanism says
+      WHY (no graded sites to hit). What intervention would you
+      preregister for a D-15-class experiment: an encoding with
+      deliberately graded sites, an operator that edits at
+      sub-site granularity, or something else entirely?
+
+ON BACKEND ARCHITECTURE UPGRADES (M1 wishlist; we ask because you
+may see sharper versions of these):
+  Q8  A SITE-ADDRESSED INTERVENTION ENDPOINT: given artifact +
+      site + canonical perturbation rule, return the perturbed
+      artifact id and a server-computed per-case consequence
+      record under a named battery. This one endpoint would have
+      made D-14 a 30-minute experiment with zero comparator
+      deviation. What contract would you specify for it?
+  Q9  PERSISTED SEARCH-PHYSICS PAIRS (opt-in): displacement/
+      locality calls that write their parents/children to the
+      artifact store with lineage. Cost: storage. What retention
+      policy would you propose (the fossil store is tiered)?
+  Q10 EFFECTIVE-CONFIG ECHO EVERYWHERE: every creation record
+      carries the effective operator config (IF-1). Any reason
+      not to make this a release gate?
+  Q11 PER-RESPONSE RELEASE ECHO (still outstanding from D-13's
+      incident H-1). Any argument against making the release hash
+      a response header on every route?
+  Q12 A BEHAVIOR-DISTANCE ROUTE: server-side pairwise behavioral
+      distance between two ARTIFACTS under a named battery and
+      metric, so no client ever re-implements a comparator. Shape?
+
+ON THE NORTH STAR (research ideas wanted): Prometheus is hunting
+substrates and mechanisms by which a machine INVENTS, ACQUIRES,
+RETAINS, COMPOSES, and SELECTS new reasoning operations whose
+presence measurably expands reach. Given the lineage above --
+instrument -> cartography -> failed interventions -> spectrum
+mechanism -- what would you try next?
+  Q13 If the gapped spectrum is confirmed, "make sites graded"
+      becomes an ENCODING-DESIGN objective. Is there prior art or
+      a theory (smoothness of genotype-phenotype maps, neutral
+      networks, redundant codes) you would port as the next
+      frozen prediction, rather than another bespoke measurement?
+  Q14 The Court and the evidence firewall enforce that claims are
+      earned causally without human semantic labels. What
+      selection relation could act on OPERATION USEFULNESS
+      (transfer, reachability expansion, compositional reuse)
+      deterministically -- i.e., what would a "court for
+      operators" test, concretely?
+  Q15 The D-9 question (does machine-made organization of
+      experience beat raw storage?) was never run to verdict on
+      this instrument. Knowing what D-12..14 found about the
+      substrates' mutation geometry, how would you redesign D-9
+      so its outcome is not confounded by the substrate's own
+      unreachable local bands?
+  Q16 What measurement would DISTINGUISH "the substrate cannot
+      represent small meaningful change" from "our rulers cannot
+      see it"? (Gen-2's axioms are our best current answer; we
+      suspect they are not the last word.)
+
+---------------------------------------------------------------------
+11. ARTIFACT INDEX
+---------------------------------------------------------------------
+genesis/harmonia_a/d14/FREEZE_D14.txt          the freeze
+genesis/harmonia_a/d14/AMENDMENT_A1.txt        ephemerality repair
+genesis/harmonia_a/d14/AMENDMENT_A2.txt        sampler/control fix
+genesis/harmonia_a/d14/run_d14.py / _a1 / _a2  runners (a2 resumable)
+genesis/harmonia_a/d14/analyze_d14*.py         frozen verdict logic
+genesis/harmonia_a/d14/results/                pairs_raw (voided
+    path), a1_* (INDETERMINATE pass), a2_* (45 parents persisted,
+    partial), run metadata + controls
+genesis/harmonia_a/d14/JOURNAL.jsonl           issuance hashes,
+    boundary declarations, disclosures, kill events
+genesis/harmonia_a/d14/PROVENANCE.json         upstream hashes
+Upstream: D:\ZeusE\d12\ (D-12/13 reports, client, frozen config,
+OpenAPI capture, p1_results.json); D:\ZeusD\ (D-11, foundry
+source 0.1.1). Predecessor packets:
+REVIEW_PACKET_FINAL_D12.txt / _D13.txt (ZeusE), Harmonia Gen-0..3
+packets (genesis/harmonia_a/).
+=====================================================================
+END OF D-14 INTERIM PACKET -- the freeze holds, the instrument
+taught us two things, the measurement is 22.5% done and resumable,
+and the questions above are the ones we actually want answered.
+=====================================================================

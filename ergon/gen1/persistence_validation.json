@@ -1,0 +1,250 @@
+{
+ "verdict": "PERSISTENCE_INSTRUMENT_CLEAN",
+ "n_checks": 25,
+ "n_failed": 0,
+ "n_gate_fires": 6,
+ "lineages_checked": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "n_lineages_checked": 5,
+ "fixture_tasks_per_lineage": 6,
+ "input_fingerprint": {
+  "fingerprint_version": "ergon-gen1-inputs-v1",
+  "hash_normalization": "LF",
+  "frozen_sources": [
+   {
+    "path": "learner/m1.py",
+    "sha": "a203a6ecc5a0e6b20b8cc66961f840e59823a76ee83d13faa846c526fd1c65c4"
+   },
+   {
+    "path": "mutation/physics.py",
+    "sha": "d17d5db28c8a0e920dd547a16624a3bc2eb6e03be64a657ab98573d610b2bbe2"
+   },
+   {
+    "path": "substrate/rm_vm.py",
+    "sha": "c8535f6e0e598cef941f2553714ad4deded298b0f96c7f23dbcebdf16b23737e"
+   },
+   {
+    "path": "substrate/rm_fast.py",
+    "sha": "5ebd449055b77b2d67cc190208a79d7fcfc295650f783fbf2a8e7b076307b3a0"
+   },
+   {
+    "path": "task_generators/families.py",
+    "sha": "327a6161d772762d5c2f8c17d7c51ac95402f06dbd79b90a97a747ac68b28421"
+   },
+   {
+    "path": "exact_oracle/oracle.py",
+    "sha": "2a6a785494027d520a27ce7ed7a5258bc18cad8b6bd7e7fd56e229d32dcac060"
+   }
+  ],
+  "battery_task_count": 58,
+  "battery_content_hash": "d899d3bbc43d48191a9487b5083b300fbbd7cba92c1176928fcb19ede7d35b6a",
+  "manifest_file_sha": "6a1ba6ca33ed0342267a70b737cacd6a83f766de97b1c4fd36459f58fb18f2f6"
+ },
+ "results": [
+  {
+   "check": "A same-seed parity",
+   "world": "real (ON vs OFF)",
+   "expected": true,
+   "observed": true,
+   "pass": true,
+   "detail": "all 6 rows identical on 9 fields"
+  },
+  {
+   "check": "A library identity",
+   "world": "real (ON vs OFF)",
+   "expected": true,
+   "observed": true,
+   "pass": true,
+   "detail": "final libraries 24 entries"
+  },
+  {
+   "check": "A same-seed parity",
+   "world": "GATE-FIRE (rng burned)",
+   "expected": false,
+   "observed": false,
+   "pass": true,
+   "detail": "pos 0 field rng_state_hash: '1568d5acf201300b' vs '1b532c208d2f8bec'"
+  },
+  {
+   "check": "B round-trip exact",
+   "world": "real",
+   "expected": true,
+   "observed": true,
+   "pass": true,
+   "detail": "24 genotypes, order and hash checked"
+  },
+  {
+   "check": "B round-trip exact",
+   "world": "GATE-FIRE (1 arg changed)",
+   "expected": true,
+   "observed": true,
+   "pass": true,
+   "detail": "hash mismatch at 0"
+  },
+  {
+   "check": "C oracle leakage",
+   "world": "real",
+   "expected": 0,
+   "observed": 0,
+   "pass": true,
+   "detail": "6098 nodes inspected"
+  },
+  {
+   "check": "C scan non-vacuous",
+   "world": "real",
+   "expected": true,
+   "observed": true,
+   "pass": true,
+   "detail": "6098 nodes"
+  },
+  {
+   "check": "C oracle leakage",
+   "world": "GATE-FIRE (wlen+solved planted)",
+   "expected": 2,
+   "observed": 2,
+   "pass": true,
+   "detail": "$.events[0].wlen,$.events[1].admissions[0].solved_by_oracle"
+  },
+  {
+   "check": "D schema minimality",
+   "world": "real (no extra field)",
+   "expected": 0,
+   "observed": 0,
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "D schema minimality",
+   "world": "real (all declared used)",
+   "expected": 0,
+   "observed": 0,
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "D schema minimality",
+   "world": "GATE-FIRE (extra field)",
+   "expected": 1,
+   "observed": 1,
+   "pass": true,
+   "detail": "event.might_be_useful_someday"
+  },
+  {
+   "check": "F record fingerprinted",
+   "world": "real",
+   "expected": true,
+   "observed": true,
+   "pass": true,
+   "detail": "6 frozen sources + battery hash"
+  },
+  {
+   "check": "F inputs undrifted",
+   "world": "real",
+   "expected": 0,
+   "observed": 0,
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "F inputs undrifted",
+   "world": "GATE-FIRE (m1.py moved)",
+   "expected": 1,
+   "observed": 1,
+   "pass": true,
+   "detail": "learner/m1.py: 000000000000 -> a203a6ecc5a0"
+  },
+  {
+   "check": "F unfingerprinted raises",
+   "world": "GATE-FIRE (no fingerprint)",
+   "expected": true,
+   "observed": true,
+   "pass": true,
+   "detail": "an artifact without a fingerprint cannot read as clean"
+  },
+  {
+   "check": "E ledger fidelity",
+   "world": "lineage 0",
+   "expected": 0,
+   "observed": 0,
+   "pass": true,
+   "detail": "58 rows compared; "
+  },
+  {
+   "check": "E terminal library",
+   "world": "lineage 0",
+   "expected": true,
+   "observed": true,
+   "pass": true,
+   "detail": "replay 64 vs committed 64 entries"
+  },
+  {
+   "check": "E ledger fidelity",
+   "world": "lineage 1",
+   "expected": 0,
+   "observed": 0,
+   "pass": true,
+   "detail": "58 rows compared; "
+  },
+  {
+   "check": "E terminal library",
+   "world": "lineage 1",
+   "expected": true,
+   "observed": true,
+   "pass": true,
+   "detail": "replay 64 vs committed 64 entries"
+  },
+  {
+   "check": "E ledger fidelity",
+   "world": "lineage 2",
+   "expected": 0,
+   "observed": 0,
+   "pass": true,
+   "detail": "58 rows compared; "
+  },
+  {
+   "check": "E terminal library",
+   "world": "lineage 2",
+   "expected": true,
+   "observed": true,
+   "pass": true,
+   "detail": "replay 64 vs committed 64 entries"
+  },
+  {
+   "check": "E ledger fidelity",
+   "world": "lineage 3",
+   "expected": 0,
+   "observed": 0,
+   "pass": true,
+   "detail": "58 rows compared; "
+  },
+  {
+   "check": "E terminal library",
+   "world": "lineage 3",
+   "expected": true,
+   "observed": true,
+   "pass": true,
+   "detail": "replay 64 vs committed 64 entries"
+  },
+  {
+   "check": "E ledger fidelity",
+   "world": "lineage 4",
+   "expected": 0,
+   "observed": 0,
+   "pass": true,
+   "detail": "58 rows compared; "
+  },
+  {
+   "check": "E terminal library",
+   "world": "lineage 4",
+   "expected": true,
+   "observed": true,
+   "pass": true,
+   "detail": "replay 64 vs committed 64 entries"
+  }
+ ]
+}

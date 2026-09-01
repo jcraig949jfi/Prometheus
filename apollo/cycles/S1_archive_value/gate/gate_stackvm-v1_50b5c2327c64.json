@@ -1,0 +1,68 @@
+{
+  "engine": "stackvm-v1",
+  "release_pin": "50b5c2327c64bf112c635ca1487f2b1a8fd64e1b7faade9476d5dfa7215fd492",
+  "budget": 300,
+  "seed": 20260901,
+  "ladder": {
+    "add_const": {
+      "best_fitness": 0.08333333333333333,
+      "solved": false,
+      "pop_mass": 0
+    },
+    "multiply": {
+      "best_fitness": 0.08333333333333333,
+      "solved": false,
+      "pop_mass": 0
+    },
+    "affine": {
+      "best_fitness": 0.08333333333333333,
+      "solved": false,
+      "pop_mass": 0
+    },
+    "abs": {
+      "best_fitness": 0.5833333333333334,
+      "solved": false,
+      "pop_mass": 2,
+      "pop_mass_source": "verified post-fix (others below are pre-fix, invalid)"
+    },
+    "modular": {
+      "best_fitness": 0.4166666666666667,
+      "solved": false,
+      "pop_mass": 0
+    },
+    "square": {
+      "best_fitness": 0.16666666666666666,
+      "solved": false,
+      "pop_mass": 0
+    },
+    "threshold": {
+      "best_fitness": 0.5833333333333334,
+      "solved": false,
+      "pop_mass": 0
+    }
+  },
+  "dead": {
+    "best_fitness": 0.08333333333333333,
+    "pop_mass": 0
+  },
+  "gates": {
+    "G1_frontier_depth": false,
+    "G1_passing_ops": [
+      "abs",
+      "threshold"
+    ],
+    "G2_population_mass": false,
+    "G3_headroom": true,
+    "G3_spread": 0.5,
+    "G4_negative_discrim": true
+  },
+  "verdict": "FAIL",
+  "thresholds": {
+    "THETA_FUNCTIONAL": 0.5,
+    "G1_MIN_NONTRIVIAL": 3,
+    "G2_MIN_MASS": 3,
+    "G3_MIN_RANGE": 0.5
+  },
+  "computed_utc": "2026-09-01T11:06:26Z",
+  "validation_note": "VALIDATION RUN, current release 50b5c232 (NOT the decision-relevant release). VERDICT = FAIL, sound on G1: only abs and threshold reach THETA_FUNCTIONAL=0.5 (both 0.583 = 7/12), so <3 distinct nontrivial ops -> G1 fails; and abs's verified population mass is 2 (<3) so G2 also fails legitimately. BUG CAUGHT + FIXED: pop_mass read fitness under a non-existent 'result' key; fitness is a TOP-LEVEL field of ARTIFACT_EXECUTED (fixed 2026-09-01, verified abs mass 0->2). The pop_mass values other than abs in this artifact are pre-fix (invalid); the definitive full gate with correct mass runs against the NEXT Foundry release, where G2/mass becomes decision-relevant. CORRECTION TO EARLIER CLAIM: 'reachable set = {identity, x+1}' (from affine-only calibration) was too narrow. The substrate reaches PARTIAL functional fitness on a rectifier-like capability: abs and threshold both 0.583 (7/12, same non-negative cases), modular 0.417. Still <3 distinct operations and partial-fitness only, so the gate FAIL and the mining suspension are unchanged; partial-credit organisms require the Q2 precursor validation before they could anchor any endpoint."
+}

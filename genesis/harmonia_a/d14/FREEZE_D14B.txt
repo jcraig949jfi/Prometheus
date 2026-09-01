@@ -1,0 +1,53 @@
+=====================================================================
+D-14B FREEZE -- battery-resolution translation (8 -> 64 cases)
+Date: 2026-09-01. Issued AFTER the D-14 A2 verdict
+(D14_PREDICTION_SURVIVES, middle_mass 0.004305) and BEFORE any
+64-case measurement. D-14B does NOT modify D-14; it is an
+instrument-translation experiment on the SAME persisted pairs.
+One epistemic dimension changes: battery size. Comparator
+(final-output hash), pairs, sites, sampler, eligibility: identical.
+=====================================================================
+QUESTION. Is the apparent gap stable when observational resolution
+rises from 8 to the instrument maximum of 64 cases?
+
+BATTERY (frozen, NESTED): cases 1..8 = the A2 battery verbatim
+(SeedSequence [20260914]); cases 9..64 = 56 new length-4 uniform
+0..255 sequences from SeedSequence [20260916]. Nesting makes I_8 a
+strict sub-battery of I_64. Tasks: 56 new single-case tasks + one
+combined 56-case task (ids journaled). Mechanical shortcut as in
+A2: a child whose combined-hash (new-56) equals its parent's AND
+whose A2 combined-hash matched contributes changed-count from the
+A2 record alone; otherwise per-case evaluation.
+
+POPULATION: every A2 measured site (1,626) and every A2 FAULT-class
+site (120) -- fault status may change under new cases; re-recorded.
+I_64(P,s) = changed_cases/64 over the nested battery for the SAME
+first-hit child artifact as A2. No new mutations are drawn.
+
+ENDPOINTS (frozen):
+  E1 3x3 BIN MIGRATION matrix (zero / middle (0,0.25] / high) from
+     I_8 bins to I_64 bins on common sites.
+  E2 CRITICAL CELL: P( 0 < I_64 <= 0.25 | I_8 = 0 ) -- the direct
+     test of coarse-support manufacturing zero mass.
+  E3 64-case middle mass on the common set.
+  E4 decomposition of the 7 A2 middle-band sites at 64 cases.
+  E5 full I_64 histogram (65 attainable values).
+CONTROLS:
+  C1 parent replay at one 64-case task (hash-identical).
+  C2 nested-consistency: for every child with per-case A2 records
+     (the A2 changed subset), changed-count restricted to cases
+     1..8 must equal the A2 value exactly; any mismatch =
+     HARNESS_SUSPECT.
+  C3 fault typing: children faulting on new cases -> FAULT-class
+     at 64, excluded and counted (mirrors A2).
+SUPPORT: >= 1,400 common sites evaluable at 64 cases; else
+INDETERMINATE.
+VERDICTS (frozen):
+  BATTERY_RESOLUTION_STABLE      E3 <= 0.05 AND E2 <= 0.05.
+  BATTERY_RESOLUTION_DEPENDENT   E3 > 0.05 OR E2 > 0.05.
+  D14B_INDETERMINATE             support/control failure.
+No D-14B outcome alters the D-14 verdict; a DEPENDENT outcome
+binds every representation-level reading of D-14 to the 8-case
+ruler and stops the ladder pending review.
+STAT SEED: none needed (deterministic evaluation; no sampling).
+=====================================================================

@@ -1,0 +1,79 @@
+=====================================================================
+HARMONIA B GEN-3B -- FREEZE E5: FROZEN PREDICTION, THEN COMPUTE-MATCHED
+SHORT-HORIZON SEARCH
+Issued 2026-09-01, BEFORE any search is run. The PREDICTION FILE
+e5_frozen_ranking.json is written, hashed and journaled by this same
+freeze step, and committed, BEFORE the search script is executed.
+Prior state: E1 ASSAY_QUALIFIED; E2 complete; E3 substrate owns the
+band; E4 SMOOTHNESS_IS_NOT_NAVIGABILITY (all three smoothness
+statistics EXACTLY blind, |diff| = 0.000000, to a pair with opposite
+navigability).
+=====================================================================
+
+HYPOTHESIS (PC-4, from the charter, unmodified)
+  A pre-search ranking of cells by q10 (reach_improve@1) predicts
+  compute-matched search improvement at Spearman rho >= 0.7.
+
+STANDING SHADOW ON MY OWN PREDICTION, recorded at E1 and repeated here
+  E1's ungated clause M5 measured q10 = 1.000 for the designed-navigable
+  control and 0.967 for the sha256 hash substrate. A statistic that
+  cannot separate a navigable landscape from noise is unlikely to rank
+  search outcomes. PC-4 is nevertheless adjudicated AS WRITTEN. No-rescue
+  applies to me: I do not get to swap the statistic after seeing E1.
+
+NULL / COMPETING EXPLANATIONS
+  N-a  Mutation geometry does not predict search at all; the ruler
+       characterises neighbourhoods and stops there.
+       -> CURRENT_RULER_DOES_NOT_PREDICT_SEARCH
+  N-b  Only baseline difficulty (q13) predicts; the geometry
+       coordinates are proxies for how far the start already was.
+       Controlled by normalising every outcome by d_start.
+  N-c  Compute, not geometry. Controlled by matching phenotype
+       evaluations exactly across every cell.
+
+INTERVENTION
+  (1+1) hill-climbing from a random genotype of the cell's own
+  substrate, minimising d(f, T), under a FIXED BUDGET of 800 phenotype
+  evaluations per run -- the only currency every substrate shares.
+  12 cells x 10 targets x 15 seeds x 2 acceptance modes.
+  ACCEPTANCE MODES, both run because the difference is itself a result:
+     STRICT      accept only strict improvement
+     NEUTRAL-OK  accept improvement OR equality (permits neutral drift)
+  Wall-clock differs by up to ~5x across substrates (RELAX evaluates
+  slowest); that is recorded and is NOT the matched quantity. The
+  matched quantity is evaluations.
+
+FROZEN METRIC
+  outcome = (d_start - d_best) / d_start, per run; cell score = mean
+  over targets and seeds. Also recorded: absolute d_best, exact-hit
+  rate (d_best = 0), and accepted-step count.
+
+ADJUDICATION (frozen, and both clauses are losable)
+  PC-4   PASS iff Spearman(q10, outcome) >= 0.70 over all 12 cells.
+  PC-3   The RISKY clause, restricted to the NINE REAL-substrate cells
+         with the three designed controls EXCLUDED:
+           PC-3a PASS iff |Spearman(q4, outcome)| < 0.50
+           PC-3b PASS iff  Spearman(q10, outcome) >= 0.70
+         PC-3a failing is a result FOR the spectrum programme: it would
+         mean A's middle mass DOES rank search on real substrates, and
+         it is written so that I can lose it.
+  EXPLORATORY, LABELLED: Spearman of every Q coordinate against
+  outcome, reported in full so E6 has material. These decide nothing at
+  E5 and may not be substituted for q10 in PC-4.
+
+CONTROLS
+  P1-BLOCKS must reach d=0 on its own target T9 within budget, or the
+  search harness itself is broken and E5 is INSUFFICIENTLY_ADJUDICATED
+  rather than a result. N1 must reach exactly zero improvement on T10.
+  N2-HASH is the noise floor.
+
+KILL CONDITION
+  PC-4 fails -> verdict CURRENT_RULER_DOES_NOT_PREDICT_SEARCH is live
+  and E6 tests whether ANY coordinate or combination transfers instead.
+  The single-coordinate ruler is then reported as failed, not repaired.
+
+WHAT THE RESULT CHANGES
+  This is the campaign's load-bearing experiment. Everything before it
+  measures neighbourhoods; only this measures whether neighbourhood
+  measurement buys prospective knowledge about search.
+=====================================================================

@@ -1,0 +1,75 @@
+{
+  "n": 2,
+  "ts": "2026-09-01T07:08:52Z",
+  "model": "ollama:phi3",
+  "prompt_sha": "9960121d028f",
+  "regime": "apprentice",
+  "cost": 0.0,
+  "latency_s": 29.3,
+  "model_served": "phi3",
+  "llm_ok": true,
+  "hypothesis": "The truth value of a universal/negative-universal or conditional claim over an empty domain is always True (vacuous truth), while for existential claims it's False if the domain is stated as empty, and None abstains when there isn't enough information. For non-empty domains with counterexamples to universally quantified statements, we return False; otherwise, a universal claim without explicit negation or contradiction in context holds true (based on problem_text).",
+  "substrate_suffices_claim": "NO - The existing primitives alone cannot determine the truth value of vacuous claims as they do not inherently understand domain emptiness.",
+  "self_counterexamples": "- [NONEMPTY_UNIV_ALL] PROMPT: There are exactly 5 electric cars in the garage, and all 5 of them are blue. Consider the claim: each electric car in the garage is red. Is the claim true?\n- [EXIST_EMPTY] WITHOANDRING CLAIM: The number of people taller than two metres in a room full of basketball players, where everyone's height exceeds that threshold, considering the claim about an asleep person being tall is irrelevant. Consider the claim: there is at least one sleeping person over 2 meters tall in this group. Is the claim true?\n- [NONEMPTY_UNIV_ALL] PROMPT with a twist on context and negation to test understanding of vacuous truths, such as considering if all blue cars are electric or not when given an explicit statement about non-blue cars being irrelevant for universal claims. Consider the claim: each car in the garage is red. Is this true?",
+  "verdict": "RUNTIME_ERROR_ALL",
+  "failure_families": [
+    "runtime_error:NameError: name 're' is not defined"
+  ],
+  "static_gate": [],
+  "holdout": {
+    "n": 80,
+    "accuracy_decidable": 0.0,
+    "abstain_rate_decidable": 0.0,
+    "boundary_false_commit_rate": 0.0,
+    "errors": 80,
+    "by_kind": {
+      "EXIST_EMPTY": 0.0,
+      "NEARMISS_NO_KEYWORD": 0.0,
+      "NEARMISS_VACUOUS_WORD": 0.0,
+      "NONEMPTY_EXIST_TRUE": 0.0,
+      "NONEMPTY_UNIV_ALL": 0.0,
+      "NONEMPTY_UNIV_COUNTEREX": 0.0,
+      "NONEMPTY_UNKNOWN": 1.0,
+      "VAC_COND_EMPTY": 0.0,
+      "VAC_NEGUNIV_EMPTY": 0.0,
+      "VAC_UNIV_EMPTY": 0.0,
+      "VAC_UNIV_EMPTY_ORDER": 0.0
+    }
+  },
+  "train": {
+    "n": 8,
+    "accuracy_decidable": 0.0,
+    "abstain_rate_decidable": 0.0,
+    "boundary_false_commit_rate": 0.0,
+    "errors": 8,
+    "by_kind": {
+      "EXIST_EMPTY": 0.0,
+      "NEARMISS_NO_KEYWORD": 0.0,
+      "NONEMPTY_UNIV_ALL": 0.0,
+      "NONEMPTY_UNKNOWN": 1.0,
+      "VAC_UNIV_EMPTY": 0.0,
+      "VAC_UNIV_EMPTY_ORDER": 0.0
+    }
+  },
+  "input_mutants": {
+    "emptiness_removed_should_not_commit_yes": {
+      "passed": 8,
+      "of": 8
+    },
+    "every_to_some_should_flip_to_no": {
+      "passed": 0,
+      "of": 8
+    },
+    "candidate_order_invariance": {
+      "passed": 0,
+      "of": 80
+    },
+    "no_to_exactly_zero_same_answer": {
+      "passed": 0,
+      "of": 8
+    }
+  },
+  "candidate_file": "hephaestus\\mint_queue\\MINT-0001\\attempts\\0002_20260901T070852Z_ollama-phi3.py",
+  "result_file": "hephaestus\\mint_queue\\MINT-0001\\attempts\\0002_20260901T070852Z_ollama-phi3_result.json",
+  "rescored": "2026-09-01T07:15:09Z"
+}

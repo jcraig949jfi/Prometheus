@@ -1,0 +1,268 @@
+=====================================================================
+PROMETHEUS / SERENDIPITY FOUNDRY
+D-14 -- STACKVM INFLUENCE-SPECTRUM PREDICTION TEST
+FINAL EXTERNAL REVIEW PACKET (D-14 + D-14B + D-14C; D-14D blocked)
+=====================================================================
+Date: 2026-09-01
+Origin: Harmonia A seat, M2 research console, repo D:\Prometheus,
+directory genesis/harmonia_a/d14/, driving the M1 Foundry
+instrument (release pin 50b5c232..., git 71b29593, verified before
+every run and every 25 calls). For a first-time reviewer, the
+instrument, its backend architecture, the client discipline, and
+the D-1..D-13 lineage are explained in the companion document
+REVIEW_PACKET_D14_INTERIM.txt (same directory); this packet
+assumes that background and reports the completed science.
+Status: the D-14 measurement ladder is COMPLETE to the limit of
+the current instrument release. Every verdict below was produced
+by frozen, committed, deterministic adjudicators. Four external
+reviews were ingested mid-campaign; every disposition is recorded
+in REVIEW_RESPONSE_01_dispositions.md and JOURNAL.jsonl.
+
+---------------------------------------------------------------------
+0. SUMMARY FOR THE HURRIED REVIEWER
+---------------------------------------------------------------------
+FROZEN PREDICTION (written in the Gen-3 campaign before any
+StackVM spectrum existed): StackVM's per-site influence spectrum
+is GAPPED -- middle mass P(influence in (0, 0.25]) <= 0.05.
+
+VERDICT LADDER (one epistemic dimension changed per rung):
+
+  D-14 A2   frozen baseline          D14_PREDICTION_SURVIVES
+            middle_mass = 0.004305  (7 of 1,626 sites)
+  D-14B     battery 8 -> 64 (nested) BATTERY_RESOLUTION_STABLE
+            critical cell P(0<I64<=0.25 | I8=0) = 0.0027
+  D-14C     comparator output-hash -> state tuple
+                                     COMPARATOR_STABLE
+            danger cell = 0.0041; middle mass 0.0049
+  D-14D     sampler operator-weighted -> explicit-site
+                                     BLOCKED (instrument lacks a
+            site-addressed endpoint; Phase-0 spec filed)
+
+CONSERVATIVE READING (bound by all four reviews): under every
+ruler this instrument release can express -- 8 and 64 evaluation
+cases, final-output and execution-state comparators -- the
+measured StackVM mutation neighborhood is genuinely depleted of
+small nonzero consequences. The claim remains conditional on the
+default-mutator-conditioned single-site sampling distribution
+(the uniform-site rung is blocked) and on the absence of a full
+trajectory ruler (blocked, IF-5). It is a SUBSTRATE PROPERTY, not
+a reasoning property.
+
+THE UNEXPECTED DISCOVERY (D-14C migration matrix): 333 of 1,457
+output-silent sites -- 23% -- carry HIGH hidden state influence:
+their execution features change on more than a quarter of cases
+while final outputs reconverge exactly; 20.4% of all (site, case)
+evaluations show state-changed-output-same. The reviewers'
+"dangerous cell" phenomenon is REAL and LARGE -- and its mass
+lands in the HIGH band, never the middle. The bimodal
+(silent-or-catastrophic) architecture is RULER-INVARIANT; finer
+rulers only relabel silence as hidden catastrophe. StackVM
+computation, when perturbed, changes a lot or not at all -- at
+every observable level.
+
+---------------------------------------------------------------------
+1. EPISTEMIC LABELS (per campaign order section 16)
+---------------------------------------------------------------------
+FACT       verdicts, counts, control outcomes, commit hashes below.
+FROZEN     the middle-mass prediction and every gate/threshold,
+PREDICTION issued before its measurement (commit chain, section 6).
+OBSERVATION the migration matrices, spectra, reconvergence rate.
+INFERENCE  "the bimodality is ruler-invariant within the tested
+           ruler set" -- an induction over three rulers, bounded.
+SPECULATION anything connecting this to reasoning operations.
+           None is asserted in this packet.
+INSTRUMENT IF-1..IF-5 (section 5), banked independent of verdicts.
+FINDING
+OPEN       sections 7-8: the blocked rungs, D-15 authorization.
+QUESTION
+
+---------------------------------------------------------------------
+2. D-14 A2 -- THE FROZEN BASELINE (commits 67a29561 -> 1f0e4ae0)
+---------------------------------------------------------------------
+ESTIMAND (stated with the precision all four reviews demanded):
+under the frozen default-mutator-conditioned distribution over
+eligible single-site outcomes, with the frozen 8-case battery and
+final-output-hash comparator,
+    P_A2( 0 < I8_output <= 0.25 ) = 0.004305  <=  0.05
+    -> D14_PREDICTION_SURVIVES  (historical label preserved; the
+    claim ceiling is the estimand above, nothing stronger).
+SUPPORT: 200 parent seeds -> 113 clean parents; 1,626 measured
+sites; 120 FAULT-class interventions; exclusions: 5,650 length-
+changed + 3,025 multi-site (the default sampler's own
+composition, counted per the A2 amendment), 87 faulted parents,
+9 value-identical redraws.
+FULL 8-CASE EMPIRICAL SPECTRUM (counts at every attainable value):
+    0: 1457   1/8: 4   2/8: 3   3/8: 2   4/8: 5
+    5/8: 2    6/8: 1   7/8: 29  1: 123
+  zero mass 0.8960 | middle 0.0043 | high 0.0996
+CONTROLS (all PASS): evaluate replay; mutate replay (identical
+child id); no-op class (9/9 behaviorally identical); locality
+(0 violations among included pairs); genotype_addr hand-check 5/5.
+SECONDARY, NON-ADJUDICATING (parent-cluster bootstrap, 10,000
+resamples, frozen pre-completion): middle-mass 95% CI
+[0.0006, 0.0092], one-sided 95% UCB 0.0081; only 5 of 113 parents
+carry ANY middle-band site. The population-generalization bound
+sits 6x under the threshold. This analysis cannot and does not
+alter the frozen verdict.
+
+---------------------------------------------------------------------
+3. D-14B -- BATTERY-RESOLUTION TRANSLATION (freeze dd29f634)
+---------------------------------------------------------------------
+One dimension changed: 8 -> 64 cases, NESTED (the 8 A2 cases are
+cases 1-8 of 64), same pairs, same comparator. All 1,626 sites
+re-evaluated on the same persisted first-hit children.
+MIGRATION (I8 bins -> I64 bins):
+    zero->zero 1453   zero->middle 4    (E2 critical = 0.0027)
+    middle->middle 5  middle->high 2
+    high->high 162    (no high site softened)
+E3 middle mass at 64 cases: 0.0055.
+E4: the seven A2 middle-band sites at 8x resolution: four
+COLLAPSED to 1/64 (near-zero sites the coarse battery had caught
+once), two rose to high, one sits at 0.094. The middle band THINS
+rather than fills under resolution.
+CONTROLS: parent replay PASS; nested-consistency: recomputed
+case-1..8 change-counts reproduce I8 exactly, 0 mismatches.
+VERDICT: BATTERY_RESOLUTION_STABLE. The zero mass is real: 1,453
+sites are unchanged across all 64 cases. Coarse observational
+support did not manufacture the gap.
+
+---------------------------------------------------------------------
+4. D-14C -- COMPARATOR TRANSLATION (freeze dfbbb417)
+---------------------------------------------------------------------
+One dimension changed: comparator, at the original 8-case battery.
+DECLARED LIMIT (IF-5): full trajectory comparison is unobtainable
+for persisted artifacts on this release (the engine advertises
+trace capabilities; the evaluate route cannot request them). The
+finest OBTAINABLE ruler is the STATE TUPLE per case: (output hash,
+behavior vector, resource steps) -- strictly finer than output
+hash, strictly coarser than D-13's trajectory metric. Both facts
+bind the claim.
+MIGRATION (I_out bins -> I_state bins):
+    zero->zero 1118   zero->middle 6   zero->HIGH 333
+    middle->middle 2  middle->high 5   high->high 162
+E2 danger cell P(0 < I_state <= 0.25 | I_out = 0) = 0.0041.
+E3 middle mass under the state ruler: 0.0049.
+E4 reconvergence rate P(state differs AND output same) = 0.2036.
+CONTROLS: replay PASS; FULL consistency -- I_out recomputed here
+equals the A2 influence for every site, 0 mismatches (a strong
+cross-run determinism demonstration spanning three separate
+measurement campaigns).
+VERDICT: COMPARATOR_STABLE -- and the migration matrix carries
+the campaign's most interesting observation (section 0): hidden
+computational change is abundant (23% of silent sites; 20.4% of
+evaluations) and is ITSELF gapped -- it never lands in the middle
+band. Bimodality is invariant across all three rulers measured.
+
+---------------------------------------------------------------------
+5. INSTRUMENT FINDINGS (banked independent of every verdict)
+---------------------------------------------------------------------
+IF-1 /v0/artifacts op=mutate SILENTLY IGNORES its operator config
+     on release 50b5c232 (contradictory configs, same seed ->
+     identical child + identical creation_config_hash). Same
+     defect class D-13 filed against the prior release's SP
+     endpoints. Upgraded per review: the API lacks a reliable
+     requested-vs-executed distinction; repair is release-blocking.
+IF-2 Search-physics displacement pairs are EPHEMERAL (5,120/5,120
+     artifact GETs returned 404); no path from the D-13 comparator
+     to site identity exists on this release.
+IF-3 artifact_id is a record hash; genotype_addr = sha256(genotype
+     bytes). (My A1 hand-check compared the wrong field; my error,
+     corrected in A2.)
+IF-4 ~44% of random stackvm parents fault on an 8-case uniform
+     raw-input battery (87 + 44 of 300 seeds across runs) --
+     consistent with D-12's inherited-non-viability finding.
+IF-5 Engine advertises trace/behavior_trace; evaluate cannot
+     request them; limits.extra keys are accepted-and-ignored by
+     schema design. Full-trajectory rung blocked.
+CONSOLIDATED UPSTREAM SPEC: FOUNDRY_NEXT_RELEASE_SPEC.txt --
+S1 global effective-config invariant (release-blocking, with the
+adversarial contract suite including the exact IF-1 reproduction);
+S2 per-response release identity header; S3 site-addressed
+intervention endpoint returning raw evidence in one transaction;
+S4 first-class trace evidence on evaluate; S5 opt-in persisted SP
+pairs with tiered retention; S6 versioned behavior rulers
+(/v0/physics/distance); S7 documentation fixes. Phase-0 exit
+criterion: a release passing S1-S3 tests. D-14D runs only then.
+
+---------------------------------------------------------------------
+6. PROVENANCE AND HISTORY (preserved, not cleaned)
+---------------------------------------------------------------------
+Commit chain (freeze precedes measurement at every step):
+  67a295618 FREEZE_D14 + provenance (pre-measurement)
+  b97355b76 AMENDMENT A1: displacement-pair ephemerality (IF-2)
+  df161aa37 A1 runner + analyzer (pre-run)
+  -- A1 run: D14_INDETERMINATE by its own support gates (56
+     parents / 567 sites; IF-1 discovered in diagnosis) --
+  baa028646 AMENDMENT A2: sampler re-declared (default operator
+     filtered to single-site outcomes), C5 fixed, scale raised;
+     A1 void spectrum DISCLOSED pre-issuance
+  c8a267471 resumable runner (after an external kill lost
+     in-memory rows; a botched sed patch is journaled too)
+  -- two external stops; 45 parents persisted; lane parked;
+     operator + review authorization to finish --
+  4b3a25312 interim packet (first-time-reviewer explainer + 16
+     open questions)
+  addee85b0/3b4dd6a07 four external reviews adjudicated; two of my
+     own over-adoptions corrected in public (5%-per-bin gate
+     struck; collider terminology fixed); A2 graded "confirmatory
+     for the amended estimand, reduced novelty"
+  a2163beca secondary-uncertainty script frozen pre-completion
+  1f0e4ae01 A2 VERDICT
+  dd29f6342/1ca3968c7 D-14B freeze + runner (pre-measurement)
+  0420d5d58 D-14B VERDICT
+  dfbbb4177 D-14C freeze (+ IF-5)
+  6185b718a D-14C VERDICT + Foundry spec
+JOURNAL.jsonl carries issuance hashes, the methodological-vs-DV
+boundary declaration, every disclosure, both external-stop events,
+and all four review dispositions. Credentials: operator kit
+mechanism only; no secret value appears in any artifact.
+
+---------------------------------------------------------------------
+7. WHAT THIS PACKET DOES NOT ESTABLISH
+---------------------------------------------------------------------
+- Anything about a UNIFORM or exhaustive site population (D-14D
+  blocked; the sampling measure is operator-weighted).
+- Invariance to a full trajectory ruler (blocked, IF-5).
+- That StackVM "cannot represent" small meaningful changes -- the
+  claim is about the measured mutation neighborhood under the
+  available rulers, resource-bounded and distribution-conditioned.
+- Any causal mechanism (that is D-15: same semantics, different
+  encoding geometry -- recommended by all four reviews, frozen
+  design pending authorization).
+- Anything about search, acquisition, or reasoning operations
+  (D-16 territory, gated behind D-15 per the campaign order).
+
+---------------------------------------------------------------------
+8. RECOMMENDED NEXT STEPS (not self-authorized)
+---------------------------------------------------------------------
+1. Transmit FOUNDRY_NEXT_RELEASE_SPEC.txt to the M1 operator;
+   Phase-0 gates D-14D.
+2. Authorize D-15: the causal encoding experiment (E_GAPPED /
+   E_GRADED / optionally E_GRADED_REDUNDANT with matched
+   semantics; verify the spectra independently; preregister
+   graded -> middle-band support rises AND the local-consequence
+   band fills). The D-14C hidden-state discovery sharpens D-15's
+   design space: an encoding could be graded at the STATE level
+   yet gapped at the OUTPUT level -- D-15 should measure both.
+3. The behavioral-controllability-resolution formalization
+   (R_x(eps) with a hole near zero) now has three consistent
+   data points and one blocked axis; formal development is
+   warranted but remains SPECULATION until D-15 manipulates it.
+---------------------------------------------------------------------
+9. ARTIFACT INDEX
+---------------------------------------------------------------------
+genesis/harmonia_a/d14/: FREEZE_D14.txt, AMENDMENT_A1/A2.txt,
+FREEZE_D14B.txt, FREEZE_D14C.txt, run_d14*.py, analyze_d14*.py,
+secondary_cluster_uncertainty.py, JOURNAL.jsonl, PROVENANCE.json,
+REVIEW_RESPONSE_01_dispositions.md, FOUNDRY_NEXT_RELEASE_SPEC.txt,
+REVIEW_PACKET_D14_INTERIM.txt (background explainer), results/
+(a2_sites/children, b_sites, c_sites, all analysis JSONs,
+secondary_uncertainty.json, run metadata, controls).
+Upstream: D:\ZeusE\d12\ (D-12/13), D:\ZeusD\ (D-11, foundry src).
+=====================================================================
+END OF FINAL D-14 PACKET -- the prediction survived three hostile
+ruler changes; the gap is ruler-invariant where rulers exist; a
+fifth of the substrate's computation changes invisibly and even
+that change is gapped; and the two remaining ways to kill the
+claim are named, specified, and waiting on one instrument release.
+=====================================================================

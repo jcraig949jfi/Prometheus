@@ -1,0 +1,111 @@
+{
+  "run_id": "slice-20260901T073947Z",
+  "kind": "serendipity_slice_v0",
+  "foundry_pin": "50b5c2327c64bf112c635ca1487f2b1a8fd64e1b7faade9476d5dfa7215fd492",
+  "world": {
+    "task_id": "sha256:84133b8b5593dec7a5d41b7fba6265453911670bc2dde49551baf35e2008d035",
+    "rule": "f(x)=3x+1",
+    "engine_id": "stackvm-v1"
+  },
+  "budget": 300,
+  "seed": 20260901,
+  "science": {
+    "map_elites": {
+      "evaluations_used": 300,
+      "best_fitness": 0.1,
+      "solved": false,
+      "solver_artifact_id": null,
+      "archive_stats": {
+        "size": 11,
+        "cells_total": 64,
+        "coverage": 0.171875,
+        "qd_score": 0.4,
+        "best_fitness": 0.1
+      },
+      "seed": 20260901,
+      "driver": "map_elites",
+      "config_hash": "sha256:1f5ee705010aaf1157ec1fdea73716dbda839429368c72b21bbf48c56f5c0031",
+      "oversize_rejections": 0
+    },
+    "random": {
+      "evaluations_used": 300,
+      "best_fitness": 0.1,
+      "solved": false,
+      "solver_artifact_id": null,
+      "archive_stats": {},
+      "seed": 20260901,
+      "driver": "random_search",
+      "config_hash": "sha256:f8dd141fde5bd5ec97d89146304fd41ec9b2c811cdd059c899623a348cc4da63",
+      "oversize_rejections": 0
+    },
+    "note": "neither solved at this budget"
+  },
+  "organism": {
+    "artifact_id": "sha256:9af9ef380d0a5335b0457b4c54cac14c347b6b738940c038231223063f80b1eb",
+    "genotype_addr": "sha256:8471daf9a044a26b215c1fe403bd68f39f7f2db0e9299923fc24c1420b5cbcbd",
+    "genotype_bytes_len": 40,
+    "creation_op": "create_random",
+    "creation_seed": 20260901,
+    "creation_event_seq": 93756,
+    "parent_ids": [],
+    "genotype_b64": "Yow0cFZ2q1tfS4M12WiKuuDu8Dw6EUI2PiWXI3O//nJOWuekyqhLcA==",
+    "lineage": [
+      {
+        "schema_version": "0.1.0",
+        "artifact_id": "sha256:9af9ef380d0a5335b0457b4c54cac14c347b6b738940c038231223063f80b1eb",
+        "engine_id": "stackvm-v1",
+        "genotype_addr": "sha256:8471daf9a044a26b215c1fe403bd68f39f7f2db0e9299923fc24c1420b5cbcbd",
+        "genotype_bytes_len": 40,
+        "parent_ids": [],
+        "creation_op": "create_random",
+        "creation_seed": 20260901,
+        "creation_config_hash": null,
+        "creation_event_seq": 93756,
+        "tier": "fossil"
+      }
+    ]
+  },
+  "evaluate": {
+    "event_seq": 93757,
+    "result_hash": "sha256:abb9aaea6dc4e09aba77807b5d39d38ab8a1950c2da38811691a400c3bf85cb9",
+    "result": {
+      "schema_version": "0.1.0",
+      "artifact_id": "sha256:9af9ef380d0a5335b0457b4c54cac14c347b6b738940c038231223063f80b1eb",
+      "engine_id": "stackvm-v1",
+      "task_id": "sha256:84133b8b5593dec7a5d41b7fba6265453911670bc2dde49551baf35e2008d035",
+      "seed": 20260901,
+      "input_hash": "sha256:29279f1bb209fbbb71811bcd968c856c51573cc7334115fe95f732f8aacd9c07",
+      "output_hash": "sha256:6a0a26c28788b341a59f29cf4a003f7d3dda3445742d77c6d6277d7b0b76ed98",
+      "exact_success": false,
+      "cases_passed": 0,
+      "cases_total": 10,
+      "fitness": 0.0,
+      "behavior": [
+        1000000.0,
+        1.0,
+        15.0,
+        1.0,
+        0.0
+      ],
+      "trace_addr": null,
+      "resources": {
+        "steps": 1000000,
+        "evaluations": 10,
+        "genotype_bytes": 40,
+        "mem_peak_bytes": null,
+        "wall_ms": 448.5537000000477
+      },
+      "failure": {
+        "kind": "resource_exhausted",
+        "detail": "exhausted_cases=10/10"
+      }
+    }
+  },
+  "replay": {
+    "event_seq": 93757,
+    "match": true,
+    "engine_version_mismatch": false
+  },
+  "emitted_utc": "2026-09-01T07:42:03Z",
+  "provenance_hash": "sha256:d94a88cb513005e10089505001f4aa21f738a1bfbcd9211c738db9c8ee756d35"
+}

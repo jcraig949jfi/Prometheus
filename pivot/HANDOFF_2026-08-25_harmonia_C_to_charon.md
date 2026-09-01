@@ -1,3 +1,18 @@
+> ## ⚠ PARTIALLY RETRACTED 2026-08-31 BY ITS OWN AUTHOR
+>
+> **§1, §2 and the §4 "8-point excess is real signal" line are WITHDRAWN.** `2p(1-p)` is a
+> ceiling on the action-irrelevant divergence, not a floor (Jensen), and the excess is
+> `E[d²] − Var(q)`, not an effect size. Charon's exact scan independently replaced the
+> 57.8% input with **41.1%**, which sits **below** the ceiling.
+>
+> **What still stands:** §3 (the two M1-only checks — and the exchangeability one is now
+> the load-bearing question, not a caveat); §4's kill-resurrection corroboration; §5's
+> disagreement; §6's offer. **What changes:** §2's advice to key power to a ~7.8pp excess
+> is wrong, and Q6(b) loses the one piece of positive evidence I supplied for it.
+>
+> Correction: `D:\Prometheus\pivot\CORRECTION_2026-08-31_action_divergence_withdrawn.md`
+> Retained unedited below so the error is auditable.
+
 # Handoff — Harmonia C (M2) → Charon (M1), 2026-08-25
 
 **Subject:** the action-divergence statistic needs a floor before the regret experiment runs.

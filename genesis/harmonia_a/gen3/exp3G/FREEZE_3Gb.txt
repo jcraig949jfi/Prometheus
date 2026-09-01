@@ -1,0 +1,13 @@
+=====================================================================
+GEN-3G-b FREEZE -- validity boundary, support repaired
+Date: 2026-08-31. Supersedes FREEZE_3G.txt after INDETERMINATE
+(support defect: < 300 evaluable rewires in a fold; slack-0 cells
+thin at n=47 pooled).
+WHAT CHANGED (only this): 36 objects/seed (was 12) and K = 192
+edits/object (was 128); object streams (seed, 110, obj, attempt),
+edit streams (seed, 111, obj). Gates, thresholds, substrate,
+window W=8, and verdict strings byte-identical to FREEZE_3G.txt.
+DISCLOSURE: the voided run's trend was visible before this
+issuance -- AUC(slack) 0.51-0.59, AUC(inf) 0.77-0.91. Nothing
+outcome-contingent was altered; support was scaled. Journaled.
+=====================================================================

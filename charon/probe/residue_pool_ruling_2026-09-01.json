@@ -1,0 +1,173 @@
+{
+  "probe": "charon/probe/residue_pool_ruling_2026-09-01.py",
+  "ruling": "charon/probe/RULINGS_2026-09-01.md ruling 1",
+  "question": "ergon/probe/FINDING_pooled_population_single_block_residue_2026-08-30 s4",
+  "stratum": "D0",
+  "null_strategy": "matched (STRATEGY_BY_STRATUM['D0'])",
+  "seed": 20260821,
+  "M1_pool_census": {
+    "A": {
+      "path": "ergon/probe/ledgers/campaign/p1_prepass.jsonl",
+      "sha256_16": "721ff129fb4fbe5c",
+      "raw_lines": 415,
+      "rep1_rows": 206,
+      "distinct_uids": 200,
+      "rep1_status_census": {
+        "ok": 200,
+        "http_error": 6
+      },
+      "transport_failed_rep1_rows": 6,
+      "uids_whose_ONLY_rep1_row_is_transport_failed": 0,
+      "uids_carrying_both_a_failed_row_and_a_real_one": 6,
+      "pool_rep1_records": 206,
+      "pool_fabricating_records": 6,
+      "tasks_whose_F_PROM_ships_more_than_one_record": 6
+    },
+    "B": {
+      "path": "ergon/probe/ledgers/campaign_blockB/p1_prepass.jsonl",
+      "sha256_16": "33417b4df4c3f9f6",
+      "raw_lines": 534,
+      "rep1_rows": 275,
+      "distinct_uids": 220,
+      "rep1_status_census": {
+        "ok": 220,
+        "http_error": 55
+      },
+      "transport_failed_rep1_rows": 55,
+      "uids_whose_ONLY_rep1_row_is_transport_failed": 0,
+      "uids_carrying_both_a_failed_row_and_a_real_one": 53,
+      "pool_rep1_records": 275,
+      "pool_fabricating_records": 55,
+      "tasks_whose_F_PROM_ships_more_than_one_record": 53
+    }
+  },
+  "M2_contamination": {
+    "fabricating_records_in_union_pool": 61,
+    "form_b_and_c_block_scoped_pools": {
+      "block_A_tasks_draw_from_A": {
+        "tasks": 200,
+        "tasks_drawing_a_fabricating_record": 6,
+        "share": 0.03,
+        "distinct_fabricating_records_drawn": 5,
+        "max_times_one_record_served_as_the_null": 2
+      },
+      "block_B_tasks_draw_from_B": {
+        "tasks": 220,
+        "tasks_drawing_a_fabricating_record": 53,
+        "share": 0.2409,
+        "distinct_fabricating_records_drawn": 39,
+        "max_times_one_record_served_as_the_null": 2
+      }
+    },
+    "form_a_one_pooled_pool": {
+      "block_A_tasks_draw_from_AuB": {
+        "tasks": 200,
+        "tasks_drawing_a_fabricating_record": 6,
+        "share": 0.03,
+        "distinct_fabricating_records_drawn": 5,
+        "max_times_one_record_served_as_the_null": 2
+      },
+      "block_B_tasks_draw_from_AuB": {
+        "tasks": 220,
+        "tasks_drawing_a_fabricating_record": 53,
+        "share": 0.2409,
+        "distinct_fabricating_records_drawn": 39,
+        "max_times_one_record_served_as_the_null": 2
+      }
+    },
+    "note": "forms (b) and (c) draw from the same block-scoped pools and so carry the same contamination; the three forms differ in how the STATISTIC is combined, not in what the pool contains"
+  },
+  "M3_control_rewrite_under_form_a": {
+    "block_A": {
+      "tasks": 200,
+      "n_F_NULL_selection_changed": 111,
+      "changed_share": 0.555,
+      "composition_effect_drew_from_the_other_block": 106,
+      "reordering_artifact_same_block_different_record_no_new_record_involved": 5
+    },
+    "block_B": {
+      "tasks": 220,
+      "n_F_NULL_selection_changed": 113,
+      "changed_share": 0.5136,
+      "composition_effect_drew_from_the_other_block": 111,
+      "reordering_artifact_same_block_different_record_no_new_record_involved": 2
+    }
+  },
+  "M4_stability_under_own_block_growth": {
+    "snapshots": [
+      {
+        "snapshot": "dbaa9404b",
+        "sha256_16": "3dae43635e3a350c",
+        "raw_lines": 203,
+        "rep1_records": 200
+      },
+      {
+        "snapshot": "32e38d970",
+        "sha256_16": "d9af5dd4d65c22c4",
+        "raw_lines": 331,
+        "rep1_records": 200
+      },
+      {
+        "snapshot": "live",
+        "sha256_16": "721ff129fb4fbe5c",
+        "raw_lines": 415,
+        "rep1_records": 206
+      }
+    ],
+    "consecutive": [
+      {
+        "from": "dbaa9404b",
+        "to": "32e38d970",
+        "rep1_records": "200 -> 200",
+        "tasks_servable_in_both": 200,
+        "n_F_NULL_selection_changed": 0,
+        "changed_share": 0.0,
+        "of_those_that_selected_a_NEWLY_ADDED_record": 0,
+        "of_those_that_selected_a_PRE_EXISTING_record": 0
+      },
+      {
+        "from": "32e38d970",
+        "to": "live",
+        "rep1_records": "200 -> 206",
+        "tasks_servable_in_both": 200,
+        "n_F_NULL_selection_changed": 34,
+        "changed_share": 0.17,
+        "of_those_that_selected_a_NEWLY_ADDED_record": 15,
+        "of_those_that_selected_a_PRE_EXISTING_record": 19
+      }
+    ]
+  },
+  "M5_record_identity": {
+    "campaign_key_is": "ledger_id#seq  (build_f_null: shipped = [r for r in records if f'{r.ledger_id}#{r.seq}' in kept])",
+    "ledger_id_values": {
+      "A": [
+        "p1_prepass"
+      ],
+      "B": [
+        "p1_prepass"
+      ]
+    },
+    "campaign_keys_A": 206,
+    "campaign_keys_B": 275,
+    "campaign_keys_COLLIDING_across_blocks": 200,
+    "record_id_distinct_A": 200,
+    "record_id_total_A": 206,
+    "record_id_distinct_B": 220,
+    "record_id_total_B": 275,
+    "record_id_colliding_across_blocks": 0,
+    "charon_keys_colliding_across_blocks": 0,
+    "union_records": 481,
+    "union_distinct_campaign_keys": 281,
+    "union_distinct_charon_keys": 481
+  },
+  "M6_pooling_criterion_resolution": {
+    "criterion": "merge rule 3.2 cond. 3 - the two blocks' 95% intervals overlap",
+    "half_width_A": 0.0702,
+    "half_width_B": 0.0673,
+    "largest_block_difference_the_criterion_still_permits": 0.1375,
+    "observed_block_difference": 0.0145,
+    "observed_as_share_of_what_is_permitted": 0.1055,
+    "live_effect_scale_heuristic_floor_minus_solver": 0.0325,
+    "permitted_difference_in_units_of_that_effect": 4.23
+  }
+}

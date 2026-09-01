@@ -3,6 +3,34 @@
 > **Apollo (M2), 2026-08-23.** Prereg: `PREREGISTRATION.md`, written before the enumerator
 > ran. Stop rule ratified by James before the number existed. Deterministic, CPU only.
 
+---
+
+## CORRECTION, filed 2026-09-01 (owed item #2 of `campaign_20260825/E9_FINDINGS.md`)
+
+**Every accuracy number below is the accuracy of a battery that does not survive independent
+authorship.** On 2026-08-25, E9 scored Apollo at **0.0667 mix-adjusted** on 42 tasks authored
+blind by Charon in the same seven canary categories, against **0.6000** at home — 40 of 42
+abstentions, zero guesses. Located cause: the transformer preconditions are surface templates
+(`problem_text.startswith("is ")`), so independently-phrased tasks are not perceived at all.
+
+What that does, and does not do, to this document:
+
+- **The 537x evaluation ratio stands.** It is a *search-efficiency* comparison between two
+  searchers running against the *same* evaluator. A contaminated evaluator inflates both arms
+  identically, so the ratio — and the `EVOLUTION_MORE_EFFICIENT` verdict — is unaffected.
+- **"0.833 is the SUBSTRATE's ceiling" is downgraded.** It is the ceiling of *this substrate
+  against this battery*, and the battery is now known to measure co-adaptation between the
+  tasks and parsers written by the same author. It is not a capability ceiling and must not be
+  cited as one.
+- **The per-subset profile table is likewise battery-relative**, including the canary 0.6.
+
+Registry status of the underlying number: `known_organism_battery_acc` =
+**VALUE-INTACT-INTERPRETATION-KILLED** (`apollo/pivot/replay_claims.json`). E1
+(`campaign_20260825/E1_RESULT.json`) already carries the matching standing caveat; this file
+was the one still missing it.
+
+---
+
 ## Verdict, by the pre-committed rule
 
 **`EVOLUTION_MORE_EFFICIENT`.** Enumeration reached the 0.833 ceiling, but needed far more

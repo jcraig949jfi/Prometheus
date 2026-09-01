@@ -1,0 +1,44 @@
+RECOMMENDED_NEXT_STATE — MINT-0001 vacuous_truth — Master Smith session 20260901T073136Z
+
+PACKET STATE:  DEEP-MINTING -> CANDIDATE-PRODUCED   (NOT admitted; charter s14)
+
+CANDIDATE OF RECORD:  candidates/v3_quantified_truth.py
+  dev:        holdout 1.00 / boundary false-commit 0 / mutants 8/8 8/8 80/80 8/8  (PASS_DEV)
+  adversarial (20 novel phrasings, cycle 4):  4/20 correct, 0 false commits, 16 abstentions
+  knockout (cycle 5):  every kernel rule load-bearing (-0.32 .. -0.59); equality domain match
+              load-bearing (-0.10); container strip -0.89; stemming -0.63; cardinality reader -0.51;
+              predicate check in cardinality reader DECORATIVE on this dev set (0.000)
+  delta class declared in advance:  dE_synth for the kernel `quantified_truth(q, |domain|, |satisfiers|)`;
+              the parser is a template adapter (Level 0) and must never be cited as capability.
+
+SMITH'S DIAGNOSIS (charter s15 — I may reclassify):
+  The wall is REAL but SMALL. The missing operation is a 3-rule kernel over (quantifier, domain
+  cardinality, satisfier count). Nothing in forge_primitives.py or Apollo's REGISTRY computes it
+  (closure evidence in the packet). Most of the difficulty is PARSE: reading a domain noun phrase and
+  the facts asserted about exactly that phrase. Classification: genuine expressivity gap (kernel)
+  + parser gap (adapter). Same split IQ-PORT-1 found for all_but_n.
+
+WHAT INDEPENDENT MACHINERY MUST DO BEFORE THIS IS READ AS A RESULT:
+  1. Aporia/Charon-authored preregistration; held-out generator NOT written by Hephaestus
+     (the 5-task Apollo canary is degenerate; Charon's E9 6 items are the only blind set and were
+     not touched here).
+  2. Post-E9 Apollo evaluator of record (0.833 is retracted).
+  3. Absence check, mechanical: kernel not in v1 catalog / forge library / any prior registry.
+  4. Knockout inside Apollo's blackboard with the frozen tail score_by_comparison__g.
+  5. The counterfeit battery: v3 does not read state.candidates (grep), constant/keyword mutants
+     already fail the dev set (packet COUNTERFEIT_TESTS).
+
+WHAT THE APPRENTICE FORGE OWES THE WALL (cheap, unattended):
+  - add dev kind NONEMPTY_OTHER_PREDICATE ("exactly k X, j of them are Q", Q != claim predicate;
+    gold = abstain) so the decorative component becomes measurable;
+  - add dev kind PREDICATE_EXTENSION_EMPTY ("there are no chipped marbles ... every red marble is
+    chipped" -> no) — a 4th kernel rule the candidate lacks (counterexamples.md D1);
+  - feed the 16 adversarial phrasings to cheap models as a REPRESENTATION_PERTURBATIONS expansion;
+    ask them to widen the parser, not the kernel; execute; record which idioms they cover.
+
+WHAT NOT TO DO:
+  - do not widen v3's parser inside a Master Smith session — that is apprentice work (cheap, many
+    idioms, mechanical); the smith's cycle budget is for kernels, not regex coverage;
+  - do not cite the dev pass as evidence of anything: author of dev set == author of candidate.
+
+NEXT SCHEDULED CYCLE CONSUMES:  this file, traces/v3_adversarial.json, traces/v3_knockout.json.

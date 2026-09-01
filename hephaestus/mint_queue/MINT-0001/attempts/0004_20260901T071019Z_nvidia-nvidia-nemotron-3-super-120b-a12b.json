@@ -1,0 +1,81 @@
+{
+  "n": 4,
+  "ts": "2026-09-01T07:10:19Z",
+  "model": "nvidia:nvidia/nemotron-3-super-120b-a12b",
+  "prompt_sha": "440bb8dabf66",
+  "regime": "apprentice",
+  "cost": 0.0,
+  "latency_s": 144.3,
+  "model_served": "nvidia/nemotron-3-super-120b-a12b",
+  "llm_ok": true,
+  "hypothesis": "",
+  "substrate_suffices_claim": "",
+  "self_counterexamples": "",
+  "verdict": "FAIL_DEV",
+  "failure_families": [
+    "below_chance_or_abstaining",
+    "commits_without_information",
+    "keys_on_claim_form_not_domain_emptiness",
+    "quantifier_blind",
+    "candidate_order_dependent",
+    "surface_form_of_emptiness",
+    "weak_kinds:EXIST_EMPTY,NEARMISS_NO_KEYWORD,NEARMISS_VACUOUS_WORD,NONEMPTY_EXIST_TRUE,NONEMPTY_UNIV_COUNTEREX,NONEMPTY_UNKNOWN,VAC_COND_EMPTY"
+  ],
+  "static_gate": [],
+  "holdout": {
+    "n": 80,
+    "accuracy_decidable": 0.3288,
+    "abstain_rate_decidable": 0.3973,
+    "boundary_false_commit_rate": 1.0,
+    "errors": 0,
+    "by_kind": {
+      "EXIST_EMPTY": 0.0,
+      "NEARMISS_NO_KEYWORD": 0.0,
+      "NEARMISS_VACUOUS_WORD": 0.0,
+      "NONEMPTY_EXIST_TRUE": 0.25,
+      "NONEMPTY_UNIV_ALL": 0.833,
+      "NONEMPTY_UNIV_COUNTEREX": 0.0,
+      "NONEMPTY_UNKNOWN": 0.0,
+      "VAC_COND_EMPTY": 0.0,
+      "VAC_NEGUNIV_EMPTY": 0.75,
+      "VAC_UNIV_EMPTY": 0.857,
+      "VAC_UNIV_EMPTY_ORDER": 0.714
+    }
+  },
+  "train": {
+    "n": 8,
+    "accuracy_decidable": 0.5714,
+    "abstain_rate_decidable": 0.2857,
+    "boundary_false_commit_rate": 0.0,
+    "errors": 0,
+    "by_kind": {
+      "EXIST_EMPTY": 0.0,
+      "NEARMISS_NO_KEYWORD": 0.0,
+      "NONEMPTY_UNIV_ALL": 1.0,
+      "NONEMPTY_UNKNOWN": 1.0,
+      "VAC_UNIV_EMPTY": 1.0,
+      "VAC_UNIV_EMPTY_ORDER": 1.0
+    }
+  },
+  "input_mutants": {
+    "emptiness_removed_should_not_commit_yes": {
+      "passed": 1,
+      "of": 8
+    },
+    "every_to_some_should_flip_to_no": {
+      "passed": 1,
+      "of": 8
+    },
+    "candidate_order_invariance": {
+      "passed": 28,
+      "of": 80
+    },
+    "no_to_exactly_zero_same_answer": {
+      "passed": 7,
+      "of": 8
+    }
+  },
+  "candidate_file": "hephaestus\\mint_queue\\MINT-0001\\attempts\\0004_20260901T071019Z_nvidia-nvidia-nemotron-3-super-120b-a12b.py",
+  "result_file": "hephaestus\\mint_queue\\MINT-0001\\attempts\\0004_20260901T071019Z_nvidia-nvidia-nemotron-3-super-120b-a12b_result.json",
+  "rescored": "2026-09-01T07:15:09Z"
+}

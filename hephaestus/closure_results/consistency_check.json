@@ -1,0 +1,163 @@
+{
+  "spec": "consistency_check",
+  "notes": "consistency_check: is a set of strict-order relations acyclic? Independent DFS target; frozen primitives take edge lists.",
+  "route_keys": [
+    "consistent"
+  ],
+  "n_search_points": 64,
+  "n_verify_points": 4096,
+  "n_verify_shift_points": 300,
+  "verify_shift_description": "300 sampled 5/6-node digraphs, half with duplicate edges, labels offset into a larger universe",
+  "target_type": "bool",
+  "basis": {
+    "version": "A2-GENERIC-v1",
+    "hash": "7f2ef69196e7f128"
+  },
+  "max_depth": 3,
+  "generated": "2026-09-01T11:17:46Z",
+  "A0_frozen_no_routing": {
+    "evaluated": 55,
+    "distinct_classes": 14,
+    "depth": 3,
+    "seconds": 0.06,
+    "budget": 300000,
+    "per_route": {
+      "consistent": {
+        "mechanism_bearing": [],
+        "coerced_only_aliases": [],
+        "n_mechanism": 0,
+        "n_robust": 0,
+        "n_alias": 0
+      }
+    },
+    "all_routes_mechanism_bearing": false,
+    "all_routes_robust": false,
+    "all_routes_coerced": false
+  },
+  "A1_frozen_with_routing": {
+    "evaluated": 55,
+    "distinct_classes": 14,
+    "depth": 3,
+    "seconds": 0.06,
+    "budget": 300000,
+    "per_route": {
+      "consistent": {
+        "mechanism_bearing": [],
+        "coerced_only_aliases": [],
+        "n_mechanism": 0,
+        "n_robust": 0,
+        "n_alias": 0
+      }
+    },
+    "all_routes_mechanism_bearing": false,
+    "all_routes_robust": false,
+    "all_routes_coerced": false
+  },
+  "A2_frozen_routing_generic": {
+    "evaluated": 908,
+    "distinct_classes": 93,
+    "depth": 3,
+    "seconds": 0.87,
+    "budget": 300000,
+    "per_route": {
+      "consistent": {
+        "mechanism_bearing": [
+          {
+            "expr": "is_some(topological_sort(rels))",
+            "depth": 2,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          },
+          {
+            "expr": "not(is_none(topological_sort(rels)))",
+            "depth": 3,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          },
+          {
+            "expr": "and(pigeonhole_check(1, 0), is_some(topological_sort(rels)))",
+            "depth": 3,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          },
+          {
+            "expr": "and(is_some(topological_sort(rels)), pigeonhole_check(1, 0))",
+            "depth": 3,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          },
+          {
+            "expr": "and(is_some(topological_sort(rels)), is_some(topological_sort(rels)))",
+            "depth": 3,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          }
+        ],
+        "coerced_only_aliases": [],
+        "n_mechanism": 5,
+        "n_robust": 5,
+        "n_alias": 0
+      }
+    },
+    "all_routes_mechanism_bearing": true,
+    "all_routes_robust": true,
+    "all_routes_coerced": true
+  },
+  "B_generic_language": {
+    "evaluated": 20,
+    "distinct_classes": 12,
+    "depth": 3,
+    "seconds": 0.1,
+    "budget": 300000,
+    "per_route": {
+      "consistent": {
+        "mechanism_bearing": [
+          {
+            "expr": "not(has_cycle_dfs(rels))",
+            "depth": 2,
+            "static_type": "bool",
+            "typed": true,
+            "verify_exhaustive": true,
+            "verify_shift": true,
+            "mechanism_bearing": true,
+            "robust": true
+          }
+        ],
+        "coerced_only_aliases": [],
+        "n_mechanism": 1,
+        "n_robust": 1,
+        "n_alias": 0
+      }
+    },
+    "all_routes_mechanism_bearing": true,
+    "all_routes_robust": true,
+    "all_routes_coerced": true
+  },
+  "classification": {
+    "class": "SEARCH_ROUTING",
+    "CLOSURE_MARGIN": "A2_ONLY",
+    "why": "target is mechanism-bearing inside G(C|R,A2); the frozen set computes it and the system does not route to it",
+    "robust_at_margin": true,
+    "representation_debt": "Moderate: parse 'A > B and B > C and C > A' into (a,b) pairs. Apollo's REGISTRY already has parse_names_and_relations / relations_from_facts writing the `relations` slot; the missing piece was never the parse, it was that no op turns `relations` into a consistency verdict."
+  }
+}

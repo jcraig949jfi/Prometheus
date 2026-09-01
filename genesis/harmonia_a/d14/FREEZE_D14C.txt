@@ -1,0 +1,47 @@
+=====================================================================
+D-14C FREEZE -- comparator translation (output-hash -> state tuple)
+Date: 2026-09-01. Issued after D-14B's verdict, before any state-
+tuple measurement. One epistemic dimension changes: the COMPARATOR.
+Battery: the ORIGINAL 8 A2 cases (resolution was D-14B's axis).
+Pairs/sites: the same persisted A2 population. No new mutations.
+=====================================================================
+INSTRUMENT LIMIT, DECLARED (IF-5): the engine advertises trace/
+behavior_trace capabilities but /v0/evaluate exposes no way to
+request them (limits.extra keys are accepted and ignored -- by
+schema design, not defect). Full-trajectory comparison is
+UNOBTAINABLE for persisted artifacts on release 50b5c232; that
+rung is BLOCKED pending the Phase-0 upstream work (R2/R5). D-14C
+therefore translates to the finest OBTAINABLE ruler:
+  STATE TUPLE per case = (output_hash, behavior vector, resource
+  steps) from the evaluate result.
+This is strictly finer than output-hash (it can see execution-
+feature changes that reconverge to the same output) and strictly
+coarser than D-13's trajectory metric. Both facts bind the claim.
+
+DEFINITIONS: for each A2 measured site (first-hit child), evaluate
+parent and child on the 8 original single-case tasks capturing the
+full state tuple. I_state(P,s) = #{cases: tuple differs}/8.
+I_out(P,s) recomputed from the captured output hashes.
+ENDPOINTS (frozen):
+  E1 migration matrix I_out bins -> I_state bins (zero/middle/high).
+  E2 DANGER CELL: P( 0 < I_state <= 0.25 | I_out = 0 ) -- hidden
+     state consequence in the exact band D-14 predicts empty.
+  E3 middle mass under I_state.
+  E4 reconvergence rate: P(state differs AND output same), overall
+     and per case.
+CONTROLS:
+  C1 replay: one parent's 8 tuples re-fetched, identical.
+  C2 FULL consistency: I_out recomputed here must equal the A2
+     influence exactly for every site (now checkable for all
+     children, not only the changed subset); any mismatch =
+     HARNESS_SUSPECT.
+  C3 fault typing as before.
+SUPPORT: >= 1,400 sites evaluable; else D14C_INDETERMINATE.
+VERDICTS (frozen):
+  COMPARATOR_STABLE       E3 <= 0.05 AND E2 <= 0.05.
+  COMPARATOR_DEPENDENT    E3 > 0.05 OR E2 > 0.05.
+  D14C_INDETERMINATE      support/control failure.
+A COMPARATOR_DEPENDENT outcome binds every D-14 reading to the
+output-hash ruler and stops the ladder pending review. No D-14C
+outcome alters the D-14 or D-14B verdicts.
+=====================================================================

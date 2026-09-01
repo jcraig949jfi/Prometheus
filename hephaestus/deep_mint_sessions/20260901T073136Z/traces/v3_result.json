@@ -1,0 +1,782 @@
+{
+  "wall": "vacuous_truth",
+  "candidate": "hephaestus\\deep_mint_sessions\\20260901T073136Z\\candidates\\v3_quantified_truth.py",
+  "ts": "2026-09-01T07:35:54Z",
+  "static_gate": [],
+  "train": {
+    "n": 8,
+    "accuracy_decidable": 1.0,
+    "abstain_rate_decidable": 0.0,
+    "boundary_false_commit_rate": 0.0,
+    "errors": 0,
+    "by_kind": {
+      "EXIST_EMPTY": 1.0,
+      "NEARMISS_NO_KEYWORD": 1.0,
+      "NONEMPTY_UNIV_ALL": 1.0,
+      "NONEMPTY_UNKNOWN": 1.0,
+      "VAC_UNIV_EMPTY": 1.0,
+      "VAC_UNIV_EMPTY_ORDER": 1.0
+    }
+  },
+  "holdout": {
+    "n": 80,
+    "accuracy_decidable": 1.0,
+    "abstain_rate_decidable": 0.0,
+    "boundary_false_commit_rate": 0.0,
+    "errors": 0,
+    "by_kind": {
+      "EXIST_EMPTY": 1.0,
+      "NEARMISS_NO_KEYWORD": 1.0,
+      "NEARMISS_VACUOUS_WORD": 1.0,
+      "NONEMPTY_EXIST_TRUE": 1.0,
+      "NONEMPTY_UNIV_ALL": 1.0,
+      "NONEMPTY_UNIV_COUNTEREX": 1.0,
+      "NONEMPTY_UNKNOWN": 1.0,
+      "VAC_COND_EMPTY": 1.0,
+      "VAC_NEGUNIV_EMPTY": 1.0,
+      "VAC_UNIV_EMPTY": 1.0,
+      "VAC_UNIV_EMPTY_ORDER": 1.0
+    }
+  },
+  "input_mutants": {
+    "emptiness_removed_should_not_commit_yes": {
+      "passed": 8,
+      "of": 8
+    },
+    "every_to_some_should_flip_to_no": {
+      "passed": 8,
+      "of": 8
+    },
+    "candidate_order_invariance": {
+      "passed": 80,
+      "of": 80
+    },
+    "no_to_exactly_zero_same_answer": {
+      "passed": 8,
+      "of": 8
+    }
+  },
+  "holdout_records": [
+    {
+      "id": "vt-055",
+      "kind": "VAC_UNIV_EMPTY",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes, it is true",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-032",
+      "kind": "NEARMISS_VACUOUS_WORD",
+      "gold": "no",
+      "comparison": false,
+      "selected": "no, it is false",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-007",
+      "kind": "NONEMPTY_EXIST_TRUE",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-066",
+      "kind": "VAC_UNIV_EMPTY",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes, the claim holds",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-037",
+      "kind": "VAC_UNIV_EMPTY_ORDER",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes, it is true",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-054",
+      "kind": "NEARMISS_VACUOUS_WORD",
+      "gold": "no",
+      "comparison": false,
+      "selected": "no",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-022",
+      "kind": "VAC_UNIV_EMPTY",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes, the claim holds",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-087",
+      "kind": "NEARMISS_VACUOUS_WORD",
+      "gold": "no",
+      "comparison": false,
+      "selected": "no, it is false",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-064",
+      "kind": "NEARMISS_NO_KEYWORD",
+      "gold": "no",
+      "comparison": false,
+      "selected": "no, it is false",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-073",
+      "kind": "NONEMPTY_EXIST_TRUE",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-051",
+      "kind": "NONEMPTY_EXIST_TRUE",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes, it is true",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-070",
+      "kind": "VAC_UNIV_EMPTY_ORDER",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-016",
+      "kind": "NONEMPTY_UNIV_COUNTEREX",
+      "gold": "no",
+      "comparison": false,
+      "selected": "no, it is false",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-018",
+      "kind": "NONEMPTY_EXIST_TRUE",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes, it is true",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-056",
+      "kind": "VAC_NEGUNIV_EMPTY",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes, the claim holds",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-074",
+      "kind": "NONEMPTY_UNKNOWN",
+      "gold": "und",
+      "comparison": null,
+      "selected": "",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-034",
+      "kind": "VAC_NEGUNIV_EMPTY",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes, it is true",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-005",
+      "kind": "NONEMPTY_UNIV_COUNTEREX",
+      "gold": "no",
+      "comparison": false,
+      "selected": "no, it is false",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-029",
+      "kind": "NONEMPTY_EXIST_TRUE",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes, the claim holds",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-080",
+      "kind": "EXIST_EMPTY",
+      "gold": "no",
+      "comparison": false,
+      "selected": "no, it is false",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-012",
+      "kind": "VAC_NEGUNIV_EMPTY",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes, the claim holds",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-001",
+      "kind": "VAC_NEGUNIV_EMPTY",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-028",
+      "kind": "NONEMPTY_UNIV_ALL",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-063",
+      "kind": "NONEMPTY_UNKNOWN",
+      "gold": "und",
+      "comparison": null,
+      "selected": "",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-086",
+      "kind": "NEARMISS_NO_KEYWORD",
+      "gold": "no",
+      "comparison": false,
+      "selected": "no, it is false",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-000",
+      "kind": "VAC_UNIV_EMPTY",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes, the claim holds",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-071",
+      "kind": "NONEMPTY_UNIV_COUNTEREX",
+      "gold": "no",
+      "comparison": false,
+      "selected": "no, it is false",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-065",
+      "kind": "NEARMISS_VACUOUS_WORD",
+      "gold": "no",
+      "comparison": false,
+      "selected": "no, the claim fails",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-081",
+      "kind": "VAC_UNIV_EMPTY_ORDER",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes, it is true",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-010",
+      "kind": "NEARMISS_VACUOUS_WORD",
+      "gold": "no",
+      "comparison": false,
+      "selected": "no, the claim fails",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-036",
+      "kind": "EXIST_EMPTY",
+      "gold": "no",
+      "comparison": false,
+      "selected": "no, the claim fails",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-027",
+      "kind": "NONEMPTY_UNIV_COUNTEREX",
+      "gold": "no",
+      "comparison": false,
+      "selected": "no, it is false",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-082",
+      "kind": "NONEMPTY_UNIV_COUNTEREX",
+      "gold": "no",
+      "comparison": false,
+      "selected": "no, it is false",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-031",
+      "kind": "NEARMISS_NO_KEYWORD",
+      "gold": "no",
+      "comparison": false,
+      "selected": "no",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-079",
+      "kind": "VAC_COND_EMPTY",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes, the claim holds",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-075",
+      "kind": "NEARMISS_NO_KEYWORD",
+      "gold": "no",
+      "comparison": false,
+      "selected": "no, it is false",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-023",
+      "kind": "VAC_NEGUNIV_EMPTY",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes, the claim holds",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-006",
+      "kind": "NONEMPTY_UNIV_ALL",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes, it is true",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-085",
+      "kind": "NONEMPTY_UNKNOWN",
+      "gold": "und",
+      "comparison": null,
+      "selected": "",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-052",
+      "kind": "NONEMPTY_UNKNOWN",
+      "gold": "und",
+      "comparison": null,
+      "selected": "",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-053",
+      "kind": "NEARMISS_NO_KEYWORD",
+      "gold": "no",
+      "comparison": false,
+      "selected": "no, the claim fails",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-015",
+      "kind": "VAC_UNIV_EMPTY_ORDER",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-019",
+      "kind": "NONEMPTY_UNKNOWN",
+      "gold": "und",
+      "comparison": null,
+      "selected": "",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-049",
+      "kind": "NONEMPTY_UNIV_COUNTEREX",
+      "gold": "no",
+      "comparison": false,
+      "selected": "no, the claim fails",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-026",
+      "kind": "VAC_UNIV_EMPTY_ORDER",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes, the claim holds",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-020",
+      "kind": "NEARMISS_NO_KEYWORD",
+      "gold": "no",
+      "comparison": false,
+      "selected": "no",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-014",
+      "kind": "EXIST_EMPTY",
+      "gold": "no",
+      "comparison": false,
+      "selected": "no, the claim fails",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-044",
+      "kind": "VAC_UNIV_EMPTY",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes, the claim holds",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-042",
+      "kind": "NEARMISS_NO_KEYWORD",
+      "gold": "no",
+      "comparison": false,
+      "selected": "no",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-038",
+      "kind": "NONEMPTY_UNIV_COUNTEREX",
+      "gold": "no",
+      "comparison": false,
+      "selected": "no",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-040",
+      "kind": "NONEMPTY_EXIST_TRUE",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes, it is true",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-030",
+      "kind": "NONEMPTY_UNKNOWN",
+      "gold": "und",
+      "comparison": null,
+      "selected": "",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-050",
+      "kind": "NONEMPTY_UNIV_ALL",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-062",
+      "kind": "NONEMPTY_EXIST_TRUE",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes, the claim holds",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-024",
+      "kind": "VAC_COND_EMPTY",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-043",
+      "kind": "NEARMISS_VACUOUS_WORD",
+      "gold": "no",
+      "comparison": false,
+      "selected": "no",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-048",
+      "kind": "VAC_UNIV_EMPTY_ORDER",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes, the claim holds",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-083",
+      "kind": "NONEMPTY_UNIV_ALL",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes, it is true",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-004",
+      "kind": "VAC_UNIV_EMPTY_ORDER",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-008",
+      "kind": "NONEMPTY_UNKNOWN",
+      "gold": "und",
+      "comparison": null,
+      "selected": "",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-013",
+      "kind": "VAC_COND_EMPTY",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes, it is true",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-067",
+      "kind": "VAC_NEGUNIV_EMPTY",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-021",
+      "kind": "NEARMISS_VACUOUS_WORD",
+      "gold": "no",
+      "comparison": false,
+      "selected": "no, the claim fails",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-077",
+      "kind": "VAC_UNIV_EMPTY",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes, the claim holds",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-025",
+      "kind": "EXIST_EMPTY",
+      "gold": "no",
+      "comparison": false,
+      "selected": "no, it is false",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-069",
+      "kind": "EXIST_EMPTY",
+      "gold": "no",
+      "comparison": false,
+      "selected": "no, the claim fails",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-039",
+      "kind": "NONEMPTY_UNIV_ALL",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes, it is true",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-076",
+      "kind": "NEARMISS_VACUOUS_WORD",
+      "gold": "no",
+      "comparison": false,
+      "selected": "no",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-058",
+      "kind": "EXIST_EMPTY",
+      "gold": "no",
+      "comparison": false,
+      "selected": "no, it is false",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-060",
+      "kind": "NONEMPTY_UNIV_COUNTEREX",
+      "gold": "no",
+      "comparison": false,
+      "selected": "no, it is false",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-057",
+      "kind": "VAC_COND_EMPTY",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-084",
+      "kind": "NONEMPTY_EXIST_TRUE",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes, the claim holds",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-045",
+      "kind": "VAC_NEGUNIV_EMPTY",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-068",
+      "kind": "VAC_COND_EMPTY",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-011",
+      "kind": "VAC_UNIV_EMPTY",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-072",
+      "kind": "NONEMPTY_UNIV_ALL",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-002",
+      "kind": "VAC_COND_EMPTY",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-046",
+      "kind": "VAC_COND_EMPTY",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes, it is true",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-078",
+      "kind": "VAC_NEGUNIV_EMPTY",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes, it is true",
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "vt-035",
+      "kind": "VAC_COND_EMPTY",
+      "gold": "yes",
+      "comparison": true,
+      "selected": "yes, the claim holds",
+      "ok": true,
+      "error": null
+    }
+  ],
+  "verdict": "PASS_DEV"
+}

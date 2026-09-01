@@ -1,0 +1,49 @@
+APOLLO SERENDIPITY STATUS  (ASCII; charter S10)
+timestamp                 : 2026-09-01T07:42Z (Gen-2 first boot + vertical slice)
+foundry_version           : 50b5c2327c64bf11 (git 71b29593, 211 files) LIVE, auth OK
+apollo_version            : gen2-slice-v0
+charter                   : roles/Apollo/CHARTER_GEN2_serendipity_20260901.md
+active_namespace_count    : 1 (client_id=apollo, campaign=slice_pilot)
+worlds_seen               : 3 engines (stackvm-v1, push-pyshgp, treegp-deap)
+worlds_explored           : 1 Apollo-authored task (f(x)=3x+1, stackvm-v1)
+micro_runs                : 2 bursts (random, map_elites) @ budget 300
+organisms_evaluated       : 1 create_random + 2 search bursts
+new_archive_cells         : map_elites 11/64 cells, coverage 0.172, qd 0.40
+new_boundary_pairs        : 0
+new_failure_classes       : 0
+new_transfer_events       : 0
+new_recurring_motifs      : 0
+new_fossils               : 1 (serendipity_slice/slice-20260901T073947Z_d94a88cb5130.json)
+replay_success_rate       : 1/1 (event 93757, match=True, no engine drift)
+representation_survival   : n/a (lane B not yet exercised)
+lane_d_compute_fraction   : 0.00
+lane_d_novel_events       : 0
+queue_depth               : 0
+--
+VERTICAL SLICE            : VERIFIED end-to-end (charter S19):
+                            world -> burst(random|map_elites) -> create_random organism ->
+                            evaluate -> genotype+lineage capture -> replay(match=True) -> fossil.
+SCIENCE (honest null)     : at budget 300 NEITHER map_elites NOR random solved f(x)=3x+1
+                            (both best_fitness 0.1). map_elites' only differentiation was a QD
+                            archive (coverage 0.172); no solve advantage over random at this budget.
+                            Do not read activity as progress -- this is a plumbing milestone, not
+                            a capability result.
+adapter_boundary          : foundry_creds / world_adapter / eval_adapter / fossil all live and
+                            proven. ProvenanceAdapter = fossil.provenance_hash. Thin by design.
+legacy_cleanup            : Task1 E9-scorer DONE (repro 0.0667). Task2 state-injection OWED.
+ecology_peers             : D-12/D-13 (ZeusE), Harmonia A (genesis/harmonia_a/d14). No collisions.
+blockers                  : /v0/search is synchronous+slow (~60-75s per 300-eval burst); size
+                            budgets modestly on the shared host. New Foundry release expected
+                            ~2026-09-02 -> revise FOUNDRY_API_NOTES.md + PIN then.
+last_job                  : Source Viability Gate build + validation run (stackvm)
+S1_status                 : BLOCKED / UNSCORED -- 'NO NONTRIVIAL SOURCE POPULATION AT
+                            FEASIBLE COST' (HITL ruling 2026-09-01).
+apollo_mining             : SUSPENDED. Zero routine search compute on current substrate.
+                            No new campaign / no behavioural pivot / NO budget rescue.
+gate                      : source_viability_gate.py built + machine-enforced in s1_campaign
+                            (scored run REFUSED without a PASS artifact for engine+release).
+authorized_next           : ONE Source Viability Gate probe vs the next Foundry release.
+                            Gate FAIL or Q4 unmet -> RETIRE scheduled mining; keep infra dormant.
+ruling                    : apollo/cycles/S1_archive_value/RULING_2026-09-01.md (decision tree)
+program_lesson            : diversity/archive-coverage are UNSAFE observables (dead world = 19% cov)
+errors                    : treegp-deap suspected mis-wired for integer-induction tasks (0.000)

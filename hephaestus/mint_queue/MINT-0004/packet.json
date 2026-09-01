@@ -1,0 +1,174 @@
+{
+  "MINT_ID": "MINT-0004",
+  "STATUS": "DORMANT",
+  "PRIORITY": {
+    "score": 0.219,
+    "dimensions": {
+      "cheap_search_exhaustion": 0.0,
+      "distinct_models": 0,
+      "distinct_failure_families": 0,
+      "evidence_current_set_cannot_express": 0.0,
+      "frequency_across_worlds": 0.25,
+      "number_of_independent_origins": 0.5,
+      "potential_cross_world_utility": 0.5,
+      "quality_of_reproducer": 0.0,
+      "quality_of_falsifier": 0.0,
+      "minimality_of_required_extension": 0.5
+    },
+    "rationale": "Closure gauntlet: SEARCH_ROUTING. Routed to Apollo: add a typed is_consistent(relations)->bool op over check_transitivity/topological_sort. Not a mint."
+  },
+  "SOURCE_WORLD": "Apollo canary, category consistency_check",
+  "SOURCE_AGENT": "Apollo / Aporia",
+  "FAILURE_FAMILY": "consistency_check (PARSER gap + missing consistency predicate over an existing structure)",
+  "WHAT_FAILED": "check_transitivity / solve_constraints exist; no parser feeds them a cycle-detection question; no predicate 'is this relation set consistent' is exposed as an op.",
+  "WHAT_SHOULD_HAVE_HAPPENED": "A boolean verdict: the strict-order relation set is consistent iff its directed graph is acyclic.",
+  "MINIMAL_REPRODUCER": null,
+  "POSITIVE_EXAMPLES": [],
+  "NEGATIVE_EXAMPLES": [],
+  "BOUNDARY_EXAMPLES": [],
+  "CURRENT_PRIMITIVES": [
+    "topological_sort",
+    "check_transitivity",
+    "pigeonhole_check",
+    "all_but_n",
+    "Apollo REGISTRY: parse_names_and_relations, relations_from_facts, op_transitive_closure (no consistency predicate)"
+  ],
+  "PRIMITIVE_SET_HASH": null,
+  "WHY_COMPOSITION_APPEARS_INSUFFICIENT": "It is not insufficient: composition suffices at depth 3 with generic structural ops. The system never routed `relations` to a consistency verdict.",
+  "CLOSURE_EVIDENCE": [],
+  "SEARCH_ALREADY_ATTEMPTED": [
+    "Apollo O1 exhaustive enumeration over the v2 registry: consistency_check 0/5 (no op writes a consistency verdict).",
+    "closure_test.py (2026-09-01): A0/A1 nothing; A2 depth 3 mechanism-bearing; B depth 2."
+  ],
+  "CHEAP_MODEL_ATTEMPTS": [],
+  "CHEAP_MODEL_FAILURES": [],
+  "BEST_FAILED_CANDIDATE": null,
+  "KNOCKOUT_RESULTS": [
+    {
+      "note": "Baseline (no op) = Apollo's current behaviour: abstain on every item; accuracy_decidable 0.0. Any candidate's holdout accuracy is therefore its own knockout delta.",
+      "n_executed_attempts": 0,
+      "n_pass_dev": 0
+    }
+  ],
+  "COUNTERFEIT_TESTS": [],
+  "KNOWN_SHORTCUTS": [],
+  "FORBIDDEN_SHORTCUTS": [],
+  "REPRESENTATION_PERTURBATIONS": [],
+  "DESIRED_TYPED_INTERFACE": null,
+  "RESOURCE_CONSTRAINTS": null,
+  "INDEPENDENT_EVALUATOR": null,
+  "SUCCESS_CRITERION": null,
+  "KILL_CRITERION": null,
+  "PROVENANCE": [
+    {
+      "ref": "aporia/docs/CYCLE_155S_FOUR_ARE_NOT_FOUR_2026-08-24.md:72-75"
+    },
+    {
+      "ref": "aporia/docs/CYCLE_156S_SEVERED_LIBRARY_2026-08-24.md"
+    },
+    {
+      "ts": "2026-09-01T10:48:54Z",
+      "by": "hephaestus.src.closure_test (Addendum 3)",
+      "note": "second specimen through the funnel; classified before any apprentice or smith work"
+    },
+    {
+      "ts": "2026-09-01T11:20:23Z",
+      "by": "hephaestus.src.closure_test under A2-GENERIC-v1 (Addendum 4)",
+      "note": "re-run under the frozen basis; equivalence classes recorded; two verify columns"
+    }
+  ],
+  "_meta": {
+    "created": "2026-09-01T07:08:02Z",
+    "updated": "2026-09-01T11:20:23Z",
+    "schema": "mint_packet_v1",
+    "routing": "search_routing"
+  },
+  "SEMANTIC_KERNEL_SPEC": {
+    "inputs": {
+      "relations": "tuple of (a, b) pairs over a small universe (a > b)"
+    },
+    "output": "bool: consistent (acyclic)",
+    "independent_target": "DFS three-colour cycle detection in closure_specs/consistency_check.py; shares no code with forge_primitives",
+    "CLASSIFICATION": "SEARCH_ROUTING via bounded generic composition. Frozen primitives alone (A0 == A1; no route key) reach NOTHING -- not even a coerced alias: topological_sort returns [] on the empty set (falsy, but consistent) and None on cycles, so its truthiness is not the target; check_transitivity returns a dict. With generic structural ops (is_none / not / len / reflexive-membership count) the target is mechanism-bearing at depth 3: pigeonhole_check(1, self_reach(check_transitivity(rels))); the observationally equivalent not(is_none(topological_sort(rels))) exists at the same depth and was pruned as a duplicate. Verified on all 4,096 four-node digraphs.",
+    "what_is_still_missing_if_perfect_semantic_state_were_injected": "a typed boolean wrapper `is_consistent(relations)` over the existing closure/toposort -- a Level-1 composition, not a mint",
+    "caveat": "A2's generic op set includes a reflexive-membership count over the closure dict (self_reach). Without any dict-structural generic op only B reaches the target; the classification is SEARCH_ROUTING under A2 and would read OPERATOR-adjacent under A1 alone. Both are recorded; neither is a Master Smith target."
+  },
+  "REPRESENTATION_ADAPTER_SPEC": "Moderate and largely paid: Apollo's REGISTRY already parses 'A > B' relations into the `relations` slot (parse_names_and_relations, relations_from_facts). What was missing is the consistency predicate op, not the parse.",
+  "CLOSURE_TEST": {
+    "script": "hephaestus/src/closure_test.py consistency_check",
+    "result": "hephaestus/closure_results/consistency_check.json",
+    "basis": {
+      "version": "A2-GENERIC-v1",
+      "hash": "7f2ef69196e7f128"
+    },
+    "family": "F3 relational / global invariant",
+    "max_depth": 3,
+    "search_points": 64,
+    "verify_exhaustive_small_points": 4096,
+    "verify_structural_shift_points": 300,
+    "verify_shift": "300 sampled 5/6-node digraphs, half with duplicate edges, labels offset into a larger universe",
+    "A0": {
+      "evaluated": 55,
+      "all_mech": false
+    },
+    "A1": {
+      "evaluated": 55,
+      "all_mech": false,
+      "all_robust": false,
+      "witnesses": {
+        "consistent": {
+          "mechanism_bearing": [],
+          "coerced_only_aliases": [],
+          "n_mechanism": 0,
+          "n_robust": 0,
+          "n_alias": 0
+        }
+      }
+    },
+    "A2": {
+      "evaluated": 908,
+      "all_mech": true,
+      "all_robust": true,
+      "witnesses": {
+        "consistent": {
+          "mechanism_bearing": [
+            "is_some(topological_sort(rels)) (d2)",
+            "not(is_none(topological_sort(rels))) (d3)",
+            "and(pigeonhole_check(1, 0), is_some(topological_sort(rels))) (d3)",
+            "and(is_some(topological_sort(rels)), pigeonhole_check(1, 0)) (d3)",
+            "and(is_some(topological_sort(rels)), is_some(topological_sort(rels))) (d3)"
+          ],
+          "coerced_only_aliases": [],
+          "n_mechanism": 5,
+          "n_robust": 5,
+          "n_alias": 0
+        }
+      }
+    },
+    "B": {
+      "evaluated": 20,
+      "witnesses": {
+        "consistent": {
+          "mechanism_bearing": [
+            "not(has_cycle_dfs(rels)) (d2)"
+          ],
+          "coerced_only_aliases": [],
+          "n_mechanism": 1,
+          "n_robust": 1,
+          "n_alias": 0
+        }
+      }
+    },
+    "classification": {
+      "class": "SEARCH_ROUTING",
+      "CLOSURE_MARGIN": "A2_ONLY",
+      "why": "target is mechanism-bearing inside G(C|R,A2); the frozen set computes it and the system does not route to it",
+      "robust_at_margin": true,
+      "representation_debt": "Moderate: parse 'A > B and B > C and C > A' into (a,b) pairs. Apollo's REGISTRY already has parse_names_and_relations / relations_from_facts writing the `relations` slot; the missing piece was never the parse, it was that no op turns `relations` into a consistency verdict."
+    },
+    "basis_intervention_report": "Addendum 4: per-spec generic ops replaced by frozen A2-GENERIC-v1. Classification unchanged. Witness changed from pigeonhole_check(1, self_reach(check_transitivity(rels))) [per-spec op, now forbidden] to is_some(topological_sort(rels)) (d2).",
+    "previous_evidence_of_record": null
+  },
+  "ROUTE_CLASS": "SEARCH_ROUTING (closure test: SEARCH_ROUTING; CLOSURE_MARGIN=A2_ONLY; robust=True; basis A2-GENERIC-v1)",
+  "CLOSURE_MARGIN": "A2_ONLY"
+}

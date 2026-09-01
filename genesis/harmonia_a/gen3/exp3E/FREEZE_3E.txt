@@ -1,0 +1,48 @@
+=====================================================================
+GEN-3E FREEZE -- parent-condition dependence
+Date: 2026-08-31. Campaign rules R1-R7. Prerequisite: none.
+Context: 3D tie set {F5 operator-family, F3 kNN}; the chart-borrow
+family finished last among real families (0.687).
+=====================================================================
+QUESTION. Is there reusable GLOBAL structure, transferable LOCAL
+(parent-chart) structure, or only object-specific response
+surfaces? And do parent-local charts admit mappings between one
+another (are chart parameters predictable from parent covariates)?
+
+ARMS (same task, folds, and information budget as 3D; stat seed
+20260906):
+  GLOBAL   the 3D leader, verbatim: operator-family rank-linear
+           (per edit kind), fitted on train parents pooled.
+  ATLAS    per-TRAIN-parent charts, richer than 3D-F6: per kind x
+           5 influence bins response curve; test edit scored by
+           the chart of the nearest train parent in z-scored
+           covariate space. Charts never see test parents.
+  CEILING  within-parent reference: each TEST parent's own chart
+           fitted on its even-index non-neutral edits, scored on
+           its odd-index edits. THIS IS A MUTATION-LEVEL SPLIT --
+           DECLARED as a non-transport reference ceiling only,
+           never a transport claim (charter 3B rule is not
+           violated because no transport conclusion may cite it).
+
+GATES (frozen):
+  ATLAS_SUPERIOR    atlas beats global by >= 0.02 mean AUC and in
+                    >= 4/5 folds.
+  GLOBAL_SUFFICIENT global >= atlas - 0.01 mean AUC.
+  (If neither fires -- atlas ahead by (0.01, 0.02) or folds split
+  -- verdict INDETERMINATE_MARGIN.)
+FLAGS (reported, frozen definitions, no verdict weight):
+  OBJECT_HEADROOM_LARGE  ceiling mean - max(global, atlas) mean
+                         >= 0.10.
+  CHARTS_MAPPABLE        chart parameters (p_low = P(SMALL |
+                         inf <= 0.1), p_high = P(SMALL |
+                         inf > 0.25), each defined on >= 5 edits)
+                         predicted from parent covariates by
+                         rank-linear LOSO with held-out rho >= 0.5
+                         in 5/5 folds for BOTH parameters.
+
+ROUTE EFFECT: GLOBAL_SUFFICIENT + earlier verdicts keeps the
+campaign on the OPERATOR_FAMILY/TRANSFERABLE branch for 3F.
+ATLAS_SUPERIOR would move the standing claim toward
+PARENT_LOCAL_ONLY unless CHARTS_MAPPABLE also fires (mappable
+charts are themselves transferable structure).
+=====================================================================

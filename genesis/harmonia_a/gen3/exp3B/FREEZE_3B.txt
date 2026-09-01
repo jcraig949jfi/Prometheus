@@ -1,0 +1,53 @@
+=====================================================================
+GEN-3B FREEZE -- held-out-parent transport
+Date: 2026-08-31. Campaign rules R1-R7 apply. Prerequisite: none.
+Candidates (3A frozen handoff): s_live, inf_density, b_live,
+balance_dev, live_vars, anf_support, depth, forced_neutral_floor,
+forced_local_bound.
+=====================================================================
+QUESTION. Does any predictive structure transfer to UNSEEN parents?
+Random mutation-level splits are FORBIDDEN; entire parents are
+withheld. Split rule (frozen): leave-one-seed-out (LOSO, 5 folds) --
+all 60 parents of a master seed withheld together; a parent never
+appears in both sides.
+
+TIER B1 (parent-level response surface). Predict per-object
+SMALL_SHARE from parent covariates. Frozen model classes, all
+deterministic: (a) rank-linear least squares on all candidates;
+(b) 1-NN in z-scored candidate space; (c) best-single-covariate
+rank predictor, the covariate chosen ON TRAIN ONLY per fold.
+Statistic: held-out Spearman(prediction, actual) per fold.
+Null control: within-train permutation of y before fit, 100 perms
+per fold per model; observed must exceed the 99th percentile of
+its own null.
+GATE: TRANSPORT if some model class achieves rho >= 0.5 in 5/5
+folds AND beats its null; WEAK if >= 0.3 in 5/5 folds AND beats
+null; else NONE.
+
+TIER B2 (edit-level mutation structure). Predict the PER-EDIT
+class among non-neutral edits (binary: SMALL vs LARGE-or-
+DESTRUCTION) from (influence of the edited gate, edit kind,
+parent covariates). NEUTRAL edits are excluded and the exclusion
+is DECLARED FORCED: d <= inf(target), so influence-0 targets are
+neutral by theorem -- predicting that is not structure. Edit
+identity regenerated deterministically from the Gen-1 streams;
+influence read from the objects' stored 24-gate profiles.
+Frozen models: (a) rank-linear on features scored by held-out AUC;
+(b) univariate AUC of inf_target alone. Same LOSO folds, same
+null-control construction (100 label permutations within train).
+GATE: TRANSPORT if AUC >= 0.70 in 5/5 folds AND beats null; WEAK
+if >= 0.60 in 5/5; else NONE.
+
+VERDICT (frozen): TRANSPORT_CONFIRMED iff either tier gates
+TRANSPORT; TRANSPORT_WEAK iff best outcome is WEAK; NO_TRANSPORT
+iff both tiers gate NONE; INDETERMINATE on support defects
+(a fold with < 30 evaluable objects or < 500 evaluable edits).
+Route effect (charter section 2): 3C runs only on coordinates
+surviving a TRANSPORT or WEAK gate in the tier that used them;
+NO_TRANSPORT skips 3C.
+
+STAT SEED: 20260903. CLAIM CEILING: population and entanglement
+bounds as Gen-1; LOSO folds share the generator, so "unseen
+parents" means unseen OBJECTS from the same distribution, not a
+new distribution (that is 3H's question, not 3B's).
+=====================================================================

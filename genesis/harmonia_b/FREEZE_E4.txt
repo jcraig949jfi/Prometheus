@@ -1,0 +1,59 @@
+=====================================================================
+HARMONIA B GEN-3B -- FREEZE E4: SMOOTHNESS IS NOT NAVIGABILITY
+Issued 2026-09-01, BEFORE any E4 evidence exists.
+Prior state: E1 ASSAY_QUALIFIED; E2 table complete; E3 substrate owns
+the band (eta2 0.9752 vs 0.0002), PC-2 survived, neither kill fired.
+=====================================================================
+
+HYPOTHESIS
+  A substrate can be SMOOTH and USELESS. No statistic computed from the
+  consequence-magnitude distribution alone -- however refined -- can
+  separate a navigable landscape from a non-navigable one.
+
+NULL / COMPETING EXPLANATION
+  Smoothness IS navigability, or a good enough proxy for it: if
+  neighbouring interventions produce neighbouring outputs, bounded
+  search receives usable information. Under this null some smoothness
+  statistic separates P1 from N1.
+
+INTERVENTION
+  Three pre-declared smoothness statistics, computed from E2's frozen
+  table with no new measurement:
+     SM1  q4  = P(0 < d <= 0.25)          [A's D-14 middle mass]
+     SM2  1 - median(d | d > 0)           [magnitude smoothness]
+     SM3  q3  = P(class = SMALL)          [A's band rate]
+  and the two navigability statistics:
+     NV1  q10 on the cell's OWN declared target (controls) or the
+          battery mean (real substrates), each labelled
+     NV2  q11 drift
+
+FROZEN METRIC AND GATES
+  E4-C1  NO smoothness statistic separates the sharp pair:
+         |SM_i(P1) - SM_i(N1)| <= 0.02 for i = 1,2,3.
+  E4-C2  At least one navigability statistic DOES separate it:
+         |NV_j(P1, T9) - NV_j(N1, T10)| >= 0.50 for some j.
+  E4-C3  The 2x2 quadrant table is populated on DESIGNED labels, and
+         every quadrant that no cell occupies is reported EMPTY rather
+         than filled by relabelling a cell to suit the table:
+             smooth + navigable        P1-BLOCKS
+             smooth + non-navigable    N1-SMOOTH-UNREACHABLE
+             discontinuous + non-nav.  N2-HASH
+             discontinuous + navigable EMPTY BY DESIGN -- this is an
+                 EMPIRICAL cell with no constructed occupant. Its
+                 candidates are CIRCUIT and DNF and it is filled, or
+                 left empty, by E5's search outcomes and by nothing
+                 else.
+
+KILL CONDITION
+  If E4-C1 fails -- if some smoothness statistic DOES separate P1 from
+  N1 -- then the campaign's premise that these controls are
+  geometrically identical is wrong, the control pair is not the
+  instrument I claimed, and E5-E8 are RE-SCOPED rather than rescued.
+
+WHAT THE RESULT CHANGES
+  It fixes whether "smooth" may ever be offered as evidence of
+  navigability in the final packet. If E4 passes, no smoothness number
+  anywhere in this campaign -- including A's middle mass -- may be
+  quoted as a navigability claim without an accompanying
+  target-relative measurement.
+=====================================================================

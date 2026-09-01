@@ -1,0 +1,114 @@
+=====================================================================
+HARMONIA A / GEN-3 CAMPAIGN CHARTER -- MUTATION GEOMETRY FUNNEL
+Date: 2026-08-31   Authorized by operator instruction (verbatim
+scope: at most eight experiments, in order, skip-on-falsified-
+prerequisite, no Gen-3I).
+=====================================================================
+
+0. BINDING RULES (frozen before any experiment)
+
+  R1  AT MOST eight experiments, 3A..3H, run IN ORDER.
+  R2  An experiment may be SKIPPED only when its prerequisite
+      (section 2) has been falsified upstream; the skip is recorded
+      with the falsifying verdict cited.
+  R3  NO-RESCUE: a later experiment may not be interpreted as
+      rescuing a hypothesis killed earlier. If a premise dies,
+      subsequent experiments either stop or explicitly open a NEW
+      hypothesis class under a fresh freeze.
+  R4  NO GEN-3I. No ninth experiment may be invented, regardless of
+      how any verdict reads.
+  R5  Each experiment gets its own freeze (question, endpoints,
+      gates, verdict strings, analysis code hash) issued before its
+      evidence exists; one experiment at a time.
+  R6  All outcomes are measured under the Gen-2b ruler R_VEC2
+      (classes NEUTRAL/SMALL/LARGE/DESTRUCTION[/FAULT]; components
+      d, surv_sym, minmass') or a substrate-specific instance
+      re-derived from the Gen-2 AXIOMS (never by carrying Boolean
+      thresholds across substrates -- relevant from 3G on).
+  R7  StackVM artifacts remain untouched until 3H, and 3H runs
+      only if a structural hypothesis survives to it.
+
+1. THE EIGHT EXPERIMENTS (questions as authorized)
+
+  3A  Re-adjudicate Gen-1 under R_VEC2. Did the Gen-1 negative
+      survive fixing the ruler?
+      Verdicts: NO_TRANSFER_STRUCTURE / TRANSFER_STRUCTURE_
+      RECOVERED / INDETERMINATE.
+  3B  Held-out-parent transport. Does any predictive structure
+      transfer to unseen objects? Random mutation-level splits
+      FORBIDDEN; entire parents withheld.
+  3C  Geometry kill-pair search. Do surviving coordinates survive
+      constructed exchange pairs (near-equal coordinate distance,
+      sharply different consequence; and converse)?
+  3D  Mathematical-type tournament. What KIND of object describes
+      mutation -> consequence: scalar coordinate, stratified/
+      piecewise, graph neighborhood, partial order, operator
+      family, parent-conditioned charts, or null?
+  3E  Parent-condition dependence. Global geometry vs atlas of
+      parent-local charts vs object-specific response surfaces;
+      do local charts admit mappings between one another?
+  3F  Representation invariance. Behaviorally equivalent objects,
+      different encodings, analogous mutations: does discovered
+      structure track behavior or representation?
+      (Failure label: REPRESENTATION_SPECIFIC.)
+  3G  Validity boundary. Smallest validity-constrained substrate;
+      FAULT goes live; do faults/destruction/large transitions
+      organize around distance-to-validity-boundary?
+  3H  Cross-substrate transport of surviving hypotheses, ruler
+      re-derived from axioms. Boolean artifact, representation-
+      class phenomenon, or portable?
+
+2. PREREQUISITE GRAPH (skip conditions, frozen)
+
+  3A  none (artifact exists: 38,400 re-scored rows).
+  3B  none (runs regardless of 3A; 3A recalibrates interpretation
+      and supplies the frozen candidate-coordinate list).
+  3C  requires >= 1 coordinate surviving 3B's transport gate;
+      else SKIP citing 3B.
+  3D  none (its family list includes the null; it adjudicates
+      structure TYPE and may run on a fully negative 3B/3C).
+  3E  none (distinguishes PARENT_LOCAL_ONLY from no-structure;
+      meaningful under any upstream outcome).
+  3F  requires >= 1 surviving structural claim from 3C/3D/3E;
+      else SKIP (nothing to test for invariance).
+  3G  none (independent premise: the bootstrap validity-coupling
+      hypothesis; also builds the substrate 3H may use).
+  3H  requires >= 1 surviving structural hypothesis after 3F/3G;
+      else SKIP and the campaign closes without touching StackVM.
+
+3. CAMPAIGN VERDICT FAMILY (final output is ONE of these)
+
+  NO_REUSABLE_MUTATION_CONSEQUENCE_STRUCTURE
+  PARENT_LOCAL_ONLY
+  REPRESENTATION_SPECIFIC_STRUCTURE
+  OPERATOR_FAMILY_STRUCTURE
+  PIECEWISE_OR_BOUNDARY_GEOMETRY
+  TRANSFERABLE_GEOMETRY
+  CROSS_SUBSTRATE_STRUCTURE
+  INSUFFICIENTLY_ADJUDICATED
+
+  Mapping rule (frozen): the final verdict is the STRONGEST claim
+  that survived every experiment that tested it, where the order
+  of strength is CROSS_SUBSTRATE > TRANSFERABLE > PIECEWISE_OR_
+  BOUNDARY > OPERATOR_FAMILY > REPRESENTATION_SPECIFIC >
+  PARENT_LOCAL_ONLY > NO_REUSABLE. INSUFFICIENTLY_ADJUDICATED is
+  reserved for harness failures or unresolvable support defects,
+  never for disliked results.
+
+4. SHARED MACHINERY
+
+  gen3/common.py -- loading, R_VEC2 classification, rank/Spearman/
+  partial/eta2/permutation utilities (verbatim ports of the frozen
+  Gen-1/2 implementations). Hash journaled at charter issuance;
+  any later edit requires a journaled amendment naming the
+  experiments it touches.
+
+5. RECORD
+
+  gen3/JOURNAL.jsonl -- campaign-wide, hashes at issuance per
+  experiment. gen3/CAMPAIGN_LOG.md -- one entry per experiment:
+  verdict, what died, route effect. Final packet on request.
+
+=====================================================================
+END CHARTER
+=====================================================================

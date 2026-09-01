@@ -1,0 +1,84 @@
+=====================================================================
+HARMONIA B GEN-3B -- FREEZE E3: SUBSTRATE vs OPERATOR DECOMPOSITION
+Issued 2026-09-01, BEFORE any E3 evidence exists.
+Prior state at issuance: E1 ASSAY_QUALIFIED; E2 descriptive table
+complete (22 cells, all measurable).
+=====================================================================
+
+HYPOTHESIS
+  Brittleness -- specifically the ABSENCE of a local consequence band --
+  is owned by the SUBSTRATE (the genotype->phenotype map), not by the
+  mutation operator.
+
+NULL / COMPETING EXPLANATIONS, all three live
+  N-a  MUTATOR DOMINATES. The apparent geometry is an artefact of a
+       badly chosen operator; a semantics-respecting operator on the
+       same substrate recovers a band.
+  N-b  INTERACTION DOMINATES. Neither factor alone; the cell is the
+       unit and no main effect is interpretable.
+  N-c  BUDGET. What looks like substrate brittleness is how far the
+       operator stepped; a matched budget removes the difference.
+
+DESIGN -- A CROSSED 3x3, plus the typed contrasts
+  IDENTIFICATION PROBLEM, stated because it is why this freeze needed
+  an amendment: every operator in the charter except M-UNIFORM is
+  substrate-TYPED (a byte scramble is meaningless on a DNF, a wire
+  rewire on a byte string). A nested matrix cannot separate a substrate
+  main effect from an operator main effect, which is the very thing the
+  campaign's third mandate calls mandatory. Amendment A-B1 therefore
+  added two SUBSTRATE-AGNOSTIC operators that use only the Substrate
+  interface and know nothing about what a site means:
+     M-UNIFORM    one uniform site, uniform alternative   (budget 1)
+     M-UNIFORM2   two independent such edits              (budget 2)
+     M-TAILSITE   uniform alternative, sites restricted to the last
+                  third of the genotype                   (budget 1)
+  DISCLOSED: I had seen E2's Q table before writing those two. Neither
+  is tuned to move any coordinate; both are defined without reference
+  to the ruler. The ordering is journaled rather than hidden.
+
+  ARM 1 -- CROSSED: {CIRCUIT, BYTEVM, DNF} x {M-UNIFORM, M-UNIFORM2,
+           M-TAILSITE}. Identical operators, identical draw counts,
+           identical parents (seeds 5000..5059), matched intervention
+           budget within each operator. This is the only place in the
+           campaign where a substrate main effect and an operator main
+           effect are BOTH identified.
+  ARM 2 -- TYPED CONTRAST (paired, within substrate, same parents):
+           BYTEVM x M-RAWBYTE  vs  BYTEVM x M-INSTR.
+           These share every byte of the genotype->phenotype map and
+           differ only in which neighbours exist. This is the sharpest
+           available operator intervention and it adjudicates PC-2.
+
+FROZEN METRIC
+  For each Q coordinate, on ARM 1's 9 cells:
+     eta2_substrate, eta2_operator, eta2_interaction, computed by the
+     standard two-way decomposition of the cell-mean table with
+     per-object replication (60 objects per cell, so cell variance is
+     estimable). Reported per coordinate; NEVER pooled into one number.
+  PC-2 adjudication, on ARM 2:
+     PASS iff |q2(M-RAWBYTE) - q2(M-INSTR)| >= 0.02
+          AND q3(M-RAWBYTE) < 0.05 AND q3(M-INSTR) < 0.05.
+  Cluster-robust uncertainty: a 95% bootstrap CI over OBJECTS (2000
+  resamples, objects as the resampling unit) accompanies every
+  reported difference. Objects are the independent unit; edits within
+  an object are not. This adopts external review #3's 2.3 finding
+  against the A lineage at design time rather than after data.
+
+CONTROLS
+  P1 / N1 / N2 are carried through ARM 1 where the operator applies, as
+  a floor and ceiling on every coordinate's achievable range. A
+  substrate effect smaller than the control span is reported as such.
+
+KILL CONDITION
+  If eta2_operator EXCEEDS eta2_substrate on q3 (band rate) in ARM 1,
+  the campaign's working hypothesis is falsified and the verdict
+  MUTATOR_DOMINATES_SUBSTRATE becomes live. E5-E7 then proceed with the
+  substrate framing DEMOTED, not repaired.
+  If eta2_interaction exceeds both main effects on q3,
+  SUBSTRATE_MUTATOR_INTERACTION_DOMINATES becomes live and no main
+  effect may be quoted alone anywhere in the final packet.
+
+WHAT THE RESULT CHANGES
+  It decides which factor the rest of the campaign is entitled to talk
+  about, and it fixes whether "substrate geometry" is even a
+  well-posed object in this arena.
+=====================================================================

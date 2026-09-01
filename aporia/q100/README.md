@@ -219,3 +219,17 @@ controls the field actually runs.
 - No dossier may claim a prerequisite is satisfied without naming the artifact and its commit.
 - `feedback_llm_convergence_is_gravity_amplifier` — where a frontier model and this list agree,
   that is corpus gravity, not validation.
+
+- **A gate must clear BOTH axes, not one** (added 2026-09-01, `L1_L2_GATE_REACHABILITY_2026-09-01.md`).
+  Reachability alone is passable by declaring no gate worth failing: L2 scores 87% REACHABLE
+  with a median chance floor of **0.500** — half its questions pass by coin flip. Every question
+  entering a dossier is scored on reachability *and* on gate strength
+  (TWO_SIDED / ONE_SIDED_NUMERIC / DIRECTIONAL / NONE) with a published chance floor. A
+  DIRECTIONAL or NONE gate must have a threshold constructed for it in the dossier's
+  prerequisites section before the question can be researched.
+- **L3 and L4 numbers carry UNAUDITABLE_SOURCE.** Those two registries retained verdicts and no
+  test text, so 150 gate verdicts cannot be re-derived by anyone including their author. Recovering
+  the raw lists verbatim is a blocking repair, not a filed one — it already blocks re-coding L3/L4
+  under the bounded-domain exception. L1 and L2 are re-auditable from their registries.
+- **A prediction about a set states, before filing, the input under which that set is non-empty.**
+  Otherwise the predicate can only pass vacuously (P138, hit again 2026-09-01).

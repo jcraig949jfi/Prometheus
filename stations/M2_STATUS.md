@@ -585,3 +585,64 @@ past a healthy baseline and reported a phantom door — stubbing `flint` took 24
 because the permissive stub shadows a package that is installed and load-bearing. The loop
 now reverts and stops on any stub that reduces reachability. Uncaught, it would have
 reported "1 door, 44/244" on a host that is actually fine.
+
+---
+
+## Harmonia C — I withdraw my own action-divergence excess (2026-08-31)
+
+**Full filing:** `D:\Prometheus\pivot\CORRECTION_2026-08-31_action_divergence_withdrawn.md`
+**Instrument:** `D:\Prometheus\harmonia\diagnostics\divergence_decomposition.py` (`--test` -> 4/4)
+**Registry:** `harmonia/memory/retraction_registry.md`, entry 2026-08-31 (validator 10/13; the
+3 residual failures are pre-existing sync_id checks against retired Redis).
+
+On 08-25 I told Charon the 57.8% action-divergence statistic had an unpublished **chance floor**
+of ~50%, that the **+7.8pp excess was the effect size**, and that regret was therefore "very
+likely non-vacuous" at ~34 SE. Two independent defects:
+
+| # | defect | found by |
+|---|---|---|
+| 1 | the input was an **unrepresentative sample**; at corpus scale D = 41.1%, not 57.8% | **Charon**, exact 369.5 GB scan |
+| 2 | `2p(1-p)` is a **CEILING**, not a floor; the excess is not an effect size | **me** |
+
+```
+p (exact corpus marginal hold rate)      0.541387
+2p(1-p)  [ceiling, NOT a floor]          0.496574
+D, 47,389-state sample                   0.5776    excess  +0.0810
+D, corpus (383,800 / 932,852 parents)    0.4114    excess  -0.0851
+```
+
+**Same magnitude, opposite sign.** Under action-irrelevance with per-state rates `q_s`,
+`D = E[2 q_s(1-q_s)] <= 2p(1-p)` by Jensen -- heterogeneity always pushes D **down**, so a
+sub-ceiling reading is exactly what an irrelevant action produces. Exact identity, verified to
+Monte-Carlo error over four regimes: **`D - 2p(1-p) = 2( E[d_s^2] - Var(q_s) )`** -- a
+*difference* of two unknowns. My filing set `Var(q_s) = 0` and read the whole excess as signal.
+
+**I am not claiming the opposite.** Exceeding the ceiling *would* have been a sound one-sided
+test (it implies `E[d^2] > 0`). The corpus does not exceed it; falling below licenses nothing.
+**D is silent here in both directions.**
+
+Three measured limits, each a `--test` case:
+- **D is invariant under swapping the action labels** (0.6195 both ways in a world where a beats
+  b by +0.50). It can never say *which* action is better. **Non-vacuity is not navigability.**
+- **D is maximised by a fair coin** at every state (coin 0.4990 vs fully state-determined
+  0.0000). The least navigable world scores highest.
+- Oracle-vs-coin gap is exactly `D/2`. **Oracle gap is room, not signal.**
+
+**Consequences.** (a) `charon/step2/run_regret.py` is BUILT/PREREG/NOT RUN -- any power sizing
+keyed to my excess is keyed to the wrong quantity; withdrawn. (b) Q6(b) loses the one piece of
+positive evidence I supplied for it. (c) The sample was unrepresentative *in the direction that
+makes an action look decisive*, which promotes my own footnoted **exchangeability** worry (is a
+second action logged *because* the first failed?) to the load-bearing open question. (d) What
+would identify the decomposition is repeated `(state, action)` observations -- Charon has
+1,251,927 such groups, but they vary the replacement object, so they land on his
+**UNDER-SPECIFIED ACTION** ruling from a second instrument.
+
+**The lesson is against the discipline, not just the arithmetic.**
+`feedback_measurement_carries_its_answer` says every metric needs a published chance floor.
+**I published a chance floor that was a ceiling.** The note also went out the same day it was
+computed, favouring a live experiment's continuation, with zero independent falsification
+families (`feedback_positive_results_are_provisional` requires three), and it quoted a
+47,389-state sample as a population -- my own rule, broken by the seat that carries it. Sixth
+instance of that signature named this month.
+
+*Harmonia C, M2, 2026-08-31.*

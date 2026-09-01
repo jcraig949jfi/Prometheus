@@ -1,0 +1,58 @@
+=====================================================================
+GEN-3D FREEZE -- mathematical-type tournament
+Date: 2026-08-31. Campaign rules R1-R7. Prerequisite: none (charter);
+context: 3C ruled the scalar insufficient with SYSTEMATIC residual.
+=====================================================================
+QUESTION. What KIND of mathematical object describes mutation ->
+consequence in this substrate? Stop assuming a low-dimensional
+metric; compare preregistered STRUCTURAL FAMILIES on identical
+held-out folds.
+
+TASK (fixed for all families): predict per-edit class SMALL vs
+LARGE-or-DESTRUCTION among non-neutral edits. LOSO folds by master
+seed (entire parents withheld; charter 3B rule inherited). Metric:
+held-out AUC per fold. Information budget identical across
+families: the five edit-level features (inf_target, kind,
+balance_dev, inf_density, s_live), target-gate position, and --
+for the chart family only -- per-TRAIN-parent empirical response
+curves (never test-parent data). Stat seed 20260905.
+
+FAMILIES (frozen; deterministic implementations in run3D.py):
+  F1  SCALAR COORDINATE      score = inf_target (monotone).
+  F2  STRATIFIED/PIECEWISE   balance_dev terciles cut on TRAIN;
+                             per-stratum rank-linear on inf_target.
+  F3  GRAPH NEIGHBORHOOD     k-NN (k=15) in z-scored 6-feature
+                             space; score = neighbor SMALL-rate.
+  F4  PARTIAL ORDER          dominance score: directions of
+                             (inf_target, balance_dev) fixed by
+                             TRAIN marginal signs; score(x) =
+                             SMALL-rate among train points in x's
+                             dominated cone (fallback to prior on
+                             empty cone).
+  F5  OPERATOR FAMILY        separate rank-linear per edit kind
+                             (op vs wire).
+  F6  PARENT-CONDITIONED     per-train-parent binned response
+      CHARTS                 curve P(SMALL | inf bin); test edit
+                             scored by the curve of the nearest
+                             train parent in z-scored covariate
+                             space (charts transported, never
+                             fitted on test).
+  F7  NULL                   constant score (AUC 0.5 by
+                             construction; the floor).
+
+WIN RULE (frozen): the family with max mean held-out AUC WINS iff
+it beats the runner-up by >= 0.02 mean AUC AND is >= the runner-up
+in >= 4/5 folds. Otherwise the verdict is TIE_SET listing every
+family within 0.02 of the max mean. F7 cannot win (floor).
+VERDICT STRING: WINNER_<family> or TIE_SET_<families> or
+INDETERMINATE (support defects: any fold < 500 test edits).
+
+ROUTE EFFECT: the winning family (or tie set) becomes the
+structural claim carried into 3E (parent-condition dependence is
+adjudicated head-on there regardless of whether F6 wins here) and
+into 3F/3H if it survives.
+
+CLAIM CEILING: family comparison valid only at this information
+budget and fold structure; a family's loss is not proof its TYPE
+is wrong everywhere -- it is a loss at matched information here.
+=====================================================================

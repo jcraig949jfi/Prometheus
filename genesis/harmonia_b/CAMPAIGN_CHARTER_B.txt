@@ -1,0 +1,397 @@
+=====================================================================
+PROMETHEUS / GENESIS ECOLOGY
+HARMONIA B -- GEN-3B SUBSTRATE NAVIGABILITY CAMPAIGN
+CAMPAIGN CHARTER (frozen before any adjudicating measurement)
+=====================================================================
+Seat:    Harmonia B (meter integrity / independent gate)
+Date:    2026-09-01
+Host:    M2, repo D:\Prometheus, directory genesis/harmonia_b/
+Status:  FROZEN. Everything below is written before any experiment
+         runs. The only measurement that precedes it is the LABELED
+         NON-ADJUDICATING BOOTSTRAP (section 9), whose numbers may
+         not appear in any verdict and whose observation by me is
+         disclosed where it shaped a precommitment.
+
+---------------------------------------------------------------------
+0. THE QUESTION
+---------------------------------------------------------------------
+What measurable properties distinguish a computational substrate that
+supports navigable accumulation of useful behavioural change from one
+that does not -- and can Prometheus decide this CHEAPLY and
+PROSPECTIVELY, before spending serious compute searching?
+
+This campaign does NOT ask whether continuous representations are
+better, does not attempt to rescue StackVM, and does not assume the
+pathological-geometry diagnosis is correct. Its job is to make the
+competing explanations -- substrate, mutation operator, their
+interaction, behavioural measurement, task structure -- compete under
+one ruler.
+
+---------------------------------------------------------------------
+1. RECOVERED EVIDENCE (Harmonia A lineage; evidence, not doctrine)
+---------------------------------------------------------------------
+Recovered by reading the repository, and where a primary artifact
+exists it was re-read rather than quoted from prose.
+
+A-1  Gen-0  NO_REPRESENTATIONAL_REACHABILITY_EFFECT. An alternate
+     representation of the same object does not open a local band the
+     native one lacks. Native 24-gate circuits over {0,1}^10 show
+     83.6% neutral / 11.9% local (0 < d <= 0.25) / 4.5% far.
+A-2  Gen-1  NO_LOW_DIMENSIONAL_TRANSFER_COORDINATE.
+A-3  Gen-2  VECTOR_RULER_REQUIRED. Ruler R_VEC2 = (d, surv_sym,
+     minmass'); classes NEUTRAL / SMALL / LARGE / DESTRUCTION.
+A-4  Gen-3  TRANSFERABLE_GEOMETRY, qualified: a richer-than-scalar,
+     operator-family-conditioned, GLOBAL, behaviour-tracking
+     predictive structure INSIDE the Boolean-circuit family.
+     Explicitly NOT cross-substrate (3H).
+A-5  Gen-3 rider (A's deepest result): the EXISTENCE of a local
+     consequence band is itself substrate-dependent and aligns with
+     the per-site influence spectrum.
+       circuits: graded, 7.61% mass in (0,0.25] -> band exists (11.9%)
+       Z_97:     gapped,  0.00% mass in (0,0.25] -> band EMPTY
+                 (every non-neutral edit displaces >= 0.948)
+     A states the ceiling itself: "two points define a direction, not
+     a law."
+A-6  D-14 (Harmonia A, LIVE at the time of this charter) tests the
+     frozen prediction that StackVM's influence spectrum is GAPPED
+     (middle mass <= 0.05). 22.5% measured, parked/resumed, NO
+     verdict. Its own claim ceiling, adopted verbatim here: a verdict
+     "says nothing about reasoning, search improvement, or
+     cross-substrate transfer."
+A-7  Killed along the way, and NOT to be re-litigated by this
+     campaign: scalar coordinate (3C), parent-local atlases (3D/3E),
+     validity-boundary organisation (3G-b), cross-substrate
+     recurrence on the live distinction (3H-b), tensor reps as a
+     reachability RESCUE (Gen-0).
+
+RECOVERY FINDING B-R1 -- THREE ENGINES, NOT ONE.
+     The D-13 primary artifact D:\ZeusE\d12\analysis\p1_results.json,
+     which the A lineage cites for StackVM, contains band
+     measurements for THREE engines. Re-read by me directly:
+       stackvm  kpos025 = 0.000 in ALL FIVE channels
+                (I-L_strong / I-L_medium / I-H_strong / I0 / I-SHAM)
+                n_both_clean 400-505 of 960, induced_fault .05-.23
+       pushgp   kpos025 median 0.000 but upper 0.0137 / 0.027 / 0.0143
+                n_both_clean 309-319 of 960, induced_fault .16-.20
+       treegp   kpos025 0.0052-0.0104, NONZERO in all six channels
+                n_both_clean 960 of 960, induced_fault EXACTLY 0.000
+     So the band-existence axis already has three real points, not
+     one, and they are ORDERED: treegp (band present, zero faults) >
+     pushgp (marginal) > stackvm (band absent, faults present).
+     FAIRNESS NOTE, because this must not be read as a miss by A:
+     A's alignment claim pairs SPECTRUM with BAND on the same
+     substrate, and the spectrum is genuinely absent from this file
+     -- that absence is exactly why D-14 exists. What is recovered
+     here is the BAND half for two further engines, plus a
+     destruction/band ordering that no A document uses. It is
+     external, pre-existing, and this campaign does not own it.
+     STATUS: recovered evidence. It is a TARGET for section 8's
+     transfer test, never a result of this campaign.
+
+---------------------------------------------------------------------
+2. WHAT THIS CAMPAIGN MAY NOT TOUCH
+---------------------------------------------------------------------
+C-1  Harmonia A's frozen artifacts are READ-ONLY. Nothing under
+     genesis/harmonia_a/ is written by this campaign.
+C-2  StackVM and the M1 Foundry instrument are NOT touched, read,
+     driven, or tuned against. D-14 is live in that lane. No number
+     produced here is a StackVM number. The BYTEVM substrate below is
+     a locally written ANALOG and is labelled as such everywhere.
+C-3  No LLM supplies a truth criterion. Every phenotype is computed by
+     exact full enumeration over all 1024 inputs; every class, every
+     distance, and every verdict is a deterministic function of those
+     bits. LLMs wrote this code and chose these experiments; they
+     adjudicate nothing.
+C-4  A verdict may not be rescued. If a prerequisite is falsified the
+     dependent experiments are SKIPPED, not repaired. There is no
+     ninth experiment.
+
+---------------------------------------------------------------------
+3. OPERATIONAL DEFINITIONS (fixed before any result is seen)
+---------------------------------------------------------------------
+PHENOTYPE SPACE. Every substrate maps a genotype to a Boolean
+  function on {0,1}^10, held as a 1024-entry truth table computed by
+  FULL ENUMERATION. This is the design's load-bearing choice: it makes
+  d exactly comparable across substrates, so a cross-substrate
+  comparison compares genotype->phenotype MAPS and not two different
+  behaviour spaces wearing one name.
+
+d(f,g)            = Hamming(f,g)/1024. Exact.
+LOCAL             = exactly ONE elementary intervention in the
+                    substrate's own native coordinates. Budget B=1 for
+                    all geometry; B>1 only in the search stage, where
+                    it is stated.
+BEHAVIOURAL       = d(f,f') > 0. Nothing weaker counts as variation,
+  VARIATION         and neutrality is never called a small change.
+CONSEQUENCE CLASS = R_VEC2, verbatim from A (NEUTRAL / DESTRUCTION /
+                    SMALL / LARGE; EPS_TRIV=0.025, LOCAL_BAND=0.25).
+USEFUL            = STRICTLY REDUCES DISTANCE TO A FROZEN TARGET:
+                    d(f',T) < d(f,T). Target-relative, deterministic,
+                    and defined with no reference to any search
+                    trajectory, any operator, or any substrate.
+VIABLE INTERMEDIATE = non-NEUTRAL and non-DESTRUCTION and USEFUL.
+REACHABLE@B       = attainable by at most B elementary interventions.
+COMPUTE           = number of phenotype evaluations. This is the only
+                    currency every substrate shares, and it is the
+                    matched budget wherever a comparison is claimed.
+
+FROZEN TARGET BATTERY (chosen before any substrate was profiled, from
+  standard Boolean-complexity families, plus the two control-owned
+  targets so that every substrate faces one identical battery):
+    T1 PARITY5       parity of x0..x4
+    T2 MAJORITY10    at least 5 of 10 bits set
+    T3 THRESH7       at least 7 of 10 bits set
+    T4 MUX           x0,x1 address, select among x2..x5
+    T5 CMP           (x0..x4 as int) > (x5..x9 as int)
+    T6 RUN3          three consecutive set bits anywhere
+    T7 RANDBAL       fixed pseudorandom balanced function, seed 4242
+    T8 INTERVAL      (x as int) in [300, 800)
+    T9 P1_TARGET     the positive control's own target (declared)
+    T10 N1_TARGET    the N1 control's own target (declared)
+  Every target is evaluated against every substrate. Per-target
+  results are reported; aggregation never hides a per-target row.
+
+---------------------------------------------------------------------
+4. THE NAVIGABILITY VECTOR Q  (precommitted; NOT scalarised)
+---------------------------------------------------------------------
+Q is measured per (SUBSTRATE x OPERATOR) cell, and its target-relative
+coordinates additionally per TARGET. Scalarisation is forbidden as a
+primary: section 8 tests whether any low-dimensional summary of Q
+transfers, and pre-collapsing Q would destroy the very information
+that test is about.
+
+GEOMETRY (target-free)
+  q1  neutral_rate            P(d = 0)
+  q2  destruction_rate        P(class = DESTRUCTION)
+  q3  band_rate               P(class = SMALL)
+  q4  middle_mass             P(0 < d <= 0.25)     [A's D-14 statistic]
+  q5  median_nonzero_d        median d | d > 0
+  q6  gapped                  1 iff q4 <= 0.05     [A's GAPPED rule]
+TARGET-RELATIVE
+  q7  improving_rate          P(d(f',T) < d(f,T))
+  q8  improve_given_nonneutral q7 / (1 - q1)
+  q9  mean_improve_magnitude  E[max(0, d(f,T) - d(f',T))]
+  q10 reach_improve@1         P(the single-edit neighbourhood contains
+                              at least one improving edit)
+                              -- this is the prompt's E(S)
+  q11 drift                   P(improve) - P(worsen), among non-neutral
+STRUCTURE
+  q12 neutral_option_gain     among neutral neighbours, the mean
+                              fraction of their non-neutral
+                              consequence set that was NOT reachable
+                              from the parent. Does neutral drift buy
+                              new options?
+  q13 baseline_d              mean d(f,T) at the start. Normaliser;
+                              never a navigability claim on its own.
+
+---------------------------------------------------------------------
+5. THE ARENA: SUBSTRATE x OPERATOR MATRIX
+---------------------------------------------------------------------
+SUBSTRATES (all -> the same Boolean phenotype space)
+  S1 CIRCUIT     24 straight-line gates over {AND,OR,XOR,NAND}.
+                 A's native representation, ported verbatim. Serves as
+                 the CALIBRATION ANCHOR (section 7, E1).
+  S2 BYTEVM      byte-addressed stack machine, 48 bytes. An ANALOG of
+                 a byte-level genotype map -- NOT StackVM (C-2).
+                 Underflow is DEFINED (reads all-false), so the
+                 substrate has no execution-fault channel at all and
+                 fault rate cannot masquerade as consequence geometry.
+  S3 DNF         6-term DNF over 10 variables. Grammar-constrained:
+                 every genotype is well-formed by construction, so
+                 there is no invalid-program class.
+  S4 RELAX(tau)  continuous genotype, soft gates at temperature tau,
+                 phenotype = threshold of the soft output at 0.5.
+                 tau -> 0 recovers a discrete circuit. The continuous
+                 arm, present to be TESTED, not to be endorsed.
+  OMITTED, with reasons: graph-rewrite and explicit module/composition
+  substrates are omitted as disproportionate to the measurement
+  question -- both need a rewrite engine and a composition semantics
+  before a single number is produced, and neither adds a cell the
+  factorial cannot already estimate (typed/grammar structure is
+  carried by S3, operator-family conditioning by S1's op/wire split).
+  A probabilistic/distributional instruction representation is
+  omitted because S4 already varies exactly the property it would
+  contribute (soft mixing over instructions).
+
+OPERATORS (defined SEPARATELY from substrates and crossed with them --
+  this separation is mandatory and is the campaign's third mandate)
+  M-UNIFORM    uniform site, uniform alternative. Defined identically
+               for every discrete substrate. This is what makes the
+               substrate main effect estimable at all.
+  M-RAWBYTE    replace one byte with a uniform random other byte
+               (BYTEVM). Knows nothing about instruction boundaries.
+  M-INSTR      same substrate, same genotype, semantics-respecting:
+               change EITHER opcode OR operand, never both.
+  M-OPONLY     circuit gate ops only; topology frozen.
+  M-WIREONLY   circuit topology only; ops frozen.
+  M-GAUSS[s]   one continuous coordinate, Gaussian step s (RELAX).
+  SWEEP-ALL    not an operator: the full single-edit neighbourhood,
+               used where the estimand is the SITE POPULATION rather
+               than an operator-weighted draw. The two are reported
+               separately and NEVER interchanged -- this is external
+               review #1's Q4 distinction, adopted at design time.
+
+CONTROLS (DECLARED CONSTRUCTIONS; they carry no empirical content
+  about real substrates, exactly as A declared the FAULT class
+  definitional in Gen-3G. Their only job is to qualify the assay.)
+  P1-BLOCKS    SMOOTH + NAVIGABLE. 16 blocks; each bit XORs one block
+               of the target. Every edit moves d by exactly 1/16;
+               hill-climbing reaches d=0 in <= 16 strictly monotone
+               steps. Spectrum: a single spike at 0.0625.
+  N1-SMOOTH-UNREACHABLE  SMOOTH + NON-NAVIGABLE. The SAME 16-block
+               geometry, so its consequence spectrum is a spike at
+               0.0625 TOO -- verified identical to P1's, mechanically.
+               Its target disagrees with the anchor on exactly half of
+               every block, so flipping any block exchanges the
+               agreeing and disagreeing halves and leaves d(f,T)
+               EXACTLY 0.5 for all 2^16 reachable phenotypes.
+               VERIFIED: 400 sampled genotypes, d(f,T) = 0.5 with no
+               other value observed; edit-d unique value 0.0625 for
+               both P1 and N1.
+  N2-HASH      DISCONTINUOUS + NON-NAVIGABLE. sha256 counter-mode:
+               every genotype is an independent random truth table.
+               The pathological floor.
+  DISCONTINUOUS + NAVIGABLE is not constructed; it is an EMPIRICAL
+  CELL, and S1/S3 are its candidates. If no arena cell occupies it,
+  that is reported as an unoccupied quadrant, not manufactured.
+
+  THE CONTROL PAIR IS THE CAMPAIGN'S SHARPEST INSTRUMENT. P1 and N1
+  have provably IDENTICAL local consequence geometry and OPPOSITE
+  navigability. Any statistic that ranks them equally is measuring
+  smoothness, not navigability. Section 6's E4 is that test.
+
+---------------------------------------------------------------------
+6. PRECOMMITTED HYPOTHESES  (falsifiable, with disclosure)
+---------------------------------------------------------------------
+PC-1  ASSAY QUALIFICATION. The Q vector separates P1 from N2 on
+      target-relative coordinates (q7-q11), AND separates P1 from N1
+      on q7-q11 while NOT separating them on q3-q5. Falsified if the
+      controls are not separated: the assay is then unqualified and
+      the campaign HALTS at E1 with no substrate ranking.
+PC-2  OPERATOR MOVES DESTRUCTION, SUBSTRATE OWNS THE BAND. On BYTEVM,
+      swapping M-RAWBYTE for M-INSTR moves q2 (destruction) by
+      >= 0.02 absolute, but leaves q3 (band) below 0.05 under BOTH
+      operators.
+      DISCLOSURE: this pattern was OBSERVED in the labelled bootstrap
+      (n=2400/operator: destruction .090 -> .048, band .0046 ->
+      .0071). It is frozen here as a prediction to be re-tested at
+      scale on DISJOINT seeds, and its evidential novelty is reduced
+      accordingly. Recorded, not hidden.
+PC-3  MIDDLE MASS DOES NOT SUFFICE. Across the FULL arena including
+      controls, q4 (A's D-14 spectrum statistic) will NOT rank cells
+      by subsequent search improvement (|rho| < 0.5). This is forced
+      by construction once N1 is present -- N1 has maximal middle
+      mass and provably zero navigability -- so the full-arena clause
+      is a CONSISTENCY CHECK, not a discovery, and is labelled as
+      such. THE RISKY CLAUSE is the second: restricted to the REAL
+      substrates only (S1-S4, controls excluded), q4 will still fail
+      to reach |rho| >= 0.5, while q10 (reach_improve@1) will reach
+      |rho| >= 0.7. If q4 predicts search on the real substrates,
+      PC-3's risky clause is FALSIFIED and that is a result for the
+      spectrum programme, not against it.
+PC-4  SEARCH RANK. A frozen pre-search ranking of cells by q10 will
+      correlate with compute-matched search improvement at Spearman
+      rho >= 0.7 across the arena. Falsified below that: the ruler
+      characterises neighbourhoods but does not predict search, and
+      the campaign says so (verdict CURRENT_RULER_DOES_NOT_PREDICT_
+      SEARCH).
+PC-5  RELAXATION SMOOTHS WITHOUT NAVIGATING. Increasing RELAX's
+      temperature or step size raises q3/q4 (more graded consequence)
+      WITHOUT a proportional rise in q10/q7. Falsified if q10 rises
+      with q4 at comparable rate.
+PC-6  NO FORCED UNIVERSAL. It is an admissible and expected outcome
+      that no low-dimensional summary of Q transfers across
+      materially different substrates. NO_TRANSFERABLE_NAVIGABILITY_
+      COORDINATE is a first-class verdict, not a failure.
+
+---------------------------------------------------------------------
+7. THE EXPERIMENT FUNNEL  (at most EIGHT, in order, no ninth)
+---------------------------------------------------------------------
+Each experiment is frozen in its own FREEZE_E*.txt, issued and hashed
+into JOURNAL.jsonl BEFORE its evidence exists.
+
+E1  ASSAY QUALIFICATION AND CALIBRATION
+    HYPOTHESIS      the assay can measure a millimetre.
+    NULL            it cannot; any later ranking is then noise.
+    INTERVENTION    measure Q on P1, N1, N2 and on S1 CIRCUIT.
+    FROZEN METRIC   PC-1 clauses; plus the CALIBRATION ANCHOR:
+                    S1's P(0 < d <= 0.25) under SWEEP-ALL must land
+                    within +/- 0.03 of A's published 0.119.
+    CONTROL         P1 (positive), N2 (pathological), N1 (the sharp
+                    one).
+    KILL            any clause fails -> HALT the campaign, report an
+                    unqualified assay, run no ranking.
+E2  ARENA CHARACTERISATION
+    Measure Q on every (substrate x operator) cell. Descriptive; the
+    only verdict available is that a cell is or is not measurable.
+E3  SUBSTRATE vs OPERATOR DECOMPOSITION
+    HYPOTHESIS      brittleness is substrate-owned.
+    NULL            it is operator-owned, or interaction-owned.
+    METRIC          eta^2 of substrate, operator, and interaction on
+                    each Q coordinate, over matched intervention
+                    budgets. PC-2 adjudicated here.
+E4  SMOOTHNESS IS NOT NAVIGABILITY
+    HYPOTHESIS      a smoothness statistic fails to separate P1/N1.
+    METRIC          the 2x2 occupancy table and the P1/N1 contrast on
+                    q3-q5 versus q7-q11.
+    KILL            if smoothness DOES separate them, PC-1's premise
+                    is wrong and E5-E8 are re-scoped, not rescued.
+E5  FROZEN PREDICTION, THEN COMPUTE-MATCHED SHORT-HORIZON SEARCH
+    The pre-search ranking by q10 is FROZEN AND JOURNALED BEFORE any
+    search runs. Then (1+lambda) hill-climbing per cell, per target,
+    matched by phenotype-evaluation count. PC-4 adjudicated here.
+E6  CROSS-SUBSTRATE PREDICTOR TRANSFER
+    Leave-one-substrate-out: fit a predictor of search improvement on
+    Q from k-1 substrates, predict the held-out one. PC-6's test.
+E7  PROSPECTIVE CHEAPNESS
+    How small an assay budget still predicts? Predictive power as a
+    function of edits sampled. Answers "cheaply and prospectively".
+E8  RESERVED. Allocated after E1-E7, to the sharpest surviving
+    question. If none survives, E8 is NOT run and that is recorded.
+
+---------------------------------------------------------------------
+8. VERDICT LADDER (frozen; the campaign may return exactly one)
+---------------------------------------------------------------------
+  SUBSTRATE_GEOMETRY_PREDICTS_NAVIGABILITY
+  MUTATOR_DOMINATES_SUBSTRATE
+  SUBSTRATE_MUTATOR_INTERACTION_DOMINATES
+  CURRENT_RULER_DOES_NOT_PREDICT_SEARCH
+  NO_TRANSFERABLE_NAVIGABILITY_COORDINATE
+  CONTINUOUS_RELAXATION_IMPROVES_NAVIGABILITY
+  CONTINUOUS_RELAXATION_IMPROVES_SMOOTHNESS_NOT_NAVIGABILITY
+  ASSAY_UNQUALIFIED            (E1 kill; no ranking is reported)
+  INSUFFICIENTLY_ADJUDICATED   (harness failure ONLY, never a
+                               disliked result)
+A verdict about StackVM is NOT in this ladder and may not be returned.
+
+---------------------------------------------------------------------
+9. THE BOOTSTRAP, AND WHAT I ALREADY SAW
+---------------------------------------------------------------------
+A labelled non-adjudicating bootstrap ran before this charter
+(genesis/harmonia_b/bootstrap/). It answered engineering questions
+only: do the substrates run, are they non-degenerate, are they fast.
+Two things must be disclosed because I saw them:
+  (a) PC-2's pattern was visible there (see PC-2's disclosure).
+  (b) The bootstrap FOUND A DEFECT IN MY OWN CONTROL DESIGN: N1's
+      first version restricted the free region to half the domain, so
+      its spectrum spiked at 1/32 while P1's spiked at 1/16 -- the two
+      controls would have differed in geometry AND navigability, and
+      any separation would have been uninterpretable. Repaired before
+      this freeze; the repair is recorded in the substrate docstring
+      and the identical-spectrum claim is now mechanically verified.
+No bootstrap number is evidence. Every experiment re-measures from
+scratch, on its own seeds, under its own frozen script.
+
+---------------------------------------------------------------------
+10. PROVENANCE
+---------------------------------------------------------------------
+Ruler and circuit machinery: VERBATIM PORT of
+  genesis/harmonia_a/gen3/common.py
+  sha256 87a59d2aa964b3da71915d52f571850d972287d6b67ceff2cc96adc2c7516628
+copied rather than imported so A's live D-14 tree is never a
+dependency of mine and my numbers cannot drift if A amends.
+D-13 primary artifact re-read directly for B-R1:
+  D:\ZeusE\d12\analysis\p1_results.json
+Campaign journal: genesis/harmonia_b/JOURNAL.jsonl (issuance hashes,
+verdicts, disclosures, every correction against myself).
+=====================================================================

@@ -1,0 +1,64 @@
+=====================================================================
+GEN-3H FREEZE -- cross-substrate transport
+Date: 2026-08-31. Campaign rules R1-R7. Prerequisite satisfied:
+surviving hypothesis after 3F/3G = "per-site behavioral influence
+of the edited site predicts consequence class, operator-family-
+conditioned, globally, tracking behavior not encoding."
+=====================================================================
+SUBSTRATE (materially different). Straight-line register programs
+over Z_97: 4 registers init (r0=x, r1=y, r2=1, r3=0), L = 12
+instructions (op in {ADD, SUB, MUL} mod 97; dst, a, b in 0..3),
+output = r0 after execution; behavior = map Z_97^2 -> Z_97 on the
+full 9409-point domain. Different value domain, operator algebra,
+and output space from all prior generations. StackVM is NOT used;
+full StackVM transport remains open (the D-14 hook).
+
+RULER INSTANCE, RE-DERIVED FROM THE GEN-2 AXIOMS (per charter R6 --
+Boolean thresholds NOT carried):
+  d        disagreement fraction over the 9409-point domain.
+  activity NM(f) = {x : f(x) != modal value of f}.
+  surv_h   |{x : f(x) = f'(x), x in NM(f)}| / |NM(f) u NM(f')|.
+  triv     |NM(g)|/9409 <= eps_h with eps_h = 0.025 = half the
+           census band floor on non-modal fraction (band
+           [0.05, 1.0]), same justification rule as Gen-2.
+  classes  NEUTRAL iff f'==f; DESTRUCTION iff triv(f');
+           SMALL iff d <= 0.25 and surv_h >= 0.5; LARGE else.
+  MINI-BATTERY (must pass before any 3H row is read; else the
+  ruler instance is invalid and 3H is INDETERMINATE): forced cells
+  AX1 identity -> NEUTRAL; AX2 collapse-to-constant -> DESTRUCTION
+  at 2 parent activity levels; AX3 k-point table modification
+  (k <= 8) of a surviving table -> SMALL; AX7 healthy replacement
+  -> never DESTRUCTION. Constructed directly on value tables.
+
+POPULATION. 12 programs x 5 seeds (streams (seed, 120, obj,
+attempt)); census: non-modal fraction in [0.05, 1.0] AND output
+depends on x or y (constants rejected); K = 128 edits/program
+(streams (seed, 121, obj)). Edit family (frozen, analogous class):
+op swap (kind=op) OR operand/dst rewire to another register
+(kind=wire). influence(i) = P(output changes when instruction i's
+result is incremented by 1 mod 97 before proceeding) -- the
+intervention analog of Gen-1's wire negation; exact.
+
+TESTS (LOSO by seed; stat seed 20260909):
+  (a) STRUCTURE RECURS  AUC(influence alone -> SMALL vs LARGE-or-
+      DESTRUCTION among non-neutral edits) >= 0.65 in 5/5 folds.
+  (b) MODEL PORTABLE    the CIRCUIT-fitted reduced model (per-kind
+      rank-linear on the substrate-agnostic features inf, gpos
+      only; parent covariates excluded as substrate-specific,
+      declared) applied verbatim to register edits: AUC >= 0.60
+      in 5/5 folds. The reduced circuit model's own held-out AUC
+      on circuits is reported alongside for calibration.
+
+VERDICTS (frozen):
+  CROSS_SUBSTRATE_STRUCTURE      (a) and (b) both pass.
+  STRUCTURE_RECURS_NOT_PORTABLE  (a) passes, (b) fails.
+  BOOLEAN_ARTIFACT               (a) fails with any fold <= 0.55.
+  PARTIAL                        anything else.
+  INDETERMINATE                  mini-battery fails or any fold
+                                 < 300 non-neutral edits.
+
+CLAIM CEILING. One alternative substrate, one op algebra, one
+intervention analog. Passing (b) is evidence of portability of
+the RELATIONSHIP, not a universal law; StackVM remains the named
+out-of-sample target for a successor (D-14), untouched here.
+=====================================================================

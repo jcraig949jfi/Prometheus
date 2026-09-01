@@ -1,0 +1,45 @@
+=====================================================================
+D-14 AMENDMENT A2 -- sampler re-declaration + control repairs +
+support scaling (frozen before the re-measurement)
+Date: 2026-08-31. Amends AMENDMENT_A1 harness details ONLY.
+Hypothesis, interval (0,0.25], threshold 0.05, verdict mapping,
+first-hit rule, influence formula, battery, and no-rescue rule are
+UNCHANGED.
+=====================================================================
+WHAT THE A1 RUN ESTABLISHED (verdict D14_INDETERMINATE, correctly):
+ 1. INSTRUMENT DEFECT, disclosed and filed upstream: the
+    /v0/artifacts mutate op SILENTLY IGNORES the operator config
+    (two contradictory configs, same seed -> identical child and
+    identical creation_config_hash d0a4949f...). This is the
+    D-13 "silent-config-ignore" defect class (reports/08),
+    resurfacing on the artifacts route of release 50b5c232.
+ 2. The realized sampler is therefore the engine's DEFAULT mutate
+    operator, whose draws include indels (1,680 length-changed) and
+    multi-site changes (1,219) alongside single-site point changes.
+ 3. My C5 hand-check compared the wrong field: artifact_id is not
+    sha256(genotype bytes); genotype_addr is (verified exactly).
+ 4. Clean-parent yield is ~56% on the frozen battery.
+A2 REPAIRS (each mechanical, none touching the scientific gate):
+ R1 SAMPLER RE-DECLARATION. The canonical single-site intervention
+    remains a native single-byte point change; it is now drawn by
+    the engine's default mutate operator FILTERED to its
+    single-site outcomes (diff == 1, equal length) -- the same
+    eligibility rule as before. Multi-site and length-changing
+    draws become EXPECTED exclusion classes of the default sampler
+    (counted, composition reported), no longer support-gate
+    violations. The locality control (C3) reverts to its intent:
+    every INCLUDED pair has diff == 1 by construction, verified.
+    The observed site-position histogram is reported as frozen.
+ R2 C5 compares genotype_addr to sha256 of the decoded genotype.
+ R3 SUPPORT SCALING: parent seeds 910001..910200 (200 seeds,
+    targeting >= 100 clean parents), mutation seeds k = 1..96.
+    Gates unchanged: >= 100 clean parents, >= 1000 measured sites.
+ R4 The A1 site rows are VOID for adjudication (wrong declared
+    sampler, failed handcheck field); retained on disk for
+    post-hoc comparison only. Their spectrum was printed by the
+    analyzer before this amendment (middle_mass 0.0035 on 567
+    sites); this observation is DISCLOSED here so the reviewer can
+    weigh issuance order. Nothing in R1-R3 is chosen to move that
+    number: the influence formula, bins, threshold, battery, and
+    eligibility rule are byte-identical to A1's.
+=====================================================================

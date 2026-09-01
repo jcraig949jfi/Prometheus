@@ -1,0 +1,92 @@
+=====================================================================
+HARMONIA B GEN-3B -- FREEZE E1: ASSAY QUALIFICATION AND CALIBRATION
+Issued 2026-09-01, BEFORE any E1 evidence exists.
+=====================================================================
+
+HYPOTHESIS
+  The Q vector can measure a millimetre. Concretely: it separates a
+  DESIGNED-NAVIGABLE landscape from a DESIGNED-PATHOLOGICAL one, and it
+  separates the sharp pair (P1 vs N1) whose local geometry is provably
+  identical and whose navigability is opposite.
+
+NULL / COMPETING EXPLANATION
+  The assay separates nothing that was not put there by the choice of
+  statistic; any later substrate ranking is then noise dressed as
+  geometry. External review Q16 to the A lineage states the standard
+  this clause implements: "before concluding nature contains no
+  millimetres, prove the ruler can measure a millimetre."
+
+DESIGN CORRECTION MADE WHILE WRITING THIS FREEZE (recorded, because it
+changes what E1 can claim and it was found by reasoning, not by data)
+  My first intention was to qualify the assay on q10 (reach_improve@1)
+  averaged over the whole target battery. Working the construction
+  through BEFORE running it shows that would have been a straw test in
+  BOTH directions:
+    (a) Averaged over the battery, P1 and N1 both sit near q10 = 1,
+        because N1's flatness holds only against ITS OWN target; against
+        the other nine targets its block flips move d like anyone's. The
+        controls' designed properties are defined with respect to their
+        own targets and must be adjudicated there. Charter section 3
+        already anticipated this ("per-target results are reported").
+    (b) More seriously: N2-HASH -- pure noise, the pathological floor --
+        has an improving single edit roughly half the time BY CHANCE,
+        because from a random point in any landscape about half of all
+        moves reduce distance to any fixed target. So a single-step
+        improvement statistic CANNOT separate a navigable landscape from
+        noise, and a qualification clause built on one would have passed
+        for the wrong reason.
+  This is not a repair of a broken assay. It is the assay's first
+  finding, and E1 is written to MEASURE it rather than to avoid it.
+
+INTERVENTION
+  Measure the frozen Q vector on four cells:
+    CIRCUIT   x SWEEP-ALL (uncapped: exactly A's 1056-edit family/object)
+    P1-BLOCKS x SWEEP-ALL
+    N1-SMOOTH-UNREACHABLE x SWEEP-ALL
+    N2-HASH   x SWEEP-ALL (capped at 8 alternatives/site; cap recorded)
+  60 objects per cell, seeds 1000..1059, disjoint from the bootstrap's.
+
+FROZEN METRIC AND GATES (all four must pass, or the campaign HALTS)
+  E1-C1  CALIBRATION ANCHOR. CIRCUIT's q4 = P(0 < d <= 0.25) under the
+         uncapped sweep must land within +/- 0.03 of Harmonia A's
+         published 0.119. This checks my verbatim ruler port against an
+         independent seat's frozen artifact. FAIL -> harness is wrong.
+  E1-C2  GEOMETRY SEPARATES THE OBVIOUS PAIR.
+         |q3(P1) - q3(N2)| >= 0.50.
+  E1-C3  TARGET-RELATIVE SEPARATES THE SHARP PAIR, each control judged
+         on its own declared target:
+         q10(P1, T9_P1_TARGET) - q10(N1, T10_N1_TARGET) >= 0.50.
+  E1-C4  GEOMETRY IS BLIND TO THE SHARP PAIR (the control pair's whole
+         point; identical spectra were verified mechanically pre-freeze):
+         |q3(P1)-q3(N1)| <= 0.02 AND |q4(P1)-q4(N1)| <= 0.02
+         AND |q5(P1)-q5(N1)| <= 0.02.
+
+MEASURED BUT NOT GATED (a prediction about the assay's own limits; it
+decides nothing, and it is reported whichever way it lands)
+  E1-M5  |q10(P1,T9) - q10(N2,T9)| <= 0.20, i.e. the single-step
+         improvement statistic FAILS to separate the navigable control
+         from pure noise. If this is small, then geometry-only and
+         target-only coordinates each separate a different pair and
+         NEITHER FAMILY ALONE QUALIFIES -- which would extend A's Gen-2
+         VECTOR_RULER_REQUIRED rather than compete with it.
+
+CONTROLS
+  POSITIVE  P1-BLOCKS: 16 block flips, each moving d by exactly 1/16,
+            hill-climbing reaches d=0 in <= 16 monotone steps.
+  NEGATIVE  N2-HASH: every genotype an independent random truth table.
+  SHARP     N1: identical spectrum to P1 (verified: single spike at
+            0.0625 for both), and d(f, T10) = 0.5 for every reachable
+            phenotype (verified: 400 genotypes, no other value).
+
+KILL CONDITION
+  Any of C1-C4 fails -> verdict ASSAY_UNQUALIFIED, the campaign HALTS,
+  and NO substrate ranking is reported. A failed C1 specifically means
+  my ruler port is wrong and nothing downstream is trustworthy.
+
+WHAT THE RESULT CHANGES
+  PASS -> E2 may characterise the arena, and the Q vector is licensed as
+  the ruler for everything after it.
+  FAIL -> the campaign reports an unqualified assay and stops. That is a
+  first-class outcome and it is cheaper than any ranking built on a
+  ruler that cannot see a millimetre.
+=====================================================================
