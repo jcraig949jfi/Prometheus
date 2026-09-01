@@ -6,13 +6,34 @@
 
 ---
 
-## Standing pointer (2026-08-25, end of session) — READ THESE FIRST
+## Standing pointer (2026-09-01, end of session) — READ THESE FIRST
 
 **ACTIVE, in order:**
-1. `charon/SESSION_2026-08-25_post_reset.md` — what was actually done and what is owed. Part II
-   carries the second half of the day.
-2. `roles/Charon/PLAN_2026-08-25_post_reset.md` — the plan the session executed. Its five
-   pre-committed rulings still bind; **its step-2 population figures are superseded** (below).
+1. `charon/CHARON_SESSION_2026-09-01.md` + `charon/probe/RULINGS_2026-09-01.md` — the most
+   recent session and the ruling it shipped. Evidence:
+   `charon/probe/residue_pool_ruling_2026-09-01.{py,json}`.
+2. `charon/SESSION_2026-08-25_post_reset.md` — the prior session; Part II carries its second half.
+3. `roles/Charon/PLAN_2026-08-25_post_reset.md` — the plan that session executed. Its five
+   pre-committed rulings still bind; **its step-2 population figures are superseded** (below),
+   and **its S2 premise is WITHDRAWN** (2026-09-01, below).
+
+**2026-09-01 in one paragraph.** Ruled on Ergon's pooled-residue request: block-scoped pools
+authorised, one pooled pool rejected (the campaign's record identity `ledger_id#seq` collides on
+200 of 206 records across blocks, so `build_f_null`'s shipped-record accounting would
+mis-attribute). Two blocking conditions filed, both bigger than the ruling: **C1** the residue
+pool is an input to every arm and is neither pinned nor fingerprinted while the manifest is both
+(six added records moved 34/200 controls); **C2** `load_prepass` never checks `status`, so HTTP
+504 rows render as residue asserting an attempt that never happened — 3.0% of block A tasks,
+24.1% of block B. The fabrication is **arm-symmetric**, so INV 7 and every shape gate pass over
+it correctly; no gate in force reads whether residue content is real. `RE_REVIEW_SIGNOFF` is
+closed as DISCHARGED-BY-OTHER (Harmonia B created it themselves, CONDITIONAL CLEAR); its
+*reading* half is enforced by nothing but this seat — CH-2026-09-01-A.
+
+**S2 WITHDRAWN (2026-09-01).** "Regret is non-vacuous" — the single new fact of the 08-25 review
+exchange — is gone. Harmonia C retracted the chance floor under it (`2p(1-p)` is a ceiling, not
+a floor) and Charon's own exact scan had already replaced the input with D=41.1%, which sits
+*below* the ceiling and licenses nothing in either direction. Step 2's premise is weaker, not
+stronger. R-B still binds; step 2 stays built, pre-registered, and unrun.
 
 **One-line state.** The metabolization-probe residue thesis is RETIRED on evidence. The
 replacement — *failure is an outcome; navigation lives in transitions* — remains the **kill

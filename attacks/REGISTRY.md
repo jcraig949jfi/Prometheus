@@ -191,9 +191,43 @@ applies-to: claim classes this attack must be run against before the claim is be
   `0.0000`: a gate that cannot fail. Proxy rate 4.75% against a 2% gate, at the same 8192 cap
   that confounded P1. Consequence is ATK-014-shaped (vacuous metric); root cause is this seam.
   Detail: `charon/probe/ADDENDUM_2026-08-23_drip_truncation.md`.
+- **kills (3):** 2026-08-31/09-01, Charon — the same seam in the OPPOSITE DIRECTION, in the
+  same loader. `load_prepass` filters `rep != 1` and `derives_from_gold` and **never reads
+  `status`**, while its writer emits `status: "http_error"` / `error_type: "HTTP504"` with an
+  empty `attempt_text`. Those rows become residue whose body is `method_projection("")` —
+  *"(prior attempt recorded no recognizable method vocabulary)"* — so the packet tells the
+  solver an attempt was made and used no known method, when the call 504'd at 302s and was
+  retried hours later. Measured: block A 6/206 records → 6/200 tasks (3.0%); **block B 55/275
+  records → 53/220 tasks (24.1%)**, an 8.0x asymmetry between two blocks pooled at n=405.
+  Zero tasks fabricate from nothing — every task also carries a real record — so the packet is
+  misleading, not empty. The F-null shape matcher keys on `null_fields` and mirrors the
+  fabrication faithfully, so it is **arm-symmetric**: INV 7 and `packet_invariants` pass over
+  it correctly, because a shape gate decides across-arm identity and identical fabrications
+  satisfy it. Detail and evidence: `charon/probe/RULINGS_2026-09-01.md` ruling 1d,
+  `charon/probe/residue_pool_ruling_2026-09-01.{py,json}`.
+- **PROBE LIMITATION, measured 2026-09-01 and OPEN.** `attacks/probes/atk013_prepass_loader_seam.py`
+  printed `Defect ABSENT on this ledger set` while kill (3) was live in the file it names. Two
+  reasons, both structural, neither a bug in its own terms:
+  1. **Directional.** Its fire condition is `rep1_by_writer > 0 and accepted == 0` — total
+     under-reading only. It cannot fire on partial loss, and it cannot fire on **over**-reading
+     at all. The registry's own generalization (`rows_on_disk > 0 ⟹ rows_accepted > 0`) is an
+     existence check, strictly weaker than this entry's class description ("a producer and its
+     consumer disagree about a field's shape"). Over-reading is that disagreement.
+  2. **Block-blind.** It globs only `ergon/probe/ledgers/campaign/`. Block B's prepass lives in
+     `campaign_blockB/` and has never been examined by it — the block where kill (3) is 8x
+     worse. Third occurrence of block-blindness in this campaign (Ergon fixed it in
+     `packet_invariants`; Harmonia B found it in their own gate-fire, 2026-08-31).
+  **Not repaired here, deliberately.** Charon ruling R-D (2026-08-25) freezes the preflight to
+  a bounded completion criterion, and this seat is the one most at risk of building instruments
+  instead of killing things. Repair is authorised for the entry's owner and should add the
+  over-read direction as a SIBLING probe registered in `known_failing.json` with an owner —
+  never by widening this probe, which would let a real total-seam regression hide behind a
+  name that had started failing for a different reason.
 - **applies-to:** every producer/consumer pair crossing a file boundary; **mandatory gate
   before any campaign advances past P1.** Generalization extends to METRICS, not only loaders:
-  a gate whose input field is absent must RAISE, never return a passing value.
+  a gate whose input field is absent must RAISE, never return a passing value. And it is
+  **directional**: a consumer that accepts rows its writer marked failed is the same seam as
+  one that drops rows its writer marked good. State which direction a seam probe tests.
 
 ### ATK-015 verdict without rows (aggregate committed, ledger untracked)
 - **class:** provenance
