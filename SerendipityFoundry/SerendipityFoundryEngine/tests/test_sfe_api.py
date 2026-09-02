@@ -117,7 +117,7 @@ def test_openapi_is_generated(client):
     r = client.get("/v2/openapi.json")
     assert r.status_code == 200
     spec = r.json()
-    assert spec["info"]["version"] == "2.1.0"
+    assert spec["info"]["version"] == "2.2.0"
     assert "/v2/worlds/{wid}/fork" in spec["paths"]
     assert "/v2/work/claim" in spec["paths"]
     assert "/v2/worlds/{wid}/experiments/{eid}/commit" in spec["paths"]

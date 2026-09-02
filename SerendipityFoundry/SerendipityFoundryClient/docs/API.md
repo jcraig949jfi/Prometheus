@@ -15,6 +15,13 @@ scientific request must not carry silently-ignored parameters. Three payloads ar
 freeform **by design** and documented as such: an experiment's `spec`, a
 fork-child's `interventions`, and an artifact's `meta` (except its `info_kind`).
 
+**Idempotency** (GEN-2.1 / F5): the epistemic POSTs — hypotheses, predictions,
+observations, artifacts, failures — accept an optional `Idempotency-Key` header.
+A transport retry with the **same key + same request** replays the same logical
+result (no duplicate object); the **same key + a materially different request**
+(including a different world) is a `409` conflict. Keys are scoped per client and
+are durable across an engine restart. `sfclient` exposes this as `idem_key=`.
+
 **Errors** come back as `{"detail": {"error": "<code>", "message": "...", ...}}`
 with an HTTP status:
 
@@ -39,12 +46,21 @@ stamped into every `EXPERIMENT_COMMITTED` event, so a result can be bound to the
 instrument that produced it. Pin this hash when you qualify.
 ```bash
 curl --cacert config/m1.crt https://192.168.1.202:8811/v2/version
-# → {"api":"v2","schema_version":2,"runtime":"serendipity-foundry-sfe",
+# → {"api":"v2","schema_version":3,"runtime":"serendipity-foundry-sfe",
 #    "registration_open":true,
 #    "engine_source_hash":"sha256:…","source_commit":"…"}
 ```
 ```python
 c.version()
+```
+
+**Release identity is on EVERY response** (GEN-2.1 / F4), not only `/version`, as
+headers — so a client can detect that two consecutive responses came from
+different engine builds without a probe:
+```
+X-SFE-Engine-Source-Hash: sha256:…   (build-derived)
+X-SFE-Api-Version: 2.2.0
+X-SFE-Schema-Version: 3
 ```
 
 ### `POST /v2/clients` — register a client, get a token (no auth)
@@ -244,11 +260,17 @@ c.commit_experiment(wid, plan["exp_id"], enqueue=True, kind="evaluate")
 On a **committed** experiment. `outcome` ∈ `SURVIVED`/`FALSIFIED`/`INCONCLUSIVE`.
 `pred_id` binds a prediction (prospective iff it preceded commit); a post-commit
 prediction needs `retrospective=true`. `work_id` binds the authoritative work
-result (→ `ENGINE_WORK_RESULT`).
+result (→ `ENGINE_WORK_RESULT`). **Duplicate binding (GEN-2.1 / F3):** the first
+observation bound to a prediction is the `ORIGINAL` adjudication; a **second**
+observation bound to the same prediction is rejected (`409`) unless
+`replication=true`, and is then recorded as a retest that can **never**
+re-adjudicate the original.
 ```python
 o = c.observation(wid, e["exp_id"], {"score": 1.0}, "SURVIVED", pred_id=p)
 o = c.observation(wid, e["exp_id"], {"score": 1.0}, "SURVIVED",
                   work_id=e["work_id"])              # engine-attested evidence
+o = c.observation(wid, e2, {"score": 1.0}, "SURVIVED", pred_id=p,
+                  replication=True)                  # a typed retest
 ```
 
 ### `POST /v2/worlds/{wid}/failures` — record a first-class failure
@@ -266,10 +288,35 @@ fid = c.failure(wid, failure_type="below_threshold", falsifier="oracle",
 
 ### `POST /v2/worlds/{wid}/artifacts` — store a content-addressed artifact
 Binary payload is base64 in `data_b64`; `meta.info_kind` classifies it for
-sharing-policy checks (e.g. `artifact`, `failure`, `hypothesis`, `success`).
+sharing-policy checks and must come from the closed ontology
+`{artifact, failure, hypothesis, observation, success}` (GEN-2.1 / F2 —
+`success` is now a first-class kind, and `SUCCESSES_ONLY` shares exactly it).
 ```python
-art = c.artifact(wid, "best", b"discovered-bytes", {"info_kind": "artifact"})
+art = c.artifact(wid, "best", b"discovered-bytes", {"info_kind": "success"})
 # → {"artifact_id":"art_…","blob_hash":"…","origin":"NATIVE"}
+```
+
+### `GET /v2/worlds/{wid}/artifacts/{aid}/content` — retrieve content (GEN-2.1 / F1)
+Returns the artifact's **bytes** (base64) + provenance, iff the artifact is
+epistemically **visible** to this world — native here, or legally imported here.
+Possession of an id, an origin hash, or group membership without an import
+confers nothing; a miss is `404`, disclosing nothing. For an imported artifact
+the bytes are the source's and provably hash to `source_hash`.
+```python
+c.artifact_content(wid, aid)   # → {content_b64, origin, source_world,
+                               #    source_hash, visibility_basis, …}
+c.artifact_bytes(wid, aid)     # → decoded bytes (convenience)
+```
+
+### `GET /v2/worlds/{wid}/knowledge?seq=N` — legal information frontier (GEN-2.1 / F10)
+Reconstructs, from the ledger, which information identities were **legally
+available** to this world at/before global `event_seq` `N` (omit for now).
+Availability is established only by native creation and legal import; it answers
+"could world W legally know X by seq N" — never read, used, or causal.
+```python
+c.knowledge_set(wid)           # → {available:[{artifact_id, origin, source_world,
+                               #    content_hash, first_available_seq, basis}], …}
+c.knowledge_set(wid, seq=120)  # frontier as of a past sequence
 ```
 
 ### `POST /v2/topology-groups` — mint a registered sharing capability

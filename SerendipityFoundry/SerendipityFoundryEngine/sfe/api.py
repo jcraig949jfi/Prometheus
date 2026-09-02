@@ -30,6 +30,14 @@ def _token_hash(tok: str) -> str:
     return hashlib.sha256(tok.encode()).hexdigest()
 
 
+def _req_hash(route: str, wid: Optional[str], body) -> Optional[str]:
+    """Canonical hash of the SEMANTIC request (F5). Binds route + world + body,
+    so an idempotency key reused for a materially different request conflicts."""
+    from sfe.ids import content_hash
+    payload = body.model_dump() if hasattr(body, "model_dump") else body
+    return content_hash({"route": route, "world_id": wid, "body": payload})
+
+
 class _Body(BaseModel):
     model_config = ConfigDict(extra="forbid")   # scientific requests fail closed
 
@@ -96,6 +104,9 @@ class ObservationCreate(_Body):
                                        # -> evidence_class ENGINE_WORK_RESULT
     retrospective: bool = False        # required to bind a post-commit
                                        # prediction (never prospective)
+    replication: bool = False          # F3: required for a SECOND observation
+                                       # bound to a prediction (a retest that
+                                       # never re-adjudicates the original)
 
 
 class FailureCreate(_Body):
@@ -177,12 +188,31 @@ class WorkFail(_Body):
 
 def create_app(db_path: str, *, registration_open: bool = True) -> FastAPI:
     app = FastAPI(title="Serendipity Foundry Gen-2",
-                  version="2.1.0", openapi_url="/v2/openapi.json",
+                  version="2.2.0", openapi_url="/v2/openapi.json",
                   docs_url="/v2/docs")
     app.state.db_path = db_path
     # after-bootstrap hardening: the operator can close unauthenticated client
     # registration (serve.py --registration closed); existing tokens still work.
     app.state.registration_open = registration_open
+
+    @app.middleware("http")
+    async def _stamp_release(request, call_next):
+        # F4: EVERY response identifies the loaded build -- including an
+        # unhandled-error 500 -- so a client can detect that two consecutive
+        # responses came from different engine builds even without hitting
+        # /version. Build-derived, not asserted.
+        from sfe.store import SCHEMA_VERSION
+        from starlette.responses import JSONResponse
+        try:
+            response = await call_next(request)
+        except Exception:                            # noqa: BLE001
+            response = JSONResponse(status_code=500, content={
+                "detail": {"error": "internal_error",
+                           "message": "unhandled server error"}})
+        response.headers["X-SFE-Engine-Source-Hash"] = release.ENGINE_SOURCE_HASH
+        response.headers["X-SFE-Api-Version"] = "2.2.0"
+        response.headers["X-SFE-Schema-Version"] = str(SCHEMA_VERSION)
+        return response
     # one Foundry to run the schema migration + resolve tokens (short-lived use)
     boot = Foundry(db_path)
     boot.close()
@@ -334,26 +364,39 @@ def create_app(db_path: str, *, registration_open: bool = True) -> FastAPI:
         return {"nodes": fn(wid, kind, id)}
 
     # -- research objects --------------------------------------------------
+    # F5: epistemic POSTs accept an optional `Idempotency-Key` header; a
+    # transport retry with the same key + same request replays the same logical
+    # result, and the same key + a different request is a 409 conflict.
     @app.post("/v2/worlds/{wid}/hypotheses")
     def hypotheses(wid: str, body: HypothesisCreate, cid: str = Depends(auth),
-                   f: Foundry = Depends(get_foundry)):
-        return {"hyp_id": f.propose_hypothesis(wid, body.statement,
-                                               client_id=cid)}
+                   f: Foundry = Depends(get_foundry),
+                   idem: Optional[str] = Header(default=None,
+                                                alias="Idempotency-Key")):
+        return {"hyp_id": f.propose_hypothesis(
+            wid, body.statement, client_id=cid, idem_key=idem,
+            request_hash=_req_hash("hypotheses", wid, body))}
 
     @app.post("/v2/worlds/{wid}/predictions")
     def predictions(wid: str, body: PredictionCreate, cid: str = Depends(auth),
-                    f: Foundry = Depends(get_foundry)):
-        return {"pred_id": f.register_prediction(wid, body.hyp_id, body.content,
-                                                 client_id=cid)}
+                    f: Foundry = Depends(get_foundry),
+                    idem: Optional[str] = Header(default=None,
+                                                 alias="Idempotency-Key")):
+        return {"pred_id": f.register_prediction(
+            wid, body.hyp_id, body.content, client_id=cid, idem_key=idem,
+            request_hash=_req_hash("predictions", wid, body))}
 
     @app.post("/v2/worlds/{wid}/experiments")
     def experiments(wid: str, body: ExperimentCreate, cid: str = Depends(auth),
-                    f: Foundry = Depends(get_foundry)):
+                    f: Foundry = Depends(get_foundry),
+                    idem: Optional[str] = Header(default=None,
+                                                 alias="Idempotency-Key")):
         return f.create_experiment(wid, body.spec, client_id=cid,
                                    hyp_id=body.hyp_id, pred_id=body.pred_id,
                                    commit=body.commit,
                                    enqueue=body.enqueue, kind=body.kind,
-                                   priority=body.priority)
+                                   priority=body.priority, idem_key=idem,
+                                   request_hash=_req_hash("experiments", wid,
+                                                          body))
 
     @app.post("/v2/worlds/{wid}/experiments/{eid}/commit")
     def commit_experiment(wid: str, eid: str, body: ExperimentCommit,
@@ -367,15 +410,21 @@ def create_app(db_path: str, *, registration_open: bool = True) -> FastAPI:
 
     @app.post("/v2/worlds/{wid}/observations")
     def observations(wid: str, body: ObservationCreate, cid: str = Depends(auth),
-                     f: Foundry = Depends(get_foundry)):
+                     f: Foundry = Depends(get_foundry),
+                     idem: Optional[str] = Header(default=None,
+                                                  alias="Idempotency-Key")):
         return {"obs_id": f.record_observation(
             wid, body.exp_id, body.content, body.outcome, client_id=cid,
             pred_id=body.pred_id, work_id=body.work_id,
-            retrospective=body.retrospective)}
+            retrospective=body.retrospective, replication=body.replication,
+            idem_key=idem,
+            request_hash=_req_hash("observations", wid, body))}
 
     @app.post("/v2/worlds/{wid}/failures")
     def record_failure(wid: str, body: FailureCreate, cid: str = Depends(auth),
-                       f: Foundry = Depends(get_foundry)):
+                       f: Foundry = Depends(get_foundry),
+                       idem: Optional[str] = Header(default=None,
+                                                    alias="Idempotency-Key")):
         return {"failure_id": f.record_failure(
             wid, failure_type=body.failure_type, falsifier=body.falsifier,
             violated=body.violated, client_id=cid,
@@ -383,14 +432,33 @@ def create_app(db_path: str, *, registration_open: bool = True) -> FastAPI:
             prediction_id=body.prediction_id, reference=body.reference,
             expected=body.expected, observed=body.observed,
             measurement_id=body.measurement_id, artifact_refs=body.artifact_refs,
-            reproducibility=body.reproducibility, extensions=body.extensions)}
+            reproducibility=body.reproducibility, extensions=body.extensions,
+            idem_key=idem, request_hash=_req_hash("failures", wid, body))}
 
     @app.post("/v2/worlds/{wid}/artifacts")
     def artifacts(wid: str, body: ArtifactCreate, cid: str = Depends(auth),
-                  f: Foundry = Depends(get_foundry)):
+                  f: Foundry = Depends(get_foundry),
+                  idem: Optional[str] = Header(default=None,
+                                               alias="Idempotency-Key")):
         data = base64.b64decode(body.data_b64)
         return f.create_artifact(wid, body.kind, data, client_id=cid,
-                                 meta=body.meta)
+                                 meta=body.meta, idem_key=idem,
+                                 request_hash=_req_hash("artifacts", wid, body))
+
+    @app.get("/v2/worlds/{wid}/artifacts/{aid}/content")
+    def artifact_content(wid: str, aid: str, cid: str = Depends(auth),
+                         f: Foundry = Depends(get_foundry)):
+        # F1: policy-gated content retrieval -- visible iff native here or
+        # legally imported here; a miss is deny-by-default (404), disclosing
+        # nothing. Content hashes to the recorded source identity.
+        return f.get_artifact_content(wid, aid, client_id=cid)
+
+    @app.get("/v2/worlds/{wid}/knowledge")
+    def knowledge(wid: str, seq: Optional[int] = None, cid: str = Depends(auth),
+                  f: Foundry = Depends(get_foundry)):
+        # F10: the legal information frontier of this world at/<= seq (global
+        # event_seq; omit for now), reconstructed from the ledger.
+        return f.knowledge_set(wid, seq=seq, client_id=cid)
 
     @app.post("/v2/worlds/{wid}/import")
     def import_artifact(wid: str, body: ImportArtifact, cid: str = Depends(auth),

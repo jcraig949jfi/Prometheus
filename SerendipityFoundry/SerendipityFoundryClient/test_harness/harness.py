@@ -140,7 +140,8 @@ def main() -> int:
         iso = c.create_world(sid, "iso", sharing_policy="ISOLATED",
                              topology_group="grp")["world_id"]
         c.start(src); c.start(dst); c.start(iso)
-        art = c.artifact(src, "best", b"discovered", {"info_kind": "artifact"})
+        # F2: SUCCESSES_ONLY shares the first-class "success" kind
+        art = c.artifact(src, "best", b"discovered", {"info_kind": "success"})
         imp = c.import_artifact(dst, src, art["artifact_id"])
         assert imp["origin"] == "IMPORTED" and imp["source_world"] == src
         # ISOLATED world refuses the import (policy enforced)

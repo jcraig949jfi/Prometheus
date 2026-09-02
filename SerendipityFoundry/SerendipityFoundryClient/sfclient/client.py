@@ -60,10 +60,15 @@ class EngineClient:
         return http.client.HTTPConnection(self._u.hostname, self._u.port,
                                           timeout=self.timeout)
 
-    def _req(self, method: str, path: str, body: Optional[dict] = None) -> Any:
+    def _req(self, method: str, path: str, body: Optional[dict] = None, *,
+             idem_key: Optional[str] = None) -> Any:
         headers = {"accept": "application/json"}
         if self.token:
             headers["authorization"] = f"Bearer {self.token}"
+        if idem_key is not None:
+            # F5: a transport retry with the same key replays the same result;
+            # the same key + a different request is a 409 conflict.
+            headers["Idempotency-Key"] = idem_key
         data = None
         if body is not None:
             data = json.dumps(body).encode()
@@ -158,13 +163,16 @@ class EngineClient:
             f"{urllib.parse.quote(obj_id)}&direction={direction}")["nodes"]
 
     # -- research objects --------------------------------------------------
-    def hypothesis(self, wid, statement: str) -> str:
+    def hypothesis(self, wid, statement: str, *,
+                   idem_key: Optional[str] = None) -> str:
         return self._req("POST", f"/v2/worlds/{wid}/hypotheses",
-                         {"statement": statement})["hyp_id"]
+                         {"statement": statement}, idem_key=idem_key)["hyp_id"]
 
-    def prediction(self, wid, hyp_id: str, content: dict) -> str:
+    def prediction(self, wid, hyp_id: str, content: dict, *,
+                   idem_key: Optional[str] = None) -> str:
         return self._req("POST", f"/v2/worlds/{wid}/predictions",
-                         {"hyp_id": hyp_id, "content": content})["pred_id"]
+                         {"hyp_id": hyp_id, "content": content},
+                         idem_key=idem_key)["pred_id"]
 
     def experiment(self, wid, spec: dict, *, hyp_id=None, pred_id=None,
                    commit: bool = True, enqueue: bool = False,
@@ -191,28 +199,55 @@ class EngineClient:
     def observation(self, wid, exp_id: str, content: dict, outcome: str,
                     pred_id: Optional[str] = None,
                     work_id: Optional[str] = None,
-                    retrospective: bool = False) -> str:
+                    retrospective: bool = False,
+                    replication: bool = False,
+                    idem_key: Optional[str] = None) -> str:
         """Record an outcome on a COMMITTED experiment. A bound prediction is
         prospective only if it preceded the commit; a post-commit prediction
         needs retrospective=True and is never prospective. Pass work_id to bind
         the authoritative completed work result (evidence_class
-        ENGINE_WORK_RESULT); otherwise the evidence is CLIENT_ASSERTED."""
+        ENGINE_WORK_RESULT); otherwise the evidence is CLIENT_ASSERTED. A SECOND
+        observation bound to the same prediction needs replication=True and is
+        recorded as a retest that never re-adjudicates the original (F3)."""
         return self._req("POST", f"/v2/worlds/{wid}/observations", {
             "exp_id": exp_id, "content": content, "outcome": outcome,
             "pred_id": pred_id, "work_id": work_id,
-            "retrospective": retrospective})["obs_id"]
+            "retrospective": retrospective, "replication": replication},
+            idem_key=idem_key)["obs_id"]
 
     def failure(self, wid, *, failure_type: str, falsifier: str, violated: str,
-                **kw) -> str:
+                idem_key: Optional[str] = None, **kw) -> str:
         body = {"failure_type": failure_type, "falsifier": falsifier,
                 "violated": violated, **kw}
-        return self._req("POST", f"/v2/worlds/{wid}/failures", body)["failure_id"]
+        return self._req("POST", f"/v2/worlds/{wid}/failures", body,
+                         idem_key=idem_key)["failure_id"]
 
-    def artifact(self, wid, kind: str, data: bytes, meta: Optional[dict] = None):
+    def artifact(self, wid, kind: str, data: bytes, meta: Optional[dict] = None,
+                 *, idem_key: Optional[str] = None):
         import base64
         return self._req("POST", f"/v2/worlds/{wid}/artifacts", {
             "kind": kind, "data_b64": base64.b64encode(data).decode(),
-            "meta": meta or {}})
+            "meta": meta or {}}, idem_key=idem_key)
+
+    def artifact_content(self, wid, artifact_id: str) -> dict:
+        """F1: retrieve an artifact's CONTENT + provenance, iff it is
+        epistemically visible to this world (native here or legally imported
+        here). Returns content_b64 (bytes hash to source_hash) + provenance."""
+        return self._req(
+            "GET", f"/v2/worlds/{wid}/artifacts/{artifact_id}/content")
+
+    def artifact_bytes(self, wid, artifact_id: str) -> bytes:
+        """Convenience: the decoded content bytes for a visible artifact."""
+        import base64
+        return base64.b64decode(self.artifact_content(wid, artifact_id)[
+            "content_b64"])
+
+    def knowledge_set(self, wid, seq: Optional[int] = None) -> dict:
+        """F10: the information-availability frontier of this world at/<= seq
+        (global event_seq; omit for now). Answers only 'could world W legally
+        know X by seq N' -- not read, not used, not causal."""
+        q = f"?seq={seq}" if seq is not None else ""
+        return self._req("GET", f"/v2/worlds/{wid}/knowledge{q}")
 
     def import_artifact(self, wid, source_world: str, source_artifact: str):
         return self._req("POST", f"/v2/worlds/{wid}/import", {

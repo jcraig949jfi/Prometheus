@@ -112,7 +112,7 @@ def run_canary(db_path: str, *, seed_root: int = 20260901, length: int = 24,
                 if other == tag:
                     continue
                 # try to import the peer's published info this world may receive
-                if "artifact" in allowed and published[other]["best_artifact"]:
+                if "success" in allowed and published[other]["best_artifact"]:
                     _try_import(f, client, wid, owid,
                                 published[other]["best_artifact"], pop[tag],
                                 length)
@@ -143,10 +143,10 @@ def run_canary(db_path: str, *, seed_root: int = 20260901, length: int = 24,
             top_bits, top_score = ranked[0]
             if top_score > best[tag][1]:
                 best[tag] = (top_bits, top_score); best_round[tag] = rnd
-            # publish best as an 'artifact' (success) for peers to maybe import
+            # publish best as a 'success' (F2: a first-class kind) for peers
             ba = f.create_artifact(wid, "best", top_bits.encode(),
                                    client_id=client,
-                                   meta={"info_kind": "artifact",
+                                   meta={"info_kind": "success",
                                          "score": top_score})
             published[tag]["best_artifact"] = ba["artifact_id"]
             # publish best direction as a 'hypothesis'
