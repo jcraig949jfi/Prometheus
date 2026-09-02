@@ -7,11 +7,11 @@ requires a new neutrality preregistration and run.
 | operator | weight | what it does (the hashed description) | length |
 |---|---|---|---|
 | insertion | 0.08 | insert k in [1,4] uniformly random instructions at an aligned position | + |
-| deletion | 0.10 | delete k in [1,4] contiguous instructions at an aligned position | − |
+| deletion | 0.11 | delete k in [1,4] contiguous instructions at an aligned position | − |
 | duplication | 0.04 | copy k in [1,4] contiguous instructions and insert the copy at an aligned position | + |
 | movement | 0.08 | cut k in [1,4] contiguous instructions and paste them at another aligned position | 0 |
 | replacement | 0.12 | overwrite one instruction with four uniformly random words | 0 |
-| operand_perturbation | 0.20 | pick one word; add a signed delta in [−8,8] or flip one bit | 0 |
+| operand_perturbation | 0.19 | pick one word; add a signed delta in [−8,8] or flip one bit | 0 |
 | reference_redirection | 0.08 | pick one instruction; keep its opcode word; overwrite one operand word uniformly | 0 |
 | region_swap | 0.06 | swap two non-overlapping regions of k in [1,4] instructions | 0 |
 | splice | 0.05 | replace a region of k instructions with a region of k′ instructions copied from a mate (self if none) | ± |
@@ -20,10 +20,14 @@ requires a new neutrality preregistration and run.
 | unreachable_removal | 0.03 | delete one instruction not statically reachable from ip=0 (no offset fixup; approximate when code_writable) | − |
 | config_perturbation | 0.08 | step one manifest limit (n_regs, tape_words, code_writable, persist, tick_budget, out_cap) within published bounds | 0 |
 
-Subtraction mass (deletion + unreachable_removal = 0.13) exceeds addition mass (insertion +
-duplication = 0.12) by design, so growth is not the default direction (brief §8). Whether the
-grammar is free of a complexity ratchet in either direction at a 300-generation horizon is a
-measured property under `v0/NEUTRALITY_PREREG.md`, not a design claim.
+**Version v0.1.** Grammar v0 (deletion 0.10, operand_perturbation 0.20, tape halving clamped to
+the genome) FAILED the neutrality gate with a growth ratchet: operator mass favoured subtraction
+(0.13 vs 0.12) but expected *instructions* did not (0.25 removed vs 0.30 added), because
+unreachable_removal removes one instruction while the others move about 2.5. That mistake is
+recorded in `v0/NEUTRALITY_PREREG.md`. v0.1 balances expected instructions (≈0.275 + 0.01–0.03
+removed vs 0.30 added) and stops the tape-halving clamp that pinned genomes at their cap.
+Whether v0.1 is free of a ratchet at a 300-generation horizon is a measured property under the
+same preregistered tolerances, not a design claim.
 
 **Operators considered and NOT built, with the reason (A3 flag rule):**
 

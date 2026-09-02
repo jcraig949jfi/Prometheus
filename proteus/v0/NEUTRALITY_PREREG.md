@@ -52,3 +52,31 @@ opcode-frequency drift under no selection is reported as a diagnostic without a 
 
 Grammar under test: `GRAMMAR_HASH` recorded in `NEUTRALITY_PREREG.json` beside this file; the
 runner refuses to run against any other grammar.
+
+---
+
+## Run 1 — grammar v0 (`da7e2ccb…`) — FAIL. Kept as filed.
+
+Result: `NEUTRALITY_RESULT_grammar_v0_FAIL.json`; prereg copy `NEUTRALITY_PREREG_grammar_v0.json`.
+Cohort 8 grew (+0.071 instr/gen, burn-in ratio 2.77). Cohort 128 shrank (median −0.036,
+last-half −0.045) and sat at its cap 8.1% of the time. Cohort 32 passed everything. Balance 1.076.
+
+Cause, established by read-only calibration on random genomes (not on any probe result):
+insertion + duplication add 0.30 instructions per generation in expectation, deletion removes
+0.25, unreachable_removal 0.01–0.03; the net is +0.02 to +0.04 — a growth ratchet I had
+described as "subtraction mass exceeds addition mass" because I counted operator weights, not
+expected instructions. Second cause: config perturbation's tape halving clamped the tape to the
+genome length, pinning genomes at their cap so insertion became a no-op while deletion did not.
+Third: at start 128 the bootstrap interval half-width (0.0305) exceeded the tolerance (0.03),
+so by `feedback_gate_must_exceed_measurement_error` that cohort's gate was not a gate.
+
+## Run 2 — grammar v0.1 — preregistered here, frozen before running
+
+Grammar changes, length behaviour only: deletion 0.10→0.11, operand_perturbation 0.20→0.19
+(expected removed ≈ 0.275 + 0.01–0.03 vs. added 0.30), and tape halving is a no-op when the
+genome would not fit. **Tolerances unchanged.** Lineages per cohort 30→60 so the interval
+half-width falls below the tolerance at every start size. Calibrated expected drift under
+v0.1 is recorded in the commit that freezes this section. Everything else identical.
+
+If run 2 fails, the same procedure applies: keep the run, revise, re-version, re-preregister.
+The number of revisions is itself reported in the packet.

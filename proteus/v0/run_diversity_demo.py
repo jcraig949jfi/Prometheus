@@ -1,7 +1,11 @@
 """Diversity demonstration runner (A4/A5/A7/A8). Freezes the configuration identity, runs once,
 writes rows. Refuses to run under a configuration that differs from an existing identity file.
 
-    python proteus/v0/run_diversity_demo.py
+    python proteus/v0/run_diversity_demo.py [outdir]
+
+`outdir` defaults to proteus/v0. A changed configuration (grammar, runtime, ensemble, prereg)
+is a NEW demonstration and must be given its own directory; the runner refuses to overwrite a
+frozen identity in place.
 """
 from __future__ import annotations
 
@@ -31,7 +35,12 @@ def entropy_bits(counter):
 
 
 def main():
-    with open(os.path.join(HERE, "DIVERSITY_PREREG.md"), "rb") as f:
+    global HERE
+    prereg_path = os.path.join(HERE, "DIVERSITY_PREREG.md")
+    if len(sys.argv) > 1:
+        HERE = os.path.abspath(sys.argv[1])
+        os.makedirs(HERE, exist_ok=True)
+    with open(prereg_path, "rb") as f:
         prereg_hash = hash_obj(f.read().replace(b"\r\n", b"\n").decode("utf-8"))
     fm = dict(generate.DEFAULT_FOUNDRY_MANIFEST)
     fm["seed"] = int(probes.ADDENDUM_SHA256[:16], 16)

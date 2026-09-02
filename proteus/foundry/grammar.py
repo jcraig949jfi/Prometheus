@@ -23,11 +23,11 @@ IW = 4  # instruction words
 # name -> (weight, description). Weights sum to 1.00. Frozen; changing them changes GRAMMAR_HASH.
 OPERATORS = (
     ("insertion",             0.08, "insert k in [1,4] uniformly random instructions at an aligned position"),
-    ("deletion",              0.10, "delete k in [1,4] contiguous instructions at an aligned position"),
+    ("deletion",              0.11, "delete k in [1,4] contiguous instructions at an aligned position"),
     ("duplication",           0.04, "copy k in [1,4] contiguous instructions and insert the copy at an aligned position"),
     ("movement",              0.08, "cut k in [1,4] contiguous instructions and paste them at another aligned position"),
     ("replacement",           0.12, "overwrite one instruction with four uniformly random words"),
-    ("operand_perturbation",  0.20, "pick one word; add a signed delta in [-8,8] or flip one bit"),
+    ("operand_perturbation",  0.19, "pick one word; add a signed delta in [-8,8] or flip one bit"),
     ("reference_redirection", 0.08, "pick one instruction; keep its opcode word; overwrite one operand word uniformly"),
     ("region_swap",           0.06, "swap two non-overlapping regions of k in [1,4] instructions"),
     ("splice",                0.05, "replace a region of k instructions with a region of k' instructions copied from a mate (self if none)"),
@@ -40,9 +40,16 @@ NAMES = tuple(o[0] for o in OPERATORS)
 WEIGHTS = tuple(o[1] for o in OPERATORS)
 assert abs(sum(WEIGHTS) - 1.0) < 1e-9
 
-GRAMMAR_VERSION = "proteus.grammar.v0"
+# v0 -> v0.1 (2026-09-02): neutrality run 1 FAILED (proteus/v0/NEUTRALITY_RESULT_grammar_v0_FAIL.json).
+# Two changes, both to LENGTH behaviour only: deletion 0.10 -> 0.11 and operand_perturbation
+# 0.20 -> 0.19 so that expected instructions removed per generation (0.275 + unreachable
+# 0.01..0.03) matches expected instructions added (0.30); and config_perturbation no longer
+# clamps a halved tape to the genome length (which pinned genomes at their cap) -- it is a
+# no-op when the genome would not fit. Calibrated on random genomes, not on any probe result.
+GRAMMAR_VERSION = "proteus.grammar.v0.1"
 GRAMMAR_HASH = hash_obj({"version": GRAMMAR_VERSION, "operators": [list(o) for o in OPERATORS],
-                         "k_range": [1, 4], "delta_range": [-8, 8]})
+                         "k_range": [1, 4], "delta_range": [-8, 8],
+                         "config_tape_halving": "noop_if_genome_would_not_fit"})
 
 GMIN = STORAGE_BOUNDS["genome_words"]["min"] // IW
 GMAX = STORAGE_BOUNDS["genome_words"]["max"] // IW
@@ -259,9 +266,11 @@ def op_config_perturbation(m, rng, mate):
         c["n_regs"] = min(max(v, b["n_regs"]["min"]), b["n_regs"]["max"])
     elif which == "tape_words":
         v = m["tape_words"] * 2 if rng.randbelow(2) else m["tape_words"] // 2
-        v = min(max(v, b["tape_words"]["min"], len(m["genome"])), b["tape_words"]["max"])
+        v = min(max(v, b["tape_words"]["min"]), b["tape_words"]["max"])
         v -= v % 4
-        c["tape_words"] = max(v, len(m["genome"]))
+        if v < len(m["genome"]):
+            return c, {"field": which, "noop": "genome_would_not_fit", "from": m["tape_words"], "to": m["tape_words"]}
+        c["tape_words"] = v
     elif which == "code_writable":
         c["code_writable"] = not m["code_writable"]
     elif which == "persist":
