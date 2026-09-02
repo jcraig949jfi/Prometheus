@@ -1,0 +1,532 @@
+# D15B_DESIGN_PACKET -- CROSS-WORLD SCIENTIFIC TRANSFER
+## When does other experience actually help?
+
+**Seat:** Harmonia B (meter integrity / independent gate)  **Date:** 2026-09-02  **Host:** M2
+**Status:** DESIGN ONLY. Nothing confirmatory has run. No science world exists. No artifact has
+crossed. Per brief 17 this packet halts here for review.
+**Engine under study:** SFE GEN-2.1, `engine_source_hash sha256:5274ddbe9120ddbb...`,
+`source_commit a2898d19`, API 2.2.0, schema 3, live at `https://192.168.1.202:8811`.
+**Verified live by me, read-only, no auth, no writes** (`GET /v2/version`), 2026-09-02.
+
+---
+
+## 0. THE PRECONDITION, AND THE DIVISION OF LABOUR
+
+**GEN-2.1 IS NOT QUALIFIED.** Daedalus's packet says so in its own header:
+`READY_FOR_REQUALIFICATION -- not qualified. Builder asserts; only Harmonia issues the verdict.`
+The last Harmonia verdict on record is **GEN-2 `e367e791`: QUALIFIED_WITH_DECLARED_LIMITATIONS**
+(L1-L7). The live host now serves `5274ddbe`.
+
+That single fact reorders this campaign, and it has already had teeth elsewhere: Harmonia A's
+Topology-2 froze against `e367e791` with a stop clause, GEN-2.1 deployed onto the shared live host
+about 55 minutes later, and A **suspended Topology-2** under its own pin (`528c25eb2`). The freeze
+worked. But the governing fact stands and belongs in this design: **a release was deployed onto the
+shared instrument under another seat's frozen campaign.** D15-B inherits that risk and treats it as
+a first-class hazard (12, C-7).
+
+**Division of labour with D15-A, declared to avoid duplicated and therefore uninformative work.**
+A's D15-A packet (`85e50a619`) makes GEN-2.1 requalification its Phase 0 and covers **invariant
+conformance**: F1 basic visibility and deny-by-default, F2 success-first-class and the G12 assertion,
+F3's five adjudication sequences, F4 header presence, F5 key scoping and retry storms, F10 frontier
+correctness, fork equality, future-info absence, NULL fail-closed.
+
+D15-B does **not** re-run those. D15-B owns the surface A's plan does not reach -- **laundering and
+provenance semantics**: transitive re-export, origin-hash reads, ontology confusion as an evasion
+rather than as a schema check, read-as-availability, post-fork inheritance, stale rows, global-id
+behaviour, the artifact-id squat, duplicate evidence arriving by multiple paths, and the
+imported-evidence-vs-local-replication distinction. 11 is that matrix.
+
+**Sequencing, and it is a hard dependency.** D15-B's science does not run until A's Phase 0 returns
+a qualification verdict. If Phase 0 fails, D15-B's attack matrix still runs (an unqualified engine
+is still worth attacking) but **no scientific claim is issued** -- the verdict string is
+`CONTAMINATED_UNQUALIFIED_SUBSTRATE`. Attacking an engine is valid on any engine; *making a
+scientific claim through* one is not.
+
+### 0.1 Two findings the design phase produced before any execution
+
+Both are against **F2**, both are expressivity gaps rather than defects, and both change what this
+campaign is allowed to claim. They are filed now because they were found by reading the contract,
+and because brief 12 requires documenting a substrate deficiency rather than silently patching it
+in experiment code.
+
+**B-F2-1 -- THE POLICY SET DOES NOT SPAN THE ONTOLOGY.**
+The closed ontology is `{artifact, failure, hypothesis, observation, success}` (5 kinds). The
+sharing policies are `ISOLATED, FAILURES_ONLY, HYPOTHESES_ONLY, FAILURES_AND_HYPOTHESES,
+SUCCESSES_ONLY, FULLY_SHARED, DELAYED_SHARING, EXPLICIT_IMPORT_ONLY`. There is **no selective
+policy for `observation` and none for `artifact`.** The brief asks for an `OBSERVATIONS_ONLY` diet;
+the substrate cannot express it as a policy. It can only be reached through `FULLY_SHARED`
+(non-selective) or `EXPLICIT_IMPORT_ONLY` (selection performed by *me*, not the engine).
+
+**B-F2-2 -- `artifact` CANNOT DISTINGUISH RAW EVIDENCE FROM A DERIVED ABSTRACTION.**
+A compressed obstruction certificate (5) is, ontologically, an `artifact`. So is a raw trajectory
+dump. **No sharing policy can admit abstractions while excluding raw evidence**, which is precisely
+the contrast the brief's 4 exists to test.
+
+**Consequence, stated as a claim ceiling rather than worked around.** The `FOREIGN_ABSTRACTIONS`,
+`FOREIGN_RAW` and `OBSERVATIONS_ONLY` diets must be separated by **topology-group partitioning plus
+producer-side discipline**, not by engine policy. A topology group is an unguessable capability, not
+a semantic kind. Therefore the sentence "only abstractions crossed into this world" is warranted by
+**my construction and the ledger audit (8)**, and is **NOT** an engine-enforced guarantee. Every
+D15-B claim that depends on diet purity carries that ceiling. This is the crossing-layer twin of
+GEN-2's declared **L7** ("freeform fields are open by design; estimand-bearing content in them is
+client responsibility"): *the engine governs crossing, it does not govern content.* Answer-leak
+prevention is therefore entirely mine, which is why 5 makes the certificate schema mechanically
+checkable and 12 makes a schema violation a contamination stop.
+
+Both are filed to Daedalus as **GEN-2.2 candidates**, not as GEN-2.1 blockers.
+
+---
+
+## 1. TRANSFER TAXONOMY
+
+Seven regimes. Each is a *relation between a source world and a target world*, and each exists to
+kill a specific non-transfer explanation. The ground-truth object that may or may not transfer is
+the **obstruction class Omega** (2).
+
+| # | Regime | Construction | The explanation it kills |
+|---|---|---|---|
+| **A** | HOMOLOGOUS | same interaction hypergraph family, same coordinate map pi, same surface encoding E | none -- this is the ceiling. If A fails, nothing transfers and the campaign ends early |
+| **B** | RECOORDINATED | same Omega; pi drawn independently per world (permutation + polarity flips) | **shared-coordinate leakage.** Any gain that survives B cannot be variable-index matching |
+| **C** | FAMILY-SHIFTED | same mechanism; different distribution over clause arity and core size | **family frequency / marginal priors.** Gain surviving C is not "the source told me the base rate" |
+| **D** | STRUCTURAL-TRANSFER | different **surface encoding** E (bitstring vs. program vs. grammar derivation); same Omega underneath | **dataset identity and cargo-cult reuse.** This is the decisive regime: the target's surface generator was never seen |
+| **E** | IRRELEVANT | source Omega drawn independently of target Omega | **evidence volume.** If E transfers as well as A-D, the gain is "more bytes", not structure |
+| **F** | ANTI-TRANSFER | source Omega systematically **inverted** relative to the target (cores that are infeasible in the source are exactly the feasible ones in the target) | detects **negative transfer**, and makes the experiment two-sided: a design that can only find gains is not measuring transfer |
+| **G** | ANSWER-LEAK | source artifacts contain target-identifying content | **audit control only.** Proves the 8 audit *detects* leakage. FORBIDDEN in the science ledger -- see 12, and the quarantine in 3.4 |
+
+**Positive vs negative transfer is a signed quantity here, not a filter.** F is expected to produce
+a *negative* TRANSFER_GAIN. A design that reports only |gain| cannot distinguish "learned nothing"
+from "learned the opposite", and the second is the more interesting result.
+
+---
+
+## 2. SOURCE AND TARGET GENERATOR DESIGN
+
+**Family: Masked Interaction Landscapes (MIL).** Chosen because it separates four things the brief
+requires to vary independently -- deep structure, coordinates, surface form, and difficulty -- and
+because the transferable object can be defined with ground truth I hold and no world ever sees.
+
+**Instance.** N = 32 binary variables. A set of m clauses, each over 3 variables with one forbidden
+assignment pattern. `score(x) = fraction of clauses satisfied`. Instance seeds frozen as
+`SeedSequence([20260902, regime, family, idx])`.
+
+**Deep structure -- the obstruction class Omega.** Each instance is constructed to contain a planted set
+of **minimal infeasible cores**: clause subsets that cannot be jointly satisfied. Omega is the
+*multiset of core shapes*, expressed as an isomorphism-invariant signature of each core's
+clause-variable incidence graph (5). **Omega is invariant under pi and under E by construction.** That
+invariance is a property of the construction, not a hypothesis, and it is what makes B and D fair
+tests rather than rigged ones.
+
+**Coordinate map pi.** A permutation of variable indices plus per-variable polarity flips.
+HOMOLOGOUS shares pi; RECOORDINATED draws it independently per world.
+
+**Surface encoding E.** Three, all decoding to the same assignment space:
+- `E1 BITSTRING` -- candidate is 32 bits; edits are bit flips.
+- `E2 PROGRAM` -- candidate is a short straight-line program over a small write-instruction set;
+  the same assignments are reachable, the *neighbourhood* is different.
+- `E3 GRAMMAR` -- candidate is a derivation in a small CFG.
+STRUCTURAL-TRANSFER crosses E1 -> E2/E3.
+
+**Family shift.** The distribution over clause arity and core size. FAMILY-SHIFTED changes it while
+holding the mechanism.
+
+**Ground truth.** I hold Omega. **No world ever receives it.** A source world can only *learn* an
+obstruction from its own failures; that learned object is what may cross. Any path by which Omega
+reaches a world other than through that world's own experience is a leak and a contamination stop.
+
+### 2.1 The prediction task -- why it is not a search score
+
+The target-world endpoint is a **prospective, falsifiable, binary prediction**, not a search score.
+Given a frozen query set of *repair proposals* (small variable-flip sets), the target world must
+predict for each: **will this repair FAIL (hit an obstruction) or SUCCEED?**
+
+Three reasons this is the right endpoint and a search score is not:
+1. **The engine enforces prospectivity for me.** A prediction is prospective iff
+   `prediction.created_seq < experiment.committed_seq`, checked at commit. This is exactly the
+   brief's 5 requirement that imports be legally available *before the prediction being evaluated*,
+   and it is enforced by the substrate rather than asserted by me.
+2. **The answer has never been available.** Query-set outcomes are computed only at observation.
+3. **It separates knowing-the-structure from being-good-at-search.** A better searcher scores
+   higher without understanding anything. A better *predictor of where repair fails* has to have
+   acquired the obstruction.
+
+Base rates of FAIL are matched across worlds by construction (target 0.50 +/- 0.05, verified at
+census) so that a constant predictor sits at balanced accuracy 0.50.
+
+---
+
+## 3. EXACT CROSSING POLICIES
+
+### 3.1 Policies actually used
+Every world is created with an explicit `sharing_policy` from the real enum. Nothing is defaulted.
+
+| Role | `sharing_policy` | topology group | rationale |
+|---|---|---|---|
+| Target world (all arms) | `ISOLATED` at creation | none until the crossing frontier | isolation is engine-enforced, not conventional |
+| Source, failure diet | `FAILURES_ONLY` | `grp_fail_<regime>` | policy-enforced, kind = `failure` |
+| Source, hypothesis diet | `HYPOTHESES_ONLY` | `grp_hyp_<regime>` | policy-enforced |
+| Source, success diet | `SUCCESSES_ONLY` | `grp_succ_<regime>` | policy-enforced; **producer must tag `meta.info_kind="success"` explicitly** (F2 migration note -- a default-kind artifact is no longer shared as a success) |
+| Source, raw / abstraction / observation diets | `EXPLICIT_IMPORT_ONLY` | one group **per diet**, never shared between diets | **B-F2-1/B-F2-2: the engine cannot select these by kind.** Group partitioning + producer discipline + 8 audit |
+| ORACLE_LEAK | separate client, separate session | `grp_leak_quarantine` | never in a group with any science world |
+
+### 3.2 Crossing mechanics
+Import is `POST /v2/worlds/{dst}/import`. Same-client import requires a shared `topology_group` and
+that the destination policy admits the kind. Cross-client additionally requires the group be
+**registered**, the source policy emit the kind, and the source artifact be **NATIVE origin**
+(H6 -- no transitive re-export).
+
+**Declared asymmetry, and it is load-bearing for this campaign.** The NATIVE-origin requirement is
+documented for the **cross-client** path. D15-B's source and target worlds are same-client by
+construction, so the configuration in which A->B->C re-export is *most likely permitted* is exactly
+mine. Whether that is intended (one client owns all three worlds, no privilege boundary crossed) or
+a provenance-laundering hole is **not assumed either way** -- it is attack **X-04** in 11 and it is
+the sharpest thing recon produced. Its answer changes 7's duplicate-evidence model, so 7 is
+written for both outcomes.
+
+### 3.3 Legality is proved, not asserted
+Every crossing point records, before the import: `knowledge_set(target, seq=frontier)`, the source
+world id, the source `event_seq`, the import `event_seq`, the policy, and the group. 8 is the
+protocol.
+
+### 3.4 ORACLE_LEAK quarantine
+Runs in a **dedicated client and session**, on dedicated worlds, in `grp_leak_quarantine`, which no
+science world ever joins. Its ledger namespace is quarantined and it is excluded from every
+scientific aggregate by world-id whitelist, not by a flag. It exists to prove the 8 audit fires.
+**If ORACLE_LEAK's audit does not fire, the audit is unqualified and every other arm's leak-freedom
+claim is void** -- the same logic as a positive control in an assay.
+
+---
+
+## 4. INFORMATION-DIET ARMS
+
+Nine arms. All target predictions prospective; all imports legally available before the prediction
+being evaluated, proved from the ledger.
+
+| Arm | What crosses | Kind(s) | Enforcement |
+|---|---|---|---|
+| `LOCAL_ONLY` | nothing | -- | `ISOLATED`, engine |
+| `FOREIGN_RAW` | raw failure trajectories (candidates + outcomes) | `artifact` | group + discipline |
+| `FOREIGN_FAILURES` | typed first-class failures | `failure` | **policy** |
+| `FOREIGN_SUCCESSES` | successful repairs | `success` | **policy** |
+| `FOREIGN_HYPOTHESES` | source-world hypotheses | `hypothesis` | **policy** |
+| `FOREIGN_OBSERVATIONS` | source observations | `observation` | group + discipline (**B-F2-1**) |
+| `FOREIGN_ABSTRACTIONS` | obstruction certificates only (5) | `artifact` | group + discipline (**B-F2-2**) |
+| `FOREIGN_MIXED` | failures + successes | `failure`,`success` | policy (`FAILURES_ONLY` U `SUCCESSES_ONLY` via two groups) |
+| `ORACLE_LEAK` | target-identifying content | any | quarantined (3.4) |
+
+**The brief's 8 question is a preregistered contrast, not an assumption.** Prometheus's standing
+hypothesis is that structured failure transfers better than success. D15-B tests
+`FOREIGN_FAILURES` vs `FOREIGN_SUCCESSES` vs `FOREIGN_MIXED` head-to-head at matched volume, and
+the outcome worth preserving -- *successes transfer navigation, failures transfer expressivity
+diagnostics* -- is registered as a **secondary decomposition** (search-cost-to-first-repair vs.
+obstruction-prediction accuracy), so it can be found without being assumed.
+
+---
+
+## 5. ABSTRACTION FORMAT
+
+The compressed object. **Exported instead of trajectories** in `FOREIGN_ABSTRACTIONS`.
+
+```
+OBSTRUCTION_CERTIFICATE v1   (canonical JSON, UTF-8, sorted keys)
+{
+  "cert_version": 1,
+  "source_world": "<engine world id>",
+  "n_failures_consumed": <int>,
+  "cores": [
+    { "size": <int>,                    # clauses in the minimal core
+      "arity_multiset": [<int>, ...],   # sorted
+      "wl_hash": "<hex>",               # 1-WL colour-refinement hash of the
+                                        # core's clause-variable incidence graph
+      "support": <int>,                 # failures exhibiting this core
+      "confidence": <float in [0,1]> }
+  ],
+  "derivation": "minimal-core extraction from local failures",
+  "schema_closed": true
+}
+```
+
+**Why the WL hash.** Colour refinement on the incidence graph is invariant under any relabelling of
+variables and clauses, so the certificate is invariant under pi **by construction** -- which is what
+makes RECOORDINATED a real test rather than a coordinate lookup. It is also invariant under surface
+encoding E, because E changes the neighbourhood, not the incidence structure. (1-WL is incomplete --
+it can collide non-isomorphic cores. That is declared: collisions add noise and can only *reduce*
+measured transfer, so they cannot manufacture a positive result.)
+
+**Leak firewall, mechanically checked.** The schema is **closed**: any key not in the whitelist, or
+any value containing a variable index, polarity, literal candidate, score, or target identifier, is
+a schema violation. A validator runs on **every** certificate before it is stored as an artifact and
+again at import. A violation is a **contamination stop** (12, C-3), not a warning. This is the
+control that makes B-F2-2 survivable: the engine cannot tell an abstraction from a trajectory, so I
+must, and I must be able to show a reviewer the check.
+
+**Learned, never read off.** Certificates are extracted from a source world's *own recorded
+failures*. A certificate that cannot be reconstructed from that world's ledger is a contamination
+stop (C-4).
+
+---
+
+## 6. CAUSAL ABLATIONS
+
+For any positive TRANSFER_GAIN, sever the hypothesised link. Each ablation holds volume and
+marginal priors **exactly** and breaks one causal path. If a gain survives severing, the explanation
+is wrong and is withdrawn.
+
+| # | Ablation | Held constant | Severed |
+|---|---|---|---|
+| **S1** SHUFFLED_PAIRING | certificate count, byte volume, vocabulary, marginal FAIL prior | worldcertificate correspondence (certificates from other targets' sources) |
+| **S2** WRONG_WORLD_ATTACH | abstraction vocabulary, count | attaches each certificate to the wrong target |
+| **S3** RANK_RANDOMIZED | candidate-set narrowing (same shortlist) | the *ordering* within the shortlist |
+| **S4** IRRELEVANT_SWAP | evidence volume and type | relevant evidence replaced by regime-E evidence |
+| **S5** SCRAMBLE_EACH | everything | coordinate correspondence: each source independently recoordinated |
+| **S6** MARGINAL_ONLY | the source's marginal FAIL base rate, transmitted alone | all structure |
+
+**S1 is the primary comparator.** The brief's decomposition instantiates as:
+
+```
+TRANSFER_GAIN = BalAcc(FOREIGN_ABSTRACTIONS) - BalAcc(S1 SHUFFLED_PAIRING)
+```
+
+S6 is the sharpest single competitor: if a world does as well knowing only "about 50% of repairs
+fail here" as it does with certificates, there is no structural transfer, only prior transfer.
+
+---
+
+## 7. DUPLICATE-EVIDENCE MODEL
+
+**The scenario, constructed explicitly.** Evidence `E` is native in world `A`. `A` shares to `B`.
+`A` independently shares to `C`. `B` and `C` both later inform target `D`. Can `D` count `E` twice?
+
+**Where the substrate helps and where it stops.** F3 protects *observation adjudication within a
+world*: the first observation of an experiment/prediction is `ORIGINAL`, a repeat needs
+`replication=true` and never re-adjudicates. That is a within-world guarantee. It says **nothing**
+about two *imported artifacts* that descend from one native ancestor. The engine records
+`source_world`, source lineage and `content_hash` on every import, so **provenance-aware dedup is
+computable from the ledger** -- but the engine does not perform it, and nothing in the scientific
+layer is obliged to.
+
+**Two meta-analyses, both computed, difference reported:**
+- **NAIVE** -- treat each imported artifact as an independent observation.
+- **PROVENANCE-AWARE** -- collapse to the equivalence class of the **native ancestor**, identified by
+  `(origin_world, content_hash)` walked back through `lineage`. Weight each class once.
+
+**Preregistered prediction (falsifiable, mine, losable):** the naive analysis will show a
+*confidence* gain (narrower intervals) without a corresponding *accuracy* gain, and the gap will
+grow with the number of sharing paths. If naive and provenance-aware agree, duplicate evidence is
+not a live hazard in this ecology and I will say so.
+
+**Dependency on X-04.** If same-client transitive re-export is permitted (3.2), then `D` can also
+receive `E` **through** `B` with `B` as apparent source, and the native ancestor may be recoverable
+only by walking lineage -- not from `source_world` alone. If re-export is refused, the multi-path
+case is limited to independent imports from `A` and dedup is a one-hop walk. **The design covers
+both; which one obtains is measured, not assumed.**
+
+**Expected deficiency, filed in advance as a GEN-2.2 candidate (B-DUP-1):** the substrate has no
+first-class notion of *evidential independence*. If confirmed, the recommendation is a
+`native_ancestor` field on imported artifacts, or a `knowledge_set` that reports equivalence classes
+rather than identities. Documented, per brief 12 -- not patched inside experiment code.
+
+---
+
+## 8. KNOWLEDGESET AUDIT PROTOCOL
+
+For **every** target-world prediction, the following row is written to `d15b/ledger/frontier.jsonl`
+at the moment of the decision, and the entire analysis is later reconstructed **from the ledger and
+this row only** -- never from application memory. This is the direct test of F10 the brief asks for.
+
+```
+prediction_seq            prediction.created_seq
+committed_experiment      exp_id + committed_seq
+knowledge_set_at_pred     full knowledge_set(target, seq=prediction_seq)
+imports_available         artifact ids with first_available_seq <= prediction_seq
+imports_not_yet_available artifact ids with first_available_seq  > prediction_seq
+source_world / source_event_seq / import_event_seq
+sharing_policy / topology_group / info_kind
+engine_source_hash        X-SFE-Engine-Source-Hash from THIS call (F4)
+```
+
+**Audit gates, each with a stop condition:**
+- **K1 RECONSTRUCTION.** The analysis is recomputed from the ledger alone and must reproduce every
+  reported number **exactly**. Any divergence -> stop (C-1).
+- **K2 NO FUTURE INFO.** No artifact with `first_available_seq > prediction_seq` may appear in the
+  frontier used for that prediction.
+- **K3 ORDERING CANARY.** At every capture, an artifact is created *immediately after* the frontier
+  is taken; it must **not** appear in it. This fires on the off-by-one that would make every
+  "prospective" decision silently future-informed.
+- **K4 FORK EQUALITY.** At each fork, `child.knowledge_set(fork_seq)` must equal
+  `parent.knowledge_set(checkpoint_seq)` **in both directions** -- nothing extra, nothing missing.
+- **K5 HASH CONTINUITY.** Every response's `X-SFE-Engine-Source-Hash` is recorded. Any run spanning
+  two hashes is marked **discontinuous** and its cells are quarantined (C-7).
+- **K6 LEAK SCAN.** Every imported payload is scanned against the 5 closed schema and against a
+  target-identifier blacklist. ORACLE_LEAK must trip K6; if it does not, the audit is unqualified.
+
+---
+
+## 9. PARALLEL CROSSING SCHEDULE
+
+Harmonia A (D15-A) and Harmonia C run concurrently. This is used as a source of genuine independent
+counterfactuals, and it is treated as a hazard as well as an asset.
+
+**Isolation until preregistered frontiers.** Every target world is `ISOLATED` from creation. At a
+declared frontier `Phi_k` the target is **forked**, and each child receives exactly one crossing
+condition -- so every arm faces a byte-identical target state and every fork is a live F10 test:
+
+```
+Phi_k -> fork -> { import NOTHING | import A-selected | import C-selected
+               | import BOTH | import SHUFFLED-equivalent }
+```
+
+**Arrival order is captured** (`import_event_seq` per child). Two arrival orders of the same two
+imports are run as a declared pair. **If arrival order changes the scientific conclusion, that is a
+finding to classify, not a nuisance to average over**: expected semantics (later evidence updates a
+posterior) vs. a Foundry defect (order-dependent availability) are distinguished by whether
+`knowledge_set` at the decision seq is identical across the two orders. Identical frontier +
+different conclusion = semantics. Different frontier = defect (C-6).
+
+**Cross-seat imports are an OPTIONAL enrichment arm (`D15B-X`), never load-bearing.** They require a
+registered cross-client topology group, A's or C's cooperation, their source policy emitting the
+kind, and NATIVE origin. That is a dependency on another seat's schedule, so `D15B-X` has a declared
+fallback: if unavailable at the frontier, the arm is **skipped and recorded as skipped**, and no
+primary endpoint depends on it.
+
+**Contention is a real cost, and it is Daedalus's own declared limitation.** GEN-2.1 opens a
+per-request `Foundry` with a write-lock schema check, serialising requests; the packet says the
+write lock is contended under a heavy concurrent campaign. A's D15-A and Topology-2 (180 worlds)
+plus C plus D15-B on one host will contend. **Mitigation:** D15-B declares a world budget before
+execution, runs its attack matrix in an idle window or a private instance per Daedalus's 16.3
+advice, and records wall-clock and error rates per phase. Throughput is not correctness -- but a
+timeout mid-crossing is an availability event with a seq, so contention can *change the ledger*.
+That is why K5 and the idempotency discipline (11 X-13) are continuous, not sampled.
+
+---
+
+## 10. POWER ANALYSIS
+
+**Procedure frozen now; numbers from the pilot.** No effect size is invented before data.
+
+**Unit and pairing.** The unit is a `(target instance x regime)` cell. Every arm faces the **same**
+target instance via fork-at-frontier, so contrasts are **paired** -- the same device that let A's
+Topology-2 beat isomorphism arguments, and the right one here.
+
+**Primary statistic.** Balanced accuracy on the frozen query set; paired difference vs. S1;
+instance-paired bootstrap CI (10,000 resamples, seed `20260902`), resampling **target instances** as
+the independent unit. Calibration reported as Brier score and a reliability curve; a gain in
+accuracy without a gain in calibration is reported as such and does not count as structural
+transfer.
+
+**Preregistered MDE.**
+```
+TRANSFER_GAIN >= +0.08 balanced accuracy over S1 SHUFFLED_PAIRING,
+with the 95% paired bootstrap CI excluding 0,
+AND a non-negative calibration change (Brier not worse).
+```
+**Rationale for +0.08, stated so it can be argued with:** below ~0.05 the effect is within the range
+that certificate noise and 1-WL collisions can produce; a substrate capability that buys less than
+8 points of balanced accuracy over a volume-matched, prior-matched control does not justify a
+cross-world crossing mechanism and its provenance burden. The number is a judgement, and it is
+frozen before data so it cannot become one afterwards.
+
+**Pilot (declared, non-adjudicating):** 6 instances x 3 regimes x {LOCAL_ONLY, FOREIGN_ABSTRACTIONS,
+S1} to estimate between-instance SD and the exclusion/decline rates. Confirmatory n is then solved
+for 80% power at MDE = 0.08 and **frozen before the confirmatory run**. Pilot numbers may not appear
+in any verdict.
+
+---
+
+## 11. ATTACK MATRIX -- F1 / F2 / F3 / F5 / F10
+
+Concrete attacks, each with a mechanism and a pass criterion. **Not assertions that they fail.**
+Every attack is scripted, run against a **private instance or isolated test worlds**, and recorded
+with its exact request/response and the `X-SFE-Engine-Source-Hash`. `EXPECTED` is my prediction,
+recorded so I can be wrong on the record.
+
+| id | Inv | Attack | Mechanism | PASS = | EXPECTED |
+|---|---|---|---|---|---|
+| **X-01** | F1 | read content without import | `GET .../artifacts/{aid}/content` on a foreign native id | `404`, no existence disclosure | holds |
+| **X-02** | F1 | guessed artifact id | enumerate/derive plausible ids | `404` | holds |
+| **X-03** | F1 | read by **origin hash** | supply `blob_hash`/`source_hash` in place of / alongside the id | `404`; hash is not an access path | holds |
+| **X-04** | F1/H6 | **A->B then C gets bytes through B** | same-client transitive re-export | either refused, **or** permitted-and-provenance-preserving with native ancestor recoverable by `lineage` | **UNKNOWN -- the sharpest open question.** Cross-client requires NATIVE origin; same-client is not documented to |
+| **X-05** | F2 | ontology confusion as evasion | relabel a raw trajectory `meta.info_kind="success"` to ride `SUCCESSES_ONLY`; relabel a failure as `hypothesis` | crossing is governed by the *declared* kind and the ledger records it, so mislabelling is visible in audit | **engine will permit it** -- kind is producer-asserted (L7 class). If so this is a *documented* limit, not a defect, and my 8 audit is the only defence |
+| **X-06** | F2 | forbidden `info_kind` | non-ontology kind at create and at import | `422` | holds (G12) |
+| **X-07** | F10 | future info via seq cutoffs | request `knowledge_set` at seq boundaries around an import; NULL/omitted seq | fail-closed; no future identity | holds (fixed in 2.1) |
+| **X-08** | F10 | **reads establish availability** | `GET content`, then re-take the frontier; does the *read* create availability? | frontier unchanged by a read | holds -- F10 says availability is native creation + legal import only. **Worth firing anyway: a read event that entered the frontier would make every audit self-confirming** |
+| **X-09** | F10 | post-fork inheritance | after forking, create an artifact in the parent; check the child's frontier at and after fork seq | child never sees post-fork parent info | holds |
+| **X-10** | F1 | stale local artifact rows | create, then attempt to present a local row as available before its availability event | `first_available_seq` governs | holds |
+| **X-11** | F1/F5 | exact-copy / global id | create byte-identical artifact in two worlds; observe global id behaviour | ids/provenance remain unambiguous | **UNKNOWN** -- interacts with X-12 |
+| **X-12** | F1 | **artifact-id squat** (documented LOW, unfixed) | pre-claim the global PK with victim's `world_id`+blob+kind+meta; victim's identical create is `INSERT OR IGNORE`d | reproduce **in isolated test data only**; confirm victim self-denial and confirm **no** content/existence leak | **reproduces** -- Daedalus documents it. Value is the exact severity envelope in a *crossing* campaign, and whether it can silently drop a science artifact |
+| **X-13** | F5 | idempotency abuse | same key + different body; same key across worlds; retry storm mid-crossing | `409` on conflict; object count invariant | holds |
+| **X-14** | F3 | re-adjudication laundering | unbound observation; second prediction on same hypothesis; FALSIFIED->SURVIVED | refused; falsification-monotonic | holds (both criticals fixed) -- **but D15-B re-fires them because A's requalification of GEN-2 left exactly this ambiguity open as L1/R5** |
+| **X-15** | F3 | imported != replication | can an *imported* observation be presented as a local replication, or vice versa? | the two are distinguishable in the ledger | **EXPECTED DEFICIENCY -- see 12 below** |
+
+**X-15 is 12 of the brief, and it deserves its own paragraph.** `evidence_role  in  {ORIGINAL,
+REPLICATION}` is a *within-world* typing of observations. `origin  in  {NATIVE, IMPORTED}` is a
+*provenance* typing of artifacts. There is no type that says *"this claim is supported by imported
+evidence rather than by local experimental replication."* An imported observation is **not** a local
+replication, and the substrate does not currently force that distinction. If X-15 confirms this,
+the finding is filed as **B-DUP-2** (GEN-2.2 candidate: an `evidence_provenance` dimension on
+adjudicating observations) and D15-B **operationalises the distinction in its own ledger** while
+declaring that the engine does not enforce it.
+
+---
+
+## 12. CONDITIONS THAT FORCE A CONTAMINATED VERDICT
+
+Any one of these **stops the affected scientific claim**, produces a **minimal reproducer**, and --
+per brief 16 -- is a more valuable result than completing D15-B. None of them is a reason to
+continue quietly.
+
+| id | Condition | Scope of the stop |
+|---|---|---|
+| **C-1** | Legal knowledge != KnowledgeSet: the analysis cannot be reproduced from ledger + ancestry + legal imports alone (K1 fails) | **whole campaign.** This is F10's contract and the brief's central reproducibility claim |
+| **C-2** | Available != retrievable: an artifact in the frontier cannot be read, or a readable artifact is absent from the frontier | affected arms |
+| **C-3** | A certificate violates the 5 closed schema, or K6 trips on a science arm | that arm and every arm downstream of it |
+| **C-4** | A certificate cannot be reconstructed from its source world's own ledger (Omega reached a world other than through its experience) | whole campaign -- this is oracle leakage |
+| **C-5** | Duplicate evidence cannot be resolved to a native ancestor from the ledger | every confidence/calibration claim; accuracy claims may survive, stated separately |
+| **C-6** | Concurrent arrival order changes the conclusion **with an identical frontier at the decision seq** -> semantics; **with a differing frontier** -> Foundry defect | the parallel arms (9) |
+| **C-7** | `engine_source_hash` changes mid-campaign (K5), as it already did to A's Topology-2 | every cell spanning the discontinuity is quarantined; classify, requalify, re-freeze |
+| **C-8** | An artifact appears before its availability event, or a read establishes availability (X-08) | whole campaign -- every "prospective" decision becomes future-informed |
+| **C-9** | Idempotent retry duplicates information, or a stale idempotent return silently serves a different body | affected arms; config round-trip verification on every idempotent create |
+| **C-10** | ORACLE_LEAK does **not** trip the audit | **whole campaign.** The leak audit is a positive control; an audit that cannot detect planted leakage cannot certify its absence anywhere |
+| **C-11** | GEN-2.1 fails A's Phase-0 requalification | no scientific claim issues; verdict `CONTAMINATED_UNQUALIFIED_SUBSTRATE`; the attack matrix still runs and still reports |
+| **C-12** | Diet purity is violated: an artifact of the wrong kind is found in an arm's frontier by 8 audit | that arm. **Expected failure mode given B-F2-1/B-F2-2** -- the engine cannot enforce it, so the audit is the only guard |
+
+**And the honest one about myself.** D15-B's headline decomposition subtracts a control I built
+(S1). My Gen-3B campaign closed three days ago on a finding that a *designed-deceptive* landscape
+can defeat a geometry-based ruler while looking identical to a good one. The same risk applies here:
+if S1 is a weak comparator, TRANSFER_GAIN will look larger than it is. S6 (MARGINAL_ONLY) and S4
+(IRRELEVANT_SWAP) exist as independent lower bounds precisely so the primary contrast is not the
+only thing standing between me and a flattering number.
+
+---
+
+## FALSIFIERS FOR H_TRANSFER (brief 15, mapped)
+
+H_TRANSFER fails or narrows if: (1) gains vanish under **regime B** recoordination; (2) **S1**
+reproduces them; (3) **S6** reproduces them; (4) **regime E** transfers equally; (5) gains appear
+only in **ORACLE_LEAK**; (6) `FOREIGN_FAILURES` does not beat a content-matched random summary at
+equal volume; (7) **regime D** fails while A succeeds -- transfer is surface-bound, not structural;
+(8) the naive/provenance-aware gap (7) explains the confidence gain; (9) dosage ( below) shows
+uncontrolled negative transfer; (10) **C-1** -- legal availability cannot be reconstructed.
+
+**Dosage (brief 7):** `{0, 1, 2, 4, 8, 16}` source worlds at fixed per-source volume, and a second
+sweep at fixed **total** volume (to separate "more sources" from "more bytes"). Measured per rung:
+accuracy, calibration, search cost, synthesis cost, negative-transfer rate, entropy reduction of the
+prediction distribution, and dependence on the marginal prior (S6 residual). The shape --
+**monotonic / saturating / interfering / collapsing** -- is reported as measured. More experience is
+not assumed to be better, and regime F exists to make collapse detectable.
+
+---
+
+## STOP
+
+Per brief 17 this packet halts here for review. **Nothing confirmatory has run.** No science world
+has been created, no artifact has crossed, no prediction has been registered. The only live contact
+with the Engine was one unauthenticated read-only `GET /v2/version`, recorded in 0.
+
+**GEN-2.1 remains unqualified.** On approval the sequence is: A's Phase-0 requalification -> D15-B
+attack matrix 11 (private instance / isolated worlds) -> generator census and base-rate verification
+-> pilot -> power freeze -> confirmatory freeze -> campaign.
+
+D15-B is successful even if H_TRANSFER dies. It is **not** successful if a crossing can be laundered
+and the campaign reports a scientific number anyway.
+
+-- Harmonia B, M2, 2026-09-02
