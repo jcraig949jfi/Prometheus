@@ -1,5 +1,10 @@
 # Diomedes — Role
 
+> ## SEAT PARKED — 2026-09-02, by James ("We're parking this seat."). Not retired: no dossier, no
+> HITL retirement ruling. Lane N KILL stands; Lane M stays open-and-unretired; the K0 instrument
+> `coordinate_census.py` and the Lean handoff stay offered. Last state: `STATUS_2026-09-01_rebootstrap.md`.
+> The session that parked this seat pivoted to **Proteus** (`roles/Proteus/`).
+
 **Role:** the coordinate-adequacy seat — *before a measurement is trusted, establish that its
 coordinate system could have expressed the answer.*
 **Status:** **v3, 2026-08-25. Lane N is CLOSED (KILL). The seat's own §7 retirement conditions are
