@@ -21,10 +21,18 @@ from sfe.errors import (AccessDenied, BudgetExhausted, ConflictError,
 from sfe.ids import content_hash, new_id
 from sfe.store import Store, now
 
-# information kinds the sharing machinery understands; an artifact's meta may
-# carry arbitrary freeform user metadata, but info_kind is CONTROL configuration
-# and must come from this closed vocabulary (DFX-4 discipline).
-INFO_KINDS = frozenset({"artifact", "failure", "hypothesis", "observation"})
+# The closed info_kind ontology the sharing machinery understands. An artifact's
+# meta may carry arbitrary freeform user metadata, but info_kind is CONTROL
+# configuration and must come from this vocabulary (DFX-4 discipline).
+#
+# F2 (GEN-2.1): "success" is a FIRST-CLASS kind, not a synonym for "artifact".
+# Before GEN-2.1 the SUCCESSES_ONLY policy pointed at "artifact", so a policy
+# named for successes actually shared every artifact (incoherent -- an artifact
+# can be produced for a failed line too). Now a producer that wants to share a
+# validated result tags it info_kind="success" explicitly; SUCCESSES_ONLY shares
+# exactly those. Every sharing policy maps onto THIS ontology (asserted below).
+INFO_KINDS = frozenset({"artifact", "failure", "hypothesis", "observation",
+                        "success"})
 
 # evidence provenance classes (H4): what stands behind an observation.
 EVIDENCE_CLASSES = ("ENGINE_WORK_RESULT", "CLIENT_ASSERTED")
@@ -44,12 +52,19 @@ SHARING_POLICIES = {
     "FAILURES_ONLY": frozenset({"failure"}),
     "HYPOTHESES_ONLY": frozenset({"hypothesis"}),
     "FAILURES_AND_HYPOTHESES": frozenset({"failure", "hypothesis"}),
-    "SUCCESSES_ONLY": frozenset({"artifact"}),
+    "SUCCESSES_ONLY": frozenset({"success"}),         # F2: a first-class kind now
     "FULLY_SHARED": frozenset({"failure", "hypothesis", "artifact",
-                              "observation"}),
+                              "observation", "success"}),
     "EXPLICIT_IMPORT_ONLY": frozenset({"failure", "hypothesis", "artifact",
-                                       "observation"}),
+                                       "observation", "success"}),
 }
+
+# F2 coherence gate (G12): every declared policy must map ONTO the closed
+# ontology. This fails at import time if a future edit reintroduces drift.
+for _pol, _kinds in SHARING_POLICIES.items():
+    assert _kinds <= INFO_KINDS, (
+        f"sharing policy {_pol} references kinds outside the info_kind "
+        f"ontology: {sorted(_kinds - INFO_KINDS)}")
 
 DEFAULT_LEASE_S = 30.0
 
@@ -137,6 +152,39 @@ class Foundry:
             events.append_foundry(cx, "TOPOLOGY_GROUP_CREATED", actor=client_id,
                                   scope_kind="group", scope_id=gid, payload={})
         return gid
+
+    # ================= idempotency (F5) =================================
+    def _idem_check(self, cx, client_id, key, request_hash):
+        """Inside the caller's write txn: if this (client, key) already completed
+        with the SAME semantic request, return its stored response for replay; a
+        DIFFERENT request under the same key is a conflict; a first use returns
+        None. The caller MUST call _idem_record before the txn commits, so key +
+        response + epistemic object commit ATOMICALLY -- exactly-once holds even
+        across a process restart mid-retry (either all committed or none did).
+        Scope is (client_id, key); request_hash binds route+world+body, so a key
+        reused for another world is a conflict, never a cross-world dedup."""
+        if key is None:
+            return None
+        row = cx.execute(
+            "SELECT request_hash, response FROM idempotency_keys WHERE "
+            "client_id=? AND idem_key=?", (client_id, key)).fetchone()
+        if row is None:
+            return None
+        if row["request_hash"] != request_hash:
+            raise ConflictError(
+                "idempotency key reused for a materially different request",
+                idem_key=key)
+        return json.loads(row["response"])
+
+    def _idem_record(self, cx, client_id, key, world_id, route, request_hash,
+                     response):
+        if key is None:
+            return
+        cx.execute(
+            "INSERT INTO idempotency_keys(client_id,idem_key,world_id,route,"
+            "request_hash,response,created_ts) VALUES(?,?,?,?,?,?,?)",
+            (client_id, key, world_id, route, request_hash,
+             json.dumps(response), now()))
 
     # ================= world lifecycle ==================================
     def create_world(self, session_id: str, name: str, *,
@@ -588,10 +636,15 @@ class Foundry:
     # ================= research objects ==================================
     def propose_hypothesis(self, world_id: str, statement: str, *,
                            client_id: Optional[str] = None,
-                           parents: Optional[list] = None) -> str:
+                           parents: Optional[list] = None,
+                           idem_key: Optional[str] = None,
+                           request_hash: Optional[str] = None) -> str:
         hid = new_id("hypothesis")
         with self.store.write() as cx:
             r = self._authorize(cx, world_id, client_id)
+            replay = self._idem_check(cx, r["client_id"], idem_key, request_hash)
+            if replay is not None:
+                return replay
             ev = events.append(cx, world_id, "HYPOTHESIS_PROPOSED",
                                actor=r["client_id"], refs={"hyp_id": hid},
                                payload={"statement": statement})
@@ -602,16 +655,23 @@ class Foundry:
             for p in (parents or []):
                 self._edge(cx, world_id, r["client_id"], p["kind"], p["id"],
                            "hypothesis", hid, "DERIVES_FROM")
+            self._idem_record(cx, r["client_id"], idem_key, world_id,
+                              "hypotheses", request_hash, hid)
         return hid
 
     def register_prediction(self, world_id: str, hyp_id: str, content: dict, *,
-                            client_id: Optional[str] = None) -> str:
+                            client_id: Optional[str] = None,
+                            idem_key: Optional[str] = None,
+                            request_hash: Optional[str] = None) -> str:
         """Register a SEALED prediction. Its content hash and its event_seq are
         frozen now, so a prediction cannot be edited post-hoc and its temporal
         position is authoritative (I6)."""
         pid = new_id("prediction")
         with self.store.write() as cx:
             r = self._authorize(cx, world_id, client_id)
+            replay = self._idem_check(cx, r["client_id"], idem_key, request_hash)
+            if replay is not None:
+                return replay
             if cx.execute("SELECT 1 FROM hypotheses WHERE hyp_id=? AND "
                           "world_id=?", (hyp_id, world_id)).fetchone() is None:
                 raise NotFound("hypothesis not in this world", hyp_id=hyp_id)
@@ -627,6 +687,8 @@ class Foundry:
                         ev["event_seq"]))
             cx.execute("UPDATE hypotheses SET state='PREDICTED' WHERE hyp_id=? "
                        "AND state='PROPOSED'", (hyp_id,))
+            self._idem_record(cx, r["client_id"], idem_key, world_id,
+                              "predictions", request_hash, pid)
         return pid
 
     def create_experiment(self, world_id: str, spec: dict, *,
@@ -635,13 +697,20 @@ class Foundry:
                           pred_id: Optional[str] = None,
                           commit: bool = True,
                           enqueue: bool = False, kind: str = "experiment",
-                          priority: int = 100) -> dict:
+                          priority: int = 100,
+                          idem_key: Optional[str] = None,
+                          request_hash: Optional[str] = None) -> dict:
         """REGISTER an experiment and (by default) COMMIT it atomically in the
         same transaction. Registration alone (commit=False) is PLANNING: the
         experiment exists but is non-executable, consumes no budget, and its
         prospective-prediction window is still open. `enqueue` requires commit
         -- nothing is ever released for execution without crossing the commit
-        boundary (see commit_experiment for the governing rule)."""
+        boundary (see commit_experiment for the governing rule).
+
+        F5: an idem_key makes a SUCCESSFUL create+commit retry-safe (no
+        duplicate experiment, no second budget debit). A budget-BLOCKED create
+        is not cached (a retry re-registers), which is harmless -- both are
+        blocked and neither debits."""
         if enqueue and not commit:
             raise ValidationError(
                 "enqueue requires commit: an experiment cannot be released for "
@@ -651,6 +720,9 @@ class Foundry:
         blocked_info = None
         with self.store.write() as cx:
             r = self._authorize(cx, world_id, client_id)
+            replay = self._idem_check(cx, r["client_id"], idem_key, request_hash)
+            if replay is not None:
+                return replay
             if pred_id is not None and cx.execute(
                     "SELECT 1 FROM predictions WHERE pred_id=? AND world_id=?",
                     (pred_id, world_id)).fetchone() is None:
@@ -672,6 +744,9 @@ class Foundry:
                     cx, r, eid, enqueue=enqueue, kind=kind, priority=priority)
                 if blocked_info is None:
                     out.update(commit_out)
+            if blocked_info is None:      # record for retry-safety on success
+                self._idem_record(cx, r["client_id"], idem_key, world_id,
+                                  "experiments", request_hash, out)
         if blocked_info is not None:
             # COMMIT-THEN-RAISE: the registration and the durable exhaustion
             # record persist; the experiment remains REGISTERED, non-executable.
@@ -764,8 +839,19 @@ class Foundry:
                            outcome: str, *, client_id: Optional[str] = None,
                            pred_id: Optional[str] = None,
                            work_id: Optional[str] = None,
-                           retrospective: bool = False) -> str:
+                           retrospective: bool = False,
+                           replication: bool = False,
+                           idem_key: Optional[str] = None,
+                           request_hash: Optional[str] = None) -> str:
         """Record an observation on a COMMITTED experiment.
+
+        DUPLICATE BINDING (F3): the FIRST observation bound to a prediction is
+        the ORIGINAL adjudication relation and fixes the prediction's epistemic
+        status. A later observation bound to the SAME prediction is rejected
+        unless it is an EXPLICIT replication=True, in which case it is recorded
+        as evidence_role=REPLICATION and can NEVER improve (re-adjudicate) the
+        original -- a replication is a retest, not a rewrite. Replication is
+        typed, never inferred from a duplicate.
 
         PROSPECTIVE RULE (DFX-1): a bound prediction is prospective iff it was
         registered BEFORE the experiment's commit (pred.created_seq <
@@ -787,6 +873,9 @@ class Foundry:
         oid = new_id("observation")
         with self.store.write() as cx:
             r = self._authorize(cx, world_id, client_id)
+            replay = self._idem_check(cx, r["client_id"], idem_key, request_hash)
+            if replay is not None:
+                return replay
             ex = cx.execute("SELECT * FROM experiments WHERE exp_id=? AND "
                             "world_id=?", (exp_id, world_id)).fetchone()
             if ex is None:
@@ -833,6 +922,28 @@ class Foundry:
                         "prospective", pred_id=pred_id,
                         prediction_seq=p["created_seq"],
                         committed_seq=ex["committed_seq"])
+            # F3: the FIRST outcome-bearing observation of an experiment is its
+            # ORIGINAL result; likewise the first binding of a prediction. A
+            # REPEAT -- another observation of the SAME experiment (with OR
+            # without a prediction), or another binding of the SAME prediction --
+            # must be an explicit replication (typed, never inferred) and NEVER
+            # re-adjudicates. Keying on the experiment (not only the prediction)
+            # closes the pred_id=None and cross-prediction re-adjudication paths.
+            prior_exp = cx.execute(
+                "SELECT COUNT(*) n FROM observations WHERE world_id=? AND "
+                "exp_id=?", (world_id, exp_id)).fetchone()["n"]
+            prior_pred = 0 if pred_id is None else cx.execute(
+                "SELECT COUNT(*) n FROM observations WHERE world_id=? AND "
+                "pred_id=?", (world_id, pred_id)).fetchone()["n"]
+            is_repeat = prior_exp > 0 or prior_pred > 0
+            if is_repeat and not replication:
+                raise ConflictError(
+                    "this experiment (or prediction) already has an ORIGINAL "
+                    "observation; a later observation must set replication=true "
+                    "and is a retest that can never re-adjudicate the original",
+                    exp_id=exp_id, pred_id=pred_id)
+            evidence_role = "REPLICATION" if is_repeat else "ORIGINAL"
+            if pred_id is not None:
                 cx.execute("UPDATE predictions SET state='OBSERVED' WHERE "
                            "pred_id=?", (pred_id,))
             ev = events.append(cx, world_id, "OBSERVATION_RECORDED",
@@ -841,30 +952,46 @@ class Foundry:
                                      "pred_id": pred_id, **ev_work_refs},
                                payload={"outcome": outcome,
                                         "prospective": prospective,
-                                        "evidence_class": evidence_class})
+                                        "evidence_class": evidence_class,
+                                        "evidence_role": evidence_role})
             cx.execute("INSERT INTO observations(obs_id,world_id,exp_id,pred_id,"
                        "content,outcome,pred_prospective,evidence_class,"
-                       "work_id,created_ts,created_seq) "
-                       "VALUES(?,?,?,?,?,?,?,?,?,?,?)",
+                       "evidence_role,work_id,created_ts,created_seq) "
+                       "VALUES(?,?,?,?,?,?,?,?,?,?,?,?)",
                        (oid, world_id, exp_id, pred_id, json.dumps(content),
-                        outcome, prospective, evidence_class, work_id, now(),
-                        ev["event_seq"]))
+                        outcome, prospective, evidence_class, evidence_role,
+                        work_id, now(), ev["event_seq"]))
             cx.execute("UPDATE experiments SET state='OBSERVED' WHERE exp_id=?",
                        (exp_id,))
-            if ex["hyp_id"]:
-                st = {"FALSIFIED": "FALSIFIED", "SURVIVED": "SURVIVED"}.get(
-                    outcome)
-                if st:
+            # ADJUDICATION happens only on the ORIGINAL observation, and
+            # FALSIFICATION IS MONOTONIC: a SURVIVED observation can NEVER
+            # un-falsify a hypothesis, and CLAIM_* is emitted ONLY on a real
+            # state transition (no superseding / duplicate claims). This makes
+            # adjudication once-and-fixed against laundering, while still letting
+            # a later independent experiment legitimately FALSIFY a hypothesis
+            # that earlier survived (survived -> falsified, never the reverse).
+            if ex["hyp_id"] and evidence_role == "ORIGINAL":
+                cur = cx.execute("SELECT state FROM hypotheses WHERE hyp_id=?",
+                                 (ex["hyp_id"],)).fetchone()["state"]
+                new = None
+                if outcome == "FALSIFIED" and cur != "FALSIFIED":
+                    new = "FALSIFIED"
+                elif outcome == "SURVIVED" and cur not in ("SURVIVED",
+                                                           "FALSIFIED"):
+                    new = "SURVIVED"
+                if new is not None:
                     cx.execute("UPDATE hypotheses SET state=? WHERE hyp_id=?",
-                               (st, ex["hyp_id"]))
+                               (new, ex["hyp_id"]))
                     # provenance SURVIVES adjudication (H4): the claim event
                     # carries the evidence class and prospective status.
                     events.append(cx, world_id,
-                                  "CLAIM_FALSIFIED" if outcome == "FALSIFIED"
+                                  "CLAIM_FALSIFIED" if new == "FALSIFIED"
                                   else "CLAIM_SURVIVED", actor=r["client_id"],
                                   refs={"hyp_id": ex["hyp_id"], "obs_id": oid},
                                   payload={"prospective": prospective,
                                            "evidence_class": evidence_class})
+            self._idem_record(cx, r["client_id"], idem_key, world_id,
+                              "observations", request_hash, oid)
         return oid
 
     def record_failure(self, world_id: str, *, failure_type: str,
@@ -877,10 +1004,15 @@ class Foundry:
                        observed: Any = None, measurement_id: Optional[str] = None,
                        artifact_refs: Optional[list] = None,
                        reproducibility: str = "UNKNOWN",
-                       extensions: Optional[dict] = None) -> str:
+                       extensions: Optional[dict] = None,
+                       idem_key: Optional[str] = None,
+                       request_hash: Optional[str] = None) -> str:
         fid = new_id("failure")
         with self.store.write() as cx:
             r = self._authorize(cx, world_id, client_id)
+            replay = self._idem_check(cx, r["client_id"], idem_key, request_hash)
+            if replay is not None:
+                return replay
             ev = events.append(cx, world_id, "FAILURE_RECORDED",
                                actor=r["client_id"], refs={"failure_id": fid,
                                "experiment_id": experiment_id},
@@ -896,6 +1028,8 @@ class Foundry:
                  json.dumps(observed), falsifier, violated, measurement_id,
                  json.dumps(artifact_refs or []), reproducibility,
                  json.dumps(extensions or {}), now(), ev["event_seq"]))
+            self._idem_record(cx, r["client_id"], idem_key, world_id,
+                              "failures", request_hash, fid)
         return fid
 
     def consume_failure(self, world_id: str, failure_id: str, dst_kind: str,
@@ -939,7 +1073,9 @@ class Foundry:
     # ================= artifacts + import (provenance) ==================
     def create_artifact(self, world_id: str, kind: str, data: bytes, *,
                         client_id: Optional[str] = None,
-                        meta: Optional[dict] = None) -> dict:
+                        meta: Optional[dict] = None,
+                        idem_key: Optional[str] = None,
+                        request_hash: Optional[str] = None) -> dict:
         # meta is freeform USER metadata BY DESIGN -- except info_kind, which is
         # CONTROL configuration for the sharing machinery and must come from the
         # closed vocabulary (DFX-4: scientific config fails closed recursively).
@@ -949,6 +1085,9 @@ class Foundry:
                                   allowed=sorted(INFO_KINDS))
         with self.store.write() as cx:
             r = self._authorize(cx, world_id, client_id)
+            replay = self._idem_check(cx, r["client_id"], idem_key, request_hash)
+            if replay is not None:
+                return replay
             blob = self.store.put_blob(data if isinstance(data, bytes)
                                        else str(data).encode())
             aid = content_hash({"world": world_id, "kind": kind, "blob": blob,
@@ -962,7 +1101,10 @@ class Foundry:
                 "VALUES(?,?,?,?,?, 'NATIVE',?,?)",
                 (aid, world_id, kind, blob, json.dumps(meta or {}), now(),
                  ev["event_seq"]))
-            return {"artifact_id": aid, "blob_hash": blob, "origin": "NATIVE"}
+            out = {"artifact_id": aid, "blob_hash": blob, "origin": "NATIVE"}
+            self._idem_record(cx, r["client_id"], idem_key, world_id,
+                              "artifacts", request_hash, out)
+            return out
 
     def get_artifact(self, world_id: str, artifact_id: str, *,
                      client_id: Optional[str] = None) -> dict:
@@ -973,6 +1115,131 @@ class Foundry:
         if r is None:
             raise NotFound("artifact not in this world", artifact_id=artifact_id)
         return _artifact_dict(r)
+
+    def get_artifact_content(self, world_id: str, artifact_id: str, *,
+                             client_id: Optional[str] = None) -> dict:
+        """F1 -- policy-gated CONTENT retrieval. Succeeds iff the artifact is
+        epistemically VISIBLE to the requesting world: a local artifacts row for
+        (world_id, artifact_id) exists AND the caller owns the world. Visibility
+        is therefore native-to-this-world OR legally-imported-into-this-world;
+        possession of an artifact id, knowledge of an origin hash, or access to
+        some OTHER world confers nothing -- the lookup is scoped to the
+        requesting world's own rows behind _authorize, and a miss is deny-by-
+        default (NotFound, disclosing nothing). For an imported artifact the
+        bytes ARE the source's (blob_hash was copied at import) and get_blob
+        re-verifies the content hash on read, so returned content provably hashes
+        to the recorded source identity. Retrieval never mutates the ledger (no
+        availability transition occurs on a read; availability was fixed at
+        native creation or import), consistent with GEN-2 read semantics."""
+        cx = self.store.read()
+        self._authorize(cx, world_id, client_id)   # 403 if not the caller's world
+        r = cx.execute("SELECT * FROM artifacts WHERE world_id=? AND "
+                       "artifact_id=?", (world_id, artifact_id)).fetchone()
+        if r is None:
+            raise NotFound("artifact not visible to this world",
+                           artifact_id=artifact_id)
+        content = self.store.get_blob(r["blob_hash"])   # verifies hash on read
+        basis = {"visibility": "NATIVE"}
+        if r["origin"] == "IMPORTED":
+            imp = cx.execute("SELECT payload FROM events WHERE event_seq=? AND "
+                             "world_id=?",
+                             (r["import_seq"], world_id)).fetchone()
+            basis = {"visibility": "IMPORTED",
+                     **(json.loads(imp["payload"]) if imp else {})}
+        import base64
+        return {"world_id": world_id, "artifact_id": artifact_id,
+                "origin": r["origin"], "source_world": r["source_world"],
+                "source_artifact": r["source_artifact"],
+                "source_hash": r["blob_hash"], "blob_hash": r["blob_hash"],
+                "import_seq": r["import_seq"], "kind": r["kind"],
+                "meta": json.loads(r["meta"]), "visibility_basis": basis,
+                "content_b64": base64.b64encode(content).decode()}
+
+    def knowledge_set(self, world_id: str, *, seq: Optional[int] = None,
+                      client_id: Optional[str] = None) -> dict:
+        """F10 -- the information-availability frontier, RECONSTRUCTED from the
+        ledger (no separate state). Returns the artifact/information identities
+        that were LEGALLY AVAILABLE to `world_id` at or before event `seq`
+        (default: now). Availability is established by exactly two governed
+        transitions -- native creation (ARTIFACT_CREATED) and legal import
+        (ARTIFACT_IMPORTED) -- both already recorded with their event_seq, so
+        `first_available_seq` is authoritative and monotonic. Fork-inherited
+        artifacts become available at the child's WORLD_FORKED seq.
+
+        This answers only 'could world W legally know X by seq N'. It does NOT
+        assert the client READ X, USED X, or that X was causally decisive --
+        those distinctions are preserved and out of scope.
+
+        TRANSITIVELY correct across multi-level forks: a grandchild inherits its
+        grandparent's frontier (reconstructed recursively from the parent's
+        frontier AT the fork point), not just the immediate WORLD_FORKED list.
+        Fail-CLOSED: an availability seq that is unknown (NULL) is EXCLUDED under
+        a cutoff, never surfaced as if it existed early."""
+        cx = self.store.read()
+        self._authorize(cx, world_id, client_id)
+        items = self._reconstruct_frontier(cx, world_id, seq)
+        items.sort(key=lambda x: (x["first_available_seq"] is None,
+                                  x["first_available_seq"] or 0))
+        head = cx.execute("SELECT MAX(event_seq) m FROM events WHERE "
+                          "world_id=?", (world_id,)).fetchone()["m"]
+        return {"world_id": world_id, "as_of_seq": seq,
+                "world_head_seq": head,
+                "seq_axis": "global event_seq (same ordering as created_seq / "
+                            "committed_seq); omit as_of_seq for 'now'",
+                "available_count": len(items), "available": items,
+                "note": "availability != read != used != causally responsible"}
+
+    def _reconstruct_frontier(self, cx, world_id, cutoff):
+        """Availability frontier of `world_id` at/<= global event_seq `cutoff`
+        (None = now), reconstructed from the ledger and TRANSITIVE across forks.
+        Fail-closed: unknown availability is excluded under a cutoff."""
+        items, seen = [], set()
+        for r in cx.execute("SELECT * FROM artifacts WHERE world_id=? ORDER BY "
+                            "created_seq", (world_id,)).fetchall():
+            avail = r["import_seq"] if r["origin"] == "IMPORTED" \
+                else r["created_seq"]
+            if avail is None:
+                if cutoff is not None:            # fail-closed on unknown seq
+                    continue
+            elif cutoff is not None and avail > cutoff:
+                continue
+            items.append({
+                "artifact_id": r["artifact_id"], "origin": r["origin"],
+                "source_world": r["source_world"],
+                "source_artifact": r["source_artifact"],
+                "content_hash": r["blob_hash"], "first_available_seq": avail,
+                "basis": "native_creation" if r["origin"] == "NATIVE"
+                         else "legal_import"})
+            seen.add(r["blob_hash"])
+        # fork inheritance: everything available to the PARENT at the fork point
+        # becomes available to this world at ITS fork seq -- recursively, so a
+        # grandchild inherits the grandparent's frontier (not just the immediate
+        # WORLD_FORKED list).
+        w = cx.execute("SELECT parent_world_id, fork_point FROM worlds WHERE "
+                       "world_id=?", (world_id,)).fetchone()
+        if w is not None and w["parent_world_id"] is not None:
+            fk = cx.execute("SELECT event_seq FROM events WHERE world_id=? AND "
+                            "event_type='WORLD_FORKED'", (world_id,)).fetchone()
+            fork_seq = fk["event_seq"] if fk else None
+            if fork_seq is not None and (cutoff is None or fork_seq <= cutoff):
+                pcut = cx.execute(
+                    "SELECT event_seq FROM events WHERE world_id=? AND "
+                    "world_index=?",
+                    (w["parent_world_id"], int(w["fork_point"]))).fetchone()
+                for it in self._reconstruct_frontier(
+                        cx, w["parent_world_id"],
+                        pcut["event_seq"] if pcut else None):
+                    if it["content_hash"] in seen:
+                        continue
+                    seen.add(it["content_hash"])
+                    items.append({
+                        "artifact_id": None, "origin": "INHERITED",
+                        "source_world": w["parent_world_id"],
+                        "source_artifact": it.get("artifact_id"),
+                        "content_hash": it["content_hash"],
+                        "first_available_seq": fork_seq,
+                        "basis": "fork_inheritance"})
+        return items
 
     def _may_cross(self, dst_row, src_row, info_kind: str, *,
                    same_client: bool) -> bool:
@@ -1049,11 +1316,12 @@ class Foundry:
                     "allowed; import from the origin world (redistribution "
                     "requires the original owner's own share)",
                     dst_world=dst_world, src_world=src_world)
-            # The information KIND (failure / hypothesis / artifact / ...) the
-            # artifact represents governs whether policy lets it cross; a
-            # "success" carries kind 'artifact', a shared failure carries
-            # 'failure'. Re-check with the specific kind (the earlier check used
-            # the generic 'artifact' as a fast gate).
+            # The information KIND the artifact represents governs whether policy
+            # lets it cross. F2: kinds are a closed ontology
+            # {artifact, failure, hypothesis, observation, success}; "success" is
+            # FIRST-CLASS (not a synonym for "artifact"), so a producer that
+            # wants SUCCESSES_ONLY sharing tags meta.info_kind="success". Read the
+            # specific kind (default "artifact" when meta declares none).
             info_kind = json.loads(srow["meta"]).get("info_kind", "artifact")
             if not self._may_cross(dst, src, info_kind, same_client=same_client):
                 raise IsolationViolation(
@@ -1069,6 +1337,13 @@ class Foundry:
                                      "source_world": src_world,
                                      "source_artifact": src_artifact_id,
                                      "source_hash": srow["blob_hash"]},
+                               # policy basis recorded so visibility is auditable
+                               # and reconstructable (F1 provenance, F10 basis)
+                               payload={"info_kind": info_kind,
+                                        "same_client": same_client,
+                                        "dst_policy": dst["sharing_policy"],
+                                        "src_policy": src["sharing_policy"],
+                                        "topology_group": dst["topology_group"]},
                                artifacts=[srow["blob_hash"]])
             cx.execute(
                 "INSERT OR IGNORE INTO artifacts(artifact_id,world_id,kind,"

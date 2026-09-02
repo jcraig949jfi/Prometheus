@@ -291,7 +291,7 @@ def test_t10_artifact_import_provenance(foundry):
                                topology_group="grp")["world_id"]
     foundry.start_world(src, ca); foundry.start_world(dst, ca)
     art = foundry.create_artifact(src, "result", b"discovered-here",
-                                  client_id=ca)
+                                  client_id=ca, meta={"info_kind": "success"})
     assert art["origin"] == "NATIVE"
     imp = foundry.import_artifact(dst, src, art["artifact_id"], client_id=ca)
     assert imp["origin"] == "IMPORTED"

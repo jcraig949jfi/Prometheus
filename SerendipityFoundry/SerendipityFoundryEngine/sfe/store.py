@@ -31,7 +31,7 @@ import time
 from pathlib import Path
 from typing import Any, Iterator, Optional
 
-SCHEMA_VERSION = 2
+SCHEMA_VERSION = 3
 
 # The schema is intentionally explicit and constrained: NOT NULLs, CHECK
 # enumerations on lifecycle columns, and foreign keys, so a bad transition or a
@@ -216,11 +216,18 @@ CREATE TABLE IF NOT EXISTS observations (
     evidence_class TEXT NOT NULL DEFAULT 'CLIENT_ASSERTED'
                  CHECK (evidence_class IN ('ENGINE_WORK_RESULT',
                                            'CLIENT_ASSERTED')),
+    evidence_role TEXT NOT NULL DEFAULT 'ORIGINAL'   -- F3: the FIRST observation
+                 CHECK (evidence_role IN ('ORIGINAL', 'REPLICATION')),
+                                       -- bound to a prediction is ORIGINAL and
+                                       -- fixes its adjudication; a later binding
+                                       -- must be an explicit REPLICATION and can
+                                       -- never improve the original's status.
     work_id      TEXT REFERENCES work_items(work_id),
     created_ts   REAL NOT NULL,
     created_seq  INTEGER NOT NULL
 );
 CREATE INDEX IF NOT EXISTS ix_obs_world ON observations(world_id);
+CREATE INDEX IF NOT EXISTS ix_obs_pred ON observations(world_id, pred_id);
 CREATE INDEX IF NOT EXISTS ix_obs_exp ON observations(exp_id);
 
 CREATE TABLE IF NOT EXISTS failures (
@@ -300,6 +307,24 @@ CREATE TABLE IF NOT EXISTS topology_groups (
     created_ts  REAL NOT NULL
 );
 
+-- F5: request-identity idempotency for epistemic writes. A key is scoped to the
+-- issuing client; request_hash binds the SEMANTIC request (route + world +
+-- canonical body), so the same key with a materially different request is a
+-- conflict, never a silent dedup. The response is stored so a transport retry
+-- replays the SAME logical result. The row is written in the SAME transaction as
+-- the epistemic object, so exactly-once holds across process restart: either the
+-- object and its key committed together, or neither did.
+CREATE TABLE IF NOT EXISTS idempotency_keys (
+    client_id     TEXT NOT NULL REFERENCES clients(client_id),
+    idem_key      TEXT NOT NULL,
+    world_id      TEXT,
+    route         TEXT NOT NULL,
+    request_hash  TEXT NOT NULL,
+    response      TEXT NOT NULL,      -- canonical JSON of the stored result
+    created_ts    REAL NOT NULL,
+    PRIMARY KEY (client_id, idem_key)
+);
+
 CREATE TABLE IF NOT EXISTS checkpoints (
     checkpoint_id TEXT PRIMARY KEY,
     world_id      TEXT NOT NULL REFERENCES worlds(world_id),
@@ -363,15 +388,16 @@ class Store:
             have = int(row["value"])
             if have == SCHEMA_VERSION:
                 return
-            if have == 1:
+            if have > SCHEMA_VERSION:
+                raise RuntimeError(
+                    f"db schema version {have} is NEWER than this engine's "
+                    f"{SCHEMA_VERSION}; refusing to run (would misread state)")
+            if have <= 1:
                 self._migrate_1_to_2(cx)
-                cx.execute("UPDATE meta SET value=? WHERE key='schema_version'",
-                           (str(SCHEMA_VERSION),))
-                return
-            raise RuntimeError(
-                f"db schema version {have} != {SCHEMA_VERSION} and no "
-                f"migration path exists; refusing to run against a "
-                f"mismatched database")
+            if have <= 2:
+                self._migrate_2_to_3(cx)
+            cx.execute("UPDATE meta SET value=? WHERE key='schema_version'",
+                       (str(SCHEMA_VERSION),))
 
     @staticmethod
     def _migrate_1_to_2(cx) -> None:
@@ -403,6 +429,27 @@ class Store:
             cx.execute("ALTER TABLE observations ADD COLUMN work_id TEXT")
         cx.execute("UPDATE worlds SET budget_root=world_id "
                    "WHERE budget_root IS NULL")
+
+    @staticmethod
+    def _migrate_2_to_3(cx) -> None:
+        """v2 -> v3 (GEN-2.1). Additive: observations.evidence_role and the
+        idempotency_keys table. Pre-v3 observations become ORIGINAL -- they were
+        recorded under the old semantics; any historical DUPLICATE prospective
+        bindings are honestly left as legacy (all ORIGINAL), NOT retroactively
+        relabelled REPLICATION (invariant V: old events remain old events)."""
+        have = {r["name"] for r in cx.execute(
+            "PRAGMA table_info(observations)").fetchall()}
+        if "evidence_role" not in have:
+            cx.execute("ALTER TABLE observations ADD COLUMN evidence_role "
+                       "TEXT NOT NULL DEFAULT 'ORIGINAL'")
+        cx.execute(
+            "CREATE TABLE IF NOT EXISTS idempotency_keys ("
+            "client_id TEXT NOT NULL, idem_key TEXT NOT NULL, world_id TEXT, "
+            "route TEXT NOT NULL, request_hash TEXT NOT NULL, "
+            "response TEXT NOT NULL, created_ts REAL NOT NULL, "
+            "PRIMARY KEY (client_id, idem_key))")
+        cx.execute("CREATE INDEX IF NOT EXISTS ix_obs_pred "
+                   "ON observations(world_id, pred_id)")
 
     # -- transactions ------------------------------------------------------
     @contextlib.contextmanager
