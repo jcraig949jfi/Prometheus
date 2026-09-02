@@ -1,0 +1,717 @@
+{
+  "frozen_at": "2026-09-02T07:30:49Z",
+  "purpose": "MEASUREMENT QUALIFICATION GATE -- frozen BEFORE any gold label was inspected",
+  "code": {
+    "taxonomy.py": "5baf0cb3c4f40cd6d0c37e96a57b55d10962a02bf33912fbb5baf8cf8c854454",
+    "domain.py": "3770c9c8243b5dfbdc620d0d82f687f3be1e756030b45a052936bb3b541b9e93",
+    "predicates.py": "4cacd69548d15bda049b1798e3a3a559b70f00f4e22c6abf5d2d6cc2df9e26c3",
+    "schema.py": "c3976650c5e0071985d8e5763976914663b4e3215bcabc20b813ab58535b492b",
+    "store.py": "3ebe961a072e600a244a0985ad1737322a30a990a31e47b0b6f0bf845d1be69f",
+    "sources.py": "8edf0f4dd7b2af43e92f5fe22f059898a04471b71a25a0c80048f3a69a7d1c6d",
+    "cycle.py": "c37ee7ff0cfd644b49b5e50e5defe9a8cd4005f575c51f346cd65fc67d892260",
+    "exp2_corpus.py": "ec7b938a3f7b71a90050550d4d6bd97ab0794d23b933743fa797ab91c6e1bcd4",
+    "exp2_analysis.py": "836fff2b4c8bbfafa3031ffa5616df55ae5eb57e25ac5a01b8f52de9fffb174e",
+    "exp3_predictive.py": "ae1f7329f4268a0c5a3c9d2f0a3b117f96a307389bf08b1e65c87df83094657d",
+    "exp1_tx004.py": "a302a677ca657469de96419b9773caeece5f1aec1fe1ff60852309da117188df",
+    "vocab_audit.py": "9a9bae3040b710d56e6fc8c6cf9e3a500c0c59a60a185ecb121827e9dafece65",
+    "allocator.py": "2f87626cf1aebf8874701602b928e81c1fe1202146635ffbcabee68eaaff9dca",
+    "fossils.py": "d05a8e4b6be4146e6119faab1a03ffee66874581b9c78e3f644a91b96f3863c1"
+  },
+  "data": {
+    "exp2_fulltext_sample.json": "be00876275cbe9fa74bd6b060382f5357c5314e3550a8012f82b50b62a4449c2",
+    "exp2_results.json": "97c7072f2032f7e10fa7ae236b9c1dd2ca87fac80cc7328472c683a6c7095345",
+    "exp3_results.json": "3cce0713d02139cc862b0df6c232f6527a8f32ebb9124201a8466ae3e46d24b6",
+    "exp1_tx004_results.json": "1f6912e6ea6245c452bb3d8c2a54e40b2307298b808a7f2a6d7d74ebd479c8d7",
+    "CAMPAIGN_MANIFEST.json": "f8f1c42acb1334299b96c4b52dfe0a36cb1114f1590ed3f5ff148f6015f45338"
+  },
+  "derived": {
+    "allowed_coordinate_values": {
+      "bottleneck": [
+        "B1_REPRESENTATION",
+        "B2_CREDIT_SEARCH",
+        "B3_TELEOLOGY_EVAL",
+        "B_UNASSIGNED"
+      ],
+      "representation_family": [
+        "discrete_program",
+        "graph_circuit",
+        "continuous_neural",
+        "hybrid_differentiable",
+        "symbolic_expression",
+        "unknown"
+      ],
+      "selection_family": [
+        "scalar_fitness",
+        "case_wise",
+        "novelty",
+        "archive_qd",
+        "gradient",
+        "exact_search",
+        "adversarial",
+        "unknown"
+      ],
+      "evaluation_regime": [
+        "fixed_test_suite",
+        "scalar_objective",
+        "behavioral_descriptor",
+        "coevolved_moving",
+        "formal_verifier",
+        "unknown"
+      ]
+    },
+    "n_mechanisms": 35,
+    "n_surface_forms": 170,
+    "mechanism_table_digest": "ec647c5263f3a00efa8f1d1e555aba0e6ed96409c8ce5ae407bcf43ac4642a9b",
+    "domain_gate_digest": "0355bb55bd66a05acec71ed3038531d8cc050fa2b6c75644f000478fdfa5a97a",
+    "current_classifications_54": {
+      "2605.28353": {
+        "bottleneck": "B1_REPRESENTATION",
+        "representation_family": "graph_circuit",
+        "selection_family": "scalar_fitness",
+        "evaluation_regime": "scalar_objective",
+        "mechanisms": [
+          "cartesian_gp",
+          "circuit_representation",
+          "grammatical_evolution",
+          "linear_gp",
+          "program_synthesis",
+          "scalar_objective",
+          "symbolic_regression",
+          "tournament_selection",
+          "tree_gp"
+        ]
+      },
+      "1001.1889": {
+        "bottleneck": "B3_TELEOLOGY_EVAL",
+        "representation_family": "discrete_program",
+        "selection_family": "gradient",
+        "evaluation_regime": "coevolved_moving",
+        "mechanisms": [
+          "coevolution",
+          "gradient_descent",
+          "scalar_objective",
+          "tournament_selection",
+          "tree_gp"
+        ]
+      },
+      "2008.03649": {
+        "bottleneck": "B1_REPRESENTATION",
+        "representation_family": "discrete_program",
+        "selection_family": "case_wise",
+        "evaluation_regime": "fixed_test_suite",
+        "mechanisms": [
+          "grammatical_evolution",
+          "lexicase",
+          "program_synthesis",
+          "push_gp",
+          "test_suite",
+          "tree_gp"
+        ]
+      },
+      "2209.13233": {
+        "bottleneck": "B2_CREDIT_SEARCH",
+        "representation_family": "graph_circuit",
+        "selection_family": "exact_search",
+        "evaluation_regime": "unknown",
+        "mechanisms": [
+          "beam_search",
+          "nas",
+          "neural_representation",
+          "sparse_autoencoder",
+          "tournament_selection",
+          "tree_gp"
+        ]
+      },
+      "2004.11018": {
+        "bottleneck": "B1_REPRESENTATION",
+        "representation_family": "graph_circuit",
+        "selection_family": "unknown",
+        "evaluation_regime": "scalar_objective",
+        "mechanisms": [
+          "cartesian_gp",
+          "circuit_representation",
+          "scalar_objective",
+          "symbolic_regression",
+          "tree_gp"
+        ]
+      },
+      "2107.09484": {
+        "bottleneck": "B1_REPRESENTATION",
+        "representation_family": "symbolic_expression",
+        "selection_family": "gradient",
+        "evaluation_regime": "unknown",
+        "mechanisms": [
+          "gradient_descent",
+          "neural_representation",
+          "symbolic_regression",
+          "tree_gp"
+        ]
+      },
+      "2504.07152": {
+        "bottleneck": "B3_TELEOLOGY_EVAL",
+        "representation_family": "unknown",
+        "selection_family": "unknown",
+        "evaluation_regime": "scalar_objective",
+        "mechanisms": [
+          "scalar_objective"
+        ]
+      },
+      "2109.13110": {
+        "bottleneck": "B1_REPRESENTATION",
+        "representation_family": "symbolic_expression",
+        "selection_family": "scalar_fitness",
+        "evaluation_regime": "unknown",
+        "mechanisms": [
+          "linear_gp",
+          "symbolic_regression",
+          "tournament_selection",
+          "tree_gp"
+        ]
+      },
+      "2504.10253": {
+        "bottleneck": "B1_REPRESENTATION",
+        "representation_family": "graph_circuit",
+        "selection_family": "unknown",
+        "evaluation_regime": "unknown",
+        "mechanisms": [
+          "cartesian_gp",
+          "circuit_representation",
+          "grammatical_evolution",
+          "program_synthesis",
+          "push_gp",
+          "symbolic_regression",
+          "tree_gp"
+        ]
+      },
+      "1004.4609": {
+        "bottleneck": "B_UNASSIGNED",
+        "representation_family": "graph_circuit",
+        "selection_family": "exact_search",
+        "evaluation_regime": "unknown",
+        "mechanisms": [
+          "circuit_representation",
+          "constraint_solving"
+        ]
+      },
+      "2107.14449": {
+        "bottleneck": "B_UNASSIGNED",
+        "representation_family": "continuous_neural",
+        "selection_family": "unknown",
+        "evaluation_regime": "scalar_objective",
+        "mechanisms": [
+          "neural_representation",
+          "scalar_objective"
+        ]
+      },
+      "1807.03168": {
+        "bottleneck": "B1_REPRESENTATION",
+        "representation_family": "hybrid_differentiable",
+        "selection_family": "exact_search",
+        "evaluation_regime": "unknown",
+        "mechanisms": [
+          "beam_search",
+          "differentiable_program",
+          "program_synthesis"
+        ]
+      },
+      "2108.08724": {
+        "bottleneck": "B1_REPRESENTATION",
+        "representation_family": "discrete_program",
+        "selection_family": "unknown",
+        "evaluation_regime": "fixed_test_suite",
+        "mechanisms": [
+          "neural_representation",
+          "program_synthesis",
+          "test_suite"
+        ]
+      },
+      "1711.03243": {
+        "bottleneck": "B1_REPRESENTATION",
+        "representation_family": "hybrid_differentiable",
+        "selection_family": "exact_search",
+        "evaluation_regime": "fixed_test_suite",
+        "mechanisms": [
+          "constraint_solving",
+          "differentiable_program",
+          "dsl_library",
+          "gradient_descent",
+          "neural_representation",
+          "program_synthesis",
+          "test_suite"
+        ]
+      },
+      "1411.0481": {
+        "bottleneck": "B_UNASSIGNED",
+        "representation_family": "discrete_program",
+        "selection_family": "exact_search",
+        "evaluation_regime": "unknown",
+        "mechanisms": [
+          "constraint_solving",
+          "program_synthesis"
+        ]
+      },
+      "1807.07022": {
+        "bottleneck": "B_UNASSIGNED",
+        "representation_family": "discrete_program",
+        "selection_family": "exact_search",
+        "evaluation_regime": "unknown",
+        "mechanisms": [
+          "enumerative_synthesis",
+          "program_synthesis"
+        ]
+      },
+      "2106.07175": {
+        "bottleneck": "B1_REPRESENTATION",
+        "representation_family": "hybrid_differentiable",
+        "selection_family": "exact_search",
+        "evaluation_regime": "fixed_test_suite",
+        "mechanisms": [
+          "beam_search",
+          "constraint_solving",
+          "differentiable_program",
+          "dsl_library",
+          "neural_representation",
+          "program_synthesis",
+          "test_suite"
+        ]
+      },
+      "2604.13290": {
+        "bottleneck": "B1_REPRESENTATION",
+        "representation_family": "discrete_program",
+        "selection_family": "exact_search",
+        "evaluation_regime": "fixed_test_suite",
+        "mechanisms": [
+          "dsl_library",
+          "enumerative_synthesis",
+          "grammatical_evolution",
+          "program_synthesis",
+          "test_suite"
+        ]
+      },
+      "2009.08438": {
+        "bottleneck": "B2_CREDIT_SEARCH",
+        "representation_family": "continuous_neural",
+        "selection_family": "archive_qd",
+        "evaluation_regime": "behavioral_descriptor",
+        "mechanisms": [
+          "behavior_descriptor",
+          "gradient_descent",
+          "map_elites",
+          "neural_representation",
+          "quality_diversity",
+          "scalar_objective"
+        ]
+      },
+      "2305.07767": {
+        "bottleneck": "B2_CREDIT_SEARCH",
+        "representation_family": "discrete_program",
+        "selection_family": "case_wise",
+        "evaluation_regime": "behavioral_descriptor",
+        "mechanisms": [
+          "behavior_descriptor",
+          "lexicase",
+          "map_elites",
+          "novelty_search",
+          "program_synthesis",
+          "quality_diversity",
+          "scalar_objective",
+          "tournament_selection"
+        ]
+      },
+      "2107.04964": {
+        "bottleneck": "B2_CREDIT_SEARCH",
+        "representation_family": "unknown",
+        "selection_family": "novelty",
+        "evaluation_regime": "behavioral_descriptor",
+        "mechanisms": [
+          "behavior_descriptor",
+          "cmaes",
+          "map_elites",
+          "novelty_search",
+          "quality_diversity",
+          "scalar_objective",
+          "test_suite"
+        ]
+      },
+      "1807.02397": {
+        "bottleneck": "B2_CREDIT_SEARCH",
+        "representation_family": "continuous_neural",
+        "selection_family": "novelty",
+        "evaluation_regime": "scalar_objective",
+        "mechanisms": [
+          "map_elites",
+          "neural_representation",
+          "novelty_search",
+          "open_endedness",
+          "quality_diversity",
+          "scalar_objective"
+        ]
+      },
+      "2007.05352": {
+        "bottleneck": "B2_CREDIT_SEARCH",
+        "representation_family": "unknown",
+        "selection_family": "novelty",
+        "evaluation_regime": "behavioral_descriptor",
+        "mechanisms": [
+          "behavior_descriptor",
+          "cmaes",
+          "map_elites",
+          "novelty_search",
+          "open_endedness",
+          "quality_diversity",
+          "scalar_objective"
+        ]
+      },
+      "2005.04320": {
+        "bottleneck": "B2_CREDIT_SEARCH",
+        "representation_family": "unknown",
+        "selection_family": "novelty",
+        "evaluation_regime": "scalar_objective",
+        "mechanisms": [
+          "map_elites",
+          "novelty_search",
+          "quality_diversity",
+          "scalar_objective"
+        ]
+      },
+      "2211.13742": {
+        "bottleneck": "B2_CREDIT_SEARCH",
+        "representation_family": "continuous_neural",
+        "selection_family": "novelty",
+        "evaluation_regime": "behavioral_descriptor",
+        "mechanisms": [
+          "behavior_descriptor",
+          "cmaes",
+          "map_elites",
+          "neural_representation",
+          "novelty_search",
+          "quality_diversity",
+          "scalar_objective"
+        ]
+      },
+      "2211.02193": {
+        "bottleneck": "B2_CREDIT_SEARCH",
+        "representation_family": "continuous_neural",
+        "selection_family": "archive_qd",
+        "evaluation_regime": "unknown",
+        "mechanisms": [
+          "map_elites",
+          "neural_representation",
+          "quality_diversity"
+        ]
+      },
+      "1906.05175": {
+        "bottleneck": "B2_CREDIT_SEARCH",
+        "representation_family": "discrete_program",
+        "selection_family": "archive_qd",
+        "evaluation_regime": "coevolved_moving",
+        "mechanisms": [
+          "coevolution",
+          "constraint_solving",
+          "grammatical_evolution",
+          "map_elites",
+          "quality_diversity"
+        ]
+      },
+      "2511.14465": {
+        "bottleneck": "B2_CREDIT_SEARCH",
+        "representation_family": "graph_circuit",
+        "selection_family": "unknown",
+        "evaluation_regime": "fixed_test_suite",
+        "mechanisms": [
+          "causal_attribution",
+          "circuit_discovery",
+          "circuit_representation",
+          "test_suite"
+        ]
+      },
+      "2504.19475": {
+        "bottleneck": "B2_CREDIT_SEARCH",
+        "representation_family": "graph_circuit",
+        "selection_family": "gradient",
+        "evaluation_regime": "unknown",
+        "mechanisms": [
+          "causal_attribution",
+          "circuit_discovery",
+          "circuit_representation",
+          "gradient_descent",
+          "sparse_autoencoder"
+        ]
+      },
+      "2402.03855": {
+        "bottleneck": "B1_REPRESENTATION",
+        "representation_family": "graph_circuit",
+        "selection_family": "unknown",
+        "evaluation_regime": "unknown",
+        "mechanisms": [
+          "causal_attribution",
+          "circuit_discovery",
+          "circuit_representation",
+          "neural_representation",
+          "sparse_autoencoder"
+        ]
+      },
+      "2511.09432": {
+        "bottleneck": "B1_REPRESENTATION",
+        "representation_family": "graph_circuit",
+        "selection_family": "unknown",
+        "evaluation_regime": "unknown",
+        "mechanisms": [
+          "circuit_discovery",
+          "circuit_representation",
+          "neural_representation",
+          "sparse_autoencoder"
+        ]
+      },
+      "2606.16939": {
+        "bottleneck": "B1_REPRESENTATION",
+        "representation_family": "graph_circuit",
+        "selection_family": "unknown",
+        "evaluation_regime": "unknown",
+        "mechanisms": [
+          "causal_attribution",
+          "circuit_discovery",
+          "circuit_representation",
+          "neural_representation",
+          "sparse_autoencoder"
+        ]
+      },
+      "2604.14477": {
+        "bottleneck": "B2_CREDIT_SEARCH",
+        "representation_family": "graph_circuit",
+        "selection_family": "unknown",
+        "evaluation_regime": "unknown",
+        "mechanisms": [
+          "causal_attribution",
+          "circuit_discovery",
+          "circuit_representation",
+          "neural_representation"
+        ]
+      },
+      "2409.13714": {
+        "bottleneck": "B1_REPRESENTATION",
+        "representation_family": "graph_circuit",
+        "selection_family": "gradient",
+        "evaluation_regime": "unknown",
+        "mechanisms": [
+          "circuit_discovery",
+          "circuit_representation",
+          "gradient_descent",
+          "neural_representation",
+          "program_synthesis",
+          "sparse_autoencoder"
+        ]
+      },
+      "2511.08854": {
+        "bottleneck": "B2_CREDIT_SEARCH",
+        "representation_family": "graph_circuit",
+        "selection_family": "gradient",
+        "evaluation_regime": "unknown",
+        "mechanisms": [
+          "causal_attribution",
+          "circuit_discovery",
+          "circuit_representation",
+          "gradient_descent",
+          "sparse_autoencoder"
+        ]
+      },
+      "2304.14997": {
+        "bottleneck": "B2_CREDIT_SEARCH",
+        "representation_family": "graph_circuit",
+        "selection_family": "unknown",
+        "evaluation_regime": "scalar_objective",
+        "mechanisms": [
+          "causal_attribution",
+          "circuit_discovery",
+          "circuit_representation",
+          "distillation",
+          "dsl_library",
+          "neural_representation",
+          "scalar_objective"
+        ]
+      },
+      "2506.02483": {
+        "bottleneck": "B2_CREDIT_SEARCH",
+        "representation_family": "unknown",
+        "selection_family": "unknown",
+        "evaluation_regime": "unknown",
+        "mechanisms": [
+          "distillation"
+        ]
+      },
+      "2505.20313": {
+        "bottleneck": "B1_REPRESENTATION",
+        "representation_family": "continuous_neural",
+        "selection_family": "unknown",
+        "evaluation_regime": "unknown",
+        "mechanisms": [
+          "neural_representation"
+        ]
+      },
+      "2601.01982": {
+        "bottleneck": "B1_REPRESENTATION",
+        "representation_family": "discrete_program",
+        "selection_family": "unknown",
+        "evaluation_regime": "unknown",
+        "mechanisms": [
+          "program_synthesis"
+        ]
+      },
+      "2509.03644": {
+        "bottleneck": "B2_CREDIT_SEARCH",
+        "representation_family": "unknown",
+        "selection_family": "exact_search",
+        "evaluation_regime": "fixed_test_suite",
+        "mechanisms": [
+          "constraint_solving",
+          "test_suite"
+        ]
+      },
+      "2507.09854": {
+        "bottleneck": "B3_TELEOLOGY_EVAL",
+        "representation_family": "continuous_neural",
+        "selection_family": "gradient",
+        "evaluation_regime": "coevolved_moving",
+        "mechanisms": [
+          "adversarial_curriculum",
+          "gradient_descent",
+          "neural_representation"
+        ]
+      },
+      "2504.19354": {
+        "bottleneck": "B_UNASSIGNED",
+        "representation_family": "unknown",
+        "selection_family": "unknown",
+        "evaluation_regime": "unknown",
+        "mechanisms": []
+      },
+      "1909.09065": {
+        "bottleneck": "B1_REPRESENTATION",
+        "representation_family": "continuous_neural",
+        "selection_family": "unknown",
+        "evaluation_regime": "unknown",
+        "mechanisms": [
+          "neural_representation"
+        ]
+      },
+      "2506.21797": {
+        "bottleneck": "B2_CREDIT_SEARCH",
+        "representation_family": "continuous_neural",
+        "selection_family": "gradient",
+        "evaluation_regime": "unknown",
+        "mechanisms": [
+          "circuit_discovery",
+          "gradient_descent",
+          "neural_representation"
+        ]
+      },
+      "2507.09751": {
+        "bottleneck": "B_UNASSIGNED",
+        "representation_family": "unknown",
+        "selection_family": "unknown",
+        "evaluation_regime": "unknown",
+        "mechanisms": []
+      },
+      "1905.07510": {
+        "bottleneck": "B1_REPRESENTATION",
+        "representation_family": "symbolic_expression",
+        "selection_family": "unknown",
+        "evaluation_regime": "fixed_test_suite",
+        "mechanisms": [
+          "neural_representation",
+          "symbolic_regression",
+          "test_suite",
+          "tree_gp"
+        ]
+      },
+      "2512.15920": {
+        "bottleneck": "B1_REPRESENTATION",
+        "representation_family": "symbolic_expression",
+        "selection_family": "unknown",
+        "evaluation_regime": "unknown",
+        "mechanisms": [
+          "symbolic_regression",
+          "tree_gp"
+        ]
+      },
+      "2506.15881": {
+        "bottleneck": "B1_REPRESENTATION",
+        "representation_family": "symbolic_expression",
+        "selection_family": "unknown",
+        "evaluation_regime": "unknown",
+        "mechanisms": [
+          "neural_representation",
+          "symbolic_regression"
+        ]
+      },
+      "2605.31276": {
+        "bottleneck": "B1_REPRESENTATION",
+        "representation_family": "symbolic_expression",
+        "selection_family": "unknown",
+        "evaluation_regime": "unknown",
+        "mechanisms": [
+          "neural_representation",
+          "symbolic_regression",
+          "tree_gp"
+        ]
+      },
+      "2304.06333": {
+        "bottleneck": "B1_REPRESENTATION",
+        "representation_family": "symbolic_expression",
+        "selection_family": "unknown",
+        "evaluation_regime": "unknown",
+        "mechanisms": [
+          "neural_representation",
+          "symbolic_regression",
+          "tree_gp"
+        ]
+      },
+      "2511.08424": {
+        "bottleneck": "B1_REPRESENTATION",
+        "representation_family": "symbolic_expression",
+        "selection_family": "unknown",
+        "evaluation_regime": "unknown",
+        "mechanisms": [
+          "dsl_library",
+          "symbolic_regression",
+          "tree_gp"
+        ]
+      },
+      "2507.13033": {
+        "bottleneck": "B1_REPRESENTATION",
+        "representation_family": "symbolic_expression",
+        "selection_family": "gradient",
+        "evaluation_regime": "unknown",
+        "mechanisms": [
+          "gradient_descent",
+          "neural_representation",
+          "symbolic_regression"
+        ]
+      },
+      "2405.18471": {
+        "bottleneck": "B1_REPRESENTATION",
+        "representation_family": "graph_circuit",
+        "selection_family": "unknown",
+        "evaluation_regime": "unknown",
+        "mechanisms": [
+          "circuit_representation",
+          "symbolic_regression",
+          "tree_gp"
+        ]
+      },
+      "2511.22794": {
+        "bottleneck": "B1_REPRESENTATION",
+        "representation_family": "symbolic_expression",
+        "selection_family": "unknown",
+        "evaluation_regime": "unknown",
+        "mechanisms": [
+          "distillation",
+          "symbolic_regression",
+          "tree_gp"
+        ]
+      }
+    },
+    "classifications_digest": "99d1f565192434045ed80fff163606e93a290d06178a968e8030873fe994b564"
+  },
+  "manifest_digest": "86c2e5df111b7a6a137a3f1a455395f06d2d8d6a73c2518092aaea6ed2347a60"
+}
