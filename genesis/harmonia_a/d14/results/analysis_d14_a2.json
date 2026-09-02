@@ -1,0 +1,46 @@
+{
+ "spectrum": {
+  "n_sites": 1626,
+  "zero_mass": 0.896064,
+  "middle_mass": 0.004305,
+  "high_mass": 0.099631,
+  "counts": {
+   "zero": 1457,
+   "middle": 7,
+   "high": 162,
+   "fault": 120
+  },
+  "value_histogram": {
+   "0.0": 1457,
+   "0.125": 4,
+   "0.25": 3,
+   "0.375": 2,
+   "0.5": 5,
+   "0.625": 2,
+   "0.75": 1,
+   "0.875": 29,
+   "1.0": 123
+  }
+ },
+ "threshold": 0.05,
+ "gates": {
+  "n_parents": 113,
+  "n_measured_sites": 1626,
+  "n_fault_sites": 120,
+  "distinct_influence_values": 9,
+  "varies": true,
+  "locality_violations": 0,
+  "c1_replay_eval": true,
+  "c1_replay_mutate": true,
+  "c2_noop_bad": 0,
+  "c5_handcheck_all_match": true,
+  "exclusions": {
+   "multisite_default_sampler": 3025,
+   "length_changed": 5650,
+   "parent_faulted": 87,
+   "diff0_noop": 9
+  }
+ },
+ "support_ok": true,
+ "verdict": "D14_PREDICTION_SURVIVES"
+}

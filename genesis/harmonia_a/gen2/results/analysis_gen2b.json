@@ -1,0 +1,161 @@
+{
+ "compliance": {
+  "R_HAM": {
+   "n_violations": 41,
+   "by_axiom": {
+    "AX2": 40,
+    "AX2/N1": 1
+   },
+   "examples": [
+    [
+     "C2_0",
+     "AX2",
+     "required DESTRUCTION, got LARGE"
+    ],
+    [
+     "C2_1",
+     "AX2",
+     "required DESTRUCTION, got LARGE"
+    ],
+    [
+     "C2_2",
+     "AX2",
+     "required DESTRUCTION, got LARGE"
+    ],
+    [
+     "C2_3",
+     "AX2",
+     "required DESTRUCTION, got LARGE"
+    ]
+   ],
+   "passes_all": false
+  },
+  "R_REL": {
+   "n_violations": 50,
+   "by_axiom": {
+    "AX1c+AX7": 38,
+    "AX7+AX9": 12
+   },
+   "examples": [
+    [
+     "C11_0",
+     "AX1c+AX7",
+     "forbidden DESTRUCTION"
+    ],
+    [
+     "C9b_0",
+     "AX1c+AX7",
+     "forbidden DESTRUCTION"
+    ],
+    [
+     "C10_1",
+     "AX7+AX9",
+     "forbidden DESTRUCTION"
+    ],
+    [
+     "C11_1",
+     "AX1c+AX7",
+     "forbidden DESTRUCTION"
+    ]
+   ],
+   "passes_all": false
+  },
+  "R_NMI": {
+   "n_violations": 60,
+   "by_axiom": {
+    "AX7+AX9": 20,
+    "AX1c+AX7": 39,
+    "AX9/N2": 1
+   },
+   "examples": [
+    [
+     "C10_0",
+     "AX7+AX9",
+     "forbidden DESTRUCTION"
+    ],
+    [
+     "C11_0",
+     "AX1c+AX7",
+     "forbidden NEUTRAL"
+    ],
+    [
+     "C9b_0",
+     "AX1c+AX7",
+     "forbidden DESTRUCTION"
+    ],
+    [
+     "C10_1",
+     "AX7+AX9",
+     "forbidden DESTRUCTION"
+    ]
+   ],
+   "passes_all": false
+  },
+  "R_VEC": {
+   "n_violations": 59,
+   "by_axiom": {
+    "AX3": 30,
+    "AX3/N1": 1,
+    "AX3/N2": 1,
+    "AX3/C13": 27
+   },
+   "examples": [
+    [
+     "C1_k4_0",
+     "AX3",
+     "required SMALL, got LARGE"
+    ],
+    [
+     "C1_k8_0",
+     "AX3",
+     "required SMALL, got LARGE"
+    ],
+    [
+     "C1_k1_2",
+     "AX3",
+     "required SMALL, got LARGE"
+    ],
+    [
+     "C1_k8_2",
+     "AX3",
+     "required SMALL, got LARGE"
+    ]
+   ],
+   "passes_all": false
+  },
+  "R_VEC2": {
+   "n_violations": 0,
+   "by_axiom": {},
+   "examples": [],
+   "passes_all": true
+  }
+ },
+ "gates": {
+  "G_TEETH": {
+   "verdict": "PASS"
+  },
+  "G_TEETH_C13": {
+   "n_c13": 27,
+   "old_R_VEC_failures": 27,
+   "verdict": "PASS",
+   "note": "C13 must exist in force and must kill the Gen-2 R_VEC"
+  }
+ },
+ "verdict": "VECTOR_RULER_REQUIRED",
+ "gen1_rescore_v2": {
+  "gen1_rows": 38400,
+  "old_LOCAL_rows": 6139,
+  "frac_old_LOCAL_now_DESTRUCTION": 0.0168,
+  "frac_old_LOCAL_now_LARGE": 0.3066,
+  "frac_old_LOCAL_confirmed_SMALL": 0.6767,
+  "full_confusion": {
+   "LARGE->DESTRUCTION": 63,
+   "LARGE->LARGE": 2250,
+   "NEUTRAL->NEUTRAL": 29948,
+   "SMALL->DESTRUCTION": 103,
+   "SMALL->LARGE": 1882,
+   "SMALL->SMALL": 4154
+  }
+ },
+ "ruler_version": "R_VEC2_gen2b"
+}

@@ -1,0 +1,110 @@
+{
+ "T1_T2": {
+  "status": 200,
+  "result": "FAIL",
+  "note": "late pred bound with full credit"
+ },
+ "T3": {
+  "status": 200,
+  "claims_surviving": 1,
+  "observations": 3,
+  "result": "AMBIGUOUS",
+  "note": "duplicate pred-binding accepted; claim counting idempotent at hypothesis level"
+ },
+ "T4_pred": {
+  "status": 404,
+  "result": "PASS"
+ },
+ "T5": {
+  "result": "PASS",
+  "note": "same surface as T4"
+ },
+ "T6_hyp": {
+  "status": 404,
+  "result": "PASS"
+ },
+ "T7_exp": {
+  "status": 404,
+  "result": "PASS"
+ },
+ "T8_obs": {
+  "status": 404,
+  "result": "PASS",
+  "note": "no amendment/supersession mechanism (limitation)"
+ },
+ "T9": {
+  "status": 403,
+  "result": "PASS"
+ },
+ "T10": {
+  "status": 403,
+  "result": "PASS"
+ },
+ "T11": {
+  "status": 404,
+  "result": "PASS",
+  "note": "cross-world exp bind blocked"
+ },
+ "T11b": {
+  "status": 403,
+  "result": "PASS"
+ },
+ "T12": {
+  "status": 409,
+  "error": "budget_exhausted",
+  "result": "PASS"
+ },
+ "T13": {
+  "distinct_ids": true,
+  "result": "FINDING",
+  "note": "duplicate registration unmetered (DFX-2)"
+ },
+ "T14": {
+  "result": "ABSENT",
+  "note": "no request-identity idempotency on epistemic POSTs (P3 limitation)"
+ },
+ "T15": {
+  "status": 422,
+  "result": "PASS"
+ },
+ "T16": {
+  "status": 200,
+  "result": "FAIL",
+  "note": "nested budget spec unknown key ACCEPTED (DFX-4)"
+ },
+ "T17": {
+  "status": 422,
+  "result": "PASS"
+ },
+ "T18": {
+  "result": "PASS_DECLARED",
+  "note": "unavailable-class consumes past limit without blocking, per declared semantics"
+ },
+ "T19": {
+  "budget_exhausted_events": 1,
+  "result": "PASS",
+  "note": "commit-then-raise verified behaviorally"
+ },
+ "T20": {
+  "failure_listed": true,
+  "result": "PASS"
+ },
+ "T21": {
+  "headers": "NONE",
+  "result": "FAIL",
+  "note": "no release identity beyond api/schema/runtime (DFX-3)"
+ },
+ "T22": {
+  "result": "PASS",
+  "note": "budget config round-trips exactly"
+ },
+ "T23": {
+  "status": 200,
+  "result": "CONFIRMED_LIMITATION",
+  "note": "laundering via recreation accepted; acute given DFX-1"
+ },
+ "T24": {
+  "result": "BLOCKED",
+  "note": "no replay engine (declared honest gap)"
+ }
+}

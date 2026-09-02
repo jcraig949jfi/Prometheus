@@ -1,0 +1,44 @@
+{
+ "n_edits": 8452,
+ "n_cross_pairs": 199197,
+ "BASE_discordance": 0.5016,
+ "KP1": {
+  "n": 15430,
+  "disc_at_matched": 0.3827,
+  "parents": 300,
+  "seeds": 5,
+  "in_force": true
+ },
+ "KP2": {
+  "concordance_far_coord": 0.4169
+ },
+ "residual_folds": {
+  "11": {
+   "n_test": 5727,
+   "auc": 0.7758
+  },
+  "22": {
+   "n_test": 5486,
+   "auc": 0.7958
+  },
+  "33": {
+   "n_test": 5780,
+   "auc": 0.7753
+  },
+  "44": {
+   "n_test": 4862,
+   "auc": 0.8072
+  },
+  "55": {
+   "n_test": 5961,
+   "auc": 0.7626
+  }
+ },
+ "residual_pass": true,
+ "KP3": {
+  "matched_yhat_pairs": 8217,
+  "discordant": 1556,
+  "rate": 0.1894
+ },
+ "verdict": "COORDINATE_INSUFFICIENT_RICHER_STRUCTURE"
+}

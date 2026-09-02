@@ -1,0 +1,43 @@
+{
+ "spectrum": {
+  "n_sites": 567,
+  "zero_mass": 0.892416,
+  "middle_mass": 0.003527,
+  "high_mass": 0.104056,
+  "counts": {
+   "zero": 506,
+   "middle": 2,
+   "high": 59,
+   "fault": 45
+  },
+  "value_histogram": {
+   "0.0": 506,
+   "0.25": 2,
+   "0.375": 1,
+   "0.5": 5,
+   "0.875": 9,
+   "1.0": 44
+  }
+ },
+ "threshold": 0.05,
+ "gates": {
+  "n_parents": 56,
+  "n_measured_sites": 567,
+  "n_fault_sites": 45,
+  "distinct_influence_values": 6,
+  "varies": true,
+  "locality_violations": 1219,
+  "c1_replay_eval": true,
+  "c1_replay_mutate": true,
+  "c2_noop_bad": 0,
+  "c5_handcheck_all_match": false,
+  "exclusions": {
+   "locality_violation": 1219,
+   "length_changed": 1680,
+   "parent_faulted": 44,
+   "diff0_noop": 5
+  }
+ },
+ "support_ok": false,
+ "verdict": "D14_INDETERMINATE"
+}

@@ -1,0 +1,190 @@
+{
+ "compliance": {
+  "R_HAM": {
+   "n_cells": 264,
+   "n_violations": 41,
+   "violations_by_axiom": {
+    "AX2": 40,
+    "AX2/N1": 1
+   },
+   "examples": [
+    [
+     "C2_0",
+     "AX2",
+     "required DESTRUCTION, got LARGE"
+    ],
+    [
+     "C2_1",
+     "AX2",
+     "required DESTRUCTION, got LARGE"
+    ],
+    [
+     "C2_2",
+     "AX2",
+     "required DESTRUCTION, got LARGE"
+    ],
+    [
+     "C2_3",
+     "AX2",
+     "required DESTRUCTION, got LARGE"
+    ],
+    [
+     "C2_4",
+     "AX2",
+     "required DESTRUCTION, got LARGE"
+    ]
+   ],
+   "passes_all": false
+  },
+  "R_REL": {
+   "n_cells": 264,
+   "n_violations": 50,
+   "violations_by_axiom": {
+    "AX1c+AX7": 38,
+    "AX7+AX9": 12
+   },
+   "examples": [
+    [
+     "C11_0",
+     "AX1c+AX7",
+     "forbidden DESTRUCTION"
+    ],
+    [
+     "C9b_0",
+     "AX1c+AX7",
+     "forbidden DESTRUCTION"
+    ],
+    [
+     "C10_1",
+     "AX7+AX9",
+     "forbidden DESTRUCTION"
+    ],
+    [
+     "C11_1",
+     "AX1c+AX7",
+     "forbidden DESTRUCTION"
+    ],
+    [
+     "C9b_1",
+     "AX1c+AX7",
+     "forbidden DESTRUCTION"
+    ]
+   ],
+   "passes_all": false
+  },
+  "R_NMI": {
+   "n_cells": 264,
+   "n_violations": 60,
+   "violations_by_axiom": {
+    "AX7+AX9": 20,
+    "AX1c+AX7": 39,
+    "AX9/N2": 1
+   },
+   "examples": [
+    [
+     "C10_0",
+     "AX7+AX9",
+     "forbidden DESTRUCTION"
+    ],
+    [
+     "C11_0",
+     "AX1c+AX7",
+     "forbidden NEUTRAL"
+    ],
+    [
+     "C9b_0",
+     "AX1c+AX7",
+     "forbidden DESTRUCTION"
+    ],
+    [
+     "C10_1",
+     "AX7+AX9",
+     "forbidden DESTRUCTION"
+    ],
+    [
+     "C11_1",
+     "AX1c+AX7",
+     "forbidden NEUTRAL"
+    ]
+   ],
+   "passes_all": false
+  },
+  "R_VEC": {
+   "n_cells": 264,
+   "n_violations": 32,
+   "violations_by_axiom": {
+    "AX3": 30,
+    "AX3/N1": 1,
+    "AX3/N2": 1
+   },
+   "examples": [
+    [
+     "C1_k4_0",
+     "AX3",
+     "required SMALL, got LARGE"
+    ],
+    [
+     "C1_k8_0",
+     "AX3",
+     "required SMALL, got LARGE"
+    ],
+    [
+     "C1_k1_2",
+     "AX3",
+     "required SMALL, got LARGE"
+    ],
+    [
+     "C1_k8_2",
+     "AX3",
+     "required SMALL, got LARGE"
+    ],
+    [
+     "C1_k1_3",
+     "AX3",
+     "required SMALL, got LARGE"
+    ]
+   ],
+   "passes_all": false
+  }
+ },
+ "gates": {
+  "G_TEETH": {
+   "r_ham_violations": 41,
+   "verdict": "PASS",
+   "note": "battery must kill the known-defective incumbent"
+  },
+  "G_AX4_SEVERITY": {
+   "collapse_classified_SMALL": {
+    "R_HAM": 21,
+    "R_REL": 0,
+    "R_NMI": 0,
+    "R_VEC": 0
+   }
+  }
+ },
+ "verdict": "CONSEQUENCE_LOCALITY_NOT_WELL_DEFINED",
+ "gen1_rescore": {
+  "gen1_rows": 38400,
+  "old_LOCAL_rows": 6139,
+  "reclassified": {
+   "LARGE": 2205,
+   "SMALL": 3831,
+   "DESTRUCTION": 103
+  },
+  "frac_old_LOCAL_now_DESTRUCTION": 0.0168,
+  "frac_old_LOCAL_now_LARGE": 0.3592,
+  "frac_old_LOCAL_confirmed_SMALL": 0.624,
+  "full_confusion": {
+   "LARGE->DESTRUCTION": 63,
+   "LARGE->LARGE": 2250,
+   "NEUTRAL->NEUTRAL": 29948,
+   "SMALL->DESTRUCTION": 103,
+   "SMALL->LARGE": 2205,
+   "SMALL->SMALL": 3831
+  },
+  "novelty_component_reportonly": {
+   "median": 0.0,
+   "p90": 0.125
+  }
+ }
+}

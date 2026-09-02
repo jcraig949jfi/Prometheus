@@ -1,0 +1,92 @@
+{
+ "n_rows": 34560,
+ "fault_rate": 0.2294,
+ "per_seed_nonneutral_rewires": {
+  "11": 833,
+  "22": 840,
+  "33": 647,
+  "44": 674,
+  "55": 656
+ },
+ "class_mix_by_slack": {
+  "0": {
+   "NEUTRAL": 0.803,
+   "SMALL": 0.093,
+   "LARGE": 0.094,
+   "DESTRUCTION": 0.009
+  },
+  "1": {
+   "NEUTRAL": 0.813,
+   "SMALL": 0.104,
+   "LARGE": 0.08,
+   "DESTRUCTION": 0.003
+  },
+  "2": {
+   "NEUTRAL": 0.855,
+   "SMALL": 0.07,
+   "LARGE": 0.067,
+   "DESTRUCTION": 0.007
+  },
+  "3": {
+   "NEUTRAL": 0.841,
+   "SMALL": 0.08,
+   "LARGE": 0.075,
+   "DESTRUCTION": 0.004
+  },
+  "4": {
+   "NEUTRAL": 0.846,
+   "SMALL": 0.08,
+   "LARGE": 0.07,
+   "DESTRUCTION": 0.004
+  },
+  "5": {
+   "NEUTRAL": 0.872,
+   "SMALL": 0.077,
+   "LARGE": 0.048,
+   "DESTRUCTION": 0.002
+  },
+  "6": {
+   "NEUTRAL": 0.848,
+   "SMALL": 0.08,
+   "LARGE": 0.067,
+   "DESTRUCTION": 0.006
+  },
+  "7": {
+   "NEUTRAL": 0.864,
+   "SMALL": 0.071,
+   "LARGE": 0.059,
+   "DESTRUCTION": 0.006
+  },
+  "8": {
+   "NEUTRAL": 0.853,
+   "SMALL": 0.081,
+   "LARGE": 0.063,
+   "DESTRUCTION": 0.002
+  }
+ },
+ "auc_slack_folds": {
+  "11": 0.5214,
+  "22": 0.5218,
+  "33": 0.5403,
+  "44": 0.5528,
+  "55": 0.5135
+ },
+ "auc_inf_folds": {
+  "11": 0.7977,
+  "22": 0.8223,
+  "33": 0.7778,
+  "44": 0.8035,
+  "55": 0.7643
+ },
+ "smallrate_hug_minus_far": {
+  "hug0": 0.4734,
+  "n_hug": 188,
+  "far4plus": 0.5505,
+  "n_far": 2910,
+  "diff_ci95": [
+   -0.1488,
+   -0.0052
+  ]
+ },
+ "verdict": "NO_BOUNDARY_ORGANIZATION"
+}

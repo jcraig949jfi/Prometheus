@@ -1,0 +1,86 @@
+{
+ "n_rows": 7680,
+ "fault_rate": 0.2311,
+ "fault_note": "FORCED: definitional (out-of-window rewire)",
+ "class_mix_by_slack": {
+  "0": {
+   "NEUTRAL": 0.805,
+   "SMALL": 0.1,
+   "LARGE": 0.091,
+   "DESTRUCTION": 0.004
+  },
+  "1": {
+   "NEUTRAL": 0.835,
+   "SMALL": 0.069,
+   "LARGE": 0.095,
+   "DESTRUCTION": 0.0
+  },
+  "2": {
+   "NEUTRAL": 0.894,
+   "SMALL": 0.05,
+   "LARGE": 0.055,
+   "DESTRUCTION": 0.0
+  },
+  "3": {
+   "NEUTRAL": 0.837,
+   "SMALL": 0.098,
+   "LARGE": 0.061,
+   "DESTRUCTION": 0.004
+  },
+  "4": {
+   "NEUTRAL": 0.869,
+   "SMALL": 0.063,
+   "LARGE": 0.063,
+   "DESTRUCTION": 0.004
+  },
+  "5": {
+   "NEUTRAL": 0.888,
+   "SMALL": 0.059,
+   "LARGE": 0.05,
+   "DESTRUCTION": 0.003
+  },
+  "6": {
+   "NEUTRAL": 0.871,
+   "SMALL": 0.065,
+   "LARGE": 0.056,
+   "DESTRUCTION": 0.009
+  },
+  "7": {
+   "NEUTRAL": 0.897,
+   "SMALL": 0.067,
+   "LARGE": 0.033,
+   "DESTRUCTION": 0.003
+  },
+  "8": {
+   "NEUTRAL": 0.867,
+   "SMALL": 0.08,
+   "LARGE": 0.052,
+   "DESTRUCTION": 0.002
+  }
+ },
+ "auc_slack_folds": {
+  "11": 0.5402,
+  "22": 0.5896,
+  "33": 0.5073,
+  "44": 0.5412,
+  "55": 0.5315
+ },
+ "auc_inf_folds": {
+  "11": 0.7719,
+  "22": 0.8323,
+  "33": 0.8471,
+  "44": 0.8853,
+  "55": 0.9091
+ },
+ "smallrate_hug_minus_far": {
+  "hug0": 0.5106,
+  "n_hug": 47,
+  "far4plus": 0.5816,
+  "n_far": 576,
+  "diff_ci95": [
+   -0.216,
+   0.0706
+  ]
+ },
+ "verdict": "INDETERMINATE"
+}
