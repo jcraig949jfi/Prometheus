@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "prometheus/incubator/world_phylogeny/v0",
+  "title": "Incubator World Phylogeny Record (v0)",
+  "description": "One record per WORLD in the Incubator research tree. The Incubator develops by failure-driven forking: World N+1 exists ONLY because World N exposed a specific, characterized ceiling. This file is therefore the experimental history of the Incubator itself, and it is the artifact that distinguishes a research program from a sequence of demos. FAILED WORLDS ARE NEVER OVERWRITTEN OR DELETED -- they are fossils, and a world that cleanly exposes a ceiling is often more scientifically useful than one that looks successful.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "world_id", "parent_world_id", "created_ts",
+    "world_physics_hash", "engine_source_hash", "intent", "status"
+  ],
+  "properties": {
+    "schema_version": { "const": "incubator.world_phylogeny.v0" },
+
+    "world_id":        { "type": "string" },
+    "parent_world_id": { "type": ["string", "null"], "description": "null only for World-0, the root" },
+    "sibling_arm":     { "type": ["string", "null"], "description": "when several worlds fork from one ceiling as competing interventions, the arm label (e.g. duplication / protected-module / control). Siblings share a parent AND a preregistered prediction set." },
+    "created_ts":      { "type": "number" },
+
+    "engine_source_hash": { "type": "string", "description": "build-derived identity of the engine that ran this world" },
+    "world_physics_hash": { "type": "string", "description": "identity of instruction set + generator distribution + cost table. MUST be inside the release identity, never a mutable runtime file." },
+    "checkpoint_id":      { "type": ["string", "null"], "description": "the parent checkpoint this world was forked from, if the fork was a state fork rather than a fresh physics" },
+
+    "intent": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "WHY this world exists. A world with no antecedent ceiling is not a scientific fork -- it is a new program, and must be labelled as such.",
+      "properties": {
+        "antecedent_ceiling": { "type": ["string", "null"], "description": "the characterized limiting regime observed in the parent (e.g. an F-class from the OEE Failure Atlas) that motivated this fork" },
+        "ceiling_evidence":   { "type": ["string", "null"], "description": "what measurement established that ceiling in the parent, including the null it beat" },
+        "proposed_mechanism": { "type": ["string", "null"], "description": "the causal mechanism hypothesised to produce the ceiling" },
+        "intervention":       { "type": ["string", "null"], "description": "exactly what changed in the physics/operators/economy relative to the parent. MUST be a single named change per arm where possible." },
+        "is_control":         { "type": "boolean", "description": "true if this arm changes nothing causal and exists to isolate the intervention" },
+        "is_new_program":     { "type": "boolean", "description": "true if this world does NOT descend from a measured ceiling. Such worlds are permitted but must be labelled, because they are exploratory rather than confirmatory." }
+      },
+      "required": ["is_control", "is_new_program"]
+    },
+
+    "preregistration": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Sealed BEFORE the world runs, via the engine's irreversible experiment-commit boundary. A fork whose prediction was written after its result is not evidence.",
+      "properties": {
+        "prediction":        { "type": "string", "description": "what the intervention is predicted to do to the REGIME, not merely to performance" },
+        "primary_statistic": { "type": "string" },
+        "null_models":       { "type": "array", "items": { "type": "string" } },
+        "decision_rule":     { "type": "string", "description": "the single pre-committed test and threshold" },
+        "sealed_commit_seq": { "type": ["integer", "null"], "description": "ledger event_seq of the sealing commit; null means NOT SEALED and the result is exploratory only" },
+        "prereg_hash":       { "type": ["string", "null"] }
+      },
+      "required": ["prediction", "primary_statistic", "decision_rule"]
+    },
+
+    "observed": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "What the world actually did. Populated after the run; never edited afterwards -- corrections are appended as errata.",
+      "properties": {
+        "regime_classification": {
+          "type": "string",
+          "description": "the dominant dynamical regime observed, drawn from the OEE Failure Atlas class set (refined taxonomy), or NOVEL_REGIME if none fits"
+        },
+        "e_level_reached": {
+          "type": "string",
+          "enum": ["E0", "E1", "E2", "E3", "E4", "E5", "E6", "E7", "NONE"],
+          "description": "highest level of the Prometheus OEE hierarchy for which COUNTERFACTUAL evidence exists. Behavioural impression is never sufficient. Regression is permitted and expected."
+        },
+        "e_level_evidence": { "type": "string", "description": "the ablation or transplant that established it" },
+        "failure_landscape_change": { "type": "string", "description": "how the failure topology differed from the parent, measured under rarefaction on capability-DISJOINT coordinates" },
+        "ceiling_observed": { "type": ["string", "null"], "description": "the limiting regime this world itself exposed -- i.e. the antecedent_ceiling for its children" },
+        "conventional_metrics": { "type": "string", "description": "fitness, success rate, efficiency, diversity -- recorded so we can test whether failure geometry added anything the cheap metrics did not" },
+        "scale_actually_run": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Recorded so that 'it did not compound' can be separated from 'we could not afford to let it compound'.",
+          "properties": {
+            "generations": { "type": "integer" },
+            "population":  { "type": "integer" },
+            "total_vm_steps": { "type": "integer" },
+            "independent_runs": { "type": "integer", "description": "the replicate count for population-level claims. A single run is n=1 and supports no population claim." }
+          }
+        }
+      }
+    },
+
+    "verdict": {
+      "type": "string",
+      "enum": [
+        "PREDICTION_CONFIRMED",
+        "PREDICTION_FALSIFIED",
+        "INCONCLUSIVE_UNDERPOWERED",
+        "INCONCLUSIVE_CONFOUNDED",
+        "KILLED_BY_CRITERION",
+        "NOT_YET_RUN"
+      ]
+    },
+    "killed_by": { "type": ["string", "null"], "description": "which preregistered kill criterion fired, if any" },
+
+    "status": {
+      "type": "string",
+      "enum": ["PLANNED", "SEALED", "RUNNING", "COMPLETE", "ABANDONED"],
+      "description": "ABANDONED worlds are RETAINED, never deleted. Reason must be recorded in notes."
+    },
+
+    "next_forks": {
+      "type": "array",
+      "description": "Children this world motivates. Populating this is how the research tree grows: a ceiling with no proposed fork is an unfinished result.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "proposed_arm":       { "type": "string" },
+          "targets_ceiling":    { "type": "string" },
+          "rationale":          { "type": "string" },
+          "scale_is_the_intervention": { "type": "boolean", "description": "true if the ONLY change is more time/population/compute. Such forks are permitted but must be declared, because 'run it longer' must be an explicit hypothesis rather than the reflex response to every plateau." }
+        },
+        "required": ["proposed_arm", "targets_ceiling", "rationale", "scale_is_the_intervention"]
+      }
+    },
+
+    "reconstruction": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Everything needed to re-run this world exactly. A world that cannot be reconstructed is not evidence.",
+      "properties": {
+        "world_seed":      { "type": "integer" },
+        "genome_seeds":    { "type": "array", "items": { "type": "integer" } },
+        "ledger_range":    { "type": "array", "items": { "type": "integer" }, "minItems": 2, "maxItems": 2 },
+        "kill_criteria_hash": { "type": "string" },
+        "analysis_code_hash": { "type": "string", "description": "the analysis is part of the instrument; a silently changed analysis invalidates cross-world comparison" }
+      }
+    },
+
+    "notes": { "type": "string" }
+  },
+
+  "$comment": "DESIGN RULES a future maintainer must not 'improve' away: (1) A world exists because a MEASURED ceiling motivated it -- worlds added for elegance or biological realism must be flagged is_new_program=true. (2) The prediction is sealed BEFORE the run or the result is exploratory. (3) Failed and abandoned worlds are retained permanently. (4) 'Run it longer / bigger' is a declarable intervention, never a default. (5) e_level_reached requires counterfactual evidence, never a suggestive trajectory. (6) This file records the falsification ladder WE climb; it must never become a curriculum the ORGANISMS climb -- that distinction is the foundation of the whole program."
+}
