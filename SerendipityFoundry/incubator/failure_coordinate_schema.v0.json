@@ -1,0 +1,146 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "prometheus/incubator/world0/failure_coordinate/v0",
+  "title": "World-0 Failure Coordinate Record (v0)",
+  "description": "Emitted by the ENGINE for every externally observable unsuccessful interaction. This is a COORDINATE VECTOR, never a boolean. Design rules: (1) no field records a human semantic judgement about what the organism was 'trying' to do; (2) every field is mechanically derived from physics execution; (3) novel failure is preserved as candidate evidence of frontier expansion and is never suppressed or optimized away; (4) fields sufficient to distinguish failure DISAPPEARANCE from failure METABOLIZATION are mandatory.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "world_id", "tick", "organism_id", "lineage_id",
+    "generation", "engine_source_hash", "world_physics_hash",
+    "outcome_class", "resource_state", "frontier"
+  ],
+  "properties": {
+    "schema_version": { "const": "world0.failure_coordinate.v0" },
+
+    "world_id":            { "type": "string" },
+    "tick":                { "type": "integer", "minimum": 0 },
+    "episode_seq":         { "type": "integer", "description": "engine ledger event_seq; the authoritative chronological anchor" },
+
+    "organism_id":         { "type": "string" },
+    "lineage_id":          { "type": "string", "description": "root of the organismic inheritance chain" },
+    "generation":          { "type": "integer", "minimum": 0 },
+    "ancestor_path_hash":  { "type": "string", "description": "hash of the ordered ancestor id path; makes lineage-relative analysis cheap without walking the DAG" },
+
+    "engine_source_hash":  { "type": "string", "description": "build-derived identity of the running engine (see GEN-2.1 F4). Binds this coordinate to an exact instrument." },
+    "world_physics_hash":  { "type": "string", "description": "identity of the instruction set + channel generator distribution + cost table. MUST be inside the release identity, NOT a mutable runtime file. (Direct lesson from the WOW-0 forensic survey, where the task corpus sat outside the release allowlist and could have changed without the pin moving.)" },
+
+    "interaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "What the organism was interacting with, described structurally and without semantic labels.",
+      "properties": {
+        "channel_id":              { "type": "string" },
+        "channel_class":           { "type": "string", "enum": ["WORLD", "DEPOSIT"] },
+        "channel_generator_depth": { "type": "integer", "minimum": 0, "description": "composition depth of the hidden generating program; the world's structural difficulty axis" },
+        "channel_generator_hash":  { "type": "string", "description": "identity of the generating program; enables exact regeneration and held-out splits" },
+        "channel_age_ticks":       { "type": "integer", "minimum": 0 },
+        "channel_origin_lineage":  { "type": ["string", "null"], "description": "for DEPOSIT channels, the lineage that emitted it. NEVER null for DEPOSIT. (The WOW-0 survey found operator_id null throughout, which made attribution -- and therefore causal ablation -- impossible. That must not recur.)" },
+        "concurrent_attach_count": { "type": "integer", "minimum": 0, "description": "ecological contention on this channel at this tick" }
+      },
+      "required": ["channel_id", "channel_class", "channel_generator_depth"]
+    },
+
+    "resource_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The organism's economic position AT failure. Required to separate 'could not' from 'could not afford'.",
+      "properties": {
+        "charge_before":  { "type": "number" },
+        "charge_after":   { "type": "number" },
+        "quanta_budget":  { "type": "integer" },
+        "quanta_used":    { "type": "integer" },
+        "steps_executed": { "type": "integer" },
+        "steps_limit":    { "type": "integer" },
+        "mem_peak":       { "type": "integer" }
+      },
+      "required": ["charge_before", "quanta_budget", "quanta_used", "steps_executed", "steps_limit"]
+    },
+
+    "outcome_class": {
+      "type": "string",
+      "enum": [
+        "VM_FAULT",
+        "PREDICTION_MISS",
+        "NO_OUTPUT",
+        "SHAPE_MISMATCH",
+        "RESOURCE_EXHAUSTION",
+        "ILLEGAL_ACTION",
+        "ABSTENTION_NO_ATTACH",
+        "ABSTENTION_ATTACHED_NO_OUTPUT"
+      ],
+      "description": "Top-level partition of failure. Deliberately coarse; the geometry lives in the sub-objects. THE TWO ABSTENTION CLASSES ARE LOAD-BEARING: every economic rule that removes a degenerate exploit also makes acting expensive, which selects for organisms that fail less by attempting less. If a non-attempt emitted no record, the primary observable would deform for purely economic reasons and we would misread caution as capability. We instrument the dog that did not bark."
+    },
+
+    "vm_fault": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Present iff outcome_class == VM_FAULT. These codes are intrinsic to the physics, not authored task categories -- which is what makes them an honest coordinate system.",
+      "properties": {
+        "fault_code": {
+          "type": "string",
+          "enum": ["STACK_UNDERFLOW", "STACK_OVERFLOW", "TYPE_ERROR", "DIV_ZERO",
+                   "MEM_BOUNDS", "STEP_LIMIT", "HALT_EMPTY", "INVALID_OPCODE",
+                   "DEPOSIT_RECURSION_LIMIT"]
+        },
+        "fault_pc":     { "type": "integer", "description": "program counter at fault" },
+        "fault_depth":  { "type": "integer", "description": "invocation/composition depth at fault; the axis on which 'reaching deeper' becomes visible" },
+        "opcode":       { "type": "string" }
+      },
+      "required": ["fault_code", "fault_pc", "fault_depth"]
+    },
+
+    "prediction_miss": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Present iff outcome_class == PREDICTION_MISS. Retains WHERE and HOW the model broke, not merely that it did.",
+      "properties": {
+        "horizon_k":              { "type": "integer", "minimum": 1 },
+        "correct_prefix_len":     { "type": "integer", "minimum": 0, "description": "how far the model held before diverging; a partial-credit geometry, not a pass/fail" },
+        "first_divergence_index": { "type": "integer", "minimum": 0 },
+        "residual_l1":            { "type": "number" },
+        "residual_linf":          { "type": "number" },
+        "residual_sign_pattern":  { "type": "string", "description": "compact encoding of the error sign sequence; distinguishes systematic bias from noise" },
+        "predicted_hash":         { "type": "string" },
+        "actual_hash":            { "type": "string" }
+      },
+      "required": ["horizon_k", "correct_prefix_len", "first_divergence_index"]
+    },
+
+    "frontier": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The tectonic instrument. A more capable organism may look WORSE because it reaches states where new things can fail. These flags exist so that such expansion is detectable rather than mistaken for regression.",
+      "properties": {
+        "region_id": { "type": "string", "description": "discretized landscape cell: a deterministic function of (channel_class, generator_depth bucket, outcome_class, fault_code | divergence bucket). The occupancy of these cells over time IS the failure landscape." },
+        "lineage_first_encounter":    { "type": "boolean", "description": "first time THIS lineage has occupied this cell" },
+        "population_first_encounter": { "type": "boolean", "description": "first time ANY lineage in this world has occupied this cell -- candidate frontier expansion" },
+        "prior_encounters_lineage":   { "type": "integer", "minimum": 0 },
+        "reachability_delta": { "type": ["string", "null"], "enum": ["NEWLY_REACHABLE", "STILL_REACHABLE", "NO_LONGER_REACHED", null],
+          "description": "Set by the analysis pass, not the physics. Supports distinguishing the seven disappearance causes in the charter (solved / avoided / environment changed / niche abandoned / pressure removed / representation changed / measurement broke)." }
+      },
+      "required": ["region_id", "lineage_first_encounter", "population_first_encounter"]
+    },
+
+    "action_history_hash": { "type": "string", "description": "hash of the organism's action sequence this episode; enables exact replay addressing and 'after what history' queries" },
+
+    "replay": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Everything needed to recompute this exact failure offline. Without this the record is an anecdote.",
+      "properties": {
+        "genotype_addr":  { "type": "string" },
+        "world_seed":     { "type": "integer" },
+        "episode_seed":   { "type": "integer" },
+        "deposit_closure_hash": { "type": "string", "description": "hash of the set of deposits legally available to this organism at this tick (the engine's knowledge-frontier query, GEN-2.1 F10). Required for epistemic-inheritance ablation: it records what the organism COULD have known -- not what it used." }
+      },
+      "required": ["genotype_addr", "world_seed", "episode_seed"]
+    }
+  },
+
+  "$comment": "NON-GOALS, stated so a future maintainer does not 'improve' this schema into uselessness: (a) there is deliberately NO aggregate score, quality rating, or 'severity' field -- aggregation destroys the geometry we are trying to measure; (b) there is NO field describing intent, strategy, or explanation; (c) no LLM or human label may populate any field; (d) records are never deleted or downsampled for being common OR for being rare.",
+
+  "$comment_analysis_partition": "MANDATORY BEFORE ANY ANALYSIS (see design review section 8, defect D1). Every coordinate must be partitioned, and the partition frozen by content hash, into: CAPABILITY-COUPLED -- any function of the prediction residual that the capability metric also reads (prediction_miss.correct_prefix_len, first_divergence_index, residual_l1, residual_linf, residual_sign_pattern); and CAPABILITY-DISJOINT -- vm_fault.*, resource_state.*, interaction.*, the abstention classes, and frontier.*. THE CONFIRMATORY TECTONIC TEST MAY USE ONLY THE DISJOINT SET. Using coupled coordinates would make the hypothesis partly tautological: a finer-resolution readout of a quantity necessarily moves before a coarse threshold on that same quantity is crossed, so we would 'discover' that a thermometer precedes a fever. Coupled coordinates are exploratory only.",
+
+  "$comment_sampling": "Every topology statistic computed over these records MUST be rarefied to a fixed interaction count n0 per lineage-window (design review section 8, defect D2). Interaction count is itself under selection -- a lineage approaching a transition is sampled more densely by construction -- and every named topology statistic (clustering, density, boundary movement, basin counts) is sample-size sensitive. Without rarefaction we would be measuring our own sampling rate."
+}
