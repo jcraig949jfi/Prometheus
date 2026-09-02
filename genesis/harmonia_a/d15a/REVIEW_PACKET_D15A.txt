@@ -1,0 +1,287 @@
+=====================================================================
+PROMETHEUS / SERENDIPITY FOUNDRY
+D15-A -- ACTIVE IDENTIFIABILITY: CAN A REASONER LEARN WHAT IT
+NEEDS TO LEARN?
+DESIGN + PHASE-0 + TRACK-B REDESIGN -- EXTERNAL REVIEW PACKET
+=====================================================================
+Date: 2026-09-02
+Origin: Harmonia A (M2, adversarial scientific client), operating
+the SFE gen-2.1 epistemic control plane (Daedalus, M1) as the
+experiment runtime. Directory genesis/harmonia_a/d15a/ on
+Prometheus main. This packet is self-contained for a first-time
+reviewer: it explains the question, the instrument, what was built,
+what was attacked, what broke, and the two decisions now waiting on
+the operator. No confirmatory science has run.
+
+---------------------------------------------------------------------
+0. SUMMARY FOR THE HURRIED REVIEWER
+---------------------------------------------------------------------
+THE QUESTION. When a reasoning system's dynamics are broken and the
+fix is UNDERIDENTIFIED (several distinct repairs are consistent with
+what it has seen), can the system ACTIVELY CHOOSE observations that
+reduce uncertainty over the missing repair -- and does that
+reduction predict when synthesizing a new operator is warranted?
+The claim under test is NOT "more search sees more states." It is
+"intelligently chosen information is disproportionately useful for
+distinguishing repair hypotheses." This is the synthetic analogue of
+designing an experiment.
+
+STATUS, in three verdicts:
+  D15A_PHASE0_GEN21             = ENGINE_QUALIFIED_WITH_LIMITATIONS
+  D15A_PHASE0_SCIENCE_INSTRUMENT = SCIENCE_NOT_READY (v1 generator)
+  D15A_TRACKB_GENERATOR / INSTRUMENT = NOT_READY (v2, 5/6 rungs)
+  => CONFIRMATORY D15-A REMAINS FORBIDDEN.
+
+The headline is process, not result: the benchmark has now stopped
+this experiment from running TWICE -- once by killing a broken
+generator at Phase 0 (cheap), once by catching its own missing rung
+in Track B (cheaper still). The engine survived a hard scientific-
+integrity attack; the science instrument has not yet earned the
+right to run. That distinction is the point.
+
+---------------------------------------------------------------------
+1. THE INSTRUMENT STACK (first-time orientation)
+---------------------------------------------------------------------
+Two layers, kept strictly separate.
+- SFE GEN-2.1 (engine, https://192.168.1.202:8811, /v2): the
+  EPISTEMIC CONTROL PLANE. It governs hypotheses, PROSPECTIVE
+  predictions, committed experiments (an irreversible commit
+  boundary closes the prediction window before execution),
+  authoritative budgets, first-class failures, per-world
+  hash-chained ledgers, cross-client isolation, forks-as-
+  counterfactuals, and a KnowledgeSet query ("what could this world
+  legally have known at event_seq N?"). Release identity is
+  build-derived (engine_source_hash) and stamped on every response.
+- The SCIENCE INSTRUMENT (this seat's code): finite synthetic worlds
+  in which a repair must be identified, with an EXACT oracle for
+  evaluation, firewalled from every discovery path. The engine runs
+  the epistemic lifecycle; the worlds are the scientific object.
+Neither may lie about the other. GEN-2.1 does not manufacture
+substrate evidence (D-14's blocked rungs stay blocked); it governs.
+
+---------------------------------------------------------------------
+2. THE SCIENTIFIC OBJECT: REPAIR IDENTIFIABILITY
+---------------------------------------------------------------------
+A world (state space Z_6 x Z_6 = 36 states, fully enumerable) has
+true dynamics using an operator set the agent PARTLY lacks: a hidden
+operator h. With its known operators T the agent cannot reach the
+target G (a DYNAMICS failure, not mere search failure). It must
+synthesize a repair from a candidate pool. It may PROBE: reveal the
+true dynamics h(s) at a chosen state s (an intervention). Probes
+constrain which repairs remain consistent.
+Three nested equivalence relations (the v1 generator conflated the
+first with the object; the v2 redesign fixes this):
+  E1 extensional operator equality (exact function identity).
+  E2 GOAL-RELEVANT REPAIR EQUIVALENCE (PRIMARY): two repairs are the
+     same iff they make the same targets reachable AND preserve the
+     same soundness (taboo) status -- collapsing all differences
+     OFF the goal-relevant region.
+  E3 decision equivalence (same warrant endpoint; secondary).
+IDENTIFIABILITY = the size of the version space over E2 CLASSES
+consistent with the probes so far. UNDERIDENTIFIED = more than one
+E2 class possible; IDENTIFIED = one. The whole science is: can
+actively chosen probes collapse that version space faster than
+passive exploration, and does the collapse predict synthesis
+warrant?
+
+---------------------------------------------------------------------
+3. PHASE 0 -- DUAL QUALIFICATION (engine vs instrument)
+---------------------------------------------------------------------
+Amendment A4 required two INDEPENDENT verdicts; they were not
+collapsed.
+
+3a. ENGINE (GEN-2.1, release 5274ddbe, API 2.2.0, schema 3):
+ENGINE_QUALIFIED_WITH_LIMITATIONS. The attack used D15-A's own
+workflow -- forks at knowledge frontiers, KnowledgeSet cutoffs
+around every artifact/import/fork, repeat-evidence sequences,
+idempotency retry storms, epistemic replay. All scientific-integrity
+gates held:
+  - prediction ordering: late prediction 409; the nearby bypass
+    (post-commit prediction, no observation yet) also 409 -- the
+    window closes at COMMIT, before execution is possible.
+  - budgets: atomic debit at commit; idempotent re-commit; no free
+    third experiment on a limit-2 world.
+  - F1 content retrieval: native round-trips; imported bytes hash to
+    source; unimported and cross-client both denied.
+  - F2 ontology: success first-class; SUCCESSES_ONLY shares exactly
+    {success}, rejects failure (403).
+  - F3 binding: repeat-without-replication rejected; replication
+    never re-adjudicates; FALSIFIED->SURVIVED impossible (monotone).
+  - F4 identity header on EVERY response including errors.
+  - F5 idempotency: exact retry same object; changed-body+same-key
+    409; cross-world key scoped; no double debit.
+  - A3 EPISTEMIC REPLAY (hard gate): a warrant decision's feature
+    vector reproduced BIT-IDENTICALLY after destroying and
+    reconstructing the client process from the ledger + KnowledgeSet
+    alone. Prometheus can prove a conclusion used exactly the
+    information legally available at that moment.
+  TWO DECLARED, RECOVERABLE LIMITATIONS (filed, non-blocking for
+  D15-A's depth-1 fork design):
+    ENG-1 (P2): at fork depth >= 2 an inherited artifact's id
+      pointer can null in the grandchild's KnowledgeSet; content_hash
+      survives and is correct, so identity is recoverable by hash.
+    ENG-2 (P3): inherited artifacts are legally AVAILABLE but not
+      content-READABLE (availability != readability, by design); a
+      fork branch must reconstruct state from the event ledger, not
+      from inherited artifact content.
+    ENG-3 (P3): sfclient.experiment() lacks the idem_key kwarg the
+      engine supports; tested via raw HTTP.
+  DISCIPLINE NOTE: three of the attack's initial "failures" were
+  test-side bugs (a case-sensitive header read; inherited-artifact
+  ids live in source_artifact not artifact_id; idem-keys must be
+  run-unique). Each was chased down and corrected BEFORE any engine
+  defect was recorded -- which is why ENG-1 was graded P2 (identity
+  recoverable) and not P1.
+
+3b. SCIENCE INSTRUMENT (v1 generator): SCIENCE_NOT_READY. Its own
+census REJECTED it. Repair equivalence collapsed almost nothing
+(37-142 apparent classes per world -- E2 was too close to operator
+identity); the equivalent-repair rung was absent; only 34/200 seeds
+instantiated; probe/goal orthogonality could not be evaluated. The
+firewall canary and DSL-shortcut checks passed, so the epistemic
+machinery was sound; the WORLD MATHEMATICS was broken. Confirmatory
+science was blocked. This is Phase 0 working exactly as intended:
+the cheap place for a benchmark to die.
+
+---------------------------------------------------------------------
+4. TRACK B -- GENERATOR REDESIGN
+---------------------------------------------------------------------
+Only the world mathematics was touched (the engine, firewall,
+replay, and ordering were left alone -- they had passed).
+
+FIXED AND EXACTLY VERIFIED (per-world, by exhaustive BFS, not
+sampling):
+  - E2 now collapses operator multiplicity: E1/E2 class-count ratio
+    median 3.0-5.0 across every rung. The v1 defect is gone.
+  - EQUIV rung real (I5): median E1/E2 = 5.0, one E2 class from many
+    syntactic candidates.
+  - ZERO-INFO pole real (I0): probing the ENTIRE observable universe
+    shrinks the version space in 0% of cases (zero_info_frac = 1.00);
+    underidentified forever by construction.
+  - IDENTIFIED pole real (I5): identified_frac = 1.00.
+  - THE ACTIVE-INFORMATION OBJECT IS REAL AND SHARP (I1):
+    active_advantage_frac = 1.00. In every I1 world, PASSIVE
+    (navigation-reachable) probing CANNOT identify the repair
+    (cost = infinite) while a SINGLE active teleport probe DOES
+    (cost = 1). This is a stronger contrast than the graded rung the
+    design asked for.
+  - No master-key repair (max hidden-op frequency <= 0.15 over an
+    enlarged 26-operator family).
+
+WHAT IS STILL NOT READY:
+  - I2 (the GRADED middle rung: both passive and active can identify,
+    but active with strictly fewer probes) is NON-CONSTRUCTIBLE in
+    Z_6 x Z_6. In a 36-state world, informative states are almost
+    always already navigation-reachable, so passive and active costs
+    are equal; the strict per-world filter rejected all 12,000 seeds.
+    A substrate-size limit, not a logic error.
+  - Two open measurement items: the info-only/goal-only/mixed/null
+    probe factorial and the matched-difficulty stratification (the
+    guarantee that identifiability varies INDEPENDENTLY of ordinary
+    search difficulty) are only partially instantiated and must be
+    re-measured on the populated rungs.
+  - Frozen census criterion "reject if a rung disappears" therefore
+    fires: GENERATOR_NOT_READY (5/6 rungs), INSTRUMENT_NOT_READY.
+    Honest, and correct.
+
+---------------------------------------------------------------------
+5. TWO REMEDIES (operator decision required)
+---------------------------------------------------------------------
+R-A ENLARGE THE SUBSTRATE to Z_8 x Z_8 (64 states) or Z_6^3 (216).
+   A larger navigation/observable gap makes graded passive>active
+   costs generic, so I2 becomes constructible. Exact enumeration
+   stays cheap. Keeps the full 6-rung ladder.
+R-B RESCOPE TO A 5-RUNG LADDER in which I1 (passive-impossible /
+   active-trivial) IS the active-advantage rung. Scientifically this
+   is arguably STRONGER: the D15-A claim is sharpest when passive
+   literally cannot disambiguate and active trivially can. The graded
+   I2 becomes an optional dose-response secondary. This CHANGES the
+   preregistered ladder and therefore needs sign-off.
+Harmonia's recommendation: R-B for the confirmatory ladder (cleaner,
+sharper contrast); R-A in parallel if the graded gradient is wanted
+as a secondary dose-response.
+
+---------------------------------------------------------------------
+6. QUESTIONS FOR THE REVIEWER
+---------------------------------------------------------------------
+Q1 Is the sharp I1 contrast (passive-impossible vs active-trivial)
+   an acceptable, or preferable, primary form of the active-
+   information claim -- or does the science require the GRADED I2
+   dose-response to avoid a knife-edge result?
+Q2 E2 makes SOUNDNESS (taboo preservation) a meaningful repair
+   distinction but treats repair COST as only an E3 distinction. Is
+   that the right scientific commitment, or should cost enter the
+   primary identifiability object?
+Q3 The matched-difficulty stratification (identifiability must vary
+   independently of reach-size / target-count / solver-density) is
+   the guard against regressing to "hard world -> high entropy." What
+   is the minimum stratification a reviewer would require before
+   accepting a positive confirmatory result?
+Q4 Epistemic replay is now a hard gate (A3): every warrant decision
+   must be bit-reconstructable from ledger + KnowledgeSet. Is
+   bit-identity the right bar, or is a declared-tolerance replay
+   acceptable for deterministic-but-floating-point feature pipelines
+   in later campaigns?
+Q5 For the confirmatory forks-as-counterfactuals design, ENG-2 means
+   fork branches must rebuild state from the inherited event ledger,
+   not from artifact content. Does the reviewer want ENG-1/ENG-2
+   fixed and requalified FIRST (deeper forks, readable inheritance),
+   or is depth-1 ledger-reconstruction sufficient for D15-A?
+Q6 Topology-2 (a separate ecology experiment) remains frozen at 6/90
+   cells under the PRE-upgrade engine pin. Restart clean under the
+   new pin, or abandon in favor of the D15-A line?
+
+---------------------------------------------------------------------
+7. EPISTEMIC LABELS
+---------------------------------------------------------------------
+FACT: all verdicts, gate outcomes, census numbers, commit hashes.
+FROZEN EXPECTATION: the design gates, the three amendments, the
+census acceptance criteria. OBSERVATION: E1/E2 = 3-5x; I0 zero-info
+1.00; I1 active-advantage 1.00; I5 identified 1.00; I2 empty.
+INFERENCE: I1 is a stronger form of the active claim than I2;
+substrate size is the I2 blocker. INSTRUMENT FINDINGS: ENG-1/2/3
+(engine), SCI-TB-1/2/3 (science). SPECULATION: none asserted; the
+remedies are proposals for review. BLOCKED: confirmatory D15-A;
+D-14D/trajectory rungs (substrate executor); Topology-2 (pin
+boundary).
+
+---------------------------------------------------------------------
+8. WHAT THIS PACKET DOES NOT CLAIM
+---------------------------------------------------------------------
+No result about active identifiability yet (no confirmatory run).
+No claim about reasoning operations (the topology/identifiability
+work is search-ecology and repair-geometry; the bridge to acquired
+reasoning operations stays walled off until an operator-court can
+test reach expansion). No qualification of any future engine release
+(the freeze binds exactly 5274ddbe; any upgrade requalifies). The
+instrument has been made correct at its poles; it has not yet been
+made complete.
+
+---------------------------------------------------------------------
+9. ARTIFACT INDEX (genesis/harmonia_a/d15a/, repo main)
+---------------------------------------------------------------------
+D15A_DESIGN_PACKET.md              original design (stopped for review)
+D15A_AMENDMENTS_R1.md              three review amendments frozen
+D15A_PHASE0_REPORT.md              dual Phase-0 verdict
+D15A_GEN21_REQUALIFICATION.json    engine attack results
+D15A_INSTRUMENT_QUALIFICATION.json v1 census (rejected)
+D15A_ENGINE_DEFECTS.jsonl          ENG-1/2/3
+phase0_engine_attack.py            engine attack (deterministic)
+replay_pipeline.py                 A3 replay feature pipeline
+D15A_REPAIR_EQUIVALENCE_V2.md      E1/E2/E3 formalization
+generator_v2.py                    constructive generator + census
+D15A_GENERATOR_CENSUS_V2.json      Track-B census
+D15A_IDENTIFIABILITY_LADDER_V2.json rung table
+D15A_PROBE_ORTHOGONALITY.json      probe factorial summary
+D15A_SCIENCE_DEFECTS_TRACKB.jsonl  SCI-TB-1/2/3
+D15A_TRACKB_REPORT.md              Track-B dual verdict + 10 answers
+JOURNAL.jsonl                      every issuance, disclosure, verdict
+Commit chain: design 85e50a619 -> amendments 167e10efd -> Phase 0
+82b023756 -> Track B 6ed391627.
+=====================================================================
+END D15-A PACKET -- the engine earned qualification under a hard
+attack; the benchmark has twice refused to let a false result run.
+Two clean remedies are on the table and one preregistration decision
+is the operator's. The instrument is now correct where it matters
+most and honestly incomplete where it does not yet.
+=====================================================================
