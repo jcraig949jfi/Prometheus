@@ -1,8 +1,9 @@
 # D16C_DESIGN_PACKET -- PARALLEL DISCOVERY ECOLOGY
 ## Does independent science plus governed crossing produce superadditive knowledge?
 
-Harmonia C (M2) . 2026-09-02 . **DESIGN ONLY -- stops for review before any
-execution** (brief s.22). Instrument: SFE GEN-2.1 (`engine_source_hash
+Harmonia C (M2) . 2026-09-02 . v1.1 FROZEN FOR PHASE 0 (review of commit
+4a153e66f: APPROVED WITH FOUR REQUIRED AMENDMENTS -- incorporated in s.19 and
+edited in place in s.2, s.7, s.9, s.11; v1.0 text otherwise unchanged). Instrument: SFE GEN-2.1 (`engine_source_hash
 sha256:5274ddbe...`, API 2.2.0, schema 3) -- NOT Harmonia-qualified; Harmonia
 A's D15-A Phase 0 is the requalification of record, and D16-C's torture plan
 (s.9) is a second, independent attack on the same build. D16-C runs no science
@@ -146,7 +147,11 @@ import on 409);
 `V` verification experiments (experiments spent re-testing imported claims --
 a subset of `E`, reported separately as the VERIFICATION TAX).
 Total cost `C = E + c_I * I + c_K * K`. **Primary: `c_I = 1, c_K = 0`.**
-Sensitivity: `c_I in {0, 4}`, `c_K = 0.25`. A condition is matched iff its
+Sensitivity: `c_I in {0, 1, HIGH}` with HIGH fixed during pilot before
+confirmatory freeze (never post hoc), `c_K = 0.25`. If the verdict is
+SUPERADDITIVE at c_I=0 but REDUNDANT/HARMFUL at c_I=1, the recorded result is
+"complementarity exists but does not repay its crossing cost under the
+primary resource model" -- reported as such, not resolved by re-weighting. A condition is matched iff its
 summed `C` across ALL its worlds (lineages + synthesis + forks) <= `B_total`
 under the primary weights; the audit script recomputes `C` from
 `/resources` and the event ledger and VOIDS any cell that exceeds it.
@@ -341,6 +346,19 @@ TRUE in its world because of an imported foreign failure are counted as
 
 ## 7. Causal composition audit (brief s.7, s.9)
 
+**Three levels of information use (Amendment 3; used verbatim everywhere):**
+`AVAILABLE` -- engine-certified: artifact in KnowledgeSet(W, seq); means only
+that W could legally possess it by seq. `CONSUMED` -- client-asserted: the
+research process reports it retrieved/processed the artifact (a read log
+supports the claim; NOT an engine epistemic event in GEN-2.1). `NECESSARY` --
+experimentally demonstrated: removing the information while preserving the
+relevant prior epistemic state changes the downstream result; only LOSO/
+counterfactual worlds establish it. AVAILABLE != CONSUMED != NECESSARY. The
+phrase "artifact X caused result Y" is never written from F10 or a read log.
+Primary compositional discoveries require NECESSARY; where counterfactual
+intervention cannot be run, the label is `ATTRIBUTION_UNRESOLVED`, which is
+NOT a partial pass.
+
 For every synthesis instance solved:
 1. **Availability**: `knowledge_set(syn_world, seq = commit_seq(solving
    experiment) - 1)` captured and stored with the result. Anything with
@@ -353,9 +371,10 @@ For every synthesis instance solved:
 4. **Leave-one-source-out (LOSO)**: for each origin lineage `i`, the synthesis
    world is re-created from scratch WITHOUT lineage `i`'s imports (a fresh
    world, not a fork -- a fork would inherit the frontier), same `B_syn`, same
-   synthesizer, same seed. `COMPOSITE` iff solved with the full set AND
-   unsolved under every single-lineage removal for at least two distinct
-   lineages. LOSO on a fresh world is engine-enforced: the removed artifacts
+   synthesizer, same seed. `TRUE_COMPOSITION` iff solved with the full set
+   AND unsolved under single-lineage removal for at least two distinct
+   lineages (each such lineage is NECESSARY). If removal of every individual
+   foreign source leaves the solution unchanged, it is NOT composition. LOSO on a fresh world is engine-enforced: the removed artifacts
    are absent from F10's frontier, and that absence is what is checked.
 5. **Shuffled-source control**: the same import volume with each artifact's
    claim payload replaced by a claim from a DIFFERENT world (labels shuffled,
@@ -476,7 +495,21 @@ atomicity under `budget_exhausted` bursts (consumed never exceeds limit; the
 block is durable); origin-only re-export (A->B->C denied); append-only
 (re-verify chains after every burst).
 
-**Throughput collapse curve.** Concurrency `n in {1, 2, 4, 8, 16, 32, 64,
+**Split (Amendment 4).** C1 QUALIFIED OPERATING ENVELOPE: levels 1, 2, 4,
+8, 16 (upward only as warranted) on the private pinned instance; at each
+level R1-R10 plus write exactness, budget exactness, event ordering, ledger
+validity, KnowledgeSet determinism, idempotency, fork-boundary semantics are
+asserted from the ledger; the ecology runs ONLY inside the highest level that
+passed every check. C2 DESTRUCTIVE CAMPAIGN: 32, 64, 128, 256 or until clear
+collapse; measures throughput degradation, lock contention, timeout cascades,
+retry storms, correctness failures. Performance collapse with invariants
+intact = `ENGINE_PERFORMANCE_LIMIT` (not contamination); any correctness
+failure at any load = `ENGINE_CORRECTNESS_DEFECT`, assessed for
+contamination. Live-instance bursts are corroborative only, inside an
+announced window; a live-only anomaly is `LIVE_ANOMALY_UNREPLICATED` until
+reproduced on the private pinned instance.
+
+**Throughput collapse curve (C2).** Concurrency `n in {1, 2, 4, 8, 16, 32, 64,
 128, 256}` clients, mixed workload (60% epistemic POSTs, 25% GETs incl.
 `knowledge_set`, 10% imports, 5% forks), 60 s per level. Recorded: p50/p95/
 p99 latency, timeouts, HTTP 5xx, `database is locked` occurrences (server
@@ -541,6 +574,22 @@ worlds; contrasts are within-world.
 **Primary endpoint:** `COMP(cond, w, B)` = fraction of INTERACTIVE synthesis
 instances (A+C, A+B+C) in `Syn(w)` solved by the condition's synthesis world
 at matched `B_total`, AND provenance-complete (s.7 steps 1-3 reconstructible).
+
+**Superadditivity ladder (Amendment 1).** Four distinct claims, reported
+separately for every primary interactive result: `COVERAGE` (lineages
+discover different useful facts: unique-coverage share), `UNION` (a
+downstream process has AVAILABLE the collection: UNION_AVAILABLE cell =
+synthesis over ISOLATED lineages' artifacts, no crossing during discovery),
+`COMPOSITION` (downstream solution NECESSARILY requires information from >1
+lineage: TRUE_COMPOSITION per s.7), `SYNERGY` (combined performance exceeds
+what the union predicts under the declared cost model: COMP(LATE_MERGE) -
+COMP(UNION_AVAILABLE) with CI). Each primary result row carries:
+SERIAL_MONOCULTURE, SERIAL_RESTART, PARALLEL_ISOLATED (per lineage),
+UNION_AVAILABLE, TRUE_COMPOSITION flag, SHUFFLED_SOURCE_CONTROL, and
+LOSO_<lineage> for every contributing lineage. The critical test is not "did
+parallel discover more" but "did the combined solution require complementary
+information that no individual lineage possessed". Union-explained outcomes
+are `UNION_ONLY`, never `SUPERADDITIVE`; the declared prior (0.35) stands.
 Primary contrast per regime: `D_prim(B) = COMP(PARALLEL_LATE_MERGE) -
 COMP(SERIAL_MONOCULTURE)`, world-paired bootstrap CI (10,000 resamples, seed
 20260916). Companion contrasts, same machinery: vs SERIAL_RESTART; LATE_MERGE
@@ -768,7 +817,54 @@ Three ways the FOUNDRY could corrupt the conclusion without crashing:
 
 ---
 
-**STOP.** Per brief s.22 this packet halts here for review. Nothing has been
+## 19. Review amendments incorporated (2026-09-02, commit 4a153e66f review)
+
+1. Superadditivity null strengthened: COVERAGE / UNION / COMPOSITION / SYNERGY
+   ladder (s.11); UNION_AVAILABLE cell added to every primary contrast.
+2. **Origin-laundering is a BLOCKING engine gate, run before any ecology
+   science.** Minimal three-client test: A creates X natively; B legally
+   imports X; B reads the bytes; B creates a content-identical NATIVE
+   artifact; C attempts to import from B. Variations: artifact_id, meta,
+   info_kind, byte-identical payload, semantically-equivalent byte-different
+   payload. If C obtains X through B: `GEN21_ORIGIN_LAUNDERING = CRITICAL`,
+   affected Phase 0 work stops, minimum reproducer goes to Daedalus, NOT
+   worked around in D16-C client code, NOT reinterpreted as rediscovery
+   unless the engine itself can distinguish rediscovery from republication.
+3. AVAILABLE / CONSUMED / NECESSARY vocabulary (s.7); `ATTRIBUTION_UNRESOLVED`.
+4. C1 envelope vs C2 destruction (s.9).
+5. Fork-encoded merge is PRIMARY but named precisely: a new descendant lineage
+   begins from a frontier containing the selected foreign information; it
+   does not represent the identical continuing researcher learning later.
+   Primary claims concern lineage topology, inherited epistemic state, and
+   timing of availability. Schedule-encoded import is the secondary test of
+   within-lineage arrival timing. Disagreement between the two is reported,
+   never pooled.
+6. c_I = 1 primary; sensitivity {0, 1, HIGH}, HIGH fixed in pilot (s.2).
+7. Correctness claims come from the private pinned instance only (s.9).
+8. Duplicate evidence: five constructions planted; provenance reconstruction
+   from legitimate engine state only; if independence cannot be established:
+   `SUBSTRATE_GAP: EVIDENCE_INDEPENDENCE_NOT_REPRESENTABLE`; any cell whose
+   inference requires independence of apparently separate evidence is VOID
+   unless independence is established externally by the experimental
+   construction.
+9. Phase 0 issues five separate verdicts: D16C_BENCHMARK_QUALIFIED,
+   D16C_CAUSAL_AUDIT_QUALIFIED, D16C_CROSSING_QUALIFIED,
+   D16C_CONCURRENCY_ENVELOPE, GEN21_D16C_QUALIFIED. Never collapsed.
+10. Phase 0 order (fixed): adjudicator -> generator census (master-key and
+    marginal-prior shortcuts) -> multi-component necessity -> union-vs-
+    composition qualification -> origin-laundering attack -> duplicate-
+    evidence constructions -> F10 fork/frontier -> LOSO audit -> concurrency
+    envelope -> pilot -> freeze thresholds/N -> return for review.
+    Deliverables: D16C_PHASE0_REPORT.md, D16C_BENCHMARK_QUALIFICATION.json,
+    D16C_CROSSING_QUALIFICATION.json, D16C_CONCURRENCY_QUALIFICATION.json,
+    D16C_ENGINE_DEFECTS.jsonl, D16C_SCIENCE_DEFECTS.jsonl.
+    Out of scope for Phase 0: confirmatory science; any Harmonia A/B
+    import; destructive load on the live engine outside an announced window.
+
+---
+
+**STOP (v1.0).** Per brief s.22 this packet halted here for review; v1.1
+proceeds to Phase 0 only. Nothing has been
 run: no generator instance exists, no engine world has been created for
 D16-C, no burst has been fired at the live instance, no adapter has been
 written. On approval the sequence is: Phase 0 (private-instance torture R1-
