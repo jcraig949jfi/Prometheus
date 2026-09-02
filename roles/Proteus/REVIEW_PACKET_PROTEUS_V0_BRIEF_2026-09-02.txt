@@ -278,7 +278,9 @@ Then the post-build packet. Then stop.
 
 The only checkable claims at this stage are provenance:
 
-  git show origin/main:roles/Proteus/PROMPT_PROTEUS_PLAYER_FOUNDRY_V0_2026-09-02.txt     | sha256sum
+  git show origin/main:<PATH>   with PATH =
+    roles/Proteus/PROMPT_PROTEUS_PLAYER_FOUNDRY_V0_2026-09-02.txt
+    (pipe the output to sha256sum)
     expected cacf303f3a997e2172cac5ef39021ac194ab3ec82edea21f5dfc8579e70ec5b4
   The hash is of the committed blob (LF line endings). A Windows checkout
   with core.autocrlf rewrites the working copy to CRLF and sha256sum on
