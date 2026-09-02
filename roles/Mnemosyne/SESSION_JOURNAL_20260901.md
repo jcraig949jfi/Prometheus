@@ -186,3 +186,34 @@ VERDICT: RETRIEVAL_ADVANTAGE_WITHOUT_DESIGN_ADVANTAGE (MODEL_SPECIFIC).
   ingest-vs-isolate (HUMAN_AUDIT_PACKET_V2 q1).
 - s17 ontology rulings encoded as HUMAN v2 registry rows. Gap slate still
   sealed. Tensor untouched. G14 cross-host still NOT_QUALIFIED.
+
+---
+
+# Addendum 5 (2026-09-02): PEW V3 EXECUTED — explicit memory, fossil record, incubator prep
+
+Charter sha 0d24ff4f...; prereg 4f8f6c875 + AMENDMENT 1 (20560088e,
+committed before any arm output was read). Full gates: benchmarks/gates_v3.json.
+
+- AMBIENT MEMORY: fully inventoried (226 files, per-file sha manifest,
+  LEGACY_AMBIENT_MEMORY packet). G3 FAIL, probe-proven three ways: the
+  index is injected into ALL subagents, worktree does not isolate, and
+  physical directory relocation does not isolate (parent-session caching).
+  AMBIENT_MEMORY_CANNOT_YET_BE_SAFELY_REMOVED; DECLARED mode qualified.
+- EXPLICIT MEMORY: s6 chain live (memory_artifacts + memory_influences).
+  Execution experiment (deterministic, sealed truth 11f16bdd, no LLM
+  judge): A 5/5/6 vs B(pack) 6/6/6 -> delta +0.111 = frozen MARGINAL band,
+  floor-bounded by G6 saturation (control competence 0.867 > 0.80 band).
+  The benefit concentrated exactly where knowledge, not skill, was binding
+  (the dirichlet mirror). B agents verified pack claims live and twice
+  OVERRODE the pack after verification (G9 anti-anchoring PASS).
+- FOSSIL RECORD: 11,731 rows of REAL SFE history metabolized by reference
+  (mode=ro, entry-hash anchored). 5 mining query classes at <=7ms; SVD
+  exercise; q3 blocked by SFE phenotype coverage 2/6006 -> requirement
+  handed upstream: Incubator organisms must emit phenotype observations.
+- REINTERPRETATION: I1->I2 supersession on a hash-verified immutable event.
+- FIREWALL: PEW-NATIVE surfaces scanner-clean vs live prose vocabulary.
+- DISTRIBUTED: 4-identity concurrent ingest clean (0 dupes under retry +
+  crash replay); envelope 7 / 712 / 8191 ev/s; cross-host still NOT READY.
+- INCUBATOR DECISION: READY_WITH_LIMITATIONS (see gates_v3.json).
+- V3 FROZEN; packet at evidence_wiki/V3_REVIEW_PACKET_2026-09-02.txt.
+  Per charter s27: STOPPED here. No V4, no mass ingestion.
