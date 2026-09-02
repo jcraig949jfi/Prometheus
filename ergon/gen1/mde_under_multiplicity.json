@@ -1,0 +1,32 @@
+{
+ "n_lineages": 30,
+ "sigma": 0.0412,
+ "power_target": 0.8,
+ "n_perm": 2000,
+ "n_trials": 3000,
+ "seed": 20260902,
+ "prereg_stated_mde_pp": 1.9,
+ "rows": [
+  {
+   "label": "uncorrected            alpha=0.05",
+   "alpha": 0.05,
+   "mde_pp": 2.18
+  },
+  {
+   "label": "Holm, best of 5     alpha=0.05/5",
+   "alpha": 0.01,
+   "mde_pp": 2.72
+  },
+  {
+   "label": "Holm, 2nd of 5      alpha=0.05/4",
+   "alpha": 0.0125,
+   "mde_pp": 2.68
+  },
+  {
+   "label": "Bonferroni-like     alpha=0.05/3",
+   "alpha": 0.016666666666666666,
+   "mde_pp": 2.59
+  }
+ ],
+ "n_for_1p9pp_under_holm": 60
+}

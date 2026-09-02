@@ -1,0 +1,172 @@
+{
+  "purpose": "CEILING-1: attainable rung map for the pinned solver",
+  "solver_pin": "nvidia:gpt-oss-120b",
+  "seed": 20260826,
+  "max_tokens": 4096,
+  "resolution": "screening (n=20 per cell), not decision-n",
+  "ts_utc": "2026-08-26T22:23:11+00:00",
+  "cells": {
+    "WEIR:R0": {
+      "n_attempted": 20,
+      "n_transport_ok": 20,
+      "transport_failure_rate": 0.0,
+      "n": 20,
+      "accuracy": 1.0,
+      "se": 0.0,
+      "ci95": [
+        1.0,
+        1.0
+      ],
+      "accuracy_excluding_parse_failures": 1.0,
+      "parse_failure_rate": 0.0,
+      "truncation_rate": 0.0,
+      "baseline_random": 0.41,
+      "illegal_action_rate": 0.0,
+      "baseline_majority_same_items": 0.35
+    },
+    "WEIR:R2": {
+      "n_attempted": 20,
+      "n_transport_ok": 20,
+      "transport_failure_rate": 0.0,
+      "n": 20,
+      "accuracy": 0.75,
+      "se": 0.0968,
+      "ci95": [
+        0.5602,
+        0.9398
+      ],
+      "accuracy_excluding_parse_failures": 0.9375,
+      "parse_failure_rate": 0.2,
+      "truncation_rate": 0.2,
+      "baseline_random": 0.3212,
+      "illegal_action_rate": 0.0,
+      "baseline_greedy_1ply_same_items": 0.8125,
+      "baseline_majority_same_items": 0.45
+    },
+    "WEIR:R3": {
+      "n_attempted": 20,
+      "n_transport_ok": 20,
+      "transport_failure_rate": 0.0,
+      "n": 20,
+      "accuracy": 0.55,
+      "se": 0.1112,
+      "ci95": [
+        0.332,
+        0.768
+      ],
+      "accuracy_excluding_parse_failures": 1.0,
+      "parse_failure_rate": 0.45,
+      "truncation_rate": 0.45,
+      "baseline_random": 0.0,
+      "baseline_majority_same_items": 0.25
+    },
+    "LOOM:R0": {
+      "n_attempted": 20,
+      "n_transport_ok": 20,
+      "transport_failure_rate": 0.0,
+      "n": 20,
+      "accuracy": 1.0,
+      "se": 0.0,
+      "ci95": [
+        1.0,
+        1.0
+      ],
+      "accuracy_excluding_parse_failures": 1.0,
+      "parse_failure_rate": 0.0,
+      "truncation_rate": 0.0,
+      "baseline_random": 0.675,
+      "illegal_action_rate": 0.0,
+      "baseline_majority_same_items": 0.6
+    },
+    "LOOM:R2": {
+      "n_attempted": 20,
+      "n_transport_ok": 20,
+      "transport_failure_rate": 0.0,
+      "n": 20,
+      "accuracy": 0.85,
+      "se": 0.0798,
+      "ci95": [
+        0.6935,
+        1.0
+      ],
+      "accuracy_excluding_parse_failures": 1.0,
+      "parse_failure_rate": 0.15,
+      "truncation_rate": 0.15,
+      "baseline_random": 0.5167,
+      "illegal_action_rate": 0.0,
+      "baseline_greedy_1ply_same_items": 1.0,
+      "baseline_majority_same_items": 0.4
+    },
+    "LOOM:R3": {
+      "n_attempted": 20,
+      "n_transport_ok": 20,
+      "transport_failure_rate": 0.0,
+      "n": 20,
+      "accuracy": 0.65,
+      "se": 0.1067,
+      "ci95": [
+        0.441,
+        0.859
+      ],
+      "accuracy_excluding_parse_failures": 0.8667,
+      "parse_failure_rate": 0.25,
+      "truncation_rate": 0.25,
+      "baseline_random": 0.0,
+      "baseline_majority_same_items": 0.25
+    },
+    "TITHE:R0": {
+      "n_attempted": 20,
+      "n_transport_ok": 20,
+      "transport_failure_rate": 0.0,
+      "n": 20,
+      "accuracy": 1.0,
+      "se": 0.0,
+      "ci95": [
+        1.0,
+        1.0
+      ],
+      "accuracy_excluding_parse_failures": 1.0,
+      "parse_failure_rate": 0.0,
+      "truncation_rate": 0.0,
+      "baseline_random": 1.0,
+      "illegal_action_rate": 0.0,
+      "baseline_majority_same_items": 1.0
+    },
+    "TITHE:R2": {
+      "n_attempted": 20,
+      "n_transport_ok": 20,
+      "transport_failure_rate": 0.0,
+      "n": 20,
+      "accuracy": 0.7,
+      "se": 0.1025,
+      "ci95": [
+        0.4992,
+        0.9008
+      ],
+      "accuracy_excluding_parse_failures": 1.0,
+      "parse_failure_rate": 0.3,
+      "truncation_rate": 0.3,
+      "baseline_random": 0.5,
+      "illegal_action_rate": 0.0,
+      "baseline_greedy_1ply_same_items": 0.9286,
+      "baseline_majority_same_items": 0.75
+    },
+    "TITHE:R3": {
+      "n_attempted": 20,
+      "n_transport_ok": 20,
+      "transport_failure_rate": 0.0,
+      "n": 20,
+      "accuracy": 0.6,
+      "se": 0.1095,
+      "ci95": [
+        0.3853,
+        0.8147
+      ],
+      "accuracy_excluding_parse_failures": 1.0,
+      "parse_failure_rate": 0.4,
+      "truncation_rate": 0.4,
+      "baseline_random": 0.0,
+      "baseline_majority_same_items": 0.15
+    }
+  }
+}

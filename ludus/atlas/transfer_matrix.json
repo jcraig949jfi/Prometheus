@@ -1,0 +1,3034 @@
+{
+  "artifact": "LUDUS transfer matrix + atlas",
+  "no_model_calls": true,
+  "ts_utc": "2026-08-27T08:16:05+00:00",
+  "circuits": {
+    "r0010": {
+      "axis": "SELECT",
+      "doc": "bank the most right now: take the option with the highest immediate pot",
+      "transferable": true
+    },
+    "r0011": {
+      "axis": "SELECT",
+      "doc": "preserve capacity: take the option that consumes the least irreversible capacity, ties to immediate pot",
+      "transferable": true
+    },
+    "r0012": {
+      "axis": "SELECT",
+      "doc": "one-ply lookahead: take the option whose single next draw has the best greedy expected pot",
+      "transferable": true
+    },
+    "r0013": {
+      "axis": "SELECT",
+      "doc": "null circuit: take the first option in enumeration order, reading nothing about the state",
+      "transferable": false
+    },
+    "r0014": {
+      "axis": "SELECT",
+      "doc": "spend capacity only when it pays: take the option maximising pot gain per unit capacity consumed",
+      "transferable": true
+    },
+    "r0003": {
+      "axis": "STOP",
+      "doc": "myopic one-step rule: stop iff P(death) * pot >= E[immediate gain]. Cycle 002's transferring circuit.",
+      "transferable": true
+    },
+    "r0004": {
+      "axis": "STOP",
+      "doc": "floor: never bank voluntarily, ride to forced end or death",
+      "transferable": false
+    },
+    "r0005": {
+      "axis": "STOP",
+      "doc": "floor: bank at the first opportunity",
+      "transferable": false
+    },
+    "r0007": {
+      "axis": "STOP",
+      "doc": "survival rule: stop once the chance of surviving one more draw falls below one half",
+      "transferable": true
+    },
+    "r0015": {
+      "axis": "STOP",
+      "doc": "two-ply myopic: stop iff continuing for TWO draws under greedy play has negative expected change",
+      "transferable": true
+    }
+  },
+  "worlds": {
+    "FLIP7": {
+      "world": "FLIP7",
+      "genre": "push-your-luck / set collection",
+      "surface": "cards, numbers, a deck that depletes as you draw",
+      "rules_state": "HYPOTHESIZED",
+      "declared_interfaces": [
+        "STOP"
+      ],
+      "select_axis_is_live": false,
+      "n_states": 5812,
+      "optimal_ev": 18.565218,
+      "compile_and_solve_seconds": 0.1,
+      "stop_axis": {
+        "r0003": {
+          "ev": 18.562417,
+          "retention": 0.9998,
+          "retention_by_partner": {
+            "optimal_select": 0.9998,
+            "greedy_select": 0.9998,
+            "one_ply_select": 0.9998
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0004": {
+          "ev": 5.74332,
+          "retention": 0.3094,
+          "retention_by_partner": {
+            "optimal_select": 0.3094,
+            "greedy_select": 0.3094,
+            "one_ply_select": 0.3094
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0005": {
+          "ev": 8.227848,
+          "retention": 0.4432,
+          "retention_by_partner": {
+            "optimal_select": 0.4432,
+            "greedy_select": 0.4432,
+            "one_ply_select": 0.4432
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0007": {
+          "ev": 10.586795,
+          "retention": 0.5702,
+          "retention_by_partner": {
+            "optimal_select": 0.5702,
+            "greedy_select": 0.5702,
+            "one_ply_select": 0.5702
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0015": {
+          "ev": 18.091907,
+          "retention": 0.9745,
+          "retention_by_partner": {
+            "optimal_select": 0.9745,
+            "greedy_select": 0.9745,
+            "one_ply_select": 0.9745
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0006-fitted": {
+          "ev": 18.521226,
+          "retention": 0.9976,
+          "fitted_T": 23.0,
+          "transferable": false,
+          "note": "swept per world; the bar a transferable circuit must clear"
+        }
+      },
+      "select_axis": {},
+      "axis_decomposition": {
+        "note": "no SELECT axis: every draw admits at most one option. This is a property of the world, recorded, not a gap."
+      },
+      "wall_seconds": 0.9
+    },
+    "INCAN_GOLD": {
+      "world": "INCAN_GOLD",
+      "genre": "push-your-luck / press-your-luck",
+      "surface": "an expedition deck, temples, gems, and paired hazards",
+      "rules_state": "HYPOTHESIZED",
+      "declared_interfaces": [
+        "STOP"
+      ],
+      "select_axis_is_live": false,
+      "n_states": 442368,
+      "optimal_ev": 17.339875,
+      "compile_and_solve_seconds": 19.0,
+      "stop_axis": {
+        "r0003": {
+          "ev": 17.339875,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 1.0,
+            "greedy_select": 1.0,
+            "one_ply_select": 1.0
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0004": {
+          "ev": 0.0,
+          "retention": 0.0,
+          "retention_by_partner": {
+            "optimal_select": 0.0,
+            "greedy_select": 0.0,
+            "one_ply_select": 0.0
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0005": {
+          "ev": 4.133333,
+          "retention": 0.2384,
+          "retention_by_partner": {
+            "optimal_select": 0.2384,
+            "greedy_select": 0.2384,
+            "one_ply_select": 0.2384
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0007": {
+          "ev": 3.316478,
+          "retention": 0.1913,
+          "retention_by_partner": {
+            "optimal_select": 0.1913,
+            "greedy_select": 0.1913,
+            "one_ply_select": 0.1913
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0015": {
+          "ev": 17.176938,
+          "retention": 0.9906,
+          "retention_by_partner": {
+            "optimal_select": 0.9906,
+            "greedy_select": 0.9906,
+            "one_ply_select": 0.9906
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0006-fitted": {
+          "ev": 15.541615,
+          "retention": 0.8963,
+          "fitted_T": 31.0,
+          "transferable": false,
+          "note": "swept per world; the bar a transferable circuit must clear"
+        }
+      },
+      "select_axis": {},
+      "axis_decomposition": {
+        "note": "no SELECT axis: every draw admits at most one option. This is a property of the world, recorded, not a gap."
+      },
+      "wall_seconds": 107.8
+    },
+    "MARTIAN_DICE": {
+      "world": "MARTIAN_DICE",
+      "genre": "push-your-luck / dice",
+      "surface": "thirteen dice, flying saucers, tanks, and abducted livestock",
+      "rules_state": "HYPOTHESIZED",
+      "declared_interfaces": [
+        "STOP",
+        "SELECT"
+      ],
+      "select_axis_is_live": true,
+      "n_states": 8555,
+      "optimal_ev": 2.093806,
+      "compile_and_solve_seconds": 1.8,
+      "stop_axis": {
+        "r0003": {
+          "ev": 2.067013,
+          "retention": 0.9872,
+          "retention_by_partner": {
+            "optimal_select": 0.9872,
+            "greedy_select": 0.8655,
+            "one_ply_select": 0.9656
+          },
+          "partner_spread": 0.1217,
+          "transferable": true
+        },
+        "r0004": {
+          "ev": 0.482895,
+          "retention": 0.2306,
+          "retention_by_partner": {
+            "optimal_select": 0.2306,
+            "greedy_select": 0.2052,
+            "one_ply_select": 0.2243
+          },
+          "partner_spread": 0.0255,
+          "transferable": false
+        },
+        "r0005": {
+          "ev": 0.373241,
+          "retention": 0.1783,
+          "retention_by_partner": {
+            "optimal_select": 0.1762,
+            "greedy_select": 0.1783,
+            "one_ply_select": 0.1783
+          },
+          "partner_spread": 0.0021,
+          "transferable": false
+        },
+        "r0007": {
+          "ev": 1.812581,
+          "retention": 0.8657,
+          "retention_by_partner": {
+            "optimal_select": 0.8657,
+            "greedy_select": 0.7712,
+            "one_ply_select": 0.8477
+          },
+          "partner_spread": 0.0945,
+          "transferable": true
+        },
+        "r0015": {
+          "ev": 2.014177,
+          "retention": 0.962,
+          "retention_by_partner": {
+            "optimal_select": 0.962,
+            "greedy_select": 0.8217,
+            "one_ply_select": 0.9406
+          },
+          "partner_spread": 0.1403,
+          "transferable": true
+        },
+        "r0006-fitted": {
+          "ev": 1.978289,
+          "retention": 0.9448,
+          "fitted_T": 3.0,
+          "transferable": false,
+          "note": "swept per world; the bar a transferable circuit must clear"
+        }
+      },
+      "select_axis": {
+        "r0010": {
+          "ev": 1.819246,
+          "retention": 0.8689,
+          "retention_by_partner": {
+            "myopic_stop": 0.8655,
+            "never_stop": 0.2052,
+            "optimal_stop": 0.8689
+          },
+          "partner_spread": 0.6637,
+          "transferable": true
+        },
+        "r0011": {
+          "ev": 0.524825,
+          "retention": 0.2507,
+          "retention_by_partner": {
+            "myopic_stop": 0.2501,
+            "never_stop": 0.0195,
+            "optimal_stop": 0.2507
+          },
+          "partner_spread": 0.2312,
+          "transferable": true
+        },
+        "r0012": {
+          "ev": 2.040952,
+          "retention": 0.9748,
+          "retention_by_partner": {
+            "myopic_stop": 0.9656,
+            "never_stop": 0.2243,
+            "optimal_stop": 0.9748
+          },
+          "partner_spread": 0.7504,
+          "transferable": true
+        },
+        "r0013": {
+          "ev": 1.548931,
+          "retention": 0.7398,
+          "retention_by_partner": {
+            "myopic_stop": 0.7398,
+            "never_stop": 0.1705,
+            "optimal_stop": 0.7398
+          },
+          "partner_spread": 0.5693,
+          "transferable": false
+        },
+        "r0014": {
+          "ev": 1.68238,
+          "retention": 0.8035,
+          "retention_by_partner": {
+            "myopic_stop": 0.8004,
+            "never_stop": 0.1834,
+            "optimal_stop": 0.8035
+          },
+          "partner_spread": 0.6201,
+          "transferable": true
+        },
+        "OPTIMAL": {
+          "ev": 2.067013,
+          "retention": 0.9872,
+          "transferable": false
+        }
+      },
+      "axis_decomposition": {
+        "cheap_pair": "r0012+r0003",
+        "cheap_pair_retention": 0.9656,
+        "recovered_by_upgrading_SELECT_only": 0.0216,
+        "recovered_by_upgrading_STOP_only": 0.0091,
+        "total_residual": 0.0344
+      },
+      "wall_seconds": 98.0
+    },
+    "CANT_STOP": {
+      "world": "CANT_STOP",
+      "genre": "push-your-luck / dice race",
+      "surface": "four dice, eleven columns of unequal length, three white runners",
+      "rules_state": "HYPOTHESIZED",
+      "declared_interfaces": [
+        "STOP",
+        "SELECT"
+      ],
+      "select_axis_is_live": true,
+      "n_states": 69038,
+      "optimal_ev": 0.714186,
+      "compile_and_solve_seconds": 60.9,
+      "stop_axis": {
+        "r0003": {
+          "ev": 0.714186,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 1.0,
+            "greedy_select": 0.8983,
+            "one_ply_select": 0.9278
+          },
+          "partner_spread": 0.1017,
+          "transferable": true
+        },
+        "r0004": {
+          "ev": 0.052768,
+          "retention": 0.0739,
+          "retention_by_partner": {
+            "optimal_select": 0.0739,
+            "greedy_select": 0.0292,
+            "one_ply_select": 0.044
+          },
+          "partner_spread": 0.0447,
+          "transferable": false
+        },
+        "r0005": {
+          "ev": 0.315692,
+          "retention": 0.442,
+          "retention_by_partner": {
+            "optimal_select": 0.3702,
+            "greedy_select": 0.442,
+            "one_ply_select": 0.436
+          },
+          "partner_spread": 0.0718,
+          "transferable": false
+        },
+        "r0007": {
+          "ev": 0.094574,
+          "retention": 0.1324,
+          "retention_by_partner": {
+            "optimal_select": 0.1324,
+            "greedy_select": 0.099,
+            "one_ply_select": 0.1159
+          },
+          "partner_spread": 0.0334,
+          "transferable": true
+        },
+        "r0015": {
+          "ev": 0.712731,
+          "retention": 0.998,
+          "retention_by_partner": {
+            "optimal_select": 0.998,
+            "greedy_select": 0.8961,
+            "one_ply_select": 0.9257
+          },
+          "partner_spread": 0.1018,
+          "transferable": true
+        },
+        "r0006-fitted": {
+          "ev": 0.671045,
+          "retention": 0.9396,
+          "fitted_T": 0.9223,
+          "transferable": false,
+          "note": "swept per world; the bar a transferable circuit must clear"
+        }
+      },
+      "select_axis": {
+        "r0010": {
+          "ev": 0.641584,
+          "retention": 0.8983,
+          "retention_by_partner": {
+            "myopic_stop": 0.8983,
+            "never_stop": 0.0292,
+            "optimal_stop": 0.8983
+          },
+          "partner_spread": 0.8691,
+          "transferable": true
+        },
+        "r0011": {
+          "ev": 0.670531,
+          "retention": 0.9389,
+          "retention_by_partner": {
+            "myopic_stop": 0.9389,
+            "never_stop": 0.0374,
+            "optimal_stop": 0.9389
+          },
+          "partner_spread": 0.9014,
+          "transferable": true
+        },
+        "r0012": {
+          "ev": 0.662635,
+          "retention": 0.9278,
+          "retention_by_partner": {
+            "myopic_stop": 0.9278,
+            "never_stop": 0.044,
+            "optimal_stop": 0.9278
+          },
+          "partner_spread": 0.8838,
+          "transferable": true
+        },
+        "r0013": {
+          "ev": 0.561653,
+          "retention": 0.7864,
+          "retention_by_partner": {
+            "myopic_stop": 0.7864,
+            "never_stop": 0.0165,
+            "optimal_stop": 0.7827
+          },
+          "partner_spread": 0.7699,
+          "transferable": false
+        },
+        "r0014": {
+          "ev": 0.668346,
+          "retention": 0.9358,
+          "retention_by_partner": {
+            "myopic_stop": 0.9358,
+            "never_stop": 0.034,
+            "optimal_stop": 0.9358
+          },
+          "partner_spread": 0.9018,
+          "transferable": true
+        },
+        "OPTIMAL": {
+          "ev": 0.714186,
+          "retention": 1.0,
+          "transferable": false
+        }
+      },
+      "axis_decomposition": {
+        "cheap_pair": "r0011+r0003",
+        "cheap_pair_retention": 0.9389,
+        "recovered_by_upgrading_SELECT_only": 0.0611,
+        "recovered_by_upgrading_STOP_only": 0.0,
+        "total_residual": 0.0611
+      },
+      "wall_seconds": 972.9
+    },
+    "FOUNDRY[gate=0,decay=0,k=2,cap=2,h=6]": {
+      "world": "FOUNDRY[gate=0,decay=0,k=2,cap=2,h=6]",
+      "genre": "synthetic control",
+      "surface": "no theme at all, deliberately",
+      "rules_state": "SYNTHETIC",
+      "declared_interfaces": [
+        "STOP",
+        "SELECT"
+      ],
+      "select_axis_is_live": true,
+      "n_states": 58,
+      "optimal_ev": 2.079102,
+      "compile_and_solve_seconds": 1.5,
+      "stop_axis": {
+        "r0003": {
+          "ev": 2.079102,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 1.0,
+            "greedy_select": 1.0,
+            "one_ply_select": 1.0
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0004": {
+          "ev": 1.240723,
+          "retention": 0.5968,
+          "retention_by_partner": {
+            "optimal_select": 0.5968,
+            "greedy_select": 0.5968,
+            "one_ply_select": 0.5968
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0005": {
+          "ev": 1.25,
+          "retention": 0.6012,
+          "retention_by_partner": {
+            "optimal_select": 0.6012,
+            "greedy_select": 0.6012,
+            "one_ply_select": 0.6012
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0007": {
+          "ev": 1.240723,
+          "retention": 0.5968,
+          "retention_by_partner": {
+            "optimal_select": 0.5968,
+            "greedy_select": 0.5968,
+            "one_ply_select": 0.5968
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0015": {
+          "ev": 2.055664,
+          "retention": 0.9887,
+          "retention_by_partner": {
+            "optimal_select": 0.9887,
+            "greedy_select": 0.9887,
+            "one_ply_select": 0.9887
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0006-fitted": {
+          "ev": 2.054688,
+          "retention": 0.9883,
+          "fitted_T": 4.0,
+          "transferable": false,
+          "note": "swept per world; the bar a transferable circuit must clear"
+        }
+      },
+      "select_axis": {
+        "r0010": {
+          "ev": 2.079102,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "myopic_stop": 1.0,
+            "never_stop": 0.5968,
+            "optimal_stop": 1.0
+          },
+          "partner_spread": 0.4032,
+          "transferable": true
+        },
+        "r0011": {
+          "ev": 1.71875,
+          "retention": 0.8267,
+          "retention_by_partner": {
+            "myopic_stop": 0.8267,
+            "never_stop": 0.6097,
+            "optimal_stop": 0.8267
+          },
+          "partner_spread": 0.217,
+          "transferable": true
+        },
+        "r0012": {
+          "ev": 2.079102,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "myopic_stop": 1.0,
+            "never_stop": 0.5968,
+            "optimal_stop": 1.0
+          },
+          "partner_spread": 0.4032,
+          "transferable": true
+        },
+        "r0013": {
+          "ev": 2.079102,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "myopic_stop": 1.0,
+            "never_stop": 0.5968,
+            "optimal_stop": 1.0
+          },
+          "partner_spread": 0.4032,
+          "transferable": false
+        },
+        "r0014": {
+          "ev": 1.71875,
+          "retention": 0.8267,
+          "retention_by_partner": {
+            "myopic_stop": 0.8267,
+            "never_stop": 0.6097,
+            "optimal_stop": 0.8267
+          },
+          "partner_spread": 0.217,
+          "transferable": true
+        },
+        "OPTIMAL": {
+          "ev": 2.079102,
+          "retention": 1.0,
+          "transferable": false
+        }
+      },
+      "axis_decomposition": {
+        "cheap_pair": "r0010+r0003",
+        "cheap_pair_retention": 1.0,
+        "recovered_by_upgrading_SELECT_only": 0.0,
+        "recovered_by_upgrading_STOP_only": 0.0,
+        "total_residual": 0.0
+      },
+      "wall_seconds": 1.5
+    },
+    "FOUNDRY[gate=0,decay=0,k=2,cap=4,h=6]": {
+      "world": "FOUNDRY[gate=0,decay=0,k=2,cap=4,h=6]",
+      "genre": "synthetic control",
+      "surface": "no theme at all, deliberately",
+      "rules_state": "SYNTHETIC",
+      "declared_interfaces": [
+        "STOP",
+        "SELECT"
+      ],
+      "select_axis_is_live": true,
+      "n_states": 77,
+      "optimal_ev": 2.141602,
+      "compile_and_solve_seconds": 0.0,
+      "stop_axis": {
+        "r0003": {
+          "ev": 2.141602,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 1.0,
+            "greedy_select": 1.0,
+            "one_ply_select": 1.0
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0004": {
+          "ev": 1.662598,
+          "retention": 0.7763,
+          "retention_by_partner": {
+            "optimal_select": 0.7763,
+            "greedy_select": 0.7763,
+            "one_ply_select": 0.7763
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0005": {
+          "ev": 1.25,
+          "retention": 0.5837,
+          "retention_by_partner": {
+            "optimal_select": 0.5837,
+            "greedy_select": 0.5837,
+            "one_ply_select": 0.5837
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0007": {
+          "ev": 1.662598,
+          "retention": 0.7763,
+          "retention_by_partner": {
+            "optimal_select": 0.7763,
+            "greedy_select": 0.7763,
+            "one_ply_select": 0.7763
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0015": {
+          "ev": 2.141602,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 1.0,
+            "greedy_select": 1.0,
+            "one_ply_select": 1.0
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0006-fitted": {
+          "ev": 2.141602,
+          "retention": 1.0,
+          "fitted_T": 5.0,
+          "transferable": false,
+          "note": "swept per world; the bar a transferable circuit must clear"
+        }
+      },
+      "select_axis": {
+        "r0010": {
+          "ev": 2.141602,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "myopic_stop": 1.0,
+            "never_stop": 0.7763,
+            "optimal_stop": 1.0
+          },
+          "partner_spread": 0.2237,
+          "transferable": true
+        },
+        "r0011": {
+          "ev": 1.71875,
+          "retention": 0.8026,
+          "retention_by_partner": {
+            "myopic_stop": 0.8026,
+            "never_stop": 0.6617,
+            "optimal_stop": 0.8026
+          },
+          "partner_spread": 0.1409,
+          "transferable": true
+        },
+        "r0012": {
+          "ev": 2.141602,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "myopic_stop": 1.0,
+            "never_stop": 0.7763,
+            "optimal_stop": 1.0
+          },
+          "partner_spread": 0.2237,
+          "transferable": true
+        },
+        "r0013": {
+          "ev": 2.141602,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "myopic_stop": 1.0,
+            "never_stop": 0.7763,
+            "optimal_stop": 1.0
+          },
+          "partner_spread": 0.2237,
+          "transferable": false
+        },
+        "r0014": {
+          "ev": 1.71875,
+          "retention": 0.8026,
+          "retention_by_partner": {
+            "myopic_stop": 0.8026,
+            "never_stop": 0.6617,
+            "optimal_stop": 0.8026
+          },
+          "partner_spread": 0.1409,
+          "transferable": true
+        },
+        "OPTIMAL": {
+          "ev": 2.141602,
+          "retention": 1.0,
+          "transferable": false
+        }
+      },
+      "axis_decomposition": {
+        "cheap_pair": "r0010+r0003",
+        "cheap_pair_retention": 1.0,
+        "recovered_by_upgrading_SELECT_only": 0.0,
+        "recovered_by_upgrading_STOP_only": 0.0,
+        "total_residual": 0.0
+      },
+      "wall_seconds": 0.0
+    },
+    "FOUNDRY[gate=0,decay=0,k=3,cap=2,h=6]": {
+      "world": "FOUNDRY[gate=0,decay=0,k=3,cap=2,h=6]",
+      "genre": "synthetic control",
+      "surface": "no theme at all, deliberately",
+      "rules_state": "SYNTHETIC",
+      "declared_interfaces": [
+        "STOP",
+        "SELECT"
+      ],
+      "select_axis_is_live": true,
+      "n_states": 34,
+      "optimal_ev": 2.25,
+      "compile_and_solve_seconds": 0.0,
+      "stop_axis": {
+        "r0003": {
+          "ev": 2.25,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 1.0,
+            "greedy_select": 1.0,
+            "one_ply_select": 1.0
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0004": {
+          "ev": 1.423828,
+          "retention": 0.6328,
+          "retention_by_partner": {
+            "optimal_select": 0.6328,
+            "greedy_select": 0.6328,
+            "one_ply_select": 0.6328
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0005": {
+          "ev": 1.5,
+          "retention": 0.6667,
+          "retention_by_partner": {
+            "optimal_select": 0.6667,
+            "greedy_select": 0.6667,
+            "one_ply_select": 0.6667
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0007": {
+          "ev": 1.423828,
+          "retention": 0.6328,
+          "retention_by_partner": {
+            "optimal_select": 0.6328,
+            "greedy_select": 0.6328,
+            "one_ply_select": 0.6328
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0015": {
+          "ev": 2.25,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 1.0,
+            "greedy_select": 1.0,
+            "one_ply_select": 1.0
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0006-fitted": {
+          "ev": 2.25,
+          "retention": 1.0,
+          "fitted_T": 3.0,
+          "transferable": false,
+          "note": "swept per world; the bar a transferable circuit must clear"
+        }
+      },
+      "select_axis": {
+        "r0010": {
+          "ev": 2.25,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "myopic_stop": 1.0,
+            "never_stop": 0.6328,
+            "optimal_stop": 1.0
+          },
+          "partner_spread": 0.3672,
+          "transferable": true
+        },
+        "r0011": {
+          "ev": 1.265625,
+          "retention": 0.5625,
+          "retention_by_partner": {
+            "myopic_stop": 0.5625,
+            "never_stop": 0.4746,
+            "optimal_stop": 0.4746
+          },
+          "partner_spread": 0.0879,
+          "transferable": true
+        },
+        "r0012": {
+          "ev": 2.25,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "myopic_stop": 1.0,
+            "never_stop": 0.6328,
+            "optimal_stop": 1.0
+          },
+          "partner_spread": 0.3672,
+          "transferable": true
+        },
+        "r0013": {
+          "ev": 2.25,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "myopic_stop": 1.0,
+            "never_stop": 0.6328,
+            "optimal_stop": 1.0
+          },
+          "partner_spread": 0.3672,
+          "transferable": false
+        },
+        "r0014": {
+          "ev": 1.265625,
+          "retention": 0.5625,
+          "retention_by_partner": {
+            "myopic_stop": 0.5625,
+            "never_stop": 0.4746,
+            "optimal_stop": 0.4746
+          },
+          "partner_spread": 0.0879,
+          "transferable": true
+        },
+        "OPTIMAL": {
+          "ev": 2.25,
+          "retention": 1.0,
+          "transferable": false
+        }
+      },
+      "axis_decomposition": {
+        "cheap_pair": "r0010+r0003",
+        "cheap_pair_retention": 1.0,
+        "recovered_by_upgrading_SELECT_only": 0.0,
+        "recovered_by_upgrading_STOP_only": 0.0,
+        "total_residual": 0.0
+      },
+      "wall_seconds": 0.0
+    },
+    "FOUNDRY[gate=0,decay=0,k=3,cap=4,h=6]": {
+      "world": "FOUNDRY[gate=0,decay=0,k=3,cap=4,h=6]",
+      "genre": "synthetic control",
+      "surface": "no theme at all, deliberately",
+      "rules_state": "SYNTHETIC",
+      "declared_interfaces": [
+        "STOP",
+        "SELECT"
+      ],
+      "select_axis_is_live": true,
+      "n_states": 65,
+      "optimal_ev": 2.53125,
+      "compile_and_solve_seconds": 0.0,
+      "stop_axis": {
+        "r0003": {
+          "ev": 2.53125,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 1.0,
+            "greedy_select": 1.0,
+            "one_ply_select": 1.0
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0004": {
+          "ev": 1.779785,
+          "retention": 0.7031,
+          "retention_by_partner": {
+            "optimal_select": 0.7031,
+            "greedy_select": 0.7031,
+            "one_ply_select": 0.7031
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0005": {
+          "ev": 1.5,
+          "retention": 0.5926,
+          "retention_by_partner": {
+            "optimal_select": 0.5926,
+            "greedy_select": 0.5926,
+            "one_ply_select": 0.5926
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0007": {
+          "ev": 1.779785,
+          "retention": 0.7031,
+          "retention_by_partner": {
+            "optimal_select": 0.7031,
+            "greedy_select": 0.7031,
+            "one_ply_select": 0.7031
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0015": {
+          "ev": 2.53125,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 1.0,
+            "greedy_select": 1.0,
+            "one_ply_select": 1.0
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0006-fitted": {
+          "ev": 2.53125,
+          "retention": 1.0,
+          "fitted_T": 5.0,
+          "transferable": false,
+          "note": "swept per world; the bar a transferable circuit must clear"
+        }
+      },
+      "select_axis": {
+        "r0010": {
+          "ev": 2.53125,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "myopic_stop": 1.0,
+            "never_stop": 0.7031,
+            "optimal_stop": 1.0
+          },
+          "partner_spread": 0.2969,
+          "transferable": true
+        },
+        "r0011": {
+          "ev": 1.265625,
+          "retention": 0.5,
+          "retention_by_partner": {
+            "myopic_stop": 0.5,
+            "never_stop": 0.4219,
+            "optimal_stop": 0.4219
+          },
+          "partner_spread": 0.0781,
+          "transferable": true
+        },
+        "r0012": {
+          "ev": 2.53125,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "myopic_stop": 1.0,
+            "never_stop": 0.7031,
+            "optimal_stop": 1.0
+          },
+          "partner_spread": 0.2969,
+          "transferable": true
+        },
+        "r0013": {
+          "ev": 2.53125,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "myopic_stop": 1.0,
+            "never_stop": 0.7031,
+            "optimal_stop": 1.0
+          },
+          "partner_spread": 0.2969,
+          "transferable": false
+        },
+        "r0014": {
+          "ev": 1.265625,
+          "retention": 0.5,
+          "retention_by_partner": {
+            "myopic_stop": 0.5,
+            "never_stop": 0.4219,
+            "optimal_stop": 0.4219
+          },
+          "partner_spread": 0.0781,
+          "transferable": true
+        },
+        "OPTIMAL": {
+          "ev": 2.53125,
+          "retention": 1.0,
+          "transferable": false
+        }
+      },
+      "axis_decomposition": {
+        "cheap_pair": "r0010+r0003",
+        "cheap_pair_retention": 1.0,
+        "recovered_by_upgrading_SELECT_only": 0.0,
+        "recovered_by_upgrading_STOP_only": 0.0,
+        "total_residual": 0.0
+      },
+      "wall_seconds": 0.0
+    },
+    "FOUNDRY[gate=1,decay=0,k=2,cap=2,h=6]": {
+      "world": "FOUNDRY[gate=1,decay=0,k=2,cap=2,h=6]",
+      "genre": "synthetic control",
+      "surface": "no theme at all, deliberately",
+      "rules_state": "SYNTHETIC",
+      "declared_interfaces": [
+        "STOP",
+        "SELECT"
+      ],
+      "select_axis_is_live": true,
+      "n_states": 58,
+      "optimal_ev": 1.233887,
+      "compile_and_solve_seconds": 0.0,
+      "stop_axis": {
+        "r0003": {
+          "ev": 1.233887,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 1.0,
+            "greedy_select": 0.7064,
+            "one_ply_select": 0.9446
+          },
+          "partner_spread": 0.2936,
+          "transferable": true
+        },
+        "r0004": {
+          "ev": 0.904297,
+          "retention": 0.7329,
+          "retention_by_partner": {
+            "optimal_select": 0.7329,
+            "greedy_select": 0.5176,
+            "one_ply_select": 0.6953
+          },
+          "partner_spread": 0.2153,
+          "transferable": false
+        },
+        "r0005": {
+          "ev": 0.0,
+          "retention": 0.0,
+          "retention_by_partner": {
+            "optimal_select": 0.0,
+            "greedy_select": 0.0,
+            "one_ply_select": 0.0
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0007": {
+          "ev": 0.904297,
+          "retention": 0.7329,
+          "retention_by_partner": {
+            "optimal_select": 0.7329,
+            "greedy_select": 0.5176,
+            "one_ply_select": 0.6953
+          },
+          "partner_spread": 0.2153,
+          "transferable": true
+        },
+        "r0015": {
+          "ev": 1.233887,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 1.0,
+            "greedy_select": 0.7064,
+            "one_ply_select": 0.9446
+          },
+          "partner_spread": 0.2936,
+          "transferable": true
+        },
+        "r0006-fitted": {
+          "ev": 1.220703,
+          "retention": 0.9893,
+          "fitted_T": 3.0,
+          "transferable": false,
+          "note": "swept per world; the bar a transferable circuit must clear"
+        }
+      },
+      "select_axis": {
+        "r0010": {
+          "ev": 0.871582,
+          "retention": 0.7064,
+          "retention_by_partner": {
+            "myopic_stop": 0.7064,
+            "never_stop": 0.5176,
+            "optimal_stop": 0.7064
+          },
+          "partner_spread": 0.1888,
+          "transferable": true
+        },
+        "r0011": {
+          "ev": 0.96875,
+          "retention": 0.7851,
+          "retention_by_partner": {
+            "myopic_stop": 0.7851,
+            "never_stop": 0.6565,
+            "optimal_stop": 0.7851
+          },
+          "partner_spread": 0.1286,
+          "transferable": true
+        },
+        "r0012": {
+          "ev": 1.165527,
+          "retention": 0.9446,
+          "retention_by_partner": {
+            "myopic_stop": 0.9446,
+            "never_stop": 0.6953,
+            "optimal_stop": 0.9446
+          },
+          "partner_spread": 0.2493,
+          "transferable": true
+        },
+        "r0013": {
+          "ev": 0.0,
+          "retention": 0.0,
+          "retention_by_partner": {
+            "myopic_stop": 0.0,
+            "never_stop": 0.0,
+            "optimal_stop": 0.0
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0014": {
+          "ev": 0.96875,
+          "retention": 0.7851,
+          "retention_by_partner": {
+            "myopic_stop": 0.7851,
+            "never_stop": 0.6565,
+            "optimal_stop": 0.7851
+          },
+          "partner_spread": 0.1286,
+          "transferable": true
+        },
+        "OPTIMAL": {
+          "ev": 1.233887,
+          "retention": 1.0,
+          "transferable": false
+        }
+      },
+      "axis_decomposition": {
+        "cheap_pair": "r0012+r0003",
+        "cheap_pair_retention": 0.9446,
+        "recovered_by_upgrading_SELECT_only": 0.0554,
+        "recovered_by_upgrading_STOP_only": 0.0,
+        "total_residual": 0.0554
+      },
+      "wall_seconds": 0.0
+    },
+    "FOUNDRY[gate=1,decay=0,k=2,cap=4,h=6]": {
+      "world": "FOUNDRY[gate=1,decay=0,k=2,cap=4,h=6]",
+      "genre": "synthetic control",
+      "surface": "no theme at all, deliberately",
+      "rules_state": "SYNTHETIC",
+      "declared_interfaces": [
+        "STOP",
+        "SELECT"
+      ],
+      "select_axis_is_live": true,
+      "n_states": 77,
+      "optimal_ev": 1.701416,
+      "compile_and_solve_seconds": 0.0,
+      "stop_axis": {
+        "r0003": {
+          "ev": 1.701416,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 1.0,
+            "greedy_select": 0.937,
+            "one_ply_select": 0.9669
+          },
+          "partner_spread": 0.063,
+          "transferable": true
+        },
+        "r0004": {
+          "ev": 1.324707,
+          "retention": 0.7786,
+          "retention_by_partner": {
+            "optimal_select": 0.7756,
+            "greedy_select": 0.7574,
+            "one_ply_select": 0.7786
+          },
+          "partner_spread": 0.0212,
+          "transferable": false
+        },
+        "r0005": {
+          "ev": 0.0,
+          "retention": 0.0,
+          "retention_by_partner": {
+            "optimal_select": 0.0,
+            "greedy_select": 0.0,
+            "one_ply_select": 0.0
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0007": {
+          "ev": 1.324707,
+          "retention": 0.7786,
+          "retention_by_partner": {
+            "optimal_select": 0.7756,
+            "greedy_select": 0.7574,
+            "one_ply_select": 0.7786
+          },
+          "partner_spread": 0.0212,
+          "transferable": true
+        },
+        "r0015": {
+          "ev": 1.638916,
+          "retention": 0.9633,
+          "retention_by_partner": {
+            "optimal_select": 0.9633,
+            "greedy_select": 0.9095,
+            "one_ply_select": 0.9347
+          },
+          "partner_spread": 0.0538,
+          "transferable": true
+        },
+        "r0006-fitted": {
+          "ev": 1.701416,
+          "retention": 1.0,
+          "fitted_T": 5.0,
+          "transferable": false,
+          "note": "swept per world; the bar a transferable circuit must clear"
+        }
+      },
+      "select_axis": {
+        "r0010": {
+          "ev": 1.594238,
+          "retention": 0.937,
+          "retention_by_partner": {
+            "myopic_stop": 0.937,
+            "never_stop": 0.7574,
+            "optimal_stop": 0.937
+          },
+          "partner_spread": 0.1797,
+          "transferable": true
+        },
+        "r0011": {
+          "ev": 1.023438,
+          "retention": 0.6015,
+          "retention_by_partner": {
+            "myopic_stop": 0.6015,
+            "never_stop": 0.5639,
+            "optimal_stop": 0.6015
+          },
+          "partner_spread": 0.0376,
+          "transferable": true
+        },
+        "r0012": {
+          "ev": 1.64502,
+          "retention": 0.9669,
+          "retention_by_partner": {
+            "myopic_stop": 0.9669,
+            "never_stop": 0.7786,
+            "optimal_stop": 0.9669
+          },
+          "partner_spread": 0.1883,
+          "transferable": true
+        },
+        "r0013": {
+          "ev": 0.0,
+          "retention": 0.0,
+          "retention_by_partner": {
+            "myopic_stop": 0.0,
+            "never_stop": 0.0,
+            "optimal_stop": 0.0
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0014": {
+          "ev": 1.023438,
+          "retention": 0.6015,
+          "retention_by_partner": {
+            "myopic_stop": 0.6015,
+            "never_stop": 0.5639,
+            "optimal_stop": 0.6015
+          },
+          "partner_spread": 0.0376,
+          "transferable": true
+        },
+        "OPTIMAL": {
+          "ev": 1.701416,
+          "retention": 1.0,
+          "transferable": false
+        }
+      },
+      "axis_decomposition": {
+        "cheap_pair": "r0012+r0003",
+        "cheap_pair_retention": 0.9669,
+        "recovered_by_upgrading_SELECT_only": 0.0331,
+        "recovered_by_upgrading_STOP_only": 0.0,
+        "total_residual": 0.0331
+      },
+      "wall_seconds": 0.0
+    },
+    "FOUNDRY[gate=1,decay=0,k=3,cap=2,h=6]": {
+      "world": "FOUNDRY[gate=1,decay=0,k=3,cap=2,h=6]",
+      "genre": "synthetic control",
+      "surface": "no theme at all, deliberately",
+      "rules_state": "SYNTHETIC",
+      "declared_interfaces": [
+        "STOP",
+        "SELECT"
+      ],
+      "select_axis_is_live": true,
+      "n_states": 34,
+      "optimal_ev": 1.265625,
+      "compile_and_solve_seconds": 0.0,
+      "stop_axis": {
+        "r0003": {
+          "ev": 1.265625,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 0.0,
+            "greedy_select": 1.0,
+            "one_ply_select": 0.0
+          },
+          "partner_spread": 1.0,
+          "transferable": true
+        },
+        "r0004": {
+          "ev": 1.067871,
+          "retention": 0.8438,
+          "retention_by_partner": {
+            "optimal_select": 0.8438,
+            "greedy_select": 0.8438,
+            "one_ply_select": 0.8438
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0005": {
+          "ev": 0.0,
+          "retention": 0.0,
+          "retention_by_partner": {
+            "optimal_select": 0.0,
+            "greedy_select": 0.0,
+            "one_ply_select": 0.0
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0007": {
+          "ev": 1.067871,
+          "retention": 0.8438,
+          "retention_by_partner": {
+            "optimal_select": 0.8438,
+            "greedy_select": 0.8438,
+            "one_ply_select": 0.8438
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0015": {
+          "ev": 1.265625,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 1.0,
+            "greedy_select": 1.0,
+            "one_ply_select": 0.8438
+          },
+          "partner_spread": 0.1562,
+          "transferable": true
+        },
+        "r0006-fitted": {
+          "ev": 1.265625,
+          "retention": 1.0,
+          "fitted_T": 1.0,
+          "transferable": false,
+          "note": "swept per world; the bar a transferable circuit must clear"
+        }
+      },
+      "select_axis": {
+        "r0010": {
+          "ev": 1.265625,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "myopic_stop": 1.0,
+            "never_stop": 0.8438,
+            "optimal_stop": 1.0
+          },
+          "partner_spread": 0.1562,
+          "transferable": true
+        },
+        "r0011": {
+          "ev": 0.0,
+          "retention": 0.0,
+          "retention_by_partner": {
+            "myopic_stop": 0.0,
+            "never_stop": 0.0,
+            "optimal_stop": 0.0
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0012": {
+          "ev": 1.067871,
+          "retention": 0.8438,
+          "retention_by_partner": {
+            "myopic_stop": 0.0,
+            "never_stop": 0.8438,
+            "optimal_stop": 0.8438
+          },
+          "partner_spread": 0.8438,
+          "transferable": true
+        },
+        "r0013": {
+          "ev": 0.0,
+          "retention": 0.0,
+          "retention_by_partner": {
+            "myopic_stop": 0.0,
+            "never_stop": 0.0,
+            "optimal_stop": 0.0
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0014": {
+          "ev": 0.0,
+          "retention": 0.0,
+          "retention_by_partner": {
+            "myopic_stop": 0.0,
+            "never_stop": 0.0,
+            "optimal_stop": 0.0
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "OPTIMAL": {
+          "ev": 0.0,
+          "retention": 0.0,
+          "transferable": false
+        }
+      },
+      "axis_decomposition": {
+        "cheap_pair": "r0010+r0003",
+        "cheap_pair_retention": 1.0,
+        "recovered_by_upgrading_SELECT_only": -1.0,
+        "recovered_by_upgrading_STOP_only": 0.0,
+        "total_residual": 0.0
+      },
+      "wall_seconds": 0.0
+    },
+    "FOUNDRY[gate=1,decay=0,k=3,cap=4,h=6]": {
+      "world": "FOUNDRY[gate=1,decay=0,k=3,cap=4,h=6]",
+      "genre": "synthetic control",
+      "surface": "no theme at all, deliberately",
+      "rules_state": "SYNTHETIC",
+      "declared_interfaces": [
+        "STOP",
+        "SELECT"
+      ],
+      "select_axis_is_live": true,
+      "n_states": 65,
+      "optimal_ev": 1.898438,
+      "compile_and_solve_seconds": 0.0,
+      "stop_axis": {
+        "r0003": {
+          "ev": 1.898438,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 0.0,
+            "greedy_select": 1.0,
+            "one_ply_select": 0.0
+          },
+          "partner_spread": 1.0,
+          "transferable": true
+        },
+        "r0004": {
+          "ev": 1.423828,
+          "retention": 0.75,
+          "retention_by_partner": {
+            "optimal_select": 0.75,
+            "greedy_select": 0.75,
+            "one_ply_select": 0.75
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0005": {
+          "ev": 0.0,
+          "retention": 0.0,
+          "retention_by_partner": {
+            "optimal_select": 0.0,
+            "greedy_select": 0.0,
+            "one_ply_select": 0.0
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0007": {
+          "ev": 1.423828,
+          "retention": 0.75,
+          "retention_by_partner": {
+            "optimal_select": 0.75,
+            "greedy_select": 0.75,
+            "one_ply_select": 0.75
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0015": {
+          "ev": 1.898438,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 1.0,
+            "greedy_select": 0.8889,
+            "one_ply_select": 0.75
+          },
+          "partner_spread": 0.25,
+          "transferable": true
+        },
+        "r0006-fitted": {
+          "ev": 1.898438,
+          "retention": 1.0,
+          "fitted_T": 1.0,
+          "transferable": false,
+          "note": "swept per world; the bar a transferable circuit must clear"
+        }
+      },
+      "select_axis": {
+        "r0010": {
+          "ev": 1.898438,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "myopic_stop": 1.0,
+            "never_stop": 0.75,
+            "optimal_stop": 1.0
+          },
+          "partner_spread": 0.25,
+          "transferable": true
+        },
+        "r0011": {
+          "ev": 0.0,
+          "retention": 0.0,
+          "retention_by_partner": {
+            "myopic_stop": 0.0,
+            "never_stop": 0.0,
+            "optimal_stop": 0.0
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0012": {
+          "ev": 1.423828,
+          "retention": 0.75,
+          "retention_by_partner": {
+            "myopic_stop": 0.0,
+            "never_stop": 0.75,
+            "optimal_stop": 0.75
+          },
+          "partner_spread": 0.75,
+          "transferable": true
+        },
+        "r0013": {
+          "ev": 0.0,
+          "retention": 0.0,
+          "retention_by_partner": {
+            "myopic_stop": 0.0,
+            "never_stop": 0.0,
+            "optimal_stop": 0.0
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0014": {
+          "ev": 0.0,
+          "retention": 0.0,
+          "retention_by_partner": {
+            "myopic_stop": 0.0,
+            "never_stop": 0.0,
+            "optimal_stop": 0.0
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "OPTIMAL": {
+          "ev": 0.0,
+          "retention": 0.0,
+          "transferable": false
+        }
+      },
+      "axis_decomposition": {
+        "cheap_pair": "r0010+r0003",
+        "cheap_pair_retention": 1.0,
+        "recovered_by_upgrading_SELECT_only": -1.0,
+        "recovered_by_upgrading_STOP_only": 0.0,
+        "total_residual": 0.0
+      },
+      "wall_seconds": 0.0
+    },
+    "FOUNDRY-DECAY[gate=0,decay=0.25,k=3,cap=4,h=6]": {
+      "world": "FOUNDRY-DECAY[gate=0,decay=0.25,k=3,cap=4,h=6]",
+      "genre": "synthetic control",
+      "surface": "no theme at all, deliberately",
+      "rules_state": "SYNTHETIC",
+      "declared_interfaces": [
+        "STOP",
+        "SELECT"
+      ],
+      "select_axis_is_live": true,
+      "n_states": 81,
+      "optimal_ev": 2.777344,
+      "compile_and_solve_seconds": 0.0,
+      "stop_axis": {
+        "r0003": {
+          "ev": 2.777344,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 1.0,
+            "greedy_select": 1.0,
+            "one_ply_select": 1.0
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0004": {
+          "ev": 2.302734,
+          "retention": 0.8291,
+          "retention_by_partner": {
+            "optimal_select": 0.8291,
+            "greedy_select": 0.8291,
+            "one_ply_select": 0.8291
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0005": {
+          "ev": 1.5,
+          "retention": 0.5401,
+          "retention_by_partner": {
+            "optimal_select": 0.5401,
+            "greedy_select": 0.5401,
+            "one_ply_select": 0.5401
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0007": {
+          "ev": 2.302734,
+          "retention": 0.8291,
+          "retention_by_partner": {
+            "optimal_select": 0.8291,
+            "greedy_select": 0.8291,
+            "one_ply_select": 0.8291
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0015": {
+          "ev": 2.671875,
+          "retention": 0.962,
+          "retention_by_partner": {
+            "optimal_select": 0.962,
+            "greedy_select": 0.962,
+            "one_ply_select": 0.962
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0006-fitted": {
+          "ev": 2.777344,
+          "retention": 1.0,
+          "fitted_T": 7.0,
+          "transferable": false,
+          "note": "swept per world; the bar a transferable circuit must clear"
+        }
+      },
+      "select_axis": {
+        "r0010": {
+          "ev": 2.777344,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "myopic_stop": 1.0,
+            "never_stop": 0.8291,
+            "optimal_stop": 1.0
+          },
+          "partner_spread": 0.1709,
+          "transferable": true
+        },
+        "r0011": {
+          "ev": 1.265625,
+          "retention": 0.4557,
+          "retention_by_partner": {
+            "myopic_stop": 0.4557,
+            "never_stop": 0.4343,
+            "optimal_stop": 0.4343
+          },
+          "partner_spread": 0.0214,
+          "transferable": true
+        },
+        "r0012": {
+          "ev": 2.777344,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "myopic_stop": 1.0,
+            "never_stop": 0.8291,
+            "optimal_stop": 1.0
+          },
+          "partner_spread": 0.1709,
+          "transferable": true
+        },
+        "r0013": {
+          "ev": 2.777344,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "myopic_stop": 1.0,
+            "never_stop": 0.8291,
+            "optimal_stop": 1.0
+          },
+          "partner_spread": 0.1709,
+          "transferable": false
+        },
+        "r0014": {
+          "ev": 1.265625,
+          "retention": 0.4557,
+          "retention_by_partner": {
+            "myopic_stop": 0.4557,
+            "never_stop": 0.4343,
+            "optimal_stop": 0.4343
+          },
+          "partner_spread": 0.0214,
+          "transferable": true
+        },
+        "OPTIMAL": {
+          "ev": 2.777344,
+          "retention": 1.0,
+          "transferable": false
+        }
+      },
+      "axis_decomposition": {
+        "cheap_pair": "r0010+r0003",
+        "cheap_pair_retention": 1.0,
+        "recovered_by_upgrading_SELECT_only": 0.0,
+        "recovered_by_upgrading_STOP_only": 0.0,
+        "total_residual": 0.0
+      },
+      "wall_seconds": 0.0
+    },
+    "FOUNDRY-DECAY[gate=0,decay=0.5,k=3,cap=4,h=6]": {
+      "world": "FOUNDRY-DECAY[gate=0,decay=0.5,k=3,cap=4,h=6]",
+      "genre": "synthetic control",
+      "surface": "no theme at all, deliberately",
+      "rules_state": "SYNTHETIC",
+      "declared_interfaces": [
+        "STOP",
+        "SELECT"
+      ],
+      "select_axis_is_live": true,
+      "n_states": 88,
+      "optimal_ev": 3.316406,
+      "compile_and_solve_seconds": 0.0,
+      "stop_axis": {
+        "r0003": {
+          "ev": 3.316406,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 1.0,
+            "greedy_select": 1.0,
+            "one_ply_select": 1.0
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0004": {
+          "ev": 3.118652,
+          "retention": 0.9404,
+          "retention_by_partner": {
+            "optimal_select": 0.9404,
+            "greedy_select": 0.9404,
+            "one_ply_select": 0.9404
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0005": {
+          "ev": 1.5,
+          "retention": 0.4523,
+          "retention_by_partner": {
+            "optimal_select": 0.4523,
+            "greedy_select": 0.4523,
+            "one_ply_select": 0.4523
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0007": {
+          "ev": 3.118652,
+          "retention": 0.9404,
+          "retention_by_partner": {
+            "optimal_select": 0.9404,
+            "greedy_select": 0.9404,
+            "one_ply_select": 0.9404
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0015": {
+          "ev": 3.316406,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 1.0,
+            "greedy_select": 1.0,
+            "one_ply_select": 1.0
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0006-fitted": {
+          "ev": 3.316406,
+          "retention": 1.0,
+          "fitted_T": 7.0,
+          "transferable": false,
+          "note": "swept per world; the bar a transferable circuit must clear"
+        }
+      },
+      "select_axis": {
+        "r0010": {
+          "ev": 3.316406,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "myopic_stop": 1.0,
+            "never_stop": 0.9404,
+            "optimal_stop": 1.0
+          },
+          "partner_spread": 0.0596,
+          "transferable": true
+        },
+        "r0011": {
+          "ev": 1.59082,
+          "retention": 0.4797,
+          "retention_by_partner": {
+            "myopic_stop": 0.4797,
+            "never_stop": 0.4797,
+            "optimal_stop": 0.4797
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0012": {
+          "ev": 3.316406,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "myopic_stop": 1.0,
+            "never_stop": 0.9404,
+            "optimal_stop": 1.0
+          },
+          "partner_spread": 0.0596,
+          "transferable": true
+        },
+        "r0013": {
+          "ev": 3.316406,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "myopic_stop": 1.0,
+            "never_stop": 0.9404,
+            "optimal_stop": 1.0
+          },
+          "partner_spread": 0.0596,
+          "transferable": false
+        },
+        "r0014": {
+          "ev": 1.59082,
+          "retention": 0.4797,
+          "retention_by_partner": {
+            "myopic_stop": 0.4797,
+            "never_stop": 0.4797,
+            "optimal_stop": 0.4797
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "OPTIMAL": {
+          "ev": 3.316406,
+          "retention": 1.0,
+          "transferable": false
+        }
+      },
+      "axis_decomposition": {
+        "cheap_pair": "r0010+r0003",
+        "cheap_pair_retention": 1.0,
+        "recovered_by_upgrading_SELECT_only": 0.0,
+        "recovered_by_upgrading_STOP_only": 0.0,
+        "total_residual": 0.0
+      },
+      "wall_seconds": 0.0
+    },
+    "FOUNDRY-DECAY[gate=0,decay=0.75,k=3,cap=4,h=6]": {
+      "world": "FOUNDRY-DECAY[gate=0,decay=0.75,k=3,cap=4,h=6]",
+      "genre": "synthetic control",
+      "surface": "no theme at all, deliberately",
+      "rules_state": "SYNTHETIC",
+      "declared_interfaces": [
+        "STOP",
+        "SELECT"
+      ],
+      "select_axis_is_live": true,
+      "n_states": 96,
+      "optimal_ev": 3.641602,
+      "compile_and_solve_seconds": 0.0,
+      "stop_axis": {
+        "r0003": {
+          "ev": 3.641602,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 1.0,
+            "greedy_select": 1.0,
+            "one_ply_select": 1.0
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0004": {
+          "ev": 3.641602,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 1.0,
+            "greedy_select": 1.0,
+            "one_ply_select": 1.0
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0005": {
+          "ev": 1.5,
+          "retention": 0.4119,
+          "retention_by_partner": {
+            "optimal_select": 0.4119,
+            "greedy_select": 0.4119,
+            "one_ply_select": 0.4119
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0007": {
+          "ev": 3.641602,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 1.0,
+            "greedy_select": 1.0,
+            "one_ply_select": 1.0
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0015": {
+          "ev": 3.641602,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 1.0,
+            "greedy_select": 1.0,
+            "one_ply_select": 1.0
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0006-fitted": {
+          "ev": 3.641602,
+          "retention": 1.0,
+          "fitted_T": 9.0,
+          "transferable": false,
+          "note": "swept per world; the bar a transferable circuit must clear"
+        }
+      },
+      "select_axis": {
+        "r0010": {
+          "ev": 3.641602,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "myopic_stop": 1.0,
+            "never_stop": 1.0,
+            "optimal_stop": 1.0
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0011": {
+          "ev": 1.834717,
+          "retention": 0.5038,
+          "retention_by_partner": {
+            "myopic_stop": 0.5038,
+            "never_stop": 0.5038,
+            "optimal_stop": 0.5038
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0012": {
+          "ev": 3.641602,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "myopic_stop": 1.0,
+            "never_stop": 1.0,
+            "optimal_stop": 1.0
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0013": {
+          "ev": 3.641602,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "myopic_stop": 1.0,
+            "never_stop": 1.0,
+            "optimal_stop": 1.0
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0014": {
+          "ev": 1.834717,
+          "retention": 0.5038,
+          "retention_by_partner": {
+            "myopic_stop": 0.5038,
+            "never_stop": 0.5038,
+            "optimal_stop": 0.5038
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "OPTIMAL": {
+          "ev": 3.641602,
+          "retention": 1.0,
+          "transferable": false
+        }
+      },
+      "axis_decomposition": {
+        "cheap_pair": "r0010+r0003",
+        "cheap_pair_retention": 1.0,
+        "recovered_by_upgrading_SELECT_only": 0.0,
+        "recovered_by_upgrading_STOP_only": 0.0,
+        "total_residual": 0.0
+      },
+      "wall_seconds": 0.0
+    },
+    "FOUNDRY-DECAY[gate=1,decay=0.25,k=3,cap=4,h=6]": {
+      "world": "FOUNDRY-DECAY[gate=1,decay=0.25,k=3,cap=4,h=6]",
+      "genre": "synthetic control",
+      "surface": "no theme at all, deliberately",
+      "rules_state": "SYNTHETIC",
+      "declared_interfaces": [
+        "STOP",
+        "SELECT"
+      ],
+      "select_axis_is_live": true,
+      "n_states": 81,
+      "optimal_ev": 2.003906,
+      "compile_and_solve_seconds": 0.0,
+      "stop_axis": {
+        "r0003": {
+          "ev": 2.003906,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 0.0,
+            "greedy_select": 1.0,
+            "one_ply_select": 0.0
+          },
+          "partner_spread": 1.0,
+          "transferable": true
+        },
+        "r0004": {
+          "ev": 1.667725,
+          "retention": 0.8322,
+          "retention_by_partner": {
+            "optimal_select": 0.8322,
+            "greedy_select": 0.8322,
+            "one_ply_select": 0.8322
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0005": {
+          "ev": 0.0,
+          "retention": 0.0,
+          "retention_by_partner": {
+            "optimal_select": 0.0,
+            "greedy_select": 0.0,
+            "one_ply_select": 0.0
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0007": {
+          "ev": 1.667725,
+          "retention": 0.8322,
+          "retention_by_partner": {
+            "optimal_select": 0.8322,
+            "greedy_select": 0.8322,
+            "one_ply_select": 0.8322
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0015": {
+          "ev": 2.003906,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 1.0,
+            "greedy_select": 1.0,
+            "one_ply_select": 1.0
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0006-fitted": {
+          "ev": 2.003906,
+          "retention": 1.0,
+          "fitted_T": 5.0,
+          "transferable": false,
+          "note": "swept per world; the bar a transferable circuit must clear"
+        }
+      },
+      "select_axis": {
+        "r0010": {
+          "ev": 2.003906,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "myopic_stop": 1.0,
+            "never_stop": 0.8322,
+            "optimal_stop": 1.0
+          },
+          "partner_spread": 0.1678,
+          "transferable": true
+        },
+        "r0011": {
+          "ev": 0.0,
+          "retention": 0.0,
+          "retention_by_partner": {
+            "myopic_stop": 0.0,
+            "never_stop": 0.0,
+            "optimal_stop": 0.0
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0012": {
+          "ev": 2.003906,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "myopic_stop": 0.0,
+            "never_stop": 0.8322,
+            "optimal_stop": 1.0
+          },
+          "partner_spread": 1.0,
+          "transferable": true
+        },
+        "r0013": {
+          "ev": 0.0,
+          "retention": 0.0,
+          "retention_by_partner": {
+            "myopic_stop": 0.0,
+            "never_stop": 0.0,
+            "optimal_stop": 0.0
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0014": {
+          "ev": 0.0,
+          "retention": 0.0,
+          "retention_by_partner": {
+            "myopic_stop": 0.0,
+            "never_stop": 0.0,
+            "optimal_stop": 0.0
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "OPTIMAL": {
+          "ev": 0.0,
+          "retention": 0.0,
+          "transferable": false
+        }
+      },
+      "axis_decomposition": {
+        "cheap_pair": "r0010+r0003",
+        "cheap_pair_retention": 1.0,
+        "recovered_by_upgrading_SELECT_only": -1.0,
+        "recovered_by_upgrading_STOP_only": 0.0,
+        "total_residual": 0.0
+      },
+      "wall_seconds": 0.0
+    },
+    "FOUNDRY-DECAY[gate=1,decay=0.5,k=3,cap=4,h=6]": {
+      "world": "FOUNDRY-DECAY[gate=1,decay=0.5,k=3,cap=4,h=6]",
+      "genre": "synthetic control",
+      "surface": "no theme at all, deliberately",
+      "rules_state": "SYNTHETIC",
+      "declared_interfaces": [
+        "STOP",
+        "SELECT"
+      ],
+      "select_axis_is_live": true,
+      "n_states": 88,
+      "optimal_ev": 2.25,
+      "compile_and_solve_seconds": 0.0,
+      "stop_axis": {
+        "r0003": {
+          "ev": 2.25,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 1.0,
+            "greedy_select": 1.0,
+            "one_ply_select": 1.0
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0004": {
+          "ev": 2.190674,
+          "retention": 0.9736,
+          "retention_by_partner": {
+            "optimal_select": 0.9736,
+            "greedy_select": 0.9736,
+            "one_ply_select": 0.9736
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0005": {
+          "ev": 0.0,
+          "retention": 0.0,
+          "retention_by_partner": {
+            "optimal_select": 0.0,
+            "greedy_select": 0.0,
+            "one_ply_select": 0.0
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0007": {
+          "ev": 2.190674,
+          "retention": 0.9736,
+          "retention_by_partner": {
+            "optimal_select": 0.9736,
+            "greedy_select": 0.9736,
+            "one_ply_select": 0.9736
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0015": {
+          "ev": 2.25,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 1.0,
+            "greedy_select": 1.0,
+            "one_ply_select": 1.0
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0006-fitted": {
+          "ev": 2.25,
+          "retention": 1.0,
+          "fitted_T": 5.0,
+          "transferable": false,
+          "note": "swept per world; the bar a transferable circuit must clear"
+        }
+      },
+      "select_axis": {
+        "r0010": {
+          "ev": 2.25,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "myopic_stop": 1.0,
+            "never_stop": 0.9736,
+            "optimal_stop": 1.0
+          },
+          "partner_spread": 0.0264,
+          "transferable": true
+        },
+        "r0011": {
+          "ev": 0.0,
+          "retention": 0.0,
+          "retention_by_partner": {
+            "myopic_stop": 0.0,
+            "never_stop": 0.0,
+            "optimal_stop": 0.0
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0012": {
+          "ev": 2.25,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "myopic_stop": 1.0,
+            "never_stop": 0.9736,
+            "optimal_stop": 1.0
+          },
+          "partner_spread": 0.0264,
+          "transferable": true
+        },
+        "r0013": {
+          "ev": 0.0,
+          "retention": 0.0,
+          "retention_by_partner": {
+            "myopic_stop": 0.0,
+            "never_stop": 0.0,
+            "optimal_stop": 0.0
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0014": {
+          "ev": 0.0,
+          "retention": 0.0,
+          "retention_by_partner": {
+            "myopic_stop": 0.0,
+            "never_stop": 0.0,
+            "optimal_stop": 0.0
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "OPTIMAL": {
+          "ev": 2.25,
+          "retention": 1.0,
+          "transferable": false
+        }
+      },
+      "axis_decomposition": {
+        "cheap_pair": "r0010+r0003",
+        "cheap_pair_retention": 1.0,
+        "recovered_by_upgrading_SELECT_only": 0.0,
+        "recovered_by_upgrading_STOP_only": 0.0,
+        "total_residual": 0.0
+      },
+      "wall_seconds": 0.0
+    },
+    "FOUNDRY-DECAY[gate=1,decay=0.75,k=3,cap=4,h=6]": {
+      "world": "FOUNDRY-DECAY[gate=1,decay=0.75,k=3,cap=4,h=6]",
+      "genre": "synthetic control",
+      "surface": "no theme at all, deliberately",
+      "rules_state": "SYNTHETIC",
+      "declared_interfaces": [
+        "STOP",
+        "SELECT"
+      ],
+      "select_axis_is_live": true,
+      "n_states": 96,
+      "optimal_ev": 2.493896,
+      "compile_and_solve_seconds": 0.0,
+      "stop_axis": {
+        "r0003": {
+          "ev": 2.493896,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 1.0,
+            "greedy_select": 1.0,
+            "one_ply_select": 1.0
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0004": {
+          "ev": 2.493896,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 1.0,
+            "greedy_select": 1.0,
+            "one_ply_select": 1.0
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0005": {
+          "ev": 0.0,
+          "retention": 0.0,
+          "retention_by_partner": {
+            "optimal_select": 0.0,
+            "greedy_select": 0.0,
+            "one_ply_select": 0.0
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0007": {
+          "ev": 2.493896,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 1.0,
+            "greedy_select": 1.0,
+            "one_ply_select": 1.0
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0015": {
+          "ev": 2.493896,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 1.0,
+            "greedy_select": 1.0,
+            "one_ply_select": 1.0
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0006-fitted": {
+          "ev": 2.493896,
+          "retention": 1.0,
+          "fitted_T": 8.0,
+          "transferable": false,
+          "note": "swept per world; the bar a transferable circuit must clear"
+        }
+      },
+      "select_axis": {
+        "r0010": {
+          "ev": 2.493896,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "myopic_stop": 1.0,
+            "never_stop": 1.0,
+            "optimal_stop": 1.0
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0011": {
+          "ev": 0.0,
+          "retention": 0.0,
+          "retention_by_partner": {
+            "myopic_stop": 0.0,
+            "never_stop": 0.0,
+            "optimal_stop": 0.0
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0012": {
+          "ev": 2.493896,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "myopic_stop": 1.0,
+            "never_stop": 1.0,
+            "optimal_stop": 1.0
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0013": {
+          "ev": 0.0,
+          "retention": 0.0,
+          "retention_by_partner": {
+            "myopic_stop": 0.0,
+            "never_stop": 0.0,
+            "optimal_stop": 0.0
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0014": {
+          "ev": 0.0,
+          "retention": 0.0,
+          "retention_by_partner": {
+            "myopic_stop": 0.0,
+            "never_stop": 0.0,
+            "optimal_stop": 0.0
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "OPTIMAL": {
+          "ev": 2.493896,
+          "retention": 1.0,
+          "transferable": false
+        }
+      },
+      "axis_decomposition": {
+        "cheap_pair": "r0010+r0003",
+        "cheap_pair_retention": 1.0,
+        "recovered_by_upgrading_SELECT_only": 0.0,
+        "recovered_by_upgrading_STOP_only": 0.0,
+        "total_residual": 0.0
+      },
+      "wall_seconds": 0.0
+    },
+    "FOUNDRY-DECAY[gate=0,decay=0,k=3,cap=4,h=6]": {
+      "world": "FOUNDRY-DECAY[gate=0,decay=0,k=3,cap=4,h=6]",
+      "genre": "synthetic control",
+      "surface": "no theme at all, deliberately",
+      "rules_state": "SYNTHETIC",
+      "declared_interfaces": [
+        "STOP",
+        "SELECT"
+      ],
+      "select_axis_is_live": true,
+      "n_states": 74,
+      "optimal_ev": 2.53125,
+      "compile_and_solve_seconds": 0.0,
+      "stop_axis": {
+        "r0003": {
+          "ev": 2.53125,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 1.0,
+            "greedy_select": 1.0,
+            "one_ply_select": 1.0
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0004": {
+          "ev": 1.779785,
+          "retention": 0.7031,
+          "retention_by_partner": {
+            "optimal_select": 0.7031,
+            "greedy_select": 0.7031,
+            "one_ply_select": 0.7031
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0005": {
+          "ev": 1.5,
+          "retention": 0.5926,
+          "retention_by_partner": {
+            "optimal_select": 0.5926,
+            "greedy_select": 0.5926,
+            "one_ply_select": 0.5926
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0007": {
+          "ev": 1.779785,
+          "retention": 0.7031,
+          "retention_by_partner": {
+            "optimal_select": 0.7031,
+            "greedy_select": 0.7031,
+            "one_ply_select": 0.7031
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0015": {
+          "ev": 2.53125,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 1.0,
+            "greedy_select": 1.0,
+            "one_ply_select": 1.0
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0006-fitted": {
+          "ev": 2.53125,
+          "retention": 1.0,
+          "fitted_T": 5.0,
+          "transferable": false,
+          "note": "swept per world; the bar a transferable circuit must clear"
+        }
+      },
+      "select_axis": {
+        "r0010": {
+          "ev": 2.53125,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "myopic_stop": 1.0,
+            "never_stop": 0.7031,
+            "optimal_stop": 1.0
+          },
+          "partner_spread": 0.2969,
+          "transferable": true
+        },
+        "r0011": {
+          "ev": 1.265625,
+          "retention": 0.5,
+          "retention_by_partner": {
+            "myopic_stop": 0.5,
+            "never_stop": 0.4219,
+            "optimal_stop": 0.4219
+          },
+          "partner_spread": 0.0781,
+          "transferable": true
+        },
+        "r0012": {
+          "ev": 2.53125,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "myopic_stop": 1.0,
+            "never_stop": 0.7031,
+            "optimal_stop": 1.0
+          },
+          "partner_spread": 0.2969,
+          "transferable": true
+        },
+        "r0013": {
+          "ev": 2.53125,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "myopic_stop": 1.0,
+            "never_stop": 0.7031,
+            "optimal_stop": 1.0
+          },
+          "partner_spread": 0.2969,
+          "transferable": false
+        },
+        "r0014": {
+          "ev": 1.265625,
+          "retention": 0.5,
+          "retention_by_partner": {
+            "myopic_stop": 0.5,
+            "never_stop": 0.4219,
+            "optimal_stop": 0.4219
+          },
+          "partner_spread": 0.0781,
+          "transferable": true
+        },
+        "OPTIMAL": {
+          "ev": 2.53125,
+          "retention": 1.0,
+          "transferable": false
+        }
+      },
+      "axis_decomposition": {
+        "cheap_pair": "r0010+r0003",
+        "cheap_pair_retention": 1.0,
+        "recovered_by_upgrading_SELECT_only": 0.0,
+        "recovered_by_upgrading_STOP_only": 0.0,
+        "total_residual": 0.0
+      },
+      "wall_seconds": 0.0
+    },
+    "LUCKY_NUMBERS": {
+      "world": "LUCKY_NUMBERS",
+      "genre": "constrained placement",
+      "surface": "a small grid, numbered tiles, rows and columns that must ascend",
+      "rules_state": "HYPOTHESIZED",
+      "declared_interfaces": [
+        "SELECT"
+      ],
+      "select_axis_is_live": true,
+      "n_states": 3832,
+      "optimal_ev": 4.0,
+      "compile_and_solve_seconds": 0.1,
+      "stop_axis": {
+        "r0003": {
+          "ev": 2.666667,
+          "retention": 0.6667,
+          "retention_by_partner": {
+            "optimal_select": 0.0,
+            "greedy_select": 0.6667,
+            "one_ply_select": 0.6312
+          },
+          "partner_spread": 0.6667,
+          "transferable": true
+        },
+        "r0004": {
+          "ev": 4.0,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 1.0,
+            "greedy_select": 0.6667,
+            "one_ply_select": 0.759
+          },
+          "partner_spread": 0.3333,
+          "transferable": false
+        },
+        "r0005": {
+          "ev": 1.0,
+          "retention": 0.25,
+          "retention_by_partner": {
+            "optimal_select": 0.0,
+            "greedy_select": 0.25,
+            "one_ply_select": 0.25
+          },
+          "partner_spread": 0.25,
+          "transferable": false
+        },
+        "r0007": {
+          "ev": 4.0,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 1.0,
+            "greedy_select": 0.6667,
+            "one_ply_select": 0.759
+          },
+          "partner_spread": 0.3333,
+          "transferable": true
+        },
+        "r0015": {
+          "ev": 4.0,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 1.0,
+            "greedy_select": 0.6667,
+            "one_ply_select": 0.759
+          },
+          "partner_spread": 0.3333,
+          "transferable": true
+        },
+        "r0006-fitted": {
+          "ev": 4.0,
+          "retention": 1.0,
+          "fitted_T": 4.0,
+          "transferable": false,
+          "note": "swept per world; the bar a transferable circuit must clear"
+        }
+      },
+      "select_axis": {
+        "r0010": {
+          "ev": 2.666667,
+          "retention": 0.6667,
+          "retention_by_partner": {
+            "myopic_stop": 0.6667,
+            "never_stop": 0.6667,
+            "optimal_stop": 0.6667
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0011": {
+          "ev": 0.0,
+          "retention": 0.0,
+          "retention_by_partner": {
+            "myopic_stop": 0.0,
+            "never_stop": 0.0,
+            "optimal_stop": 0.0
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "r0012": {
+          "ev": 3.036111,
+          "retention": 0.759,
+          "retention_by_partner": {
+            "myopic_stop": 0.6312,
+            "never_stop": 0.759,
+            "optimal_stop": 0.759
+          },
+          "partner_spread": 0.1278,
+          "transferable": true
+        },
+        "r0013": {
+          "ev": 0.0,
+          "retention": 0.0,
+          "retention_by_partner": {
+            "myopic_stop": 0.0,
+            "never_stop": 0.0,
+            "optimal_stop": 0.0
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0014": {
+          "ev": 0.0,
+          "retention": 0.0,
+          "retention_by_partner": {
+            "myopic_stop": 0.0,
+            "never_stop": 0.0,
+            "optimal_stop": 0.0
+          },
+          "partner_spread": 0.0,
+          "transferable": true
+        },
+        "OPTIMAL": {
+          "ev": 0.0,
+          "retention": 0.0,
+          "transferable": false
+        }
+      },
+      "axis_decomposition": {
+        "cheap_pair": "r0012+r0003",
+        "cheap_pair_retention": 0.6312,
+        "recovered_by_upgrading_SELECT_only": -0.6312,
+        "recovered_by_upgrading_STOP_only": 0.1278,
+        "total_residual": 0.3688
+      },
+      "wall_seconds": 0.1
+    },
+    "COLORETTO": {
+      "world": "COLORETTO",
+      "genre": "set collection with negative scoring",
+      "surface": "chameleons, colour cards, and rows you may claim",
+      "rules_state": "HYPOTHESIZED",
+      "declared_interfaces": [
+        "STOP",
+        "SELECT"
+      ],
+      "select_axis_is_live": true,
+      "n_states": 296925,
+      "optimal_ev": 23.296342,
+      "compile_and_solve_seconds": 19.6,
+      "stop_axis": {
+        "r0003": {
+          "ev": 1.0,
+          "retention": 0.0429,
+          "retention_by_partner": {
+            "optimal_select": 0.0,
+            "greedy_select": 0.0429,
+            "one_ply_select": 0.0
+          },
+          "partner_spread": 0.0429,
+          "transferable": true
+        },
+        "r0004": {
+          "ev": 23.296342,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 1.0,
+            "greedy_select": 0.5421,
+            "one_ply_select": 0.7807
+          },
+          "partner_spread": 0.4579,
+          "transferable": false
+        },
+        "r0005": {
+          "ev": 0.0,
+          "retention": 0.0,
+          "retention_by_partner": {
+            "optimal_select": 0.0,
+            "greedy_select": 0.0,
+            "one_ply_select": 0.0
+          },
+          "partner_spread": 0.0,
+          "transferable": false
+        },
+        "r0007": {
+          "ev": 23.296342,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 1.0,
+            "greedy_select": 0.5421,
+            "one_ply_select": 0.7807
+          },
+          "partner_spread": 0.4579,
+          "transferable": true
+        },
+        "r0015": {
+          "ev": 23.296342,
+          "retention": 1.0,
+          "retention_by_partner": {
+            "optimal_select": 1.0,
+            "greedy_select": 0.5398,
+            "one_ply_select": 0.7807
+          },
+          "partner_spread": 0.4602,
+          "transferable": true
+        },
+        "r0006-fitted": {
+          "ev": 23.296342,
+          "retention": 1.0,
+          "fitted_T": 19.0,
+          "transferable": false,
+          "note": "swept per world; the bar a transferable circuit must clear"
+        }
+      },
+      "select_axis": {
+        "r0010": {
+          "ev": 12.627987,
+          "retention": 0.5421,
+          "retention_by_partner": {
+            "myopic_stop": 0.0429,
+            "never_stop": 0.5421,
+            "optimal_stop": 0.5421
+          },
+          "partner_spread": 0.4991,
+          "transferable": true
+        },
+        "r0011": {
+          "ev": 15.930697,
+          "retention": 0.6838,
+          "retention_by_partner": {
+            "myopic_stop": 0.0,
+            "never_stop": 0.6837,
+            "optimal_stop": 0.6838
+          },
+          "partner_spread": 0.6838,
+          "transferable": true
+        },
+        "r0012": {
+          "ev": 18.188172,
+          "retention": 0.7807,
+          "retention_by_partner": {
+            "myopic_stop": 0.0,
+            "never_stop": 0.7807,
+            "optimal_stop": 0.7807
+          },
+          "partner_spread": 0.7807,
+          "transferable": true
+        },
+        "r0013": {
+          "ev": 13.865871,
+          "retention": 0.5952,
+          "retention_by_partner": {
+            "myopic_stop": 0.0,
+            "never_stop": 0.5951,
+            "optimal_stop": 0.5952
+          },
+          "partner_spread": 0.5952,
+          "transferable": false
+        },
+        "r0014": {
+          "ev": 15.930697,
+          "retention": 0.6838,
+          "retention_by_partner": {
+            "myopic_stop": 0.0,
+            "never_stop": 0.6837,
+            "optimal_stop": 0.6838
+          },
+          "partner_spread": 0.6838,
+          "transferable": true
+        },
+        "OPTIMAL": {
+          "ev": 0.0,
+          "retention": 0.0,
+          "transferable": false
+        }
+      },
+      "axis_decomposition": {
+        "cheap_pair": "r0012+r0003",
+        "cheap_pair_retention": 0.0,
+        "recovered_by_upgrading_SELECT_only": 0.0,
+        "recovered_by_upgrading_STOP_only": 0.7807,
+        "total_residual": 1.0
+      },
+      "wall_seconds": 34.8
+    }
+  }
+}

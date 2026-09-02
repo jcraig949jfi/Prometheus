@@ -1,0 +1,26 @@
+{
+  "purpose": "axis ablation: where does Martian Dice's residual value live?",
+  "optimal_ev": 2.0938,
+  "configurations": {
+    "cheap claim (most)  + cheap stop (myopic transplant)": {
+      "ev": 1.9043,
+      "retention": 0.9095
+    },
+    "cheap claim (most)  + OPTIMAL stop": {
+      "ev": 1.9033,
+      "retention": 0.909
+    },
+    "OPTIMAL claim       + cheap stop (myopic transplant)": {
+      "ev": 2.067,
+      "retention": 0.9872
+    },
+    "OPTIMAL claim       + OPTIMAL stop": {
+      "ev": 2.0938,
+      "retention": 1.0
+    }
+  },
+  "recovered_by_stop_axis_only": -0.0005,
+  "recovered_by_claim_axis_only": 0.0777,
+  "total_residual": 0.0905,
+  "no_model_calls": true
+}

@@ -1,0 +1,301 @@
+ERGON TIER A GATE -- PROJECTS 1 AND 2
+2026-09-01. Self-contained external-review packet for a reviewer who has not
+seen the originating conversation.
+
+HEADLINE
+
+    PROJECT 1 -- SELECTION_NOT_DISTINGUISHABLE_FROM_CHURN.
+
+    Principled selection does NOT beat arbitrary churn. At n = 100 fresh
+    paired lineages the contrast is -0.31 pp with 95% CI [-1.12, +0.55] pp
+    and p = 0.473. The upper bound EXCLUDES the preregistered 2.00 pp
+    strategic threshold, so this is a BOUNDED null: the data rule out a
+    meaningful selection advantage rather than merely failing to find one.
+
+    Gen-1B measured +1.51 pp on this contrast at n = 30. The replication
+    REVERSES the sign, and its CI excludes the Gen-1B point estimate.
+
+    PROJECT 2 -- TRAJECTORY_INSTRUMENT_CLEAN, with a methodological finding
+    that matters more than the gate: the parity test passed on an instrument
+    that recorded nothing.
+
+======================================================================
+1. WHAT PROJECT 1 WAS, AND WHY IT WAS NOT A POWER PROBLEM
+======================================================================
+
+Gen-1B reported I1 MUT_REDUNDANT - I3 RANDOM at +1.51 pp, uncorrected
+p = 0.0228, dying only after Holm correction across five contrasts
+(adjusted 0.0912). The natural reading -- and the one the Gen-1B packet
+offered -- was "suggestive, underpowered, rerun it bigger."
+
+That reading was wrong, and the pre-run power analysis said so BEFORE the run:
+recomputing from the contrast's own per-lineage SD (sigma = 0.03218),
+
+    n = 30    MDE80 1.65 pp    MDE90 1.90 pp
+    n = 100   MDE80 0.90 pp    MDE90 1.04 pp
+
+n = 30 ALREADY had 90% power against a 2.00 pp effect. The binding constraint
+in Gen-1B was MULTIPLICITY, not lineage count. Project 1 therefore isolates a
+contrast that was diluted by being run beside four others; with one
+preregistered contrast it takes no correction, and that was recorded as a
+design change in advance rather than discovered as an analysis change.
+
+======================================================================
+2. PREREGISTRATION
+======================================================================
+
+    brief    ergon/gen2/PROMPT_NEXT_QUEUE_2026-09-01.txt
+             blob 979238c65b37cbc633d0382d57bc93068c8afcf7
+    prereg   ergon/gen2/PREREG_P1_2026-09-01.txt
+             blob edce0fedd6dcef0cb54c2c24ebc9c50039277db5
+    runner   ergon/gen1b/gen1_run.py, UNCHANGED from Gen-1B
+             blob 577125847aabf6a3087d06935e39701cffc751be
+    analysis ergon/gen2/p1_analyze.py, committed at be3d586b1 BEFORE any
+             result file was opened
+
+THE THRESHOLD, frozen before data and justified without reference to the
+observed effect:
+
+    T = 2.00 pp
+
+  a. GRANULARITY. CFR is over 42 tasks, so one task is 2.38 pp. Below T an
+     effect cannot reliably move even one task in forty-two within a lineage.
+  b. PROPORTION. The whole accumulation effect is 10.95 pp and its
+     content-adaptedness component 6.7 pp. T is ~18% and ~30% of those.
+  c. DECISION RELEVANCE. Nothing downstream in the queue is worth building on
+     a selection effect that cannot clear one task in forty-two.
+
+T is STRATEGIC, not statistical. A real effect below T is reported as real and
+below scale, never as absent.
+
+======================================================================
+3. DESIGN
+======================================================================
+
+    arms          I1 MUT_REDUNDANT, I3 RANDOM. No other arm.
+    n             100 FRESH paired lineages per arm
+    battery       the frozen 42 non-control D-5 tasks
+    budget        30,000 evaluations per task
+    cap           64, admission frozen, search core frozen
+    pairing       lineage L uses the same nav-seed base in both arms
+    seed space    lineage indices 100..199 -> nav bases 300000..399000.
+                  Gen-1B used 200000..229000. ZERO overlap, verified.
+
+FRESH LINEAGES, NOT AN EXTENSION. Adding lineages to a set whose result has
+already been seen is optional stopping and would make the p-value
+uninterpretable. Gen-1B's 30 lineages are not pooled and do not enter the
+primary analysis at all. This is an independent replication.
+
+VALIDITY, checked in the analysis and passing: 400/400 result files; every one
+of the 200 arm-lineages ends with exactly 64 artifacts; every task count is 42;
+no nav_base overlaps Gen-1B.
+
+======================================================================
+4. PROJECT 1 RESULT
+======================================================================
+
+    arm  policy            mean CFR    sd       min     max
+    I1   MUT_REDUNDANT      0.3076   0.0422   0.190   0.405
+    I3   RANDOM             0.3107   0.0478   0.214   0.405
+
+PRIMARY CONTRAST, the only contrast, no multiplicity correction:
+
+    I1 - I3     mean   -0.0031   =   -0.31 pp
+                SE      0.0043
+                95% CI [-0.0112, +0.0055]  =  [-1.12, +0.55] pp
+                p       0.4726   (two-sided paired sign-flip, 50,000 draws)
+                signs   35 positive, 45 negative, 20 tied of 100
+
+    VERDICT: SELECTION_NOT_DISTINGUISHABLE_FROM_CHURN
+
+The decision rule was fixed in the prereg and is exhaustive over all five
+named outcomes. This branch fires because p >= 0.05 AND the CI upper bound
+(+0.55 pp) is below T. It is a bounded null.
+
+======================================================================
+5. THE REPLICATION REVERSAL, AND WHAT IT COSTS
+======================================================================
+
+    Gen-1B   n = 30    I1 - I3 = +1.51 pp   uncorrected p 0.0228
+    Project1 n = 100   I1 - I3 = -0.31 pp   p 0.473, CI [-1.12, +0.55]
+
+The sign reversed and the new CI excludes the old point estimate. Both arms
+moved toward each other rather than one collapsing:
+
+    I1   0.3135 -> 0.3076
+    I3   0.2984 -> 0.3107
+
+That is the signature of regression to the mean on a contrast selected for
+attention because it was marginal.
+
+HOLM WAS RIGHT AND THE GEN-1B PACKET TALKED PAST IT. That packet called the
+contrast "suggestive, underpowered" and recommended a bigger rerun. The
+correction was not being conservative; it was being correct, and the
+replication now confirms the corrected reading over the uncorrected one. The
+pre-run power calculation was the available clue and it pointed the same way.
+
+The transferable rule: when a marginal contrast dies on multiplicity, the
+first question is whether the correction was RIGHT, not how to get more n.
+
+======================================================================
+6. WHAT PROJECT 1 DOES NOT KILL
+======================================================================
+
+Gen-1B's I1 - I0 = +2.78 pp (Holm 0.0040) is UNTOUCHED by this run, because
+I0 was not an arm here. Combined with I1 ~= I3, the surviving hypothesis is:
+
+    ANYTHING beats the inherited MRU rule, and the specific selection
+    criterion does not matter -- i.e. most-recent-first eviction is ACTIVELY
+    HARMFUL rather than principled retention being helpful.
+
+That is a different claim from the one the queue was built on. It is
+consistent with Gen-1B's I3 - I0 = +1.27 pp (p = 0.0540, just missing at
+n = 30) and with the fact that in Project 1 the RANDOM arm sits at 0.3107,
+well above Gen-1B's MRU arm at 0.2857.
+
+It is NOT confirmed. Confirming it needs I0 at n = 100, which Project 1
+deliberately did not run because the prereg fixed two arms.
+
+======================================================================
+7. PROJECT 2 -- TRAJECTORY_INSTRUMENT_CLEAN
+======================================================================
+
+Gen-1B's largest instrumentation gap is closed. Candidate-level trajectory is
+now recorded: candidate genotype hash, behaviour fingerprint, score,
+evaluation index, task, lineage, policy, library-state reference, parent
+hash(es), parent source and mutation operator.
+
+Observational by construction, no fork of the frozen core -- wrappers over the
+four surfaces it already uses: library draw, physics.mutate,
+physics.crossover, FastTask.dist.
+
+PARITY, both arms, instrumented vs not:
+    rows identical (solved, first_solve, evals) ......... PASS
+    library contents identical .......................... PASS
+    library size identical .............................. PASS
+    eviction count identical ............................ PASS
+    total draws identical ............................... PASS
+    effective-use totals identical ...................... PASS
+    candidate coverage of metered evaluations ........... 1.0000
+
+CONTROLS:
+    POSITIVE  24-task fixture that reaches the cap: divergence MUST fire, and
+              does, at evaluation index 33999 (identity Jaccard 0.6347,
+              behaviour Jaccard 0.6667)
+    NEGATIVE  same arm, same seed: no divergence. PASS
+    ANCESTRY  1.0000 of scored candidates carry a parent. PASS
+
+THE METHODOLOGICAL FINDING, which is the part worth keeping. The parity gate
+passed on the FIRST version of this instrument, and that version was broken:
+97% of scored candidates had NO parent recorded. The cause is structural --
+m1_rx builds a whole generation of 32 children and only THEN scores them, so a
+single "pending parent" slot is overwritten 31 times before the first dist()
+call.
+
+    Parity tests that an instrument does not CHANGE the phenomenon.
+    It does not test that the instrument CAPTURES it.
+
+Both gates are needed. The Gen-1A persistence instrument had only the first
+kind, and passed.
+
+A second instance of the same shape nearly slipped through: the first
+divergence run reported None for I1 vs I3, which looked like a clean result
+and was actually a 6-task fixture where the cap is never reached, so no
+eviction has yet differed and the policies are still identical. A broken
+detector and a not-yet-diverged pair are indistinguishable without a positive
+control.
+
+DENOMINATOR FOR ANY FUTURE MECHANISM CLAIM: only about 5.5% of scored
+candidates descend directly from a library draw
+(LIB 2419, XOVER 19822, POP 19212, REP 2541 on the 24-task fixture). Whatever
+retention does, it acts through that narrow channel.
+
+======================================================================
+8. COMPUTE SPENT
+======================================================================
+
+    Project 1     2 arms x 100 lineages x 42 tasks x 30,000 evals
+                  = 252,000,000 organism-evaluations
+    Project 2     parity and control fixtures, ~0.5M evaluations
+    money         $0.00, local CPU, no API call
+    storage       6.4 MB Project 1 results
+
+======================================================================
+9. CLAIM CEILING
+======================================================================
+
+  - The null is BOUNDED, not absolute: effects below +0.55 pp remain possible
+    and are excluded only relative to T = 2.00 pp.
+  - This is one contrast between two specific policies on one consumer, one
+    42-task battery, one budget. It does not show that no retention policy can
+    beat random; it shows that THIS one does not, at this scale.
+  - I0 was not run. "MRU is actively harmful" is the surviving hypothesis, not
+    a result.
+  - Project 2 certifies the instrument, not any mechanism. No trajectory claim
+    is made anywhere in this packet.
+  - The 5.5% library-descended fraction is measured on a 24-task fixture at
+    budget 2000, not on the full experiment.
+
+======================================================================
+10. DEVIATIONS
+======================================================================
+
+  1. The Project 1 driver (ergon/gen2/p1_run.py) is new code, because the
+     frozen Gen-1B runner loops lineage indices from 0 and Project 1 needs
+     100..199. The runner itself is imported UNCHANGED so its hashed blob
+     remains the executing code; only the loop lives outside it. Adding a
+     --start flag would have changed the frozen blob.
+  2. Project 2's instrument was revised twice DURING development, before any
+     verdict was recorded: once to key provenance by child object, once to add
+     the positive control and ancestry-coverage gate. Both revisions are
+     described in section 7 rather than silently folded in.
+
+======================================================================
+11. RECOMMENDATION -- THE QUEUE NEEDS RE-GATING
+======================================================================
+
+Project 1 was declared the gate for almost everything downstream, and it
+returned negative. Taking that seriously:
+
+STOP, do not run as designed:
+  - PROJECT 3 (where does the +2.78pp enter?) as a SELECTION mechanism study.
+    There is no selection effect to trace. The question survives only in its
+    reformulated version below.
+  - PROJECT 7 (transplant). It was already gated on "a selection effect worth
+    transplanting". There is none.
+
+RUN NEXT, and it is one cheap discriminating experiment:
+  - I0 MRU vs I3 RANDOM at n = 100, same design, one contrast, no correction.
+    This is the ONLY experiment that can distinguish the two surviving stories:
+        (a) MRU is actively harmful, and any churn beats it
+        (b) Gen-1B's I1-I0 was itself inflated the way I1-I3 was
+    It costs about the same as Project 1 and it decides whether ANY retention
+    result in this programme survives. If I3 - I0 is null, then Gen-1B's
+    headline goes too and the honest position becomes "retention policy does
+    not measurably matter in this consumer at this scale."
+
+THEN, conditional on I3 > I0:
+  - Reformulated PROJECT 3: not "why does selection help" but "what is MRU
+    doing wrong?" Use the Project 2 instrument on paired I0 vs I3 lineages.
+    The mechanism question becomes tractable and specific: most-recent-first
+    eviction has a systematic defect, and the trajectory instrument can now
+    say what it is.
+
+DEFER: Projects 4, 5, 6, 8, 9. Project 4's forgetting rule was motivated by
+the hazard structure, which stands on its own, but building a retirement
+policy is not worth it until we know whether ANY eviction rule beats another.
+
+The Phase 7 hazard result from Gen-1B is unaffected by all of this and remains
+the most reusable thing the programme has produced on memory: usefulness does
+not decay, 44% of artifacts never earn a first credit, and 24% of used
+artifacts revive after five or more dormant tasks.
+
+REPRODUCE
+
+    python -m ergon.gen2.p1_run --lineages 100
+    python -m ergon.gen2.p1_analyze
+    python -m ergon.gen2.trajectory --selftest --tasks 6 --budget 2000
+
+agent_d5_blind/ is imported read-only and is untouched throughout.
+
+-- Ergon, 2026-09-01

@@ -1,0 +1,12 @@
+{
+  "base_url": "https://192.168.1.202:8811",
+  "cafile": "config/m1.crt",
+  "client_name": "my-research-console",
+  "token": null,
+  "_notes": [
+    "base_url: the Engine on M1/SKULLPORT (LAN IP 192.168.1.202, TLS, port 8811).",
+    "cafile: the Engine's TLS certificate to trust (CN/SAN = 192.168.1.202); copy config/m1.crt to your machine.",
+    "token: leave null on first use; call EngineClient.register(client_name) to obtain one, then paste it here.",
+    "Only machines on 192.168.1.0/24 may reach the port (firewall-restricted)."
+  ]
+}

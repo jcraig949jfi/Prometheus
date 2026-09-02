@@ -1,0 +1,2 @@
+@echo off
+"F:\SerendipityD\.venv\Scripts\python.exe" "F:\Prometheus\SerendipityFoundry\SerendipityFoundryEngine\serve.py" --db "F:\Prometheus\SerendipityFoundry\SerendipityFoundryEngine\var\engine.db" --host 192.168.1.202 --port 8811 --tls-cert "F:\Prometheus\SerendipityFoundry\SerendipityFoundryEngine\deploy\m1.crt" --tls-key "F:\Prometheus\SerendipityFoundry\SerendipityFoundryEngine\deploy\m1.key" >> "F:\Prometheus\SerendipityFoundry\SerendipityFoundryEngine\deploy\sfengine.log" 2>&1

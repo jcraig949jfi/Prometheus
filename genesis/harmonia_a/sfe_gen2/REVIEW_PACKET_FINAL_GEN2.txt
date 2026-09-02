@@ -1,0 +1,226 @@
+=====================================================================
+PROMETHEUS / SERENDIPITY FOUNDRY ENGINE (GEN-2)
+QUALIFICATION -> REPAIR -> REQUALIFICATION -> FIRST SCIENCE DRY RUN
+FINAL EXTERNAL REVIEW PACKET
+=====================================================================
+Date: 2026-09-01
+Origin: Harmonia A (M2, adversarial scientific client), qualifying
+and then first-using the gen-2 epistemic control plane built and
+maintained by Daedalus (M1). Directory:
+genesis/harmonia_a/sfe_gen2/. Role boundary held throughout: the
+instrument builder asserted the contract; only this seat issued
+verdicts.
+Status: CLOSED. One full day, four phases, every verdict from
+frozen expectations, every incident journaled.
+
+---------------------------------------------------------------------
+0. SUMMARY FOR THE HURRIED REVIEWER
+---------------------------------------------------------------------
+GEN-2 is a new KIND of instrument for Prometheus: not a substrate
+executor but an epistemic control plane -- worlds, hypotheses,
+prospective predictions, committed experiments, budgets, first-
+class failures, per-world hash-chained ledgers, cross-client
+isolation. Its purpose: make hindsight-into-foresight, free
+compute, and rewritten history STRUCTURALLY difficult.
+
+ARC, in four verdicts:
+ 1. QUALIFICATION (hostile battery T1-T24 against frozen plan):
+    NOT_QUALIFIED -- 4 gates failed. Two P1: the advertised
+    prediction-ordering 409 was DEAD CODE (guard unreachable) with
+    no prospective concept in the schema; budgets were cooperative-
+    only (no server-authoritative debit). Two P2: nested config not
+    fail-closed; no wire-bindable release identity.
+ 2. REPAIR (Daedalus): better than the filing. One irreversible
+    lifecycle boundary -- EXPERIMENT_COMMITTED -- closes the
+    prospective window BEFORE execution is possible, debits budget
+    atomically (idempotently) in the same transaction, and stamps
+    the build-derived engine_source_hash into the event. Plus
+    hardening beyond the filing: lease fencing (claim_id), fork
+    epistemic-time and budget-root rules, evidence provenance
+    classes, bilateral unguessable topology groups, origin-only
+    re-export. 506 lines of regression tests.
+ 3. REQUALIFICATION (repros rerun + one nearby bypass each):
+    QUALIFIED_WITH_DECLARED_LIMITATIONS -- all 10 gates PASS on
+    release engine_source_hash sha256:e367e791c10080decc8ac8152c8
+    2fde61b426682a9bc298403f0ccc970f9ed1a (source_commit ec4d35a1,
+    API 2.1.0, schema 2). Seven limitations declared (L1-L7).
+    That exact release is the frozen approved control plane.
+ 4. FIRST SCIENCE DRY RUN (topology-1): DRYRUN_CLEAN, and all
+    three prospective predictions SURVIVED:
+      mean best-score at matched engine-enforced budget --
+      A1 ISOLATED 0.883 < A4 SHAM 0.903 < A2 FAILURES_ONLY 0.933
+      < A3 FULLY_SHARED 0.975
+    P1 failure-sharing beats isolation (perm p = 0.064 on 5 seeds;
+    directional by pre-commitment, no significance theater);
+    P2 full sharing >= failure sharing; P3 the junk-import sham
+    sits near isolation -- THE BENEFIT IS THE INFORMATION, NOT THE
+    IMPORT MACHINERY. First instrument-enforced datum for the
+    metabolization thesis, at toy scale, claim ceiling pre-bound.
+
+The engine held under real load: 60 of 60 searcher worlds were
+terminated by server-side budget enforcement; a deliberate
+late-prediction attempt mid-campaign was rejected 409 IN
+PRODUCTION; the fail-closed config validation caught a live bug in
+this seat's own runner. A well-behaved client found it convenient;
+a buggy client found it fail-closed. That was the standard.
+
+---------------------------------------------------------------------
+1. PHASE 1 -- QUALIFICATION (NOT_QUALIFIED)
+---------------------------------------------------------------------
+Frozen plan (commit 5a82d3c2d) before execution; battery T1-T24;
+full table in GEN2_QUALIFICATION_PACKET.md + results/
+qual_battery_results.json. Highlights:
+  PASS x14 including isolation (403 read+write+bind), durable
+  budget exhaustion with commit-then-raise ledger recording,
+  immutability by construction (no mutation routes), ledger
+  integrity, config round-trip, failure querying.
+  FAIL: T1/T2 (late prediction got full credit; 409 guard
+  unreachable -- static analysis confirmed behaviorally), T16
+  (nested budget key "sneaky" accepted), T21 (no release identity).
+  FINDINGS: T13 duplicate registration unmetered; T23 laundering
+  by recreation uncharacterized; T3 duplicate pred-binding
+  ambiguous.
+Defects filed in the sVIII handoff format: DFX-1 (P1), DFX-2 (P1,
+already honestly declared as I8 PARTIAL in the engine's own
+invariants doc), DFX-3 (P2), DFX-4 (P2), DOC-1 (P3).
+
+---------------------------------------------------------------------
+2. PHASE 2 -- THE REPAIR (Daedalus, commit f9dd6ed88)
+---------------------------------------------------------------------
+Governing change: EXPERIMENT_COMMITTED as the one irreversible
+boundary -- freeze spec (spec_hash), close prospective window
+(committed_seq), debit budget (local + lineage root), stamp
+engine_source_hash, optionally authorize execution. Prospective
+iff prediction.created_seq < experiment.committed_seq; post-commit
+predictions require retrospective=true and are never prospective.
+Beyond the filing: H1 claim_id fencing; H2 forks cannot convert
+past evidence to future evidence; H3 forks cannot mint budget
+(budget_root lineage debits); H4 evidence_class ENGINE_WORK_RESULT
+vs CLIENT_ASSERTED carried into adjudication; H5 topology groups
+are server-minted unguessable capabilities; H6 origin-only
+re-export. Handoff doc explicitly left the verdict to this seat.
+
+---------------------------------------------------------------------
+3. PHASE 3 -- REQUALIFICATION (QUALIFIED_WITH_DECLARED_LIMITATIONS)
+---------------------------------------------------------------------
+Protocol per own packet s10-11: fixes + regression tests inspected;
+MY repros rerun; one nearby bypass per fix. Table in
+REQUALIFICATION_2026-09-01.md. Decisive rows:
+  exact DFX-1 repro -> 409 prediction_ordering_error;
+  BYPASS post-commit pred with NO prior observation -> 409 (the
+  window truly closes at commit -- stronger than the original ask);
+  observation on uncommitted experiment -> 409 invalid_transition;
+  third commit on limit-2 -> 409 with consumed=2; re-commit
+  idempotent (already_committed: true, no double charge); blocked
+  commit leaves nothing claimable;
+  fork child commit blocked by lineage root (no budget minting);
+  release hash on version + status + EXPERIMENT_COMMITTED events
+  (build-derived, not attestation);
+  nested sneaky key / bad enforcement / bogus info_kind -> 422 x3;
+  fencing: claim_id required (422), wrong id (409), correct
+  exactly-once; fabricated work_id -> 422; real -> ENGINE_WORK_
+  RESULT; fabricated topology group inert at create, 403 at the
+  actual crossing; prospective flags carried on CLAIM_* events.
+GATES: G1-G10 ALL PASS. LIMITATIONS L1-L7 declared (duplicate
+pred-bind semantics undocumented; no per-response release header;
+no request-identity idempotency on non-commit POSTs; no amendment
+records; no replay engine; ENGINE_WORK_RESULT attests engine-
+verified completion of MY worker, not third-party compute;
+freeform spec/interventions/meta fields open by documented design).
+FROZEN QUALIFIED RELEASE: e367e791... / ec4d35a1 / API 2.1.0 /
+schema 2 / client @ f9dd6ed88. Mid-campaign hash change = stop,
+classify, requalify, new freeze.
+
+---------------------------------------------------------------------
+4. PHASE 4 -- DRY RUN "TOPOLOGY-1" (DRYRUN_CLEAN; P1-P3 SURVIVED)
+---------------------------------------------------------------------
+Frozen: FREEZE_DRYRUN.md (commit 0516d5f78, before any execution).
+Question: does failure-sharing between sibling searchers improve
+best-score-at-matched-budget vs isolation, full sharing, and a
+junk-import sham? 4 arms x 5 seeds x 3 sibling worlds; hidden
+24-bit target per cell; identical hill-climb everywhere; ONLY the
+sharing topology differs, and the ENGINE enforces it (policy-gated
+imports; 40-experiment budgets terminating every searcher via 409).
+Predictions P1-P3 registered prospectively in the engine's own
+meta-world before any arm world existed.
+
+RESULTS (mean best-score over 15 runs/arm):
+  A1 ISOLATED       0.883
+  A4 SHAM           0.903   (|A4-A1| = 0.019 < |A2-A1| = 0.050)
+  A2 FAILURES_ONLY  0.933   (perm p A2 vs A1 = 0.064, 5 seeds)
+  A3 FULLY_SHARED   0.975
+  P1 SURVIVED - P2 SURVIVED - P3 SURVIVED (adjudicated in-engine
+  against the prospective predictions; meta-world
+  wld_6393713e9a1aadb417a1ba4a holds the full chain).
+READING (pre-bound): a directional toy-scale datum FOR the
+metabolization thesis -- shared failure information (not sharing
+machinery: the sham controls that) buys search efficiency at
+matched budget, and richer sharing buys more. Claim ceiling: toy
+task, K=3, S=5, one topology family, this engine's semantics,
+own executor. Nothing about reasoning.
+
+INCIDENTS (all journaled, none engine faults):
+  - transport timeout killed launch 1 (runner hardened: 120s +
+    cell-level resume); RESUME DISCLOSURE: meta predictions
+    re-registered after one cell's bests were visible in the local
+    log -- the binding prereg is the committed freeze doc; the
+    engine registration is its administrative mirror; the orphaned
+    first meta-world stays in the ledger.
+  - this seat's own runner exported info_kind "success", which the
+    DFX-4 strictness fix correctly rejected 422 mid-campaign
+    (fixed to "artifact"; the fail-closed contract catching a real
+    buggy client in the wild).
+ENGINE FEEDBACK FILED: DR-1 (imports transport provenance only --
+ids + content hashes, no payload, no content-GET; fine for
+single-client trusted-LAN with driver-side payloads verified via
+source_hash, but multi-client ecologies need policy-gated content
+retrieval); DR-2 (P3: SUCCESSES_ONLY sharing policy exists but no
+"success" info_kind is accepted -- enum/doc mismatch).
+
+---------------------------------------------------------------------
+5. EPISTEMIC LABELS
+---------------------------------------------------------------------
+FACT: all verdicts, gate results, means, probe outcomes, commit
+hashes. FROZEN EXPECTATION: T1-T24 plan, P1-P3, all gates and
+thresholds. OBSERVATION: the A1<A4<A2<A3 ordering; sibling
+synchronization under sharing. INFERENCE: "the benefit is the
+information, not the machinery" (from the sham arm). INSTRUMENT
+FINDINGS: DFX-1..4 (fixed), DR-1, DR-2, L1-L7. SPECULATION: none
+asserted. OPEN QUESTIONS: L1 dup-bind semantics; DR-1 content
+retrieval design; whether topology effects survive non-toy tasks
+(a successor campaign, not this one).
+
+---------------------------------------------------------------------
+6. WHAT THIS ARC DOES NOT ESTABLISH
+---------------------------------------------------------------------
+Gen-2 does not unblock the substrate rungs: D-14D still needs
+site-addressed intervention (S3) and trajectory work needs S4 on
+the gen-1 executor. The topology result is a toy-scale directional
+datum, not a law of collective search. Qualification binds to the
+exact frozen release; any upgrade requalifies.
+
+---------------------------------------------------------------------
+7. ARTIFACT INDEX (genesis/harmonia_a/sfe_gen2/, repo main)
+---------------------------------------------------------------------
+FIRST_CONTACT_REPORT.md            onboarding + first teeth checks
+FROZEN_QUAL_PLAN.md                T1-T24, frozen pre-execution
+GEN2_QUALIFICATION_PACKET.md       phase-1 verdict + defects
+REQUALIFICATION_2026-09-01.md      phase-3 verdict + frozen release
+FREEZE_DRYRUN.md / DRYRUN_DESIGN_DRAFT.md   campaign prereg
+run_dryrun.py                      campaign runner (resumable)
+results/                           battery results, dryrun log +
+                                   summary
+JOURNAL.jsonl                      every issuance, incident,
+                                   disclosure, verdict
+Engine side: SerendipityFoundry/ @ f9dd6ed88 (repair + handoff +
+506-line regression suite); GEN2_REQUALIFICATION_HANDOFF.md.
+Key commits: 5a82d3c2d (plan) -> bd1488d98 (NOT_QUALIFIED) ->
+f9dd6ed88 (repair) -> 42770ac4a (QUALIFIED) -> 0516d5f78 (dry-run
+freeze) -> completion commits through 8c0782cbd.
+=====================================================================
+END GEN-2 PACKET -- the instrument was built honestly, killed
+honestly, repaired better than asked, requalified adversarially,
+and then did its first real scientific work: three prospective
+predictions met their evidence inside the machine built to make
+that meeting honest. The walls held.
+=====================================================================

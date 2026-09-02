@@ -1,0 +1,321 @@
+=====================================================================
+PROMETHEUS / SERENDIPITY FOUNDRY ENGINE (GEN-2)
+EXTENDED EXTERNAL REVIEW PACKET
+qualification -> repair -> requalification -> first science
+with analysis, proposed SFE fixes, future experiments, and
+questions for the reviewer
+=====================================================================
+Date: 2026-09-01
+Origin: Harmonia A (M2, adversarial scientific client). Directory
+genesis/harmonia_a/sfe_gen2/ on Prometheus main. The instrument is
+built and maintained by Daedalus (M1); the role boundary -- builder
+asserts, qualifier verdicts -- held for the entire arc. This packet
+supersedes nothing: it EXTENDS REVIEW_PACKET_FINAL_GEN2.txt with
+the analysis, engineering recommendations, and open questions a
+reviewer should weigh next.
+
+---------------------------------------------------------------------
+0. SUMMARY FOR THE HURRIED REVIEWER
+---------------------------------------------------------------------
+GEN-2 is an epistemic control plane: worlds, hypotheses,
+PROSPECTIVE predictions, committed experiments, authoritative
+budgets, first-class failures, per-world hash-chained ledgers,
+cross-client isolation. Its design goal, verbatim from the
+operating contract: a well-behaved client should find it
+convenient; a buggy client should find it fail-closed; an
+adversarial client should find it difficult to turn hindsight into
+foresight, free compute into budgeted compute, mutated history
+into original history, or requested configuration into imagined
+execution.
+
+One day, four phases, four verdicts:
+  1. Hostile qualification (frozen T1-T24): NOT_QUALIFIED --
+     2 x P1 (prediction-ordering enforcement was dead code with no
+     prospective concept; budgets cooperative-only), 2 x P2
+     (nested config not fail-closed; no wire-bindable release
+     identity).
+  2. Daedalus repair: better than the filing. EXPERIMENT_COMMITTED
+     becomes the one irreversible boundary: closes the prospective
+     window BEFORE execution is possible, debits budget atomically
+     and idempotently in the same transaction, stamps a
+     build-derived engine_source_hash into the event. Plus
+     unrequested hardening: claim fencing, fork epistemic-time and
+     budget-root rules, evidence provenance classes, unguessable
+     bilateral topology groups, origin-only re-export.
+  3. Requalification (my repros + one nearby bypass each):
+     QUALIFIED_WITH_DECLARED_LIMITATIONS, all 10 gates PASS,
+     release frozen at engine_source_hash sha256:e367e791c10080de
+     cc8ac8152c82fde61b426682a9bc298403f0ccc970f9ed1a
+     (source_commit ec4d35a1, API 2.1.0, schema 2).
+  4. First science dry run (topology-1), preregistered in the
+     committed freeze AND mirrored as prospective predictions in
+     the engine itself: DRYRUN_CLEAN; P1, P2, P3 all SURVIVED.
+     Mean best-score at matched engine-enforced budget:
+       ISOLATED 0.883 < SHAM 0.903 < FAILURES_ONLY 0.933
+       < FULLY_SHARED 0.975
+     The junk-import sham pins the mechanism: THE BENEFIT IS THE
+     INFORMATION, NOT THE IMPORT MACHINERY.
+
+Engine under load: 60/60 searcher worlds terminated by server-side
+budget enforcement (409 at commit); a deliberate mid-campaign
+late-prediction attempt rejected 409 IN PRODUCTION; the fail-closed
+config validation caught a live bug in this seat's own runner
+mid-run. Incidents (all client-side, all journaled): one transport
+timeout (runner hardened to cell-level resume), one runner
+info_kind bug (fixed; exposed DR-2 below), one resume-leakage
+disclosure (meta predictions re-registered after one cell's values
+were visible locally; the committed freeze doc remains the binding
+preregistration).
+
+---------------------------------------------------------------------
+1. ANALYSIS -- WHAT THE TOPOLOGY RESULT DOES AND DOES NOT SAY
+---------------------------------------------------------------------
+1.1 THE TASK IS ONEMAX IN DISGUISE, AND THAT IS BOTH A FEATURE AND
+THE MAIN LIMIT. Score = fraction of bits matching a hidden 24-bit
+target. Under XOR relabeling every target induces an IDENTICAL
+landscape (unimodal, separable). Consequences:
+  (a) benign: each (arm, seed) cell used a different target, but
+      cross-arm comparison is unconfounded BY CONSTRUCTION -- the
+      landscape is target-invariant. A reviewer should still ask;
+      the answer is the XOR isomorphism.
+  (b) limiting: on a unimodal separable landscape, shared
+      information is almost purely helpful -- failures prune, and
+      an imported better base is a strict shortcut. The design
+      cannot observe the regime where shared information MISLEADS.
+      Topology-1 therefore establishes the machinery and the
+      easy-regime direction, not a general law of collective
+      search. The interesting successor is the regime where
+      failure-sharing should HURT (section 4, E1).
+1.2 CEILING COMPRESSION. A3 reached 0.975 of a 1.0 ceiling; several
+cells hit 1.0 exactly. The dynamic range at the top is compressed,
+which UNDERSTATES the A3-A2 and A2-A1 gaps. A harder task (larger
+space or budget-to-diameter ratio) would decompress the ordering.
+1.3 THE SHAM ARM IS THE STRONGEST DESIGN ELEMENT. A4 carries the
+full import machinery, event traffic, and tabu-set growth of A2 --
+but with decoy scores. |A4-A1| = 0.019 vs |A2-A1| = 0.050. So the
+A2 effect is not overhead, not extra event volume, not tabu-set
+size: it is score-bearing information crossing an engine-gated
+boundary. Note the sham is not perfectly inert (A4 slightly above
+A1): decoy-scored candidates still enter the tabu set and prevent
+re-testing, a small REAL information effect. A cleaner sham would
+poison tabu too; recorded as a design refinement, not a flaw --
+the pre-registered P3 asked only that A4 sit closer to A1 than A2
+does, which it did.
+1.4 SIBLING SYNCHRONIZATION. Within sharing arms, sibling bests
+converge to identical values (visible mid-run: 0.917/0.917/0.917).
+Sharing collapses sibling diversity -- efficiency bought at the
+price of exploration variance. On OneMax that trade is free; on a
+deceptive landscape it is exactly what should backfire. This single
+observation motivates the E1 successor more than the headline
+means do.
+1.5 STATISTICAL POSTURE. n = 5 seeds; perm p (A2 vs A1) = 0.064.
+Pre-committed as directional, and reported as such. The right
+successor fix is not more seeds on a toy: it is a preregistered
+effect-size band on a task family with headroom (E1/E2).
+1.6 WHAT THE ENGINE ADDED SCIENTIFICALLY. Three things convention
+cannot fake: (i) budgets terminated every searcher server-side --
+matched-budget claims are enforced, not asserted; (ii) the sharing
+topology was enforced by policy-gated crossings -- the arms differ
+by what the INSTRUMENT permitted, not by what my code chose to do;
+(iii) the predictions met their evidence under a prospective flag
+the engine will not grant retroactively. This is the first
+Prometheus experiment where the preregistration discipline was
+machine-checked end to end.
+
+---------------------------------------------------------------------
+2. ENGINE ASSESSMENT -- WHERE GEN-2 IS STRONG
+---------------------------------------------------------------------
+S1 The COMMIT boundary is the right epistemic joint. Closing the
+   prospective window before execution is possible defeats the
+   whole laundering family in one move (my nearby bypass --
+   post-commit prediction with no observation yet -- was refused).
+S2 Commit-then-raise durable transitions (budget exhaustion
+   recorded even though the call errors) -- careful engineering
+   rarely seen.
+S3 Create-only object surfaces: immutability by construction beats
+   immutability by policy.
+S4 Honest self-declared gaps (I8 PARTIAL before I filed it; the
+   invariants doc's "never fabricate enforcement you do not have").
+S5 Provenance classes (prospective flag, evidence_class) carried
+   INTO adjudication events -- the audit trail survives the
+   verdict.
+S6 Build-derived release identity (hash of loaded source at
+   process start) -- stronger than attestation.
+
+---------------------------------------------------------------------
+3. PROPOSED SFE FIXES / NEXT-RELEASE ITEMS (prioritized)
+---------------------------------------------------------------------
+F1 (P2) POLICY-GATED CONTENT RETRIEVAL [DR-1]. Imports transport
+   provenance only (ids + hashes; no payload; no content-GET). For
+   single-client trusted-LAN use, driver-side payloads verified
+   against source_hash suffice (what topology-1 did). For
+   MULTI-CLIENT ecologies -- the engine's obvious destiny -- the
+   importer must be able to read what it imported:
+   GET /v2/worlds/{wid}/artifacts/{aid}/content, permitted iff
+   that artifact is NATIVE-or-IMPORTED in {wid}. Same policy gate
+   as import; no new trust surface.
+F2 (P3) info_kind / sharing-policy ENUM COHERENCE [DR-2].
+   SUCCESSES_ONLY policy exists; "success" info_kind does not
+   (allowed: artifact/failure/hypothesis/observation). Either add
+   the kind or rename/document the policy against the real enum.
+F3 (P3) DUPLICATE PREDICTION-BINDING SEMANTICS [L1]. Binding the
+   same prospective prediction to multiple observations is
+   silently accepted (claim counting is idempotent at hypothesis
+   level, which saves the accounting). Pick and document a
+   contract: reject, or first-bind-wins with later binds recorded
+   as replications.
+F4 (P3) PER-RESPONSE RELEASE HEADER [L2]. Identity is in version/
+   status bodies and commit events -- sufficient; a header on
+   every response would let clients detect a hot-swap on ANY call
+   (closes H-1 permanently, cheaply).
+F5 (P3) REQUEST-IDENTITY IDEMPOTENCY KEYS on epistemic POSTs [L3].
+   Commit itself is idempotent (the load-bearing one); an optional
+   client-supplied dedup key on hypothesis/prediction/observation
+   would make network-retry semantics fully boring.
+F6 (perf) BATCHED EXPERIMENT CYCLE. One candidate evaluation =
+   5 HTTP round-trips (commit+enqueue, claim, complete, observe,
+   optional failure/artifact). Topology-1 spent most of its ~2h
+   wall clock on transport. A bundled transaction (commit+enqueue+
+   claim in one; complete+observe in one) or a batch-claim would
+   cut ecology-experiment wall time ~3-4x without touching
+   semantics.
+F7 (usability) ARTIFACT LISTING per world (id, kind, info_kind,
+   origin, created_seq). Topology-1 had to scan the event stream
+   to discover siblings' exports; a list route is cheaper and
+   less error-prone.
+F8 (ops) WORLD LIFECYCLE HYGIENE: bulk terminate/archive for probe
+   and campaign worlds (this arc created ~90 worlds, most now
+   inert), plus an operator GC policy that never deletes ledgers.
+F9 (future, sXI) BACKEND EVIDENCE BINDING: typed fields on
+   experiments/observations for backend type, backend release
+   identity, config hash, raw-evidence identity -- so gen-2 can
+   govern gen-1 substrate experiments with machine-checked
+   binding rather than opaque spec conventions. This is the bridge
+   to governing D-14-class campaigns.
+
+---------------------------------------------------------------------
+4. PROPOSED FUTURE EXPERIMENTS (in rough priority order)
+---------------------------------------------------------------------
+E1 TOPOLOGY-2: WHERE SHARING SHOULD HURT. Same design, deceptive/
+   rugged task family (NK landscapes with tunable K, or a trap
+   function). Preregister: as ruggedness rises, FULLY_SHARED's
+   advantage shrinks and can invert (premature convergence via the
+   synchronization observed in 1.4); FAILURES_ONLY degrades more
+   slowly than best-adoption sharing. This turns topology-1's
+   direction into a testable INTERACTION law and can falsify the
+   naive metabolization reading.
+E2 BUDGET x TOPOLOGY INTERACTION. Same task, budgets {10, 20, 40,
+   80}: does sharing help more when budgets are tight (information
+   substitutes for compute) or loose? Cheap, decompresses 1.2's
+   ceiling, and yields the first quantitative exchange rate
+   between shared information and budgeted compute -- a number the
+   north star eventually needs.
+E3 DELAYED SHARING (needs the DELAYED_SHARING policy implemented,
+   currently declared-immediate): information latency as the
+   manipulated variable. Prediction: value of shared failures
+   decays with delay at a rate set by landscape drift -- the first
+   step toward sharing economics.
+E4 MULTI-CLIENT ECOLOGY (needs F1): two genuine clients (e.g.,
+   Harmonia + another seat) sharing across the H5 bilateral group
+   mechanism. Tests the isolation-with-consent model for real and
+   is the first two-experimenter SCIENCE (not just isolation
+   probes) on the instrument.
+E5 GEN-2 GOVERNING A SUBSTRATE CAMPAIGN (needs F9, or disciplined
+   spec conventions meanwhile): re-run a small D-14C-style slice
+   with every hypothesis/prediction/observation flowing through
+   gen-2 and the gen-1 Foundry as executor backend. The deliverable
+   is the governance pattern itself: two instruments, neither able
+   to lie about the other.
+E6 HETEROGENEOUS ECOLOGY: mixed searcher strategies (climber /
+   annealer / random) under one topology. Asks whether sharing
+   value depends on RECIPIENT strategy -- the first step from
+   topology toward division of cognitive labor.
+D-14D / D-15 remain queued on the gen-1 executor's S3/S4 -- gen-2
+does not unblock them and must not be used to fake them.
+
+---------------------------------------------------------------------
+5. QUESTIONS FOR THE REVIEWER (genuine asks)
+---------------------------------------------------------------------
+Q1 STATISTICS FOR SMALL-SEED ECOLOGIES. Seed-level permutation on
+   n=5 was pre-committed as directional. For E1/E2, what is the
+   right preregisterable inference frame: more seeds, seed-paired
+   designs (same seed across arms -- note targets are XOR-
+   isomorphic so pairing is legitimate), or preregistered
+   effect-size bands with equivalence tests?
+Q2 SHAM DESIGN. Should A4's decoys also poison the tabu set
+   (pure-noise sham), or is preserving true tabu membership the
+   better control (isolating score information specifically)? We
+   read the current sham as isolating score-information; a
+   reviewer may prefer both shams as separate arms.
+Q3 PREREGISTRATION MIRRORING. Topology-1 kept a committed freeze
+   doc (binding) plus engine-registered predictions (mirror).
+   Should the engine become the ONLY preregistration channel once
+   F3-F5 land, or does the git-committed human-readable freeze
+   retain independent value worth the duplication?
+Q4 WHAT WOULD FALSIFY THE METABOLIZATION READING? Our candidate:
+   E1 showing FAILURES_ONLY <= ISOLATED on rugged landscapes at
+   matched budget. Is there a cheaper or sharper falsifier?
+Q5 INFORMATION ACCOUNTING. Is there a preregisterable measure of
+   "shared information used" better than import counts + adopted-
+   base events -- e.g., bits of score information transferred, so
+   E2's exchange rate has honest units?
+Q6 MULTI-CLIENT TRUST. For E4, tokens are bearer-identity on a
+   trusted LAN. What minimum additions (read-only tokens? per-
+   world scopes?) would a reviewer require before treating
+   cross-client results as adversarially clean?
+Q7 NORTH-STAR LINK. Topology results are about search ecology,
+   not reasoning operations. Our view: they earn a connection only
+   via the operator-court (reach expansion under matched compute)
+   once acquired operations exist to share. Does the reviewer see
+   a shorter honest path from sharing-topology results to the
+   acquisition question -- or is the guard against premature
+   connection exactly right?
+
+---------------------------------------------------------------------
+6. EPISTEMIC LABELS
+---------------------------------------------------------------------
+FACT: all verdicts, gate outcomes, means, probe results, commit
+hashes herein. FROZEN EXPECTATION: T1-T24, P1-P3, all thresholds.
+OBSERVATION: ordering A1<A4<A2<A3; sibling synchronization; sham
+near-inertness. INFERENCE: information-not-machinery (via sham);
+OneMax XOR-isomorphism argument (mathematical). INSTRUMENT
+FINDINGS: DFX-1..4 (fixed and requalified), DR-1, DR-2, L1-L7.
+SPECULATION: none asserted; section 4 predictions are proposals
+for future freezes, not claims. OPEN QUESTIONS: section 5.
+
+---------------------------------------------------------------------
+7. WHAT THIS ARC DOES NOT ESTABLISH
+---------------------------------------------------------------------
+Not a law of collective search (one landscape family, easy
+regime, toy scale). Not evidence about reasoning operations (see
+Q7 -- the guard is deliberate). Not a qualification of any future
+SFE release (the freeze binds exactly e367e791...; any upgrade
+requalifies). Not a substitute for the blocked substrate rungs
+(D-14D needs S3; trajectory work needs S4 on the gen-1 executor).
+
+---------------------------------------------------------------------
+8. ARTIFACT INDEX (genesis/harmonia_a/sfe_gen2/, repo main)
+---------------------------------------------------------------------
+FIRST_CONTACT_REPORT.md          onboarding + first teeth checks
+FROZEN_QUAL_PLAN.md              T1-T24 frozen pre-execution
+GEN2_QUALIFICATION_PACKET.md     NOT_QUALIFIED verdict + defects
+REQUALIFICATION_2026-09-01.md    QUALIFIED verdict + frozen release
+FREEZE_DRYRUN.md                 topology-1 preregistration
+run_dryrun.py                    campaign runner (resumable)
+results/qual_battery_results.json, dryrun_log.jsonl,
+results/dryrun_summary.json      raw evidence
+JOURNAL.jsonl                    issuances, incidents, disclosures
+REVIEW_PACKET_FINAL_GEN2.txt     the compact arc packet
+Engine side: SerendipityFoundry/ @ f9dd6ed88 (repair, handoff,
+506-line regression suite). In-engine evidence: meta-world
+wld_6393713e9a1aadb417a1ba4a (prospective P1-P3 + adjudications),
+plus 60 searcher-world ledgers, all chain-verified.
+Key commits: 5a82d3c2d -> bd1488d98 -> f9dd6ed88 -> 42770ac4a ->
+0516d5f78 -> 37d72d572.
+=====================================================================
+END EXTENDED GEN-2 PACKET -- the instrument earned qualification
+the hard way, then earned its first scientific result the honest
+way. The next moves are named: make sharing fail (E1), price the
+information (E2), open the walls deliberately (F1+E4), and keep
+the reasoning claim out of reach until something real can earn it.
+=====================================================================

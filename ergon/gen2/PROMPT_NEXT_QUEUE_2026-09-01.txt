@@ -1,0 +1,669 @@
+======================================================================
+ERGON - NEXT QUEUE: FROM RETENTION EFFECT TO MEMORY SCIENCE
+
+Issued by James, 2026-09-01. Committed verbatim as the authoritative brief.
+Where this file and any later summary disagree, this file wins.
+======================================================================
+
+Gen-1B is complete.
+
+The inherited MRU retention rule has been beaten by a preregistered policy:
+
+    MUT_REDUNDANT - MRU = +2.78 pp
+    Holm-corrected p = 0.0040
+    n = 30 paired lineages
+
+But the scientifically load-bearing comparison remains unresolved:
+
+    MUT_REDUNDANT - RANDOM = +1.51 pp
+    Holm = 0.0912
+    below the preregistered MDE
+
+Therefore the current result is NOT:
+
+    intelligent memory selection beats arbitrary memory.
+
+It is:
+
+    the inherited MRU policy is worse than at least one alternative.
+
+Your next queue exists to determine whether there is a real SELECTION effect,
+identify the trajectory mechanism if one exists, derive forgetting rules from
+measured evidence rather than intuition, and only then ask whether selected
+memory transfers independently of the trajectory that created it.
+
+Do this as a sequence of gated projects.
+
+Do not execute later projects merely because they are listed here.
+
+======================================================================
+PROJECT 1 - ARBITRARY-MEMORY DECISION
+======================================================================
+
+PRIORITY: CRITICAL
+
+Question:
+
+    DOES PRINCIPLED SELECTION BEAT ARBITRARY CHURN?
+
+Run the cleanest adequately powered comparison of:
+
+    I1 MUT_REDUNDANT
+
+versus
+
+    I3 RANDOM
+
+Do not rerun unnecessary arms.
+
+Use the existing Gen-1B results to design the smallest experiment that can
+resolve the remaining +1.51 pp contrast at a scientifically meaningful MDE.
+
+Presumptive design:
+
+    arms ............... I1 vs I3 only
+    lineages ........... >= 60 total paired lineages, or whatever power
+                         calculation justifies before execution
+    task battery ....... frozen Gen-1 battery
+    cap ................ 64
+    admission .......... frozen
+    search core ........ frozen
+    endpoint ........... CFR
+    inference unit ..... lineage
+    statistical test ... paired lineage-level permutation/sign-flip
+    analysis ........... preregistered and hashed
+
+Do not use Gen-1B's observed +1.51 pp as the success threshold.
+
+Freeze an effect-size threshold that answers:
+
+    how small can the advantage become before "selection beats churn"
+    ceases to be strategically meaningful?
+
+Return one of:
+
+    SELECTION_BEATS_CHURN
+    SELECTION_NOT_DISTINGUISHABLE_FROM_CHURN
+    SELECTION_EFFECT_BELOW_USEFUL_SCALE
+    UNDERPOWERED
+
+If the comparison does not clear the preregistered bar, do not rescue it using
+subgroup analyses.
+
+This project is the gate for almost everything that follows.
+
+======================================================================
+PROJECT 2 - TRAJECTORY INSTRUMENTATION
+======================================================================
+
+PRIORITY: CRITICAL
+
+Gen-1B's largest instrumentation defect is now load-bearing:
+
+    candidate-level trajectory divergence was not recorded.
+
+Fix that before another mechanistic retention experiment.
+
+Instrument, observationally where possible:
+
+  - candidate genotype identity;
+  - parent source;
+  - whether parent came from library or resident population;
+  - mutation operator;
+  - candidate behaviour fingerprint;
+  - score;
+  - evaluation index;
+  - task;
+  - lineage;
+  - policy;
+  - library state reference;
+  - candidate ancestry sufficient to reconstruct the local causal chain.
+
+The instrumentation must expose:
+
+    FIRST DIVERGENCE INDEX
+
+for paired policy runs.
+
+Also measure through time:
+
+  - candidate-stream identity overlap;
+  - behaviour-level overlap;
+  - score-distribution divergence;
+  - operator-distribution divergence;
+  - ancestry divergence;
+  - solution-discovery divergence;
+  - proportion of candidate production descended from library artifacts;
+  - divergence before versus after the first policy-distinct eviction.
+
+Do not fork or alter the frozen search semantics merely to make logging easier.
+
+Run parity/falsification tests proving instrumentation itself does not alter:
+
+  - RNG consumption;
+  - evaluation order;
+  - candidate generation;
+  - score;
+  - CFR;
+  - library contents.
+
+Deliver:
+
+    TRAJECTORY_INSTRUMENT_CLEAN
+
+or
+
+    TRAJECTORY_INSTRUMENT_SUSPECT
+
+No mechanistic trajectory claim is allowed until this gate is green.
+
+======================================================================
+PROJECT 3 - WHERE DOES THE +2.78 PP ACTUALLY ENTER?
+======================================================================
+
+PRIORITY: VERY HIGH
+
+Question:
+
+    AT WHAT POINT AFTER A RETENTION DECISION DOES FUTURE SEARCH
+    BECOME DIFFERENT?
+
+Use the clean trajectory instrument.
+
+Do NOT begin by testing another clever policy.
+
+Take the two most informative treatments based on Project 1:
+
+  - selected policy;
+  - arbitrary or inherited comparator, whichever is scientifically relevant.
+
+Track paired developmental trajectories.
+
+For each policy-distinct eviction ask:
+
+1. Which artifact was removed?
+2. Which artifact survived instead?
+3. When was either survivor next drawn?
+4. Did that draw produce a candidate not reachable from the comparator's
+   corresponding library?
+5. Did the downstream trajectory remain divergent?
+6. Was a future exact solution ancestrally downstream of that difference?
+
+Construct causal-descriptive chains of the form:
+
+    eviction difference
+        ->
+    retained seed difference
+        ->
+    mutation difference
+        ->
+    candidate-region difference
+        ->
+    eventual solution / no solution
+
+Do not call these mediated causal effects unless the design earns that
+statement.
+
+We need to know whether policy effects typically come from:
+
+A. preserving rare mutational affordances;
+B. maintaining behavioural diversity;
+C. preventing useless residents from occupying capacity;
+D. altering the timing of seed reuse;
+E. random trajectory bifurcation amplified by search;
+F. another mechanism.
+
+Produce population statistics, not anecdotes.
+
+Examples:
+
+  - fraction of policy-distinct evictions that ever become
+    trajectory-relevant;
+  - fraction that lead to unique descendant behaviours;
+  - fraction of solved tasks whose solution ancestry crosses a policy-distinct
+    retention event;
+  - lag between retention decision and measurable downstream divergence;
+  - distribution of effect sizes from individual retention events where
+    estimable.
+
+The desired output is not:
+
+    "here is one cool lineage."
+
+It is:
+
+    what class of retention events systematically creates downstream
+    capability?
+
+======================================================================
+PROJECT 4 - EMPIRICAL FORGETTING RULE
+======================================================================
+
+PRIORITY: VERY HIGH
+
+Gen-1B killed a simple memory-decay story.
+
+Observed structure:
+
+  - ~44% of artifacts never earn a first effective use;
+  - many are well exposed;
+  - after repeated usefulness, future-use hazard rises and plateaus;
+  - 24% of used artifacts revive after >= 5 dormant tasks.
+
+Therefore:
+
+    DORMANCY != USELESSNESS.
+
+Build the first retirement policy derived from the measured hazard structure.
+
+The working hypothesis should be:
+
+    REMOVE WELL-EXPOSED ZERO-CREDIT ARTIFACTS;
+    PRESERVE PROVEN ARTIFACTS THROUGH DORMANCY.
+
+Do not immediately fit a complicated model.
+
+Start with a transparent rule family based on quantities available online:
+
+  - draw opportunities;
+  - effective-use count;
+  - perhaps task-family exposure;
+  - perhaps mutational-neighbourhood uniqueness.
+
+Candidate conceptual form:
+
+    if effective_uses == 0
+       and opportunities >= N:
+           eligible_for_retirement
+    otherwise:
+           dormancy alone is not retirement evidence
+
+Determine N using a preregistered calibration procedure that does NOT optimize
+on the ultimate CFR test set.
+
+Then compare against:
+
+  - RANDOM;
+  - MRU;
+  - MUT_REDUNDANT;
+  - EFFECTIVE_USAGE where scientifically useful.
+
+Primary question:
+
+    DOES AN EMPIRICALLY DERIVED FORGETTING RULE OUTPERFORM
+    HAND-CHOSEN RETENTION HEURISTICS?
+
+Secondary question:
+
+    can we eliminate inert memory without deleting latent/resurrecting value?
+
+Measure:
+
+  - CFR;
+  - capacity liberated;
+  - fraction of retired artifacts that would later become effective if
+    retained;
+  - age;
+  - diversity;
+  - unique mutation neighborhoods;
+  - solution ancestry;
+  - compute effect.
+
+This should be treated as a new generation with its own preregistration.
+
+======================================================================
+PROJECT 5 - MEMORY VALUE AS A DISTRIBUTION, NOT AN IDENTITY
+======================================================================
+
+PRIORITY: HIGH
+
+Gen-1B found:
+
+    same-policy / different-lineage artifact Jaccard
+    ~=
+    different-policy artifact Jaccard
+    ~= 0
+
+This is a major structural result.
+
+The useful object may not be:
+
+    WHICH ARTIFACTS ARE STORED?
+
+It may be:
+
+    WHAT DISTRIBUTION OF AFFORDANCES DOES THE LIBRARY REPRESENT?
+
+Develop quantitative library-level descriptors.
+
+Candidates include:
+
+  - behavioural entropy;
+  - mutation-neighbourhood coverage;
+  - effective-use mass;
+  - effective-use concentration;
+  - genotype structural diversity;
+  - operator affordance diversity;
+  - behavioural recurrence;
+  - score distribution;
+  - age distribution;
+  - novelty coverage;
+  - mutation graph coverage;
+  - task-family coverage.
+
+Then ask whether libraries produced under a given policy are recognizable in
+this feature space even when they share zero identities.
+
+Required falsification:
+
+Train a classifier on library summaries from some lineages and predict the
+generating policy on HELD-OUT lineages.
+
+No artifact IDs may be used.
+
+If policies cannot be identified above chance from their distributional
+statistics:
+
+    POLICY_SIGNATURE_NOT_RECOVERABLE
+
+If they can:
+
+    DISTRIBUTIONAL_POLICY_SIGNATURE
+
+Then ask whether that signature predicts future CFR better than policy label
+itself.
+
+This is representation research, not merely another leaderboard.
+
+======================================================================
+PROJECT 6 - LIBRARY COMPRESSION WITHOUT REACHABILITY LOSS
+======================================================================
+
+PRIORITY: HIGH
+
+Phase 1 established:
+
+    same phenotype != same mutational affordances.
+
+Now turn that finding into a compression problem.
+
+Question:
+
+    HOW MUCH MEMORY CAN BE REMOVED WHILE PRESERVING FUTURE
+    REACHABILITY?
+
+Take mature libraries and construct increasingly compressed versions using:
+
+A. behavioural deduplication only;
+B. behavioural + mutational redundancy;
+C. mutation-neighbourhood coverage;
+D. random deletion controls.
+
+For target sizes such as:
+
+    64, 48, 32, 16
+
+measure:
+
+  - retained behavioural coverage;
+  - retained mutational-neighbourhood coverage;
+  - held-out CFR;
+  - solution reachability;
+  - unique descendants;
+  - effective-use density.
+
+This is NOT a search for smaller libraries for engineering convenience.
+
+The scientific question is:
+
+    WHAT IS THE MINIMAL SUFFICIENT MEMORY BASIS?
+
+If a 32-entry library preserving mutation-neighbourhood coverage performs like
+a 64-entry library, that tells us far more than "cap 64 worked."
+
+If compression destroys capability long before behavioural diversity falls,
+that is evidence that latent affordance diversity is carrying information
+invisible to the behavioural readout.
+
+======================================================================
+PROJECT 7 - MEMORY TRANSPLANT, CONDITIONALLY
+======================================================================
+
+PRIORITY: HIGH, BUT GATED
+
+Do not run this merely because it was designed previously.
+
+Run only after Projects 1-3 establish that there is a selection effect worth
+transplanting and we understand enough of the trajectory to interpret a null.
+
+Question:
+
+    DOES A POLICY PRODUCE A BETTER PERSISTENT SUBSTRATE,
+    SEPARABLE FROM THE DEVELOPMENTAL TRAJECTORY THAT CREATED IT?
+
+Freeze mature libraries.
+
+Disable further admission and eviction.
+
+Expose all libraries to fresh matched held-out tasks.
+
+The only treatment is the starting library.
+
+Required controls:
+
+  - EMPTY;
+  - random genotype library;
+  - size-matched shuffled library;
+  - perhaps distribution-matched but policy-label-broken library if Project 5
+    makes this possible.
+
+Critical design improvement over the current proposal:
+
+Before spending the full battery, perform a RANGE TEST.
+
+Ask whether the held-out tasks have sufficient dynamic range for:
+
+    EMPTY < useful library < ceiling.
+
+If the inherited ALIEN battery is floor-like or fails to distinguish even
+known-positive libraries, do not rerun it merely because it is available.
+
+Either construct a legitimate held-out battery with measurable library
+sensitivity or return:
+
+    TRANSPLANT_ENDPOINT_UNINFORMATIVE
+
+Primary interpretations:
+
+A. policy advantage transfers:
+   PERSISTENT_SUBSTRATE_EFFECT
+
+B. policy advantage disappears:
+   DEVELOPMENTAL_TRAJECTORY_DEPENDENT
+
+C. all libraries beat empty but policies do not differ:
+   ACCUMULATION_TRANSFERS_SELECTION_DOES_NOT
+
+D. no library beats empty:
+   TRANSFER_NOT_ESTABLISHED
+
+Do not infer more than the contrast supports.
+
+======================================================================
+PROJECT 8 - FAILURE MEMORY
+======================================================================
+
+PRIORITY: MODERATE/HIGH, AFTER CORE MEMORY WORK
+
+Current effective-use credit is success-oriented:
+
+    child beats recent population median.
+
+That measures productive positive ancestry.
+
+It does not yet tell us whether FAILED artifacts carry reusable directional
+information.
+
+Design an observational study first.
+
+Ask whether artifacts associated with failed descendants can still contribute
+by steering later search AWAY from repeatedly bad regions.
+
+Possible readouts:
+
+  - recurrence of known-bad behaviour regions;
+  - avoidance after failed ancestry is retained;
+  - reduction in repeated dead-end mutations;
+  - search coverage gained by preserving negative evidence;
+  - whether negative-evidence ancestry predicts future success indirectly.
+
+Do not invent a "failure memory" policy until a measurable signal exists.
+
+The goal is to determine whether executable memory has at least two species:
+
+    POSITIVE MEMORY:
+        seeds that generate useful descendants
+    NEGATIVE MEMORY:
+        evidence that prevents repeated waste
+
+If no measurable negative-memory channel exists in this consumer, say so.
+
+======================================================================
+PROJECT 9 - SECOND-CONSUMER GENERALITY TEST
+======================================================================
+
+PRIORITY: LATER / CONDITIONAL
+
+Do not widen consumer scope yet.
+
+Only after at least one selection/forgetting effect survives strong
+within-consumer falsification should you ask whether the phenomenon
+generalizes.
+
+Then choose ONE genuinely different consumer with:
+
+  - executable reusable artifacts;
+  - bounded memory;
+  - explicit admission/retirement semantics;
+  - deterministic evaluation;
+  - enough throughput for proper lineage-level replication.
+
+Do not port the policy mechanically.
+
+Port the QUESTION:
+
+    does selective persistence matter beyond accumulation?
+
+If the phenomenon vanishes:
+
+    CONSUMER_SPECIFIC_MEMORY_EFFECT
+
+If it survives:
+
+    CROSS_CONSUMER_RETENTION_EFFECT
+
+One second consumer is enough.
+
+Do not start another ecology.
+
+======================================================================
+PROJECT 10 - MEMORY THEORY SYNTHESIS
+======================================================================
+
+PRIORITY: AFTER EMPIRICAL WORK
+
+Once the preceding results exist, produce a compact empirical theory of memory
+in this substrate.
+
+It must be written entirely in terms of quantities that have actually been
+measured.
+
+Address:
+
+ 1. What makes an artifact worth admitting?
+ 2. What makes it worth retaining?
+ 3. What makes two artifacts redundant?
+ 4. What predicts future reuse?
+ 5. What predicts safe forgetting?
+ 6. What survives dormancy?
+ 7. What transfers to new tasks?
+ 8. Is useful memory an identity-level object or a distribution?
+ 9. How much memory is sufficient?
+10. How much of memory's value comes from changing the trajectory rather than
+    carrying portable capability?
+
+Explicitly list every proposition as one of:
+
+    ESTABLISHED
+    SUPPORTED BUT NOT ESTABLISHED
+    OPEN
+    REFUTED
+
+No narrative inflation.
+
+======================================================================
+ORDER OF EXECUTION
+======================================================================
+
+Tier A - DO NOW
+
+    1. Arbitrary-memory decision
+    2. Trajectory instrumentation
+    3. Retention-event / trajectory mechanism study
+
+Tier B - NEXT, IF WARRANTED
+
+    4. Empirical forgetting rule
+    5. Distributional library signature
+    6. Minimal sufficient memory / compression
+
+Tier C - CONDITIONAL
+
+    7. Memory transplant
+    8. Failure memory
+
+Tier D - ONLY AFTER CORE RESULTS SURVIVE
+
+    9. Second-consumer generality
+   10. Memory theory synthesis
+
+======================================================================
+GENERAL STOP RULE
+======================================================================
+
+Ergon is no longer tasked with generating more memory machinery.
+
+Ergon is tasked with destroying ambiguity about how executable experience is:
+
+    retained,
+    forgotten,
+    reused,
+    compressed,
+    transferred,
+    and converted into future search capability.
+
+At every stage prefer:
+
+    one discriminating experiment
+
+over:
+
+    five interesting analyses.
+
+Do not acquire donors.
+Do not build a generic memory database.
+Do not add LLM judgment.
+Do not widen the ecology.
+Do not invent abstractions that lack a consumer.
+Do not convert a +2.78 pp local effect into a general theory of learning.
+
+The central north-star question for this queue is:
+
+    WHEN THE PAST CHANGES THE FUTURE,
+    WHAT INFORMATION FROM THE PAST ACTUALLY HAD TO SURVIVE?
+
+Return review packets at each major gate rather than running the entire queue
+blindly.
+
+======================================================================
+END ERGON NEXT-QUEUE PROMPT

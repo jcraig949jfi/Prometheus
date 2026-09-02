@@ -1,0 +1,178 @@
+================================================================================
+D-10 PHASE 2 -- CAPACITY GATE PACKET
+Syntax-Only Relevance Keying: can this interface express the phenomenon?
+================================================================================
+Prepared:     2026-08-28   FINAL for this phase
+Decision:     ASSAY_NOT_VIABLE_SYNTAX_ONLY
+Instrument:   Foundry 0.1.0, UNCHANGED (141-file subset hash 71feebc4...
+              reproduces exactly; 0 modified, 0 missing)
+Gate spec:    45ec9ae326fff87e...  frozen+hashed before any gate evaluation
+Gate result:  98de31b38258fb56...  byte-identical across two independent runs
+
+--------------------------------------------------------------------------------
+1. INSTRUMENT BOUNDARY
+--------------------------------------------------------------------------------
+The manifest now lists 189 files vs Phase 1's 146 and its own sha differs.
+Cause established and BENIGN: it was regenerated inside this workspace
+(git.commit records "<git unavailable>" for F:\SerendipityE) and the
+generator's EXCLUDE_DIRS omits d10, sweeping in 43 d10 files + BOOTSTRAP.md.
+141 + 43 + 1 + 4 pytest_cache = 189. No upgrade. No stop condition.
+
+--------------------------------------------------------------------------------
+2. DEFECTS REPRODUCED AND REPAIRED
+--------------------------------------------------------------------------------
+D1  LDR R0 returned genotype length EXACTLY (7/16/40/96/250);
+    word0==len for 400/400.                        -> len(g) removed
+D2  RE-DERIVED in the real acquire loop, not the Phase-1 simulated sort:
+    injected parent-slot share 0x00=0.06137 vs 0xFF=0.00217 = 28.3x
+    (15.95x on a 2nd task set). Phase 1's "97.9% vs 0.0%" is SUPERSEDED.
+                                                   -> seeded-hash tie-break,
+                                                      post-repair ratio 0.80
+D3  shaping term struck; primary objective = endpoint alone + source audit
+D4  max genotype 3139B vs a 1,000,000 limit, nothing bounding growth
+                                                   -> bound 1024, vm_steps
+                                                      first-class
+D7  timeout_s=5.0 in the key path                  -> KEY_WALL_S=3600,
+                                                      raises on wall halt
+Regression: 10/10 tests DISCRIMINATING (fail pre-repair, pass after).
+Suites: repairs 17, boundary 9, query-firewall 13 -- 39/39 pass.
+
+--------------------------------------------------------------------------------
+3. RECONSTRUCTION AUDIT (artifact side, best-shot offline features)
+--------------------------------------------------------------------------------
+target                     acc     baseline   lift      verdict
+------------------------   -----   --------   ------    ---------------------
+genotype length            r2=.863    --        --      INTRINSIC
+source history task         .919      .033     +.886    INTRINSIC (clonal)
+source family               .314      .129     +.185    INTRINSIC, weak
+restart phase               .359      .334     +.025    not reconstructible
+admission source            .363      .527     -.164    not reconstructible
+solver status               .996      .996     -.000    not reconstructible
+family from LENGTH ALONE    .106      .129     -.023    WORSE THAN CHANCE
+
+The one SUPPLIED channel is gone, and length alone predicts family worse
+than the majority baseline. What remains is intrinsic -- and it is the WRONG
+signal: syntax reveals which run produced an artifact (.919), not what it
+computes (.314), and relevance depends on the latter.
+
+--------------------------------------------------------------------------------
+4. CAPACITY CEILING (DEV) -- the measurement that decided the phase
+--------------------------------------------------------------------------------
+Task-conditional relevance EXISTS and is large:
+  artifact x task interaction ......... 69.3% of relevance variance
+  top-4 overlap between two tasks ..... 0.045
+  top-4 overlap with global-best set .. 0.021
+  UNIFORM 0.0000 | ORACLE_UNCOND 0.0729 | ORACLE_COND 0.1979
+  conditional headroom available ...... 0.125
+
+But it is NOT recoverable from admissible syntax (capture of that headroom):
+  6 hand pairings ......... -0.234 to -0.328   (all negative)
+  learned RandomForest .... -0.134
+  BILINEAR, in-sample ..... +0.033
+  BILINEAR, held-out ...... -0.244
+
+The bilinear model is a STRICT SUPERSET of the interface (since
+-popcount(x XOR y) = (x.y-64)/2), with no 64-bit limit and no step cap.
+It captures 3.3% even when fitted and scored on the same tasks.
+The failure is INFORMATIONAL, not ingenuity and not the step cap.
+
+--------------------------------------------------------------------------------
+5. PP2 CANDIDATES (5 serious, all genome-packaged, all within the cap)
+--------------------------------------------------------------------------------
+ #   candidate                              keys    PP2      R2     PP2-R2
+---  ------------------------------------   -----   ------  ------  -------
+ C1  bytevalue(3) x output(8)                2865   .0208   .0104   +.0104
+ C2  bytevalue(2) x output(8)                2552   .0208   .0104   +.0104
+ C3  opcode(3) x output(8)                   2613   .0000   .0104   -.0104
+ C4  constant(3) x output(8)                     1  .0000   .0000   +.0000
+ C5  bytevalue(3) x output+input(5)  SELECTED 2865  .0208   .0000   +.0208
+
+BUG FOUND IN MY OWN EVALUATION: an earlier dev run passed bare KA programs
+to build_organization, which DECODES its argument as a genome and silently
+truncated them -- C1/C2 gave byte-identical keys for all 4110 artifacts and
+C4 showed a spurious +0.0417. That run is DISCARDED; make_genome now asserts
+an exact round-trip.
+
+--------------------------------------------------------------------------------
+6. FROZEN GATE RESULT (24 held-out tasks x 4 seeds = 96 trials/arm)
+--------------------------------------------------------------------------------
+arm                                  test-exact rate
+----------------------------------   ---------------
+U      uniform corpus sample                  0.0417
+R2     same keys, query-shuffled              0.0208
+PP2                                           0.0000
+PP1    privileged oracle (calibration)        0.3750
+PN     planted negative                       0.0104
+
+PRIMARY: mean(PP2 - R2) = -0.0208, one-sided permutation p = 1.0,
+         bootstrap 95% CI [-0.052, 0.000], n = 24 tasks.
+PP2 is worse than its own query-shuffled twin AND worse than uniform.
+
+PASS CRITERIA
+  1 effect >= DELTA_MIN 0.03 ...... NO  (-0.0208)
+  2 permutation p < 0.05 .......... NO  (1.0)
+  3 no boundary violation ......... yes (39/39, no NondeterministicKey)
+  4 no cost violation ............. yes (cap-parity, all arms <= 400)
+  5 planted negative fails ........ yes (-0.0104, p = 1.0)
+INVALIDATION: sigma same-family rate 0.0 | PP1 (.375) > U (.042) |
+              gate disjoint from dev | determinism byte-identical.
+              GATE IS VALID AND DISCRIMINATING.
+
+COST: steps/eval 381-635 across arms at identical evaluation counts -- which
+is precisely why D4 made VM steps a first-class meter.
+
+DIAGNOSTICS (post-freeze): bit-permutation invariance 24/24 (implementation
+correct). Alt-metric top-4 overlap with Hamming 0.031/0.042 -- descriptive
+only, NOT used to revisit the verdict.
+
+--------------------------------------------------------------------------------
+7. UNRESOLVED THREATS AND CAVEATS
+--------------------------------------------------------------------------------
+1 The operating point shifted under legitimate repair. The D2 tie-break
+  changed trajectories: history test-solves 11 -> 6, corpus 3962 -> 4110.
+  Headroom did NOT disappear (gate PP1 .375 vs U .042, better than Phase 1's
+  .344 vs .031), so no stop condition fired -- but Phase-1 absolute numbers
+  are not directly comparable to Phase-2 ones.
+2 The environment's output bound is enforced on PROBE inputs, not on the
+  sampled cases, so some train/test outputs fall outside [0,255]. Found
+  mid-phase; recorded, not repaired.
+3 n_examples and arity remain in the KQ encoding as words 0-1 and occupy two
+  registers. Both are constant across every task here so they leak nothing,
+  but they waste half the cheap register channel. Deliberately NOT changed:
+  removing them after seeing PP2 fail would be a capacity-enhancing change.
+4 KA sees only the first 192 bytes; median corpus genotype is 47 bytes so
+  this rarely binds, but it does for the tail.
+5 Intrinsic run-identity reconstructibility (.919) is legitimate but would
+  need controlling in any future design that gets past this gate.
+6 The bilinear superset argument assumes +/-1 bit embeddings and rich but
+  finite feature sets. It is a very strong upper bound, not a proof.
+7 Operational slip: two gate processes ran concurrently for one execution.
+  The gate is fully deterministic, outputs are byte-identical (verified by
+  re-running), so no result depends on it.
+
+--------------------------------------------------------------------------------
+8. DECISION
+--------------------------------------------------------------------------------
+  CAPACITY_GATE_PASS ................. no
+  CAPACITY_GATE_INVALID .............. no
+  ASSAY_NOT_VIABLE_SYNTAX_ONLY ....... YES
+
+WHY, STRUCTURALLY: for PP2 > R2, KQ must produce from input/output pairs
+alone a fingerprint matching one KA produces from program syntax alone. The
+only bridge between syntax and semantics is execution, excluded by
+construction. Conditional relevance is abundant and simply not recoverable
+from admissible syntax.
+
+THIS IS NOT evidence that endogenous relevance keying is impossible, and
+says nothing about geometry, memory organization, concepts or cognition. It
+RETIRES THIS INTERFACE: a future evolutionary null here would have been
+uninterpretable, because the mechanism it was meant to detect cannot be
+expressed within it.
+
+No execution primitive, behaviour trace, or human-designed semantic feature
+was added to rescue capacity (charter 15). The organizer GA was NOT run, no
+preregistration was frozen, no effect for E was estimated, and the Foundry
+was not modified.
+================================================================================
+END OF PACKET
+================================================================================

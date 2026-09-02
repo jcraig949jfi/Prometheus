@@ -1,0 +1,229 @@
+{
+ "gate_spec_sha256": "45ec9ae326fff87e05e0d0337b28926ba4232de5eaae13ba7ba91d774317f27c",
+ "pp2": {
+  "name": "C5 bytevalue_bitset3 x out+in_bitset5",
+  "note": "query signature uses inputs as well as outputs",
+  "ka_fn": "ka_bytevalue_bitset",
+  "ka_args": [
+   3
+  ],
+  "kq_fn": "kq_output_and_input_bitset",
+  "kq_args": [
+   5
+  ],
+  "dev_PP2": 0.0208,
+  "dev_R2": 0.0,
+  "dev_PP2_minus_R2": 0.0208,
+  "selection_rule": "max dev (PP2-R2), then max dev PP2, then order",
+  "n_candidates_evaluated_on_dev": 5
+ },
+ "organization": {
+  "n_distinct_keys": 2865,
+  "live_bits": 64,
+  "key_entropy_bits": 10.918,
+  "n_distinct_query_keys": 24,
+  "ka_steps_per_artifact": 267.0,
+  "kq_steps": 98,
+  "KEY_MAX_STEPS": 300
+ },
+ "rates": {
+  "U": 0.0417,
+  "R2": 0.0208,
+  "PP2": 0.0,
+  "PP1": 0.375,
+  "PN": 0.0104
+ },
+ "per_task": {
+  "U": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "R2": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.25,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.25,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "PP2": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "PP1": [
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0
+  ],
+  "PN": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.25,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ]
+ },
+ "primary": {
+  "mean_PP2_minus_R2": -0.0208,
+  "permutation_p_one_sided": 1.0,
+  "bootstrap_ci_95": [
+   -0.0521,
+   0.0
+  ],
+  "DELTA_MIN": 0.03,
+  "n_tasks": 24
+ },
+ "planted_negative": {
+  "mean_PN_minus_R2": -0.0104,
+  "permutation_p_one_sided": 1.0
+ },
+ "cost": {
+  "U": {
+   "evals": 35212,
+   "vm_steps": 22369077,
+   "max_evals": 400,
+   "steps_per_eval": 635.3
+  },
+  "R2": {
+   "evals": 36702,
+   "vm_steps": 17687843,
+   "max_evals": 400,
+   "steps_per_eval": 481.9
+  },
+  "PP2": {
+   "evals": 36740,
+   "vm_steps": 19207022,
+   "max_evals": 400,
+   "steps_per_eval": 522.8
+  },
+  "PP1": {
+   "evals": 20844,
+   "vm_steps": 7939110,
+   "max_evals": 400,
+   "steps_per_eval": 380.9
+  },
+  "PN": {
+   "evals": 36473,
+   "vm_steps": 19856433,
+   "max_evals": 400,
+   "steps_per_eval": 544.4
+  }
+ },
+ "pass_criteria": {
+  "1_effect_ge_DELTA_MIN": false,
+  "2_permutation_p_lt_alpha": false,
+  "4_cap_parity": true,
+  "5_planted_negative_fails": true
+ },
+ "invalidation_checks": {
+  "sigma_same_family_rate_is_zero": true,
+  "PP1_exceeds_U": true,
+  "gate_disjoint_from_dev": true
+ },
+ "DECISION_INPUTS": {
+  "all_pass_criteria_met": false,
+  "all_invalidation_checks_ok": true
+ }
+}

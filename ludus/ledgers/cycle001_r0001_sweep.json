@@ -1,0 +1,152 @@
+{
+  "primitive": "r0001 greedy-decidability gap",
+  "question": "is the gap a property of the world, of its horizon, or of the score function the author happened to write?",
+  "method": "exhaustive over eligible states (branching >= 2); exact minimax ground truth; zero model calls",
+  "ts_utc": "2026-08-26T22:09:54+00:00",
+  "horizon_sweep": [
+    {
+      "moves": 4,
+      "stock": 8,
+      "eligible_states": 78,
+      "r0001_gap": 0.0
+    },
+    {
+      "moves": 6,
+      "stock": 12,
+      "eligible_states": 528,
+      "r0001_gap": 0.0
+    },
+    {
+      "moves": 8,
+      "stock": 16,
+      "eligible_states": 2444,
+      "r0001_gap": 0.0008
+    },
+    {
+      "moves": 10,
+      "stock": 20,
+      "eligible_states": 8412,
+      "r0001_gap": 0.0002
+    },
+    {
+      "moves": 12,
+      "stock": 24,
+      "eligible_states": 23844,
+      "r0001_gap": 0.0001
+    }
+  ],
+  "scoring_sweep": [
+    {
+      "rung_weight": 5,
+      "thread_weight": 1,
+      "spin_yield": 2,
+      "eligible_states": 528,
+      "r0001_gap": 0.0
+    },
+    {
+      "rung_weight": 5,
+      "thread_weight": 2,
+      "spin_yield": 2,
+      "eligible_states": 528,
+      "r0001_gap": 0.0322
+    },
+    {
+      "rung_weight": 5,
+      "thread_weight": 3,
+      "spin_yield": 2,
+      "eligible_states": 528,
+      "r0001_gap": 0.0758
+    },
+    {
+      "rung_weight": 5,
+      "thread_weight": 4,
+      "spin_yield": 2,
+      "eligible_states": 528,
+      "r0001_gap": 0.0871
+    },
+    {
+      "rung_weight": 4,
+      "thread_weight": 3,
+      "spin_yield": 2,
+      "eligible_states": 528,
+      "r0001_gap": 0.0871
+    },
+    {
+      "rung_weight": 3,
+      "thread_weight": 1,
+      "spin_yield": 2,
+      "eligible_states": 528,
+      "r0001_gap": 0.0
+    },
+    {
+      "rung_weight": 2,
+      "thread_weight": 1,
+      "spin_yield": 2,
+      "eligible_states": 528,
+      "r0001_gap": 0.0322
+    },
+    {
+      "rung_weight": 1,
+      "thread_weight": 1,
+      "spin_yield": 2,
+      "eligible_states": 528,
+      "r0001_gap": 0.0871
+    },
+    {
+      "rung_weight": 1,
+      "thread_weight": 2,
+      "spin_yield": 2,
+      "eligible_states": 528,
+      "r0001_gap": 0.0189
+    },
+    {
+      "rung_weight": 1,
+      "thread_weight": 0,
+      "spin_yield": 2,
+      "eligible_states": 528,
+      "r0001_gap": 0.1004
+    },
+    {
+      "rung_weight": 0,
+      "thread_weight": 1,
+      "spin_yield": 2,
+      "eligible_states": 528,
+      "r0001_gap": 0.0189
+    },
+    {
+      "rung_weight": 5,
+      "thread_weight": 1,
+      "spin_yield": 1,
+      "eligible_states": 458,
+      "r0001_gap": 0.0
+    },
+    {
+      "rung_weight": 5,
+      "thread_weight": 1,
+      "spin_yield": 3,
+      "eligible_states": 546,
+      "r0001_gap": 0.0
+    },
+    {
+      "rung_weight": 7,
+      "thread_weight": 2,
+      "spin_yield": 3,
+      "eligible_states": 546,
+      "r0001_gap": 0.0
+    }
+  ],
+  "verdict": {
+    "horizon_gap_range": [
+      0.0,
+      0.0008
+    ],
+    "scoring_gap_range": [
+      0.0,
+      0.1004
+    ],
+    "horizon_is_the_cause": false,
+    "scoring_is_a_cause": true,
+    "mechanism": "greedy prefers CLIMB over SPIN iff wr - wt > spin_out * wt; the gap is 0 throughout that region",
+    "consequence_for_GATE_W1": "the gap must be swept over scoring, not read once at the author's chosen weights"
+  }
+}

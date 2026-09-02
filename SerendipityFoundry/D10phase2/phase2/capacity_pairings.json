@@ -1,0 +1,36 @@
+{
+ "uniform": 0.06174,
+ "global_best": 0.175,
+ "cond_oracle": 0.61979,
+ "conditional_span": 0.44479,
+ "candidates": {
+  "bitset64_out_vs_allbytes": {
+   "mean_topk_relevance": 0.07083,
+   "capture_of_conditional_span": -0.2342
+  },
+  "bitset64_out_vs_first24B": {
+   "mean_topk_relevance": 0.07083,
+   "capture_of_conditional_span": -0.2342
+  },
+  "bitset64_inout_vs_allbytes": {
+   "mean_topk_relevance": 0.02917,
+   "capture_of_conditional_span": -0.3279
+  },
+  "exact_byteset_overlap": {
+   "mean_topk_relevance": 0.06042,
+   "capture_of_conditional_span": -0.2576
+  },
+  "byte_hist_cosine": {
+   "mean_topk_relevance": 0.04792,
+   "capture_of_conditional_span": -0.2857
+  },
+  "opcode_set_vs_outmod33": {
+   "mean_topk_relevance": 0.0375,
+   "capture_of_conditional_span": -0.3091
+  },
+  "learned_RF_leave_one_family_out": {
+   "mean_topk_relevance": 0.11562,
+   "capture_of_conditional_span": -0.1335
+  }
+ }
+}

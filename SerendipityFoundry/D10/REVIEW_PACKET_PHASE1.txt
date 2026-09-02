@@ -1,0 +1,721 @@
+================================================================================
+EXTERNAL REVIEW PACKET
+D-10 ENDOGENOUS MEMORY ORGANIZATION -- PHASE 1 (PRE-FREEZE)
+================================================================================
+Prepared:     2026-08-28   DRAFT -- NOT frozen; main experiment NOT run
+Location:     F:\SerendipityE\d10\
+Instrument:   Prometheus Serendipity Foundry 0.1.0 (source UNMODIFIED)
+Instr hash:   71feebc474be88696695ac653eaa3ea23fddb5a5e3f2d780ca63e7d13ed471d7
+              (transferable subset, 141 files)
+Gate:         465 passed / 0 failed / 0 skipped, twice consecutively
+Artifacts:    d10/PHASE1_REPORT.md            (entry point, 15 deliverables)
+              d10/prereg/PREREG_DRAFT.md      (pre-review, SUPERSEDED)
+              d10/review/DESIGN_BRIEF.md      (what reviewers attacked)
+              d10/review/REVIEW_RECORD.md, _B.md, _C.md
+              d10/lib/, d10/preflight/, d10/tests/
+Headline:     REVISE_BEFORE_FREEZE -- assay is viable and has an 11x dynamic
+              range, but 15 blocking defects survived review, 4 of them
+              confirmed live in our own experiment code
+
+--------------------------------------------------------------------------------
+1. CLAIM / SUBJECT UNDER REVIEW
+--------------------------------------------------------------------------------
+This packet asks you to review a PROPOSED EXPERIMENT, not a result. No
+preregistration is frozen, no main run has occurred, and no scientific
+verdict exists. What is under review is: an operational definition of
+"machine-created memory organization", an information boundary, a control
+architecture, a set of preflight measurements that fix the operating point,
+and the adversarial review that has already been run against all of it.
+
+The question: can a computational system construct its own useful
+organization of accumulated computational experience, rather than having
+that organization specified by humans?
+
+The MAXIMUM claim the proposed design could ever support:
+
+  In one substrate (stackvm-v1), on one distribution of substrate-generated
+  exact program-synthesis tasks, a 64-bit retrieval key function produced by
+  substrate search under selection on downstream acquisition consequences
+  causes a higher held-out exact-solve rate than (a) no memory, (b)
+  unorganized memory, (c) a shipped human-designed organization, (d) a
+  machine-fitted human-designed organization, (e) a compute-matched
+  organizer whose selection signal was decoupled from the query, and (f) a
+  compute-matched cold search given the same TOTAL budget -- and survives
+  ablation, stratified scrambling, query-shuffling and transplantation.
+
+Deliberately out of scope: intelligence, cognition, concepts, language,
+abstraction, understanding, "alien reasoning". A maximal positive result
+reads as: a machine-produced hash function beat every control we built.
+That is intended to sound disappointingly narrow.
+
+PRE-REGISTERED FALSIFIERS (what would kill the claim)
+  - E does not beat R2 (the within-organizer, query-shuffled null) by the
+    pre-declared minimum effect size at the lineage level.
+  - The effect survives statistics-preserving scrambling of the key
+    assignment (would mean the specific organization is not doing the work).
+  - N+ (cold search given E's construction compute) matches or beats E
+    (mechanism claim may survive; utility claim dies).
+  - A planted negative is admitted, or a planted positive is not detected.
+  - Any information-boundary detector fires.
+
+--------------------------------------------------------------------------------
+2. METHOD / SETUP / SUBSTRATE
+--------------------------------------------------------------------------------
+SUBSTRATE. stackvm-v1, the Foundry's in-house metered stack/register VM.
+33 opcodes; EVERY byte string is a legal program (no invalid genotypes);
+bit-deterministic in (code, inputs, max_steps); exact step meter.
+EngineLimits(max_steps=200, timeout_s=5.0).
+
+THE OBJECT UNDER STUDY. An "organization" is a pair of total functions
+
+    KA : genotype bytes  ->  64-bit key      (artifact key)
+    KQ : train examples  ->  64-bit key      (query key)
+
+plus a SUPPLIED retrieval rule: return the k corpus artifacts minimising
+Hamming distance between their KA key and the query's KQ key, ties broken
+by a deterministic hash. The organization IS the induced structure: which
+artifacts share a key, which are Hamming-near, which of the 64 bits are
+live, what those bits separate, and what is discarded.
+
+An organizer genome is ONE byte string decoded totally into (KA, KQ), so it
+is an ordinary substrate artifact with ordinary Foundry lineage.
+
+WHY THIS SHAPE. The charter forbids assuming the answer's shape. We did not
+assume it; we chose it and we declare it. The consequence is stated in
+section 3 as E4-prime and is the biggest concession in this packet.
+
+WHAT WE DID NOT USE, AND WHY. The Foundry ships six competing index
+builders (Q0..Q5). We judge them INADEQUATE to this question and did not
+build the experiment on them:
+  - All six consume ONE human feature space (foundry/representations/
+    features.py: 256-bin byte histogram, Shannon entropy, log1p length,
+    failure-kind one-hots, mean behaviour vector, output-hash diversity)
+    through Euclidean kNN. That is a human-specified organization with
+    fitted parameters at best -- charter category 4, not 5 or 6.
+  - Q1/Q3/Q4/Q5 embed the QUERY side through an explicitly random
+    projection. The instrument documents this honestly in query_path_doc
+    ("pure seeded noise -- carries no learned structure"). There is
+    therefore NO learned task coupling on the query side at all.
+Q3 is retained only as arm H-fixed, the "off-the-shelf human organization"
+reference point, with the above caveat attached to any result it produces.
+
+--------------------------------------------------------------------------------
+3. KEY DEFINITIONS AND THE INFORMATION BOUNDARY
+--------------------------------------------------------------------------------
+An organization is ENDOGENOUS iff all four hold:
+
+E1  SUBSTRATE PROVENANCE. KA and KQ are substrate programs with complete
+    Foundry lineage terminating in create_random events with recorded
+    seeds. No human- or LLM-authored byte. No "import" creation-op anywhere
+    in an organizer lineage.
+
+E2  CONSEQUENCE SELECTION. Every survival event's only input was measured
+    downstream acquisition outcomes on FITTING tasks. Verified by replaying
+    the organizer GA byte-identically from its seeds.
+
+E3  NO PRIVILEGED INFORMATION. Nothing outside the declared encoded input
+    reaches KA/KQ. In particular not task_id (a content hash of train AND
+    test cases, i.e. a perfect task fingerprint), family identity,
+    generator parameters, difficulty, or chronology.
+
+E4-prime  UNRESTRICTED FUNCTION CLASS, SUPPLIED GEOMETRY. The key
+    functions are unrestricted substrate programs, BUT the retrieval
+    geometry (a shared 64-bit space, Hamming distance, top-k) is SUPPLIED
+    and is itself a human-designed organizational schema.
+
+E4-prime replaces a draft E4 which asserted that no distance function, no
+dimensionality and no similarity notion were supplied -- while the very
+same table supplied all three. Reviewer A caught the self-contradiction.
+This is the most important correction of the phase and it lowers the
+headline claim: we can test whether the KEY ASSIGNMENT is machine-created;
+we cannot test whether the NOTION OF NEARNESS is.
+
+THE BOUNDARY (exhaustive; hashed in SUPPLIED_MANIFEST.json before the run
+and re-verified after; anything outside it that influenced an organizer's
+survival invalidates the run):
+
+SUPPLIED                                  MAY EMERGE
+---------------------------------------   ------------------------------------
+substrate and its meters                  byte content of KA and KQ
+acquisition procedure (GA shape)          which artifacts collide into one key
+endpoint predicate (exact, held out)      partition granularity
+raw input encodings                       which of the 64 bits are live
+key width = 64 bits                       what the live bits separate
+Hamming; top-k; tiebreak                  which artifacts are near / far
+retrieval step cap                        preserved vs discarded distinctions
+k, and the budgets                        what makes an experience relevant
+organizer variation operators, GA shape
+organizer fitness definition
+task generator, filters, shortcut screen
+corpus construction rule
+
+The boundary is TESTED, not asserted: d10/tests/test_boundary.py, 9/9
+passing, including 200/200 identical query keys across tasks with identical
+train splits but differing task_id. Reviewer B correctly observes that this
+test CANNOT FAIL and must be supplemented by reconstruction probes.
+
+--------------------------------------------------------------------------------
+4. ENVIRONMENT, CORPUS, AND ARMS
+--------------------------------------------------------------------------------
+ENVIRONMENT (d10/lib/progtasks.py). A task is defined by a REFERENCE
+PROGRAM in the same substrate the learner searches. Rationale: exact
+solvability is guaranteed by construction (so a null is a hypothesis
+failure, not an unreachable target), difficulty has a mechanical dial,
+family members share reusable substructure BY DESCENT rather than by a
+human notion of similarity, and no human semantic category enters at all.
+
+  - family      = a random reference program (root, length L_ref) plus its
+                  mutational neighbours (N_mut substrate mutations)
+  - task        = a family member + 6 train cases + 20 disjoint test cases,
+                  inputs uniform on [0,255]^2
+  - filters     = reference must halt within 64 steps, produce outputs in
+                  [0,255], and give >= 16 distinct outputs over 40 probes
+  - SHORTCUT SCREEN = task rejected if ANY member of a frozen trivial set
+                  (all <=2-instruction programs + 2000 fixed random
+                  programs) reproduces train+test exactly
+
+"Same family" is a fact about substrate descent. No learner, index or
+organizer can read it; it lives oracle-side only.
+
+CORPUS RULE (supplied, arm-neutral, identical for all arms), per lineage:
+    C = union of the FINAL POPULATION of every history search
+      + every history search's solver genotype
+      + a uniform random subsample of all history artifacts
+This is declared rather than disguised as "raw experience": a purely
+uniform subsample of a large history contains almost no useful material
+(preflight p7: 0 solvers in 36 history trials at B=800).
+
+ARMS. Every arm runs the IDENTICAL acquisition procedure -- a fixed-size
+population of which exactly k members are injected genotypes, identical
+budget, identical trial seeds. Arms differ ONLY in which k. This
+neutralises "more material" and "more compute" structurally rather than
+statistically.
+
+Arm       Injected k                              Isolates
+-------   -------------------------------------   ------------------------
+N         fresh random genotypes                  no memory
+N+        fresh random, at B + C_org/(T*S)        COMPUTE-MATCHED SEARCH
+U         uniform corpus sample                   unorganized memory
+U-len     random, length/diversity matched to E   material, not relevance
+H-fixed   Foundry Q3 (AURORA-like) top-k          human-designed organization
+H-fit     sign(features . W), W_A 278x64 and      machine-fitted human
+          W_Q 83x64 evolved on the same signal    organization
+R         E machinery, family-block-disjoint      compute-matched, non-
+          derangement of fitting evidence         task-conditional
+R2        E's OWN winner, query key taken from    task-conditionality, with
+          another eval task's evidence            nothing else varying
+E         evolved KA / KQ                         the hypothesis
+
+--------------------------------------------------------------------------------
+5. PROCEDURE / METRICS / STATISTICS
+--------------------------------------------------------------------------------
+ENDPOINT. Test-split exact solve, checked oracle-side, never visible to the
+search. Train-exact success is the SEARCH signal only. This separation is
+load-bearing: preflight found a case at 0.450 train-exact / 0.000
+test-exact, i.e. train-exact is a fake endpoint.
+
+UNIT OF ANALYSIS: THE LINEAGE. Every trial inside a lineage-arm cell is
+driven by ONE draw of an organizer, so L is the sample size, not L*T*S.
+Reviewer C simulated the naive pooled two-proportion test under a true
+null and obtained 12.8% Type-I error at zero between-lineage variance
+(family clustering alone), rising to 48.8% at sigma_org = 0.04.
+
+PRIMARY CONTRAST: E - R2. Adopted from reviewer C over the draft's E - R.
+R2 is within-organizer, exactly compute-matched, costs zero extra
+construction compute, and isolates task-conditionality with nothing else
+varying. R is retained as the compute-matched secondary null.
+
+PRIMARY TEST. Per-lineage paired differences d_l under common random
+numbers; exact one-sided sign-flip permutation test over {d_l}, exhaustive
+to L ~ 22. CI by two-way cluster bootstrap over lineages AND eval families.
+GLMM as sensitivity only, with non-convergence pre-declared as "not a
+result". The invalid pooled analysis is reported and LABELLED INVALID.
+
+MULTIPLICITY. Single primary, one-sided, alpha 0.05, uncorrected.
+Secondaries in a fixed-sequence gatekeeping family (E-H_fit, R-U,
+H_fixed-U, H_fit-H_fixed, U-N), stopping at first non-rejection, costing
+zero alpha. Counterfactuals become GATES with pre-declared thresholds, not
+tests. Everything else is BH-FDR q=0.10 and labelled exploratory. The
+operating-point cell is frozen BEFORE any eval task is generated -- note
+that preflight has already swept 72 cells, which is a partly-walked garden
+of forking paths and must be declared as such.
+
+DESIGN CONSTRAINTS DERIVED, NOT CHOSEN
+  L >= 8            minimum attainable one-sided p = 2^-L
+  F_eval >= 24      effective df is min(L, F) - 1; family members are
+                    near-duplicate programs, so tasks are not independent
+  >= 8 expected successes per lineage-arm cell in the weakest organized arm
+  L cannot be set until sigma_org is measured
+
+SECONDARY ENDPOINT. Number of the 20 held-out test cases passed by the
+final best-by-train individual (ordinal 0..20). The draft's
+"evaluations-to-test-solve" is NOT MEASURABLE: the harness halts on the
+first TRAIN-exact success, so no time-to-test-solve exists.
+
+COST MODEL (four separately metered ledgers, pre-declared)
+  C_hist    identical across arms, charged to none
+  C_org     zero for N/U/U-len/N+; index-build for H-fixed; equal for
+            E / H-fit / R
+  C_eval    CAP-PARITY: identical B, realised <= B, reported descriptively
+  ret_steps retrieval key computation, in VM STEPS, never silently
+            converted to evaluations
+Pre-declared: a total-cost loss does NOT invalidate the mechanism claim
+(settled by the equal-marginal-budget primary contrast) but DOES invalidate
+every efficiency claim. If N+ >= E, the organization is dominated by simply
+searching longer: mechanism survives, utility dies. That wording is fixed
+NOW, not improvised after seeing numbers.
+
+--------------------------------------------------------------------------------
+6. PRIMARY RESULT OF PHASE 1: PREFLIGHT MEASUREMENTS
+--------------------------------------------------------------------------------
+There is no experimental result. The phase-1 result is the set of
+measurements that fix (or refuse) the operating point.
+
+6.1 THROUGHPUT
+  ~1250 evals/s at max_steps=200 with 20 train cases per evaluation
+  ~2100 to 2500 evals/s with 10 train cases per evaluation
+
+6.2 THE SHIPPED TASK FAMILIES ARE UNUSABLE (p4, p4b)
+All five Foundry synthetic families give cold-start HELD-OUT solve 0.000 at
+budgets up to 2000. Selected cells:
+
+  Family          Difficulty  n_train  Budget   Train    Test
+  -------------   ----------  -------  ------   ------   ------
+  modular_affine       1..3         6    2000    0.000    0.000
+  iterated_map         1..3         6    2000    0.000    0.000
+  register_puzzle      1..3         6    2000    0.000    0.000
+  conditional             1         3    1500    0.450    0.000
+  polygonal               1         3    1500    0.150    0.150
+
+The conditional row is the warning: 45% apparent success, 0% generalisation.
+
+6.3 SUBSTRATE-GENERATED ENVIRONMENT: HEADROOM WITH PLANTED MATERIAL (p5b)
+With unbounded 64-bit outputs the landscape is gradient-free (p5: seeding
+the population with same-family reference programs still yields 0.021).
+Bounding reference outputs to [0,255] restores gradient through the
+instrument's own cases_passed fitness -- no bespoke shaping function.
+
+  L_ref  N_mut  Budget    cold   foreign   sibling
+  -----  -----  ------   -----   -------   -------
+     12      1     600   0.000     0.091     0.568
+     12      1    2000   0.023     0.091     0.591
+     12      3     600   0.000     0.000     0.521
+     20      1     600   0.021     0.021     0.375
+
+CAUTION, AND REVIEWER C IS RIGHT ABOUT THIS: "sibling" here injects the
+ACTUAL same-family reference programs and the family root. Those artifacts
+do not exist in any corpus a history phase produces. These are NOT headroom
+numbers. They are superseded by 6.5.
+At L_ref = 20 there is a large train/test gap (0.250 train vs 0.021 test);
+at L_ref = 12 the gap is zero.
+
+6.4 SHORTCUT CEILING
+The frozen trivial-program screen rejects 76% to 90% of candidate tasks
+across cells (typically ~85%) as solvable by a <=2-instruction program or
+by one of 2000 fixed random programs. This is a recorded property of the
+environment, and the surviving tasks are a deliberately biased, harder
+subsample.
+
+6.5 REALISABLE HEADROOM: THE DECISIVE MEASUREMENT (p9, p10)
+End-to-end, with a real history phase and the declared corpus rule.
+PP1 = oracle retrieval (the k corpus artifacts with highest TRUE train
+fitness on the eval task) -- a privileged upper bound, never admitted as
+evidence. n = 96 trials per condition, 24 eval tasks.
+
+  Probe  n_train  B_hist  Hist    Solver  Corpus       N       U     PP1
+                          solves  genos
+  -----  -------  ------  ------  ------  ------   -----   -----   -----
+  p9           6    3200       1       6    2790   0.000   0.000   0.042
+  p9          10    3200       3       8    2722   0.010   0.010   0.188
+  p10         10   12800      11      25    3962   0.021   0.031   0.344
+
+READ THIS TABLE CAREFULLY. It is the whole viability argument. At the first
+row the assay is dead: the hoard contains one generalising solver and the
+oracle ceiling is 0.042. Raising n_train from 6 to 10 (which aligns train
+with test) quadruples the ceiling. Provisioning the history phase properly
+(B_hist 3200 -> 12800, 48 -> 96 trials) takes it to 0.344 against 0.031
+unorganized memory: an 0.313 absolute, ~11x relative dynamic range, with a
+hoard that actually contains 25 solver genotypes.
+The first two rows are reported precisely because they show how easily this
+experiment could have been run in a regime where nothing was measurable.
+
+6.6 BUDGET CURVE (p8) -- only L_ref = 8 has a usable slope
+  L_ref    B=200   B=800   B=3200   B=12800
+  -----    -----   -----   ------   -------
+      8    0.000   0.042    0.167     0.208
+     10    0.000   0.000    0.042     0.042
+     12    0.000   0.000    0.042     0.042
+
+6.7 ORGANIZER-SPACE REACHABILITY (p6; 600 random genomes, 300 artifacts)
+  Regime (distinct keys out of 300)      Count of 600
+  ------------------------------------   ------------
+  collapsed (1 key)                               273
+  coarse (2 to 5%)                                 60
+  middle (5 to 50%)                                68
+  fine (50 to 100%)                               142
+  injective (100%)                                 57
+  Median distinct keys: 2
+  Mutation walks reaching a grouping regime: 58 of 60 within 40 mutations
+
+Reviewer A is right that this shows an UNDIRECTED WALK reaches a regime; it
+is not evidence that selection can hill-climb.
+
+--------------------------------------------------------------------------------
+7. DELIVERABLES AND ACCEPTANCE CRITERIA
+--------------------------------------------------------------------------------
+Charter phase-1 deliverables, against what exists:
+
+  1  operational definition ................................ yes (sec 3)
+  2  strongest supportable claim ........................... yes (sec 1)
+  3  contamination / leakage routes ........................ yes (16 threats)
+  4  experiment and control architecture ................... yes (sec 4)
+  5  information boundary .................................. yes, and TESTED
+  6  provenance / origin accounting ........................ yes, with one
+                                                              instrument gap
+  7  cost model ............................................ yes (sec 5)
+  8  preflight and shortcut ceilings ....................... yes (sec 6)
+  9  planted positive / negative designs ................... yes (sec 8)
+ 10  statistical design and units .......................... yes (sec 5)
+ 11  causal interventions .................................. yes (sec 8)
+ 12  adversarial review and changes ........................ yes (sec 9)
+ 13  complete draft preregistration ........................ yes, SUPERSEDED
+ 14  unresolved threats .................................... yes (sec 11)
+ 15  explicit recommendation ............................... REVISE_BEFORE_FREEZE
+
+--------------------------------------------------------------------------------
+8. CONTROLS, PLANTED INSTRUMENTS, AND CAUSAL INTERVENTIONS
+--------------------------------------------------------------------------------
+PLANTED INSTRUMENTS (must pass before any main run)
+  PP1  assay sensitivity, PRIVILEGED. Oracle-ranked retrieval. Exercises
+       the full pipeline and sets the ceiling. MEASURED: 0.344 vs U 0.031.
+       Never admitted as evidence.
+  PP2  mechanism-faithful positive. A HAND-WRITTEN KA/KQ pair using no
+       privileged information. PROMOTED TO A HARD PRE-FREEZE GATE: if no
+       hand-written pair can beat the null under the frozen interface,
+       evolution will not find one, and a null would measure the interface
+       rather than the hypothesis. NOT YET CONSTRUCTED.
+  PN1  planted negative. KA = sha256(artifact_id), constant KQ. Must not
+       beat U.
+  PN2  planted negative. Scrambled winner. Must not beat U.
+
+CAUSAL INTERVENTIONS on each lineage's shipped E organizer, all at
+cap-parity budget: bit ablation on live bits; STRATIFIED scramble (permute
+within length-decile x first-byte-octile x multiplicity strata);
+QUERY-SHUFFLE (artifact side entirely fixed); bag control; transplantation
+across lineages; held-out families; matched-random organizer at matched
+granularity.
+
+WHY THE NAIVE SCRAMBLE WAS REPLACED. It preserves key multiset,
+granularity, entropy and bit marginals -- exactly and only what our own
+test checked -- while destroying key-to-length, key-to-first-byte,
+key-to-multiplicity and key-to-quality joints. So "E beats scramble"
+licenses only "the key assignment carries information", never
+"task-conditional relevance". R2, not scramble, is the task-conditionality
+null.
+
+--------------------------------------------------------------------------------
+9. INDEPENDENT ADVERSARIAL VERIFICATION
+--------------------------------------------------------------------------------
+Three independent hostile reviewers, disjoint mandates, given the design
+brief AND the code, and told to kill it. 38 findings; 15 judged blocking.
+We reproduced the 6 most consequential ourselves rather than taking them on
+trust, and failed to reproduce one reviewer's specific magnitude figure
+using a different statistic (recorded as such).
+
+FOUR CONFIRMED LIVE DEFECTS IN OUR OWN CODE
+
+D1  A SUPPLIED LENGTH CHANNEL STRAIGHT INTO THE KEY FUNCTION.
+    artifact_words passes len(g) as word 0, which the VM mirrors into
+    register R0, so the 2-byte program LDR R0 returns genotype length
+    EXACTLY. Reproduced:
+        len   7 -> key   7      len  96 -> key  96
+        len  16 -> key  16      len 250 -> key 250
+        len  40 -> key  40
+    The function's own docstring claimed "no length bucket". And length is
+    a strong channel to exactly what E3 forbids:
+        source history task means:   22.1 / 85.5 / 15.1   (5.7x spread)
+        within-run first vs second half:  30.6 -> 13.7
+                                          26.7 ->  3.5    (up to 7.6x)
+
+D2  A CONTENT-FREE BYTE DECIDES WHETHER RETRIEVED MEMORY SURVIVES.
+    The acquisition GA sorts by (-fitness, genotype_bytes), and at cold
+    start essentially all fitness is tied, so the early GA is a
+    lexicographic sort on bytes. Reproduced over 400 replicates with
+    injected genotypes differing ONLY in their leading byte:
+        leading byte   mean rank (of 24)   share of the 2 elite slots
+        ------------   -----------------   --------------------------
+        0x00                        1.55                        0.979
+        0xFF                       21.47                        0.000
+
+D3  THE FITNESS SHAPING TERM IS THE PLANTED POSITIVE'S OWN CRITERION.
+    The draft organizer fitness added 0.01 * mean best_train_fitness,
+    described as a tiebreak. Two defects. Arithmetically it is a strict
+    tiebreak only while 1/(N_fit*trials) > 0.01:
+        n_fit_units    min increment    tiebreak valid
+        -----------    -------------    --------------
+                 16          0.06250    yes
+                 54          0.01852    yes
+                100          0.01000    NO
+                160          0.00625    NO
+    Ontologically it asserts "an experience is relevant to a query if it
+    passes more of that query's train cases" -- which is LITERALLY the PP1
+    oracle ranking criterion. Since the unshaped landscape is near-flat, it
+    is plausibly the only usable gradient, and it is query-conditional so
+    it does NOT difference out of the primary contrast. This is the
+    charter's central failure mode occurring inside the design meant to
+    prevent it.
+
+D4  STEPS PER EVALUATION IS NOT CONSTANT (found via a crashed probe).
+        Budget     mean len    max len    VM steps / evaluation
+        -------    --------    -------    ---------------------
+          1,600        23.2        110                      247
+          6,400       118.9        415                    1,130
+         25,600       157.9        561                    1,481
+    max_genotype_bytes defaults to 1,000,000 and the adapter only
+    PENALISES oversize genotypes after evaluation; nothing bounds growth.
+    So a 6x swing in VM steps sits inside a budget the cost model treated
+    as matched, and an arm could gain by retrieving LONGER genotypes with
+    no task-conditional relevance at all.
+
+TWO STRUCTURAL DEFECTS IN THE INSTRUMENT'S COURT (foundry/court/)
+
+D5  THE ADJUDICATION GATES ARE SIMULTANEOUSLY UNREACHABLE AND UNFAILABLE.
+        DEFAULT_MARGINS: exact_effect 0.25, ablation 0.25, transfer 0.25,
+                         control 0.10, null 0.10, cost 0.0
+        measured maximum attainable delta: 0.313
+      - exact_effect / transfer at 0.25 are passable only by a near-oracle
+        organizer  -> impossible positive controls
+      - control at 0.10 passes iff |delta| <= 0.10, and realistic deltas
+        are below that  -> the controls CANNOT FAIL
+      - cost at 0.0 passes on any positive delta at ANY cost  -> fail-open
+      - selection_penalty defaults to 0.0  -> the multiple-comparison
+        mechanism is INERT by default
+      - CourtHarness.n_trials defaults to 8, and the predicates apply no
+        statistical test at all (point estimate vs fixed margin)
+
+D6  A REAL EFFECT FAILS THE GATE BECAUSE IT IS REAL.
+    _two_arm_effect requires passed = (budget_equal AND delta > margin),
+    with budget_tolerance defaulting to 0, while the acquisition harness
+    early-stops on success -- so a MORE effective arm consumes FEWER
+    evaluations, budget equality fails, and the gate rejects it.
+
+ONE MORE, AFFECTING REPRODUCIBILITY OF THE OBJECT OF STUDY
+
+D7  run_key passes timeout_s=5.0 to the VM, so a key program running near
+    the wall-clock backstop yields a DIFFERENT KEY on a loaded machine than
+    on an idle one. The organization itself is not reproducible, and total
+    wall clock is unbounded.
+
+WHAT THE REVIEWERS FOUND SOUND
+  - The query-side firewall holds STRUCTURALLY, not by convention.
+    evidence_words touches only train_examples; TaskEvidence/TaskView are
+    extra="forbid"; task_id provably hashes train AND test and is never
+    read. Verified 200/200 identical query keys.
+  - The held-out test split is genuinely unreconstructible from train
+    evidence within the step cap (Mersenne Twister inversion needs 624
+    outputs; 12 are available).
+  - Degenerate key collapse floors cleanly at arm U rather than at
+    something pathological.
+  - Unplanned determinism cross-check PASSED: two probes ran the identical
+    history phase in separate processes and produced byte-identical
+    summaries (96 trials, 11 solves, 25 solver genotypes, 1,011,559
+    artifacts, corpus 3,962).
+
+Reviewer B's summary is worth quoting in substance: the leaks that exist
+are on the ARTIFACT side and in the HARNESS -- the opposite of where our
+defences were concentrated.
+
+--------------------------------------------------------------------------------
+10. COMMENTARY AND ANALYSIS
+--------------------------------------------------------------------------------
+(a) The design's defences were pointed the wrong way. We spent the
+    engineering effort on the query side -- task_id, oracle metadata,
+    family labels -- and that side held perfectly. Every confirmed leak is
+    on the artifact side (a supplied length statistic) or in the harness
+    (a lexicographic tie-break, an unbounded genotype length, a shaping
+    term). The general lesson: the firewall you design is the firewall you
+    test, and the firewall you test is the one that holds. The dangerous
+    surface is the one you did not think of as a surface.
+
+(b) D3 is the most instructive failure. We wrote a preregistration whose
+    section 3 lists "the experimenter supplying the important ontology
+    indirectly" as threat T-zero, and then supplied it -- as a term we
+    labelled a tiebreak, whose content is identical to the oracle criterion
+    we planted as the positive control. It survived our own review and two
+    of three hostile reviewers.
+
+(c) The assay's viability turned on a parameter we nearly did not sweep.
+    n_train 6 -> 10 moved the oracle ceiling 0.042 -> 0.188, and proper
+    history provisioning moved it to 0.344. Nothing about the hypothesis
+    changed. Had we frozen at the first configuration we would have run a
+    correctly-designed experiment in a regime with no measurable dynamic
+    range and reported a null.
+
+(d) We are NOT confident the hypothesis is testable at this interface.
+    Random key programs execute a median of ~20 VM steps. KA sees genotype
+    BYTES and cannot execute them; KQ sees I/O NUMBERS and cannot execute
+    anything. For E to beat R2, some pair must correlate syntax with
+    semantics -- which is the program-synthesis problem the acquisition GA
+    exists to solve -- inside a few hundred steps. Hence the PP2 gate.
+
+(e) E4-prime materially reduces the claim, and we think that is correct.
+    Reviewer A measured that swapping only the supplied comparison changes
+    the retrieved top-4 on roughly half of queries.
+
+(f) The Court is not the safety net we assumed. It adjudicates effect and
+    provenance integrity. It cannot see the encoders, the corpus, or the
+    derangement; it cannot verify that a shuffle is a shuffle; it cannot
+    check creation_op, so it cannot adjudicate E1 at all; and its defaults
+    are fail-open in four places.
+
+(g) An honest note on our own process. Three of the four code defects were
+    found by hostile reviewers, not by us, and we had already written and
+    passed a boundary test suite that cannot fail. Self-review was
+    insufficient here by a wide margin.
+
+--------------------------------------------------------------------------------
+11. KNOWN LIMITATIONS AND CAVEATS
+--------------------------------------------------------------------------------
+  1  sigma_org is UNMEASURED. Once sigma_org >= 2*delta, required L is ~30
+     and adding tasks or seeds buys NOTHING.
+  2  Capacity is unproven. See commentary (d). The one open item that could
+     still make the assay non-viable.
+  3  The TRANSFER ceiling is entirely unmeasured.
+  4  The supplied Hamming geometry does a large share of the selection
+     work. Bounded, not eliminated.
+  5  Organizer-genome modularity: roughly a third of single mutations
+     rewrite both KA and KQ.
+  6  H-fixed is answered by construction: Q3's query side is documented by
+     the instrument itself as pure seeded noise.
+  7  Preflight has already swept 72 operating-point cells.
+  8  The family relation is defined by the SEARCHER'S OWN mutation
+     operator, which manufactures the headroom and caps external validity.
+  9  U - N is a weak contrast even at the provisioned point (0.021 vs
+     0.031) and is expected to fail.
+ 10  One probe crashed with MemoryError while retaining ~1.01M genotypes.
+     Cause NOT isolated; recorded as unexplained.
+ 11  Windows / single local disk. The Foundry's per-event fsync ledger
+     peaks near 1,100 evals/s at 8 workers and COLLAPSES beyond that.
+ 12  Reviewer magnitude figures marked ACCEPTED-UNVERIFIED were not
+     independently reproduced.
+
+--------------------------------------------------------------------------------
+12. REPRODUCTION
+--------------------------------------------------------------------------------
+All commands from F:\SerendipityE. Python is .venv\Scripts\python.exe.
+
+Instrument gate (about 75 s):
+    .venv\Scripts\python.exe -m pytest tests -q
+
+Information-boundary structural tests (seconds; expect 9/9 PASS):
+    .venv\Scripts\python.exe d10\tests\test_boundary.py
+
+Spot-check the shipped preflight results without re-running anything:
+    type d10\preflight\p8.json          (budget curve)
+    type d10\preflight\p9_n6_B400.json  (thin operating point)
+    type d10\preflight\p9_n10_B400.json (n_train fix)
+    type d10\preflight\p9_rich.json     (provisioned; the 0.344 row)
+    type d10\preflight\p6.json          (organizer-space reachability)
+    type d10\preflight\p11.log          (the preserved crash)
+
+Re-run the decisive end-to-end probe (about 8 to 12 minutes):
+    .venv\Scripts\python.exe d10\preflight\p9_operating_point.py ^
+        10 400 12800 4 3 rich
+
+FASTEST WAY TO CONFIRM THE HEADLINE DEFECTS YOURSELF
+  D1  from lib.organizer import artifact_words, run_key
+      from foundry.engines.gp.stackvm import vm
+      KA = bytes([vm.OP["LDR"], 0])
+      [run_key(KA, artifact_words(bytes(n))) for n in (7,16,40,96,250)]
+      Expect exactly [7, 16, 40, 96, 250].   (NOTE: repaired in Phase 2)
+  D2  read d10/lib/acquire.py population sort and tournament helper.
+  D5  from foundry.court.predicates import DEFAULT_MARGINS
+  D7  read d10/lib/organizer.py run_key: timeout_s=5.0.
+
+--------------------------------------------------------------------------------
+13. PROPOSED NEXT STEPS
+--------------------------------------------------------------------------------
+TIER 0 -- GATES. If either fails, the recommendation changes.
+  0.1  CAPACITY GATE. Hand-write a KA/KQ pair that beats the null under the
+       frozen interface.        [EXECUTED IN PHASE 2 -- FAILED]
+  0.2  SIGMA_ORG GATE. >= 4 pilot lineages; set L from the result.
+                               [NOT REACHED]
+
+TIER 1 -- BLOCKING CODE REPAIRS
+  1.1  delete len(g) from artifact_words          [DONE, Phase 2]
+  1.2  seeded-hash fitness tie-break              [DONE, Phase 2]
+  1.3  spend the FULL budget, collect all solves  [NOT DONE]
+  1.4  step-based key metering                    [DONE, Phase 2]
+  1.5  bound genotype length; meter VM steps      [DONE, Phase 2]
+  1.6  de-duplicate the corpus by content         [already content-deduped]
+  1.7  no-shaping objective becomes primary       [DONE, Phase 2]
+  1.8  two independent organizer chromosomes      [NOT DONE]
+  1.9  three-way task split; family-block derangement  [DONE, Phase 2]
+  1.10 stream the history phase                   [NOT DONE]
+
+TIER 2 -- DESIGN REPAIRS (steel-man H-fit; add N+; add R2; stratified
+  scramble + query-shuffle; different family-generation operator;
+  comparison-robustness arm; reconstruction probes)
+                               [R2 and reconstruction probes DONE in Phase 2;
+                                the rest NOT REACHED]
+
+TIER 3 -- MEASUREMENT REPAIRS (family-disjoint transfer ceiling; re-derive
+  Court margins; cap-parity; commit lineage audit into the manifest)
+                               [cap-parity DONE in Phase 2; rest NOT REACHED]
+
+TIER 4 -- REVISED PREREGISTRATION, then re-review, then freeze.
+                               [NOT REACHED -- superseded by the Phase 2
+                                capacity verdict]
+
+--------------------------------------------------------------------------------
+14. QUESTIONS FOR THE REVIEWERS
+--------------------------------------------------------------------------------
+Q1  Given E4-prime, is the remaining claim still WORTH TESTING, or has the
+    concession hollowed it out?
+Q2  Is "an embedding plus a supplied metric" legitimately an ORGANIZATION,
+    or should we rename the object and drop the word entirely?
+Q3  Should the object admit a RELATIONAL primitive?
+Q4  THE CRUX. Is the PP2 capacity gate the right stopping condition? If no
+    hand-written KA/KQ can beat R2 within a few hundred VM steps, would you
+    (a) declare ASSAY_NOT_VIABLE, (b) grant KA a bounded execution
+    primitive, or (c) something else?
+    [PHASE 2 ANSWERED THIS EMPIRICALLY: PP2 failed; we took (a), and did
+     NOT take (b), per the Phase-2 charter.]
+Q5  Is an 11x dynamic range with a binary endpoint at ~3% base rate ENOUGH?
+Q6  Is the substrate-generated environment circular enough to invalidate
+    the headroom, given family membership uses the searcher's own operator?
+Q7  Is the declared corpus curation acceptable, or does it change the
+    question to "organize a curated shortlist"?
+Q8  Do you accept the LINEAGE as the unit, with L=16, F>=24?
+Q9  If N+ beats E, is a mechanism claim that loses to "just search longer"
+    worth reporting at all?
+Q10 Is the four-ledger cost model right to treat matched acq_evals as the
+    primary parity condition, given VM steps swing 6x within it?
+Q11 How much additional adversarial review before a freeze?
+Q12 Is there a leakage route, control weakness, or deterministic shortcut
+    that all four of us missed?
+
+--------------------------------------------------------------------------------
+15. VERDICT / DECISION
+--------------------------------------------------------------------------------
+  ASSAY_NOT_VIABLE ............... no
+  READY_TO_FREEZE ................ no
+  REVISE_BEFORE_FREEZE ........... YES
+
+NOT ready to freeze: 15 blocking findings survived review; four are
+confirmed live defects in our own code. NOT non-viable: the environment
+works at a measured operating point with an 11x dynamic range, and every
+blocking finding has a concrete, named, affordable repair.
+
+REVIEWER'S BOTTOM LINE. Given that we supply the 64-bit key space, the
+Hamming metric and top-k selection, and given that no hand-written
+key-program pair has yet been shown to beat the query-shuffled null within
+a few hundred VM steps -- is there still a real phenomenon this design can
+detect, or are we about to spend 14 hours measuring our own retrieval
+geometry?
+
+    [ANSWERED IN PHASE 2: the latter. See d10/PHASE2_REPORT.md --
+     ASSAY_NOT_VIABLE_SYNTAX_ONLY.]
+================================================================================
+END OF PACKET
+================================================================================

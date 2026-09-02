@@ -1,0 +1,47 @@
+{
+  "purpose": "CEILING-1: attainable rung map for the pinned solver",
+  "solver_pin": "nvidia:gpt-oss-120b",
+  "seed": 20260826,
+  "max_tokens": 4096,
+  "resolution": "pilot (transport check)",
+  "ts_utc": "2026-08-26T22:04:23+00:00",
+  "cells": {
+    "WEIR:R0": {
+      "n_attempted": 4,
+      "n_transport_ok": 4,
+      "transport_failure_rate": 0.0,
+      "n": 4,
+      "accuracy": 1.0,
+      "se": 0.0,
+      "ci95": [
+        1.0,
+        1.0
+      ],
+      "accuracy_excluding_parse_failures": 1.0,
+      "parse_failure_rate": 0.0,
+      "truncation_rate": 0.0,
+      "baseline_random": 0.325,
+      "illegal_action_rate": 0.0,
+      "baseline_majority_same_items": 0.5
+    },
+    "WEIR:R2": {
+      "n_attempted": 4,
+      "n_transport_ok": 4,
+      "transport_failure_rate": 0.0,
+      "n": 4,
+      "accuracy": 1.0,
+      "se": 0.0,
+      "ci95": [
+        1.0,
+        1.0
+      ],
+      "accuracy_excluding_parse_failures": 1.0,
+      "parse_failure_rate": 0.0,
+      "truncation_rate": 0.0,
+      "baseline_random": 0.3833,
+      "illegal_action_rate": 0.0,
+      "baseline_greedy_1ply_same_items": 1.0,
+      "baseline_majority_same_items": 0.5
+    }
+  }
+}

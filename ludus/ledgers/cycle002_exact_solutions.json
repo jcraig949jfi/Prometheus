@@ -1,0 +1,33 @@
+{
+  "purpose": "exact optimal play for two founding stochastic-stopping worlds",
+  "no_model_calls": true,
+  "ts_utc": "2026-08-26T23:07:54+00:00",
+  "FLIP7": {
+    "states_solved": 8192,
+    "optimal_ev_per_round": 18.5652
+  },
+  "MARTIAN_DICE": {
+    "states_solved": 6176,
+    "optimal_ev_per_turn": 2.0938
+  },
+  "rules_audit": {
+    "epistemic_state": "HYPOTHESIZED \u2014 reconstructed from memory, no rulebook consulted",
+    "why_it_matters": "charter v2 \u00a74: the operator can cheaply detect fabricated rules; every cycle-002 verdict is conditional on this sheet",
+    "FLIP7": [
+      "deck: rank r appears r times for r in 1..12, rank 0 appears once (79 cards)",
+      "flipping a rank you already hold BUSTS you; the round scores 0",
+      "banking scores the sum of held ranks",
+      "holding 7 distinct ranks scores +15 and ends your round immediately",
+      "SCOPE CUT (not a rule claim): action cards (Freeze, Flip Three, Second Chance) and modifier cards (+2/+4/+6/+8/+10/x2) are NOT implemented"
+    ],
+    "MARTIAN_DICE": [
+      "13 dice; each die has faces tank, ray, ray, human, cow, chicken (the DOUBLED RAY FACE is the highest-leverage constant here)",
+      "all tanks rolled are set aside compulsorily",
+      "you must then claim ALL dice of exactly one symbol you have not claimed before this turn; if you cannot, the turn ends scoring 0",
+      "after claiming you may stop or reroll the remaining dice",
+      "scoring: rays must be >= tanks or the turn scores 0; otherwise score is humans + cows + chickens",
+      "+3 bonus for holding at least one human AND one cow AND one chicken"
+    ],
+    "SOLITAIRE_SCOPE": "both worlds are single-player; opponent interaction (Incan Gold's splitting, Can't Stop's race) is out of scope for this cut and is stated as a limitation"
+  }
+}
