@@ -556,6 +556,121 @@ def telemetry(request: Request, conn=Depends(get_conn)):
                 "alone does not count", **revisions(conn)}, default=str)))
 
 
+# ------------------------------------------------- PEW-NATIVE surface
+# Semantically sterile projections for future Incubator analysis (charter
+# V3 s3-s4). Emits ONLY identifiers, hashes, and numbers: family labels are
+# hashed to opaque tokens; no claim text, interpretation prose, ontology
+# labels, or wiki-derived embeddings can appear here. The firewall test
+# (tests/test_firewall_v3.py) verifies this against live substrate prose.
+def _fam_token(family):
+    import hashlib as _h
+    return "fam:" + _h.sha256(("pewfam|" + (family or "")).encode()).hexdigest()[:10]
+
+
+@app.get("/api/v1/native/fossil/matrix")
+def native_fossil_matrix(request: Request, conn=Depends(get_conn)):
+    identity(request)
+    from . import fossil
+    m = fossil.q1_family_failure_matrix(conn)
+    return {"f": [_fam_token(x) for x in m["families"]],
+            "o": [f"out:{i}" for i in range(len(m["outcomes"]))],
+            "m": m["matrix"], "n": m["total"],
+            "rev": revisions(conn)["canonical_revision"]}
+
+
+class FossilEncounterIn(BaseModel):
+    encounter_id: str
+    sfe_entry_hash: str
+    sfe_world_id: str | None = None
+    sfe_event_id: str | None = None
+    world_id: str | None = None
+    outcome: str | None = None
+    failure_class: str | None = None
+    namespace: str = "prod"
+    idempotency_key: str | None = None
+
+
+@app.post("/api/v1/fossil/encounters")
+def post_fossil_encounter(body: FossilEncounterIn, request: Request,
+                          conn=Depends(get_conn)):
+    """Incubator ingest path: idempotent, provenance-required (an encounter
+    without an SFE entry hash is refused), append-only."""
+    ident = identity(request, write=True)
+    if not body.sfe_entry_hash or not body.sfe_entry_hash.strip():
+        raise HTTPException(422, "fossil_encounter_requires_sfe_entry_hash")
+    with conn.cursor() as cur:
+        cur.execute("SELECT nextval('ew.canonical_revision_seq')")
+        rev = cur.fetchone()[0]
+        cur.execute(
+            "INSERT INTO ew.fossil_encounters(encounter_id, sfe_world_id, "
+            "sfe_event_id, sfe_entry_hash, world_id, outcome, failure_class, "
+            "namespace, revision) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s) "
+            "ON CONFLICT (encounter_id) DO NOTHING RETURNING encounter_id",
+            (body.encounter_id, body.sfe_world_id, body.sfe_event_id,
+             body.sfe_entry_hash, body.world_id, body.outcome,
+             body.failure_class, body.namespace, rev))
+        inserted = cur.fetchone() is not None
+        cur.execute(
+            "INSERT INTO ew.write_log(idempotency_key, endpoint, machine, "
+            "agent, payload_sha256, accepted, result_object_id) "
+            "VALUES (%s,'fossil.encounter',%s,%s,%s,true,%s) "
+            "ON CONFLICT (idempotency_key) DO NOTHING",
+            (body.idempotency_key, ident["machine"], ident["agent"],
+             body.sfe_entry_hash[:64], body.encounter_id))
+    conn.commit()
+    return {"encounter_id": body.encounter_id, "inserted": inserted}
+
+
+class FossilBatchIn(BaseModel):
+    encounters: list[FossilEncounterIn]
+
+
+@app.post("/api/v1/fossil/encounters/batch")
+def post_fossil_batch(body: FossilBatchIn, request: Request,
+                      conn=Depends(get_conn)):
+    """Bulk Incubator ingest: one transaction, one revision per batch,
+    per-row idempotency preserved (ON CONFLICT), provenance still required
+    per row (rows without sfe_entry_hash are rejected as a batch)."""
+    ident = identity(request, write=True)
+    if any(not e.sfe_entry_hash or not e.sfe_entry_hash.strip()
+           for e in body.encounters):
+        raise HTTPException(422, "fossil_encounter_requires_sfe_entry_hash")
+    inserted = 0
+    with conn.cursor() as cur:
+        cur.execute("SELECT nextval('ew.canonical_revision_seq')")
+        rev = cur.fetchone()[0]
+        args = [(e.encounter_id, e.sfe_world_id, e.sfe_event_id,
+                 e.sfe_entry_hash, e.world_id, e.outcome, e.failure_class,
+                 e.namespace, rev) for e in body.encounters]
+        from psycopg2.extras import execute_values
+        execute_values(cur,
+            "INSERT INTO ew.fossil_encounters(encounter_id, sfe_world_id, "
+            "sfe_event_id, sfe_entry_hash, world_id, outcome, failure_class, "
+            "namespace, revision) VALUES %s ON CONFLICT (encounter_id) DO NOTHING",
+            args)
+        inserted = cur.rowcount
+        cur.execute(
+            "INSERT INTO ew.write_log(endpoint, machine, agent, "
+            "payload_sha256, accepted, result_object_id) "
+            "VALUES ('fossil.batch',%s,%s,%s,true,%s)",
+            (ident["machine"], ident["agent"],
+             str(len(body.encounters)), f"batch:{len(body.encounters)}"))
+    conn.commit()
+    return {"received": len(body.encounters), "inserted": inserted}
+
+
+@app.get("/api/v1/native/fossil/anomalies")
+def native_fossil_anomalies(request: Request, top: int = 5,
+                            conn=Depends(get_conn)):
+    identity(request)
+    from . import fossil
+    rows = fossil.q2_anomalous_worlds(conn, top=top)
+    return {"rows": [{"w": r["world_id"], "f": _fam_token(r["family"]),
+                      "n": r["n_encounters"], "kl": r["kl_vs_family"],
+                      "h": r["sfe_anchor"]} for r in rows],
+            "rev": revisions(conn)["canonical_revision"]}
+
+
 # ---------------------------------------------------------------- wiki
 @app.get("/wiki", response_class=HTMLResponse)
 @app.get("/wiki/{page:path}", response_class=HTMLResponse)
