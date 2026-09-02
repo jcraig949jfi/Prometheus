@@ -44,7 +44,8 @@ def generate(conn, view_name):
     spec = VIEWS[view_name]
     skipped = []
     with ewdb.dict_cur(conn) as cur:
-        cur.execute(f"SELECT * FROM ew.evidence e WHERE {spec['filter_sql']}")
+        # evidence_prod: fixture/test-namespaced rows never reach coordinates
+        cur.execute(f"SELECT * FROM ew.evidence_prod e WHERE {spec['filter_sql']}")
         rows = cur.fetchall()
     written = 0
     with conn.cursor() as cur:

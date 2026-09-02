@@ -342,8 +342,11 @@ def get_claim(conn, claim_id):
         cur.execute("SELECT * FROM ew.evidence WHERE claim_id=%s "
                     "ORDER BY created_at", (claim_id,))
         evidence = cur.fetchall()
+        # match both bare ids and version-suffixed addresses (C-xxx#v2)
+        like = claim_id + "#%"
         cur.execute("SELECT * FROM ew.relations WHERE src_id=%s OR dst_id=%s "
-                    "ORDER BY created_at", (claim_id, claim_id))
+                    "OR src_id LIKE %s OR dst_id LIKE %s ORDER BY created_at",
+                    (claim_id, claim_id, like, like))
         relations = cur.fetchall()
         return {"claim_id": claim_id, "current": versions[0],
                 "versions": versions, "evidence": evidence,
@@ -378,8 +381,10 @@ def contradictions(conn, claim_id=None):
     candidate conditional structure, surfaced for inspection — never
     auto-resolved (charter §12)."""
     with ewdb.dict_cur(conn) as cur:
-        q = ("SELECT * FROM ew.relations WHERE relation_type IN "
-             "('CONTRADICTS','REFUTES') AND epistemic_class='OBSERVED'")
+        # INFERRED contradictions are included but carry their epistemic_class
+        # so consumers/UI can badge them; they are never silently promoted.
+        q = ("SELECT * FROM ew.relations_prod WHERE relation_type IN "
+             "('CONTRADICTS','REFUTES','FAILS_TO_REPLICATE')")
         args = []
         if claim_id:
             q += " AND (src_id=%s OR dst_id=%s)"

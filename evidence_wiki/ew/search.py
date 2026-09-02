@@ -29,8 +29,8 @@ def corpus_docs(conn):
     """One document per claim (current version), source vocabulary only."""
     with ewdb.dict_cur(conn) as cur:
         cur.execute(
-            "SELECT c.* FROM ew.claims c JOIN "
-            "(SELECT claim_id, max(version) v FROM ew.claims GROUP BY claim_id) m "
+            "SELECT c.* FROM ew.claims_prod c JOIN "
+            "(SELECT claim_id, max(version) v FROM ew.claims_prod GROUP BY claim_id) m "
             "ON m.claim_id=c.claim_id AND m.v=c.version "
             "WHERE c.write_stage IN ('SOURCE_BOUND','INDEXED') "
             "ORDER BY c.claim_id")

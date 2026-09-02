@@ -43,14 +43,24 @@ def get_index(conn):
 
 
 def identity(request: Request, write: bool = False):
-    tok = request.headers.get("authorization", "")
-    if tok != f"Bearer {CFG['auth_token']}":
-        raise HTTPException(401, "bad or missing bearer token")
+    """V1 auth: per-machine tokens bind the claimed machine identity; the V0
+    shared token remains accepted as LEGACY (rotation procedure in
+    docs/OPERATIONS_V1.md) but cannot impersonate a tokened machine."""
+    tok = request.headers.get("authorization", "").removeprefix("Bearer ").strip()
     machine = request.headers.get("x-prometheus-machine")
     agent = request.headers.get("x-prometheus-agent")
+    machine_tokens = CFG.get("machine_tokens", {})
+    token_owner = next((m for m, t in machine_tokens.items() if t == tok), None)
+    if token_owner is not None:
+        if machine and machine != token_owner:
+            raise HTTPException(401, "token does not match claimed machine")
+        machine = token_owner
+    elif tok != CFG["auth_token"]:
+        raise HTTPException(401, "bad or missing bearer token")
     if write and (not machine or not agent):
         raise HTTPException(400, "writes require X-Prometheus-Machine and X-Prometheus-Agent")
-    return {"machine": machine or "unknown", "agent": agent or "unknown"}
+    return {"machine": machine or "unknown", "agent": agent or "unknown",
+            "auth": "machine_token" if token_owner else "legacy_shared"}
 
 
 def log_read(conn, endpoint, ident, query, n, t0):
@@ -381,10 +391,10 @@ def get_consumers(request: Request, conn=Depends(get_conn)):
     with ewdb.dict_cur(conn) as cur:
         cur.execute(
             "SELECT c.claim_id, c.text_canonical, c.agent_id, c.status, "
-            "EXISTS (SELECT 1 FROM ew.relations r WHERE "
+            "EXISTS (SELECT 1 FROM ew.relations_prod r WHERE "
             " r.relation_type IN ('CONSUMED_BY','DEPENDS_ON','REUSES_NEGATIVE_EVIDENCE') "
             " AND (r.src_id=c.claim_id OR r.dst_id=c.claim_id)) AS has_consumer_link "
-            "FROM ew.claims c JOIN (SELECT claim_id, max(version) v FROM ew.claims "
+            "FROM ew.claims_prod c JOIN (SELECT claim_id, max(version) v FROM ew.claims_prod "
             "GROUP BY claim_id) m ON m.claim_id=c.claim_id AND m.v=c.version")
         rows = cur.fetchall()
     orphaned = [r for r in rows if not r["has_consumer_link"]]
@@ -493,6 +503,57 @@ def tensor_related(body: TensorRelatedIn, request: Request,
     return {"claim_id": body.claim_id, "results": out,
             "artifact_id": fr["artifact_id"],
             "epistemic_warning": "latent association is not evidence"}
+
+
+# ----------------------------------------------------------- telemetry
+@app.get("/api/v1/telemetry")
+def telemetry(request: Request, conn=Depends(get_conn)):
+    """Usage + metabolization observability (charter V1 s8, s18)."""
+    identity(request)
+    REUSE = ("MOTIVATED", "REUSES_NEGATIVE_EVIDENCE", "EXTENDS", "TESTS")
+    with ewdb.dict_cur(conn) as cur:
+        cur.execute("SELECT endpoint, machine, agent, count(*) n FROM ew.read_log "
+                    "GROUP BY 1,2,3 ORDER BY n DESC LIMIT 40")
+        reads = cur.fetchall()
+        cur.execute("SELECT endpoint, machine, agent, count(*) n, "
+                    "count(*) FILTER (WHERE accepted) accepted FROM ew.write_log "
+                    "GROUP BY 1,2,3 ORDER BY n DESC LIMIT 40")
+        writes = cur.fetchall()
+        # negative-evidence metabolization: per negative claim, does any
+        # reuse-typed OBSERVED relation touch it, and how fast, and across
+        # which boundaries?
+        cur.execute(
+            "SELECT DISTINCT e.claim_id, e.agent_id, e.created_at "
+            "FROM ew.evidence_prod e WHERE e.negative AND e.claim_id IS NOT NULL")
+        negs = cur.fetchall()
+        detail = []
+        for n in negs:
+            cur.execute(
+                "SELECT r.*, c2.agent_id AS other_agent FROM ew.relations_prod r "
+                "LEFT JOIN ew.claims_prod c2 ON c2.claim_id = "
+                " (CASE WHEN r.src_id=%s THEN r.dst_id ELSE r.src_id END) "
+                " AND c2.version=1 "
+                "WHERE r.relation_type = ANY(%s) AND r.epistemic_class='OBSERVED' "
+                "AND (r.src_id=%s OR r.dst_id=%s)",
+                (n["claim_id"], list(REUSE), n["claim_id"], n["claim_id"]))
+            reuses = cur.fetchall()
+            detail.append({
+                "claim_id": n["claim_id"], "agent": n["agent_id"],
+                "reused": bool(reuses),
+                "cross_agent": any(r["other_agent"] and
+                                   r["other_agent"] != n["agent_id"]
+                                   for r in reuses),
+                "n_reuse_edges": len(reuses)})
+        reused = [d for d in detail if d["reused"]]
+    return JSONResponse(json.loads(json.dumps({
+        "reads_by_endpoint": reads, "writes_by_endpoint": writes,
+        "negative_claims": len(detail),
+        "reuse_rate": (len(reused) / len(detail)) if detail else None,
+        "orphan_rate": (1 - len(reused) / len(detail)) if detail else None,
+        "cross_agent_reuse": sum(1 for d in reused if d["cross_agent"]),
+        "negative_evidence_detail": detail,
+        "note": "reuse requires an OBSERVED reuse-typed relation; citation "
+                "alone does not count", **revisions(conn)}, default=str)))
 
 
 # ---------------------------------------------------------------- wiki

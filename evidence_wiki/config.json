@@ -8,6 +8,12 @@
   "db_user": "postgres",
   "db_password": "prometheus",
   "auth_token": "prometheus-ew-v0-shared-token",
+  "machine_tokens": {
+    "M1": "ew-m1-7f3a91c2d8e4",
+    "M2": "ew-m2-4b8e02d5a1f7",
+    "M3": "ew-m3-9c1d73f6b2e8",
+    "M4": "ew-m4-2e6f84a9c3d1"
+  },
   "derived_dir": "derived",
   "note": "V0 auth = single shared bearer token on trusted LAN + mandatory machine/agent headers; TLS and per-machine tokens are the documented V1 upgrade. DB is never exposed to the LAN; only the service port is."
 }
