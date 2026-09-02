@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "prometheus/proteus/player_manifest/v0",
+  "title": "Proteus Player Manifest (v0)",
+  "description": "The genome and its bounds. A player IS this object: content-addressed (organism_id = sha256 of canonical JSON), interpreted by the frozen runtime, never host code. Every field is a bounded integer, a boolean, or an enum; no field carries a string a player can read. Bounds are the published affordance table's STORAGE_BOUNDS and are enforced fail-closed by proteus.foundry.vm.validate_manifest, which is the authority when this document and the code disagree.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "n_regs", "tape_words", "genome", "code_writable", "persist", "tick_budget", "out_cap"],
+  "properties": {
+    "schema_version": {"const": "proteus.player_manifest.v0"},
+    "n_regs":     {"type": "integer", "minimum": 2, "maximum": 16, "description": "register count; operand fields are taken modulo this"},
+    "tape_words": {"type": "integer", "minimum": 16, "maximum": 4096, "multipleOf": 4, "description": "bounded storage; the genome occupies the front of the tape"},
+    "genome":     {"type": "array", "minItems": 4, "maxItems": 4096, "items": {"type": "integer", "minimum": 0, "maximum": 4294967295},
+                   "description": "32-bit words, length a multiple of 4 and <= tape_words; instruction = (op, a, b, c); op = word mod 25"},
+    "code_writable": {"type": "boolean", "description": "if false, ST into the genome region is ignored (protected/stable state); if true the program may rewrite itself"},
+    "persist":    {"enum": ["none", "regs", "tape", "all"], "description": "what survives a tick boundary: nothing, registers, tape, or both"},
+    "tick_budget": {"type": "integer", "minimum": 8, "maximum": 65536, "description": "maximum operations per tick; a caller may lower it, never raise it"},
+    "out_cap":    {"type": "integer", "minimum": 1, "maximum": 256, "description": "maximum values appended per output channel per tick; further appends are dropped and counted"}
+  }
+}
