@@ -1,0 +1,126 @@
+{
+ "substrate": "Z_8xZ_8 (64 states)",
+ "verdicts": {
+  "D15A_TRACKB1_I2": "NOT_READY",
+  "D15A_TRACKB1_ORTHOGONALITY": "NOT_READY",
+  "D15A_TRACKB1_DIFFICULTY_MATCH": "NOT_READY",
+  "D15A_TRACKB1_FULL_GENERATOR": "NOT_READY",
+  "D15A_TRACKB1_INSTRUMENT": "NOT_READY"
+ },
+ "i2": {
+  "n": 0,
+  "n_ok": false,
+  "median_dC": 0.0,
+  "median_dC_ok": false,
+  "magic_probe_frac": 1.0,
+  "magic_ok": false,
+  "gradient_frac": 0.0,
+  "gradient_ok": false
+ },
+ "i2_paired_distribution": [],
+ "orthogonality": {
+  "info_only_world_frac": 1.0,
+  "goal_only_world_frac": 0.0,
+  "io_ok": true,
+  "go_ok": false,
+  "cells_median_by_rung": {
+   "I0": {
+    "INFORMATION_ONLY": 0.0,
+    "GOAL_ONLY": 0.0,
+    "MIXED": 0.0,
+    "NULL": 0.0
+   },
+   "I1": {
+    "INFORMATION_ONLY": 50.5,
+    "GOAL_ONLY": 0.0,
+    "MIXED": 0.0,
+    "NULL": 13.5
+   },
+   "I3": {
+    "INFORMATION_ONLY": 64.0,
+    "GOAL_ONLY": 0.0,
+    "MIXED": 0.0,
+    "NULL": 0.0
+   },
+   "I4": {
+    "INFORMATION_ONLY": 64.0,
+    "GOAL_ONLY": 0.0,
+    "MIXED": 0.0,
+    "NULL": 0.0
+   },
+   "I5": {
+    "INFORMATION_ONLY": 0.0,
+    "GOAL_ONLY": 0.0,
+    "MIXED": 0.0,
+    "NULL": 64.0
+   }
+  }
+ },
+ "difficulty_match": {
+  "pairs": {
+   "I0_vs_I5": 76,
+   "I2_vs_I3": 0,
+   "I1_vs_I3": 76
+  },
+  "band": ">=30 per contrast"
+ },
+ "substrate_confound": {
+  "first_active_outside_N_frac": 0.0,
+  "disc_out_N_median": 0.0,
+  "disc_in_N_median": 0.0,
+  "I3_equality_persists": true,
+  "info_advantage_ok": false
+ },
+ "anchors": {
+  "all_rungs_40": false,
+  "I0_zero_info": 1.0,
+  "I1_separation": 1.0,
+  "I5_identified": 1.0,
+  "E1_E2_median_all": 3.0,
+  "master_key_top": 0.095
+ },
+ "per_rung": {
+  "I0": {
+   "n": 80,
+   "E2_V0_median": 2.0,
+   "H0_median": 1.0,
+   "pc_median": 1.0,
+   "ac_median": 9.0
+  },
+  "I1": {
+   "n": 80,
+   "E2_V0_median": 2.0,
+   "H0_median": 1.0,
+   "pc_median": 9.0,
+   "ac_median": 1.0
+  },
+  "I2": {
+   "n": 0,
+   "E2_V0_median": null,
+   "H0_median": null,
+   "pc_median": null,
+   "ac_median": null
+  },
+  "I3": {
+   "n": 80,
+   "E2_V0_median": 2.0,
+   "H0_median": 1.0,
+   "pc_median": 1.0,
+   "ac_median": 1.0
+  },
+  "I4": {
+   "n": 80,
+   "E2_V0_median": 2.0,
+   "H0_median": 1.0,
+   "pc_median": 1.0,
+   "ac_median": 1.0
+  },
+  "I5": {
+   "n": 80,
+   "E2_V0_median": 1.0,
+   "H0_median": 0.0,
+   "pc_median": 0.0,
+   "ac_median": 0.0
+  }
+ }
+}
