@@ -1,0 +1,829 @@
+================================================================================
+  PROMETHEUS INCUBATOR -- DAEDALUS WORLD FOUNDRY V0
+  EXTERNAL REVIEW PACKET
+
+  A machine for producing enormous numbers of small, semantically sterile,
+  reproducible worlds -- and for finding one real bump in a flat landscape
+  of millions of failures.
+
+  Author : Daedalus, maintainer of the Serendipity Foundry Engine (SFE)
+  Date   : 2026-09-02
+  Status : FROZEN FOR EXTERNAL REVIEW. Nothing launched. The primordial soup
+           waits for adjudication of this packet.
+================================================================================
+
+--------------------------------------------------------------------------------
+0. ORIENTATION AND ROLE SEPARATION
+--------------------------------------------------------------------------------
+The Incubator is a distributed evolutionary experiment with strict role
+separation, which this design never collapses:
+
+    PROTEUS    player foundry      -> frozen player manifests
+    DAEDALUS   world foundry       -> frozen world manifests
+    HARMONIA   matchmaker/operator -> schedules frozen encounters on M1-M4
+    SFE        engine              -> authoritative immutable experiment record
+    MNEMOSYNE  PEW/Tensor          -> qualified, evolving knowledge about it
+
+SFE is a qualified research runtime: hash-chained per-world ledgers,
+content-addressed artifacts, idempotency keys, lease-fenced work claims,
+lineage-scoped budgets, and an irreversible experiment-commit boundary that
+closes a prospective-prediction window BEFORE execution. The fabric below reuses
+that machinery rather than reinventing it.
+
+SCIENTIFIC OBJECTIVE. Not player fitness. The question is whether the joint
+PLAYER x WORLD x ECOLOGY landscape contains REPRODUCIBLE NON-FLAT REGIONS.
+Expected workload: millions of cheap failures. Target: ONE bump that survives a
+prospective falsification crucible. Build a seismograph, not a leaderboard.
+
+--------------------------------------------------------------------------------
+1. EXECUTIVE VERDICT
+--------------------------------------------------------------------------------
+
+                        BUILD_WITH_REVISIONS
+
+PROVENANCE, STATED FIRST. The draft design was submitted to an independent
+adversarial review across five dimensions BEFORE this packet was written.
+Verdicts on the draft: semantic quarantine UNSOUND_AS_STATED; bump statistics
+UNSOUND_AS_STATED; program coherence UNSOUND_AS_STATED; distributed execution
+and ecology/economy SOUND_WITH_FIXES. TEN FATAL findings. Reviewers should
+assume the unrevised design would have (a) killed exactly the informative
+worlds, (b) selected a degenerate ecosystem of channel-blind sprinters, and
+(c) certified a false bump with high probability. Every finding is incorporated
+below as a numbered revision (R1-R14). This packet is the product of trying to
+kill the design, not to defend it.
+
+THE THREE MOST IMPORTANT THINGS AN EXTERNAL REVIEWER SHOULD SCRUTINIZE:
+
+  (1) R13 -- WHAT A BUMP IS. The draft's bump ("flagged, then confirmed") was
+      not well-posed: the crucible tests internal validity only, so a
+      grammar-baked tautology (a world family whose cost primitives punish
+      constants) would flag, replay, transfer, and confirm -- and the program
+      would declare success having learned only its own design taste. The
+      revision: BUMPHOOD IS A COMPARATIVE CLAIM -- exceedance over the
+      REFERENCE FRONTIER (best reference-battery member AND largest planted
+      positive) by a preregistered margin, with a mandatory crucible arm that
+      runs the full reference battery on the flagged world itself.
+
+  (2) R4/R5 -- THE NULL. A null calibrated on unevolved reference players under
+      uniform sampling is the WRONG null for tier-selected survivors under
+      adaptive scheduling. Five qualification tiers passing the top-20% leave
+      the top 3.2e-4 of the null: the detector would flag a large fraction of
+      ALL survivors and the seismograph would read a permanent earthquake.
+
+  (3) R14 -- EXTERNAL CONVINCIBILITY. Hash chains prove nobody tampered AFTER
+      commit; they prove nothing about what we chose to commit. The one
+      artifact a hostile reviewer cannot dismiss is detector power certified
+      against SEALED planted positives authored by an external party.
+
+--------------------------------------------------------------------------------
+2. WORLD FOUNDRY ARCHITECTURE                                    [v0 item 1]
+--------------------------------------------------------------------------------
+Package `wforge`, to live INSIDE the engine source tree so that grammar,
+expansion code, and cost tables all fall within the build-derived release
+identity from day one (the WOW-0 forensic lesson: an environment outside the
+release allowlist can change without the pin moving).
+
+    genome  --expand-->  mechanics DAG  --instantiate-->  encounter runtime
+    (data)   (pure fn)   (typed nodes)     (integer VM)    (deterministic)
+
+  * A world is DATA: (grammar_version, generation_seed, parents, mutations).
+  * Expansion is a PURE FUNCTION; re-expansion must reproduce the mechanics
+    manifest bit-for-bit or the world is invalid.
+  * Primitive families: STATE (register banks, ring tapes, graphs), TRANSITION
+    (linear maps mod M, regime switches, seeded stochastic kernels,
+    delayed-effect queues), OBSERVATION (projection, permutation, quantization,
+    seeded corruption, delay), ACTION_COUPLING (costed writes), RESOURCE
+    (conserved charge, metabolic costs, contested yield), INTERACTION
+    (shared-state contention, transfers, signal channels, and -- R11 -- at
+    least one POSITIVE-SUM joint-production primitive), TERMINATION, FAULT.
+  * ALL INTEGER ARITHMETIC. Floats are banned from world physics: cross-host
+    bit-exactness by construction, not by hope.
+  * This is a WORLD SPACE, not a catalog: composable primitives produce
+    structures we did not hand-author individually. Demonstrated: 300 genomes
+    from grammar v0 yield 108 distinct behavioral fingerprints and 23 distinct
+    probe orderings (section 19).
+
+R12 (EARNED ADMISSION -- red team FATAL-adjacent). The draft shipped the entire
+primitive catalog under one aggregate kill test that could essentially never
+fire. Revision: PER-PRIMITIVE-FAMILY EARNED ADMISSION. Before a family enters
+the campaign sampling distribution, the null battery runs on ABLATION GRAMMARS
+(with vs without the family); the family is admitted only if it WIDENS the
+discriminative band or changes the reference-player ordering in some region
+beyond a preregistered margin. Admissions and rejections are recorded in the
+grammar phylogeny -- this is what makes the phylogeny discipline real rather
+than cosmetic bookkeeping, and it is the operative descendant of the previous
+program's earned-worlds principle.
+
+--------------------------------------------------------------------------------
+3. WORLD GENOME / MANIFEST                                       [v0 item 2]
+--------------------------------------------------------------------------------
+Normative schema shipped: schemas/world_genome.schema.v0.json. Key fields:
+world_id (= content-hash prefix; worlds are content-addressed); grammar_version
+(a release-identity component; the phylogeny discipline applies at this level);
+generation_seed; parent_ids (0 = de novo, 1 = mutation, 2 = recombination);
+mutation_history (typed, seeded ops); mechanics_manifest (the audited expansion
+output: typed node DAG, n_slots, derived horizon_class, stochasticity mode);
+interface_manifest (obs/act widths, value bits, per-world channel permutation
+seed, mixing level as an EXPERIMENTAL ARM); resource_constraints (authoritative
+budgets; wall-clock is safety-kill only); runtime_hash; content_hash.
+
+Deliberate absences: no human-language description of what a world "is about";
+no difficulty rating; no quality score. horizon_class is derived mechanically
+from the DAG (delay depth, regime period), never authored.
+
+--------------------------------------------------------------------------------
+4. WORLD MUTATION GRAMMAR                                        [v0 item 3]
+--------------------------------------------------------------------------------
+Operators over the mechanics DAG, each typed and seeded, each producing a
+DESCENDANT genome (never an in-place edit):
+
+  PARAM_PERTURB      seeded jitter of one primitive's integer parameters
+  PRIMITIVE_INSERT   add a typed node (type-checked composition)
+  PRIMITIVE_DELETE   remove a node (arity-preserving)
+  REWIRE             change an action target / input edge
+  SUBGRAPH_SPLICE    recombination: graft a subgraph from a second parent
+  BUDGET_MUTATE      change horizons/budgets within grammar bounds
+  INTERFACE_MUTATE   change observation corruption/delay/mixing level
+
+The mutation history is interpreted at EXPANSION time, so a descendant genome
+alone reproduces the mutated world exactly -- no diff artifacts to lose.
+Demonstrated: 4 mutation classes on one parent produced 3 behaviorally distinct
+children and 1 neutral variant, with the grandchild's provenance chain intact
+(section 19).
+
+--------------------------------------------------------------------------------
+5. SEMANTIC QUARANTINE SPECIFICATION                             [v0 item 4]
+--------------------------------------------------------------------------------
+THE BOUNDARY. Player-visible traffic is opaque integer vectors. Forbidden
+across the boundary: natural language, semantic labels, human corpora,
+pretrained embeddings, LLM output, human-named concepts, privileged simulator
+state, PEW interpretations. Channel identity is permuted per-world by seed.
+Human-readable instrumentation exists ONLY outside the player boundary.
+Removing English strings is necessary and NOT sufficient; the audit targets
+ontology leakage disguised as numeric identifiers or convenient decompositions.
+
+R1 (RED TEAM FATAL -- the draft's kill criterion killed the informative worlds).
+The draft said: train a decoder adversary to reconstruct designer-side labels
+from player-visible traffic; above-chance reconstruction = breach = kill. The
+red team showed above-chance decoding of PRIMITIVE FAMILY identity is a generic
+property of any structured dynamics -- exactly the worlds in the discriminative
+band -- so the criterion as stated kills the band and leaves only worlds mixed
+into statistical whiteness (the flat region). REVISION:
+  * Two label classes, treated differently:
+      DESIGNER-SEMANTIC labels (channel role: which channel is another player's
+      action, which is reward-adjacent, designer messages) -- GATED. These are
+      anthropic leakage.
+      PRIMITIVE-FAMILY identity (mathematical structure) -- MEASURED AND
+      REPORTED, never a kill criterion. Structure is what makes a world
+      learnable at all.
+  * The gate is a PREREGISTERED LEAKAGE BUDGET, not a binary: fixed decoder
+    hypothesis class, fixed training budget, leakage measured as effect size
+    (balanced-accuracy margin over chance / MI bound), acceptance envelope
+    calibrated JOINTLY with the discriminative band during the null campaign.
+  * The mixing layer is retained as an EXPERIMENTAL ARM only (it is a placebo
+    against a competent decoder while taxing learnability -- red team MAJOR);
+    how much of any result depends on our channel decomposition is a measured
+    quantity, not a hidden constant.
+
+R3 (RED TEAM MAJOR -- ontology leaks through the measurement instrument).
+The reference battery, planted positives, and band definition are themselves
+human-shaped, and they sit designer-side of the boundary where no decoder
+looks. REVISION: the production battery MUST include programs sampled from
+Proteus's own genotype distribution (random organisms, not human scripts); the
+discriminative band is computed under BOTH batteries and grammar kill decisions
+require emptiness under both; planted positives are drawn from the same
+generative family as real players (mutated organisms with induced effects).
+
+--------------------------------------------------------------------------------
+6. MULTIPLAYER MECHANICS CONTRACT                                [v0 item 5]
+--------------------------------------------------------------------------------
+  * Worlds declare n_slots. Players interact ONLY through world state; the
+    interface never distinguishes "other player" from "world mechanism" --
+    W* = W + other players is a fact of physics, not a labeled feature.
+  * Within-tick: simultaneous action intake, deterministic two-phase
+    settlement with an explicit total order (seed, slot index) -- never
+    arrival order, never unordered iteration.
+  * POPULATION DYNAMICS HAPPEN ACROSS MATCHES, NEVER INSIDE ONE: every match
+    is fully frozen; a "dynamically changing opponent population" is a series
+    of frozen manifests whose composition drifts, each individually replayable.
+  * Supported experiment shapes: solitary; homogeneous and heterogeneous
+    populations; symmetric and asymmetric roles; cooperation opportunities
+    (R11 positive-sum primitive); contention; signaling (world-mediated);
+    interference; persistent modification (within-episode state; persistent
+    cross-episode world state deferred to grammar v1 -- see item 24).
+
+R11 (RED TEAM MAJOR -- zero-sum collapse and ill-typed bumps). With only
+zero-sum interaction primitives, theft is the fastest legible win and
+multi-slot worlds converge to hawk-dove over transfers; worse, any multiplayer
+bump is frequency-dependent. REVISIONS: (a) at least one positive-sum
+joint-production primitive (super-additive return on coordinated costed
+writes) so cooperation is representable; (b) a preregistered COLLAPSE METRIC
+-- fraction of score variance attributable to zero-sum transfer flux per world
+region -- with a rebalance criterion; (c) multiplayer bump claims are TYPED
+HONESTLY as (player, world, opponent-distribution) with crucible-measured
+sensitivity to opponent mix reported as part of the finding.
+
+--------------------------------------------------------------------------------
+7. IMMUTABLE WORLD LINEAGE                                       [v0 item 6]
+--------------------------------------------------------------------------------
+Never mutate a historical world in place. Worlds are content-addressed,
+versioned, immutable; evolution produces descendants recorded with full
+provenance (parents, ops, seeds). Historical evidence binds to the exact
+content hash of the world that generated it, forever. FOSSIL RULE: no genome
+is ever deleted -- failed and boring worlds define the landscape against which
+a bump becomes visible. The world phylogeny schema from the prior program
+(incubator/world_phylogeny.schema.v0.json) records the GRAMMAR-VERSION lineage
+with the same discipline: prereg sealed before runs, scale-as-intervention
+declared, abandoned versions retained.
+
+--------------------------------------------------------------------------------
+8. PLAYER / WORLD INTERFACE                                      [v0 item 7]
+--------------------------------------------------------------------------------
+  observe(slot) -> integer vector (width obs_width, values in [0, 2^value_bits))
+  act(slot)     <- integer vector (width act_width)
+  no other channel exists
+
+  * Per-world channel permutation; optional mixing arm (R1).
+  * Malformed actions are typed faults, never partial credit.
+  * A slot that cannot afford its action is FORCED-ABSTAIN, and abstention is
+    counted (an uninstrumented non-attempt would deform the landscape
+    invisibly -- the dog that did not bark, carried over from World-0).
+  * Players may carry bounded persistent state between ticks (and, as
+    checkpoints, between encounters); the checkpoint is content-addressed and
+    referenced by later manifests only after its producing encounter is
+    QUALIFIED (R8 admission rule).
+
+R2 (RED TEAM FATAL -- transfer under permutation). Zero-shot transfer probes
+under fresh per-world permutation pass ONLY channel-permutation-invariant
+players (constants, aggregate responders): staged qualification would
+systematically enrich for channel-blind organisms and filter out the entire
+space of structured strategies -- while any covert cross-world channel
+alignment to "fix" this would itself be an ontology leak invisible to a
+per-world decoder. REVISION: TRANSFER IS PREREGISTERED AS ADAPTATION SAVINGS,
+never zero-shot performance -- transplant under a fresh permutation with a
+fixed small re-adaptation budget, scored as advantage over ancestor/fresh
+controls given the identical budget. If any cross-world coordinate stability
+is ever introduced, it must be declared in the grammar version and a
+CROSS-WORLD decoder task (predict world-A labels from world-B traffic) is
+added to the quarantine battery.
+
+--------------------------------------------------------------------------------
+9. HARMONIA MATCHMAKING PROTOCOL                                 [v0 item 8]
+--------------------------------------------------------------------------------
+Normative schema shipped: schemas/match_manifest.schema.v0.json.
+
+  MATCH = (world_hash, player_hashes[], player_checkpoint_hashes[], seed,
+           resource_budget, execution_version, scheduling_policy_version,
+           tier, pairing_class, prospective_test_id)
+
+  * match_id is DERIVED (hash of the frozen fields), never minted: submission
+    is idempotent by construction and the same experiment is the same match on
+    every machine forever.
+  * pairing_class records scheduling intent: RANDOM, STRATIFIED,
+    LINEAGE_CROSS, ANCESTOR_DESCENDANT, WORLD_TRANSPLANT, OPPONENT_TRANSPLANT,
+    FRESH_CONTROL, CRUCIBLE -- so pairing bias is analyzable.
+  * Scheduling policy is versioned and replayable; "why was this match
+    scheduled" must always be answerable from the ledger.
+  * Harmonia needs no knowledge of world or player internals -- manifests and
+    content-addressed artifacts suffice.
+
+R5 (RED TEAM FATAL -- scheduler vs statistics). The scheduler's routing must
+be PREDICTABLE with respect to the detector's e-process filtration: routing
+decisions may use only information already multiplied into the e-values
+(enforced by versioned policy + ledger). Adaptive region-targeting that
+conditions on past extremeness otherwise silently destroys the always-valid
+guarantee (details in section 16).
+
+--------------------------------------------------------------------------------
+10. DISTRIBUTED M1-M4 EXECUTION PLAN                             [v0 item 9]
+--------------------------------------------------------------------------------
+Reuses the engine's existing fabric: lease-fenced claims (claim_id fencing,
+heartbeats, expiry reassignment), idempotency keys, content-addressed
+artifacts, client-scoped isolation. Scientific correctness never depends on
+all four machines being alive. Revisions from the distributed red team:
+
+R8a WALL-CLOCK KILLS ARE NEVER OUTCOMES (FATAL). A wall-clock kill is host-
+    load-dependent and fires preferentially on expensive worlds: as an outcome
+    it would be load-correlated censoring concentrated exactly where compute-
+    coupled bumps live. Revision: typed EXECUTION_FAULT ledger record; voids
+    the claim; bounded requeue; after N faults the manifest is INFEASIBLE.
+    Null calibration and the detector ingest per-region fault-rate series as
+    first-class data; a region whose fault rate departs from calibration is
+    frozen for detection.
+
+R8b DUPLICATE EXECUTION IS A FREE DETERMINISM AUDIT (FATAL). First-write-wins
+    dedupe would discard the second trace unexamined -- converting every real
+    determinism bug into an undetected coin flip. Revision: on duplicate
+    commit for one match_id, compare canonical trace digests. Equal: dedupe.
+    UNEQUAL: DETERMINISM_FAULT -- quarantine both traces, freeze the (world,
+    execution_version) pair, halt promotions touching that region. Plus a
+    DELIBERATE 1-2% redundancy rate (same manifest, two hosts) as a continuous
+    determinism canary rather than relying on crash luck.
+
+R8c EXECUTION_VERSION = SEALED RUNTIME IMAGE DIGEST (MAJOR). Integer-only
+    removes float divergence; hash-order iteration, interpreter drift, and
+    mixed int backends remain. Revision: execution_version is the content
+    digest of a sealed runtime image (interpreter, dependencies, engine code,
+    fixed hash seed); a worker whose local image digest differs MUST refuse
+    the claim. Engine-core lint bans unordered iteration in any settlement
+    path; the settlement total order is an explicit tested function of
+    (seed, slot).
+
+R8d CHECKPOINT ADMISSION RULE (MAJOR). A manifest is claimable only if every
+    referenced checkpoint resolves to a COMMITTED, QUALIFIED, non-voided
+    producing encounter at a strictly earlier ledger position (recorded in the
+    manifest). Voiding an encounter marks all ledgered descendants TAINTED and
+    excludes them from detection statistics and promotion. No lineage may
+    climb tiers on a voided ancestor.
+
+R8e TWO-PHASE BUDGET (MAJOR). Atomic RESERVE(max_steps) at claim (fails if the
+    lineage budget cannot cover it -- closing the concurrent-overspend race),
+    SETTLE(actual) at evidence commit, RELEASE by compensation record on lease
+    expiry. All three are ledger entries, so the crucible's compute-
+    explanation test reasons over replayable accounting.
+
+R8f CONSERVATION INVARIANT (MAJOR). Continuously checked:
+    claims(ledger) == outcomes + faults + budget-exhaustions (ledger). Machine-
+    correlated fault classes (OOM on big-state worlds, disk-full on long
+    traces) cannot silently eat evidence: fault dispositions carry manifest id
+    and fault class in the SCIENTIFIC ledger; diagnostic detail stays in
+    segregated telemetry.
+
+R8g FLEET MEMBERSHIP IS LEDGERED (MINOR). Host-set requirements (e.g. the
+    crucible's independent-hosts arms) are explicit preconditions in the
+    prospective test: a confirmation that cannot meet them BLOCKS VISIBLY
+    rather than degrading silently. Cache reads verify artifact digests before
+    execution; derived-artifact cache keys include grammar and execution
+    versions; a digest mismatch is an EXECUTION_FAULT, never a silent refetch.
+
+--------------------------------------------------------------------------------
+11. SFE EVENT SCHEMA                                             [v0 item 10]
+--------------------------------------------------------------------------------
+Normative schema shipped: schemas/encounter_record.schema.v0.json.
+
+  * per_slot coordinate vectors: raw world-defined outcome channels (NO
+    aggregate score field exists anywhere in the record), resource state
+    (could-not vs could-not-afford), typed faults, abstention ticks, a
+    versioned behavior digest for cheap behavioral-distance statistics.
+  * world_events: HIDDEN AUTHORITATIVE STATE -- regime switches, injected
+    faults, observation corruption, stochastic branches -- recorded for the
+    scientist and the crucible, invisible to players. This is what makes
+    "an observed loss is not necessarily player failure" analyzable: self
+    failure / world fault / observation failure / chance are distinguishable
+    HERE and only here. Outcomes reach players as observations, not verdicts.
+  * landscape_cell: a discretized (world-region x outcome-class) id computed
+    by a FROZEN versioned cell function. Cell occupancy across millions of
+    encounters IS the failure landscape. Changing the cell function is a new
+    instrument; cross-version comparison is forbidden.
+  * qualification is APPENDED, never edited; termination=INFRASTRUCTURE_ABORT
+    records are excluded from every landscape statistic.
+  * FOSSIL RULES: no deletion, no downsampling, no compaction; zero-outcome
+    encounters are landscape, not noise. The record must be mineable years
+    later.
+
+--------------------------------------------------------------------------------
+12. PEW INGESTION / METABOLIZATION CONTRACT                      [v0 item 11]
+--------------------------------------------------------------------------------
+BOUNDARY: SFE = what happened. PEW = evolving knowledge about what happened.
+Qualified evidence flows into PEW as references (world hash, ledger seq,
+match_id) -- never as copies that could drift. PEW may relate player lineages,
+world lineages, ecologies, mutations, behaviors, failures, resource profiles,
+transfer outcomes, candidate bumps, falsification attempts, reinterpretations.
+
+PEW MAY PROPOSE WHERE TO LOOK. PEW MAY NOT MANUFACTURE THE EVIDENCE THAT
+CONFIRMS ITS OWN PROPOSAL. Mechanism: every PEW proposal becomes a frozen
+prospective_test_id committed through the engine's irreversible boundary;
+confirming evidence must postdate the commit; the scheduling policy that
+executes it is versioned and replayable.
+
+R14a (RED TEAM FATAL -- the loop the firewall missed). The prospective_test_id
+mechanism quarantines CONFIRMATION evidence but not the detector's OPERATING
+data: PEW -> scheduler -> sampling distribution -> empirical null -> detector
+thresholds -> what PEW sees next is a contamination loop that survives the
+draft firewall. REVISION: a PERMANENT, VERSIONED, IMMUTABLE REFERENCE STREAM
+-- a fixed fraction of every machine's budget forever runs (reference battery
++ continuing planted positives) x a FROZEN grammar-uniform world sampler.
+Detector thresholds, false-positive monitoring, and power certification are
+computed ONLY from that stream. PEW-shaped scheduling directs the remainder
+and can never touch threshold-setting data. Every threshold update ledgered
+next to the reference-stream policy hash.
+
+R14b (RED TEAM MAJOR -- cold-region quota). Every batch of flag-guided world
+proposals carries a preregistered matched quota of COLD-REGION (flag-naive)
+proposals, so grammar drift toward flag-rich scoring geometry is measurable
+against a control stream.
+
+--------------------------------------------------------------------------------
+13. BUDGET MODEL                                                 [v0 item 12]
+--------------------------------------------------------------------------------
+Authoritative, engine-enforced, lineage-scoped (a fork cannot mint budget).
+Tracked and limited per encounter: player compute (VM steps), memory,
+persistent storage, action count, environment steps; wall-clock as safety kill
+only. Two-phase RESERVE/SETTLE/RELEASE per R8e. Unlimited brute force destroys
+the selection pressure; the habitat makes cognition expensive enough that
+efficient representation can matter.
+
+R10 (RED TEAM FATAL -- the true fitness function). Compute is the reproductive
+resource, so under a single outcome-gated ladder the quantity actually under
+selection is EARLY LEGIBLE SCORE PER UNIT COMPUTE -- a monoculture of fast
+shallow exploiters that then poisons every multiplayer statistic and
+re-anchors every baseline. REVISION: the campaign budget splits into TWO
+PREREGISTERED CURRENCIES:
+  * an OUTCOME-GATED ladder (staged qualification as designed), and
+  * a DIVERSITY-GATED allocation funding lineages by behavioral divergence
+    from the current survivor population (the statistic already exists for
+    detection; reused for allocation).
+Plus a STRATEGY-CLUSTER CAP: no behavioral cluster may hold more than a
+preregistered fraction of expensive-tier budget. Both are ecology-shaping
+policies: versioned, ledgered, replayable, like the scheduler.
+
+--------------------------------------------------------------------------------
+14. STAGED EARLY-DEATH QUALIFICATION                             [v0 item 13]
+--------------------------------------------------------------------------------
+  T0_MICRO -> T1_DIFFERENTIATION -> T2_TRANSFER -> T3_NOVEL_WORLD
+                       -> T4_FALSIFICATION -> T5_PERSISTENT
+
+Most encounters die at T0 for almost nothing. Promotion statistics are
+preregistered per (tier x horizon-class) stratum. Transfer at T2 is ADAPTATION
+SAVINGS (R2). Failure evidence is always preserved (fossil rules).
+
+R9 (RED TEAM FATAL -- the slow-developer mitigations relabeled the bias).
+Horizon stratification, a blind lottery, and horizon normalization all move
+the bias without shrinking it: micro tiers cannot express delayed payoffs, so
+promotion from the long-horizon stratum is a coin flip dressed as
+qualification; lottery survivors die one tier later against baselines set by
+sprinters. REVISIONS:
+  * SEPARATE "INSUFFICIENT POWER" FROM "FLAT". A lineage is killed only on
+    AFFIRMATIVE flatness: a sequential test concluding indistinguishability
+    from the reference battery AT ADEQUATE POWER for its horizon stratum.
+    Anything else is DEFERRED, not killed: parked as a frozen manifest (which
+    costs nothing) in a bounded re-audition queue.
+  * The long-horizon stratum gets its OWN ladder whose T0 is BUDGET-matched
+    (longer horizon, fewer replicates), not duration-matched.
+  * The lottery is CONDITIONED, not blind: reserved for lineages whose cheap
+    NON-outcome signals (interaction with delayed-effect nodes, behavioral
+    divergence from the battery) are anomalous despite flat outcomes.
+
+--------------------------------------------------------------------------------
+15. NULL-LANDSCAPE CALIBRATION DESIGN                            [v0 item 14]
+--------------------------------------------------------------------------------
+The FIRST CAMPAIGN (item 21) and the permanent reference stream (R14a).
+Establishes, before any evolution:
+  * score/outcome distributions per world region under BOTH batteries
+    (human-archetype probes AND Proteus-distribution random organisms -- R3);
+  * the DISCRIMINATIVE BAND: worlds where players differ. All-fail and
+    all-succeed worlds carry no selection information. Demonstrated on the
+    prototype: 58% band, 41% all-dead, <1% no-discrimination (section 19).
+  * R12: the band is a preregistered per-grammar-version KILL TEST ONLY,
+    never a revision gradient (Goodhart guard). All-fail worlds are PARKED in
+    a re-audition queue and re-probed with evolved players each campaign --
+    band membership is time-indexed, never permanent, because reference-player
+    discrimination says nothing about evolved-player discrimination.
+  * detector false-positive rate and POWER (section 16 discipline);
+  * per-region fault-rate baselines (R8a) and resource-consumption floors
+    (R13 denominator guard);
+  * throughput -> how many encounters the real campaign can afford.
+
+--------------------------------------------------------------------------------
+16. BUMP DETECTOR                                                [v0 item 15]
+--------------------------------------------------------------------------------
+THE DETECTOR IS A PRIORITIZER, NOT A JUDGE. It triages candidates into a
+capacity-bounded crucible; it confirms nothing. Statistic family
+(preregistered, small): survival, adaptation-savings transfer,
+resource-normalized outcome, behavioral divergence, repeated survival across
+contexts. Candidate detection is conservative; a candidate triggers FREEZE
+(player, world, opponents, evidence-at-detection), never exploitation.
+
+The red team found the draft detector statistically unsound on four
+independent grounds. Revisions:
+
+R4  TIER-CONDITIONAL, SELF-REFRESHING NULL (FATAL). Thresholds are calibrated
+    on the distribution of SURVIVORS of each tier under outcome-irrelevant
+    randomization (pseudo-lineages pushed through the identical selection
+    funnel), not on the raw reference battery. A STANDING NEGATIVE-CONTROL
+    STREAM (reference players + permuted-outcome evolved players injected into
+    the live match distribution) recalibrates on a preregistered cadence;
+    every recalibration is ledgered. EMPIRICAL GATE: the full detector runs
+    against the negative-control stream under the REAL adaptive scheduler; a
+    detector version whose realized flag rate exceeds nominal is killed.
+
+R5  EXCHANGEABLE UNITS AND FILTRATION DISCIPLINE (FATAL). One e-value per
+    (world x seed-block) aggregate -- never per encounter -- under a
+    hierarchical null carrying world- and opponent-level random effects
+    estimated in calibration (shared-world encounters are correlated; at
+    intra-class rho=0.1 and n=100, effective sample size is ~9, so an
+    independence-assuming e-process overstates evidence ~11x). Scheduler
+    routing must be predictable w.r.t. the e-process filtration (R5/section 9).
+
+R7  REGIONS ARE PREREGISTERED, MULTI-GRANULAR, AND OWNED (MAJOR). The
+    (world-region x architecture-region x opponent-cluster) partition is
+    computed per grammar version from PRE-DATA coordinates (grammar features +
+    behavioral embeddings measured only on the reference battery during
+    calibration), validated for within-region exchangeability, and frozen by
+    hash. Detection runs at 2-3 preregistered granularities with multiplicity
+    priced in (a bump filling 1% of a coarse region needs ~1e4x the evidence
+    -- narrow bumps must not be structurally invisible). Any repartition is a
+    new hypothesis family with a fresh evidence budget; old data demotes to
+    pilot.
+
+R11 CONTEMPORANEOUS SENTINEL BASELINE (MAJOR). Detector statistics compare
+    against a continuing trickle of reference-battery sentinels ON THE SAME
+    WORLDS in the evolved era -- never against the epoch-zero null alone -- so
+    ecology drift does not read as landscape structure.
+
+R13a TWO-STATISTIC FLAG RULE AND DENOMINATOR FLOOR (MAJOR). Resource-
+    normalized outcome is gameable by denominator starvation (noop + one cheap
+    exploit = enormous ratio, and it replays perfectly). The denominator floor
+    is preregistered from the null campaign's empirical resource distribution,
+    and a FREEZE requires flags under at least TWO independent members of the
+    statistic family.
+
+R6a CAPACITY-DERIVED THRESHOLD (MAJOR). The detector threshold is set so that
+    expected flags/week ~= crucible slots/week: a preregistered quantity, not
+    an aspiration. Admission from the candidate queue is by e-value-
+    proportional lottery or FIFO -- NEVER top-k by observed effect size, which
+    would preferentially admit the most winner's-curse-inflated candidates.
+
+R3b PLANT TAXONOMY WITH HOLDOUT (MAJOR). Planted positives span the axes real
+    bumps would vary on (opponent-conditional, delayed-onset, region-
+    localized, transfer-only, normalized-only), are drawn from the organism
+    family, are injected CONTINUOUSLY into the live stream blinded by manifest
+    hashing, and at least one family is held out from all detector tuning.
+    Holdout-family power is the only number allowed to inform go/no-go.
+
+--------------------------------------------------------------------------------
+17. BUMP FALSIFICATION CRUCIBLE                                  [v0 item 16]
+--------------------------------------------------------------------------------
+On candidate: freeze player, world, opponents, evidence-at-detection; commit
+prospective tests through the engine's irreversible boundary; then:
+
+  ENGINE-INTEGRITY (necessary, carries ZERO confirmatory weight -- R6c):
+    1 exact replay (deterministic by construction: it confirms the fabric,
+      never the finding)
+  CONFIRMATION (each arm preregistered with alpha and power):
+    2 fresh seeds                    3 independent hosts
+    4 nearby world-parameter perturbation
+    5 nearby player-architecture perturbation
+    6 component ablation             7 player transplant
+    8 opponent transplant (sampling frame preregistered across strategy
+      clusters INCLUDING the reference battery -- R11)
+    9 ancestor comparison           10 fresh controls
+   11 compute-explanation test (does budget explain the effect?)
+   12 REFERENCE-FRONTIER TEST (R13 -- mandatory): the full reference battery
+      and largest planted positive run on the flagged world itself. A
+      candidate that null-grade players reproduce is a WORLD-GEOMETRY
+      ARTIFACT, classified and fed back as a grammar diagnostic -- not a bump.
+   13 MINIMAL-SCRIPT ABLATION (R13a): extract the minimal action skeleton
+      from the flagged trace; if a scripted replay of the skeleton reproduces
+      the statistic, classify as statistic exploit.
+
+  ERROR CONTROL ACROSS THE QUEUE (R6b -- FATAL in draft): effects are shrunk
+  empirically (empirical-Bayes against the survivor null) BEFORE powering the
+  arms; alpha-investing / merged e-values across candidates bound the
+  confirmed-set FDR at a stated level (target: 10%). The draft, uncorrected,
+  yields confirmed-set FDR ~87% under realistic numbers (200 candidates/yr,
+  5 real, power 0.3, per-arm alpha 0.05).
+  ECOLOGY SNAPSHOT (R6a): the transplant/control opponent pool is frozen AT
+  FLAG TIME so late-run confirmations remain exchangeable with early ones.
+
+ONLY after surviving all of this does a candidate become an ADMITTED BUMP.
+We do not call it intelligence. We call it evidence of landscape structure.
+
+AFTER A REAL BUMP (R14c -- the governance gap the red team called the
+highest-pressure moment of the program): DO NOT HAND-OPTIMIZE. Neighborhood
+mapping is a PREREGISTERED CAMPAIGN: the world-mutation sampling distribution
+around the confirmed point is committed BEFORE any mapping encounter runs;
+mapping worlds are drawn only from that distribution, never accepted or
+rejected on the focal player's performance; the map reports ALL draws, no
+discards. Then descendants explore the neighborhood under selection -- the
+question is whether EVOLUTION can amplify the bump, not whether we can.
+
+--------------------------------------------------------------------------------
+18. REPLAY / RECOVERY TEST PLAN                                  [v0 item 17]
+--------------------------------------------------------------------------------
+DEMONSTRATED NOW (prototype, section 19): same-manifest replay produces
+identical trace hashes within and across processes and under a changed
+PYTHONHASHSEED; genome re-expansion is bit-identical; seed sensitivity
+confirmed.
+
+REQUIRED BATTERY BEFORE ANY CAMPAIGN (each a standing CI test):
+  * cross-host replay: same manifest on all four machines -> identical digests
+  * kill -9 mid-encounter -> lease expiry -> re-execution -> single qualified
+    record (idempotency under crash)
+  * duplicate-commit divergence drill: inject a deliberate nondeterminism ->
+    DETERMINISM_FAULT fires, region freezes (R8b works end to end)
+  * checkpoint-race drill: schedule against an uncommitted checkpoint -> claim
+    refused (R8d)
+  * budget-race drill: concurrent claims against one lineage -> RESERVE fails
+    cleanly, no overspend (R8e)
+  * host-loss drill: kill a machine mid-campaign -> conservation invariant
+    still balances; no evidence lost or duplicated (R8f)
+  * cache-corruption drill: flip a byte in a cached artifact -> digest check
+    catches it as EXECUTION_FAULT (R8g)
+
+--------------------------------------------------------------------------------
+19. GENERATED-WORLD DIVERSITY DEMONSTRATION                      [v0 item 18]
+--------------------------------------------------------------------------------
+Prototype `wforge` (pure Python, integer-only, stdlib-only, offline) is
+shipped alongside this packet. Grammar v0 (register banks, linear maps mod M,
+regime switches, seeded stochastic kernels, delayed actions, observation
+permutation/corruption/delay, contested yield economy, 1-2 slots).
+
+Results, N=300 de novo genomes:
+  horizon classes            MICRO 43 / SHORT 102 / MEDIUM 87 / LONG 68
+  slot counts                234 solo / 66 two-slot
+  stochasticity              157 deterministic / 143 seeded-stochastic
+  structural signatures      32 distinct (ops x delay x regime x corruption)
+  behavioral fingerprints    108 distinct / 300 worlds
+  DISCRIMINATIVE BAND        58%  (probes genuinely differ)
+  all-probes-dead            41%  (the expected cemetery; retained as fossils)
+  no-discrimination          <1%
+  distinct probe orderings   23   (worlds DISAGREE about which strategy wins
+                                   -- the "discriminate among strategies"
+                                   requirement, demonstrated rather than
+                                   asserted)
+  lineage demo               4 mutation classes -> 3 behaviorally distinct
+                             children + 1 neutral; provenance chain verified
+  determinism                identical trace hashes across runs, processes,
+                             and hash seeds; bit-identical re-expansion
+
+CAVEATS, honestly: the band is measured against the HUMAN-SHAPED v0 battery
+(R3 applies -- production requires the organism-distribution battery); the
+prototype grammar has not been through R12 earned admission; and 41% dead
+worlds at v0 parameters means roughly 2.4x compute overhead per informative
+encounter, which the calibration campaign must price.
+
+--------------------------------------------------------------------------------
+20. KILL CRITERIA (WORLD FOUNDRY PROGRAM)                        [v0 item 23]
+--------------------------------------------------------------------------------
+Each requires its five-tuple (statistic, estimator, null, threshold, data
+source) before the calibration campaign; tighten-never-loosen applies.
+
+  WF-K1  GRAMMAR DEGENERACY -- N sampled genomes collapse to few behavioral
+         equivalence classes (band and fingerprint counts under BOTH batteries)
+  WF-K2  EMPTY DISCRIMINATIVE BAND -- under both batteries (R3): the space is
+         flat and no seismograph can help
+  WF-K3  QUARANTINE BREACH -- designer-semantic leakage exceeds the
+         preregistered budget (R1); or any hidden world_event reaches a player
+         (zero tolerance)
+  WF-K4  DETERMINISM BREACH -- any unresolved DETERMINISM_FAULT (zero
+         tolerance; stop the line)
+  WF-K5  DETECTOR POWER FAILURE -- holdout-family planted positives not
+         recovered at calibrated effect size (R3b)
+  WF-K6  DETECTOR CALIBRATION FAILURE -- realized flag rate on the negative-
+         control stream exceeds nominal under the live scheduler (R4)
+  WF-K7  EVIDENCE DUPLICATION -- conservation invariant violated (R8f)
+  WF-K8  PROSPECTIVE BREACH -- any confirmation evidence predating its test
+         commit (inadmissible by construction; its appearance means the
+         fabric is broken)
+  WF-K9  MONOCULTURE COLLAPSE -- strategy-cluster concentration above the
+         preregistered cap despite the diversity currency (R10)
+  WF-K10 ZERO-SUM COLLAPSE -- transfer-flux variance fraction above the
+         rebalance criterion across the space (R11)
+  WF-K11 CEMETERY OVERRUN -- informative-encounter cost overhead above the
+         priced bound (dead-world fraction x throughput)
+  WF-K12 SEMANTIC CONTAMINATION OF SELECTION -- any LLM or human label in any
+         selection path (absolute, inherited from the incubator charter)
+
+--------------------------------------------------------------------------------
+21. PROPOSED FIRST CALIBRATION CAMPAIGN                          [v0 item 19]
+--------------------------------------------------------------------------------
+NO EVOLUTION. Purpose: establish the noise floor and the failure landscape,
+qualify the instrument, and price the campaign -- before any exploitation.
+
+  C1-A  GRAMMAR QUALIFICATION. R12 earned admission per primitive family
+        (ablation grammars x null battery). Band measured under both
+        batteries. WF-K1/K2 adjudicated.
+  C1-B  NULL LANDSCAPE. Both batteries x grammar-uniform world sample x seeds
+        across M1-M4: score distributions, region partitions (R7), fault-rate
+        baselines (R8a), denominator floors (R13a), throughput.
+  C1-C  DETECTOR QUALIFICATION. Planted-positive taxonomy injected blind
+        (R3b); negative-control stream under the real scheduler (R4);
+        detector version killed or frozen on the empirical gates
+        (WF-K5/K6). Thresholds derived from crucible capacity (R6a).
+  C1-D  FABRIC QUALIFICATION. The full replay/recovery battery (section 18)
+        plus the 1-2% standing redundancy canary, on all four machines.
+  OUTPUT: a frozen instrument (grammar version, region partition, thresholds,
+        statistic family, crucible protocol) and a priced campaign design --
+        all committed via the engine boundary, and (R14) ESCROWED EXTERNALLY.
+
+HONEST EXPECTED OUTCOME: several WF-K criteria fire and grammar v0 is revised.
+That is a SUCCESSFUL calibration. An instrument that survives its own
+qualification unmodified should be viewed with suspicion.
+
+--------------------------------------------------------------------------------
+22. WHAT NOT TO BUILD                                            [v0 item 24]
+--------------------------------------------------------------------------------
+  * a human-language control arm (the semantically sterile path IS the
+    experiment; we already know human semantics is useful)
+  * any LLM in any selection, adjudication, or curriculum path
+  * a scalar interestingness/intelligence score anywhere in the machine
+  * top-k-by-effect-size crucible admission (R6a) or any leaderboard
+  * world adaptation that rescues a favored lineage (worlds and players stay
+    independently generated until a prospective experiment freezes a pairing)
+  * detector tuning on non-holdout plants (R3b)
+  * hand-optimization of a confirmed bump; unpreregistered neighborhood
+    mapping (R14c)
+  * persistent cross-episode world state, host-parasite ecologies, and
+    communication primitives -- grammar v1+ candidates, admitted only through
+    R12 earned admission after v0 exposes its ceilings
+  * deletion of anything: worlds, players, encounters, failed grammar
+    versions. The cemetery is the product.
+
+--------------------------------------------------------------------------------
+23. ASSUMPTIONS WE BELIEVE ARE WEAK (READ FIRST)
+--------------------------------------------------------------------------------
+A1  THE REFERENCE FRONTIER DEFINES BUMPHOOD (R13) -- so bumphood is relative
+    to a battery we chose. The organism-distribution battery (R3) softens but
+    does not eliminate this: some genuinely novel capability could sit below
+    the frontier on every preregistered statistic. The seismograph is blind to
+    what its statistic family cannot express. Mitigated only by keeping the
+    family small, preregistered, and versioned -- and by admitting the
+    blindness out loud.
+A2  QUARANTINE IS A BUDGET, NOT A PROOF (R1). We gate designer-semantic
+    leakage at a preregistered effect size; below-threshold leakage exists by
+    construction. A reviewer must judge whether the budget concept is
+    scientifically honest or a licensed hole.
+A3  THE EXCHANGEABLE-UNIT NULL (R5) depends on estimating world- and
+    opponent-level random effects from calibration data that predates
+    evolution. If evolved play changes the correlation structure itself, the
+    hierarchical null drifts and only the negative-control stream (R4) would
+    notice. The whole detector guarantee therefore rests on the negative
+    controls being truly outcome-irrelevant.
+A4  DEFER-NOT-KILL (R9) creates an ever-growing parked population. The
+    re-audition queue is bounded, so genuine slow developers can still starve
+    in the queue -- the bias is reduced and measured, not removed.
+A5  CRUCIBLE CAPACITY (R6a) is the program's real rate limiter: at realistic
+    flag rates the crucible, not the fleet, decides how fast the program can
+    learn. Four machines may be too few to run discovery and confirmation
+    concurrently at any interesting scale.
+A6  THE DIVERSITY CURRENCY (R10) pays for behavioral divergence, which is
+    gameable in principle (cheap noise is divergent). The cluster cap and the
+    two-statistic rule guard the obvious exploit; the red team of the NEXT
+    revision should attack this specifically.
+A7  WORLD-GEOMETRY ARTIFACTS (R13, arm 12) are classified by whether
+    null-grade players reproduce the signature -- but a geometry artifact
+    exploitable only ABOVE reference-grade play would pass arm 12 and be
+    admitted. The distinction between "landscape structure" and "grammar
+    property" is graded, not binary, and the packet says so.
+A8  EXTERNAL ESCROW (R14) requires an external party willing to author sealed
+    plants and hold hashes. If none exists, the program's results remain
+    internally consistent and externally unverifiable -- a stated limitation,
+    not a hidden one.
+
+--------------------------------------------------------------------------------
+24. QUESTIONS REQUIRING EXTERNAL ADJUDICATION
+--------------------------------------------------------------------------------
+Q1  Is the reference-frontier definition of bumphood (R13) acceptable, or does
+    it smuggle a leaderboard back in through the null? What would you use?
+Q2  Is the leakage-budget quarantine (R1) honest, or should designer-semantic
+    leakage be zero-tolerance even at the cost of killing the band?
+Q3  Do you accept adaptation-savings as THE transfer definition (R2), given it
+    requires granting candidates a re-adaptation budget (i.e. some learning
+    during evaluation)?
+Q4  Is the two-currency budget (R10) legitimate ecology-shaping or an authored
+    diversity subsidy that contaminates "endogenous selection pressure"?
+Q5  Confirmed-set FDR target: is 10% (R6b) the right bound for a program whose
+    headline deliverable is ONE bump? Argue for stricter if you would.
+Q6  Should the crucible's opponent-transplant arm sample from reference
+    players only, evolved clusters only, or both -- and with what weights?
+Q7  Who should the external escrow party (R14) be, and what is the minimal
+    sealed-plant protocol they must follow?
+Q8  Is 4 machines enough to run the reference stream (R14a), discovery, AND
+    the crucible concurrently, or should the program declare a minimum fleet?
+
+--------------------------------------------------------------------------------
+25. ONE RECOMMENDED NEXT IMPLEMENTATION ACTION                   [v0 item 25]
+--------------------------------------------------------------------------------
+IMPLEMENT R12 EARNED ADMISSION AND RUN IT ON GRAMMAR V0 -- OFFLINE.
+
+That is: the ablation-grammar harness (with/without each primitive family),
+both batteries (which requires the FIRST concrete Proteus deliverable: a
+sampler from the player genotype distribution -- a one-page interface
+contract, requested herewith), and the band measurement under both. No
+service, no port, no evolution, no detector yet.
+
+RATIONALE: every downstream quantity -- the null, the regions, the thresholds,
+the plants, the price of the campaign -- is conditioned on which primitive
+families are actually in the sampling distribution. Earned admission is the
+cheapest gate that can falsify the grammar, it forces the Proteus interface
+contract to exist (the highest-risk external dependency), and it is the direct
+analog of the structure probe that the previous program made its first action.
+If grammar v0 loses most of its families under ablation, we learn that for the
+price of an offline harness rather than a campaign.
+
+================================================================================
+  FINAL PRINCIPLE
+  We are not building a world in which intelligence succeeds. We are building
+  an ecology in which different ways of processing experience encounter
+  different consequences. Provenance, physics, budgets, replay and
+  falsification are frozen; representations, algorithms, architectures and
+  eventually world ecologies vary.
+
+  The goal is extraordinarily modest: FIND ONE REAL BUMP. Millions of dead
+  organisms and dead worlds are acceptable -- the cemetery is the product,
+  because the surrounding failures define the landscape against which a bump
+  becomes visible.
+
+  Build the machine capable of finding it. Then let it be wrong in public.
+================================================================================
