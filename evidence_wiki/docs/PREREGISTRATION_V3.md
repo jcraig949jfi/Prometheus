@@ -74,3 +74,19 @@ X6 calibration: both arms expected ~1.0; a low X6 score flags execution-
 Contamination rules: an A-window probe reporting ANY injected memory voids
 the A window (rerun after re-relocation). Service reachability during the
 A window is checked (must be connection-refused). All raw outputs preserved.
+
+## AMENDMENT 1 (committed BEFORE any arm output was read; A agents in flight)
+The in-window probe VOIDED the isolation leg: the ambient index persists in
+subagents even with the memory directory physically relocated — the
+injection is CACHED AT THE PARENT-SESSION level, so no mechanism available
+to a live session can produce a memory-free subagent. Per charter s5 the
+DISABLED mode is unavailable; the experiment proceeds under the charter's
+third sanctioned mode, EXPLICITLY DECLARED:
+- ARM A (amended): ambient memory DECLARED (MEMORY.md sha 05dbe05e...,
+  identical to B), PEW service DOWN (port closed - technically unable),
+  no pack. This is exactly the condition of the already-running A agents.
+- ARM B: unchanged (ambient declared + frozen pack 8345ba29... + service up
+  + memory_influences logging).
+- Treatment contrast becomes: EXPLICIT PEW MEMORY (pack + service) versus
+  NO PEW, at ambient parity. Endpoints, criteria, and thresholds UNCHANGED.
+- G3 will be adjudicated from the probe evidence, not assumed.
