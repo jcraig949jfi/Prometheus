@@ -1,0 +1,18 @@
+{
+ "models": {
+  "sonnet": {
+   "retrieval_delta_core": 0.3,
+   "retrieval_delta_negative": 0.405,
+   "design_delta": -0.01,
+   "control_boundary_violations": "0/12"
+  },
+  "haiku": {
+   "retrieval_delta_core": 0.011,
+   "retrieval_delta_negative": 0.09,
+   "design_delta": -0.022,
+   "control_boundary_violations": "7/15 attempts (5/8 original, 2/7 incl replacements)"
+  }
+ },
+ "disclosure": "both models are Anthropic; independent families unavailable without paid APIs (charter s8 disclosure)",
+ "interaction": "treatment x model interaction dominates retrieval; design null holds at both tiers"
+}

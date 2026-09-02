@@ -154,3 +154,35 @@ Headline verdicts (none softened):
 
 23 subagents used: 3 harvest/1 heldout, 16 designers, 6 annotators + 1
 normalizer (numbers per notifications; harvest agents from 09-01).
+
+---
+
+# Addendum 4 (2026-09-02): V2 MEMORY-ADVANTAGE CAMPAIGN EXECUTED AND ADJUDICATED
+
+Charter sha 7e5d2dae...; prereg + task corpus + sealed gold (731b5b8c...)
+frozen at cab825adc BEFORE any designer. ~70 agents: 2 pilots, 40 A/B
+designers (sonnet+haiku), 5 retrieval + 5 pack designers, 4 blind scorer
+agents, 7 quarantine replacements. Full adjudication: benchmarks/gates_v2.json.
+
+VERDICT: RETRIEVAL_ADVANTAGE_WITHOUT_DESIGN_ADVANTAGE (MODEL_SPECIFIC).
+- Retrieval: sonnet wiki arms +0.300 core-gold recall (+0.405 negative
+  evidence, corrections doubled); haiku +0.011; pooled +0.151 fails the
+  frozen 0.25 bar -> MODEL_SPECIFIC_ADVANTAGE_ONLY. Arm C EVIDENCE PACK
+  strongest of all (0.90 core, 1.00 corrections) - the V3 interface.
+- Design: blind 2-scorer composite delta -0.016 (threshold +0.40), 8/19
+  wins -> NOT DEMONSTRATED; instrument ceiling flagged per frozen band
+  (control 3.72 > 3.4). Clean-task delta -0.234 = exploratory
+  retrieval-noise/anchoring harm signal.
+- G9 misleading-resistance PASS (0 adoption everywhere); G17 blind scoring
+  inter-rater 0.882/0.982.
+- LEAKAGE EVENTS (both preserved, protocol-handled): (1) haiku controls
+  violated the evidence_wiki access boundary 7/15 attempts (sonnet 0/12);
+  cells quarantined + identically re-run; T10-haiku excluded after second
+  violation. (2) THE BIG ONE: the agent harness injects the operator's
+  project auto-memory into every subagent - designers cited memory doctrine
+  that exists nowhere in the repo; Prometheus already runs an implicit,
+  provenance-free memory channel that pre-seeded ~5 tasks' gold in BOTH
+  arms. Parity held; wiki delta is a lower bound; James asked to rule on
+  ingest-vs-isolate (HUMAN_AUDIT_PACKET_V2 q1).
+- s17 ontology rulings encoded as HUMAN v2 registry rows. Gap slate still
+  sealed. Tensor untouched. G14 cross-host still NOT_QUALIFIED.

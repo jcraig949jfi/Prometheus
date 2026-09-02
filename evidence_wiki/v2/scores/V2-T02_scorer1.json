@@ -1,0 +1,46 @@
+[
+  {
+    "proposal": "P",
+    "D1": 4, "D3": 4, "D4": 4, "D5": 3, "D6": 4,
+    "justifications": {
+      "D1": "The enumeration hole is converted into decisive controls: 'Phase 1 - CAPTURE gate / positive control. Inject N_planted records... Require 100% rejection before any further phase runs' plus held-out near-miss variants ('must include patterns not used to author or tune the current list') and a Phase 0 fail-closed construction audit.",
+      "D3": "F1-F5 carry numeric thresholds and the stopping rule is explicit ('HALT immediately and report the failing rows - do not continue sampling to average a tripped falsifier back under threshold'); F2 ('positive-control rejection rate < 100%... certification BLOCKED regardless of Phase 2 result') is cheap, early, and independent of the escape mechanism.",
+      "D4": "Each summary confound has a concrete element (per-kind selection-bias breakdown, F4 kind-coverage, fail-closed check), plus positive control and 'Null-admit control... sanity-checks the probe's own defect density' demonstrating the instrument can detect real signal.",
+      "D5": "Frames a defensible extension of the settled precedent to a new sanitizer ('We hypothesize the same failure recurs here') with a certification protocol, but does not state a distinct new empirical cell beyond re-applying the precedent.",
+      "D6": "Every falsifier branch is a distinct verdict and vacuity is pre-committed ('a gate that has never actually been tested against a real bad record - the vacuity concern'; 'P4 and the before/after control become inapplicable and should be dropped rather than forced')."
+    }
+  },
+  {
+    "proposal": "Q",
+    "D1": 2, "D3": 3, "D4": 2, "D5": 2, "D6": 3,
+    "justifications": {
+      "D1": "The unenumerated-class risk is only partially guarded: seeded defects come from the five known categories, with the guard deferred and unverifiable ('seeded defects may miss emergent patterns (mitigation: secondary audit of actual rejects post-deployment)') and no novel-class planting or unknown-class quarantine in the certification itself.",
+      "D3": "Seven numeric falsifiers plus a stopping rule ('Complete validation phase regardless of interim results... unanimity gate'), but every falsifier tests the same pattern-detection mechanism - none is mechanism-independent.",
+      "D4": "Several confounds are isolated by design ('Sample by lineage, not sequentially'; burn-test-not-tuning-loop), but the summary's known confounds - fail-open admission and pass-what-is-not-enumerated - have no concrete design element.",
+      "D5": "Partially duplicative of enumerated-pattern screening with a defensible calibration extension ('the 5-check battery... provided the schema constraint and oracle-field defect taxonomy'), and never acknowledges the summary's refuted denylist precedent.",
+      "D6": "Each falsifier breach maps to a named diagnosis ('sanitizer too strict'/'sanitizer too weak'/'pattern underdetermined'), but no vacuous/no-signal reading is pre-committed for the certification pass."
+    }
+  },
+  {
+    "proposal": "R",
+    "D1": 4, "D3": 4, "D4": 3, "D5": 3, "D6": 3,
+    "justifications": {
+      "D1": "The known failure is turned into the probe itself: 'adversarial, out-of-list probe - structural variants of the known-bad patterns... run by a party independent of the list's authorship', with cross-field compositional variants and F2 catching whole-class holes ('escape rate >= 50% on its >=30-variant probe set, regardless of the aggregate').",
+      "D3": "F1-F4 all numeric with an explicit stopping rule ('If any single falsifier fails, STOP - do not iteratively patch the denylist and re-run the same probe set'); F3's false-positive check on the clean control is cheap and independent of the escape-rate mechanism.",
+      "D4": "The summary's confounds each get a concrete element ('probe corpus must be drawn from a population disjoint from whatever data the denylist was curated against'; covariate table per F4), but there is no planted positive control confirming the gate fires on literal enumerated bad records.",
+      "D5": "A superseding application of the settled precedent to a new, unmeasured system ('these are pre-registered decision lines, not historical values of this sanitizer'), without a crisp statement of a new empirical cell.",
+      "D6": "Falsifier branches route to distinct dispositions ('either (a) a fix analogous to Ergon's conservation_law repair, or (b) explicit retirement/documentation as an uncovered class'), but no vacuous/no-signal reading is pre-committed."
+    }
+  },
+  {
+    "proposal": "S",
+    "D1": 1, "D3": 4, "D4": 2, "D5": 2, "D6": 4,
+    "justifications": {
+      "D1": "Adjacent risks are mentioned but the design still commits the enumeration failure: fixtures and census cover only listed patterns, and 'Bad-pattern list maintenance... A static list risks obsoletion. Specification does not include update protocol' plus uncosted false negatives ('does not explicitly cost false negatives') leave no novel-class planting or quarantine.",
+      "D3": "Numeric gates throughout (sensitivity CI >=90%, FPR <=0.1%, '>=5 records' eligibility, 2% interaction) with a hard-stop rule; the Phase A census falsifier ('If target corpus has 0 matches for a pattern, that pattern fails admission') is cheap, early, and independent of the detection mechanism.",
+      "D4": "Strong generic isolation ('Measuring max statistic on actual data before reading any rejection rate prevents threshold-above-ceiling defect'), but the summary's known confounds - unenumerated defect classes and fail-open residue admission - are not addressed by any element.",
+      "D5": "A partially duplicative validation of enumerated-pattern screening with a defensible calibration/eligibility extension ('sanitizer adds no decision signal, admission refused'), with no acknowledgment of the summary's precedents.",
+      "D6": "All branches pre-mapped with explicit vacuous readings ('flag as VACUOUS and pre-commit a structural-zero reading before proceeding'; 'threshold within 2x SD of median -> rule reclassified as noise-floor, decision eligibility lost'; high-agreement 'high-recall baseline redundancy' branch)."
+    }
+  }
+]

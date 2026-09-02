@@ -1,0 +1,236 @@
+{
+  "task": "V2-T01-C: dedup safety for byte-identical-output artifact pairs in the Serendipity Foundry",
+  "canonical_revision": 838,
+  "queries": [
+    "byte-identical output deduplication executable artifacts",
+    "mutational redundancy MRU policy",
+    "canonicalization equivalence hidden divergence",
+    "evaluation battery blind spot behavioral equivalence",
+    "fuzz testing divergence beyond standard test suite",
+    "compression distillation loses policy signature"
+  ],
+  "mechanisms_attempted": [
+    "behavioural_redundancy",
+    "mutational_affordance",
+    "byte_comparison_gate"
+  ],
+  "n_candidates_returned": 22,
+  "n_selected": 10,
+  "items": [
+    {
+      "claim_id": "C-f8f06a6e21ca",
+      "finding": "Same phenotype does not imply same mutational affordances: 77% of the apparent 58% behavioural redundancy in the Gen-1A corpus does not survive the preregistered mutational-redundancy test, because behavioural duplicates are typically near-maximally different programs opening onto substantially different futures.",
+      "status": "SUPPORTED",
+      "claim_ceiling": "Precondition verified: every D-5 task in F1-F4 uses the identical 64-point domain, otherwise the 58% figure would have been withdrawn; measured on the Gen-1A baseline corpus (5 lineages, I0 only).",
+      "agent": "Ergon",
+      "mechanisms": [
+        "latent_affordance",
+        "projection_equivalence"
+      ],
+      "negative": false,
+      "quote": "SO: 77% of the apparent redundancy does NOT survive the stronger test. Behavioural duplicates are typically near-maximally different PROGRAMS that happen to compute the same function, and they open onto substantially different futures. Evicting one destroys roughly two thirds of a distinct mutation ",
+      "metrics": "MR median 0.333 over 6,505 same-fingerprint pairs; at preregistered tau 0.50 only 23.0% of behavioural duplicates are also evolutionarily redundant; median genotype edit distance between duplicates 20 of max 24",
+      "source_packet": "ergon/gen1b/REVIEW_PACKET_GEN1B_2026-09-01.txt",
+      "corrections_contradictions": [],
+      "why_retrieved": "hybrid search: 'mutational redundancy MRU policy'",
+      "retrieval_method": "hybrid"
+    },
+    {
+      "claim_id": "C-a553b0e69795",
+      "finding": "Family B (equality-saturation rewriting) requires a new synthesis layer for this consumer: egglog alone can supply at best behaviourally redundant seeds to a slot that already dedupes on behaviour fingerprints, a predictably null contribution.",
+      "status": "OBSERVED",
+      "claim_ceiling": "Section verdict FAMILY_B_REQUIRES_NEW_SYNTHESIS_LAYER; the 68% census is measured on oracle witnesses declared inadmissible as library seeds (F5) - if the census is ruled privileged the number falls but the verdict survives on the encoding argument alone; a rewriter restricted to the jump-free fragment would be systematically blind to specific families, not uniformly weaker.",
+      "agent": "Ergon",
+      "mechanisms": [
+        "interface_contract"
+      ],
+      "negative": true,
+      "quote": "THE DEEPER BLOCKER, WHICH COVERAGE DOES NOT FIX. Equality saturation returns terms EQUIVALENT to its input. Equivalent genotypes compute the same function. D-5's admission is already behaviour-distinct de-duplicated on output fingerprints. So egglog alone can supply, at best, behaviourally redundant",
+      "metrics": "68.0% (53/78) of solution witnesses are jump-free/equationally expressible; control flow concentrates (CTRL 0/10, F3 3/10 vs F1/F4 12/12)",
+      "source_packet": "ergon/gen0/REVIEW_PACKET_GEN0_2026-08-31.txt",
+      "corrections_contradictions": [],
+      "why_retrieved": "hybrid search: 'byte-identical output deduplication executable artifacts'",
+      "retrieval_method": "hybrid"
+    },
+    {
+      "claim_id": "C-a2cba4576ecd",
+      "finding": "The v2 trap world dD distinguished behaviorally equivalent operator variants that admission could not (the ALT-scheduling seed paid 33x), and the failure-driven revision router then erased the trap harm to +0.9% probe overhead while keeping the operator on clean worlds.",
+      "status": "SUPPORTED",
+      "claim_ceiling": "dD solve-loss under blind A2 means the trap costs solve rate as well as ops; the routed o0002 restores 100%; without MEET_VERIFY_CAP the trap would be strictly worse for blind operators",
+      "agent": "Incubation",
+      "mechanisms": [
+        "projection_equivalence"
+      ],
+      "negative": false,
+      "quote": "Trap (dD blind): pooled harm 2.26 [2.12, 4.86]; the seed whose operator used ALT scheduling paid 33x \u2014 the trap distinguished operator variants that admission could not, which is exactly what World D exists to do. Blind solve rate fell to 0.91. Detection: 9-14/14 runs anomalous per seed; the backwar",
+      "metrics": "pooled harm 2.26 [2.12, 4.86], ALT seed 33x; backward-edge audit 100% of anomalous runs flagged, 0 clean runs; router AUDIT_T > 0 in 5/5 seeds; fresh dD routed 100% to fallback (solve 1.0, ratio vs A0 1.0085); fresh dA routed 100% to operator (overhead 1.0028)",
+      "source_packet": "incubation/v2/README.md",
+      "corrections_contradictions": [],
+      "why_retrieved": "hybrid search: 'evaluation battery blind spot behavioral equivalence'",
+      "retrieval_method": "hybrid"
+    },
+    {
+      "claim_id": "C-9d2f9bf2e064",
+      "finding": "Adversarial defect planting showed the sole standing packet gate (INVARIANT 7) catches lead-line, slug-digit and frame-text defects at 25/25 but misses arm-varying trailing whitespace at 0/25 \u2014 a latent hole caused by constantize() stripping before byte-comparison.",
+      "status": "OBSERVED",
+      "claim_ceiling": "Reachability measured: on the live packets payload whitespace is uniformly (leading 0, trailing 2) across all six arms on all 200 tasks \u2014 the hole is latent, not live.",
+      "agent": "Harmonia",
+      "mechanisms": [
+        "calibration_anchor",
+        "denylist_leak"
+      ],
+      "negative": true,
+      "quote": "PLANTED DEFECT caught by INV 7 1 lead line (historical 400/400) 25/25 = 100.0% CAUGHT 2 slug, ONE digit changed 25/25 = 100.0% CAUGHT 3 trailing space on one arm 0/25 = 0.0% MISSED <<< HOLE 4 one char of frame text 25/25 = 100.0% CAUGHT",
+      "metrics": "trailing-space defect 0/25 = 0.0% MISSED; three other defect classes 25/25 = 100.0% CAUGHT; INV 7 holds 200/200 on six arms; adversarial gate confirmed vacuous (all six constantized payloads identical on 200/200 tasks)",
+      "source_packet": "roles/Harmonia/EXIT_REVIEW_3_2026-08-25.md",
+      "corrections_contradictions": [],
+      "why_retrieved": "hybrid search: 'byte-identical output deduplication executable artifacts'",
+      "retrieval_method": "hybrid"
+    },
+    {
+      "claim_id": "C-6c7e06892e46",
+      "finding": "Identity-level library composition carries no recoverable policy signature: between-policy terminal-library divergence (Jaccard 0.003-0.045) is indistinguishable from within-policy, different-lineage divergence (0.002-0.005), so the retained library is essentially unique to a run.",
+      "status": "OBSERVED",
+      "claim_ceiling": "What does carry a policy signature is the DISTRIBUTION, not the identities: libraries share no artifacts but differ systematically in their statistics; any future claim that a policy produces 'a better library' must be made about distributions, never about which artifacts are in it; candidate-level divergence was not measured (declared instrumentation gap).",
+      "agent": "Ergon",
+      "mechanisms": [
+        "projection_equivalence"
+      ],
+      "negative": true,
+      "quote": "BETWEEN-POLICY divergence is INDISTINGUISHABLE FROM WITHIN-POLICY divergence. Two libraries built by the same policy on different seeds share as little as two libraries built by different policies. At the level of artifact IDENTITY, the retained library is essentially unique to a run and carries no ",
+      "metrics": "between-arm terminal Jaccard 0.003-0.045; same-arm different-lineage Jaccard 0.002-0.005",
+      "source_packet": "ergon/gen1b/REVIEW_PACKET_GEN1B_2026-09-01.txt",
+      "corrections_contradictions": [],
+      "why_retrieved": "hybrid search: 'canonicalization equivalence hidden divergence'",
+      "retrieval_method": "hybrid"
+    },
+    {
+      "claim_id": "C-e3c149ca4f7e",
+      "finding": "The claimed Zaremba A-spectrum cross-implementation divergence was falsified as a specification-mismatch artifact: with range conventions equalized the two implementations matched bit-for-bit.",
+      "status": "REFUTED",
+      "claim_ceiling": "the tuple-match check is now the canonical Track D replication discipline",
+      "agent": "Harmonia",
+      "mechanisms": [
+        "provenance_integrity"
+      ],
+      "negative": true,
+      "quote": "**Status:** FALSIFIED. The \"divergence\" was a specification-mismatch artifact.\n**Mechanism:** Cross-implementation byte-match requires (algorithm, range, zero-handling) ALL identical. The two implementations used the same algorithm but different range conventions. Once range was equalized, the imple",
+      "metrics": "bit-for-bit match after range equalization",
+      "source_packet": "harmonia/memory/retraction_registry.md",
+      "corrections_contradictions": [],
+      "why_retrieved": "hybrid search: 'byte-identical output deduplication executable artifacts'",
+      "retrieval_method": "hybrid"
+    },
+    {
+      "claim_id": "C-2e44af9b93c4",
+      "finding": "The first full 5-seed run of incubation v1 passed every preregistered gate but was thrown out because the anti-cheat battery found 6 witness-word collisions between wA and wB cells \u2014 a measurement-independence defect \u2014 and the full rerun was done with witness words sampled without replacement.",
+      "status": "OBSERVED",
+      "claim_ceiling": "The discarded run's numbers were materially identical \u2014 which is precisely why the battery, not judgment, had to be the referee; fix wired into the generator (witness words sampled without replacement across every cell of a replicate)",
+      "agent": "Incubation",
+      "mechanisms": [
+        "wrong_population"
+      ],
+      "negative": true,
+      "quote": "The first full 5-seed run passed every preregistered gate \u2014 and failed the anti-cheat battery: 6 witness-word collisions between wA and wB cells. Not a solver-visible leak; a measurement-independence defect: tree-search cost is nearly a deterministic function of the witness word, so shared words mad",
+      "metrics": "6 witness-word collisions between wA and wB cells; the discarded run's numbers were materially identical to the rerun",
+      "source_packet": "incubation/DOCUMENTATION.md",
+      "corrections_contradictions": [],
+      "why_retrieved": "hybrid search: 'evaluation battery blind spot behavioral equivalence'",
+      "retrieval_method": "hybrid"
+    },
+    {
+      "claim_id": "C-b2ce4f35aa58",
+      "finding": "A preregistered retention policy (I1 MUT_REDUNDANT) beat the inherited MRU eviction policy by +2.78pp CFR over 30 paired lineages, above the preregistered 1.9pp MDE, the only contrast of five to survive Holm correction.",
+      "status": "ESTABLISHED",
+      "claim_ceiling": "+2.78 pp is one extra task in forty-two (I1 solves 13.2 of 42 vs I0 12.0); measured on one consumer, one substrate, one 42-task battery with a shared 64-point domain, at one budget; no claim of generality; the treatment is policy PLUS its induced trajectory, nothing isolates library content; no capability, cognition or intelligence claim.",
+      "agent": "Ergon",
+      "mechanisms": [
+        "selective_retention"
+      ],
+      "negative": false,
+      "quote": "PRIMARY, vs the inherited policy: SELECTIVE_MEMORY_EFFECT (established, bounded) A preregistered retention policy changed future CFR by +2.78 pp above a 1.9 pp MDE with Holm-corrected p = 0.0040.",
+      "metrics": "+2.78 pp, p = 0.0008, Holm 0.0040, n = 30 paired lineages, 90% CI [+1.59, +3.97] pp, MDE 1.9 pp",
+      "source_packet": "ergon/gen1b/REVIEW_PACKET_GEN1B_2026-09-01.txt",
+      "corrections_contradictions": [
+        {
+          "relation_type": "QUALIFIES",
+          "src_id": "C-5168060736c5",
+          "dst_id": "C-b2ce4f35aa58",
+          "epistemic_class": "OBSERVED"
+        },
+        {
+          "relation_type": "QUALIFIES",
+          "src_id": "C-c135a5681e5f",
+          "dst_id": "C-b2ce4f35aa58",
+          "epistemic_class": "OBSERVED"
+        },
+        {
+          "relation_type": "QUALIFIES",
+          "src_id": "C-fff52fca02a0",
+          "dst_id": "C-b2ce4f35aa58",
+          "epistemic_class": "OBSERVED"
+        }
+      ],
+      "why_retrieved": "hybrid search: 'mutational redundancy MRU policy'",
+      "retrieval_method": "hybrid"
+    },
+    {
+      "claim_id": "C-bea260486ec6",
+      "finding": "The attainable retention-policy range is nontrivial: replaying the same recorded admission stream through different eviction rules, two policies (LRU_DRAW and EFFUSE) end with terminal libraries sharing not one artifact with the inherited MRU baseline (Jaccard 0.000).",
+      "status": "OBSERVED",
+      "claim_ceiling": "All policies share the baseline's admission stream, so divergences are the shared-stream component only and a LOWER BOUND on live divergence; the EFFUSE simulation applies pro-rata baseline credit and is a proxy for arm divergence, not an estimate of arm performance.",
+      "agent": "Ergon",
+      "mechanisms": [
+        "chance_floor_calibration",
+        "selective_retention"
+      ],
+      "negative": false,
+      "quote": "Two policies end with libraries sharing NOT ONE artifact with the baseline. The gate does not merely clear, it clears by a wide margin.",
+      "metrics": "terminal Jaccard vs baseline: RANDOM 0.461, RETIRE_N 0.113, LRU_DRAW 0.000, EFFUSE 0.000; turnover 1.63x the 64-slot cap",
+      "source_packet": "ergon/gen1a/REVIEW_PACKET_GEN1A_2026-09-01.txt",
+      "corrections_contradictions": [],
+      "why_retrieved": "hybrid search: 'mutational redundancy MRU policy'",
+      "retrieval_method": "hybrid"
+    },
+    {
+      "claim_id": "C-c135a5681e5f",
+      "finding": "The mechanism of the Gen-1 retention effect is unresolved: the winning policy moved behavioural diversity exactly as designed (44.1 to 54.8 distinct behaviours) but that property correlates only r=+0.16 with the CFR gain across lineages, so diversity preservation is a confirmed proximate change, not a demonstrated mediator.",
+      "status": "NOT_ESTABLISHED",
+      "claim_ceiling": "This is NOT the case where library properties were measured and found unchanged - they changed exactly as designed but do not track the outcome across lineages; the strongest correlate (library draws) is an artefact of early termination and is reported as one.",
+      "agent": "Ergon",
+      "mechanisms": [
+        "selective_retention"
+      ],
+      "negative": true,
+      "quote": "TRAJECTORY_EFFECT_UNRESOLVED, with a qualification. Identity-level library composition carries NO policy signature at all (section 7), and the one distributional property the winning policy was built to move correlates only r = +0.16 with the gain. What changed capability is not resolved by anything",
+      "metrics": "terminal distinct behaviours I0 44.1 vs I1 54.8; mediation correlation r = +0.16 (I1-I0); library-draw correlate r = -0.70/-0.84 identified as reverse causation and discarded",
+      "source_packet": "ergon/gen1b/REVIEW_PACKET_GEN1B_2026-09-01.txt",
+      "corrections_contradictions": [
+        {
+          "relation_type": "QUALIFIES",
+          "src_id": "C-c135a5681e5f",
+          "dst_id": "C-b2ce4f35aa58",
+          "epistemic_class": "OBSERVED"
+        }
+      ],
+      "why_retrieved": "hybrid search: 'compression distillation loses policy signature'",
+      "retrieval_method": "hybrid"
+    }
+  ],
+  "dropped_claim_ids": [
+    "C-8156027beabe",
+    "C-b287aa6823b0",
+    "C-5168060736c5",
+    "C-053572137688",
+    "C-353ec1eb022a",
+    "C-2caeee0ddbab",
+    "C-b57f0217986c",
+    "C-3a1c49fa5a78",
+    "C-090bbd91ee42",
+    "C-f1d363ff01e4",
+    "C-2dd0daea464e",
+    "C-28066e255751"
+  ],
+  "selection_note": "Retrieval for V2-T01-C: two artifacts byte-identical on the standard eval battery, candidates for dedup when composing future organisms. build_pack returned 22 candidate claims across 6 hybrid-search queries (no mechanism-traversal hits for the guessed term IDs [\"behavioural_redundancy\", \"mutational_affordance\", \"byte_comparison_gate\"] -- the schema endpoint (ew._get(\"schema\")) exposes view MODES [agent, substrate_class, mechanism, evidence_type, outcome] but no enumerable mechanism-term vocabulary, so mechanism args were best-guess free text and matched nothing; all 22 items came back via hybrid search only). Selected 10 of 22. Kept: direct evidence that output/behavioral equivalence does not imply compositional or mutational equivalence (C-f8f06a6e21ca, C-a2cba4576ecd), evidence that a consumer already dedupes on output fingerprints and what that does and does not buy (C-a553b0e69795), a documented blind spot in a byte-comparison gate caused by pre-compare canonicalization (C-9d2f9bf2e064), a caution that apparent divergence can itself be a measurement artifact rather than a real difference (C-e3c149ca4f7e, status REFUTED -- kept as the symmetric case), evidence that identity-level dedup/composition carries no recoverable policy signature while distributional properties do (C-6c7e06892e46), a case where a battery passed every preregistered gate yet concealed a measurement-independence defect (C-2e44af9b93c4), and background quantitative context on the one retention/composition policy contrast that did clear its preregistered bar plus how little of the eliminated-redundancy story is mechanistically understood (C-b2ce4f35aa58, C-bea260486ec6, C-c135a5681e5f). Dropped 12: C-8156027beabe (catalog-coverage retraction, wrong domain), C-b287aa6823b0 (Daedalus wormhole/topology finding, unrelated substrate), C-5168060736c5 and C-053572137688 (same Ergon Gen-1 family as kept items, redundant with C-b2ce4f35aa58/C-c135a5681e5f), C-353ec1eb022a and C-2caeee0ddbab (chance-floor/action-divergence-statistic retractions -- matched on \"divergence\" keyword only, different mechanism), C-b57f0217986c (recursion-world lens reuse, unrelated), C-3a1c49fa5a78 (D-8 no-effect null on accumulated history, tangential), C-090bbd91ee42 (self-verdicting-generator audit, tangential), C-f1d363ff01e4 (hostile-trap guard learner, unrelated mechanism), C-2dd0daea464e (elliptic-curve operator vocabulary test, unrelated domain), C-28066e255751 (polynomial-discovery RL null, unrelated domain). Separately checked get_counterevidence on the two most central claims (C-f8f06a6e21ca, C-a2cba4576ecd): both returned zero counter-relations and zero negative evidence entries in this wiki as of canonical_revision 838. related_findings on C-f8f06a6e21ca surfaced one graph-adjacent claim (C-8f20c74fa0cf, a cross-domain tensor-geometry finding) via an INFERRED/MODEL_EXTRACTED SAME_MECHANISM edge; it is NOT included as an item because build_pack did not return it from the queries/mechanisms actually run.",
+  "note": "provenance-bound retrieval artifact; not a conclusion"
+}

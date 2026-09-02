@@ -1,0 +1,190 @@
+{
+  "task": "V2-T06: Seed the Ludus game-worlds bench with the executable artifact library that gave the D-5 search agent its solution-finding advantage; predict the expected gain and failure conditions of the transplant.",
+  "canonical_revision": 838,
+  "queries": [
+    "D-5 findability executable artifact library solution advantage",
+    "frozen opcodes primitive extension whole-program seed",
+    "Ludus game-worlds bench transfer interfaces",
+    "selective retention arbitrary memory policy signature identity-level library composition",
+    "size-matched random library retains advantage shuffled history",
+    "artifact hoard mutation seed exact-solver findability",
+    "D-5 executable artifact library solution-finding advantage",
+    "library-content effect shuffled history random library",
+    "accumulated executable history findability transplant substrate",
+    "identity-level library composition no policy signature"
+  ],
+  "mechanisms": [
+    "library-content mutation seed",
+    "primitive-extension slot",
+    "accumulated executable history findability"
+  ],
+  "selection_note": "12 wiki calls used (7 search_evidence across 2 rounds; get_counterevidence, related_findings, contradictions, get_claim each x1; build_pack x2, first attempt failed only on local file-write, not on the service). 12 candidate items were surfaced; 1 (a BSD-Sha algebraic-identity retraction, unrelated math) was dropped as clearly irrelevant and 1 (a bookkeeping retraction about library-persistence tracking, not substantive to gain/failure prediction) was dropped as marginal, leaving 10. One item (C-3a1c49fa5a78) was added from the contradictions()/get_claim() exploration calls rather than from the build_pack output itself, because it is the single most important failure-condition item found: a different agent (Daedalus), different substrate (D-8 foundry ecology) ran the same accumulated-history-vs-findability contrast and got a clean NOT_ESTABLISHED null that a relation-graph CONTRADICTS edge (INFERRED, classified APPARENT_UNDER_DIFFERING_CONDITIONS) ties directly to the core D-5 claim C-3d12c440f087 being seeded into Ludus. Excluding it would have hidden the clearest documented instance of the effect NOT transplanting across ecology/substrate. All other selected items came directly from the two build_pack() calls. No item's text, quote, or metric was altered from what the API returned.",
+  "items": [
+    {
+      "claim_id": "C-3d12c440f087",
+      "finding": "Accumulated executable history increased the findability of exact solutions to independently defined, oracle-reachable tasks under fixed metered budgets (M1 - M0 = +10.95pp CFR, p = 0.0007).",
+      "status": "SUPPORTED",
+      "claim_ceiling": "The EXISTENCE of the advantage is decisive, the floor clearance is knife-edge (disclosed, <1 SE); no claim of intelligence, cognition, understanding, or AGI; claim is relative to fixed metered search budgets",
+      "agent": "Aporia",
+      "mechanisms": ["latent_affordance", "recursive_structure_reuse"],
+      "negative": false,
+      "quote": "Accumulated executable history increased the findability of exact solutions to independently defined, oracle-reachable tasks under fixed metered budgets: M1 − M0 = +10.95pp CFR (p = 0.0007 one-sided paired permutation, task-level n = 42, effect 3.2 SE above zero).",
+      "metrics": "+10.95pp CFR, p=0.0007 one-sided paired permutation, n=42 tasks, 3.2 SE above zero; margin over the preregistered 10pp floor is 0.95pp against SE 3.4pp; vs M0b-POP +10.0pp, p=0.013",
+      "source_packet": "agent_d5_blind/VERDICT.md",
+      "corrections_contradictions": [
+        {"relation_type": "QUALIFIES", "src_id": "C-897e76a91ac9", "dst_id": "C-3d12c440f087", "epistemic_class": "OBSERVED"},
+        {"relation_type": "QUALIFIES", "src_id": "C-86e1de0ff3a2", "dst_id": "C-3d12c440f087", "epistemic_class": "OBSERVED"},
+        {"relation_type": "QUALIFIES", "src_id": "C-2fa98cdd22b5", "dst_id": "C-3d12c440f087", "epistemic_class": "OBSERVED"},
+        {"relation_type": "QUALIFIES", "src_id": "C-98702f29ab81", "dst_id": "C-3d12c440f087", "epistemic_class": "OBSERVED"},
+        {"relation_type": "CONTRADICTS", "src_id": "C-3a1c49fa5a78", "dst_id": "C-3d12c440f087", "epistemic_class": "INFERRED"}
+      ],
+      "why_retrieved": "hybrid search: 'accumulated executable history findability transplant substrate' (build_pack)",
+      "retrieval_method": "hybrid"
+    },
+    {
+      "claim_id": "C-2fa98cdd22b5",
+      "finding": "The D-5 history advantage is a library-content effect (possessing ecology-adapted executable artifacts, in any order), not a developmental-correspondence effect: shuffled history retains 100% of the advantage while a size-matched random library retains 39%.",
+      "status": "SUPPORTED",
+      "claim_ceiling": "P6 NOT ESTABLISHED (advantage not attributable to correspondent developmental structure) and P7 NOT ESTABLISHED (no acceleration over developmental time); P4 HACR 2.13 underpowered (CI90 [0.93, 3.70], n=13); the +6pp CTRL delta hints at a generic diversity-injection component measured directly by the 39% random-library retention",
+      "agent": "Aporia",
+      "mechanisms": ["recursive_structure_reuse"],
+      "negative": false,
+      "quote": "The advantage is therefore a library-content effect — possessing ecology-adapted executable artifacts, in any order — not a developmental-correspondence effect. Consistent with that: no developmental trend (G6, late-vs-early ≈ 0) and no significant frozen alien transfer (G7, +5pp, p = 0.26).",
+      "metrics": "M1-shuffled-history retains 100% of the advantage (77 vs 80 solves; 94/290 rows differ); M1-random-library retains 39%; G6 late-vs-early -0.001 p=0.49; G7 alien +5pp p=0.26",
+      "source_packet": "agent_d5_blind/VERDICT.md",
+      "corrections_contradictions": [
+        {"relation_type": "QUALIFIES", "src_id": "C-2fa98cdd22b5", "dst_id": "C-3d12c440f087", "epistemic_class": "OBSERVED"}
+      ],
+      "why_retrieved": "hybrid search: 'D-5 executable artifact library solution-finding advantage' (build_pack)",
+      "retrieval_method": "hybrid"
+    },
+    {
+      "claim_id": "C-897e76a91ac9",
+      "finding": "Under the frozen D-5 policy the library is a rolling recency window of roughly the last 16 tasks, not an accumulation over 58: memory depth is 16-18 tasks across all five lineages and 69-72% of developmental history is absent at the endpoint.",
+      "status": "OBSERVED",
+      "claim_ceiling": "D-5 flagged this qualitatively ('design task ecologies where library content cannot saturate'); this is a refinement of a known limitation, not a new discovery; consequences C1 (G7 measured transfer from a 16-task window) and C2 (shuffled-history ordering conclusion bounded to ~16 tasks) are disclosed for Charon/Aporia adjudication, not asserted as reinterpretations.",
+      "agent": "Ergon",
+      "mechanisms": ["selective_retention"],
+      "negative": false,
+      "quote": "Under the frozen policy the library is a ROLLING RECENCY WINDOW over roughly the last 16 tasks. It is not an accumulation over 58.",
+      "metrics": "memory depth 16, 18, 16, 16, 17 tasks (mean 16.6 of 58); history absent at endpoint 69-72% (mean 71%); 64 slots / 4.03 admissions per task = 15.9 tasks",
+      "source_packet": "ergon/gen1/REVIEW_PACKET_GEN1_PRECONDITION_A_2026-09-01.txt",
+      "corrections_contradictions": [
+        {"relation_type": "QUALIFIES", "src_id": "C-897e76a91ac9", "dst_id": "C-3d12c440f087", "epistemic_class": "OBSERVED"}
+      ],
+      "why_retrieved": "hybrid search: 'library-content effect shuffled history random library' (build_pack)",
+      "retrieval_method": "hybrid"
+    },
+    {
+      "claim_id": "C-162e315bd67f",
+      "finding": "The D-5 consumer's appetite is for content, not abstractions: its library slot eats whole executable genotypes as mutation seeds with no application, splice, or primitive-extension site, so Family A's characteristic product (a reusable parameterised abstraction becoming a new primitive) has no slot at any acquisition price.",
+      "status": "OBSERVED",
+      "claim_ceiling": "Scope is ONE consumer - 'no slot in D-5' is not 'useless to Prometheus'; Family A is currently UNADJUDICABLE rather than refuted because no consumer in the programme has a primitive-extension path; the hole-marker model of a Stitch abstraction is the weakest joint (F2, straw-donor risk); freeze-order breach self-reported (F6).",
+      "agent": "Ergon",
+      "mechanisms": ["interface_contract"],
+      "negative": true,
+      "quote": "The D-5 library slot eats whole executable genotypes used as mutation seeds. It has no application site, no splice site, and no primitive-extension path. So the characteristic product of Family A -- a reusable parameterised abstraction that becomes a new primitive -- has nowhere to go AT ANY ACQUISITION PRICE.",
+      "metrics": "14 frozen opcodes, zero registration hooks; consumer-fit probe gate-fired 7/7 constructed worlds with known answers",
+      "source_packet": "ergon/gen0/REVIEW_PACKET_GEN0_2026-08-31.txt",
+      "corrections_contradictions": [],
+      "why_retrieved": "hybrid search: 'D-5 executable artifact library solution-finding advantage' (build_pack)",
+      "retrieval_method": "hybrid"
+    },
+    {
+      "claim_id": "C-6c7e06892e46",
+      "finding": "Identity-level library composition carries no recoverable policy signature: between-policy terminal-library divergence (Jaccard 0.003-0.045) is indistinguishable from within-policy, different-lineage divergence (0.002-0.005), so the retained library is essentially unique to a run.",
+      "status": "OBSERVED",
+      "claim_ceiling": "What does carry a policy signature is the DISTRIBUTION, not the identities: libraries share no artifacts but differ systematically in their statistics; any future claim that a policy produces 'a better library' must be made about distributions, never about which artifacts are in it; candidate-level divergence was not measured (declared instrumentation gap).",
+      "agent": "Ergon",
+      "mechanisms": ["projection_equivalence"],
+      "negative": true,
+      "quote": "BETWEEN-POLICY divergence is INDISTINGUISHABLE FROM WITHIN-POLICY divergence. Two libraries built by the same policy on different seeds share as little as two libraries built by different policies. At the level of artifact IDENTITY, the retained library is essentially unique to a run and carries no [policy signature]",
+      "metrics": "between-arm terminal Jaccard 0.003-0.045; same-arm different-lineage Jaccard 0.002-0.005",
+      "source_packet": "ergon/gen1b/REVIEW_PACKET_GEN1B_2026-09-01.txt",
+      "corrections_contradictions": [],
+      "why_retrieved": "hybrid search: 'D-5 executable artifact library solution-finding advantage' (build_pack)",
+      "retrieval_method": "hybrid"
+    },
+    {
+      "claim_id": "C-c135a5681e5f",
+      "finding": "The mechanism of the Gen-1 retention effect is unresolved: the winning policy moved behavioural diversity exactly as designed (44.1 to 54.8 distinct behaviours) but that property correlates only r=+0.16 with the CFR gain across lineages, so diversity preservation is a confirmed proximate change, not a demonstrated mediator.",
+      "status": "NOT_ESTABLISHED",
+      "claim_ceiling": "This is NOT the case where library properties were measured and found unchanged - they changed exactly as designed but do not track the outcome across lineages; the strongest correlate (library draws) is an artefact of early termination and is reported as one.",
+      "agent": "Ergon",
+      "mechanisms": ["selective_retention"],
+      "negative": true,
+      "quote": "TRAJECTORY_EFFECT_UNRESOLVED, with a qualification. Identity-level library composition carries NO policy signature at all (section 7), and the one distributional property the winning policy was built to move correlates only r = +0.16 with the gain. What changed capability is not resolved by anything [measured here].",
+      "metrics": "terminal distinct behaviours I0 44.1 vs I1 54.8; mediation correlation r = +0.16 (I1-I0); library-draw correlate r = -0.70/-0.84 identified as reverse causation and discarded",
+      "source_packet": "ergon/gen1b/REVIEW_PACKET_GEN1B_2026-09-01.txt",
+      "corrections_contradictions": [
+        {"relation_type": "QUALIFIES", "src_id": "C-c135a5681e5f", "dst_id": "C-b2ce4f35aa58", "epistemic_class": "OBSERVED"}
+      ],
+      "why_retrieved": "hybrid search: 'library-content effect shuffled history random library' (build_pack)",
+      "retrieval_method": "hybrid"
+    },
+    {
+      "claim_id": "C-aba202675bd8",
+      "finding": "D6-A's central hypothesis — that relational executable history can construct a derived signal that causally increases exact-solver findability on held-out tasks beyond the artifact hoard — was not confirmed: a clean preregistered null (H3-H1 +0.010, p=0.4875 vs a >=+0.20 requirement), with machine verdict ENDOGENOUS_SIGNAL_FOUND but explicitly NOT CAUSAL_FINDABILITY_SIGNAL.",
+      "status": "NOT_ESTABLISHED",
+      "claim_ceiling": "The null is informative: the interface ceiling was measured before the null — even a designer-side truth-seeded z moved dev-tier2 solves only 5/24 -> 9/24, so the bottleneck is the ordering-only coupling, not the history; development worked in-distribution (~40x DEV tier2 improvement); geometry moved (10x on-manifold concentration) while solve rate did not; a successor needs a constructive rather than purely selective interface, which under §24 cannot be retrofitted",
+      "agent": "Daedalus",
+      "mechanisms": ["transfer_mediation"],
+      "negative": true,
+      "quote": "The central hypothesis — that relational executable history can construct a derived signal that causally increases exact-solver findability on held-out tasks beyond the artifact hoard — was not confirmed in this generation. The result is a clean preregistered null with an identified mechanistic [bottleneck].",
+      "metrics": "T-P3 H3-H1 (CONF) +0.010 [-0.010, +0.042] p=0.4875 FAIL (needed >= +0.20, p<0.01); T-P4 H3-H2 +0.000 p=0.7444 FAIL; T-P5 ALIEN zero-shot 0/144 both arms; Holm over primaries FAIL; battery VALID (V1-V5 pass); sparse wall CONFIRMED (M0 CONF 0.007, tier3 0/576)",
+      "source_packet": "SerendipityFoundry/D6A/REPORT_D6A.md",
+      "corrections_contradictions": [],
+      "why_retrieved": "hybrid search: 'D-5 findability executable artifact library solution advantage' (build_pack)",
+      "retrieval_method": "hybrid"
+    },
+    {
+      "claim_id": "C-3a1c49fa5a78",
+      "finding": "D-8's blind serendipity incubator returned S0 NO_EFFECT: accumulated executable history produced no statistically distinguishable improvement in exact task acquisition over the strongest history-free baseline under equal metered resources, and the null is informative because the instrument was validated sensitive before freeze.",
+      "status": "NOT_ESTABLISHED",
+      "claim_ceiling": "Instrument sensitivity validated pre-freeze via planted useful object (gain 1.00, ablation loss 1.00), so the null is a property of the ecology + learner, not of a blind instrument; preregistered design ceiling S3, with S4/S5 declared unlikely in the anti-tautology audit",
+      "agent": "Daedalus",
+      "mechanisms": ["accumulated executable history findability"],
+      "negative": true,
+      "quote": "Accumulated executable history, as constructed by this generation's machinery, produced NO statistically distinguishable improvement in exact task acquisition over the strongest history-free baseline under equal metered resources (delta = +0.100, 95% CI [-0.033, +0.233], exact McNemar p = 0.210). Zero of eight promoted z-candidates were admitted. The instrument was validated sensitive BEFORE freeze (planted useful object: gain 1.00, ablation loss 1.00), so this null is informative -- a property of the ecology + learner, not of a blind instrument.",
+      "metrics": "delta = +0.100, 95% CI [-0.033, +0.233], exact McNemar p = 0.210; 0/8 promoted z-candidates admitted; instrument sensitivity check gain 1.00 / ablation loss 1.00",
+      "source_packet": "SP-8ef6fce0eabb (D-8, agent_id Daedalus, experiment_id X-7d549eb65419)",
+      "corrections_contradictions": [
+        {"relation_type": "CONTRADICTS", "src_id": "C-3a1c49fa5a78", "dst_id": "C-3d12c440f087", "epistemic_class": "INFERRED", "classification": "APPARENT_UNDER_DIFFERING_CONDITIONS", "rationale": "Genuine opposite-outcome pair on 'accumulated executable history improves future search': D-5 blind SUPPORTED (+10.95pp) vs D-8 blind S0 NO_EFFECT. Substrates differ (program ecology vs foundry ecology). Side A (D-5): SVM-8 deterministic total straight-line stack VM (8-bit wraparound, 26 opcodes), task families F1-F6, 10,000 candidate evaluations per (arm, task). Side B (D-8): M1 vs M0 arms on a preflight-valid substrate; 42 non-control tasks, fixed metered budgets, machine verdict in results/gates_verdict.json."}
+      ],
+      "why_retrieved": "get_claim (from contradictions() exploration call against C-3d12c440f087, the core D-5 advantage claim); not surfaced by build_pack's queries",
+      "retrieval_method": "graph_contradiction + get_claim"
+    },
+    {
+      "claim_id": "C-cd8ef5fb0a65",
+      "finding": "Externally defined tasks on a preflight-valid substrate were 0/48 findable under the pointwise exact-match objective while substrate-emitted targets were 57% reachable; the emitted-vs-external findability gap is an obstacle D-4-style geometry assays cannot see.",
+      "status": "OBSERVED",
+      "claim_ceiling": "Findability is per-primitive heterogeneous even at depth 1 (SHRC 8/8 vs MULC3 0/8 at 8000 evals): task-level replication is mandatory; single attempts measure seed luck",
+      "agent": "Aporia",
+      "mechanisms": ["accessibility_geometry"],
+      "negative": true,
+      "quote": "Needle-landscape discovery: externally defined tasks on a preflight-valid substrate were 0/48 findable under the pointwise exact-match objective; substrate-EMITTED targets were 57% reachable. The gap between emitted-phenotype accessibility and external-task findability is the central obstacle D-[4-style geometry assays cannot see].",
+      "metrics": "0/48 external tasks findable under pointwise exact match; 57% of substrate-emitted targets reachable; deterministic bitwise partial credit restored a gradient (depth-1 ~80%, depth-2 ~40-60%, depth-3 ~20% at 30k)",
+      "source_packet": "agent_d5_blind/VERDICT.md",
+      "corrections_contradictions": [],
+      "why_retrieved": "hybrid search: 'accumulated executable history findability transplant substrate' (build_pack)",
+      "retrieval_method": "hybrid"
+    },
+    {
+      "claim_id": "C-98702f29ab81",
+      "finding": "For INSERT-complete mutation physics, reachability equals expressibility (R == E): every expressible witness is reachable by an explicit edge-checked path, so reachability can never be the failure mode and every failure on an expressible task is a findability failure.",
+      "status": "ESTABLISHED",
+      "claim_ceiling": "A successor wanting a live reachability axis needs physics without universal single-edit insertion; validated here only on ablated-physics synthetic cases",
+      "agent": "Aporia",
+      "mechanisms": ["accessibility_geometry", "latent_affordance"],
+      "negative": false,
+      "quote": "P1 PASS (structural): R == E theorem — INSERT-complete physics makes every expressible witness reachable by an explicit edge-checked path (<= 26 steps). Reachability carries no information in this generation; every failure on an expressible task is a findability failure. DISCLOSED.",
+      "metrics": "explicit edge-checked paths <= 26 steps for all 78 tasks; P0 78/78 constructive witnesses",
+      "source_packet": "agent_d5_blind/VERDICT.md",
+      "corrections_contradictions": [
+        {"relation_type": "QUALIFIES", "src_id": "C-98702f29ab81", "dst_id": "C-3d12c440f087", "epistemic_class": "OBSERVED"}
+      ],
+      "why_retrieved": "hybrid search: 'accumulated executable history findability transplant substrate' (build_pack)",
+      "retrieval_method": "hybrid"
+    }
+  ]
+}

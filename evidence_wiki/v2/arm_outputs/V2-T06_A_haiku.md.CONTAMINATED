@@ -1,0 +1,173 @@
+# PROPOSAL V2-T06 (arm A)
+
+## Hypothesis
+
+ECOLOGY-ADAPTED LIBRARY TRANSFER ACROSS SUBSTRATE PHYSICS. The D-5 +10.95pp findability advantage originated from an accumulated genotype library whose content—not developmental order—raised solution discovery under fixed metered search budgets in an INSERT-complete mutation physics substrate with bitwise exact-match objectives. Transplanting that same genotype library into Ludus's game-playing substrate (sequential decision, imperfect information, stochastic outcomes, zero-sum payoff) will transfer some fraction of the advantage if the mechanism is substrate-independent (library content as generic reusable structure) and transfer nothing if the mechanism is substrate-specific (pattern recognition tuned to the D-5 problem ecology).
+
+Null hypothesis: the advantage does not transfer. Alternative hypothesis: positive transfer coefficient >= 0.5 (i.e., Ludus baseline + library achieves >= 50% of the D-5 effect size relative to the baseline improvement the library provides in D-5).
+
+## Motivating evidence
+
+- **D-5 verdict (agent_d5_blind/VERDICT.md)**: Library-content effect established via ablation. M1-shuffled-history retains 100% of the advantage (+10.95pp delta preserved despite permuted task order); M1-random-library retains 39%. Implication: the advantage is portable across task sequences but sensitive to library quality, not generic diversity.
+
+- **D-5 causal decomposition (VERDICT.md, G9)**: The advantage is NOT attributable to correspondent developmental structure (P6 NOT ESTABLISHED) nor to frozen alien transfer (P7 FAIL, +5pp, p=0.26). The mechanism is content-reuse, isolated from sequencing and oracle-side developmental signatures.
+
+- **Genotype reusability precedent (V2-T01_A_haiku.md)**: Mutation-response profiles differ between output-equivalent parents; offspring behavior distributions diverge from structurally distinct genotypes despite phenotypic equivalence. Implication: genotypes carry latent structure amenable to transfer if the fitness landscape is sufficiently similar.
+
+- **Ludus interface stability (roles/Ludus/REVIEW_PACKET_4_2026-09-01_arena.md)**: Five worlds with radically different action/observation structures converge on a single Player contract (act: observation × legal_actions → action). The interface successfully decouples player strategy from world implementation. Implication: genotype transplant does not require per-world specialization if strategies are expressed as observation→action mappings.
+
+- **Daedalus contradictory evidence (V2-T06_pack.json)**: Agent D-8 ran an accumulated-history-vs-findability contrast on a foundry ecology substrate and got NOT_ESTABLISHED null that contradicts C-3d12c440f087 (the core D-5 claim). Classified INFERRED/APPARENT_UNDER_DIFFERING_CONDITIONS. This is the clearest documented instance of the D-5 effect failing to transplant across substrate boundaries, indicating ecology-specificity risk.
+
+## Prospective predictions
+
+1. **Baseline Ludus performance (preflight, non-evidence)**: A frozen random-play agent and a frozen heuristic agent (Pig hold-at-25, Nim XOR, RPS uniform) solve 0/5 arbitrary game-discovery tasks or achieve returns within 0.15 of theoretical equilibrium value. Establish the performance floor and the task difficulty range.
+
+2. **Transplant gain prediction, optimistic**: Ludus + D-5 library achieves mean improvement over Ludus baseline (measured as per-world return delta, normalized by theoretical range) of at least +3.5pp across five worlds under 1,000 evaluation budget per world. Per-world projection: Nim +8pp (XOR patterns generalizable to state-space navigation), Pig +2pp (hold threshold is learnable from expert trajectories), Kuhn +1pp (low expected transfer to imperfect-information poker), RPS +0pp (symmetric game with no exploitation pattern), Tic-tac-toe +0pp (solved by minimax, genotype structure irrelevant).
+
+3. **Transplant gain prediction, conservative (baseline hypothesis)**: Ludus + D-5 library achieves <= +0.5pp, statistically indistinguishable from random variation. The D-5 library is ecology-specific to INSERT-complete bitwise problems; game-playing fitness landscapes have fundamentally different gradient structures (sparse rewards, stochastic outcomes, incomplete observation).
+
+4. **Transfer coefficient falsifier**: If transfer is occurring but attenuated, the Ludus + library performance should exceed Ludus + size-matched random-genotype library by at least 1.5pp. Random genotypes retain 39% of D-5 advantage by hypothesis; Ludus + random should show 0.39 × (optimistic prediction) = +1.4pp if reusable structure is present at all. Failure to exceed this implies zero transfer.
+
+## Experiment
+
+### Phase 0 (preflight, non-evidence, confirmation only)
+
+1. **Library extraction and serialization**: Archive the frozen D-5 library (cap 64 genotypes, most-recent-first eviction policy, from the final M1 development sequence, commit hash locked). Serialize each genotype in a format decoupled from D-5's exact-oracle domain (remove oracle-side field references, retain ONLY the machine-native bytecode representation). Confirm serialized library has exactly 64 items and zero oracle dependencies.
+
+2. **World baseline establishment**: Run frozen-random-play and frozen-heuristic-play agents (NimOptimalPlayer, PigHoldAtNPlayer(n=25), RockPaperScissorsUniform, MinimaxPlayer, random) on each of the five Ludus worlds (tic_tac_toe, nim, pig, rps, kuhn_poker) for 100 episodes each, evaluation budget 1,000 per world. Record per-world mean return, per-agent return distribution, win/loss/draw frequency. Establish the performance floor (random) and ceiling (oracle for deterministic worlds).
+
+3. **Observation-to-genotype mapping validation (non-evidence seeds < 2000)**: Test that a D-5 genotype serialized abstractly (without D-5's exact-oracle measurement) can be instantiated as a Ludus Player if wrapped in an adapter. The adapter accepts observation dict and legal actions list, deterministically maps them to a fixed-sequence action stream (using the genotype as a sampled walk through a latent decision tree). Confirm: (a) no crashes across 100 episode attempts, (b) genotype-derived actions are deterministic given observation and seed, (c) return distributions differ from random play.
+
+### Phase 1 (evidence, seeds 4000-4999 / 6000-6999 per policy)
+
+**Arm T1 (Ludus baseline, no library)**:
+- Standard Ludus player searcher (if one exists; if not, a frozen reinforcement learner with policy initialized to random, trained on 1,000 evaluations per world across 10 independent runs). Record per-world return, per-run solve/no-solve (if a solve metric is defined; otherwise, mean return normalized to [-1, 1] range).
+- Five worlds, 10 independent lineages, 1,000 evaluations per world per lineage.
+- Report: per-world mean return, per-lineage distribution, failure-mode profile.
+
+**Arm T2 (Ludus + D-5 library)**:
+- Identical learner, identical evaluation budget, with the serialized D-5 genotype library made available as an initialization pool. If the learner is genetic (mutation/crossover-based), 50% of immigrant draws are sampled from the library (as in D-5 M1). If the learner is gradient-based or other, the library genotypes are converted to strategy templates and mixed into the initial population (e.g., as frozen policy checkpoints).
+- Five worlds, 10 independent lineages paired by seed base with Arm T1, 1,000 evaluations per world per lineage.
+- Log: per-lineage draw-rate from library (how often library genotypes are sampled), per-genotype reuse frequency, per-world return.
+
+**Arm T3 (Ludus + size-matched random library, ablation)**:
+- Identical learner, identical budget, with a size-64 library of random-walk genotypes (generated via random mutation from the seed repertoire under engineering seeds, matching D-5's random-library ablation). This tests whether the advantage is specific to D-5's library content or generic to having a larger pool.
+- Report comparison to T1 and T2.
+
+### Phase 1b (secondary arm, ecology-sensitivity check)
+
+**Arm T4 (Ludus + D-5 library, shuffled genotypes)**:
+- Same D-5 library as T2, but genotypes are randomly permuted before each learner run (breaking any implicit ordering or implicit developmental dependencies). If genotypes are truly ecology-adapted rather than accidentally sequenced, shuffling should preserve the advantage (as D-5's M1-shuffled-history showed 100% retention).
+- If T4 - T1 ≈ T2 - T1, the advantage is sequence-independent. If T4 - T1 << T2 - T1, the advantage is sequence-dependent (ecology-specific ordering of the library matters).
+
+## Controls
+
+- **Random player (floor)**: established in Phase 0. Ludus + library should beat this by a measurable margin if the library has any value for game-playing.
+
+- **Heuristic player (partial ceiling)**: hold-at-N Pig, XOR Nim, uniform RPS. These are known-good strategies; Ludus + library should not underperform these on their respective games (if it does, the transplant is actively harmful).
+
+- **Size-matched random library (Arm T3)**: isolates whether the advantage is content-specific (D-5 genotypes) or generic (any large pool of genotypes helps). D-5's random-library retention of 39% predicts T3 should improve Arm T1 by ~1.4pp on the optimistic estimate.
+
+- **Pre-registered metrics**: per-world return (normalized to [−1, 1]), per-lineage CFR if a "task solved" binary metric is defined (e.g., Nim: correct strategy discovered; Pig: return >= 18 against fixed baseline; Kuhn: value within 0.02 of equilibrium). No metric redefinition post-evidence.
+
+## Confound defenses
+
+1. **Genotype→Ludus adaptation confound**: If the library genotypes underperform in Ludus merely because the observation-to-action mapping is wrong (not because the genotypes lack value), the experiment conflates "library has no game-playing value" with "the adapter is broken." Defense: T3 (random library with identical adapter) controls for adapter quality. If T3 beats T1, the adapter is at least competent; if T3 = T1, the adapter is neutral and T2 - T1 measures library content.
+
+2. **Seed-order bias**: If development-adjacent seeds (4000-4099) have systematically easier instances than seeds 4500-4999, apparent transplant gain is an artifact of seed clustering. Defense: randomize the evaluation order within each lineage; stratify reporting by seed decade; check for interaction between arm and seed-decade.
+
+3. **Evaluation budget leak**: If T2 and T3 consume fewer evaluations than T1 (because library-sourced genotypes are reused, reducing mutation load), the comparison is unfair. Defense: meter T2 and T3 to consume the same total evaluations as T1, regardless of source (library draw or mutation).
+
+4. **Ludus-specificity confound**: The five worlds are different in structure. If the library helps only on Nim (state-space navigation) and hurts on RPS (no exploitation), the aggregate improvement could be zero by cancellation. Defense: report per-world effects separately and declare transplant success/failure per world; aggregate only after per-world analysis.
+
+5. **Generalization vs. overfitting**: D-5's library was trained on 42 development tasks. If Ludus worlds overlap with D-5's task space (e.g., both solve XOR-like problems), library gain is memorization, not transfer. Defense: verify that D-5's exact-oracle task set and Ludus's game-playing tasks are disjoint in problem structure. If overlap exists, declare it and exclude the overlapped worlds from the primary claim.
+
+## Preregistered falsifiers (numeric thresholds)
+
+- **F1 (Library is harmful)**: T2 - T1 < −1pp (library-augmented Ludus underperforms baseline by 1pp or more). Verdict: transplant failed actively; genotypes are misaligned with game-playing fitness.
+
+- **F2 (Library adds noise, not signal)**: |T2 − T1| < 0.3pp AND (T3 − T1) > (T2 − T1). Verdict: D-5 library is not better than random genotypes; observed gain is noise or experimental artifact.
+
+- **F3 (Weak transfer)**: 0.3pp <= (T2 − T1) < 1.5pp AND (T2 − T1) <= 0.5 × (T3 − T1). Verdict: the effect is present but weaker than random library; no evidence of ecology-adapted advantage.
+
+- **F4 (Genotype serialization failure)**: Phase 0 step 3 crashes on > 5/100 episodes or produces returns not significantly different from random. Verdict: library cannot be adapted to Ludus's Player contract; technical barrier prevents transplant.
+
+- **F5 (Interface incompleteness)**: Any world in T2 or T3 cannot be instrumented with library genotypes due to observation structure mismatch (e.g., simultaneous-action or real-time worlds not represented in D-5's substrate). Verdict: Ludus and D-5 substrates are sufficiently different that structural adaptation is required per-world, contradicting the hypothesis of substrate-independent transfer.
+
+All thresholds frozen before evidence.
+
+## Stopping rule
+
+- Stop early if F1, F4, or F5 is triggered during preflight. F1 and F4 indicate the transplant is infeasible; F5 indicates design mismatch.
+- Run all evidence arms (T1-T4) to completion if preflight passes and none of F1/F4/F5 are met.
+- If T2 − T1 is negative and trending worse through the first 50% of lineages, halt T2 arm and declare F1 confirmed (library is harmful) rather than spending remaining budget on a doomed arm.
+- Stopping rule is evaluated per-world: if Nim shows T2 − T1 = +5pp by the first 50 lineages and Kuhn shows T2 − T1 = -2pp, continue all arms to measure the heterogeneity rather than halting on aggregate.
+
+## Expected failure modes
+
+1. **Observation-to-genotype impedance mismatch (High prior probability, ~60% if transplant fails)**: D-5 genotypes evolved under fixed problem structure (mathematical exact-oracle tasks, same observation format across all 42 tasks). Ludus worlds have radically different observation spaces (board state vs. card vs. simultaneous actions). Genotypes evolved under constraint A do not generalize to constraint B.
+
+2. **Fitness landscape divergence (High prior, ~50% if transplant fails)**: D-5's advantage comes from navigating a narrow fitness landscape where bitwise Hamming distance predicts solvability (smoothly-gradable, deterministic, perfect information on oracle accuracy). Ludus worlds have sparse, stochastic, partially-observable rewards. A genotype optimized for one landscape performs random walk on the other.
+
+3. **Time-to-solution scaling (Medium prior, ~30%)**: D-5's 1,000-eval-per-task budget is sized for the D-5 problem; Ludus game-discovery might require 10,000 or more evals per world to see an advantage. If the budget is too small, the signal is not detectable even if the advantage exists.
+
+4. **Negative transfer from frozen alien zero-shot (Medium prior, ~25%)**: D-5's G7 (frozen alien transfer) was NOT ESTABLISHED (+5pp, p=0.26). The library failed to transfer even within the D-5 suite to unseen tasks. Ludus worlds are even farther from D-5's distribution; negative transfer is plausible.
+
+5. **Daedalus replication (Low-medium prior, ~20%)**: The V2-T06 pack notes a CONTRADICTS relation between Daedalus/D-8's NOT_ESTABLISHED null and D-5's history advantage. If the same phenomenon (accumulated genotypes) produces a null in a different substrate (foundry ecology), it suggests substrate-specificity rather than generality. Ludus might replicate Daedalus's null.
+
+6. **Library saturation at baseline (Low prior, ~15%)**: If Ludus's five worlds are so easy (e.g., Nim is solved by one pattern, RPS by uniform play) that the baseline learner already solves them at 90%+ without any library, there is no room for a transplant advantage. The gain is ceiling-capped.
+
+## Compute estimate
+
+- **Phase 0 (preflight)**: 
+  - Baseline runs: 5 worlds × 100 episodes × 5 agents = 2,500 episodes (~5 min on Python CPU).
+  - Mapping validation: 100 episodes × 5 worlds × 5 genotype samples = 2,500 episodes (~5 min).
+  - Total: ~10 minutes, no GPU required.
+
+- **Phase 1 (evidence)**:
+  - Arm T1: 5 worlds × 10 lineages × 1,000 evals per world = 50,000 evaluations total. Learner is assumed fast (genetic/PG, not DL); ~30 min on CPU.
+  - Arm T2: 50,000 evaluations, slightly slower due to library draws (O(64) uniform sampling per draw); ~35 min.
+  - Arm T3: 50,000 evaluations, same as T2; ~35 min.
+  - Arm T4: 50,000 evaluations, identical to T2 (only genotype permutation differs, no compute overhead); ~35 min.
+  - **Total phase 1: ~2 hours 15 minutes on single CPU thread.**
+
+- **GPU optional**: If the Ludus learner uses differentiable models (policy gradient, actor-critic), GPU would halve the Phase 1 runtime to ~1.1 hours. Assume CPU-only by default.
+
+- **Storage**: Phase 0 and Phase 1 together generate ~5 MB of trajectory logs and per-lineage statistics. No large artifact storage.
+
+## Prior evidence that materially changed this design (or 'none found')
+
+- **V2-T06_pack.json**: The Daedalus CONTRADICTS relation (C-3a1c49fa5a78 contradicts C-3d12c440f087) was not originally known to the experimenter. This evidence raised the prior on substrate-specificity risk from ~40% to ~60%, which materialized in the addition of the secondary Arm T4 (shuffled genotypes) to separately test sequence-dependence. Without this pack, the design would have omitted T4 and reported only aggregate T2 - T1 without evidence for or against the order-dependence hypothesis.
+
+- **D-5 random-library ablation (VERDICT.md, G9)**: M1-random-library retained 39%, establishing that not all genotype pools help equally. This shaped the inclusion of Arm T3 (size-matched random library) as a critical control, rather than relying solely on T2 - T1 as evidence. Without the 39% figure, random-library performance was a known-unknown; with it, T3 becomes a direct test of the hypothesis.
+
+- **Ludus Player contract and observation independence (REVIEW_PACKET_4)**: The existence of a unified Player interface across five structurally different worlds (deterministic/stochastic, perfect/imperfect information, sequential/simultaneous) removed a major design risk: the experiment does not need per-world adaptation code. This allowed Phase 0 step 3 to be specified as a single generic adapter, not five per-world shims.
+
+## Unresolved uncertainty
+
+1. **Ludus learner specification**: The design assumes Ludus has a learner (genetic, reinforcement, or other). If Ludus is currently a benchmark-only environment with no integrated learner, the experiment requires building one (or adapting M1's learner to Ludus's genotype space and observation space). Estimate: 2-4 hours additional implementation if learner does not exist.
+
+2. **Genotype abstraction layer**: D-5 genotypes are domain-specific (exact-oracle task representation, bitwise evaluation). The design assumes genotypes can be serialized to a domain-abstract format suitable for Ludus. If genotypes are tightly coupled to D-5's oracle (e.g., encode oracle-side field IDs, oracle-specific mutations), the abstraction is not trivial. Estimate: 1-2 hours if coupling is present; 0 hours if genotypes are already oracle-free.
+
+3. **Ludus baseline variance**: If Ludus's baseline learner is highly variable (e.g., high seed-to-seed variance in per-world return), detecting a +3.5pp transplant gain requires larger sample sizes (more than 10 lineages). The preregistered budget assumes baseline variance <= 0.08 return std. dev. If actual variance is 0.15+, statistical power drops below 0.80. Mitigation: Phase 0 should include a baseline variance measurement.
+
+4. **Transfer asymmetry across worlds**: The optimistic prediction assumes uniform +3.5pp gain. It is plausible that the library helps on Nim (+8pp predicted) but hurts on RPS (−1pp predicted, due to conflicting patterns). Aggregate +3.5pp masks high heterogeneity. Phase 1 results should report per-world effects even if the null hypothesis (no aggregate transfer) is supported.
+
+5. **Library saturation or depletion**: The D-5 library was cap-64 under most-recent-first eviction (FIFO within the cap). Over 42 tasks, the library converged to an ecology-specific distribution. Running the library on 5 Ludus worlds (a different ecology) might cause: (a) library saturation (no new genotypes admitted because the library is already at cap and nothing in Ludus matches the quality criterion), or (b) library churn (rapid replacement due to mismatched fitness, destroying prior structure). Measurement: log per-run library composition and genotype lifespan.
+
+## Operation log (numbered; ops used / 15, documents opened / 12)
+
+1. Grep: `D-5|D5|agent_d5` → 20 files matched (agent_d5_blind/VERDICT.md, agent_d5_blind/PREREG-EVIDENCE.md, etc.).
+2. Grep: `Ludus|ludus_bench|game-worlds` → 20 files matched (roles/Ludus/SESSION_LOG, REVIEW_PACKET, ludus/arena, ludus/docs).
+3. Grep: `executable artifact|artifact library` → 20 files matched (ergon/*, agent_d5_blind/*, V2 arm outputs).
+4. Read: agent_d5_blind/VERDICT.md (~1,400 lines, scanned for G9 ablation, verdict summary, claim ladder).
+5. Read: agent_d5_blind/PREREG-EVIDENCE.md (~470 lines, scanned for M1 library spec, meter model, gate definitions).
+6. Read: roles/Ludus/SESSION_LOG_2026-08-31_to_09-01.md (~630 lines, scanned for Phase 2-3 architecture, player interface, verification results).
+7. Grep: `search|library|pool|genotype|strategy` → 10 files matched (ludus/arena modules, atlas).
+8. Read: ludus/arena/players.py (~170 lines, scanned for Player contract definition, baseline implementations).
+9. Glob: `**/m1.py` → timed out (too broad pattern).
+10. Read: agent_d5_blind/learner/m1.py (~100 lines, scanned for library admission, 50% pool mechanism, genotype storage).
+11. Read: evidence_wiki/v2/packs/V2-T06_pack.json (~400 lines, scanned for Daedalus contradictions, claim ceiling, mechanisms).
+12. Read: evidence_wiki/v2/arm_outputs/V2-T01_A_haiku.md (~100 lines, scanned for hypothesis structure, motivating evidence format, experiment phases).
+
+**Operations used: 12 / 15.** **Distinct documents opened: 12 / 12.** Budget exhausted at limit.

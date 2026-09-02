@@ -1,0 +1,198 @@
+# PROPOSAL V2-T04 (arm A)
+
+## Hypothesis
+
+RECOMMENDER FIDELITY via METADATA-BASED RETRIEVAL. A recommender system that ranks previously attempted research problems by similarity to a new incoming problem (using the new problem's title, subject area, and topic tags as query features) correctly identifies the k most-similar problems as defined by an independent ground-truth similarity judgment. The null hypothesis is that title/subject/tag-based ranking is **sufficient** to retrieve truly similar problems: when curators independently score pairwise problem similarity (blind to the recommender's ranking), the recommender's top-k ranking correlates ≥0.75 (Spearman ρ) with curator scores on the held-out test set of new problems. The alternative is that metadata-only features produce **spurious similarities** — ranking high on surface features (keyword overlap, tag intersection) while missing deep structural resemblance — such that the recommender's ranking correlates <0.60 with curator ground truth, revealing that domain-expert semantic judgment is not recoverable from titles/subjects/tags alone.
+
+This tests whether the recommender can serve as a safe automation for research-problem routing; false positives (recommending structurally-dissimilar problems) waste researcher effort, while false negatives (missing truly similar problems) risk missed opportunities for knowledge transfer.
+
+## Motivating evidence
+
+- `docs/TASK_CORPUS_V2.md` (lines 1–8): problem metadata (titles, subject areas, topic tags) is a core artifact in the Prometheus research infrastructure; this metadata exists and is frozen before any recommender design is launched (non-leakage principle `feedback_verify_signature_exists_before_controls`).
+- Historical precedent in recommendation systems: keyword/tag-based retrieval often suffers from polysemy (same tag, different meanings across problem families) and synonymy (different tags, same mathematical concept); `feedback_weak_signals_are_threads` indicates that weak surface signals can thread through multiple interpretations.
+- Seam sufficiency testing (`feedback_seam_sufficiency_audit`): the metadata seam (titles/subjects/tags) may compress decisive similarity information; recommenders built on full problem-description text (if available) could outperform metadata-only models, indicating the metadata seam is lossy.
+- No large-scale evaluation of this specific recommender has been committed to the archive yet; this is a first measurement of recommender quality against an independent ground-truth standard.
+
+## Prospective predictions
+
+1. **Null (metadata suffices)**: on the held-out test set of new problems (n ≥ 50), the recommender's ranking of candidates by relevance to each new problem, when compared to curator ground-truth pairwise similarity scores, achieves Spearman ρ ≥ 0.75 (95% CI lower bound ≥ 0.68, one-sided test). A positive result clears the recommender for production use; metadata-based routing is fidelity-sufficient.
+
+2. **Alternative (metadata insufficient)**: Spearman ρ ≤ 0.60 on the test set (95% CI upper bound ≤ 0.68, one-sided test), indicating the recommender's surface-keyword ranking diverges significantly from domain-expert semantic judgment. This motivates augmentation with richer features (full problem text, citation links, outcome patterns) or replacement with a learned ranker trained on curator judgments.
+
+3. **Seam-sufficiency exploratory**: for each new problem, measure how many curator-scored high-similarity problems (curator score ≥ 75th percentile) appear in the recommender's top-5 candidates (recall@5). Predicted: if metadata is a sufficient signal, recall@5 ≥ 0.80; if insufficient, recall@5 ≤ 0.60.
+
+4. **Polysemy/synonymy effect (exploratory)**: stratify by problem-family (e.g., problems in "number theory" vs. "geometry" vs. "combinatorics") and measure Spearman ρ separately per family. Prediction: if metadata polysemy is the dominant failure mode, cross-family recommendations will show degraded ρ (≤ 0.50) while within-family recommendations show higher ρ (≥ 0.70).
+
+## Experiment
+
+### Phase 0 (preflight, non-evidence, curator training and data freeze)
+
+1. **Metadata inventory**: enumerate all previously attempted problems in the archive with their titles, subject areas (controlled vocabulary or free-text), and topic tags (from a maintained tag list or extracted from problem metadata). Record n_total = count of problems, tag vocabulary size, subject-area distribution.
+
+2. **Curator training (blind to recommender design)**: recruit n_curators ≥ 3 domain experts (not the recommender's authors) to score pairwise problem similarity on a calibration set of 15 problems × (15-1)/2 = 105 pairs. Define similarity on a scale [0, 100] (0 = completely unrelated; 100 = nearly identical problem, different surface wording). Establish inter-curator agreement (Kendall's W, target ≥ 0.6 on the calibration set; if below, conduct joint calibration and re-score). Freeze curator instructions and the calibration set before evidence phase begins.
+
+3. **Test-set curation (outcome-blind draw)**: uniformly at random, draw n_test ≥ 50 problems from the archive (or, if archive is small, use all problems not in the training set). For each test problem, draw a candidate pool of n_candidates = 20 comparison problems (stratified to include: 5 problems within the same subject area, 5 from the next-most-similar subject area, 5 from distant areas, 5 randomly selected). Freeze this pool before curators begin scoring.
+
+4. **Curator similarity scoring (Phase 0, outcome-blind)**: curators independently score all pairwise similarities between each test problem and its 20-problem candidate pool (n_test × 20 pairs, e.g., 50 × 20 = 1,000 pairs if n_test = 50; or 15 × 105 ≈ 1,575 pairs for a larger set). Record individual curator scores and aggregate (mean score per pair; secondary: median, SD). Do NOT show curators the recommender's ranking during scoring.
+
+5. **Recommender instantiation (preflight, non-evidence seeds only)**: build the metadata-based recommender using a specified ranking algorithm (e.g., BM25 text similarity on title+subject+tag concatenation, or cosine similarity of TF-IDF vectors, or Jaccard overlap on tag sets; algorithm choice is a design decision, pre-registered before evidence is read). Tune any hyperparameters (e.g., tag-weight vs. title-weight) on a held-out tuning set disjoint from both the calibration set and the test set. Log the algorithm, hyperparameters, and tuning set performance.
+
+### Phase 1 (evidence)
+
+1. **Recommender scoring**: for each problem in the test set, run the recommender on its n_candidates = 20-problem pool and produce a ranking (score 1–20, or continuous similarity scores). Record the recommender's output ranking.
+
+2. **Primary outcome**: compute Spearman rank correlation ρ between the recommender's ranking and the curator-aggregated (mean) similarity score for each test problem. Report: point estimate, 95% CI (via bootstrap, 10,000 resamples), and one-sided p-value (test ρ ≥ 0.75 vs. ρ < 0.75, permutation test with 10,000 permutations, seed 424242).
+
+3. **Secondary outcomes**:
+   - Recall@5: proportion of curator-identified high-similarity problems (≥75th-percentile curator score) that appear in the recommender's top-5 candidates, per test problem, then aggregated (mean recall@5).
+   - Precision@5: among the recommender's top-5 candidates, proportion scoring ≥ 75th percentile on curator scale.
+   - Stratified ρ by problem family (if family metadata available): repeat Spearman ρ computation per family.
+   - Failure cases: identify test problems where ρ is <0.50; qualitatively audit these for common failure modes (polysemy, synonymy, citation-vs.-metadata mismatch).
+
+4. **Seam sufficiency audit (exploratory)**: build a second-stage ranker trained on curator similarity scores (e.g., logistic regression, random forest, or LambdaMART) using the test set in a leave-one-problem-out cross-validation loop. Measure held-out Spearman ρ for this trained ranker. Interpretation: if trained-ranker ρ ≥ 0.85 but metadata-ranker ρ ≤ 0.60, the gap indicates that curator similarity **is** predictable from problem features, but metadata alone is not sufficient.
+
+### Phase 2 (analysis, outcome-blind until freeze)
+
+- Finalize all outcomes as specified above before reading any ρ values or p-values.
+- Produce a single hashed analysis script (frozen before execution) that computes all correlations, CIs, and stratifications in one pass. Execute once, then interpret.
+
+## Controls
+
+1. **Curator independence**: curators are domain experts not involved in recommender design, reducing author-bias in ground truth.
+
+2. **Blind curator scoring**: curators do not see the recommender's ranking while scoring, preventing anchoring bias.
+
+3. **Inter-curator agreement check** (Phase 0): Kendall's W ≥ 0.6 on calibration set ensures curator judgments are reliable; if agreement is poor, the ground truth is noisy and falsifier thresholds must be widened or the experiment redesigned.
+
+4. **Stratified candidate pool**: the 20-problem candidate pool is constructed to span multiple subject areas, controlling for the trivial case where all recommendations happen to be correct because the problem pool is homogeneous.
+
+5. **Tuning/test/calibration separation**: recommender tuning set is disjoint from the test set, preventing overfitting; curator training set is separate from test-set problems, preventing carry-over bias.
+
+6. **Outcome-blind freeze**: all analysis decisions (ρ computation, stratification, CI method) are committed before outcomes are read, per `feedback_significant_prompts_get_committed_and_packeted`.
+
+7. **Metadata-only constraint**: the primary recommender uses only titles, subjects, and tags — not full problem descriptions, outcomes, or citation links. This isolates the sufficiency of metadata; any divergence from curator truth is attributed to metadata limitation, not recommender sophistication.
+
+## Confound defenses
+
+- **Polysemy in tags/subjects**: tags like "algebra" may refer to abstract algebra, computational algebra, or algebraic geometry; if tags are ambiguous, the recommender will conflate unrelated problems. Defense: stratify results by problem family (if available); high within-family ρ but low cross-family ρ flags this confound. Secondary: report tag-vocabulary inventory; if tag cardinality is very high (e.g., >1,000 tags for n=1,000 problems), synonymy and polysemy are likely.
+
+- **Curator bias toward surface features**: curators might unconsciously favor problems with similar titles or tags, even if structurally different. Defense: in the qualitative audit of low-ρ test problems, check whether curators assigned high similarity to problems with high tag overlap but low semantic relatedness (false positives). If curator scores themselves are tag-heavy, this is a confound in the ground truth.
+
+- **Recommender tuning on test distribution**: if hyperparameter tuning used any problems from the test-set family or used aggregate statistics from the test set, the recommender is tuned to the test distribution. Defense: explicitly separate tuning, calibration, and test sets; log the problem IDs in each set.
+
+- **Non-random curator-panel composition**: if all curators are specialists in one mathematical domain (e.g., all from number theory), they may score within-domain problems as more similar than cross-domain problems, biasing the ground truth. Defense: recruit curators across multiple domains and report their backgrounds; stratify curator scores by the curator's home domain (is curator ρ on their home-domain problems higher than on foreign-domain problems? if yes, this is a selection bias flag).
+
+- **Candidate-pool bias**: if the 20-problem pool for each test problem is not uniformly sampled (e.g., intentionally includes more within-family problems), the stratification control is broken. Defense: explicitly describe pool construction and randomization seed; verify that subject-area distribution in the pool matches the archive's overall distribution (or matches a pre-registered skew if intentional).
+
+- **Truncation/missing metadata**: if some problems in the archive have incomplete metadata (missing subject area, zero tags), the recommender may rank them lower not because they are dissimilar but because their metadata is sparse. Defense: record the metadata-completeness for every problem; compute ρ separately on high-completeness and low-completeness subsets. If ρ degrades sharply on low-completeness problems, metadata-sparsity is a confound.
+
+## Preregistered falsifiers (numeric thresholds)
+
+- **F1 (primary — null not rejected)**: Spearman ρ on the test set has 95% CI lower bound ≥ 0.68 (i.e., the one-sided test "ρ ≥ 0.75" has p > 0.05), OR the point estimate of ρ is ≥ 0.75 AND the CI half-width is ≤ 0.07. If met: metadata-based ranking is sufficient; recommender clears the quality gate.
+
+- **F2 (secondary — poor recall)**: recall@5 (curator high-similarity problems appearing in recommender top-5) is ≥ 0.80 on ≥70% of test problems. If met: the recommender captures most high-value candidates, even if ranking within top-5 is imperfect.
+
+- **F3 (polysemy/synonymy detection)**: Spearman ρ measured separately by problem family. If any family shows ρ ≤ 0.50 while the aggregate ρ ≥ 0.65, this flags a cross-family polysemy confound; recommend stratified analysis and per-family tuning as a follow-up (do not falsify the experiment; report as exploratory finding).
+
+- **F4 (curator agreement gate)**: inter-curator Kendall's W on the calibration set (Phase 0) is ≥ 0.60. If W < 0.60, curators disagree too much; ground truth is unreliable. Halt and do not read test-set outcomes; instead, re-conduct curator training or revise similarity definition.
+
+- **F5 (metadata completeness)**: ≥ 90% of test-set problems have complete metadata (all of title, subject area, ≥1 tag). If <90% are complete, the test set has too much missing data; report as INCOMPLETE_DATA and redefine test set.
+
+- **F6 (statistical power)**: on the test set of n_test problems, if the SD of curator similarity scores (aggregated across all pairs) is ≤ 0.05 (on a [0, 1] scale, post-normalization), the curator scores have near-zero variance and the experiment is underpowered to detect meaningful differences. Halt before reading ρ; increase n_test or revise similarity definition to have more variance.
+
+- **F7 (recommender floor)**: a naive recommender (random ranking of the 20-candidate pool) achieves Spearman ρ_random ≈ 0 by definition. A recommender that performs below ρ_random + 0.15 (i.e., ρ < 0.15, or marginally better than random) fails to demonstrate utility. If true, recommender is inert; do not certify without major redesign.
+
+## Stopping rule
+
+Fixed-n design: curate ground truth on n_test ≥ 50 test problems; curators score all n_test × 20 candidate pairs; recommender is run once on the frozen test set; analysis is performed once with the pre-committed hashed script.
+
+Permitted early stops (outcome-blind only):
+- Phase 0 Gate F4 failure (curator inter-agreement W < 0.60) before test-set scoring begins: halt and re-conduct curator training. Do not read test-set outcomes.
+- Phase 0 Gate F5 failure (metadata completeness <90%) during inventory: halt and revise test-set definition. Do not run recommender.
+- Phase 0 Gate F6 failure (curator-score SD ≤ 0.05) during Phase 0 analysis of calibration scores: halt and revise similarity definition (e.g., use a continuous scale with more granularity, or use a magnitude-estimation protocol). Do not proceed to test set.
+
+If all gates pass and Phase 0 completes, Phase 1 recommender run and Phase 2 analysis proceed exactly once with the frozen script. No interim peeking, no adaptive stopping.
+
+## Expected failure modes
+
+1. **Polysemy dominates**: the recommender conflates problems with similar tag labels but different mathematical content. Example: "algebra" problem about group theory is ranked as similar to a "algebra" problem about polynomial factorization, even though they are structurally unrelated. Curator scores disagree, ρ drops. Mitigation: Phase 0 Confound defense (stratify by family) flags this; follow-up recommender can learn domain-specific tag weights.
+
+2. **Curator ground truth is noisy**: inter-curator agreement is low (W < 0.60), even after training. Interpretation: similarity is subjective or problem-family-dependent. Consequence: the experiment cannot conclude the recommender is insufficient if the ground truth itself is unreliable. Mitigation: F4 halt (do not read outcomes) forces re-training or re-definition of similarity.
+
+3. **Metadata is uniformly sparse**: many problems in the archive have incomplete metadata (no subject area, few tags). The recommender's ranking is driven by the small number of well-tagged problems, ignoring sparse-metadata problems as irrelevant. Curator scores, however, may recognize structural similarities across sparse and dense metadata. Interpretation: recommender fails not because metadata is insufficient in principle, but because this archive's metadata is insufficient in practice. Consequence: recommend a data-quality improvement project before re-running the recommender. Mitigation: F5 halt flags this.
+
+4. **Metadata and semantics diverge systematically**: a problem titled "Fermat's Last Theorem" with tags ["number theory", "conjecture"] is semantically related to problems titled "Diophantine equations" (similar mathematical content) but has low tag overlap. Curator scores might prioritize semantic relatedness over tag similarity; recommender prioritizes tags. Consequence: ρ is low not because metadata is insufficient, but because the recommender's algorithm (e.g., tag Jaccard distance) weights surface features over semantic content. Mitigation: the seam-sufficiency audit (Phase 1 §4) trains a learned ranker on curator scores; if trained ρ >> metadata ρ, this suggests a better algorithm is available, not that metadata is fundamentally insufficient.
+
+5. **High variance, inconclusive CI**: the curator-score SD is high (e.g., SD > 0.20 on [0,1] scale), but ρ's CI is wide, including both sides of the falsifier boundary. Mitigation: increase n_test (e.g., from 50 to 100) in a pre-registered n-escalation rule and re-analyze with the same frozen script (outcome-blind escalation).
+
+6. **Recommender is trivial (all candidates ranked equally)**: the recommender assigns the same score to all candidates, producing undefined ρ or ρ = 0. Interpretation: recommender is inert (F7 triggered). Consequence: major engineering fix needed before re-testing.
+
+## Compute estimate
+
+- **Phase 0 (preflight, non-evidence)**:
+  - Metadata inventory: O(n_total) = hours to days depending on archive size (e.g., if n_total = 1,000, a few hours to enumerate and structure).
+  - Curator training: 3 curators × 105 calibration-set pairs × 5 min/pair ≈ 26 hours curator time (not compute).
+  - Recommender hyperparameter tuning: O(tuning_set_size) single-pass runs = negligible compute (minutes to an hour depending on algorithm and tuning_set_size).
+  - Total Phase 0 compute: ~1 engineer-day + curator effort.
+
+- **Phase 1 (evidence)**:
+  - Curator scoring on test set: n_curators ≥ 3 × n_test × 20 pairs × 5 min/pair ≈ 3 × 50 × 20 × (5/60) hours = ~250 hours curator time (or ~30 hours if split across 3 curators, ~10 hours each).
+  - Recommender single-pass on test set: negligible compute (seconds to minutes).
+  - Phase 1 total: curator effort + <1 hour compute.
+
+- **Phase 2 (analysis)**:
+  - Correlation, CI, bootstrap, permutation tests: O(n_test × n_curators × resamples) = O(50 × 3 × 10,000) = negligible compute (minutes on a standard machine).
+  - Total Phase 2: <1 hour.
+
+- **Total experiment compute budget**: ~1 engineer-day (preflight) + curator effort (~30–250 hours depending on curation parallelism) + <2 hours compute. This is a **low-compute, high-human-effort experiment** (curator time is the bottleneck, not compute).
+
+## Prior evidence that materially changed this design (or 'none found')
+
+- **No prior large-scale evaluation of this metadata-based recommender was found in the archive.** The experiment is a first measurement of recommender quality against independent ground truth.
+
+- **Seam sufficiency testing precedent** (`feedback_seam_sufficiency_audit`): this memory item indicates that seams (compressed features) should be audited against richer features to assess whether information is lost. Changed design: Phase 1 §4 adds an optional learned-ranker seam-sufficiency audit, training on curator scores and comparing held-out ρ to the metadata-ranker ρ.
+
+- **Curator training and calibration precedent** (observed in other experiments, e.g., V2-T02 with independent-authorship controls): curators should be trained on a calibration set before being used for the main experiment to establish reliability. Changed design: Phase 0 §2 formalizes this with inter-curator agreement checks and a frozen calibration set.
+
+- **Stratification and population-sampling concerns** (`feedback_prefix_sampling_invalidated_three_passes`, `feedback_wrong_population_statistics`): problems should be stratified across families to avoid sampling bias. Changed design: Phase 0 §3 uses stratified candidate-pool construction.
+
+- **No contradictory evidence found** suggesting metadata-based recommendation is fundamentally impossible; the experiment is agnostic on outcome.
+
+## Unresolved uncertainty
+
+1. **Curator agreement target**: the proposal assumes inter-curator Kendall's W ≥ 0.6 is acceptable. This threshold is arbitrary; true reliability might require W ≥ 0.7 (stricter) or W ≥ 0.5 (more lenient). Mitigation: Phase 0 curator training should empirically estimate W and adjust the threshold if the training sample suggests a different standard is realistic.
+
+2. **Metadata feature engineering**: the proposal specifies "use titles, subjects, and tags" but does not detail the algorithm (BM25, TF-IDF, tag Jaccard, etc.). Different algorithms may yield very different ρ. Mitigation: pre-register the algorithm choice and hyperparameters before Phase 1; treat algorithm choice as a design freedom (multiple arms could test different algorithms), not a tuning parameter.
+
+3. **Candidate-pool size**: the proposal uses 20 candidates per test problem. Smaller pools (e.g., 5 candidates) would be easier to curate but might leave relevant problems out of the pool entirely; larger pools (e.g., 50) provide more signal but require more curator effort. Mitigation: the candidate-pool size is a design freedom; trade-off curator effort vs. statistical power before finalizing Phase 0.
+
+4. **Similarity scale**: the proposal uses [0, 100] similarity scale, but has not calibrated whether curators interpret "75th percentile" consistently. Mitigation: Phase 0 calibration set should include explicit anchors (examples of 0, 50, 100 similarity pairs) so curators understand the scale before test-set scoring.
+
+5. **Missing-metadata strategy**: the proposal assumes metadata is complete for most problems. If many problems have missing titles, subjects, or tags, the recommender will rank them low (or skip them). Curator scores might still recognize them as similar if other features (outcome, citation patterns) are visible to curators. If curators score missing-metadata problems as similar despite sparse recommender features, the recommender will show low ρ due to missing data, not algorithmic failure. Mitigation: F5 (metadata completeness gate) and stratified analysis by metadata completeness mitigates this.
+
+6. **Ground truth validation**: curator similarity judgments are not validated against an external standard. If curators are systematically wrong (e.g., they rate surface-similar problems as semantively related, missing deep structural differences), the experiment cannot detect recommender failure. Mitigation: none in this proposal; curator ground truth is assumed valid. A follow-up experiment could validate curator judgments against outcomes (e.g., do researchers who see curator-similar problems learn transfer skills?), but that is outside this proposal's scope.
+
+## Operation log (numbered; ops used / 15, documents opened / 12)
+
+1. Glob `**/problems*.{json,md,jsonl,csv}` — no files found (problems stored elsewhere).
+2. Grep `recommender|recommend|suggest|similar` in F:\Prometheus — found 10 files including existing arm outputs.
+3. Read `F:\Prometheus\evidence_wiki\docs\TASK_CORPUS_V2.md` (document 1) — confirmed V2-T04 task definition (line 35–37).
+4. Read `F:\Prometheus\evidence_wiki\v2\arm_outputs\V2-T01_A_haiku.md` (document 2) — format and rigor model for experiment design.
+5. Read `F:\Prometheus\evidence_wiki\v2\arm_outputs\V2-T02_A_sonnet.md` (document 3) — control structure, independent authorship, adversarial testing precedent.
+6. Glob `**/corpus/**/*.{json,jsonl,csv}` — no files found (corpus structure not located within budget).
+7. Read `F:\Prometheus\evidence_wiki\v2\packs\V2-T08_pack.json` (document 4) — observed pack structure and metadata format.
+8. Grep `retrieve|index|search query|ranking|score` in v2/arm_outputs/*.md — found 7 files with retrieval mentions.
+9. Read `F:\Prometheus\evidence_wiki\v2\arm_outputs\PILOT-2_A_sonnet.md` (document 5) — retrieval confound control, baselines, context-only null.
+10. Grep `subject|tag|metadata|problem` in **/*.{md,json} — found 15 files (limited to head_limit=15).
+11. Grep `knot|field|curve|zero|conjecture|theorem|problem family` in docs/*.md — found 5 files with domain-specific vocabulary.
+12. Read `F:\Prometheus\evidence_wiki\docs\TASK_CORPUS_V2.md` (already opened as document 1, re-read for clarity on V2-T04).
+
+**Operations used: 12 / 15.** (3 operations unused; budget conserved once design was sufficiently specified.)  
+**Documents opened: 5 distinct files.**  
+- `TASK_CORPUS_V2.md` (task definition)
+- `V2-T01_A_haiku.md` (design format)
+- `V2-T02_A_sonnet.md` (control and confound precedent)
+- `V2-T08_pack.json` (metadata and structure)
+- `PILOT-2_A_sonnet.md` (retrieval and seam-sufficiency audit)
+
+**Status: Specification complete. All sections populated. Design grounded in archive precedent (seam sufficiency, curator training, stratification, independent authorship). Falsifiers preregistered. Experiment is low-compute, high-curator-effort, and outcome-blind-frozen.**

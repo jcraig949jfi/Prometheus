@@ -1,0 +1,46 @@
+[
+  {
+    "proposal": "P",
+    "D1": 2, "D3": 3, "D4": 2, "D5": 3, "D6": 2,
+    "justifications": {
+      "D1": "\"mark quantities predating their source claim as 'metadata_incomplete'; do not flag these as misaligned, only as unverifiable\" — assumption-auditing guards exist, but the summary's circular-derivation failure mode (columns computed under the tested conjecture) is never explicitly quarantined.",
+      "D3": "\"If ≥2 metrics with documented fail-dangerous or measurement-bias sources lack paired regulators ... the audit FAILS\" — >=2 numeric count thresholds plus phase stopping rules, but no cheap early hypothesis-killing falsifier.",
+      "D4": "\"Null ledger: Run the same audit against a synthetic ledger with random quantity values\" — at least one confound isolated by design, but the summary's known circularity confound has no concrete element.",
+      "D5": "\"no automated check flagged this reversal for dependent calculations\" — a clearly new internal-audit question, without an explicit statement of the new empirical cell.",
+      "D6": "\"halt and report 'insufficient structured quantity–claim binding to proceed'\" — the misaligned vs aligned hypotheses get different predicted flag counts, but a zero-flag outcome has no pre-committed reading."
+    }
+  },
+  {
+    "proposal": "Q",
+    "D1": 4, "D3": 4, "D4": 4, "D5": 4, "D6": 4,
+    "justifications": {
+      "D1": "\"rank ≥2 results are reported only as 'internal table consistency,' never as 'BSD verification'\" — the circularity failure mode is converted into the perturbation-injection discriminator (predictions 2-3, F2).",
+      "D3": "\"F4: HALT before scaling if independent re-derivation of 'every distinct sha_an is a perfect square' ... produces any counterexample\" — a cheap early mechanism-independent falsifier plus numeric F1-F3 and a staged stopping rule.",
+      "D4": "\"Positive control: hand-verified famous curves (step 1) — validates the arithmetic itself\" plus the perturbation negative control — the summary's confounds each addressed and the instrument's detection power is demonstrated.",
+      "D5": "\"A naive whole-table audit of this identity will report a near-universal 'pass,' but that pass is largely tautological on the rank ≥ 2 stratum\" — states the non-circular-stratum cell it adds beyond the full-table prior.",
+      "D6": "\"the (expected) failure to catch them on rank ≥2 is itself the key measured output, not noise to be explained away\" — every branch pre-committed, including NOT_ESTABLISHED when provenance metadata is absent."
+    }
+  },
+  {
+    "proposal": "R",
+    "D1": 1, "D3": 4, "D4": 2, "D5": 3, "D6": 3,
+    "justifications": {
+      "D1": "\"For curves with rank ≤ 2 (high confidence in the BSD formula accuracy), compute the LHS of BSD (Sha_an × Reg × prod c_p)\" — the design uses conjecture-derived sha_an as a verification endpoint; the circularity failure mode is never mentioned, and the rank restriction (motivated by formula confidence, not provenance) still includes the contaminated stratum.",
+      "D3": "\"F1 — rank-regulator consistency (fatal): Any curve with rank=0 and regulator > 0.001 ... Count: 0 allowed\" — a cheap early logic-level falsifier plus numeric F2-F5 and a staged stopping rule with hard stops on F1/F2.",
+      "D4": "\"pre-register the normalization standard before the audit begins\" — several relevant confounds (population, normalization, staleness) are isolated, but the summary's known circularity confound has no concrete element.",
+      "D5": "\"No existing audit loop was found in the codebase that systematically re-verifies stored derived quantities against their conjectures\" — a new storage-integrity question, without an explicit new-cell statement.",
+      "D6": "\"If F1 or F2 fails ... This signals a tool-level error in prometheus_math ... not a schema-level issue\" — most failure branches route to distinct conclusions, but a pass cannot be distinguished from tautological consistency when sha_an is back-solved, so not every branch is distinct."
+    }
+  },
+  {
+    "proposal": "S",
+    "D1": 4, "D3": 4, "D4": 4, "D5": 3, "D6": 4,
+    "justifications": {
+      "D1": "\"a back-solved row MUST show near-zero residual by construction, and if it doesn't, the provenance tag itself is untrustworthy\" — circularity is converted into the Phase-0 provenance split with F3 validating the classifier itself.",
+      "D3": "\"F1: if ... fewer than 30 joinable rows in any single object family, the family is DECLARED UNTESTABLE\" — cheap early independent falsifiers (F1-F3) plus numeric F4/F5 and phase-wise stopping verdicts.",
+      "D4": "\"the true-paired residual distribution's median is not below the 5th percentile of the shuffled-pairing residual distribution\" — every summary confound addressed plus canary and permutation checks demonstrating the statistic can detect real pairing signal.",
+      "D5": "\"the audit's first job is to separate these two populations before scoring anything\" — a defensible superseding extension of the consistency audit, but the prior full-table result is not explicitly positioned as the cell being superseded.",
+      "D6": "\"a structural zero is not evidence of agreement\" — UNTESTABLE / DESIGN-INVALID / INSTRUMENT-BROKEN verdicts plus first-class coverage accounting pre-commit every branch including the vacuous reading."
+    }
+  }
+]

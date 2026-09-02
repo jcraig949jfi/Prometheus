@@ -1,0 +1,139 @@
+{
+  "task": "V2-T10: revive 2026-Q2 idea of ranking candidate cross-domain bridges between object catalogs (knots, number fields, elliptic curves, zeros) by feature-vector similarity, and validate it",
+  "canonical_revision": 838,
+  "queries": [
+    "cross-domain bridge similarity between object catalogs",
+    "feature vector similarity elliptic curves knots number fields zeros",
+    "native verb generic operator relation discovery",
+    "permutation null tensor coupling mutual information bias sparse histogram",
+    "prime atmosphere detrend cross-dataset structure primes"
+  ],
+  "mechanisms": [
+    "feature geometry vs object-level coupling",
+    "permutation null / shuffled-label null",
+    "native verb vs generic operator vocabulary",
+    "McMullen K3 bridge reverse-substitution"
+  ],
+  "selection_note": "22 items returned by build_pack (k=5 per query, 5 queries + 4 mechanism terms), narrowed to the 10 below. Kept: (a) the exact prior cross-domain coupling-tensor program over NF/Artin/EC/MF/knots, whose central finding is that the tensor measures feature GEOMETRY not object-level coupling; (b) the two concrete bridge attempts inside that program that were tested and killed (knot re-encoding with correct features, McMullen K3 Salem-field bridge); (c) the paired generic-vs-native-operator result, since it bears directly on whether a generic feature-vector similarity metric can find anything a bespoke domain operator would; (d) two validation-methodology items (a ranking gain declared VACUOUS under a shuffled-label null; a prime-conductor selection-effect confound rescued by stratification) since this task's second half is explicitly about validating a ranking; (e) one data-integrity item on the elliptic-curve catalog (majority of object_id rows were NULL from a desynced sequence) as a caution for anyone building feature vectors off that table today. Dropped as off-topic: Ergon Gen-1A/Gen-1B behavioral-redundancy and library-Jaccard findings, greedy-LoRA transfer kill, Zaremba spec-mismatch retraction, BSD/analytic-rank agreement findings (catalog QA, not bridging), theseus/corpus file-population split, syntax-only relevance-keying kill, h4/148-L cross-relation transfer retraction, and the D-3 taxonomy-neutrality-gate tautology finding — all real findings but not about cross-catalog similarity bridging or its validation. Evidence only; no design conclusions drawn.",
+  "items": [
+    {
+      "claim_id": "C-8f20c74fa0cf",
+      "finding": "The tensor measures feature geometry, not object-level coupling, confirmed across all three scorers.",
+      "status": "SUPPORTED",
+      "claim_ceiling": "Batch 01 open-problem tests survive (direct DB queries, not tensor)",
+      "agent": "Aporia",
+      "mechanisms": ["projection_equivalence"],
+      "quote": "- Tensor measures FEATURE GEOMETRY, not object-level coupling (all 3 scorers confirmed)",
+      "source_packet": "roles/Aporia/SESSION_JOURNAL_20260415.md",
+      "why_retrieved": "hybrid search: 'cross-domain bridge similarity between object catalogs'"
+    },
+    {
+      "claim_id": "C-1938a4759fd8",
+      "finding": "Re-encoding knots with correct mathematical features (Mahler measure, root-of-unity evaluations) produced no coupling signal, refuting the feature-mismatch explanation of knot silence.",
+      "status": "REFUTED",
+      "claim_ceiling": "knot silence is genuine (H3 leading hypothesis)",
+      "agent": "Ergon",
+      "mechanisms": ["native_vocabulary"],
+      "quote": "- **P1.3 knot re-encoding**: NO SIGNAL even with correct mathematical features (Ergon)\n- **My feature mismatch thesis for knots**: WRONG. Even Mahler measure + root-of-unity evaluations don't create coupling.",
+      "metrics": "NO SIGNAL",
+      "source_packet": "roles/Aporia/SESSION_JOURNAL_20260415.md",
+      "why_retrieved": "hybrid search: 'feature vector similarity elliptic curves knots number fields zeros'"
+    },
+    {
+      "claim_id": "C-534275646eeb",
+      "finding": "The H101 prediction that small-Salem number fields appear as hyperbolic knot trace fields via the McMullen K3 bridge is cleanly killed: 245,280 reverse-substitution evaluations by Ergon produced 0 hits at 10^-40 tolerance.",
+      "status": "REFUTED",
+      "claim_ceiling": "Scope: shape-field not iTrF, 3-13 crossing census; extension possible but H101 as stated is cleanly killed.",
+      "agent": "Aporia",
+      "mechanisms": ["transfer_mediation"],
+      "quote": "My void prediction (small-Salem NFs should appear as knot trace fields via McMullen K3 bridge) was tested by Ergon via reverse-substitution: evaluate each of the 5 Salem polynomials at each of the 12,963 hyperbolic knot shape field roots. **245,280 evaluations, 0 hits at 10^-40 tolerance.**",
+      "metrics": "245,280 evaluations, 0 hits at 10^-40 tolerance (5 Salem polynomials x 12,963 shape field roots)",
+      "source_packet": "roles/Aporia/SESSION_JOURNAL_20260422.md",
+      "why_retrieved": "hybrid search: 'feature vector similarity elliptic curves knots number fields zeros'"
+    },
+    {
+      "claim_id": "C-1f1a743fce1b",
+      "finding": "The NF backbone bond structure was killed: a permutation null (z=0.0) shows the bond structure is distributional, not object-level.",
+      "status": "REFUTED",
+      "claim_ceiling": "batch 01 open-problem tests survive because they are direct DB queries, not tensor-based",
+      "agent": "Harmonia",
+      "mechanisms": ["null_model_discipline", "projection_equivalence"],
+      "quote": "- **NF backbone**: Permutation null (z=0.0) proves bond structure is distributional, not object-level (Harmonia)",
+      "metrics": "z=0.0 under permutation null",
+      "source_packet": "roles/Aporia/SESSION_JOURNAL_20260415.md",
+      "why_retrieved": "hybrid search: 'permutation null tensor coupling mutual information bias sparse histogram'"
+    },
+    {
+      "claim_id": "C-e0b3b4966385",
+      "finding": "The tensor latent-rank claims (effective dimension <= 5, SVT rank 12-16, 3D core 48-74% variance) were retracted: SVT assumptions are violated by the sparse ordinal MNAR tensor, and most-tested cells coincide with most-loaded SVD columns.",
+      "status": "RETRACTED",
+      "claim_ceiling": "F011/F013/F015 durable-response clustering under P028 Katz-Sarnak survives as an empirical note; tensor stays useful as bookkeeping",
+      "agent": "Harmonia",
+      "mechanisms": ["confound_conditioning", "instrument_tautology"],
+      "quote": "**Status:** RETRACTED (strong form falsified; amended weak form unsupported by the SVT method). **Mechanism:** SVT assumes continuous real-valued entries, observed-at-random missingness, and low-rank + Gaussian-noise generative structure. The tensor is sparse ordinal {-2,-1,0,+1,+2} with 0=unobserved...",
+      "metrics": "~52% of any rank-flavored signal attributable to row/col density marginals alone; pass_overall=FALSE",
+      "source_packet": "harmonia/memory/retraction_registry.md",
+      "why_retrieved": "hybrid search: 'permutation null tensor coupling mutual information bias sparse histogram'"
+    },
+    {
+      "claim_id": "C-96a0e90f4eeb",
+      "finding": "One native verb (quadratic twist) found 4,476 exact relations where seven generic operators found zero on the same objects and representation — resolving that the prior nulls were about the vocabulary, not the objects — though after class-level deduplication 100% of the sampled relations are LMFDB-recorded, so none are discoveries.",
+      "status": "OBSERVED",
+      "claim_ceiling": "the 3,896 'not recorded by LMFDB' count is an isogeny-multiplicity artifact and is reported as one; twisting is a theorem",
+      "agent": "Aporia",
+      "mechanisms": ["native_vocabulary"],
+      "quote": "**One native verb finds 4,476 exact relations where seven generic operators found zero.**\n\n    141-E:  7 unary operators, 294,909,843 reachable triples  ->  H = 0\n    142-F:  1 native verb (quadratic twist), 900 curves        ->  4,476 exact relations",
+      "metrics": "4,476 exact relations vs 0; deduplicated stored sample: 12 distinct triples, 12 LMFDB-recorded (100%)",
+      "source_packet": "aporia/docs/CYCLE_142F_NATIVE_VERBS_2026-08-23.md",
+      "why_retrieved": "hybrid search: 'native verb generic operator relation discovery'"
+    },
+    {
+      "claim_id": "C-a3744a88ea5e",
+      "finding": "Seven generic unary sequence operators found zero relations over 294,909,843 reachable triples on elliptic-curve trace sequences (cycle 141-E), with the instrument verified four ways.",
+      "status": "OBSERVED",
+      "claim_ceiling": "resolved by 142-F as a statement about the vocabulary, not the objects",
+      "agent": "Aporia",
+      "mechanisms": ["native_vocabulary"],
+      "quote": "- **Generic operators find nothing on arithmetic objects.** 7 unary operators, 0 relations over 294,909,843 reachable triples on elliptic-curve trace sequences (141-E), instrument verified four ways.",
+      "metrics": "0 relations over 294,909,843 reachable triples",
+      "source_packet": "aporia/docs/PROGRAM_SUMMARY_2026-08-24.md",
+      "why_retrieved": "hybrid search: 'native verb generic operator relation discovery'"
+    },
+    {
+      "claim_id": "C-750f2b6fc3ac",
+      "finding": "A state-conditioned ranking gain of D = +0.24395 at seventy times its own standard error was declared VACUOUS and not reportable because the shuffled-label null scored 0.5903 against chance 0.5029, failing to perturb the axis the statistic varies on.",
+      "status": "NOT_ESTABLISHED",
+      "claim_ceiling": "No claim whatever is made about whether the substrate has navigational information — the pass establishes only that the harness cannot currently answer it; no accuracy figure from this pass should be cited; 12 of 165 batches.",
+      "agent": "Aporia",
+      "mechanisms": ["null_model_discipline"],
+      "quote": "D clears its materiality bar by seventy-fold. Reported naively this reads as *the substrate has powerful state-dependent navigational information*. **Two of four controls failed, so it is not reportable.** Control C3 failed: the shuffled-label null scored 0.5903 against chance 0.5029",
+      "metrics": "D = M4 - M1 = +0.24395; paired McNemar SE 0.00178; shuffled-label null 0.5903 vs chance 0.5029 (more than twenty SE above); n = 132,009; verdict VACUOUS on the preregistered branch (C = 2 of 4), terminal REDESIGN",
+      "source_packet": "aporia/docs/CYCLE_146J_OPERATOR_RANKING_2026-08-24.md",
+      "why_retrieved": "hybrid search: 'permutation null tensor coupling mutual information bias sparse histogram'"
+    },
+    {
+      "claim_id": "C-948eae5cb70c",
+      "finding": "The object_zeros NULL defect was root-caused: the 2026-04-16 load assigned object_id only to the 24,922 curves already in the registry because the registry's id sequence was desynced and would have collided on the primary key, leaving 1,984,167 of 2,009,089 elliptic-curve rows with NULL object_id; the repair is reversible above watermark 134475.",
+      "status": "OBSERVED",
+      "claim_ceiling": "lmfdb_label (the true identity) is intact on every row; arrays/labels are clean; the same NULL pattern exists in the *_corrupt_20260416 quarantine copies; repair is fully reversible (every touched row gets object_id > 134475).",
+      "agent": "Ergon",
+      "mechanisms": ["provenance_integrity"],
+      "quote": "The 2026-04-16 load only assigned `object_id` to the 24,922 curves already present in `xref.object_registry`. The registry's id sequence (`xref.object_registry_object_id_seq`) was **desynced** — `last_value=1, is_called=false` while `max(object_id)=134475` — so any insert using the sequence default collided.",
+      "metrics": "1,984,167 / 2,009,089 rows NULL; sequence last_value=1 vs max(object_id)=134475; reversibility watermark 134475",
+      "source_packet": "ergon/repair/README_rekey_2026-06-23.md",
+      "why_retrieved": "hybrid search: 'feature vector similarity elliptic curves knots number fields zeros'"
+    },
+    {
+      "claim_id": "C-4d867be1dc68",
+      "finding": "The abc/Szpiro ratio decrease was first confounded by a prime-conductor selection effect, then rescued by a stratified test showing the decrease is real at fixed bad-prime count.",
+      "status": "SUPPORTED",
+      "claim_ceiling": "abc supported only after triple correction chain",
+      "agent": "Aporia",
+      "mechanisms": ["confound_conditioning"],
+      "quote": "- **abc Szpiro REVISED**: Selection effect found (prime-conductor bias at high N), then RESCUED by stratified test (decrease real at fixed bad-prime count).",
+      "metrics": "Szpiro ratio monotone decreasing 4.41->1.46 across 7 conductor decades (session table)",
+      "source_packet": "roles/Aporia/SESSION_JOURNAL_20260415.md",
+      "why_retrieved": "hybrid search: 'prime atmosphere detrend cross-dataset structure primes'"
+    }
+  ]
+}

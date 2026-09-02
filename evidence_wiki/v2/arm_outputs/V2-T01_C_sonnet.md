@@ -1,0 +1,96 @@
+# PROPOSAL V2-T01 (arm C)
+
+## Hypothesis
+Byte-identical output equivalence on the standard evaluation battery is a **phenotype-level** equivalence and does not imply **evolutionary (mutational-affordance) equivalence**. Two Foundry artifacts that match on the standard battery will, in the majority of cases, sit in substantially different mutational neighborhoods (different sets of reachable one-mutation offspring behaviors). Consequently, discarding one member of such a pair when composing future organisms is NOT safe by default: it will measurably reduce the forward-exploration capacity of the composed lineage on a metric the standard battery itself cannot see (because the battery only scores current behavior, not mutational reach).
+
+Null hypothesis (H0): byte-identical-output pairs are, at a preregistered threshold, also mutationally redundant often enough (and downstream-neutral enough) that keep-one deduplication causes no detectable harm to composed-organism outcomes.
+
+## Motivating evidence
+Ergon's Gen-1B mutational-redundancy (MR) audit found that only 23.0% of behaviorally-duplicate artifact pairs in the Gen-1A corpus were also evolutionarily redundant at a preregistered tau=0.50 (MR median 0.333 over 6,505 same-fingerprint pairs; median genotype edit distance between duplicates 20 of a max 24) — i.e., 77% of apparent phenotype redundancy does not survive a mutational-neighborhood test. Separately, a Foundry-adjacent consumer (D-5 admission) already dedupes on output fingerprints, and Ergon's Gen-0 review flagged that a synthesis layer restricted to producing behaviorally-equivalent terms can only contribute redundant seeds to such a slot — output-identity dedup and mutation-seed composition interact directly. A trap world in Incubation v2 (World D) showed that behaviorally-equivalent operator variants can differ 33x in downstream cost, and only a routing/detection layer (not the standard battery) recovered the loss. Direct repository inspection of the Foundry engine's storage layer (`SerendipityFoundry/SerendipityFoundryEngine/sfe/store.py`) confirms the byte-identical-bytes case is already handled safely: `put_blob` content-addresses on the hash of the artifact's own bytes, so genuinely identical source artifacts are deduplicated automatically at the storage layer. The task's actual risk case is different and unaddressed by that mechanism: two artifacts with **different blob hashes / genotypes** that happen to produce **identical outputs on the evaluation battery**.
+
+## Prospective predictions
+1. When the Gen-1B MR methodology (matched single-mutation neighborhoods, Jaccard over offspring fingerprints) is applied to Foundry byte-identical-output pairs, the surviving fraction at tau=0.50 will be well under 50% (directionally consistent with the 23.0% Gen-1B figure), i.e. most pairs are NOT also evolutionarily redundant.
+2. A composition ablation that evicts one member of each byte-identical pair (ARM_DEDUP) will show lower terminal distinct-behavior count and lower downstream discovery/CFR-analog than an arm that retains both (ARM_KEEP), on a shared admission stream.
+3. A random-eviction control matched in eviction rate but NOT targeted at duplicate pairs will show a smaller (or absent) effect than ARM_DEDUP, isolating the harm to the targeting rule rather than to eviction volume per se.
+4. A subsample audit of the byte-comparison gate itself will find at least one instance where "byte-identical" is an artifact of pre-comparison canonicalization rather than genuine output identity (the mechanism Harmonia documented: a canonicalization step can strip exactly the bytes a real divergence lives in).
+
+## Experiment
+Phase 0 — Precondition and harness audit (must pass before anything else is interpretable):
+  a. Verify every candidate pair's fingerprint was computed over the identical input domain/battery configuration; withdraw any pair for which this is false (mirrors the Gen-1B precondition check on the 58% figure).
+  b. Canonicalization audit: for a random sample of n≥30 pairs flagged byte-identical, re-diff RAW pre-canonicalization outputs (before whitespace-strip / constantize-style normalization) in addition to the canonicalized comparison the gate actually uses. Record the count of pairs where raw outputs diverge despite canonicalized identity.
+
+Phase 1 — Mutational Redundancy (MR) test, applied to the Foundry's own byte-identical pairs using the same design as `ergon/gen1b/phase1_mutational_redundancy.py`:
+  - For each artifact in a pair, generate K=120 offspring via matched single mutations, using the SAME RNG seed stream per artifact (so neighborhood differences are attributable to genotype, not luck).
+  - Compute N_K(a), N_K(b) as the sets of distinct offspring behavior fingerprints; MR(a,b) = Jaccard(N_K(a), N_K(b)).
+  - Preregister tau=0.50; report the full sweep (0.20–0.90) as Gen-1B did, so the threshold choice is visible, not load-bearing.
+  - Also compute: median genotype edit distance between paired artifacts, operator-class-matched neighborhood Jaccard (per mutation class), and fraction of offspring behaviorally novel vs. the shared parent fingerprint.
+
+Phase 2 — Compositional ablation (paired-lineage design, mirroring the Gen-1 I0-vs-I1 CFR contrast):
+  - Replay the SAME recorded admission stream (as in Gen-1A's LRU_DRAW/EFFUSE replay design) through two policies: ARM_KEEP (both members of every byte-identical pair retained) and ARM_DEDUP (one member evicted on admission using a fixed tie-break rule, e.g. lower blob_hash).
+  - Run N paired lineages (n to be fixed by a power analysis analogous to Gen-1B's, targeting the same class of MDE ~1–2pp on the consumer's CFR-analog metric) sharing seeds/admission order across arms.
+  - Primary outcome: downstream composed-organism task-solve rate (CFR-analog) on the consumer's held-out battery.
+  - Secondary outcomes: terminal library distinct-behavior count; MR-neighborhood coverage (union of N_K over the terminal library) as a structural proxy for exploration capacity.
+
+Phase 3 — Distributional signature check (not identity-level): compare ARM_DEDUP vs ARM_KEEP terminal libraries on DISTRIBUTIONAL statistics (distinct-behavior count, MR-coverage), not on artifact-identity overlap, because identity-level overlap is expected to be near-zero and uninformative regardless of policy (see Confound defenses).
+
+## Controls
+- Random-eviction control (ARM_RANDOM): evict a randomly chosen artifact at the same rate as ARM_DEDUP's targeted evictions, drawn independently of duplicate-pair membership, to separate "cost of any eviction" from "cost of targeting behavioral duplicates specifically."
+- Matched-seed / matched-admission-stream control across all three arms (ARM_KEEP, ARM_DEDUP, ARM_RANDOM), so divergence is attributable to policy, not to differential luck in which artifacts were ever generated.
+- Harness-consistency control (the symmetric case): before treating any pair as genuinely divergent OR genuinely identical, verify the two artifacts were evaluated under identical (algorithm, domain, canonicalization) configuration — the Zaremba A-spectrum case showed that apparent divergence can itself be a specification-mismatch artifact, not a real difference, so both directions of error must be checked, not just "identical-looking pairs might really differ."
+
+## Confound defenses
+- Canonicalization masking a real divergence (Harmonia INV7 hole: a defect class at 0/25 caught only because constantize() stripped it before byte-comparison): Phase 0b directly tests for this on the Foundry's own gate before any MR conclusion is drawn; a hole here would mean some "byte-identical" pairs are not really identical at all, which is a harness defect, not evidence about dedup safety.
+- Measurement independence (precedent: an incubation battery passed every preregistered gate yet concealed a witness-word collision that made a supposedly independent measurement partially deterministic): the MR neighborhood generation must use an independently-seeded stream per artifact by construction (as in the Gen-1B script), and this must be explicitly checked (not assumed) before trusting any MR value.
+- Reverse-causation / early-termination confound (Gen-1B found a library-draw correlate of r=-0.70/-0.84 that was reverse causation from early termination, discarded from the mediator story): all Phase 2/3 metrics must be read at matched draw-count or matched wall-clock budget across arms, never at matched wall-clock time if arms terminate at different points.
+- Identity-vs-distribution confound (Gen-1B: identity-level library composition carries no recoverable policy signature — between-policy terminal-library Jaccard 0.003–0.045 is indistinguishable from within-policy, different-lineage Jaccard 0.002–0.005): Phase 3 is scoped to distributional statistics for exactly this reason; any claim here framed as "the libraries share/don't share artifacts" would be measuring noise, not a policy effect.
+- Selection-relation control: the random-eviction control (ARM_RANDOM) must be drawn from a rule that does not itself correlate with duplicate-pair membership, or it silently becomes another version of the treatment.
+
+## Preregistered falsifiers (numeric thresholds)
+- F1 (MR test): if the surviving fraction of byte-identical pairs at tau=0.50 is ≥ 0.50, the "unsafe to dedup" hypothesis is REJECTED for this corpus at this threshold — most duplicates would also be mutationally redundant, and dedup would be defensible by the same logic Gen-1B used for I1.
+- F2 (compositional ablation): if the ARM_KEEP vs ARM_DEDUP difference on the primary CFR-analog outcome has a 90% CI that excludes harm larger than the preregistered MDE (computed via a power analysis before the run, on the scale of Gen-1B's ~1.9pp MDE for its battery), dedup is judged SAFE on this axis (fail to reject H0).
+- F3 (canonicalization audit): if the Phase 0b raw-output audit finds 0 of n≥30 sampled "byte-identical" pairs diverge pre-canonicalization, the gate is cleared as reliable for this corpus; if ≥1 diverges, the byte-comparison gate is declared UNRELIABLE and dedup must not proceed until the gate is fixed, independent of the MR/CFR results.
+- F4 (distributional check): if ARM_DEDUP terminal-library distinct-behavior count and MR-coverage are not significantly different from ARM_KEEP (same test/alpha discipline as Gen-1B, Holm-corrected across the 3-arm family), dedup is judged safe on the structural-diversity axis specifically (independent of F2's outcome-level verdict).
+
+## Stopping rule
+Fix n (paired lineages for Phase 2, sample size for Phase 0b) via a pre-run power analysis targeting the Phase 2 MDE, analogous to Gen-1B's approach. No interim peeking: analyze once at the pre-specified n, apply Holm correction across the family of contrasts (ARM_DEDUP vs ARM_KEEP, ARM_RANDOM vs ARM_KEEP, F4's distributional tests), and report the go/no-go decision at that single analysis point. Early stop is allowed only for a Phase 0 precondition failure (non-shared domain, or a Phase 0b canonicalization hole found before Phase 1/2 begin) — that is a design failure, not a result, and halts the run before it starts accumulating an interpretable answer.
+
+## Expected failure modes
+- Family/operator heterogeneity: MR may be high for some artifact families and low for others (the Gen-0 census found control-flow representation concentrates unevenly across families, e.g. CTRL 0/10 vs F1/F4 12/12 jump-free); a single global tau/verdict could paper over a family-specific safety picture. Report MR stratified by family, not only pooled.
+- Corpus too small: if the Foundry's current corpus yields too few genuine byte-identical pairs (distinct blob_hash, identical outputs) to power Phase 2, the compositional ablation may need to run on a synthetic/seeded corpus first (instrument calibration), with a real-corpus replication flagged as required before any policy change ships.
+- Gate gaming: if the byte-comparison gate is patched in response to the Phase 0b canonicalization audit mid-experiment, Phase 1/2 must be re-run against the corrected gate, not patched retroactively.
+- Budget/rate limits on the live Foundry engine (SFEngine on M1) may cap the number of paired lineages achievable in one run; if so, report the achieved n and the resulting achieved MDE rather than silently shrinking the preregistered target.
+
+## Compute estimate
+Phase 1 (MR test) is cheap and local: the Gen-1B script computed pairwise MR over 6,505 pairs with K=120 matched mutations per artifact across a handful of artifacts in duplicate groups, finishing in local single-machine time (no GPU, no external API calls) — the Foundry-scale rerun should be of the same order unless the current duplicate-pair census is much larger, in which case cost scales roughly linearly in (number of duplicate-group members) x K. Phase 0b (canonicalization audit) is a re-diff of n≥30 existing recorded outputs — negligible compute. Phase 2 (compositional ablation) is the expensive phase: N paired lineages x 3 arms of live Foundry admission/replay, budgeted against the engine's own budget rows (per SFEngine's durable-runtime accounting) rather than wall-clock estimated here; the run should be sized against Gen-1B's own paired-lineage count (n=30) as a reference scale, with an explicit pre-run power analysis (not copied from Gen-1B) to fix the actual n for this consumer's effect size and variance.
+
+## Prior evidence that materially changed this design (or 'none found')
+Yes — see Pack items section below; the design is a direct transplant of the Gen-1B MR methodology plus two additional guardrails (canonicalization audit, distributional-not-identity outcome framing) drawn from other pack items.
+
+## Unresolved uncertainty
+Gen-1B itself found that the mechanism behind a real, gated retention-policy effect (+2.78pp CFR) was NOT resolved: the winning policy moved diversity exactly as designed but that diversity change correlated only r=+0.16 with the CFR gain across lineages. This means even if Phase 2 here finds a CFR harm from dedup, we should not assume "loss of MR-preserved diversity" is the mechanism without separately testing the mediation — diversity preservation may again be a confirmed proximate change without being a demonstrated mediator of the outcome. This experiment is not designed to resolve that mediation question; it is designed only to answer the narrower safety question (does dedup hurt outcomes, yes/no) and the gate-reliability question (is "byte-identical" actually true).
+
+## Pack items that changed this design (ids -> concrete decision; 'pack did not affect design' is valid)
+- C-f8f06a6e21ca -> adopted the Gen-1B MR methodology (K=120 matched mutations, Jaccard over offspring fingerprints, tau=0.50 preregistered with full sweep reported) as Phase 1 verbatim, and set F1's numeric threshold (0.50 surviving fraction) directly from this precedent.
+- C-a553b0e69795 -> confirmed the risk is live for Foundry-adjacent consumers specifically (a fingerprint-deduping slot can only receive redundant seeds from an equivalence-preserving synthesis layer), motivating Phase 2's composition ablation rather than treating this as a purely academic MR question.
+- C-a2cba4576ecd -> motivated the random-eviction control (ARM_RANDOM): behaviorally-equivalent variants can differ hugely in downstream cost, so the experiment must isolate "harm from eviction" from "harm from targeting duplicates," not just observe a difference between one dedup arm and one keep arm.
+- C-9d2f9bf2e064 -> added Phase 0b (canonicalization audit) and preregistered falsifier F3; directly modeled on the documented mechanism (constantize() stripping before byte-comparison hid a real defect) as the concrete way a Foundry "byte-identical" flag could itself be wrong.
+- C-e3c149ca4f7e -> added the harness-consistency control (symmetric case): apparent divergence can be a specification-mismatch artifact, so the design checks BOTH directions of gate error, not only "identical-looking pairs might secretly differ."
+- C-6c7e06892e46 -> reframed Phase 3 and F4 around distributional statistics rather than artifact-identity overlap, and added the identity-vs-distribution item to Confound defenses, directly citing the 0.003–0.045 vs 0.002–0.005 Jaccard finding as why identity-level comparison would be uninformative here.
+- C-2e44af9b93c4 -> added the measurement-independence confound defense (verify the MR neighborhood streams are genuinely independently seeded per artifact, not assumed), modeled on the witness-word collision precedent.
+- C-b2ce4f35aa58 / C-bea260486ec6 -> set the scale for Phase 2's design (paired-lineage replay of a shared admission stream, n on the order of Gen-1B's n=30, MDE on the order of ~1–2pp) and confirmed the attainable dynamic range of retention-policy effects is large enough to be worth testing rather than assumed negligible.
+- C-c135a5681e5f -> added the Unresolved uncertainty section: explicitly declines to claim a diversity-loss mechanism even if Phase 2 finds harm, citing the r=+0.16 mediation-correlation precedent.
+
+## Operation log (numbered; ops used / 15, documents opened / 12)
+0. Read F:\Prometheus\evidence_wiki\v2\packs\V2-T01_pack.json (free, not counted against budget).
+1. Bash: `grep -ril "serendipity" ...` over F:\Prometheus excluding evidence_wiki — backgrounded/timed out, no usable output obtained.
+2. Bash: `ls ergon/gen1b ergon/gen0 ergon/gen1a` — confirmed the pack's cited source packets exist locally as repo files (not evidence_wiki-only).
+3. Bash: `ls daedalus` / `find . -iname "*foundry*"` — no top-level `daedalus/` directory found; backgrounded find produced no output before being superseded by a more targeted git query.
+4. Read `F:\Prometheus\ergon\gen1b\phase1_mutational_redundancy.py` — document 1; obtained the exact MR methodology (K=120, matched seed per artifact, Jaccard over offspring fingerprint sets, tau=0.50 sweep) adopted as Phase 1.
+5. Read background-task output file (empty) — no evidence.
+6. Bash: `git log --oneline --all -- '*foundry*'` plus a stat grep — located the Apollo Gen-2 Foundry-credential commit; established `SerendipityFoundry/` as the real path.
+7. Read background-task output file (empty) — no evidence.
+8. Bash: `git show --stat d332658cf` — enumerated the Serendipity Foundry Engine commit's files, confirming `SerendipityFoundry/SerendipityFoundryEngine/sfe/store.py` as the engine's storage layer.
+9. Grep (files_with_matches) for `fingerprint|dedup|byte.ident` under `F:\Prometheus\SerendipityFoundry` — located `sfe/store.py` and `sfe/runtime.py` as the files implementing content-addressed storage.
+10. Grep (content) for `fingerprint|dedup|byte.ident|hash` in `sfe/store.py` — document 2; confirmed `put_blob` content-addresses on the artifact's own byte hash (the trivial identical-bytes case is already safe), which sharpened the Hypothesis/Motivating-evidence framing of the actual risk case (identical outputs, different blob_hash/genotype).
+
+Ops used: 10 / 15. Distinct documents opened: 2 / 12 (phase1_mutational_redundancy.py, sfe/store.py) — background-task output reads were empty scratch files, not repository documents, and are not counted toward the 12-document cap.

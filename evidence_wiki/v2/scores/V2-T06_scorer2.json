@@ -1,0 +1,57 @@
+[
+  {
+    "proposal": "P",
+    "D1": 2, "D3": 3, "D4": 3, "D5": 3, "D6": 3,
+    "justifications": {
+      "D1": "\"None found that substantially downgrade the hypothesis\" — a guard exists (F1/F3 no-transfer gates, conservative band) but the core D-5-vs-D-8 contradiction is never surfaced or used as a kill condition, so the avoidance is incomplete.",
+      "D3": "\"Gate F2 ... +4.2pp ± 3.1pp (i.e., +1.1pp to +7.3pp)\" plus \"No early stopping based on intermediate results\" — >=2 numeric falsifiers and an explicit stopping rule, but no cheap early mechanism-independent kill.",
+      "D4": "\"Seeded-random-library control (C_random) ... Shuffled-library control (C_shuffled)\" — the known diversity/order/leakage confounds each get a concrete element, but there is no positive control demonstrating the instrument detects real signal.",
+      "D5": "\"Transplanting the D-5 terminal libraries ... into Ludus game-worlds as a circuit-seeding mechanism\" — clearly new question, but no explicit statement of the new empirical cell relative to prior work.",
+      "D6": "\"Interpretation if failed: Library mechanism is substrate-specific\" — gate-wise interpretations map most branches, but some outcomes (F2 overshoot → 'investigate') are procedures, not pre-committed conclusions."
+    }
+  },
+  {
+    "proposal": "Q",
+    "D1": 2, "D3": 3, "D4": 3, "D5": 3, "D6": 3,
+    "justifications": {
+      "D1": "\"set P1 threshold to +4–8pp (conservative) instead of assuming +10pp carryover\" — risk acknowledged and partially guarded, but a ~50%-of-D-5 gain is still predicted with no D-8-null contradiction surfaced as a kill condition.",
+      "D3": "\"F1 (Primary): Transplant gain < +2pp CFR on worlds with depth ≥4\" plus the scheduled-stop rule — numeric falsifiers F1-F6 and a stopping rule, but no cheap early mechanism-independent falsifier.",
+      "D4": "\"Ensure random-library control is drawn from D-5's actual genotype complexity distribution ... Report Kolmogorov-Smirnov test\" — confounds each addressed by design, but no positive control demonstrating signal detectability.",
+      "D5": "\"libraries built on world-set A transfer ≥50% of within-A gains to held-out world-set B\" — a clearly new cross-domain question, but no explicit new-cell framing relative to prior work.",
+      "D6": "\"F3 (Hindsight): Early-episode gain > +6pp but late-episode gain < +1pp\" — falsifiers map to distinct mechanisms and F6 gives an uninformative reading, but mid-band outcomes between thresholds are unmapped."
+    }
+  },
+  {
+    "proposal": "R",
+    "D1": 4, "D3": 4, "D4": 3, "D5": 4, "D6": 4,
+    "justifications": {
+      "D1": "\"expect near-null unless an explicit interface layer supplies the missing native-verb correspondence, and even then expect the random-library control to eat most of any apparent gain\" — the naive-gain trap is converted into the decisive RAND (falsifier 3) and floor-replication (falsifier 5) tests.",
+      "D3": "\"FALSIFIED (RAW arm voided ...) if < 90% of RAW-arm artifacts execute without error\" — numeric falsifiers plus a pilot stopping rule, with a cheap, early, mechanism-independent executability kill.",
+      "D4": "\"a 'vocabulary-only' control not yet built into the arm list above and flagged here as a design gap\" — the known confounds are each addressed (RAND, per-world stratification, executability pre-gate) but the guard set is self-admittedly incomplete and there is no positive control.",
+      "D5": "\"transfer across substrate families (register-machine genotypes to card/dice game states) is the harder case, not the easier one\" — explicitly states the new cross-substrate cell relative to G7's in-substrate null.",
+      "D6": "\"this is not a weaker version of D-5's G7 null — it is a full replication of it under harder (cross-substrate) conditions\" — every branch, including voided-arm and underpowered readings, has a pre-committed interpretation."
+    }
+  },
+  {
+    "proposal": "S",
+    "D1": 4, "D3": 4, "D4": 3, "D5": 4, "D6": 4,
+    "justifications": {
+      "D1": "\"D-8 blind S0 NO_EFFECT vs ... D-5 blind SUPPORTED +10.95pp ... directly lowered the point prediction from D-5's raw +10.95pp to ≈+4pp and made the full three-part G9 ablation ... mandatory\" — the contradiction is surfaced and converted into kill conditions (falsifiers 3-5).",
+      "D3": "\"if the RM library ingests into Ludus without a rejected/coerced record for ≥1 artifact, treat as instrument failure\" — a cheap, early, mechanism-independent falsifier plus numeric gates (+3pp, 60%/70% retention) and a hard run-once stopping rule.",
+      "D4": "\"Pre-hash the analysis script before any arm's rows are read\" — each known confound has a concrete element (M1-random, M1-shuffled, CTRL family, budget metering), but no positive control demonstrating the instrument detects real signal.",
+      "D5": "\"the same 'accumulated history helps search' mechanism already flipped from SUPPORTED to NO_EFFECT once under a substrate change\" — explicitly fills the third-substrate cell of the D-5/D-8 contradiction.",
+      "D6": "\"Full success requires ALL of: delta ≥ +3pp with p ≤ 0.05, shuffled retention ≥ 70%, AND random-library retention ≤ 60%\" — every outcome branch, including instrument-failure and ceiling-effect readings, is pre-committed."
+    }
+  },
+  {
+    "proposal": "T",
+    "D1": 4, "D3": 4, "D4": 4, "D5": 4, "D6": 4,
+    "justifications": {
+      "D1": "\"used as the direct quantitative anchor (CI spanning zero, p=0.21) for predicting a likely null, and motivated the M1-native control arm\" — the D-5/D-8 contradiction is surfaced and converted into F4's decisive disambiguation.",
+      "D3": "\"F1 (Gate 0 hard stop): if < 70% of the sampled 16-20 D-5 artifacts survive translation ... stop before any solve-rate run\" — a cheap early independent falsifier plus numeric F2-F5 under a sequential-gate stopping rule.",
+      "D4": "\"Gate 2 n=10/arm floor-effect pilot\" and \"Negative-control world ... predicted null in ALL arms, confirming that any null on the main world is not just a floor effect\" — all summary confounds addressed plus reachability and positive-control (M1-native) checks.",
+      "D5": "\"we predict this replicates the D-8 pattern more often than the D-5 pattern\" — explicitly fills the contradiction-resolution cell relative to prior work.",
+      "D6": "\"Any outcome where the 95% CI on the primary contrast includes zero is classified NOT_ESTABLISHED\" — F1-F5 map every branch, including no-slot/vacuous and governance readings."
+    }
+  }
+]

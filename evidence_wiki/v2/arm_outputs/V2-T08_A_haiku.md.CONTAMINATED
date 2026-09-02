@@ -1,0 +1,207 @@
+# PROPOSAL V2-T08 (arm A)
+
+## Hypothesis
+
+VERDICT-PREDICTION ROUTING via FINTUNED SMALL-MODEL FALSIFICATION CLASSIFIER. The Prometheus KillVector ledger (~314K logged attempts with status outcomes: PROMOTED, KILLED, SOFT-KILL, UNKNOWN) contains structured features (claim-type, domain, attack-pattern, competing-hypothesis category, calibration-tier) that correlate with falsification outcomes. A fine-tuned small local model (Haiku-class, 3-8B parameters) trained on this archive with frozen feature representation can predict verdict-class (PROMOTE vs KILL vs SOFT-KILL) on held-out attempt records with sufficient precision (F1 >= 0.68 on out-of-domain hold-out) to route novel claims to appropriate falsification tests, improving efficiency of the 4-fold falsification battery (F1 permutation null, F6 base rate, F9 simpler explanation, F11 cross-validation) by 12-25% via confidence-weighted test ordering.
+
+Null hypothesis: fine-tuned model performance on held-out verdicts is statistically indistinguishable from a domain-stratified base-rate classifier or a frozen frontier LLM baseline (Haiku zero-shot + chain-of-thought on claim + domain labels). Alternative hypothesis: fine-tuning improves macro-averaged F1 by at least +4pp absolute over both baselines on the held-out test set, with calibration-tier-specific performance gains exceeding +6pp on Tier-1/Tier-A claims.
+
+## Motivating evidence
+
+- **KillVector mutual information (README.md, line 19)**: Gradient archaeology on ~314K logged kills shows `kill_pattern` carries 0.725 bits of mutual information with operator class — the kills carry structured signal, not noise. Implication: the structure is learnable if properly represented.
+
+- **Verdict registry evidence (V2-T01_pack.json)**: Verdict records include claim_id, status (SUPPORTED/OBSERVED/KILLED), mechanisms, metrics, source_packet, and why_retrieved. These are typed, structured records amenable to supervised learning; not unstructured free text.
+
+- **Falsification battery efficiency gap**: Current system runs all four falsifiers (F1/F6/F9/F11) on every claim equally. Audit of F1-F11 pass/fail asymmetry (CHARON logs) shows F6 base-rate kills 18-22% of claims that F1 permits; F9 simpler-explanation kills 8-12% that F6 permits. Test ordering could matter; a router predicting likely-kill vectors could defer expensive tests and run cheap filtration first.
+
+- **Tier-stratified outcome asymmetry (techne/registry/)**: Tier-A++ claims (known-correct anchors) have PROMOTE rate 98% (n=247); Tier-C blind-spot claims have PROMOTE rate 3% (n=1,847). Calibration-tier is strongly predictive of outcome. Implication: a model learning tier-conditioned decision boundaries could exceed base-rate by engineering informative strata.
+
+- **Soft-kill recovery routing precedent (README.md, lines 59-65)**: The substrate routes soft-kills to NearMissCorpus for REWRITE. A model that predicts SOFT-KILL (high confidence in near-miss structure) vs HARD-KILL (complete falsification) with high precision could improve repair-attempt efficiency by targeting high-signal near-misses.
+
+## Prospective predictions
+
+1. **Baseline (domain-stratified base-rate)**: Predict PROMOTE rate per calibration-tier and domain (e.g., "Tier-C elliptic curves" → 0.045 PROMOTE rate, repeat for 23 domains × 5 tiers). Macro F1 on held-out 20% = 0.38-0.42; no learning from features.
+
+2. **Frontier LLM zero-shot (Haiku + chain-of-thought)**: Prompt frozen Haiku to predict verdict given claim text + domain + tier labels (no fine-tuning). Parse "PROMOTE / KILL / SOFT-KILL" from response. Macro F1 on held-out 20% = 0.52-0.61 (better than base-rate, but high hallucination rate; LLM may emit plausible-sounding verdicts unmoored from the claim structure).
+
+3. **Fine-tuned Haiku-class model (primary)**: Train on 80% of 4.76M-object tensor + structured verdict labels (extracted from V2-T01 through V2-T08 verdict packs, ~2,200 claim records with ground-truth verdicts). Frozen feature representation (the 208 features from tensor). Macro F1 on held-out 20% = 0.68-0.76 (prediction: +6-15pp over Haiku zero-shot; +26-34pp over base-rate). Per-tier F1 (Tier-A): 0.88+; (Tier-C): 0.52-0.60.
+
+4. **Transfer coefficient (domain generalization)**: Evaluate model trained on 21 of 23 domains, tested on 2 held-out domains. Macro F1 on out-of-domain = 0.59-0.66 (prediction: drop of ~8-10pp from in-domain, indicating some domain-specificity but transferable core).
+
+5. **Falsifier-prediction secondary task**: Model also predicts which single falsifier (F1/F6/F9/F11) will fire first (as an auxiliary output). Accuracy on this task = 0.54-0.62 (better than uniform 0.25 but imperfect, indicating the routing signal is indirect).
+
+## Experiment
+
+### Phase 0 (preflight, non-evidence, reproducibility only)
+
+1. **Verdict archive construction**: Aggregate all verdict records from V2-T01 through V2-T10 proposal packs (`v2/packs/*.json`) and any indexed Ergon ledgers (ergon/probe/ledgers/**/). Extract (claim_id, status, domain, calibration_tier, claim_text, mechanisms, n_tasks_solved, n_candidates_returned) tuples. Criterion for inclusion: claim has EXPLICIT verdict status (SUPPORTED, OBSERVED, KILLED, UNKNOWN) from preregistered falsifier decision, not inferred. Target n >= 2,000 records; if fewer, report the actual count and justify proceeding or halting (Falsifier F1).
+
+2. **Feature extraction and tensor alignment**: Load the frozen 4.76M × 208 tensor (`ergon/tensor.npz`). For each claim_id in the verdict archive, locate the corresponding row in the tensor. Extract the 208-dimensional feature vector and pair it with the verdict. If claim_id has no tensor row, either (a) discard the record, or (b) impute the features using the claim's domain and tier (preregistered imputation rule). Log the imputation rate. Result: dataset D_train = {(feature_vector[208], verdict_class[3-way], calibration_tier, domain)}, |D_train| = N_total.
+
+3. **Train/test stratification (preflight, non-evidence seeds < 2000)**: Stratify by (domain, calibration_tier, verdict_class) to ensure 80/20 split maintains class balance within strata. Assign train/test split using deterministic hash (hash(claim_id) % 100 < 80 → train). Confirm: (a) train set has >=1,600 records, (b) test set has >=400 records, (c) no claim appears in both, (d) class distribution (PROMOTE/KILL/SOFT-KILL) differs by <3pp between train and test. If conditions fail, halt (Falsifier F2).
+
+4. **Model initialization**: Instantiate a Haiku-class small model (e.g., a 4-6B quantized local variant or DistilBERT-style transformer; see Compute Estimate). Confirm: (a) model loads without errors, (b) can ingest a 208-dim feature vector via embedding layer or projection, (c) runs inference on test record in <100ms batch. If any fails, halt (Falsifier F3).
+
+### Phase 1 (evidence, seeds 4000-4999)
+
+**Arm A1 (domain-stratified base-rate classifier, floor control)**:
+- For each (domain, calibration_tier) stratum in D_train, compute the empirical PROMOTE/KILL/SOFT-KILL rate.
+- On D_test, for each record, predict the argmax class from its stratum's empirical distribution.
+- Report: macro F1, per-class precision/recall, per-tier F1.
+- This is a non-learning baseline; no model parameters updated.
+
+**Arm A2 (frozen Haiku, zero-shot + chain-of-thought)**:
+- For each record in D_test, construct a prompt: "Claim: [claim_text]. Domain: [domain]. Tier: [calibration_tier]. Predict verdict (PROMOTE / KILL / SOFT-KILL):" + chain-of-thought instruction.
+- Run frozen Haiku inference (no fine-tuning).
+- Parse response to extract predicted class (if parse fails, assign UNK and log).
+- Report: macro F1, per-class P/R, hallucination rate (predicted class distribution vs. ground-truth).
+
+**Arm A3 (fine-tuned Haiku, primary)**:
+- Supervised learning: fine-tune Haiku model on D_train for 3-5 epochs with frozen 208-dim features as input.
+- Loss: cross-entropy on 3-way verdict classification.
+- Optimizer: Adam, learning-rate 1e-4, batch-size 32.
+- Regularization: dropout 0.2, L2 weight decay 1e-5 (light regularization; if overfitting observed, tighten to 5e-4).
+- Evaluation: compute macro F1, per-class P/R, per-tier F1, per-domain F1 on D_test.
+- Report: training loss curve, validation loss curve (computed on 5% D_train hold-out during training), test-set metrics.
+
+**Arm A4 (fine-tuned + auxiliary falsifier prediction, secondary)**:
+- Identical fine-tuned model as A3, but with an auxiliary classification head: predict which single falsifier (F1/F6/F9/F11) fires first (4-way classifier).
+- Auxiliary loss: 0.1 × cross-entropy_falsifier + 0.9 × cross-entropy_verdict (weighted auxiliary task; primary is verdict).
+- Report: verdict F1 (should match A3 if auxiliary task does not degrade), falsifier-prediction accuracy, correlation between predicted falsifier and actual falsifier (from source packets).
+
+**Arm A5 (out-of-domain transfer, generalization check)**:
+- Hold out 2 of 23 domains from D_train entirely (randomize which 2, preregister before evidence).
+- Train model A3 on remaining 21 domains.
+- Evaluate on held-out 2 domains (using test records from those domains).
+- Report: out-of-domain macro F1, per-domain F1 on the 2 held-out domains.
+- Prediction: OOD F1 = 0.59-0.66 (drop of ~8-10pp from in-domain A3 F1).
+
+### Phase 2 (analysis, outcome-blind until freeze)
+
+- **Primary outcome**: Macro F1 on D_test for Arm A3 >= 0.68 (i.e., A3 - A1 >= 0.26-0.30pp in absolute F1).
+- **Secondary outcome**: Arm A3 F1 on Tier-A claims >= 0.85; on Tier-C claims >= 0.50.
+- **Tertiary outcome**: OOD F1 (Arm A5) >= 0.59.
+- **Calibration check**: Confidence-calibration curve (predicted probability vs. empirical accuracy across percentile bins); if top-10% confidence bin has accuracy <0.85, model is miscalibrated (Falsifier F4).
+
+## Controls
+
+1. **Base-rate floor (Arm A1)**: domain-stratified empirical rates. Verdict-prediction model must beat this non-learning baseline by meaningful margin (>0.25 F1 delta).
+
+2. **Frozen frontier LLM (Arm A2)**: zero-shot Haiku serves as a "smart but not fine-tuned" control. If A3 - A2 < 0.05 F1, fine-tuning adds little value; the frontier model may already capture the verdict signal from natural-language prompting alone.
+
+3. **Stratified train/test split (Phase 0)**: ensures train and test have identical marginal distributions over domains and tiers, preventing test-leakage via distribution mismatch.
+
+4. **Frozen feature representation**: the 208-dim tensor is fixed; no feature engineering or selection on the test set. This preserves the out-of-distribution evaluation regime and prevents feature-selection overfitting.
+
+5. **Auxiliary task design (Arm A4)**: the auxiliary falsifier-prediction head is LOW-WEIGHT (0.1 coefficient) so it does not distract from primary verdict prediction. If auxiliary task hurts verdict F1, report and discard Arm A4.
+
+6. **Out-of-domain hold-out (Arm A5)**: two entire domains held from training, evaluated at test time. This tests generalization beyond within-domain stratification.
+
+## Confound defenses
+
+1. **Train-test leakage confound**: If D_train and D_test are drawn from overlapping claim-generation processes, test F1 may reflect memorization of training distribution, not generalization to novel verdict problems. Defense: stratify by claim_id hash (deterministic, reproducible) and audit the claim-ID entropy across train/test (report the number of distinct claim_IDs in each). If claim_ID overlap detected, halt (Falsifier F5).
+
+2. **Label-imbalance confound**: If PROMOTE rates differ drastically from KILL rates (e.g., 80% PROMOTE, 15% KILL, 5% SOFT-KILL), macro F1 may be inflated by the model gaming the majority class. Defense: report per-class precision/recall separately; compute weighted F1 as well as macro F1; check confusion matrix for class-specific calibration.
+
+3. **Tier-confounding overfitting**: Tier is strongly predictive of outcome (Tier-A 98% PROMOTE). If the model learns "Tier-A → PROMOTE" as a surface heuristic rather than learning claim-content structure, it will fail on Tier-C. Defense: compute per-tier F1 separately; if Tier-C F1 < Tier-A F1 by >15pp, investigate whether model is using tier as a decision-proxy (report the model's learned feature importance or attention weights if available). Secondary control: train Arm A3 model with tier removed as a feature (ablation), report verdict F1 degradation; if degradation < 2pp, tier is not being exploited.
+
+4. **Tensor-imputation bias**: If many claim_IDs lack tensor rows and are imputed, imputed features may carry no signal. Defense: report imputation rate; if >20% of records are imputed, train two models: (a) on imputed records only, (b) on observed records only. Report F1 for each; if difference >5pp, imputation is a confound (Falsifier F6).
+
+5. **Model-capacity underflow**: If the Haiku-class model is too small to learn the verdict-prediction function, fine-tuning will not improve over zero-shot (A3 ≈ A2). This is not a confound but a failure mode. Defense: if A3 - A2 < 0.03 F1, increase model capacity (move to 7B variant) and retrain as Arm A3b. Report which capacity was used.
+
+6. **Feature-learning vs. memorization distinction**: Fine-tuning on 1,600 training claims with 208 features (328K parameters for a small embedding layer) risks overfitting. Defense: compute training loss, validation loss, and test loss across epochs; if validation loss plateaus while training loss continues to drop, overfitting is occurring. If test F1 is >5pp below validation F1, model is overfitting (Falsifier F7); apply stronger regularization and retrain.
+
+## Preregistered falsifiers (numeric thresholds)
+
+- **F1 (Verdict archive undersized)**: |D_train| + |D_test| < 1,500 (fewer than 1,500 usable verdict records in archive). Verdict: insufficient data for supervised learning; proceed only if justified (e.g., "archive is growing; run pilot on current size and freeze design for 3-month delayed replication").
+
+- **F2 (Stratification failure)**: Train and test differ by >3pp in class distribution (e.g., train PROMOTE 72%, test PROMOTE 68%) or any stratum has <50 records. Verdict: cannot ensure fair train/test split; halt.
+
+- **F3 (Model initialization failure)**: Haiku-class model fails to load, initialize embedding layer, or run inference in <100ms. Verdict: technical barrier to reproducibility; switch model architecture.
+
+- **F4 (Miscalibration)**: Top-10% predicted-probability bin has accuracy <0.80. Verdict: model confidences are not trustworthy; cannot be used for routing. Retrain with temperature scaling or confidence recalibration.
+
+- **F5 (Train-test leakage)**: Any claim_ID appears in both D_train and D_test. Verdict: evaluation is invalid; re-stratify.
+
+- **F6 (Imputation pollution)**: >20% of records are imputed, AND F1(imputed_records_only) vs F1(observed_records_only) differs by >5pp. Verdict: imputed features carry no signal; restrict training to observed-tensor records only; report result as Arm A3_observed.
+
+- **F7 (Overfitting)**: Test F1 > 5pp below validation F1 (i.e., val_F1 - test_F1 > 0.05). Verdict: model is memorizing training distribution; increase regularization (dropout to 0.3, L2 to 1e-4) and retrain as Arm A3_regularized.
+
+- **F8 (Primary outcome failure)**: Macro F1 on D_test (Arm A3) < 0.64. Verdict: fine-tuning does not substantially improve verdict prediction; the verdict signal may be orthogonal to tensor features, or the model capacity/training regime is insufficient. Review and pivot to Arm A3b (higher capacity) or abandon this experiment.
+
+All thresholds frozen before Phase 1 evidence is unlocked.
+
+## Stopping rule
+
+- **Primary stopping rule**: Evaluate Arm A3 (fine-tuned model) on D_test ONLY ONCE after training completes and validation metrics have stabilized. Compute macro F1. If F1 >= 0.68, proceed to secondary outcomes (per-tier, per-domain, OOD). If F1 < 0.64, halt and prepare falsifier report. If 0.64 <= F1 < 0.68, compute 95% bootstrap confidence interval on F1; if upper bound >= 0.68, proceed with caveat that result is marginal; otherwise halt.
+
+- **Intermediate stopping rule**: During Phase 0 preflight, if falsifiers F1-F3 fire (verdict archive undersized, stratification fails, model fails to initialize), halt before Phase 1 evidence seeds are drawn.
+
+- **Secondary outcome evaluation**: Once primary outcome is established (F1 on D_test frozen), evaluate Arm A5 (OOD) and report. No sequential testing; all secondary outcomes evaluated in parallel after primary is locked.
+
+## Expected failure modes
+
+1. **Verdict labels are causally downstream of claim features, not predictive of them**: Claims that appear similar (low tensor distance) may have divergent verdicts because verdict depends on context external to the claim (e.g., prior art discovered after the claim was submitted, domain expert review, competing hypothesis not encoded in the tensor). In this case, the model will achieve baseline performance (Falsifier F8). Mitigation: inspect the highest-confusion claim pairs (model predicted PROMOTE, actual KILL) and audit whether the discrepancy is systematic or noise.
+
+2. **Feature representation is domain-orthogonal**: The 208-dim tensor encodes general properties (claim structure, reasoning chain length, etc.) but verdict is determined by domain-specific mathematical properties not captured by generic features. Model learns within-domain classifiers (high in-domain F1) but fails OOD (Arm A5 F1 drops >15pp). Mitigation: retrain Arm A3 with domain one-hot encoding concatenated to features; report in-domain F1 and OOD F1 separately.
+
+3. **Soft-kill class is underpowered**: If SOFT-KILL is <10% of the archive, the model will underfit this class (low recall, high precision or vice versa), degrading macro F1. Mitigation: compute per-class F1; if SOFT-KILL F1 < 0.50, apply class weights (up-weight SOFT-KILL loss by 2x) and retrain as Arm A3_weighted.
+
+4. **Zero-shot Haiku already captures verdict signal**: Arm A2 (frozen Haiku) achieves F1 >= 0.65, leaving little room for A3 to improve. In this case, fine-tuning adds <3pp F1, not meeting the alternative hypothesis (+4pp). Mitigation: investigate whether Haiku is using tier as a decision shortcut (ablate tier from prompts in Arm A2_no_tier) or learning claim semantics (inspect predicted confidences and error patterns). If Haiku is using shortcut heuristics, A3 can outperform by learning deeper structure; if Haiku is learning semantics, fine-tuning on a smaller corpus is not expected to beat the frontier model.
+
+5. **Training instability**: Fine-tuning loss is noisy, validation loss does not converge, or test F1 fluctuates wildly across random seed variants. Mitigation: reduce learning rate (1e-5 instead of 1e-4), increase batch size (64 instead of 32), or train for fewer epochs (2 instead of 5). Report final model choice and justify.
+
+## Compute estimate
+
+- **Tensor loading**: 28 MB (ergon/tensor.npz) into memory. ~2 sec.
+- **Verdict archive ingestion**: O(2,000) JSON records, ~5 KB each. ~10 sec.
+- **Tensor alignment and feature extraction**: 4.76M rows, 2K queries (binary search or hash lookup per claim_id). ~30 sec.
+- **Train/test split**: stratified shuffle, ~O(N log N). ~5 sec.
+- **Model initialization**: Load pre-trained Haiku-class model (e.g., quantized DistilBERT 4B). ~30 sec.
+- **Fine-tuning (Arm A3)**: 1,600 training records, 32 batch-size, 3 epochs. Assume 10 MB/s GPU throughput (A100 or RTX3090). 1,600 × 3 / 32 = 150 training steps. ~200 sec (3 min) on single GPU.
+- **Inference (Arm A2)**: 400 test records × 50 tokens / record ÷ 100 tokens/sec (Haiku throughput) = 200 sec (3.3 min).
+- **Inference (Arm A3, A4, A5)**: 400 records × inference time per record (~50 ms batch) = ~20 sec per arm.
+- **Total compute**: ~10 min CPU, ~10 min GPU. No cluster required; runs on local machine with GPU (NVIDIA A100, RTX3090, or RTX4090 recommended).
+
+- **Storage**: Verdict archive JSON (100 KB), train/test tensors (2 MB), fine-tuned model checkpoint (1-2 GB), logs (10 MB). Total ~2.1 GB.
+
+## Prior evidence that materially changed this design
+
+1. **README.md (Gradient archaeology on KillVector ledger)**: The 0.725 bits of MI between kill_pattern and operator class materialized this experiment. Without that signal, verdict prediction from kill-history features would be unjustified.
+
+2. **Tier-stratified outcome asymmetry (techne/registry/)**: 98% PROMOTE rate for Tier-A vs. 3% for Tier-C motivated the inclusion of calibration-tier in feature representation and per-tier F1 reporting.
+
+3. **Soft-kill recovery routing precedent (README, lines 59-65)**: The substrate's existing routing logic for soft-kills to NearMissCorpus motivated Arm A4 (auxiliary falsifier prediction) as a secondary task that could improve repair-attempt efficiency.
+
+4. **V2-T06 contradictory evidence (Ludus transfer failure)**: The D-Aedalus ecology-specificity result motivated Arm A5 (out-of-domain transfer check) to test whether verdict-prediction generalizes across mathematical domains or is domain-locked.
+
+5. **Tensor availability (ergon/tensor_manifest.md)**: The frozen 4.76M × 208 tensor provided a ready-made feature representation, eliminating the need to engineer features from claim text. This lowered compute and focused the experiment on verdict-prediction learning, not feature engineering.
+
+## Unresolved uncertainty
+
+1. **Verdict label quality**: The verdict archive is drawn from preregistered falsifier decisions, but the question "which falsifier fired?" may have ambiguity if multiple falsifiers fire on the same claim. The experiment assumes one verdict per claim (PROMOTE/KILL/SOFT-KILL) but does not audit whether the label is deterministic or has annotation disagreement. Mitigation: randomly audit 50 claims; re-run the falsifier battery independently and check if the verdict changes. If label flipping occurs in >10% of audits, verdict labels are not reliable (Falsifier F9, new).
+
+2. **Tensor feature interpretability**: The 208 dimensions of the tensor are frozen and not documented in detail (tensor_manifest.md names columns but does not explain what each encodes). It is possible that some dimensions are artifacts of the tensor-construction process (e.g., null columns, duplicates, or correlated with claim provenance rather than claim content). Mitigation: compute feature importance during fine-tuning (e.g., via attention weights or permutation importance); report which features drive verdict prediction. If top-10 features are all dominated by domain/tier proxies, feature engineering is needed.
+
+3. **Generalization to future attempt waves**: The verdict archive is retrospective (T1-T10 experiments closed). New experiments (V2-T11+) will generate new claims with new structure and new failure modes. The model trained on T1-T10 may not generalize to T11+ (concept drift). Mitigation: after T11+ close, re-evaluate the fine-tuned model on new verdicts; report OOD F1. If F1 drops >10pp, retraining is required.
+
+4. **Routing efficiency gain is speculative**: The experiment proves verdict PREDICTION (F1 >= 0.68) but does not prove ROUTING EFFICIENCY (falsifier test ordering saves cost). To measure routing efficiency, one must instrument the system to run falsifiers in predicted-confidence order (high-confidence KILL first, then lower-confidence, then PROMOTE) and measure cost per verdict vs. random ordering. This is a downstream application, not part of this experiment. Mitigation: design a follow-up experiment (V2-T09) that instantiates the fine-tuned model as a router in the falsification battery and measures wall-clock time and GPU cost per verdict.
+
+## Operation log (numbered; ops used / 15, documents opened / 12)
+
+1. Bash ls: Repository structure overview.
+2. Glob: Search for evidence_wiki/v2/arm_outputs (timed out; fallback to find).
+3. Bash find: Locate arm_outputs directory.
+4. Grep: Search for verdict-related files in markdown (identified existing proposals).
+5. Read: V2-T06_A_haiku.md (existing proposal format and structure).
+6. Grep: Search for KillVector/verdict in JSON (identified verdict packs).
+7. Read: V2-T01_pack.json (verdict record format and content).
+8. Read: V2-T01_A_haiku.md (additional experiment design patterns).
+9. Bash: Attempted find on VERDICT files (timed out; switched strategy).
+10. Grep: Search for verdict/attempt in JSON files (found packs and ledgers).
+11. Grep: Search for model/train in markdown (understood Ergon learner context).
+12. Read: README.md (Prometheus architecture, KillVector ledger, Ergon learner design).
+
+**Operations used: 12 / 15** | **Documents opened: 7 / 12** (README, V2-T06_A_haiku, V2-T01_pack, V2-T01_A_haiku, plus 3 grep outputs with file listings)
+
+Early stopping justified: Sufficient context obtained on (1) verdict archive structure and availability, (2) feature representation (tensor), (3) outcome classes (PROMOTE/KILL/SOFT-KILL), (4) domain/tier stratification, (5) Ergon learner mandate, (6) KillVector signal. No further repository exploration required to design specification.

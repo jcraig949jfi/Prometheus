@@ -1,0 +1,62 @@
+[
+  {
+    "proposal": "P",
+    "D1": 4,
+    "D3": 4,
+    "D4": 3,
+    "D5": 4,
+    "D6": 4,
+    "justifications": {
+      "D1": "Cross-family adoption is gated on held-out per-family validation rather than assumed: flagged experiments 'run to completion' for ground truth, and F3 would detect exactly the summary's failure ('if it catches 80% of doom in one family but only 35% in another, the signature is not generalizable without domain-specific recalibration').",
+      "D3": "F1-F5 all numeric ('Sensitivity >= 0.65 AND specificity >= 0.85', '< 5%', '>= 95%') plus a fixed-N stopping rule; F5's theory-grounding audit ('Armchair theory alone scores zero') is cheap, Phase-0, and independent of the signature's doom mechanism.",
+      "D4": "Each named confound has a concrete element ('independent analyst ... conducts Phase 0 power analysis without outcome data access', preregistered anchored Δ_max, committed-plan variance, inter-rater Δ_max coding), but no positive control demonstrating the instrument detects real doom (null classifier and trivial-threshold controls are floors/scoping, not detection demonstrations).",
+      "D5": "New question with the new cell explicitly stated: 'Transferability question: Does this signature generalize beyond within-lineage paired designs?' - reframed 'from policy comparison to meta-experimental validation' beyond the single Gen-1A observation.",
+      "D6": "Every branch is pre-committed to a distinct named verdict (SIGNATURE_LACKS_DISCRIMINANCE, FAMILY_SPECIFIC_SIGNATURE_ONLY, PREREGISTRATION_NOT_BINDING) including scope-limiting and validity-compromised readings ('report as PHASE_0_VALIDITY_COMPROMISED and demote results to exploratory')."
+    }
+  },
+  {
+    "proposal": "Q",
+    "D1": 4,
+    "D3": 4,
+    "D4": 4,
+    "D5": 4,
+    "D6": 4,
+    "justifications": {
+      "D1": "Explicitly rebuilds around the refuted naive test: generalization is claimed 'ONLY IF the cross-family test controls for (a) base-rate drift ... (b) discovery-family-specific index/provenance artifacts, and (c) feature degeneracy under structural regime shift', with F4 capping status at family-specific and F5 imposing a false-abort bound.",
+      "D3": "F1-F5 numeric ('outside [0.75x, 1.25x]', 'strict-match count ... = 0 at N>=90', 'alpha=0.05', 'false-abort rate ... < 5%') plus an explicit stop rule ('Stop and report FALSIFIED-CROSS-FAMILY the moment F2 or F3 triggers on the first fully-covered held-out family'); F2 is cheap, early, and independent of the signature's mechanism story.",
+      "D4": "Every summary confound is addressed by a concrete element (base-rate-matched null, frozen predicate, regime-degenerate feature ablation, different-provenance Phase 3), plus gate reachability/power computed first: 'compute minimum N per regime for target power before scoring anything'.",
+      "D5": "Acknowledges the refutation and names the untested cell: 'only Phase 3's different-batch family counts toward a genuine cross-family claim' - a tightened superseding protocol 'so the next attempt does not repeat the same falsified inference path'.",
+      "D6": "Phase 2 pre-registers 'Three mutually exclusive, pre-registered outcomes' (genuine geometric signal / regime-specific artifact / selection bias), and F1-F5 map every branch to a distinct verdict (FALSIFIED-CROSS-FAMILY, PASSED-REGIME-SPECIFIC, PASSED-PROGRAM-WIDE, deploy-blocked)."
+    }
+  },
+  {
+    "proposal": "R",
+    "D1": 4,
+    "D3": 4,
+    "D4": 4,
+    "D5": 4,
+    "D6": 4,
+    "justifications": {
+      "D1": "Held-out per-family validation gates any deployment ('Ground truth per family is the FULL-budget oracle far-episode-reach') and false-kill control is built in: 'F1 (hard falsifier, single-counterexample sufficient) ... if any one panel family trips the ... trigger ... but its full-budget oracle far-episode-reach exceeds 0.10, the compound signature is falsified'.",
+      "D3": "F1-F5 numeric ('precision ... below 0.80', 'Holm-corrected alpha = 0.05', 'below 50%') plus an explicit stopping rule ('Stop immediately ... if F1 fires on any completed family'); F1 is adjudicated by the oracle - 'a different measurement process from the early-checkpoint navigator suite' - so it is mechanism-independent and fires early.",
+      "D4": "Summary confounds each get elements (S1-vs-S3 conflation guard, encoding-artifact guard, small-n honesty with per-family cluster-bootstrap CIs) plus explicit reachability checks: 'confirm the target signature COULD in principle fire there at all' and F5's 'confirm 0.80 lies within the attainable precision range given the panel's actual class balance'.",
+      "D5": "New question with the new cell stated: 'whether a CHEAP, early-checkpoint version of the compound signature ... can be validated as a program-wide early-abort trigger across problem families neighboring the four already tested (S1_REG, S2_STACK, S3_REWRITE, S4_MEM)'.",
+      "D6": "Branches all pre-committed: F4 is 'a distinct outcome from F1-F3, not folded into them', unreachable comparison families are 'disclosed as an untested boundary, not resolved', and each family closes in one of three documented modes - no outcome is wasted."
+    }
+  },
+  {
+    "proposal": "S",
+    "D1": 2,
+    "D3": 4,
+    "D4": 3,
+    "D5": 4,
+    "D6": 3,
+    "justifications": {
+      "D1": "The trigger is acted on cross-family before transfer is demonstrated ('FLAGGED experiments that were ABORTED do not execute (no outcome data collected)'), so doom status of aborted runs is unverifiable; F3's 2-fold family-consistency check is a guard, but the deployment-during-validation design leaves the summary's failure only partially addressed.",
+      "D3": "F1-F6 numeric ('Sensitivity ... < 0.65', 'False-positive rate ... > 0.15', '< 90% of redesigned experiments', '< 5 lineages or < 1.4 hours') with an explicit fixed-N stopping rule and bounded redesign loop; F5's Δ_max audit ('< 80% of ... derivations meet the audit rubric') is cheap, Phase-0, and independent of the doom mechanism.",
+      "D4": "The summary's confounds get concrete elements (F3 family stratification, F2 false-kill bound, timestamped Δ_max audits, DECISION_REVERSAL flagging, committed-prior variance), but the abort-removes-ground-truth confound is unhandled and there is no positive control demonstrating doom detection.",
+      "D5": "New operational-deployment cell explicitly stated: 'This tests whether the signature is operationally deployable as a program-wide early-stop mechanism across neighboring problem families, not merely predictively valid post-hoc'.",
+      "D6": "Falsifiers carry distinct named verdicts and the low-doom-rate branch is pre-read as valid ('this is a valid outcome; report as \"the signature works, but ...\"'), but the flagged-and-aborted branch cannot be adjudicated (its counterfactual outcome is never observed), so not every plausible branch maps cleanly."
+    }
+  }
+]

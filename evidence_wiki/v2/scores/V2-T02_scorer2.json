@@ -1,0 +1,62 @@
+[
+  {
+    "proposal": "P",
+    "D1": 4,
+    "D3": 4,
+    "D4": 4,
+    "D5": 4,
+    "D6": 4,
+    "justifications": {
+      "D1": "Converts the enumeration hole into detection instruments: 'Include analyst-crafted \"near-miss\" bad records' held out from list authorship, a Phase 0 'fail-closed vs fail-open' construction audit, and 'Phase 1 - CAPTURE gate / positive control ... Require 100% rejection before any further phase runs'.",
+      "D3": "F1-F5 all numeric ('escape rate > 0%', 'rejection rate < 100%', 'gap ... > 2 percentage points', '>= 5 record kinds ... 0%') with an explicit halt-on-trip stopping rule; F2's CAPTURE positive control is mechanism-independent, cheap, and a hard precondition ('certification BLOCKED regardless of Phase 2 result').",
+      "D4": "Each known confound has a concrete element (held-out near-miss variants against circular tuning, stratified sampling, per-kind selection-bias breakdown 'reported beside the headline number') plus the planted positive control and 'Null-admit'/'Null-reject' stubs proving the probe can detect signal.",
+      "D5": "Acknowledges both priors as 'Two independent prior instances of exactly this mechanism in this codebase' and states the new cell: 'We hypothesize the same failure recurs here' at a new, never-probed sanitizer, adding the drift probe and construction audit beyond the precedent.",
+      "D6": "Every falsifier maps to a distinct blocked-cause verdict, the vacuous-gate branch is pre-committed ('gate is vacuous -> certification BLOCKED'), and the no-positive-spec branch is pre-legitimated: 'P4 and the before/after control become inapplicable and should be dropped rather than forced'."
+    }
+  },
+  {
+    "proposal": "Q",
+    "D1": 1,
+    "D3": 3,
+    "D4": 2,
+    "D5": 3,
+    "D6": 3,
+    "justifications": {
+      "D1": "Certifies the pattern list against seeded defects drawn from the same five enumerated categories; the risk is mentioned ('seeded defects may miss emergent patterns'; 'defects may use synonyms ... update patterns if coverage < 90%') but the design still commits it - no planted novel defect classes and no unknown-class quarantine.",
+      "D3": "Seven numeric falsifiers ('False accept rate ... > 0.5%', 'Schema coverage < 90%') plus explicit stopping rules ('Early stop if calibration false-reject > 2% on first 10k records'), but every falsifier tests the seeded-defect mechanism itself; none is independent of it.",
+      "D4": "At least one confound isolated by design ('Sample by lineage, not sequentially; verify cohort composition', 'patterns ... do not optimize ... against seeded defects'), but the summary's enumeration-hole and fail-open-residue confounds have no concrete element.",
+      "D5": "Certifying this new sanitizer is a clearly new question not settled by the priors ('Extract known-bad patterns from ... validate_persistence.py'), though the proposal never positions itself against the prior denylist failures or states a new empirical cell.",
+      "D6": "Each falsifier names a distinct diagnosis ('sanitizer too strict', 'sanitizer too weak', 'pattern underdetermined') and the unanimity gate maps branches, but no vacuous/no-signal reading is pre-committed (defect-artificiality is only a listed failure mode with a defense)."
+    }
+  },
+  {
+    "proposal": "R",
+    "D1": 4,
+    "D3": 4,
+    "D4": 3,
+    "D5": 4,
+    "D6": 3,
+    "justifications": {
+      "D1": "Builds the certification around out-of-list detection: 'a party who did NOT author or curate that list constructs k>=30 structural variants per pattern' including the novel 'cross-field composition of two individually-clean fields into a jointly-bad record', with the variant set frozen and hidden from maintainers.",
+      "D3": "F1-F4 numeric ('95% CI lower bound ... > 0% OR ... exceeds 2%', 'escape rate >= 50%', '5 percentage points') plus a stopping rule capping re-certification at 2 cycles on fresh adversarial sets; F3's clean-control false-positive falsifier is mechanism-independent and cheap in the same batch run.",
+      "D4": "The summary's confounds each get an element (wrong-population disjoint probe corpus, F2 whole-class holes, F4 covariate selection-bias table, 'compute the SE of the escape-rate estimator BEFORE setting the pass/fail line'), but there is no must-fire positive control demonstrating the sanitizer catches even enumerated bads.",
+      "D5": "Explicitly frames a superseding certification of an unmeasured system and names the cell: 'Thresholds anchored to the Ergon/Charon precedent as calibration priors - this system has not yet been measured, so these are pre-registered decision lines'.",
+      "D6": "F1-F4 plus the PASS bar ('self-reported pass statistic ... agrees with the independently-computed escape rate') map branches to distinct fixes/retirements, but no vacuous reading (e.g., probe defect-density zero, gate never fires) is pre-committed."
+    }
+  },
+  {
+    "proposal": "S",
+    "D1": 2,
+    "D3": 4,
+    "D4": 2,
+    "D5": 3,
+    "D6": 4,
+    "justifications": {
+      "D1": "Validation is entirely per-enumerated-pattern ('For each of K patterns with >=10 known-positive fixtures'); the only guard against unenumerated defects is the partial, unverifiable Phase D human-baseline contrast ('Human expert review of a 200-record random sample'), and no novel defect classes are planted.",
+      "D3": "Six numeric falsifiers with CIs ('Sensitivity CI lower bound <90%', 'FPR ... CI upper bound >0.2%') plus hard/early/conditional stopping rules; the Phase A existence census ('0 matches ... test returns VACUOUS') is independent of the detection mechanism, cheap, and evaluated first.",
+      "D4": "Several confounds isolated by design (external-authority fixtures, stratified held-out split, 'Threshold - median >= 2x SD'), but the summary's enumeration-hole and fail-open confounds have no concrete element; the strong attainability checks cannot lift it past level 2.",
+      "D5": "Validating this sanitizer with existence/reachability/fixture gates is a clearly new question ('the sanitizer's decision eligibility is demonstrated against a baseline'), but it neither cites the settled denylist priors nor states a new empirical cell relative to them.",
+      "D6": "Outcome branches are exhaustively pre-committed including vacuous readings: 'If 0, test returns VACUOUS and design proceeds to structural-zero protocol', 'threshold ... reclassified as noise-floor, decision eligibility lost', and the baseline-redundancy branch is separately labeled."
+    }
+  }
+]

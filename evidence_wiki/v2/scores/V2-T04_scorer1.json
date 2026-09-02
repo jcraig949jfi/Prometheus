@@ -1,0 +1,46 @@
+[
+  {
+    "proposal": "P",
+    "D1": 4, "D3": 4, "D4": 4, "D5": 4, "D6": 4,
+    "justifications": {
+      "D1": "The refuted semantic-routing failure is the experiment's own decisive null: 'SEM-SHUFFLE (null): identical pipeline, but title/subject_area/topic_tags are permuted across the entire candidate corpus... the permutation must break the selection relation between fields and outcome', with metadata similarity carried as the expected null and behavioral ground truth mandated.",
+      "D3": "F1-F5 numeric ('FAILS if dAUC(SEM-REAL - SEM-SHUFFLE) < 0.05 OR bootstrap P(d <= 0) >= 0.01') with a one-pass stopping rule and BLOCKED_ON_CORPUS early stop; F2's base-rate reclassifier ('TRIGGERS if dAUC(SEM-REAL - POP) < 0.02 while F1 passes') is cheap and independent of the similarity mechanism.",
+      "D4": "Each summary confound has a concrete element (POP baseline, whole-corpus shuffle, truncation depths, circularity disqualification) plus an in-run positive control: 'a harness that also fails to separate BEHAV from POP would indicate an instrumentation problem, not a null result about semantics.'",
+      "D5": "States the new cell explicitly from the prior's own ceiling: 'A title/subject/tag recommender is exactly this untested router-grade artifact, and its ceiling defines two mandatory design features below.'",
+      "D6": "All branches pre-committed to distinct conclusions including vacuous and surprise readings ('it is reported as BLOCKED_ON_CORPUS and closed pending a corpus that meets the precondition'; F4 'a genuinely novel finding worth its own follow-up, not a design bug')."
+    }
+  },
+  {
+    "proposal": "Q",
+    "D1": 1, "D3": 3, "D4": 2, "D5": 2, "D6": 3,
+    "justifications": {
+      "D1": "Only an adjacent risk is gestured at ('If CFR baseline is high for high-similarity problems even in random arm, flag as DIFFICULTY_CONFOUND') while the design commits the summary's failure: metadata-embedding similarity is compared to a random baseline with no popularity control and no field-shuffle null, exactly the comparison the prior showed to be inflated.",
+      "D3": "F1-F7 carry numeric thresholds and the stopping rules are explicit ('No exploratory peeking at partial results; statistics are frozen before reporting'), but every falsifier is tied to the similarity-transfer mechanism - none is mechanism-independent.",
+      "D4": "Several confounds are isolated by design ('Matched-problem paired design... Deltas are within-problem'; outcome-blind embedding freeze), but the summary's popularity confound has no element and no positive control exists.",
+      "D5": "Partially duplicative of the settled metadata-null with a defensible extension to downstream solver CFR ('problem titles and tags (surface structure) are insufficient signals... motivated inclusion of three embedding types'), but the refuted routing prior is never acknowledged.",
+      "D6": "Branches carry named conclusions ('note as THRESHOLD_MISCALIBRATION'; EMBEDDING_UNSTABLE), but the zone between F4's <+0.05 failure line and the +0.08 success criterion maps to no conclusion and no vacuous reading is pre-committed."
+    }
+  },
+  {
+    "proposal": "R",
+    "D1": 0, "D3": 3, "D4": 2, "D5": 2, "D6": 3,
+    "justifications": {
+      "D1": "Walks directly into the refuted metadata-routing failure: the recommender is built from title/statement/tags/domain metadata, validated against curated metadata links (related_ids), predicts success ('Hybrid... achieves 0.76-0.82 rho'), and asserts 'No contradictory evidence found that would argue for learner-based vs. heuristic recommender at this scale' - no expected-null framing, no behavioral feature.",
+      "D3": "Six numeric falsifiers ('If Spearman rho on V1 canonical queries < 0.72...') and a decision rule ('If >=2 falsifiers fire, stop and conclude recommender insufficient'), but no falsifier is both independent of the similarity mechanism and cheap to evaluate early.",
+      "D4": "Some internal confounds are isolated ('Stratify test set by domain; compute rho separately per domain'; version locking), but the summary's popularity confound and semantic-circularity confound have no design element and there is no positive control.",
+      "D5": "Partially duplicative retrieval-engineering extension of settled territory ('Evidence-wiki skill... Demonstrated hybrid BM25+embedding search is production-viable') with no acknowledgment or supersession of the refuted prior.",
+      "D6": "Each falsifier carries a named verdict ('verdict: \"embedding generalization gap; structure alone insufficient\"'), but the 0.72-0.75 indeterminate zone is unmapped and no vacuous/no-signal reading is pre-committed."
+    }
+  },
+  {
+    "proposal": "S",
+    "D1": 4, "D3": 4, "D4": 3, "D5": 4, "D6": 4,
+    "justifications": {
+      "D1": "The priors are converted into decisive controls and preregistered falsifiers: 'tag-shuffle null - permute tag sets across problems within each subdomain stratum', the popularity-confound prediction ('Top-1 neighbor selection frequency will correlate with a prominence proxy... at Pearson r > 0.3'), and 'run the cold-start ablation (step 6) as the headline deployment-realistic number.'",
+      "D3": "Five numeric falsifiers with a locked-sample stopping rule ('no optional stopping or resampling of the adjudication set is permitted after scores are seen'); falsifier 1's tag-fill-rate census ('>= 70%... FALSIFIED', with a <10% stop-gate) is cheap, early, and independent of the similarity mechanism.",
+      "D4": "Each summary confound has a concrete element ('flag and separately report results for rows whose provenance note indicates a default assignment'; tag-vocabulary-blind adjudicator; prominence-matched comparison), but there is no positive-control arm demonstrating the harness detects real signal.",
+      "D5": "States the new cell relative to prior work: 'this repo has already designed (though not fully executed) almost exactly this recommender-quality test once before, on a different corpus' - this design executes it on the math-problem ledgers.",
+      "D6": "Every prediction has a pre-committed FALSIFIED branch, plus a coarse value check (falsifier 5) and a vacuous stop ('stop after reporting that finding rather than proceeding to build a tag axis the corpus cannot support')."
+    }
+  }
+]

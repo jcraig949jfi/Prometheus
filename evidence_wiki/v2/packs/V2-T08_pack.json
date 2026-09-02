@@ -1,0 +1,129 @@
+{
+  "task": "V2-T08: Fine-tune a small local model on the archive of solved and failed attempt records, to improve its ability to judge whether a new attempt will succeed.",
+  "canonical_revision": 838,
+  "queries": [
+    "fine-tune small local model on solved and failed attempt records to judge success",
+    "LoRA fine-tuning surface pattern versus reasoning generalization",
+    "classifier judge success failure memorization generalization out of domain",
+    "small local model VRAM ceiling parameter budget",
+    "guard learner recovers failure boundary from failure evidence alone",
+    "warm-start collaborative completion navigable failure residue solve matrix",
+    "anti-transfer memorization out-of-domain worse than guessing",
+    "gate threshold must exceed measurement error standard error",
+    "control must break selection relation exchangeability train test split",
+    "predict attempt success probability before running judge outcome calibration",
+    "failed API calls loaded as prior-attempt residue defect",
+    "retention policy indistinguishable from random eviction at small n"
+  ],
+  "mechanisms": [
+    "LoRA fine-tuning",
+    "memorization vs generalization",
+    "failure residue navigability",
+    "small-n retention policy",
+    "training data contamination"
+  ],
+  "selection_note": "Selected 10 of 30 build_pack results by direct task relevance to 'fine-tune a small local model on solved/failed attempt records to judge new-attempt success'. Kept: two LoRA fine-tuning decompositions on the exact target task shape (judge success/failure from a small-model tune), the one clean positive precedent for learning a failure-predictor from failure evidence alone, one positive and one null precedent for routing/judging from archived attempt records (collaborative vs metadata signal), one retracted anti-transfer/memorization result on a small held-out archive, two archive-quality defects (fabricated residue rows; a corpus lacking usable state/action/outcome triples) bearing on whether the archive is fit to train on, one null on whether accumulated attempt history causally improves solver findability, and one baseline-calibration finding (a trivial heuristic beating a full solver) relevant to what floor a fine-tuned judge must clear. Dropped as off-topic for this task: Ergon library-eviction/retention-policy chain (5 items, about which artifacts a memory system keeps, not about judging attempt success), game-world strategic-realm findings, an algebraic-identity-artifact kill, several packet/provenance-instrument audits (arm-label leakage, truncation confound, whitespace gate hole, persistence-instrument checks) that are about experimental-hygiene of OTHER campaigns, and two recursive-structure-reuse verdicts (meet-in-the-middle discovery, lens construction) that concern operator/representation discovery rather than success/failure judgement from an archive. Evidence only; no design recommendation is made or implied.",
+  "n_items": 10,
+  "items": [
+    {
+      "claim_id": "C-01f913ae81af",
+      "finding": "The greedy-LoRA +0.68 gain decomposes into format-following, a False/kill prior, and narrow per-source template classes with no cross-domain transfer and almost no genuine reasoning - a calibrating kill establishing that more failure data of the same shape will not grow the reasoning share.",
+      "status": "REFUTED",
+      "claim_ceiling": "All of the above is about the gold-judgement metric; the Learner's actual objective (routing by failure) had no eval yet; pure failure-reasoning sources have no gold slice of their own so only their transfer (nil) is measured; transfer appears only where the surface pattern is shared and is absent exactly where genuine computation is required.",
+      "agent": "Ergon",
+      "mechanisms": ["memorization_surface"],
+      "metrics": "leave-one-out: drop theseus 0.86->0.25, drop hephaestus 1.0->0.29, drop pollux 1.0->0.395 with other slices untouched; computable-gold OOD judgement 0.55 vs 0.50 chance with T/F split 0.20/0.90 (False prior); diverse-gold transfer +0.027 on n=600, ~1.3 sigma, NOT significant",
+      "source_packet": "roles/Ergon/GREEDY_FOLLOWUP_FINDINGS_2026-06-07.md"
+    },
+    {
+      "claim_id": "C-d1ce433f289a",
+      "finding": "The greedy-substrate LoRA gain survives a shuffled-label control and entity-disjoint holdout, but decomposition shows genuine mathematical reasoning is the smallest component (~0.10 of the raw +0.68), behind format-following, relation base-rate priors (~0.67) and value memorization (~0.12).",
+      "status": "SUPPORTED",
+      "claim_ceiling": "One seed, one epoch, rank 16 - no error bars yet; in-distribution and narrow: narrow mathematical judgement, not general MATH-benchmark reasoning; CounterMath OOD probe unscored.",
+      "agent": "Ergon",
+      "mechanisms": ["memorization_surface"],
+      "metrics": "Base 0.228 / Greedy LoRA 0.907 / shuffled-label control 0.681 on 1,200 held-out; content effect +0.226; E-hidden 0.744, E-shown 0.841; relation base-rate oracle 0.669; parse-fail 0.653 -> 0.000",
+      "source_packet": "roles/Ergon/GREEDY_LORA_RESULT_2026-06-03.md"
+    },
+    {
+      "claim_id": "C-f1d363ff01e4",
+      "finding": "Incubation v1's guard learner recovered the hostile world's designed trap boundary (m//5 = 161) exactly from failure evidence alone, predicting out-of-sample failures at 0.9975-1.0 per seed with zero false positives and node ratio exactly 1.0.",
+      "status": "SUPPORTED",
+      "claim_ceiling": "Bounded, not repaired: hostile node harm persists under the guard (2.9097) because hostile tasks are hostile at the task level (minimal solutions avoid M) - unreachable by any state predicate; recorded as c0001's failure region.",
+      "agent": "Incubation",
+      "mechanisms": ["negative_evidence_reuse"],
+      "metrics": "guard comp0(s)<161 OR comp0(r02(s))<161 vs designed boundary 161; out-of-sample failure prediction 1.0/0.9975/1.0/1.0/1.0; 0 runtime failures guarded vs 2,207,501 blind; node ratio 1.0; exec overhead 1.0348",
+      "source_packet": "incubation/DOCUMENTATION.md"
+    },
+    {
+      "claim_id": "C-b2cebe551f3b",
+      "finding": "Warm-start collaborative completion is SUPPORTED and robust: navigable structure beyond popularity exists in the mined-failure solve matrix (COLLAB AUC 0.829 vs POP 0.754, P<0.0001) and survives an adversarial tail check dropping the top-8 popular probes, so the navigable handle for failure residue is behavioral, not semantic.",
+      "status": "SUPPORTED",
+      "claim_ceiling": "In-distribution only; the true objective (route a new problem to a tool) remains untestable because the artifact lacks probe features and is top-10 truncated - those two gaps are the spec for a router-grade artifact.",
+      "agent": "Ergon",
+      "mechanisms": ["accessibility_geometry", "negative_evidence_reuse"],
+      "metrics": "COLLAB AUC 0.829+/-0.162 vs POP 0.754+/-0.153, dAUC +0.075, P<0.0001; tail check dAUC +0.082, P<0.0001",
+      "source_packet": "roles/Ergon/ROUTING_EVAL_2026-06-09.md"
+    },
+    {
+      "claim_id": "C-94fc12c3e6af",
+      "finding": "Cold-start feature routing is NULL: a held-out scrap's concept/field metadata carries no routing signal over popularity (FEATURE AUC 0.744 vs POP 0.753, and real fields perform the same as shuffled fields), so a tool cannot be routed to problems from its concept labels.",
+      "status": "REFUTED",
+      "claim_ceiling": "In-distribution routing only (no probe identity, no unseen-probe claim); top-10 truncation biases against finding routing signal so the NULL is partly truncation-limited; modest power (80 scraps, 63 with fields, 45 active probes).",
+      "agent": "Ergon",
+      "mechanisms": ["native_vocabulary"],
+      "metrics": "FEATURE AUC 0.744+/-0.151 vs POP 0.753+/-0.157, dAUC -0.009, bootstrap P(d<=0)=0.93; real fields 0.744 ~ shuffled fields 0.743",
+      "source_packet": "roles/Ergon/ROUTING_EVAL_2026-06-09.md"
+    },
+    {
+      "claim_id": "C-e5e726a050c1",
+      "finding": "Cycle 148-L retracted 147-K's positive: the 14-cell structure does not transfer to held-out relations (D = -0.011, both models at the shuffled null and below chance - anti-transfer, with invariant rankings partially reversing across relations); the gain was memorisation of fourteen constants.",
+      "status": "RETRACTED",
+      "claim_ceiling": "four folds and 14 cells, the equal fold (7,707 sets) carries much of the variance; 12 of 165 batches (~7% of corpus); scope h4 only, feature selection over four invariants.",
+      "agent": "Aporia",
+      "mechanisms": ["memorization_surface", "transfer_mediation"],
+      "metrics": "D = M2 - M1 = -0.01103, clustered SE 0.07398, bar 0.15980, transfers? NO; both models at shuffled null (-0.1725/-0.1836 vs -0.1803) and below chance (0.33/0.32 vs ~0.49)",
+      "source_packet": "aporia/docs/CYCLE_148L_TRANSFER_2026-08-24.md"
+    },
+    {
+      "claim_id": "C-55004a4674b8",
+      "finding": "Failed API calls were being loaded as prior-attempt residue (DEFECT CONFIRMED): the prepass loader admits http_error rows, and in block B, at a 24.4% transport error rate, 43 of 220 tasks had no ok prepass row yet rendered F-prom packets asserting a prior attempt - fabricated residue byte-indistinguishable from the legitimate empty-vocabulary case.",
+      "status": "OBSERVED",
+      "claim_ceiling": "Block A content intact (treatment method census unchanged; the 38 shifted packets are the sparsity block, all six arms); block B actively fabricating; a lookup that finds zero usable rows must refuse, never return a renderable value.",
+      "agent": "Ergon",
+      "mechanisms": ["denylist_leak", "provenance_integrity"],
+      "metrics": "block A 15/415 http_error (3.6%), zero pure-fabrication tasks, no collected arm data invalidated; block B 60/246 http_error (24.4%), 43/220 tasks with no ok prepass row",
+      "source_packet": "ergon/probe/FINDING_transport_failures_as_residue_2026-08-25.md"
+    },
+    {
+      "claim_id": "C-dc484d4cf977",
+      "finding": "Cycle 151-O closed theseus/corpus for retrospective navigation: none of the eight edge-bearing generators records a usable (state, action, outcome) triple, each failing for a different structural reason.",
+      "status": "OBSERVED",
+      "claim_ceiling": "h2 is one field away from being a navigation dataset (positional method lists lack labels; 2,320 records where methods disagree outright); Charon's cross-cut shows the census globbed only *.jsonl and missed the .gz population.",
+      "agent": "Aporia",
+      "mechanisms": ["accessibility_geometry", "projection_equivalence"],
+      "metrics": "8 generators, 8 distinct failures: d3 action=random seed; c4 tautology 0.7776; h2 method identity unrecorded; h1 action field populated only on success; h4 magnitude-confounded; d2 a classification; c5 tautology 0.0129; d1 too small (5,337)",
+      "source_packet": "aporia/docs/CYCLE_151O_CORPUS_CLOSED_2026-08-24.md"
+    },
+    {
+      "claim_id": "C-aba202675bd8",
+      "finding": "D6-A's central hypothesis - that relational executable history can construct a derived signal that causally increases exact-solver findability on held-out tasks beyond the artifact hoard - was not confirmed: a clean preregistered null (H3-H1 +0.010, p=0.4875 vs a >=+0.20 requirement), with machine verdict ENDOGENOUS_SIGNAL_FOUND but explicitly NOT CAUSAL_FINDABILITY_SIGNAL.",
+      "status": "NOT_ESTABLISHED",
+      "claim_ceiling": "The null is informative: the interface ceiling was measured before the null - even a designer-side truth-seeded z moved dev-tier2 solves only 5/24 -> 9/24, so the bottleneck is the ordering-only coupling, not the history; a successor needs a constructive rather than purely selective interface.",
+      "agent": "Daedalus",
+      "mechanisms": ["transfer_mediation"],
+      "metrics": "T-P3 H3-H1 (CONF) +0.010 [-0.010, +0.042] p=0.4875 FAIL (needed >= +0.20, p<0.01); T-P4 H3-H2 +0.000 p=0.7444 FAIL; T-P5 ALIEN zero-shot 0/144 both arms; Holm over primaries FAIL; battery VALID (V1-V5 pass); sparse wall CONFIRMED (M0 CONF 0.007, tier3 0/576)",
+      "source_packet": "SerendipityFoundry/D6A/REPORT_D6A.md"
+    },
+    {
+      "claim_id": "C-82fe472469ca",
+      "finding": "A one-line non-LLM heuristic (count of the five integers coprime to 30) scores 0.5225 on fresh unseen tasks while the free-host solver scores 0.4794, so the probe band's attainable-without-reasoning floor is ~0.52, not the 0.25 chance floor the [0.35, 0.60] band was reasoned against.",
+      "status": "OBSERVED",
+      "claim_ceiling": "If neither proposed repair is adopted, any Delta_carry from this family must be reported with the heuristic floor stamped beside it, and a positive result cannot distinguish metabolization from method-priming; the F-generic control arm is itself confounded by envelope shape (separable by shape alone, no classifier required).",
+      "agent": "Ergon",
+      "mechanisms": ["chance_floor_calibration"],
+      "metrics": "coprime-to-30 heuristic CV 0.5700, fresh-seed 0.5225; solver 0.4794; chance 0.2500; sized confound ~+4pp, half the +8pp the probe is powered for",
+      "source_packet": "ergon/probe/FINDING_heuristic_floor_2026-08-24.md"
+    }
+  ]
+}

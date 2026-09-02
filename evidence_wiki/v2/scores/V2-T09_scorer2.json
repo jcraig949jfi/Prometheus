@@ -1,0 +1,46 @@
+[
+  {
+    "proposal": "P",
+    "D1": 4, "D3": 4, "D4": 3, "D5": 4, "D6": 4,
+    "justifications": {
+      "D1": "\"If SE_batch_level > 50% of the observed effect, flag the gate as unresolvable\" — the wrong-unit and gate-in-noise failures are converted into batch-level detection falsifiers (F2, F3, F5) rather than merely avoided.",
+      "D3": "\"Early stop if F4 or F5 is triggered during preflight (n_eff < 10 or extreme outlier weights)\" — numeric falsifiers F1-F6 with cheap early mechanism-independent preflight kills and an explicit stopping rule.",
+      "D4": "\"Compute weights under robust covariance estimation ... If they diverge, the effect is sensitive to outliers\" — the summary's confounds (unit, heterogeneity, measurement error) each isolated, but no injected-signal positive control demonstrating detection.",
+      "D5": "\"not only is the unit the batch, but the weighting within the batch-level analysis matters when batch-size and outcome-variance correlate. This is the second-order confound Arm B isolates\" — explicit new-cell statement beyond the settled unit correction.",
+      "D6": "\"Non-null verdicts for F3–F6 are discoveries (heterogeneity, confounding, brittleness), not failures\" — every branch pre-committed, including the unresolvable-gate and brittle-inference readings."
+    }
+  },
+  {
+    "proposal": "Q",
+    "D1": 4, "D3": 4, "D4": 3, "D5": 3, "D6": 4,
+    "justifications": {
+      "D1": "\"Compute n_effective (count distinct batches) before any analysis. Use batch-level inference as primary\" — the 57x wrong-unit failure is made detectable via F3's pseudoreplication-trap falsifier and the row-level arm demoted to a transparency check.",
+      "D3": "\"Early stop if F5 is triggered during preflight (n_batches < 10): the experiment is underpowered by design\" — numeric falsifiers F1-F5 with a cheap early design-failure kill and explicit stopping rules.",
+      "D4": "\"Compute SE BEFORE preregistration. Require gate to be >= 2 SE away from plausible values\" — each summary confound has a concrete defense (stratification, resolution matching), but there is no positive control demonstrating the pipeline detects real signal.",
+      "D5": "\"Batch-level analysis reveals the effect is weaker or disappears compared to naive per-row inference\" — applies the settled clustered-SE correction to a new planned experiment with a moderation extension, without an explicit new-cell statement.",
+      "D6": "\"Verdict: no statistically detectable effect (inconclusive on power, not on magnitude)\" — F1-F5 map every branch with pre-committed vacuous/unresolvable and design-failure readings."
+    }
+  },
+  {
+    "proposal": "R",
+    "D1": 4, "D3": 4, "D4": 4, "D5": 4, "D6": 4,
+    "justifications": {
+      "D1": "\"148-L demonstrates that fixing the unit-of-analysis defect is necessary but was NOT sufficient\" — both summary failures (wrong unit, fold dominance/memorization) are converted into the inflation-ratio readout, jackknife dominance gate, and hard held-out replication gate.",
+      "D3": "\"if G (number of batches) < 20, the analytic CR2 SE alone is insufficient; the wild cluster bootstrap CI must also exclude the null\" — numeric falsifiers 1-5 with a cheap early cluster-count floor and an interim dominance stop.",
+      "D4": "\"inject a batch-level effect of known magnitude into a held-out synthetic corpus ... verify the pipeline recovers it\" — every summary confound addressed plus an explicit positive control demonstrating detection of real signal.",
+      "D5": "\"they are preregistered here as this task's own gate, not as an imported validated constant\" — explicitly states the new batch-decision-substrate cell beyond the 147-K/148-L precedents.",
+      "D6": "\"reclassified FOLD_DOMINANCE_ARTIFACT ... RETRACTED, full stop ... INCONCLUSIVE_INSUFFICIENT_CLUSTERS\" — every branch maps to a named, pre-committed verdict including the no-effect and underpowered readings."
+    }
+  },
+  {
+    "proposal": "S",
+    "D1": 4, "D3": 4, "D4": 4, "D5": 4, "D6": 4,
+    "justifications": {
+      "D1": "\"Forbidden quantity, stated explicitly: any SE computed as if N = total row count. Its presence in a report is treated as a defect\" — the wrong-unit failure is converted into hard-coded assertions plus gate-fire worlds that reproduce the inflation where the truth is known.",
+      "D3": "\"If, in the null gate-fire world, the batch-bootstrap empirical coverage of the 95% BCa interval falls below 90% ... the bootstrap implementation is rejected\" — a cheap early mechanism-independent falsifier plus numeric falsifiers 2-4 and a pilot-based stopping rule.",
+      "D4": "\"Three gate-fire synthetic worlds, run and passing before any real batch is analyzed\" — batch-size, nesting, and autocorrelation confounds each defended, with null, deterministic-copy, and planted-correlation positive controls.",
+      "D5": "\"the specific risk here ... is new territory, not a re-run of either precedent — hence this is a design specification, not a replication\" — explicit statement of the new cell (widely varying batch sizes, dual estimands).",
+      "D6": "\"the result is marked UNDECIDED pending more batches, never rounded to a side\" — every branch, including the methods-agree reversion (falsifier 2) and no-CI readings, is pre-committed."
+    }
+  }
+]

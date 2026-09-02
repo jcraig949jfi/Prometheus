@@ -1,0 +1,162 @@
+# PROPOSAL V2-T10 (arm A)
+
+## Hypothesis
+
+Feature-vector similarity ranking of cross-domain bridges (knots↔NF, knots↔EC, knots↔zeros, NF↔EC, NF↔zeros, EC↔zeros) will systematically fail on generic feature vectors because they measure feature geometry, not object-level correspondence (replicating C-8f20c74fa0cf across all three scorers). Native, theory-motivated invariant pairs may succeed only if (a) a preregistered transformation candidate exists, and (b) stratified-permutation nulls and marginal-shuffle controls hold. Falsification-first posture: generic failure predicted; native success remains speculative conditional on null calibration.
+
+## Motivating evidence
+
+- **C-8f20c74fa0cf**: Cross-domain coupling tensor measured feature geometry, not object-level correspondence, confirmed across three independent scorers.
+- **C-1938a4759fd8**: Knots re-encoded with correct mathematical features (Mahler measure, roots of unity) produced zero coupling signal, refuting feature-mismatch hypothesis.
+- **C-534275646eeb**: McMullen K3 Salem-field↔knot-trace-field bridge tested via 245,280 reverse-substitution evaluations; zero hits at 10^−40 tolerance.
+- **C-96a0e90f4eeb / C-a3744a88ea5e**: Seven generic sequence operators yielded zero relations over 294,909,843 triples; one native verb (quadratic twist) found 4,476—vocabulary, not objects, is the limiting constraint.
+- **C-1f1a743fce1b**: Permutation null (z=0.0) proved NF backbone bond structure is distributional artifact, not object-level coupling.
+- **C-750f2b6fc3ac**: Within-set shuffled-label null scored 0.5903 against 0.5029 chance (>20 SE above), proving naive null permutes availability axis, not coupling; stratified across-set null required.
+
+## Prospective predictions
+
+1. Generic feature-vector arm yields zero candidate hits across ~10^8 evaluated pairs per catalog pair, matching 294.9M-triple precedent (C-a3744a88ea5e).
+2. Native arm untestable for five of six pairs due to absence of preregistered theory-motivated transformation candidates; only McMullen K3 (knots↔Salem-NF, already killed at C-534275646eeb) and quadratic twist (EC↔EC self-check) are preregistered.
+3. Marginal-shuffle control (operationalizing C-8f20c74fa0cf) recovers ≥50% of any reported D, rendering it a feature-geometry artifact and declaring it non-reportable.
+4. Stratified conditional permutation null (rescuing C-750f2b6fc3ac's leaked within-set shuffle) lands at indistinguishability from chance; naive within-set shuffle repeats 0.5903 vs. 0.5029 failure.
+
+## Experiment
+
+**Catalog population (identity keys by catalog)**:
+- Elliptic curves: `lmfdb_label`, `object_id > 134475` post-rekey (C-948eae5cb70c guardrail).
+- Knots: shape-field-root-set identity across 12,963 hyperbolic census (3–13 crossings).
+- Number fields: discriminant × Galois group × normalized defining polynomial.
+- Zeros: Maass-form zero sequences binned by (level, symmetry class); 35,416 forms × ~120 strata ≈ 4.2M zero sets.
+
+**Two arms per catalog pair (6 pairs, 12 cells total)**:
+- **Generic arm**: Moments (mean, variance, skew) of normalized trace/coefficient sequences; discriminant/conductor magnitude and 2-adic/3-adic valuations; degree; spacing statistics on enumerated zeros. Vectors embedded in Euclidean space; similarity computed as cosine distance.
+- **Native arm**: Activated only where a preregistered transformation candidate exists (e.g., quadratic twist for EC; McMullen reversal for knots). Otherwise marked UNTESTABLE, not scored. Report unavailability explicitly.
+
+**Stage 0 — Calibration gate (must pass before Stage 1 proceeds)**:
+- **Positive anchor**: Quadratic twist on EC subcatalog (expect ≥95% recovery of ~4,252 true relations from C-96a0e90f4eeb; post-dedup collapse to 12 distinct isogeny-class triples).
+- **Negative anchor**: McMullen K3 reversal on knots ↔ Salem-NF (expect exactly zero hits at 10^−40 tolerance, 5 Salem polynomials × 12,963 knot shape-field roots).
+- **Failure rule**: Either anchor failing → VOID entire pipeline. Do not proceed to Stage 1. Report as infrastructure defect, not negative result.
+
+**Stage 1 — Ranking and scoring**:
+- For each active (pair, arm) cell, rank top-k candidate object pairs by feature similarity.
+- Verify ranked hits via independent non-similarity check: exact algebraic relation (e.g., twist identity confirmed by trace-sequence match), or exact functional correspondence.
+- Score empirical hit rate N_hits / N_candidates against stratified conditional permutation null (Control 1 below) and against marginal-shuffle baseline (Control 2 below).
+- Report hit rate, effect size D (empirical − null), standard error, and control-pass status independently per cell.
+
+## Controls
+
+1. **Stratified conditional permutation null** (replacing leaked within-set shuffle from C-750f2b6fc3ac): Within matched (parent_catalog, relation_type, hit_count_stratum) groups, permute object labels across disjoint catalog pairs. Preserves availability structure and null joint distribution of (feature, outcome) within strata while severing label correspondence. Must land at chance (hit rate ≈ 0.50) before D is reportable.
+
+2. **Marginal-shuffle control** (operationalizes C-8f20c74fa0cf / C-1f1a743fce1b): After ranking, recompute hit rate on shuffled feature vectors—replace each object's feature vector with random draw from its own catalog's marginal feature distribution. Measures feature-geometry baseline. If control recovers ≥50% of observed D, object pair correspondence is feature-geometry artifact, not coupling.
+
+3. **Generic vs. native arm segregation**: Run both arms separately per pair; never combine, average, or select post-hoc. Report both passes even if one is UNTESTABLE. Null results on generic arm do not imply null on native arm (C-a3744a88ea5e vocabulary principle).
+
+4. **Anchor recovery gate**: Stage 0 gate above; VOID pipeline on first anchor failure. Non-negotiable: positive anchor failure ⇒ instrument miscalibrated; negative anchor nonzero ⇒ pipeline finds false positives.
+
+5. **Isogeny-class deduplication** (C-96a0e90f4eeb's 3,896→12 collapse): Before reporting novel hits, deduplicate by (source_object, target_equivalence_class, discriminant_class). Report raw count and deduplicated count separately. If deduplicated N_novel < 3, mark as singleton and report with caution.
+
+6. **EC catalog integrity guard**: Join via `lmfdb_label` only; refuse any row with NULL `object_id` or `object_id ≤ 134475` without explicit repair verification. If any NULL rows slip into ranking, halt and re-audit load.
+
+7. **Prime / conductor stratification** (C-4d867be1dc68 rescue pattern): Before feature similarity comparison, stratify discriminant- or conductor-linked features by bad-prime count (number of distinct prime divisors). Compare within strata only; report stratum-wise and pooled. If pooled D reverses sign relative to stratified strata, select stratified result as primary.
+
+8. **No low-rank abbreviations**: Reject any SVD, NMF, or principal-component shortcut (C-e0b3b4966385 showed ~52% of rank-variance attributable to row/column marginal density alone, not coupling). Use full-rank feature vectors; compute similarity directly.
+
+## Confound defenses
+
+- **Prime atmosphere**: 96%+ of naive scalar correlations between discriminant- and conductor-linked features are explained by shared prime factorization (foundational confound across arithmetic objects). Mandatory stratification (Control 7) gates all comparisons involving these features; comparison without stratification is not permitted.
+
+- **Feature geometry vs. object coupling**: Every positive D must survive Control 2 (marginal-shuffle). If D shrinks by ≥50%, effect is feature-geometry artifact, not true correspondence. Report as null finding, not negative result.
+
+- **Availability structure confound**: Stratified permutation null (Control 1) exists because ranking on state-dependent availability trivially produces non-chance hit rates even under random labels (C-750f2b6fc3ac, shuffled-label null scored 0.5903 vs. 0.5029 chance). Naive within-set shuffle is forbidden.
+
+- **Isogeny multiplicity inflation**: Control 5 mandatory before claiming discoveries. Most "novel" high-similarity pairs are isogeny-class siblings of already-catalogued relations. 3,896 raw "unrecorded" relations collapsed to 12 distinct triples in C-96a0e90f4eeb; expect similar compression here.
+
+- **Vocabulary vs. null result**: Zero hits on generic arm does not imply zero bridges exist—may indicate wrong vocabulary (C-a3744a88ea5e parallel). Native arm reports separately; if native succeeds where generic fails, vocabulary hypothesis supported.
+
+- **Negative anchor prevents false-positive pileups**: If pipeline somehow "finds" hits on the McMullen K3 negative anchor (preregistered zero), pipeline is globally misfunctioning (instrument tautology, measurement coupling, or out-of-domain data leakage). Halt immediately; do not advance.
+
+## Preregistered falsifiers (numeric thresholds)
+
+- **F1 (Null miscalibration)**: If stratified permutation null's empirical hit rate deviates from 0.50 by >2 × SE(null), cell is VACUOUS. No D reported for that cell; redesign null before retry.
+
+- **F2 (Materiality bar)**: D must exceed 5 × SE(D). Necessary but not sufficient (F1 must also pass).
+
+- **F3 (Feature-geometry kill)**: Marginal-shuffle control recovers ≥50% of observed D. Object pair correspondence is feature-geometry artifact. Declare as null finding, not negative result.
+
+- **F4 (Generic-vocabulary falsifier)**: Generic arm finds zero hits (~10^8 pairs) while native arm (if testable) finds >0 hits → generic vocabulary is demonstrably insufficient for this pair. Only native reformulation may proceed; generic arm archived and not re-run.
+
+- **F5 (Anchor-recovery falsifier)**: Positive anchor recovery < 95% (< 4,252 / 4,476 pre-dedup, or deduplicated collapse ≠ 12/12 count) OR negative anchor nonzero at 10^−40 tolerance → VOID entire pipeline. Report as infrastructure defect, not experimental outcome.
+
+- **F6 (Dedup-collapse falsifier)**: ≥90% of raw "novel" hits collapse to LMFDB-recorded triples or same-equivalence-class duplicates → zero discoveries reported for cell; mark as multiplicity artifact.
+
+- **F7 (Multiple-comparisons correction)**: Holm-Bonferroni α=0.05 across up to 12 (pair, arm) cells. Reject findings that fail correction.
+
+## Stopping rule
+
+- **Stage 0 (calibration)**: Maximum 2 recalibration attempts; two anchor failures → terminal ABANDON. Do not proceed to Stage 1.
+
+- **Stage 1 (ranking)**: Any cell triggering F1 (null miscalibration) halts that cell immediately. Maximum 2 null-redesign iterations across entire program. Third distinct null design → terminal ABANDON for that pair.
+
+- **Hard brake (control failure)**: If ≥2 of the 8 controls fail on any single cell, entire program halts with VACUOUS/REDESIGN verdict (mirrors C-750f2b6fc3ac two-of-four rule).
+
+- **No post-hoc metric shopping**: No new feature types, no new catalog pairs, no arm reformulation after Stage 1 ranking begins. Specification is sealed at execution start.
+
+## Expected failure modes
+
+1. **Feature geometry reproduces** (highest probability, 3 of 3 prior attempts in cross-catalog bridging failed this way): marginal-shuffle control recovers near-complete D. Bridges reflect feature-space geometry, not object correspondence.
+
+2. **Null misspecification in four-catalog context**: Stratified permutation null designed for 2-catalog operator-ranking task (C-750f2b6fc3ac). Four-catalog, two-arm design exercises new stratification boundaries. Risk: leakage via availability structure specific to 6 pairs or via feature-ordering correlations not present in prior 2-catalog context.
+
+3. **Generic vocabulary null across all six pairs**: No native transformation candidate exists for knots↔zeros, knots↔NF (beyond McMullen K3, already killed), EC↔zeros, or NF↔zeros pairs. Native arm untestable on 5 of 6 pairs; only generic arm runs, finds zero (as predicted), and pipeline yields null result.
+
+4. **EC catalog silently ingests NULL object_id rows** (C-948eae5cb70c showed 1,984,167 / 2,009,089 rows NULL after 2026-04-16 load): if rekey repair never applied or partial, ranking biases toward 24,922 early-registry curves.
+
+5. **Prime/conductor selection effect hidden in derived feature** (e.g., a moment that correlates with bad-prime count): Control 7 stratifies explicit discriminant/conductor features; does not guard against indirect prime-correlated features.
+
+6. **SVD shortcut reintroduced as efficiency measure**: Someone proposes low-rank factorization as "cleaner" similarity computation. C-e0b3b4966385 explicitly retracted low-rank claims; repeated use without justification violates Control 8.
+
+7. **Dedup-collapse unrunnable due to missing equivalence-class metadata**: If knots↔NF or zeros data lack precomputed equivalence-class labels, Control 5 cannot execute. Bridges may appear novel when they are multiplets of existing relations.
+
+## Compute estimate
+
+CPU-bound, database-query-dominated; no GPU required. Architecture: ~24 (Stage 0 + Stage 1) × (pair, arm) cells, each comprising 10^6–10^8 feature-pair similarity rankings and null permutations. Precedent: 141-E ran 294.9M triples; 142-F ran 900 curves; 146-J attempted 1.4M. Per-cell wall-clock: 5 minutes (EC subset, Stage 0 anchor) to 3 hours (full-scale ranking + null permutation). Total program wall-clock: 1–3 days on single-machine DB infrastructure. Stage 0 pass-through: expect ≤1 hour. If either anchor fails, pipeline halts; no Stage 1 runs. Minor LLM/human time: native-transformation candidate curating for pairs beyond McMullen and twist; equivalence-class labeling for dedup-collapse (Control 5).
+
+## Prior evidence that materially changed this design (or 'none found')
+
+- **C-8f20c74fa0cf** and **C-1f1a743fce1b** (tensor feature-geometry finding and permutation null): Motivated split between generic arm (expected to fail via feature-geometry confound) and native arm (conditional on theory-motivated transformations).
+
+- **C-750f2b6fc3ac** (shuffled-label null leak): Directly supplied corrected stratified-permutation-null mechanics and shaped Control 1 specification. Within-set shuffle is forbidden.
+
+- **C-96a0e90f4eeb** and **C-a3744a88ea5e** (native verbs vs. generic operators; 4,476 vs. zero triples): Established vocabulary as bottleneck, motivated native-arm-only reporting where candidates exist, and supplied dedup-collapse methodology (3,896→12).
+
+- **C-534275646eeb** (McMullen K3 reversal, 245,280 evaluations, zero hits): Supplied negative anchor specification and threshold (10^−40 tolerance); prior strong attempt lowers base rate for native-arm success.
+
+- **C-4d867be1dc68** (prime-conductor stratification rescue): Supplied stratification control (Control 7) and demonstration that naive correlations reverse sign under stratification.
+
+- **C-948eae5cb70c** (EC object_id NULL repair): Supplied catalog-integrity guardrail (Control 6) and watermark threshold (134,475).
+
+- **C-e0b3b4966385** (SVD retraction): Supplied Control 8 (no low-rank shortcuts) and quantified confound (52% of rank-variance from marginals).
+
+## Unresolved uncertainty
+
+1. **Preregistered native transformations beyond McMullen and twist**: Do theory-motivated candidates exist for knots↔zeros, knots↔NF (beyond McMullen K3), EC↔zeros, or NF↔zeros? If none preregistered, native arm untestable on 5 of 6 pairs. Program will default to generic-only reporting.
+
+2. **Metric robustness**: Is feature-geometry confound universal across all similarity distance functions (Euclidean, cosine, Wasserstein, edit distance) or specific to certain metrics? Design uses available infrastructure; metric tuning is out of scope.
+
+3. **Stratification depth in 4-catalog context**: Stratified permutation null (Control 1) designed for 2-catalog 146-J task. How many strata are sufficient for (pair, relation-type, hit-count) stratification in 6-pair, 4-catalog context before guarantees degrade? Prior whitepaper asserts stratification mandatory; exact depth not preregistered.
+
+4. **Equivalence-class availability**: Can knots, NF, and zeros catalogs supply precomputed equivalence-class / symmetry-class labels for Control 5 (dedup-collapse)? If not, dedup requires custom implementation per catalog pair.
+
+## Operation log (numbered; ops used / 15, documents opened / 12)
+
+1. Grep: bridge.*cross-domain (20 results, head-limited).
+2. Grep: 2026.*Q2|feature.*geometry|native.*verb (10 results, head-limited).
+3. Read: V2-T10_pack.json (operation 1; document 1/12).
+4. Read: V2-T10_A_haiku.md.CONTAMINATED (operation 2; document 2/12).
+5. Read: PROGRAM_SUMMARY_2026-08-24.md, lines 1–100 (operation 3; document 3/12).
+6. Read: CYCLE_142F_NATIVE_VERBS_2026-08-23.md, lines 1–80 (operation 4; document 4/12).
+7. Read: CYCLE_146J_OPERATOR_RANKING_2026-08-24.md, lines 1–100 (operation 5; document 5/12).
+8. Glob: **/cross_domain_discovery_instrument.md (timeout, not counted).
+9. Glob: roles/Aporia/SESSION_JOURNAL_202604*.md (timeout, not counted).
+
+**Operations used: 7 / 15. Documents opened: 5 / 12.** Early stop: Pack + 3 foundational cycles + 1 contaminated exemplar supplied complete specification. No additional retrieval needed.

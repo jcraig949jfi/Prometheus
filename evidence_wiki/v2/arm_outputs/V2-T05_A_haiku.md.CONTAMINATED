@@ -1,0 +1,133 @@
+# PROPOSAL V2-T05 (arm A)
+
+## Hypothesis
+
+A pre-registered, statistically observable failure signature — measured minimum detectable effect (MDE) exceeding the theoretical maximum effect a treatment could modulate — reliably predicts experimental doom across problem families when applied prospectively as an early-abort criterion, with false-positive rate <= 0.10 (Type I error) and true-positive detection of doomed attempts >= 0.80 (power).
+
+## Motivating evidence
+
+- **Ergon Gen-1A Finding (section 7, 2026-09-01)**: In a memory retention policy experiment, the inherited n=5 lineages produced MDE 10.1 pp at 80% power, which EXCEEDS the total content-adaptedness effect measurable (6.7 pp). This was detected before any policy was run; the experiment was redesigned to n=30 lineages (MDE 1.9 pp) to escape the trap.
+- **Theoretical basis**: Retention policy effects are constrained by existing architecture; the maximum effect a new policy can possibly modulate is bounded by (M1 − M0_best_alternative) − (M0_shuffled − M0_baseline) from prior work. If MDE > this bound, no result can inform the choice between policies, making statistical power analysis a prospective kill signal.
+- **Observed cost**: The Gen-1A experiment wasted zero lineages by catching the signature before execution; the original design would have published a null indistinguishable from "no effect exists" when only detection-power was missing.
+- **Transferability question**: This signature arose in a within-lineage paired design. Does it generalize as an early-abort trigger to different problem families (cross-domain transfer experiments, multi-seat collaborations, batch-level analysis, hierarchical inference)?
+
+## Prospective predictions
+
+1. **Primary (predictive validity)**: Across a frozen suite of pre-planned experiments in neighboring problem families (candidates: D-5/Aporia transplant, Ludus game-world transfer, cross-substrate circuit discovery), prospective application of the MDE-exceeds-bound signature identifies >= 80% of experiments that will (a) run to completion and (b) produce statistically non-significant results consistent with "measurement error prevents detection," with false-positive rate on viable experiments <= 10%.
+
+2. **Mechanism prediction**: Experiments identified as doomed by the signature will show: (i) actual MDE matches preregistered prediction within ±15%; (ii) confidence intervals on treatment effects centered near zero and entirely within ±1 SE of the preregistered bound; (iii) no post-hoc reframing (e.g., "effect smaller than predicted, success at reduced scale") that changes the interpretation of doom into a true finding.
+
+3. **Negative case (falsifier)**: If an experiment flagged by the signature produces a large, unexpected treatment effect (effect size > 2 SE above the preregistered bound), the signature failed as a predictive tool on that family, and post-hoc analysis must identify which assumption (theoretical bound, design specification, or power calculation) was violated.
+
+4. **Cross-family consistency**: The signature's predictive value does not vary by more than 2-fold across problem families; a tool that predicts doom accurately in one domain but fails in a second violates generalization and requires domain-specific recalibration.
+
+## Experiment
+
+**Phase 0 (audit and signature application, pre-freeze):**
+
+1. **Identify candidate experiments** in neighboring problem families (defined as seat/substrate pairs within one relational hop of Ergon/Aporia: e.g., transfer experiments between Ludus and D-5, between Aporia learning and Charon validation). Require each candidate to have (a) a preregistered effect model; (b) explicitly stated theoretical bounds on treatment effect; (c) a committed statistical analysis plan with the primary test and alpha.
+
+2. **For each candidate, conduct a prospective power analysis**:
+   - State the theoretical maximum effect (Δ_max) the treatment could modulate, derived from prior contrasts or architectural bounds, before outcome data.
+   - Compute the study's MDE at 80% power given the preregistered sample size, design, and primary test.
+   - Preregister the comparison: is MDE < 0.5 × Δ_max (viable), or MDE ≥ 0.5 × Δ_max (flagged as doomed)?
+   - Freeze the decision before running any experiment.
+
+3. **Classify experiments** into three groups:
+   - **VIABLE**: MDE < 0.5 × Δ_max. Experiment proceeds normally.
+   - **FLAGGED**: MDE ≥ 0.5 × Δ_max. Experiment is marked as doomed but runs to completion for validation (no early stopping; arm blind to the flag).
+   - **REDESIGNED**: MDE ≥ 0.5 × Δ_max initially, but investigators choose to increase sample size or reduce noise before freezing. Redesign is documented and included in the analysis.
+
+4. **Freeze experiment roster and predictions** before any outcome inspection. Record for each flagged experiment: (a) Δ_max derivation; (b) MDE computation; (c) design specifications; (d) preregistered stopping rule.
+
+**Phase 1 (execution and blinded outcome measurement):**
+
+1. Run each experiment according to its preregistered protocol. Experimenters remain blind to their doom classification.
+
+2. For each experiment, record: (a) whether it ran to completion without early stopping; (b) primary test statistic and p-value; (c) effect size (point estimate + 90% CI); (d) comparison to preregistered Δ_max and MDE.
+
+3. Measure performance of the signature:
+   - For each FLAGGED experiment that completed, determine whether the observed effect fell within the ±1 SE envelope around zero (consistent with "measurement noise prevented detection") or exceeded it (signature failed).
+   - For each VIABLE experiment, check whether it produced a statistically significant result (success case) or non-significant but coherent with model (correctly viable).
+
+**Phase 2 (validation and falsification):**
+
+1. **Cross-tabulation**: Create a 2×2 table (Signature: {Viable, Flagged} × Outcome: {Significant result, Non-significant; CI includes zero}). Compute sensitivity (% of truly non-significant experiments correctly flagged) and specificity (% of significant experiments not flagged).
+
+2. **Falsifier audit**: For any FLAGGED experiment with a large unexpected effect (|effect| > 2 SE above Δ_max), conduct post-hoc analysis to identify which assumption was violated: (a) theoretical bound was wrong; (b) design had hidden heterogeneity; (c) statistical test was misspecified.
+
+3. **Cross-family consistency test**: Stratify the validation by problem family. Test whether signature predictive validity differs by > 2-fold across families (e.g., it works in memory-retention problems but not in curriculum-discovery problems). If so, map which family-specific features control signature performance.
+
+## Controls
+
+- **Null doom classifier**: A blind baseline that randomly classifies experiments as doomed/viable with the same rate as the true signature. Signature must exceed this baseline's predictive accuracy by >= 15 percentage points.
+- **Trivial threshold**: Classify any experiment with MDE < 0.2 × Δ_max as automatically viable (this requires no insight). Measure signature value only on experiments where MDE is in the range [0.3 × Δ_max, 1.0 × Δ_max], where signal and noise are genuinely hard to distinguish.
+- **Same-family replication**: Include at least two independent experiments from the same problem family (e.g., two retention-policy explorations with different search cores or task sets) to test within-family consistency of the signature.
+- **Post-hoc reframing catch**: Audit the final interpretation of each FLAGGED experiment. If the investigators change the claimed effect size, primary endpoint, or success criterion post-outcome, mark as REFRAMING_ATTEMPTED and report the frequency across arms.
+
+## Confound defenses
+
+- **Preregistration window leakage**: Investigators might use Phase 0 power analysis results to steer design choices post-hoc. Defense: phase 0 is conducted by an independent analyst (not the experiment PI) who does not see the outcome data until Phase 2 adjudication. Auditor signature and timestamp embedded in frozen packs.
+- **Retroactive theory correction**: After an experiment fails to detect a treatment, the investigators might re-derive Δ_max to explain why it was smaller than expected, moving the goalposts. Defense: Δ_max derivation is preregistered WITH EXPLICIT ANCHORS (citing specific prior contrasts, architectural diagrams, or other publicly committed statements). Any post-hoc revision is recorded as a separate correction event, not retroactive.
+- **Measurement-error underestimation**: If the measurement noise is larger than anticipated, MDE will be underestimated in Phase 0, making more experiments appear viable when they are not. Defense: The primary test and its expected variance are taken FROM COMMITTED STATISTICAL PLANS, never estimated from data. If actual observed noise in an experiment exceeds the preregistered assumption, that is a notable finding (model misspecification) and must be reported separately.
+- **Definition creep on Δ_max**: Different investigators might use conflicting priors to derive the theoretical bound. Defense: Δ_max derivations are scored by an independent adjudicator on explicit criteria (e.g., is it grounded in prior published results? does it rest on unfalsifiable assumptions?). Inter-rater reliability on Δ_max coding is measured; disagreement triggers hand-adjudication with documented reasoning.
+- **False-negative (doom signature misses a doomed experiment)**: Some experiments might be doomed for reasons the signature does not capture (e.g., model misspecification, oracle leakage, selection bias in task assignment). Defense: At the end of Phase 2, any VIABLE experiment that failed dramatically is audited for alternative failure modes. The signature is not claimed to catch all doom, only the MDE-mediated class.
+
+## Preregistered falsifiers (numeric thresholds)
+
+- **F1 (primary: signature validity)**: Sensitivity (% of non-significant experiments flagged as doomed) must exceed 0.65; specificity (% of significant experiments marked viable) must exceed 0.85. If either is missed: SIGNATURE_LACKS_DISCRIMINANCE.
+- **F2 (false-positive rate)**: Among VIABLE experiments that run to completion, the fraction that produce non-significant results (CI includes zero) must not exceed 0.30. A high false-negative rate suggests the viable category admitted too many marginal designs. If exceeded: VIABLE_CATEGORY_UNRELIABLE.
+- **F3 (cross-family consistency)**: Sensitivity and specificity must not differ by more than 2-fold across identified problem families. If a family shows 0.80 sensitivity but another shows 0.35, the signature is not generalizable: FAMILY_SPECIFIC_SIGNATURE_ONLY.
+- **F4 (reframing resistance)**: Post-outcome revisions of Δ_max or primary endpoint must occur in < 5% of all experiments (both doomed and viable groups). If exceeded, the signature is vulnerable to investigator degrees of freedom: PREREGISTRATION_NOT_BINDING.
+- **F5 (theory anchoring check)**: >= 95% of Δ_max derivations must cite specific quantitative prior evidence (e.g., a published effect size, a preregistered contrast, an architectural diagram with labeled bounds). Armchair theory alone scores zero. If < 95% are grounded: BOUND_DERIVATION_WEAK.
+
+## Stopping rule
+
+Fixed-N: all experiments identified in Phase 0 run to completion. No early termination based on interim significance of any single experiment. Phase 0 analysis is frozen before Phase 1 begins; no post-hoc experiments added to improve signature calibration. If catastrophic issues are discovered (e.g., leakage of outcome data into Δ_max derivation, systematic bias in the power analysis tool), report as PHASE_0_VALIDITY_COMPROMISED and treat all results as exploratory.
+
+## Expected failure modes
+
+- **Signature detects noise, not doom**: In some problem families the MDE formalism may conflate measurement error with true effect smallness. Then the signature misclassifies viable-but-hard-to-detect experiments as doomed. Requires deep investigation of whether the measurement model is appropriate to the domain.
+- **Δ_max is unfalsifiable**: Theory may allow the maximum effect to range widely (e.g., "library policy could improve CFR by anywhere from 2% to 20%"). Then Δ_max becomes a moving target. Defense: adjudicator must reject excessively wide bounds during Phase 0 scoring (F5 gate).
+- **Experiment redesign after flagging**: Investigators might informally redesign flagged experiments (increase n, reduce noise, switch endpoints) without formally reopening the preregistration. The signature would be blamed unfairly. Defense: every experiment run logs its final executed design (actual n, actual noise estimate, actual primary test). Any divergence from preregistration is flagged and reported.
+- **Selection bias into the sample**: If the problem families chosen happen to share a property (e.g., all are within-subject designs, all depend on library quality), the signature's generalization is limited. Disclosed up front in the family description; results are stratified by design class.
+- **Inherent circularity in Δ_max**: The theoretical bound must be derived from prior evidence that is itself subject to measurement error. If a prior experiment overestimated the effect, Δ_max is too high, and the signature fails silently. This is unavoidable; the signature captures only power-analysis doom, not all doom.
+
+## Compute estimate
+
+- Phase 0 (audit + power analyses): 8–12 candidate experiments, ~2 hours per experiment (design review, prior literature search, power calculation, Δ_max justification). Total: ~20–24 hours, single analyst.
+- Phase 1 (execution): varies by problem family, measured in existing experiment completion times (not an additional cost).
+- Phase 2 (adjudication + validation): ~5 hours (tabulation, falsifier audit, cross-family analysis, reporting).
+- **Total analyst time: ~30 hours**. No additional compute infrastructure needed beyond what experiments already use.
+
+## Prior evidence that materially changed this design (or 'none found')
+
+- **Ergon Gen-1A (section 7, 2026-09-01)**: The MDE-exceeds-bound observation changed the hypothesis from "which retention policy is best?" to "can power analysis predict doom prospectively?" This shifted the design from a policy-comparison frame to a meta-experimental validation frame.
+- **Ergon Gen-1A (section 5, power table)**: The discovery that discreteness dominates heterogeneity (MDE falls sharply n=5→n=8) changed the falsifier thresholds from "±20% tolerance on MDE" to "±15%, measured at the medium n-range where this matters most."
+- **Gen-1A messaging on "lineages are cheap"**: The framing that sample-size adjustments are operationally feasible (38,000 evals/sec, 30 lineages costs one hour) changed the expected failure mode from "experiments run underpowered" to "do investigators catch the signature early enough to redesign?" That moved the design's focus to prospective application (Phase 0) rather than post-hoc diagnosis.
+
+## Unresolved uncertainty
+
+- **Δ_max derivation craft**: No formal procedure exists for deriving theoretical bounds from prior literature. This requires domain expertise and adjudication. The V2 experiment tests whether a rubric (F5: cite quantitative prior) is sufficient, but hand-crafted bounds may hide as much as they reveal.
+- **Generalization to non-paired designs**: The Gen-1A context is a within-lineage paired design (Δ at the task level, aggregated). Does the signature work equally well for between-groups designs, unequal-n designs, or hierarchical models with random slopes? Candidate experiments may include these, offering empirical evidence.
+- **Interaction with model selection**: Many experiments implicitly search over multiple models/designs and report the best. This inflation of degrees of freedom can invalidate both the primary test and the power analysis. Whether the signature remains valid under selective reporting is untested.
+- **Temporal drift in problem families**: Ergon's memory-retention family has been under active development; assumptions may shift. Does Δ_max remain stable as the problem evolves? Long-running experiments may show temporal confounds.
+
+## Operation log (numbered; ops used / 15, documents opened / 12)
+
+1. Grep: "failure.*signature|signature.*failure" (3 files)
+2. Grep: "early.*abort|abort.*trigger" (9 files)
+3. Glob: "**/kill*.md" (timeout)
+4. Grep: "modal.*collapse|rediscovery.*tautology|stopping.*rule" (10 files)
+5. Grep: "KILL|kill.*path|doomed" (10 files)
+6. Read: F:\Prometheus\roles\Mnemosyne\prompts\CHARTER_EVIDENCE_WIKI_V2_2026-09-02.txt
+7. Grep: "problem family|neighboring families|substrate.*[A-E]" (10 files)
+8. Read: F:\Prometheus\evidence_wiki\docs\TASK_CORPUS_V2.md (found V2-T05 definition)
+9. Grep: "T05|signature|kill.*early" (4 files)
+10. Read: F:\Prometheus\evidence_wiki\v2\packs\V2-T06_pack.json (pack example)
+11. Bash: find /f/Prometheus/roles/Ergon -name "*.md" -o -name "*.txt" (file listing)
+12. Read: F:\Prometheus\ergon\gen1\REVIEW_PACKET_GEN1_PRECONDITION_A_2026-09-01.txt (Gen1 context)
+13. Read: F:\Prometheus\ergon\gen1a\REVIEW_PACKET_GEN1A_2026-09-01.txt (distinctive failure signature: MDE exceeds theoretical bound)
+
+**Operations used: 13 / 15**
+**Documents opened: 8 / 12**

@@ -1,0 +1,57 @@
+[
+  {
+    "proposal": "P",
+    "D1": 4, "D3": 3, "D4": 4, "D5": 4, "D6": 4,
+    "justifications": {
+      "D1": "\"the between-family (near vs. decoy) gap will not shrink relative to a prompted-baseline judge\" — the format/prior/survivorship failure mode is converted into the F2/F3 detection contrast rather than assumed away.",
+      "D3": "\"ΔAUC-ROC(FT-paired vs B-prompt) on E-near ... does not exceed 0.03 AUC at the Holm-corrected 0.05 level\" — >=2 numeric falsifiers plus a fixed-length no-peeking stopping rule, but none is cheap to evaluate early.",
+      "D4": "\"confirm the 'will this attempt succeed' signal is present and separable in the archive at all before trusting any FT delta\" — leakage, survivorship, prior and population confounds each addressed plus a signal-existence/reachability check.",
+      "D5": "\"the corpus-first / basins-are-the-ceiling story does not generalize from Ignis's reasoning-trap domain to attempt-record judgment\" — names the new cell (attempt-record judgment, paired vs pooled corpora) relative to prior work.",
+      "D6": "\"the run is declared underpowered rather than the bar lowered post hoc\" — F1-F5 pre-commit every branch including pipeline-exercise and no-signal readings."
+    }
+  },
+  {
+    "proposal": "Q",
+    "D1": 4, "D3": 3, "D4": 4, "D5": 4, "D6": 4,
+    "justifications": {
+      "D1": "\"the calibrating kill generalizes past its original confounds and is a property of the archive/objective, not an artifact of the first experiment's hygiene gaps\" — the refuted prior is rebuilt into LOSO-primary gates plus a shuffled-label invalidation falsifier.",
+      "D3": "\"must beat the heuristic floor (arm iii) by >=5pp accuracy/AUC on at least 3 of 4 ... held-out sources\" — numeric falsifiers 1-4 plus a frozen-manifest stopping rule, but no cheap early kill before the single training pass.",
+      "D4": "\"reproducing the 0.228->0.908-style headline check but on hygiene-fixed data, to confirm the fix didn't kill the in-distribution signal outright\" — each summary confound has a concrete fix (de-templating, label balance, fitness pass, heuristic floor) plus an in-distribution positive-signal check.",
+      "D5": "\"H1 confirmed closes the LLM-judge-from-raw-text approach on this archive with a cleaner methodology than the first kill; H0 confirmed reopens it\" — a superseding rerun with the confound-removed cell explicitly stated.",
+      "D6": "\"Any result landing between falsifiers 1 and 3 ... is reported as NOT_ESTABLISHED with both numbers shown side by side\" — every branch, including invalidated-leak and NOT-APPLICABLE downgrades, is pre-committed."
+    }
+  },
+  {
+    "proposal": "R",
+    "D1": 3, "D3": 3, "D4": 3, "D5": 2, "D6": 2,
+    "justifications": {
+      "D1": "\"If truncated-data AUC ≥ 0.68 (within 0.04 of full-data model), reject transfer-learning interpretation; model learned format, not structure\" — guards would detect format-dominance, but the design still leads with a naive positive headline and lacks the full decomposition battery (no format-only or prior-only trained controls).",
+      "D3": "\"Falsifier 1: If fine-tuned AUC < 0.62 on held-out test, hypothesis rejected\" — >=2 numeric falsifiers plus a 3-seed stopping rule, with no cheap early independent kill.",
+      "D4": "\"Force geometric measurement: ablate each input feature (task_id, trace_length, error_count, prior_count) independently\" — format, prior, and family-holdout confounds each have a concrete element, but no positive control demonstrating signal detection.",
+      "D5": "\"Reduced prior skepticism about archive-based transfer\" — substantially re-runs the settled fine-tune-a-judge question with a defensible calibration/OOD-family extension.",
+      "D6": "\"If hold-out family AUC is ≤ 0.56 while in-distribution families hit ≥0.70\" — two live hypotheses separate, but mid-band outcomes (e.g., AUC 0.62-0.70 or partial falsifier combinations) have no pre-committed reading."
+    }
+  },
+  {
+    "proposal": "S",
+    "D1": 4, "D3": 4, "D4": 4, "D5": 4, "D6": 4,
+    "justifications": {
+      "D1": "\"The genuine-judgment residual = raw gain − max(shuffled-label gain, format-only gain, base-rate-only gain)\" — the refuted decomposition is rebuilt as the mandatory Phase-3 battery with falsifier 3's CI requirement.",
+      "D3": "\"if fewer than 3 independent sources each yield ≥100 usable triples ... the experiment HALTS at Phase 0\" — a cheap early mechanism-independent falsifier plus Holm-corrected numeric falsifiers 2-5 and a no-threshold-moving stopping rule.",
+      "D4": "\"positive controls (a known-planted signal) must be run and shown detectable BEFORE a null result is trusted\" — every summary confound addressed (format-stripped, base-rate-only, entity- and relation-disjoint splits) plus positive-control and two-sided leakage discipline.",
+      "D5": "\"relation/domain-disjoint transfer, not just entity-disjoint holdout, is a mandatory split here\" — explicitly states the new cell beyond the 2026-06 precedent and the 148-L retraction.",
+      "D6": "\"reported as an archive-readiness null, not a modeling failure\" — all branches, including anti-transfer (\"reported exactly as 148-L was, not softened\") and pilot-downgrade readings, are pre-committed."
+    }
+  },
+  {
+    "proposal": "T",
+    "D1": 2, "D3": 4, "D4": 2, "D5": 3, "D6": 2,
+    "justifications": {
+      "D1": "\"Ablation: config-only vs config+outcome\" — partial guards exist (permutation null, ablation), but there is no format-only/template decomposition and the success claim is still gated on headline accuracy over a baseline.",
+      "D3": "\"If any of the 5 preregistered thresholds is violated on the validation set during training, stop immediately\" — >=2 numeric falsifiers, an explicit stopping rule, and a cheap early mechanism-independent abort.",
+      "D4": "\"Re-train on same data with verdict labels shuffled ... Expected: accuracy drops to ~50%\" — one relevant confound isolated by design, but the summary's format/template confounds lack concrete elements and there is no positive control.",
+      "D5": "\"can learn to classify whether a new experiment will receive a pass verdict ... better than domain heuristics\" — verdict-prediction from configs is a clearly new question, but there is no statement of the new cell relative to the priors.",
+      "D6": "\"If (B) achieves >75% accuracy but (A) < 65%, then outcome information is carrying the signal\" — two hypotheses receive different predictions, but many outcome combinations (marginal beats, mixed falsifiers) have no pre-committed conclusion."
+    }
+  }
+]

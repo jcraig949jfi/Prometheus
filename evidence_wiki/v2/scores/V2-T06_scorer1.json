@@ -1,0 +1,57 @@
+[
+  {
+    "proposal": "P",
+    "D1": 2, "D3": 3, "D4": 3, "D5": 3, "D6": 3,
+    "justifications": {
+      "D1": "\"Conservative estimate: 40-50% of D-5's advantage is transferable\" — prediction is tempered and interface-encoded, but the D-8/D6-A nulls are never surfaced and no kill condition derives from the contradiction; guard exists but incomplete.",
+      "D3": "\"Gate F2 — Quantitative prediction hold: ... +4.2pp ± 3.1pp\" plus \"No early stopping based on intermediate results\" — >=2 numeric falsifiers with an explicit stopping rule, but no cheap early mechanism-independent falsifier.",
+      "D4": "\"Seeded-random-library control (C_random)... If C_seeded beats C_random by >1pp\" — each listed confound has a concrete element, but no positive control demonstrating the instrument detects real signal.",
+      "D5": "\"This experiment measures transfer *with a frozen library*\" — clearly new cross-substrate question, but the new empirical cell is not explicitly stated relative to prior work.",
+      "D6": "\"If F1 fails, stop and declare TRANSFER_NOT_DETECTED\" — most branches map to named verdicts, but F2 failure resolves to \"TRANSFER_MAGNITUDE_UNCERTAIN and investigate,\" an uncommitted reading."
+    }
+  },
+  {
+    "proposal": "Q",
+    "D1": 2, "D3": 3, "D4": 3, "D5": 3, "D6": 3,
+    "justifications": {
+      "D1": "\"+4 to +8pp CFR, ~50% of D-5's +10.95pp\" — tempered via the LoRA analogy, but the D-8 null is never surfaced and the prediction still derives from D-5 alone; partial guard only.",
+      "D3": "\"F1 (Primary): Transplant gain < +2pp CFR\" plus \"Scheduled stop: After 5 seeds × 10 worlds × 3 variants = 150 circuit runs\" — multiple numeric falsifiers and a stopping rule, but no cheap early mechanism-independent kill.",
+      "D4": "\"Hindsight promotion: Use two disjoint episode windows\" — several confounds isolated by design (shuffle, random-library, metering audit), but no positive control demonstrating detectability.",
+      "D5": "\"Ludus charter §43 establishes that transfer is mediated by interfaces\" — a new transplant question, but no explicit statement of the new empirical cell it fills.",
+      "D6": "\"F4 (Genre homogeneity)... Ludus bet falsified; interface ≠ transfer mechanism\" — falsifiers carry interpretations, but the +2 to +4pp middle band between F1 and early-stop-success maps to no committed conclusion."
+    }
+  },
+  {
+    "proposal": "R",
+    "D1": 4, "D3": 4, "D4": 3, "D5": 4, "D6": 4,
+    "justifications": {
+      "D1": "\"expect near-null unless an explicit interface layer supplies the missing native-verb correspondence, and even then expect the random-library control to eat most of any apparent gain\" — the naive-gain trap is converted into the load-bearing RAND control and executability gate.",
+      "D3": "\"EXECUTABILITY GATE: FALSIFIED (RAW arm voided...) if < 90% of RAW-arm artifacts execute\" evaluated at a one-world pilot under 10% of budget — a cheap, early, mechanism-independent falsifier plus numeric falsifiers 1-5 and a hard stop.",
+      "D4": "\"results must be reported per-world, never pooled into one cross-world number\" — known confounds each get a concrete element, but the self-flagged vocabulary-only control gap is unresolved and there is no positive control.",
+      "D5": "\"transfer across substrate families... is the harder case, not the easier one\" — explicitly names the untested cross-substrate cell relative to G7's in-substrate null.",
+      "D6": "\"if the best transplant arm's point estimate is <= 0pp... it is a full replication of [G7's null]... an outright FAILURE, not 'underpowered'\" — every branch pre-committed including the null reading."
+    }
+  },
+  {
+    "proposal": "S",
+    "D1": 4, "D3": 4, "D4": 3, "D5": 4, "D6": 4,
+    "justifications": {
+      "D1": "\"the same 'accumulated history helps search' mechanism already flipped from SUPPORTED to NO_EFFECT once under a substrate change... directly lowered the point prediction... and made the full three-part G9 ablation... mandatory\" — the contradiction is surfaced and converted into kill conditions.",
+      "D3": "\"if the RM library ingests into Ludus without a rejected/coerced record for >=1 artifact, treat as instrument failure\" — a cheap ingestion-time falsifier independent of the mechanism, plus numeric falsifiers 2-5 and a run-once stop.",
+      "D4": "\"A structureless CTRL task family... mirroring D-5's G8, to catch a non-selective advantage\" — known confounds each addressed concretely, but no positive control demonstrating the pilot can detect a real library effect (ceiling risk only flagged).",
+      "D5": "\"re-instantiate the mechanism on a Ludus-native artifact type with an explicit, checkable type contract\" — states the exact new cell versus D-5's in-substrate result and the established literal-transplant impossibility.",
+      "D6": "\"Full success requires ALL of: delta >= +3pp with p <= 0.05, shuffled retention >= 70%, AND random-library retention <= 60%\" — a three-way signature plus pre-committed instrument-failure and ceiling-effect readings map every branch."
+    }
+  },
+  {
+    "proposal": "T",
+    "D1": 4, "D3": 4, "D4": 4, "D5": 4, "D6": 4,
+    "justifications": {
+      "D1": "\"The single most probable outcome is a delta statistically indistinguishable from zero, mirroring the direct cross-substrate replication attempt already on record (D-8)\" — the contradiction anchors the hypothesis, with Gate 0 and the M1-native arm as decisive detectors.",
+      "D3": "\"F1 (Gate 0 hard stop): if < 70% of the sampled 16-20 D-5 artifacts survive translation... stop before any solve-rate run\" — a cheap, early, mechanism-independent falsifier plus numeric F2-F5 and sequential stopping gates.",
+      "D4": "\"Gate 2 n=10/arm floor-effect pilot (redesign task band if CFR pins at 0%/100%)\" — every known confound has a concrete element plus a gate-reachability check and a negative-control world predicted null in all arms.",
+      "D5": "\"M1-native... isolates 'the D-5 transplant specifically failed' from 'history-based library seeding does not work in Ludus at all'\" — names the new empirical cell relative to both D-5 and D-8.",
+      "D6": "\"Any outcome where the 95% CI on the primary contrast includes zero is classified NOT_ESTABLISHED... not silently reported as a directional trend\" — all branches pre-committed including the F1 no-slot and F5 reachability vacuous readings."
+    }
+  }
+]
