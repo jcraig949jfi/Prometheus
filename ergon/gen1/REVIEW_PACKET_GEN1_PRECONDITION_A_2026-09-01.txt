@@ -671,11 +671,21 @@ NEW, ARISING FROM THIS WORK:
       generally. That is a question for the Gen-1A instance, not a
       finding against it.
 
-  Q8  Given section 6, should Gen-1 run on this consumer at all, or
-      should the cap and the task count be re-chosen so that the library
-      spans a meaningful fraction of the lineage? A retention policy
-      operating on a 16-task window is a different experiment from one
-      operating on 58 tasks of history.
+  Q8  WITHDRAWN -- REJECTED ON REVIEW, 2026-09-02, and rightly. The
+      question assumed the ~16-task horizon is a property of the
+      CONSUMER. It is not. The cap binds on artifact COUNT (64), not on
+      age; the horizon is an arithmetic consequence of the BASELINE
+      admitting ~4.03 artifacts per task and evicting blindly by
+      recency. A selective policy can hold an artifact from task 3 to
+      task 58 while killing newer ones -- which is the experiment, not a
+      workaround.
+      Measured confirmation, from my own instrument: the baseline
+      survival curve reaches a MAX SURVIVOR AGE OF 28 TASKS under blind
+      recency, so the substrate already permits far more than 16 with no
+      selection pressure at all.
+      DO NOT raise the cap. Raising it reduces eviction pressure and
+      weakens the phenomenon being measured. See
+      RULING_2026-09-02_external_review.md section 1.
 
   Q9  Do sections 6 C1 and C2 change the reading of D-5's G7 and G9?
       This is explicitly Charon's and Aporia's call, not the driver's.
@@ -689,14 +699,30 @@ NEW, ARISING FROM THIS WORK:
       31337 even if the committed copy is ever lost again, verified
       against the ledger on all 58 tasks.
 
- Q11  NEW. Does section 6 change the n=30 design? A retention policy
-      operating on a 16-task rolling window is a different experiment
-      from one operating on 58 tasks of accumulated history. Raising
-      LINEAGE COUNT fixes the power problem; it does not change the
-      DEPTH of the memory each lineage's policy acts on. If the seat
-      question is what should persist, a consumer that structurally
-      cannot hold more than ~16 tasks may be answering a narrower
-      question than the one asked.
+ Q11  WITHDRAWN with Q8, same error: "a consumer that structurally
+      cannot hold more than ~16 tasks" is false. Depth is a policy
+      property and extending it is a possible RESULT.
+
+ Q12  REPLACES Q8/Q11, and is now executable. Does the treatment extend
+      USEFUL memory age, or only change which recent artifacts survive?
+      Baseline, measured and frozen before any arm ran (42-task corpus,
+      5 lineages): median resident age 7-8 tasks, P(resident older than
+      16 tasks) = 0.0042, P(older than 32) = 0.0000, and old residents
+      take 0.0029 of all library draws.
+      Three-world test: CFR up with the age distribution unmoved means
+      long-term retention is NOT the mechanism; old survivors
+      accumulating with draw mass flat means persistence alone is NOT
+      the mechanism; old survivors accumulating AND drawn means
+      selective memory is doing work. Tool: memory_age_survival.py.
+
+ Q13  NEW, and decision-relevant BEFORE the run. The preregistered MDE
+      (1.9 pp) was derived ONE-SIDED at uncorrected alpha; the frozen
+      decision rule is TWO-SIDED under Holm across five contrasts. Under
+      the rule actually frozen the smallest CALLABLE effect at n=30 is
+      ~2.7 pp, 1.4x the committed figure. Record 2.7 pp, raise n to 60,
+      or reduce to one primary contrast? The last costs no compute and
+      coincides with the reviewer's own preference. See
+      RULING_2026-09-02_external_review.md section 3.
 
 ====================================================================
 17. REPRODUCTION
@@ -730,6 +756,9 @@ The battery is regenerable if results/ is absent:
     policies defined ........................ NOT STARTED
     preregistration frozen .................. NOT STARTED
     Charon attack packet frozen ............. NOT STARTED
+    external review ......................... PRECONDITION A PASS
+                                              (2026-09-02; Q8/Q11
+                                              rejected, ruling recorded)
     organism-evaluations spent .............. 0
     spend ................................... $0.00
 
