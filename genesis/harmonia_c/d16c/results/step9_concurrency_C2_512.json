@@ -1,0 +1,43 @@
+{
+ "engine_hash": "sha256:5274ddbe9120ddbbd75a36965106d2efe640a3b72278e7bb97b82e356e1fc9fc",
+ "mode": "C2",
+ "B": 8,
+ "levels": [
+  {
+   "level": 512,
+   "invariants": {
+    "workers_ok": 512,
+    "errors": [],
+    "n_errors": 0,
+    "write_exact": true,
+    "budget_exact": true,
+    "index_contiguous": true,
+    "seq_increasing": true,
+    "global_seq_unique": true,
+    "chain_recompute_ok": true,
+    "engine_verify_world": true,
+    "f10_deterministic": true,
+    "idempotency_same_response": true,
+    "idempotency_conflict_409": true,
+    "fork_boundary": true,
+    "imports_ok": 2802,
+    "imports_denied": 0,
+    "exhausted_lineages": 222,
+    "done_lineages": 290,
+    "all_invariants": true
+   },
+   "perf": {
+    "wall_s": 64.96,
+    "events": 39568,
+    "events_per_s": 609.1,
+    "req_latency_ms": {
+     "p50": 4579.0,
+     "p95": 6959.8,
+     "max": 22290.4
+    }
+   },
+   "failed_audits": [],
+   "verdict": "PASS"
+  }
+ ]
+}
