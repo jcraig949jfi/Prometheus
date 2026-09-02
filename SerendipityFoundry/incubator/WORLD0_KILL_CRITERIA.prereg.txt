@@ -1,0 +1,270 @@
+================================================================================
+  PROMETHEUS INCUBATOR -- WORLD-0 PREREGISTERED KILL CRITERIA
+  Status: DRAFT (not yet frozen). Freeze required BEFORE Campaign 1.
+  Author: Daedalus (SFE maintainer). Date: 2026-09-02.
+================================================================================
+
+PURPOSE
+  A kill criterion is a condition that, if met, means World-0 is NOT a usable
+  Incubator substrate and must be revised or abandoned -- regardless of how
+  interesting its behaviour looks. These exist to make it possible for this
+  program to FAIL HONESTLY and EARLY.
+
+FREEZE PROTOCOL
+  Two stages, because some thresholds cannot be set responsibly without
+  calibration data, and inventing them now would be numerology:
+
+  STAGE A -- FREEZE NOW (before any campaign). The criterion, its statistic,
+             and its direction are fixed. No threshold needed, or threshold is
+             structural (e.g. "any occurrence").
+  STAGE B -- FREEZE AFTER CAMPAIGN 0 (the physics shakedown, which runs FIXED
+             non-evolving organisms and random search only). Campaign 0 supplies
+             the null/baseline distribution; the threshold is then set from it
+             and frozen BEFORE Campaign 1 begins. Campaign 0 results may NOT be
+             used to argue that a criterion should be dropped.
+
+  Once frozen, the file is hashed and the hash is recorded in the engine ledger.
+  Any later edit requires a new version and an explicit, logged supersession.
+
+  ANTI-GAMING RULE: no criterion may be weakened after seeing Campaign 1+ data.
+  A criterion may only be ADDED or TIGHTENED post hoc, never loosened.
+
+--------------------------------------------------------------------------------
+K0 -- TRIVIAL POLICY                                              STAGE B
+--------------------------------------------------------------------------------
+  CONCERN   A small fixed strategy reaches near-maximal viability, so the world
+            selects for nothing interesting.
+  STATISTIC Viability (median charge balance and survival duration) of a frozen
+            reference set of trivial predictors -- at minimum: predict-constant,
+            predict-last-value, predict-linear-extrapolation, and a random
+            program of matched size -- compared against the evolved population.
+  KILL IF   Any trivial reference predictor attains >= X% of the best evolved
+            lineage's viability, sustained over Y ticks.
+  THRESHOLD X, Y to be set from Campaign 0. PRE-COMMITMENT: X will not be set
+            above 80%.
+  NOTE      This is the criterion most likely to fire. It is the primary purpose
+            of Campaign 0 to try to make it fire.
+
+--------------------------------------------------------------------------------
+K1 -- MEMORIZATION WORLD                                          STAGE B
+--------------------------------------------------------------------------------
+  CONCERN   Performance comes from memorizing channel instances rather than from
+            structural adaptation to the generator distribution.
+  STATISTIC Held-out generalization gap: performance on channels generated from
+            the SAME distribution with UNSEEN generator programs and unseen
+            seeds, versus performance on channels the lineage has encountered.
+  KILL IF   Held-out performance is statistically indistinguishable from the
+            trivial-predictor baseline while seen-instance performance is not.
+  THRESHOLD Effect size and alpha set from Campaign 0.
+
+--------------------------------------------------------------------------------
+K2 -- AUTHORED LADDER LEAKAGE                                     STAGE A
+--------------------------------------------------------------------------------
+  CONCERN   Progress follows a human-authored sequence of intended solutions --
+            i.e. we built the curriculum and then congratulated ourselves.
+  STATISTIC Structural audit, not a runtime number. The engine must contain NO
+            enumerated task list, NO difficulty tiers, NO named capability
+            milestones, and NO reward term keyed to a specific solution shape.
+            The channel generator must be a distribution over programs, not a
+            curated set.
+  KILL IF   Any such construct exists in the physics, OR the observed order of
+            capability acquisition matches a designer-written expected order at
+            a rate above chance (tested by pre-registering, and sealing, a
+            designer-predicted order before Campaign 1 and scoring rank
+            correlation afterwards).
+  FROZEN    Yes -- structural condition, no threshold needed. The rank-correlation
+            arm requires the sealed designer prediction, which uses the engine's
+            existing prospective-prediction commit boundary.
+
+--------------------------------------------------------------------------------
+K3 -- SCALAR COLLAPSE / DIVERSITY DEATH                           STAGE B
+--------------------------------------------------------------------------------
+  CONCERN   Selection converges to one narrow strategy; ecological diversity
+            disappears; coevolution degenerates.
+  STATISTIC Occupancy of the failure-landscape region set (distinct region_id
+            cells occupied per window) and lineage count, tracked over time.
+  KILL IF   Sustained monotone collapse of occupied-region count toward a small
+            constant while charge continues to concentrate in one lineage.
+  THRESHOLD Set from Campaign 0 + the static-world control.
+
+--------------------------------------------------------------------------------
+K4 -- NOVELTY WITHOUT UTILITY                                     STAGE B
+--------------------------------------------------------------------------------
+  CONCERN   Behavioural/failure diversity increases but does not causally improve
+            future adaptation -- i.e. we are measuring churn.
+  STATISTIC Correlation, and then ABLATION, between newly-occupied regions and
+            subsequent adaptation rate to novel channel families.
+  KILL IF   Region novelty rises while adaptation rate to held-out channel
+            families is flat, AND ablating the novel structure produces no
+            measurable adaptation-rate loss.
+  THRESHOLD Set from Campaign 0/1.
+
+--------------------------------------------------------------------------------
+K5 -- FITNESS WITHOUT EVOLVABILITY                                STAGE B
+--------------------------------------------------------------------------------
+  CONCERN   Fitness improves while the ability to acquire NEW capability does
+            not. This is L0 masquerading as L2.
+  STATISTIC Adaptation rate (interactions-to-criterion on a novel channel
+            family) measured for early-generation vs late-generation lineages,
+            compute-matched.
+  KILL IF   Late lineages show higher fitness but no reduction in
+            interactions-to-criterion on novel families.
+  NOTE      Firing K5 does not kill the WORLD; it kills the claim that the world
+            has demonstrated L2. Recorded separately as a claim-level kill.
+
+--------------------------------------------------------------------------------
+K6 -- COMPUTE CONFOUND                                            STAGE A
+--------------------------------------------------------------------------------
+  CONCERN   Apparent epistemic improvement is merely more effective compute.
+  STATISTIC All cross-generation capability comparisons must be reported under
+            equal total VM steps AND equal quanta, not equal wall-clock or equal
+            episode count. The engine's lineage-scoped budget accounting is the
+            enforcement mechanism (a fork MUST NOT mint fresh compute).
+  KILL IF   Any headline capability claim fails to survive compute matching.
+  FROZEN    Yes -- procedural requirement, no threshold.
+
+--------------------------------------------------------------------------------
+K7 -- INHERITANCE THEATER                                         STAGE A
+--------------------------------------------------------------------------------
+  CONCERN   Accumulated epistemic artifacts (deposits) look important but are
+            causally inert.
+  STATISTIC Removal ablation: replay descendants with the deposit closure
+            restricted to exclude the candidate structure, holding genotype and
+            seeds fixed.
+  KILL IF   Removing the accumulated deposits produces no measurable capability
+            or adaptation-rate loss relative to the matched random-artifact
+            control.
+  FROZEN    Yes -- structural comparison. Effect-size threshold at Stage B.
+
+--------------------------------------------------------------------------------
+K8 -- NON-RECONSTRUCTABILITY                                      STAGE A
+--------------------------------------------------------------------------------
+  CONCERN   Claims cannot be reproduced from ledger + checkpoints + artifacts.
+  STATISTIC Bit-exact replay: re-executing any recorded episode from
+            (genotype_addr, world_seed, episode_seed, deposit_closure_hash,
+            world_physics_hash) must reproduce the recorded result_hash and the
+            recorded failure coordinate.
+  KILL IF   Replay divergence rate on a random audit sample exceeds ZERO for
+            episodes declared deterministic.
+  FROZEN    Yes -- zero tolerance. Nondeterministic components must be declared
+            as such in advance and excluded from the deterministic sample.
+
+--------------------------------------------------------------------------------
+K9 -- SEMANTIC CONTAMINATION                                      STAGE A
+--------------------------------------------------------------------------------
+  CONCERN   Human labels or frontier-model judgements materially determine what
+            survives.
+  STATISTIC Structural audit of the selection path: no LLM, no human label, no
+            human-legibility term, and no natural-language artifact may appear
+            anywhere between an organism's action and its charge outcome.
+  KILL IF   Any such dependency exists in the selection path.
+  FROZEN    Yes -- absolute. Human labels are permitted ONLY as post-hoc analysis
+            metadata that cannot feed back into selection.
+
+--------------------------------------------------------------------------------
+K10 -- CONTAINMENT FAILURE                                        STAGE A
+--------------------------------------------------------------------------------
+  CONCERN   A synthetic organism gains any access beyond its defined interface.
+  STATISTIC Audit + runtime assertion: organisms execute only as interpreted
+            data inside the bounded VM. No syscall, filesystem, network, shell,
+            subprocess, host-process, credential, or host-executable path is
+            reachable from any instruction. No instruction may cause host code
+            generation or evaluation.
+  KILL IF   Any occurrence, ever. Immediate program halt and disclosure.
+  FROZEN    Yes -- zero tolerance, non-negotiable, no threshold.
+
+--------------------------------------------------------------------------------
+K11 -- ECONOMIC DEGENERACY (added by adversarial review)          STAGE B
+--------------------------------------------------------------------------------
+  CONCERN   Organisms extract charge from each other rather than from modelling
+            the world: mutual-attachment farming, trivially-predictable deposit
+            emission, self-prediction, or any closed loop that pays without
+            reducing uncertainty about WORLD channels.
+  STATISTIC Fraction of total charge inflow attributable to DEPOSIT channels
+            whose generator is trivially predictable, and the sign of the
+            population's aggregate WORLD-channel predictive accuracy over time.
+  KILL IF   Charge flow becomes dominated by deposit-to-deposit loops while
+            WORLD-channel predictive accuracy stagnates or declines.
+  NOTE      Added because a closed economy that pays for mutual predictability
+            is the most likely degenerate attractor in this design.
+
+--------------------------------------------------------------------------------
+K12 -- TECTONIC HYPOTHESIS NOT TESTABLE AS STATED                 STAGE A
+--------------------------------------------------------------------------------
+  CONCERN   "Failure topology deforms before capability transitions" becomes
+            unfalsifiable if we compute many topology statistics over many
+            windows and report whichever moved first.
+  STATISTIC Requires, BEFORE Campaign 1: (a) ONE pre-committed primary topology
+            statistic, (b) a pre-committed lead-time window, (c) a
+            pre-committed capability-transition detector, and (d) a
+            permutation/shuffle null over lineage and time. Secondary statistics
+            are exploratory and must be reported as such with correction.
+  KILL IF   These four are not sealed before Campaign 1, OR the primary
+            statistic fails to beat its shuffle null.
+  FROZEN    Yes -- procedural. This criterion kills the HYPOTHESIS, not the world.
+
+--------------------------------------------------------------------------------
+K13 -- UNIT-OF-ANALYSIS INFLATION (added by adversarial review)    STAGE A
+--------------------------------------------------------------------------------
+  CONCERN   One long run is n=1 for a population-level claim. Organisms under
+            minimal-criterion selection are near-clonal, lineages share ancestry,
+            and generations are serially dependent. Treating organisms or
+            generations as independent replicates would inflate significance by
+            orders of magnitude.
+  STATISTIC The declared unit of analysis for every population-level claim is the
+            independent RUN (independent world seed); for the precursor claim it
+            is the transition EVENT. A pilot establishes the transition base rate
+            and is DISCARDED from the confirmatory analysis.
+  KILL IF   The affordable number of independent runs is too small to support the
+            claim at the preregistered power. In that case the claim is NOT MADE.
+  FROZEN    Yes -- procedural. This kills CLAIMS, not the world.
+
+--------------------------------------------------------------------------------
+K14 -- SURVIVORSHIP / REGRESSION-TO-MEAN IN L2 (added by review)   STAGE A
+--------------------------------------------------------------------------------
+  CONCERN   Acquisition cost measured only over lineages still alive is biased
+            downward, and the bias GROWS WITH SELECTION STRENGTH -- i.e. it is
+            largest exactly in the regime where L2 is claimed. Time-to-next-
+            acquisition is right-censored. Lineages selected for a good window
+            regress toward the mean in the next one.
+  STATISTIC Time-to-next-acquisition modelled with a survival model (Cox or
+            parametric hazard) with lineage frailty, reporting censored lineages
+            explicitly. NEVER a mean over survivors.
+  KILL IF   An L2 effect does not survive censoring-aware estimation, or
+            disappears when the acquisition event used for selection is excluded
+            from the measurement window.
+  FROZEN    Yes -- estimator requirement. Threshold at Stage B.
+
+================================================================================
+  MANDATORY FIVE-TUPLE REQUIREMENT (accepted criticism from adversarial review)
+================================================================================
+  Adversarial review correctly observed that the criteria above, as first
+  drafted, were NAMES RATHER THAN DECISION RULES. A criterion with no estimator,
+  null model and numeric threshold CANNOT FIRE -- so a campaign would trivially
+  report that nothing fired, which is a null result from an instrument incapable
+  of producing a positive.
+
+  BEFORE CAMPAIGN 0, every criterion K0-K14 must carry:
+      1. STATISTIC     -- the exact quantity computed
+      2. ESTIMATOR     -- how it is estimated, including rarefaction where the
+                          quantity is sample-size sensitive
+      3. NULL MODEL    -- the specific null it is tested against
+      4. THRESHOLD     -- a number (Stage A) or a calibration procedure (Stage B)
+      5. DATA SOURCE   -- which ledger records/coordinates it reads
+
+  DETECTOR VALIDATION (non-negotiable): Campaign 0 ships SCRIPTED ADVERSARY
+  ORGANISMS as planted positives -- one per named exploit (predict-last-value,
+  predict-constant, do-nothing/hoard, self-attaching depositor, colluding clone
+  pair, PRNG shared-secret pair, deposit spammer, attach-shopper). A criterion
+  that cannot be made to fire on a deliberately constructed cheater is not a
+  criterion. We validate the detector BEFORE we trust the detector's silence.
+
+================================================================================
+  SUPERSESSION LOG
+    v0 (2026-09-02) -- initial draft, NOT frozen. Awaiting external review.
+    v0.1 (2026-09-02) -- added K11 (economic degeneracy), K12 (tectonic
+         hypothesis not testable as stated), K13 (unit-of-analysis inflation),
+         K14 (survivorship / regression-to-mean), and the mandatory five-tuple +
+         detector-validation requirements, all following independent adversarial
+         review of the World-0 design. Still NOT frozen.
+================================================================================
