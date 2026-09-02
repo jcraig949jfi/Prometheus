@@ -135,8 +135,15 @@ records, that is the prior identity leaking and it should be named as such.
 
 ## 6. V0 deliverables (brief §15) — the checklist, with target artifacts
 
-Nothing below exists yet. Order is the build order; each item names the artifact that will prove
-it exists. No item is "done" without its rows.
+**Status 2026-09-02: all sixteen built under the external review addendum
+(`ADDENDUM_EXTERNAL_REVIEW_V0_2026-09-02.txt`, sha256 `4a9fe0cb…`); the A6 neutrality hard gate
+was NOT passed after three preregistered runs. See `STATUS_2026-09-02_v0_build.md`.** The
+addendum supersedes this section where they differ: the ABI has no channel layout and no
+World-0 adapter (A1); probes are derived from the addendum hash, not authored (A4); the lens
+tags of R7 are withdrawn (A3); `coordinate_census.py` is not used (A5).
+
+Order is the build order; each item names the artifact that proves it exists. No item is
+"done" without its rows.
 
 1. **Architecture** — `proteus/ARCHITECTURE.md`: runtime, genome, grammar, interfaces, and what is
    frozen vs. evolvable, one page per component.

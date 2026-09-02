@@ -1,0 +1,408 @@
+PROTEUS / PLAYER FOUNDRY V0 -- POST-BUILD EXTERNAL REVIEW PACKET
+2026-09-02. Written for a reviewer who has not seen the originating
+conversation. Covers the V0 build under the kickoff brief (sha256
+cacf303f...) as amended by the external review addendum (sha256
+4a9fe0cb...). Both are committed verbatim in roles/Proteus/.
+
+The reviewer's question, from the addendum:
+
+  Did Proteus build a sufficiently large and reproducible space of
+  computational organisms without quietly deciding in advance what
+  kind of organism ought to succeed?
+
+Short answer, with the failures first: the space is large and
+bit-reproducible; every measurement is preregistered and every run is
+kept; ONE hard gate did not pass after three preregistered attempts,
+and ONE content bias in the grammar was found by a diagnostic the gate
+did not cover. Whether either disqualifies the grammar is the
+reviewer's call, not this seat's. No world was touched. No campaign is
+launched. Proteus has not run a qualification and is not its own
+operator.
+
+====================================================================
+0. SELF-REPORTED FAILURE MODES, FIRST
+====================================================================
+
+F1. THE NEUTRALITY HARD GATE (A6) IS NOT PASSED.
+    Three grammars, three frozen preregistrations, three runs, all
+    kept under their grammar version in proteus/v0/:
+
+      grammar   cohort 8            cohort 32           cohort 128
+      v0        +0.071 [+.048,+.094] +0.021 [-.006,+.047] -0.023, med -0.036,
+                ratio 2.77 FAIL     PASS                cap occ .081 FAIL
+      v0.1      +0.041 [+.028,+.053] -0.002 [-.019,+.014] -0.028 [-.047,-.008]
+                FAIL                PASS                med -0.045 FAIL
+      v0.2      +0.033 [+.020,+.046] +0.009 [-.012,+.029] -0.014 [-.040,+.016]
+                FAIL (G1)           PASS                med -0.034,
+                                                        last-half -0.042 FAIL
+      (slopes in instructions per generation; tolerance 0.03; 95%
+       lineage-cluster bootstrap intervals; 30 lineages in v0, 60 after)
+
+    What each revision did, and what it was NOT:
+      v0 -> v0.1  deletion 0.10->0.11, operand_perturbation 0.20->0.19,
+                  tape-halving no longer clamps to genome length. Cause:
+                  I wrote "subtraction mass exceeds addition mass" about
+                  operator WEIGHTS (0.13 vs 0.12) when expected
+                  INSTRUCTIONS were 0.25 removed vs 0.30 added, because
+                  unreachable_removal deletes one instruction while the
+                  others move about 2.5. A real defect, caught by the
+                  gate, which is what the gate is for. Calibrated on
+                  random genomes with no probe run.
+      v0.1 -> v0.2  tape halving is a no-op unless the genome would
+                  occupy at most half the new tape. Cause: at exactly
+                  128 instructions a halved 1024-word tape fits the
+                  512-word genome EXACTLY, landing the cap on it, so
+                  insertion no-ops while deletion does not. Cap
+                  occupancy went 0.081 -> 0.018 -> 0.000; the mean
+                  slope interval at 128 now spans zero.
+      Tolerances were never changed. Lineages went 30 -> 60 once,
+      because at start 128 the run-1 interval half-width (0.0305)
+      exceeded the tolerance and that gate was not a gate.
+
+    What remains, stated as the prereg predicted before run 3:
+      - cohort 8 drifts UP off the minimum bound. Deletion cannot go
+        below one instruction; near a reflecting wall a symmetric walk
+        drifts away from it. No weight fixes this without a
+        size-dependent bias, which would be an authored prior.
+      - cohort 128 median and last-half slopes are still below -0.03
+        with intervals excluding zero, while the mean slope interval
+        spans zero. I do not have a mechanism for the residual and
+        do not claim one.
+    I committed in the run-3 prereg to no fourth revision in V0 and
+    have made none. Deliverable 14 therefore ships with its hard gate
+    FAILED under the preregistered criteria.
+
+F2. THE GRAMMAR HAS A CONTENT BIAS THE LENGTH GATE CANNOT SEE.
+    The prereg promised an ungated opcode-frequency diagnostic. Under
+    no selection, 300 generations, the share of opcode 0 (NOP) rose by
+    +0.133 (from ~0.04 to ~0.17 of instructions) while every other
+    opcode fell by <= 0.011. Cause: the zeroing operator writes
+    all-zero words (NOP 0 0 0) at 0.04 x ~2.5 instructions per
+    generation, and only uniform replacement/randomization dilute
+    them. This is a ratchet in CONTENT toward the null instruction. It
+    is exactly the kind of "authored direction" A3 warns about, it was
+    not in the gate, and it is reported here rather than fixed because
+    fixing it is a fourth revision. Recommendation in section 8.
+
+F3. 79% OF GENERATION-0 ORGANISMS EMIT NOTHING ON THE PROBES.
+    Uniform random genomes mostly halt, spin, or never reach OUT.
+    3,175 / 4,000 are silent; 2,513 exhaust a tick budget. This is a
+    fact about uniform initialisation and is NOT tuned (A8). It means
+    a first world will see a population that is mostly inert at
+    generation 0. That is the brief's expectation ("most of your
+    organisms should fail"); it is stated so nobody later calls it a
+    surprise.
+
+F4. ONE OPERATOR NEVER CHANGED A TRANSCRIPT.
+    reference_redirection: 0 of 180 one-mutation children changed
+    class (v0 demo). Every other operator changed 2% - 34%. Not tuned;
+    reported. It may be that overwriting one operand word rarely
+    touches reached code on genomes this short.
+
+F5. THE PRE-EXECUTION PACKET'S C5 WAS WITHDRAWN.
+    Per-operator (M,T,C,Pi) lens tags are meaningless for syntactic
+    operators (A3). The knockout vector replaces them. Recorded in
+    proteus/MUTATION_GRAMMAR.md so the change is visible.
+
+F6. THIS OPERATOR'S CALIBRATION RECORD.
+    Same seat as the pre-execution packet's R8. The one design claim I
+    made with confidence before running ("subtraction exceeds
+    addition") was wrong on the quantity that mattered. The gate
+    caught it. Treat every other unmeasured claim here accordingly.
+
+====================================================================
+1. WHAT WAS BUILT (deliverables 1-16, artifact per item)
+====================================================================
+
+   1 architecture         proteus/ARCHITECTURE.md
+   2 manifest schema      proteus/contracts/player_manifest.schema.v0.json
+                          (enforced fail-closed by vm.validate_manifest)
+   3 mutation grammar     proteus/foundry/grammar.py v0.2 (13 syntactic
+                          operators, frozen weights, GRAMMAR_HASH);
+                          proteus/MUTATION_GRAMMAR.md      [gate: FAIL]
+   4 deterministic gen    proteus/foundry/generate.py; tests/test_replay.py
+   5 lineage/checkpoints  proteus/foundry/lineage.py;
+                          contracts/lineage_record.schema.v0.json
+   6 resource hooks       vm.Meter (vector; no fitness field; two
+                          declared proxies)
+   7 world interface      contracts/WORLD_INTERFACE.md (generic ABI, NO
+                          channel layout, NO World-0 adapter)
+   8 multiplayer          WORLD_INTERFACE.md section 4 (operator wiring;
+                          nothing on the player side)
+   9 SFE integration      contracts/SFE_INTEGRATION.md; export.py
+                          (payload shapes only, provisional; four open
+                          questions filed for Daedalus)
+  10 PEW export           contracts/PEW_EXPORT.md; export.pew_rows
+                          (client is on branch mnemosyne/evidence-wiki-v0,
+                          not main; contract unexercised)
+  11 quarantine audit     proteus/audits/quarantine.py  [string: PASS]
+  12 diversity demo       proteus/v0/DIVERSITY_* (grammar v0),
+                          v0/demo_grammar_v0_1/, v0/demo_grammar_v0_2/
+                          [instrument qualified, three times]
+  13 replay tests         tests/test_replay.py   9 pass
+  14 mutation tests       tests/test_mutation.py 7 pass; A6 gate FAIL
+  15 failure tests        tests/test_failure.py  7 pass
+  16 campaign proposal    proteus/v0/CAMPAIGN_1_PROPOSAL.md (NOT launched)
+
+Pure standard-library Python 3.12; no third-party import anywhere in
+proteus/ (audited). Top-level proteus/ directory; nothing under
+SerendipityFoundry/ (Daedalus's tree) was touched.
+
+====================================================================
+2. THE ORGANISM, IN ONE PARAGRAPH
+====================================================================
+
+A player is a content-addressed manifest: a genome of 32-bit words
+(4..4096, multiple of 4) plus six bounded limits (registers 2..16,
+tape 16..4096 words, tick budget 8..65536, output cap 1..256, a
+code-writable flag, a persist policy in {none, regs, tape, all}). The
+genome is copied to the front of a bounded tape and executed in place
+by a 25-opcode interpreter; op = word mod 25, so EVERY word sequence
+is a valid program and no mutation can produce an illegal one. The 25
+opcodes fall into nine published classes: halt/yield (incl. NOP),
+read/write, indirection, arithmetic, logical, comparison, control,
+opaque I/O, externally supplied randomness. There is no cost opcode
+(A2). Self-modification exists only as ST into the genome region when
+code_writable is true; there is no other plasticity mechanism. The
+(M,T,C,Pi) lens of the brief does not appear in the code: in a single
+address space they are all patterns of words, and whether an organism
+has any of them is a fact about the organism.
+
+Affordance table hash f1607ee8be680acc... (published BEFORE any
+measurement, proteus/contracts/affordance_table.v0.json). Runtime hash
+folds it in and is computed over LF-normalised source, so a CRLF
+checkout does not fork identity.
+
+====================================================================
+3. QUARANTINE (A2, brief section 1) -- what is mechanical, what is not
+====================================================================
+
+String layer, mechanical, PASS on every run:
+  - import allowlist over proteus/foundry (no random, socket, urllib,
+    http, subprocess, ctypes, pickle, importlib, any ML library)
+  - banned-stem scan over identifiers, mnemonics and non-docstring
+    string literals of vm.py and affordances.py (search, plan, match,
+    attention, analogy, strategy, hierarchy, special, communicat, goal,
+    cause, object, enemy, hypothes, memory, reason, think, learn,
+    believ, intent, agent, cooperat, decept, predator, prey, compet,
+    reward, fitness, concept, meaning)
+  - affordance table in memory == frozen published table
+  - type gate: nothing but bounded integers on the tape or channels
+    after execution of a probe
+
+Ontology layer, NOT mechanical, for the reviewer: the audit prints the
+25-row table and asks which entry is already a theory of cognition.
+Candidates I would attack first: INQ (count of unread values on a
+channel -- is "how much is left" an affordance or a concept?), and the
+existence of YIELD alongside HALT (two ways to stop is a design
+opinion about persistence). Both are defensible as machine facts; the
+reviewer decides.
+
+====================================================================
+4. THE FIREWALL (A1, brief section 10)
+====================================================================
+
+roles/Proteus/READ_LEDGER.md lists every world-side file opened, with
+line ranges and reasons. No entry was added during the build. The ABI
+defines NO channel layout, NO recommended shape, NO fixed channel
+count, and NO World-0 binding; channels are addressed by register
+value mod channel count so a genome runs unchanged under any count.
+What Proteus fixes is the machine (32-bit words, output cap, tick-
+scoped cursors, three status values), not the world. Multiplayer is
+operator wiring of outputs into inputs; the player cannot tell a
+world from another player from a recording.
+
+One honest tension: the diversity probes are inputs on channels, so
+the Foundry does execute organisms against SOMETHING. Those inputs are
+uniform noise derived from the addendum hash (a public value Proteus
+did not choose), never used for selection, and the relation induced
+is named probe_transcript_equivalence and nothing else (A4).
+
+====================================================================
+5. THE DIVERSITY INSTRUMENT (A4, A5, A7, A8) -- numbers, not claims
+====================================================================
+
+Population: 2,000 generation-0 organisms (seed = first 16 hex digits
+of the addendum hash) + 2,000 one-operator children. Frozen probe
+ensemble: 4 probes, 1-3 in/out channels, 3-6 ticks, 0-3 values per
+channel per tick, budget cap 256. Floors/ceilings were stated in
+DIVERSITY_PREREG.md before the run: classes floor 1, ceiling 4,000;
+entropy ceiling 11.97 bits.
+
+                        grammar v0    v0.1     v0.2
+  transcript classes         306      313      303
+  transcript entropy (bits) 3.52     3.51     3.49
+  knockout vectors           957      961      941
+  knockout entropy (bits)   8.52     8.54     8.49
+  silent organisms         3,175    3,167    3,178
+  largest class            1,850    1,849    1,870
+  budget-exhausted         2,513    2,512    2,536
+  deaths at qualification      0        0        0
+  instrument qualified       yes      yes      yes
+
+(generation 0 is identical across the three by construction; only the
+2,000 children differ, so the near-identical numbers are expected and
+are NOT evidence that the grammar revisions were harmless.)
+
+Degeneracy map (A7), v0.2: 263 non-silent classes; 26 of them reached
+by more than one lineage; 1,892 parent-child pairs share a class. The
+largest non-silent class holds 158 genomes from 98 lineages with 69
+parent-child pairs inside it -- i.e. it is reached independently by
+many roots, not carried by one. Every class row keeps class id,
+genome count, lineage ids, parent-child pair count, and its knockout
+vector distribution. The largest silent classes hold 1,870 / 705 /
+301 genomes; "silent" splits by status sequence (halt vs yield vs
+budget per tick), which is why silent != one class.
+
+One-mutation transcript-change rate by operator (v0 demo, n per op in
+parentheses): splice .34 (107), randomization .32 (72), insertion .25
+(143), replacement .22 (242), zeroing .20 (84), region_swap .20 (111),
+deletion .18 (199), movement .13 (167), duplication .09 (74),
+operand_perturbation .05 (398), config_perturbation .05 (165),
+unreachable_removal .02 (58), reference_redirection .00 (180).
+
+What these numbers are NOT: a diversity target, a capability measure,
+an interestingness score, or a comparison the reviewer should read as
+"good". The instrument qualification criterion was "each signature
+distinguishes more than one organism"; it did; that is the whole
+claim. Nothing was tuned after seeing them (A8): each grammar
+revision was for the neutrality gate, calibrated on random genomes,
+and each demonstration landed in its own directory under its own
+frozen CONFIG_IDENTITY.json.
+
+coordinate_census.py (the prior seat's instrument) was not run and is
+not reported, per A5.
+
+====================================================================
+6. CLAIMS, CEILINGS, AND WHAT BREAKS EACH
+====================================================================
+
+C1  Same Foundry manifest + same runtime hash => byte-identical
+    population, transcripts, children and checkpoint continuations.
+    Ceiling: tested on 300-organism populations and 40-organism
+    probe sets on one machine and one Python version; cross-machine
+    replay is untested. Breaks if: sha256 of any result differs on
+    another host (run tests/test_replay.py there).
+
+C2  Every word sequence is a valid program; no manifest within bounds
+    can make the runtime raise. Ceiling: 12,000+ organisms across all
+    runs without a runtime exception; not a proof. Breaks if:
+    qualify.py ever ledgers RUNTIME_RAISED.
+
+C3  The player sees no string, no world identity, no score, no other
+    player; the runtime imports nothing that could carry one.
+    Ceiling: string layer only. Breaks if: the ontology reviewer names
+    an opcode as a cognitive primitive, or a binding layer authors a
+    channel layout and calls it Proteus's.
+
+C4  Grammar v0.2 is length-stationary at the middle cohort
+    (slope +0.009 [-0.012, +0.029]) and NOT at either bound-adjacent
+    cohort. Ceiling: 300 generations, 60 lineages, three start sizes,
+    one tape size. Breaks if: the reviewer rules bound drift a
+    ratchet (then the grammar is unqualified); or a longer horizon
+    shows drift at 32.
+
+C5  Grammar v0.2 biases content toward NOP under no selection
+    (+0.133 share over 300 generations). This is a NEGATIVE claim
+    about my own grammar. Ceiling: one run; one start-size mix.
+    Breaks if: a rerun with zeroing weight 0 shows the same drift
+    (then the cause is elsewhere).
+
+C6  The two signatures separate organisms (303-313 classes, 941-961
+    vectors of 4,000). Ceiling: 4 probes, one ensemble, uniform
+    initialisation; says nothing about any world. Breaks if: a
+    different frozen ensemble collapses classes to ~1 (instrument was
+    probe-dependent), which would be worth knowing.
+
+No claim is made about intelligence, reasoning, capability, emergence,
+progress, or "diversity" in any sense beyond C6's literal count.
+
+====================================================================
+7. DECLARED CONFLICTS
+====================================================================
+
+D1  I revised the grammar twice after seeing neutrality results. Each
+    revision was preregistered, each failed run is kept, tolerances
+    never moved, and calibration used random genomes, not probes. It
+    is still two looks at the data by the person who wrote the
+    grammar. The reviewer should weigh C4 accordingly.
+D2  The probe ensemble size (4) and shape were chosen by me before any
+    run and are part of the frozen identity; they were not derived
+    from anything external except the seed. A different ensemble is a
+    legitimate attack on C6.
+D3  Prior seat (Diomedes) mandate: none of it was used. The alphabet/
+    entropy/floor/ceiling habit was, as the prereg discipline.
+
+====================================================================
+8. RECOMMENDATIONS TO THE REVIEWER (not actions taken)
+====================================================================
+
+R1  Rule on F1. Options as I see them: (a) bound-adjacent drift is a
+    ratchet -> grammar unqualified, V0 not complete; (b) gate the
+    neutrality test at cohorts >= 3 diffusion SDs from both bounds
+    and re-preregister -> a fourth run under a rule the reviewer,
+    not the seat, chose; (c) accept "stationary away from bounds" as
+    the V0 property and carry the bound behaviour as a known limit.
+R2  Rule on F2. The zeroing operator is the only one whose output is
+    not uniform over words. Either drop it (12 operators) or make it
+    write a uniformly random NOP-class instruction; either is a new
+    grammar version and a new prereg.
+R3  Name an independent distinctness measure if C6's two are not
+    enough; both were built by this seat.
+R4  Answer the four Daedalus questions in SFE_INTEGRATION.md section 6
+    before any population enters SFE.
+R5  Assign the neutral operator and a machine. Without the first,
+    nothing after this packet can run without a firewall breach.
+
+====================================================================
+9. COMPUTE ACCOUNTING
+====================================================================
+
+All on the F: machine (M1), single core, pure Python 3.12.10:
+  unit tests                 23 tests, < 1 s
+  neutrality runs            2.9 s (v0, 30 lineages), 5.2 s, 5.1 s
+  diversity demonstrations   18.8 s, 18.8 s, 18.9 s (4,000 organisms,
+                             ~40,000 ensemble executions each)
+  calibration (read-only)    ~10 s total
+No GPU, no LLM, no API, no spend. Storage in git: ~2.8 MB gzipped rows
+per demonstration x 3, plus ~0.5 MB degeneracy map each.
+
+====================================================================
+10. REPRODUCTION
+====================================================================
+
+From a checkout of origin/main:
+
+  python -m pytest proteus/tests -q            # 23 pass
+  python proteus/audits/quarantine.py          # string layer PASS
+  python proteus/v0/run_neutrality_gate.py
+      # reruns grammar v0.2 -> FAIL; writes NEUTRALITY_RESULT.json;
+      # compare to NEUTRALITY_RESULT_grammar_v0_2_FAIL.json
+  python proteus/v0/run_diversity_demo.py /tmp/demo_check
+      # refuses if the configuration identity differs;
+      # otherwise reproduces proteus/v0/demo_grammar_v0_2
+
+Hashes to pin (sha256):
+  brief
+    cacf303f3a997e2172cac5ef39021ac194ab3ec82edea21f5dfc8579e70ec5b4
+  addendum
+    4a9fe0cb33fb88acbb64e3bcff23c609f80429ffb46b21040de81527d6510fab
+  affordance table
+    f1607ee8be680acc33288a95c1a25c09ad4c799a47b0975381be8ca02d7638ce
+  grammar v0    da7e2ccb4b63db0e...     grammar v0.1  973c7c108c1ec56b...
+  grammar v0.2
+    779da90d173fdd0528fdfe98b1056cc9d3fcad1807fdd2f677f3d879250e9796
+  (hash committed files as blobs: git show origin/main:<path> | sha256sum)
+
+====================================================================
+11. NOT DONE, BY INSTRUCTION
+====================================================================
+
+No Campaign 1 launch. No qualification-world internals read (ledger
+unchanged). No World-0 or any adapter. No tuning against any
+qualification outcome (none exists). No claim of reasoning,
+intelligence, emergence or progress. Proteus did not act as its own
+neutral operator: the only executions were Foundry-local probes on
+noise. The seat stops here.
+
+-- Proteus, post-build packet, 2026-09-02. Built. Stopped.
