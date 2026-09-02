@@ -1,0 +1,93 @@
+MICROSTRUCTURE OBSERVATORY -- V0 OBSERVABLE FAMILY (FROZEN)
+============================================================
+Freeze discipline (directive section 18): this family is frozen BEFORE any
+input from the external historical survey. The content hash of THIS FILE is
+the observable_family_hash carried by every weak-signal record. Changing this
+file is a NEW FAMILY VERSION; records across versions are never pooled.
+
+Sources permitted in constructing this family: the directive's own candidate
+list (section 6), vetted on measurement/statistical grounds only; the
+substrate's mechanical properties (deterministic replay, integer traces,
+paired twins). Sources excluded: the historical ALife/OEE survey (assigned to
+another seat), cognitive-science taxonomies, any semantic notion of reasoning.
+
+V0 COORDINATES OF THE MICROSTRUCTURE VECTOR mu
+------------------------------------------------------------
+mu1  PAIRED_OUTCOME_DELTA
+     Per-twin difference in raw outcome channels: final charge, ticks alive,
+     yield events, actions used, abstention ticks. Block-aggregated.
+
+mu2  INTERVENTIONAL_CAUSAL_DEPTH_PROFILE  D(k), k in {1,2,4,6,8,12}
+     Replay-based intervention: flip one seeded-chosen observation element at
+     tick t-k, replay the remainder deterministically, record normalized
+     action-stream divergence over the window [t, t+W). Marginalized over
+     seeded t-samples. Measures USE of history, not capacity: an unused
+     buffer contributes exactly zero. Summary coordinates: D_max_lag (largest
+     k with D(k) above the divergence floor), D_area (sum over profile).
+
+mu3  RELEVANT_IRRELEVANT_SEPARATION  S = D_rel - D_irr
+     Same intervention, restricted to observation channels that causally feed
+     the world's yield predicate (relevant) vs channels that do not
+     (irrelevant), determined WORLD-SIDE from the mechanics DAG and never
+     visible to players. A pure history-echo shows S ~ 0; differential
+     response shows S != 0. Serves double duty as the falsifier for
+     "causal depth fooled by recurrence".
+
+mu4  TRAJECTORY_STRUCTURE_CONTRAST
+     Held-out hit-rate of a frozen order-2 integer context model on the
+     action stream MINUS the same statistic on a seeded within-player
+     shuffled/rotated control stream. Integer-exact (hit counts). Constants
+     and pure noise both give contrast ~ 0 (constants: control predicts
+     equally well; noise: neither predicts).
+
+mu5  TWIN_BEHAVIORAL_DIVERGENCE
+     Normalized Hamming distance between twin action streams, and its onset
+     tick. Scheme versioned. (Coherence of this divergence across blocks --
+     not its magnitude -- is what the null adjudicates.)
+
+mu6  RESOURCE_ALLOCATION_DELTA
+     Per-twin difference in steps-used, action-magnitude distribution
+     (bucketed), abstention structure. Separates "does something different"
+     from "spends differently".
+
+DELIBERATELY EXCLUDED FROM V0 (recorded for the packet's rejected list):
+  - raw trajectory entropy (rewards noise; replaced by mu4 contrast)
+  - observational mutual-information history estimators (confounded by
+    recurrence; replaced by interventional mu2)
+  - any aggregate/composite score over mu (forbidden by design)
+  - adaptation savings (requires a learning-budget protocol; deferred to the
+    family version that accompanies checkpointed players)
+  - predictive-information / compressibility via general-purpose compressors
+    (compressor-version dependence; non-reproducible across hosts)
+
+NULL FAMILY (frozen with the observables)
+------------------------------------------------------------
+N-A  BLOCK SIGN-FLIP: exchangeable unit = (world, seed-block) twin aggregate;
+     signs flipped at block level; preserves all within-block dependence.
+N-B  ROBUST AGGREGATION: block aggregates enter as signs / ranks, never raw
+     magnitudes (chaotic blocks must not dominate stable ones).
+N-C  LINEAGE-BLOCK PERMUTATION for genealogical trend tests: generation
+     labels permuted within lineage; trend statistic = directional
+     consistency of per-generation mu deltas.
+N-D  E-PROCESS LUMINOSITY: investigation-stage evidence accumulates by
+     betting on block-aggregate direction (binomial e-process on signs with
+     a preregistered success-probability grid); anytime-valid; optional
+     stopping safe.
+N-E  MATCHED CONTROL TWIN: every plant/candidate statistic is computed
+     against a sibling control twin-set constructed identically except for
+     the hypothesized delta.
+
+THRESHOLDS (frozen)
+------------------------------------------------------------
+PRESERVATION   storage act; everything preregistered and computed is kept.
+FLAG           permissive: uncorrected block sign-test p < 0.10 on any single
+               mu coordinate, or >= 70% directional consistency across >= 10
+               blocks. Marks UNRESOLVED_WEAK_SIGNAL. Zero consequences.
+INVESTIGATION  lottery/FIFO admission within a fixed budget slice; hypothesis
+               frozen at entry; luminosity-only response to weakness.
+ADMISSION      preregistered direction reproduced on held-out blocks with
+               e-value >= 20 under N-D; invariance profile STABLE on >= 3
+               preregistered axes; pseudo-signal battery cleared;
+               alpha-investing ledger charged for the admission family.
+============================================================
+END OF FROZEN FAMILY -- content hash of this file = observable_family_hash

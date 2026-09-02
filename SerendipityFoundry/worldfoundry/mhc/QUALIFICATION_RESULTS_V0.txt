@@ -1,0 +1,49 @@
+==========================================================================
+MICROSTRUCTURE OBSERVATORY v0 -- QUALIFICATION CAMPAIGN
+==========================================================================
+world pool: 60 qualifying solo worlds
+
+Q1. POWER CURVES  (recovery probability; anytime-valid wealth)
+    classes: P1 concentrated | P1 diffuse | P1 on memoryful base
+    eps(milli)  L   conc:flag/admit  diff:flag/admit  echo:flag/admit  activ_bound
+          500   8   0.60/0.20        0.65/0.05        0.10/0.00      0.982
+          200   8   0.30/0.00        0.15/0.00        0.00/0.00      0.798
+          100   8   0.00/0.00        0.10/0.00        0.05/0.00      0.551
+           50   8   0.00/0.00        0.05/0.00        0.05/0.00      0.330
+            0   8   0.00/0.00        0.00/0.00        0.05/0.00      0.000
+          500  32   1.00/1.00        1.00/0.95        0.05/0.05      1.000
+          200  32   0.80/0.50        1.00/0.70        0.05/0.00      0.998
+          100  32   0.40/0.10        0.60/0.10        0.10/0.00      0.959
+           50  32   0.35/0.05        0.25/0.00        0.05/0.05      0.798
+            0  32   0.00/0.00        0.00/0.00        0.00/0.00      0.000
+
+Q2. OPERATOR-COHERENCE ARTIFACT  (rejected sign-test vs rank null)
+    naive sign test fires : 15/15  (certifies operator coherence as 'structure')
+    conditional-rank fires: 0/15  (systematic push common to candidate and references cancels)
+
+Q3. DEAD-CODE OPERATOR FLOOR (inert dP -> exact ties, wealth 1)
+    inert-perturbation twin agreement: 20/20 exact (pipeline-level exact-null calibration)
+
+Q4. GENEALOGICAL DRIFT  (per-individual blindness vs lineage trend)
+    any single generation admits : 2/12
+    lineage increment-trend fires: 2/12  (class-C machinery sees what per-individual tests cannot)
+
+Q5. STRUCTURE vs OUTCOME  (same plant, two lenses, equal luminosity)
+    trajectory-structure lens admits: 1/15
+    outcome lens admits             : 0/15  (what an outcome metric would have called nothing)
+
+Q6. PSEUDO-SIGNAL BATTERY
+    N1 correlated seeds : naive 16x-replication admits 4/30; block-id dedup admits 0/30
+    N3 winner's curse   : top-5 selected stage-1 wealth ['1.6', '1.6', '0.9', '0.7', '0.6']
+                          same candidates, fresh blocks     ['0.2', '0.4', '0.2', '0.9', '0.9']  (regression to null)
+
+Q7. SEALED HOLDOUT P5
+    (deterministic replay of attempt 1 with BOTH preregistered
+    thresholds reported; recorded as attempt 2 per seal protocol)
+    coordinate mu2_area : flags  0/12   admits  0/12
+    coordinate mu2_r0   : flags  0/12   admits  0/12
+    coordinate mu4      : flags  1/12   admits  0/12
+
+==========================================================================
+QUALIFICATION COMPLETE
+==========================================================================
