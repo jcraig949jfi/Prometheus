@@ -33,6 +33,17 @@ def _record(cur, claim_id, why, method):
     c = cur.fetchone()
     if not c:
         return None
+    # V3 closeout ratification: LEGACY_AMBIENT_MEMORY-backed items never
+    # enter evidence packs silently (charter s1). Explicit forensic queries
+    # go through the store directly, not through packs. The guard covers the
+    # claim's own packet AND every packet on its evidence rows.
+    cur.execute(
+        "SELECT 1 FROM ew.source_packets sp WHERE sp.kind='legacy_ambient_memory' "
+        "AND sp.packet_id IN (SELECT packet_id FROM ew.evidence_prod "
+        "  WHERE claim_id=%s AND packet_id IS NOT NULL UNION SELECT %s) LIMIT 1",
+        (claim_id, c.get("packet_id")))
+    if cur.fetchone():
+        return None
     cur.execute("SELECT * FROM ew.evidence_prod WHERE claim_id=%s "
                 "ORDER BY created_at LIMIT 1", (claim_id,))
     e = cur.fetchone()

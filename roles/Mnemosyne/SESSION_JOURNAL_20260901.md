@@ -217,3 +217,33 @@ committed before any arm output was read). Full gates: benchmarks/gates_v3.json.
 - INCUBATOR DECISION: READY_WITH_LIMITATIONS (see gates_v3.json).
 - V3 FROZEN; packet at evidence_wiki/V3_REVIEW_PACKET_2026-09-02.txt.
   Per charter s27: STOPPED here. No V4, no mass ingestion.
+
+## ADDENDUM 6 — 2026-09-02 — V3 CLOSEOUT AND FREEZE
+Closeout charter received (READY_WITH_LIMITATIONS accepted; NO V4); committed
+verbatim, sha 0af9193d60ef0c0beb061bdfd55cd05b5787ec82b84c2863a7efd3e3378ef893.
+- AMBIENT: LEGACY_AMBIENT_MEMORY ratified as distinct provenance class;
+  disposition doc + pack-build guard in evidence_pack.py (_record drops any
+  item whose claim or evidence packet is legacy_ambient_memory); guard PROVEN
+  on both shapes via rolled-back probes. Corpus re-hashed: MEMORY.md sha
+  05dbe05e... UNCHANGED since V3 audit; 226 files; inventory packet
+  SP-a960f1327491.
+- EXPERIMENT CLOSED verbatim (A 0.889 / B 1.000 / +0.111 / MARGINAL /
+  SATURATED) in docs/V3_EXPERIMENT_CLOSURE.md; no rescoring, no extension.
+- X5 amendment: docs/SCORING_POLICY_AMENDMENT_X5.md (6 mandatory prereg
+  items; future-only).
+- PHENOTYPE BOUNDARY: SFE owns emission, PEW consumes by hash reference;
+  docs/PHENOTYPE_CONSUMER_REQUIREMENT.md + roles/Daedalus/todo_20260902.md.
+- POOLING: ThreadedConnectionPool(2,16) behind ewdb.connect() proxy; first
+  deploy hit a lazy-init RACE (two pools; 3/4 workers 500'd) -> lock +
+  double-close guard; requalified: distributed test G17/G19 PASS, firewall
+  PASS, replay adds 0 rows. Envelope now 48 / 3633 / 3616(replay) ev/s
+  (was 7.1 / 712). G21 rerun reads false ONLY because the harness expects
+  exactly 600 synthetic rows on a clean slate; append-only accumulation =
+  2600 stored, 2600 DISTINCT, zero duplicates.
+- MEMORY-CLEAN PROCEDURE written, labeled UNQUALIFIED
+  (docs/MEMORY_CLEAN_SESSION_PROCEDURE.md); a running session cannot certify
+  its own cleanliness.
+- CROSS-HOST: BLOCKED — M2-M4 have not pulled mnemosyne/evidence-wiki-v0
+  (remote tip 869755c2b; no peer evidence). Explicitly reported as such.
+- FROZEN.md placed at evidence_wiki/ root. Seat state:
+  PEW_FROZEN_WAITING_FOR_INCUBATOR.
