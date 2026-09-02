@@ -65,7 +65,9 @@ def main():
     c = EngineClient(BASE, token=tok, cafile=CA, timeout=60.0)
     v = c.version()
     assert v["engine_source_hash"] == PIN, "pin mismatch"
-    sid = c.create_session("d15a-phase0")
+    import uuid
+    RUNID = uuid.uuid4().hex[:8]
+    sid = c.create_session(f"d15a-phase0-{RUNID}")
 
     # ---------- CORE prior repros -------------------------------------
     w = c.create_world(sid, "p0-core", budget={"experiments": {
@@ -175,15 +177,14 @@ def main():
                          < max(seqs["CLAIM_FALSIFIED"]))
 
     # ---------- F4 identity headers -----------------------------------
-    hdrs = {}
-    raw(tok, "GET", "/v2/version", headers_out=hdrs)
-    h1 = hdrs.get("X-SFE-Engine-Source-Hash")
-    hdrs = {}
-    raw(tok, "GET", f"/v2/worlds/{wf}", headers_out=hdrs)
-    h2 = hdrs.get("X-SFE-Engine-Source-Hash")
-    hdrs = {}
-    raw(tok, "GET", "/v2/worlds/wld_nonexistent", headers_out=hdrs)
-    h3 = hdrs.get("X-SFE-Engine-Source-Hash")
+    def hh(path):
+        hd = {}
+        raw(tok, "GET", path, headers_out=hd)
+        return {k.lower(): val for k, val in hd.items()}.get(
+            "x-sfe-engine-source-hash")
+    h1 = hh("/v2/version")
+    h2 = hh(f"/v2/worlds/{wf}")
+    h3 = hh("/v2/worlds/wld_nonexistent")
     R["f4_headers"] = dict(version=h1 == PIN, world=h2 == PIN,
                            error_response=h3 == PIN)
 
@@ -191,7 +192,7 @@ def main():
     wi = c.create_world(sid, "p0-f5", budget={"experiments": {
         "limit": 5, "enforcement": "enforceable"}})["world_id"]
     c.start(wi)
-    k1 = "d15a-key-hyp-1"
+    k1 = f"d15a-key-hyp-{RUNID}"
     ha = c.hypothesis(wi, "idem", idem_key=k1)
     hb = c.hypothesis(wi, "idem", idem_key=k1)
     R["f5_exact_retry_same"] = bool(ha == hb)
@@ -199,12 +200,33 @@ def main():
                                idem_key=k1)
     w2i = c.create_world(sid, "p0-f5b")["world_id"]; c.start(w2i)
     R["f5_cross_world"] = err(c.hypothesis, w2i, "idem", idem_key=k1)
-    ke = "d15a-key-exp-1"
-    ea = c.experiment(wi, {"z": 1}, idem_key=ke)
-    eb = c.experiment(wi, {"z": 1}, idem_key=ke)
+    ke = f"d15a-key-exp-{RUNID}"
+    def raw_exp():
+        ctx = ssl.create_default_context(cafile=CA)
+        req = urllib.request.Request(
+            BASE + f"/v2/worlds/{wi}/experiments",
+            data=json.dumps({"spec": {"z": 1}, "hyp_id": None,
+                             "pred_id": None, "commit": True,
+                             "enqueue": False, "kind": "experiment",
+                             "priority": 100}).encode(),
+            headers={"authorization": f"Bearer {tok}",
+                     "content-type": "application/json",
+                     "Idempotency-Key": ke})
+        try:
+            r = urllib.request.urlopen(req, context=ctx)
+            return json.loads(r.read())
+        except urllib.error.HTTPError as e2:
+            return {"error_status": e2.code}
+    ea, eb = raw_exp(), raw_exp()
     res = c.resources(wi)
-    R["f5_exp_retry"] = dict(same=bool(ea["exp_id"] == eb["exp_id"]),
-                             consumed=res["consumed"])
+    R["f5_exp_retry"] = dict(
+        same=bool(ea.get("exp_id") and ea.get("exp_id") == eb.get("exp_id")),
+        consumed=res["consumed"], raw=[ea, eb])
+    defect("P0-client-idemkey", "P3", "F5 client plumbing",
+           "sfclient experiment() lacks idem_key though engine supports it",
+           "client exposes idem_key on all epistemic POSTs",
+           "TypeError: unexpected keyword argument",
+           "shipped client cannot use F5 on the budget-bearing call")
 
     # ---------- F10 knowledge cutoffs + fork races --------------------
     wk = c.create_world(sid, "p0-f10", sharing_policy="FULLY_SHARED",
@@ -214,9 +236,11 @@ def main():
     ks = c.knowledge_set(wk)
     n_seq = [x["first_available_seq"] for x in ks["available"]
              if x["artifact_id"] == a1["artifact_id"]][0]
+    def _aid(x):
+        return x["artifact_id"] or x.get("source_artifact")
     def avail_at(wid_, seq):
         k = c.knowledge_set(wid_, seq=seq)
-        return [x["artifact_id"] for x in k["available"]]
+        return [_aid(x) for x in k["available"]]
     R["f10_cutoff"] = dict(
         before=a1["artifact_id"] in avail_at(wk, n_seq - 1),
         at=a1["artifact_id"] in avail_at(wk, n_seq),
@@ -236,8 +260,14 @@ def main():
     child = (kids[0]["world_id"] if isinstance(kids, list)
              else kids["children"][0]["world_id"])
     c.start(child)
-    child_avail = avail_at(child, None) if False else [
-        x["artifact_id"] for x in c.knowledge_set(child)["available"]]
+    child_avail = [_aid(x)
+                   for x in c.knowledge_set(child)["available"]]
+    try:
+        c.artifact_bytes(child, a1["artifact_id"])
+        inherited_readable = True
+    except EngineError:
+        inherited_readable = False
+    R["f10_inherited_content_readable"] = inherited_readable
     R["f10_fork_race"] = dict(
         pre_inherited=a1["artifact_id"] in child_avail,
         post_excluded=a_post["artifact_id"] not in child_avail)
@@ -247,7 +277,7 @@ def main():
     gks = c.fork(child, ck3["checkpoint_id"], [{"name": "gchild"}])
     gchild = (gks[0]["world_id"] if isinstance(gks, list)
               else gks["children"][0]["world_id"])
-    g_avail = [x["artifact_id"]
+    g_avail = [_aid(x)
                for x in c.knowledge_set(gchild)["available"]]
     R["f10_grandparent"] = dict(
         grandparent_retained=a1["artifact_id"] in g_avail,

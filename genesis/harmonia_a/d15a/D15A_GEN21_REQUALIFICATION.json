@@ -1,0 +1,183 @@
+{
+ "release": {
+  "api": "v2",
+  "schema_version": 3,
+  "runtime": "serendipity-foundry-sfe",
+  "registration_open": true,
+  "engine_source_hash": "sha256:5274ddbe9120ddbbd75a36965106d2efe640a3b72278e7bb97b82e356e1fc9fc",
+  "source_commit": "a2898d19601b9cfc2619e105418cb637562accb7"
+ },
+ "checks": {
+  "core_late_pred_409": true,
+  "core_third_commit_409": true,
+  "core_recommit_idem": true,
+  "core_nested_422": true,
+  "core_fork_mint_409": true,
+  "f1_native": true,
+  "f1_imported_hash": true,
+  "f1_unimported_deny": true,
+  "f1_foreign_deny": true,
+  "f2_success_ok": true,
+  "f2_gate_success": true,
+  "f2_gate_failure": true,
+  "f3_repeat_rejected": true,
+  "f3_replication_ok": true,
+  "f3_monotonic": true,
+  "f4_all_headers": true,
+  "f5_exact_retry": true,
+  "f5_changed_body_409": true,
+  "f5_no_double_debit": true,
+  "f10_cutoff_clean": true,
+  "f10_import_clean": true,
+  "f10_fork_race": true,
+  "f10_grandparent": false,
+  "a3_replay_bitident": true
+ },
+ "raw": {
+  "core_late_pred": [
+   409,
+   "prediction_ordering_error"
+  ],
+  "core_third_commit": [
+   409,
+   "budget_exhausted"
+  ],
+  "core_recommit": [
+   "OK",
+   {
+    "exp_id": "exp_530df6dd46676a04eecaa185",
+    "committed_seq": 31129,
+    "work_id": null,
+    "already_committed": true
+   }
+  ],
+  "core_nested_sneaky": [
+   422,
+   "[{'type': 'extra_forbidden', 'loc': ['body', 'budget', 'expe"
+  ],
+  "core_fork_mint": [
+   409,
+   "budget_exhausted"
+  ],
+  "f1_native_roundtrip": true,
+  "f1_imported_bytes_match": true,
+  "f1_unimported_deny": [
+   404,
+   "not_found"
+  ],
+  "f1_foreign_deny": [
+   403,
+   "access_denied"
+  ],
+  "f1_read_evented": false,
+  "f2_success_kind": [
+   "OK",
+   {
+    "artifact_id": "sha256:277ec0887897a01d7e3250b00a39f0bcca00b36fd7919be77158b7e8c9b8fa28",
+    "blob_hash": "sha256:823a3180dad3c9c3c4dea43ab2baf9f04bac9c3a7711745ff5f702551496d735",
+    "origin": "NATIVE"
+   }
+  ],
+  "f2_successonly_accepts_success": [
+   "OK",
+   {
+    "artifact_id": "sha256:cab871fb66034e823e3943334667dd66cb8d6f8afeeb251b478b2b0d54099df0",
+    "origin": "IMPORTED",
+    "source_world": "wld_402f8d24eb28d362721e7da8",
+    "source_artifact": "sha256:fcc97a97ba455e2fa21970cd8386b4aa9ca77655b6366ff0ca5df381e9bf898f",
+    "source_hash": "sha256:043a718774c572bd8a25adbeb1bfcd5c0256ae11cecf9f9c3f925d0e52beaf89"
+   }
+  ],
+  "f2_successonly_rejects_failure": [
+   403,
+   "isolation_violation"
+  ],
+  "f3_repeat_no_flag": [
+   409,
+   "conflict"
+  ],
+  "f3_replication_ok": [
+   "OK",
+   "obs_13f1f5f481d289b89cacda56"
+  ],
+  "f3_unbound_repeat": [
+   409,
+   "conflict"
+  ],
+  "f3_surv_then_fals": [
+   "OK",
+   "obs_2b156bd8432a954707bd7bc4"
+  ],
+  "f3_fals_then_surv_attempt": [
+   "OK",
+   "obs_d711c8f66972b46d126df070"
+  ],
+  "f3_claim_sequence": [
+   "CLAIM_SURVIVED"
+  ],
+  "f3_monotonic": true,
+  "f4_headers": {
+   "version": true,
+   "world": true,
+   "error_response": true
+  },
+  "f5_exact_retry_same": true,
+  "f5_changed_body": [
+   409,
+   "conflict"
+  ],
+  "f5_cross_world": [
+   409,
+   "conflict"
+  ],
+  "f5_exp_retry": {
+   "same": true,
+   "consumed": {
+    "experiments": 1
+   },
+   "raw": [
+    {
+     "exp_id": "exp_6ea6daf30c2325248425ae62",
+     "work_id": null,
+     "committed_seq": 31177
+    },
+    {
+     "exp_id": "exp_6ea6daf30c2325248425ae62",
+     "work_id": null,
+     "committed_seq": 31177
+    }
+   ]
+  },
+  "f10_cutoff": {
+   "before": false,
+   "at": true,
+   "after": true
+  },
+  "f10_import_cutoff": {
+   "before": false,
+   "at": true
+  },
+  "f10_inherited_content_readable": false,
+  "f10_fork_race": {
+   "pre_inherited": true,
+   "post_excluded": true
+  },
+  "f10_grandparent": {
+   "grandparent_retained": false,
+   "parent_retained": true,
+   "post_still_excluded": true
+  },
+  "a3_replay": {
+   "bit_identical": true,
+   "decl": {
+    "world": "wld_f6ebe45a4a77417a0116e5b5",
+    "seq": 31198,
+    "pipeline_hash": "ea486cd927b554c617ac9fb767388394d817f2afeea70a56c46bcad492c24bb1",
+    "vector_1": "18bb63875325bcfb543fd45decdce9db38534db71e76e8ea88e7740982bac108:SEARCH_MORE",
+    "vector_2": "18bb63875325bcfb543fd45decdce9db38534db71e76e8ea88e7740982bac108:SEARCH_MORE"
+   }
+  }
+ },
+ "verdict": "ENGINE_NOT_QUALIFIED",
+ "n_defects": 2
+}

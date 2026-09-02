@@ -1,0 +1,37 @@
+{
+ "checks": {
+  "n_worlds_built": 34,
+  "Q3_exact_enumeration": true,
+  "Q1_ladder": {
+   "min": 37,
+   "max": 142,
+   "multi_repair_frac": 1.0,
+   "equiv_present": false
+  },
+  "census_master_key": {
+   "top_hidden_frac": 0.294,
+   "pass_": false
+  },
+  "census_marginal_prior": {
+   "top_class_frac": 0.324,
+   "note": "descriptive; class balance enforced per-type in full gen"
+  },
+  "census_dsl_shortcut": {
+   "leaked": 0,
+   "pass_": true
+  },
+  "Q2_probe_goal_orthogonality": {
+   "mean_abs_corr": 0.0,
+   "n": 0,
+   "pass_": true
+  },
+  "Q4_firewall_canary": {
+   "oracle_tokens_in_pipeline": [],
+   "pass_": true
+  }
+ },
+ "verdict": "SCIENCE_NOT_READY",
+ "n_defects": 1,
+ "basis_size": 22,
+ "n_states": 512
+}
