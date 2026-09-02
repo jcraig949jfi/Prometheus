@@ -1,0 +1,223 @@
+================================================================================
+PROMETHEUS INCUBATOR
+PROTEUS - PLAYER FOUNDRY - V0 EXTERNAL REVIEW ADDENDUM
+
+Issued by James, 2026-09-02, in reply to the pre-execution review packet
+roles/Proteus/REVIEW_PACKET_PROTEUS_V0_BRIEF_2026-09-02.txt.
+
+Committed verbatim as authoritative. It amends the V0 kickoff brief
+(PROMPT_PROTEUS_PLAYER_FOUNDRY_V0_2026-09-02.txt, sha256 cacf303f...). Where
+this file and RESPONSIBILITIES.md or any later summary disagree, this file wins;
+where this file and the brief disagree, this file wins as the later instruction.
+Character set preserved as issued. sha256 of this file is recorded in the commit
+message that lands it and is the frozen external seed root for the V0 probe
+generator (amendment A4).
+================================================================================
+
+EXTERNAL REVIEW ADDENDUM — PROTEUS PLAYER FOUNDRY V0
+
+Proceed with the V0 build subject to the following amendments.
+
+These amendments refine the existing brief. They do not authorize qualification or population launch.
+
+A1. WORLD INTERFACE FIREWALL
+
+Proteus shall implement only a generic, semantics-free player ABI.
+
+Proteus shall NOT implement the World-0 adapter.
+
+The ABI must support varying numbers/shapes of opaque input and output channels without redesigning player architecture.
+
+World-specific bindings belong to the future neutral experiment operator / SFE-side integration layer.
+
+An opaque vector whose positions have Proteus-authored semantic roles is NOT considered semantically sterile merely because the field names are hidden.
+
+Document this boundary explicitly.
+
+⸻
+
+A2. MINIMIZE PRIVILEGED AFFORDANCES
+
+Keep the V0 instruction set deliberately primitive.
+
+Preferred categories are:
+
+* bounded storage
+* read/write
+* arithmetic
+* logical/bitwise transformation
+* comparison
+* conditional control transfer
+* indirection
+* opaque input/output
+* halt/yield
+* externally supplied randomness
+
+Do not encode cognition-shaped conveniences such as search, planning, matching, attention, analogy, strategy, hierarchy, specialization, communication policy, or equivalent abstractions.
+
+Randomness does not intrinsically know its cost.
+
+Resource/cost information, if exposed to a player, should arrive through the generic environment interface rather than through a cognition-specific privileged opcode unless an explicit justification is accepted in review.
+
+Publish and hash the final affordance table before diversity measurements.
+
+⸻
+
+A3. MUTATION MUST MANIPULATE REPRESENTATION, NOT AN AUTHORED CAPABILITY LADDER
+
+V0 need not make the mutation grammar itself evolvable.
+
+However, mutation operators should preferentially be syntactic/genotypic transformations such as:
+
+* insertion
+* deletion
+* duplication
+* movement
+* replacement
+* operand/constant perturbation
+* reference redirection
+* region swap
+* splice
+* zeroing
+* randomization
+* removal of unreachable material
+
+Do not create mutation operators whose semantics amount to adding presumed cognitive capabilities.
+
+If an operator cannot be described without cognition-laden language, flag it for review.
+
+⸻
+
+A4. REPLACE HAND-AUTHORED BEHAVIOURAL PROBES
+
+Proteus may own the probe EXECUTION MECHANISM but should not hand-author a behavioral benchmark.
+
+Generate probe inputs algorithmically from a frozen external seed using a simple published deterministic generator.
+
+No mazes.
+No sequence tasks.
+No delayed-copy tasks.
+No parity tasks.
+No handcrafted patterns.
+No tasks chosen because humans consider them cognitively interesting.
+
+For each organism, execute a fixed probe ensemble under a fixed operation budget and hash the externally visible transcript.
+
+Call the resulting relation:
+
+probe_transcript_equivalence
+
+Do not label it intelligence, reasoning, capability, or meaningful behavioral diversity.
+
+⸻
+
+A5. INDEPENDENT STRUCTURAL SIGNATURE
+
+In addition to transcript equivalence, construct a primitive-ablation signature.
+
+For each primitive class used by an organism:
+
+1. replace/disable that primitive according to a frozen null rule;
+2. rerun the same probe ensemble;
+3. record whether the transcript changes.
+
+The resulting knockout-sensitivity vector is the structural signature.
+
+Do not use Diomedes coordinate_census.py as the authoritative distinctness measure.
+
+It may be reported as a secondary diagnostic if clearly marked non-authoritative.
+
+⸻
+
+A6. MUTATION NEUTRALITY IS A HARD GATE
+
+Retain C3 as a hard gate, but test for absence of an implicit complexity ratchet rather than merely absence of upward drift.
+
+Under mutation WITHOUT selection, across multiple starting genome sizes, preregister and measure:
+
+* mean genome-length slope
+* median genome-length slope
+* length variance
+* insertion/deletion balance
+* minimum-bound occupancy
+* maximum-bound occupancy
+* equilibrium/attractor behavior after burn-in
+
+The grammar passes only if genome size remains within the preregistered stationary envelope.
+
+Strong downward collapse is not a pass merely because upward growth is absent.
+
+Freeze tolerances before observing results.
+
+⸻
+
+A7. PRESERVE GENOTYPE → PHENOTYPE DEGENERACY
+
+For every measured transcript-equivalence class preserve:
+
+* class identifier
+* number of distinct genomes mapping to it
+* lineage identities
+* pairwise ancestry relationship where available
+* structural-signature distribution
+
+Do not treat this merely as a diversity statistic.
+
+This mapping is future detector material.
+
+A behavioral anomaly reached independently by multiple unrelated genomes may be substantially more interesting than the same anomaly observed repeatedly within one lineage.
+
+PEW should later be able to reconstruct this distinction from immutable evidence.
+
+⸻
+
+A8. DO NOT OPTIMIZE V0 FOR DIVERSITY
+
+The diversity demonstration is an instrument qualification only.
+
+Do not tune mutation weights, genome initialization, runtime primitives, probe configuration, or generation parameters merely to maximize distinctness after observing the diversity result.
+
+A low-diversity result is evidence about the Foundry configuration, not permission for post-hoc optimization.
+
+Any subsequent change requires a new frozen configuration identity and a new demonstration.
+
+⸻
+
+A9. PHENOTYPE EXHAUST
+
+Coordinate the eventual encounter-output requirement with Daedalus but do not define world-specific phenotype semantics.
+
+Proteus should ensure organisms and lineage records have immutable identities sufficient for SFE to associate future observations with:
+
+* genotype
+* parentage
+* runtime version
+* mutation history
+* encounter identity
+
+SFE owns authoritative encounter/phenotype emission.
+
+PEW consumes and reinterprets it later.
+
+⸻
+
+DISPOSITION
+
+Proteus is authorized to BUILD V0 under these amendments.
+
+Proteus is NOT authorized to:
+
+* launch Campaign 1;
+* inspect qualification-world internals;
+* implement a World-0-specific player design;
+* tune the Foundry against qualification outcomes;
+* claim reasoning, intelligence, emergence, or progress from diversity;
+* become its own neutral operator.
+
+Complete the sixteen V0 build deliverables, run only Foundry-local qualification tests, produce the promised post-build external-review packet, and STOP.
+
+The post-build reviewer should be able to answer one question before any population enters SFE:
+
+Did Proteus build a sufficiently large and reproducible space of computational organisms without quietly deciding in advance what kind of organism ought to succeed?
+
+That is the V0 qualification target.
