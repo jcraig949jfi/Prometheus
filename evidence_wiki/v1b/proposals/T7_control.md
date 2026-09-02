@@ -158,7 +158,12 @@ prefix/window sampling):**
   signal concentrates at d ~ measurement error (<= 1e-4-ish), not merely d < tol.
 - **C5 — coverage/selection confound, direction stated.** `bsd_joined` coverage falls
   from 93% (<1K) to 0% (>400K); high-conductor mirror rows are biased toward prime
-  conductor and trivial torsion. Missing L-values cannot fabricate integrality (no
+  conductor and trivial torsion, and an adjudicated audit
+  (`cartography/docs/audit_F044_rank4_lmfdb_selection_results.md`) showed the LMFDB
+  rank >= 2 population at conductor >= 1e8 is a selection-frame artifact (essentially
+  100% single-bad-prime semistable, consistent with rank-record-construction
+  sourcing) — one reason the high-rank strata here are reported per band and never
+  extrapolated to "elliptic curves in general". Missing L-values cannot fabricate integrality (no
   `leading_term`, no Q — those classes are excluded, not imputed), but all claims are
   scoped to the covered strata and reported per band; the confound's push direction
   relative to each gate is stated in the verdict.
@@ -243,6 +248,26 @@ in the class simultaneously, a stronger joint constraint). Verdicts are per
   rank >= 2 is the rounded BSD-assuming quotient — this proposal replaces it there
   with the unrounded independent-ingredient quotient. Also documents that stored
   analytic Sha ~= 1 for essentially all rank >= 2 rows (motivates control C4).
+- `charon/scripts/bsd_phase2_unblock.py` (2026-04-15) — the direct predecessor: a
+  stratified BSD-ratio==1 test (100/100/50/20 classes per rank 0-3) that pulled
+  real_period, tamagawa_product, and `sha_an` from the REMOTE devmirror `ec_mwbsd`
+  table. **Superseded here on two counts:** (a) it placed `sha_an` in the denominator
+  at rank >= 2, where sha_an is defined by assuming the very ratio being tested — the
+  ratio==1 outcome is tautological there; this design removes Sha from the formula and
+  tests integrality/squareness of the residual quotient instead; (b) it depended on a
+  live remote mirror for Omega/Tam, which this design computes locally from `ainvs`.
+  Its docstring's convention claim ("leading_term is already L^(r)(1)/r!") is treated
+  as a hypothesis and verified empirically in Phase 0, not inherited.
+- `harmonia/scripts/test_bsd.py` — the script of record behind
+  `harmonia/docs/millennium_prize_tests.md` (tests 1-6, including refined-formula
+  verification "on curves with known Sha"); its rank <= 1 machinery is the template
+  for the Phase 0 calibration stratum, while its rank >= 2 use of stored Sha is what
+  the primary endpoint here replaces.
+- `cartography/docs/audit_F044_rank4_lmfdb_selection_results.md` (+ companion
+  frame-based-resample audit) — RETRACTED F044 as a Pattern-4 selection-frame
+  artifact: all LMFDB rank 4-5 curves (and rank 2-3 at conductor >= 1e8) are
+  single-bad-prime semistable by construction of the source lists. Directly motivates
+  control C5's scoping and the decision to treat rank 4 as descriptive-only.
 - `harmonia/bsd_sha_paradox.py` — precedent for inverting the BSD formula against
   mirror columns and for catching a conditioning tautology (BSD_TAUTOLOGY_NO_PARADOX
   branch); its inversion A = L·Tor²/Sha is the rank-0 special case of Q.
