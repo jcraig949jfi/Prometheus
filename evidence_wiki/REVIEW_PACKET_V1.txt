@@ -1,0 +1,208 @@
+================================================================================
+V1 REVIEW PACKET
+PROMETHEUS EVIDENCE WIKI -- ONTOLOGY QUALIFICATION, METABOLIZATION,
+PROSPECTIVE GAP DISCOVERY
+================================================================================
+Prepared:        2026-09-02   frozen, adjudicated
+Location/Code:   evidence_wiki/  (docs/, benchmarks/, gold/, v1b/, tests/)
+Artifacts:       benchmarks/{gates_v1,ontology_v1,metabolization_v1,
+                 gap_prospective_v1,tensor_learning_curve,g1_integrity_v1}.json
+                 docs/{PREREGISTRATION_V1,ONTOLOGY_QUALIFICATION_V1,
+                 METABOLIZATION_EXPERIMENT_V1,GAP_SURFACING_V1,CASE_STUDIES_V1,
+                 ARCHITECTURE_V1,OPERATIONS_V1,HUMAN_AUDIT_PACKET_V1}.md
+Version/Hash:    branch mnemosyne/evidence-wiki-v0; prereg frozen a2898d196;
+                 final commit 08b391ea7; V1 charter sha256 52d4a256490cff6c
+                 1d51b15f8d89b9623fa6f09deefaa323f7d775a00ddc8a54
+Headline:        The canonical mechanism layer is QUALIFIED beyond its
+                 curator (G2/G3 PASS). The behavioral claim failed honestly:
+                 METABOLIZATION_NOT_DEMONSTRATED (instrument ceiling).
+                 Tensor stays shelved. Gaps are blinded and prospective.
+
+--------------------------------------------------------------------------------
+1. CLAIMS UNDER TEST
+--------------------------------------------------------------------------------
+H1 ONTOLOGY GENERALIZATION: canonical mechanisms capture reusable structure,
+   not Mnemosyne's curation preferences.
+H2 METABOLIZATION: Wiki access changes experiment design vs repo search.
+H3 PROSPECTIVE VALUE: Wiki structure identifies underexplored regions whose
+   investigation pays off.
+All thresholds, task slates, traps, and gate criteria were frozen in
+PREREGISTRATION_V1.md at commit a2898d196 BEFORE any campaign agent ran.
+V0 was left untouched (G1: files unchanged, V0 snapshot refactors to the
+identical reproducibility hash).
+
+--------------------------------------------------------------------------------
+2. V1-A ONTOLOGY QUALIFICATION (H1)
+--------------------------------------------------------------------------------
+Held-out corpus: 30 adjudicated findings (24 negative), 14 seats, from 30
+source files fully disjoint from all 38 V0 sources. Mnemosyne annotated
+BLIND and sealed the hash (69902d61...) before any annotator launched.
+Six isolated annotators: A1/A2 (ontology given), B1/B2 (+ new-term
+permission), C1/C2 (free-form, no ontology), + a normalizer who saw only
+phrases, never findings.
+
+Agreement (preregistered primary M-A1, threshold 0.50):
+  Mechanism any-overlap, mean pairwise (A/B)        0.956   PASS
+  Substrate-class exact                        0.767-0.967
+  Failure-class exact                          0.833-0.917
+  Free-form (C) vs A/B after blind normalization    0.833
+  C1 vs C2 mutual, via normalization                0.867
+  vs Mnemosyne's own blind labels (non-gating) 0.633-0.700
+The annotators agree with EACH OTHER far more than with the curator; the
+consensus labels, not Mnemosyne's, were ingested.
+
+G3 NON-CIRCULARITY (the kill test): 44 cross-agent gold pairs defined by
+condition-A annotators; retrieval by condition-B labels; Mnemosyne excluded
+from both sides.
+
+  Method        MRR     hits@10
+  -----------   -----   -------
+  labels (B1)   0.486     0.909
+  labels (B2)   0.415     0.773
+  embedding     0.165     0.477
+  bm25          0.143     0.364
+
+Label MRR 0.451 >= 2 x 0.165 and hits@10 0.841 >= 0.6:
+  G3 PASS -- CANONICAL_MECHANISM_LAYER_QUALIFIED (at this corpus scale).
+
+Ontology growth under governance (G4 PASS): mechanism cross_domain_bridge
+(demanded convergently by 4/4 annotators on H-010) + 3 substrate terms
+(B1 and B2 proposed near-identical names independently) registered as
+versioned rows; nothing rewritten. Disagreement concentrates on exactly the
+sibling boundaries flagged in the registry (algebraic_identity_artifact vs
+circular_verification; calibration_anchor vs circular_verification) -- these
+head the human audit packet.
+
+--------------------------------------------------------------------------------
+3. V1-B METABOLIZATION EXPERIMENT (H2) -- PRIMARY, AND A CLEAN NULL
+--------------------------------------------------------------------------------
+8 frozen design tasks x {control, wiki}; 16 isolated designer agents.
+Control: full repo search, wiki never mentioned. Wiki: same + mandatory
+structured consultation (queries logged server-side). Frozen deterministic
+checklist: D duplication, K known-failure walk-in, R reuse-signature as a
+concrete design element, F numeric falsifiers + stopping rule.
+
+Result: ALL 16 ARMS SCORED 4/4. Ties on all 8 tasks; W - L = 0 against a
+preregistered demonstration threshold of >= 5.
+
+  G7 = METABOLIZATION_NOT_DEMONSTRATED
+
+Diagnosis (stated, not softened): the instrument SATURATED. Every control
+agent found every trap through ordinary repo search -- this repo is dense
+with verdict documents and the designers were strong. This is a valid null
+about this instrument at this designer strength and documentation density,
+not a demonstration of equivalence. V2 discriminating design is specified
+(priors outside verdict docs; time-boxed/weaker designers; graded scoring
+with demonstrated attainable range; non-author scorer).
+
+Secondary, exploratory, non-gating:
+  - G18 traceability: 8/8 wiki proposals map claim ids to design decisions,
+    verifiable against ew.read_log; 0/8 controls are machine-resolvable.
+  - G8 PASS as phenomenon: concrete changed decisions traceable to
+    retrieved negative evidence (e.g. T2-wiki: "rows with finish_reason !=
+    stop are QUARANTINED" from the truncation-confound finding) -- but the
+    differential vs control was not shown.
+  - T3-wiki spontaneously consumed registered gap H-bac36ae694a2 and
+    designed the experiment to fill it (first gap->experiment link; G12
+    bars it from self-validation).
+  - T4-wiki used a stored finding to CHALLENGE the corpus-closure census's
+    coverage -- retrieval producing scrutiny of verdicts, not deference.
+  - Consultation cost ~zero (74.6K vs 74.8K mean agent tokens).
+  - G9 ADJUDICATED_NULL: duplication/trap rates were zero in both arms.
+
+--------------------------------------------------------------------------------
+4. V1-C PROSPECTIVE GAPS (H3) + CONTRADICTION + TENSOR
+--------------------------------------------------------------------------------
+Gaps: 15 blinded MISSING_CELL hypotheses on mechanism x substrate_class
+(5 marginal-top, 5 uniform-random seed 7, 5 freq-weighted seed 8; 5 V0-era
+method-exposed cells excluded as burned). Slate membership sealed; mapping
+sha a11168818abb... committed; 60-day chain-tracking protocol frozen.
+  G11 = PENDING_PROSPECTIVE. No verdict claimed; do not unseal early.
+
+Contradiction (G10 PASS, genuine, no fixture): B-025 (D-8: accumulated
+history produced NO effect) CONTRADICTS B-001 (D-5: history advantage
+SUPPORTED, +10.95pp). Both claims and evidence preserved; INFERRED edge
+badged; classified APPARENT_UNDER_DIFFERING_CONDITIONS with differing
+dimensions listed (substrate, agent, evidence_type, gate); surfaced by API
+and wiki; nothing auto-retracted.
+
+Tensor (G19 PASS): no rescue attempted. Learning-curve milestone recorded
+(99 -> 147 coordinates, density 0.117% -> 0.17%; cp seed stability 0.554).
+TENSOR_NOT_JUSTIFIED retained; G6 reopens at >= 1000 real coordinates with
+marginal/metadata/graph/embedding/CP/Tucker/TT/random all competing.
+
+--------------------------------------------------------------------------------
+5. ENGINEERING GATES
+--------------------------------------------------------------------------------
+G1  V0 integrity ................ PASS   (files + repro hash identical)
+G4  extensibility ............... PASS   (real new terms, versioned)
+G5  provenance .................. PASS   (111/111 chain to packets)
+G6  epistemic separation ........ PASS   (quarantine re-verified)
+G13 fixture isolation ........... PASS   (namespace + prod views, live-checked)
+G14 distributed ................. PARTIAL (M1 four-identity parity live;
+                                  cross-host probes await M2-M4 pulling)
+G15 recovery .................... PASS   (kill -> watchdog restart, autostart)
+G16 rebuildability .............. PASS   G17 staleness ......... PASS
+G18 traceability ................ PASS
+Write-path qualification: 16/16 checks (found + fixed a real
+version-addressing defect in correction traversal). Per-machine tokens bind
+claimed machine identity; rotation runbook in OPERATIONS_V1.md.
+Corpus now: 111 findings, 147 coordinates, 15 seats. ew schema ~2.4 MB.
+No paid API calls anywhere in V1. ~23 subagents total.
+
+--------------------------------------------------------------------------------
+6. KNOWN LIMITATIONS & CAVEATS
+--------------------------------------------------------------------------------
+- Annotators/designers are isolated contexts of ONE base-model family;
+  the 0.956 agreement partly reflects shared priors. G3's design (labels
+  from one agent set, pairs from another) reduces but does not remove this.
+  Human or different-model annotation is the V2 strengthening.
+- Mnemosyne scored V1-B against frozen checklists and authored the wiki;
+  quotes shipped; the result was a null AGAINST the wiki.
+- The V1-B null generalizes only to strong designers on a well-documented
+  repo; weaker designers or thinner documentation may show a differential.
+- G14 cross-host leg and G11 prospective verdict remain open by nature.
+- 18/60 condition-C normalizations were flagged low-confidence.
+- Consensus ingestion means curator-community label disagreements resolved
+  toward the community; policy reversible via HUMAN_RULING (audit packet).
+
+--------------------------------------------------------------------------------
+7. REPRODUCTION
+--------------------------------------------------------------------------------
+  cd F:\Prometheus\evidence_wiki
+  python benchmarks/integrity_and_curve_v1.py    (G1 + learning curve)
+  python benchmarks/ontology_analysis_v1.py      (V1-A; verifies blind hash)
+  python tests/test_writepath_v1.py              (s17 suite)
+  python tests/test_distributed_demo.py          (A19/G12/G13 legacy suite)
+  python benchmarks/gap_slates_v1c.py            (regenerates slates: DON'T
+                                                  rerun before adjudication)
+Spot-checks: /wiki/mechanisms/confound_conditioning (5 programs, incl. the
+same OQ1 kill arriving via two independent curation pipelines);
+/wiki/contradictions; benchmarks/metabolization_v1.json quotes vs
+v1b/proposals/*.md.
+
+--------------------------------------------------------------------------------
+8. VERDICT
+--------------------------------------------------------------------------------
+ONTOLOGY GENERALIZES BEYOND CURATOR ........ YES (this scale; model caveat)
+NON-CIRCULAR CROSS-LINK VALUE .............. YES (2.7x text baselines)
+METABOLIZATION BEHAVIORAL DIFFERENTIAL ..... NOT DEMONSTRATED
+NEGATIVE-EVIDENCE REUSE (phenomenon) ....... YES; differential NOT shown
+GAP PROSPECTIVITY .......................... PENDING (blinded, 60 days)
+TENSOR JUSTIFIED AT 147 COORDINATES ........ NO
+DISTRIBUTED OPERATION ...................... PARTIAL (cross-host pending)
+
+What survives on merit: the typed, provenance-locked substrate and the
+qualified canonical-mechanism layer (now the program's best cross-agent
+linkage instrument); governance that grows vocabulary without rewriting
+history; the operational service. What did not earn promotion: the claim
+that wiki access makes strong designers design better -- retest with the
+specified V2 instrument. The wiki pointed; the experiments decided.
+
+Reviewer's bottom line: do you accept the qualification split -- promote the
+mechanism layer as linkage infrastructure while holding metabolization as an
+open, retestable claim -- and will you rule on the audit packet's two
+ontology boundaries so the next annotation round inherits them?
+================================================================================
+END OF PACKET
+================================================================================
