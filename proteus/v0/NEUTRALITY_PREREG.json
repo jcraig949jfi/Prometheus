@@ -21,9 +21,9 @@
   "tick_budget": 64
  },
  "frozen_before_any_run": true,
- "grammar_hash": "973c7c108c1ec56b0b76ed360ffc001bc069ce088c851fe780b315d72bd51c9c",
+ "grammar_hash": "779da90d173fdd0528fdfe98b1056cc9d3fcad1807fdd2f677f3d879250e9796",
  "prereg_doc": "NEUTRALITY_PREREG.md",
- "revision_note": "v0.1 prereg after run 1 FAIL under grammar v0. Tolerances UNCHANGED. Lineages per cohort 30 -> 60 because at start 128 the bootstrap CI half-width (0.0305) exceeded the 0.03 tolerance, so that gate was not a gate. Grammar changes: deletion 0.10->0.11, operand_perturbation 0.20->0.19, tape-halving no-op when genome would not fit. Frozen before run 2.",
+ "revision_note": "v0.2 prereg after run 2 FAIL at cohorts 8 and 128 under v0.1 (PASS at 32). One change: tape halving is a no-op unless the genome would occupy at most half of the new tape. Weights, tolerances, design unchanged. Last revision in V0; cohort-8 reflection expected to persist.",
  "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
  "schema_version": "proteus.neutrality_prereg.v0",
  "seed": 20260902,

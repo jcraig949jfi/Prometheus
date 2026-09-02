@@ -29,6 +29,12 @@ removed vs 0.30 added) and stops the tape-halving clamp that pinned genomes at t
 Whether v0.1 is free of a ratchet at a 300-generation horizon is a measured property under the
 same preregistered tolerances, not a design claim.
 
+**Version v0.2.** v0.1 passed at start 32 and failed at both bound-adjacent starts. The 128
+failure was the halving rule again (a halving that fits the genome *exactly* still lands the cap
+on it); v0.2 permits halving only when the genome would occupy at most half of the new tape.
+Weights unchanged. The 8 failure is reflection off the minimum bound and is not addressed by
+weights; see `v0/NEUTRALITY_PREREG.md`, run 3.
+
 **Operators considered and NOT built, with the reason (A3 flag rule):**
 
 - *"promote a subroutine"*, *"add a loop"*, *"wire an input to an output"* — each is describable

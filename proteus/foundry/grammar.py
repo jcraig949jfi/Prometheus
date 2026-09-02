@@ -46,10 +46,13 @@ assert abs(sum(WEIGHTS) - 1.0) < 1e-9
 # 0.01..0.03) matches expected instructions added (0.30); and config_perturbation no longer
 # clamps a halved tape to the genome length (which pinned genomes at their cap) -- it is a
 # no-op when the genome would not fit. Calibrated on random genomes, not on any probe result.
-GRAMMAR_VERSION = "proteus.grammar.v0.1"
+# v0.1 -> v0.2 (2026-09-02): run 2 FAILED at cohort 128 because a halving that fits the genome
+# EXACTLY still lands the cap on the genome. Halving is now a no-op unless the genome would
+# occupy at most half of the new tape. Weights unchanged. Nothing else changed.
+GRAMMAR_VERSION = "proteus.grammar.v0.2"
 GRAMMAR_HASH = hash_obj({"version": GRAMMAR_VERSION, "operators": [list(o) for o in OPERATORS],
                          "k_range": [1, 4], "delta_range": [-8, 8],
-                         "config_tape_halving": "noop_if_genome_would_not_fit"})
+                         "config_tape_halving": "noop_unless_genome_at_most_half_of_new_tape"})
 
 GMIN = STORAGE_BOUNDS["genome_words"]["min"] // IW
 GMAX = STORAGE_BOUNDS["genome_words"]["max"] // IW
@@ -268,8 +271,11 @@ def op_config_perturbation(m, rng, mate):
         v = m["tape_words"] * 2 if rng.randbelow(2) else m["tape_words"] // 2
         v = min(max(v, b["tape_words"]["min"]), b["tape_words"]["max"])
         v -= v % 4
-        if v < len(m["genome"]):
-            return c, {"field": which, "noop": "genome_would_not_fit", "from": m["tape_words"], "to": m["tape_words"]}
+        # v0.2: a tape change must not move the cap ONTO the genome. Halving is allowed only if the
+        # genome would occupy at most half of the new tape, so the genome keeps at least as much
+        # headroom (in fraction of tape) as the smallest tape it could have been generated on.
+        if v < m["tape_words"] and len(m["genome"]) * 2 > v:
+            return c, {"field": which, "noop": "cap_would_land_on_genome", "from": m["tape_words"], "to": m["tape_words"]}
         c["tape_words"] = v
     elif which == "code_writable":
         c["code_writable"] = not m["code_writable"]

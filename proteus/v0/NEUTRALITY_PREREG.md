@@ -80,3 +80,31 @@ v0.1 is recorded in the commit that freezes this section. Everything else identi
 
 If run 2 fails, the same procedure applies: keep the run, revise, re-version, re-preregister.
 The number of revisions is itself reported in the packet.
+
+## Run 2 — grammar v0.1 (`973c7c10…`) — FAIL at cohorts 8 and 128; PASS at 32. Kept as filed.
+
+Result: `NEUTRALITY_RESULT_grammar_v0_1_FAIL.json`; prereg copy `NEUTRALITY_PREREG_grammar_v0_1.json`.
+Cohort 32: slope −0.002 [−0.019, +0.014], ratio 1.015 — flat. Cohort 8: +0.041 [+0.028, +0.053].
+Cohort 128: −0.028 [−0.047, −0.008], median −0.045, last-half −0.044. Balance 1.025. Every
+interval half-width is now below the tolerance.
+
+The weights are balanced away from the bounds. Both failures are bound interactions. Cohort 8
+reflects off the minimum: deletion cannot go below one instruction, so near the bound expected
+removal is smaller than expected insertion and a symmetric walk drifts away from a reflecting
+wall. Cohort 128 sits exactly where halving a 1,024-word tape to 512 words fits its 512-word
+genome exactly, so v0.1's "no-op if the genome would not fit" still lands the cap on the genome;
+insertion then no-ops while deletion does not until a later doubling frees it.
+
+## Run 3 — grammar v0.2 — preregistered here, frozen before running
+
+One change: tape halving is a no-op unless the genome would occupy at most half of the new tape
+(the cap can no longer land on the genome). Weights unchanged. **Tolerances unchanged. Design
+unchanged** (60 lineages, 300 generations, starts 8/32/128).
+
+Stated before running: cohort 8's reflection is expected to persist, because it is a property of
+any bounded symmetric walk and not of these weights; a passing cohort 8 would require a
+size-dependent bias, which is an authored prior. If cohort 8 alone fails, the preregistered
+verdict is FAIL and the packet reports it as such; the program disposition — whether reflection
+off the minimum counts as a ratchet — is the reviewer's, not this seat's. **This is the last
+revision in V0.** A third failure at cohort 128 would mean the halving analysis is wrong and is
+reported as such without a further fix.
