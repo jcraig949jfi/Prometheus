@@ -1,0 +1,252 @@
+# D15-B METHODOLOGICAL NOTE -- VACUOUS GATE PASS AND VACUOUS NULL
+## The final pre-execution deliverable. Frozen 2026-09-02.
+
+Part of the frozen D15-B design set. Referenced by `D15B_DESIGN_PACKET.md`
+(`18c991cc4`), `D15B_AMENDMENTS_R1.md` (`164562d98`), `D15B_AMENDMENTS_R2.md`
+(`0e93c10c3`). This note **defines a defect class and two verdict rules**; it
+adds **no scientific scope, no arm, and no control**.
+
+---
+
+## 1. THE TWO DEFINITIONS (frozen)
+
+**VACUOUS GATE PASS**
+> A gate passes vacuously when its prohibited outcome is absent because the
+> mechanism required to make the test discriminating was never demonstrated to
+> operate.
+
+**VACUOUS NULL** -- the scientific dual
+> A null result is vacuous when the contrasted conditions were not demonstrated
+> to differ in the experimental variable whose causal effect the null purports
+> to bound.
+
+**They are related but distinct, and the distinction is load-bearing.** The first
+is an *instrument* failure: a protection is credited for prohibiting something
+the machinery could not have produced anyway. The second is an *experimental*
+failure: an effect is bounded at zero across conditions that were never shown to
+differ. A campaign can suffer either without the other. D15-B is exposed to both
+-- to the first through its attack matrix, to the second through its ablation
+ladder -- which is why both are frozen here rather than one being treated as a
+special case of the other.
+
+---
+
+## 2. THE LIVENESS-TWIN PRINCIPLE
+
+For every critical destructive or negative gate `G-`, require a corresponding
+constructive witness `G+` **whenever such a witness is logically necessary**:
+
+```
+G+ : demonstrate that the mechanism CAN produce the relevant legitimate
+     distinction
+G- : demonstrate that the prohibited corruption, leakage, duplication or
+     effect does NOT occur
+```
+
+**Neither substitutes for the other.** The qualifier *whenever logically
+necessary* is deliberate: some gates have no constructible positive witness (a
+pure existence denial over an unbounded id space), and inventing a ceremonial one
+would be its own theatre. Where no witness exists, that is recorded as
+`G+_NOT_CONSTRUCTIBLE` with the reason, not silently omitted.
+
+**Instrument form, as already built into D15-B:**
+
+| pair | `G+` constructive witness | `G-` destructive claim |
+|---|---|---|
+| **F1** | legally imported content **is** retrievable, bytes hash-match | unimported foreign content is **not** retrievable |
+| **F3** | legitimate `SURVIVED` **and** `FALSIFIED` adjudications occur (X-14A/B) | repeated / rebound evidence cannot corrupt adjudication |
+| **F5** | first logical write creates exactly one object and one debit | retries cannot duplicate it |
+| **F10** | legitimately available information **appears** at the correct frontier | future information does not |
+| **K3** | artifact created **before** capture **appears** | artifact created **after** capture does **not** |
+| **ORACLE** | planted leak **is** detected | no leak detected in legitimate science arms |
+
+---
+
+## 3. SCIENCE-SIDE LIVENESS: THE MANIPULATION WITNESS
+
+For every critical causal contrast `A vs B`, record three fields **before
+interpreting either a positive or a null effect**:
+
+```
+manipulation_present    the intended information actually reached the arm
+manipulation_distinct   the two arms actually differed in the intended
+                        information
+endpoint_sensitive      the endpoint can change when a legitimate relevant
+                        input changes
+```
+
+Failure of these produces **`MANIPULATION_NOT_ESTABLISHED`** or
+**`ENDPOINT_NOT_LIVE`** -- **never `NO_EFFECT`, and never `H0`.**
+
+`H0` ("foreign information provides no prospective benefit") is a claim about the
+world. It may only be reached from contrasts whose manipulation was witnessed.
+This is the rule that protects the bottom of my own verdict ladder, which was
+previously unprotected.
+
+---
+
+## 4. CORRECTION TO R2's K7 SENSITIVITY TWIN (my error, replaced)
+
+**R2 as written was wrong.** It required that dropping one imported certificate
+change the prediction. **That criterion can reject a perfectly valid
+deterministic predictor** whenever the dropped input happens to be irrelevant to
+that particular decision -- a false defect against correct behaviour, which is
+exactly the kind of instrument error this campaign exists to avoid. Recorded as a
+correction rather than quietly amended.
+
+**Replacement -- the preregistered SENSITIVITY CANARY.** Construct a pair of legal
+replay inputs
+```
+I   and   I'
+```
+differing in **one known endpoint-relevant fact**, for which the predictor is
+expected **by construction** to produce different outputs. Require:
+```
+predictor(I) != predictor(I')
+```
+For D15-B the canary pair is built from the obstruction certificate: `I` contains
+a core whose `wl_hash` matches an obstruction actually present in the target
+query set; `I'` is identical except that core is replaced by one whose structure
+is known absent from the target. A predictor that uses the certificate at all
+must separate them; a constant cannot.
+
+**Ordinary exact replay is kept SEPARATELY:**
+```
+replay(original state) == original prediction
+```
+Together they establish **reproducibility + non-constancy**. Either alone is
+insufficient, and neither is now asked to do the other's job.
+
+---
+
+## 5. CORRECTION TO R2's ARM-DELIVERY LIVENESS (my error, refined)
+
+**R2 relied on pairwise-distinct content hashes.** Those prove different **bytes**
+arrived. They do **not** prove the intended scientific manipulation differed --
+two differently serialized copies of the same obstruction certificate satisfy a
+hash check and manipulate nothing. Recorded as a correction.
+
+**Two levels are now recorded per contrast:**
+```
+DELIVERY_DISTINCT_BYTES     content hashes differ
+DELIVERY_DISTINCT_ESTIMAND  the estimand-bearing representations differ
+```
+**A null transfer claim requires the second.**
+
+**The estimand-bearing representation, defined before execution.** For a
+certificate:
+```
+ESTIMAND_DIGEST = sha256( canonical sorted multiset of
+                          (size, sorted arity_multiset, wl_hash) )
+```
+i.e. the structural core descriptors only -- order-independent, and excluding
+source identity, confidence, support and all serialization.
+
+**The estimand-bearing variable is declared PER CONTRAST, not globally.** This
+matters and is easy to get wrong: `CERTIFICATE-TRUE` vs `CERTIFICATE-STRUCTURE-ONLY`
+is **expected to be estimand-IDENTICAL** at the structural digest, because the
+manipulated variable in that contrast is the *metadata* (source, confidence,
+support), not the structure. Applying the structural digest mechanically to that
+pair would flag a correct design as vacuous. The frozen expectation table:
+
+| contrast | manipulated variable | expected relation |
+|---|---|---|
+| TRUE vs S1 SHUFFLED | structure<->target correspondence | estimand-DISTINCT |
+| TRUE vs STRUCTURE-DAMAGED | structural identity | estimand-DISTINCT |
+| TRUE vs S4 IRRELEVANT_SWAP | source relevance | estimand-DISTINCT |
+| TRUE vs S6 MARGINAL_ONLY | all structure vs a scalar prior | estimand-DISTINCT (different type) |
+| TRUE vs STRUCTURE-ONLY | **metadata** (source/confidence/support) | estimand-IDENTICAL, **metadata-DISTINCT** |
+
+Serialization noise never qualifies as a manipulation for any contrast.
+
+---
+
+## 6. THE VACUITY VERDICT (outside the scientific ladder)
+
+A verdict state usable throughout D15-B, at both the instrument and science
+layers:
+
+```
+VOID_BY_VACUITY
+  V01_MECHANISM_NOT_LIVE        the protected mechanism was never shown to
+                                exercise the distinction under test
+  V02_MANIPULATION_NOT_DELIVERED the intended information did not reach the arm
+  V03_MANIPULATION_NOT_DISTINCT  arms did not differ in the estimand-bearing
+                                variable
+  V04_ENDPOINT_NOT_SENSITIVE     the endpoint could not change under a
+                                legitimate relevant input change
+  V05_POSITIVE_CONTROL_FAILED    the constructive witness G+ did not fire
+```
+
+**These are instrument failures, not scientific negatives.** They are kept
+strictly **outside the H0-H5 ladder** and may never be reported as, aggregated
+with, or counted toward a scientific outcome. A cell voided for vacuity is
+re-run or abandoned; it is never evidence about transfer.
+
+---
+
+## 7. HISTORICAL LINEAGE -- PROVENANCE ONLY
+
+The four instances that motivated this doctrine:
+```
+Ergon INV 7                    (exit review #3)
+D15-B / Gen-3B E6 permutation null   (mine)
+Harmonia A Gen-3H
+D15-A Phase-0 F3
+```
+
+**No historical verdict is retroactively rewritten from inside D15-B.** These are
+recorded **solely as provenance for why the doctrine exists**. Whether any past
+result needs reclassification is a question for a separate Prometheus-wide
+review with the authority and scope to conduct it; D15-B has neither and does not
+claim either.
+
+---
+
+## 8. BANKED FOR DAEDALUS -- CANDIDATE CROSS-SYSTEM INVARIANTS
+
+Offered as candidates for a future metrology/substrate iteration. **Not requested
+for GEN-2.1, and not a condition on its qualification.**
+
+```
+INV-LIVE : NO NEGATIVE WITHOUT A POSITIVE WITNESS
+  A negative integrity claim requires evidence that the protected mechanism was
+  capable of exercising the distinction under test.
+
+INV-MANIP: NO NULL WITHOUT A VERIFIED MANIPULATION
+  A null causal claim requires evidence that the experimental conditions
+  actually differed in the estimand-bearing variable.
+```
+
+D15-B's obligation is narrower and is met by construction: **produce
+machine-readable evidence sufficient for such a future primitive.** Every gate
+emits its `G+`/`G-` pair, every contrast emits its three manipulation fields,
+and every void emits its `V0x` reason code -- so a later substrate release could
+consume this campaign's output directly as a worked specification rather than a
+prose argument.
+
+---
+
+## 9. FREEZE
+
+**D15-B DESIGN IS FROZEN.** No further speculative controls, no methodological
+expansion, no additional arms. Scope may change only if execution discovers a
+concrete blocker, and then only to route around it -- never to rescue a result.
+
+```
+FROZEN DESIGN SET
+  D15B_DESIGN_PACKET.md    18c991cc4  sha256 ea38adf7...
+  D15B_AMENDMENTS_R1.md    164562d98  sha256 96ed1cd3...
+  D15B_AMENDMENTS_R2.md    0e93c10c3  sha256 3911de44...
+  D15B_VACUITY_DOCTRINE.md this document
+```
+
+Next action is not mine: **D15-A's Phase-0 verdict.** Then B11 step 1 (X-04A),
+with every destructive gate preceded by its liveness twin and every contrast
+preceded by its manipulation witness.
+
+During execution: defects may stop the campaign, evidence may narrow the
+hypothesis, controls may void cells -- **but the design does not move to rescue a
+result.** The purpose now is to let reality attack what has been built.
+
+-- Harmonia B, M2, 2026-09-02
