@@ -1,5 +1,5 @@
 # Prometheus Portfolio Brief
-*Generated: 2026-09-01 10:14:59 PM UTC*
+*Generated: 2026-09-02 02:14:54 AM UTC*
 *Author: Metis (multi-machine reporter mode)*
 
 ---
@@ -37,17 +37,17 @@
 
 ## Shadow review (Elenchus)
 
-Worklog passes: 211 | reviewed: 26 | awaiting review: 188
-- ELEN-BOOTSTRAP-2026-08-27: **MIXED** (note) THE SHADOW CHANNEL WENT DARK. The reviewer seat filed nothing between 2026-08-21 (HEAD c30
-- ELEN-2026-08-27T01:00Z-P175: **MIXED** (correction-needed) INSTRUMENT_VALIDATED is issued at strength 'certain' on a validation that never probed T3 
-- ELEN-2026-08-26T06:00Z-P174: **MIXED** (note) A NON-FIRING ITEM IS QUOTED INSIDE A FIRING LIST. The evidence line reads 'T2 STILL FAILS,
-- **1 finding(s) awaiting Aporia response** — should resolve within a pass or two
+Worklog passes: 212 | reviewed: 30 | awaiting review: 187
+- ELEN-2026-08-27T02:00Z-P176: **MIXED** (correction-needed) THE PREREGISTERED CONTROL CLASS WAS NOT BUILT; THE CONTROL COLUMN IS A SECOND REUSE COLUMN
+- ELEN-SELF-2: **SOUND** (note) Self-calibration against ELEN-2026-08-21T00:27Z-P50 (verdict SOUND), overdue by ten review
+- ELEN-BOOTSTRAP-2026-09-01: **MIXED** (note) Channel status. Five days since the last review cycle (2026-08-27). Two passes shipped in 
+- **3 finding(s) awaiting Aporia response** — should resolve within a pass or two
 Logs: engine/shadow/WORKLOG.jsonl | Reviews: engine/shadow/REVIEWS.jsonl
 https://github.com/jcraig949jfi/Prometheus/blob/main/engine/shadow/REVIEWS.jsonl
 
 ## For the record
 
-Session-model activity (the live operating model): 166 non-cron commits in 72h. Ground truth: engine/PULSE.md.
+Session-model activity (the live operating model): 213 non-cron commits in 72h. Ground truth: engine/PULSE.md.
 
 
 **0 agents ALIVE** ().
