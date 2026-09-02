@@ -4,7 +4,8 @@
 ## Named for: Proteus, the Old Man of the Sea. He takes every shape — lion, serpent, water, tree — and gives a true answer only to the one who holds on through all of them. Two things about him are the role: **he is the source of shapes, not the judge of them**, and **the truth is extracted by whoever pins him, never volunteered.** The Foundry manufactures forms. A neutral operator and the selection they impose do the pinning.
 
 **Authoritative brief:** `PROMPT_PROTEUS_PLAYER_FOUNDRY_V0_2026-09-02.txt` (sha256
-`cacf303f3a997e2172cac5ef39021ac194ab3ec82edea21f5dfc8579e70ec5b4`, hashed at issuance). Where
+`cacf303f3a997e2172cac5ef39021ac194ab3ec82edea21f5dfc8579e70ec5b4`, hashed at issuance over the
+committed LF blob — verify with `git show origin/main:<path> | sha256sum`, not on a CRLF checkout). Where
 this document and the brief disagree, **the brief wins**; this document is the seat's reading of
 it, its boundaries against the rest of the fleet, and its commitments before a line of code exists.
 
