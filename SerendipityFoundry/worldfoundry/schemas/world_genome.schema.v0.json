@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "prometheus/incubator/worldfoundry/world_genome/v0",
+  "title": "World Genome (v0)",
+  "description": "The complete, deterministic recipe for one world. A world is NOT code written by hand; it is the deterministic expansion of this genome by a versioned grammar. Two invariants: (1) expansion is a pure function -- genome + grammar_version fully determine the world, bit for bit; (2) worlds are immutable -- evolution produces DESCENDANT genomes, never in-place edits. Historical evidence binds to the exact content hash of the world that generated it, forever.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "world_id", "grammar_version", "generation_seed",
+    "parent_ids", "mutation_history", "mechanics_manifest", "interface_manifest",
+    "resource_constraints", "content_hash"
+  ],
+  "properties": {
+    "schema_version": { "const": "worldfoundry.world_genome.v0" },
+
+    "world_id":       { "type": "string", "description": "equal to content_hash prefix; worlds are content-addressed" },
+    "grammar_version": { "type": "string", "description": "identity of the generative grammar that expands this genome. The grammar lives INSIDE the engine release identity: a grammar change is a release change. The world-phylogeny discipline applies at THIS level -- grammar versions are earned by measured failures of their predecessors." },
+    "generation_seed": { "type": "integer", "description": "seed for the deterministic expansion; with grammar_version, fully determines the mechanics DAG" },
+
+    "parent_ids": {
+      "type": "array", "items": { "type": "string" },
+      "description": "zero parents = de novo sample from the grammar; one = mutation; two = recombination (subgraph splice). Never empty for a mutated world."
+    },
+    "mutation_history": {
+      "type": "array",
+      "description": "ordered mutation operations that produced this genome from its parent(s). Empty for de novo worlds.",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "properties": {
+          "op": { "type": "string", "enum": ["PARAM_PERTURB", "PRIMITIVE_INSERT", "PRIMITIVE_DELETE", "REWIRE", "SUBGRAPH_SPLICE", "BUDGET_MUTATE", "INTERFACE_MUTATE"] },
+          "target": { "type": "string", "description": "node id in the mechanics DAG" },
+          "op_seed": { "type": "integer" },
+          "detail": { "type": "string" }
+        },
+        "required": ["op", "op_seed"]
+      }
+    },
+
+    "mechanics_manifest": {
+      "type": "object", "additionalProperties": false,
+      "description": "The expanded mechanics DAG: typed composition of generative primitives. This is the EXPANSION output, recorded for audit; the genome (grammar_version + generation_seed + mutations) is the authority, and re-expansion must reproduce this manifest bit-for-bit or the world is invalid (determinism breach).",
+      "properties": {
+        "nodes": {
+          "type": "array",
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "properties": {
+              "node_id":   { "type": "string" },
+              "family":    { "type": "string", "enum": ["STATE", "TRANSITION", "OBSERVATION", "ACTION_COUPLING", "RESOURCE", "INTERACTION", "TERMINATION", "FAULT"] },
+              "primitive": { "type": "string", "description": "primitive name within the family, e.g. REGISTER_BANK, LINEAR_MOD, REGIME_SWITCH, DELAY_QUEUE, PROJECTION, XOR_MIX, SHARED_CONTENTION" },
+              "params":    { "type": "object", "description": "integer parameters only. FLOATS ARE BANNED from world physics (cross-host determinism)." },
+              "inputs":    { "type": "array", "items": { "type": "string" } }
+            },
+            "required": ["node_id", "family", "primitive", "params"]
+          }
+        },
+        "n_slots": { "type": "integer", "minimum": 1, "description": "player slots. Slot roles may be asymmetric; the INTERFACE never labels which mechanisms are other players." },
+        "horizon_class": { "type": "string", "enum": ["MICRO", "SHORT", "MEDIUM", "LONG"], "description": "declared consequence-delay class, derived mechanically from the DAG (max delay-queue depth, regime-switch period). USED FOR QUALIFICATION-TIER STRATIFICATION so staged early death does not silently select against slow-developing strategies. Never visible to players." },
+        "stochasticity": { "type": "string", "enum": ["DETERMINISTIC", "SEEDED_STOCHASTIC"], "description": "SEEDED_STOCHASTIC draws exclusively from named seed streams derived from the episode seed; there is no other entropy source anywhere in a world" }
+      },
+      "required": ["nodes", "n_slots", "horizon_class", "stochasticity"]
+    },
+
+    "interface_manifest": {
+      "type": "object", "additionalProperties": false,
+      "description": "The player-facing contract. SEMANTIC QUARANTINE APPLIES: opaque integer vectors only; no names, labels, units, or documentation cross this boundary; channel order is permuted per-world by seed.",
+      "properties": {
+        "obs_width":   { "type": "integer", "minimum": 1 },
+        "act_width":   { "type": "integer", "minimum": 1 },
+        "value_bits":  { "type": "integer", "description": "integer range of each element" },
+        "channel_permutation_seed": { "type": "integer" },
+        "mixing": { "type": "string", "enum": ["NONE", "PERMUTE", "PERMUTE_XOR", "FULL_LINEAR"], "description": "seeded invertible integer mixing applied at the boundary to destroy designer channel decomposition. Mixing level is an EXPERIMENTAL ARM, not a constant: how much of any result depends on our decomposition is a measured quantity." }
+      },
+      "required": ["obs_width", "act_width", "value_bits", "channel_permutation_seed", "mixing"]
+    },
+
+    "resource_constraints": {
+      "type": "object", "additionalProperties": false,
+      "description": "Authoritative budgets enforced by the engine, not by politeness. Step budgets are the scientific quantity; wall-clock is a safety kill only and never appears in any statistic.",
+      "properties": {
+        "max_env_steps":        { "type": "integer" },
+        "player_step_budget":   { "type": "integer", "description": "VM steps per player per encounter" },
+        "player_mem_limit":     { "type": "integer" },
+        "player_persist_limit": { "type": "integer", "description": "bytes of state a player may carry between ticks" },
+        "action_budget":        { "type": "integer" },
+        "wallclock_safety_ms":  { "type": "integer", "description": "SAFETY KILL ONLY; an encounter killed by wall-clock is recorded as INFRASTRUCTURE_ABORT, never as a player outcome" }
+      },
+      "required": ["max_env_steps", "player_step_budget", "player_mem_limit", "action_budget"]
+    },
+
+    "runtime_hash": { "type": "string", "description": "build-derived hash of the world-runtime code (expansion + step function). Lives inside the engine release identity." },
+    "content_hash": { "type": "string", "description": "hash over the canonical serialization of every field above except world_id and content_hash itself" },
+    "notes": { "type": "string" }
+  },
+
+  "$comment": "NON-GOALS: (a) no field may carry a human-language description of what the world 'is about' -- that text lives in Daedalus-side instrumentation OUTSIDE the genome; (b) no difficulty rating, no quality score -- discrimination is measured empirically by the reference battery, never asserted; (c) horizon_class is mechanically derived, not authored. FOSSIL RULE: no genome is ever deleted; boring worlds define the landscape against which a bump is visible."
+}

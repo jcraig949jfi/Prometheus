@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "prometheus/incubator/worldfoundry/encounter_record/v0",
+  "title": "Encounter Record (v0)",
+  "description": "The authoritative scientific record of one executed match, written to the SFE ledger. Generalizes the World-0 failure-coordinate discipline to multi-player encounters: outcomes are COORDINATE VECTORS, never booleans; an observed loss is not a verdict; hidden authoritative world state (injected faults, regime switches, true hidden state) is recorded HERE for later scientific audit while remaining invisible to players. History is immutable: later reinterpretation (qualification, bump candidacy, PEW metabolization) never alters this record.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "match_id", "world_hash", "execution_version",
+    "host_id", "trace_hash", "termination", "per_slot", "world_events"
+  ],
+  "properties": {
+    "schema_version": { "const": "worldfoundry.encounter_record.v0" },
+
+    "match_id":          { "type": "string" },
+    "world_hash":        { "type": "string" },
+    "execution_version": { "type": "string" },
+    "host_id":           { "type": "string", "description": "which machine executed it. Recorded for replay-audit sampling; NEVER a factor in any scientific statistic." },
+    "ledger_seq":        { "type": "integer", "description": "engine event sequence of this record; the chronological anchor" },
+
+    "trace_hash": { "type": "string", "description": "hash of the full canonical trace (observations, actions, transitions, seed-stream draws), stored as a content-addressed artifact. Cross-host replay compares THIS. Divergence tolerance is ZERO." },
+    "trace_artifact": { "type": "string", "description": "content address of the full trace" },
+
+    "termination": {
+      "type": "string",
+      "enum": ["HORIZON", "ABSORBING_STATE", "ALL_BUDGETS_EXHAUSTED", "INFRASTRUCTURE_ABORT"],
+      "description": "INFRASTRUCTURE_ABORT records exist for audit but are excluded from every landscape statistic and every qualification decision"
+    },
+
+    "per_slot": {
+      "type": "array",
+      "description": "one entry per player slot; the player-side coordinate vector",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "properties": {
+          "slot":            { "type": "integer" },
+          "player_hash":     { "type": "string" },
+          "checkpoint_in":   { "type": ["string", "null"] },
+          "checkpoint_out":  { "type": ["string", "null"], "description": "content address of learned state after the encounter, if the player persists state. Referenceable by later manifests ONLY after this record is qualified." },
+          "outcome_vector":  { "type": "array", "items": { "type": "integer" }, "description": "the world's raw outcome channels for this slot -- resources held, absorbing flags, structural counters. RAW AND WORLD-DEFINED. No aggregate score field exists anywhere in this schema; scoring conventions live in versioned analysis code, never in the record." },
+          "resource_state": {
+            "type": "object", "additionalProperties": false,
+            "properties": {
+              "steps_used":    { "type": "integer" },
+              "steps_budget":  { "type": "integer" },
+              "mem_peak":      { "type": "integer" },
+              "actions_used":  { "type": "integer" },
+              "actions_budget": { "type": "integer" }
+            },
+            "required": ["steps_used", "steps_budget", "actions_used"],
+            "description": "separates 'could not' from 'could not afford'; required for resource-normalized landscape statistics"
+          },
+          "fault": {
+            "type": ["object", "null"],
+            "additionalProperties": false,
+            "properties": {
+              "fault_code":  { "type": "string", "enum": ["VM_FAULT", "STEP_LIMIT", "MEM_LIMIT", "ILLEGAL_ACTION", "NO_OUTPUT", "MALFORMED_ACTION"] },
+              "fault_tick":  { "type": "integer" },
+              "fault_detail": { "type": "string" }
+            },
+            "required": ["fault_code", "fault_tick"]
+          },
+          "abstention_ticks": { "type": "integer", "description": "ticks with no action emitted. First-class: economic pressure selects for inaction, and an uninstrumented non-attempt would deform the landscape invisibly." },
+          "behavior_digest":  { "type": "string", "description": "hash-sketch of the action stream (fixed scheme, versioned); supports behavioral-distance statistics without reading full traces" }
+        },
+        "required": ["slot", "player_hash", "outcome_vector", "resource_state", "abstention_ticks"]
+      }
+    },
+
+    "world_events": {
+      "type": "array",
+      "description": "HIDDEN AUTHORITATIVE WORLD STATE record: what the world actually did, whether or not any player could observe it. This is what makes 'an observed loss is not necessarily player failure' analyzable: self failure vs world fault vs observation corruption vs chance are distinguishable HERE and only here. Never exposed to players; outcomes reach players as observations, not verdicts.",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "properties": {
+          "tick": { "type": "integer" },
+          "kind": { "type": "string", "enum": ["REGIME_SWITCH", "FAULT_INJECTED", "OBSERVATION_CORRUPTED", "STOCHASTIC_BRANCH", "IRREVERSIBLE_TRANSITION", "RESOURCE_SHOCK"] },
+          "node_id": { "type": "string", "description": "mechanics-DAG node responsible" },
+          "detail":  { "type": "string" }
+        },
+        "required": ["tick", "kind", "node_id"]
+      }
+    },
+
+    "landscape_cell": { "type": "string", "description": "discretized (world-region x outcome-class) cell id, computed by a FROZEN, versioned cell function. The occupancy of these cells across millions of encounters IS the failure landscape the bump detector watches. The cell function is part of the instrument: changing it is a new instrument version, and cross-version comparison is forbidden." },
+
+    "qualification": {
+      "type": "object", "additionalProperties": false,
+      "description": "APPENDED by the qualification pass, never edited: the original execution fields above are immutable.",
+      "properties": {
+        "status": { "type": "string", "enum": ["UNQUALIFIED", "QUALIFIED", "REJECTED_DETERMINISM", "REJECTED_BUDGET", "REJECTED_PROVENANCE"] },
+        "replay_verified": { "type": "boolean" },
+        "replay_host_id":  { "type": ["string", "null"], "description": "when replay-audited, on which OTHER host" }
+      },
+      "required": ["status"]
+    }
+  },
+
+  "$comment": "FOSSIL RULES: (a) no record is deleted, downsampled, or compacted -- a zero-outcome encounter is landscape, not noise; (b) no aggregate score, ranking, or 'interestingness' field may be added to this schema -- those are analysis products bound to analysis-code versions; (c) worker/host telemetry lives elsewhere; the only host field here is host_id for replay audit; (d) hidden world_events are for the scientist and the crucible -- any path that leaks them to players is a semantic-quarantine breach (kill criterion)."
+}

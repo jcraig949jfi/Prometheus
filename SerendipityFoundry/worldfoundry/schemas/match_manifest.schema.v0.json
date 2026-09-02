@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "prometheus/incubator/worldfoundry/match_manifest/v0",
+  "title": "Match Manifest (v0)",
+  "description": "One frozen, deterministic, executable encounter. Harmonia schedules these across M1-M4 without knowing how to design players or worlds. The manifest is complete: any qualified host given this manifest and the referenced content-addressed artifacts MUST produce the identical trace hash. Match identity is derived, not assigned: match_id = hash(canonical serialization of the frozen fields), which makes submission idempotent by construction -- the same experiment is the same match everywhere, forever.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "match_id", "world_hash", "player_hashes",
+    "player_checkpoint_hashes", "seed", "resource_budget", "execution_version",
+    "scheduling_policy_version", "tier"
+  ],
+  "properties": {
+    "schema_version": { "const": "worldfoundry.match_manifest.v0" },
+
+    "match_id":   { "type": "string", "description": "hash over (world_hash, player_hashes, player_checkpoint_hashes, seed, resource_budget, execution_version, tier, prospective_test_id). DERIVED, never minted. Duplicate execution of the same match_id is by definition a replay, and replays must agree." },
+
+    "world_hash": { "type": "string", "description": "content hash of the world genome (worldfoundry.world_genome.v0)" },
+    "player_hashes": { "type": "array", "items": { "type": "string" }, "minItems": 1, "description": "frozen player manifests from Proteus, one per slot, in slot order" },
+    "player_checkpoint_hashes": { "type": "array", "items": { "type": ["string", "null"] }, "description": "per-slot learned-state checkpoint, null = fresh. A checkpoint may only be referenced after the match that produced it is QUALIFIED in the ledger -- a scheduling race that references an unqualified checkpoint is a rejected manifest, not a warning." },
+
+    "seed": { "type": "integer", "description": "episode master seed; every stochastic stream in the encounter derives from it by named substream" },
+
+    "resource_budget": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "max_env_steps":      { "type": "integer" },
+        "player_step_budget": { "type": "integer" },
+        "player_mem_limit":   { "type": "integer" },
+        "action_budget":      { "type": "integer" },
+        "wallclock_safety_ms": { "type": "integer" }
+      },
+      "required": ["max_env_steps", "player_step_budget", "player_mem_limit", "action_budget"],
+      "description": "May tighten but never exceed the world genome's resource_constraints. Debited atomically from the campaign budget lineage at match commit."
+    },
+
+    "execution_version": { "type": "string", "description": "engine release identity (build-derived source hash) the match must run under. A host on a different release MUST refuse the claim." },
+    "scheduling_policy_version": { "type": "string", "description": "identity of the Harmonia policy that emitted this manifest. Policies are versioned and replayable; 'why was this match scheduled' must always be answerable." },
+
+    "tier": {
+      "type": "string",
+      "enum": ["T0_MICRO", "T1_DIFFERENTIATION", "T2_TRANSFER", "T3_NOVEL_WORLD", "T4_FALSIFICATION", "T5_PERSISTENT"],
+      "description": "staged-qualification tier. Tier budgets and promotion statistics are preregistered per (tier x horizon_class) stratum -- horizon stratification exists so cheap early death does not silently select against slow-developing strategies."
+    },
+
+    "prospective_test_id": { "type": ["string", "null"], "description": "null for landscape/soup encounters. Set when this match executes a preregistered prospective test (a crucible arm, a PEW proposal, a calibration arm). The test must be COMMITTED in the ledger (irreversible commit boundary) BEFORE this manifest is created; evidence for a test that predates its commit is inadmissible by construction." },
+
+    "pairing_class": {
+      "type": "string",
+      "enum": ["RANDOM", "STRATIFIED", "LINEAGE_CROSS", "ANCESTOR_DESCENDANT", "WORLD_TRANSPLANT", "OPPONENT_TRANSPLANT", "FRESH_CONTROL", "CRUCIBLE"],
+      "description": "why these players are in this world -- the scheduling intent, recorded so pairing bias is analyzable"
+    },
+
+    "notes": { "type": "string" }
+  },
+
+  "$comment": "EXECUTION CONTRACT: (1) a worker claims a manifest via the engine's lease-fenced claim (claim_id fencing; heartbeats; expiry reassignment); (2) executes deterministically; (3) submits the outcome under the engine idempotency key = match_id, so a crash-after-execute-before-commit resolves to exactly-once evidence, and two workers racing the same manifest converge on identical traces or trigger a DETERMINISM_BREACH incident (which is a stop-the-line event, not a data point to average over); (4) worker health, retries, host telemetry are recorded OUTSIDE the scientific ledger. INFRASTRUCTURE_ABORT outcomes (wall-clock kill, host loss) are never player outcomes and never enter any landscape statistic."
+}
