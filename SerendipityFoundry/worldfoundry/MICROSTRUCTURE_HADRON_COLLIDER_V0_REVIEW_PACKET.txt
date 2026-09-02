@@ -1,0 +1,723 @@
+================================================================================
+  PROMETHEUS INCUBATOR --
+  MICROSTRUCTURE HADRON COLLIDER V0
+  EXTERNAL REVIEW PACKET
+
+  Find R0.00001 without knowing what reasoning looks like:
+  an instrument for noticing when ZERO becomes NOT QUITE ZERO,
+  and for stating exactly where we are still blind.
+
+  Author : Daedalus, maintainer of the Serendipity Foundry Engine (SFE)
+  Date   : 2026-09-02
+  Status : FROZEN FOR EXTERNAL REVIEW. Implementation frozen; qualification
+           run complete; NOTHING LAUNCHED. The soup waits for adjudication.
+================================================================================
+
+--------------------------------------------------------------------------------
+1. EXECUTIVE VERDICT
+--------------------------------------------------------------------------------
+
+              QUALIFIED_AS_SENSITIVITY_INSTRUMENT, WITH
+              STATED BLINDNESSES -- NOT READY FOR ADMISSION CLAIMS
+
+The Microstructure Observatory v0 exists, runs, and produced calibrated power
+curves, a clean false-positive record, demonstrated artifact rejection, and --
+most importantly -- HONEST BLINDNESS FINDINGS, including one delivered by the
+sealed holdout family exactly as a holdout is supposed to deliver it.
+
+PROVENANCE. The draft design went to an independent adversarial review across
+six dimensions BEFORE implementation. ALL SIX RETURNED UNSOUND_AS_STATED:
+14 FATAL and 17 MAJOR findings. The deepest: the design's foundational null
+(sign-coherence of paired differences) is FALSE under the no-structure null,
+because perturbing any selected, functional system generically degrades it in
+a sign-coherent way -- fragility of a tuned point reads as structure. The
+statistical core was REBUILT around the fix before a line of detector code ran:
+per-block CONDITIONAL RANKS against matched reference ensembles, with an
+anytime-valid wealth process betting on ranks from block one. Section 20
+carries the full findings; nothing was softened.
+
+THE MOST IMPORTANT FIGURE IN THIS PACKET is not a detection. It is section 14's
+power curve, and its headline reading is:
+
+  * concentrated OR diffuse micro-effects on an unstructured base:
+    detectable down to eps ~ 0.1-0.2 at luminosity L=32 blocks;
+    BLIND below eps ~ 0.05 at that luminosity.
+  * the SAME effect planted on a base that already has genuine structure:
+    NEARLY BLIND AT ALL TESTED EFFECT SIZES at v0 luminosity.
+    Real evolved organisms are structured bases. This is the honest,
+    load-bearing limitation of v0, stated in front.
+
+We did not find a particle. We built a seismograph, measured its noise floor,
+and mapped where it cannot hear. Per the directive, that is the success
+condition -- and the claimed alternative (an R0.00001 without calibrated
+detector power) would have been worthless.
+
+--------------------------------------------------------------------------------
+2. ARCHITECTURE
+--------------------------------------------------------------------------------
+A SECOND instrument beside the Bump Detector. The Bump Detector finds strong
+anomalies; the Observatory accumulates evidence about effects too small,
+distributed, delayed, genealogical, or outcome-free for any ordinary analysis
+to keep. It NEVER promotes organisms and never declares intelligence.
+
+  frozen manifests --> paired counterfactual twins --> per-block statistics
+        |                     |                              |
+        |                     v                              v
+        |            interventional replays        conditional ranks vs
+        |            (open-loop, player-only)      matched reference twins
+        |                     |                              |
+        v                     v                              v
+   SFE ledger  <---  microstructure vectors mu  --->  wealth processes
+   (authoritative)    (versioned, never collapsed)    (anytime-valid)
+                              |
+                              v
+                    weak-signal records --> PEW (interpretation, append-only)
+
+  THREE PERMANENT THRESHOLDS:
+    PRESERVATION   a storage act, not a test. Everything preregistered and
+                   computed is kept. UNRESOLVED_WEAK_SIGNAL is a recorded
+                   state with ZERO fitness/promotion/scheduling consequence.
+                   Its purpose: "not proven" must never become "zero".
+    INVESTIGATION  preregistered extra luminosity; lottery/FIFO admission
+                   within a fixed budget slice; the hypothesis is FROZEN at
+                   entry; luminosity is the only response to weakness.
+                   Investigation results feed ONLY the candidate's e-process
+                   -- they can never mint new flags or lottery tickets
+                   (red-team fix: the self-exciting feedback loop is cut).
+    ADMISSION      strict: held-out directional replication, invariance
+                   profile, pseudo-signal battery, global alpha-wealth
+                   accounting (section 5). v0 makes NO admission claims.
+
+  STERILITY: Observatory encounters run on CLONED frozen genomes, produce no
+  reusable checkpoints, are excluded from all promotion statistics, and (per
+  red team) production runs use disjoint RNG namespaces and a dedicated host
+  pool so measurement cannot become a selection force (section 20, G-row).
+
+  Implementation: worldfoundry/mhc/ -- players.py (plants), harness.py
+  (recorded encounters + interventional replay), stats.py (rank/wealth core),
+  qualify.py (the campaign), OBSERVABLE_FAMILY_V0.frozen.txt (the freeze).
+
+--------------------------------------------------------------------------------
+3. OBSERVABLES CONSIDERED (THE FROZEN V0 FAMILY)
+--------------------------------------------------------------------------------
+Frozen in mhc/OBSERVABLE_FAMILY_V0.frozen.txt (hash 8a752400c8264a3f) BEFORE
+any input from the external historical survey, per the directive's semantic
+quarantine of the detector target. Sources: the directive's own candidate
+list, vetted on measurement grounds; and the substrate's mechanical
+properties. NOT sources: the historical survey (assigned elsewhere),
+cognitive-science taxonomies, anything named after a mental faculty.
+
+  mu1  paired outcome deltas (charge, ticks, yields, actions, abstention)
+  mu2  INTERVENTIONAL CAUSAL-DEPTH PROFILE D(k), k in {2,6,12}, plus the
+       lag-0 REACTIVITY coordinate r0 (section 9)
+  mu3  relevant/irrelevant perturbation separation (descriptive in v0;
+       see the red-team demotion in section 20)
+  mu4  trajectory-structure contrast: held-out order-2 hit-count minus the
+       same on a seeded within-player shuffle (integer-exact; both shuffle
+       and rotation nulls preregistered as sub-coordinates)
+  mu5  twin behavioral divergence (Hamming + onset)
+  mu6  resource-allocation deltas (steps, magnitude buckets, abstention)
+
+No coordinate is ever collapsed into a score. Coordinate names describe
+measurements, not interpretations.
+
+--------------------------------------------------------------------------------
+4. OBSERVABLES REJECTED, AND WHY (preserved per directive section 6)
+--------------------------------------------------------------------------------
+  RAW TRAJECTORY ENTROPY -- rewards noise; replaced by the mu4 contrast,
+    which sends both constants and pure noise to zero.
+  OBSERVATIONAL MUTUAL-INFORMATION HISTORY ESTIMATORS -- confounded by
+    recurrence that merely retains bits; replaced by intervention (sec. 9).
+  GENERAL-PURPOSE COMPRESSOR COMPRESSIBILITY -- compressor-version dependent;
+    non-reproducible across hosts; rejected outright.
+  ANY COMPOSITE SCORE -- forbidden by design; aggregation destroys the
+    geometry the instrument exists to measure.
+  ADAPTATION SAVINGS -- deferred to the family version that accompanies
+    checkpointed players; requires a learning-budget protocol that v0's
+    players do not have. Recorded as a deferral, not a rejection.
+  CLOSED-LOOP CAUSAL DEPTH -- rejected by the red team as non-identifiable:
+    re-stepping the world makes D(k) measure the world's divergence-growth
+    curve times one-step reactivity, not player memory. The open-loop
+    protocol (section 9) is the preregistered replacement.
+  YIELD-RELEVANCE AS A FALSIFIER -- demoted to descriptive (section 20):
+    channels irrelevant to yield may feed structure aimed at anything else;
+    a true echo-falsifier needs causally INERT channels, which requires a
+    grammar addition (engine change request, section 24).
+
+--------------------------------------------------------------------------------
+5. NULL CONSTRUCTION (REBUILT AFTER THE RED TEAM)
+--------------------------------------------------------------------------------
+THE SUBSTRATE FACT: worlds are deterministic and bit-exact replayable, so any
+effective perturbation either changes the trace or does not. "No difference"
+is therefore never the null. The DRAFT null -- no coherent sign direction
+across blocks, tested by block sign-flip -- was destroyed by the red team on
+four independent grounds (fragility asymmetry; kinship dependence across
+blocks; scale heterogeneity; an asserted-not-constructed bridge to anytime
+validity). THE REBUILT CONSTRUCTION:
+
+  PER BLOCK (one world x seed unit):
+    one CANDIDATE contrast   (e.g. plant twin minus control twin)
+    m REFERENCE contrasts    (identically constructed pairs differing only
+                              by irrelevant seeds -- or, for operator nulls,
+                              other draws from the same frozen perturbation
+                              distribution)
+  Under H0 the candidate is EXCHANGEABLE with its references WITHIN the
+  block, so its rank among them is EXACTLY uniform -- for any block scale,
+  any world chaos, any fragility or operator push common to candidate and
+  references. The null is CONSTRUCTED, not assumed.
+
+  ACCUMULATION: a wealth process bets a preregistered fraction (mixture over
+  lam in {1/4, 1/2, 3/4}) on "candidate ranks top"; exact ties (all-zero
+  contrasts) bet nothing. Product over independent blocks is an e-process;
+  wealth >= 1/alpha is an anytime-valid level-alpha test (Ville). Optional
+  stopping -- which is what field use looks like -- is safe BY CONSTRUCTION,
+  from block one. Exact rational arithmetic; no float drift in inference.
+
+  WHAT THIS BUYS, DEMONSTRATED IN QUALIFICATION:
+    * operator-coherence artifacts cancel (Q2): a perturbation operator that
+      mechanically pushes a mu coordinate the same way in every world fires
+      the rejected sign test and does NOT fire the rank construction;
+    * exact-zero nulls behave exactly (Q3): an inert dP produces perfect
+      twin agreement -- wealth 1, nothing to explain;
+    * pseudo-replication is structural, not statistical (Q6/N1): duplicated
+      blocks collapse under block-id dedup instead of compounding wealth.
+
+  REMAINING DEPENDENCE DEBT (open, stated): kinship ACROSS blocks (shared
+  founders/grammar families) is priced in production by hierarchical units
+  (founder-cluster x grammar-family flips) and an unrelated-founder
+  replication axis at admission -- specified, NOT yet exercised, because v0
+  has no evolved pedigrees. Gate table row G6.
+
+--------------------------------------------------------------------------------
+6. PAIRED-COUNTERFACTUAL DESIGN
+--------------------------------------------------------------------------------
+First-class experimental objects, all seeds shared by construction:
+
+  P  vs P+dP     identical (W, seed, opponents, budget)   -- player twins
+  W  vs W+dW     identical player conditions              -- world twins
+  (P,P+dP) x (W,W+dW)  prospective factorial twins        -- interaction
+
+  ANTITHETIC PAIRS (+dP, -dP) are preregistered where the encoding permits
+  sign-symmetrization (red-team fix for generic perturbation asymmetry).
+  REFERENCE TWINS (the m identically-distributed contrasts per block) are
+  not an optimization -- they ARE the null (section 5).
+
+  INTERACTION HONESTY (red team): the factorial second difference carries
+  ~4x a cell's variance while interaction-only effects are second-order
+  (~eps_P x eps_W). Factorial probes are therefore budgeted at >= 4x the
+  block count of marginal probes, OR the standing blindness statement for
+  dP x dW below the achievable product is published. v0 publishes the
+  blindness statement (section 22); it does not pretend to power it lacks.
+
+--------------------------------------------------------------------------------
+7. MICROSTRUCTURE-VECTOR DESIGN
+--------------------------------------------------------------------------------
+Normative schema: schemas/microstructure_vector.schema.v0.json.
+  * versioned coordinates; extensible ONLY by new family versions (new
+    observable_family_hash); vectors across versions never pooled;
+  * per-block values retrievable via evidence refs; raw evidence behind
+    every coordinate; intervention manifests are themselves frozen,
+    replayable experimental objects;
+  * no composite score field can ever be added (schema comment is normative);
+  * multivariate claims use a PREREGISTERED PROJECTION DICTIONARY tested by
+    max-statistic over the dictionary under the joint block null -- a
+    data-chosen projection is recomputed inside every permutation or it is
+    invalid (red-team fix); coordinates are whitened against the null
+    cross-coordinate covariance estimated from identity-twin runs before
+    any "distributed effect" claim, and the effective rank of the effect is
+    reported beside its direction (red-team fix for one-degree-of-freedom
+    artifacts wearing three coordinate systems).
+
+--------------------------------------------------------------------------------
+8. CAPABILITY-VECTOR DEFINITION
+--------------------------------------------------------------------------------
+A CAPABILITY_VECTOR is a reproducible local direction in player/world
+configuration space associated with changing structured behavior relative to
+the appropriate null. Deliberately analogous to KillVectors, inverted. The
+name implies nothing about intelligence.
+
+Record content (weak_signal_record.schema.v0.json): the frozen perturbation
+AND the hash of the DISTRIBUTION it was drawn from; the Delta-mu direction;
+invariance profile; an explicit zero-outcome flag (an interesting direction
+may lose every game); replication status on fresh blocks.
+
+RED-TEAM HARDENING (was FATAL): a frozen-but-asymmetric perturbation
+distribution manufactures directions that every organism shows (a probe
+property, invariant across seeds/worlds/lineages precisely because it is not
+about the organism). THEREFORE: every capability vector is reported as a
+CONTRAST against the reference-ensemble response to the identical frozen
+distribution; perturbation supports are sign-symmetrized where the encoding
+permits; the perturbation GAUGE (coordinate scaling, support) is versioned
+inside the record; vectors across gauges are never compared. Curvature
+claims inherit all of this plus the frozen-fan discipline: no manual
+hill-climbing; the question is whether a hill exists BEFORE evolution is
+allowed to climb it.
+
+--------------------------------------------------------------------------------
+9. CAUSAL-DEPTH INSTRUMENT
+--------------------------------------------------------------------------------
+QUESTION: how far back in experience does current behavior actually depend on
+information? ANSWER BY INTERVENTION, not estimation -- the substrate replays.
+
+  PREREGISTERED PROTOCOL (open-loop; red-team FATAL resolved):
+    1. record one encounter: the player-facing observation stream (post-
+       permutation, post-corruption -- the stream the player actually saw)
+       and the action stream;
+    2. for each seeded anchor tick tau: flip ONE bit of one seeded
+       observation element at tau; re-run THE PLAYER ONLY against the
+       recorded stream; the world is never re-stepped, so world chaos
+       contributes exactly zero;
+    3. IMMEDIATE-ACTION STRATIFICATION: if the action at tau itself changed,
+       the event is a REACTIVITY (r0) count -- lag-0 use of the observation.
+       D(k) is computed ONLY on interventions whose immediate action was
+       unchanged: later divergence can then flow only through STORED
+       INTERNAL STATE. This kills the reactivity-x-recurrence confound that
+       made the draft non-identifiable.
+
+  EXACTNESS: an unused buffer yields D(k) = 0 exactly (capacity without use
+  is invisible, as it must be); an observation-blind player yields zero
+  everywhere (verified: dead-code twin agreement 20/20 exact, Q3).
+  FALSIFIER FOR ECHO-VS-USE: v0 uses the reactivity/depth stratification
+  plus the trajectory contrast; the full inert-channel falsifier requires
+  grammar-level causally-inert channels (engine request, section 24).
+  ATTENUATION HONESTY (red team): interventions on corrupted channels
+  realize with probability < 1; production logs realized interventions and
+  conditions estimates on them, and power statements are stratified by
+  world-family corruption/delay parameters. v0's pool is dominated by
+  moderate-corruption worlds; the stratified restatement is future work and
+  is listed as a blindness (section 22).
+
+--------------------------------------------------------------------------------
+10. INVARIANCE METHODOLOGY
+--------------------------------------------------------------------------------
+Magnitude is never enough. Every investigated signal carries an INVARIANCE
+PROFILE: one STABLE/UNSTABLE/UNTESTED/NOT_APPLICABLE entry per preregistered
+axis -- seeds, hosts, world siblings, player siblings, observation
+permutations, resource budgets, opponent mixtures, delayed replication,
+architecture ablations. RED-TEAM ADDITION (mandatory): replication across
+>= k UNRELATED FOUNDERS and >= k unrelated grammar families is an admission
+axis -- a kinship artifact replicates beautifully across everything else.
+A tiny stable effect outranks a huge fragile one for investigation priority.
+Losers are first-class: outcome success is never an admission requirement,
+and the Observatory runs across the cemetery. Especially the cemetery.
+
+--------------------------------------------------------------------------------
+11. PLANTED-POSITIVE TAXONOMY
+--------------------------------------------------------------------------------
+All plants ride on matched controls identical except the mechanism (same
+class, eps=0), so twin contrasts isolate exactly the planted effect.
+
+  P1  DELAYED-STATE (class A): action modulated by an observation element
+      stored LAG=6 ticks ago, with per-tick probability eps.
+      VARIANTS (red-team fix -- authored plants were basis-aligned):
+        concentrated (one locus, one lag, one sign)
+        DIFFUSE (three loci, lags {3,6,9}, sign-mixed across channels)
+        ON MEMORYFUL BASE (planted atop genuine lag-2 structure -- the
+        realistic case; also the honest-null false-positive column)
+  P2  INTERACTION-ONLY (dP x dW): mechanism active only under a world
+      feature. Underpowered at v0 luminosity by construction; blindness
+      published rather than papered over (sections 6, 22).
+  P3  STRUCTURE-NOT-OUTCOME (class B): action stream restructured at
+      near-constant economy; detected via mu4/mu5, near-invisible to mu1.
+  P4  GENEALOGICAL DRIFT (class C): lineage with eps growing 0.06/gen;
+      per-individual power ~0; the increments trend test is the target.
+  P5  SEALED HOLDOUT: spec hashed BEFORE detector code; late-onset,
+      current-observation, relevance-coupled -- an effect SHAPE no tuning
+      family shares. Evaluated once (attempt 2 = deterministic replay with
+      both preregistered thresholds reported). Results: section 13.
+  MISSING BY DESIGN DEBT (red team, accepted): a SANDBOX-EVOLVED plant class
+      (mechanism chosen by the substrate, not the author) and SIGN-REVERSING
+      plants (direction flips by world family). Both are calibration-
+      campaign requirements before any field deployment (section 24).
+
+--------------------------------------------------------------------------------
+12. ADVERSARIAL PSEUDO-SIGNAL TAXONOMY
+--------------------------------------------------------------------------------
+Nuisance processes that must NOT fire (or whose firing must be quantified):
+  N1 correlated seeds / duplicated blocks        -- CODED, Q6
+  N2 shared-world pseudo-replication             -- structurally immunized:
+     references live INSIDE each block, so world-level effects are common
+     to candidate and references by construction; argument recorded
+  N3 regression to the mean / winner's curse     -- CODED, Q6
+  N4 selection-funnel conditioning               -- design-level: the twin
+     construction cannot even express a survivor-vs-nonsurvivor comparison;
+     genealogical trends additionally require selection-matched neutral
+     controls in production (red-team FATAL, gate G7)
+  N5 operator mechanical coherence               -- CODED, Q2 (deliberately
+     instantiated via a damping operator on the abstention coordinate)
+  N6 host effects / scheduler bias               -- production battery (v0
+     is single-host; gate G8)
+  N7 denominator artifacts                       -- inherited two-statistic
+     rule + denominator floors from the World Foundry packet
+  RED-TEAM ADDITIONS, accepted into the battery spec: world-expansion
+  coupling of dW through seeded expansion; permutation-seed contamination
+  (v0 VERIFIED structurally: the corruption stream is a function of (world,
+  episode seed, slot) only -- twins face bit-identical corruption); yield-
+  window/horizon geometry (randomize window phase across blocks; exclude
+  boundary-adjacent anchors); Poisson activation bound and integer
+  quantization floor as LEAKAGE ALARMS (power above the bound means the
+  detector is keying on a side channel, and voids the run).
+
+--------------------------------------------------------------------------------
+13. HELD-OUT RESULTS (SEALED P5 -- REPORTED AS-IS)
+--------------------------------------------------------------------------------
+  eps = 0.30, L = 32 blocks, 12 replicate experiments:
+    coordinate mu2_area : flags 0/12   admits 0/12
+    coordinate mu2_r0   : flags 0/12   admits 0/12
+    coordinate mu4      : flags 1/12   admits 0/12
+
+  THE FROZEN V0 FAMILY IS BLIND TO THE SEALED CLASS AT BOTH THRESHOLDS.
+  This is the holdout doing its job. Post-hoc diagnosis (from world-side
+  facts; nothing was tuned): P5 activates only after horizon/2 of the
+  DECLARED world horizon, while many episodes TERMINATE EARLY (charge
+  exhaustion) and anchor ticks are placed in [4, T-14] of the LIVED episode
+  -- so the activation window frequently lies partly or wholly outside the
+  probed region. Late-onset, non-stationary effects are a real blindness of
+  v0 (section 22, B3). The fix (lived-episode-aware anchor placement and a
+  late-window coordinate) belongs to the NEXT family version; v0 does not
+  patch itself after peeking, and these numbers stand.
+
+--------------------------------------------------------------------------------
+14. POWER CURVES (THE CENTRAL DELIVERABLE)
+--------------------------------------------------------------------------------
+Recovery probability at the ADMISSION-grade anytime-valid threshold
+(wealth >= 20, alpha = 0.05); flag-grade (wealth >= 5) in the table.
+20 replicate experiments per point; block = 8 encounters (1 candidate twin +
+7 controls forming 3 reference contrasts); 6 interventional anchors per
+encounter; lag grid {2,6,12}.
+
+  DETECTION POWER (admission-grade), L = 32 blocks
+      1.00 |                                          C  D
+           |
+      0.75 |                              D
+           |
+      0.50 |                              C
+           |
+      0.25 |
+           |                  C,D
+      0.05 |      C,D
+      0.00 |  E---E-----------E-----------E-----------E---
+           +----+------------+-----------+-----------+----->  eps
+              0.05         0.10        0.20        0.50
+        C = concentrated plant   D = diffuse plant
+        E = same plant on a MEMORYFUL base (the realistic case)
+
+  FULL GRID (flag/admit), with the Poisson activation bound:
+    eps    L    concentrated   diffuse      memoryful-base   activ.bound
+    0.50   8    0.60/0.20      0.65/0.05    0.10/0.00        0.982
+    0.20   8    0.30/0.00      0.15/0.00    0.00/0.00        0.798
+    0.10   8    0.00/0.00      0.10/0.00    0.05/0.00        0.551
+    0.05   8    0.00/0.00      0.05/0.00    0.05/0.00        0.330
+    0.00   8    0.00/0.00      0.00/0.00    0.05/0.00        0.000
+    0.50  32    1.00/1.00      1.00/0.95    0.05/0.05        1.000
+    0.20  32    0.80/0.50      1.00/0.70    0.05/0.00        0.998
+    0.10  32    0.40/0.10      0.60/0.10    0.10/0.00        0.959
+    0.05  32    0.35/0.05      0.25/0.00    0.05/0.05        0.798
+    0.00  32    0.00/0.00      0.00/0.00    0.00/0.00        0.000
+
+  READINGS:
+  * Luminosity works: eps=0.20 admission power rises 0.00 -> 0.50-0.70 from
+    L=8 to L=32. ACCUMULATE LUMINOSITY is not a slogan; it is the measured
+    response surface.
+  * Diffuse tracks concentrated (0.70 vs 0.50 at eps=0.20/L=32): the
+    instrument is not narrowly tuned to single-locus plants.
+  * No measured power exceeds its activation bound anywhere: NO LEAKAGE
+    ALARMS. The detector is reading behavior, not side channels.
+  * THE E-COLUMN IS THE HEADLINE: against a base with genuine intrinsic
+    structure, power collapses to noise level at every tested eps. The
+    added lag-6 events drown in the base's own lag-2 divergence noise.
+    Sharpening the per-block statistic (lag-profile-shaped contrasts,
+    variance reduction within blocks) is the single highest-value
+    improvement to v0 -- listed for the calibration campaign, NOT patched
+    here after seeing these numbers.
+
+--------------------------------------------------------------------------------
+15. MINIMUM DETECTABLE EFFECTS (v0, AS MEASURED)
+--------------------------------------------------------------------------------
+  unstructured base, concentrated/diffuse:
+      eps ~ 0.20 at L=32 (power 0.5-0.7 admission-grade)
+      eps ~ 0.10 at L=32 (power ~0.1) -- investigation-grade only
+      BLIND below eps ~ 0.05 at L=32; below ~0.5 at L=8 for admission
+  structured (memoryful) base: BLIND at all tested eps at v0 luminosity
+  interaction-only (dP x dW): BLIND by construction at v0 luminosity
+      (published as a standing blindness, not attempted)
+  genealogical drift at 0.06/generation, 8 generations, L=8/generation:
+      trend fires 2/12, single-generation admits 2/12 -- the class-C
+      machinery is NOT yet demonstrably better than per-individual testing
+      at this scale; reported as underpowered, not as validated
+  late-onset non-stationary effects: BLIND (sealed holdout, section 13)
+  Extrapolation beyond the tested grid is forbidden across the integer
+  quantization floor: an effect below one quantum on every touched register
+  is EXACTLY zero in the trace, and no luminosity recovers it.
+
+--------------------------------------------------------------------------------
+16. FALSE-POSITIVE BEHAVIOR
+--------------------------------------------------------------------------------
+  * eps=0 columns: 0/20 admission false positives in every class at L=32;
+    flag-grade false positives 0.00-0.05 per cell against an anytime
+    nominal of <= 0.20 (wealth 5) and <= 0.05 (wealth 20). Conservative.
+  * honest-null column (memoryful base, eps=0): admit 0.00-0.05 -- the
+    nontrivial null with genuinely noisy ranks holds the bound.
+  * dead-code operator floor: 20/20 exact ties -- the pipeline's exact-null
+    calibration at full scale shows zero mechanical leakage.
+  * operator-coherence artifact (Q2): the REJECTED sign test fires
+    15/15; the conditional-rank construction fires 0/15.
+  * pseudo-replication (Q6/N1): naive 16x duplication admits 4/30 (13%);
+    block-id dedup admits 0/30.
+  * winner's curse (Q6/N3): top-5 stage-1 wealths [1.6,1.6,0.9,0.7,0.6]
+    regress on fresh blocks to [0.2,0.4,0.2,0.9,0.9] -- selection inflation
+    is real, measurable, and the two-stage design absorbs it.
+
+--------------------------------------------------------------------------------
+17. COMPUTE / LUMINOSITY REQUIREMENTS
+--------------------------------------------------------------------------------
+Measured on one commodity core (prototype, pure Python):
+  * one block = 8 encounters (<=128 ticks) + 48 player-only open-loop
+    replays: ~25-30 ms. The full qualification campaign (~50k encounters +
+    ~300k replays) ran in ~3.5 minutes.
+  * OPEN-LOOP REPLAY IS THE COST WIN: interventions never re-step the
+    world; a replay is O(horizon) player calls. Causal-depth profiling is
+    ~6x the base encounter cost, not ~50-100x.
+  * scaling law from the curves: admission power at fixed eps rises with L
+    roughly as P(events >= 4), events ~ Binomial(6L, eps/width) -- so the
+    luminosity to reach eps ~ 0.01 at admission grade is L ~ 2000-4000
+    blocks per candidate: ~30-60 core-seconds. R0.00001-scale eps values
+    demand ~10^6+ blocks per candidate -- hours per candidate, which is why
+    PRESERVATION IS PERMISSIVE, INVESTIGATION IS RATIONED, and luminosity
+    accumulates across preregistered axes instead of being re-bought.
+  * the Observatory's production budget is a FIXED preregistered slice of
+    fleet time (World Foundry reference-stream discipline applies).
+
+--------------------------------------------------------------------------------
+18. SFE STORAGE IMPLICATIONS (POLICY REVIEWED AGAINST R0.00001)
+--------------------------------------------------------------------------------
+THE CEMETERY IS THE PRODUCT now binds harder: a trace meaningless today may
+carry the first manifestation of a structure recognized months later.
+  * RAW canonical evidence: for integer worlds, obs+action streams are
+    ~2-20 KB/encounter compressed; 10^7 encounters ~ 0.2-2 TB. Affordable.
+  * REPLAY AMPLIFICATION (red-team math, accepted): storing every
+    counterfactual replay trace would multiply this 50-100x into PB range.
+    RESOLUTION -- exploit determinism instead of disk: an intervention
+    replay is fully specified by (manifest, seeds, flip_tick, flip_elem);
+    store the RESULT (divergence counts, digests) plus the intervention
+    manifest, re-derive full streams bit-exactly on demand, and keep full
+    raw streams for a permanently-retained random audit subset.
+  * NO COMPACTION of primary encounter records, ever. Any future lossy
+    representation must prove planted micro-signals remain recoverable AND
+    carry dual retention with periodic raw-vs-lossy divergence audits on
+    LIVE data, not only on plants (red team: the plants-only gate is a
+    self-licensing loophole).
+  * every derived artifact carries analysis-code + family + null version
+    hashes; ledger-anchored; verification cost is budgeted so the
+    integrity guarantee stays checkable (an unauditable guarantee is
+    theater).
+
+--------------------------------------------------------------------------------
+19. PEW CONTRACT
+--------------------------------------------------------------------------------
+Normative schema: schemas/weak_signal_record.schema.v0.json (extended per
+red team). PEW is the long-term memory for unresolved microstructure:
+weak-signal ID; evidence refs INCLUDING per-block identities with
+seed-derivation paths and the UNFLAGGED reference-twin cohort; null,
+detector, family, and expansion versions; effect vector with uncertainty;
+invariance profile; lineage context; probe-cohort denominator at flag time;
+the subject's flag-count percentile under the analytic null (so "flagged 7
+times" cannot masquerade as convergent evidence); funnel state; global
+alpha-wealth snapshot; append-only interpretations.
+
+RETROSPECTIVE DISCOVERY IS THE POINT -- hundreds of old unresolved anomalies
+sharing a structural direction must be FINDABLE. But (red-team FATALs):
+  * ONE GLOBAL ALPHA-WEALTH LEDGER for the Observatory's lifetime, debited
+    at family CREATION, whatever the family's origin (human, LLM, miner).
+    The family PROCESS is priced, not just each family. Cumulative family
+    count and expected false admissions publish with every admitted record.
+  * a mined family's fresh evidence must be DISJOINT (founder lineages,
+    grammar families, seed blocks) from every record cited in its
+    generation, or carry an explicit e-value haircut for overlap.
+  * an LLM-generated grouping is a PROPOSAL, never evidence; its provenance
+    (miner identity, prompt hash) rides in the family record; no LLM output
+    enters mu, any threshold, or any admission decision.
+  * detector/null/battery/sealed-family authors work from quantitative
+    fields only; each detector version records which PEW content its
+    authors accessed (the interpretation-marination leak is audited, since
+    it cannot be fully closed).
+SFE remains authoritative history. PEW owns interpretation. A republished
+interpretation never edits a record; it appends.
+
+--------------------------------------------------------------------------------
+20. RED-TEAM FINDINGS (REQUIRED REVIEW; ALL PRESERVED)
+--------------------------------------------------------------------------------
+Six dimensions, all UNSOUND_AS_STATED on the draft: 14 FATAL, 17 MAJOR.
+Complete structured findings in the session workflow archive; the FATALs:
+
+  F1  Sign-symmetry false under generic perturbation asymmetry (fragility
+      of a tuned point) ......................... FIXED: reference-ensemble
+      conditional ranks (built + demonstrated, Q2)
+  F2  Kinship breaks block exchangeability ...... SPECIFIED: founder x
+      grammar hierarchical units; unrelated-founder admission axis (G6)
+  F3  Selection funnel confounds genealogical trends ... SPECIFIED:
+      selection-matched neutral controls; increments not levels (built);
+      cohort-centering; founder-disjoint lineage blocks (G7)
+  F4  Unbounded family generation = global fishing license ... SPECIFIED:
+      global alpha-wealth ledger at family creation; disjointness (G9)
+  F5  D(k) non-identifiable (closed-loop chaos / open-loop off-policy) ...
+      FIXED: open-loop preregistered + immediate-action stratification
+      (built; exactness verified Q3)
+  F6  Yield-relevance falsifier conflates echo with structure-aimed-
+      elsewhere ... FIXED BY DEMOTION to descriptive; inert-channel
+      falsifier requires grammar addition (engine request)
+  F7  Genealogical drift/RTM nulls wrong (random-walk vs iid levels) ...
+      PARTIALLY BUILT (increments); rest specified (G7)
+  F8  Frozen perturbation distribution manufactures capability vectors ...
+      SPECIFIED: reference-ensemble contrast; gauge versioning (G10)
+  F9  Measurement backreaction on the ecology ... SPECIFIED: cloned
+      genomes, disjoint RNG namespaces, dedicated pool, standing
+      backreaction audit published with every admission (G11)
+  F10 PEW family multiplicity via LLM mining ... SPECIFIED as F4 + prompt-
+      hash provenance + miner-input exclusion defaults (G9)
+  F11 Authored plants basis-aligned with mu; power curves are upper bounds
+      ... PARTIALLY FIXED: diffuse class built; sandbox-evolved and sign-
+      reversing classes are calibration-campaign requirements (G12)
+  F12 Operator mechanical coherence + e-process = certified rounding
+      artifact ... FIXED: operator negative controls (Q2/Q3 built); e-bets
+      against the measured operator floor in production (G13)
+  F13 (=F1 via the D1 dimension) ... as F1
+  F14 Sign-incoherent (context-reversing) structure invisible; plants hide
+      the blindness ... SPECIFIED: stratified per-family statistic with
+      max-|stat| combining; sign-reversing plant class required (G12)
+  MAJORs (17) are folded through sections 2-19; every one is traceable in
+  the gate table or the blindness list. NOTHING WAS DISCARDED.
+
+--------------------------------------------------------------------------------
+21. GATE TABLE (WHAT IS PROVEN vs SPECIFIED vs OWED)
+--------------------------------------------------------------------------------
+  gate  claim                                    status v0
+  ----  ---------------------------------------  -----------------------
+  G1    anytime-valid accumulation from block 1  BUILT+DEMONSTRATED (Q1)
+  G2    exact-null pipeline calibration          BUILT+DEMONSTRATED (Q3)
+  G3    operator-coherence rejection             BUILT+DEMONSTRATED (Q2)
+  G4    pseudo-replication guard                 BUILT+DEMONSTRATED (Q6)
+  G5    winner's-curse absorption (two-stage)    BUILT+DEMONSTRATED (Q6)
+  G6    kinship-hierarchical exchangeable units  SPECIFIED, NOT EXERCISED
+  G7    selection-matched genealogical controls  SPECIFIED, NOT EXERCISED
+  G8    host-effect battery (multi-host)         OWED (v0 single-host)
+  G9    global family alpha-wealth ledger        SPECIFIED, NOT BUILT
+  G10   capability-vector reference contrast     SPECIFIED, NOT BUILT
+  G11   backreaction isolation + audit           SPECIFIED, NOT BUILT
+  G12   sandbox-evolved + sign-reversing plants  OWED (calibration)
+  G13   e-bets against measured operator floor   SPECIFIED (floor=0 in v0
+                                                 by Q3 exactness)
+  G14   external seal protocol (beacon-seeded    OWED (solo-seal caveat
+        plants, ledger-committed detector hash)   below)
+  ADMISSION CLAIMS ARE FORBIDDEN until G6-G14 close. v0 claims exactly
+  what Q1-Q7 demonstrate, nothing more.
+
+--------------------------------------------------------------------------------
+22. KNOWN BLINDNESSES (READ BEFORE BELIEVING ANYTHING ELSE)
+--------------------------------------------------------------------------------
+  B1  STRUCTURED BASES: near-zero power for micro-effects added to a player
+      with genuine intrinsic structure -- the realistic case. The honest
+      headline. Improvement path exists (profile-shaped contrasts) and is
+      deliberately NOT applied post hoc in this packet.
+  B2  INTERACTION-ONLY (dP x dW) effects below eps-product ~ 0.1: blind at
+      v0 luminosity; published, not attempted.
+  B3  LATE-ONSET / NON-STATIONARY effects: blind (sealed holdout, sec. 13)
+      -- activation windows outside the probed region of lived episodes.
+  B4  SIGN-REVERSING context-dependent effects: blind pending the
+      stratified statistic family (G12); v0's D-coordinates are unsigned
+      (divergence counts), which partially immunizes them, but signed
+      coordinates (outcome, mu4) carry the blindness.
+  B5  GENEALOGICAL class C: not demonstrably better than per-individual
+      testing at v0 scale (2/12 vs 2/12).
+  B6  SUB-QUANTUM effects: exactly invisible; no luminosity helps.
+  B7  EFFECTS EXPRESSED ONLY AGAINST OPPONENTS: v0 qualification is solo-
+      world only.
+  B8  SOLO-SEAL CAVEAT: P5's seal proves temporal ordering, not
+      informational independence -- the same mind wrote plants and
+      detector. The external protocol (ledger-committed detector hash,
+      beacon-seeded plant parameters, recorded attempts) is specified in
+      G14 and is required before any field admission is believed.
+  B9  Anchor placement excludes the first 4 and last ~14 ticks of lived
+      episodes; effects confined there are unprobed.
+
+--------------------------------------------------------------------------------
+23. EXACT REPRODUCTION
+--------------------------------------------------------------------------------
+  location   F:\Prometheus\SerendipityFoundry\worldfoundry  (repo: main)
+  run        python -m mhc.qualify        (from worldfoundry/, any host;
+             pure stdlib + wforge; single core; ~4 minutes)
+  output     mhc/QUALIFICATION_RESULTS_V0.txt  -- every number in sections
+             13-16 reproduces BIT-IDENTICALLY: all randomness derives from
+             named xorshift64 streams; the campaign is a pure function of
+             the code hashes below.
+  hashes     observable_family (frozen)  8a752400c8264a3f
+             mhc/players.py              bbf2d23f0caee30a
+             mhc/harness.py              5c25bee6ef0d2c94
+             mhc/stats.py                0ed3ee059adff0fe
+             mhc/qualify.py              d1435959379ff7eb
+             wforge/world.py (grammar)   31d40f0030d79d29
+  note       hashes are of the committed final files; git is authoritative.
+
+--------------------------------------------------------------------------------
+24. RECOMMENDATION FOR CALIBRATION
+--------------------------------------------------------------------------------
+SEQUENCE UNCHANGED from the standing World Foundry order: (1) Proteus
+sampler contract; (2) offline R12 earned admission; (3) grammar freeze;
+(4) THIS instrument's calibration items; (5) external review; (6) only then
+any campaign. Do not launch evolution from this packet.
+
+THE CALIBRATION ITEMS THIS PACKET ADDS, ranked:
+  C1  close B1: per-block variance reduction against structured bases
+      (lag-profile-shaped contrasts; more reference twins per block --
+      the m-references knob is a preregistered luminosity parameter).
+  C2  build G12's plant classes (sandbox-evolved; sign-reversing) and
+      restate ALL blindness bounds from the WORST class.
+  C3  implement G9 (global family wealth ledger) and G14 (external seal)
+      BEFORE any live PEW mining exists to tempt anyone.
+  C4  engine change requests: (a) causally-inert observation channels in
+      the grammar (the true echo falsifier); (b) lived-episode-aware
+      anchor placement; (c) disjoint RNG namespaces + cloned-genome
+      execution mode for Observatory sterility (G11).
+  C5  multi-host qualification (G8) on M1-M4 with the World Foundry's
+      determinism canary.
+
+--------------------------------------------------------------------------------
+25. QUESTIONS REQUIRING EXTERNAL ADJUDICATION
+--------------------------------------------------------------------------------
+  Q1  Is the conditional-rank-vs-reference-ensemble null the RIGHT null, or
+      does conditioning on references drawn from the same frozen operator
+      distribution hide effects that the operator itself carries? (We claim
+      that is a feature; a reviewer may disagree.)
+  Q2  Admission threshold: is anytime alpha=0.05 per candidate plus a
+      global family wealth ledger the right split of error budget, and
+      what should the ledger's initial wealth be?
+  Q3  Is the B1 blindness (structured bases) acceptable to proceed to
+      calibration, or must C1 close BEFORE the instrument touches any
+      evolved population at all?
+  Q4  The sealed-holdout verdict (blind to late-onset class): freeze v0 as
+      is and version the family (our position), or revise-and-reseal
+      before external review?
+  Q5  UNRESOLVED_WEAK_SIGNAL retention: literally forever, or with a
+      preregistered RETIRED_UNDERPOWERED horizon (we chose: retire state,
+      retain evidence forever)?
+  Q6  Who externally escrows the G14 seal, and is a public randomness
+      beacon acceptable to the program's security posture?
+  Q7  May the Observatory ever run on live (non-cloned) organisms if the
+      backreaction audit stays null, or is cloning non-negotiable?
+  Q8  Is the directive's "never solve multiplicity by raising preservation
+      thresholds" compatible with the red team's Simes-calibrated FLAG
+      rate (we implemented flags as consequence-free and kept preservation
+      universal -- does that honor the letter and the spirit)?
+
+================================================================================
+  FINAL PRINCIPLE
+  We did not find intelligence. We did not find reasoning. We did not find
+  an impressive organism. We built an instrument that can notice when zero
+  becomes not-quite-zero, measured where it cannot, wrote the blindnesses
+  in the front of the report, and left the hypothesis families frozen.
+
+  The first important discovery may be R0.00001. It may lose every game.
+  It may look like nothing. The instrument's job is to not look through it.
+
+  ACCUMULATE LUMINOSITY.
+================================================================================

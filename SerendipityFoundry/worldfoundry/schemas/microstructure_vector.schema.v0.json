@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "prometheus/incubator/worldfoundry/microstructure_vector/v0",
+  "title": "Microstructure Vector mu (v0)",
+  "description": "The versioned observation vector of the Microstructure Observatory. NEVER collapsed into one score -- aggregation destroys the geometry the instrument exists to measure. Every coordinate carries references to the raw evidence that produced it. The coordinate set is EXTENSIBLE by new family versions only (new observable_family_hash); coordinates are never silently redefined. PEW may later discover that a DIRECTION Delta-mu matters more than any coordinate -- the schema must make that retrospective join possible, which is why block ids and twin refs ride along.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "observable_family_hash", "detector_version", "coordinates", "evidence_refs"],
+  "properties": {
+    "schema_version": { "const": "worldfoundry.microstructure_vector.v0" },
+    "observable_family_hash": { "type": "string", "description": "hash of mhc/OBSERVABLE_FAMILY_V0.frozen.txt (or successor). Vectors under different hashes are never pooled." },
+    "detector_version": { "type": "string", "description": "content hash of the analysis code" },
+
+    "coordinates": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "V0 coordinates. Each value is the BLOCK-AGGREGATED statistic with its per-block values retrievable via evidence_refs. Integer or rational where possible; floats only in scientist-side analysis, never in world physics.",
+      "properties": {
+        "mu1_outcome_delta":        { "type": "object", "description": "per-channel paired outcome differences (charge, ticks, yields, actions, abstention)" },
+        "mu2_causal_depth":         { "type": "object", "description": "D(k) profile over frozen lag grid + D_max_lag + D_area" },
+        "mu3_rel_irr_separation":   { "type": "object", "description": "D_rel, D_irr, S = D_rel - D_irr" },
+        "mu4_trajectory_contrast":  { "type": "object", "description": "held-out order-2 hit-rate minus shuffled-control hit-rate (integer counts + ratio)" },
+        "mu5_twin_divergence":      { "type": "object", "description": "normalized Hamming distance + onset tick" },
+        "mu6_resource_delta":       { "type": "object", "description": "steps/magnitude/abstention structure differences" }
+      }
+    },
+
+    "block_count":  { "type": "integer", "description": "luminosity: number of independent (world x seed-block) units aggregated" },
+    "block_ids":    { "type": "array", "items": { "type": "string" } },
+
+    "evidence_refs": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "twin_set_refs": { "type": "array", "items": { "type": "string" } },
+        "per_block_values": { "type": "string", "description": "content address of the per-block coordinate table (raw, never downsampled)" },
+        "intervention_manifests": { "type": "array", "items": { "type": "string" }, "description": "replay-intervention manifests for mu2/mu3 -- each intervention is itself a frozen, replayable experimental object" }
+      },
+      "required": ["twin_set_refs", "per_block_values"]
+    },
+
+    "notes": { "type": "string" }
+  },
+
+  "$comment": "NON-GOALS: (a) no aggregate/composite score field may ever be added; (b) no semantic labels (planning, memory, attention) may name coordinates -- coordinate names describe the MEASUREMENT, not an interpretation; (c) no LLM output may populate any field."
+}
