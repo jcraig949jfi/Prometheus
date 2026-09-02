@@ -122,3 +122,35 @@ Service ops note: no watchdog yet; restart by hand after reboot
 - `roles/{Charon,CrossDomainCartographer,Harmonia,Koios,Ergon}/todo_20260901.md` (NEW)
 - `evidence_wiki/**` (NEW subsystem) + `.claude/skills/evidence-wiki/SKILL.md`
 - `roles/Mnemosyne/prompts/CHARTER_EVIDENCE_WIKI_V0_2026-09-01.txt` (NEW)
+
+---
+
+# Addendum 3 (2026-09-02): V1 QUALIFICATION CAMPAIGN EXECUTED
+
+V1 charter committed verbatim (sha256 52d4a256...) + PREREGISTRATION_V1
+frozen at a2898d196 BEFORE any campaign agent launched. Full adjudication in
+evidence_wiki/benchmarks/gates_v1.json; docs under evidence_wiki/docs/.
+
+Headline verdicts (none softened):
+- G2 PASS: 4 independent annotators, mean any-overlap 0.956; free-form
+  condition C converges 0.833 after blind normalization.
+- G3 PASS: CANONICAL_MECHANISM_LAYER_QUALIFIED - 44 annotator-defined
+  cross-agent pairs retrieved by annotator labels at MRR 0.451 vs 0.165 best
+  text baseline; Mnemosyne excluded from both sides. Same-model caveat
+  recorded.
+- G7 METABOLIZATION_NOT_DEMONSTRATED: 8/8 task ties at 4/4 - the frozen
+  checklist saturated; controls avoided every trap via repo search.
+  Instrument-ceiling diagnosis + V2 design recorded.
+- G8 PASS (phenomenon, not differential); G9 ADJUDICATED_NULL; G10 PASS on
+  genuine pair B-025 vs B-001; G11 PENDING_PROSPECTIVE (15 blinded cells,
+  sealed methods); G19 TENSOR_NOT_JUSTIFIED retained (147 coords).
+- G4 demonstrated with real need: cross_domain_bridge + 3 substrate terms
+  registered from convergent annotator demand.
+- Corpus: 81 -> 111 findings; held-out corpus ingested with CONSENSUS labels
+  (not the curator's); curator-community divergence 0.30-0.37 disclosed.
+- Ops: watchdog + autostart (G15 kill/restart PASS), per-machine tokens,
+  fixture namespace (G13), telemetry endpoint, write-path suite 16/16.
+- G14 PARTIAL: cross-host probes await M2/M3/M4 pulling the branch.
+
+23 subagents used: 3 harvest/1 heldout, 16 designers, 6 annotators + 1
+normalizer (numbers per notifications; harvest agents from 09-01).

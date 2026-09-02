@@ -1,0 +1,33 @@
+{
+  "adjudicated": "2026-09-02",
+  "prereg": "docs/PREREGISTRATION_V1.md (frozen at a2898d196); no gate softened post-hoc",
+  "gates": {
+    "G1_v0_integrity": {"verdict": "PASS", "evidence": "V0 files unchanged since c711c5bf6; V0 snapshot SN-1a257d803512 refactors to identical repro sha (benchmarks/g1_integrity_v1.json)"},
+    "G2_ontology_generalization": {"verdict": "PASS", "evidence": "M-A1 mean pairwise any-overlap 0.956 (threshold 0.50); substrate 0.767-0.967; failure 0.833-0.917; free-form condition C converges at 0.833 after blind normalization (ontology_v1.json)", "caveat": "annotators share a base model family; human/different-model pass is the V2 strengthening"},
+    "G3_ontology_non_circularity": {"verdict": "PASS", "evidence": "44 annotator-defined cross-agent pairs; B-annotator labels MRR 0.451 vs best text baseline 0.165 (>=2x required), hits@10 0.841 (>=0.6); Mnemosyne excluded from prediction and adjudication. CANONICAL_MECHANISM_LAYER_QUALIFIED at this scale"},
+    "G4_ontology_extensibility": {"verdict": "PASS", "evidence": "cross_domain_bridge v1 + 3 substrate terms introduced via versioned registry from convergent annotator demand; zero destructive migration; historical assignments untouched"},
+    "G5_provenance": {"verdict": "PASS", "evidence": "111/111 corpus evidence rows chain to source packets; write-path suite rejects provenance-deficient writes (tests/writepath_v1_results.json)"},
+    "G6_epistemic_separation": {"verdict": "PASS", "evidence": "derived-view packets refused as evidence (re-tested); TENSOR_INFERRED relations require artifact lineage; hypotheses cannot leave HYPOTHESIZED"},
+    "G7_metabolization": {"verdict": "METABOLIZATION_NOT_DEMONSTRATED", "evidence": "8/8 task ties at composite 4/4; W-L=0 vs preregistered >=5. Instrument-ceiling diagnosis: controls avoided every trap via repo search (metabolization_v1.json)"},
+    "G8_negative_evidence_reuse": {"verdict": "PASS", "evidence": "concrete changed design decisions traceable to retrieved negative evidence (e.g. T2-wiki truncation quarantine rule from C-efb1cf440e10; historical B-023->B-024 chain)", "caveat": "reuse demonstrated as a phenomenon in BOTH arms; a wiki-attributable DIFFERENTIAL was not shown (see G7)"},
+    "G9_duplication_failure_avoidance": {"verdict": "ADJUDICATED_NULL", "evidence": "D=0 and K=0 in all 16 arms; wiki access produced no measurable reduction because the floor was already zero at this designer strength"},
+    "G10_contradiction": {"verdict": "PASS", "evidence": "genuine pair B-025 vs B-001 registered (INFERRED, badged), classified APPARENT_UNDER_DIFFERING_CONDITIONS with differing dimensions listed; both claims + evidence preserved; no auto-retraction; surfaced via API and wiki"},
+    "G11_gap_prospectivity": {"verdict": "PENDING_PROSPECTIVE", "evidence": "15 blinded slate cells (marginal/uniform/freq-weighted) sealed by hash a11168818abb...; 60-day chain-tracking protocol frozen; no verdict claimed"},
+    "G12_no_self_fulfilling_gap_loop": {"verdict": "PASS", "evidence": "T3-wiki gap->experiment chain explicitly barred from counting as gap validation; hypotheses carry no evidence status; enforced in store + documented"},
+    "G13_fixture_isolation": {"verdict": "PASS", "evidence": "object_namespace + *_prod views; V0 fixtures and V1 test rows excluded from search/coords/telemetry; verified live (FIXTURE rows absent from production search)"},
+    "G14_distributed_operation": {"verdict": "PARTIAL", "evidence": "four-machine-identity read/write/provenance parity demonstrated over live HTTP on M1 (incl. concurrent single-record and idempotent retry); TRUE cross-host probes from M2/M3/M4 pending those machines pulling the branch", "required_verdict_if_final": "DISTRIBUTED_OPERATION_NOT_QUALIFIED (cross-host leg)"},
+    "G15_recovery": {"verdict": "PASS", "evidence": "deliberate taskkill -> watchdog restart -> health 200 in ~8s; Task Scheduler autostart registered"},
+    "G16_rebuildability": {"verdict": "PASS", "evidence": "snapshot sha stable across recompiles; cp artifact deleted and rebuilt to identical repro sha (V0 rebuild_G17 + V1 g1 check)"},
+    "G17_staleness": {"verdict": "PASS", "evidence": "every search/tensor/telemetry response carries canonical_revision + per-kind derived lag"},
+    "G18_usage_traceability": {"verdict": "PASS", "evidence": "8/8 wiki proposals map claim ids to design decisions; consultations logged in ew.read_log with machine/agent; ids resolvable to packets"},
+    "G19_tensor_honesty": {"verdict": "PASS (TENSOR_NOT_JUSTIFIED retained)", "evidence": "no promotion; learning-curve milestone recorded at 99 coords (density 0.117%, cp seed stability 0.554); G6 reopens at >=1000 real coordinates"},
+    "G20_metabolization_value": {"verdict": "PARTIAL", "evidence": "The REPRESENTATION is qualified beyond its curator (G2/G3): canonical labels beat text retrieval with independent annotators on a held-out corpus. The BEHAVIORAL differential (better designs because of wiki access) was not demonstrated against strong repo-searching controls (G7). Value beyond archival/search demonstrated for cross-agent linkage and auditable evidence lineage; not yet demonstrated for design outcomes."}
+  },
+  "explicit_negative_verdicts_used": ["METABOLIZATION_NOT_DEMONSTRATED", "TENSOR_NOT_JUSTIFIED (retained)", "PENDING_PROSPECTIVE (gap surfacing)", "ADJUDICATED_NULL (duplication delta)"],
+  "final_question_answers": {
+    "wiki_causes_useful_behavior_change_beyond_repo_search": "NOT DEMONSTRATED at V1 (instrument ceiling; V2 design specified)",
+    "mechanism_normalization_generalizes_beyond_curator": "YES at this scale (0.956 agreement; G3 retrieval 2.7x text baselines without curator labels; same-model caveat)",
+    "negative_evidence_retrieval_leads_to_genuine_reuse": "YES as phenomenon with concrete changed decisions; differential attribution to the wiki NOT shown",
+    "tensor_justified_at_current_scale": "NO (147 coordinates; unchanged verdict)"
+  }
+}
