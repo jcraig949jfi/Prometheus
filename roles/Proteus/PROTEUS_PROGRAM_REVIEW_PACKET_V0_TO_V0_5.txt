@@ -1,0 +1,405 @@
+PROTEUS / PLAYER FOUNDRY -- CONSOLIDATED PROGRAM REVIEW PACKET
+Passes V0 through V0.5.  2026-09-03.  origin/main at fe27309f4.
+
+For a reviewer who has not seen the originating conversation. Each pass has its
+own packet in the repository; this one is the program-level picture, the
+standing state, and the decisions now owed to review.
+
+Nothing in this packet asks you to approve anything. Two things are blocked on
+your ruling and they are named in section 8.
+
+====================================================================
+1. WHAT PROTEUS IS, AND WHAT IT IS NOT
+====================================================================
+
+Proteus supplies the PLAYER side of the Prometheus Incubator: a deterministic,
+seeded generator that manufactures large numbers of small, semantically sterile
+computational organisms so that a neutral operator can drop them into worlds the
+Foundry has never seen. Daedalus's Serendipity Foundry Engine and the World-0
+line supply the worlds. Proteus does not design worlds, does not read their
+internals, does not tune to them, and does not judge survivors.
+
+An organism is a content-addressed manifest: a genome of 32-bit words plus six
+bounded limits. The genome is copied to the front of a bounded tape and executed
+by a 25-opcode interpreter in which op = word mod 25, so EVERY word sequence is
+a valid program and no mutation can produce an illegal one. Genomes are data,
+never host code. There is no fitness anywhere in the Foundry.
+
+NOT CLAIMED, anywhere in six passes: that any organism reasons, is intelligent,
+is capable, is interesting, or that useful evolution will occur. No campaign has
+been launched. No world has been touched. No adapter exists.
+
+====================================================================
+2. THE ARC, IN ONE TABLE
+====================================================================
+
+  pass  what changed                    verdict
+  ----  ------------------------------  --------------------------------------
+  V0    built the Foundry               16/16 deliverables; A6 neutrality gate
+                                        FAILED (apparent genome-length drift)
+  V0.1  reweighted deletion/operand,    FAILED again
+        first tape-halving guard
+  V0.2  half-tape occupancy rule        FAILED again; no further revision
+  V0.3  removed the zeroing operator    NOT_QUALIFIED_DIRECTIONAL_MUTATION_
+        (the NOP content ratchet)       PRIOR_REMAINS -- a tape-size ratchet
+  V0.4  removed the half-tape rule      NOT_QUALIFIED_DIRECTIONAL_MUTATION_
+                                        PRIOR_REMAINS (one content coordinate)
+                                        + HISTORICAL_V0_LENGTH_FAILURE_
+                                          RECLASSIFIED_AS_JOINT_GEOMETRY
+  V0.5  NOTHING. Grammar frozen.        V0_4_CONTENT_DISCOVERY_NOT_REPLICATED
+                                        + STRUCTURAL_KERNEL_NONREVERSIBLE_
+                                          AUTHORED_CURRENT_DETECTED
+                                        + NO_REPLICATED_MARGINAL_DIRECTIONAL_
+                                          PRIOR_DETECTED
+
+Every verdict is preregistered, every failed run is preserved under its own
+identity, and no old verdict has ever been amended.
+
+====================================================================
+3. THE TWO FINDINGS THAT MATTER
+====================================================================
+
+3.1  THE LENGTH FAILURE THAT DROVE THREE REVISIONS WAS GEOMETRY, NOT A PRIOR.
+
+V0, V0.1 and V0.2 each measured genome-length drift against a one-dimensional
+criterion with no geometry control, and each failed. V0.4 built NC5, a joint
+walk over the coupled (genome_length, tape_words) space that is symmetric BY
+CONSTRUCTION and therefore has no mutation prior at all. NC5 reproduces the old
+effect almost exactly:
+
+    instructions per generation      cohort 8    cohort 128
+    grammar v0                        +0.0707      -0.0234
+    grammar v0.1                      +0.0412      -0.0280
+    grammar v0.2                      +0.0328      -0.0136
+    grammar v0.4                      +0.0270      -0.0168
+    NC5 (symmetric, no prior)         +0.0408      -0.0159
+
+Three grammar revisions chased the shape of the state space. The second of them
+introduced a REAL ratchet in the tape coordinate that took a whole further pass
+to find and remove. The old verdicts were correct under the rules they declared;
+those rules simply could not distinguish geometry from prior.
+
+Cost of the missing control: two grammar revisions and one genuine defect.
+
+3.2  THE MUTATION KERNEL IS A NONEQUILIBRIUM MARKOV PROCESS.
+
+V0.4 catalogued 16,172 asymmetric directed-edge pairs in the length kernel and
+could not show they were dynamically active. V0.5 measured the structural kernel
+from the LIVE operator over 124 enumerated states, 50,000 mutations per state,
+and solved it:
+
+    connected pairs                        506
+    total |J|                         2.84e-02      J = pi_i P_ij - pi_j P_ji
+    max |J|                           2.45e-04
+    Monte-Carlo noise floor           4.16e-05      (max |J| between two
+                                                     independent samples of the
+                                                     SAME kernel)
+    pairs above that floor                 166
+    stationary entropy production     9.97e-03 nats/step, 1,012 terms
+    one-way edges                            0      (so sigma is finite)
+    top 3-cycle affinity                 -1.21 nats (Kolmogorov violated)
+    reversible reference max |J|      2.17e-19      (the control behaves)
+
+Attribution of the 166 material pairs: OPERATOR_WEIGHTING 165,
+OPERATOR_IMPLEMENTATION 1, PUBLISHED_BOUNDARY 0, MANIFEST_VALIDITY_GEOMETRY 0.
+The geometry that V0.4 spent an entire pass isolating contributes nothing above
+the noise floor. The current is authored: it comes from operator weights that
+Proteus chose.
+
+AND IT DOES NOT MOVE THE MARGINALS. Two million matched steps under the active
+kernel and under a detailed-balance reference on the same support:
+
+    mean genome length          21.927   vs   21.863
+    occupancy TV between them            0.0198
+    sampling floor at that horizon      ~0.019
+    length moves up/down ratio   0.932   vs    1.003   (replicated, two seeds)
+
+So four passes of marginal drift testing could not see this, and one pass of
+equilibrium analysis found it immediately. Zero marginal drift is a much weaker
+condition than detailed balance, and the Foundry satisfies the first and fails
+the second.
+
+====================================================================
+4. WHAT IS QUALIFIED, WHAT IS NOT
+====================================================================
+
+PROVISIONALLY ACCEPTED by external review after V0.3, and unchanged since:
+the VM, the manifest model, replay machinery, the quarantine boundary, the
+world firewall, lineage machinery, and the diversity instruments.
+
+ESTABLISHED SINCE:
+
+  * the V0.2 half-tape asymmetry is gone, proved exhaustively over all 2,044
+    valid structural states: cases where a FITTING shrink was blocked went from
+    510 to 0, and every tape edge is reversible to 1e-15;
+  * no structural coordinate exceeds the joint geometry null at any cohort,
+    on two independent seeds;
+  * the behavioural space does not collapse under neutral diffusion to 10,000
+    mutation events: occupancy concentration matches the geometry reference
+    while cumulative unique phenotype classes keep rising;
+  * phenotype structure is stable across six independently seeded probe
+    ensembles (Jaccard 0.9886 to 0.9993 on the same-class relation);
+  * zero of 350 (coordinate x cohort) cells survive the global multiplicity
+    family on a fresh seed.
+
+NOT QUALIFIED:
+
+  * the mutation kernel is not reversible and carries authored current (3.2);
+  * the full-space kernel analysis is UNRESOLVED -- see 6.4.
+
+====================================================================
+5. THE DISCOVERY THAT DIED, AND THE ONE THAT MIGHT BE NEXT
+====================================================================
+
+V0.4 declared exactly one effect: the halt/yield opcode-class share at cohort
+128, delta -0.0191 against its length-matched null, z 3.53. V0.4's own packet
+said it did not replicate across cohorts, was absent against the second null,
+and had no mechanism -- and declared it anyway, because the preregistered rule
+fired and waiving it would have been a post-hoc rescue.
+
+V0.5 gave it one independent confirmatory test with every parameter frozen
+before the seed existed. Result:
+
+    V0.4   delta -0.0191   z 3.53
+    V0.5   delta +0.0118   95% CI [-0.0008, +0.0236]   z 1.90
+           one-sided p in the claimed direction = 0.9716
+
+    V0_4_CONTENT_DISCOVERY_NOT_REPLICATED
+
+The sign reversed. The effect did not weaken; it inverted. The discovery is
+retained in the record, not erased.
+
+STANDING CANDIDATE, DELIBERATELY NOT DECLARED AND NOT CHASED: genome_length at
+cohort 256 against NC5 is negative on both independent seeds -- V0.4 -6.53 (not
+significant), V0.5 -12.80 with interval [-19.99, -5.86] and z 3.55. It survives
+within-cohort correction and does NOT survive the preregistered global family.
+Same sign twice, growing magnitude, one cohort. That is exactly the shape
+halt/yield had before it failed. No extra seed was run to chase it, because
+choosing a test after seeing the result it would rescue is the failure mode this
+whole sequence exists to prevent.
+
+====================================================================
+6. INSTRUMENT FAILURE LEDGER -- EVERY DEFECT PROTEUS FOUND IN ITSELF
+====================================================================
+
+This is the most useful section for a reviewer. Across six passes the
+instruments have been wrong more often than the Foundry has.
+
+6.1  V0: "subtraction mass exceeds addition mass" was true of operator WEIGHTS
+     (0.13 vs 0.12) and false of expected INSTRUCTIONS (0.25 removed vs 0.30
+     added), because one operator deletes a single instruction while the others
+     move about 2.5. The neutrality gate caught it. It was the only confident
+     design claim made before measuring, and it was wrong on the quantity that
+     mattered.
+
+6.2  V0: the quarantine audit reported PASS on a tree that did not yet contain
+     export.py. The V0 packet's "string layer PASS" was true of the code when it
+     ran and false of the code it shipped. Closed in V0.4 by an atomic
+     audit-identity stamp binding a per-file digest of every covered source;
+     staleness was demonstrated, not asserted.
+
+6.3  V0.3: the Holm correction was inert. It compared a z-equivalent against a
+     RATIO of normal quantiles instead of the quantile, and had no step-down
+     stop, making the "corrected" test WEAKER than simply excluding zero. It
+     would have published twenty surviving coordinates; the corrected version
+     published one. Fixed, then given frozen fixtures and a second independent
+     implementation that aborts on disagreement.
+
+6.4  V0.3: content coordinates were preregistered against a null that FREEZES
+     genome length, which is a wrong-population comparison wherever length
+     changes. Six coordinate declarations at one cohort evaporated under the
+     length-matched null.
+
+6.5  V0.4: the analytic structural kernel used by NC5 differs from the kernel
+     measured from the live operator by median total variation 0.0162 and
+     maximum 0.1661. Causes: one operator was modelled as always firing when it
+     fires conditionally, and the k-clamping inside deletion and duplication was
+     not modelled at all. This qualifies V0.4's NC5-based claims. It does not
+     overturn V0.4's tape-symmetry proof, which was exhaustive over the real
+     rule rather than the model.
+
+6.6  V0.5: cross-runtime replay is no longer byte-identical. CPython 3.12 on
+     Windows and on Linux agree exactly; CPython 3.11 differs at 1e-14 relative
+     in the stationary distribution. Cause demonstrated rather than guessed:
+     CPython 3.12 changed the builtin sum() to compensated summation, and the
+     stationary solve normalises with sum(). Twelve orders of magnitude below
+     the measurement noise, changes no conclusion -- but no numerical replay
+     tolerance was preregistered, so it is reported, not adjudicated.
+
+6.7  V0.5: the preregistration made two of the three kernel classifications
+     non-exclusive. Both fit the data. Resolved toward the stronger statement so
+     the attribution finding would not be suppressed, and the defect disclosed.
+
+6.8  V0.5: THE PREREGISTERED FULL-SPACE SENSITIVITY ARM FAILED ITS OWN FROZEN
+     TOLERANCE. At 300 samples per state over 2,044 states, two independent
+     samples of the same kernel differ by median TV 0.0667 against a frozen
+     limit of 0.02, and the stationary solve hit its iteration cap without
+     converging. So the question "is the primary current a truncation artifact"
+     is INCONCLUSIVE, not answered. Partial support against the artifact
+     reading: the full space is closed with zero escaped mass, the primary
+     space's escaped mass is at most 0.0075 per state, the largest currents are
+     interior length edges far from any boundary, and the full-space attribution
+     agrees qualitatively (8,085 of 9,087 pairs OPERATOR_WEIGHTING, cycle
+     affinities to -2.54 nats). A properly powered full-space run needs roughly
+     two orders of magnitude more sampling than this pass could afford.
+
+====================================================================
+7. METHOD CHANGES THAT PAID FOR THEMSELVES
+====================================================================
+
+  * A GEOMETRY NULL THAT IS SYMMETRIC BY CONSTRUCTION. A symmetrized reflected
+    walk drifts +18 instructions off the minimum bound and -19.6 off the cap
+    with a flat interior. Before that control existed, three passes read those
+    walls as mutation priors.
+
+  * A JOINT NULL OVER COUPLED COORDINATES. A genome at a tape boundary does not
+    live in the same mutation geometry as one with spare capacity. The
+    single-coordinate null could never have shown that the tape coordinate
+    drifts in OPPOSITE directions at the two ends purely from geometry.
+
+  * GLOBAL MULTIPLICITY OVER (coordinate x cohort). V0.4 corrected within
+    cohorts while the decision searched across both. On the V0.5 data, two cells
+    would have been declared under the old architecture and are rejected by the
+    correct family -- caught prospectively, on live data, in the first pass
+    after the change.
+
+  * MEASURING THE KERNEL FROM THE LIVE OPERATOR INSTEAD OF MODELLING IT. That
+    is what exposed 6.5, and it is why the V0.5 current numbers do not inherit a
+    model/code gap.
+
+  * TESTING DETAILED BALANCE RATHER THAN DRIFT. The single highest-yield change
+    in the sequence. It found in one pass what four passes of marginal testing
+    could not see.
+
+====================================================================
+8. DECISIONS OWED TO EXTERNAL REVIEW
+====================================================================
+
+D1  DOES AUTHORED PROBABILITY CURRENT VIOLATE THE FOUNDRY NEUTRALITY
+    REQUIREMENT? The V0.5 brief reserved this explicitly and no hard rule was
+    frozen before measurement, so Proteus cannot decide it. The facts: detailed
+    balance fails; the current is attributable to operator weighting rather than
+    geometry; it does not move coarse structural occupancy at two million
+    neutral steps. Options as Proteus sees them, with no recommendation offered
+    beyond what the numbers support:
+      (a) rule that nonequilibrium mutation physics is acceptable, state the
+          measured magnitude as a permanent characterised property, and proceed;
+      (b) authorise a repair -- Metropolis correction, reverse operators, or
+          weight rebalancing -- each of which is a new grammar and a new
+          preregistration, and each of which has, in this sequence's history, a
+          real chance of relocating the defect rather than removing it;
+      (c) require the properly powered full-space run (6.8) before ruling.
+
+D2  SHOULD THE QUALIFICATION RULE BE AMENDED FOR V0.6? V0.4 fired on a single
+    cohort of five under within-cohort correction. V0.5 replaced that with a
+    global family and nothing survived. The open question is not this pass's
+    number but the rule: whether confirmation should additionally require
+    agreement between primary and sensitivity nulls, or replication across
+    cohorts. Proteus deliberately did not create either rule retrospectively.
+
+D3  A NUMERICAL REPLAY TOLERANCE. None was preregistered; byte-identity is no
+    longer achievable across CPython minor versions (6.6). One should be frozen
+    before any pass that claims replay.
+
+D4  THE STANDING PRECONDITIONS, UNCHANGED SINCE V0. A neutral experiment
+    operator has never been assigned, and without one no qualification can run
+    without a firewall breach by construction. No machine is assigned. The four
+    SFE integration questions filed for Daedalus are unanswered. The Evidence
+    Wiki client is not on main, so the PEW export is specified but unexercised.
+
+====================================================================
+9. CLAIMS AND CEILINGS
+====================================================================
+
+C1  The mutation kernel is not reversible; currents exceed the Monte-Carlo floor
+    on 166 of 506 pairs; entropy production is 9.97e-03 nats/step.
+    CEILING: a 124-state truncated space, content marginalised over uniform
+    genomes. BREAKS IF: a powered full-space run collapses the currents toward
+    the floor.
+
+C2  The material current is authored, not geometric: 165 of 166 above-floor
+    pairs are OPERATOR_WEIGHTING.
+    CEILING: the attribution rule is Proteus's own and is heuristic at the
+    margins.
+
+C3  The current does not materially change coarse structural occupancy at two
+    million neutral steps.
+    CEILING: coarse marginals only, neutral dynamics only, NO SELECTION. This
+    says nothing about behaviour under selection, and Proteus has no instrument
+    that would.
+
+C4  The historical V0 length failure is joint geometry, not a grammar prior.
+    CEILING: shown at the cohorts the old runs reported; rests on NC5, whose
+    analytic kernel is now known to be imperfect (6.5).
+
+C5  The V0.4 halt/yield discovery did not replicate.
+    CEILING: one confirmatory dataset, as preregistered. Non-replication is not
+    proof of absence.
+
+C6  Zero of 350 cells survive the global family on a fresh seed.
+    CEILING: one seed. Raw exceedances ran 7.7% against 5% expected, which is
+    reported and not interpreted.
+
+====================================================================
+10. REPRODUCTION AND IDENTITIES
+====================================================================
+
+Everything is on origin/main at fe27309f4. Hash committed files as blobs:
+    git show origin/main:<path> | sha256sum
+
+  briefs (all committed verbatim, hashed at issuance)
+    V0            cacf303f3a997e21...      V0 addendum   4a9fe0cb33fb88ac...
+    V0.3          78ed8284294b33ab...      V0.4          da514fda91630c07...
+    V0.5          59314e9da89a1a3c...
+
+  grammars (each failed run preserved under its own identity)
+    v0    da7e2ccb4b63db0e...   v0.1  973c7c108c1ec56b...
+    v0.2  779da90d173fdd05...   v0.3  44ae7f598660a523...
+    v0.4  5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832
+
+  preregistrations
+    V0.3  075a40d965fe7bcf...   V0.4  572cc6342b4fd50d...
+    V0.5  1ed728ac2a04decd...
+
+  runtime 73f110e21b9df879...   affordance table f1607ee8be680acc...
+
+  commands
+    python -m pytest proteus/tests -q            # 57 pass
+    python proteus/audits/audit_identity.py verify
+    python proteus/v0_5/run_crucible.py V0_5     # and NC5/NC1B/NC2/NC3/NC4
+    python proteus/v0_5/run_adjudicate.py
+    python proteus/v0_5/run_kernel.py primary
+    python proteus/v0_5/run_crosshost.py out.json
+
+  per-pass packets
+    roles/Proteus/REVIEW_PACKET_PROTEUS_V0_POSTBUILD_2026-09-02.txt
+    roles/Proteus/PROTEUS_V0_3_NEUTRALITY_CRUCIBLE_REVIEW_PACKET.txt
+    roles/Proteus/PROTEUS_V0_4_REVERSIBILITY_CRUCIBLE_REVIEW_PACKET.txt
+    roles/Proteus/PROTEUS_V0_5_EQUILIBRIUM_CONFIRMATION_REVIEW_PACKET.txt
+
+====================================================================
+11. COMPUTE
+====================================================================
+
+Every pass, single-core pure Python on one machine. No GPU, no LLM, no API, no
+spend. The heaviest single measurement in the sequence is the V0.5 primary
+kernel: 12.4 million live mutations, 960 seconds. Total storage added across six
+passes is a few megabytes of gzipped rows.
+
+====================================================================
+12. WHAT PROTEUS WILL NOT DO WITHOUT AUTHORISATION
+====================================================================
+
+Launch a campaign. Touch a world or read its internals. Build an adapter.
+Invent selection or fitness. Repair a failed result. Run additional seeds to
+rescue a dying effect. Change the grammar. Act as its own neutral operator.
+
+The Foundry is not yet a neutral universe. It is closer than it was: the content
+ratchet is gone, the tape ratchet is gone by proof, the length failure turned
+out to be the shape of the space, no marginal directional prior replicates, and
+the behavioural space does not collapse. What remains is a probability current
+that no observable used in the first four passes could see, put there by weights
+Proteus chose, and whose consequence for a selection experiment is unknown and
+not measurable with anything built so far.
+
+-- Proteus, consolidated program review packet, 2026-09-03. Stopped.
