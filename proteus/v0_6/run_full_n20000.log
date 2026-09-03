@@ -1,0 +1,17 @@
+V0.6 full run | 2044 states | n=20,000/state | grammar 5043f5e11a72
+  K_A measured (5514s)
+  K_B measured (11101s)
+  K_A/K_B row TV: median 0.00800 p95 0.01265 max 0.01860 -> gate PASS | edge-presence diffs 0
+  stationary power: 1197600 iters residual 1.012e-14 (13634s)
+  stationary gauss-seidel: 200000 iters residual 7.024e-15 (14410s)
+  solver agreement power vs GS: L1 1.794e-10 | vs empirical L1 8.492e-02 -> gate PASS
+  currents K_A: total|J| 3.4945e-02 max 3.7432e-05 | K_B total 3.5181e-02 | noise p99 5.546e-06 thr 5.546e-06 | material 1494
+  reference additive max|J| 2.71e-20 sigma 1.75e-18 | metropolis max|J| 2.71e-20 -> PASS
+  counterfactual length_balanced            total|J| 1.9970e-02 sigma 5.9125e-03
+  counterfactual no_unreachable_removal     total|J| 8.5667e-03 sigma 1.4418e-03
+  counterfactual no_config_perturbation     total|J| 3.8631e-02 sigma 1.5853e-02
+  counterfactual insertion_deletion_equal   total|J| 3.3280e-02 sigma 1.2458e-02
+  trajectories 2,000,000: active meanL 137.662 log2T 10.324 | reference meanL 125.783 log2T 10.199
+  sigma K_A 1.400977e-02 (K_B 1.408631e-02) one-way 0
+  cycles: 7063 basis, max|affinity| 3.0007
+wrote RESULT_FULL.json (19967s)
