@@ -1,0 +1,373 @@
+Page  20 
+ 
+Supplementary Materials 
+ 
+(a)  Mean and relational effects of interaction terms 
+In the developmental system we model, when all inte raction terms, B, are zero, changes to G have an 
+effect on the mean value of the phenotypic traits ( including their sign) but not their correlation; he nce we 
+refer to G as the ‘direct’ effects of the genotype on phenoty pic characters. Conversely, for a distribution 
+of G elements each with a mean of zero, the effect of B is to alter the correlation of phenotypic traits b ut 
+not their mean. However, as expected for general ep istatic models (and in contrast to statistical mode ls 
+that keep interaction terms and mean effects separa te), whenever trait values are non-zero a change to  an 
+interaction term can have both a ‘mean effect’ as w ell as a ‘relational effect’. This is important bec ause 
+interaction coefficients that have no mean effect on phenotype can only be selected because of their effect 
+on the shape of the distribution of phenotypes they  produce (Pavlicev, Cheverud & Wagner 2011), but 
+interaction coefficients that also have a mean effe ct on phenotypes can be selected because of their m ean 
+effect but nonetheless have a (systematically related) effect on the shape of the distribution of phenotypes.  
+(b)  Hill-climbing model of selection  
+The evolution of the population is modelled by assuming the introduction of a mutant genotype, ′ and/or  
+′, being small mutations of ̅ and  , (in single copy number in a large population). Th is genotypic 
+mutation uniquely determines a mutant phenotype, ∗′. In general, the probability of this mutant fixing in 
+the population is proportional to the selective adv antage of that mutation. But, here we aim to provid e a 
+phenomenological model of the evolution of developm ent and as such it is the direction of selection, 
+rather than quantified rates, that are important (r ates will be sensitive to parameters such as magnit ude of 
+selection coefficients, mutation probabilities and the number of genetic loci contributing to a quanti tative 
+trait, etc. which will be case specific). According ly, it is sufficient for our purposes to assume a ‘ hill-
+climbing’ model of selection (e.g., Kashtan et al. 2009), i.e., that the selection coefficient is suff iciently 
+large that beneficial mutations fix and deleterious  mutations do not. In general, mutation-rate-limite d 
+evolution can have qualitatively different dynamic properties to selection-intensity-limited evolution; but 
+in all our experiments we find that the direction o f selection using the former agrees with analysis u sing 
+the latter (Pavlicev, Cheverud & Wagner (2011), and  the stochastic nature of selection that would occu r 
+with small selection coefficients  does not add to the clarity of exposition. Thus, if  the mutant genotype is 
+beneficial (i.e., fitness (develop (′,	′,T )) > fitness (develop (̅, ,T )), this becomes the mean genotype of 
+the population (̅(t+1)= 	′,	 (t+1) =′ ), otherwise the loss of the mutant from the popula tion leaves the 
+mean genotype of the population unchanged. Only the fitness rankings of phenotypes (not the magnitudes 
+of the fitnesses) are relevant for a hill-climbing selection model.  
+(c)  Effect of evolved interaction terms on the shape of phenotypic distributions 
+ 
+-0.02 0 0.02 
+-0.02 
+-0.01 
+0
+0.01 
+0.02 
+gene 1 
+gene 2 
+-0.02 0 0.02 
+-0.02 
+-0.01 
+0
+0.01 
+0.02 
+gene 3 
+gene 4 
+-0.02 0 0.02 
+-0.02 
+-0.01 
+0
+0.01 
+0.02 
+gene 2 
+gene 3 
+-0.02 0 0.02 
+-0.02 
+-0.01 
+0
+0.01 
+0.02 
+gene 5 
+gene 6 
+a) b) c) d) 
+ 
+Fig. S1 : The effect of evolved regulatory interactions (af ter 10,000 generations) on the correlation of expre ssion 
+(Experiment 1, target, S = ++---+-+ ); for a pair of genes that are selected together  S12 = ++ (a), S34 = -- (b), or 
+selected contrariwise, S23 = +- (c), S56 = -+ (d). Each point in each distribution shows the  expression levels of two 
+genes from a phenotype developed using the evolved regulatory interactions. Each phenotype is develope d from a 
+random G drawn from a uniform distribution. 
+Page  21 
+ 
+Figure S1 confirms that the correlation of characte rs in the phenotypic distribution produced by the 
+evolved developmental interactions agrees with the direction of selection experienced on those two 
+characters in the selective environment. 
+(d)  The cumulative effect of many small mutations under directional selection. 
+Under directional  selection, the cumulative effect of a large number  of small mutations is equivalent to 
+the effect of a small number of large mutations whe n controlling for variance. When the time for G to 
+stabilise after a change in environment is small co mpared to the number of generations after it stabil ises 
+before the next change in environment, we can there fore model the effect of natural selection in any o ne 
+selective environment as follows. For each element of B (in random order without replacement) we test 
+for both positive and negative directional selectio n by applying hill-climbing selection on two mutati ons, 
+one drawn from a distribution with mean q, the other with mean – q, each with standard deviation . 
+Under directional selection, at most one of these m utations will be retained by selection. Experiments  3 
+and 4 use q=0.02 and q=0.005, respectively. In both cases we use a standard deviation =0.01 q.  
+A standard deviation of 1% of the mean simulates th e cumulative effect of 10 
+4 discrete mutations 
+(each with equal probability of being positive or n egative) occurring before each change in environmen t 
+(coming from  ==>1 − 	,  = 0.5	). Naturally, there is a trade-off in these experim ents between 
+how many mutations occur before each change in envi ronment and how many changes in environment 
+are simulated in total. If the latter is increased,  the former can be decreased, but this requires sim ulating 
+more mutation-selection cycles. Here we find that 40 changes in environment is sufficient for Experiment 
+3 whereas Experiment 4 uses lower mutation magnitud es and 800 changes in environment (on average, 
+100 presentations of each training pattern). This l ow mutation rate enables the evolution of the 16 
+phenotypic attractors without ‘over-fitting’ to the 8 target patterns (see section (f)).   
+(e)  Developmental switching – abrupt change in phenotype from linear change in genotype 
+ 
+Fig. S2: Quantified detail of Fig.3.f. – match of G and adult phenotypes to targets S1  and S2 . 
+In an experiment where G varies systematically from S1  to S2  in steps of 5% (Fig. 3.f), note that as G 
+changes slowly from S1  to S2  the adult phenotype switches abruptly from S1  to S2 . 
+ 
+(f)  Generalisation and evolvability 
+Any kind of canalisation seems to oppose the possib ility that a developmental representation can be 
+primed to produce phenotypic patterns that are genu inely new. However evolved correlations – or more 
+exactly, the restrained application of evolved corr elations – can facilitate evolutionary novelty in a  
+quantifiable sense. Specifically, we can use knowle dge of neural network learning to understand the 
+affordances and limitations of enhanced evolvability to produce outputs that are new. Here we equate t he 
+selective environment that the evolving GRN has alr eady been exposed to with the training set  of the 
+learning neural network. High fitness in these selective environments corresponds to high performance on 
+the training set. Whereas, the ability to evolve hi gh fitness phenotypes in new  selective environments is 
+0 10 20 30 40 50 60 70 80 90 100 
+200 
+400 
+600 
+800 
+1000 
+1200 
+1400 
+1600 
+characters matching target 
+G varies from S1 to S2 (%) 
+ 
+ 
+G match to S1 
+Adult match to S1 
+Adult match to S2 
+Page  22 
+ 
+analogous to the ability of a well-trained neural n etwork to generalise  to an unseen test set . For example, 
+in Experiment 3, the ‘training set’, contains 8 patterns but we observe that the network is predispose d to 
+create 16 phenotypic patterns, not just these 8.  
+ This type of generalisation is not to be taken for  granted, however, even when the training set contains 
+the structural patterns that are representative of the general class. The problem is that the training  set, 
+being only a subset of the general class, necessari ly also contains other structural patterns that you  do not 
+want the system to learn if it is to provide good g eneralisation. A learner may in some cases learn th e 
+specific patterns of the training set and thereby f ail to generalise to the test set. This is called over-fitting  
+(Rumelhart et al. 1986). In general, the difficult part of machine learning is not the task of getting  high 
+performance on the training set but the task of get ting good generalisation on the test set. The issue  is 
+exacerbated if the model space is particularly ‘exp ressive’ or high-dimensional (as is necessary for 
+complex learning tasks). In this case the model spa ce will be highly under-constrained  – meaning that 
+there are many ways to represent the training set p erfectly. Unfortunately, most of these solutions do  not 
+generalise well; so the task of finding general sol utions is all the more difficult when the model spa ce is 
+high-dimensional.  
+ Note that any kind of generalisation is equivalent  to a ‘failure’ of a memory to represent only  the 
+training set. One solution to over-fitting is there fore to limit the complexity of the model space suc h that 
+the learning system can only attain high fitness on  the training set by finding general solutions; in other 
+words, such that it does not have the capacity to l earn the patterns by rote. In neural network models , 
+model complexity is sometimes controlled by adding a penalty for each neural connection that is used 
+(O’Reilly & Munakata 2000). Similarly, Clune, Moure t & Lipson (2013) add a cost to connections and 
+observed improved evolvability, and Kashtan, Noor & Alon (2007) simply limit the number of logic gates 
+a solution can use. In the current work, the traini ng set of Experiment 3 has no (pairwise) correlatio ns 
+between modules and thus there is nothing for the G RN to learn. Or more exactly, there is no structure  
+that the GRN is capable  of learning. 
+ 2  
+ In the context of neural learning, when a memory i s formed that was not in the training set this is 
+sometimes referred to as a “spurious memory”. But spurious memories can also be interpreted as a simple 
+form of generalisation – producing a pattern that c ontains features of several different training patt erns 
+(Watson, Buckley & Mills 2009, Watson, Mills & Buckley 2010, Jang, Kim & Lee 1992). In some cases, 
+this generalisation ability has the effect of ident ifying meso-scale features that are common to many 
+patterns and putting them together in new combinati ons. This can create a genuinely new pattern that i s 
+substantially different from any of the training pa tterns, and yet contains features that resemble sub -
+patterns observed in multiple training patterns (Wa tson, Mills & Buckley 2010), as illustrated in 
+Experiment 3. It is no coincidence that this kind o f generalisation involves modules. Consider two tra its 
+in different modules; If generalisation is to be pe rmitted then the GRN must not enforce a correlation  
+between these two traits. In fact, for any  two traits in different modules, the GRN knows nothing  about 
+what combinations of traits are fit. Accordingly, t he only way for the GRN to know anything  about past 
+selective environments (whilst still allowing some traits to vary independently) is for it to learn 
+correlations in approximately disjoint subsets. Lea rning correlations within modules usefully restrict s the 
+phenotypes that are produced, but learning correlations between modules opposes generalisation.  
+ Note that learning the correlations within modules  improves performance on the training set, but the 
+only advantage of not  learning the correlations between modules, allowing modules to vary independently 
+of one another, is for improving generalisation and  performance on the test set. This suggests that th e 
+selective pressures on learning what things go toge ther are quite different from the selective pressur e to 
+learn what things to keep separate (‘parcelation’ r ather than ‘integration’; Wagner & Altenberg, 1996) . 
+This perspective indicates that the challenge for u nderstanding the evolution of evolvability is close ly 
+related to the difficulty of learning general models from data – i.e., overcoming the problem of over-fitted 
+                                                      
+2 In Experiment 3, the number of loops in the traini ng patterns represent odd parity  – i.e., the training samples have 
+1 or 3 modules. Odd parity is a generalisation of X OR (logical Exclusive OR) to multiple inputs that f amously 
+cannot be solved by local pairwise interactions. Si nce the developmental network can represent pairwis e 
+correlations, but not higher-order correlations, it  cannot learn this set of training patterns without  also producing 
+patterns with 0, 2 and 4 loops. 
+Page  23 
+ 
+solutions that give high-performance on the trainin g set but fail to generalise to unseen test cases. And 
+more specifically, the capability of expressive of G-P mappings to represent complex structural patterns is 
+balanced by their tendency to over-fit to the past and thus fail to generalise to future selective 
+environments.  
+ Nonetheless, the equivalence between developmental  memory and associative learning demonstrated 
+in the current paper indicates that the evolution o f a G-P mapping can provide substantive adaptive 
+advantages in quite general scenarios. For example,  the capability of recurrent neural networks to fin d 
+locally optimal solutions to constraint optimisatio n problems (Hopfield & Tank 1986) is well known and  
+associative learning can improve this ability (Wats on, Buckley & Mills 2010, Watson, Mills & Buckley 
+2011). Specifically, associative learning can impro ve the ability of a network to find high-quality 
+solutions even when the problem has only ‘accidenta l’ structure rather than an explicit modular 
+decomposition (Watson, Buckley & Mills 2011). But the advantage is much more pronounced when there 
+is modular structure that can be exploited (especia lly if the G-P map changes the variational 
+neighbourhood, enabling large but controlled variat ion in phenotype space) (Watson, Mills & Buckley 
+2011, Mills 2010, Mills & Watson 2009, Mills & Wats on submitted). The potential for evolution by 
+natural selection, given developmental processes with suitable heritable variation, to exhibit such adaptive 
+capabilities suggests that the evolution of evolvab ility may alter the adaptive capabilities of natura l 
+selection in a substantial manner; and, perhaps mor e importantly, the application of a machine learnin g 
+framework enables us to quantify and understand the affordances and limitations of this ability (Watson et 
+al. 2010a). 
+ 
+(g)  Modularly varying environments produces modular structure in the interaction network 
+In Experiment 3 in the main text the two patterns in each module are arbitrary, not the complement of one 
+another, and different patterns are used in each mo dule (e.g., different rotations of loops). The char acters 
+that correspond to a block are also not continuous in the linear genome G (there is nothing about the 
+experiment that is sensitive to this ordering of the phenotypic characters 
+3). This serves to illustrate that the 
+result does not require special symmetries. Here we  provide an additional experiment, analogous to 
+Experiment 3, but with more transparent modularity that can be easily verified by inspecting B. We 
+studied 8 target phenotypes, each of which is composed of 16 characters, divided into four groups of f our 
+(Fig. S3.a). The four characters within each group only appear in the set of target patterns as either  ---- or 
+++++. Four of these sub-patterns are combined to create a complete training pattern of 16 characters such 
+that each target pattern contains one module of the  “++++” type and the remainder are of the “----” ty pe 
+or vice versa.  
+Figure S3.b-c shows that the evolved correlations c learly identify the strong correlations amongst the  
+genes within each module as predicted by Hebb’s rul e. We then examine the distribution of adult 
+phenotypes produced from these evolved correlations  (Fig. S3.d-e). We see that development reproduces 
+only well-formed modules (i.e., the traits within e ach module match either ‘++++’ or ‘----‘), but that in 
+addition to the target phenotypes, the adult phenot ypes also exhibit other patterns produced by new 
+combinations of those modules. In fact, all 16 poss ible combinations of the four modules are exhibited  in 
+the distribution of adult phenotypes (not just the 8 in the training set). In this simple example we c an see 
+the modularity in B (Fig. S3.b) (representing the fact that there are strong correlations between traits in 
+the same module and no evolved correlations between  traits in different modules) that thus allows new 
+combinations of modules to be produced by development. 
+ 
+                                                      
+3 The ability of development to produce novel phenot ypes via new combinations of developmental modules is 
+closely analogous to the ability of sexual recombin ation to produce novel genotypes via new combinatio ns of 
+genetic building blocks (Watson, Weinreich & Wakele y 2011), and the test case used here is structurall y equivalent. 
+However, the success of sexual recombination requir es that genetic linkage corresponds with epistatic dependencies, 
+whereas here useful modules can be identified and r eproduced in new combinations regardless of the ord ering of 
+traits in the target phenotypes. 
+Page  24 
+ 
+ 
+Fig. S3:  Interaction coefficients evolved in modularly vary ing selective environment (9.6·10 
+6 generations) and 
+resultant phenotypes. a) The set of modularly varyi ng target phenotypes. b) Evolved interaction coeffi cients. c) 
+Hebbian interaction matrix summed over the 8 patter ns. Evolved within-module interactions are positive  and 
+between-module interactions are approximately zero,  exactly as expected under Hebbian learning. d) 30 example 
+adult phenotypes developed from uniformly random G. Note that these include patterns that are not in the target set. 
+e) Distributions of phenotype patterns; ‘Targets’ h ave either 4 or 12 positive traits. ‘Without regula tion’ shows the 
+frequency positive traits in G. For this figure only, G is are generated to be uniformly distributed in number of positive 
+characters [0,16]; ‘With regulation’ shows the freq uency ‘+’ traits in the adult phenotype patterns de veloped with the 
+evolved interaction coefficients. Note that the phe notypes produced include the target patterns (with one or three 
+blocks of positive traits) but also all other combinations of modules (with zero, two and four blocks of positive traits). 
+(h)  Brief investigation of robustness to environmental noise 
+Each row is a sample of 10 phenotypes (as per Fig. 3.d) but each row shows the effect of environmental  
+perturbation ( in this extreme case, a full randomisation of the va lues of P) at progressively later time 
+steps of development. For example, when environment  affects P only 3 time steps from the end of 
+development, the adult phenotype (at time step 10) is unable to recover either of the target phenotype s 
+accurately.   
+However, note that since there are only two phenoty pic attractors in this developmental system, and an y 
+G leads to either one or the other (Fig. 3.d), if de velopment were allowed to continue for additional t ime 
+steps after an environmental perturbation, in every case it will eventually equilibrate at one or other of the 
+two targets as before. In these experiments we are interpreting environmental perturbation simplistically; 
+a) we are investigating whether an adult phenotype can recover from an environmental perturbation not 
+whether a phenotype can resist environmental pertur bation in the first place, b) here we are also not 
+investigating what happens when environmental perturbation of the phenotype is partial. 
+(i)  Robustness without reducing phenotypic variability 
+An evolved developmental process with appropriate f lexibility may enable the recovery of high-fitness 
+phenotypes quickly and reliably after a change in e nvironment. The converse is also true, however; the  
+ability of a population to evolve a particular phen otype may be retarded by a developmental process th at 
+does not produce appropriate phenotypic variation. This has some relevance to the apparent tension 
+between evolvability and robustness. That is, the c onservative and myopic quality of natural selection  
+favours developmental canalisation and robustness w hich seems intrinsically opposed to an increase in 
+phenotypic variability or evolvability. Some view t hese notions as two-sides of the same coin (Kirchne r 
+& Gerhart 1998, Draghi et al. 2010, Brigandt 2007);  i.e., a predisposition to evolve some phenotypes 
+more readily goes hand in hand with a decrease in the propensity to produce other phenotypes. Indeed, the 
+
+Page  25 
+ 
+regulatory connections that evolve in our model do not evolve because they increase the speed of futur e 
+evolution, although they do, but rather because, in  the immediate term, they increase the strength wit h 
+which the current phenotype is expressed.  
+ 
+Time  step  of   
+perturbation   
+ 
+1 
+ 
+2 
+ 
+3 
+ 
+4 
+ 
+5 
+ 
+6 
+ 
+7 
+ 
+8 
+ 
+9 
+ 
+10 
+ 
+  
+Fig. S4: Example phenotypes at developmental time step 10, after an environmental perturbation (randomisation) to 
+the developing gene expression pattern at successiv ely later developmental time steps (each image is a n 
+independent simulation, 10 examples for each perturbation period).  
+ 
+ A multi-dimensional concept of variability, includ ing correlated variability, provides a more 
+sophisticated appreciation of the manner by which c analisation might oppose or facilitate evolvability . 
+For example, if robustness is increased by canalisa tion applied uniformly in all dimensions then that 
+would oppose evolvability. But there are (at least)  two other possibilities. i) An increase in robustn ess 
+might occur by reducing variability in some traits whilst leaving others free to vary; focussing the 
+remaining variability on more useful dimensions. This partly alleviates the apparent tension of robustness 
+and evolvability. ii) But more interestingly, evolved correlations, uniquely, can reduce the dimensionality 
+of phenotype space by reducing the combinations  of traits that occur in phenotypes, without reduci ng 
+phenotypic variability in any individual  phenotypic characters. For example, the two phenot ypes ++ 
+and -- constitute only half of the four possible phenotypes composed of two bi-allelic characters, but each 
+individual trait can still take either value + or -  (this is the developmental analogue of altering th e linkage 
+disequilibrium of simultaneously segregating allele s without altering allele frequencies/fixing allele s at 
+either locus). Limiting character combinations without limiting the variability of the individual characters 
+alleviates the tension between robustness and evolvability in a more profound sense.  
+ The logic functions IFF and XOR correspond to posi tive and negative correlation, respectively. These 
+functions are significant in machine learning becau se the output is not a linearly decomposable functi on 
+of the inputs (McClelland & Rumelhart 1986). It is necessary to learn correlations to represent these 
+functions, and representing these functions is necessary to produce a memory that can store more than one 
+pattern without simply blending them. Simpler types  of canalisation, e.g. from a linear developmental 
+process, preclude this possibility (as illustrated in Figs. 3.h & 4.d). 
+ 
+
+Page  26 
+ 
+(j)  Recall from partial stimuli showing developmental time 
+ 
+Fig. S5: An evolved gene regulation network exhibits a developmental memory of phenotypes that have been 
+selected for in the past.  The gene network was evolved in an environment whe re selection varies between two 
+target phenotypes; an image of Charles Darwin and a n image of Donald Hebb (the neuropsychologist from whom 
+Hebbian learning takes its name). Each pixel in the  image corresponds to the expression level of a gen e. The 
+evolved network of regulatory interactions introduc es phenotypic correlations that create developmenta l attractors 
+corresponding to these two phenotypes. We find that  this is functionally equivalent to the manner in w hich a neural 
+network learns an associative memory of a set of tr aining patterns via Hebbian learning. This experime nt shows that 
+if the genotype, controlling the embryonic phenotype, partially resembles one of the targets, development ‘recognises’ 
+which phenotype it belongs to and recreates the com plete adult phenotype in a self-consistent manner. The 
+development of ten example individuals from differe nt genotypes (a-j) are shown over ten developmental  time steps.  
+In most cases development produces an adult phenotype that fully resembles only one of the phenotypes selected in 
+the past. In cases where the genotype is almost equ ally matched to both phenotypes (e.g. g and h) the process of 
+development breaks this symmetry, producing an adult phenotype that largely resembles only one, but some residual 
+trace of the other phenotype is visible late into developmental time. 
+See main text for references. 
+ 
+individual  
+1 2 3 4 5 6 7 8 9 10  
+developmental time  
+a)  
+b) 
+c) 
+d) 
+e) 
+f) 
+g) 
+h) 
+i) 
+j) 
+adult  
+phenotype 
+genotype =  
+embryonic phenotype 

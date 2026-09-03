@@ -1,0 +1,95 @@
+Supplementary Information for "Evolution of digital organisms at high mutation rate leads to survival of the flattest".
+
+Equation (1) was chosen because it described well the empirically observed
+
+decay of the mean fitness as a function of the mutation rate. The following cal-
+
+culation, due to Peter Schuster (University of Vienna), shows that an equation
+
+of the same form can be derived from the quasi-species model [1,2].
+
+In mutation-selection equilibrium, the average fitness w(µ) of a population
+
+consisting of a master sequence I0 and its mutants is given to second order by
+
+[2,3]
+
+w(µ)
+
+=
+
+W00
+
++
+
+k=0
+
+W0k Wk0 W00 - Wkk
+
+,
+
+(*)
+
+where W = {Wij; i, j = 0, . . . , n} is the matrix of selective values and mutation probabilities, and it is assumed that the master sequence I0 has n different possible mutants. In our experiments with digital organisms, mutations arise
+
+with a uniform probability R = µ/L per site, and hence the elements of the
+
+matrix W are of the form
+
+Wik = wk d(i,k)(1 - R)L ,
+
+where the replication rate of genotype k is given by wk, L is the sequence length, d(i, k) is the Hamming distance between the two genotypes i and k, and the quantity = R/[(1 - R)( - 1)] is the modified mutation rate, with  being the cardinality of the genetic alphabet ( = 4 for the natural alphabet, AUGC, and  = 28 in the case of these digital organisms).
+In the following, all terms of order higher than R2 will be ignored. In the sense of a mean field approximation, we represent all single-site mutants of the master sequence by their mean replication rate w(1) and by the difference of their mean replication rate to the replication rate of the master sequence, w(1) = w0 -w(1). Here, the subscript "(1)" refers to the family of all sequences that differ from the master sequence by exactly one mutation. Noting that there are L( - 1) different single-site mutants, equation (*) becomes
+
+w(µ) = w(RL) = w0(1 - R)L
+
+1+
+
+Lw(1) ( - 1)w(1)
+
+R 1-R
+
+2
+
+.
+
+Expansion in a power series of the mutation rate µ yields:
+
+w(µ) = w0 1 - µ +
+
+L-1 +
+
+w(1)
+
+µ2 + O(µ3) .
+
+2L L( - 1)w(1)
+
+(**)
+
+Likewise, equation (1) can be expanded into
+
+w(µ) = w0 1 - aµ +
+
+a2 -b
+
+µ2 + O(µ3)
+
+.
+
+2
+
+(***)
+
+1
+
+A comparison between equations (**) and (***) reveals two conditions on the parameters a and b: (i) a2/2 > b, since the coefficient in front of µ2 in equation (**) is always positive, and (ii) a 1, because from µ = LR follows that aL gives a measure for the effective genome length of the organism.
+We compared a and b in all 24 organisms that we studied, and found criterion (i) satisfied in all but 3 cases. We cannot expect complete agreement between the theory and our measurements, for the following reasons. First, the derivation of equation (**) assumes equilibrium. We have, however, measured the mean population fitness after fifteen generations, in order to obtain a result with predictive value for the (short-term) competition experiments. Fifteen generations do not guarantee full equilibration of the quasi-species. Second, if there is a strong disparity between the one-mutant replication rates, where some are almost neutral (i.e., have almost identical replication rate to the master sequence) while others replicate much slower, the mean field approximation that led to equation (**) may not be justified. From earlier studies [4], we know that such a disparity among the one-mutants does indeed exist. Regarding criterion (ii), we observed that a < 1 in sixteen cases, whereas a > 1 in eight others. In principle, a > 1 implies an effective genome length greater than the actual length, which is difficult to comprehend. However, it must be emphasized that these values were obtained by fitting a two-parameter model, exp(-aµ - bµ2), to empirical data. In all cases with a > 1, the decay initially accelerated with increasing µ, but then slowed down, so that the curve fitting tended to overestimate parameter a and underestimate b. Despite such subtle discrepancies, the measured fitness functions w(µ) agree well with the quasi-species theory.
+References
+[1] Eigen, M. & Schuster, P. The hypercycle. A principle of natural selforganization. Part A: Emergence of the hypercycle. Naturwissenschaften, 64, 541­565 (1977).
+[2] Eigen, M., McCaskill, J. & Schuster, P. The molecular quasispecies. Adv. Chem. Phys., 75, 149­263 (1989).
+[3] Schuster, P. & Swetina, J. Stationary mutant distribution and evolutionary optimization. Bull. Math. Biol., 50, 635-660 (1988).
+[4] Lenski, R. E., Ofria, C., Collier, T. C. & Adami, C. Genome complexity, robustness and genetic interactions in digital organisms. Nature 400, 661­ 664 (1999).
+2
+
+
