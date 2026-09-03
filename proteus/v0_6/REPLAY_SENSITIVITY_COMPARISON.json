@@ -1,0 +1,33 @@
+{
+ "conclusion_byte_identity": "RUNTIME-SENSITIVE without fsum; byte-identity is lost",
+ "conclusion_tolerance": "the frozen NUMERICAL tolerances would still have passed at this scale, so this control demonstrates sensitivity of the digest, NOT failure of the tolerance gate",
+ "deviations": {
+  "max_abs_current_abs_dev": 0.0,
+  "one_way_edges_equal": true,
+  "pi_max_abs_dev": 2.7755575615628914e-17,
+  "residual_l1_abs_dev": 0.0,
+  "sigma_abs_dev": 5.204170427930421e-18,
+  "total_abs_current_abs_dev": 3.469446951953614e-18
+ },
+ "deviations_within_frozen_tolerance": true,
+ "digest_py311": "f4d175c9614387cc758d4259f4d8d99acdac6818aa819bfdaa7919dc7bf850ac",
+ "digest_py312": "9cbe53968599ac9c39008811f4069b5b9aa23465a0595d438969ef1dc5c07243",
+ "digests_differ_without_fsum": true,
+ "frozen_tolerances": {
+  "max_abs_current_abs_dev": 1e-12,
+  "pi_max_abs_dev": 1e-09,
+  "residual_l1_abs_dev": 1e-10,
+  "sigma_abs_dev": 1e-09,
+  "total_abs_current_abs_dev": 1e-12
+ },
+ "hosts": [
+  "3.12.10",
+  "3.11.9"
+ ],
+ "iterations": [
+  1790,
+  1790
+ ],
+ "question": "does the replay comparison have the power to fail without math.fsum?",
+ "schema_version": "proteus.v0_6_replay_sensitivity.v1"
+}
