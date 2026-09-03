@@ -1,0 +1,79 @@
+{
+ "closure": {
+  "escaped_destinations": [],
+  "escaped_valid_structural_state_count": 0,
+  "precondition_met": true,
+  "samples_per_state": 400,
+  "total_proposals": 817600
+ },
+ "comparison_with_prior_enumeration": {
+  "cardinality_matches": true,
+  "only_in_prior": [],
+  "only_in_regenerated": [],
+  "prior_hash": "64e55c9d31b39b6bc37f6e8a5c1d92c5209ae085711116c18dfdcefc93266459",
+  "prior_n": 2044,
+  "regenerated_hash": "64e55c9d31b39b6bc37f6e8a5c1d92c5209ae085711116c18dfdcefc93266459",
+  "regenerated_n": 2044,
+  "set_matches": true
+ },
+ "identities": {
+  "affordance_hash": "f1607ee8be680acc33288a95c1a25c09ad4c799a47b0975381be8ca02d7638ce",
+  "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+  "grammar_version": "proteus.grammar.v0.4",
+  "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0"
+ },
+ "noop_reasons_observed": [
+  "config_perturbation:manifest_validity",
+  "config_perturbation:published_boundary",
+  "deletion:at_min",
+  "duplication:at_max",
+  "insertion:at_max",
+  "movement:too_short",
+  "region_swap:too_short",
+  "splice:bounds",
+  "unreachable_removal:all_reachable",
+  "unreachable_removal:at_min"
+ ],
+ "published_rules": {
+  "genome_max_words": 4096,
+  "genome_min_words": 4,
+  "instruction_words": 4,
+  "schema_hash": "dacb3c7a149af89fc4dc248a663c95dbfa2a9e1e153f15aa363b8ccc9aadd967",
+  "schema_id": "prometheus/proteus/player_manifest/v0",
+  "tape_max": 4096,
+  "tape_min": 16,
+  "tape_multiple_of": 4
+ },
+ "schema_version": "proteus.v0_6_space_audit.v1",
+ "space_identity": {
+  "hash": "64e55c9d31b39b6bc37f6e8a5c1d92c5209ae085711116c18dfdcefc93266459",
+  "max_state": [
+   1024,
+   4096
+  ],
+  "min_state": [
+   1,
+   16
+  ],
+  "n_states": 2044
+ },
+ "support": {
+  "max": 11,
+  "mean": 9.849804305283758,
+  "median": 10,
+  "min": 5,
+  "p90": 11
+ },
+ "tapes": [
+  16,
+  32,
+  64,
+  128,
+  256,
+  512,
+  1024,
+  2048,
+  4096
+ ],
+ "wall_s": 107.73700308799744
+}
