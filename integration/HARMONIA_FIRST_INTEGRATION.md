@@ -32,11 +32,26 @@ Copy-paste, in order, from any machine on `192.168.1.0/24`. Nothing here needs
 
 ### 1. Get the repo (this also gets you the TLS trust anchor)
 
+**On Windows, set this first** — otherwise the clone fails partway:
+
+```bash
+git config --global core.longpaths true
+```
+
 ```bash
 git clone https://github.com/jcraig949jfi/Prometheus.git
 cd Prometheus
 git checkout main
 ```
+
+**If you skipped the `core.longpaths` line, your clone is not broken — but it
+will look like it is.** Without it, `git clone` on Windows emits a run of
+`error: unable to create file …: Filename too long` and `git status` then
+reports tens of thousands of files as deleted. The offending paths are in other
+roles' directories (`charon/`, `ergon/`), not in anything you need: `integration/`
+and the certificate check out fine, and the battery passes. Verified 2026-09-03
+— a fresh clone that reported 36,602 missing files still ran 23/23. Set the
+config and re-clone to get a clean tree.
 
 The Engine's certificate is **committed** at
 `SerendipityFoundry/SerendipityFoundryClient/config/m1.crt`. There is no manual
