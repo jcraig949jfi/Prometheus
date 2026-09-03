@@ -1,0 +1,761 @@
+================================================================================
+PROMETHEUS / HERAKLES SEAT
+HC-T01 / TOUSSAINT MISSING-CELL EXPERIMENT
+
+Issued by James, 2026-09-03. Committed verbatim as the authoritative directive.
+Where this file and any later summary disagree, this file wins.
+Follows RULING_V0_CONTINUE_HYPOTHESIS_DAMAGED_2026-09-03.txt
+(sha256 31816dc2bb7c40c7a5252e164a7fdcb228509388927459279d45ca18fa10811a).
+================================================================================
+
+HERAKLES — NEXT DIRECTIVE
+
+HC-T01 / TOUSSAINT MISSING-CELL EXPERIMENT
+
+Verify whether a historical detector and a historical ablation already existed but were never composed
+
+Herakles,
+
+The Historical Collider has produced its first major methodological correction:
+
+We should not assume prior researchers lacked the microscope. We should recover the microscopes they built, identify what each could not see, and test whether combinations of historical instruments expose dynamics nobody measured longitudinally.
+
+Your next assignment is therefore NOT another broad survey pass.
+
+It is a focused historical-composition investigation centered on Marc Toussaint’s 2000–2003 work on exploration distributions, neutrality, self-adaptation of genetic representation, and the associated ablation experiments.
+
+The target is a specific claim surfaced in your latest packet:
+
+By approximately 2003, Toussaint’s programme may already have contained all of the components required for a D4/D5-style detector: a formal exploration-distribution concept, a working estimator, longitudinal measurement, and a mechanism ablation affecting acquisition — but the estimator may never have been run inside the ablation condition.
+
+If true, this is exactly the kind of Historical Collider result we are looking for:
+
+not a new theory,
+not a new metric,
+but a missing experimental cell.
+
+Your job is to determine whether that claim is historically correct and, if so, reconstruct and execute the smallest faithful experiment that fills the cell.
+
+Do not run compute until the historical composition claim itself survives verification.
+
+⸻
+
+0. PRIMARY OBJECTIVE
+
+Answer one question:
+
+Did Toussaint’s programme already possess both a detector of future exploration/accessibility and an intervention that altered acquisition dynamics, without ever measuring the detector inside that intervention?
+
+Possible verdicts:
+
+MISSING_CELL_CONFIRMED
+ALREADY_MEASURED_HISTORICALLY
+PARTIAL_COMPOSITION_ONLY
+HISTORICAL_RECORD_AMBIGUOUS
+NOT_RECONSTRUCTABLE
+CLAIM_FALSE
+
+Any of these is a useful result.
+
+Do not rescue the missing-cell hypothesis if the literature already contains the composition.
+
+⸻
+
+1. T0 — SOURCE/COMPOSITION VERIFICATION GATE
+
+Before code or simulation, recover and read the relevant primary material.
+
+At minimum identify the exact works corresponding to:
+
+* formal definition of phenotypic/exploration distribution;
+* Monte Carlo estimator;
+* per-generation or longitudinal application;
+* neutrality / self-adaptation mechanism;
+* the claimed 2×2 ablation;
+* any thesis chapters that unify these experiments;
+* technical reports, workshop versions, appendices, or later retrospectives that may contain omitted measurements.
+
+For every load-bearing statement record:
+
+source_id
+exact title
+year
+venue
+page/section/figure
+exact historical claim
+evidence_source
+artifact hash where held
+
+Do not cite titles from memory.
+
+⸻
+
+2. PROVE THE DETECTOR EXISTED
+
+Reconstruct Toussaint’s detector exactly.
+
+Determine:
+
+1. What mathematical object did he call the exploration distribution?
+2. Was it a distribution over phenotypes, offspring effects, search steps, or something else?
+3. What random variable was sampled?
+4. What mutation/variation operator induced the distribution?
+5. What distance, entropy, spread, richness, or other statistic was actually reported?
+6. Was the estimator Monte Carlo?
+7. Was the remembered sample count of 2,000 correct?
+8. Was that 2,000 samples:
+    * per individual,
+    * per population,
+    * per generation,
+    * per selected checkpoint,
+    * or something else?
+9. Was the detector computed population-wide?
+10. Was it longitudinal?
+11. Were distributions retained, or reduced to a scalar?
+12. What uncertainty or estimator noise was reported?
+
+Produce:
+
+TOUSSAINT_DETECTOR_SPEC.md
+
+Do not translate it into Prometheus terminology until the historical definition is frozen.
+
+⸻
+
+3. PROVE THE ABLATION EXISTED
+
+Reconstruct the mechanism-ablation experiment exactly.
+
+Determine:
+
+1. What mechanism was ablated?
+2. What were the treatment arms?
+3. Was it truly a 2×2 design?
+4. What varied along each axis?
+5. What was held fixed?
+6. What outcome was measured?
+7. Did adaptive acquisition occur in the experiment?
+8. Was selection active?
+9. Was neutrality active?
+10. Was representation self-adaptation active?
+11. What population size and run length were used?
+12. How many independent replicates?
+13. Which plots/results were reported?
+14. Was only fitness shown?
+15. Were exploration-distribution measurements absent from this experiment?
+
+Produce:
+
+TOUSSAINT_ABLATION_SPEC.md
+
+⸻
+
+4. SEARCH AGGRESSIVELY FOR THE “MISSING” CELL
+
+The strongest negative historical claim is:
+
+The exploration estimator was never run inside the ablation experiment.
+
+Do not infer this from absence in one paper.
+
+Search:
+
+* thesis;
+* appendices;
+* companion papers;
+* workshop versions;
+* technical reports;
+* author webpages;
+* archived project material;
+* source comments;
+* later review papers;
+* later papers by Toussaint or collaborators;
+* bibliographic descendants of the experiment.
+
+If the combined experiment already exists, stop.
+
+Classify:
+
+ALREADY_MEASURED_HISTORICALLY
+
+Then recover it as a detector specimen.
+
+That would be a success for the Historical Collider.
+
+⸻
+
+5. DEFINE THE HISTORICAL COMPOSITION
+
+If the missing cell is confirmed, express it mechanically:
+
+HISTORICAL DETECTOR A
+    exploration-distribution estimator
+HISTORICAL INTERVENTION B
+    mechanism ablation / representation treatment
+HISTORICAL OUTCOME C
+    adaptive acquisition / fitness trajectory
+MISSING COMPOSITION
+    measure A under all arms of B
+    and relate its trajectory to C
+
+Do not add new Prometheus-native quantities yet.
+
+The first experiment must use:
+
+Toussaint’s microscope on Toussaint’s experiment.
+
+⸻
+
+6. NO NEW THEORY IN HC-T01
+
+GATE-3 remains closed.
+
+Do NOT introduce:
+
+* P-MED;
+* Prometheus failure topology;
+* occupancy-boundary flux;
+* R0.00001 scores;
+* custom accessibility entropy;
+* custom lineage metrics;
+* LLM interpretations.
+
+Use only:
+
+* faithful historical physics;
+* historical detector;
+* historical intervention;
+* conventional statistical analysis required to compare arms.
+
+If Toussaint’s detector is inadequate, report that after the faithful test.
+
+Do not silently replace it.
+
+⸻
+
+7. RECONSTRUCTION CLASSES
+
+For each component classify:
+
+ORIGINAL_SPECIMEN
+RECOVERED_SPECIMEN
+REIMPLEMENTATION
+APPROXIMATE_RECONSTRUCTION
+CONCEPTUAL_REPRODUCTION
+
+If exact source code does not survive, create a parameter-certainty table.
+
+Every historical parameter must be:
+
+VERIFIED_EXACT
+VERIFIED_RANGE
+INFERRED
+UNSPECIFIED
+ASSUMED_FOR_RECONSTRUCTION
+
+The experiment may proceed only if the assumptions are judged unlikely to determine the outcome.
+
+Otherwise return:
+
+NOT_RECONSTRUCTABLE
+
+⸻
+
+8. HC-T01 CORE HYPOTHESIS
+
+If T0 passes, preregister the following before execution:
+
+The mechanism manipulated by the historical ablation changes the trajectory of Toussaint’s exploration distribution in a way associated with subsequent adaptive acquisition.
+
+Do not require a particular direction.
+
+Possible outcomes include:
+
+* broader exploration precedes adaptation;
+* narrower exploration precedes adaptation;
+* distribution shape changes without fitness change;
+* detector changes simultaneously with adaptation;
+* no detector difference between arms;
+* detector moves but has no relationship to future acquisition.
+
+All are admissible.
+
+⸻
+
+9. THREE CLAIM LEVELS
+
+Use this hierarchy.
+
+T1 — COUPLING
+
+The exploration-distribution statistic differs across treatment arms in association with acquisition differences.
+
+Weakest interesting result.
+
+T2 — TEMPORAL PRECEDENCE
+
+A preregistered detector change occurs consistently before a conventional acquisition/fitness change.
+
+Stronger.
+
+T3 — CAUSAL DEPENDENCE
+
+The intervention suppresses or alters both:
+
+detector trajectory
+
+and
+later acquisition
+
+in the predicted dependency pattern.
+
+This is the strongest result available from the historical design.
+
+Do not claim more.
+
+⸻
+
+10. PRECOMMIT THE TEMPORAL TEST
+
+If the historical detector is longitudinal enough for T2:
+
+Freeze before execution:
+
+* primary detector statistic;
+* smoothing, if any;
+* lead-time window;
+* acquisition event definition;
+* arm comparison;
+* threshold;
+* null model;
+* replicate as unit of analysis.
+
+Avoid the defect encountered previously in Prometheus:
+
+A fine-grained version of the same quantity must not be declared a precursor merely because it crosses earlier.
+
+If detector and outcome are mathematically coupled, T2 is invalid.
+
+State that explicitly.
+
+⸻
+
+11. UNIT OF ANALYSIS
+
+The independent replicate is the run.
+
+Not:
+
+* generation;
+* individual;
+* offspring sample;
+* lineage point.
+
+Do not inflate n through temporal or genealogical pseudoreplication.
+
+If the historical design used too few replicates for a modern claim, reproduce additional runs under the faithful physics.
+
+Report:
+
+historical n
+modern n
+reason modern replication is required
+
+⸻
+
+12. COMPUTE MODEL BEFORE RUN
+
+Before execution benchmark the faithful implementation.
+
+Report:
+
+population size
+generations
+detector samples / individual
+individuals measured / generation
+total detector evaluations
+simulations / second
+wall-clock / replicate
+intended replicate count
+total wall-clock
+storage footprint
+
+If the historical estimator really requires 2,000 offspring samples per individual per generation, verify whether that is computationally trivial or dominant under modern hardware.
+
+Do not assume.
+
+⸻
+
+13. RUN THE SMALLEST INFORMATIVE EXPERIMENT FIRST
+
+Do not immediately reproduce the maximum historical run length.
+
+Run a shakedown sufficient to confirm:
+
+1. historical baseline behavior reproduces;
+2. treatment ordering resembles the historical paper;
+3. detector values reproduce any historical examples;
+4. random seeds produce deterministic replay where expected;
+5. estimator noise is characterized.
+
+Only then run the confirmatory replicate set.
+
+⸻
+
+14. HISTORICAL VALIDATION TARGETS
+
+Before interpreting the missing cell, require the reconstruction to hit independent historical observables.
+
+Choose at least three, such as:
+
+* reported fitness trajectory shape;
+* final fitness distribution;
+* treatment ordering;
+* phenotype statistics;
+* population complexity;
+* representation changes;
+* historical exploration-distribution values where reported.
+
+These targets must be independent of the new missing-cell result.
+
+If reconstruction misses them materially:
+
+RECONSTRUCTION_FAILS
+
+Do not interpret HC-T01.
+
+⸻
+
+15. THE PRIMARY RESULT TABLE
+
+For each arm and replicate report:
+
+detector trajectory
+acquisition trajectory
+detector change point, if preregistered
+acquisition change point
+lead/lag
+final detector value
+final acquisition value
+
+Then estimate:
+
+treatment effect on detector
+treatment effect on acquisition
+association between detector change and future acquisition
+uncertainty at RUN level
+
+Do not collapse everything into one headline statistic.
+
+⸻
+
+16. COUNTERFACTUAL QUESTION
+
+The key scientific question is not:
+
+Did one arm explore more?
+
+It is:
+
+Did the historical mechanism change the distribution of future variation in a way that altered what the population subsequently acquired?
+
+Keep that sentence in the report.
+
+⸻
+
+17. DETECTOR-PART EXTRACTION
+
+If the historical detector proves useful, add it to:
+
+HISTORICAL_DETECTOR_PARTS
+
+Describe it abstractly.
+
+Candidate format:
+
+detector_part_id
+historical name
+mathematical object
+estimator
+sampling cost
+what it sees
+what it misses
+substrate dependence
+longitudinal capability
+causal capability
+known confounds
+SFE translation potential
+
+Do not label it “Prometheus detector” yet.
+
+⸻
+
+18. MECHANISM-PART EXTRACTION
+
+If the ablated mechanism causally alters future accessibility/acquisition, add a candidate computational part.
+
+Describe functionally.
+
+For example:
+
+phenotype-preserving representational variation that changes the distribution of offspring phenotypes available to subsequent search
+
+Do not call it:
+
+reasoning
+metacognition
+intelligence
+
+unless later cross-system evidence earns such terminology.
+
+⸻
+
+19. PARTS-ARCHAEOLOGY HANDOFF
+
+If HC-T01 survives, return to Herakles’s broader registry:
+
+mechanism part X
+detector part Y
+historical experiment Z
+observed composition result
+candidate analogues in:
+    GP
+    neuroevolution
+    Avida
+    EvCA
+    developmental encoding
+    neutral networks
+    SFE worlds
+
+Herakles then searches for recurrence.
+
+HC-T01 itself stays narrow.
+
+⸻
+
+20. NEGATIVE OUTCOMES ARE FIRST-CLASS
+
+Possible high-value negative results:
+
+N1
+
+The historical detector does not change under the mechanism ablation.
+
+N2
+
+It changes, but only simultaneously with fitness.
+
+N3
+
+It changes earlier, but the lead is mathematically coupled to the outcome.
+
+N4
+
+It changes, but does not predict acquisition across runs.
+
+N5
+
+The historical mechanism changes fitness without changing accessibility.
+
+N6
+
+The historical detector is too noisy or expensive to be useful.
+
+N7
+
+The combined experiment already exists historically.
+
+N8
+
+The reconstruction is too ambiguous to support a claim.
+
+Every one of these sharpens the Collider.
+
+⸻
+
+21. RELATIONSHIP TO EVCA
+
+Do NOT close the EvCA compute gate.
+
+EvCA remains the next recovered specimen.
+
+The two experiments answer different questions.
+
+HC-T01 / Toussaint
+
+Tests whether an existing accessibility detector, applied inside an existing intervention, reveals changes in future exploration associated with acquisition.
+
+HC-E01 / EvCA
+
+Tests whether locally successful structural transitions alter or constrict future reachable strategy space and whether failure/accessibility instrumentation can see the trap.
+
+Toussaint comes first because it is potentially the cheapest missing experimental cell.
+
+EvCA remains frozen and ready.
+
+⸻
+
+22. RELATIONSHIP TO ERGON
+
+Do not duplicate Ergon’s Avida deep dive.
+
+Herakles owns HC-T01 because the scientific object is:
+
+historical detector composition.
+
+Ergon continues to own specimen-deep causal reconstruction such as Avida 2003.
+
+If HC-T01 requires substantial source-level reconstruction beyond Herakles’s remit, prepare a handoff packet rather than widening the seat indefinitely.
+
+⸻
+
+23. REQUIRED DELIVERABLES
+
+Create:
+
+herakles/specimens/spec-toussaint-exploration/
+
+with:
+
+A
+
+PRIMARY_SOURCE_LEDGER.md
+
+B
+
+RECOVERED_ARTIFACT_MANIFEST.jsonl
+
+C
+
+TOUSSAINT_DETECTOR_SPEC.md
+
+D
+
+TOUSSAINT_ABLATION_SPEC.md
+
+E
+
+COMPOSITION_SEARCH_REPORT.md
+
+F
+
+PARAMETER_CERTAINTY_TABLE.md
+
+G
+
+HISTORICAL_VALIDATION_TARGETS.md
+
+H
+
+HC_T01_PREREGISTRATION.md
+
+I
+
+HC_T01_COMPUTE_MODEL.md
+
+J
+
+HC_T01_RESULTS.jsonl
+
+K
+
+HISTORICAL_DETECTOR_PARTS.jsonl
+
+L
+
+CANDIDATE_COMPUTATIONAL_PARTS.jsonl
+
+M
+
+HC_T01_REVIEW_PACKET.txt
+
+Do not populate J until execution is authorized.
+
+⸻
+
+24. EXECUTION GATE
+
+The review packet must end with exactly one recommendation:
+
+RUN_HC_T01
+ALREADY_MEASURED_HISTORICALLY
+MORE_ARCHAEOLOGY_REQUIRED
+NOT_RECONSTRUCTABLE
+ABANDON_COMPOSITION_CLAIM
+
+No experiment runs before this gate is reviewed.
+
+⸻
+
+25. PARALLEL SURVEY WORK
+
+While HC-T01 is being verified, continue only lightweight broad work necessary to resolve the existing D-ladder thesis.
+
+Specifically:
+
+* clear the two remaining D4-shaped papers named in the latest packet;
+* update the replacement-thesis gate;
+* do not launch another broad 100-paper expansion;
+* do not populate TOP lists yet.
+
+The next major broad survey waits until HC-T01 teaches us whether detector composition is actually fruitful.
+
+⸻
+
+26. THE QUESTION THAT MATTERS
+
+The Historical Collider began with the idea:
+
+old researchers may have lacked the detector.
+
+That was too simple.
+
+The current possibility is more interesting:
+
+they may have built the detector in pieces.
+
+HC-T01 is the first direct test of that possibility.
+
+If Toussaint already possessed:
+
+representation self-adaptation
++
+exploration-distribution measurement
++
+longitudinal population dynamics
++
+ablation
+
+but never measured all four together, then we are not inventing a new microscope.
+
+We are assembling one that was already sitting on the bench.
+
+That is exactly the kind of historical leverage this programme exists to find.
+
+⸻
+
+FINAL DIRECTIVE
+
+Verify the missing cell before filling it.
+
+Recover the exact historical detector.
+
+Recover the exact intervention.
+
+Search aggressively for evidence that the composition was already performed.
+
+If it was, recover the result.
+
+If it was not, reconstruct the physics faithfully and run the smallest experiment that combines the two without adding Prometheus-native theory.
+
+Then ask only:
+
+Did changing the historical mechanism change the population’s future exploration distribution in a way that mattered for what it acquired next?
+
+If yes, preserve the mechanism and detector as parts.
+
+If no, kill the composition.
+
+Either way, EvCA remains waiting.
+
+Use the old microscope before building a new one.
