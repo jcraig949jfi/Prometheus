@@ -1,5 +1,7 @@
 # P. TOP-10 UNTESTED COMPOSITIONS — **CANDIDATE POOL, NOT RANKED**
 
+**2026-09-03: this file now holds two kinds of composition.** Entries comp-01 to comp-10 compose MECHANISM parts, things evolution uses. Entry comp-11 composes DETECTOR parts, instruments scientists built. The second kind is cheaper to test and, on current evidence, more likely to be genuinely untested.
+
 Combinations that appear scientifically interesting and, as far as model recall goes, have not been adequately tested together. **"Not adequately tested" is itself an unverified claim** and is the first thing the primary-source pass must attack: the most likely failure of this file is that someone tested a cell in 1997 and we did not find it.
 
 Each entry states the missing cell in factorial terms and the specific non-additivity that would make it interesting (§2-D: Effect(A+B) ≠ Effect(A) + Effect(B), measured on an **acquisition** endpoint, not a fitness endpoint).
@@ -45,6 +47,22 @@ The cross-paradigm test. Can a Drescher-style "invent a state variable when pred
 ## comp-10 — reward scaffold x neutral drift, with the scaffold removed midway
 `part-reward-scaffold` + `part-neutral-drift-precursor`
 Avida's scaffold is designer-imposed. If the scaffold is removed after intermediates exist, does neutral drift preserve them long enough to be used? **Interesting if:** drift substitutes for the scaffold after a critical point. **Cost:** MODERATE.
+
+---
+
+## comp-11 — DETECTOR composition, added 2026-09-03: Toussaint's estimator inside Toussaint's ablation
+
+Not a mechanism composition. A **detector** composition, and the first entry of a kind this file did not previously contain.
+
+By 2003 Marc Toussaint had all four parts: a formal definition of the phenotypic exploration distribution, a Monte Carlo estimator at 2000 samples per individual per generation, a population-wide longitudinal readout over 1000 to 2000 generations, and a clean two-by-two ablation of the mechanism that changes accessibility (second-type mutations at 0.1 versus 0, ten trials per cell).
+
+The estimator was never run inside the ablation. Where accessibility was measured, selection was flat by design so nothing could be acquired. Where acquisition happened and the mechanism was ablated, only fitness was plotted.
+
+**Interesting if:** running the estimator inside the ablation yields a D4 or D5 result. **Cost:** low, because both halves are specified in the source. **Why it is the strongest entry in this file:** it requires no new theory, no new instrument, and no assumption that the historical work was wrong about anything. It only requires pointing two existing instruments at each other.
+
+**Kill:** the exploration distribution turns out not to differ between the ablation arms, in which case the mechanism changes fitness without changing accessibility, and the seat learns something real about the difference.
+
+A second, weaker instance of the same shape: MODES already performs a per-generation, population-wide single-site knockout and null-substitution scan, then reduces it to a scalar count of informative sites. Not reducing it is a one-line change that would make it a D3 accessibility detector.
 
 ---
 

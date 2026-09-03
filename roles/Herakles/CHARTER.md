@@ -58,7 +58,9 @@ These bind me and are not subject to my own judgement.
 
 **GATE-1, compute.** No evolutionary compute runs until at least one specimen reaches `ARTIFACT_IN_HAND`, or a reconstruction is proven sufficiently exact. "Sufficiently exact" means its output distribution has been checked against a published artifact of the original. Reading parameters from a paper is necessary and not sufficient.
 
-**GATE-2, the blindness claim.** No historical-blindness claim of any kind until the six remaining reachability-measurement candidates are cleared. Two of the first two checked were counterexamples; the prior that generated the claim was badly calibrated.
+**GATE-2, the blindness claim. STILL CLOSED as of 2026-09-03.** Survey 1 cleared the six named candidates and found no clean D4 or D5, so the residual hypothesis survived its first attack. The gate does not open, because the survey identified two unread papers that are D4-shaped on their face: Draghi & Wagner 2008 (*Evolution* 62(2):301-315) and Draghi & Wagner 2009 (*J Evol Biol* 22(3):599-611). Clearing them is cheap and must precede any historical-blindness claim. See `DETECTOR_SURVEY_2026-09-03.md`.
+
+**GATE-5, citations in briefs.** Every citation inside a brief or handoff carries the same evidence tier as a registry row. Survey 1 caught two paper titles I had supplied from recall that appear in neither author's bibliographic record. A brief that sends an agent hunting for a paper that does not exist spends the budget the real question needed.
 
 **GATE-3, no invented measures.** No Prometheus-native quantity may be invented before `Q_DETECTOR_PARTS_REGISTRY.md` records whether the field already has a better-developed one. Lots of microscopes were built. Assembling proven detector parts beats inventing every detector from scratch.
 
@@ -73,6 +75,8 @@ The thesis I opened with is dead and I do not get to mourn it. What replaces it,
 Researchers have measured pieces of reachability and evolvability for decades. What is much less settled is longitudinal, population-wide, causal measurement of how accessibility distributions deform through ancestry, whether tiny changes compose, and whether those changes predict or enable subsequent acquisition. The D-ladder in `Q_DETECTOR_PARTS_REGISTRY.md` exists so that claim can die cleanly.
 
 There are now two kinds of part, and I owe both. **Mechanism parts** are what evolution uses. **Detector parts** are what scientists invented to see them. The synthetic reasoning machine may already be distributed across the first. The collider may already be distributed across the second.
+
+**And the search target has changed shape again, 2026-09-03.** Survey 1 found that by 2003 one researcher held a formal definition of the exploration distribution, a working estimator for it, a longitudinal population readout, and a clean ablation of the mechanism that changes it, and never ran the estimator inside the ablation. So my job is not only to find detectors nobody built. It is also, and more cheaply, to **find pairs of instruments a single research programme already had and never pointed at each other**.
 
 ---
 

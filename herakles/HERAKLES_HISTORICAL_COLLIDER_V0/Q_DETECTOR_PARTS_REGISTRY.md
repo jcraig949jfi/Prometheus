@@ -39,7 +39,41 @@ The hypothesis that replaces the dead one, stated so it can die cleanly:
 
 The standing bet, recorded so it can be scored later: plenty of D1 and D2; possibly much more D3 than currently realised; very little clean D4 or D5.
 
-**That is a bet, not a finding.** The prior that produced the dead hypothesis was badly calibrated, so this one is held loosely and is being actively attacked. A D-level survey is in flight; results land in this file, and no historical-blindness claim may be made until it completes (ruling authorisation 1).
+**That is a bet, not a finding.** The prior that produced the dead hypothesis was badly calibrated, so this one is held loosely and is being actively attacked.
+
+**SURVEY 1 COMPLETE, 2026-09-03. The bet scored correct on all three clauses.** No clean D4 or D5 was found across the six named candidates plus three bonus checks. Full results and citations: `DETECTOR_SURVEY_2026-09-03.md`. Two priors were wrong (Andreas Wagner 2008 is D3, not D2; Wagner & Altenberg 1996 contains one D3-shaped figure), three D3s exist where fewer were expected, and **two unread Draghi & Wagner papers from 2008 and 2009 are D4-shaped on their face**. GATE-2 does not open: the strongest remaining threat is now identified rather than eliminated.
+
+One survey of eight self-nominated candidates is not a base rate over the field, and must not be quoted as one.
+
+---
+
+## The composition finding, and why it is the most important thing in this file
+
+Survey 1 produced a result that sits above any individual registry entry.
+
+**By 2003 Marc Toussaint held every part of a D4/D5 detector and never assembled them.** He had a formal definition of the phenotypic exploration distribution, a working Monte Carlo estimator at 2000 samples per individual per generation, a population-wide longitudinal readout over 1000 to 2000 generations, and a clean two-by-two ablation of the mechanism that changes accessibility. He never ran the estimator inside the ablation. Where he measured accessibility, selection was deliberately flat so nothing could be acquired; where acquisition happened and the mechanism was perturbed, only fitness was plotted.
+
+Running his own estimator inside his own ablation would have produced the result this programme is chasing, in 2003, with no new theory and no new instrument.
+
+The ruling's reframe said that lots of microscopes were built and rarely assembled into one instrument. This is that statement instantiated **inside one researcher's own work across two years**, not across decades and disciplines. It raises the prior that the composition opportunity is real, and lowers the prior that anyone reached it by accident.
+
+A weaker second instance: the MODES toolbox already runs a per-generation, population-wide, single-site knockout and null-substitution scan on every organism, then **reduces it to a scalar count of informative sites**. It is one reduction step from being a D3 accessibility detector and does not take that step.
+
+**Operating consequence.** The seat's search target changes shape. It is no longer only "find a detector nobody built". It is also, and probably more productively, **"find pairs of instruments a single research programme already had and never pointed at each other"**. That is a much cheaper thing to look for and a much cheaper thing to act on.
+
+---
+
+## Definitional trap: "accessibility" is an overloaded word
+
+Recorded so no future retrieval falls into it.
+
+Hu and Banzhaf's **accessibility** is a sum over inbound transition frequencies to a phenotype: how easy that phenotype is to reach from anywhere. It is **inbound, phenotype-indexed, landscape-global**.
+
+This registry's ladder concerns an **outbound, individual-indexed, local** quantity: what is reachable from here.
+
+The consequence is mechanical, not terminological. A quantity indexed by phenotype rather than by individual cannot be carried on a population through time, which is precisely why that line of work never reaches D3 or above except once. In their vocabulary, this programme's quantity maps onto *genotypic evolvability* and *variability*.
+
+Matching on the word alone will mis-classify an entire body of work in both directions.
 
 ---
 
@@ -93,7 +127,7 @@ Each detector part carries: `detector_id`, historical name, inventor and date, *
 - **Quantity:** cumulative usage/persistence of components, compared against a neutral-model shadow population to subtract what drift alone would produce.
 - **Sees:** whether adaptive novelty is being *retained* and accumulated, population-wide and longitudinally.
 - **Cannot see:** **accessibility.** This is an activity and persistence measure, not a reachability measure. It answers "what has been used and survived", not "what could be reached from here".
-- **D-level:** provisionally **D0 on the accessibility axis**, despite being longitudinal and population-wide on its own axis. **This is the classification most likely to be wrong** and is flagged for the survey in flight.
+- **D-level:** **D0 on the accessibility axis. CONFIRMED 2026-09-03** by direct reading of both the 1992 and 1998 papers. The incrementation function is literally existence: a counter increments if the component exists and is used. Diversity counts extant components. The axis is what has been used and survived, never what is reachable. Longitudinal and population-wide, on the wrong axis. The neutral shadow does not rescue it: it randomises selection to give a null for adaptedness, not a measurement of reachability.
 - **Why it is in the registry anyway:** the *neutral shadow* is a detector part in its own right and is separable from the activity statistic. A shadow population that isolates what drift alone produces is directly reusable as a null arm for any accessibility measure.
 - **Evidence:** `MODEL_RECALL_UNVERIFIED`.
 
@@ -103,7 +137,7 @@ Each detector part carries: `detector_id`, historical name, inventor and date, *
 - **Quantity:** the connectivity structure of the set of genotypes mapping to one phenotype, and the set of phenotypes accessible from its boundary.
 - **Sees:** which innovations are adjacent to which neutral sets; a structural upper bound on what selection can ever reach.
 - **Cannot see:** whether an *evolving population* actually occupies the parts of the network that matter, unless a population is tracked on it.
-- **D-level:** typically D2 as usually reported, because it characterises a static structure rather than a population trajectory. Becomes D3 when a population's occupancy is tracked over time.
+- **D-level:** typically D2 as usually reported. **But Andreas Wagner 2008 reaches D3** and the seat's prior that it did not was wrong: Results 2(d) evolves a population of 500 under a neutrality filter and, after each round, counts unique structures in the neighbourhood of the **entire population**, against generations. Not D4, because the acquisition experiment uses single-lineage random walks, a different unit from the populations in the longitudinal figure. Ciliberti, Martin & Wagner 2007 is flat D2: the sampler is Metropolis and the authors exclude selection outright.
 - **Evidence:** `MODEL_RECALL_UNVERIFIED` pending the survey.
 
 ### det-part-07 — Mutation-effect distribution
@@ -112,7 +146,7 @@ Each detector part carries: `detector_id`, historical name, inventor and date, *
 - **Quantity:** the distribution of fitness or phenotype changes over sampled mutations of a genome.
 - **Sees:** the full shape that det-part-02 compresses to a scalar.
 - **Cannot see:** effects requiring more than the sampled number of steps; interactions between mutations unless multi-step sampling is added.
-- **D-level:** anywhere from D1 to D3 depending on sampling design. **This is the quantity the seat was about to reinvent**, and the reason this registry exists.
+- **D-level:** anywhere from D1 to D3 depending on sampling design. **This is the quantity the seat was about to reinvent**, and the reason this registry exists. Toussaint's Monte Carlo exploration-density estimator (2001, and the 2003 thesis) is the best-developed instance found so far and is the one to adopt rather than replace. Wagner & Altenberg's mutational variance is a scalar second moment of the same object.
 - **Evidence:** `MODEL_RECALL_UNVERIFIED`.
 
 ### det-part-08 — Mass replay from checkpoints

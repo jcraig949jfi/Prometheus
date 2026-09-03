@@ -93,6 +93,14 @@ May not: assert a replication succeeded, assert causal equivalence between two m
 
 ---
 
+## 9a. Citations inside briefs and handoffs (added 2026-09-03)
+
+A brief is not exempt from the evidence tiers. Every citation in a brief, handoff or agent prompt carries a tier exactly as a registry row does, and a `MODEL_RECALL_UNVERIFIED` citation must be marked as such **inside the brief**, so the recipient knows it may not exist.
+
+This rule exists because Survey 1 caught two paper titles supplied from recall that appear in neither named author's bibliographic record. The cost is not embarrassment; it is that an agent spends a constrained search budget hunting a phantom instead of answering the question.
+
+Corollary: when naming a paper in a brief, prefer a DOI or a stable URL over a remembered title. A wrong title is worse than no title, because it looks actionable.
+
 ## 10. Session hygiene
 
 - Every session opens by reading `RESPONSIBILITIES.md`, this file, the newest `todo_*.md`, and the V0 `README.md` status block.
