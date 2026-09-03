@@ -1,0 +1,3018 @@
+                 Genome Growth and the
+    Evolution of the Genotype-Phenotype Map
+
+                                          Lee Altenberg
+
+                            Institute of Statistics and Decision Sciences,
+                         Duke University, Durham, NC 27708-0251 U.S.A
+
+    The evolution of new genes is distinct from evolution through allelic sub-
+stitution in that new genes bring with them new degrees of freedom for genetic
+variability. Selection in the evolution of new genes can therefore act to sculpt the
+dimensions of variability in the genome. This "constructional" selection effect is
+an evolutionary mechanism, in addition to genetic modification, that can affect
+the variational properties of the genome and its evolvability. One consequence of
+selective genome growth is a form of genic selection: genes with large potential
+for generating new useful genes when duplicated ought to proliferate in the ge-
+nome, rendering it ever more capable of generating adaptive variants. A second
+consequence is that alleles of new genes whose creation produced a selective ad-
+vantage may be more likely to also produce a selective advantage, provided that
+gene creation and allelic variation have correlated phenotypic effects. A fitness
+distribution model is analyzed which demonstrates these two effects quantita-
+tively. These are effects that select on the nature of the genotype-phenotype map.
+New genes that perturb numerous functions under stabilizing selection, i.e. with
+high pleiotropy, are unlikely to be advantageous. Therefore, genes coming into
+the genome ought to exhibit low pleiotropy during their creation. If subsequent
+offspring genes also have low pleiotropy, then genic selection can occur. If sub-
+sequent allelic variation also has low pleiotropy, then that too should have a
+higher chance of not being deleterious. The effects on pleiotropy are illustrated
+with two model genotype-phenotype maps: Wagner's linear quantitative-genetic
+model with Gaussian selection, and Kauffman's "NK" adaptive landscape model.
+Constructional selection is compared with other processes and ideas about the
+evolution of constraints, evolvability, and the genotype-phenotype map. Empiri-
+cal phenomena such as dissociability in development, morphological integration,
+and exon shuffling are discussed in the context of this evolutionary process.
+
+1 Introduction
+
+In this chapter I discuss an evolutionary mechanism whose target is specifically
+the ability of genomes to generate adaptive variants. It is about the evolution
+
+   Reprinted from Evolution and Biocomputation: Computational Models of Evolution,
+   ed. W. Banzhaf and Frank H. Eeckman, Springer-Verlag Lecture Notes in Computer
+   Sciences vol. 899, 1995, pp. 205-259. Revisions and corrections through November,
+   2023. Web site: https://dynamics.org/Altenberg/
+2
+
+of evolvability. The main focus of action for this process is the genotype-pheno-
+type map (Wagner 1984, 1989), i.e. the way genetic variation maps to phenotypic
+variation. The genotype-phenotype map is the concept underpinning the classical
+concepts of pleiotropy, polygeny, epistasis, constraints, and gradualness.
+
+    The way that genetic variation maps to phenotypic variation is fundamen-
+tal to whether or not that variation has the possibility of producing adaptive
+change. Even when strong opportunity exists for new adaptations in an organism,
+many of its previously evolved functions will remain under stabilizing selection.
+Adaptation requires variation that is able to move the organismal phenotype
+toward traits under directional selection without greatly disturbing traits re-
+maining under stabilizing selection. Variation that disturbs existing adaptations
+as it produces new adaptations -- i.e. variation which is pleiotropic -- will have
+difficulty producing an overall fitness advantage.
+
+    Other aspects of the genotype-phenotype map that affect evolvability include:
+
+ ­ Gradualness: genetic changes with extreme effects are less likely to be ad-
+     vantageous;
+
+ ­ Rugged landscapes: adaptive changes that require the simultaneous altering
+     of several genes are less likely to evolve; and
+
+ ­ Constraints: adaptations for which no genetic variability exists are unable
+     to evolve.
+
+    The question of whether the genotype-phenotype map has evolved so as to
+systematically affect evolvability has been dealt with in a variety of ways in the
+literature. Approaches include the following:
+
+The genome as fluid: Evolvability is not limited; genetic variation exists within
+     populations for any trait one wishes to select on.
+
+The internalist view: The degree of evolvability is a byproduct of the physics
+     of development. It is fortunate that physics permitted evolvability.
+
+Lineage selection: Different developmental systems may have different evolv-
+     abilities; those which happen to have high evolvability will proliferate as
+     species lineages.
+
+Genetic modification: Selection for adaptedness happens to systematically
+     produce high evolvability.
+
+    This paper adds an additional hypothesis to this list:
+
+Constructional selection: Selection during the origin of genes provides a filter
+     on the construction of the genotype-phenotype map that naturally produces
+     evolvability.
+
+    The internalist viewpoint is what this paper will take issue with most. The
+internalist viewpoint holds that the variational properties of the genotype-pheno-
+type map are the result of the physics of development (Goodwin 1989). The pro-
+cess of morphogenesis is proposed as a complex dynamical system toward which
+genes contribute, but which has internal macroscopic properties that determine
+what kinds of phenotypic variability exist.
+                                                                                                       3
+
+    One can ask, however, whether morphogenetic dynamics could have been
+shaped by evolutionary forces that systematically affect the nature of develop-
+mental constraints, or the smoothness of the adaptive landscape, or its evolv-
+ability. Here I discuss an evolutionary mechanism by which selection can come
+to act indirectly on evolutionary potential, as a consequence of how genes come
+into being in the first place.
+
+    The main idea, in a nutshell, is this: the genes that stably exist in a genome
+share the common feature that, when they were created, they produced a selec-
+tive advantage for the organism. But when a new gene is created, it not only
+produces its current phenotypic effect, but carries with it a new "neighborhood"
+in "sequence space" -- the kinds of variants that it can in turn give rise to.
+The phenotypic character of this neighborhood depends on the gene's mode of
+action. Different modes of gene action can be expected to have different overall
+likelihood of producing adaptive variants. The fact that a gene's existence is
+predicated on it having originally produced a selective advantage means that
+the accumulation of new genes in the genome should be biased toward modes of
+action whose variants are more likely to be fruitful in adaptation.
+
+    Since there is a diversity of modes of gene action, the question remains as
+to why there are the kinds there are, in the frequencies they are found, within
+the genomes of organisms. This chapter presents a theory about the statistical
+properties of genotype-phenotype maps, and how these statistics would be ex-
+pected to change in the course of the evolutionary construction of the genome
+toward ways that facilitate the generation of adaptive variants.
+
+    There are two basic aspects to the idea of a genotype-phenotype map. One
+can think of the genotype as a "representation" or description of the phenotype.
+Representation has two aspects: generative and variational. The generative as-
+pect of a representation is how the representation is actually used to produce the
+object, which in genetics would be the process of gene expression and its integra-
+tion in development. It is not the mechanisms of how this map is accomplished
+that is relevant to evolvability; rather, what matters is the variational aspect of
+a representation -- how changes in the representation map to changes in the ob-
+ject. Variational aspects can be described by their statistical properties without
+having to deal with the generative mechanisms. The principal variational aspect
+I will be concerned with is pleiotropy -- the constellation of phenotypic effects
+from single mutations.
+
+1.1 Bonner's Low Pleiotropy Principle
+
+Bonner (1974) has articulated a basic "design principle" for the genotype-pheno-
+type map necessary to allow the generation of adaptive variants through random
+genetic variation, a principle of low pleiotropy:
+
+     We presume that it is of a distinct advantage to keep a number of the
+     units of gene action of the organism quite independent of one another.
+     The reason for this seems straightforward: mutations that affect a num-
+     ber of construction units are more likely to be lethal than those that
+4
+
+     affect only one. Or to put it another way, the fewer the interconnections
+     of gene action (the less the pleiotropy), the greater the chances of its
+     being a viable mutant. A viable mutant may be one that appears late
+     in development, such as the pigmentation of hair, eyes, or feathers, or
+     one that acts in a small developmental unit that is independent of the
+     others. (1974, p. 61)
+
+Lewontin (1978) proposed the low pleiotropy principle in a somewhat different
+manner, as a principle of "quasi-independence", i.e. that there must be "a great
+variety of alternative paths by which a given characteristic may change, so that
+some of them will allow selection to act on the characteristic without altering
+other characteristics of the organism in a countervailing fashion: pleiotropic and
+allometric relations must be changeable."
+
+    However, this design principle suffers from the "for the good of the species"
+problem. Even though a property might be "good for the species", it can only
+evolve if organisms bearing it (or "replicators" to be more general (Brandon
+1990)) have higher fitness. Although it would be a marvelous design for the
+organism to have a genome organized for its future adaptive potential, this future
+advantage does not give an organism the present advantage it needs in order to
+pass on such a trait.
+
+2 Constructional Selection
+
+All variational aspects of the genotype-phenotype map face the "good of the
+species" problem, because variation is not the phenotype of an organism, but
+a property of genetic transmission between organisms. How, therefore, can or-
+ganismal selection get a "handle" on the processes that produce variation? The
+general answer to this question is that there must be correlations between varia-
+tional properties and properties affecting organismal fitness. These correlations
+can come about through diverse means.
+
+    In the case of variational properties like recombination and mutation rates,
+correlations can be induced by the evolutionary dynamics of modifier genes --
+genes that control recombination, mutation, and so forth. Genes modifying re-
+combination rates, for example, can evolve linkage associations to genes under
+selection whose transmission they affect. In this case, it is the modifier gene
+that provides natural selection with the "handle" to change recombination rates
+(Liberman and Feldman 1986, Altenberg and Feldman 1987).
+
+    Modifier genes are rather specialized mechanisms. But here I consider a
+means by which selection can gain a handle on the variational properties of
+any gene, through the selective forces operating during the origin of the gene.
+All genes face the problem of selection during their creation, and those genes
+that produce a selective disadvantage never become stably incorporated in the
+genome. Therefore, existing genes share the common history of having once pro-
+duced a selective advantage to the organism. But new genes bring with them new
+degrees of freedom for variability in the genome. These new degrees of freedom
+are of two types:
+                                                                                                       5
+
+Type I: new genes serve as new templates for further genome growth, and
+Type II: new genes afford new sites at which allelic variation can occur.
+
+The phenotypic effects of either of these new degrees of freedom depend on the
+physical nature of the gene's action. And the gene's mechanisms of action is
+unlikely to change radically between its creation and subsequent gene duplica-
+tions and allelic variations. Therefore it is reasonable to expect a correlation to
+exist between the phenotypic or fitness effects of a newly created gene and subse-
+quent duplications and allelic changes. This then is a means by which variational
+properties of the genome can become correlated with organismal selection.
+
+    Therefore, without the postulation of additional modifier genes, selection
+during the creation of new degrees of freedom for genetic variability can gain a
+handle on the quality of those degrees of freedom. The strength of this handle
+depends on the strength of the correlations. When referring to this process, I
+will summarize it with the term "constructional selection", since it is tied to the
+construction of new genes (Altenberg 1985).
+
+2.1 Riedl's Theory
+
+Riedl's (1977) theory for the evolution of "genome systemization" is the main
+earlier example of a constructional selection theory for the genotype-phenotype
+map. He considers the situation where functional interactions arise in the organ-
+ism that require the coordinated change of several phenotypic characters in order
+to produce adaptive variants. When this would require simultaneous mutations
+at several genes, he argues that the evolution of a new gene that produces the
+needed coordinated variability -- a "superimposed genetic unit" -- is a far more
+likely possibility. Thus Riedl is proposing that the genotype-phenotype map can
+evolve in directions that facilitate adaptation through selective genome growth.
+
+2.2 Fine Points
+
+It is important at this point to be clear that this is not an argument that most
+adaptive evolution happens through the origin of new genes, as opposed to allelic
+substitution. Rather, I am proposing that the events surrounding the creation
+of new genes may play a special role in the evolution of the genotype-phenotype
+map because of their distinct property of adding new degrees of freedom to the
+genome.
+
+    Also, it should be understood that "new genes" can refer equally to new parts
+of genes or new clusters of genes, i.e. new sections of DNA sequence that are
+of functional use to the organism. Therefore, the arguments here apply to such
+elements as exons, promoters, enhancers, operators, other regulatory elements,
+etc..
+
+    Throughout this chapter, pleiotropy must be understood to refer not to mul-
+tiple effects on arbitrary "characters" of the organism, since these are artifacts of
+measurement and description, but to organismal functions that are components
+of adaptation, what Nemeschkal et al. (1992) refer to as a "unit of characters
+6
+
+working together to accomplish a common biological role". Moreover, in the case
+of new genes, the definition of "multiple" effects that is germane as a definition
+of pleiotropy is when the gene not only produces variability for functions un-
+der directional selection, but also disturbs functions under stabilizing selection.
+"Low pleiotropy" will refer to genes that affect mainly functions under direc-
+tional selection and leave functions under stabilizing selection unaffected.
+
+2.3 Pleiotropy and Constructional Selection
+
+Let us examine Bonner's low pleiotropy principle in the context of the genome
+growth process. New genes which have fewer pleiotropic effects when added to
+the genome, whose action causes the phenotype to change mainly in dimensions
+that are under directional selection, stand a better chance, by Bonner's principle,
+of providing a selective advantage. This is would hold even if that chance is still
+slight. Genes which disturb many adapted functions of the phenotype are unlikely
+to be advantageous, and thus would not be incorporated in the genome.
+
+    Therefore, selection can filter the pleiotropy of genes as they are added to
+the genome. If there is any correlation between the pleiotropic effects during
+the gene's addition and the pleiotropy of subsequent additions or allelic changes
+in the gene, then the genome shall have expanded its degrees of freedom in
+directions with lower pleiotropy.
+
+    The effects of constructional selection on the two forms of genetic variation,
+Type I and II above, are distinct, so each is taken up in turn.
+
+2.4 Type I Effect: The Genome as Population.
+
+If there are correlations between the phenotypic effects of duplicated genes and
+the effects of their subsequent duplications during macroevolutionary time scales,
+then a novel form of intragenomic "genic" selection process becomes possible.
+This selection process is based on looking at the genome as a "population" of
+genes, as in the case of genic selection in the evolution of transposable elements.
+The idea that transposable elements are genetic parasites propagating within
+the genome (Cavalier-Smith 1977, Doolittle and Sapienza 1980, Orgel and Crick
+1980) lead to the idea that the genome could be considered a population of genes,
+within which a new level of selection can operate when certain sequences can
+proliferate within the genome. Such "genic" selection is usually associated with
+transposable elements, whose activity is generally in conflict with organismal
+selection. The type I effect, however, is a form of genic selection in harmony
+with organismal selection, which, moreover, has organismal selection as a sub-
+process.
+
+    Where do new genes come from? Although there is a certain amount of de
+novo synthesis of DNA in the genome, most genes originate from template based
+duplication of existing sequences. And while the vast majority of gene duplica-
+tions may go to extinction, the genes currently functioning in an organism will
+possess an unbroken backward genealogy to earlier, ancestral genes (complicated
+perhaps by the occasional reactivation or insertion of pseudogene sequences). So
+                                                                                                       7
+
+there exists an "intra-genomic phylogeny", which is actually beginning to be
+taken as an object of study as the accumulation of DNA sequences allows the
+construction of "gene-trees" (Dorit and Gilbert 1990, Dorit et al. 1991, Strong
+and Gutman 1992, Burt and Paton 1992, Klenova, et al. 1992, Streydio et al.
+1992, Haefliger et al. 1989).
+
+    If one picks any functioning gene in the genome, what would a typical story
+for its origin be? One could generally list:
+
+ 1. Sequence duplication;
+ 2. Fixation in the population, through selection or drift;
+ 3. Maintenance of function by selection;
+ 4. Sequence evolution under mutation and selection.
+
+    Differences in gene properties that systematically bias the chances of the
+above events can produce a Darwinian process on the level of genome-as-pop-
+ulation. Darwinian process have three basic elements: viability, fecundity, and
+heritability. If there exist properties which show heritable variation in viability
+or fecundity, those properties can evolve over time. Viability, fecundity, and
+heritability each have their analogs on the level of genome-as-population:
+
+Viability:
+     The viability of a genetic sequence is simply its survival in the genome.
+     This will depend on whether selection establishes it in the population, and
+     maintains it against mutational degradation or replacement by other genes.
+     This in turn depends on1:
+      1. there being adaptive opportunity for properties of the sequence;
+      2. the sequence having functional properties which are not disrupted by
+          new functional contexts; and
+      3. the sequence having properties that allow its duplication without dis-
+          rupting existing functions of genes with which it interacts.
+
+Fecundity:
+     The fecundity of a genetic sequence is the rate at which copies of it appear
+     in the genome. This depends on:
+      1. the rate of illegitimate recombination events involving that sequence;
+          and
+      2. whether the sequence codes for its own duplicative transposition.
+
+1 Note added in revision: Originally these three items were placed under it Fecundity,
+   below, because I conceived of taking the "census" of offspring genes after they had
+   been established as a functional genes. Censusing immediately after gene duplication
+   produces a cleaner distinction between intragenomic viability and fecundity, and is
+   adopted here. The problem of when to census also arises in standard population ge-
+   netics when trying to distinguish viability fitness components from fecundity fitness
+   components.
+8
+
+Heritability:
+     Heritability here refers to ancestral and offspring genes having correlated
+     properties, and depends on:
+      1. Conservation of the property of a gene over the time scale on which gene
+          duplications occur; and
+      2. Carry-over of the property from ancestral to offspring genes.
+
+In each case above, one could just as well substitute "genetic element" for "gene",
+since the principles apply equally well to exons, promoters, regulatory sequences,
+and so forth.
+
+    If there are systematic differences between sequences in the likelihood that
+duplications of them give rise to useful new genes (viability in the genome),
+and these different likelihoods are conserved between gene origins, and carried
+from ancestral to offspring genes (heritability), then the genome will become
+populated with genes that are better able to give rise to other genes. The type
+I, or "genic selection" effect of constructional selection, therefore, is to increase
+the genome's ability to evolve new genes. This is an effect on the variational
+properties of the genome.
+
+    The genome-as-population analogs of viability, fecundity and heritability in
+the type I effect can be contrasted with these analogs in the case of transposable
+elements. For such "selfish" DNA, viability as genes is low: on a macroevolu-
+tionary time scale, individual copies of transposons are transient, since they
+exist either as transient allelic polymorphisms or, if they ever go to fixation, are
+deleted or silenced rapidly because as alleles they are usually neutral or dele-
+terious, and genetically unstable. The fecundity of transposons in the genome,
+however, is unsurpassed, and overcomes their sub-viability in the genome as in-
+dividual copies. Furthermore, their heritability as genes is extremely high, since
+offspring genes mostly have the same ability to transpose. Thus the type I effect
+of constructional selection and "selfish DNA" are two kinds of intragenomic genic
+selection, and are in a sense opposite points within a continuum defined by the
+genome-as-population analogs of the Darwinian elements, viability, fecundity,
+and heritability. 2
+
+2.5 Type II Effect: Correlated Allelic Variation.
+
+If there are correlations between the phenotypic effects of duplicated genes and
+the effects of their subsequent allelic variants, then selection during the creation
+of new genes can come to affect the nature of allelic variants produced in the
+genome. This is what I call the type II or correlated allelic variation effect of
+selective genome growth. In particular, if a new gene was advantageous because
+
+2 Note added in revision: Transposable elements and normal genes represent the in-
+   tragenomic analogues of "r-" versus "K-selection": transposable elements have high
+   "r", reproducing rapidly but with low genomic viability; conversely, functioning or-
+   ganismal genes have low "r", being duplicated infrequently, but these duplications
+   may come to exhibit a "K" strategy of higher intragenomic viability--i.e. a higher
+   chance of being established and preserved by organismal selection.
+                                                                                                       9
+
+it moved the phenotype along dimensions under directional selection, then sub-
+sequent alleles of that new gene may also be likely to be advantageous if they
+vary the phenotype along the same "lines" as occurred during the gene's orig-
+inal incorporation in the genome. By "likely", I mean relative to the effects of
+allelic variation at all the genes that were generated by duplication processes,
+but never fixed in the population and maintained by selection. If the pleiotropy
+of a gene is a relatively fixed result of its mode of action, then there will be a
+correlation between the phenotypic effects of the gene's origin and its subsequent
+allelic variation. If low pleiotropy helped the gene become established in the first
+place, then the subsequent low pleiotropy of its allelic variants would enhance
+their likelihood of being adaptive rather than universally deleterious.
+
+    An important case of the correlated allelic variation effect is "function split-
+ting", where a gene that has been selected as a compromise for carrying out
+several organismal functions is duplicated and the separate copies can evolve
+to specialize in some subset of functions. An example is the duplication of the
+hemoglobin gene and its specialization for fetal or postnatal oxygen transport
+conditions. In this case, the duplication causes changes in the genotype-pheno-
+type maps of both resulting genes, with the net result of lowering the pleiotropy
+of allelic variation at these genes, and better optimization of the adaptive func-
+tions. This is an area which has already received a good deal of empirical and
+theoretical study (Ohta 1991, 1988, Kappen et al. 1989, Li 1985).
+
+    The type II effect is entirely dependent on there being correlations between
+the phenotypic effects of a new gene and the effects of allelic variation at that
+locus. For genes of recent origin, correlations would be expected. However, over
+time these correlations would be expected to weaken due to several factors.
+First, substantial sequence changes may occur as the gene diverges in function
+from that of its ancestral state. Second, whatever novel advantage the gene may
+have offered when it first arose will tend to change from being a "luxury" to
+being a necessity, as other functions evolve conditioned on the current state of
+that gene. This is what Riedl (1977) calls "burden" (and what Wimsatt and
+Schank call "generative entrenchment" (Schank and Wimsatt 1987, Wimsatt
+and Schank 1988). Histones, polymerases, snRPs, etc, are extreme examples of
+burdened genes, since effectively all characters of the organism depend on them;
+their mutations are of necessity highly pleiotropic, and they are extremely well
+conserved. So over macroevolutionary time scales, the correlated allelic variation
+effect may become "stale" once a gene is in place. The low pleiotropy might be
+kept "fresh", however, if changing selection or polymorphism produces a history
+of variation in the gene to which other genes coadapt.
+
+2.6 An Overall Picture of Genome Growth.
+
+These considerations lead to the following picture of the intra-genomic phy-
+logeny: There should be a static core of genes which have ceased to give rise
+to new genes in the genome; these may be extremely ancient and functionally
+burdened, or so highly specialized as to have little adaptive potential for dupli-
+cations. Once genes enter this core, they should tend to remain there (though
+10
+
+they may continue sequence evolution). There should in addition be a "growth
+front" in the genome consisting of genes that are prolific in generating offspring
+genes. The growth front would gradually lose genes to the static core once they
+were created, but would be renewed by the influx of newly created genes, which
+would be the most likely to give rise to the next set of new genes. On occasion,
+static genes would be revived into the growth front by new adaptive opportuni-
+ties conferred by changes in organismal selection. In addition, there would be the
+various "exceptional" families of genes, including transposable elements, highly
+repetitive genes selected for quantity production, "junk" and structural DNA,
+and so forth.
+
+2.7 Constraints and Latent Directional Selection.
+
+An examination of the situations discussed in the literature in which the geno-
+type-phenotype map constrains evolution shows them to be of two basic kinds:
+kinetic and range constraints. A range constraint is simply where no genetic vari-
+ation exists for phenotype or specific combination of phenotypic changes. Kinetic
+constraints emerge from the population genetic dynamics when the probability
+of creating given phenotypic variants is vanishingly low. A softer version of this
+is a kinetic bias, in which the most probable variant that responds to a selective
+pressure has specific phenotypic forms. The problem of adaptation on "rugged
+fitness landscapes" (Kauffman 1989a) is an example of kinetic constraints, in
+that what keeps a population at a local fitness peak is the improbability of gen-
+erating fitter variants (in fact it is transmission probabilities that define what a
+neighborhood is in the sequence space). This includes the situation considered
+by Riedl (1977), where mutations are needed at several loci to produce a given
+phenotype.
+
+    The general consequence of either range or kinetic constraints is that to vary-
+ing extents, organisms will be suboptimally adapted. There may be phenotypes
+that would be more adapted if only the genome could produce them. The pop-
+ulation may have reached a mutation-selection balance, in which new variants
+are all deleterious, and so appear to be at an adaptive peak, when the lack of
+fitter variants is due to kinetic or range constraints. In such cases one could say
+that there exists a "latent" directional selection, which would become visible if
+genetic variation existed in this direction.
+
+    Riedl's idea is that much of the adaptive opportunity for the evolution of new
+genes may come from latent directional selection. But constructional selection
+effects would apply to conditions of normal directional selection as well. There
+would be adaptive opportunity for any new gene whose effects on the pheno-
+type were in the direction of the current directional selection on the organism.
+Therefore, genes may to some extent reflect the historical sequence of direc-
+tional selection experienced by the organism's lineage. Even ancient and highly
+functionally burdened genes may reveal the functions they conferred in their
+origin. For example, homeotic mutations which change insect segment identity
+are universally deleterious. But if an alteration of segment identity was what
+                                                                                                      11
+
+the gene did when it was created (and thereby presupposed to have been selec-
+tively advantageous), then the gene's current function may be a reflection of the
+directional selection that existed at the time of its origin.
+
+2.8 Models Illustrating Constructional Selection
+
+To give explicit mathematical form to the ideas sketched so far about genome
+growth, several models will be developed. The first is a simple model showing
+both type I and II effects, which uses probability distributions of fitness effects
+for gene additions and subsequent allelic variation. The analysis shows the expo-
+nential quality of the genic selection effect, and the dependence on correlations
+in the correlated allelic variation effect. The second and third models are further
+illustrations of the correlated allelic variation effect, using as concrete examples
+of genotype-phenotype map functions:
+
+ 1. Wagner's linear quantitative-genetic model with Gaussian stabilizing selec-
+     tion (Wagner 1989); and
+
+ 2. Kauffman's (1989a) epistatic "NK" adaptive landscape model.
+
+The linear model illustrates latent directional selection arising from constraints
+on the range of phenotypic variation produced by the genotype, and exhibits
+selection for new genes that overcome these range constraints. The NK model
+illustrates latent directional selection arising from kinetic constraints due to
+the ruggedness of the adaptive landscape, and exhibits selection for genes that
+overcome the kinetic constraints and produce smoother adaptive landscapes.
+
+    The Discussion follows, with an overview of the results, an examination of
+relevant empirical phenomena, and a discussion of the relation of constructional
+selection to current thinking about the evolution of evolvability.
+
+3 A Fitness Distribution Model
+
+The effects of constructional selection can be described directly in terms of the
+fitness distributions of new mutations, without having to specify the genotype-
+phenotype maps that give rise to these distributions. In the case of the genic
+selection effect, the mutation is a gene duplication; in the case of the correlated
+allelic variation effect, the mutation is an allelic change.
+
+    In this model, a new gene is randomly created from the existing genes in the
+genome. Selection then determines whether the gene is kept in the genome. The
+model considers what happens when either allelic mutations or subsequent gene
+duplications occur. The genes in the population come in different types that
+determine the fitness distribution of their mutations. The main elements in the
+model are as follows. Let:
+
+G be the space of different types of genetic sequences;
+pi be the probability that a newly created gene is of type i  G;
+w be the fitness of the genome with the new gene, relative to its value before
+
+     the addition;
+12
+
+gi(w) be the probability that a new gene of type i has relative fitness effect w;
+xi be the probability that a new gene of type i is kept in the genome by selection.
+
+    The probability density gi(w) would be the result of the phenotypic properties
+of the gene, as described under Viability in Sect. 2.4, including its pleiotropy,
+modularity, and adaptive opportunity. A concrete illustration is developed in
+Sect. 5, on Kauffman's NK adaptive landscapes.
+
+    In a simple-minded approach, a gene would be kept by selection if it increased
+fitness, i.e. if w > 1. Then the probability that the gene is kept is
+
+            
+
+    xi =       gi(w) dw .
+
+          w=1
+
+But in finite populations, or in any population dynamics where there is a chance
+that a gene will not be passed down to any offspring, even a gene increasing
+fitness can sometimes be lost from the population. The probability that a new
+gene is successfully incorporated in the genome will be some increasing function
+(w) of its fitness w. Classical results using branching process models or diffusion
+approximations give a success probability of 0 if w < 1, and (w)  2(w - 1) for
+w  1 (Haldane 1927, Crow and Kimura 1970). So a more general formula for
+the likelihood that a new gene of type i is fixed is:
+
+          
+
+    xi = (w) gi(w) dw .                                           (1)
+
+    0
+
+The fixation probability over all random newly created genes is:
+
+                                           x = xi pi .
+
+                                                                      iG
+
+    With these definitions, results for both the genic selection effect and the
+correlated allelic variation effect will be derived.
+
+3.1 The Correlated Allelic Variation Effect
+
+Here we will see how selection on the creation of new genes can cause subsequent
+allelic variation of the genes to be more likely to be adaptive. We will look at
+the fitness distributions of alleles from all new genes and from only those genes
+that selection stably incorporates into the genome.
+
+    Suppose that a newly created gene of type i gives rise to allelic variants.
+Let the allelic fitnesses, w , be distributed with probability density fi(w ). No
+assumptions need to be made about this density, so it would certainly include
+the biologically plausible case in which most of the alleles are deleterious. For a
+gene or type i, we see that the proportion
+
+                                                                          
+
+                                     Fi(w) = fi(y) dy ,
+
+                                                                        w
+
+of its alleles are fitter than w.
+                                                                       13
+
+Result 1 (Correlated allelic variation)
+Let
+
+F (w) be the proportion of new alleles of randomly created genes that are fitter
+     than w, and
+
+F (w) be the proportion of new alleles of stably incorporated genes that are fitter
+     than w.
+
+Then
+
+      F (w) = F (w) + Cov[Fi(w), xi/x] .                               (2)
+
+Proof. The proportion of alleles that are fitter than w, among randomly created
+gene, is
+
+                                      F (w) = Fi(w) pi ,
+
+                                                                      iG
+
+while among genes that are stably incorporated in the genome it is
+
+F (w) = Pr[w > w | the gene was fixed]
+         = Pr[w > w, and the gene was fixed] / Pr[the gene was fixed]
+
+         = Fi(w) xi pi / x = F (w) + Cov[F (wi), xi/x] .
+
+                 iG
+
+    If there is a positive correlation between the fixation probability
+
+                                                                  
+
+                                    xi = (w) gi(w) dw
+
+                                                                0
+
+of a new gene, and the fitness distribution
+
+                                                                            
+
+                                      Fi(w) = fi(y) dy
+
+                                                                          w
+
+of its alleles, then F (w) is greater than F (w). Similarity between the functions
+gi(w) and fi(w) would produce a positive covariance. The biological foundation
+for a positive covariance would include:
+
+ 1. there continuing to be adaptive opportunity for variation in the phenotype
+     controlled by the gene, and
+
+ 2. the same suite of phenotypic characters being affected by the alleles of the
+     gene as were affected during the gene's origin.
+
+With these plausible and general provisions, we see how selection on new genes
+can also select on the fitness distributions of the alleles that these genes generate.
+14
+
+3.2 The Genic Selection Effect
+
+Now we will see how selection on new genes can increase the chance that new
+genes are adaptive when created. We will examine how genes with a higher
+chance of producing adaptive variants tend to proliferate as the genome grows,
+as reflected in the evolution of pi. The model I am considering is this: genes are
+randomly picked from the genome and copied. Their fitness effect determines
+whether they are stably incorporated in the genome. If they are, then the pool
+of genes subject to duplication is increased by one, and the process repeated. In
+this way genes of different types come to proliferate at different rates within the
+genome.
+
+    Consider the process of sequence duplication that is the starting point for the
+history of every gene (or part of a gene). One can think of the rate that a gene
+gives rise to new, successfully incorporated genes as its "constructional fitness".
+This will be the product of
+
+ 1. the rate that copies of the gene are produced (intragenomic fecundity), and
+ 2. the likelihood that they are fixed in the genome by having provided a selective
+
+     advantage to the organism (intragenomic viability).
+
+While genetic elements such as transposons or highly repetitive sequences may
+proliferate because of factor 1, here I wish consider only factor 2, and assume no
+systematic differences among sequences in the rate that gene copies are produced.
+
+Perfect Transmission of the Gene's Type. Suppose for now that copies of
+genes of type i are also of type i. Because the gene's type is transmitted from a
+gene to its offspring genes, this provides a correlation between the fitness effects
+of a new gene and its subsequent duplications. As in equation (1), a new gene of
+type i will have probability xi of fixation due to its yielding a selective advantage.
+
+    Let
+
+ni(t) be the number of genes in the genome of type i at time t,
+
+N (t) = iG ni(t) be total number of genes in the genome at time t, so that
+     the frequency of genes of type i is pi(t) = ni(t) / N (t), and
+
+ be the rate each gene is duplicated per unit time.
+
+One then obtains this differential equation for the change in the composition of
+the genome (approximating the number of genes with a continuum), using the
+fixation probability, xi, for new genes of type i:
+
+which has solution:  d
+                     dt ni(t) =  xi ni(t) ,
+                     ni(t) = exit ni(0) .
+                                                                                           15
+
+The ratio between the frequencies in the genome of sequences with different
+
+constructional fitnesses grows exponentially with the degree of difference between
+
+them:                  ni(t) = e(xi-xj)t ni(0) .
+
+                       nj (t)                          nj (0)
+
+Result 2 (Fisher's Theorem applied to genome growth)
+The average constructional fitness of the genome,
+
+                              x(t) = xi pi(t) ,
+
+                                           iG
+
+which is the portion of new duplicated genes that go to fixation, increases at rate
+
+                       d
+                          x(t) =  Var(x) > 0 .
+
+                       dt
+
+Proof.
+
+        d                     d
+           x(t) =      xi dt pi(t)
+        dt         iG
+
+           =           xi  [  d   ni(t)  /  N  (t)  -  ni  (t)  d   N  (t)  /  N  (t)2]
+                              dt                                dt
+                   iG
+
+                                  x2i  ni(t)  -                                         2
+           =                                     N (t)2
+                           iG                                       xi ni(t)
+              N (t)
+                                                                iG
+
+           =                  x2i pi(t) - x(t)2
+
+                       iG
+
+           =  Var(x) > 0 .
+
+    This result is Fisher's fundamental theorem of Natural Selection (Fisher
+1930), but here, what is evolving is the probability of gene duplications giving
+rise to new useful genes.
+
+Imperfect Transmission of the Gene's Type. The model can be extended
+to less-than-perfect heritability of constructional fitness by defining a transmis-
+sion function, T (i  j), which is the probability that a gene of type j gives
+rise to a copy of type i (Slatkin 1970, Altenberg and Feldman 1987). It satisfies
+conditions
+
+               T (i  j) = 1 for all j  G, and T (i  j)  0 for all i, j  G .
+
+               iG
+16
+
+Here, the fraction of the new genes that are of type i is
+
+                             pi(t) = T (i  j) nj(t) / N (t) .
+
+                                                        i,jG
+
+The dynamics now become:
+                              d
+                              dt ni(t) =  xi T (i  j) nj(t) .
+
+                                                                       jG
+
+Price's Covariance and Selection theorem (Price 1970, 1972) emerges when we
+consider selection in the presence of arbitrary transmission:
+
+Result 3 (Price's Theorem applied to genome growth)
+For a gene of type j, let
+
+                           j = xi T (i  j) .
+
+                                    iG
+
+be the fraction of its duplicate offspring genes that are stably incorporated in the
+
+genome. Then rate of change in the average constructional fitness of the genome
+
+evaluates to      d
+                     x(t) =  Cov(, x) + [(t) - x(t)] x(t) ,
+
+                  dt
+
+where
+
+       (t) = i pi(t), and Cov(, x) = i xi pi(t) - (t) x(t) .
+
+              iG                           iG
+
+Proof. The portion of gene duplications that go to fixation is
+
+    x(t) = xi pi(t) = xi T (i  j) nj(t) / N (t) = jnj(t)/N (t) .
+
+       iG               iG jG                                              jG
+
+This changes at the rate:
+
+       d                xi T (i  j)  dnj(t) /N (t)  -  dN (t)              nj  (t)/N  (t)2
+          x(t) =                       dt                dt
+                  i,jG
+       dt
+
+              =  xi T (i  j) xj T (j  k) nk(t) / N (t)
+
+                  i,jG                 kG
+
+                                                                           
+
+                  - nj(t)        xk T (k  h) nh(t) / N (t)2
+
+                           k,hG
+
+              =  j xj T (j  k) nk(t) / N (t)
+
+                  jG           kG
+
+                  - nj(t) h nh(t) / N (t)2
+
+                           hG
+
+                                                    2
+
+              =  jxjpj(t) -   xjpj(t)
+
+                  jG                   jG
+
+              =  Cov(, x) + [(t) - x(t)] x(t) .
+                                 17
+
+    The covariance term is between a gene's probability of fixation and its off-
+spring genes' average probability of fixation. Note that the frequencies used in
+the covariance are the frequencies of different types among gene duplications,
+not the current genes in the genome.
+
+    A positive correlation between i and xi is to be expected if a gene and
+its offspring genes affect the same sort of phenotypic characters, and the adap-
+tive opportunity that existed for these characters still exists. Genes (or gene
+parts, e.g. exons) that code for generally useful products, such as promoters,
+transmembrane linkers, catalytic sites, developmental controls, etc., would have
+such continuing adaptive opportunity, and they would contribute to making
+Cov(, x) > 0.
+
+    The term (t) - x(t) is the net bias in the transmission of constructional
+fitness between a gene and its offspring genes. A conservative assumption is that
+the transmission bias is negative -- i.e. the chance that gene duplications are
+adaptive is less for a gene's grand-offspring than it is for the gene's offspring.
+This is a reasonable assumption since duplications of a gene (or gene part) would
+diverge to various extents from the ancestral gene's effects, selection may change,
+or the adaptive opportunity for new copies of the gene may get saturated.
+
+    But even with a negative transmission bias, the average constructional fitness,
+x(t), increases as long as
+
+(t) - x(t) > -Cov(, x) / x(t) .  (3)
+
+    As an illustrative example, we can set i = xi with  < 1, a downward
+transmission bias. Still, x(t) increases as long as
+
+>  1                 .           (4)
+
+   1 + Var(xi/x(t))
+
+Evaluation of (4) requires evaluating the magnitude of Var(xi/x(t)), which de-
+pends on the distribution of constructional fitness values in the genome. Let q(x)
+be the portion of gene duplications with constructional fitness x. The conditions
+for (4) under a variety of distributions are:
+
+­ A uniform distribution, q(x) = 1: x increases if  > 3/4;
+­ An exponential distribution, q(x) =  e-x ( is the normalizer): for large
+
+   , x increases if  > 1/2;
+­ A Gaussian initial distribution, q(x) =  e-x2 : for large , x increases if
+
+    > 2/;
+18
+
+­ A Gamma distribution,
+
+                   q(x) =  (x; , ) =       x-1 e-x/ (), x > 0,                 :
+
+                                          0,                      x  0,
+
+    for  large  ,  x  increases  if    >      .  Since  one  can  choose    >  0  close  to  0,
+                                          +1
+
+    distributions can be found for any arbitrarily small  in which the average
+
+    constructional fitness of the genome grows.
+
+    Thus, even for arbitrarily strong downward transmission bias, where the
+probability of a gene giving rise to a useful offspring gene decreases by a factor
+ each gene duplication, the average probability in the genome that a gene du-
+plication produces a selective advantage may still increase in time, depending on
+the initial distribution of these probabilities in the genome.
+
+    As ni(t) evolves, both Cov(, x) and the net transmission bias will change.
+Under a wide variety of well-behaved transmission functions, where the net trans-
+mission bias initially satisfies equation (3), the distribution of constructional fit-
+ness values will shift upward until the net bias balances the covariance or the
+covariance is exhausted.
+
+    Results 1 and 3 are extensions of a line of theorems in quantitative genet-
+ics based on the covariance of different traits with fitness, including Fisher's
+fundamental theorem, Robertson's "secondary theorem of Natural Selection"
+(Robertson 1966), and a result by Price (1970) on gene frequency change, which
+were elaborated upon by Crow and Nagylaki (1976) and Lande and Arnold
+(1983). Price's theorem has been applied in a number of different contexts in
+evolutionary genetics, including kin selection (Grafen 1985, Taylor 1988), group
+selection (Wade 1985), the evolution of mating systems (Uyenoyama 1988), and
+quantitative genetics (Frank and Slatkin 1990). I have applied it to performance
+analysis of genetic algorithms in Altenberg (1994, 1995).
+
+4 Wagner's Linear Quantitative-Genetic Model with
+     Gaussian Selection
+
+Wagner (1984, 1989) has investigated evolutionary aspects of the genotype-
+phenotype map through analysis of linear maps combined with a number of
+different fitness surfaces, including "corridor" and Gaussian fitness functions. In
+this section I investigate the correlated allelic variation effect of genome growth
+using a variant of Wagner's (1989) model of "constrained pleiotropy". The model
+here is a multilayered linear map from the genotype to the organismal pheno-
+type, and from the phenotype to the adaptive functions they carry out. Figure
+1 illustrates this model.
+
+    What I want to capture with this model is the following idea: genes don't
+"know" a priori what they are doing, what functions they are carrying out;
+i.e. there is "universal pleiotropy". Pleiotropic constraints may limit the geno-
+type's ability to optimize simultaneously all the functions it controls, so that
+the best phenotype achievable, given the genetic variability available, may be a
+                                19
+
+Functions        z QTy*
+                          Q
+under      QTy
+selection               y*
+
+Q PHENOTYPE T          OPTIMUM
+
+FUNCTION
+MAP
+
+Phenotype y
+
+GENOTYPE
+
+A PHENOTYPE
+
+MAP
+
+     Genotype x
+
+Fig. 1. Wagner's linear model of the genotype-phenotype map with a Gaussian fitness
+function on the departure, z, from optimality.
+
+compromise between tradeoffs that represents a departure from the global selec-
+tive optimum. The genotype may appear to be at a selective peak, but if new
+dimensions of genetic variability were opened up, this peak would be revealed
+to be on the slope of a larger selective peak.
+
+    Therefore, at these constrained peaks there exists a "latent" directional se-
+lection to which the population could respond if the proper dimension of genetic
+variation existed. In such situations, events which makes the proper variation
+possible can be major factors in evolution. Genetic changes that alter the nature
+of the pleiotropic constraints can therefore come under selection. In this model,
+I will show how, when there exists variability in the pleiotropic effects of genes
+coming into existence, genes which are most aligned with the latent directional
+selection will have the best chance of being incorporated into the genome, and
+the genomes that result will be able to simultaneously optimize all the adaptive
+functions much better than would be expected from the underlying distribution
+of pleiotropic effects. Moreover, the pattern of phenotypic effects of each gene
+will tend to reflect the directional selection that existed when the gene came into
+being. The phenotypic variability present in the genomes will therefore indicate
+the history of directional selection that the genomes experienced during their
+evolutionary construction.
+
+4.1 The Adaptive Landscape
+
+The organismal phenotype is defined as a k-element long vector, y  Rk. The
+organism carries out f different adaptive functions. The optimal organismal
+phenotype is y, which would perform each of these functions maximally. For
+each of the f organismal functions there will be a vector qi  Rk, i = 1, . . . , f ,
+such that when the phenotype y departs from y in the direction qi, only the
+performance of adaptive function i is altered. Thus the set of {qi} must be
+orthogonal. The amount, zi, of this departure of adaptive function i from its
+20
+
+optimum is simply the component of qi present in y - y, i.e., the projection of
+y - y onto qi:
+
+                                        zi = qTi (y - y) .
+
+    Let the departures from optimality in each adaptive function interact multi-
+plicatively in reducing the fitness of the organism, with the relative importance
+of function i measured by a value i > 0, i = 1, . . . , f . A Gaussian selection
+scheme satisfies these specifications, giving
+
+                                                                                                           f
+
+       w(y) = exp -(y - y)TQQT(y - y) = exp - izi2 , (5)
+
+                                                                                                         i=1
+
+where
+
+       Q = q1, . . . , qf  Rf×k
+
+is the matrix whose columns are qi, and  is the diagonal matrix
+
+        = diag                            i  f    .
+                                             i=1
+
+Assume that {qi} are linearly independent, which requires f  k. Let them also
+be normalized, so that QTQ = Ik (if f = k then Q is an orthogonal matrix,
+hence QT = Q-1).
+
+    Together, y, Q, and  determine the structure of the "adaptive landscape"
+
+in terms of the organismal phenotype, y.
+
+4.2 Genetic Control of the Phenotype
+
+Suppose there are n genes, and the allelic state at each gene i determines a
+
+genotype xi  R. The organismal phenotype, y, is the sum of a set of normalized
+vectors ai  Sk on the unit k-sphere, weighted by the values xi. Hence
+
+       y = Ax ,                                                     (6)
+
+where
+
+       A = a1, . . . , an  Rk×n
+
+is the matrix whose columns are the vectors aj, j = 1, . . . , n. The gene effects
+on the phenotype are additive, by the linearity of equation (6). The magnitude
+
+is partitioned from the direction of the gene's effects by normalizing aj, so that
+
+                        k                    j = 1, . . . , n.
+
+       ajTaj = ai2j = 1,
+
+                       i=1
+
+The allelic value xj controls the magnitude of the gene's effects.
+    The fitness function for the genotype is:
+
+       w(x) = exp -(Ax - y)TQQT(Ax - y) .
+
+A note on epistasis: Although the loci interact additively in this model, they are
+also epistatic in terms of fitness, since the contribution of each allelic value to
+fitness depends on the value of the alleles at the other loci:
+
+       w(x)/xi = -2w(x) (Ax - y)TQQTai .                            (7)
+                                                                                                               21
+
+4.3 "Latent" Directional Selection at Fitness Peaks under
+       Pleiotropic Constraints
+
+I assume that each of the elements of x are free to evolve, and that the population
+will eventually become fixed, through allelic substitution, on the genotype vector
+x^ that produces the maximum fitness, i.e. which minimizes
+
+(x) = (Ax - y)TQQT(Ax - y) .                                                                                   (8)
+
+If y is not in the column space of A, then there is no x such that Ax = y.
+This is illustrated in Fig. 2. The dynamics of the evolution toward this optimum
+
+                                                       GLOBAL
+                                                       OPTIMUM
+
+FITNESS                                                        CONSTRAINED
+              1                                                OPTIMUM
+
+         0.75                                                                                   PHENOTYPIC
+            0.5                                                                                VARIATION
+           0.25
+                  0                                                                                         2
+                  -2                                                                                  1
+                                 -1
+                                                    0                                          0
+
+                                                                                        -1
+                                                       1
+
+                                                                               -2
+                                                                         2
+
+Fig. 2. Illustration of the "latent" directional selection remaining when adaptation is
+
+constrained by phenotypic variability to be suboptimal. The global optimum phenotype
+is y and the constrained optimum is y^.
+
+are not critical to what follows, but the gradient ascent model of Via and Lande
+(1985), extended to arbitrary dimensions, would be applicable. The constraints
+in this model are therefore entirely range constraints, and not kinetic constraints,
+on the attainable optima.
+
+    To find the minimum of (x) in equation (8) one differentiates. Let
+
+                                          M = QQT .
+
+Then M is positive definite (if f = k) or semi-definite (if f < k). The system
+
+ATM (Ax^ -                                             y)  =    1       =  0                                   (9)
+                                                                 (x)/x
+                                                                2
+
+represents the "normal equations" for the minimization problem (Luenberger
+1968). The closed-form solution, when unique, is
+
+x^ = (ATM A)-1ATM y ,                                                                                          (10)
+22
+
+and requires that the matrix ATM A, known as the Gram matrix of A, be
+positive definite. This is assured if the column space of A does not intersect the
+null space of QT except at 0, a generic condition here when n < f, k. Note that
+numerical computation of x^ in what follows utilizes LU decomposition, not the
+matrix inversion in equation (10).
+
+    In his analysis of variability maintained by a mutation-selection balance in
+this model, Wagner (1989) changes coordinates so that y = 0. But then by
+equation (10), y^ = y, so the system evolves to the global fitness peak, and
+is not constrained by variation to be suboptimal. Although this is of no conse-
+quence for the nature of a mutation-selection balance, it eliminates the evolu-
+tionary potential afforded by the "latent" directional selection that exists when
+the population is constrained to be suboptimal, which is what I consider here.
+
+    Quantitative genetic models with the kind of constrained optima described
+here present a number of important features. Adding allelic polymorphism to
+the current model, as in Wagner (1989), would reveal that there can be additive
+genetic variance for a trait under directional selection and yet no evolution of that
+trait. Moreover, if selection is increased on any trait, the population will respond
+to it and move in the direction of the increase of selection until a new balance is
+found; upon relaxation of the selection to the former level, the population would
+return to the previous value.
+
+4.4 Constructional Selection
+
+The presence of latent directional selection at a constrained optimum creates
+adaptive opportunity for new genes that give different directions of phenotypic
+variability, and so until evolution reaches the global maximum, there is always
+the opportunity for genome growth. The process of adding new genes to the
+genome then is modeled as increasing the matrix A column by column. Here
+this process is examined under very simple evolutionary dynamics, where the
+population is fixed on its best attainable genotype at the time a new gene is tested
+in the genome. If the new gene increases fitness, it is added to the genome, and
+before any new genes are tested, the genotype evolves through allelic substitution
+to the new optimum that the new gene allows it to attain. This process is then
+repeated and the genome thus built up.
+
+    A new gene is added to the genome according to some random sampling
+process, producing a random vector, an+1 -- its vector of effects on the organ-
+ismal phenotype -- which expands A by one column to yield A . Addition of
+a new gene increases the length of x^ by one element, xn+1, a random variable,
+to yield x . The number of phenotypic characters, k, remains unchanged. Once
+the new gene is added to the genome, mutations in its allelic value xn+1 will
+change the phenotype along the same vector of variation, an+1, as produced by
+the gene's creation. Thus there is complete correlation in this model between
+the phenotypic effects from the creation of the gene and the effects of its subse-
+quent allelic variation, which is what provides the basis of the correlated allelic
+variation effect of constructional selection.
+                                                                        23
+
+    The departure of the fitness components from the optimum before the addi-
+tion of the new gene is:
+
+                 (x) = zTz = izi2 .
+
+                                                  i
+
+where z = QT(Ax^ - y), and each zi is the departure of phenotype from perfect
+
+realization of adaptive function i. The fitness of the organism after addition of
+
+the new gene is              w(x ) = e-(x )
+
+where
+
+(x ) = (Ax^ + xn+1an+1 - y)TQQT(Ax^ + xn+1an+1 - y) .                   (11)
+
+Define:
+
+                             = xn+1QTan+1 .
+
+Then
+
+                 (x ) = (z + )T(z + ) .                                 (12)
+
+So fitness increases if and only if
+
+         (x ) - (x) = 2xn+1 (Ax^ - y)TM an+1 + xn2 +1 aTn+1M an+1       (13)
+                          = (2z + )T = i(2zi + i) i < 0 .
+
+                                                                     i
+
+    The effect of the new gene on fitness depends on both its magnitude xn+1
+and its direction an+1. In order for changes in function i to contribute toward
+increased fitness, zi and i must be of opposite sign (i.e. the new gene changes
+the genotype in the opposite direction from its error), and
+
+                                     | i| < 2|zi| .                     (14)
+
+If xn+1 is very small, then
+
+                             (2zi + i) i  2zi i ,
+
+and under a wide variety of assumptions about the distributions of xn+1, the
+probability that a new gene will produce a fitness increase would be 1/2, in-
+dependent of the new gene's pleiotropy vector, an+1. Thus there would be no
+constructional selection on an+1.
+
+    If xn+1 is distributed with larger values, however, the condition in equation
+(14) corresponds to the new gene not causing the phenotype to overshoot the
+maximum for function i and produce a fitness contribution lower than before. If
+any zi has evolved to be very small, i.e., the organismal phenotype has realized
+adaptive function i very well, then a large perturbation i from any new gene
+reduces the chance that it increases fitness. This selection against large i is
+greater with larger i. Thus there will be selection against the addition of new
+genes that alter existing highly adapted functions. Under this model, new genes
+that are incorporated in the growing genome will therefore tend to have lower
+pleiotropy for existing organismal functions than randomly added genes.
+24
+
+A Measure of Pleiotropy. A measure pA(an+1) of the pleiotropy of the new
+gene can be defined to display the extent to which the new gene disturbs the
+existing constrained optimum:
+
+    pA(an+1)  =  x^TATM an+1  .
+                  yTM an+1
+
+We see from equation (9) that pleiotropy is large for a new gene that moves
+the phenotype in a direction within the space of variability that it is already
+optimized for:
+
+                                  pA(ai) = 1 for i = 1 . . . n .
+
+Whereas pleiotropy is small when the new gene moves the phenotype in the
+exact direction of the global optimum, Ax^ - y:
+
+    pA(Ax^ - y) = 0 .
+
+Then condition equation (13) for a fitness increase can be written:
+
+(x ) - (x) = x2n+1 aTn+1 M an+1 - 2xn+1 yT M an+1 [1 - pA(an+1)] < 0 .
+
+Since the first term is always positive, a fitness increase requires that:
+
+ 1. xn+1 be the same sign as yT M an+1, i.e. the change is toward rather than
+     away from the optimum; and that
+
+ 2. the term 1 - pA(an+1) be as large as possible, i.e. that the pleiotropy value
+     is small.
+
+Genetic Modifiers of Pleiotropy. It should be mentioned that the same
+analysis applies to selection on a modifier gene that changes the A matrix.
+Suppose an allele at a modifier locus changes matrix A to A + C. Then with the
+substitution xn+1an+1 = Cx^ in equation (11) the subsequent analysis (through
+equation (14)) applies. The selective advantage of the modifier relative to the
+unmodified genotype is
+
+                                 w (x) - 1 = e(x)- (x) - 1 .
+                                 w(x)
+
+Here, w and  indicate values using A + C for A. So any modifier locus which
+is able to change the genotype-phenotype map, A, has a potential selective
+advantage of as much as the "latent" directional selection, e(x) - 1.
+
+4.5 Numerical Simulation
+
+A numerical simulation of this model illustrates the constructional selection pro-
+cess. The genome is grown gene by gene according to the algorithm illustrated
+in Fig. 3:
+                                                                                                    25
+
+1. Randomly create the adaptive landscape matrices matrices Q, , and opti-
+   mal phenotype vector y:
+   (a) pick the elements of Q uniformly on [-1, 1] and then orthogonalize the
+         columns (the Modified Gram-Schmidt algorithm was used (Golub and
+         Van Loan 1983));
+   (b) generate the diagonal elements of  uniformly on [0, 1];
+   (c) generate elements yi uniformly on [-1, 1].
+
+2. Add a new gene to the genome:
+   (a) create a new pleiotropy vector an+1 by picking elements ai uniformly on
+         [-1, 1] and then normalizing so that i a2i = 1;
+   (b) let the allelic value, xn+1, for the new gene equal a scale value which
+         exponentially decreases until the new gene is kept.
+
+3. In a run when constructional selection is acting: if the new gene decreases
+   fitness, reject it and repeat step 2. Otherwise, keep it.
+
+4. Adapt x to the new optimum x^.
+5. Repeat step 2 until the genome has 32 genes.
+
+GENOME GROWTH ALGORITHM:
+
+                      ADD A NEW GENE
+                      TO THE GENOME
+
+OBTAIN ITS
+FUNCTIONAL EFFECTS
+RANDOMLY FROM A
+GIVEN DISTRIBUTION
+
+              IF
+
+NEW GENE PRODUCES NEW GENE PRODUCES
+A FITNESS DECREASE A FITNESS INCREASE
+
+                        CONSTRUCTIONAL
+                        SELECTION
+
+REJECT IT  KEEP IT
+
+ADAPT THE GENOME THROUGH
+ALLELIC SUBSTITUTION UNTIL
+IT IS AT A FITNESS PEAK
+
+Fig. 3. The genome growth algorithm used in the simulation.
+
+    In this simulation, the pleiotropy vectors, an+1, are chosen from the same
+distribution throughout the run. Therefore, there is no heritability on the level
+of genome-as-population, and thus no opportunity for the genic selection effect.
+The obvious scheme of heredity for gene-to-gene duplications will not produce
+meaningful results given the way the model is set up. Consider a simple form of
+heredity, where new vectors an+1 are resampled from {a1, . . . , an}, the columns
+26
+
+of A. The new gene would have maximal pleiotropy and always be deleterious
+since it could only move the phenotype off its constrained peak; the new matrix
+A would be less than full rank, moreover, giving a continuum of constrained
+optima. So with the linear genotype-phenotype map, the genic selection effect
+would not occur under this model of heredity.
+
+    The procedure for choosing xn+1 in step 2b was taken instead of choosing
+xn+1 from some random distribution in order to lessen the variance in the strin-
+gency of constructional selection on a (as discussed in Sect. 4.4) and to maintain
+a roughly constant stringency of constructional selection as the genome grows.
+
+    Simulation were run both with and without constructional selection (where
+each new gene is accepted in the genome regardless of its immediate effect on
+fitness), to allow comparison between genomes resulting from constructional se-
+lection and genomes sampled from the underlying random distribution of gene
+effects. In these simulations, there are 64 organismal functions under Gaussian
+stabilizing selection, and the genomes evolve from one gene to 32.
+
+                  WITH CONSTRUCTIONAL SELECTION           WITHOUT CONSTRUCTIONAL SELECTION
+
+                    6                                    6
+
+DISTANCE                                                 4
+FROM
+
+                     4
+
+OPTIMUM
+
+             2                                           2
+
+             0                                           0
+             10                                          10
+
+GENOME          20                                   10    20                                    10
+       SIZE                   20
+                   30                                          30         20
+                          30       FUNCTIONS                          30
+                                                                               FUNCTIONS
+
+Fig. 4. Fitness components for multiple organismal functions during genome growth: in
+
+a genome evolved with (left) and without (right) constructional selection. The height,
+izi2, measures departure of each organismal function from optimality. For clarity, only
+32 of the 64 different adaptive functions are plotted, in arbitrary order.
+
+    Figure 4 shows the evolution of the fitness components for each organismal
+function as the genome grows. The height, izi2, plotted for each function i,
+represents the departure of each component from optimality as the genome is
+increased from 1 to 32 genes. The bumps in the landscape indicate where gene
+addition decreases the adaptation for certain components, while raising it for
+other. Comparison between the genomes grown with and without constructional
+selection shows that adaptation simultaneously at many organismal functions
+can be achieved with a much smaller genome when constructional selection acts
+during the evolution of the genotype-phenotype map.
+                                                         27
+
+DISTANCE
+FROM THE
+OPTIMUM
+
+                       WITHOUT
+
+                       CONSTRUCTIONAL SELECTION
+
+0                  16         WITH
+   1      GENOME SIZE
+                               CONSTRUCTIONAL SELECTION
+
+                       32
+
+Fig. 5. Organismal fitness as a function of genome size for several runs of the genome
+growth algorithm, with (dark lines) and without (light lines) constructional selection.
+
+    Figure 5 shows the trajectories of organismal fitness as new genes are added
+to the genome. The phenotype y always moves closer to y whether or not
+constructional selection is acting, because any generic new gene increases the
+phenotype subspace spanned by the genetic variation regardless of its immediate
+effect on fitness. With constructional selection, however, rapid approach to the
+global optimum in the adaptive landscape occurs with much smaller genome size.
+Genomes with the random distribution of phenotypic effects had to grow to a
+size of 32 genes to reach the same fitnesses attained by genomes of only around 5
+genes when these underwent constructional selection. In these simulations, most
+of the adaptation occurs not from the addition of the new genes, but from the
+climb to the constrained fitness peaks that occurs between gene additions, the
+part attributable to allelic substitution.
+
+5 The "NK" Adaptive Landscape Model
+
+Kauffman's "NK" adaptive landscape model (1989) will be used to illustrate
+the effects of constructional selection because it explicitly shows the epistatic
+structure of the genotype-phenotype map. A separate presentation of this ma-
+terial can be found in Altenberg (1994). First I will describe the NK model and
+review existing analytical work on its evolutionary behavior. Then I will exam-
+ine the properties of genomes evolved under constructional selection including
+their adaptive performance and the nature of the emergent genotype-phenotype
+maps.
+
+    Kauffman's NK model has the following components:
+28
+
+­ A genome consists of n genes;
+­ Each gene contributes a fitness component to the organism, and these are
+
+   summed to give the total organismal fitness;
+­ The fitness component contributed by a given gene i depends on the allelic
+
+   state at k other genes.
+
+Although Kauffman ascribes each fitness component to a particular gene, in his
+model control over each fitness component is, in fact, symmetric with respect to
+all the genes that affect it. So in the development to follow, I recast the NK model
+in terms of a map between a set of genes and a set of fitness components. This
+allows the number of fitness components to differ from the number of genes,
+and allows genes to be added to the genome while keeping the set of fitness
+components fixed. This is illustrated in Fig. 6. The elements of the model are
+recast as follows:
+
+1. The haploid genome consists of n binary-valued genes, that exert control
+   over f phenotypic functions, each of which contributes a component to the
+   total fitness.
+
+2. Each gene controls a subset of the f fitness components, and in turn, each
+   fitness component is controlled by a subset of the n genes. This genotype-
+   phenotype map can be represented by a matrix,
+
+    M = mij , i = 1 . . . n, j = 1 . . . f ,
+
+   of indices mij  {0, 1}, where mij = 1 indicates that gene i affects fitness
+   component j;
+3. The columns of M , called the polygeny vectors, gj = mij , i = 1 . . . n, give
+   the genes controlling each fitness component j;
+4. The rows of M , called the pleiotropy vectors, pi = mij , j = 1 . . . f , give
+   the fitness components controlled by each gene i;
+5. If any of the genes controlling a given fitness component mutates, the new
+
+   value of the fitness component will be uncorrelated with the old. Each fitness
+   component i is a uniform pseudo-random function3 of the genotype, x 
+   {0, 1}n:
+
+                         i(x) = (x  gi, i, gi)  uniform on [0, 1] ,
+
+   where  : {0, 1}n × {1, . . . , n} × {0, 1}n  [0, 1],  is the Schur product
+
+   (x  gj = ximij , i = 1 . . . n). Any change in i, gi, or x  gi gives a new
+   value for (x  gi, i, gi) that is uncorrelated with the old;
+6. If a fitness component is affected by no genes, it is assumed to be zero:
+
+                       (x  gi, i, gi) = 0 for all x, if gi = 0 . . . 0 ;
+7. The total fitness is the normalized sum of the fitness components:
+
+    1f                 i(x) .
+    w(x) =                                                                (15)
+               f
+                  i=1
+
+3 The popular Park-Miller algorithm generates non-random bits, so the encryption-like
+  algorithm ran4 described in Press, et al. (1992) was used.
+                                                                                                                                                                                                                                                                      29
+
+                                                                                                                                                                                                            FUNCTIONS
+
+1111111111222222222233333333334444444444555555555566666666667777777777888888888899999999990000000000  1111111111222222222233333333334444444444555555555566666666667777777777888888888899999999990000000000  111111111122222222223333333333444444444455555555556666666666777777777788888888889999999999  1111111111222222222233333333334444444444555555555566666666667777777777888888888899999999990000000000          GENOTYPE ­
+                                                                                                                                                                                                                                                                                                                                                                                                                      FUNCTION
+                                                                                                      GENOME                                                                                                                                                                                                                                                                                                          MAP
+
+                                                                                                                                                                                                                                                                                                                                                                                                                     1111111222222233333334444444555555566666667777777
+
+                                                                                                                                                                                                                                                                                                                                                                                                              NEW GENE
+
+Fig. 6. Kauffman's NK model recast as a map between the genotype and a set of fitness
+components. Arrows indicate that the gene affects the fitness component. A new gene
+with effects on two fitness components is shown being introduced to the genome.
+
+5.1 Pleiotropy and Evolvability
+
+With the random fitness function w(x) now defined, the relationship between
+the genotype-phenotype map and the model's adaptive behavior can be investi-
+gated. The random fitness function w(x) causes genotypes that are one muta-
+tional event away from one another to be more or less correlated, depending on
+the genotype-phenotype map. The statistical property that affects adaptation
+is the likelihood that a genotype is fitter than all the genotypes that are one
+mutation different from it. The set of genotypes that are one mutation away
+from a given genotype can be called its "neighborhood", and if it is the fittest
+genotype in its neighborhood, then it is a fitness "peak", to use the metaphor of
+the adaptive landscape (Wright 1932). The NK fitness function thus produces a
+tunably rugged landscape (Kauffman 1989).
+
+    Mutation is not the only variation-producing mechanism involved in evolu-
+tion. Recombination is also very important. However, in the case of sequence
+evolution on rugged adaptive landscapes, it has been argued that single muta-
+tions are the main mechanism of change. Maynard Smith (1970) proposed that
+molecular evolution must be limited mainly to moves from a genotype to one of
+its fitter single- mutation neighbors. Gillespie (1984) provided a theoretical pop-
+ulation genetic analysis corroborating that evolution on "mutational landscapes"
+would consist mainly of "adaptive walks", in which the population moves from
+fixation of one genotype to fixation of a neighboring genotype of greater fitness.
+So such adaptive walks will be used here.
+
+    Adaptive walks have been used to study the statistics of adaptation on NK
+fitness landscapes (Kauffman and Levin 1987, Kauffman 1989, Macken and Perel-
+son 1989, Weinberger 1991). Beginning with a chosen genotype, the fitness of
+each of its 1-mutant neighbors is evaluated. If there are no fitter genotypes, the
+genotype is at a fitness peak and the adaptive walk stops. Otherwise, one moves
+to the fittest genotype and begins the process again.
+30
+
+    In the NK model, the chance that a mutation produces a fitness increase will
+depend on the pleiotropy of the genotype-phenotype map. This effect can be
+analyzed as follows. Define the pleiotropy value,
+
+                           f
+
+                ki = mij
+
+                         j=1
+
+to be the number of fitness components affected by gene i (the K in Kauffman's
+usage is ki - 1 here). Define the marginal fitness of gene i as the sum of the
+fitness components it affects:
+
+                                                                       f
+
+                                     wi(x) = mijj(x) .
+
+                                                                     j=1
+
+When gene i mutates, each fitness component it affects is resampled uniformly
+from [0,1] independently. The probability that its new marginal fitness will be
+less than y is
+
+    Fk(y) = Pr[Sk < y]                                (16)
+
+        1  k            k  y - i + |y - i| k
+    =                                              ,
+    k!       (-1)i      i
+                                   2
+           i=0
+
+where Sk is the sum of k independent uniform random variables on [0,1] (Feller
+1971). The probability distribution Fk(y) is plotted against y/k for different
+values of k in Fig. 7. One can see how as k increases, the probability density
+concentrates around the expected value E(i) = 1/2, an illustration of the Cen-
+tral Limit Theorem. Thus in genes with higher pleiotropy k, mutations have a
+stronger regression toward the fitness y/k = 1/2, with diminishing upper tails
+of the fitness density. Therefore, lower fitnesses are likely to be fitness peaks (i.e.
+all its 1-mutant neighbors are less fit) for genotype-phenotype maps with high
+pleiotropy.
+
+5.2 Statistics of Fitness Peaks on Generic Landscapes
+
+We would like to take our knowledge of the neighborhood properties of the fitness
+function in equation (16) and see how evolution proceeds. A principle question is
+how fit the peaks are that are arrived at from random starting points. Analysis
+of the probability distribution of endpoints of such adaptive walks have been
+made for k = 1 and k = n (Kauffman and Levin 1989, Macken and Perelson
+1989).
+
+    Intermediate values of k present analytical difficulties, so Weinberger (1991)
+took an indirect approach to solving the distribution of fitness peaks. Instead
+of looking at the distribution of fitness peaks arrived at from random initial
+genotypes, he looked at the fitness distributions of adaptive peaks from among
+the unweighted set of fitness peaks. The results are reviewed as follows.
+                                                                       31
+
+               1              16 8
+                                       4
+                k = 32                      2
+
+            0.9                                   1
+
+Fk(y) 0.8
+            0.7
+
+           0.6
+
+           0.5                                                         1
+
+                        0.6             0.7          0.8          0.9
+
+                                               y/k
+
+Fig. 7. The probability, Fk(y), that the marginal fitness of a mutation affecting k
+fitness components will be greater than y. Plotted with the abscissa normalized by k,
+for k = 1 . . . 32.
+
+    Given that a genotype x has marginal fitnesses, wj(x), the probability that
+it is a fitness peak is
+
+                                                     n
+
+           Pr[x is a local fitness peak | ] = Fki (wi(x)) ,            (17)
+
+                                                     i=1
+
+where  = i , i = 1 . . . f , and {Ski } are independent random variables with
+distributions Fki . Letting i and Ski be random variables, the probability that
+a random point is a fitness peak is
+
+                              f
+
+                p^ = Pr[ mijj > Ski i]                                 (18)
+
+                             j=1
+
+                                   n           f
+
+                =                       Fki (        mij j )d  .
+
+                        [0,1]f     i=1         j=1
+
+The probability, G(y), that a genotype, given it is a fitness peak, has fitness less
+
+than y is
+
+                1             f
+
+                G(y) = Pr[         i < y and         mij j > Ski i] .  (19)
+                          p^
+                              i=1                 j
+
+Weinberger (1991) obtained normal approximations of G(y) for intermediate
+
+large values of k, with f = n. Assuming ki = k for all i, and denoting µ =
+E[i(x)] and 2 = Var[i(x)], Weinberger's (1991) approximation for the distri-
+bution of fitnesses among fitness peaks is
+
+                        G(y) = N y/f - µG ,                            (20)
+                                        G
+32
+
+where N () is the normal distribution with mean 0 and variance 1, and
+
+    µG = µ +             2 ln(k)  and G2 = n                2                .
+                            k
+                                              1  +      (1  +  1  )2  ln(k)
+                                                               k
+
+For the uniform fitness functions, µ = 1/2 and 2 = 1/12. Figure 8 shows Wein-
+berger's approximation of G(y) plotted for n = 31 and several values of k. As
+k increases, the distribution of fitness peaks gets lower (when normalized by f ),
+approaching the expectation for random genotypes, f /2. In other words, geno-
+type-phenotype maps with large amounts of pleiotropy do not allow 1-mutant
+adaptive walks to get very near their global optima ( f ).
+
+                 1                k = 80 40 20 10
+              0.8
+
+G (y) 0.6
+
+              0.4
+              0.2
+
+    0.5                  0.55     0.6      0.65             0.7       0.75      0.8
+
+                                           y/f
+
+Fig. 8. Weinberger's (1991) normal approximation for the distribution of fitnesses
+among fitness peaks in the NK model. Plotted for n = 31 and k = 10, 20, 40, and
+80.
+
+5.3 Constructional Selection for Low Pleiotropy
+
+The effect of selective genome growth on the degree of pleiotropy in the evolved
+
+genotype-phenotype map can be analyzed, as follows.
+
+    Suppose a gene newly added to the genome has pleiotropy vector pn+1, and
+
+affects kn+1 =      f    mn+1  j  fitness  components,  which  become        resampled  uni-
+                    j=1
+
+formly from the interval [0,1]. If a fitness component is not yet affected by any
+
+gene, then its preexisting value is 0.
+
+    Let y be the sum, before the new gene is added, of the fitness components
+
+the new gene is going to alter. The probability that the new sum will be less
+
+than y is Fkn+1 (y) from equation (16). Then, from equation (16), the probability
+that the new gene will produce a fitness increase is 1 - Fkn+1 (y). As can be seen
+from Fig. 7, when the average of the fitness components to be altered by the
+
+new gene is above 1/2, the greater kn+1 is, the less the chance that the new gene
+                                                                        33
+
+will produce a fitness increase, precipitously less so for highly adapted fitness
+
+components. Since the new gene is kept only if it produces a fitness increase,
+
+constructional selection will filter out genes with high k.
+
+    Suppose that there is an underlying probability density s(k) of pleiotropy val-
+
+ues k for genes newly added to the genome. Then the density s(k) of pleiotropy
+
+values among genes that are kept by the genome (i.e. which improve fitness) will
+
+be
+
+    s(k) = s(k)                           Pr[p|k] 1 - Fk(pT) /N ,       (21)
+
+                                 p{0,1}f
+
+where  is the vector of fitness components before the gene was added, Pr[p|k]
+is the probability of sampling pleiotropy vector p given that the new gene's
+pleiotropy value is k, and N is the normalizer so that k s(k) = 1.
+
+    The way constructional selection filters out high pleiotropy as the adapted-
+ness of the genome increases is illustrated in Fig. 9. It plots equation (21) with
+the assumption that all fitness components are the same, i.e. i =  for all i. The
+underlying density of pleiotropy values before selection is taken to be uniform
+on 1 . . . f . The figure shows that the more highly adapted the genome is, the
+more severe is the selection against high pleiotropy.
+
+                      0.8                                          0.9
+
+    s*(k) 0.6                                                 0.8
+
+                        0.4                       _ 0.7
+
+          s(k) 0.2                                 
+
+                              0                     0.6
+
+                                 5        15 0.5
+
+                                    k 10
+
+Fig. 9. The density, s(k), of pleiotropy values k, among genes successfully incorporated
+in the genome, plotted as a function of the fitness component average, , prior to the
+gene's addition. The arrow points out the plot of the prior density s(k), of pleiotropy
+values from which the genes are sampled. s(k) is uniform on {1, . . . , f }, and here,
+f = 31.
+34
+
+5.4 Numerical Results
+
+A numerical simulation of constructional selection in the NK model was per-
+formed using the same genome growth algorithm as was used in Sect. illustrated
+in Fig. 3:
+
+ 1. Add a new gene to the genome:
+    (a) create a new pleiotropy vector pn+1, choosing uniformly (from {1, . . . , 31})
+          the number, kn+1, of fitness components to be affected by the new gene,
+          and then selecting randomly which fitness components these are, from a
+          set of f = 31 possible;
+    (b) pick the allelic value, xn+1, of the new gene with probability 1/2 being
+          either 0 or 1.
+
+ 2. If the new gene decreases fitness, reject it and repeat step 1. Otherwise, keep
+     it.
+
+ 3. Adapt x to the new (local) optimum x^ by allelic substitution through a
+     "greedy" 1-mutant adaptive walk.
+
+ 4. Repeat step 1 until the genome has 31 genes.
+
+The pleiotropy vectors, pn+1, are chosen from the same uniform distribution
+throughout the run. As a basis for comparison, the genome growth algorithm is
+also run without step 2, giving the result of choosing representations a priori.
+
+Evolved Genotype-Phenotype Maps. Figure 10 shows typical genotype-
+phenotype maps produced during runs with and without constructional selection.
+The run without constructional selection reflects the underlying distribution of
+pleiotropy vectors sampled for each new gene. In the run with constructional
+selection, during the evolution of the first few genes, the discovery of new fitness
+components selects for high pleiotropy, but as these fitness components evolve
+toward their optima, selection becomes strong against new genes affecting them.
+
+    This increasing selection for low pleiotropy can be seen in Fig. 11, which
+shows the distribution of pleiotropies kn as the genome grows, over repeated
+runs of genome growth. It can be seen to resemble the predicted distribution in
+Fig. 9. The mode for kn is always 1 after the first few genes, but as shown in
+Fig. 12, the mean kn tends toward 1 from initial values of around 16, or half of
+the maximum possible, f = 31.
+
+    The progress in adaptation can be compared between runs with and without
+constructional selection. Figure 13 shows plots for a number of runs. Without
+constructional selection, disruptive new genes are not filtered out, and adaptation
+shows little progress once the fitness components are saturated with genes that
+affect them. With constructional selection, however, fitness continues to increase
+with each new gene throughout the genome growth.
+
+    As the genome grows, the trajectories of individual fitness components can
+be seen in Fig. 14. With constructional selection, once a fitness component has
+reached a high value (low points in graph), only new genes that leave it alone are
+likely to be incorporated in the genome. Occasionally, however, one component is
+                                                                                                                                                      35
+
+    WITH CONSTRUCTIONAL SELECTION                                                       WITHOUT CONSTRUCTIONAL SELECTION
+
+30                                                                                      30
+
+25                                                                                      25
+
+20                                                                                      20
+
+{ FUNCTIONS15                                                                           15
+
+10                                                                                      10
+
+5                                                                                       5
+
+0                                                                                       0
+
+             0  5                                     10  15         20  25         30      0  5  10                     15  20         25        30
+
+                                                      GENE NUMBER                                 GENE NUMBER
+
+Fig. 10. Two genotype-phenotype maps evolved through genome growth, with (left)
+and without (right) constructional selection. Dark squares indicate that fitness compo-
+nent j depends on gene i. The columns in the right map reflect the sampling distribution
+of the pleiotropy vectors, in which the number of fitness components affected is uniform
+on [1, f ]. The left map shows how under constructional selection, later genes have lower
+pleiotropy as the genome grows and becomes more adapted.
+
+WITH CONSTRUCTIONAL SELECTION                                                  WITHOUT CONSTRUCTIONAL SELECTION
+
+DISTRIBUTION                                          LATER GENES HAVE
+                                                      LOWER PLEIOTROPY
+    150
+                                                                               150
+      100
+                                                                           30  100                                                            30
+         50                                                          20           50                                                    20
+            0                                                                        0
+                       5
+                                   10                            10                       5                                         10
+                                                  15                                                  10
+                                                                     GENE                                            15                 GENE
+             PLEIOTROPY
+                                                              0      NUMBER             PLEIOTROPY                               0      NUMBER
+                                                          20                                                                 20
+
+Fig. 11. The distribution, from repeated runs of the genome growth algorithm, of
+
+pleiotropy values kn, from each gene's pleiotropy vector pn, as the genome grows; with
+(left) and without (right) constructional selection.
+36
+
+                              20
+
+                 AVERAGE  17.5
+
+                 PLEIOTROPY, 15
+
+                 kn       12.5
+
+                              10
+
+                          7.5
+
+                              5
+
+                          2.5
+
+                              0   5  10  15  20  25  30
+
+                                     GENE NUMBER, n
+
+Fig. 12. The average pleiotropy values kn for each gene as the genome grows, from the
+runs in Figure 11, with constructional selection.
+
+              1                              WITH
+
+          0.5                                CONSTRUCTIONAL SELECTION
+FITNESS
+                                             WITHOUT
+
+                                             CONSTRUCTIONAL SELECTION
+
+    0                     16         31
+        1
+
+                             GENOME SIZE
+
+Fig. 13. Fitness as a function of genome size for several runs of the genome growth
+algorithm. Dark lines are with, and light lines without constructional selection.
+                                                                                                      37
+
+sacrificed for the improvement in another, which show up as spikes in the graph.
+By the time the genome has reached a size of 31 genes, most of the components
+have reached values well above their expected value of 1/2. Without construc-
+tional selection, the jumble of spikes represents the continuing randomization of
+the fitness components as genes with random pleiotropy are incorporated into
+the genome.
+
+                          WITH CONSTRUCTIONAL SELECTION                      WITHOUT CONSTRUCTIONAL SELECTION
+
+1 ­ FITNESS                                                                      1
+                                                                             0.75
+                  1
+              0.75                                                             0.5
+                                                                               0.25
+                 0.5
+                0.25                                                                 0
+
+                       0
+
+                          10                                                            10
+
+GENOME                                                                   10  GENOME                                                    10
+                                                           20                                                            20
+SIZE                          20                                             SIZE           20
+                                            30 FUNCTIONS                                                  30 FUNCTIONS
+
+                                  30                                                            30
+                                        40                                                            40
+
+Fig. 14. Fitness components during genome growth, for one genome evolved with (left)
+and one without (right) constructional selection. Fitness components are sorted accord-
+ing to their value at the end of the run.
+
+    Here, most of the adaptation occurs during the incorporation of new genes,
+rather than during the adaptive walks (through allelic substitution) between gene
+additions. This is because there is a much larger pool of new pleiotropy vectors
+to sample from than the pool of genotypes in the 1-mutant neighborhood of
+an existing genotype (2f vs. n). The evolutionary process under constructional
+selection is figuratively the "building" of a fitness peak, gene by gene, rather
+than the climbing of a fitness peak.
+
+    The correlated allelic variation effect as discussed in Sect. 3.1 is illustrated
+here by the fact that low pleiotropy evolves. Compared to average genes being
+tested, the genes kept by the genome will have a higher correlation between the
+fitness when the gene was added and its alternate allele because of its low plei-
+otropy. However, by the nature of the NK model, the single alternate allele of
+an advantageous new gene is unlikely to be fitter still. The ability of the corre-
+lated allelic variation effect to enhance evolvability, through the low pleiotropy
+of genotype-phenotype maps produced under constructional selection, would be
+evident in the event of shifts in the adaptive peak. Should any of the fitness com-
+ponents change due to a changed environment, the low pleiotropy of the genes
+that affect these fitness components would enhance their chance of producing
+alleles that respond to the change, without causing a prohibitive disruption of
+functions for which selection has not changed.
+38
+
+Non-Generic Properties of Evolved Landscapes. Existing theory for adap-
+tive walks on NK landscapes, as in Sect. 5.2, has been derived for generic land-
+scapes, i.e. landscapes that one would typically obtain from a random sampling
+of landscapes with given values of n and k (Kauffman and Levin 1987, Kauffman
+1989, Weinberger 1991) . The applicability of these results to organic evolution
+assumes that evolutionary processes produce such generic adaptive landscapes.
+However, the distribution of fitness peaks in the NK landscapes grown here un-
+der constructional selection are nowhere near the distributions for generic NK
+landscapes with identical genotype-phenotype maps.
+
+    Constructional selection produces genotype-phenotype maps that are much
+more finely tuned to the fitness function under which they evolved. To illus-
+trate this, the distribution of fitness peaks for several landscapes evolved under
+constructional selection are plotted in Fig. 15. For comparison, distributions are
+plotted for landscapes using the same genotype-phenotype map, but with fitness
+functions, , chosen a priori. Each point represents the fitness peak obtained
+by starting an adaptive walk from a randomly sampled genotype. The distribu-
+tions are plotted by sorting the fitness peaks by size (the transpose of the figure
+therefore represents the cumulative probability distribution for fitness peaks).
+The width of horizontal plateaus represents the size of the domain of attraction
+for a particular fitness peak.
+
+    The plateaus, and discontinuities between them, indicate fewer and larger
+domains of attraction for the evolved landscapes, i.e. they are smoother than the
+generic landscapes. The distributions for the generic landscapes follow roughly
+the Gaussian approximation derived by Weinberger (1991) as seen in Fig. 8
+(fitting close to the generic k = 10 landscapes). While the least-fit peaks are
+approximately the same for both evolved and generic landscapes, at various
+points in the ranking, the fitness of the evolved landscapes grows much higher.
+Interestingly, the jumps in the distribution are highly variable.
+
+    An additional beneficial outcome of constructional selection is that the geno-
+types resulting at the end of the run are usually the apparent global fitness peak.
+In 77% of adaptive landscapes evolved under constructional selection (304 sam-
+pled), the genotypes attained at the end of genome growth were fitter than any
+other adaptive peak found (from 250 other starting genotypes). Of the remaining
+landscapes, only an average of 19% of random initial genotypes evolved to peaks
+fitter than the genotype attained at the end of genome growth.
+
+5.5 Lineage Selection vs. Constructional Selection
+
+The NK model can be used to compare the effectiveness of lineage selection
+(see Sect. 6.3) with that of constructional selection in producing evolvable geno-
+type-phenotype maps. The idea of lineage selection is that the organisms whose
+developmental mechanisms happen to be most evolvable will found the most suc-
+cessful phyletic lineages, so that evolvable species will proliferate at the greatest
+rate (Dawkins 1988). It leaves evolvability within lineages as a byproduct of their
+genotype-phenotype map not subject to secular evolutionary pressure.
+                                                     39
+
+fitness            landscapes from constructional selection
+
+  0.9                        }
+0.85
+                                 }
+  0.8
+0.75                                                         generic
+                                                        landscapes
+  0.7
+0.65
+
+  0.6
+
+         200  400  600  800                    1000
+
+              fitness peaks sorted by fitness
+
+Fig. 15. Distributions of fitness peaks of NK landscapes: upper 10 plots are for adaptive
+landscapes evolved under constructional selection; lower 10 plots are with the same
+genotype-phenotype maps but randomized fitness functions. In each plot, the peaks
+attained from 1000 random starting genotypes are sorted by fitness. Plateaus indicate
+large domains of attraction for the peak.
+40
+
+    Lineage selection in the NK model could be implemented by generating ran-
+dom NK landscapes, selecting those with the greatest evolvability, and evaluating
+the height of the fitness peaks on these landscapes. This can be compared to the
+height of fitness peaks of genomes evolved through constructional selection. The
+basis for comparison will be the fitness of the fittest individual obtained after a
+set number of genotypes have been generated. The payoff in the level of opti-
+mization obtained through constructional selection shows it to be a much more
+powerful than lineage selection.
+
+    To give lineage selection the best possible advantage, I will consider the class
+of NK landscapes with the highest expected fitness peaks, the k = 1 landscapes
+(which is K = 0 in Kauffman's original definition). In the k = 1 landscapes,
+there is a one-to-one map from each gene to each fitness component, and f = n.
+
+    Each gene can be optimized individually, so it takes the evaluation of 2n
+genotypes to find the global peak for the landscape. Each fitness component is
+i.i.d., where the optimal ^i is distributed as the maximum of two independent
+uniform random variables on [0,1]. The probability density of each maximum ^i
+is f (^) = 2^. So E(^) = 2/3 and Var(^) = 1/18. With n = f = 31 genes and
+fitness components, one obtains:
+
+                                                                 1
+                   E[w(x^)] = 2/3, and Var[w(x^)] =  0.00179 .
+
+                                                                18f
+
+The average fitness attained under constructional selection in the numerical sim-
+ulations (where the average k is much larger than 1) is about 0.89, which is
+therefore some 5 standard deviations (5 × 0.0423) above the expected value of
+peaks obtained from generic k = 1 landscapes. The fraction of randomly gener-
+ated k = 1 landscape having a peak with fitness at least 0.89, under a normal
+approximation, is 3 × 10-7. So over 2 × 106 different k = 1 genotype-phenotype
+maps would need to be sampled to be likely to obtain fitness peaks as high as
+those obtained through constructional selection, which in the runs here took
+some 3000 sampled genotypes. The ability to select on the genotype-phenotype
+map as it is constructed is the key to finding higher fitness values.
+
+    For a more even comparison with lineage selection, we can see what kind of
+k = 1 landscapes constructional selection can produce. A simple way to imple-
+ment this would be to add one gene to the genome at a time, map the gene to
+each of the remaining unmapped fitness components, evaluate the fitnesses of
+both alleles with each map, and keep the allele and map that give the fittest
+value.
+
+    The first gene would be evaluated for the f possible genotype-phenotype
+maps, for a total of 2f evaluations. The second gene would be sampled with
+the remaining f - 1 unmapped fitness components, and so forth, giving a total
+of f (f + 1) genotypes sampled. Each resulting fitness component would be the
+maximum of 2(f - i + 1) uniform i.i.d. values, for the ith gene/gene map pair.
+So the ith fitness component would be distributed as Fi(^) = ^2(f-i+1). The
+                                                 41
+
+fitness components would have expectation
+
+E(^i)  =    2(f + 1 - i)                      .
+          2(f + 1 - i) + 1
+
+The expected value for the fitness peaks obtained through this constructional
+selection process would be
+
+E[w(x^)] =  1 f 2i                         .
+
+            f 2i + 1
+            i=1
+
+For n = f = 31, the expected fitness peak would be E[w(x^)]  0.945, and
+would take 31 × 32 = 992 genotypes to find. So when lineage selection and
+constructional selection are both compared with k = 1 landscapes, the levels of
+adaptation achieved with constructional selection are seen to be vastly greater.
+
+6 Discussion
+
+6.1 Overview of Results
+
+The goal of this chapter is to introduce the idea of "constructional" selection
+as a description of how the evolutionary acquisition of new genes can produce a
+genome better able to generate adaptive variants. In the Introduction I sketched
+out the basic conceptual framework of the idea, the two main parts being the
+genic selection effect (type I) and the correlated allelic variation effect (type II).
+The genic selection effect was based on the idea of defining viability, fecundity,
+and heritability differences at the level of the genome-as-population. I described
+how characteristics of the genotype-phenotype map, in particular Bonner's low
+pleiotropy principle, would lead to predicted differences in gene fecundity for
+giving rise to new, useful genes, and how this in turn would filter genome growth
+in the direction of lower pleiotropy.
+
+    Three models were provided to give concrete illustrations of constructional
+selection effects. The genic selection effect was illustrated with a simple model
+in which genes are ascribed "constructional" fitnesses -- the probability that
+duplications of them are useful genes. The result is exponential growth in the
+genome of genes better able to spawn new genes. The correlated allelic variation
+effect was illustrated with some concrete examples of genotype-phenotype map
+functions, Wagner's linear quantitative-genetic map with Gaussian selection, and
+the epistatic NK fitness landscape of Kauffman. The NK model, because of the
+discreteness of the different organismal functions, provided a good example of
+how the level of pleiotropy of a new gene's effects affects the probability that it
+is selectively beneficial.
+
+    One general implication of constructional selection is that the genotype-
+phenotype map ought to be less complex than one might suppose. In other
+words, to some degree "bean bag genetics" might not be entirely wrong, at least
+for more recently evolved genes. One can also expect that there would be an
+42
+
+attunement (Barwise and Perry 1983) between the dimensions of recurrent en-
+vironmental variation and the dimensions of genetic variation, in that recurrent,
+environmentally caused shifts of optimal phenotypes along certain phenotypic
+dimensions would expose the lineage to repeated directional selection along the
+same phenotypic axes; this would create the potential for the evolution of genes
+with phenotypic effects along these dimensions.
+
+    In the simulation models here, because the selection functions do not change
+during evolution, once a gene is incorporated in the genome, it is always dele-
+terious to delete it. Examples are accumulating of genes that have been lost in
+the course of evolution (Brakenhoff, et al. 1990, Nishikimi et al. 1992, Wu et al.
+1992), so clearly gene loss is a possibility, but the degree to which genes turn
+over in the genome is not known yet. The addition of gene loss to the models
+here would not prevent the constructional selection process; in fact, systematic
+differences in the rate that different genes are lost would also contribute to con-
+structional selection as viability differences on the level of genome-as-population.
+
+6.2 Empirical Phenomena
+
+The main empirical predictions that come out of the processes discussed here
+are that:
+
+ 1. There ought to be signatures of differential gene fecundity within the genome,
+     and these should relate to way the gene duplications and/or allelic variation
+     maps to the phenotype;
+
+ 2. There ought to be dimensions of variation within the genome with low plei-
+     otropy, affecting a relatively small suite of organismal functions; and
+
+ 3. More recently evolved functions ought to have the least pleiotropic genetic
+     control.
+
+    The advent of intra-genomic gene trees makes it foreseeable that some of these
+predictions could be tested. Observations on allelic variation by itself, without
+knowledge of the lineage of the gene, could be manifestations of other evolu-
+tionary processes besides constructional selection, and present methodological
+difficulties. Also, the prediction of low pleiotropy requires a basis for compar-
+ison in order to be tested, i.e. null hypotheses about levels of pleiotropy. And
+pleiotropy itself is a slippery concept, because the discretization of organismal
+traits is primarily an observer artifact; what is required is a quantification of
+functional relationships.
+
+Genic Selection Effect. Numerous examples can be pointed to of genetic el-
+ements with specific functions that appear to have proliferated in the genome.
+Promoter sequences provide one example. A comparison can be made between
+transcription promoters that are external to the transcribed sequence, and inter-
+nal promoters, whose sequence is part of the transcribed gene. Whereas internal
+promoters (which use RNA polymerase III) cannot be recombined with other
+                                                                                                      43
+
+genes without large pleiotropic effects (Shi and Tyler 1991), external promot-
+ers can routinely be recombined with other peptide coding sequences, with the
+promoter retaining its regulatory properties and the peptide retaining its func-
+tional properties. External promoters are ubiquitous (i.e. they evidently have
+high constructional fitness), while internal promoters are restricted mainly to
+rRNA, tRNA, and snRNA genes and appear to be of ancient origin.
+
+    Signal peptides may be another example of a low-pleiotropy module that has
+proliferated. But because the constraints on the amino acids of signal sequences
+are rather broad, accurate intragenomic phylogenies are difficult to be certain of.
+Multi-gene families are examples of sequences that proliferate because of their
+ability to produce new useful variants, and their parts and subparts, as in the case
+of serine proteases, tend to have very specific functions that are retained in their
+different combinations (Doolittle 1985). The immunoglobulins are a spectacular
+example of genes of specific function which when duplicated produce offspring
+genes with a very high likelihood of being selectively advantageous.
+
+    There are several ways that the genic selection effect may have left a mark on
+multi-gene families, which I give with some suggestive anecdotal examples. These
+predictions apply to those gene families that are highly diversified (rather than
+multiple-copy gene families which have a very different selection and transmission
+dynamic due to unequal crossing over and gene conversion):
+
+ 1. Gene families should show periods of exponential growth, possibly followed
+     by logistic-like stasis as the genes saturate the available adaptive opportu-
+     nities, depart from their original effects on organismal function, or become
+     functionally burdened (e.g. the vertebrate Wnt developmental gene family
+     (Sidow 1992); antennapedia-class vertebrate homeobox genes (Kappen et al.
+     1989));
+
+ 2. During periods of exponential gene family growth, adjacent branches in the
+     gene tree should show correlations in the time intervals between gene origins,
+     producing acceleration in the branching rates in fecund branches; i.e. most
+     new genes should come from genes that are themselves new;
+
+ 3. Gene families that are in the process of expanding should continue to do so
+     in independent lineages after taxon branching (e.g. neurofilament proteins
+     in fish (Mencarelli et al. 1991)).
+
+Exon Shuffling. The genic selection effect offers some explanatory clarity to
+questions about exon shuffling. Gilbert (1978) proposed that the characteristic
+exon/intron mosaic structure eukaryotic genomes existed so as to "speed evo-
+lution" by the creation of new genes through exon shuffling. But Crick (1979)
+criticized this evolutionary reasoning as being non-Darwinian, because it ap-
+peared to rely on "evolutionary foresight" in the genome -- structures existing
+for their future evolutionary potential. Blake (1978) instead proposed that ex-
+ons were descendents of the original "proto-genes", later assembled into complex,
+multi-exon proteins. Others, however, have proposed that introns were inserted
+later into contiguous genes through a transposition process. Subsequently, the
+debate on the exon-shuffling hypothesis has focused on a number of issues:
+44
+
+ ­ Whether introns arose "early" or "late" -- i.e. were present at the origin
+     of eukaryotic genes or were inserted later into contiguous genes, possibly
+     through a transposition process;
+
+ ­ Whether exons correspond to units of peptide structure or function, i.e.
+     whether exons are "modular";
+
+ ­ Whether protein evolution through exon shuffling has indeed occurred;
+ ­ Whether selection could create a correspondence between exons and protein
+
+     structures or whether exons would need to be descendents of the original
+     "proto-genes".
+
+    Proving a correspondence between intron position and peptide structure has
+been seen as crucial for answering whether gene evolution through exon shuffling
+has occurred, and whether introns arose "early" or "late". Evidence has been
+marshalled both in favor (e.g. Gilbert 1993) and against (Stoltzfus 1994) there
+being a significant correspondence between exon structure and protein structure
+in eukaryotic genes.
+
+    Once it is understood that constructional selection would enter into exon
+shuffling dynamics, however, the question of when exons arose early or late be-
+comes decoupled from the phenomenon of exon modularity. The genic selec-
+tion effect provides a Darwinian mechanism for the evolution of modular exons
+through exon shuffling (Altenberg 1985). Exon modularity is the equivalent of
+low pleiotropy on the molecular level, so more modular exons would be expected
+to have a better chance of producing useful variation when recombined with other
+genes. Even a genome composed of randomly partitioned exons would come to be
+populated by modular exons if enough genome growth had occurred to allow the
+differential proliferation of exons, i.e. the genic selection effect (Altenberg and
+Brutlag 1986). Moreover, the evolutionary increase in modular exons needn't be
+relegated to the distant past, but would be occurring presently in any evolution
+of new genes through exon shuffling. This and other hypotheses for the evolution
+of split genes are reviewed in Doolittle (1987).
+
+    Second, the genic selection effect clarifies the feature of exons that would help
+them proliferate in the genome and speed evolution. What matters fundamen-
+tally is not that introns fall between structural elements of the peptide, but that
+each exon be able to maintain, within a new peptide environment, the properties
+that it was selected for. It has been assumed that the latter would require the
+former, but this assumption needs to be justified. Therefore, the negative statis-
+tical results carried out by Stoltzfus (1994), based on where introns fall in the
+peptide structure, might not be measuring whether exons have modular prop-
+erties under exon shuffling. The more definitive test is to perform experimental
+manipulation of gene or peptide structure showing functional autonomy of the
+product of the exon or set of exons (e.g Craik 1980, Sanctis 1986, Zonneveld
+1986, de Vries 1988, and Casorati 1993). Modularity of exon function has been
+found in many but not all cases.
+
+    A testable prediction I proposed as to whether exons with modular properties
+may have proliferated in the genome was to examine the reading frame statistics
+of exons (Altenberg 1983). Exons or group of exons that were a multiple of 3
+                                                                                                      45
+
+nucleotides long would have greater modularity, because insertion of such exons
+into a protein-coding gene does not shift the reading frame down-stream. Such
+exons would have a constructional fitness advantage under exon shuffling. Data
+confirming this prediction were presented (Altenberg 1985, Altenberg and Brut-
+lag 1986) showing statistical excesses of exons and pairs of exons with lengths
+a multiple of three. Subsequently, Patthy (1987) proposed what is also a con-
+structional selection theory for exon shuffling, and also made similar predictions
+about exon reading frame properties. Smith (1988) and Gelfand (1992) have
+both corroborated these statistical findings on exon reading frame lengths.
+
+    Selection has been proposed as a possible cause of modular exons, but with-
+out sufficient attention to the level at which selection would have to act. The
+genic selection effect clarifies the means by which selection could produce modu-
+lar exons. Doolittle (1985) had proposed that modular exons should be prevalent
+because "introns that occur between potentially useful domains will have added
+survival value". But one must ask, survival value for whom? It cannot be the
+survival of the organism carrying the intron, because intron position generally
+does not affect organismal viability. It could be perhaps the long term survival
+of the intron within the gene, if rates of introns loss were found to correlate with
+protein structure. In terms of the genic selection effect, intron survival within a
+gene corresponds to viability on the level of genome-as-population. If there were
+differences in intron longevity based on peptide position, this could produce a
+correspondence between intron position and peptide structure. But the differen-
+tial proliferation of modular exons within the genome is a matter of differential
+survival, but differential fecundity on the level of genome-as-population.
+
+Dissociability in Development and Morphological Integration. Disso-
+ciability in development and morphological integration are two aspects of the
+correlation structure of phenotypic variability. Morphological integration is said
+to be present where morphological characters which are functionally interde-
+pendent are also genetically correlated. Dissociability is where one such suite
+of functionally related characters has variability independent from another such
+suite. It is a form of low pleiotropy in developmental processes (defined for phe-
+notypic as well as genetic perturbations), in that the development of certain
+structures can be changed without altering the development of other structures.
+
+    Both phenomena are predicted outcomes of constructional selection. But
+both can come about from modifier evolution as well, in which evolution under
+organismal selection at one locus systematically changes the genotype-pheno-
+type maps at other loci, which is a form of epistasis (see Sect. 6.3, below). So
+evidence of their existence cannot alone be taken as support for an impact of
+constructional selection processes.
+
+    Cheverud (1984) has hypothesized modifier evolution under stabilizing se-
+lection as a primary mechanism producing morphological integration. The ar-
+gument is principally one of genetic load: modifiers should evolve to reduce the
+genetic variance for the phenotypic dimensions under the most severe stabiliz-
+ing selection. Wagner (1988) notes, however, that for populations in mutation-
+46
+
+selection balance around a fitness peak, the strength of selection on modifiers
+of the genotype-phenotype map can be only on the order of the mutation rate.
+Wagner has consequently looked to situations in which the population is not
+near equilibrium, but is at an earlier stage of directional selection, where there
+can be stronger selection on modifiers. He notes that rather special ecological
+conditions may be needed, however, to keep a population continually far from
+equilibrium, limiting the ubiquity of this mechanism for generating morphologi-
+cal integration.
+
+    This difficulty is overcome by recalling, from Sect. 4.4, that pleiotropic con-
+straints can be expected to leave the population in a state of "latent" directional
+selection that can provide strong selective advantage to modifiers, or newly cre-
+ated genes, that break or shift the constraints in the right way. This is the context
+for Riedl's (1977) constructional selection mechanism. Therefore, morphological
+integration could be the result not of ongoing stabilizing selection about a fit-
+ness peak, but the legacy of changes in the genotype-phenotype map driven by
+the presence of latent directional selection for the morphological function. If the
+origin of the morphological adaptation involved the creation of new genes, then
+morphological integration could reflect the suite of phenotypic correlations that
+originally gave these genes their selective advantage (the correlated allelic vari-
+ation effect). This would require a certain degree of stability in the correlation
+structures over evolutionary time.
+
+    One of the means to test for morphological integration is to examine the
+eigenvalues of the genetic correlation matrices for quantitative traits. Wagner
+(1984) pointed out that conclusions about the significance of the eigenvalues
+requires a null hypothesis. Wagner investigated of the eigenvalue distributions for
+random genotype-phenotype maps as a null hypothesis, and this was extended to
+other statistics on genetic correlation matrices (Cheverud et al. 1989). Significant
+departures in real data from the random expectation were found. The genotype-
+phenotype maps evolved here in simulations of genome growth can be used to
+derive genetic correlation matrices and thus yield expectations from the action
+of constructional selection that can be compared with quantitative genetic data.
+
+    Patterns of dissociability are ubiquitous in development, but little quantita-
+tive theory for the origins or maintenance of dissociability has been developed.
+Rieppel (1991) proposes that phylogenetically successful taxa are those which
+have been able to achieve greater dissociability in their ontogenetic systems,
+using snakes as his example. This is exactly what is expected from construc-
+tional selection acting during genome growth, and what may also result from
+the evolution of modifiers of the genotype-phenotype map.
+
+    Much of the thinking about dissociability places it as an aspect of von Baer's
+Laws (1828), that dissociable developmental pathways are those added recently
+in evolution to later stages of ontogeny. A view of developmental mechanisms as
+causal cascades gives rise to this view (Riedl 1977, Schank and Wimsatt 1987,
+Wimsatt and Schank 1988), but it should not be forgotten that there is variation
+for developmental mechanisms and that what emerges is filtered by selection.
+Terminal additions in ontogeny may be prevalent because on the average they
+                                                                                                      47
+
+are less likely to be pleiotropic. But if pleiotropic cascading effects constrain the
+evolutionary malleability of earlier ontogeny, then there may exist large degrees
+of latent directional selection which would drive the evolution of new dimensions
+of genetic variability that produced dissociability. An example is the evolution of
+imaginal disks in Drosophila, a highly derived trait which effectively decouples
+larval and adult morphology. Variation in larval morphology, as long as it doesn't
+impinge on the imaginal disks, has little "generative" consequence for adult
+functioning, thereby unburdening the larval form. Imaginal disks thus were an
+invention that reduced pleiotropic constraints within Drosophila development.
+
+    Raff and coworkers (Raff 1992, Raff et al. 1992) have demonstrated espe-
+cially well with sea urchins that divergent early development does not necessi-
+tate divergent adult forms, so that cascading effects of perturbations to early
+development must be seen as contingent results of evolution. Other examples
+include the frog Gastrotheca and the clam Unio (Levinton 1988, del Pino and
+Elinson 1983). This supports a view of the evolution of the genotype-phenotype
+map in which constraints on early development are not a mechanistic necessity,
+but are always unstable to new dimensions of variation that compartmentalize
+the genetic underpinnings for different adaptive functions.
+
+Allelic Polymorphisms. If constructional selection has indeed produced genomes
+with a prevalence of genes with low pleiotropy, this might be expected to be ev-
+ident in the phenotypic nature of allelic polymorphisms. Koehn et al. (1983)
+surveyed several cases of enzyme polymorphisms to get a sense of the levels
+of pleiotropy that typically exist. Their evaluation was that natural polymor-
+phisms have low levels of pleiotropy when compared with the possibilities that
+exist for wide functional effects. The genes studied may not be reflective of genes
+in general because the nature of their pleiotropy may influence whether the genes
+maintain polymorphisms. Gimelfarb (1986, 1992) and Hastings and Hom (1989,
+1990) have shown in the case of linear genotype-phenotype maps and stabiliz-
+ing selection (as in Sect. 4), how the degree of pleiotropy can be critical to the
+number of loci at which polymorphisms can be maintained. In these quantitative
+genetic models, higher pleiotropy allows for greater polymorphism, which would
+strengthen the significance of Koehn et al.'s observations. Further theoretical
+study is needed in this area before natural genetic polymorphisms can be inter-
+preted as evidence with respect to the genotype-phenotype map, and therefore
+constructional selection.
+
+Macroevolutionary Dynamics. The creation of new genes may represent
+only a tiny fraction of the genetic events that contribute to adaptation, yet they
+may play a significant role in the sculpting of the genotype-phenotype map.
+All that is required is that the mode of action of the gene on the phenotype
+be somewhat conserved over macroevolutionary time scales. Still, however, one
+should not overlook the possibility that the evolution of new genes may often
+have a profound effect on the rates and direction of evolution. Several cases have
+been found where gene duplication was followed by accelerated rates of allelic
+48
+
+substitution (Li 1985). Because changed selection regimes would be expected to
+increase adaptive opportunities for the evolution of new genes, and because new
+genes can open up new dimensions of adaptive variation, one might expect to
+find associations between the origin of new genes and the origin of new taxa.
+This should be statistical testable once sufficient quantities of gene tree data
+accumulate.
+
+    In discussions of macroevolutionary dynamics, Eldredge (1989) points out
+that since Wright (1932) introduced the notion of the "adaptive landscape",
+adaptive change has been seen as either the tracking of moving adaptive peaks,
+or shifts from one adaptive peak to another. The dynamics considered here
+are another kind of adaptive change, in which new dimensions of variability
+in the phenotype are created, and what appeared to be an adaptive peak is
+now revealed to be a "slice" through the side of a peak of higher phenotypic
+dimensions. The organismal change afforded by new dimensions of variability
+may be incremental or profound, depending on how well the new variability
+allows decoupling of conflicting pleiotropic constraints and progress toward new
+adaptive optima. But the potential at least exists that certain "punctuations"
+or "saltational" changes during phylogeny reflect rapid climbing of pre-existing
+adaptive peaks through the introduction of new degrees of genetic freedom.
+
+6.3 The Evolution of Evolvability
+
+The main significance of constructional selection is that it is a mechanism that
+can apply more or less to all genes, with the effect of enhancing the ability of the
+genome to generate adaptive variants, and the effect of extending the genotype-
+phenotype map in the direction of lower pleiotropy. As such, it is an anagenetic
+mechanism that can enhance the genome's evolvability. Several other mecha-
+nisms that have been proposed for the evolution of evolvability are reviewed
+below.
+
+Lineage Selection. Dawkins (1989) has discussed a mechanism for the evolu-
+tion of evolvability that has perhaps made inroads into making the "evolution
+of evolvability" more discussible in evolutionary research (Arnold, et al. 1989,
+Alberch 1991). Dawkins's mechanism is lineage selection. In lineage selection, or-
+ganisms whose genotype-phenotype map by happenstance makes them evolvable
+-- i.e. better able to generate adaptive variants -- are the ones whose lineages
+would have most proliferated and endured. Thus, even though there would never
+be selection for evolvability within a lineage (consonant with Concept 3), most
+of the species we see would have high evolvability.
+
+    Dawkins proposes lineage selection for the prevalence of species with evolv-
+able developmental mechanisms; Doolittle proposed lineage selection for the
+evolvability-enhancing property of introns in protein evolution (Doolittle 1987);
+lineage selection has also been proposed for the evolution of sex (Stanley 1976,
+Aboitiz 1991). However, lineage selection must still turn to chance as an expla-
+nation of why certain genomes came to be more evolvable; it cannot produce an
+                                                                                                      49
+
+increase in the evolvability of the genome within lineages. Genetic modification
+and constructional selection are mechanisms that can change evolvability within
+lineages.
+
+Genetic Modification. Modification, as mentioned earlier, is a form of epis-
+tasis, in which the nature of the phenotypic variability determined by one locus
+is affected by the allelic state at another locus, the modifier.
+
+    The most widely discussed idea for the evolution of evolvability through
+genetic modification is "regulation" in development, otherwise called canaliza-
+tion (Waddington 1957), developmental homeostasis (Lerner 1954), morpho-
+genetic correlations (Schmalhausen 1949), or morphological integration (Olson
+and Miller 1958, Cheverud 1984). In this mechanism, genes are selected on for
+their organismal fitness effects but modify the variational properties of the ge-
+nome as a systematic side effect. Most discussions of this mechanism do not
+explicitly describe it as a modifier effect. Selection to stabilize morphological
+functions against environmental and genetic variability can systematically lead
+to the reduction of pleiotropic effects from genetic background variability. There-
+fore, this may endow the developmental system with "extrapolation" capabil-
+ities if it can produce the morphological function in the face of evolutionary
+changes in other parts of the organism (Frazzetta 1975). Kauffman argues that
+the properties of dynamical systems would produce such a systematic correla-
+tion between phenotypic stability, which is selected for, and smooth adaptive
+landscapes, which are not directly selected for (Kauffman 1989b).
+
+    Riedl, in his theory of `genome systemization", adds a modifier effect to the
+evolution of "superimposed" regulatory genes, through an unnecessary assump-
+tion about the nature of these genes. The process Riedl proposes is constructional
+selection, because new genes evolve that produce coordinated variation in the
+right direction for adaptation. Existing genes are unable to produce the adap-
+tation because it would require the simultaneous mutation of several of them.
+This creates the situation of latent directional selection. But Riedl emphasizes
+that the regulatory genes will also eliminate the previously existing uncoordi-
+nated dimensions of variability. This is the basis of his argument for hierarchies
+of constraint in the phenotype. Yet it is not the suppression of uncoordinated
+variability that allows a new superimposed gene to survive. It is its ability to
+produce variation in the direction of adaptive opportunity. The former effect
+would produce a reduction in genetic load, which is another example of the ge-
+netic modification described above. Although the evolution of new genes could
+involve both constructional selection and genetic modification effects, these are
+not inherently linked.
+
+    One additional modifier mechanism is the idea of hitchhiking, which Con-
+rad (1979 1982) proposes can evolve smoother adaptive landscapes, and Wag-
+ner(1981) proposes can accelerate responses to selection. A near-neutral modifier
+allele that increases the chance that mutations at another locus are adaptive can
+hitchhike along with these mutations. Conrad provides no population genetic
+analysis of the hitchhiking model, but it is plausible based on the model of Eshel
+50
+
+(1973) for modification of mutation rates. Modifiers that alter the adaptive land-
+scape, however, would in general be expected to have direct effects on fitness,
+either advantageous or deleterious, which would swamp any hitchhiking effects
+on the modifier evolution. Wagner also proposed what is effectively a hitchhiking
+mechanism for the evolution of increased rates of adaptation in his idea of "feed-
+back" selection (Wagner 1981). Wagner considers the general situation where a
+neutral modifier can evolve if it increases the rate at which selection increases
+the fitness of the modifier's carriers.
+
+Evolvability and the Randomness of Mutation. There is often a Darwinian
+hesitation in discussing the evolution of evolvability, because it seems to step
+outside of what natural selection can act upon, or invoke non-random mutational
+processes. To claim that the evolution of new genes should enhance the genome's
+ability to produce adaptive variants is, on the surface, contrary to the idea that
+mutation is random with respect to adaptation. But if one looks more closely at
+these notions of randomness, one finds three different concepts:
+
+Concept 1: Mutation pressure by itself will not produce adaptive evolution.
+Concept 2: Current selective pressures do not affect the direction of mutations,
+
+     with respect to those selective pressures.
+Concept 3: The ability of the genome to generate adaptive variants is not
+
+     molded in any systematic way by its evolutionary history.
+
+Neither Concepts 1 nor 2 are at issue with constructional selection. Concept 2,
+I should note, has been the center of the controversial claim of "directed muta-
+tion" in bacteria (Cairns et al. 1988, Lenski et al. 1989, Hall et al. 1990, Cairns
+and Foster 1991, Foster and Cairns 1992, and Mittler and Lenski 1992). The
+mechanism of lineage selection that Dawkins (1988) proposed for the evolution
+of evolvability is in keeping with Concept 3. It is Concept 3, however, with which
+I have taken issue here. Concept 3 is well exemplified by Maynard Smith, et al.
+(1985):
+
+     Furthermore, there is usually no reason to suppose that the developmen-
+     tal mechanisms in question evolved because of the particular phenotypes
+     that they make readily accessible. In general, therefore, the direction of
+     the resulting constraints (biases on the production of variant phenotypes)
+     is "accidental" or "random" with respect to the demands of adaptive
+     evolution. (1985, p. 269)
+
+The argument of this chapter could be boiled down simply to this: the propo-
+sition in the first sentence of this quote does not logically entail the assertion
+in the second sentence. In other words, while it is reasonable and Darwinian
+to claim that developmental mechanisms do not evolve because of the pheno-
+types they make readily accessible, the resulting accessible phenotypes will not
+be "accidental" with respect to the demands of adaptive evolution if they are
+correlated with the phenotypes originally made accessible by the developmental
+mechanisms.
+                                                                                                      51
+
+6.4 Future Directions
+
+The models described here have been designed to be simple and illustrative of
+the constructional selection effects. There are numerous refinements and elabo-
+rations one could make to the genome growth models, including allelic polymor-
+phism, changing selection and coevolution, stochastic mixing of gene duplication
+and allelic mutation events, and finite population size. Other models for geno-
+type-phenotype maps can be analyzed for their evolution under constructional
+selection. I suspect that the basic findings about the evolution of pleiotropy will
+be robust under these elaborations, and further phenomena may emerge as well.
+
+    Models specific to some of the predictions made here need to be developed,
+such as statistics of gene-tree topologies under the genic selection effect. Riedl's
+idea of burden, while not directly dealt with in the models here, may be incor-
+porated with minor modifications.
+
+    Moreover, the model genotype-phenotype maps evolved under constructional
+selection can be utilized in providing underlying models for what the effects of
+genetic constraints on evolution should look like. Theories about how constraints
+affect morphological evolution and cladistics can be concretely simulated with
+such model maps.
+
+    Levinton (1988) writes,
+
+     Evolutionary biologists have been mainly concerned with the fate of vari-
+     ability in populations, not the generation of variability. ... Whatever the
+     reason, the time has come to reemphasize the study of the origin of
+     variation.
+
+Levinton's call is certainly heeded in this chapter, which has attempted to pro-
+vide a framework for thinking about the evolutionary forces acting on the genera-
+tion of variability, and to describe new mechanisms which enable the evolvability
+of the genome to evolve.
+
+Acknowledgements
+
+This research was supported in part by the Santa Fe Institute, The Center for
+Nonlinear and Complex Systems at Duke University, Provost's Common Fund,
+and NSF Grant EAR-89-15983. I thank: Peter Haff, Marcy Uyenoyama, Richard
+Palmer, the Hawaii Institute of Geophysics and Planetology, and the Maui
+High Performance Computing Center for infrastructural support; Joe Felsen-
+stein, Frank Eeckman, Gu¨nter Wagner and Eric Mjolsness for the invitations to
+speak which facilitated this work; Stu Kauffman for helpful discussion of the NK
+landscape models, Jim Bever, Eric Macklin and Leo Buss for insightful dialec-
+tics on levels of selection, and Gu¨nter Wagner for stimulating discussions on the
+whole subject. The section on NK landscapes originated at the 1991 Complex
+Systems Summer School held by the Santa Fe Institute. Thanks to Roger Al-
+tenberg and Wolfgang Banzhaf for their consideration during the completion of
+this work.
+52
+
+References
+
+Aboitiz, F. 1991. Lineage selection and the capacity to evolve. Medical Hypotheses
+     36(2): 155­156.
+
+Alberch, P. 1991. From genes to phenotype: dynamical systems and evolvability.
+     Genetica 84: 5­11.
+
+Altenberg, L. 1983. Exon shuffling: A prediction of an excess of 0mod3 lengths for
+     exons. Letter to Nature. Unpublished.
+
+Altenberg, L. 1985. Knowledge representation in the genome: new genes, exons, and
+     pleiotropy. Genetics 110, supplement: s41. Abstract of paper presented at the 1985
+     Meeting of the Genetics Society of America.
+
+Altenberg, L. 1994. The evolution of evolvability in genetic programming. In K. E.
+     Kinnear, editor, Advances in Genetic Programming, chapter 3, pages 47­74. MIT
+     Press, Cambridge, MA.
+
+Altenberg, L. 1994. Evolving better representations through selective genome growth.
+     In Proceedings of the 1st IEEE Conference on Evolutionary Computation. Part 1
+     (of 2), pages 182­187, Piscataway N.J. IEEE.
+
+Altenberg, L. 1995. The Schema Theorem and Price's Theorem. In D. Whitley and
+     M. D. Vose, editors, Foundations of Genetic Algorithms 3, pages 23­49. Morgan
+     Kaufmann, San Mateo, CA.
+
+Altenberg, L. and D. L. Brutlag. 1986. Selection for modularity in the genome. Un-
+     published. Cited in 1987, 1987 and 1996.
+
+Altenberg, L. and M. W. Feldman. 1987. Selection, generalized transmission, and the
+     evolution of modifier genes. I. The reduction principle. Genetics 117: 559­572.
+
+Arnold, S. J., P. Alberch, V. Csanyi, R. C. Dawkins, S. B. Emerson, B. Fritzsch, T. J.
+     Horder, J. Maynard Smith, M. J. Starck, E. S. Vrba, G. P. Wagner, and D. B.
+     Wake. 1988. How do complex organisms evolve? In D. B. Wake and G. Roth,
+     editors, Complex Organismal Functions: Integration and Evolution in Vertebrates,
+     pages 403­433. John Wiley and Sons, New York.
+
+Baer, K. E. v. 1828. Entwichlungsgeschichte der Thiere: Beobachtung und Reflexion.
+     Borntr¨ager, Ko¨nigsberg, pages 221­224.
+
+Barwise, J. and J. Perry. 1983. Situations and Attitudes. M.I.T. Press, Boston, pages
+     292­295.
+
+Blake, C. C. F. 1978. Do genes-in-pieces imply proteins-in-pieces? Nature 273: 267.
+Bonner, J. T. 1974. On Development: The Biology of Form. Harvard University,
+
+     Cambridge, MA, page 61.
+Brakenhoff, R. H., H. J. M. Aarts, F. H. Reek, N. H. Lubsen, and J. G. G. Schoenmak-
+
+     ers. 1990. Human .gamma.-crystallin genes: A gene family on its way to extinction.
+     Journal of Molecular Biology 216(3): 519­532.
+Brandon, R. N. 1990. Adaptation and Environment. Princeton University Press,
+     Princeton, pages 83­84.
+Burt, D. W. and I. R. Paton. 1992. Evolutionary origins of the transforming growth
+     factor- gene family. DNA and Cell Biology 11(7): 497­510.
+Cairns, J. and P. L. Foster. 1991. Adaptive reversion of a frameshift mutation in
+     Escherichia coli. Genetics 128(4): 695­702.
+Cairns, J., J. Overbaugh, and S. Miller. 1988. The origin of mutants. Nature 335:
+     142­145.
+Casorati, G., A. Traunecker, and K. Karjalainen. 1993. The t cell receptor alpha-beta
+     v-j shuffling shows lack of autonomy between the combining site and the constant
+     domain of the receptor chains. European Journal of Immunology 23(2): 586­589.
+                                                                                                      53
+
+Cavalier-Smith, T. 1977. Visualising jumping genes. Nature 270: 10­12.
+Cheverud, J. 1984. Quantitative genetics and developmental constraints on evolution
+
+     by selection. Journal of Theoretical Biology 110: 155­171.
+Cheverud, J. M., G. P. Wagner, and M. M. Dow. 1989. Methods for the comparative
+
+     analysis of variation patterns. Systematic Zoology 38(3): 201­213.
+Conrad, M. 1979. Bootstrapping on the adaptive landscape. BioSystems 11: 167­182.
+Conrad, M. 1982. Natural selection and the evolution of neutralism. BioSystems 15:
+
+     83­85.
+Craik, C. S., S. R. Buchman, and S. Beychok. 1980. Characterization of globin domains:
+
+     heme binding to the central exon product. Proceedings of the National Academy of
+     Sciences U.S.A. 77(3): 1384­1388.
+Crick, F. 1979. Split genes and RNA splicing. Science 204: 264­271.
+Crow, J. F. and M. Kimura. 1970. An Introduction to Population Genetics Theory.
+     Alpha Editions, Edina, MN, pages 418­430.
+Crow, J. F. and T. Nagylaki. 1976. The rate of change of a character correlated with
+     fitness. The American Naturalist 110(972): 207­213.
+Dawkins, R. 1988. The evolution of evolvability. In C. G. Langton, editor, Artificial
+     Life, The Proceedings of an Interdisciplinary Workshop on the Synthesis and Sim-
+     ulation of Living Systems, volume VI of Santa Fe Institute Studies in the Sciences
+     of Complexity, pages 201­220, Redwood City, CA. Addison-Wesley.
+Sanctis, G.de , G. Falcioni, B. Giardina, F. Ascoli, and M. Brunori. 1986. Mini-
+     myoglobin: preparation and reaction with oxygen and carbon monoxide. Journal
+     of molecular biology 188(1): 73­76.
+De Vries, C., H. Veerman, F. Blasi, and H. Pannekoek. 1988. Artificial exon shuf-
+     fling between tissue-type plasminogen activator (t-PA) and urokinase (u-PA): A
+     comparative study on the fibrinolytic properties of T-PA/u-PA hybrid proteins.
+     Biochemistry 27(7): 2565­2572.
+del Pino, E. M. and R. P. Elinson. 1983. A novel development pattern for frogs:
+     gastrulation produces and embryonic disk. Nature 306: 589­591.
+Doolittle, R. F. 1985. The genealogy of some recently evolved vertebrate proteins.
+     Trends in Biochemical Sciences 10: 233­237.
+Doolittle, W. 1987. What introns have to tell us: hierarchy in genome evolution. In
+     Cold Spring Harbor symposia on quantitative biology, volume 52, pages 907­913.
+     Cold Spring Harbor Laboratory Press, 1987. Cites Altenberg and Brutlag.
+Doolittle, W. F. 1987. The origin and function of intervening sequences in DNA: A
+     review. American Naturalist 130: 915­928. Cites Altenberg and Brutlag.
+Doolittle, W. F. and C. Sapienza. 1980. Selfish genes, the phenotype paradigm and
+     genome evolution. Nature 284: 601­603.
+Dorit, R. L. and W. Gilbert. 1990. How big is the universe of exons? Science 250(4986):
+     1377­1382.
+Dorit, R. L., L. Schoenbach, and W. Gilbert. 1991. Exon shuffling and the underlying
+     motifs of protein evolution. Journal of Cellular Biochemistry Supplement 15 PART
+     D: 81.
+Eldredge, N. 1989. Macroevolutionary Dynamics: Species, Niches, and Adaptive Peaks.
+     McGraw-Hill, New York, page 205.
+Eshel, I. 1973. Clone­selection and optimal rates of mutation. Journal of Applied
+     Probability 10: 728­738.
+Feller, W. 1971. An Introduction to Probability Theory and Its Applications, volume II.
+     John Wiley and Sons, New York, 2nd edition.
+Fisher, R. A. 1930. The Genetical Theory of Natural Selection. Clarendon Press,
+     Oxford.
+54
+
+Foster, P. L. and J. Cairns. 1992. Mechanisms of directed mutation. Genetics 131(4):
+     783­789.
+
+Frank, S. A. and M. Slatkin. 1990. The distribution of allelic effects under mutation
+     and selection. Genetical Research (Cambridge) 55: 111­117.
+
+Frazzetta, T. H. 1975. Complex Adaptations in Evolving Populations. Sinauer Asso-
+     ciates, Sunderland, MA, pages 212­238.
+
+Gelfand, M. S. 1992. Statistical analysis and prediction of the exonic structure of
+     human genes. Journal of Molecular Evolution 35: 239­252.
+
+Gilbert, W. 1978. Why genes in pieces? Nature 271: 501.
+Gilbert, W. and M. Glynias. 1993. On the ancient nature of introns. Gene (Amsterdam)
+
+     135(1-2): 137­144.
+Gillespie, J. H. 1984. Molecular evolution over the mutational landscape. Evolution
+
+     38(5): 1116­1129.
+Gimelfarb, A. 1986. Additive variation maintained under stabilizing selection: A two­
+
+     locus model of pleiotropy for two quantitative characters. Genetics 112: 717­725.
+Gimelfarb, A. 1992. Pleiotropy and multilocus polymorphisms. Genetics 130: 223­227.
+Golub, G. H. and C. F. V. Loan. 1983. Matrix Computations. Johns Hopkins University
+
+     Press, Baltimore.
+Goodwin, B. C. 1989. Evolution and the generative order. In B. C. Goodwin and P. T.
+
+     Saunders, editors, Theoretical Biology: Epigenetic and Evolutionary Order, pages
+     89­100. Edinburgh University Press.
+Grafen, A. 1985. A geometric view of relatedness. Oxford Surveys in Evolutionary
+     Biology 2: 28­89.
+Haefliger, D. N., J. E. Moskaitis, D. R. Schoenberg, and W. Wahli. 1989. Amphibian
+     albumins as members of the albumin, alpha-fetoprotein, vitamin D-binding protein
+     multigene family. Journal of Molecular Evolution 29(4): 344­354.
+Haldane, J. B. S. 1927. A mathematical theory of natural and artificial selection. Part
+     V. Selection and mutation. Proceedings of the Cambridge Philosophical Society 23:
+     838­844.
+Hall, B. 1990. Spontaneous point mutations that occur more often when advantageous
+     than when neutral. Genetics 126(1): 5­16.
+Hastings, A. and C. L. Hom. 1989. Pleiotropic stabilizing selection limits the number
+     of polymorphic loci to be at most the number of characters. Genetics 122: 459­463.
+Hastings, A. and C. L. Hom. 1990. Multiple equilibria and maintenance of additive
+     genetic variance in a model of pleiotropy. Evolution 44: 1153­1163.
+Kappen, C., K. Schughart, and F. H. Ruddle. 1989. Two steps in the evolution
+     of antennapedia-class vertebrate homeobox genes. Proceedings of the National
+     Academy of Sciences of the United States of America 86(14): 5459­5463.
+Kauffman, S. A. 1989. Adaptation on rugged fitness landscapes. In D. Stein, editor,
+     Lectures in the Sciences of Complexity, pages 527­618. Addison-Wesley, Redwood
+     City. SFI Studies in the Sciences of Complexity, Lecture Volume I.
+Kauffman, S. A. 1989. Principles of adaptation in complex systems. In D. Stein, editor,
+     Lectures in the Sciences of Complexity, pages 619­712. Addison-Wesley, Redwood
+     City. SFI Studies in the Sciences of Complexity, Lecture Volume I.
+Kauffman, S. A. and S. Levin. 1987. Towards a general theory of adaptive walks on
+     rugged landscapes. Journal of Theoretical Biology 128: 11­45.
+Klenova, E. M., I. Botezato, V. Laudet, G. H. Goodwin, J. C. Wallace, and V. V. Loba-
+     nenkov. 1992. Isolation of a cDNA clone encoding the RNase-superfamily-related
+     gene highly expressed in chicken bone marrow cells. Biochemical and Biophysical
+     Research Communications 185(1): 231­239.
+                                                                                                      55
+
+Koehn, R. K., A. J. Zera, and J. G. Hall. 1983. Enzyme polymorphism and natural
+     selection. In M. Nei and R. K. Koehn, editors, Evolution of Genes and Proteins,
+     chapter 6, pages 115­136. Sinauer Associates, Sunderland, MA.
+
+Lande, R. and S. J. Arnold. 1983. The measurement of selection on correlated charac-
+     ters. Evolution 37(6): 1210­1226.
+
+Lenski, R. E., M. Slatkin, and F. J. Ayala. 1989. Mutation and selection in bacterial
+     populations: Alternatives to the hypothesis of directed mutation. Proceedings of
+     the National Academy of Sciences U.S.A. 86(8): 2775­2778.
+
+Lerner, I. M. 1954. Developmental Homeostasis. Oliver and Boyd, Edinburgh.
+Levinton, J. 1988. Genetics, Paleontology, and Macroevolution. Cambridge University
+
+     Press, Cambridge.
+Lewontin, R. C. 1978. Adaptation. Scientific American 239(3): 213­230.
+Li, W.-H. 1985. Accelerated evolution following gene duplication and its implication for
+
+     the neutralist­selectionist controversy. In T. Ohta and K. Aoki, editors, Population
+     Genetics and Molecular Evolution, pages 333­352. Springer-Verlag, Berlin.
+Liberman, U. and M. W. Feldman. 1986. Modifiers of mutation rate: A general reduc-
+     tion principle. Theoretical Population Biology 30: 125­142.
+Luenberger, D. G. 1968. Optimization by Vector Space Methods. John Wiley and Sons,
+     New York, pages 46­62.
+Macken, C. A. and A. S. Perelson. 1989. Protein evolution on rugged landscapes.
+     Proceedings of the National Academy of Sciences of the United States of America
+     86: 6191­6195.
+Maynard Smith, J. 1970. Natural selection and the concept of a protein space. Nature
+     225: 563­564.
+Maynard Smith, J., R. Burian, S. Kauffman, P. Alberch, J. Campbell, B. Goodwin,
+     R. Lande, D. Raup, and L. Wolpert. 1985. Developmental constraints and evolution.
+     Quarterly Review of Biology 60(3): 265­571.
+Mencarelli, C., B. Magi, B. Marzocchi, M. Contorni, and V. Pallini. 1991. Evolutionary
+     trends of neurofilament proteins in fish. Comparative Biochemistry and Physiology
+     B Comparative Biochemistry 100(4): 733­740.
+Mittler, J. E. and R. E. Lenski. 1992. Experimental evidence for an alternative to
+     directed mutation in the bgl operon. Nature 356(6368): 446­448.
+Nemeschkal, H. L., R. Van Den Elzen, and H. Brieschke. 1992. The morphometric
+     extraction of character complexes accomplishing common biological roles: Avian
+     skeletons as a case study. Zeitschrift fu¨r Zoologische Systematik und Evolutions-
+     forschung 30(3): 201­219.
+Nishikimi, M., T. Kawai, and K. Yagi. 1992. Guinea pigs possess a highly mutated gene
+     for l-gulono-.gamma.-lactone oxidase, the key enzyme for l-ascorbic acid biosynthe-
+     sis missing in this species. Journal of Biological Chemistry 267(30): 21967­21972.
+Ohta, T. 1988. Further simulation studies on evolution by gene duplication. Evolution
+     42: 375­386.
+Ohta, T. 1991. Role of diversifying selection and gene conversion in evolution of major
+     histocompatibility complex loci. Proceedings of the National Academy of Sciences
+     U.S.A. 88(15): 6716­6720.
+Olson, E. C. and R. L. Miller. 1958. Morphological Integration. University of Chicago
+     Press, Chicago.
+Orgel, L. E. and F. H. C. Crick. 1980. Selfish DNA: The ultimate parasite. Nature
+     284: 604­607.
+Patthy, L. 1987. Intron-dependent evolution: preferred types of exons and introns.
+     Febs (Federation Of European Biochemical Societies) Letters 214(1): 1­7.
+56
+
+Press, W. H., S. A. Teukolsky, W. T. Vetterling, and B. P. Flannery. 1992. Numerical
+     Recipes in C: The Art of Scientific Computing. Cambridge University Press, 2nd
+     edition, pages 278­280, 300­304.
+
+Price, G. R. 1970. Selection and covariance. Nature 227: 520­521.
+Price, G. R. 1972. Extension of covariance selection mathematics. Annals of Human
+
+     Genetics 35: 485­489.
+Raff, R. A. 1992. Direct-developing sea urchins and the evolutionary reorganization of
+
+     early development. Bioessays 14(4): 211­218.
+Raff, R. A., G. A. Wray, and J. J. Henry. 1990. Implications of radical evolutionary
+
+     changes in early development for concepts of developmental constraint. In L. War-
+     ren and M. Meselson, editors, New Perspective on Evolution. A. R. Liss.
+Riedl, R. J. 1977. A systems-analytical approach to macro-evolutionary phenomena.
+     Quarterly Review of Biology 52(4): 351­370.
+Rieppel, O. 1991. Progress in evolution: Snakes as an example. Zeitschrift fu¨r Zoolo-
+     gische Systematik und Evolutionsforschung 29(3): 208­212.
+Robertson, A. 1966. A mathematica model of the culling process in dairy cattle.
+     Animal Production 8: 95­108.
+Schank, J. C. and W. C. Wimsatt. 1987. Generative entrenchment and evolution.
+     Philosophy of Science Association 1986 2: 33­60.
+Schmalhausen, I. I. 1949. Factors of Evolution: The Theory of Stabilizing Selection.
+     University of Chicago Press, Chicago. 1986 edition.
+Shi, Y. and B. M. Tyler. 1991. All internal promoter elements of neurospora crassa 5S
+     ribosomal RNA and transfer RNA genes, including the A boxes, are functionally
+     gene-specific. Journal of Biological Chemistry 266(13): 8015­8019.
+Sidow, A. 1992. Diversification of the wnt gene family on the ancestral lineage of
+     vertebrates. Proceedings of the National Academy of Sciences of the United States
+     of America 89(11): 5098­5102.
+Slatkin, M. 1970. Selection and polygenic characters. Proceedings of the National
+     Academy of Sciences U.S.A. 66: 87­93.
+Smith, M. W. 1988. Structure of vertebrate genes: a statistical analysis implicating
+     selection. Journal of Molecular Evolution 27: 45­55.
+Stanley, S. M. 1976. Clades versus clones in evolution: Why we have sex. Science 190:
+     282­283.
+Stoltzfus, A., D. F. Spencer, M. Zuker, J. M. J. Logsdon, and W. F. Doolittle. 1994.
+     Testing the exon theory of genes: The evidence from protein structure. Science
+     265(5169): 202­207.
+Streydio, C., S. Swillens, M. Georges, C. Szpirer, and G. Vassart. 1992. Structure,
+     evolution and chromosomal localization of the human pregnancy-specific 1 glyco-
+     protein gene family. Genomics 6(4): 579­592.
+Strong, M. and G. A. Gutman. 1992. Evolutionary relationships within the potassium
+     channel multigene family. Society For Neuroscience Abstracts 18: 78.
+Taylor, P. D. 1988. Inclusive fitness models with two sexes. Theoretical Population
+     Biology 34: 145­168.
+Tomita, M., N. Shimizu, and D. L. Brutlag. 1996. Introns and reading frames: Cor-
+     relations between splice sites and their codon positions. Molecular Biology and
+     Evolution 13(9): 1219­1223.
+Uyenoyama, M. K. 1988. On the evolution of genetic incompatibility systems: in-
+     compatibility as a mechanism for the regulation of outcrossing distance. In R. E.
+     Michod and B. R. Levin, editors, The Evolution of Sex, pages 212­232. Sinauer
+     Associates, Sunderland, MA.
+                                                                                                      57
+
+Via, S. and R. Lande. 1985. Genotype­environment interaction and the evolution of
+     phenotypic plasticity. Evolution 39(3): 505­522.
+
+Waddington, C. H. 1957. The Strategy of the genes. Allen and Unwin, London.
+Wade, M. J. 1985. Soft selection, hard selection, kin selection, and group selection.
+
+     The American Naturalist 125: 61­73.
+Wagner, G. P. 1981. Feedback selection and the evolution of modifiers. Acta Biotheo-
+
+     retica 30: 79­102.
+Wagner, G. P. 1984. On the eigenvalue distribution of genetic and phenotypic dis-
+
+     persion matrices: Evidence for a nonrandom organization of quantitative character
+     variation. Journal of Mathematical Biology 21: 77­95.
+Wagner, G. P. 1988. The systems approach: an interface between development and
+     population genetic aspects of evolution. In D. M. Raup and D. Jablonski, edi-
+     tors, Patterns and Processes in the History of Life, pages 149­165. Springer-Verlag,
+     Berlin.
+Wagner, G. P. 1989. Multivariate mutation-selection balance with constrained
+     pleiotropic effects. Genetics 122: 223­234.
+Weinberger, E. D. 1991. Local properties of Kauffman's N-k model, a tuneably rugged
+     energy landscape. Physical Review A 44(10): 6399­6413.
+Wimsatt, W. C. and J. C. Schank. 1988. Two constraints on the evolution of complex
+     adaptations and the means for their avoidance. In M. H. Nitecki, editor, Evolu-
+     tionary Progress, pages 231­274. University of Chicago.
+Wright, S. 1932. The roles of mutation, inbreeding, crossbreeding, and selection in
+     evolution. Proceedings of the Sixth International Congress on Genetics 1: 356­366.
+Wu, X., D. M. Muzny, C. C. Lee, and C. T. Caskey. 1992. Two independent mutational
+     events in the loss of urate oxidase during hominoid evolution. Journal of Molecular
+     Evolution 34(1): 78­84.
+Zonneveld, A.-J. V., H. Veerman, and H. Pannekoek. 1986. Autonomous functions of
+     structural domains on human tissue-type plasminogen activator. Proceedings of the
+     National Academy of Sciences U.S.A. 83: 4670­4674.
+

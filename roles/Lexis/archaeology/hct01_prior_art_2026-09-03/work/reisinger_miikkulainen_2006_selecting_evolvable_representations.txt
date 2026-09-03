@@ -1,0 +1,546 @@
+Selecting for Evolvable Representations
+
+   Joseph Reisinger                                                                  Risto Miikkulainen
+joeraii@cs.utexas.edu                                                               risto@cs.utexas.edu
+
+Dept. of Computer Sciences
+University of Texas at Austin
+1 University Station, C0500
+
+   Austin TX, 78712-0233
+
+ABSTRACT                                                                            For example, when designing a coffee table, a representation
+                                                                                    with natural parameters for height and surface area would
+Evolutionary algorithms tend to produce solutions that are                          be more evolvable than a direct encoding controlling the in-
+not evolvable: Although current fitness may be high, further                        dividual position of each block of wood; making parameter
+search is impeded as the effects of mutation and crossover                          changes yields different kinds of tables, constraining varia-
+become increasingly detrimental. In nature, in addition to                          tion in a meaningful way. This effect can also be seen in
+having high fitness, organisms have evolvable genomes: phe-                         genetic programming, where parse-tree representations are
+notypic variation resulting from random mutation is struc-                          more evolvable than searching code strings directly.
+tured and robust. Evolvability is important because it allows
+the population to produce meaningful variation, leading to                             The main benefits of evolvability are to reduce the fre-
+efficient search. However, because evolvability does not im-                        quency of catastrophic mutations and to reduce the number
+prove immediate fitness, it must be selected for indirectly.                        of mutations required to produce phenotypically novel traits
+One way to establish such a selection pressure is to change                         [10]. Thus evolvability provides a mechanism through which
+the fitness function systematically. Under such conditions,                         structured variation and complex adaptations can occur [9,
+evolvability emerges only if the representation allows manip-                       15, 22]. It is necessary to consider evolvability in situations
+ulating how genotypic variation maps onto phenotypic vari-                          where currently evolutionary search is inefficient and unable
+ation and if such manipulations lead to detectable changes in                       to produce reasonable solutions. Focusing on evolvability
+fitness. This research forms a framework for understanding                          will yield more powerful genetic algorithms (GAs) that learn
+how fitness function and representation interact to produce                         not only the highly-fit points in the search space, but also
+evolvability, yielding more evolvable encodings. Ultimately                         good search strategies, enabling GAs to solve more complex
+such encodings may lead to evolutionary algorithms that                             real-world problems.
+exhibit the structured complexity and robustness found in
+nature.                                                                                Although evolvability is beneficial in the long term, it is
+                                                                                    not clear how evolvability is selected for in nature [10], or
+Categories and Subject Descriptors                                                  how it can be selected for in artificial evolution. Evolvability
+                                                                                    does not improve fitness immediately; in fact, in some cases
+G.1.6 [Optimization]: Global Optimization; I.2.8 [Artificial                        of artificial selection it actually slows evolution. In artificial
+Intelligence]: Problem Solving, Control Methods, and Search                         evolution, evolvability can be selected for directly, provided
+                                                                                    knowledge of good phenotypic variation can be built into
+General Terms                                                                       the fitness function. However, in most interesting cases (e.g.
+                                                                                    open-ended domains), the algorithm designer does not know
+experimentation, measurement, performance                                           what constitutes good phenotypic variation and thus it must
+                                                                                    be learned by the algorithm. Therefore, evolvability must
+Keywords                                                                            be selected for indirectly, e.g. as a side-effect of selection for
+                                                                                    some other characteristic.
+genetic algorithms, evolvability, modularity, representations,
+indirect encodings, development, estimation-of-distribution                            One simple yet robust way of generating a selection pres-
+                                                                                    sure for evolvability is to gradually change the fitness func-
+1. INTRODUCTION                                                                     tion in a systematic manner over the course of evolution [9,
+                                                                                    13]. Such methods are promising because they do not re-
+   Evolvability is defined as "the capacity to generate heri-                       quire specific information about evolvability to be built into
+table, selectable phenotypic variation"[10]. In terms of evo-                       the fitness function, but still provide a reward to genomes
+lutionary search, evolvability means that the algorithm pro-                        that learn the underlying structure of the problem. This pa-
+duces novel, high-fitness solutions with a high frequency.                          per analyzes various selection pressures for evolvability that
+                                                                                    are generated in this manner. In a series of experiments,
+Permission to make digital or hard copies of all or part of this work for           representations are trained to exploit bilateral symmetry by
+personal or classroom use is granted without fee provided that copies are           presenting a sequence of bilaterally symmetric fitness func-
+not made or distributed for profit or commercial advantage and that copies          tions. Only representations capable of manipulating phe-
+bear this notice and the full citation on the first page. To copy otherwise, to     notypic variation through the genotype-phenotype mapping
+republish, to post on servers or to redistribute to lists, requires prior specific  are found to be evolvable. Furthermore, the degree to which
+permission and/or a fee.                                                            representations do so is limited by how easily the resulting
+GECCO'06 July 8-12, 2006, Seattle, Washington, USA.
+Copyright 2006 ACM 1-59593-186-4/06/0007 ...$5.00.
+changes in fitness can be detected. Detectability is influ-      response to a particular fitness function.
+enced by several factors such as the fitness function, how          The distinction between latent and acquired evolvability is
+much it changes per generation, the number of genotypic
+traits controlling evolvability, their mutation rates, and the   important: as this study shows, representations with high la-
+size of the phenotype. This limitation suggests that repre-      tent evolvability may not exhibit acquired evolvability under
+sentations should be designed to maximize the detectability      certain fitness functions. Since evolvability confers mainly a
+of mutations that restructure phenotypic variation.              future evolutionary benefit, it is unclear how it is selected for
+                                                                 in nature. In general, evolvability can only be selected for
+   The paper is divided into six main sections: Section 2 re-    in cases where an increase in evolvability is correlated with
+views indirect encodings and evolvability, section 3 describes   selection for some phenotypic trait. Kirschner and Gerhart
+one method to induce selection for evolvability, section 4       [10] propose three possible methods at both the individual
+compares the performance of two representations under sev-       and clade level through which indirect selection for evolv-
+eral changing fitness functions, and sections 5 and 6 discuss    ability can be generated. First, more modular and robust
+the implications for representation design.                      organization can confer physiological advantages, such as
+                                                                 making the organism more tolerant against stochastic de-
+2. EVOLVABLE REPRESENTATIONS                                     velopment and environments. Second, because fewer mu-
+                                                                 tations have harmful effects, more genetic variation can be
+   The term evolvability is often used to describe an evo-       stored in the population (i.e. they form neutral networks
+lutionary system at the population level: populations with       [8]). Third, populations with higher evolvability are more
+high genetic variance tend to be more evolvable than those       likely to survive when environmental conditions change [10].
+with low variance. This paper focuses on evolvability at a
+more fundamental level, i.e. that of genetic representations.       Recent artificial evolution studies suggest several meth-
+Intuitively, representational evolvability means the degree to   ods through which selection for evolvability, particularly
+which a particular genome is capable of extracting and ex-       through modularity, can arise [3, 4, 11, 19, 21, 23]. The
+ploiting the underlying structure of a particular fitness func-  simplest and most effective way is to make evolvability it-
+tion. In general, representations that exhibit high evolvabil-   self a component of fitness. A commonly studied example
+ity are more capable of searching effectively through com-       is Estimation-of-Distribution algorithms (EDAs), which at-
+plex spaces. The benefits commonly associated with evolv-        tempt to learn evolvable phenotypic distributions by analyz-
+ability include increasing adaptive phenotypic variation (i.e.   ing selection data from past generations [14]. Although less
+developmental constraints) [5, 15], decorrelating phenotypic     biologically plausible than traditional genetic algorithms,
+traits (weak linkage) [20], and the emergence of both geno-      EDAs have been shown to be particular powerful in opti-
+typic and morphological modularity [9, 13]. Evolvability is      mization problems. The primary difference in EDAs and
+obtained by adaptively organizing the genotype-phenotype         indirect encoding methods is that EDAs adapt the search
+mapping in such a way that the search operators are more         operators, whereas indirect encodings adapt the genotype-
+likely to produce highly fit phenotypes.                         phenotype mapping.
+
+   Representations capable of exhibiting such control over          Another effective way to select for evolvability is through
+the genotype-phenotype mapping are known as indirect en-         a systematically varying fitness function. This approach is
+codings and have been shown to exhibit many of the same          particularly useful when performing controlled experiments
+characteristics as natural developmental systems [18]. Indi-     on evolvability. Evolvability can be defined purely in terms
+rect encodings are powerful because they facilitate search in    of the degree of exploitation of the underlying structure,
+complex domains by making meaningful phenotypes more             and several different representations can be tested under the
+accessible to search. Given an appropriate selection pres-       same conditions, since the selection pressure for evolvability
+sure, such representations will adapt how genetic variation      is constant and continuous.
+generated by the search operators maps onto phenotypic
+variation such that it becomes more structured and highly           An experimental setup presented in this paper, consisting
+constrained [15]. For example, when evolving designs for         of a changing fitness function paired with an indirect en-
+tables, L-system based developmental encodings have been         coding, allows acquired evolvability to be observed directly
+shown to find parameterizations of phenotypic variation that     and manipulated in a controlled manner. It constitutes a
+correspond to "natural" axes, such as the height and width       first step towards isolating and analyzing the effects of var-
+of the table [6]. Evolvable representations thus allow search    ious representational factors on evolvability. Specific issues
+to manipulate its own bias over the course of evolution. Such    regarding implementation are described in section 3.
+restructuring cannot happen immediately, but must take
+place gradually as the representation exploits information       3. GENERATING SELECTION PRESSURE
+gained about the fitness function. One promising method               FOR EVOLVABILITY
+of designing indirect encodings is to utilize developmental
+processes [7, 18].                                                  An implicit selection pressure for evolvability can be gen-
+                                                                 erated experimentally using two components: a changing fit-
+   Although the phrase "evolvable representation" is com-        ness function with an exploitable structure and a genotypic
+monly used in Evolutionary Computation (EC) literature,          representation capable of storing information regarding that
+representations generally only have a capacity to become         structure. Section 3.1 introduces systematically changing
+evolvable: evolvability emerges over the course of evolution     fitness functions in general, section 3.2 describes a specific
+with a specific fitness function, and is defined in terms of     instance based on bilateral symmetry, and 3.3 describes the
+that function. Therefore, in this paper the term latent evolv-   simplest indirect encoding capable of acquiring evolvability
+ability will be used to describe the representation's under-     in that domain.
+lying capacity for becoming evolvable, and acquired evolv-
+ability will be used to refer to its evolvability produced in    3.1 Fitness Regimes
+
+                                                                    A fitness regime is defined in this paper as a fitness func-
+tion that gradually changes over the course of evolution.                            target
+The degree of change can be fixed or variable and is called
+the target drift rate. Fitness regimes with low target drift                   phenotype
+rates can be tracked by evolution, whereas fitness regimes
+that change too quickly can disrupt evolution to the point                            strict O O X X X X O O
+where fitness does not increase.                                                non-strict O O X X O O O O
+
+   Of particular interest to the study of evolvability is a sub-                                       symmetry
+set of fitness regimes where the fitness function does not        Figure 1: Fitness calculation for the strict symmet-
+change randomly, but rather has some underlying structure         ric and non-strict symmetric fitness regimes. In the
+ that is invariant across all instances (i.e. a generalization    strict regime, fitness is the number of traits (i.e. lo-
+of Kashtan and Alon's modularly varying fitness function          cations or genes) in the phenotype that match both
+[9]). When evolving under such a regime, it is beneficial for     the target string and the trait at the bilaterally sym-
+a population to identify and exploit . Doing so increases         metric point in the phenotype. Phenotypic traits
+the population's ability to adapt when the fitness function       that only match the target string do not count to-
+changes. Thus the fitness regime defines a fitness differential   wards fitness. The non-strict regime relaxes this re-
+between genomes that exploit  and those that do not. Since        quirement, rewarding all traits that match the tar-
+exploiting  requires manipulating the phenotypic variation        get, regardless of whether the bilaterally symmet-
+of the population, fitness regimes implicitly produce a se-       ric point matches. Although fundamentally similar,
+lection pressure for evolvability. Furthermore, adapting the      these two fitness regimes generate significantly dif-
+local search space in this way allows the population to find      ferent selection pressures for evolvability.
+more general solutions and to escape local optima [9].
+                                                                  of bilateral symmetry has no pressure to exploit general
+   In terms of representation, each genome has a mutational       symmetry as a survival strategy. Therefore, the represen-
+cost associated with exploiting . Some genomes may be             tation might not exhibit acquired evolvability, even though
+able to exploit it with relatively few mutations whereas oth-     it has the capacity for it. Conversely, if the target string is
+ers may take many. The amount of evolvability that a rep-         changed slowly, then there is a pressure for such learning.
+resentation acquires under a particular fitness regime is pro-    Furthermore, higher rates of change yield stronger selection
+portional to the number of mutations required for learning        for evolvability.
+. Large fitness differentials generate more selection pres-
+sure and thus more tolerance to adaptations that may take            Three fitness regimes are compared in this study, one
+many mutations. If a certain selection pressure is not enough     random and two based on bilateral symmetry. Although
+to meet the representation's threshold, then evolvability will    all three fitness regimes employ a varying fitness function,
+not emerge. Representations that exhibit high evolvability        each generates quantitatively different selection pressures for
+even when there is little selection pressure are desirable, es-   evolvability:
+pecially in cases like co-evolution, where large fitness differ-
+entials cannot necessarily be guaranteed.                             · Random, where the fitness function drifts without struc-
+                                                                         ture; the initial instance is generated randomly (with
+   Since static fitness functions do not provide pressure to             no bilateral symmetry) and all target string mutations
+select for evolvability, even if a representation has high la-           are made at random. Individuals are rewarded for each
+tent evolvability, it may exhibit little acquired evolvability           trait (i.e. bit location or gene) that matches the target
+under such circumstances. This insight is important be-                  string.
+cause it may help explain the tendency for "brittle" evolved
+solutions, i.e. solutions whose local mutation space reflects         · Strict, where target string mutations occur only on one
+simply how rugged the fitness function is. In general, static            half and are copied over to the other half to preserve
+fitness functions may be a cause of low evolvability in arti-            symmetry. When fitness is calculated, only traits that
+ficial evolution, even with developmental systems [2].                   match the target function and the trait at the bilat-
+                                                                         erally symmetric point on the genome are rewarded
+3.2 Symmetry Domain                                                      (figure 1).
+
+   One conceptually simple fitness regime involves present-           · Non-strict is similar to the strict fitness regime ex-
+ing a sequence of symmetric binary strings as the target for             cept that all traits that match the target function are
+evolution. A target string of n bits is generated randomly               rewarded, regardless of whether they match the bilat-
+with symmetry around the midpoint and used as the fitness                erally symmetric point as well (figure 1).
+function. This function is changed over time by flipping each
+bit with a predefined probability, maintaining bilateral sym-        This domain was chosen for two reasons: first, the fit-
+metry. A distinction must be made between learning general        ness calculation is computationally simple to perform, and
+symmetry of any target string that is symmetric about the         second, there is a clear underlying structure to the prob-
+midpoint and specific symmetry where the target string is         lem that remains even when the target is changed. Thus,
+defined explicitly. This distinction is important because the     if the representation is capable, there is an opportunity for
+representation must generalize from each instance of specific     exploiting the invariance in order to become more evolvable.
+symmetry in order to learn about general symmetry.                Furthermore, no other opportunities exist to do so.
+
+   By varying how quickly the specific instances of bilat-        3.3 Linkage Representation
+eral symmetry change over evolution (the target drift rate),
+training sessions can be constructed that provide variable           In order to make use of the selection pressure for evolv-
+amounts of information about general symmetry. For ex-            ability, the solution representation must be able to adapt its
+ample, a representation trained on only a single instance
+     Low Linkage            High Linkage                        random non-strict strict
+
+        0-1                   0-1                               control 0.000  0.014 -0.060
+
+                                                                linkage 0.011  0.066 0.319
+
+1-1               0-0  1-1                0-0                   Table 1: The acquired evolvability of the control and
+
+     1-0                    1-0                                 li1n-k1age representations over all three domains. The
+
+                                                                evolvability score represents the average L over all
+                                                                target drift rates. Only the linkage representation
+                                                                under the strict fitness regime exhibits significant
+                                                                acquired evolvability.
+
+Figure 2: Effects of the linkage parameter on the               Since random linkage does not exploit the structure of sym-
+local mutational space. Circles indicate symmetric              metry, if the control representation evolves high linkage val-
+phenotypic traits, bold arrows show high probability            ues, then evolution may just be selecting for a higher muta-
+mutations, and dotted arrows indicate low probabil-             tion rate, rather than evolvability. Thus comparing against
+ity mutations. With low linkage, mutations between              this representation elucidates whether higher evolvability is
+each of the four combinations of phenotypic values              actually being selected for.
+(0-0, 0-1, 1-0, 1-1) are possible with equal proba-
+bility. However, as the linkage parameter value in-             4. RESULTS
+creases (from low to high), the symmetric settings
+(0-0 and 1-1) become more probable and further-                    A standard genetic algorithm with tournament selection,
+more direct mutation between the two states be-                 one-point crossover, and speciation [17] is run for 500 gen-
+comes possible. Because bilateral symmetry is re-               erations (until linkage values settled) on a population of
+warded more than asymmetry (except in the ran-                  50 randomly seeded individuals. Each genome had a fixed
+dom domain), the linkage parameters provide a way               length and consisted of binary-valued phenotypic traits and
+in which the genotype can become more evolvable.                floating-point linkage parameters. For phenotypic traits, un-
+                                                                less otherwise noted, the point mutation rate was 0.01 and
+genotype-phenotype mapping. For ease of analysis, the sim-      the linkage parameter mutation rate was 0.2 (higher linkage
+plest indirect encoding capable of exhibiting acquired evolv-   parameter mutation was found to increase acquired evolv-
+ability under the symmetry domain is employed. Genomes          ability). At the end of the run, all the linkage parameters
+consist of n phenotypic traits (genes determining the pheno-    in the population were averaged across 200 trials, yielding
+type), directly encoded as binary digits, and an additional     the linkage value Lfinal. Since linkage values are drawn ini-
+set of real-valued linkage parameters, all of which are under   tially from the uniform distribution over [0.0, 1.0], the ex-
+evolutionary control. For genomes with high values for the      pected linkage value at generation 0, L0, is E(L0) = 0.5.
+linkage parameters, point mutations made to the phenotypic      Thus, Lfinal = 0.5 indicates neutral drift (that is, no ac-
+traits have a high probability of affecting the trait symmet-   quired evolvability), 0.0 indicates selection for low linkage,
+rically opposite as well. Likewise, low values of the linkage   and 1.0 selection for high linkage, i.e. acquired evolvability.
+parameters provide little mutational correlation between the    Since only the linkage parameter affects the representation's
+two halves. Although the linkage parameter does not di-         evolvability, acquired evolvability can be measured directly
+rectly affect fitness, high linkage effectively adds a "short-  as L = Lfinal - E(L0), which ranges from -0.5 (selection
+cut" mutation, allowing pairs of symmetric phenotypic traits    against evolvability), to 0.5 (acquired evolvability), with 0.0
+to mutate together. In addition, it reduces the probability     indicating no change in evolvability.
+that symmetric traits differ (figure 2). Thus when the target
+drifts, genomes with high linkage require fewer mutations          The difference in average best fitness after 500 genera-
+to adapt the phenotypic traits. Using this representation,      tions using the control representation and the linkage rep-
+genomes that evolve high linkage values learn to exploit the    resentation is shown in figure 4. Genomes consisted of 40
+domain structure, and thus have high evolvability; further-     phenotypic traits and a single linkage parameter. Under the
+more, no other methods exist to increase evolvability. There-   random fitness regime, the two representations performed
+fore, acquired evolvability can be measured directly as the     equally well, indicating that the linkage parameters have
+average linkage values over the entire population.              no effect on fitness. Under both the strict and non-strict
+                                                                fitness regimes, symmetric linkage provided a fitness advan-
+   The number of linkage parameters can be manipulated          tage. The fitness differential generated under the strict fit-
+experimentally, ranging from one parameter per phenotypic       ness regime was several times larger than under the non-
+trait to a single parameter controlling the linkage of all the  strict regime (0.09 as opposed to 0.013). This larger differ-
+phenotypic traits. This range corresponds to the amount of      ential generated a stronger selection pressure for evolvability
+a priori information about bilateral symmetry in the rep-       (table 4). The fitness differential generated by the random
+resentation. A single linkage parameter encodes knowledge       representation was too small to induce selection for evolv-
+of bilateral symmetry perfectly into the domain. If linkage     ability (table 4). As the target drift rate increased, average
+is broken up over several parameters, the representation be-    best fitness decreased from near 1.0 to 0.7 for the linkage
+comes capable of expressing many kinds of symmetry, but         representation, and 0.6 for the control representation.
+has less specific knowledge about bilateral symmetry.
+                                                                   In general, only the linkage representation exhibits ac-
+   In the experiment, the linkage representation is compared    quired evolvability, and then only when paired with the
+to a control representation with an identical genotype but      strict fitness regime (table 4). When the effects of linkage
+where the linkage parameters control random pairs of phe-       are random (control representation), there is no selection for
+notypic traits, not necessarily bilaterally symmetric ones.     evolvability. Furthermore, using the control representation,
+                                                                the strict fitness regime actually induces weak selection to
+                        1          Random fitness regime                     lower the linkage parameter, and hence evolvability. Thus,
+                      0.8                                                    the linkage parameter is indeed being selected for because it
+                      0.6                                     linkage        affects the local mutation space, rather than simply because
+                      0.4                                      control       it leads to more mutations.
+                      0.2
+Average Best Fitness                                                            Under the strict fitness regime, as the target drift rate in-
+                        0                                                    creases, the resulting selection pressure for evolvability also
+                           0  0.1  0.2  0.3           0.4               0.5  increases (figures 4 and 5). With a target drift rate of 0.0,
+                                                                             the population with 40-bit phenotypes yields an acquired
+                                   Target Drift Rate                         evolvability score of 0.07 after 500 generations, indicating
+                                                                             little or no selection for evolvability. With a drift rate of 0.1,
+                        1          Non-strict fitness regime                 evolvability increases to 0.35 and with a target drift rate of
+                      0.8                                                    0.5, evolvability becomes 0.49, indicating strong selection.
+                      0.6                                      linkage
+                      0.4                                      control          As the number of phenotypic traits is increased in pro-
+                      0.2                                                    portion to the number of linkage parameters, slightly higher
+Average Best Fitness                                                         evolvability scores are obtained under the strict fitness regime
+                        0                                                    (figure 4). With a target drift rate of 0.1, genomes with 40
+                           0  0.1  0.2  0.3           0.4               0.5  phenotypic traits acquire an evolvability score of 0.35, those
+                                                                             with 80 acquire 0.39, and those with 160 acquire 0.48. Con-
+                                   Target Drift Rate                         versely, as more linkage parameters are added, the selection
+                                                                             pressure proves too weak to generate any significant change
+                        1          Strict fitness regime                     in the linkage parameter. Under the strict fitness regime,
+                      0.8                                                    with one linkage parameter, the maximum average linkage
+                      0.6                                   linkage          is 0.49, with two parameters, it falls to around 0.29, and
+                      0.4                                   control          with five to around 0.12. Under the unlinked fitness regime,
+                      0.2                                                    one linkage parameter yields a maximum linkage parameter
+Average Best Fitness                                                         value of 0.16, two yields 0.09, and five yields 0.04 (figure
+                        0                                                    5). Varying the number of phenotypic traits and linkage pa-
+                           0  0.1  0.2  0.3           0.4               0.5  rameters affects the size of the fitness differential created by
+                                                                             linkage parameter point mutations: more phenotypic traits
+                                   Target Drift Rate                         increases the fitness differential, whereas more linkage pa-
+                                                                             rameters decreases it. As the fitness differential is decreased,
+Figure 3: Fitness differentials between linkage and                          selection for higher linkage becomes untenable and thus the
+control representations. Average best fitness for                            representation exhibits no acquired evolvability.
+the two representations is shown after 500 gener-
+ations under the three fitness regimes: random,                                 The linkage parameter mutation rate also has a profound
+non-strict symmetric, and strict symmetric. Only                             effect on acquired evolvability. When the target drift rate
+the strict symmetric fitness regime induces a fitness                        is 0.5, a linkage parameter mutation rate of 0.01 yields an
+differential large enough to generate a reliable se-                         evolvability score of 0.246 after 500 generations. A mutation
+lection pressure for evolvability, although the non-                         rate of 0.05 yields 0.31, 0.1 yields 0.37 and 0.2 yields 0.48.
+strict regime generates a non-zero fitness differential                      Evolvability can only be selected for when the fitness func-
+as well.                                                                     tion changes in conjunction with a beneficial phenotypic mu-
+                                                                             tation resulting from linkage. Since the probability of these
+                                                                             events occurring in the same genome within the same gen-
+                                                                             eration is low, and since linkage mutation is not disruptive
+                                                                             on average, a higher mutation rate can only be beneficial to
+                                                                             selection for evolvability.
+
+                                                                                In conclusion, acquired evolvability is found to be bounded
+                                                                             by the detectability of individual mutations shifting the phe-
+                                                                             notypic distribution. The threshold of detectability can be
+                                                                             raised by increasing the fitness differential induced by the fit-
+                                                                             ness regime, or lowering the number of mutations required
+                                                                             to adaptively shift the phenotypic distribution.
+
+                                                                             5. DISCUSSION
+
+                                                                                Several intuitive results were observed in the simulations:
+                                                                             increasing linkage increases fitness especially under harsh
+                                                                             environmental conditions (i.e. target drift rate greater than
+                                                                             0.1); more selection pressure for evolvability is generated
+                                                                             with higher target drift rates; increasing the number of phe-
+                                                                             notypic traits per genome increases acquired evolvability;
+                                                                             increasing the number of linkage parameters decreases ac-
+                                                                             quired evolvability; increasing the mutation rate of the link-
+                                                                             age parameters increases acquired evolvability; the choice
+                                                                             of fitness regime determines the fitness differential between
+                                Random fitness regime                                                 Random fitness regime
+
+Evolvability (L)   0.5                                                Evolvability (L)   0.5                                             1
+                   0.4                                                                   0.4                                             2
+                   0.3                                                                   0.3                                             5
+                   0.2                                                                   0.2                                           10
+                   0.1                                                                   0.1                                           20
+
+                     0                 control-40                                          0
+                  -0.1                 control-80                                       -0.1
+                  -0.2               control-160
+                  -0.3                linkage-40                                              0
+                                      linkage-80
+                        0            linkage-160
+
+                           0.1  0.2  0.3                   0.4   0.5                             0.1  0.2  0.3               0.4             0.5
+
+                                Target Drift Rate                                                     Target Drift Rate
+
+                                Non-strict fitness regime                                             Non-strict fitness regime
+
+Evolvability (L)   0.5                                                Evolvability (L)   0.5                                              1
+                   0.4                                                                   0.4                                              2
+                   0.3                                                                   0.3                                              5
+                   0.2                                                                   0.2                                            10
+                   0.1                                                                   0.1                                            20
+
+                     0                 control-40                                          0
+                  -0.1                 control-80                                       -0.1
+                  -0.2               control-160
+                  -0.3                linkage-40                                              0
+                                      linkage-80
+                        0            linkage-160
+
+                           0.1  0.2  0.3                   0.4   0.5                             0.1  0.2  0.3               0.4             0.5
+
+                                Target Drift Rate                                                     Target Drift Rate
+
+                                Strict fitness regime                                                 Strict fitness regime
+
+Evolvability (L)   0.5                               control-40       Evolvability (L)   0.5
+                   0.4                               control-80                          0.4
+                   0.3                             control-160                           0.3
+                   0.2                              linkage-40                           0.2
+                   0.1                              linkage-80                           0.1
+                                                   linkage-160
+                     0                                                                     0
+                  -0.1                                                                  -0.1                                  1
+                  -0.2                                                                                                        2
+                  -0.3                                                                        0                               5
+                                                                                                                             10
+                        0                                                                                                    20
+
+                           0.1  0.2  0.3                   0.4   0.5                             0.1  0.2  0.3               0.4             0.5
+
+                                Target Drift Rate                                                     Target Drift Rate
+
+Figure 4: Evolvability with 40, 80, 160-bit pheno-                    Figure 5: Effects of increasing the number of link-
+types. Comparison of linkage vs. target drift rate                    age parameters on acquired evolvability (40 bit phe-
+after 500 generations. "Linkage" and "control" are                    notypes, linkage representation). Under both fit-
+the two different representations and "strict", "non-                 ness regimes the acquired evolvability decreases, i.e.
+strict" and "random" are the fitness regimes. As                      the average change in linkage tends towards 0.0 as
+target drift rate increases, acquired evolvability in-                more linkage parameters are added. Representa-
+creases in the linkage representation under the strict                tions with more linkage parameters require corre-
+and non-strict regimes. As the phenotype size in-                     spondingly more linkage mutations to induce a mea-
+creases, the acquired evolvability increases.                         surable change in evolvability.
+representations with and without acquired evolvability.           the population become more evolvable. Furthermore, when
+   From the experimental results it is clear that evolvabil-      learning the problem structure is key to solving the problem,
+                                                                  the effects of this trade-off will be diminished.
+ity, rather than a high mutation rate, is being selected for
+under the strict symmetric fitness regime. However, this             Analyzing the interplay between representation and fit-
+particular selection pressure is exceedingly weak, unable to      ness regime also sheds light on earlier results on measur-
+produce significant evolvability when the linkage parameter       ing evolvability [16]. In that study, a version of the linkage
+is split over more than two genes. This result suggests that      representation was tested where each phenotypic trait had
+there exists a lower bound on acquired evolvability based         an associated linkage parameter. Despite using a bilaterally
+on the detectability of the linkage parameters' effect on fit-    symmetric fitness regime, that representation only exhibited
+ness. Since linkage parameters affect future phenotypic vari-     acquired evolvability when the individual fitness scores were
+ation, it may take many generations for evolution to detect       averaged together with fitness scores of genotypes nearby in
+that a linkage change has had any effect on average fitness.      the local mutation space. Without a direct selection pres-
+Furthermore, selection based on detected changes is not reli-     sure for evolvability, the linkage representation exhibited no
+able because further mutations may have altered the linkage       acquired evolvability because too many mutations were re-
+parameter in the interim. Detectability represents an inter-      quired in order to exploit symmetry. In other words, the
+play between representation and the fitness function: fitness     selection pressure was too low to overcome the limitations
+regimes that induce a large selection pressure for evolvability   imposed by the representation.
+make up for representations that require a large number of
+mutations to adapt phenotypic variation. Conversely, repre-          Ultimately these results shed light on designing evolvable
+sentations that require few mutations to acquire evolvability     representations: representations should be constructed in
+will do so even when the fitness regime induces a relatively      such a way that phenotypic variation can be adapted to
+weak selection pressure.                                          match the structure of the fitness function in as few muta-
+                                                                  tions as possible. More mutations requires a correspondingly
+   Detectability has practical implications for the design of     larger selection pressure to be tenable. Thus, in order to be
+evolvable representations. Both the linkage representation        maximally evolvable, representations must be able to adapt
+with a single linkage parameter and the linkage representa-       the genotype-phenotype mapping at all levels, ranging from
+tion with five linkage parameters have the same latent evolv-     fundamental design changes to small phenotypic tweaks.
+ability: If the linkage parameters are all set to 1.0, both rep-
+resentations will exhibit the same increase in performance        6. FUTURE WORK
+on the symmetry domain. However, only the linkage repre-
+sentation with a single linkage parameter actually acquires          The results of this study suggest several areas of future
+evolvability under the symmetric fitness regime. The reason       work: measuring evolvability, evolvability in co-evolutionary
+is that many more linkage mutations are required to detect        systems, the effects of evolvability on GA performance, and
+the fitness gradient in the five parameter case; single link-     evolvability in nature.
+age mutations have 1/5 the chance of affecting a given phe-
+notypic trait, rendering the change undetectable and thus            Representations that are highly evolvable under some fit-
+unselectable in most cases.                                       ness regimes may not be evolvable under others. For ex-
+                                                                  ample, the linkage representation exhibited little evolvabil-
+   A single linkage parameter affecting all phenotypic traits     ity under the non-strict symmetric fitness regime because
+corresponds to designing a representation with perfect knowl-     there was little evolutionary benefit to exploiting the link-
+edge about bilateral symmetry. As the number of linkage           age parameter. Thus when measuring evolvability, the score
+parameters is increased, each individual parameter affects        must be normalized by the selection pressure. Normalization
+fewer phenotypic parameters, but the possibilities for other      ensures that representations that exhibit evolvability when
+kinds of linkage (not just perfect bilateral symmetry) be-        there is little selection pressure for it are evaluated correctly,
+come available. Thus as the number of traits increases,           allowing results obtained under different fitness regimes to
+the bias towards bilateral symmetry decreases. However,           be compared directly.
+even in representations with as few as five linkage parame-
+ters, the selection pressure on evolvability proves to be too        Fitness regimes naturally cause evolution to select for
+weak to generate significant acquired evolvability. Having        higher evolvability when the representation has latent evolv-
+too many linkage parameters diminishes the benefits of link-      ability. With direct encodings [12, 24], on the other hand,
+age to the point where it is no longer possible to select for.    mutations cannot be made in a way such that information
+In other words, the fitness benefit per mutation is below         about the fitness function is accumulated to bias phenotypic
+the detectability threshold. Thus there is an inherent trade-     variation. Thus direct encodings have no latent evolvabil-
+off between creating tuned representations that exhibit high      ity, and will not respond adaptively to evolution under a
+evolvability but require much a priori problem information,       fitness regime. This fact has particular implications for co-
+and more general representations that require less knowl-         evolution: Past information about the opposing population
+edge but behave poorly.                                           will simply be discarded as evolution progresses, which may
+                                                                  lead to populations cycling between behaviors or disengag-
+   It is likely, however, that this trade-off can be circum-      ing completely. Using co-evolution coupled with evolvable
+vented by designing representations that minimize the num-        indirect encodings may alleviate this problem. Furthermore,
+ber of mutations required to adapt phenotypic variation to        the open-ended co-evolution fitness regime is more general
+reflect the problem structure, or by using co-evolutionary        and powerful than the static fitness regimes evaluated in this
+methods on open-ended problems. Co-evolution in partic-           paper and in [9] because it can maintain large fitness differ-
+ular is capable of generating sustained fitness differentials     entials continually over the course of evolution. In contrast,
+over the course of evolution, as opposed to fitness differen-     with static fitness regimes the fitness differentials are finite
+tials that are fixed and thus decrease as the individuals in      and tend to zero as the representation exploits the underly-
+                                                                  ing structure. An important direction for future work is to
+develop a measure of the selection pressure for evolvability           evolvability. BioSystems, 69:83­94, 2002.
+generated in co-evolutionary settings, to elucidate the fac-      [6] G. S. Hornby. Functional scalability through
+tors that affect it. This line of inquiry could lead to more
+evolvable co-evolutionary systems, which should in turn help           generative representations: The evolution of table
+overcome common problems such as disengagement.                        designs. Environment and Planning B: Planning and
+                                                                       Design, 31(4):569­587, 2004.
+   Selection for evolvability may in some cases retard GA         [7] G. S. Hornby and J. B. Pollack. The advantages of
+performance. In a separate set of experiments (unpublished)            generative grammatical encodings for physical design.
+using a more complex genetic regulatory network represen-              In Proc. of CEC 2001, 2001.
+tation, first training under a fitness regime and then testing    [8] M. A. Huynen. Exploring phenotype space through
+performance on static fitness function was found to perform            neutral evolution. Journal of Molecular Evolution,
+significantly slower on average compared with populations              43:165­169, 1996.
+first trained on a single static fitness function. This result    [9] N. Kashtan and U. Alon. Spontaneous evolution of
+is intuitive: selection for evolvability prefers long-term fit-        modularity and network motifs. Proc. of the National
+ness gains that are averaged over many different instances of          Academy of Sciences, 102(39), 2005.
+the fitness function, which may yield relatively poor fitness    [10] M. Kirschner and J. Gerhart. Evolvability. PNAS,
+under any particular instance. However, ultimately repre-              95:8420­8427, 1998.
+sentations that are both highly evolvable and highly efficient   [11] V. Kvasnicka and J. Posp´ichal. Emergence of
+are desired. Therefore it is necessary to devise methods in            modularity in genotype-phenotype mappings.
+which both evolvability and efficiency can be rewarded.                Artificial Life, 8(4):295­310, 2002.
+                                                                 [12] G. E. Liepins and M. D. Vose. Representational issues
+   There is growing evidence both from theory [13] and com-            in genetic optimization. Journal of Experimental and
+putational simulation [9] that more evolvable genotypes can            Theoretical Artificial Intelligence, 2:101­115, 1990.
+be selected for. However there is little evidence for such       [13] H. Lipson, J. Pollack, and N. Suh. On the origin of
+selection from biological studies [10]. Understanding how              modular variation. Evolution, 56(8):1549­1556, 2002.
+evolvability arises naturally will shed light on how immense     [14] M. Pelikan, D. E. Goldberg, and F. G. Lobo. A survey
+morphological complexity and variation is generated in the             of optimization by building and using probabilistic
+metazoans. Can these results from artificial evolution be              models. Computer Optimization and Applications,
+used to augment biological research? One important next                21(1):5­20, 2002.
+step would be to study selection pressures for evolvability      [15] R. A. Raff. The Shape of Life: Genes, development,
+on more biologically plausible platforms such as Avida [1].            and the Evolution of Animal Form. The University of
+                                                                       Chicago Press, 1996.
+7. CONCLUSION                                                    [16] J. Reisinger, K. O. Stanley, and R. Miikkulainen.
+                                                                       Towards an empirical measure of evolvability. In Proc.
+   Using a conceptually simple framework of bilateral sym-             of the Genetic and Evolutionary Computation
+metry, some limitations associated with selection for evolv-           Conference Workshop Program, 2005.
+ability were demonstrated. Selection pressure for evolvabil-     [17] K. O. Stanley and R. Miikkulainen. Evolving neural
+ity was generated by making systematic changes to the sym-             networks through augmenting topologies. Evolutionary
+metric fitness function during the course of evolution. Evolv-         Computation, 10(2):99­127, 2002.
+ability was only exhibited by representations that store in-     [18] K. O. Stanley and R. Miikkulainen. A taxonomy for
+formation learned from the changing fitness function. Fur-             artificial embryogeny. Artif. Life, 9(2):93­130, 2003.
+thermore, acquired evolvability was limited by the number        [19] A. Thompson and P. J. Layzell. Evolution of
+of mutations required to detect the induced fitness gradi-             robustness in an electronics design. In Proc. of the
+ent. Finding effective methods through which to overcome               Third International Conference on Evolvable Systems,
+this limitation is an important direction for future work in           pages 218­228, London, UK, 2000. Springer-Verlag.
+designing representations and fitness functions. Ultimately,     [20] M. Toussaint. Compact representations as a search
+more evolvable evolutionary algorithms will aid in finding             strategy: Compression EDA. Theoretical Computer
+solutions to more complex problems by exploiting their un-             Science, In press.
+derlying structure.                                              [21] E. A. Variano, J. H. McCoy, and H. Lipson. Networks,
+                                                                       dynamics and modularity. Physical Review Letters,
+8. REFERENCES                                                          92(18), 2004.
+                                                                 [22] G. Wagner and L. Altenberg. Complex adaptations
+ [1] C. Adami. Introduction to Artificial Life. Springer,              and the evolution of evolvability. Evolution,
+      New York, 1998.                                                  50(3):967­976, 1996.
+                                                                 [23] R. A. Watson and J. B. Pollack. Symbiotic
+ [2] P. Bentley and S. Kumar. Three ways to grow designs:              composition and evolvability. In Proc. of the 6th
+      A comparison of embryogenies for an evolutionary                 European Conference on Advances in Artificial Life,
+      design problem. In Proc. of the Genetic and                      pages 480­490, London, UK, 2001. Springer-Verlag.
+      Evolutionary Computation Conference, pages 35­43,          [24] D. Whitley, S. Rana, and R. Heckendorn.
+      Orlando, Florida, USA, 1999. Morgan Kaufmann.                    Representation Issues in Neighborhood Search and
+                                                                       Evolutionary Algorithms, pages 39­58. John Wiley
+ [3] R. Calabretta, S. Nolfi, D. Parisi, and G. P. Wagner.             and Sons Ltd., 1997.
+      Duplication of modules facilitates the evolution of
+      functional specialization. Artif. Life, 6(1):69­84, 1999.
+
+ [4] M. Ebner, M. Shackleton, and R. Shipman. How
+      neutral networks influence evolvability. Complexity,
+      7(2):19­33, 2001.
+
+ [5] T. F. Hansen. Is modularity necessary for evolvability?
+      remarks on the relationship between pleiotropy and
+

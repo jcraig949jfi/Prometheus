@@ -1,0 +1,572 @@
+       Quantitative Analysis of Evolvability
+using Vertex Centralities in Phenotype Network
+
+             Ting Hu                                                                               Wolfgang Banzhaf
+
+Department of Computer Science                                                               Department of Computer Science
+         Memorial University                                                                          Memorial University
+         St. John's, Canada                                                                           St. John's, Canada
+
+       ting.hu@mun.ca                                                                              banzhaf@mun.ca
+
+ABSTRACT                                                                                     Neutral genetic variations by mutation possess the poten-
+                                                                                             tial for creating novel phenotypes [26, 46]. They serve as
+In an evolutionary system, robustness describes the resilience                               a staging ground for long-term adaptation and innovation.
+to mutational and environmental changes, whereas evolv-                                      Such neutrality provides a buffer against deleterious mu-
+ability captures the capability of generating novel and adap-                                tational perturbations, and accumulates genetic variations
+tive phenotypes. The research literature has not seen an                                     that might be non-neutral under changes of the environ-
+effective quantification of phenotypic evolvability able to                                  mental context [9, 10, 23, 27, 45].
+predict the evolutionary potential of the search for novel
+phenotypes. In this study, we propose to characterize the                                       Robustness [24, 44] and evolvability [22, 33, 46] are often
+mutational potential among different phenotypes using the                                    discussed to describe the two sides of neutrality. Essentially,
+phenotype network, where vertices are phenotypes and edges                                   both properties reflect how evolutionary systems respond to
+represent mutational connections between them. In the frame-                                 changes. Robustness enables them to remain intact in the
+work of such a network, we quantitatively analyze the evolv-                                 face of deleterious changes, whereas evolvability allows them
+ability of phenotypes by exploring a number of vertex cen-                                   to innovate to better fit the survival pressures of the envi-
+trality measures commonly used in complex networks. In                                       ronment. At a first glance, these two properties may seem
+our simulation studies we use a Linear Genetic Program-                                      contradictory, however, numerous theoretical and empirical
+ming system and a population of random walkers. Our re-                                      studies have reported that robustness and evolvability coop-
+sults suggest that the weighted eigenvector centrality serves                                erate [24, 49], and robustness, in fact, can facilitate evolv-
+as the best estimator of phenotypic evolvability.                                            ability [6, 8, 9, 10, 11].
+
+Keywords                                                                                        Quantitative analysis of robustness and evolvability should
+                                                                                             help to better understand the mechanisms of neutrality, and
+Evolvability; Robustness; Neutrality; Phenotype network;                                     recently many research studies in the fields of evolutionary
+Vertex centrality; Linear Genetic Programming; Genotype                                      biology [7, 30, 48] and evolutionary computing [13, 19, 36,
+network; Neutral network; Redundant genotype-to-phenotype                                    37, 51] have addressed this issue. It has been proposed that
+mapping; Representation                                                                      the relationship of robustness and evolvability crucially de-
+                                                                                             pends on the distribution of genotypic redundancy and the
+1. INTRODUCTION                                                                              mutational interconnections among phenotypes. Robustness
+                                                                                             promotes high evolvability if genotypic redundancy leads to
+   The representation schemes in both natural and computa-                                   more connections to different phenotypes.
+tional evolutionary systems often possess high redundancy,
+i.e. multiple genotypes can map to the same phenotype [13,                                      Network notions have often been used to model how geno-
+15, 23, 26, 27, 28, 29, 35, 42]. The pervasive existence of such                             typic redundancy is distributed and how different pheno-
+a redundant genotype-to-phenotype mapping, especially in                                     types are connected through mutational changes to their un-
+high-level living organisms, suggests its functional contribu-                               derlying genotypes. Genotype networks, a.k.a. neutral net-
+tion to adaptive evolution [6, 17, 20, 50].                                                  works, have been demonstrated to be very useful vehicles
+                                                                                             for quantitative studies of robustness and evolvability [34,
+   A redundant genotype-to-phenotype mapping is common                                       39, 47]. In genotype networks, genotypes are represented as
+in evolutionary algorithms and allows evolutionary popula-                                   vertices, and reversible mutational connections, as in com-
+tions to expand in neutral genotypic regions where muta-                                     mon evolutionary systems, are represented as undirected
+tions to a genotype do not alter the phenotypic outcome.                                     edges between pairs of genotypes. A genotype network is
+                                                                                             comprised of all genotypes that encode for the same pheno-
+Permission to make digital or hard copies of all or part of this work for personal or        type. A phenotype network can be constructed by represent-
+classroom use is granted without fee provided that copies are not made or distributed        ing each vertex as a phenotype. Phenotypes are connected
+for profit or commercial advantage and that copies bear this notice and the full cita-       through non-neutral point mutations between their under-
+tion on the first page. Copyrights for components of this work owned by others than          lying genotypes.
+ACM must be honored. Abstracting with credit is permitted. To copy otherwise, or re-
+publish, to post on servers or to redistribute to lists, requires prior specific permission     In the framework of genotype and phenotype networks,
+and/or a fee. Request permissions from permissions@acm.org.                                  evolvability can then be quantitatively characterized. Geno-
+GECCO '16, July 20-24, 2016, Denver, CO, USA                                                 typic evolvability is often measured as the total number of
+ c 2016 ACM. ISBN 978-1-4503-4206-3/16/07. . . $15.00                                        different phenotypes that a genotype can access through
+DOI: http://dx.doi.org/10.1145/2908812.2908940                                               single-step mutations [48]. Phenotypic evolvability can be
+
+                                733
+measured as the total number of possible phenotypes that               1                4          7
+are adjacent to a given phenotype (i.e. via phenotypically-                     3  5       6
+non-neutral single-point mutations to its underlying geno-
+types) [48] or as the diversity of a phenotype's mutational             2                         8
+connections to other phenotypes [7]. However, both pheno-
+typic evolvability measures have been shown to have short-             Figure 1: Schematic graph of a phenotype network.
+comings at predicting the capability and efficiency of a phe-          Vertices represent phenotypes. An edge connects
+notype finding other novel phenotypes through point mu-                two phenotypes if they have at least one pair of geno-
+tations [18]. The existing phenotypic evolvability measures            types that can be traversed from one to the other
+only describe the immediate hops accessing other pheno-                through one single-point mutation (a single change
+types but fail to predict evolutionary trajectories based on           to any of the four elements of an LGP instruction).
+the global structure of the genotype and phenotype net-                Edges can have varying weights, indicating the total
+works.                                                                 number of single-point mutations that can change
+                                                                       genotypes of one phenotype to the other.
+   In this study, we propose to use network centrality mea-
+sures to quantify phenotypic evolvability in the context of            a length L = 3 is given below.
+the phenotype network. Vertex centralities are widely used
+in complex and social network analysis to capture the im-                                         R4 = R2 AND R3
+portance of an individual vertex in the global network struc-
+ture. They serve as promising candidates for quantifying the                                      R0 = R1 OR R4
+evolvability of a phenotype in the phenotype network. We
+adopt a Boolean Linear Genetic Programming (LGP) algo-                                            R0 = R3 NAND R0
+rithm as our evolutionary model system, and construct its
+phenotype network by sampling the mutational connections                  A single-point mutation alters one of the four element/locus
+among phenotypes. We explore a number of centrality mea-               of an instruction in a LGP program. A mutation point will
+sures in this network and test their predictive power with             be chosen and a replacing allele will be decided randomly
+respect to the evolvability of phenotypes. Using simulations           and uniformly from the set of all possible alleles at each
+of a population of random walkers, we observe that weighted            locus.
+eigenvector centrality outperforms existing evolvability mea-
+sures and serves as the best quantification of phenotypic              2.2 Genotype and Phenotype
+evolvability among all the studied centrality measures.
+                                                                          We consider each LGP program with a unique represen-
+2. METHODS                                                             tation as a genotype. Since the two calculation registers can
+                                                                       be used as return and all five registers can serve as operands,
+2.1 Linear Genetic Programming System                                  the total number of unique instructions is 2 × 5 × 5 × |opr|,
+                                                                       where |opr| is the number of Boolean operators in the oper-
+   We use a Linear Genetic Programming (LGP) algorithm                 ator set opr. The total number of possible genotypes is thus
+as our artificial evolutionary system for the quantitative             calculated as i (50 × |opr|)Li , i.e. the sum of all possible
+study of phenotypic evolvability. LGP is a branch of Ge-               combinations of Li instructions. This number increases ex-
+netic Programming (GP), in the big family of Evolutionary              ponentially with the program length L and quickly reaches
+Computation (EC), where the chromosomal representation                 large magnitudes with common LGP program length set-
+is a set of instructions that are executed sequentially [5].           tings.
+Although LGP follows a linear instructional structure, it is
+very powerful and capable of modeling complex nonlinear                   For our LGP system, we define the three-input, one-output
+relationships among multiple attributes. LGP is one of the             Boolean function f : B3  B, where B = {TRUE, FALSE},
+three generic representatives, i.e., tree, linear, and graph, of       represented by a LGP program as its phenotype. The total
+Genetic Programming [1] and has gained increasing popular-             number of possible phenotypes is thus 223 = 256.
+ity due to its fast speed of program execution and individual
+evaluation [4, 14, 41].                                                   Similar to many GP and EA algorithms, our LGP sys-
+                                                                       tem has a highly redundant genotype-to-phenotype map-
+   In this study, we consider a three-input, one-output Boolean        ping, i.e. there are many unique genotypes which map to
+function modeling problem. Each LGP instruction is com-                the same phenotype. We define the genotypic redundancy
+prised of one return, two operands, and one Boolean opera-             of a phenotype as the total number of its underlying geno-
+tor producing the return value from the operands. Registers            types. A phenotype with a high genotypic redundancy is
+R1, R2, and R3 store the three Boolean input values. Register          considered over-represented, and a phenotype with a low
+R0 takes a default initial Boolean value and its final value af-       genotypic redundancy is under-represented [37].
+ter the execution of all instructions is returned as the LGP
+program's output. To enhance the computational capacity                2.3 Phenotype Network
+of LGP programs, we add an extra calculation register R4.
+Calculation registers R0 and R4 can serve as both return or               Network methods are powerful tools in modeling entities
+operands, whereas input registers R1, R2, and R3 are read-             and their complex relationships, and have seen numerous ap-
+only and can only serve as operands such that their input              plications in a variety of areas including engineering, social
+contents are protected from overwriting. The Boolean op-               sciences, and biology [32]. We use the notion of a pheno-
+erator in each LGP instruction is chosen from a pre-defined            type network to depict the distribution of mutational con-
+operator set opr. An example Boolean LGP program with                  nections among phenotypes. Those mutational connections
+
+                                                                  734
+reflect the potential for moving from one phenotype to an-            Table 1: LGP simulation configuration
+other. Thus the phenotype network can provide important
+insights into the dynamics of a search for novel phenotypes           Program length                  2  5 instructions
+in an evolutionary system.
+                                                                      Input registers                 R1, R2, R3
+   Figure 1 shows a schematic representation of a phenotype
+network. Each vertex is an unique phenotype, and two phe-             Initial default register value  FALSE
+notypes are connected by an edge if they have at least one
+pair of genotypes that can be traversed from one to the other         Calculation registers           R0(output), R4
+through a single-point mutation. The amount of all possible           Operator set (opr)              AND, OR, NAND, NOR
+single-point mutations from one phenotype to another can
+be captured using the weight of an edge.                              Total genotype samples          one billion
+
+   With compact evolutionary systems where all genotypes              Ensemble of random walkers      one million
+and phenotypes can be efficiently characterized, a phenotype
+network can be constructed using exhaustive enumeration of            Number of random walk steps one thousand
+all mutational transitions among genotypes and phenotypes.
+However, for common GP or EC instances, the genotype and                     tance, i.e. the shortest path, between vertices i and
+phenotype spaces are either infinite or simply too large to                  j [2, 38]. Closeness centrality describes how easily a
+apply exhaustive enumeration.                                                given vertex can reach all other vertices. A higher
+                                                                             closeness centrality indicates a more central position
+   In such cases, the sampling of random mutations can be                    of a vertex in the network.
+used to estimate the genotypic redundancy of phenotypes
+and the mutational connections among them. Random sam-                   4. Eigenvector centrality -- It would make sense to
+pling of a large number of genotypes can generate a good es-                 give greater weight to a more important neighbor when
+timate of the distribution of genotypic redundancies among                   calculating the centrality of a vertex. Specifically, the
+different phenotypes. In addition, allowing a large popula-                  centrality of a vertex is proportional to the sum of the
+tion of random walkers to explore the genotype and phe-                      centrality of its neighbors. Hence, if the centrality of
+notype spaces and tracking every step of their single-point                  the vertices of the network is denoted as a positive real
+mutational trajectories can be used to sample the mutational                 column vector x, it should satisfy
+connectivity among phenotypes.
+                                                                                                           Ax = cx,
+2.4 Vertex Centralities
+                                                                             for some constant c [3, 21]. That is, the relative values
+   A phenotype network provides a global picture of how                      of the centrality across the network do not change after
+phenotypes are connected through single-point mutations.                     the incorporation of the neighbors' centrality. It turns
+In such a framework, the evolvability of a phenotype, i.e. the               out that this eigenvector centrality is always propor-
+innovative capability of finding novel phenotypes, can be                    tional to the leading eigenvector of A. Note that the
+quantitatively captured by the importance measures of in-                    eigenvector centrality can also be defined iteratively
+dividual vertices in the network.                                            from an "initial guess". In this case, after a sufficient
+                                                                             number of iterations, the centrality thus defined always
+   When studying a network, it is often useful to measure the                converges to the same leading eigenvector of A. As a
+contribution of individual vertices to the network. There                    result, eigenvector centrality of a vertex is large either
+have been a number of such metrics from social network                       because it has a large number of neighbors or because
+analysis. We introduce a number of such centrality mea-                      it has "important" neighbors, or both.
+surements, and explore their applicability for quantifying
+phenotypic evolvability. Consider a network G = (V, E) and               The above centrality measures are discussed in the con-
+its adjacency matrix A.                                               text of undirected networks. They can be applied to both
+                                                                      unweighted and weighted networks. Their applications to
+1. Degree centrality -- The degree centrality of a ver-               weighted networks with slight modifications can be found
+   tex is simply its degree. Intuitively, the more neighbors          in [25, 31].
+   a vertex has, the more influence it may have in the net-
+   work. This assumes that all neighbors are considered               3. RESULTS
+   equally important. Formally, if we use 1 to denote the
+   column vector {1, 1, 1, . . . , 1}, the degree centrality of          In this section, we first discuss the genotype and pheno-
+   the vertices in the graph is the vector A · 1.                     type spaces of our example LGP system. Then we present
+                                                                      the phenotype network of the LGP system and characterize
+2. Betweenness centrality -- The betweenness cen-                     its network properties. Last, we explore various vertex cen-
+                                                                      trality measures for the quantification of phenotypic evolv-
+trality quantifies the number of times a vertex v is part             ability, and validate them through predictions of the mean
+                                                                      waiting time searching for a predefined target phenotype us-
+of the shortest path between any pair of vertices [12],               ing an ensemble of simulated random walks.
+
+represented as      s=v=tV  , st (v)  where  st  is  the  to-         3.1 Genotype and Phenotype Space
+
+                              st                                         In our simulation, programs of variable lengths are con-
+tal number of shortest paths from vertex s to vertex                  sidered, from a minimum of two instructions to a maxi-
+                                                                      mum of five. The operator set opr includes four funda-
+t and st(v) is the number of those paths that pass                    mental Boolean functions AND, OR, NAND, and NOR. Table 1
+                                                                      shows the detailed configuration of our LGP system. In
+through vertex v. Betweenness captures how impor-                     our configuration, there are 200 unique LGP instructions,
+
+tant a given vertex is for the connectivity of all other
+
+pairs of vertices.
+
+3. Closeness centrality -- The closeness centrality is
+
+denoted as     1     of a vertex i, where dij    is the dis-
+            j=i dij
+
+                                                                 735
+0.5                                                                                                            0.010
+
+0.4                                                                                                            0.008
+
+proportion0.3                                                                                                  0.006
+                                                                                                   proportion
+0.2                                                                                                            0.004
+
+                                                                                                               0.002
+
+0.1
+
+0.0                                                                                                            0.000         50  100            150  200
+                                                                                                                          0
+
+     10-9               10-6     10-3         1                                                                                  vertex degree
+
+                        phenotype redundancy
+
+Figure 2: Distribution of phenotype's redundancies.                   Figure 3: Distribution of vertex degree in the phe-
+The genotypic redundancy of a phenotype is the per-                   notype network. Histograms show the proportions
+centage of the total one billion sampled genotypes                    of vertices in the network and the blue curve repre-
+that map to it.                                                       sents the best fitting density function.
+
+     Table 2: Phenotype network properties                            tialized LGP programs and allow them to take one-thousand-
+                                                                      step random walks in the genotype space. For each random
+Number of non-isolated vertices  236                                  walker, we record its visit to different phenotypes at any
+                                                                      single step along its trajectory, and use the trajectories of
+Number of edges                  10353                                all random walkers to estimate the mutational connectivity
+                                                                      between any pair of different phenotypes.
+Connected components             1
+                                                                         Then we construct the approximate phenotype network of
+Network diameter                 4                                    our LGP system with vertices representing 256 different phe-
+                                                                      notypes and edges connecting pairs of them if there exist at
+Network centralization           0.546                                least one single-point mutation that can transfer genotypes
+                                                                      from one phenotype to another. Edges are weighted using
+Average vertex degree            87.737                               the total number of such single-point mutations.
+
+Clustering coefficient           0.717                                   Table 2 describes the properties of the Boolean LGP phe-
+                                                                      notype network. There are 236 non-isolated vertices, mean-
+thus the total number of genotypes of our LGP system is               ing that 20, i.e. 256 - 236, phenotypes are never visited by
+2002 + 2003 + 2004 + 2005 > 3.2 × 1011, a highly redun-               any random walker. The network is comprised of only one
+dant mapping to 256 phenotypes. Although this genotype                giant component and is highly connected with a total num-
+space is finite, such a size renders exhaustive enumeration           ber of 10353 edges. The network has a diameter of four,
+computationally infeasible.                                           suggesting that any pair of the 236 phenotypes can be tra-
+                                                                      versed from one to the other by at most four single-point
+   One billion genotypes are randomly generated to sample             mutations. The metric of network centralization measures
+the genotype space. Their phenotypes are computed such                relative differences among the centralities of all vertices in a
+that the genotypic redundancy, i.e., the percentage of total          network. An extreme value of zero suggests that all vertices
+underlying genotypes, of each phenotype can be estimated.             in a network are equally central, whereas a value of one sug-
+Figure 2 shows the distribution of phenotype's redundancies.          gests that one vertex has maximal centrality and all others
+It is a highly heterogenous distribution with the most redun-         have minimal centrality. Our phenotype network has a cen-
+dant phenotype 255 (numbered using the decimal value of               tralization of 0.546, suggesting that there are many vertices
+its 8-bit binary output string for the permutation of all eight       that are more central than the rest. On average, in the net-
+possible three-bit inputs) having 23% of the total one billion        work each vertex has 87.737 directly connected neighbors.
+sampled genotypes and nine phenotypes having zero sam-                The network also exhibits a "small world" property with a
+ples. Such heterogeneity of genotypic redundancy demon-               clustering coefficient 0.717, meaning that for most vertices,
+strates that an evolutionary search for desired phenotypes            their neighbors are also connected.
+crucially depends on which phenotypes are used as starting
+nodes and which phenotype are chosen as the target node.                 The vertex degree distribution of the LGP phenotype net-
+It also suggests the limitation of purely statistical consider-       work is shown in Figure 3. The degree distribution possesses
+ations, as a number of phenotypes are plainly invisible.              a bi-modal shape, indicating that the network has a two-ring
+                                                                      structure with a dense core and a thick peripheral.
+3.2 Boolean LGP Phenotype Network
+
+   To estimate the mutational connectivity among various
+phenotypes, we use an ensemble of one million randomly ini-
+
+                                                                 736
+200                                                                                                                          -0.25  target phenotype 3
+150                                                                                                                          -0.30  target phenotype 15
+
+vertex degree
+                                                                                                     Spearman's correlation
+                                                                                                           -0.35
+100
+
+50                                                                                                                           -0.40
+
+0                                                                              -0.45
+                                                                                   betweennescsloseness degree eigenvecbteotrweennescsl_owseness_wdegree_ewigenvector_w
+     10-9  10-6                        10-3   1                                                centrality measures of starting phenotype
+
+           phenotype redundancy                                     Figure 5: Spearman's rank correlation of mean wait-
+                                                                    ing time finding a target and the centrality mea-
+Figure 4: Vertex degree in relation to correspond-                  sures of the starting phenotypes. The notation
+ing phenotype's genotypic redundancy. Each data                     " w" means the application of centrality measures
+point represents one phenotype and shows the rela-                  in weighted-network scenarios. Random walkers
+tion of its degree in the phenotype network and its                 are genotypes randomly initialized and are classi-
+genotypic redundancy.                                               fied based on their phenotypes. The total number of
+                                                                    steps that a random walker takes to reach the target
+   Figure 4 shows the correlation of vertex degree and phe-         phenotype is recorded as its waiting time. The mean
+notype redundancy. Each data point represents one phe-              waiting time of a phenotype is the average waiting
+notype, and it depicts its vertex degree in the phenotype           time of all its sampled underlying genotypes in the
+network and its genotypic redundancy. There is a strong             initial population.
+and positive correlation (Spearman's rank correlation  =
+0.9799, p < 10-16), which suggests that, in general, pheno-            We conduct two sets of evolution simulations with two
+types comprised of more genotypes tend to be able to reach          different target phenotypes, namely phenotype 3 (genotypic
+more other phenotypes through single-point mutations.               redundancy 0.023, vertex degree 163) and phenotype 15
+                                                                    (genotypic redundancy 0.047, vertex degree 188). In both
+3.3 Quantification of Phenotypic Evolvability                       simulation sets, the mean waiting time of all starting phe-
+                                                                    notypes is calculated, and is used to evaluate how well the
+Using the framework of phenotype network, we compute                centrality measures can predict the evolvability of pheno-
+                                                                    types. We perform Spearman's rank correlation test on the
+vertex centrality measures for all phenotypes, including be-        mean waiting time and centralities of each starting pheno-
+                                                                    type. Correlation coefficients  are shown in Figure 5, where
+tweenness, closeness, degree, and eigenvector centralities in       only significant correlations (p < 0.05) are reported.
+
+both unweighed and weighted scenarios, and test them as                Centrality measurements are found to be negatively corre-
+                                                                    lated with mean waiting time, implying that the more cen-
+quantification measures of how evolvable a phenotype is.            tral a starting phenotype is in the phenotype network, the
+                                                                    less time it takes to find the target, i.e. the more evolvable it
+The Cytoscape [40] software and its embedded extension              is. The weighted centrality measures in general have better
+                                                                    prediction power on how evolvable a phenotype is, except for
+app CytoCNA [43] are used for centrality computation.               the weighted betweenness centrality where no significant cor-
+                                                                    relations are seen for both target settings. The best predict-
+We set a fixed target phenotype and use a population of             ing measure turns out to be the weighted eigenvector central-
+                                                                    ity. The correlation of weighted eigenvector centrality and
+ten thousand randomly generated LGP programs to see how             mean waiting time is highly significant (p = 8.77 × 10-5 for
+                                                                    scenario using phenotype 3 as target, and p = 2.092 × 10-5
+many steps it does take for genotypes from a specific phe-          for using phenotype 15 as target).
+
+notype to reach the target phenotype. Only single-point                In addition, weighted eigenvector centrality is positively
+                                                                    correlated with the genotypic redundancy of the correspond-
+mutations are allowed and the maximum evolution time is
+
+limited to one million steps. The mean waiting time of phe-
+
+notype p finding the target is calculated as  , (gi)=p t(gi)
+
+                                              |gi |(gi )=p
+
+where  maps a genotype to a phenotype, {gi|(gi) = p}
+
+represents all the genotypes of phenotype p, and t(gi) is the
+
+number of steps that a genotype gi takes to find the target
+
+phenotype. The initial population is comprised of randomly
+
+generated LGP programs belonging to various phenotypes.
+
+A mean waiting time finding the target can be estimated for
+
+each of those phenotypes. The hypothesis is that the more
+
+evolvable the starting phenotype, the less time it will take
+
+to find the target. Note, however, that there is no fitness
+
+currently guiding the path formation.
+
+                                                               737
+weighted eigenvector centrality  100                                         In this contribution, we propose to measure evolvability of
+                                10-2                                      phenotypes using vertex centralities in the phenotype net-
+                                10-4                                      work. We adopted a three-input, one-output Boolean LGP
+                                10-6                                      system as our evolutionary model system, and character-
+                                10-8                                      ized its genotype and phenotype spaces using random sam-
+                               10-10                                      pling and random walks. We constructed the phenotype
+                               10-12                                      network and explored a number vertex centrality measures,
+                                                                          commonly used in social network analysis, as quantification
+                                      10-9  10-6  10-3            1       of phenotypic evolvability. The results of our simulation
+                                                                          studies suggest that more sophisticated centrality measures,
+                                            phenotype redundancy          which consider the importance of a vertex on not only how
+                                                                          many neighbors it has but also how important those neigh-
+Figure 6: Weighted eigenvector centrality in relation                     bors are, better predict the long-term evolutionary capabil-
+to phenotype redundancy. Each data point is one                           ities of phenotypes. Among them, the weighted eigenvec-
+phenotype and shows the weighted eigenvector cen-                         tor centrality serves as the best quantification of phenotypic
+trality and the genotypic redundancy of the corre-                        evolvability.
+sponding phenotype. A log-log scale is shown based
+on the best least-square regression fit.                                     The predictive power of even the best centrality measure
+                                                                          is still not strong (correlation coefficient -0.5 <  < -0.4).
+ing phenotype. As shown in Figure 6, these two metrics have               This suggests that there might be other confounding ele-
+a power-law relationship, meaning that the best least-square              ments that can affect the search for novel phenotypes from
+regression fit (Pearson's correlation R2=0.966, p 10-10)                  a given starting phenotype. While phenotypes are compared
+is with a log-log scale. This observation implies that in our             and evaluated for adaptivity, genetic changes like point mu-
+LGP system, phenotypes with more underlying genotypes                     tations applied here occur at the genotypic level. We have
+tend to take more central positions in the phenotype net-                 also seen that the distribution of genotypic mutational po-
+work. Although such a positive power-law correlation ex-                  tential within phenotypes is highly heterogeneous. Robust
+ists between a phenotype's genotypic redundancy and the                   genotypes are visited more frequently by an evolutionary
+best evolvability estimator, i.e. weighted eigenvector central-           population and their mutational biases can substantially in-
+ity, the redundancy itself does not serve as the best predic-             fluence phenotypic search [19]. This has not been incorpo-
+tor on the mean waiting time (Spearman's rank correlation                 rated in the evolvability measurement, and will be our next
+ = -0.353 and  = -0.372 for the two target phenotype                      research objective.
+settings respectively).
+                                                                             In future studies, we also would like to include fitness in
+4. DISCUSSION                                                             our evolutionary model. With fitness-based selection consid-
+                                                                          ered, single-point mutations will no longer be reversible, and
+   The redundancy in the mapping from genotype to pheno-                  thus the phenotype network becomes directed. As shown
+type is hypothesized as a mechanism to have resulted from                 in our previous research [19], introducing fitness alters the
+adaptive evolution itself. Such a redundant mapping en-                   structure and connectivity of genotype and phenotype net-
+ables neutrality where mutations can appear neutral and do                works significantly and invalidates many correlations of geno-
+not alter the phenotypic outcome. Neutrality improves the                 typic and phenotypic properties. This certainly will add
+robustness of evolutionary systems against random pertur-                 more complexity to the network analysis, but will better
+bations, as well as aggregates genetic variations that make               simulate the scenarios in living organisms and evolutionary
+evolutionary systems more evolvable generating novel adap-                algorithms.
+tive phenotypes. Quantitative analysis of robustness and
+evolvability helps to elucidate the complex relationship of                  Moreover, the phenotype network is well connected in our
+these two, and to understand core mechanisms of evolution.                example LGP system, and it is interesting to analyze other
+                                                                          problem instances with less a connectivity, meaning that
+   Robustness and evolvability can correlate very differently             some phenotypes may be very difficult to reach through mu-
+at the genotypic and phenotypic levels, and thus their quan-              tations. We expect that the centrality measures may provide
+titative analysis should be separated as well. Quantitative               an improved prediction power in such a scenario.
+measurements of genotypic and phenotypic robustness and
+evolvability have been proposed in empirical studies. How-                   Further inquiries are also necessary to make centrality
+ever, phenotypic evolvability quantification using the vertex             measures applicable in real search processes where the geno-
+degree in the phenotype network [48] can be very limited for              type and phenotype networks are constantly increasing in
+predicting the long-term evolutionary trajectory.                         size and where iterative methods might be required to cal-
+                                                                          culate approximate evolvability measures.
+
+                                                                             Last, most robustness and evolvability studies focus on
+                                                                          point mutation, however, other forms of genetic changes
+                                                                          such as recombination and gene duplication could play an
+                                                                          important role linking genotypes as well. We have conducted
+                                                                          preliminary investigations on recombinational robustness and
+                                                                          evolvability [16, 17], and expect to include more analysis on
+                                                                          recombination or gene duplication in future studies.
+
+                                                                             This line of research serves as simulation studies on evo-
+                                                                          lution theories, and ultimately should inspire more sophisti-
+                                                                          cated and evolvable evolutionary algorithms.
+
+                                                                     738
+5. ACKNOWLEDGEMENTS                                               [15] T. Hu and W. Banzhaf. Neutrality and variability:
+                                                                        Two sides of evolvability in linear genetic
+   This research is supported by the Ignite Grant from the              programming. In F. Rothlauf, editor, Proceedings of
+Research and Development Corporation of Newfoundland                    the Genetic and Evolutionary Computation
+and Labrador and the Discovery Grant from the Natural Sci-              Conference, pages 963­970, 2009.
+ences and Engineering Research Council of Canada (NSERC)
+to TH. WB acknowledges support from the Natural Sciences          [16] T. Hu, W. Banzhaf, and J. H. Moore. Robustness and
+and Engineering Research Council of Canada (NSERC) Dis-                 evolvability of recombination in linear genetic
+covery Grant. The simulation was feasible with the help                 programming. In Proceedings of the European
+from the IBM HPC cluster at the Center for Health Infor-                Conference on Genetic Programming, volume 7831 of
+matics & Analytics (CHIA), Faculty of Medicine, Memorial                Lecture Notes in Computer Science, pages 97­108,
+University.                                                             2013.
+
+6. REFERENCES                                                     [17] T. Hu, J. H. Moore, and W. Banzhaf. The effects of
+                                                                        recombination on phenotypic exploration and
+ [1] W. Banzhaf, P. Nordin, R. E. Keller, and F. D.                     robustness in evolution. Artificial Life, 20(4):457­470,
+      Francone. Genetic Programming: An Introduction.                   2014.
+      Morgan Kaufmann, 1998.
+                                                                  [18] T. Hu, J. L. Payne, W. Banzhaf, and J. H. Moore.
+ [2] A. Bavelas. Communication patterns in task-oriented                Robustness, evolvability, and accessibility in linear
+      groups. Journal of the Acoustical Society of America,             genetic programming. In S. Silva, J. A. Foster,
+      22:725­730, 1950.                                                 M. Nicolau, P. Machado, and M. Giacobini, editors,
+                                                                        Proceedings of the European Conference on Genetic
+ [3] P. Bonacich. Power and centrality: A family of                     Programming, volume 6621 of Lecture Notes in
+      measures. American Journal of Sociology,                          Computer Science, pages 13­24, 2011.
+      92(5):1170­1182, 1987.
+                                                                  [19] T. Hu, J. L. Payne, W. Banzhaf, and J. H. Moore.
+ [4] M. F. Brameier and W. Banzhaf. A comparison of                     Evolutionary dynamics on multiple scales: A
+      linear genetic programming and neural networks in                 quantitative analysis of the interplay between
+      medical data mining. IEEE Transactions on                         genotype, phenotype, and fitness in linear genetic
+      Evolutionary Computation, 5(1):17­26, 2001.                       programming. Genetic Programming and Evolvable
+                                                                        Machines, 13:305­337, 2012.
+ [5] M. F. Brameier and W. Banzhaf. Linear Genetic
+      Programming. Springer, 2007.                                [20] M. A. Huynen, P. F. Stadler, and W. Fontana.
+                                                                        Smoothness within ruggedness: The role of neutrality
+ [6] S. Ciliberti, O. C. Martin, and A. Wagner. Innovation              in adaptation. Proceedings of the National Academy of
+      and robustness in complex regulatory gene networks.               Sciences, 93:397­401, 1996.
+      Proceedings of the National Academy of Sciences,
+      104(34):13591­13596, 2007.                                  [21] H. Jeong, S. P. Mason, A. L. Barabasi, and Z. N.
+                                                                        Oltvai. Lethality and centrality in protein networks.
+ [7] M. C. Cowperthwaite, E. P. Economo, W. R.                          Nature, 411:41­42, 2001.
+      Harcombe, E. L. Miller, and L. A. Meyers. The ascent
+      of the abundant: How mutational networks constrain          [22] M. Kirschner and J. Gerhart. Evolvability. Proceedings
+      evolution. PLoS Computational Biology,                            of the National Academy of Sciences, 95:8420­8427,
+      4(7):e1000110, 2008.                                              1998.
+
+ [8] B. C. Daniels, Y.-J. Chen, J. P. Sethna, R. N.               [23] C. R. Landry, B. Lemos, S. A. Rifkin, W. J.
+      Gutenkunst, and C. R. Myers. Sloppiness, robustness,              Dickinson, and D. L. Hartl. Genetic properties
+      and evolvability in systems biology. Current Opinion              influcing the evolvability of gene expression. Science,
+      in Biotechnology, 19:389­395, 2008.                               317:118­121, 2007.
+
+ [9] J. A. G. M. de Visser, J. Hermission, G. P. Wagner,          [24] R. E. Lenski, J. E. Barrick, and C. Ofria. Balancing
+      L. A. Meyers, H. Bagheri-Chaichian, and et al.                    robustness and evolvability. PLoS Biology, 4(12):e428,
+      Evolution and detection of genetic robustness.                    2006.
+      Evolution, 57(9):1959­1972, 2003.
+                                                                  [25] M. Li, J. Wang, H. Wang, and Y. Pan. Identification
+[10] J. A. Draghi, T. L. Parsons, G. P. Wagner, and J. B.               of essential proteins from weighted protein-protein
+      Plotkin. Mutational robustness can facilitate                     interaction networks. Journal of Bioinformatics and
+      adaptation. Nature, 463:353­355, 2010.                            Computational Biology, 11(3):1341002, 2013.
+
+[11] E. Ferrada and A. Wagner. Protein robustness                 [26] J. Masel and M. V. Trotter. Robustness and
+      promotes evolutionary innovations on large                        evolvability. Trends in Genetics, 26:406­414, 2010.
+      evolutionary time-scales. Proceedings of The Royal
+      Society B, 275:1595­1602, 2008.                             [27] R. C. McBride, C. B. Ogbunugafor, and P. E. Turner.
+                                                                        Robustness promotes evolvability of thermotolerance
+[12] L. C. Freeman. A set of measures of centrality based               in an RNA virus. BMC Evolutionary Biology, 8:231,
+      on betweenness. Sociometry, 40(1):35­41, 1977.                    2008.
+
+[13] E. Galvan-Lopez and R. Poli. An empirical                    [28] J. F. Miller, editor. Cartesian genetic programming.
+      investigation of how and why neutrality affects                   Springer, 2011.
+      evolutionary search. In M. Cattolico, editor,
+      Proceedings of the Genetic and Evolutionary                 [29] J. F. Miller and P. Thomson. Cartesian genetic
+      Computation Conference, pages 1149­1156, 2006.                    programming. In Prodeedings of the 3rd European
+                                                                        Conference on Genetic Programming, volume 1802 of
+[14] A. Guven. Linear genetic programming for time-series               Lecture Notes in Computer Science, pages 121­132.
+      modeling of daily flow rate. Journal of Earth System              Springer, 2000.
+      Science, 118(2):137­146, 2009.
+
+                                                             739
+[30] C. L. Nehaniv. Measuring evolvability as the rate of         [42] T. Soule. Resilient individuals improve evolutionary
+      complexity increase. In C. C. Maley and E. Boudreau,              search. Artificial Life, 12:17­34, 2006.
+      editors, Artificial Life VII Workshop Proceedings,
+      pages 55­57, 2000.                                          [43] Y. Tang, M. Li, J. Wang, Y. Pan, and F.-X. Wu.
+                                                                        CytoNCA: A cytoscape plugin for centrality analysis
+[31] M. E. J. Newman. Analysis of weighted networks.                    and evaluation of protein interaction networks.
+      Physical Review E, 70(5):56­131, 2004.                            BioSystems, 127:67­72, 2015.
+
+[32] M. E. J. Newman. Networks: An Introduction. Oxford           [44] E. van Nimwegen, J. P. Crutchfield, and M. A.
+      University Press, 2010.                                           Huynen. Neutral evolution of mutational robustness.
+                                                                        Proceedings of the National Academy of Sciences,
+[33] M. Pigliucci. Is evolvability evolvable? Nature Review             96(17):9716­9720, 1999.
+      Genetics, 9:75­82, 2008.
+                                                                  [45] V. K. Vassilev and J. F. Miller. The advantage of
+[34] C. Reidys, P. F. Stadler, and P. Schuster. Generic                 landscape neutrality in digital circuit evolution. In
+      properties of combinatory maps: neutral networks of               Proceedings of the 3rd International Conference on
+      RNA secondary structures. Bulletin of Mathematical                Evolvable Systems: From Biology to Hardware, volume
+      Biology, 59(2):339­397, 1997.                                     1801 of Lecture Notes in Computer Science, pages
+                                                                        252­263. Springer, 2002.
+[35] J. Reisinger and R. Miikkulainen. Acquring
+      evolvability through adaptive representation. In            [46] A. Wagner. Robustness, evolvability, and neutrality.
+      Proceedings of the Genetic and Evolutionary                       Federation of European Biochemical Societies Letters,
+      Computation Conference, pages 1045­1052, 2007.                    579(8):1772­1778, 2005.
+
+[36] J. Reisinger, K. O. Stanley, and R. Miikkulainen.            [47] A. Wagner. Neutralism and selectionism: A
+      Towards an empirical measure of evolvability. In                  network-based reconciliation. Nature Review Genetics,
+      Proceedings of the Genetic and Evolutionary                       9:965­974, 2008.
+      Computation Conference, pages 257­264, 2005.
+                                                                  [48] A. Wagner. Robustness and evolvability: A paradox
+[37] F. Rothlauf and D. E. Goldberg. Redundant                          resolved. Proceedings of The Royal Society B,
+      representations in evolutionary computation.                      275(1630):91­100, 2008.
+      Evolutionary Computation, 11(4):381­415, 2003.
+                                                                  [49] J. Whitacre and A. Bender. Degeneracy: A design
+[38] G. Sabidussi. The centrality index of a graph.                     principle for achieving robustness and evolvability.
+      Psychometrika, 31(4):581­603, 1966.                               Journal of Theoretical Biology, 263:143­153, 2010.
+
+[39] P. Schuster, W. Fontana, P. F. Stadler, and I. L.            [50] C. O. Wilke. Adaptive evolution on neutral networks.
+      Hofacker. From sequences to shapes and back: A case               Bulletin of Mathematical Biology, 63:715­730, 2001.
+      study in RNA secondary structures. Proceedings of
+      The Royal Society B, 255:279­284, 1994.                     [51] T. Yu and J. F. Miller. Through the interaction of
+                                                                        neutral and adaptive mutations, evolutionary search
+[40] P. Shannon, A. Markiel, O. Ozier, N. S. Baliga, J. T.              finds a way. Artificial Life, 12:525­551, 2006.
+      Wang, D. Ramage, N. Amin, B. Schwikowski, and
+      T. Ideker. Cytoscape: A software environment for
+      integrated models of biomolecular interaction
+      networks. Genome Research, 13:2498­2504, 2003.
+
+[41] D. Song, M. I. Heywood, and A. Zincir-Heywod. A
+      linear genetic programming approch to intrusion
+      detection. In Proceedings of the Genetic and
+      Evolutionary Computation Conference, volume 2724 of
+      Lecture Notes in Computer Science, pages 2325­2336.
+      Springer-Verlag, 2001.
+
+                                                             740
+

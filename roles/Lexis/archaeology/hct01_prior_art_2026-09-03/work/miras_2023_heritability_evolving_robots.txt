@@ -1,0 +1,768 @@
+Evolutionary Intelligence (2024) 17:1733­1749
+https://doi.org/10.1007/s12065-023-00860-0
+
+ RESEARCH PAPER
+
+Heritability of morphological and behavioural traits in evolving robots
+
+Matteo De Carlo1 · Eliseo Ferrante1,2 · Daan Zeeuwe1 · Jacintha Ellers1 · A. E. Eiben1
+
+Received: 30 November 2022 / Revised: 19 April 2023 / Accepted: 4 June 2023 / Published online: 3 July 2023
+© The Author(s) 2023
+
+Abstract
+In the field of evolutionary robotics, choosing the correct genetic representation is a complicated and delicate matter, espe-
+cially when robots evolve behaviour and morphology at the same time. One principal problem is the lack of methods or
+tools to investigate and compare representations. In this paper we introduce and evaluate such a tool based on the biologi-
+cal notion of heritability. Heritability captures the proportion of phenotypic variation caused by genotypic variation and is
+often used to better understand the transmissibility of traits in real biological systems. As a proof of concept, we compare
+the heritability of various robot traits in two systems, one using a direct (tree based) representation and one using an indirect
+(grammar based) representation. We measure changes in heritability during the course of evolution and investigate how direct
+and indirect representation can be biased towards more exploration or exploitation throughout the course of evolution. The
+empirical study shows that heritability can be a useful tool to analyze different representations without running complete
+evolutionary processes using them.
+
+Keywords Evolutionary robotics · Morphological evolution · Representation · Heritability
+
+1Introduction                                                    it to fill some gaps between simple evolutionary models and
+                                                                 the enormous complexity of natural evolution.
+Evolutionary Robotics [1­3] is a research field in Artificial
+Intelligence that applies Evolutionary Computing methods            The modular robots we use are defined by a genetic repre-
+to an embodied robotic platform. The main objective of the       sentation that not only defines the behaviour of the robot, but
+field is to use Evolutionary Computing to design robots that     also its morphology [4]. In this paper we compare two differ-
+are ideal to specific tasks or environments. But, Evolution-     ent typologies of genetic representation: a simple one, which
+ary Robotics can also be used as an evolutionary model with      we will refer to as direct representation, and a complex one,
+physical plausibility given its ability to generate individuals  which will be referred to as indirect or developmental rep-
+with agency in a complex world. Because of this, we can use      resentation, where there are rich interactions between genes.
+                                                                 In our developmental representation, each phenotypic trait is
+* Matteo De Carlo                                                the result of a complex series of interactions between differ-
+     m.decarlo@vu.nl                                             ent genes. The implementation details of the two representa-
+     Eliseo Ferrante                                             tions will be further explained in the Methodology (Sect. 3).
+     e.ferrante@vu.nl                                            What is important to note is that, in our model, phenotypic
+     Daan Zeeuwe                                                 traits are not transmitted directly between generations, but
+     daan_zeeuwe@hotmail.com                                     they are an expression of the underlying genotype of the
+     Jacintha Ellers                                             individuals. The genotype is transmitted between genera-
+     j.ellers@vu.nl                                              tions through inheritance of the corresponding genes. This
+     A. E. Eiben                                                 is especially relevant for the developmental representation,
+     a.e.eiben@vu.nl                                             where every phenotype is an expression of an interaction
+                                                                 of multiple genes. To compare these two different setups,
+1 Vrije Universiteit Amsterdam, Amsterdam, The Netherlands       we are interested in the investigation of heritability [5, 6], a
+2 Autonomous Robotics Research Centre, Technology                property that is usually ignored in evolutionary models but
+                                                                 often measured in real populations when studying the trans-
+     Innovation Institute, Abu Dhabi, United Arab Emirates       missability of phenotypic traits from parents to offspring.
+
+                                                                 1 3 Vol.:(0123456789)
+1734                                                                Evolutionary Intelligence (2024) 17:1733­1749
+
+   We present this study as a proof of concept for heritability     14], or assume multiple genes with additive effects to yield a
+as a useful tool, to aid the design of Evolutionary Robotic         direct relationship between genetic parameters and the trait
+systems. When designing an Evolutionary Robotic system,             under selection [15]. In living organisms, however, pheno-
+one important design choice that has a major impact but is          typic variation in traits often arises as an emergent effect
+often overlooked is the genetic representation. There are sev-      from complex molecular and developmental interactions, and
+eral representations available to the designer that have been       cannot be traced back to a single gene [16]. Particularly for
+used in the literature, and many more if one includes all vari-     quantitative traits, such as fecundity, locomotive behaviour,
+ations. Nevertheless, our understanding of how the choice           and body size, phenotypic variation results from gene-gene
+of a particular representation can influence the evolutionary       and gene-environment interactions. Complex genotype-phe-
+process is still very superficial. By comparing two substan-        notype relationships can significantly alter the trajectory and
+tially different representations, we hope to investigate the        outcome of evolution because of the reduced importance of
+applicability of the notion of heritability in an evolutionary      additive genetic variation in such systems [17]. Therefore we
+robotics system to better understand the relationship between       need more insight in how encoding a more complex genetic
+different representations and the generated phenotypes.             system can affect the properties of evolutionary models.
+
+   The main contribution is the adoption of the concept of             In this study, we modelled evolution with physically plau-
+heritability to Evolutionary Robotics and the demonstration         sible robots using an encoding-decoding process that allows
+of its utility in complex evolutionary models. There are four       interactions of genes by design, a method that is the basis of
+important aspects we investigate:                                   a field called Evolutionary Robotics. Studying biology using
+                                                                    a robotic model is not a novel idea [18­22]; In [19] when
+· Whether heritability can be used as a predictor of the            explaining his use of robots in biological research, the author
+   evolutionary response of a system, specifically whether          argues that studying biological systems through the use of
+   it is related to the rate of evolutionary change.                a model can be appropriate, when the element that we want
+                                                                    to study is modelled properly.
+· Whether heritability changes over the course of evolu-
+   tion and, if so, if this effect can be related to any other         Similar attempts of monitoring the variance in the phe-
+   measurable aspect of evolution.                                  notypic space have been proposed before. In relevant studies
+                                                                    [23­25] evolvability is defined as "the propensity of an indi-
+· Whether heritability can be used to evaluate and compare          vidual to generate phenotypic diversity", and is monitored
+   different genetic representations.                               and used to improve the results of evolution. In these studies
+                                                                    the objective is to improve the efficacy of the evolutionary
+· Whether heritability can help us better understand the            process by monitoring and improving the evolvability of
+   different effects that simple and more complicated geno-         the individuals. In [24] individuals with better evolvability
+   typic representations have on evolution.                         improve the exploration of the system in conjunction with
+                                                                    Novelty Search. In respect of our work, evolvability seem to
+2Related work                                                       focus on measuring the overall individual effectiveness on
+                                                                    creating new interesting solutions, while heritability is the
+Evolution is the process that produced complex life as we           analysis of single traits and the understanding on whether
+know it, and ultimately human conscience, but it took mil-          those traits are transmittable, with distinct measurements
+lions of years to arrive at the complexities that we know           for each trait. To summarize, evolvability is an estimation
+today. To study evolution, models are generally a good              on how frequently new interesting mutations appear, while
+solution because they allow for simulation of evolutionary          heritability measures how new helpful mutations are likely to
+processes across multiple generations in a fraction of the          survive multiple generations. Therefore, while related, evolv-
+time that real-life evolution takes place. In the past decades,     ability and heritability are two sides of the same coin, and
+many important insights have been derived from evolution-           should be valued when designing an evolutionary process.
+ary models. For example, speciation models have helped
+identify the conditions under which sympatric speciation can        3Methodology
+occur, and how learning and phenotypic plasticity promotes
+or inhibits population divergence [7­9]. Evolutionary mod-          3.1The robots
+els have also greatly increased our understanding of sexual
+selection and the importance of condition dependence of             The platform we used is a modular robotic framework based
+sexual selected traits [10­12].                                     on RoboGen [26]. Each robot is composed of three different
+                                                                    types of modules: one Core module (Fig. 1a), an arbitrary
+   One aspect of evolutionary modelling that has been notori-       number of Brick modules (Fig. 1b), and an arbitrary number
+ously difficult, is the genetic representation of the traits under
+selection. Often, models simulate trait variation as a nor-
+mal distribution with genetically controlled parameters [13,
+
+13
+Evolutionary Intelligence (2024) 17:1733­1749                       1735
+
+of Joint modules (Fig. 1c). The Core module is unique for           3.2Robot brains
+each robot and represents the robot "head" that, in the
+original physical incarnation [27], contains the main logic         The controller of the robots we used is based on Central Pat-
+board and the battery. The Core module has four connection          tern Generators (CPG) [29­32]. The CPG implementation
+points where other modules can be attached. Brick modules           we used in our work is from Lan et al. [33, 34]. This archi-
+represent the "backbone" of the robot. Only through Brick           tecture has proven to be quite successful with joint based
+modules, the robot can take up arbitrary shapes. Actuation          robots; in our previous work [35], we successfully used this
+can only be achieved through the Joint modules, thus Joint          brain architecture to evolve two very different gaits: locomo-
+modules are the only modules capable of changing the state          tion and rotation.
+of the robot in the environment. Joint and Brick modules can
+be attached to any other module in two different ways, which           In our CPG network implementation, every joint in the
+differ from each other by 90 for the axis perpendicular to          body has a corresponding CPG node that consists of three
+the attachment plane. In [28], we already introduced this           neurons. Two of these neurons (that we call x and y neurons)
+rotational attachment, but it applied only to Joint modules.        are coupled by two-directional connections, one from x to
+Allowing the Joint to be attached rotated permits the robot         y, and one from y to x. By definition, the weights of these
+to evolve morphologies that have more variety in terms of           connections have the same value but the opposite sign. The
+both degrees of freedom and actuation. In this paper, we also       remaining neuron in a CPG node provides the output signal
+introduce rotational attachment for Brick modules, which            to the servo motor driving the given joint. The correspond-
+potentially allows robots to extend vertically against gravity.     ing weight is set at 1.0 in each joint, thus a CPG node can be
+In general, the design allows the inclusion of sensors, but for     configured by just one parameter regulating the connections
+this study, we do not use any. An example of a four-legged          between x and y.
+spider robot is presented in Fig. 2a.
+                                                                       The overall controller architecture is a network with one
+                                                                    CPG node for each joint and a connection between two such
+
+Fig.1Robots are built using
+three types of modules. Starting
+with only one Core module,
+the robot grows by connecting
+Brick and Joint modules to the
+Core or other already connected
+modules
+
+Fig.2Example "spider" robot morphology with eight joints and cor-   rons of neighbouring oscillators. All connections between oscillators,
+responding brain diagram. In the brain diagram (2b), black arrows   inside and outside, are corresponded with a symmetrical connection
+represent weighted connection between neurons in the same oscilla-  of the same weight but opposite sign. (e.g. wx1y1 = -wy1x1) (colour fig-
+tor, while blue arrows represent weighted connections between neu-
+                                                                    ure online)
+
+                                                                    13
+1736                                                            Evolutionary Intelligence (2024) 17:1733­1749
+
+nodes if the corresponding joints are neighbors separated by    Augmenting Topologies (HyperNEAT) [38, 39] that encodes
+no more than two empty cells (in the Manhattan sense) in the    the weights of the CPG controller network. These indirect
+3D Euclidean grid enclosing the robot. Connected neighbor       representations are capable of creating symmetrical growth
+CPG nodes can synchronize the oscillations of their joints      structures and repetitions in our bodies.
+and induce global locomotion patterns. The number of con-
+figurable parameters for a robot brain is thus j + c, where j      L-systems are parallel rewriting systems acting on
+is the number of joints, and c is the number of connections     a formal grammar. The grammar is defined as a tuple
+between joints; in Fig. 2 we show an example of how the         G = (V, w, R), where V is the Alphabet, w is the Axiom
+nodes would be connected in a robot made of 8 joints con-       and R is a set of Replacement Rules. L-systems start from
+figured as in the "spider" robot from [27].                     the Axiom w, which is a sequence of symbols from the
+                                                                Alphabet. To develop an L-system grammar, the Axiom
+3.3Evolution with the treebased direct                          is expanded into a longer sentence by replacing symbols
+     representation                                             using the Replacement Rules in R. The replacement opera-
+                                                                tion can be repeated multiple times on the sentence.
+For the direct representation, we are using a tree-based rep-
+resentation, whose implementation is very similar to [4, 36].      In this work, we adapted a system from [40], where
+                                                                each genotype is a grammar with always the same Axiom
+   In a tree-based representation, the genotype is a tree data  and Alphabet for all robots. The Alphabet is made of the
+structure in which each node represents a module of the         following symbols:
+robot. Modules differentiate into three types: Core, Brick,
+and Joint modules, as represented in Fig. 1. The Core mod-      · Robot modules: the Core, the Brick, a Vertical Joint,
+ule is always the root of the tree and it can only be present       and a Horizontal Joint.
+once in the entire genotype. It can have four children. The
+Brick module is attached on one side to its parent block        · Mounting commands: add_left , add_front , and
+and has three remaining slots available for child nodes.            add_right. Mounting commands must be followed by
+The Joint module has only one remaining slot for a child            a module symbol otherwise they are ignored. When
+module, therefore it does not allow any branching. A Joint          the final sentence is read, their role is to attach the fol-
+has three extra parameters that directly encode the oscil-          lowing module symbol in the sentence to the module
+lator parameters: frequency, offset, and amplitude. In our          indicated by the cursor position, at a new position (left,
+tree-based representation, the brain development is limited         front, or right) depending on the specific command.
+to only decode parameters for the oscillators of the CPG
+network; i.e. all connections between oscillating nodes are     · M o v i n g c o m m a n d s : move_back  , move_right ,
+not activated.                                                      move_front, and move_left. The moving commands alter
+                                                                    the position of the cursor.
+   The robot module tree can be altered by either a body
+mutation or a brain mutation operator. Most mutation opera-     The Replacement Rules of our L-system are a set of
+tions primarily revolve around changing the body: adding a      rules that replace any of the robot module symbols with
+random module, deleting a sub-tree, duplicating a sub-tree,     a sequence of new symbols from the alphabet. In other
+or swapping a sub-tree. Brain mutations are achieved by         words, robot module symbols are both terminal and non-
+mutating the joint oscillator parameters to achieve different   terminal symbols in our L-system. Any other symbol is
+activation patterns.                                            terminal, which means it cannot be replaced further. The
+                                                                Axiom of our L-system is a sentence made of a single
+   Parent robot trees can be recombined by inheriting sub-      symbol: the Core block. Once the L-system grammar
+trees from the parents. Some checks and balances ensure         develops the Axiom into a sentence, the sentence is used
+that the recombined trees are valid, and do not exceed the      as a sequence of instructions that describe how to build
+maximum limit of modules.                                       the robot.
+
+3.4Evolution with the developmental                                The system described in this paper differs from the one
+     representation                                             we inspired upon by the addition of an extra constraint on
+                                                                the morphology, i.e. we do not allow a joint to be attached
+For the developmental representation, often called indi-        to another joint. This new constraint increases the chances
+rect representation, we choose a system from our previous       for more complex robots to appear, as shown in previous
+work [28], which is composed of an Lindenmayer-system           experiments [28]. Therefore, we decided to use it here so to
+(L-system) [37] that describes body and brain structure and     allow the development of interesting morphologies in both
+a component based on Hypercube-based Neuro Evolution of         experimental configurations. We also improved the Alphabet
+                                                                with the introduction of a new rotated Brick module, which
+                                                                allows for the morphologies to develop in three dimensions.
+
+13
+Evolutionary Intelligence (2024) 17:1733­1749                                             1737
+
+   The brain structure is defined by the body; each joint cre-    negligible effects on the phenotype. Therefore we can use
+ates a corresponding CPG oscillator node and connections          heritability to deduce the additive and non-additive compo-
+are made using the rules previously explained (Sect. 3.2).        nents of robots' genes.
+When all connections are defined, each CPG node is posi-
+tioned on a substrate space with x, y, z, w coordinates and       3.5.1Formal definition
+each connection weight value is queried from a Composi-
+tional Pattern-Producing Network (CPPN) [41], as defined          Following, we provide a detailed explanation of how herit-
+by the HyperNEAT algorithm. In the substrate space, x, y,         ability is defined and how it is measured. In an evolution-
+and z determine the position of the CPG's node correspond-        ary system the phenotypic variation (V P) of a population of
+ing joint, while the w axis determines the front and back         individuals is an expression of genetic variation (V G) and
+neurons in an oscillating CPG node.                               environmental factors (E).
+
+   The mutation and crossover operators are defined by their      VP = VG + E             (1)
+individual components: for the L-system component, we use
+the operators defined in [42]. For the HyperNEAT compo-           The genetic variation can be further subdivided into three
+nent, we use the operators as defined by HyperNEAT, with          major components: additive genetic variation (V A), non addi-
+the exclusion of the species, i.e. genomes are not divided        tive genetic variation caused by epistatic genes (V NA) and
+into species and crossover is possible for each pair of           effects of random mutations (M).
+genome in the population.
+                                                                  VG = VA + VNA + M       (2)
+3.5Heritability
+                                                                  As defined in [5, 6], heritability measures the contribution
+In biological systems, heritability distinguishes those phe-      of genes to phenotypic traits. Each phenotypic trait has a
+notypic features that are an expression of genetic material       different value of heritability. Heritability can be defined as
+from features that influenced solely by the environment. It's     broad-sense heritability (H2) or narrow-sense heritability
+expressed as a value between 0 and 1, ranging from terrible       (h2). Broad-sense heritability is the proportion of phenotypic
+to perfect heritability. In biological systems, estimated herit-  variation that is created by the genetic variation. Narrow-
+ability for life history traits and behaviour are typically low   sense heritability is only the proportion of genetic variation
+to medium (ranging up to 0.30 [43]), whereas morphological        that is generated by additive genetic values, not including
+traits are often found to have higher heritability (average her-  any effect of dominance or epistasis.
+itability of 0.46 [44]). In an evolutionary system placed on a
+flat empty environment and designed with very simple gene         H2  =  VG  h2  =  VA    (3)
+encodings, where each element of the genome is the direct                VP         VP
+value of a trait, e.g. speed, size directly encoded as numbers,
+we expect perfect heritability for traits, with values of 1.0.    Heritability is also an important component of the "response
+On the opposite extreme, a trait with a low (0.1) or null         to selection" (R), a value that can be predicted as the prod-
+value of heritability cannot be predicted from the parents        uct of narrow-sense heritability and selection differential (S)
+and will be either the result of a complicated epistatic gene     [45]:
+interaction, or the result of heavy environmental influences
+on the trait. Additive genes are those genes that have a direct   R = h2  S               (4)
+impact on the phenotype and can be easily derived from the
+parents, e.g. if the height of a species is encoded with addi-    3.5.2Measuring heritability
+tive genes, the height of the offspring can be predicted from
+the average height of the parents. Other types of genes can       The value of heritability can be calculated from its
+have effects of dominance or epistasis on the phenotypes,         theoretical formula, but this requires a deep mathematical
+i.e. a combination of different genes needs to align to have      understanding of our genotype model, which we do not
+effect on the phenotype. The non-additive genes are much          posses. However, if we are only interested in the additive
+harder to predict and measure. Finally, a phenotype could         genetic material, an estimate of narrow-sense heritability can
+be an expression of the environment and totally independent       easily be derived from population measurements by linearly
+of the genes, e.g. a dog is more friendly if it grows up in a     regressing the average trait value of the offspring against
+house. Heritability is commonly used to distinguish envi-         the parental phenotype. It is important that heritability
+ronmentally induced traits from inherited ones. In this work,     is calculated between two consecutive generations and
+we have an extremely simple environment, which causes             not more. An approximation to a linear model is possible
+                                                                  because the additive genetic code has a linear response
+
+                                                                                          13
+1738                                                                                    Evolutionary Intelligence (2024) 17:1733­1749
+
+to the resulting phenotype, in contrast to epistatic genetic     · Coverage: considering the 3D bounding box that
+code which has a much more unpredictable effect on the              encompasses the robot, this trait is the ratio between
+phenotype. The value for the slope of the linear regression         the area that is occupied by modules and the total area
+is our numerical estimation for heritability. The value for         of the rectangle.
+heritability can vary between 1.0 and 0.0, where h2 = 1.0 is
+a 45 linear regression, representing a perfect match between     The Behavioural traits are very important because they
+parents' average trait and the offspring's trait. A value of     give insight in the complex relationship of body and brain.
+h2 = 0.0 instead represents a scenario where the offspring's     In this work we used:
+trait is completely unpredictable given the parents' traits.
+                                                                 · Speed: Describes the average robot speed (cm/s), and is
+   In evolutionary robotics, the influence of the environ-          calculated as if the robot took the shortest path from the
+ment over the development of the individuals is usually             start position s0 to the end position st, and is defined with
+very limited, excluding a few exceptions [46, 47]. In our           Eq. 5. In our setup, the average robot speed is also used
+case the environment is a flat terrain, therefore its influ-        as the fitness of the robot.
+ence is completely absent. The implication is that the
+phenotypic variation in this system is only an expression        vdisp  =  sT - st0              (5)
+of genotypic variation. Through linear regression we can                     t
+estimate the narrow-sense heritability, which is only an
+expression of additive genetic variation. The rest of the        · Balance: We use the rotation of the head in the x­y plane
+phenotypic variation can only be an expression of epistatic         to define the balance of the robot. We describe the rota-
+gene interaction and mutation (Eq. 2). The use of a linear          tion of the robot with three dimensions: roll , pitch
+regression is sufficient because we are mostly interested             , and yaw . Thus, we consider the pitch and roll of
+in an overall indication on how well certain phenotypic             the robot head, expressed between 0 and 180 (because
+values transfer from parents to offspring.                          we are not interested in whether the rotation is clock-
+                                                                    wise or anti-clockwise). Perfect balance corresponds
+3.6Robot traits                                                     to = = 0, so that the higher the balance, the less
+                                                                    rotated the head. Formally, balance is defined by Eq. 6.
+To estimate an overall heritability of our system, we chose
+a wide variety of phenotypic traits that are representative      b      1     T         t +   t  (6)
+of different aspects of our robot. This work is interested in                           2  t
+the overall evolution of modular robots, but the approach           =      -     t=1
+is not limited to any particular number or type of traits.
+The same study can be repeated on any trait, e.g. it would                    180 
+be interesting to study the heritability of "the number of
+feet in a robot" and what parameters increase the transmis-      4Experimental setup
+sion of the trait to the offspring.
+                                                                 We evolve the robots for movement, defining movement as
+   We recorded a set of many traits derived from the             how far robots travelled from the starting position, the direc-
+descriptors found in [47]. From the many traits available,       tion being not important. We use the speed behavioral trait
+we sampled only a significant few that we found to be            as the value for fitness, as shown in Eq. 5, which presents an
+orthogonal to each other in previous work [48]: some traits      easy challenge that we know it can be solved by our setup
+that measure the morphological aspect of the robots and          from previous experiments. For both representations we use
+some that measure the behavioural aspect.                        the same evolutionary algorithm with a generational popula-
+                                                                 tion update scheme, that is, an evolutionary algorithm where
+   The Morphological traits give us insight on how the           consecutive populations are non-overlapping. This means
+robot shapes evolve. In this work we used:                       that survival selection is trivial: no members of population
+                                                                 Pn survive, the subsequent generation Pn+1 consists of off-
+· Proportion: considering the 2D bounding box that               spring of the current one. As for parent selection, we use the
+    encompasses the robot when viewed from above, this           tournament selection mechanism with a tournament size of
+    trait is the ratio between the two sides of this rectangle.  two individuals. This represents a very low selection pres-
+                                                                 sure. To generate more consistent data for heritability, every
+· Size: the number of modules in the body.                       new individual is generated from the crossover of two par-
+· Number of Limbs: considering the robot as a tree of            ents, i.e. no individual is generated by mutation only. We run
+                                                                 this algorithm with a population size of 100 individuals for
+    modules, it is the number of leaf modules. The value
+    is normalized per robot by the number of all possible
+    limbs available.
+
+13
+Evolutionary Intelligence (2024) 17:1733­1749                                                                                       1739
+
+50 generations, amounting to a total of 5000 evaluations as       Table2Estimated values of heritability for each phenotypic trait
+the computational budget for optimizing the robots' makeup.
+50 generations are not a lot in the evolutionary robotics field,  Trait             Tree-based heritability                 L-system
+and we do not expect evolution to converge, but it is enough
+for the type of analysis we want to make. For both repre-                                                                   heritabil-
+sentations, fitness evaluations are done by placing the given
+robot on a flat surface and running it for 30 s. As mentioned                                                               ity
+above, fitness is measured as the distance between the start-
+ing point and the end point of the life of the robot divided      Speed             0.74                                    0.35
+by the lifetime in seconds. The resulting fitness is a speed
+value measured in cm/s and it has been used successfully in       Balance           0.77                                    0.37
+previous work to evolve robot that have a meaningful loco-
+motion gait.                                                      Proportion        0.65                                    0.41
+
+   The direction of the robot is not important. Evolutionary      Size              0.73                                    0.47
+robotics has the tendency to evolve robots that are as big as
+the system allows, therefore, we fixed the maximum number         N. of limbs       0.83                                    0.67
+of modules per robot to 50 to limit the bloat effect and to
+have reasonable simulation times. Additionally, a very big        5Results
+robot is impractical to build in hardware and would collapse
+on his own weight, therefore undesirable. Both configura-         Our first analysis aims at measuring the heritability of vari-
+tions were replicated 10 times, for a total of 20 experimental    ous traits in the two representation schemes at the start of the
+runs and 100,000 different robots simulated. Compared to          evolution experiment. To do so, for each representation/trait
+previous experiments, we adjusted the mutation rates for the      pair, we measure heritability using data from all evolution-
+evolutionary run to be quite high, with a probability of 0.59     ary runs, but only on the very first generation. Heritability is
+of having at least a body mutation for the tree-based repre-      measured comparing the trait value of an offspring against
+sentation and we used the same probability (0.59) for the         the average of the parents, therefore we need the offspring
+mutation chance on the L-system grammar. The increased            from the second generation as well. A linear regression is
+mutation rates increases the chance to explore more areas of      applied to the trait values of parents against offspring, and
+the genotype space, allowing us to collect more data for our      the slope of the resulting linear model is our estimate of
+heritability study. More details on the mutation parameters       heritability. The estimated values from our measurements
+can be found in Table 1.                                          are reported in Table 2.
+
+                                                                     The scatter plots used for estimating heritability can be
+                                                                  seen in Figs. 3, 4 and 5. As we can see, the Tree-based rep-
+                                                                  resentation consistently shows higher values of heritability
+                                                                  for all traits.
+
+Table1Mutation probabilities    L-system and CPPN mutation prob.                    Direct-tree mutation prob.
+and parameters for the Direct-
+tree representation and the     Mutate L-system grammar                       0.59  Duplicate random sub-tree                       0.2
+L-system+CPPN indirect          Mutate CPPN
+representation                                                                1.0   Delete random sub-tree                          0.2
+
+                                Mutate weights                                0.9   Generate random sub-tree                        0.2
+
+                                Add link                                      0.08  Swap two random sub-trees                       0.2
+                                Add neuron
+                                                                              0.01  (Derived) probability of at least one 0.59
+                                Remove link
+                                                                                    body mutation
+
+                                                                              0     Mutate brain                                    0.2
+
+                                Remove neuron                                 0     Mutate oscillator                               0.5
+
+                                Make recurrent link                           0
+                                Make recurrent loop                           0
+                                CPPN mutation params
+                                                                                               Direct-tree mutation params
+
+                                Max weight                                    8.0   Mutate oscillator amplitude                     0.3
+                                Weight mutation max power
+                                                                              0.2   Mutate oscillator period                        0.3
+
+                                Weight replacement max power                  1.0   Mutate oscillator phase                         0.3
+
+                                Values are derived from past experiments which had reasonable results. Mutation rates were increased sub-
+                                stantially to increase the exploration and therefore collect more data points for our heritability analysis. In
+                                addition, the L-system grammar mutation was set to have the same probability of having at least one muta-
+                                tion in the Direct-tree representation
+
+                                                                                                                            13
+1740  Evolutionary Intelligence (2024) 17:1733­1749
+
+13
+Evolutionary Intelligence (2024) 17:1733­1749                                1741
+
+Fig.3Scatterplot for the two representations for the parents in the          5.1Relationship between heritability and initial
+ first generation and their offspring. The x axis shows the average trait         evolutionary response
+ value of the parents, the y axis shows the value of the offspring. The
+ blue line represents the linear regression of these values. A steeper line  In this section, we aim at analyzing the relationship
+ indicates a higher level of heritability, to a theoretical maximum of 1     between heritability and evolutionary response for the
+
+ (45 slope). The red line is a 45 reference line (colour figure online)
+
+Fig.4Heritability of the speed trait for both encodings measured at          observe that the data points are more scattered and that a lower her-
+the first generation. Blue line is the resulting linear regression (slope    itability is measured in the L-system representation (colour figure
+is heritability). Red line is a perfect heritability reference. We can       online)
+
+Fig.5Heritability of the "number of limbs" trait for both encod-             points are well clustered around the 45 line, resulting in a pretty high
+ings measured at the first generation. Blue line is the resulting lin-       value of heritability. In the L-system based representation (5b) points
+ear regression (slope is heritability). Red line is a perfect heritability   are instead scattered all around the plot, resulting in a lower value of
+reference. We can observe how in the tree-based representation (5a)          heritability (colour figure online)
+
+                                                                             13
+1742                                                           Evolutionary Intelligence (2024) 17:1733­1749
+
+two representation schemes. We present the heritability           We first analyze the most important trait, since this is
+for direct and indirect representations, calculated only       the one that is under selection: speed. In Fig. 6a, c, we
+in the first generation on one behavioural (speed, Fig. 4)     observe that in the first 10 generations of the evolutionary
+and one morphological trait (number of limbs, Fig. 5). In      process the Tree-based representation has a higher rate of
+Figs. 6 and 7 we show the dynamics of the two same traits.     change in fitness compared to the L-system. This finding is
+In both Figures, panel (a) shows the value of the trait over   further confirmed by looking at the fitness distribution at
+generations while Panel (c) shows its rate of change (or       Generation 0 for all runs and for the two representations,
+derivative) over generations. To further understand how        shown in Fig. 8.
+heritability can explain the trait dynamics over generations,
+we use Panels (b) to highlight the evolution over generations     Here we see that the L-system even starts with an advan-
+of the heritability metric (calculated across two consecutive  tage, represented by the much higher fitness diversity in the
+generations) and Panel (d) to highlight the evolution over     initial population and the corresponding presence of higher
+a generation of the phenotypic diversity of the trait being    fitness individuals. Despite this, the L-system experiment
+considered within the population.                              evolves initially at a slower rate than the Tree-based experi-
+                                                               ment (as in Fig. 6c), which means that those high-fitness
+
+Fig.6Analysis of behaviour. Here we consider the evolution of the speed trait, how fast it changes per generation, speed heritability at the first
+generation and how it changes during evolution, and the diversity of speed present across the population
+
+13
+Evolutionary Intelligence (2024) 17:1733­1749                           1743
+
+Fig.7Analysis of morphologies. Here we consider the evolution of        evolution, and the diversity of the "number of limbs" present across
+the "number of limbs" trait, how fast it changes per generation, the    the population. The value for the "number of limbs" is normalized to
+trait's heritability at the first generation and how it changes during  the maximum possible number (of limbs) for each robot
+
+individuals present in the populations are not able to pass             because good parents have a higher probability of creating
+their phenotype to their offspring to the same extent as it             good offspring.
+happens in the Tree-based representation. We argue that
+the concept of heritability can shed light to understand                   Importantly, the relation between initial heritability and
+better what we observed above. Indeed, the Tree-based                   the initial rate of change of a trait is not true only for traits
+representation has a higher heritability value than the                 that are specifically under selection. To support this claim,
+L-system representation (0.74 > 0.35, for all values see                we perform the same analysis for all traits, and we report
+Table 2). Heritability can inform us on how much of the                 here only one example. Figure 7b shows the rate of change
+phenotypic trait variation will be passed on from parents               of a morphological trait that is not under selection (number
+to offspring, therefore high heritability at the beginning of           of limbs). Also here, we observe the same overall pattern:
+the evolutionary process can predict a higher rate of change            the Tree-based representation has a higher initial rate of
+in the trait under selection, as is happening in our system.            change in this trait, consistently with having higher herit-
+Thus, higher heritability at the beginning of the evolution-            ability (Table 2).
+ary process directly facilitates the effect of initial selection,
+
+                                                                        13
+1744                                                                                         Evolutionary Intelligence (2024) 17:1733­1749
+Fig.8Distribution of fitness in the random initial population
+                                                               5.2Heritability during the later phase of evolution
+
+                                                               The analysis of heritability can not only help to describe
+                                                               the behavior of evolutionary systems in their initial phases,
+                                                               but it can also show interesting patterns during later phases
+                                                               of their process. From the theoretical definition, we expect
+                                                               the estimated value of heritability to be constant over the
+                                                               course of evolution, under the condition that the selection
+                                                               process does not affect the genetic variation in the popu-
+                                                               lation. Surprisingly, by computing the estimated value of
+                                                               heritability for each of the generations, shown in the top row
+                                                               of Fig. 9, we observe changes of the estimated heritability
+                                                               in our experiments. The change in heritability value across
+                                                               generations is most evident for traits that are not under selec-
+                                                               tion. In the later stages of evolution heritability stabilizes for
+                                                               the tree-based representation and becomes highly unstable
+                                                               for the L-system genotype.
+
+                                                                  The change of heritability over generations can be
+                                                               explained if we also analyze how the phenotypic diversity
+
+Fig.9Heritability and diversity plots over generations for three different phenotypic traits: balance, proportion and size
+
+13
+Evolutionary Intelligence (2024) 17:1733­1749                         1745
+
+Fig.10Diversity per generation. Diversity is the average distance of  gene sequences can cause very poor offspring to be gener-
+one individual against all other individuals in the same population.  ated from very fit parents and vice-versa. Slowly the selec-
+Distance is calculated in the trait space                             tion process would pick up the unpredictable gene sequences
+                                                                      in their low-fitness state and select them out of the next
+of the population over the generations varies. The diversity          generation. This effect throughout many generations would
+in the L-system population converges to zero quite quickly            explain a decrease in diversity and an increase in narrow-
+in all traits (bottom row of Fig. 9), except the one we select        sense heritability, as only the predictable gene sequences
+for: speed (Fig. 6d). In Fig. 10 we can confirm an overall            consistently survive across multiple generations and predict-
+loss of phenotypic diversity for L-system experiments. A              able gene sequences cause high narrow-sense heritability in
+visual inspection of the final populations of both setups (two        the population by definition.
+sample runs are shown in Fig. 11) confirms that phenotypic
+diversity dropped considerably in the L-system experiments,              Another pattern that we can observe is that heritability
+while it's still observable in our tree-based representation.         becomes highly unstable in later stages of evolution for
+An overall decrease in phenotypic diversity in artificial             L-system experiments; this is especially obvious in Fig. 9a.
+evolutionary systems is often observed when evolution is              The explanation for this effect can be found by looking at
+converging to a solution and it is caused by a corresponding          the diversity (Fig. 9d). A decrease in diversity for a trait
+loss of genotypic diversity. A change in genotypic diversity          is an indicator of a decrease in overall genotypic diversity,
+can also explain the change in heritability we measured. A            which implies that the evolutionary process is not explor-
+similar pattern can be observed in the tree-based representa-         ing the search space any more and all solutions are very
+tion, but the changes in heritability and diversity are visible       similar. But to compute an accurate estimation of heritability
+on a smaller scale, for fewer generations and smaller changes         we need high diversity of the population, otherwise we are
+in values.                                                            computing the linear regression of a concentrated cloud of
+                                                                      points, as shown in Fig. 12. By contrast, we deduce that the
+6Discussion                                                           tree-based experiments are exploring the evolutionary space
+                                                                      and having difficulties in exploiting the solution space. With
+Interestingly, we observed an unexpected overall increase             this knowledge we can estimate that the tree-based repre-
+in heritability for the L-system, as the value for heritability       sentation needs a lower mutation rate and a stronger selec-
+started relatively low and increased over generations. We             tion pressure to be able to exploit the solution space. This
+hypothesize that selection is responsible for this effect. The        was to be expected because we choose very high mutation
+mating selection is probably slowly excluding all individu-           rates and a relaxed selection mechanism. On the contrary
+als that present highly unpredictable gene sequences. These           L-system seems to drop diversity after generation 20, which
+                                                                      is pretty early. This is especially noticeable for trait which
+                                                                      we don't select for (Fig. 9d­f). Our L-system representa-
+                                                                      tion seems to have difficulties to explore even from the early
+                                                                      phases of evolution, despite using evolutionary parameters
+                                                                      that encourage exploration. This suggests that an evolution-
+                                                                      ary process using our L-system representation has a hard
+                                                                      time escaping a few local optima found at the beginning,
+                                                                      and probably needs some additional elements to encourage
+                                                                      exploration.
+
+                                                                         A final consideration can be done on the values that
+                                                                      we measured. Real world biological experiments measure
+                                                                      heritability values ranging from 0.30 [43] to 0.46 [44].
+                                                                      Instead the values we measured (Table 2) are extremely
+                                                                      high in comparison. This difference can be explained by
+                                                                      either one of two causes: it could be because our genotype
+                                                                      is still quite simple when compared to real life genotypes
+                                                                      or it could be because we have a very simple and stable
+                                                                      environment. We reference a study on twins [49] which
+                                                                      lived their life in very similar environments. The calcu-
+                                                                      lated estimates for narrow-sense heritability (h2) in this
+                                                                      study are very high, some as high as 0.712, comparable
+                                                                      to some of our own results. This observation seems to
+
+                                                                      13
+1746                                                            Evolutionary Intelligence (2024) 17:1733­1749
+
+Fig.11Snapshot of all indi-
+viduals in the last generation of
+two sample runs, one for each
+genetic representation. Images
+are 2D projections of the robots
+
+validate our idea that the simple environment also played       experiments, diversity drops and the estimated heritability
+a role in our unexpectedly high values of heritability.         increases at first, followed by high instability. We related the
+                                                                different rates of heritability and diversity to more explora-
+7Concluding remarks                                             tory or exploitative evolutionary algorithms and how these
+                                                                concepts seem to be intertwined; i.e. we observed how high
+In this paper we introduced the biological notion of herit-     narrow-sense heritability corresponds to an exploratory
+ability as a novel tool to study representations in evolution-  evolutionary system, and how low heritability is observed
+ary robotics. Heritability captures the correlation between a   in more an exploitative evolutionary system, caused by a
+quantifiable phenotypical trait measured in the parents and     greater epistasis effect in the representation. Importantly,
+the one measured in the offspring. In our experiments we        this analysis can be performed only within the first few gen-
+show that heritability can be a useful tool in evolutionary     erations (in our case, 50), during the transitory phase of the
+robotics to support the genotype design process. We used        evolutionary process.
+this novel tool to tackle the bootstrapping problem, because
+it reveals how exploratory a system is during the initial          Heritability proved to be a helpful tool to evaluate the
+phases of evolution. We observed how changes in herit-          shape and smoothness of the search-space, considering
+ability could correlate to changes in diversity towards the     the landscape of both fitness and other phenotypic traits.
+course of evolution; i.e. in our tree-based system diversity    Tree-based experiments converge to solutions where robots
+and heritability seem to stabilize, while, in the L-system      still retain significant morphological diversity, meaning
+                                                                the local optima found by evolution in the search-space
+                                                                is a smooth wide hill. This was expected by a genetic
+
+13
+Evolutionary Intelligence (2024) 17:1733­1749                              1747
+
+Fig.12Scatter plot and heritability for balance of the last genera-        recombination, mutation, embryonic development, early
+tion for the L-system configuration. The x axis is the average bal-        life development, behavioural and morphological lifetime
+ance of the parents and the y axis is the value of balance for the off-    adaptation. Many of these processes can be influenced by
+spring. The blue line represents the linear regression of these values.    complex environments. In addition, biological systems have
+A steeper line indicates a higher level of heritability, to a theoretical  and retain high genotypic variation.
+maximum of 1 (45 slope). The red line is a 45 reference line. The
+linear regression results in almost a 45 line because there are many          In contrast, artificial systems are extremely simplified. In
+overlapping points in the plot that are indistinguishable but influence    particular, in our evolutionary system, individuals develop
+the regression results (colour figure online)                              before they can have any interaction with the environment.
+                                                                           When individuals are placed in the environment, interac-
+representation that is mostly made of additive genes. On                   tions are extremely simple and consistent across all indi-
+the contrary, L-system experiments converged to a single                   viduals. Additionally, individuals have no morphological or
+morphological solution with little-to-none diversity, and                  behavioural adaptation systems at their disposal during their
+by observing the change in heritability and diversity we                   lifetime. Artificial systems are also characterized by a gen-
+can determine that solutions are unlikely to explore other                 erally lower genotypic diversity and a tendency to decrease
+peaks, probably because they are either too distant, too                   even more over the course of artificial evolution, when the
+narrow or not good enough compared to the solution found.                  population converges to a useful solution.
+This is an indication that the L-system is a genetic repre-
+sentation that contains lots of epistatic effects, meaning                    For the future of evolutionary robotics, adding the above-
+many genes need to align to be able to create a positive                   mentioned biological elements would be very interesting,
+effect on the phenotype.                                                   and some efforts have already been done in this direction.
+                                                                           In [50, 51] we find efforts to introduce learning systems
+   In possess of this knowledge, we will transition to a tree-             that enable individuals to adapt to their environment dur-
+based direct representation in future work where the focus                 ing their lifetime. Some work can also be found studying
+will be on evolution of morphological traits interacting with              how to design a system where the genotype-phenotype map-
+other elements, because differences in phenotypical traits                 ping can be influenced by the environment [47]. However,
+will be more tangible. In other setups, where the interest is              these additions to the evolutionary process are non-trivial:
+in studying complicated gene interaction, including epistatic              research on these more complicated and realistic systems
+effects, L-system is a good candidate.                                     require a substantial increase in computational cost required
+                                                                           from the evolutionary process. This results in slower itera-
+   This paper also highlights how the notion of heritability               tions and difficulties in the design and parameter tuning pro-
+draws attention to major discrepancies between biological                  cesses, especially if one wanted to study these processes in
+and artificial evolutionary systems. Crucially, in biology                 combination.
+computing a value of heritability requires measuring quali-
+ties of the traits at the phenotype level. However, phenotypic                The development of artificial life through artificial evo-
+traits in biology are a result of several processes and factors:           lution is still in its infancy, and lot of work in the above
+                                                                           directions and beyond could be done. Still, both for the cur-
+                                                                           rent system complexity as well as for the one of future sys-
+                                                                           tems, in our view measuring heritability will be a useful tool
+                                                                           that greatly increases our understanding of the relationship
+                                                                           between phenotypes and genotypes.
+
+                                                                           Declarations
+
+                                                                           Conflict of interest The author declares that there is no conflicts of
+                                                                           interest in this paper.
+
+                                                                           Code availability Code is available at https://g ithub.c om/c i-g roup/r evol
+                                                                           ve/releases/tag/paper%2Fheritability.
+
+                                                                           Open Access This article is licensed under a Creative Commons Attri-
+                                                                           bution 4.0 International License, which permits use, sharing, adapta-
+                                                                           tion, distribution and reproduction in any medium or format, as long
+                                                                           as you give appropriate credit to the original author(s) and the source,
+                                                                           provide a link to the Creative Commons licence, and indicate if changes
+                                                                           were made. The images or other third party material in this article are
+                                                                           included in the article's Creative Commons licence, unless indicated
+
+                                                                           13
+1748                                                                        Evolutionary Intelligence (2024) 17:1733­1749
+
+otherwise in a credit line to the material. If material is not included in  22. Floreano D, Mitri S, Magnenat S, Keller L (2007) Evolutionary
+the article's Creative Commons licence and your intended use is not               conditions for the emergence of communication in robots. Curr
+permitted by statutory regulation or exceeds the permitted use, you will          Biol 17(6):514­519
+need to obtain permission directly from the copyright holder. To view a
+copy of this licence, visit http://creativecommons.org/licenses/by/4.0/.    23. Gajewski A, Clune J, Stanley KO, Lehman J (2019) Evolvability
+                                                                                  es: scalable and direct optimization of evolvability. In: Proceed-
+References                                                                        ings of the genetic and evolutionary computation conference, pp
+                                                                                  107­115
+ 1. Cliff D, Husbands P, Harvey I (1993) Explorations in evolutionary
+      robotics. Adapt Behav 2(1):73­110                                     24. Lehman J, Stanley KO (2011) Improving evolvability through
+                                                                                  novelty search and self-adaptation. In: 2011 IEEE Congress of
+ 2. Nolfi S, Floreano D (2000) Evolutionary robotics: the biology,                Evolutionary Computation (CEC). IEEE, pp 2693­2700
+      intelligence, and technology of self-organizing machines. MIT
+      Press, Cambridge                                                      25. Mengistu H, Lehman J, Clune J (2016) Evolvability search:
+                                                                                  directly selecting for evolvability in order to study and produce it.
+ 3. Floreano D, Husbands P, Nolfi S (2008) Evolutionary robotics.                 In: Proceedings of the genetic and evolutionary computation con-
+      In: Siciliano B, Khatib O (eds) Springer handbook of robotics.              ference 2016 (GECCO'16). Association for Computing Machin-
+      Springer, Berlin, pp 1423­1451                                              ery, New York, pp 141­148
+
+ 4. Hupkes E, Jelisavcic M, Eiben AE (2018) Revolve: a versa-               26. Auerbach J, Aydin D, Maesani A, Kornatowski P, Cieslewski T,
+      tile simulator for online robot evolution. In: International con-           Heitz G, Fernando P, Loshchilov I, Daler L, Floreano D (2014)
+      ference on the applications of evolutionary computation, pp                 RoboGen: robot generation through artificial evolution. In: Arti-
+      687­702                                                                     ficial Life 14: proceedings of the fourteenth international con-
+                                                                                  ference on the synthesis and simulation of living systems, pp
+ 5. Griffiths A, Miller J, Dea S (2000) Quantifying heritability. An              136­137
+      introduction to genetic analysis
+                                                                            27. Jelisavcic M, De Carlo M, Hupkes E, Eustratiadis P, Orlowski
+ 6. Wray N, Visscher P (2008) Estimating trait heritability. Nat                  J, Haasdijk E, Auerbach JE, Eiben AE (2017) Real-world evo-
+      Educ 1(1):29                                                                lution of robot morphologies: a proof of concept. Artif Life
+                                                                                  23(2):206­235
+ 7. Doebeli M (1996) A quantitative genetic competition model for
+      sympatric speciation. J Evol Biol 9(6):893­909                        28. De Carlo M, Ferrante E, Eiben AE (2020) Comparing indirect
+                                                                                  encodings by evolutionary attractor analysis in the trait space of
+ 8. Ellers J, Slabbekoorn H (2003) Song divergence and male dis-                  modular robots. In: Proceedings of the 2020 genetic and evolu-
+      persal among bird populations: a spatially explicit model testing           tionary computation conference (GECCO 2020), pp 73­74
+      the role of vocal learning. Anim Behav 65(4):671­681
+                                                                            29. Hooper SL (2000) Central pattern generators. Curr Biol
+ 9. Thibert-Plante X, Hendry AP (2011) The consequences of                        10(5):176­179
+      phenotypic plasticity for ecological speciation: plasticity and
+      ecological speciation. J Evol Biol 24(2):326­342                      30. Marder E, Bucher D (2001) Central pattern generators and the
+                                                                                  control of rhythmic movements. Curr Biol 11(23):986­996
+10. Lorch PD, Proulx S, Rowe L, Day T (2003) Condition-dependent
+      sexual selection can accelerate adaptation. Evol Ecol Res 5(6):16     31. Ijspeert AJ (2008) Central pattern generators for locomotion con-
+                                                                                  trol in animals and robots: a review. Neural Netw 21(4):642­653
+11. Petrie M, Roberts G (2007) Sexual selection and the evolution of
+      evolvability. Heredity 98(4):198­205                                  32. Bucher D, Haspel G, Golowasch J, Nadim F (2015) Central pat-
+                                                                                  tern generators. Wiley, Hoboken, pp 1­12
+12. Kokko H, Brooks R, McNamara JM, Houston AI (2002) The
+      sexual selection continuum. Proc R Soc Lond Ser B Biol Sci            33. Lan G, Jelisavcic M, Roijers DM, Haasdijk E, Eiben AE (2018)
+      269(1498):1331­1340                                                         Directed locomotion for modular robots with evolvable morpholo-
+                                                                                  gies. In: Parallel problem solving from nature--PPSN XV, pp
+13. Lande R, Arnold SJ (1983) The measurement of selection on cor-                476­487
+      related characters. Evolution 37(6):1210­1226
+                                                                            34. Lan G, De Carlo M, van Diggelen F, Tomczak JM, Roijers DM,
+14. Servedio MR, Powers JM, Lande R, Price TD (2019) Evolution                    Eiben AE (2021) Learning directed locomotion in modular robots
+      of sexual cooperation from sexual conflict. Proc Natl Acad Sci              with evolvable morphologies. Appl Soft Comput 111:107688
+      116(46):23225­23231
+                                                                            35. Carlo MD, Zeeuwe D, Ferrante E, Meynen G, Ellers J, Eiben AE
+15. Buresch T, Eiben AE, Nitschke G, Schut MC (2005) Effects of                   (2020) Robotic task affects the resulting morphology and behav-
+      evolutionary and lifetime learning on minds and bodies in an artif-         iour in evolutionary robotics. In: 2020 IEEE symposium series on
+      ical society. In: 2005 IEEE congress on evolutionary computation,           computational intelligence (SSCI), pp 2125­2131
+      vol 2, pp 1448­1454
+                                                                            36. Jelisavcic M, Glette K, Haasdijk E, Eiben AE (2019) Lamarckian
+16. Goddard ME, Kemper KE, MacLeod IM, Chamberlain AJ, Hayes                      evolution of simulated modular robots. Front Robot AI 6:1­15
+      BJ (2016) Genetics of complex traits: prediction of phenotype,
+      identification of causal polymorphisms and genetic architecture.      37. Lindenmayer A (1968) Mathematical models for cellular inter-
+      Proc R Soc B Biol Sci 283(1835):20160569                                    actions in development II. Simple and branching filaments with
+                                                                                  two-sided inputs. J Theor Biol 18(3):300­315
+17. Sailer ZR, Harms MJ (2017) High-order epistasis shapes evolu-
+      tionary trajectories. PLoS Comput Biol 13(5):1005541                  38. Stanley KO, D'Ambrosio DB, Gauci J (2009) A hypercube-based
+                                                                                  encoding for evolving large-scale neural networks. Artif Life
+18. Cho A (2014) The accidental roboticist. Science                               15(2):185­212
+      346(6206):192­194
+                                                                            39. Gauci J, Stanley KO (2010) Autonomous evolution of topo-
+19. Long J (2012) Darwin's devices: what evolving robots can teach                graphic regularities in artificial neural networks. Neural Comput
+      us about the history of life and the future of technology                   22(7):1860­1898
+
+20. Waibel M, Floreano D, Keller L (2011) A quantitative test               40. Miras K, Eiben AE (2019) The impact of environmental history
+      of Hamilton's rule for the evolution of altruism. PLoS Biol                 on evolved robot properties. In: ALIFE 2019, pp 396­403
+      9(5):1000615
+                                                                            41. Stanley KO (2007) Compositional pattern producing networks:
+21. Floreano D, Keller L (2010) Evolution of adaptive behav-                      a novel abstraction of development. Genetic Program Evol Mach
+      iour in robots by means of Darwinian selection. PLoS Biol                   8(2):131­162
+      8(1):1000292
+                                                                            42. Miras K, Eiben AE (2019) Effects of environmental conditions on
+                                                                                  evolved robot morphologies and behavior. In: Proceedings of the
+
+13
+Evolutionary Intelligence (2024) 17:1733­1749                            1749
+
+      2019 genetic and evolutionary computation conference (GECCO        49. Polderman TJC, Benyamin B, de Leeuw CA, Sullivan PF, van
+      2019), pp 125­132                                                        Bochoven A, Visscher PM, Posthuma D (2015) Meta-analysis of
+43. Dochtermann NA, Schwab T, Anderson Berdal M, Dalos J,                      the heritability of human traits based on fifty years of twin studies.
+      Royauté R (2019) The heritability of behavior: a meta-analysis. J        Nat Genet 47(7):702­709
+      Hered 110(4):403­410
+44. Mousseau TA, Roff DA (1987) Natural selection and the herit-         50. Miras K, De Carlo M, Akhatou S, Eiben AE (2020) Evolving-con-
+      ability of fitness components. Heredity 59(2):181­197                    trollers versus learning-controllers for morphologically evolvable
+45. Lynch M, Walsh B et al (1998) Genetics and analysis of quantita-           robots. In: Castillo PA, Jiménez Laredo JL, Fernández de Vega
+      tive traits, vol 1. Sinauer, Sunderland                                  F (eds) Applications of evolutionary computation, vol 12104, pp
+46. Auerbach JE, Bongard JC (2014) Environmental influence on the              86­99
+      evolution of morphological complexity in machines. PLoS Com-
+      put Biol 10(1):1­17                                                51. Gupta A, Savarese S, Ganguli S, Fei-Fei L (2021) Embodied intel-
+47. Miras K, Ferrante E, Eiben AE (2020) Environmental regulation              ligence via learning and evolution. Nat Commun 12(1):5721
+      using plasticoding for the evolution of robots. Front Robot AI
+      7:107                                                              Publisher's NoteSpringer Nature remains neutral with regard to
+48. De Carlo M, Zeeuwe D, Ferrante E, Meynen G, Ellers J, Eiben AE       jurisdictional claims in published maps and institutional affiliations.
+      (2020) Influences of artificial speciation on morphological robot
+      evolution. In: 2020 IEEE symposium series on computational
+      intelligence (SSCI). IEEE, Canberra, pp 2272­2279
+
+                                                                         13
+

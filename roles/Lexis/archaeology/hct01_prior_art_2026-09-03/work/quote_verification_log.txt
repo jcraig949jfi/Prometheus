@@ -1,0 +1,65 @@
+HCT-01 LOAD-BEARING QUOTE VERIFICATION  (exact substring, whitespace/dash/quote-normalised)
+both -layout and flow-order pdftotext extractions searched
+
+PRESENT  A/B                  hu_banzhaf_2009_neutrality_variability_evolvabilit :: Na(t) to count the number of all attempted nonsynonymous genetic chang
+PRESENT  A/B                  hu_banzhaf_2009_neutrality_variability_evolvabilit :: ka(t) = Ma(t)/Na(t) measures the rate of nonsynonymous genetic
+PRESENT  B                    hu_banzhaf_2009_neutrality_variability_evolvabilit :: the ratio ka/ks is calculated over time, and it measures the rate
+PRESENT  C-neg                hu_banzhaf_2009_population_size_rate_of_evolution  :: adjusting population size during evolution
+PRESENT  A                    hu_2014_recombination_phenotypic_exploration       :: fraction of its neighbors in the genotype network that are neutral nei
+PRESENT  C                    hu_2014_recombination_phenotypic_exploration       :: scenario 1 is driven solely by mutation
+PRESENT  B                    hu_2014_recombination_phenotypic_exploration       :: average genotypic robustness
+PRESENT  C                    hu_banzhaf_moore_2013_robustness_evolvability_reco :: two evolution scenarios with mutation only
+PRESENT  A                    hu_2014_population_exploration_genotype_networks   :: number of unique phenotypes that it can reach through single point mut
+PRESENT  A-partial            altenberg_1994_evolution_of_evolvability_gp        :: entire distribution of fitnesses among the offspring
+PRESENT  A-deferred           altenberg_1994_evolution_of_evolvability_gp        :: should be possible to measure this in gp runs
+PRESENT  F-partial            altenberg_1995_genome_growth_gpmap                 :: randomized fitness functions
+PRESENT  C-partial            altenberg_1995_genome_growth_gpmap                 :: constructional selection
+PRESENT  C                    turner_2015_phd_thesis_cgp_neutral_drift           :: explicitly inactive genes are never mutated
+PRESENT  C                    turner_2015_phd_thesis_cgp_neutral_drift           :: only mutate active genes, never inactive
+PRESENT  A-absent-speculation turner_2015_phd_thesis_cgp_neutral_drift           :: in terms of what solutions are reachable in the next generation
+PRESENT  C                    collins_2005_needles_harder_neutrality             :: does not permit introns
+PRESENT  A-partial            collins_2005_needles_harder_neutrality             :: number of gates active
+PRESENT  C                    labar_ofria_2016_paths_to_complexity               :: blank instructions cannot be beneficial
+PRESENT  C                    labar_ofria_2016_paths_to_complexity               :: ratio of deletions to insertions as 9:1
+PRESENT  A                    labar_ofria_2017_drift_robustness                  :: each point mutation was generated for each genotype
+PRESENT  F-partial            labar_ofria_2017_drift_robustness                  :: for each of these genotypes, we evolved 10 populations
+PRESENT  A                    elena_sanjuan_2008_robustness_evolvability_digital :: systematically constructed every possible single mutation
+PRESENT  D                    elena_sanjuan_2008_robustness_evolvability_digital :: spearman's correlation coefficient between robustness and evolvability
+PRESENT  A-partial            kriegman_2018_morph_devo_guide_evo                 :: 1000 subsequent random controller mutations
+PRESENT  F                    kriegman_2018_morph_devo_guide_evo                 :: evo-devo removed
+PRESENT  neg-evidence         batut_2013_insilico_experimental_evolution         :: mutagenesis experiments to measure its mutational robustness
+PRESENT  A/B                  fowler_banzhaf_2016_modelling_evolvability_gp      :: every generation that occurs during evolution
+PRESENT  A-neg                krause_2017_step_size_adaptation_rules             :: distribution of step sizes
+PRESENT  B-partial            glickman_1998_dynamics_of_selfadaptation           :: population average mutation rate was noted
+PRESENT  A                    virgolin_2022_evolvability_degeneration_mogp       :: ratio between the number of successes and the number of attempts
+PRESENT  A                    rutten_2019_adapting_engine_to_fuel                :: 2 million in the current experiment
+PRESENT  C-partial            rutten_2019_adapting_engine_to_fuel                :: 100 fold
+MISSING  A                    tarapore_mouret_2015_evolvability_signatures       :: in 1, 000 separate and independent instances
+PRESENT  C                    misevic_2006_pmc                                   :: divide-sex or divide-asex instruction is included in the instruction s
+PRESENT  F                    kumawat_2024_pnas_fulltext                         :: we also performed reciprocal experiments
+PRESENT  B                    kumawat_2024_pnas_fulltext                         :: similar mutational neighborhood analysis on the entire lineage
+PRESENT  F                    reisinger_miikkulainen_2006_selecting_evolvable_re :: acquired evolvability can be measured directly as
+PRESENT  C                    lalejini_2017_gene_duplications_ecal               :: five slip mutation operators
+MISSING  B                    decarlo_2021_heritability_morph_robot_evo          :: heritability for each of the generations
+
+TOTAL: 38 present, 2 missing, 40 checked
+
+--- RESOLUTION OF THE 2 APPARENT MISSES (both are harness bugs, not quote errors) ---
+1. decarlo_2021_heritability_morph_robot_evo : WRONG FILE IN CHECKLIST.
+   The De Carlo et al. 2023 paper is miras_2023_heritability_evolving_robots.pdf
+   (extracted to dc.txt). Quote "heritability for each of the generations" -> PRESENT (1 hit).
+2. tarapore_mouret_2015_evolvability_signatures : TWO-COLUMN INTERLEAVE.
+   pdftotext places "in 1, 000" at the end of one line and "separate and independent
+   instances." at the start of the next, with left-column text between. Direct read of
+   tarapore2015.txt lines 725-760 confirms the running sentence:
+   "The individual is mutated at a predetermined mutation rate as used during selection,
+    in 1, 000 separate and independent instances."
+
+FINAL: 40 / 40 load-bearing quoted sentences confirmed present in the retrieved documents.
+Zero fabricated quotes.
+
+CAVEAT ON SCORING (not on quotes): for the papers screened by the three delegated
+sub-searches, the quoted sentences are verified verbatim above, but the A-F cell
+assignments were not independently re-derived by a second full methods reading.
+The headline verdict rests on three papers whose methods were read directly:
+Kumawat et al. 2024 (PNAS), Rutten et al. 2019 (BMC Evol Biol), Misevic et al. 2006 (PRSB).
