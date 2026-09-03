@@ -158,6 +158,16 @@ Each detector part carries: `detector_id`, historical name, inventor and date, *
 - **Historical availability:** economically impossible at scale for every specimen profiled so far, which is the seat's genuine leverage. Note this is a claim about *cost*, not about *conception*: the technique was understood.
 - **Evidence:** `MODEL_RECALL_UNVERIFIED` on the specific historical instances.
 
+### det-part-09 — Execution as a transcription check
+
+- **Origin:** not from the literature. Forced on the seat by the EvCA recovery of 2026-09-03.
+- **Quantity:** run the recovered specimen and compare its behaviour to the published behaviour.
+- **Sees:** transcription errors that are syntactically invisible. Two hazards in one recovery produced valid-looking but wrong 128-bit tables: a row-pairing error in PDF extraction, and a broken ligature map. A deliberately mis-paired rule scored 0.010, effectively dead, against a correct 0.769.
+- **Also sees:** errors in the *original publication*. The seat found and confirmed a typo in a 1995 PNAS table by deriving the rule from first principles.
+- **Cannot see:** anything, unless at least one recovered object is independently derivable. Here two of six rules were derivable from their mathematical definitions and calibrated the other four. **A recovery with no derivable member has no internal calibration and must be treated as unverified.**
+- **D-level:** not applicable; this is a provenance instrument, not an accessibility measure.
+- **Standing rule it generates:** a printed specimen is `RECOVERED_SPECIMEN` only after execution, never on transcription alone.
+
 ---
 
 ## The crossover: when a detector part is also a mechanism part
