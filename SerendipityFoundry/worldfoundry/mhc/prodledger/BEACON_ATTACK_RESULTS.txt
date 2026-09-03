@@ -1,0 +1,18 @@
+========================================================================
+BEACON-PRECOMPUTATION ATTACK  (K=1000, 64 blocks, m=3)
+========================================================================
+
+A1. PROCEDURAL SEAL (old): attacker precomputes all 60000 trajectories
+    crossers identified offline : 35
+    attacker registers ONLY those -> false admissions 35 for spend 0.0350
+    guarantee violated 1000x -- ATTACK SUCCEEDS against procedural sealing
+
+A2. PRODUCTION SEAL: attacker registers a strategy-chosen subset FIRST; the beacon value is generated afterwards
+    registered on best-guess    : 34 candidates (spend 34/1000 = 0.034)
+    actually crossed            : 0  (chance expectation ~ 0.034)
+    -> precomputation advantage ELIMINATED; every cross is paid for at 1/K
+
+A3. GRINDING: register N candidates blind, hope for crossers
+    5000 registrations -> 8 crossers (expected ~5.0); ledger charged 5000/1000 = 5.0 risk units -- the books balance BY CONSTRUCTION
+    (and a real ledger would have refused: 5000/1000 = 5.0 >> ALPHA_LIFE = 0.1 -- the budget runs out after ~100 registrations at K=1000)
+========================================================================
