@@ -110,18 +110,29 @@ Two consequences, both against HC-T01:
   materially weakens any argument of the form "nobody measured X", because absence from the
   literature is now known to be weak evidence about absence from the work.
 
+**And a third finding, added 2026-09-03, which is worse for HC-T01 than either.** The specimen's own
+direct ancestor **published** a local exhaustive detector in all arms with standard errors. Parter et
+al. 2008's Text S1 — a supplement this pass failed to fetch and Elenchus recovered — defines
+neutrality as *"the fraction of 1-mutant circuits that compute the same Boolean function as the
+wild-type"* over a 104-bit genome, and reports neighbourhood statistics as *"Mean ± SE … for each
+scenario"* across FG, MVG and NBVG over 30 simulations. So `A-local` was not merely built and
+unreported; it was **built, published, run in every arm, and given error bars, in 2008**, and Kouvaris
+2017 then replaced it with a uniform global sample. See `J_DETECTOR_GENEALOGY.md` §4 and
+`E_D_LEVEL_ADJUDICATION.md` §5 item 5.
+
 ## 6. Cell-by-cell comparison against the two strongest descendants
 
 Full detail in `K_DESCENDANT_SEARCH.md`; the summary belongs here because it changes what HC-T01 can
 claim.
 
-| | Kouvaris 2017 | Kounios 2016 (arXiv) | Petak 2025 (PNAS) | Tiso 2024 (thesis, unpublished) | HC-T01 target |
-|---|---|---|---|---|---|
-| A | global | global (basin size) | **local** | **local** | **local** |
-| B-within-run | yes, unreplicated | yes, 30 replicates | **yes, 15 replicates + 95% CI** | yes, 4 time points | yes |
-| C-mechanism | no (selection) | **yes** (one-to-one map vs GRN) | no (selection) | **yes** (architecture × transfer function) | **yes** (operator on/off) |
-| D-within-run | no | weak | no (arm-level) | **yes, descriptive** | yes |
-| all four | no | no | no | **qualified yes** | — |
+| | Parter 2008 (ancestor) | Kouvaris 2017 | Kounios 2016 (arXiv) | Petak 2025 (PNAS) | Tiso 2024 (thesis, unpub.) | HC-T01 target |
+|---|---|---|---|---|---|---|
+| A | **local, EXHAUSTIVE** | global | global (basin size) | **local** | **local** | **local** |
+| in all arms, with uncertainty | **yes, mean ± SE, 30 sims** | yes, no uncertainty | yes, 30 replicates | yes, 15 repl. + 95% CI | **no — absent from the control arm** | yes |
+| B-within-run | no (endpoint per arm) | yes, unreplicated | yes | **yes** | yes, 4 time points | yes |
+| C-mechanism | no (goal schedule) | no (selection) | **yes** (one-to-one map vs GRN) | no (selection) | **yes** (architecture × transfer fn) | **yes** (operator on/off) |
+| D-within-run | no | no | weak | no (arm-level) | **yes, descriptive** | yes |
+| all four | no | no | no | no | **qualified yes** | — |
 
 **Tiso 2024 chapter 3 has all four elements in a qualified sense**, and it is the nearest thing to
 HC-T01 that exists anywhere. Its qualifications are real: the mutational-effect distribution is

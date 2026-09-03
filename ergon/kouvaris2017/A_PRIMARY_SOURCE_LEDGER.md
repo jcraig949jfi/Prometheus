@@ -43,7 +43,7 @@ Three recoveries carry the pass:
 | `PRIMARY_PREPRINT` | author-deposited, pre-review | arXiv 1508.06854 |
 | `PRIMARY_THESIS` | author's own extended record | Kouvaris PhD (Southampton), Kounios MPhil |
 | `PRIMARY_CODE` | author's implementation | three tarballs |
-| `ANCESTOR` | a work explicitly supplying a measure or method | Parter et al. 2008 |
+| `ANCESTOR` | a work explicitly supplying a measure or method | Parter et al. 2008 (article **and its Text S1**, the latter added 2026-09-03); Watson et al. 2016 |
 | `DESCENDANT` | later work in the same lineage | Kounios et al. arXiv 1612.05955; Kovács et al. 2020 |
 | `ACCESS_BLOCKED` | identified, could not retrieve | Watson et al. 2014 (Evolution, Wiley) |
 
@@ -117,9 +117,20 @@ never as "the paper is wrong".
 ## 7. Ancestors
 
 - **Parter M, Kashtan N, Alon U (2008)**, *Facilitated variation: how evolution learns from past
-  environments to generalize to new environments*, PLOS Comput Biol 4(11):e1000206. Recovered as PDF
-  and XML. Reference [34] of the specimen, and the explicit source of the adaptation-rate assay
-  ("as per [34]").
+  environments to generalize to new environments*, PLOS Comput Biol 4(11):e1000206. Reference [34] of
+  the specimen, and the explicit source of the adaptation-rate assay ("as per [34]").
+  **ARCHAEOLOGY MISS, CORRECTED 2026-09-03.** The first pass of this ledger recorded it as "recovered
+  as PDF and XML" and treated that as complete. **It was not.** Parter 2008 has a 3,024,384-byte
+  Word supplement, Text S1, with eleven sections, and §7 of it is titled *"Complete characterization
+  of the phenotypic neighborhood"*. I did not fetch it, and then asserted in
+  `J_DETECTOR_GENEALOGY.md` that this ancestor had no local-accessibility element. That assertion was
+  an inference from an incomplete recovery. Elenchus recovered Text S1 independently
+  (`elenchus/kashtan-alon-mvg/`, commit `397dc307f`) and caught the error; I then fetched the file
+  myself and my sha256 matches theirs byte for byte. The correction, with quotes, is
+  `J_DETECTOR_GENEALOGY.md` §4. **Lesson for the seat: "recovered the article" is not "recovered the
+  record". A supplement is where the detectors live — in this pass, three times over: the specimen's
+  own S1 carried the developmental equations and the post-hoc declaration, and the ancestor's Text S1
+  carried an entire accessibility experiment.**
 - **Watson RA, Wagner GP, Pavlicev M, Weinreich DM, Mills R (2014)**, *The Evolution of Phenotypic
   Correlations and "Developmental Memory"*, Evolution 68(4):1124–1138. Reference [25], and the
   direct source of the GRN model and the Hebbian account of B. **ACCESS_BLOCKED.** Wiley returned

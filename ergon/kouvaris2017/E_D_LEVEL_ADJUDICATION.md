@@ -14,8 +14,9 @@ Stated precisely, because the label alone is too blunt:
 > intervention is on selection rather than on the variation operator, and the acquisition link is
 > made at arm level after evolution rather than within runs.
 >
-> `HC_T01_HISTORICALLY_REDUNDANT` is **refused**, and §5 below lists the four ways this pass
-> nonetheless damages HC-T01.
+> `HC_T01_HISTORICALLY_REDUNDANT` is **refused**, and §5 below lists the FIVE ways this pass
+> nonetheless damages HC-T01 — the fifth added 2026-09-03 after another seat caught an error in my
+> own genealogy, and it is the most damaging of the five.
 
 ---
 
@@ -26,7 +27,7 @@ Stated precisely, because the label alone is too blunt:
 | `HC_T01_HISTORICALLY_REDUNDANT` | Kouvaris satisfies **none** of A-local, C-mechanism, D-within-run. Directive §7 asks whether the paper "actually satisfies" the one-step / operator-ablation / within-run statement. It satisfies no clause of it. |
 | `KOUVARIS_NOT_D4_D5` | Half-wrong, and I will not sign a half-wrong label. D4 as the directive defines it — *"longitudinal accessibility plus subsequent acquisition outcome"* — **is** met: Fig 3 is the longitudinal accessibility trajectory, Fig 5 is the subsequent acquisition outcome, and both are present per arm. Only D5 fails. |
 | `KOUVARIS_COMPLEMENTARY` | True but weaker than the evidence supports, and it buries the finding that matters. Complementarity is a *consequence* (recorded in `M_CANDIDATE_COMPUTATIONAL_PARTS.jsonl` and §19 of the review packet), not the headline. The headline is that on the axes the two experiments share, the 2017 design is the better one, and HC-T01 has to be re-justified against it. |
-| `MORE_ARCHAEOLOGY_REQUIRED` | Refused on evidence: the published article, its complete supporting information, the preprint, the author's PhD thesis, and **the author's own source code** were all recovered and hashed. The one access gap (Watson 2014) is not load-bearing. Further archaeology would not change any cell of the matrix. |
+| `MORE_ARCHAEOLOGY_REQUIRED` | Refused **for the specimen**, on evidence: its article, its complete supporting information, the preprint, the author's PhD thesis and **the author's own source code** were all recovered and hashed. The one access gap (Watson 2014) is not load-bearing. **But note what §5 item 5 records: more archaeology WAS required on an ANCESTOR, I did not do it, and another seat caught it.** That does not change a cell of the specimen's matrix; it changed a genealogy claim and it sharpened the HC-T01 conclusion. |
 | `SPECIMEN_NOT_RECONSTRUCTABLE` | Refused. The developmental equations, class construction, training set, fitness form, all four intervention values and the detector are exact. Seven ambiguities exist (`C_HISTORICAL_PHYSICS_SPEC.md` §10) and three are code-versus-paper contradictions, but a reconstruction can enumerate them; none blocks a rebuild. |
 
 ## 2. A noun problem that has to be fixed before the ladder is applied
@@ -79,7 +80,7 @@ it here as well means it is a property of this whole experimental family, not a 
 replicates unstated and the code showing no replicate loop, the between-arm difference in the
 longitudinal detector has no error term. A causal claim needs one.
 
-## 5. What this pass does to HC-T01 — four ways it is damaged, stated without hedging
+## 5. What this pass does to HC-T01 — five ways it is damaged, stated without hedging
 
 The directive said not to protect HC-T01. These are the findings that count against it.
 
@@ -112,6 +113,23 @@ The directive said not to protect HC-T01. These are the findings that count agai
    argument was built against Toussaint's corpus and its descendants; it has not been tested against
    this.** See `K_DESCENDANT_SEARCH.md` for the full scoring and for what Kounios still lacks.
 
+5. **The specimen's own direct ancestor had a LOCAL accessibility detector, published, in all arms,
+   with standard errors — nine years earlier — and the 2017 paper replaced it with a global sample.**
+   Added 2026-09-03 after Elenchus recovered Parter et al. 2008's Text S1, which this pass had failed
+   to fetch. Text S1 defines neutrality as *"the fraction of 1-mutant circuits that compute the same
+   Boolean function as the wild-type"*, over a 104-bit genome, so the one-mutant neighbourhood is
+   enumerated **exhaustively** rather than sampled; it also reports *"Maximal fitness (mean ± SE) for
+   G2 in the phenotypic neighborhood of evolved logic circuits"* and the modularity of neighbouring
+   circuits, across **all three** arms (FG / MVG / NBVG), *"Mean ± SE … for each scenario"*, over 30
+   simulations. Its arms are still goal schedules, so `C-mechanism` remains absent. But on **detector
+   locality** and on **statistical discipline** the lineage did not stall between 2008 and 2017 — **it
+   regressed**, and it regressed while citing the earlier paper.
+   Consequence: `A-local` is not merely buildable-but-unreported, as `computeM.m` showed. It was
+   **built, published, run in every arm, and reported with error bars in 2008**. HC-T01's residual
+   novelty shrinks accordingly, to `C-mechanism` plus a quantified within-run acquisition link, and
+   nothing else. Full detail and a recorded disagreement with Elenchus about whether the 2008
+   measurement was longitudinal: `J_DETECTOR_GENEALOGY.md` §4.
+
 ## 6. What survives for HC-T01
 
 After all four, the cell HC-T01 targets is still empty, and the reason is narrow and specific:
@@ -125,11 +143,16 @@ After all four, the cell HC-T01 targets is still empty, and the reason is narrow
 - The unreported `computeM.m` has the **local** detector, population-wide and same-probe, but it is
   **endpoint-only**, never longitudinal, and never inside an operator ablation.
 
-So the three ingredients — a **local** accessibility detector, run **inside all arms of a mechanism
-ablation**, related to acquisition **within runs** — exist separately in this lineage and have never
-been assembled. That is a real gap, it is much narrower than "nobody has measured accessibility
-longitudinally under an intervention", and it is now narrower than Herakles's own statement of it,
-because Herakles's statement did not know about Kounios or about `computeM.m`.
+- **Parter et al. 2008** has the **local, exhaustive** detector, **in all arms, with SE over 30
+  replicates** — but its arms are goal schedules, not a mechanism ablation, and on the evidence I
+  verified its neighbourhood measures are endpoint-per-arm.
+
+So the surviving gap is now only this: a **local** accessibility detector, run **inside all arms of a
+MECHANISM ablation** (not a goal schedule), related to acquisition **within runs and quantitatively**.
+Every other ingredient has been built, and most of them published. That is far narrower than "nobody
+has measured accessibility longitudinally under an intervention", and narrower than Herakles's own
+statement, which did not know about Kounios 2016, `computeM.m`, Petak 2025, Tiso 2024, or Parter 2008's
+Text S1.
 
 ## 7. The honest answer to directive §25
 

@@ -11,7 +11,7 @@ Directive:   ergon/kouvaris2017/PROMPT_KOUVARIS2017_2026-09-03.txt
 Specimen:    Kouvaris K, Clune J, Kounios L, Brede M, Watson RA (2017)
              "How evolution learns to generalise", PLOS Comput Biol
              13(4):e1005358
-Recovered:   18 artifacts, all hashed: published XML + PDF, the complete
+Recovered:   19 artifacts, all hashed: published XML + PDF, the complete
              Supporting Information, the arXiv preprint and its LaTeX
              source, the Kouvaris PhD thesis, the Kounios MPhil thesis,
              THREE AUTHOR SOURCE-CODE REPOSITORIES, two ancestors, four
@@ -25,6 +25,17 @@ every element HC-T01 claims is missing. HC-T01 survives, but its
 justification document is now wrong as written and must be rewritten
 before it runs.
 
+THIRD FINDING, added 2026-09-03, and the most damaging of all: the
+specimen's OWN DIRECT ANCESTOR published a local, exhaustive
+accessibility detector, in all three arms, with standard errors over
+thirty simulations, in 2008 -- and the 2017 paper replaced it with a
+uniform global sample. On detector locality and on statistical
+discipline this lineage REGRESSED between 2008 and 2017. This
+correction was forced by another seat catching an error in my own
+genealogy: I recovered Parter et al. 2008's article but never fetched
+its 3 MB Text S1, then asserted the ancestor had no local element.
+See sections 7d and 14.
+
 --------------------------------------------------------------------------------
 1. THE QUESTION PUT TO THIS PASS
 --------------------------------------------------------------------------------
@@ -34,7 +45,8 @@ relate it to subsequent acquisition, strongly enough to make HC-T01
 redundant?
 
 Answer: NO. But the reasons are not the ones the programme expected, and
-three of the findings below count AGAINST HC-T01.
+FOUR of the findings below count AGAINST HC-T01, one of them a correction
+to this pass forced by another seat.
 
 --------------------------------------------------------------------------------
 2. WHAT THE SPECIMEN ACTUALLY DID
@@ -156,7 +168,7 @@ Recorded because the directive forbids protecting HC-T01.
      Sobol set reused at every epoch and in every arm.
 
 --------------------------------------------------------------------------------
-7. THREE FINDINGS THAT DAMAGE HC-T01
+7. FOUR FINDINGS THAT DAMAGE HC-T01
 --------------------------------------------------------------------------------
 7a. AN A-LOCAL DETECTOR ALREADY EXISTED IN THIS LINEAGE AND WAS NEVER
     REPORTED. The recovered repository
@@ -226,23 +238,64 @@ Recorded because the directive forbids protecting HC-T01.
     present in Kouvaris too, and in Kounios. Any design where both
     readouts are functionals of one frozen map has it.
 
+7d. THE DIRECT ANCESTOR ALREADY PUBLISHED THE LOCAL DETECTOR, IN ALL
+    ARMS, WITH ERROR BARS, IN 2008. Added after correction. This is
+    the single most damaging finding in the pass.
+    Parter, Kashtan and Alon 2008 is reference [34] of the specimen and
+    the acknowledged source of its adaptation-rate assay. Its Text S1,
+    a 3,024,384-byte supplement whose section 7 is titled "Complete
+    characterization of the phenotypic neighborhood", contains:
+      - "Neutrality was defined as the fraction of 1-mutant circuits
+        that compute the same Boolean function as the wild-type (G1)."
+        The genome is 104 bits, so the one-mutant neighbourhood is
+        ENUMERATED EXHAUSTIVELY. There is no sampling error at all.
+      - "Maximal fitness (mean SE) for G2 in the phenotypic
+        neighborhood of evolved logic circuits", plus the modularity of
+        neighbouring circuits and the count of modular and non-modular
+        goals in that neighbourhood.
+      - In the RNA model a whole table of them: fraction of 1-mutant
+        neighbourhood preserving the phenotype, number of distinct
+        structures in it, average structural distance in it.
+      - Reported for ALL THREE arms, FG / MVG / NBVG, as "Mean SE ...
+        for each scenario", over 30 simulations (20 for RNA).
+    C-mechanism is still absent, because FG/MVG/NBVG are goal schedules
+    and the operator is held fixed across arms.
+    LONGITUDINALITY IS UNRESOLVED AND I RECORD A DISAGREEMENT rather
+    than adopt a reading. Elenchus's packet says the 2008 measurement
+    was made longitudinally and scores the paper D4-weak. The sentences
+    I read say "genomes from the end of the last G1-epoch population
+    were analyzed", which is endpoint per arm. Text S1 does contain a
+    section "Evolution of facilitated variation on a neutral network",
+    which may be what Elenchus read. Owed back to that seat, not
+    settled here.
+    CONSEQUENCE: A-local is not merely buildable-but-unreported, which
+    is all computeM.m showed. It was BUILT, PUBLISHED, RUN IN EVERY
+    ARM AND GIVEN ERROR BARS IN 2008, BY THE SPECIMEN'S OWN ANCESTOR.
+    HC-T01's residual cell shrinks to C-mechanism plus a quantified
+    within-run acquisition link, and nothing else.
+
 --------------------------------------------------------------------------------
 8. WHAT SURVIVES FOR HC-T01
 --------------------------------------------------------------------------------
-The three ingredients exist SEPARATELY in this lineage and have never
-been assembled with rigour:
+The ingredients exist SEPARATELY and most of them are published:
 
-  local detector .......... computeM.m (unreported), Petak 2025, Tiso
+  local detector .......... PARTER 2008 (published, exhaustive, all
+                            arms, mean SE, 30 sims), Petak 2025,
+                            Tiso 2024, computeM.m (unreported)
   mechanism ablation ...... Kounios 2016, Tiso 2024
   within-run acquisition .. Tiso 2024 (descriptive), Kounios (weak)
 
 No single work has all three QUANTITATIVELY, IN EVERY ARM INCLUDING THE
-CONTROL, WITH RUN-LEVEL UNCERTAINTY, under an on/off operator ablation,
-with a preregistered mechanical-effect null separating the definitional
-part of the arm difference from the evolved part.
+CONTROL, WITH RUN-LEVEL UNCERTAINTY, under an on/off MECHANISM ablation
+rather than a goal schedule, and with a preregistered mechanical-effect
+null separating the definitional part of the arm difference from the
+evolved part.
 
-That is a real cell. It is a METHODOLOGICAL-RIGOUR cell, not an
-unexplored-territory cell, and HC-T01 should say so.
+That is a real cell, but after the 7d correction it is a thin one. It is
+a METHODOLOGICAL-RIGOUR cell, not an unexplored-territory cell, and
+HC-T01 must say so. The honest one-line version: every element has been
+built, most have been published, and what is missing is the assembly
+under proper controls.
 
 --------------------------------------------------------------------------------
 9. FALSIFICATION QUESTIONS F1-F6
@@ -374,6 +427,16 @@ is the Kouvaris half. The two halves need each other.
 --------------------------------------------------------------------------------
 14. LIMITATIONS OF THIS PASS
 --------------------------------------------------------------------------------
+  - ARCHAEOLOGY MISS, SELF-REPORTED. I recovered Parter et al. 2008's
+    article as PDF and XML and treated that as complete. It was not: it
+    has a 3 MB Text S1 with eleven sections, one of them an entire
+    accessibility experiment. I then asserted in the genealogy that
+    this ancestor had no local element. That was an inference from an
+    incomplete recovery. Elenchus recovered Text S1 independently and
+    caught it; I then fetched the file myself and my sha256 matches
+    theirs byte for byte. Lesson recorded in the ledger: "recovered
+    the article" is not "recovered the record", and in this pass the
+    supplement was where the detector lived THREE times over.
   - Watson et al. 2014, the direct model ancestor, is PAYWALLED and was
     not read. Three routes tried, all refused. Not load-bearing: the
     Supporting Information reproduces the equations in full and the
@@ -445,19 +508,23 @@ KOUVARIS_STRONGER_BUT_DIFFERENT ............. YES
 Actions this implies, in order:
   1 REWRITE HC-T01's justification. Its missing-cell finding about
     Toussaint's own programme STANDS. Its wider claim about the
-    literature does not survive Tiso 2024, Petak 2025 and Kounios 2016.
+    literature does not survive Parter 2008 Text S1, Kounios 2016,
+    Petak 2025 or Tiso 2024.
   2 Re-justify HC-T01 against Kounios's replication standard and Petak's
     detector, not against Toussaint's corpus alone.
   3 Adopt the four stealable parts in section 11 before running.
   4 Treat the coupling hazard as a family-wide property, not a
     Toussaint-specific trap.
 
-Reviewer's bottom line: given that a local offspring detector, an on/off
-representational ablation, and a within-run acquisition link all exist
-separately in this lineage, and that one unpublished 2024 thesis chapter
-has all three in qualified form, is HC-T01 still worth running as a
-rigour-completing experiment, or should Prometheus instead reconstruct
-Kouvaris 2017 to calibrate its own detector against a known result?
+Reviewer's bottom line: given that an exhaustive local accessibility
+detector was PUBLISHED in all arms with error bars in 2008 by the
+specimen's own ancestor, that a representational on/off ablation with 30
+replicates existed by 2016, that a local longitudinal detector using the
+real operator was published in PNAS in 2025, and that one unpublished
+2024 thesis chapter has all four elements in qualified form -- is HC-T01
+still worth running as a rigour-completing experiment, or should
+Prometheus instead reconstruct Kouvaris 2017 to calibrate its own
+detector against a known result?
 ================================================================================
 END OF PACKET
 ================================================================================
