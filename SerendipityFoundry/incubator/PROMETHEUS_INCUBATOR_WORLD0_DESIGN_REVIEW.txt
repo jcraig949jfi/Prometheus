@@ -1,0 +1,1086 @@
+================================================================================
+  PROMETHEUS INCUBATOR -- WORLD-0 DESIGN REVIEW PACKET
+  The first SFE world intended to select for better ways of becoming intelligent
+
+  Author  : Daedalus (maintainer, Serendipity Foundry Engine)
+  Date    : 2026-09-02
+  Status  : FROZEN FOR EXTERNAL REVIEW. No campaign launched. No world built.
+  Scope   : architecture + experiment design + smallest defensible prototype
+            proposal, per charter section 17.
+================================================================================
+
+--------------------------------------------------------------------------------
+1. EXECUTIVE VERDICT
+--------------------------------------------------------------------------------
+
+                          BUILD_WITH_REVISIONS
+
+PROVENANCE OF THIS VERDICT: the design below was submitted to an independent
+adversarial review before this packet was written. That review found THREE FATAL
+ECONOMIC DEFECTS and FOUR FATAL METHODOLOGICAL DEFECTS in the first draft. All are
+incorporated. The reader should assume the first draft would have produced a
+degenerate world and an unfalsifiable headline claim, and that this revision is
+the result of trying hard to kill the design rather than to defend it.
+
+WHY NOT "BUILD": six revisions are load-bearing and BLOCKING. R1-R3 are economic
+and must be settled in the physics before a line of world code is written; R4-R6
+are methodological and must be settled before Campaign 1.
+
+  R1. CHARGE MUST ACTUALLY BE CONSERVED. The first draft claimed "one conserved
+      resource" and then paid organisms for accuracy -- from nowhere. That
+      unspecified mint makes DEPOSIT WASH TRADING dominant and, provably, NO
+      choice of cost parameters separates it from real prediction: a depositor
+      controls the entropy of its own channel, so it can always make itself
+      perfectly predictable, and any deposit cost high enough to forbid the
+      exploit also makes Layer 1 unusable. FIX: WORLD channels are the ONLY
+      exogenous source of charge (the "sun"); DEPOSIT channels pay predictors
+      solely out of an escrow the depositor funds. Wash trading then becomes
+      strictly negative-sum and self-eliminates with no detector, no anti-
+      collusion rule, and no semantic judgement. This single rule also closes
+      self-prediction, kin collusion, and the steganographic exploit (R2).
+
+  R2. PAY THE RESIDUAL, NOT THE ACCURACY. Any branching generator over an
+      instruction set puts most mass on near-trivial programs, and SEMANTIC
+      triviality exceeds syntactic triviality (deep programs collapse to
+      constants via dead code). Under raw-accuracy payout, "predict last value"
+      earns a larger share of the same payoff at lower step cost than any real
+      predictor -- so K0 fires on day one and "generator depth" is decoration.
+      FIX: payout is scaled by the residual against a FROZEN, MINIMAL,
+      engine-owned null battery (constant, last-value, first-difference,
+      period-p repeat); a channel the battery already predicts is worth ~0. Plus
+      behavioural reject-sampling: a candidate generator enters the channel
+      population only if the battery fails on it. This defines ZERO, not a
+      direction. The battery must stay MINIMAL or it becomes the authored ladder
+      of K2 in a new hiding place.
+
+  R3. DELETE THE FREE COMPUTE QUANTUM. The first draft granted a per-tick compute
+      quantum AND charged per VM step -- two resources, one priced. That produces
+      r-selection collapse, and worse, makes in-lifetime search free, which makes
+      the evolution arm and the random-search control PHYSICALLY IDENTICAL and
+      renders K6 unreachable by measurement. FIX: VM steps are BOUGHT from the
+      organism's own charge. A hard per-tick step ceiling remains as a
+      determinism bound -- a ceiling is not an allowance. This revision is a
+      deletion, not an addition.
+
+  R4. THE TECTONIC HYPOTHESIS IS PARTLY TAUTOLOGICAL AS FIRST STATED, and is not
+      falsifiable without four sealed pre-commitments and a coordinate partition.
+      Capability is defined by prediction residual; several proposed failure
+      coordinates (first-divergence index, residual structure) are monotone
+      functions of that same residual, so a finer-resolution readout of the
+      outcome would "precede" the outcome by construction. FIX: partition the
+      coordinates into CAPABILITY-COUPLED and CAPABILITY-DISJOINT, freeze the
+      partition by hash, and run the confirmatory test ONLY on the disjoint set.
+      See section 8. (Kill criterion K12.)
+
+  R5. THE HUMAN-PRIOR ARMS (H and X, charter section 9) ARE DEFERRED OUT of
+      World-0 on scientific, not scheduling, grounds: an LLM-seeded arm cannot be
+      compute-matched against a bytecode organism (K6) and imports exactly the
+      semantics the design excludes (K9). World-0 runs the P arm only, preserving
+      the interface. I am not convinced the H-vs-P comparison is well-posed at
+      all (section 18, A4).
+
+  R6. THE PROPOSED FIRST CAMPAIGN COULD NOT FIRE ITS OWN KILL CRITERIA. A
+      shakedown of fixed, non-evolving organisms cannot exhibit wash trading, kin
+      collusion, or r-selection -- those are things a POPULATION discovers -- so a
+      broken economy would have passed. FIX: Campaign 0 ships SCRIPTED ADVERSARY
+      ORGANISMS AS PLANTED POSITIVES, one per named exploit, and its success
+      condition is that the criteria DO fire on them. See section 17.
+
+A SEVENTH, NON-BLOCKING BUT IMPORTANT REVISION: "prediction pays" is itself an
+ontological choice we make on the organisms' behalf. Defensible, but not neutral,
+and section 18 says so out loud rather than hiding it.
+
+WHY NOT "NOT_READY": the substrate is unusually far along. The qualified GEN-2.1
+engine already supplies, as shipped capabilities, the machinery that this program
+would otherwise have to invent: hash-chained per-world ledgers and bit-exact
+reconstruction; fork-by-reference from checkpoints (the natural ablation
+primitive); lineage-scoped budgets that a fork cannot inflate (the compute-confound
+defence); first-class failures with explicit metabolization edges; an
+information-availability frontier query; policy-gated cross-world inheritance with
+registered consent; and evidence provenance classes that prevent a client
+assertion from being recorded as an engine-attested fact. Section 14 maps these
+precisely. The genuinely missing pieces are few and cheap (section 15).
+
+ONE-LINE SUMMARY: the instrument is closer to ready than the hypothesis is.
+
+--------------------------------------------------------------------------------
+2. WORLD-0 PRIMITIVE PHYSICS (LAYER 0, ENGINE-OWNED, IMMUTABLE)
+--------------------------------------------------------------------------------
+
+DESIGN STANCE: a synthetic microbial ecology, not a game. Ten primitive rules
+whose interaction generates surprise, rather than a thousand authored mechanics.
+
+P1. SUBSTRATE. A deterministic bytecode VM, descended from the already-qualified
+    stackvm-v1 lineage: fixed instruction set, no I/O, no syscalls, bounded steps
+    and memory, genotypes are INTERPRETED DATA and never host code. Determinism
+    is a promise the engine keeps, and it is the precondition for replay.
+
+P2. MEDIUM. The world contains CHANNELS. A channel emits a deterministic value
+    sequence. There are exactly two channel classes:
+      WORLD channels   -- the sequence is produced by a hidden generator program
+                          drawn from a compositional distribution over the same
+                          instruction set, at unbounded composition depth.
+                          INSTANCES are resampled; the DISTRIBUTION is stable.
+                          Therefore structural adaptation pays and instance
+                          memorization does not (this is the K1 defence, built
+                          into the physics rather than bolted on).
+      DEPOSIT channels -- emitted by organisms at a cost (see P7). Yesterday's
+                          successful strategy thereby becomes part of today's
+                          environment, which is the endogenous curriculum
+                          mechanism of charter section 7.
+
+P3. TIME. Discrete ticks, two-phase (see P11). No wall-clock dependence anywhere.
+    THERE IS NO COMPUTE ALLOWANCE. VM steps are BOUGHT from the organism's own
+    charge at a fixed rate. A hard per-tick step ceiling exists purely as a
+    determinism/termination bound; a ceiling is not an allowance (revision R3).
+    Consequence: "thinking harder" is directly costly, in-lifetime search is not
+    free, and the evolution arm is not physically identical to random search.
+
+P4. RESOURCE. ONE genuinely conserved quantity: CHARGE. No second currency, no
+    scalar "intelligence score." Conservation is enforced, not asserted (P9).
+
+P5. THE CORE INTERACTION. An organism ATTACHES to a channel and emits exactly k
+    predicted values. Extra or missing output is a typed fault, never partial
+    credit. Payout is a graded distance function MULTIPLIED BY the channel's
+    residual weight (P10) -- graded so that search has a gradient to climb,
+    residual-weighted so that trivial channels are worth approximately nothing.
+
+P6. COSTS. Charge is consumed by: VM steps; per-tick persistence; attaching;
+    funding a deposit's escrow; and reproducing. Viability is a charge-balance
+    property, never a score the engine awards.
+
+P7. CONSTRUCTION. An organism may deposit a reusable arrangement of primitives
+    that others may invoke at a cost. The engine adjudicates EFFECT, never
+    meaning: there is no TOOL, LIBRARY, ALGORITHM, LANGUAGE or STRATEGY concept
+    anywhere in the engine. Invocation fees are PURE TRANSFERS under conservation
+    (P9), so collusive invocation is zero-sum minus fees and self-eliminates.
+
+P8. LOCALITY (deferred). World-0 v1 has no spatial locality. Not needed to test
+    the hypothesis; it multiplies the state space. Deferred unless review objects.
+
+P9. CONSERVATION -- THE LOAD-BEARING RULE (revision R1).
+    (a) WORLD channels are the ONLY exogenous source of charge. Each injects a
+        FIXED budget per tick -- "the sun." Nothing else creates charge.
+    (b) That budget is RIVALROUS: it is split among the organisms attached to
+        that channel in proportion to their residual-weighted accuracy share. So
+        being the BEST predictor of a channel matters, not merely an adequate one.
+    (c) DEPOSIT channels create NO charge. They pay their predictors solely from
+        an ESCROW that the depositing organism funds out of its own charge, and
+        they carry per-tick upkeep drawn from that same escrow. Escrow empty =
+        the deposit stops paying and is evicted.
+    Consequences, obtained without a single anti-cheating rule: mutual-prediction
+    wash trading is strictly negative-sum; self-prediction is pure loss; kin
+    collusion between clones cannot mint; a steganographic channel (two clones
+    sharing a PRNG seed, maximally "surprising" to the null battery) extracts at
+    most what its depositor funded, minus fees; and channel spam is bounded
+    because persistence must be paid for. Persistence of a deposit therefore IS
+    evidence of ongoing funding, which is exactly the property that makes
+    cross-generational epistemic inheritance meaningful rather than free.
+
+P10. RESIDUAL WEIGHTING AND THE NULL BATTERY (revision R2).
+    A channel's payout is scaled by how badly a FROZEN, MINIMAL, engine-owned
+    null battery predicts it. The battery is deliberately tiny -- constant,
+    last-value, first-difference, and period-p repeat for small p -- and is
+    frozen, hashed and preregistered. A channel the battery already predicts is
+    worth ~0, which prices the generator's trivial head out of the economy and
+    removes anything worth "attach-shopping" for.
+    Additionally, a candidate generator is admitted to the channel population
+    only if the battery FAILS on its output (behavioural reject-sampling). The
+    preregistered claim then becomes "the CONDITIONED generator distribution is
+    stable," and the rejection rate is logged.
+    *** THIS IS THE MOST DANGEROUS COMPONENT IN THE DESIGN. A rich battery would
+    mean the world pays for "beat these specific human-chosen model classes,"
+    relocating the authored ladder (K2) into the reward function where it is
+    harder to see. The battery must stay minimal, frozen, and adversarially
+    reviewed. ***
+
+P11. TWO-PHASE TICK WITH SIMULTANEOUS SETTLEMENT.
+    Because payout is rivalrous, sequential settlement would make an organism's
+    charge depend on iteration order, silently destroying the bit-exact replay
+    that K8 exists to guarantee. Phase 1 evaluates every organism's predictions
+    against the tick's channel values, moving no charge. Phase 2 settles all
+    transfers from that snapshot under a canonical ordering. Replay determinism
+    is a physics property, not an implementation detail.
+
+P12. ABSTENTION IS A FIRST-CLASS TYPED INTERACTION (see section 7).
+    Every fix above makes acting expensive, which selects for organisms that fail
+    less by attempting less -- and a non-attempt would emit no failure vector at
+    all. That would deform the PRIMARY OBSERVABLE for purely economic reasons.
+    Therefore non-attachment and attach-then-no-output emit coordinate records of
+    their own. We instrument the dog that did not bark.
+
+P10. NO PRIVILEGED FORM. The engine never inspects an organism's internals, never
+     rewards legibility, and never prefers one representation to another.
+
+WHY THIS HAS DEPTH RATHER THAN DIFFICULTY (charter section 6 / question 10):
+difficulty would be a bigger number; depth is a change in what is exploitable.
+Here, mastering shallow channel structure raises charge surplus, which funds
+attachment to deeper channels and deposit emission, which creates new
+regularities for others to exploit, which changes the payoff of modelling
+machinery. The ladder is not encoded; it is a consequence of a compositional
+generator meeting a charge economy.
+
+*** THE CENTRAL DESIGN RISK, STATED PLAINLY: this depth claim is an ASSUMPTION,
+not a result. If the generator distribution has a thin tail of exploitable
+structure -- if deep compositions look statistically like noise -- then there is
+no ladder to climb and World-0 is a difficulty world wearing a depth costume.
+Testing this is the primary job of Campaign 0. See sections 17 and 18. ***
+
+--------------------------------------------------------------------------------
+3. ORGANISM / CLIENT INTERFACE
+--------------------------------------------------------------------------------
+
+WHAT AN ORGANISM IS (question 2): a genotype (VM program, content-addressed), a
+charge balance, a lineage identity, a generation index, and whatever internal
+state it maintains between ticks within its own memory bounds. It is nothing else.
+The engine has no model of its beliefs, goals, or strategy.
+
+WHAT IT CAN OBSERVE (question 3), all costed:
+  * the value history of channels it is attached to, up to a bounded window
+  * a channel's public descriptor: id, class, age, current attach count
+    (NOT its generator, NOT its depth -- depth is an analysis coordinate, never
+    an observation, or we would be handing out the difficulty label)
+  * its own charge and remaining quanta
+  * the identifiers of deposits legally available to it
+Nothing else. In particular: no aggregate leaderboard, no other organism's
+internals, no engine telemetry, and no analysis products. Telemetry is for the
+scientist; it must never become advice to the organism.
+
+WHAT IT CAN DO (question 4): ATTACH, PREDICT, DEPOSIT, INVOKE (a deposit),
+REPRODUCE, and idle. That is the entire action set. Six verbs.
+
+BOUNDARY DISCIPLINE (charter section 1): the engine answers "what happened";
+the organism answers "what does it mean and what next." Any feature that would
+have the engine suggest, rank, score, or explain is rejected by construction.
+
+A NOTE ON A CATEGORY ERROR WE MUST NOT MAKE: SFE already has an epistemic
+protocol in which the RESEARCHER registers prospective predictions before an
+experiment commits. World-0 organisms also "predict." THESE ARE DIFFERENT LAYERS
+AND MUST NEVER BE CONFLATED. Organism prediction is world physics. Researcher
+prediction is the scientific protocol governing our claims about the world. The
+packet keeps them lexically distinct throughout.
+
+--------------------------------------------------------------------------------
+4. RESOURCE AND SELECTION MODEL
+--------------------------------------------------------------------------------
+
+SELECTION IS MINIMAL-CRITERION, NOT FITNESS-PROPORTIONAL. An organism that holds
+charge above a viability floor for a required interval may reproduce; it is not
+ranked against a global best. Rationale: fitness-proportional selection in a small
+coevolving world reliably converges to one narrow strategy (kill criterion K3),
+and Minimal Criterion Coevolution exists in the literature precisely because of
+this failure mode. A minimal criterion preserves ecological breadth, which is the
+substrate on which failure geometry is even definable.
+
+FITNESS IS NOT A FIELD. There is no fitness column. Viability is derived: did the
+organism maintain positive charge balance, and did it reproduce? Everything else
+is analysis.
+
+RIVALROUS PAYOUT. The per-tick world charge budget is finite and shared across
+attached organisms, so being the best predictor of a channel matters more than
+being an adequate predictor of everything.
+
+COMPUTE ACCOUNTING IS THE SAME CURRENCY AS SURVIVAL. Because charge is spent per
+VM step, "thinking harder" is directly costly. This makes the compute-confound
+control (K6) native rather than retrofitted: capability comparisons are reported
+at equal total steps and equal quanta, and the engine's lineage-scoped budgets
+already guarantee a fork cannot mint fresh compute.
+
+--------------------------------------------------------------------------------
+5. REPRODUCTION / MUTATION / INHERITANCE
+--------------------------------------------------------------------------------
+
+RECOMMENDED FOR v1: yes, but minimal.
+
+  REPRODUCTION  asexual, costed, produces a child genotype from the parent under
+                a mutation operator. Parentage is recorded as a lineage edge.
+  MUTATION      point substitution, insertion, deletion, and duplication of
+                instruction subsequences. Duplication matters: gene duplication
+                is one of the few mechanisms with real evidence for creating
+                material for new function without an authored ladder.
+  RECOMBINATION deferred to v2 unless review objects. It adds a second population
+                structure and its own confounds.
+
+TWO INHERITANCE CHANNELS (charter section 8), kept mechanically separate so that
+either can be ablated independently:
+  A. ORGANISMIC  the genotype, transmitted at reproduction.
+  B. EPISTEMIC   deposits that persist beyond the depositor's lifetime and remain
+                 legally available to descendants and (subject to policy) others.
+
+THE SEPARATION IS THE POINT. The no-epistemic-inheritance control (section 11)
+disables B while leaving A intact. If capability is unchanged, kill criterion K7
+(inheritance theater) fires and the cumulative-culture story dies. That is a
+result worth having.
+
+WE DO NOT CALL DEPOSITS THEOREMS, TOOLS, OR KNOWLEDGE. They are arrangements of
+primitives with measurable effects. Naming them would be the first step toward
+scoring them.
+
+--------------------------------------------------------------------------------
+6. CONSTRUCTIBLE-WORLD MODEL (LAYER 1)
+--------------------------------------------------------------------------------
+
+A deposit is: a content-addressed program fragment, an invocation cost, an
+emitting lineage, and an availability record. The engine enforces invocation
+bounds (including a recursion/expansion limit, which is both a physics rule and a
+containment rule) and nothing else.
+
+DEPOSITS ARE SIMULTANEOUSLY: an epistemic-inheritance vehicle (section 5B); an
+ecological modification, because a deposit channel changes what others face; and
+the primary object of causal ablation (section 9).
+
+DEPOSIT VISIBILITY IS POLICY-GATED, reusing the engine's existing sharing
+topology: within a lineage by default; across lineages only through an explicit,
+registered, bilateral group. This is what makes "no epistemic inheritance,"
+"lineage-only inheritance," and "open inheritance" three configurable treatment
+arms rather than three code branches.
+
+--------------------------------------------------------------------------------
+7. FAILURE-COORDINATE SCHEMA (THE PRIMARY SCIENTIFIC PRODUCT)
+--------------------------------------------------------------------------------
+
+Normative definition: incubator/failure_coordinate_schema.v0.json (machine
+readable, versioned, shipped with this packet).
+
+PRINCIPLE: failure is never "success = false." Every externally observable
+unsuccessful interaction emits a COORDINATE VECTOR carrying: world/tick/ledger
+anchor; organism, lineage, generation, ancestor-path hash; ENGINE identity and
+WORLD-PHYSICS identity; the interaction context (channel class, generator depth,
+generator hash, age, contention, and for deposits the ORIGIN LINEAGE); the
+resource state at failure; a coarse outcome class; and then the actual geometry --
+VM fault code with program counter and composition DEPTH, or prediction miss with
+correct-prefix length, first divergence index, and residual structure.
+
+FRONTIER MARKERS. Each record carries a discretized region_id plus
+lineage-first-encounter and population-first-encounter flags. This is the
+instrument for the charter's key insight that a MORE capable organism may look
+worse because it has reached states where new things can fail. Novel failure is
+preserved as candidate evidence of frontier expansion and is never suppressed,
+downsampled, or aggregated away.
+
+DISAPPEARANCE VS METABOLIZATION (charter section 12). The seven causes are
+separated as follows:
+  solved                  -> same region still reachable, now succeeded
+  avoided                 -> region no longer entered though still reachable
+                             (requires the reachability probe, section 9)
+  environment changed     -> generator/deposit population shifted; detectable
+                             from channel provenance
+  niche abandoned         -> lineage attachment distribution moved
+  pressure removed        -> competitor lineage extinct
+  representation changed  -> coordinate no longer applies; SEE SECTION 18, THIS
+                             IS THE HARDEST CASE AND WE DO NOT FULLY SOLVE IT
+  measurement broke       -> replay audit fails (K8)
+The engine already models the "metabolized" case explicitly: a failure can be
+recorded as CONSUMED_BY a downstream object, as a CLAIMED reference that does not
+by itself assert usefulness. World-0 inherits that discipline unchanged.
+
+--------------------------------------------------------------------------------
+8. FAILURE-TOPOLOGY ANALYSIS PROPOSAL
+--------------------------------------------------------------------------------
+
+THE HYPOTHESIS UNDER TEST: changes in failure topology PRECEDE measurable
+capability transitions.
+
+THIS IS THE MOST DANGEROUS ANALYSIS IN THE PROGRAM, because the failure landscape
+is high-dimensional, we will have many candidate statistics and many windows, and
+we very much want the answer to be yes. Left uncontrolled, something will always
+appear to precede something. Discipline is therefore mandatory, and is enforced
+as kill criterion K12.
+
+ADVERSARIAL REVIEW FOUND FOUR FATAL DEFECTS IN THE FIRST VERSION OF THIS ANALYSIS.
+Each would have GUARANTEED A POSITIVE RESULT UNDER THE NULL. They are listed
+first because they constrain everything after.
+
+  D1. DEFINITIONAL COUPLING (the hypothesis was partly tautological).
+      Capability is defined by prediction residual. But "first-divergence index"
+      and "residual structure" are monotone functions of THAT SAME RESIDUAL. A
+      finer-resolution readout of a quantity necessarily moves before a coarse
+      threshold on the same quantity is crossed. We would have "discovered" that
+      a thermometer precedes a fever.
+      MANDATORY FIX: partition every failure coordinate, BEFORE any analysis,
+      into CAPABILITY-COUPLED (any function of prediction residual on channels
+      the capability metric reads) and CAPABILITY-DISJOINT (VM fault class,
+      fault depth, attachment/abstention structure, resource state, channel
+      provenance). Freeze the partition by content hash. THE CONFIRMATORY TEST
+      RUNS ONLY ON THE DISJOINT SET. Coupled coordinates are exploratory only.
+
+  D2. SAMPLING-INTENSITY CONFOUND. Failure vectors are emitted per interaction,
+      and interaction count is itself under selection (more charge -> more
+      attachments). A lineage approaching a transition is therefore SAMPLED MORE
+      DENSELY by construction, and every topology statistic named in the charter
+      -- clustering, density, boundary movement, basin counts -- is sample-size
+      sensitive. We would measure our own sampling rate.
+      MANDATORY FIX: rarefaction. Every topology statistic is computed on exactly
+      n0 interactions subsampled uniformly per lineage-window, n0 fixed in the
+      prereg; windows with fewer than n0 interactions are dropped, not padded.
+
+  D3. UNIT-OF-ANALYSIS INFLATION. One long run is n=1 for any population-level
+      claim. Organisms under minimal-criterion selection are near-clonal and
+      strongly correlated; lineages share ancestry; generations are serially
+      dependent. Treating organisms or generations as replicates would inflate
+      significance by orders of magnitude.
+      MANDATORY FIX: the independent RUN (independent world seed) is the unit of
+      analysis for population-level claims; the transition EVENT is the unit for
+      the precursor claim. A pilot establishes the transition base rate and is
+      DISCARDED from the confirmatory analysis. If the affordable number of
+      independent runs is too small to support the claim, we say so and do not
+      make the claim.
+
+  D4. "PRECEDES" HAD NO PRE-COMMITTED STATISTIC, WINDOW, OR CAPABILITY VARIABLE,
+      and "failure topology" is undefined without a supplied embedding, metric,
+      clustering algorithm and resolution -- each a free parameter. Three free
+      parameters make the claim satisfiable by construction.
+      MANDATORY FIX: pre-commit exactly one of each, by content hash.
+
+REQUIRED PRE-COMMITMENTS, SEALED VIA THE ENGINE'S IRREVERSIBLE EXPERIMENT-COMMIT
+BOUNDARY BEFORE CAMPAIGN 1 (this is precisely what that boundary is for):
+  (a) EMBEDDING E: fixed and NOT learned -- one-hot VM fault class, rarefied
+      fault-depth histogram over fixed bins, binned channel-generator depth,
+      binned charge decile, and abstention rate. All CAPABILITY-DISJOINT by
+      construction (D1).
+  (b) PRIMARY STATISTIC: occupancy-boundary flux on E -- the rate at which the
+      occupied region set gains cells adjacent to previously occupied cells while
+      losing interior cells. Exactly one statistic. Computed under rarefaction.
+  (c) CAPABILITY-TRANSITION DETECTOR: a sustained step change in
+      interactions-to-criterion on HELD-OUT channel families, compute-matched.
+  (d) LEAD-TIME WINDOW W: named before data is seen.
+  (e) THRESHOLD and DECISION RULE, stated as a single test.
+
+NULL MODELS (all six required; each breaks exactly one dependency and preserves
+the rest): circular BLOCK permutation within lineage, with block length at least
+twice the measured integrated autocorrelation time; lineage-label shuffle;
+time-offset shuffle; a NEUTRAL-DRIFT arm using the same mutation operator and
+channel population but no selection; a compute-matched random-search arm; and a
+rarefaction-only arm that holds sampling constant while removing selection.
+RATIONALE: evolutionary series are strongly autocorrelated. For two independent
+AR(1) series at autocorrelation 0.9, effective sample size for cross-correlation
+falls to roughly n/10 -- so naive lead-lag testing inflates type-I error about
+tenfold. Bonferroni is the WRONG correction here; the correct null is a
+MAX-STATISTIC null over the whole search space actually searched.
+
+CONFIRMATORY VS EXPLORATORY, SPLIT IN THE PREREG WITH DIFFERENT RULES:
+  CONFIRMATORY -- exactly one statistic, one capability variable, one window, one
+    threshold: a single test on capability-disjoint coordinates.
+  EXPLORATORY -- clustering, density, basins, fractures, bottlenecks, ridges, and
+    all capability-coupled coordinates. Reported as exploratory, evaluated
+    against a max-statistic null over the full enumerated search space, and
+    permitted to generate World-1 hypotheses ONLY. They may never support a
+    World-0 claim. Enumerating honestly, this space is tens of thousands of
+    tests; pretending otherwise is how programs like this fool themselves.
+
+ONE FURTHER TRAP, RECORDED: the NOVEL-REGION flag is a first-passage functional
+of a lineage's own path. Any exploring process -- including a pure random walk
+under no selection -- shows elevated first-passage rates before a subsequent
+path record, as a near-mathematical identity. The raw novel-region rate must
+NEVER be used as a precursor. Only its RESIDUAL against the matched
+neutral-drift arm may be used.
+
+COMPARATORS (charter section 20): the primary statistic must be evaluated against
+aggregate fitness, success rate, resource efficiency, behavioural novelty, and
+lineage diversity, plus Bedau-style evolutionary activity. The question is not
+"does failure topology move" -- it will. The question is whether it moves EARLIER
+or MORE INFORMATIVELY than cheap conventional metrics. If it does not, we revise
+or kill the hypothesis and publish that.
+
+COMPARATORS (charter section 20): the primary statistic must be evaluated against
+aggregate fitness, success rate, resource efficiency, behavioural novelty, and
+lineage diversity. The question is not "does failure topology move" -- it will.
+The question is whether it moves EARLIER or MORE INFORMATIVELY than the cheap
+conventional metrics. If it does not, we revise or kill the hypothesis and say so.
+
+--------------------------------------------------------------------------------
+9. REPLAY AND CAUSAL-ABLATION DESIGN
+--------------------------------------------------------------------------------
+
+REPLAY. Every episode is addressed by (genotype_addr, world_seed, episode_seed,
+deposit_closure_hash, world_physics_hash, engine_source_hash). Re-execution must
+reproduce the recorded result hash and the recorded failure coordinate bit-exactly.
+Divergence tolerance on the deterministic sample is ZERO (K8).
+
+ABLATION uses machinery the engine already has, which is the single strongest
+argument that this program is buildable:
+  * CHECKPOINT + FORK-BY-REFERENCE gives counterfactual branching in which the
+    child shares the parent's immutable event prefix and cannot mutate it. The
+    "with X" and "without X" arms are two forks of one checkpoint, so they share
+    an identical, verifiable past.
+  * THE INFORMATION-AVAILABILITY FRONTIER QUERY gives, for any world and any
+    ledger sequence, the set of information identities that were LEGALLY
+    AVAILABLE at that point -- explicitly not what was read, used, or causally
+    responsible. That distinction is exactly the one this program needs, and it
+    is already implemented and tested.
+  * RESTRICTED-CLOSURE FORK (the one genuinely new ablation primitive, P0 item 3
+    in section 15): fork a world at a checkpoint with the deposit closure
+    restricted to exclude a nominated structure X, holding genotype and seeds
+    fixed.
+
+THE TARGET EVIDENCE SHAPE:
+    replay descendant D with X            -> capability C
+    replay descendant D without X         -> capability C absent or degraded
+    remove X1 upstream                    -> X2, X3 fail to arise
+                                          -> C disappears
+That is an epistemic dependency chain, and it is categorically stronger than a
+correlation between generation number and performance.
+
+MEASURED ON ABLATION: capability loss, failure-landscape reversion (does the
+occupied region set revert to an ancestral configuration?), search-cost increase,
+lost reachable states, and adaptation-rate change.
+
+--------------------------------------------------------------------------------
+10. L0-L3 OPERATIONAL DEFINITIONS
+--------------------------------------------------------------------------------
+
+L0 ADAPTATION. Within a fixed channel family and fixed world configuration, a
+   lineage's charge balance and predictive accuracy improve across generations.
+   EVIDENCE: improvement significant against a compute-matched random-search
+   control. NOT SUFFICIENT FOR ANYTHING. A spectacular L0 organism is a
+   spectacular game player.
+
+L1 TRANSFER. Machinery acquired under channel family A improves performance on a
+   distinct but structurally related family B, relative to a lineage of matched
+   compute and matched generation that never saw A.
+   EVIDENCE: held-out family performance, matched controls.
+
+L2 EVOLVABILITY. Acquired machinery REDUCES THE COST OF ACQUIRING FUTURE
+   CAPABILITY: interactions-to-criterion on novel families falls for descendants
+   carrying X and does not fall for matched descendants without X.
+   EVIDENCE: requires the ablation of section 9, compute-matched. This is the
+   beginning of the phenomenon Prometheus cares about.
+
+L3 EPISTEMIC TRANSITION. A new structure makes a previously INACCESSIBLE class of
+   capability reachable -- not merely cheaper. Operationally: a region of the
+   channel-depth/structure space with zero successful occupancy across all
+   lineages and all compute budgets before X, and non-trivial occupancy after,
+   with the dependency established by removal.
+   EVIDENCE: reachability, not rate. Requires the strongest ablation.
+
+CLAIM DISCIPLINE: L2 and L3 may NEVER be claimed from behavioural impression,
+from a suggestive plot, or from a narrative. Counterfactual evidence or no claim.
+
+--------------------------------------------------------------------------------
+11. TREATMENT / CONTROL MATRIX
+--------------------------------------------------------------------------------
+
+  ARM                       WORLD DYNAMICS  CLIENT EVOL  EPISTEMIC INHERIT.  PURPOSE
+  ------------------------  --------------  -----------  ------------------  -------
+  T0 baseline                    on             on              on           main arm
+  C1 static world                OFF            on              on           is ecology
+                                                                             load-bearing?
+  C2 frozen client               on             OFF             on           is adaptation
+                                                                             organismic?
+  C3 no epistemic inherit.       on             on              OFF          K7 test
+  C4 shuffled ancestry           on             on         volume kept,      is the DAG
+                                                           links broken      causal?
+  C5 compute-matched             on             on              on           K6 test
+  C6 history ablation            on             on         discoveries       does history
+                                                           removed           matter?
+  C7 random artifact             on             on         matched           is it THESE
+                                                           irrelevant        artifacts?
+  C8 random-search null          n/a          random          n/a            floor for all
+                                                                             claims
+
+MANDATORY ADDITION -- THE L2 IDENTIFIABILITY FACTORIAL. Adversarial review found
+that L2 as first specified is UNIDENTIFIABLE from simple environmental
+accumulation: a descendant may acquire faster because the MEDIUM accumulated
+useful deposits, not because the LINEAGE acquired machinery. Both produce "later
+acquisitions are cheaper," and the second is the more likely outcome. These are
+entirely different claims and the first draft conflated them.
+
+  2x2 TRANSPLANT FACTORIAL (preregistered):
+                          | deposit-RICH medium | deposit-STRIPPED medium
+    evolved descendant    |         A           |          B
+    naive organism        |         C           |          D
+  ORGANISMIC component = B - D   (lineage machinery, medium held empty)
+  ENVIRONMENTAL component = C - D (medium alone, lineage held naive)
+  INTERACTION = A - B - C + D    (machinery that only pays given the medium)
+An L2 claim requires a non-zero ORGANISMIC component. Reporting only (A - D) --
+which is what the first draft would have measured -- proves nothing.
+
+DEFERRED ARMS (interface preserved, not run in World-0): H (human/frontier-model
+derived primitives), C (conventional computational primitives), X (alternative or
+evolved non-human seed). World-0 runs P (primitive substrate) only. See section 18
+for why this is a scientific judgement and not a scheduling one.
+
+NOT ALL CONTROLS SHIP IN v1. The architectural requirement is that none of them is
+made IMPOSSIBLE by a v1 decision. C8 and C5 are required for Campaign 1; the rest
+may follow.
+
+--------------------------------------------------------------------------------
+12. PREREGISTERED KILL CRITERIA
+--------------------------------------------------------------------------------
+
+Normative file: incubator/WORLD0_KILL_CRITERIA.prereg.txt (K0-K12, with a
+two-stage freeze protocol and an explicit anti-gaming rule that a criterion may be
+tightened but never loosened after data is seen).
+
+K0 trivial policy  *  K1 memorization  *  K2 authored-ladder leakage  *  K3 scalar
+collapse  *  K4 novelty without utility  *  K5 fitness without evolvability  * 
+K6 compute confound  *  K7 inheritance theater  *  K8 non-reconstructability  * 
+K9 semantic contamination  *  K10 containment failure  *  K11 economic degeneracy
+(added: closed deposit-to-deposit charge loops)  *  K12 tectonic hypothesis not
+testable as stated (added: the pre-commitment requirement of section 8)  * 
+K13 unit-of-analysis inflation (added: run is the replicate; too few independent
+runs means no claim)  *  K14 survivorship and regression-to-mean in L2 estimates
+(added: acquisition cost measured only over surviving lineages is biased downward
+exactly where L2 is claimed; requires a survival model with lineage frailty and
+explicit censoring, never a mean over survivors).
+
+ACCEPTED CRITICISM OF THIS PACKET'S OWN PREREG: adversarial review observed that
+the kill criteria as first drafted were NAMES, NOT DECISION RULES -- and a
+criterion with no estimator, null and threshold cannot fire, so the shakedown
+would trivially report that nothing fired. Before Campaign 0 every criterion must
+carry a FIVE-TUPLE: statistic, estimator, null model, numeric threshold, data
+source. That requirement is now recorded in the prereg file, and the planted-
+positive design of section 17 exists to validate that each criterion actually
+fires when it should.
+
+Kill criteria are frozen and hashed into the ledger BEFORE Campaign 1. Campaign 0
+exists partly to calibrate Stage-B thresholds and may not be used to argue a
+criterion away. A criterion may be tightened after data is seen; never loosened.
+
+--------------------------------------------------------------------------------
+13. CONTAINMENT MODEL
+--------------------------------------------------------------------------------
+
+Organisms are INTERPRETED DATA inside a bounded VM. They have no access to
+networking, filesystem, shells, subprocesses, host processes, credentials, host
+executable formats, persistence outside the engine, or any host API. No
+instruction can generate, load, or evaluate host code; there is no JIT and no
+escape hatch to native execution. Steps, memory, deposit invocation depth, and
+output size are all bounded, and exceeding a bound is an ordinary, recorded
+physics fault rather than an error condition.
+
+Their capabilities are meaningful inside their universe and useless outside it.
+This is treated as foundational: K10 is zero-tolerance and triggers immediate
+program halt and disclosure, not a bug ticket.
+
+A NOTE ON THE LITERATURE: this work draws conceptual lessons from digital
+evolution and host-parasite coevolution research. It does not and must not
+produce anything resembling self-replicating code with host-level effect. The
+self-replication in World-0 is replication of interpreted data within an
+engine-owned population structure -- categorically different from Tierra-style
+replication in a shared machine-code address space, and deliberately so.
+
+--------------------------------------------------------------------------------
+14. EXISTING SFE CAPABILITY MAPPING (WHAT WE DO NOT NEED TO BUILD)
+--------------------------------------------------------------------------------
+
+Verified against the shipped GEN-2.1 engine (45 public runtime methods, 32 ledger
+event types), not from memory.
+
+  CHARTER REQUIREMENT                    ALREADY PROVIDED BY THE ENGINE
+  -------------------------------------  --------------------------------------
+  world identity, chronology, isolation  worlds with lifecycle + per-world
+                                         hash-chained ledgers; deny-by-default
+                                         cross-world isolation
+  authoritative state, "what happened"   engine-owned event ledger; observations
+                                         carry an EVIDENCE CLASS separating an
+                                         engine-attested result from a client
+                                         assertion (directly enforces the
+                                         charter's section 1 boundary)
+  reconstruction / reproducibility (K8)  chain verification + content-addressed
+                                         artifacts + deterministic seeds
+  resource accounting (K6)               per-world AND lineage-root budgets; a
+                                         fork CANNOT mint fresh budget
+  causal ablation branching (section 9)  checkpoint + fork-by-reference, sharing
+                                         an immutable event prefix
+  epistemic-inheritance frontier         the information-availability query:
+  (sections 8, 12; controls C3/C6)       what was LEGALLY AVAILABLE at seq N,
+                                         explicitly not read/used/causal
+  controlled inheritance channels        policy-gated sharing with REGISTERED,
+  (arms C3/C6/C7)                        unguessable bilateral consent groups;
+                                         imports keep permanent provenance and
+                                         cannot be transitively re-exported
+  first-class failures (section 10)      failure records with typed context
+  failure metabolization (section 12)    explicit CONSUMED_BY edges, recorded as
+                                         a CLAIMED reference that does not by
+                                         itself assert usefulness
+  lineage / ancestry (section 14)        lineage edges + ancestor/descendant walk
+  experiment commitment discipline       irreversible commit boundary that closes
+  (sealing the section 8 pre-commitments)the prospective-prediction window BEFORE
+                                         execution is possible
+  analysis-instrument integrity          versioned measurement registry: an
+                                         oracle cannot be silently replaced
+  release identity on every result       build-derived engine hash on every
+                                         response and stamped into every commit
+
+ASSESSMENT: the ablation, provenance, reproducibility and inheritance-control
+machinery -- normally the hardest part of a program like this -- is already built,
+qualified, and adversarially tested. What is missing is the WORLD, not the
+laboratory.
+
+--------------------------------------------------------------------------------
+15. REQUIRED SFE CHANGES, RANKED
+--------------------------------------------------------------------------------
+
+P0 -- NECESSARY (World-0 is not scientifically usable without these)
+
+  P0.1  ACTOR ATTRIBUTION ON EVERY RECORD. Every ledger record touching an
+        organism must carry organism_id, lineage_id and generation. NOT NULL,
+        enforced.
+        DIRECT LESSON FROM THE WOW-0 FORENSIC SURVEY (2026-09-02): in the earlier
+        instrument, operator_id was null throughout, so the reported "player A
+        borrowed player B's operator" event was NOT CORROBORABLE from the server
+        record. Without attribution there is no lineage, and without lineage there
+        is no causal ablation -- the entire program collapses to anecdote.
+
+  P0.2  WORLD PHYSICS INSIDE THE RELEASE IDENTITY. The instruction set, the
+        channel generator distribution, and the cost table must live INSIDE the
+        engine source that the build-derived release hash covers -- never in a
+        mutable runtime data file.
+        ALSO A DIRECT FORENSIC LESSON: the earlier instrument kept its entire task
+        corpus in a runtime file OUTSIDE the release allowlist, so the environment
+        could have changed completely without the release pin moving. That must
+        not recur. Cheap to get right now; expensive to retrofit.
+
+  P0.3  RESTRICTED-CLOSURE FORK. Fork at a checkpoint with the deposit closure
+        restricted to exclude a nominated structure, holding genotype and seeds
+        fixed. This is the ablation primitive; the availability query already
+        computes the closure, so this is a filter, not a subsystem.
+
+  P0.4  TYPED FAILURE-COORDINATE EMISSION. The physics executor must emit the
+        v0 coordinate record, validated against the shipped schema, on every
+        unsuccessful interaction. Not a free-text extension bag.
+
+  P0.5  EPISODE-LEVEL DETERMINISTIC REPLAY with a bit-exactness audit sampler
+        wired to K8.
+
+P1 -- STRONGLY JUSTIFIED
+  P1.1  Region-occupancy archive (a quality-diversity style archive used strictly
+        as an OBSERVATION structure, never as a selection objective).
+  P1.2  Lineage-scoped compute accounting extended to VM steps and quanta, so K6
+        matching is mechanical rather than manual.
+  P1.3  Evolutionary-activity counters (Bedau-style) for cumulative adaptive
+        novelty, as a comparator for the topology statistic.
+  P1.4  Held-out channel-family generator split, sealed, for L1/L2 measurement.
+
+P2 -- USEFUL LATER
+  P2.1  Cross-world transfer harness (L1 at scale).
+  P2.2  Deposit-sharing channel across lineages under registered consent.
+  P2.3  Spatial locality (charter P8), only if review shows it is needed.
+
+DO NOT BUILD
+  X1  Any LLM in the selection path, as adjudicator, curriculum, or fitness term.
+  X2  Semantic labels on Layer-1 configurations (TOOL / LANGUAGE / ALGORITHM).
+  X3  A scalar intelligence score, or any additive reward for "interesting."
+  X4  The H (human-corpus) arm inside World-0 -- see section 18.
+  X5  Authored task tiers, difficulty levels, or named capability milestones.
+  X6  Any organism-visible telemetry, leaderboard, or engine-generated hint.
+  X7  Visualization or UI before the science is settled.
+
+--------------------------------------------------------------------------------
+16. TARGETED LITERATURE-MECHANISM MATRIX
+--------------------------------------------------------------------------------
+
+Classified for extraction, not homage. We are not recreating Avida.
+
+  MECHANISM              PRESSURE CREATED         VERDICT AND REASON
+  ---------------------  -----------------------  ---------------------------
+  Tierra self-replication  replication in a       DEFER/REJECT. Replication
+  in a shared soup         shared address space   becomes the whole game, and
+                                                  shared-address-space
+                                                  self-replication is the wrong
+                                                  containment posture. Take the
+                                                  lesson (parasitism emerges),
+                                                  not the mechanism.
+  Avida merit-rewarded     hand-designed logic    REJECT AS DESIGNED. The task
+  logic tasks              tasks pay CPU cycles   set is an AUTHORED LADDER --
+                                                  precisely kill criterion K2.
+                                                  Adopting it would contaminate
+                                                  the central claim. Keep the
+                                                  architectural idea (compute
+                                                  as the currency of fitness),
+                                                  discard the authored tasks.
+  Genetic programming      variation + selection  RECOMMEND as the mutation
+                           over programs          substrate. Well understood,
+                                                  cheap, no semantics imported.
+  Novelty search           reward behavioural     REJECT as objective (invites
+                           novelty                K4, novelty without utility);
+                                                  RECOMMEND its diagnostics.
+  Quality-diversity /      archive over behaviour DEFER as objective, RECOMMEND
+  MAP-Elites               descriptors            AS INSTRUMENT. The archive is
+                                                  a natural representation of a
+                                                  failure/behaviour landscape.
+                                                  Selection must stay minimal-
+                                                  criterion.
+  Minimal Criterion        reproduce iff a        RECOMMEND. Directly addresses
+  Coevolution              minimal criterion      K3 scalar collapse; the
+                           is met                 closest published match to
+                                                  what this world needs.
+  POET / environment-      paired agent and       DEFER. The right long-run
+  agent coevolution        environment generation shape for endogenous
+                                                  curriculum, but too much
+                                                  machinery for World-0.
+  Host-parasite digital    adversarial coupling   DEFER to v2. Powerful driver
+  coevolution                                     of complexity; also the most
+                                                  likely source of degenerate
+                                                  cycling in a small world.
+  Evolution of             selection on the       RECOMMEND as the measurement
+  evolvability             capacity to adapt      target: this IS our L2.
+                                                  Adopt the measurement, not a
+                                                  mechanism that rewards it
+                                                  directly (that would beg the
+                                                  question).
+  Major evolutionary       transitions in         RECOMMEND conceptually: it
+  transitions              individuality and      motivates the two separate
+                           information transfer   inheritance channels.
+  Cumulative cultural      socially transmitted   RECOMMEND conceptually as the
+  evolution                accumulation           model for deposits; do NOT
+                                                  import its human ontology.
+  Open-ended evolution     cumulative adaptive    RECOMMEND Bedau-style activity
+  measurement              novelty statistics     statistics as a COMPARATOR for
+                                                  the topology statistic. It is
+                                                  the most principled existing
+                                                  answer to "is anything
+                                                  actually accumulating?"
+
+CARGO-CULT WARNING: the strongest temptation is to adopt Avida's task ladder
+because it demonstrably produces impressive emergent complexity. It would also
+guarantee that our headline result is an artifact of our own curriculum.
+
+--------------------------------------------------------------------------------
+17. SMALLEST VIABLE FIRST CAMPAIGN
+--------------------------------------------------------------------------------
+
+CAMPAIGN 0 -- "PHYSICS SHAKEDOWN". Explicitly NOT an evolutionary run.
+
+  *** ADVERSARIAL REVIEW KILLED THE FIRST VERSION OF THIS CAMPAIGN (revision R6).
+  A shakedown of fixed, non-evolving organisms CANNOT exhibit wash trading, kin
+  collusion, or r-selection collapse -- those are things a POPULATION discovers.
+  The campaign would have reported "no kill criterion fired" against a provably
+  broken economy. A null result from an instrument that cannot produce a positive
+  is not evidence; it is theatre. ***
+
+  POPULATION   (a) the frozen trivial-predictor reference set (constant,
+                   last-value, first-difference, size-matched random program);
+               (b) bounded random search; and CRITICALLY
+               (c) SCRIPTED ADVERSARY ORGANISMS AS PLANTED POSITIVES -- one per
+                   named exploit: predict-last-value; predict-constant;
+                   do-nothing/hoard; a self-attaching depositor; a colluding
+                   clone pair; a PRNG shared-secret (steganographic) pair; a
+                   deposit spammer; an attach-shopper.
+  DURATION     short; thousands of episodes, not millions.
+  PURPOSE      to TRY TO KILL THE WORLD before investing in it.
+
+  SUCCESS CONDITION, INVERTED: Campaign 0 succeeds when the kill criteria DO fire
+  on the planted positives and DO NOT fire on the honest reference set. A criterion
+  that cannot be made to fire on a deliberately constructed cheater is not a
+  criterion; it is a label. This validates the DETECTOR before we trust the
+  detector's silence.
+
+  IT SUCCEEDS IF IT ANSWERS:
+    1. Does a trivial policy dominate? (K0 -- the most likely failure)
+    2. Is there exploitable structure at depth, or does the generator's tail
+       look like noise? (the central design risk of section 2)
+    3. Does the failure coordinate stream have non-trivial structure, or does it
+       collapse into two or three cells?
+    4. Does every deterministic episode replay bit-exactly? (K8)
+    5. What is the throughput, and therefore how many generations can Campaign 1
+       actually afford? (this determines whether L2 is even in reach)
+    6. Does the closed-economy degeneracy appear as soon as deposits exist? (K11)
+
+  THE HONEST EXPECTED OUTCOME: a kill criterion fires and the physics is revised.
+  That is a SUCCESSFUL Campaign 0. A world that survives its own shakedown
+  unmodified should be viewed with suspicion.
+
+CAMPAIGN 1 -- only after Campaign 0 passes and the kill criteria are frozen:
+  T0 vs C1 (static world) vs C8 (random-search null), compute-matched, with the
+  section 8 pre-commitments sealed via the engine's commit boundary.
+  TARGET RESULT, deliberately tiny: acquired structure X changes subsequent
+  acquisition dynamics -- descendants with X adapt to a novel channel family in
+  measurably fewer interactions, the effect disappears under removal ablation,
+  and the failure landscape shows X changing WHICH boundaries descendants reach
+  rather than merely how often they succeed.
+  That is a candidate L2 PRECURSOR, and it is worth more to Prometheus than an
+  organism becoming ten times better at the world.
+
+--------------------------------------------------------------------------------
+18. ASSUMPTIONS I BELIEVE ARE WRONG OR WEAK
+--------------------------------------------------------------------------------
+
+This section is the reason to read this packet. I am the instrument maintainer,
+not the advocate, and these are the places where I think the charter is betting
+more than it has.
+
+A1. THE COORDINATE-STABILITY PARADOX -- MY STRONGEST OBJECTION.
+    Measuring "deformation of the failure landscape" presupposes a coordinate
+    system stable enough to compare generation 100 against generation 800. But
+    the charter ALSO anticipates (section 12, cause 6) that a representation may
+    change so radically that the old failure coordinate no longer applies -- and
+    that is precisely the epistemic transition we most want to catch. These pull
+    in opposite directions. A coordinate system rigid enough to track deformation
+    may be exactly the one that cannot register the transitions that matter; a
+    coordinate system that adapts is no longer a fixed frame and its "movement"
+    is partly our own construction.
+    World-0 mitigates this by anchoring coordinates in PHYSICS-INTRINSIC events
+    (VM fault codes, composition depth, divergence index) rather than in learned
+    or semantic categories -- these remain meaningful regardless of how the
+    organism's internals change. I believe that is the best available answer. I
+    do NOT believe it is a complete answer, and reviewers should treat any
+    claimed L3 transition as suspect until this is addressed properly.
+
+A2. "PREDICTION PAYS" IS ITSELF A HUMAN ONTOLOGY.
+    The charter forbids selecting for "become alien" on the grounds that it
+    injects a human ontology. Choosing to pay charge for predictive accuracy does
+    the same thing more quietly: we have decided that MODELLING is what the world
+    rewards. A world could instead pay for persistence, replication, control, or
+    construction, and would select for different machinery. This is defensible --
+    prediction is the least anthropomorphic operationalization I can find, and it
+    does not privilege any representational FORM -- but it is not neutral and the
+    packet should not pretend otherwise.
+
+A3. THE GENERATOR'S TAIL MAY BE NOISE, NOT DEPTH.
+    The depth claim requires that deeper compositions be exploitably regular. For
+    many program distributions, deep random composition is statistically
+    indistinguishable from noise, in which case there is no ladder and organisms
+    plateau at shallow structure. The fix -- biasing the generator toward
+    compositional REUSE -- edges toward authoring the ladder we claim not to
+    author. This is a genuine, unresolved tension between charter section 6
+    (depth) and kill criterion K2 (no authored ladder), and I flag it as needing
+    reviewer adjudication (section 19, Q2).
+
+A4. THE HUMAN-PRIOR EXPERIMENT IS PROBABLY NOT RUNNABLE HERE, MAYBE NOT ANYWHERE.
+    Comparing an H arm (frontier-model / human-derived primitives) against a P arm
+    under "identical physics" is close to incoherent: you cannot compute-match a
+    language model against a bytecode organism (K6), the H arm imports exactly the
+    semantics the design excludes (K9), and any result is dominated by the
+    arbitrary choice of how the human corpus is encoded into primitives. I
+    recommend World-0 preserve the INTERFACE and run P only. I would go further
+    for review: I am not convinced the H-vs-P comparison is a well-posed
+    experiment at all, and I would rather we said so than ran a version of it that
+    produces a publishable-looking number.
+
+A5. SCALE MAY PUT L2 OUT OF REACH.
+    Published digital-evolution results of comparable ambition consumed very large
+    numbers of updates. If World-0 can afford only thousands of generations, we may
+    be instrumented to detect a phenomenon we cannot afford to grow. Campaign 0
+    must report throughput precisely, and if the implied generation budget is far
+    below what L2 detection needs, that is a reason to revise scope BEFORE
+    Campaign 1 rather than to run a hopeful campaign.
+
+A6. COEVOLUTION IS AS LIKELY TO PRODUCE A CLOSED ECONOMY AS A CURRICULUM.
+    The most probable degenerate attractor is organisms paying each other for
+    mutual predictability -- deposit-to-deposit loops that yield charge without
+    reducing uncertainty about the world. Added as K11.
+
+A7. WE WILL FIND STRUCTURE IN THE FAILURE LANDSCAPE WHETHER OR NOT IT IS THERE.
+    High-dimensional data, many statistics, motivated observers. The section 8
+    pre-commitment protocol is not bureaucratic caution; without it this program's
+    headline result is unfalsifiable by construction.
+
+A9. THE FIXES INTRODUCE THEIR OWN AUTHORING PROBLEM (found by review, and I do
+    not consider it closed). Residual-weighted payout requires an engine-owned
+    null battery, and the battery IS a supplied model class. A minimal battery
+    (constant, last-value, first-difference, period-p) defines "trivial" and
+    seems defensible. A rich battery would mean the world pays for beating
+    human-chosen model classes, which is kill criterion K2 relocated into the
+    reward function where it is much harder to see. There is no bright line
+    between the two, only a judgement about minimality. This is now the second
+    place (with A3) where the design's integrity rests on a judgement call about
+    how much structure we are allowed to supply.
+
+A10. THE PAYOFF SHAPE AND THE VIABILITY THRESHOLD ARE THE STRONGEST AUTHORED
+    GRADIENTS IN THE WORLD, and the first draft hid them inside the phrase "paid
+    as a function of accuracy." A graded partial-credit payoff authors a smooth
+    ladder; an all-or-nothing payoff authors a cliff and may make the world
+    inert. Neither is neutral. These must be declared as SUPPLIED choices in a
+    supplied-versus-measured table, and the payoff shape should be a
+    preregistered ARM (graded / thresholded / prefix-exact), not a silent
+    constant chosen by the designer.
+
+A11. THE STARVATION--FREE-LUNCH BRACKET IS NARROW AND ADJACENT. Above a cost
+    line, naive organisms free-ride forever (K0). Below it, the dominant strategy
+    is to do nothing at all -- never attach, never run steps -- and the world is
+    inert. These two failure modes sit next to each other, and the first draft
+    had no calibration protocol at all. Campaign 0 must set costs empirically so
+    that a null-battery-equivalent organism nets approximately zero over a long
+    run, and must report how wide the viable corridor actually is. If the
+    corridor is very narrow, that is itself evidence the world is fragile.
+
+A12. WE MAY HAVE MADE FAILURE TOO EXPENSIVE TO OBSERVE. Every economic fix makes
+    acting costly, which selects for organisms that fail less by attempting less.
+    Abstention is now instrumented as a first-class typed interaction (P12), but
+    this is a mitigation, not a solution: a world in which the optimal policy is
+    caution produces a thin failure landscape, and the thinness is caused by our
+    own cost structure rather than by anything about intelligence.
+
+A8. "SMALLEST DEFENSIBLE" AND "GENUINELY OPEN-ENDED" MAY BE INCOMPATIBLE.
+    The charter asks for a world small enough for exhaustive counterfactual replay
+    AND rich enough for unbounded epistemic compounding. Those may simply trade
+    off. My judgement is that World-0 should buy REPLAYABILITY at the cost of
+    open-endedness, and treat open-endedness as a World-1 question -- but that is a
+    judgement call a reviewer may reasonably overturn.
+
+--------------------------------------------------------------------------------
+19. QUESTIONS REQUIRING EXTERNAL REVIEWER ADJUDICATION
+--------------------------------------------------------------------------------
+
+Q1. Is "the world pays for predictive accuracy" an acceptable operationalization
+    of fitness, or does it prejudge the epistemic ontology (A2)? If unacceptable,
+    what alternative payout is less anthropomorphic without becoming a mere
+    survival game?
+
+Q2. WHERE IS THE LINE between "biasing the channel generator toward compositional
+    reuse so that depth is exploitable" and "authoring the ladder" (K2)? This is
+    the single most consequential unresolved design question (A3).
+
+Q3. Do you accept the coordinate-stability mitigation of A1 -- anchoring failure
+    coordinates in physics-intrinsic faults -- or does the paradox invalidate
+    claims of landscape deformation across a representational transition?
+
+Q4. Do you accept deferring the H and X arms out of World-0 (R2, A4), and do you
+    consider the H-vs-P comparison well-posed in principle?
+
+Q5. What total compute budget is authorized? This determines whether L2 is
+    reachable at all (A5) and should be settled before Campaign 1, not discovered
+    during it.
+
+Q6. Should organism-organism interaction (deposit channels) be present in v1 at
+    all, or deferred to v2 to keep Campaign 0 interpretable? Including it makes
+    the world interesting and also makes K11 immediately live.
+
+Q7. Is minimal-criterion selection the right choice over fitness-proportional
+    selection, given that it slows convergence and therefore raises the compute
+    cost of any result?
+
+Q8. Do you accept the pre-commitment protocol of section 8 as SUFFICIENT to make
+    the tectonic hypothesis falsifiable, and is the proposed primary statistic
+    (occupancy-boundary flux) the right primary?
+
+--------------------------------------------------------------------------------
+20. RECOMMENDED SINGLE NEXT IMPLEMENTATION STEP
+--------------------------------------------------------------------------------
+
+BUILD THE PHYSICS CORE AS A PURE, OFFLINE, DETERMINISTIC LIBRARY -- AND NOTHING
+ELSE.
+
+  IN SCOPE: the VM, the channel generator, the cost table, the six-verb action
+  interface, and typed failure-coordinate emission validated against the shipped
+  schema. Placed INSIDE the engine source so it falls within the build-derived
+  release identity from day one (P0.2). Property-tested for determinism and
+  bit-exact replay (P0.5).
+
+  OUT OF SCOPE: no service, no port, no network exposure, no evolution loop, no
+  population dynamics, no deposits, no UI, no campaign.
+
+  THEN RUN CAMPAIGN 0 against it, offline, with the frozen trivial-predictor set,
+  and report honestly whether K0 fires and whether the generator has exploitable
+  depth.
+
+RATIONALE: this is the smallest artifact that can FALSIFY the world. It costs
+little, it is fully reviewable, it commits us to nothing, and it answers the
+question that determines whether anything else in this packet is worth building.
+If the physics cannot survive its own shakedown, we will have learned that for the
+price of a library rather than a program.
+
+DO NOT, BEFORE REVIEW: launch any evolutionary run; expose any World-0 service on
+a port; wire any LLM into any part of the loop; or freeze the kill criteria (they
+need Campaign 0 calibration for the Stage-B thresholds).
+
+================================================================================
+  END OF PACKET
+  Supporting artifacts shipped alongside:
+    incubator/failure_coordinate_schema.v0.json   (normative telemetry schema)
+    incubator/WORLD0_KILL_CRITERIA.prereg.txt     (K0-K12, freeze protocol)
+  Prior forensic work that materially shaped P0.1 and P0.2:
+    forensics/SFE_WOW0_FORENSIC_SURVEY.txt
+================================================================================

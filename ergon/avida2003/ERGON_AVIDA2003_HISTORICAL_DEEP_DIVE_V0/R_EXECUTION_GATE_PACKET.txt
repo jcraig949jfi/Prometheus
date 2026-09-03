@@ -1,0 +1,280 @@
+ERGON / AVIDA 2003 -- EXECUTION GATE PACKET V0
+2026-09-03. Deep forensics on one specimen: the Lenski, Ofria, Pennock &
+Adami complex-features / EQU experiment, Nature 423:139-144 (2003).
+
+Self-contained. Written for a reviewer who has not seen the directive.
+
+======================================================================
+0. WHAT WAS RECOVERED, AND WHAT IT COST
+======================================================================
+
+SIX ARTIFACTS IN HAND, every one byte-verified against the manifest by an
+executable gate (provenance_gates.py, P1-P4 ALL PASS):
+
+  art-avida2003-supp        44,021 B   sha256 970b2711762cf61f...
+      Supplementary Information to the primary paper. PRIMARY SOURCE.
+  art-avida-src-2.2      1,664,380 B   sha256 2e5384147bec5756...
+      Oldest surviving official Avida source release, 2005-02-14.
+  art-environment-cfg-2.2    1,285 B   the nine rewarded reactions
+  art-instset-2.2            1,584 B   the 26-instruction alphabet
+  art-lineage-derived       18,094 B   112-genotype line of descent, parsed
+  art-nature-landing       291,095 B   publisher page (paper itself PAYWALLED)
+
+THE SINGLE BEST RECOVERY: the supplementary contains the COMPLETE LINE OF
+DESCENT of the case-study population through the origin of EQU -- 112
+genotypes, phylogenetic depth 0 to 111, each with its birth update, its 9-bit
+logic-function vector, its fitness relative to its immediate parent, and its
+FULL GENOME SEQUENCE over the verified 26-letter alphabet.
+
+    ancestor (pd 0)   rucavccccccccccccccccccccccccccccccccccccutycasvab
+                      50 instructions, 0 of 9 functions
+    T_EQU             phylogenetic depth 111, birth update 27450
+    genome length     50 -> 61
+    functions at EQU  6 of 9
+
+The successful lineage is therefore a solved specimen for static analysis.
+
+======================================================================
+1. THE PHYSICS, AND ONE FINDING WORTH THE PASS ON ITS OWN
+======================================================================
+
+environment.cfg assigns each of the nine tasks a reward exponent under
+type=pow, so merit multiplies by 2^v:
+
+    NOT 1   NAND 1   AND 2   OR_N 2   OR 3   AND_N 3   NOR 4   XOR 4   EQU 5
+
+Supplementary section II independently publishes, for the same nine functions,
+the MINIMUM NUMBER OF NAND OPERATIONS required to compute each, stated to have
+been proven by exhaustive search:
+
+    NOT 1   NAND 1   AND 2   OR_N 2   OR 3   AND_N 3   NOR 4   XOR 4   EQU 5
+
+They are identical. The reward exponent IS the minimal NAND depth. The reward
+landscape is a computational-depth ladder rather than an arbitrary bonus
+schedule, and two independent artifacts agree on it. This is why the task and
+reward rows in E are VERIFIED_EXACT for 2003 rather than merely for 2.2.
+
+Also verified: ECHO is describable in the substrate but is NOT rewarded --
+absent from the nine-function legend and absent from environment.cfg. A
+reconstruction that rewards ECHO is not this specimen.
+
+======================================================================
+2. THE FINDING THAT INVERTS THE ASSIGNMENT
+======================================================================
+
+The directive asks whether modern instrumentation can recover a precursor
+signal the original experiment was not designed to measure, and treats
+one-step mutational-neighbourhood analysis as the modern addition.
+
+IT IS NOT. Avida already had one.
+
+source/main/landscape.{hh,cc} defines cLandscape, which enumerates a genome's
+mutational neighbourhood and reports GetProbDead, GetProbNeg, GetProbNeut,
+GetProbPos, mean and mean-square mutant fitness, and two-step epistasis
+counts. Process(int in_distance = 1) makes the radius a PARAMETER, so k=2 is
+supported. ProcessInsert and ProcessDelete give separate indel landscapes.
+
+The original investigators could enumerate the adjacent possible in 2005, and
+in more ways than Prometheus currently does.
+
+THE ACTUAL BLIND SPOT, located precisely rather than assumed:
+
+    landscape.hh contains ZERO references to tasks.
+    landscape.cc touches cPhenotype at four places and every one reads a
+    scalar -- GetFitness, GetMerit, GetGestationTime.
+
+The historical analyzer is FITNESS-VALUED, not PHENOTYPE-PARTITIONED. It can
+say what fraction of your neighbours are dead, worse, same or better. It
+cannot say WHICH logic functions they gained or lost, how many distinct
+phenotypes are reachable, or how that reachable set is distributed.
+
+So the honest statement of what P-MED / R1 / H1 add is not "we can enumerate
+the neighbourhood". It is:
+
+    the historical instrument asked  "how good are my neighbours?"
+    the modern one asks             "what can my neighbours DO that I cannot?"
+
+Those differ only where fitness is not a monotone function of the phenotype
+vector -- which, under a 2^v ladder over nine tasks, it is not.
+
+Six historical detector parts are recorded in O for adoption, including the
+distance parameterisation, the separate indel landscapes, the explicit
+neutrality band, and the epistasis counters. Prometheus has no epistasis
+instrument at all, and its own D-5 substrate has INSERT-complete physics yet
+never separated indel from substitution neighbourhoods. Avida did, in 2005.
+
+======================================================================
+3. WHY H1A CANNOT RUN -- THE BINDING GAP
+======================================================================
+
+The first scientific target is a MATCHED comparison: g_succ(t) against 3-5
+contemporary NON_EQU_DESCENDANT_CONTROL genotypes at the same generation,
+matched on fitness, genome length and task count.
+
+NO CONTEMPORARY GENOTYPE EXISTS IN ANY RECOVERED ARTIFACT. The supplementary
+publishes the winning line of descent and nothing else. There is no organism
+that was alive at the same update and did not lead to EQU.
+
+Consequences, stated as they are:
+
+  K6 (dominated by one run / survivorship) is ACTIVE NOW, not a risk. One
+  population, successful lineage only, no base rate. Any metric computed today
+  is a property of one survivor.
+
+  K9 (signal is merely proximity to a near-EQU task combination) is
+  UNTESTABLE. Excluding it requires post-EQU genotypes, which live in the
+  345-genotype file we do not hold. A detector that cannot be checked against
+  its most obvious confound should not be run.
+
+  Of seven survivorship controls, two are available -- and both are
+  label-permutation nulls that measure the detector's noise floor, not
+  survivorship. Every control that actually addresses survivorship needs
+  artifacts we lack.
+
+Running H1A now would produce a metric table on three genotypes with no
+controls and no base rate. That is not a weak experiment. It is an
+uninterpretable one.
+
+======================================================================
+4. WHERE THE MISSING EVIDENCE IS
+======================================================================
+
+The supplementary names the paper's own data repository:
+
+    myxo.css.msu.edu/papers/nature2003/
+
+and states that it holds the entire line of descent plus functional-genomic
+arrays for all 345 genotypes. That host is DEAD: http returns 404, https
+returns 501.
+
+BUT THE WAYBACK MACHINE HAS IT. The availability API returns status 200 for
+snapshot timestamp 20211122232656. Retrieval was blocked THIS SESSION by HTTP
+429 rate limiting after repeated CDX queries, and a backoff-and-retry also
+returned 429.
+
+That is a throttling problem, not an absence. It is the single highest-value
+unblocking action in the whole pass, and it is cheap.
+
+Second lead, unexplored: the 2.2 tarball's own CVS/Root names
+:ext:kaben@cvs.sourceforge.net:/cvsroot/avida, and SourceForge still exposes a
+CVS tool at sourceforge.net/p/avida/cvs/. That is the only plausible route to
+2003-ERA SOURCE, since SourceForge's oldest surviving RELEASE (2.2, 2005-02-14)
+post-dates the experiment by about 21 months and GitHub's repository was not
+created until 2010-11-05.
+
+======================================================================
+5. WHAT IS FROZEN, SO IT CANNOT BECOME A DEGREE OF FREEDOM LATER
+======================================================================
+
+Frozen BEFORE any accessibility metric was computed. None has been.
+
+CHECKPOINTS ARE IN PHYLOGENETIC DEPTH, NOT UPDATES.
+    A = pd 101, B = pd 61, C = pd 11.
+    Reason: the two clocks are wildly non-linear. Depth steps 0-17 span updates
+    0-1118 while single later steps span thousands. In updates, T_EQU - 100 is
+    update 27350, which lies INSIDE the final depth step, collapsing all three
+    checkpoints onto one or two genotypes.
+
+MATCHED-CONTROL ESTIMATOR IS THE MEDIAN, not the mean, because control sets of
+3-5 are small enough for one lethal-heavy outlier to dominate a mean.
+
+RPD DENOMINATOR IS "VIABLE MUTATIONS". All three denominators are reported;
+only this one enters any preregistered comparison. Rationale fixed in advance:
+"all mutations" is dominated by the lethal fraction that P-MED already reports
+separately; "novel viable" discards the silent class, which is the robustness
+signal a precursor hypothesis might turn on.
+
+N2 IS FROZEN FOR ALL GENOTYPES SIMULTANEOUSLY and may not be raised for one
+that "looks interesting".
+
+======================================================================
+6. COMPUTE
+======================================================================
+
+Static analysis is not compute-bound. |M1(g)| = L * 25 = 1250 to 1525 mutants
+per genotype; H1A over 12-18 genotypes is order 1e4 genome evaluations.
+
+The dominant cost is NOT arithmetic, and it is unmeasured: seconds per Avida
+genome evaluation, because Avida 2.2 HAS NOT BEEN COMPILED. It is 2005-era C++
+with a CVS-era build. This is a BINARY risk -- either the historical evaluator
+runs, or P-MED must be implemented against a reimplementation, which
+immediately raises K8. Attempt the build BEFORE writing metric code, because
+the outcome decides whether the analysis uses the historical evaluator or a
+surrogate.
+
+No H1B estimate is quoted, because with population size, mutation rates and
+run length all UNSPECIFIED any number would be invented.
+
+======================================================================
+7. THE ORIGINAL QUESTION, AND OURS -- KEPT SEPARATE
+======================================================================
+
+Lenski et al. asked whether historically accumulated mutations, some
+individually deleterious, were CAUSALLY INVOLVED in the later appearance of a
+complex feature. They answered it with lineage reconstruction and reversion.
+The recovered supplementary shows the evidence directly: many of the 111
+transitions on the line of descent carry relative fitness below 1.00.
+
+We ask a DIFFERENT question: whether ancestral genotypes had already acquired
+a different distribution of REACHABLE FUTURE PHENOTYPES than fitness-matched
+contemporaries that went nowhere.
+
+That is a population-level accessibility question. It is not equivalent to
+theirs and it does not retroactively bear on their causal analysis. Nothing in
+this pass is a criticism of the 2003 experiment, and the strongest finding of
+the pass is that their instrument was better than the directive assumed.
+
+======================================================================
+8. CLAIM CEILING
+======================================================================
+
+  - Nothing has been run. No accessibility metric exists. No precursor signal
+    is claimed, and none is hinted at.
+  - Six artifacts are in hand; NONE is contemporaneous with the experiment.
+    The supplementary describes the experiment; the source post-dates it by
+    ~21 months.
+  - Seven physics parameters are UNSPECIFIED (population size, world geometry,
+    three mutation rates, replicate count, seeds). A faithful RE-RUN is not
+    currently possible; any re-run today is APPROXIMATE_RECONSTRUCTION.
+  - The line-of-descent parse is a DERIVED artifact. Its hash is of our text
+    extraction, not of a historical file, and it has not been validated
+    against an independent rendering.
+  - The 112 / 345 genotype discrepancy is unexplained. The plausible reading
+    (the printed table stops at EQU) is a reading, not a verification.
+  - This is a CASE STUDY of one population and must carry that label until
+    independent runs are recovered.
+
+======================================================================
+9. RECOMMENDATION
+======================================================================
+
+Three things must be true before H1A is interpretable, and none is true today:
+contemporaries must exist, K9 must be testable, and the evaluator question
+must be settled. The first two are the same artifact, and it is confirmed to
+exist behind a rate limiter.
+
+The unblocking sequence, in order, none of it expensive:
+
+  1. Retrieve the Wayback snapshot of myxo.css.msu.edu/papers/nature2003/
+     (timestamp 20211122232656, confirmed status 200). Recover the
+     345-genotype line of descent, the functional-genomic arrays, any
+     configuration files, and any population dumps. Population dumps would
+     supply contemporaries and settle both K6 and K9.
+  2. Explore sourceforge.net/p/avida/cvs/ for 2003-era revisions of
+     environment.cfg, inst_set.default and the run configuration. This is the
+     only route to closing the seven UNSPECIFIED parameters.
+  3. Attempt an Avida 2.2 build and benchmark one genome evaluation. This
+     decides historical-evaluator versus surrogate before any metric code is
+     written.
+  4. Only then reassess H1A.
+
+RECOMMENDATION:
+
+    MORE_ARCHAEOLOGY_REQUIRED
+
+The specimen is NOT unreconstructable -- the successful lineage is recovered
+exactly and the physics of reward is verified from two independent sources.
+What is missing is the comparison set, and it is missing to a rate limiter
+rather than to history.
+
+-- Ergon, 2026-09-03

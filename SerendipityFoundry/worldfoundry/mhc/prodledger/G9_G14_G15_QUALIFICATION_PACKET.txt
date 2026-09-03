@@ -1,0 +1,556 @@
+================================================================================
+  PROMETHEUS INCUBATOR --
+  MHC ADMISSION-RIGHTS LEDGER + CRYPTOGRAPHIC SEAL
+  PRODUCTIONIZATION AND HOSTILE QUALIFICATION -- EXTERNAL REVIEW PACKET
+
+  Gates: G9-ACCOUNTING, G9-RANDOMIZATION, G14, G15
+
+  Author : Daedalus, maintainer of the Serendipity Foundry Engine (SFE)
+  Date   : 2026-09-04
+  Status : FROZEN. All four gates adjudicated below. Nothing scientific
+           was exposed; nothing in this mission can become scientific
+           evidence. The soup remains unlaunched.
+================================================================================
+
+--------------------------------------------------------------------------------
+0. ORIENTATION (self-contained)
+--------------------------------------------------------------------------------
+The Microstructure Observatory (MHC) hunts tiny reproducible structure in
+deterministic digital-organism worlds. Its statistics admit a candidate when
+an anytime-valid wealth process of conditional ranks crosses a purchased
+threshold K. The governing questions of this mission:
+
+  Q-A  Can the admission boundary be a TRUE CONSERVED-RISK SYSTEM -- no
+       sequence of adaptive registrations, crashes, retries, concurrency,
+       replays, expirations, beacon manipulations, or malformed histories
+       can spend more false-admission risk than was preregistered?
+  Q-B  At the moment an admission test purchases risk, is its future
+       admission evidence GENUINELY UNDERIVABLE from everything available
+       before commitment?
+
+Neither is answered philosophically below. The system was built, frozen,
+attacked with hostile histories, broken, repaired with every failure
+preserved, and re-attacked. Adjudicated amendments honored: ALPHA_LIFE=0.1
+permanent; scientific K_MIN=1000; K>=100 calibration-only and structurally
+incapable of scientific admission; expected-count guarantee with Markov
+corollary; guarantee scoped to candidate-local constructed-null violations;
+sham-arm halts admissions not diagnostics; founder-lineage and held-out
+grammar-family separations load-bearing; scientific exposure forbidden.
+
+FINAL RULE, enforced in code rather than prose: in a deterministic
+substrate, "not yet observed" is NOT a seal. Evidence is sealed only when
+some indispensable information required to derive it did not exist, and
+could not be known, until after the hypothesis paid for the right to look.
+
+--------------------------------------------------------------------------------
+1. EXECUTIVE VERDICT
+--------------------------------------------------------------------------------
+  G9-ACCOUNTING      PASS  (conserved-risk invariant machine-verified at
+                            every prefix; hostile battery 0/14 after repair;
+                            2,000,000-transition adversarial fold storm with
+                            conservation asserted at every accepted
+                            transition; purchases irrevocable; calibration
+                            rights cannot reach scientific records)
+  G9-RANDOMIZATION   PASS  (conditional rank lemma v1.1 with an explicit
+                            six-point Validation Clause enforced by the
+                            fold; production derivation path qualified by
+                            exact enumeration on pathological substrates --
+                            WHICH CAUGHT AND FIXED A REAL PERMUTATION-BIAS
+                            DEFECT; predicted failure boundary demonstrated
+                            and excluded by protocol)
+  G14                PASS WITH NAMED OPERATIONAL DEPENDENCIES
+                           (protocol implemented with production semantics;
+                            mock providers structurally incapable of
+                            scientific admission -- the offline GENESIS pins
+                            an EMPTY production-key set, so this build
+                            cannot mint a scientific admission AT ALL;
+                            external provider selection and the independent
+                            adjudication seat remain required, section 17)
+  G15                PASS  (14-attack battery: 7 succeeded against frozen
+                            v1.0, all preserved; 0 succeed against v1.1;
+                            beacon-precomputation attack succeeds 1000x
+                            against the procedural seal and is ELIMINATED
+                            by the production seal, both preserved)
+
+  THE HEADLINE NUMBERS: an F-omniscient attacker precomputing 60,000 null
+  trajectories under the OLD procedural seal registers only known crossers
+  and books 35 false admissions for 0.035 risk units -- a 1000x violation.
+  Under the production seal the same attacker's 34 best-guess registrations
+  yield ZERO crossers; grinding 5,000 blind registrations yields 8 crossers
+  for exactly 5.0 charged risk units -- priced, not free, and refused past
+  ~100 registrations by the budget itself.
+
+--------------------------------------------------------------------------------
+2. WHAT WAS ACTUALLY BUILT (mhc/prodledger/, repo main)
+--------------------------------------------------------------------------------
+  core.py      the conserved-risk state machine: pure fold of the event
+               log; no wall-clock in any transition; purchases irrevocable
+               at registration; namespace firewall; halt primitive;
+               protocol-enumerated rule commitments; derived block ids.
+  store.py     crash-safe append-only persistence: hash-chained JSONL,
+               fsync-before-ack, torn-tail recovery, interior-corruption
+               fail-closed, single-writer lock, poison-on-persistence-
+               failure, SYNCHRONOUS external anchoring of risk events,
+               all-anchors fork/rollback detection.
+  verify.py    independent money-supply verifier: refolds the raw log with
+               its own arithmetic, asserts the identity at every prefix,
+               enforces the same refusal rules (drift closed), rejects
+               tampered/impossible/forged histories, emits human and
+               machine conservation reports.
+  sealing.py   G14: anchor/beacon provider interfaces, rule-fixed round
+               selection, deterministic derivation (seeds, role
+               permutations, tie-breaks), fail-closed unavailability,
+               mock providers that stamp mock=true.
+  canon.py     canonical serialization and candidate identity: NFC,
+               whitelisted schema, duplicate-key refusal, default elision,
+               integer-only numerics.
+  hostile.py   the G15 attack battery (14 attack classes + generative fuzz
+               with differential service/verifier checking).
+  fold_storm.py 2,000,000-transition adversarial state-machine storm.
+  beacon_attack.py  section-VIII precomputation attack, old vs new seal.
+  rankqual.py  section-VII randomization qualification (exact enumeration).
+  RANDOMIZATION_LEMMA.txt  the formal statement (v1.1).
+  failed_versions/  EVERY broken artifact, preserved: v1.0 core/store/
+               verify/lemma, the LCG-biased sealing, the failing rankqual
+               run, and G15_RUN1_v1_0.txt (the successful attacks).
+
+--------------------------------------------------------------------------------
+3. THE EXACT CONSERVED-RISK INVARIANT
+--------------------------------------------------------------------------------
+Per namespace ns in {SCIENTIFIC, CALIBRATION}, at EVERY valid history
+prefix, in exact rational arithmetic:
+
+    unreserved(ns) + SUM open-family remaining reservations(ns)
+                   + purchased(ns)  ==  BUDGET(ns)
+
+with BUDGET(SCIENTIFIC) = 1/10 permanently, and:
+  * purchased(ns) is MONOTONE NON-DECREASING: no code path reduces it.
+    A purchase is never refunded because a test lost, expired, was
+    abandoned, failed to reach K, or was inconvenient.
+  * reservations are an allocation device: releasing UNSPENT remainder
+    (close or TTL) is provably safe -- the guarantee counts purchases only.
+  * the guarantee: E[# constructed-null false admissions over the
+    instrument lifetime] <= SUM 1/K_c <= 1/10, by per-candidate Ville +
+    linearity of expectation; Markov gives P(any, ever) <= 1/10. Valid
+    under arbitrary dependence and unbounded adaptive registration,
+    GIVEN the Validation Clause (section 8).
+
+--------------------------------------------------------------------------------
+4. STATE-MACHINE / ACCOUNTING MODEL
+--------------------------------------------------------------------------------
+Event-sourced: the ledger IS an append-only hash-chained log; state is a
+pure fold. Consequences that kill whole attack classes by construction:
+  * no debit/record gap -- the accepted PURCHASE event IS the debit; a
+    crash either durably persisted it (state has it; caller was told) or
+    did not (state lacks it; caller was never told). H10 truncated the
+    final record at EVERY byte boundary: zero conservation breaks.
+  * logical time: caller-supplied monotone integer, step-bounded
+    (MAX_LT_STEP) so a forged clock cannot detonate TTLs (H3); refusals
+    log at the ledger's own lt and never advance the watermark; expiry is
+    lazy, deterministic (family-id order), applied BEFORE each event's
+    validation, boundary pinned as lt > expires_lt.
+  * families: OPEN -> {CLOSED | EXPIRED}; close of non-open refuses;
+    double-release impossible (remainder zeroed at transition).
+  * aggregate reservation cap: un-co-signed OPEN reservations may total at
+    most 25% of the namespace BUDGET (the per-open cap fell to a geometric
+    grab, H4 -- 99% capture in 17 compliant opens; preserved, fixed).
+  * K: floor per namespace (1000 scientific / 100 calibration);
+    reachability ceiling (13/4)^block_budget with early-exit arithmetic;
+    block budget capped at 128; single purchase <= half the family's
+    original reservation.
+  * evidence blocks: ids are DERIVED H(candidate, index) -- structurally
+    unclaimable by others (H6 burn-griefing preserved, fixed); one-time-
+    use globally; refused events consume nothing.
+  * rule commitments are PROTOCOL-ENUMERATED (section 8) -- free-form
+    strings were accepted by v1.0 (H5, preserved) and are now refused.
+
+--------------------------------------------------------------------------------
+5. INDEPENDENT RECONSTRUCTION VERIFIER
+--------------------------------------------------------------------------------
+verify.py reads ONLY the raw log. It re-derives: initial ALPHA_LIFE;
+reservation, purchase, and release histories; current unreserved wealth;
+reserved-but-unspent wealth; permanently spent wealth; remaining maximum
+scientific liability -- and asserts the accounting identity AT EVERY PREFIX
+in exact arithmetic (no float ever touches money). It rejects: chain breaks,
+hash mismatches, time regressions and bombs, impossible reservations,
+unfundable or duplicate purchases, block reuse and non-derived block ids,
+K-floor and cap violations, non-canonical rule commitments, admissions
+without purchases or below K, record-type forgeries, scientific admissions
+carrying mock attestations, purchases/admissions during halt, and
+illegitimate halt lifts. SERVICE/VERIFIER DRIFT (red-team FATAL: the
+verifier checking a weaker rule set than the service is itself the
+vulnerability) was closed by porting every refusal rule into the verifier
+and differentially checking fuzz histories: every service-accepted history
+verifies; every tampered variant is rejected (H9, H12).
+
+--------------------------------------------------------------------------------
+6. SCIENTIFIC / CALIBRATION RIGHTS FIREWALL
+--------------------------------------------------------------------------------
+  * separate pools (1/10 vs a calibration budget), separate record types
+    (SCIENTIFIC_ADMITTED vs CALIBRATION_ADMITTED), separate K floors;
+  * no migration function exists; a calibration candidate emitting a
+    scientific record type is refused at fold time (H7);
+  * a SCIENTIFIC admission requires: non-mock anchor AND beacon
+    attestations, K >= 1000, wealth peak >= K, no active halt, and (in
+    production) attestation keys pinned in GENESIS. THE OFFLINE BUILD PINS
+    AN EMPTY PRODUCTION-KEY SET: this build is STRUCTURALLY INCAPABLE of
+    minting a scientific admission -- qualification cannot leak into
+    science even by operator error;
+  * mock providers stamp mock=true INSIDE the attested payload; the
+    production path refuses it; flag-stripping is covered in production by
+    signature verification against GENESIS-pinned keys (operational
+    dependency, section 17).
+
+--------------------------------------------------------------------------------
+7. EXTERNAL-ANCHOR AND BEACON PROTOCOL (G14)
+--------------------------------------------------------------------------------
+Ordering, implemented and enforced by the fold:
+  1. registration artifact exists (canonical candidate, all commitments);
+  2. hash-committed: CANDIDATE_REGISTER carries the irrevocable 1/K
+     purchase IN THE SAME EVENT -- purchase strictly precedes anchoring;
+  3. the registration is anchored (ANCHOR_ATTEST must cite the commit
+     hash; anchoring something else is refused);
+  4. eligible beacon round FIXED BY RULE: first valid pulse STRICTLY after
+     the anchor; the fold refuses round_time <= anchor_time and any round
+     that is not the rule-determined round; no nearest-pulse, no
+     designation, no retry-until-favorable, ONE beacon attestation per
+     candidate (immutable -- no round shopping);
+  5. beacon value arrives (a mock round's value is UNDEFINED before its
+     pulse time -- no early peeks even offline);
+  6. seeds, reference draws, role permutations, tie-breaks derive as pure
+     functions of (commit_hash, beacon_value, purpose, index);
+  7. evidence blocks become computable; every EVIDENCE_BLOCK must cite the
+     candidate's attested beacon value or it is refused;
+  8. admission verifies the entire chain.
+FAIL CLOSED everywhere: no anchor -> no beacon; no beacon -> no evidence;
+no local randomness fallback exists in the codebase. Risk events are
+anchored SYNCHRONOUSLY before acknowledgement, so no acknowledged purchase,
+admission, halt, or reservation can be erased by truncation (H1) or
+replaced within an anchor window (H2): restart refuses any log that fails
+to reach EVERY externally anchored head.
+
+--------------------------------------------------------------------------------
+8. FORMAL CONDITIONAL-RANDOMIZATION STATEMENT (summary; full text in
+   RANDOMIZATION_LEMMA.txt v1.1)
+--------------------------------------------------------------------------------
+PRE-BEACON FILTRATION F: the registrant is assumed F-omniscient and
+computationally unbounded over: the full frozen snapshot, all preservation
+data, all organism metadata and lineages, candidate/family generator
+outputs, all earlier candidate histories and calibration results, all
+previously revealed beacon values and unsealed blocks, matching covariates,
+and every adaptive decision ever made.
+
+THE VALIDATION CLAUSE (all six enforced by the fold; claims hold ONLY for
+histories satisfying them):
+  V1 the reference sampler R is CANONICAL, GENESIS-pinned, never
+     registrant-supplied (a doctored-law R with correct support empties
+     the guarantee while staying bit-reproducible);
+  V2 the context rule W is from the canonical whitelist (W-gerrymandering
+     produces true-but-artifact rejections);
+  V3 the role permutation Pi is protocol-derived, uniform via domain-
+     separated hash draws with exact rejection sampling;
+  V4 tie handling is BEACON_UNIFORM or STRICT_TOP_ONLY, nothing else;
+  V5 the betting rule is from the enumerated fairness-certified family
+     (sum_r payout(r)/(m+1) <= 1), predictable, and CONTEXT-BLIND -- it
+     may read past ranks and wealth, never the current block's contexts
+     (a context-peeking rule defeats Ville while marginal uniformity
+     holds: the deepest lemma-level attack found);
+  V6 the 1/K purchase is irrevocable at registration, chain-ordered
+     before the anchor (pay-on-admission = free lottery tickets,
+     E[false] -> K x ALPHA_LIFE).
+
+H0_LOCAL: under the committed beacon measure, the candidate's tie-broken
+rank is uniform on {0..m} conditional on F and the prior blocks.
+  LEMMA 1: the sharp null (delta-equivalent effects) implies exact
+  uniformity for ANY evaluation function -- structure cancels through the
+  role permutation and uniform ties.
+  LEMMA 2: NO F-measurable adaptive selection can make a null-true
+  candidate cross with probability > 1/K. Selection's only power is to
+  make H0_LOCAL FALSE -- a TRUE constructed-null rejection whose
+  scientific worth is artifact-arm jurisdiction, outside ALPHA_LIFE by
+  adjudicated amendment 5. Stated, not hidden.
+  LEMMA 3 (aggregation): lifetime bound by linearity under ARBITRARY
+  cross-candidate dependence; shared beacon rounds concentrate failures
+  into bursts; Markov survives; variance-based tail claims are forfeit.
+  BLOCK-FILTRATION HONESTY: all blocks expand one pulse via a domain-
+  separated XOF; per-block conditional uniformity is exact under ideal
+  expansion and computational against the enumerated (context-blind)
+  betting class otherwise; a per-block-round variant restores
+  unconditional exactness at operational cost. Stated, not discovered
+  later.
+
+--------------------------------------------------------------------------------
+9. EXECUTABLE RANK-CALIBRATION RESULTS (rankqual.py; exact enumeration
+   over 4096 beacon values; chi-square acceptance at p=0.001, df=3)
+--------------------------------------------------------------------------------
+  SHARP NULL x pathological substrates:
+    huge slot effects (10^6-scale structure)   chi2 = 2.2   UNIFORM
+    all-tied constants (pure tie-break)        chi2 = 5.5   UNIFORM
+    periodic near-degenerate values            chi2 = 3.5   UNIFORM
+    context-coupled slot chaos                 chi2 = 0.7   UNIFORM
+  ADVERSARIAL SELECTION ON NOISE, beacon-fresh evidence:
+    argmax over 100 preservation extrema       chi2 = 3.9   UNIFORM
+    argmax over 10,000 preservation extrema    chi2 = 8.2   UNIFORM
+  PREDICTED FAILURE BOUNDARY (must be non-uniform; is):
+    persistently atypical delta* (H0 false)    chi2 = 5,417.8
+    selection-on-noise + STALE preservation
+    evidence (the non-beacon-fresh sin)        chi2 = 11,645.1
+  The contrast between <= 8.2 and >= 5,417 is the instrument working.
+
+  DEFECT CAUGHT BY THIS HARNESS (preserved in failed_versions/): the v1.0
+  role permutation drew Fisher-Yates indices from LCG LOW BITS -- nearly
+  periodic -- making the permutation measurably non-uniform (max rank
+  deviation 0.35 on slot-structured substrates) and silently breaking
+  Lemma 1's exactness in the production path. Repaired with independent
+  domain-separated hash draws + exact rejection sampling; re-run above.
+  A first-run acceptance test using a raw max-deviation cutoff also fired
+  two false alarms at ~2 sigma; replaced by the calibrated chi-square
+  test. Both failures preserved.
+
+--------------------------------------------------------------------------------
+10. PROCEDURAL-SEAL EXPLOIT (REPRODUCED, AS REQUIRED)
+--------------------------------------------------------------------------------
+beacon_attack.py, A1: attacker with complete pre-registration state
+precomputes all 60,000 null trajectories against the pre-derivable
+evidence of a procedural seal, registers ONLY the 35 known crossers:
+35 false admissions for 0.035 purchased risk -- the expectation bound is
+violated 1000-fold BY AN ACCEPTED, PROCEDURALLY COMPLIANT HISTORY. This is
+the mission's FINAL RULE made numeric: ordering of ledger events cannot
+substitute for the nonexistence of the evidence-deriving information.
+
+--------------------------------------------------------------------------------
+11. PRODUCTION-SEAL EXPLOIT ATTEMPT
+--------------------------------------------------------------------------------
+A2: the same attacker registers 34 best-guess candidates BEFORE the beacon
+entropy exists; the realized beacon then yields ZERO crossers (chance
+expectation 0.034). Precomputation advantage eliminated; every cross is
+priced at 1/K. A3: blind grinding of 5,000 registrations yields 8 crossers
+(expected ~5) for exactly 5.0 charged risk units -- and a real ledger
+refuses long before: at K=1000 the lifetime budget funds ~100 registrations
+TOTAL. Residual channels (beacon-operator compromise, anchor-time forgery,
+commit grinding across anchors) are operational-dependency items with
+specified defenses (section 16/17), not statistical holes.
+
+--------------------------------------------------------------------------------
+12. G15 HOSTILE-TESTING CAMPAIGN
+--------------------------------------------------------------------------------
+RUN 1 (frozen v1.0 candidate; preserved as G15_RUN1_v1_0.txt):
+  7 of 14 attacks SUCCEEDED:
+   H1 torn-tail purchase erasure     H2 anchor-window suffix replacement
+   H3 logical-time bomb              H4 geometric reservation grab (99%)
+   H5 free-form rule commitments     H6 block-id burn griefing
+   (H12 harness fault, rerun)
+RUN 2 (v1.1 after repairs; G15_RUN2_v1_1.txt):
+  0 of 14 attacks succeed. The battery also includes: namespace laundering
+  (3 paths), canonicalization collisions (NFC/order/defaults/dup-keys/
+  unknown-fields), log replay/reorder/interior corruption, crash injection
+  at every byte boundary of the tail record (522 cut points, 0 breaks),
+  second-writer exclusion, halt bypass (scientific blocked, operator lift
+  refused, segregated calibration allowed), K or boundary cases, and a
+  30,000-operation generative fuzz over the full disk path (2,039 accepted
+  / 27,961 refused; verifier re-verified all 30,235 records at every
+  prefix).
+FOLD STORM: 2,000,000 adversarial state transitions (hostile namespaces,
+  forged clocks, doctored rules, forged block ids, record-type forgeries,
+  halt games, negative reserves) with the conservation identity asserted
+  after EVERY accepted transition: 2,000,000 transitions: 131,386 accepted /
+  1,868,614 refused; scientific purchased 707/100000 <= 1/10;
+  ZERO conservation violations.
+
+--------------------------------------------------------------------------------
+13. EVERY EXPLOIT FOUND (mission format)
+--------------------------------------------------------------------------------
+X1 TORN-TAIL PURCHASE ERASURE (H1) -- severity CRITICAL (guarantee).
+   Precondition: file access or crash timing after an acked purchase, no
+   anchor since. Attack: truncate final record mid-line; restart truncates
+   "torn tail"; verifier accepts shortened history. Invalid state: an
+   acknowledged 1/K debit ceases to exist while its evidence escaped. Why
+   checks failed: recovery could not distinguish crash-before-ack from
+   forged tear; anchoring was periodic. Fix: synchronous anchoring of risk
+   events before ack + all-anchors reachability check on start. Regression:
+   H1 (now refuses start). Mathematical guarantee was threatened.
+X2 ANCHOR-WINDOW SUFFIX REPLACEMENT (H2) -- CRITICAL (guarantee). Same
+   class at window scale: any unanchored suffix (purchases, halts,
+   co-signs) rewritable. Fix as X1 + every anchor (not merely the latest)
+   must be an ancestor. Regression: H2.
+X3 LOGICAL-TIME BOMB (H3) -- HIGH (liveness/allocation). One event at
+   lt=2^60 mass-expired every family and bricked future TTLs. Fix:
+   MAX_LT_STEP bound; refusals never advance the clock. Regression: H3.
+   Implementation integrity, not the expectation bound.
+X4 GEOMETRIC RESERVATION GRAB (H4) -- HIGH (fairness/liveness). 17
+   individually compliant opens captured 99% of the pool. Fix: aggregate
+   un-co-signed open-reservation cap at 25% of BUDGET. Regression: H4.
+X5 FREE-FORM RULE COMMITMENTS (H5) -- CRITICAL (guarantee, via lemma).
+   v1.0 accepted arbitrary ref/tie/betting strings: doctored reference
+   laws, candidate-wins-ties, super-fair payout tables -- each a certified-
+   noise machine. Fix: protocol enumeration (Validation Clause V1-V5)
+   enforced at fold time by service AND verifier. Regression: H5 + fold
+   storm (doctored rules injected at 12.5% rate, all refused).
+X6 BLOCK-ID BURN GRIEFING (H6) -- MEDIUM (targeted DoS/adversary-timable
+   resampling). Caller-named one-time block ids let an attacker consume a
+   victim's ids. Fix: derived ids H(candidate, index). Regression: H6.
+X7 LCG PERMUTATION BIAS (rankqual R1) -- CRITICAL (rank law). The
+   production role permutation was measurably non-uniform, silently
+   breaking Lemma 1 exactness. Found by exact enumeration; fixed by
+   per-draw hash derivation with rejection sampling. Regression: rankqual
+   full suite. Mathematical guarantee was threatened.
+X8 MAX-DEV ACCEPTANCE MISCALIBRATION (rankqual harness) -- LOW (harness
+   quality). Raw cutoff fired at ~2 sigma; replaced with chi-square at
+   p=0.001. Preserved because a qualification harness that cries wolf
+   teaches operators to ignore wolves.
+X9 STORE-INIT LOCK LEAK (H10 harness discovery) -- LOW. A refused start
+   leaked the writer lock fd on Windows. Fix: release on failed init.
+All nine have preserved reproducers (failed_versions/ + battery sections)
+and regression coverage in the standing suite.
+
+--------------------------------------------------------------------------------
+14. EVERY REPAIR MADE
+--------------------------------------------------------------------------------
+Enumerated with the exploits above (X1-X9); plus hardening absorbed from
+the design red team without a demonstrated exploit: purchase-at-
+registration pinned in the event semantics (V6); context-blind betting
+(V5); halt-taint groundwork; canonical rational form and refusal of
+floats; namespace byte-identity; REFUSAL events at ledger-lt; single
+active anchor per candidate (no round shopping); poison-on-persistence-
+failure; empty-production-key GENESIS for offline builds.
+
+--------------------------------------------------------------------------------
+15. RE-RUN RESULTS AFTER EACH REPAIR
+--------------------------------------------------------------------------------
+  after X3-X6 repairs: RUN 2a -- 12/14 conserved (X1, X2 still open:
+    the synchronous-anchor patch had not landed; preserved in-session)
+  after X1-X2 repairs: RUN 2b -- 13/14 (harness lock leak X9)
+  after X9: RUN 2 final -- 0/14 attacks succeed (G15_RUN2_v1_1.txt)
+  rankqual: RUN 1 FAIL (X7 caught) -> permutation repair -> RUN 2 with
+    calibrated statistics: PASS (RANKQUAL_RESULTS.txt)
+  beacon attack: A1 succeeds vs procedural (required), A2/A3 fail vs
+    production (BEACON_ATTACK_RESULTS.txt)
+  fold storm: 2,000,000 transitions, 0 violations (FOLD_STORM_RESULTS.txt)
+
+--------------------------------------------------------------------------------
+16. REMAINING ATTACK SURFACE (stated, not discovered later)
+--------------------------------------------------------------------------------
+  S1  BEACON/ANCHOR TRUST: U independent of F is a cryptographic-
+      operational assumption. Defenses specified for production: chained
+      threshold beacon (withholding delays, cannot alter), round-INDEX
+      eligibility with a fixed safety margin, dual-beacon XOR/KDF against
+      entropy compromise, inclusion-based anchoring (verifiable external
+      chain) instead of attested wall time. NOT implemented here: needs
+      provider selection (section 17).
+  S2  ATTESTATION SIGNATURES: the mock/production separation is enforced
+      structurally offline (empty key set); production needs pinned
+      provider keys and verifier-side signature checks to make
+      flag-stripping impossible rather than refused-by-schema.
+  S3  DERIVATION-PURITY AUDIT: bit-exact re-derivation proves determinism,
+      not input-committedness; the production audit must run the COMMITTED
+      closure in a syscall-restricted empty environment where any read
+      outside (commit preimage, beacon value) hard-fails.
+  S4  BEACON-OUTAGE ECONOMICS: fail-closed + forfeited stakes make a
+      beacon DoS a budget-burning lever. The single specified valve: a
+      REGISTRATION_VOID event valid ONLY when the eligible round provably
+      never existed on the beacon chain, co-signed by the adjudication
+      seat -- pre-reveal refunds leak nothing. Not yet implemented.
+  S5  XOF BLOCK-EXPANSION: computational rather than exact per-block
+      independence (section 8); the per-block-round variant is the
+      escape hatch if this is ever contested.
+  S6  HALT-TAINT DISPOSITIONS for in-flight candidates registered before
+      a halt: refusal groundwork exists; the per-candidate adjudicated
+      disposition event is specified, not built.
+  S7  REFUSAL-LOG GRIEFING and receipt-based censorship evidence:
+      operational policy items, documented, not enforced in code.
+
+--------------------------------------------------------------------------------
+17. OPERATIONAL DEPENDENCIES REQUIRING AN EXTERNAL SEAT
+--------------------------------------------------------------------------------
+  D1  Public randomness beacon selection (recommended candidates: drand or
+      equivalent chained threshold beacon; NIST-style beacons acceptable
+      as the second member of a dual-beacon KDF).
+  D2  External anchor operator (RFC3161 TSA, public chain inclusion, or
+      the beacon operator itself) -- inclusion-based, not wall-time.
+  D3  The independent adjudication seat: holds co-signature authority for
+      >25% reservations, halt lifts, REGISTRATION_VOID, and the G14
+      sealed-plant protocol from the V1 calibration plan.
+  D4  Production attestation keys pinned into a production GENESIS.
+  NO production provider was silently chosen; the interfaces are fixed and
+  the mock path is structurally non-scientific.
+
+--------------------------------------------------------------------------------
+18. GATE TABLE
+--------------------------------------------------------------------------------
+  G9-ACCOUNTING       PASS   independent replay verifies the invariant at
+                             every prefix; hostile+generative testing finds
+                             no counterexample after repairs; purchases
+                             cannot be refunded or duplicated; calibration
+                             rights cannot leak into scientific rights.
+  G9-RANDOMIZATION    PASS   lemma precisely stated with explicit
+                             assumptions; production randomization
+                             implements it (defect found and fixed);
+                             pathological structured-null qualification
+                             calibrated; no pre-beacon adaptive selection
+                             invalidates the rank law (only makes H0
+                             false, which is priced and labeled).
+  G14                 PASS*  registration precedes genuinely unpredictable
+                             public entropy; ordering externally
+                             verifiable; round rule-determined; derivation
+                             deterministic; undeclared inputs fail; seal
+                             failure fail-closed. *Production providers
+                             and the signature layer are D1-D4.
+  G15                 PASS   the hostile tester could not manufacture
+                             admission rights, double-spend, reuse
+                             evidence, launder calibration rights,
+                             manipulate sealing order, or exceed
+                             ALPHA_LIFE through any accepted history;
+                             all exploits preserved with reproducers;
+                             the final frozen version survives the
+                             complete suite.
+  SCIENTIFIC EXPOSURE REMAINS PROHIBITED (unchanged; upstream gates and
+  the V1 calibration campaign stand between this packet and any organism).
+
+--------------------------------------------------------------------------------
+19. REPRODUCTION INSTRUCTIONS
+--------------------------------------------------------------------------------
+  location  F:\Prometheus\SerendipityFoundry\worldfoundry\mhc\prodledger
+  (run from worldfoundry/mhc/; pure stdlib + wforge PRNG for fuzz seeds)
+    python -m prodledger.hostile <workdir>     # G15 battery (v1.1: 0/14)
+    python -m prodledger.fold_storm 2000000    # 2M-transition storm
+    python -m prodledger.beacon_attack         # section VIII contrast
+    python -m prodledger.rankqual              # section VII enumeration
+  Outputs are bit-reproducible: all randomness derives from named
+  xorshift/sha256 streams. To reproduce RUN 1's exploits, run the battery
+  against failed_versions/core_v1_0.py + store_v1_0.py (swap in place or
+  import-shim); the preserved G15_RUN1_v1_0.txt is the reference output.
+
+--------------------------------------------------------------------------------
+20. HASHES / COMMITS / ARTIFACTS
+--------------------------------------------------------------------------------
+  v1.1  core.py                    5ef7af00082dca30
+  v1.1  store.py                   e13107e945232974
+  v1.1  verify.py                  0f8aa82243a29cd6
+  v1.1  sealing.py                 33f6e909f0e554e4
+  v1.1  canon.py                   d56e962fe0f2397d
+  v1.1  hostile.py                 a8005f7ebc40ae52
+  v1.1  fold_storm.py              7e06fa4ad7ef2485
+  v1.1  beacon_attack.py           088d7e7c83232abe
+  v1.1  rankqual.py                687d1913ce153da0
+  v1.1  RANDOMIZATION_LEMMA.txt    019bf1f9622bf51b
+  Results files: G15_RUN1_v1_0.txt (7/14 attacks succeeded),
+  G15_RUN2_v1_1.txt (0/14), RANKQUAL_RESULTS.txt (PASS),
+  BEACON_ATTACK_RESULTS.txt, FOLD_STORM_RESULTS.txt,
+  failed_versions/ (all preserved defects). Git is authoritative.
+
+================================================================================
+  CLOSING STATEMENT
+  The mission asked whether Prometheus possesses a monetary system whose
+  scientific currency cannot be counterfeited. Nine counterfeiting
+  techniques were found; nine are preserved with working reproducers; nine
+  are now refused by machine-checked rules that an independent verifier
+  re-derives from the raw history alone. The one that mattered most --
+  that in a deterministic universe, LOOKING IS FREE unless the evidence
+  depends on entropy that does not exist yet -- is now the load-bearing
+  wall of the whole admission boundary, demonstrated at 1000x violation
+  on one side and 0 crossers on the other.
+
+  Daedalus has not yet earned the right to build the detector that will
+  spend these admission rights. That right belongs to the V1 calibration
+  campaign, behind gates that are now made of arithmetic.
+================================================================================

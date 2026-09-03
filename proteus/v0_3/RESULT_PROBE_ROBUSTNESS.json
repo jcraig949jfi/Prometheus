@@ -1,0 +1,201 @@
+{
+ "ensembles": {
+  "E0": {
+   "ensemble_identity": "4bba8716b364f9fff1975210a9e1a4027b70963a81fbe108d44a59360978f0bc",
+   "knockout_entropy_bits": 8.431061778798618,
+   "knockout_vectors": 926,
+   "n_probes": 4,
+   "seed_provenance": "sha256 of ADDENDUM_EXTERNAL_REVIEW_V0_2026-09-02.txt (the V0 ensemble, unchanged)",
+   "silent_fraction": 0.78675,
+   "status_sequences": 62,
+   "transcript_classes": 314,
+   "transcript_entropy_bits": 3.541579950455022,
+   "transcript_gini": 0.8813742038216561,
+   "transcript_top_share": 0.48375,
+   "wall_s": 17.36385464668274
+  },
+  "E1": {
+   "ensemble_identity": "9110f345248d63ed6dafc8cd4b38e4dff2cce346f8c4cd86f4e1bc28bb5a517b",
+   "knockout_entropy_bits": 8.424112102324264,
+   "knockout_vectors": 924,
+   "n_probes": 4,
+   "seed_provenance": "sha256 of PROMPT_PROTEUS_PLAYER_FOUNDRY_V0_2026-09-02.txt",
+   "silent_fraction": 0.78775,
+   "status_sequences": 56,
+   "transcript_classes": 311,
+   "transcript_entropy_bits": 3.5246657847510496,
+   "transcript_gini": 0.8831800643086817,
+   "transcript_top_share": 0.484,
+   "wall_s": 14.440705060958862
+  },
+  "E2": {
+   "ensemble_identity": "1bf274ee3d3ab274d771a9737cbb8bdeb3d839ba5fa51947f4ab9dfca1a224da",
+   "knockout_entropy_bits": 8.417984951235722,
+   "knockout_vectors": 920,
+   "n_probes": 4,
+   "seed_provenance": "sha256 of PROMPT_PROTEUS_V0_3_NEUTRALITY_CRUCIBLE_2026-09-03.txt",
+   "silent_fraction": 0.78775,
+   "status_sequences": 55,
+   "transcript_classes": 294,
+   "transcript_entropy_bits": 3.502374182939601,
+   "transcript_gini": 0.8861428571428571,
+   "transcript_top_share": 0.484,
+   "wall_s": 15.0240638256073
+  },
+  "E3": {
+   "ensemble_identity": "ecc73a8f420f36eccfb9d30d63771366828b61e1b749b27e0c20c51eb23b17bf",
+   "knockout_entropy_bits": 8.43157987101277,
+   "knockout_vectors": 928,
+   "n_probes": 4,
+   "seed_provenance": "sha256 of the published affordance table",
+   "silent_fraction": 0.78775,
+   "status_sequences": 62,
+   "transcript_classes": 303,
+   "transcript_entropy_bits": 3.516409601485064,
+   "transcript_gini": 0.8849059405940594,
+   "transcript_top_share": 0.48375,
+   "wall_s": 14.823320388793945
+  },
+  "E4": {
+   "ensemble_identity": "4722afb361f7951edc9c597c9c496fc37bec877d9a3128a4528ef251a4565188",
+   "knockout_entropy_bits": 8.439317385428534,
+   "knockout_vectors": 928,
+   "n_probes": 8,
+   "seed_provenance": "same seed as E2, 8 probes (resolution up)",
+   "silent_fraction": 0.78725,
+   "status_sequences": 67,
+   "transcript_classes": 318,
+   "transcript_entropy_bits": 3.5452146439639227,
+   "transcript_gini": 0.8820283018867925,
+   "transcript_top_share": 0.48325,
+   "wall_s": 31.056779146194458
+  },
+  "E5": {
+   "ensemble_identity": "126b72993a109a9cb3a12eabd45f7e10bcc54dbba826b6282bf198adbf2624b2",
+   "knockout_entropy_bits": 8.346787439075811,
+   "knockout_vectors": 881,
+   "n_probes": 2,
+   "seed_provenance": "same seed as E2, 2 probes (resolution down)",
+   "silent_fraction": 0.78825,
+   "status_sequences": 44,
+   "transcript_classes": 237,
+   "transcript_entropy_bits": 3.3681738612768894,
+   "transcript_gini": 0.8955780590717299,
+   "transcript_top_share": 0.48475,
+   "wall_s": 7.338728666305542
+  }
+ },
+ "grammar_hash": "44ae7f598660a523a6fb151ef258dd4f1c886c0822abca5780b32e98e7548289",
+ "n_organisms": 4000,
+ "pairwise_partition_agreement": {
+  "E0|E1": {
+   "jaccard_of_same_class_pairs": 0.9993380745666698,
+   "pairs_sampled": 222111,
+   "same_class_in_a": 64919,
+   "same_class_in_b": 64962,
+   "same_in_both": 64919
+  },
+  "E0|E2": {
+   "jaccard_of_same_class_pairs": 0.999215022317993,
+   "pairs_sampled": 222111,
+   "same_class_in_a": 64919,
+   "same_class_in_b": 64970,
+   "same_in_both": 64919
+  },
+  "E0|E3": {
+   "jaccard_of_same_class_pairs": 0.9979234602842552,
+   "pairs_sampled": 222111,
+   "same_class_in_a": 64919,
+   "same_class_in_b": 64970,
+   "same_in_both": 64877
+  },
+  "E0|E4": {
+   "jaccard_of_same_class_pairs": 0.9941042455589422,
+   "pairs_sampled": 222111,
+   "same_class_in_a": 64919,
+   "same_class_in_b": 64622,
+   "same_in_both": 64579
+  },
+  "E0|E5": {
+   "jaccard_of_same_class_pairs": 0.9931008107694661,
+   "pairs_sampled": 222111,
+   "same_class_in_a": 64919,
+   "same_class_in_b": 65370,
+   "same_in_both": 64919
+  },
+  "E1|E2": {
+   "jaccard_of_same_class_pairs": 0.9985541353267808,
+   "pairs_sampled": 222111,
+   "same_class_in_a": 64962,
+   "same_class_in_b": 64970,
+   "same_in_both": 64919
+  },
+  "E1|E3": {
+   "jaccard_of_same_class_pairs": 0.9985541353267808,
+   "pairs_sampled": 222111,
+   "same_class_in_a": 64962,
+   "same_class_in_b": 64970,
+   "same_in_both": 64919
+  },
+  "E1|E4": {
+   "jaccard_of_same_class_pairs": 0.9934466579493885,
+   "pairs_sampled": 222111,
+   "same_class_in_a": 64962,
+   "same_class_in_b": 64622,
+   "same_in_both": 64579
+  },
+  "E1|E5": {
+   "jaccard_of_same_class_pairs": 0.9924479843456194,
+   "pairs_sampled": 222111,
+   "same_class_in_a": 64962,
+   "same_class_in_b": 65370,
+   "same_in_both": 64919
+  },
+  "E2|E3": {
+   "jaccard_of_same_class_pairs": 0.9986771876393952,
+   "pairs_sampled": 222111,
+   "same_class_in_a": 64970,
+   "same_class_in_b": 64970,
+   "same_in_both": 64927
+  },
+  "E2|E4": {
+   "jaccard_of_same_class_pairs": 0.9946436816992458,
+   "pairs_sampled": 222111,
+   "same_class_in_a": 64970,
+   "same_class_in_b": 64622,
+   "same_in_both": 64622
+  },
+  "E2|E5": {
+   "jaccard_of_same_class_pairs": 0.993880985161389,
+   "pairs_sampled": 222111,
+   "same_class_in_a": 64970,
+   "same_class_in_b": 65370,
+   "same_in_both": 64970
+  },
+  "E3|E4": {
+   "jaccard_of_same_class_pairs": 0.9933244120406688,
+   "pairs_sampled": 222111,
+   "same_class_in_a": 64970,
+   "same_class_in_b": 64622,
+   "same_in_both": 64579
+  },
+  "E3|E5": {
+   "jaccard_of_same_class_pairs": 0.9925702841942733,
+   "pairs_sampled": 222111,
+   "same_class_in_a": 64970,
+   "same_class_in_b": 65370,
+   "same_in_both": 64927
+  },
+  "E4|E5": {
+   "jaccard_of_same_class_pairs": 0.9885574422517974,
+   "pairs_sampled": 222111,
+   "same_class_in_a": 64622,
+   "same_class_in_b": 65370,
+   "same_in_both": 64622
+  }
+ },
+ "population_seed": 8713764358171866027,
+ "prereg_id": "075a40d965fe7bcf76c8eefd92855479b713b6f7b11d626609a3131c66f3a3ac",
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "schema_version": "proteus.probe_robustness.v0_3"
+}

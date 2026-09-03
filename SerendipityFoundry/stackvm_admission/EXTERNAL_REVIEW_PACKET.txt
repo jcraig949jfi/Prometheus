@@ -1,0 +1,326 @@
+================================================================================
+  PROMETHEUS INCUBATOR --
+  STACKVM-V1 ADMISSION LANGUAGE + VERDICT-ENTROPY QUALIFICATION
+  EXTERNAL REVIEW PACKET
+
+  Author : Daedalus, maintainer of the Serendipity Foundry Engine
+  Date   : 2026-09-03
+  Status : BUILT AND HOSTILE-TESTED. STOPPED FOR EXTERNAL ADJUDICATION.
+           No admission right purchased. None of the five archaeological
+           candidates run. Nothing translated into World Foundry grammar.
+           Both live services untouched (8799 PID 23276, 8811 PID 20112).
+================================================================================
+
+--------------------------------------------------------------------------------
+VERDICT  ***  RETRACTED AND SUPERSEDED  ***
+--------------------------------------------------------------------------------
+
+  THIS PACKET ORIGINALLY REPORTED
+        STACKVM_ADMISSION_LANGUAGE_QUALIFIED_WITH_LIMITATIONS
+  THAT VERDICT IS WITHDRAWN. THE CORRECTED VERDICT IS
+
+        STACKVM_NULL_COMPROMISED
+
+  An independent adversarial review returned AFTER this packet was committed,
+  carrying measured findings that invalidate the qualification. I reproduced
+  the load-bearing measurements myself. See VERDICT_CORRECTION.md for the full
+  retraction, what I verified independently, which single red-team finding
+  does NOT apply to this implementation, and the seven items required before
+  re-qualification. In summary: R1 is not an exchangeable sampler so its rank
+  bound is UNDEFINED; R3's deliberate support hole voids exchangeability for
+  out-of-range candidates rather than merely excluding them; R1/R2 nulls are
+  false a priori for every selected candidate, so admissions would certify
+  tautologies; spec-menu multiplicity inflates the true level by J ~ 1e2-1e3
+  and the harness is structurally blind to it; "PROTOCOL_CONSTANT" arity
+  restructures the null by three orders of magnitude; the entropy gate is
+  formally vacuous, not merely empirically weak; and the decoy law is itself
+  an untyped null-path object.
+
+  PROCESS NOTE: I ran a hostile suite I wrote myself (13/13 defended) and
+  treated that as qualification while an independent red team was still
+  running. My suite tested the attacks I had thought of; it did not test
+  sampler exchangeability, observable degeneracy, or menu selection -- the
+  three things that actually broke.
+
+  SECTIONS 1-2 BELOW (the refutation of the entropy standard and the level
+  calibration) STAND and are strengthened. SECTIONS 3-5 (the canonical family
+  and its expressibility) are SUPERSEDED by the correction.
+
+--------------------------------------------------------------------------------
+ORIGINAL VERDICT (superseded, retained for the record)
+--------------------------------------------------------------------------------
+
+        STACKVM_ADMISSION_LANGUAGE_QUALIFIED_WITH_LIMITATIONS
+
+  Qualified: a native stackvm-v1 canonical admission family exists, is built
+  exclusively from corpus-independent sources, enforces its provenance as a
+  TYPE SYSTEM rather than a policy, and defended 13 of 13 hostile attacks.
+
+  With limitations, four of them material:
+   L1 LEVEL CERTIFICATION INCOMPLETE. 200 decoys bound the empirical level at
+      p0 <= 0.015; certifying p0 <= 1/K = 1e-3 needs ~1e4 decoys per spec.
+   L2 THE PROPOSED ENTROPY STANDARD IS REFUTED, NOT TUNED (see below).
+   L3 ALL FIVE ARCHAEOLOGICAL CANDIDATES REMAIN UNSTATEABLE OR ONLY PARTIALLY
+      STATEABLE -- and the null was NOT broadened to fix that.
+   L4 THE SAMPLERS ARE TRANSCRIBED, NOT IMPORTED, leaving one residual channel
+      for a support-preserving doctored law.
+
+--------------------------------------------------------------------------------
+1. THE HEADLINE RESULT: THE PROPOSED ENTROPY GATE IS REFUTED
+--------------------------------------------------------------------------------
+Mission section 5 told me to treat "H(verdict) >= 0.5 bits" as a hypothesis to
+qualify rather than a constant. It does not survive.
+
+MANDATORY NEGATIVE CONTROL (the offline-oracle attack, preserved as required):
+a saturating program -- `JMP 0`, two bytes, a legal program by spec -- whose
+`steps` observable is pinned at the ceiling on every context the beacon can
+produce, so the attacker knows the verdict before registering.
+
+Measured over 300 decoy beacons:
+
+    Shannon entropy H            0.869 bits   -> PASSES a 0.5-bit gate
+    min-entropy H_inf            0.494 bits
+    attacker best-prediction     0.710
+    empirical level p0           0.160        (target 1/K = 0.001)
+
+THE 0.5-BIT SHANNON GATE WAVES THE ATTACK THROUGH. Shannon entropy is an
+average code length, not a bound on prediction; a distribution with 0.71 mass
+on its modal class has H = 0.869. Any threshold on H is satisfiable by a
+distribution whose mode is highly predictable.
+
+The obvious repair -- min-entropy >= 1.0 bits -- rejects the attack (0.494)
+but ALSO REJECTS EVERY HONEST TEST. Honest specs measured in the same run had
+p1 = 0.000 and attacker accuracy = 1.000: a correctly calibrated test at
+threshold K admits with probability 1/K, so its verdict is overwhelmingly
+predictable ("it will refuse"). Predictability of the verdict is the SIGNATURE
+OF CORRECT CALIBRATION, not of an exploit.
+
+Both directions fail, so the framing is wrong. The two unknowables were being
+conflated:
+
+  * is the verdict unknown?  -- IRRELEVANT. Knowing you will lose is not an
+    exploit.
+  * can the registrant choose a (candidate, spec) pair whose admission
+    probability UNDER A TRUE NULL exceeds 1/K? -- this is the entire question,
+    and it is the only thing the conserved-risk arithmetic depends on.
+
+THE REPLACEMENT STANDARD. The harness -- never the registrant -- measures
+    p0 = P(ADMIT | subject drawn from the canonical reference law)
+over independent decoy beacons and refuses unless p0 <= 1/K with a stated
+one-sided confidence bound. p0 is the admission rate when the candidate is
+REPLACED BY A REFERENCE DRAW: a subject null-true by construction. It is
+exactly P(ADMIT | H0). It models no attacker, because it measures the test.
+
+On the attack spec p0 = 0.160 against 0.001: refused by a factor of 160.
+The gate that works is the one that was already there. Entropy appears
+nowhere in the final standard.
+
+TWO AUXILIARY CONDITIONS the level check does not cover:
+  (a) BEACON SENSITIVITY -- two decoys must produce different evidence hashes,
+      or the verdict is constant on the beacon fibre (catches predictions
+      entailed by statically-readable bytecode invariants);
+  (b) MEASUREMENT ADEQUACY -- with N decoys and zero admissions the 95% upper
+      bound on p0 is ~3/N, so certifying 1e-3 needs N ~ 1e4. See L1.
+
+ANSWER TO THE MISSION'S QUESTION -- "what must remain unknowable before
+purchase?" -- NOTHING ABOUT THE VERDICT. What must hold is a property of the
+TEST: (1) level p0 <= 1/K measured by the harness; (2) evidence genuinely
+beacon-dependent; (3) every null-path element non-CORPUS_DERIVED. Full
+derivation in VERDICT_ENTROPY_THEORY.md.
+
+--------------------------------------------------------------------------------
+2. WHAT THE LEVEL CHECK IMMEDIATELY EXPOSED
+--------------------------------------------------------------------------------
+Applied to my own default configuration, it found a two-order-of-magnitude
+error before any science was attempted:
+
+  n_refs  n_blocks   K      p0(attack)  p0(honest)  level OK
+     3      24     1000       0.160       0.000       no
+     3      12     1000       0.070       0.000       no
+     3       8     1000       0.010       0.000       no
+     7       8     1000       0.020       0.000       no
+     7       6     1000       0.010       0.000       no
+    15       5     1000       0.000       0.000       yes*
+    15       4     1000       0.000       0.000       yes*
+  * "no admissions in 200 decoys" = p0 <= 0.015 at 95%, NOT a 1e-3 certification.
+
+Mechanism: under a true null the subject ranks top with probability
+1/(1+n_refs). At n_refs=3 that is 1/4, and ~5 consecutive tops inside 24
+blocks reaches K -- far more likely than 1/1000. THE CONFIGURATION I WOULD
+HAVE SHIPPED BY DEFAULT WAS MISCALIBRATED BY ~160x. No entropy measurement
+would have revealed it.
+
+--------------------------------------------------------------------------------
+3. THE NATIVE CANONICAL ADMISSION FAMILY
+--------------------------------------------------------------------------------
+THE SPEC PROPERTY THAT MAKES THIS POSSIBLE AT ALL: stackvm-v1 is designed so
+that EVERY BYTE SEQUENCE IS A LEGAL PROGRAM (opcode = byte % 33; operands past
+the end read as 0; empty-stack pop = 0; div/mod by zero pushes 0; addresses
+and register indices wrap). Therefore the UNIFORM MEASURE OVER BYTE STRINGS is
+a well-defined corpus-independent measure on program space. On a substrate
+where most byte strings were invalid, the only available "distribution over
+programs" would have been the programs that actually occurred -- i.e. the
+corpus -- and Rule A would have made a corpus-independent null IMPOSSIBLE IN
+PRINCIPLE. This is a property of this instrument's design, not a general fact.
+
+REFERENCE SAMPLERS (all corpus-independent):
+  R1 MUTATION-LOCAL      spec-default mutate(candidate, beacon_seed), verbatim
+  R2 LENGTH-MATCHED      uniform bytes of the CANDIDATE'S OWN length
+  R3 CANONICAL CREATE    spec-default create_random, support [16,96], NOT
+                         BROADENED even though known candidates fall outside
+
+THE SUBTLEST DISTINCTION IN THE DESIGN, offered for scrutiny: "match the
+candidate's own length" is a function of the HYPOTHESIS (free under Rule A);
+"match to the 401-700 band" is a function of the CORPUS (a type error). Both
+mention length. Only one is legal.
+
+CONTEXT FAMILY: beacon-derived uniform 64-bit machine words. The historical
+task battery is CORPUS_DERIVED and is therefore unavailable.
+OBSERVABLES: intrinsic ExecResult fields only (steps, halt class, output,
+|opcodes_executed|, |memory_written|, stack depth). TASK SUCCESS IS NOT A
+CANONICAL OBSERVABLE.
+
+--------------------------------------------------------------------------------
+4. NULL-PATH TYPE SYSTEM AND HOSTILE RESULTS
+--------------------------------------------------------------------------------
+Four tags: SPEC_DERIVED, PROTOCOL_CONSTANT, EXTERNAL_RANDOMNESS, and
+CORPUS_DERIVED -- the last STRUCTURALLY ILLEGAL on the scientific null path,
+refused at construction. Fourteen null-path fields, all required; an
+UNDECLARED EXTRA FIELD is refused, because an unlisted knob is how a
+corpus-derived value hides. SPEC_DERIVED requires a source citation, verified
+by re-reading the file, checking its pinned hash, and confirming the symbol.
+
+HOSTILE SUITE: 13 / 13 DEFENDED.
+  A1 doctored mutate config, honestly tagged .............. refused
+  A2 doctored config MISLABELLED as SPEC_DERIVED .......... refused*
+  A3 genotype-band encoding in "generic" exclusions ....... refused*
+  B1 step budget taken from the corpus failure curve ...... refused
+  B2 same value relabelled PROTOCOL_CONSTANT (late-fixed).. refused
+  C1 sampler chosen because candidate looks extreme ....... refused*
+  D1 tag stripped (raw untagged value) .................... refused
+  D2 derived-feature laundering (spec feature/corpus thresh) refused*
+  D3 undeclared extra knob ................................ refused
+  E1 offline-oracle saturating program .................... refused by LEVEL
+  F1 historical task battery as context family ............ refused
+  F2 arity justified by corpus batteries .................. refused
+  G1 support-preserving tilted reference law .............. refused*
+
+  * = caught by a check BEYOND the tag itself. These are the honest residuals:
+    A2 needs value-vs-cited-spec comparison (in the hostile test, NOT yet in
+    the constructor); A3/D2 need thresholds separately tagged; C1 -- SAMPLER
+    SELECTION -- is the deepest: each of R1/R2/R3 is individually corpus-free,
+    but CHOOSING among them because the candidate looks extreme under one is
+    null-fitting by selection, which no per-value tag can see. Its fix is a
+    protocol requirement (pre-register the sampler before candidate
+    inspection), not a type check. G1 requires the production sampler to
+    EXECUTE THE CITED SOURCE rather than a transcription (see L4).
+
+--------------------------------------------------------------------------------
+5. EXPRESSIBILITY -- AND WHAT IS DELIBERATELY REFUSED
+--------------------------------------------------------------------------------
+Per mission section 3, no single universal null was forced.
+
+EXPRESSIBLE: mutation-local comparisons; program-space comparisons;
+execution-context interventions; resource-budget perturbation arms;
+role/permutation comparisons; lineage-independent replication.
+
+UNSTATEABLE (recorded, not worked around):
+  1. ANY task-success claim -- the task corpus is CORPUS_DERIVED.
+  2. Any claim needing R3 for a candidate outside [16,96].
+  3. Any claim whose reference set is "the artifacts that actually existed".
+  4. Any claim about discovered population bands.
+
+CONSEQUENCE FOR THE FIVE FROZEN CANDIDATES (UPDATED_WOW_ADMISSION_QUEUE.jsonl):
+  WOW-C-001 sham (401-700 band) ......... NOT_CURRENTLY_STATEABLE
+  WOW-C-002 9bc2b861 transfer probe ..... NOT_CURRENTLY_STATEABLE
+  WOW-C-003 sterile-band mechanism ...... PARTIALLY STATEABLE
+  WOW-C-004 reproductive isolation ...... PARTIALLY STATEABLE
+  WOW-C-005 convergent task solvability . NOT_CURRENTLY_STATEABLE
+
+Three of five cannot be stated; two can be stated only after restating them
+over a SPEC-DEFINED length parameterization instead of discovered modes --
+which changes the claim, and the restated version does not inherit the
+historical support. THE NULL WAS NOT BROADENED TO RESCUE ANY OF THEM.
+
+--------------------------------------------------------------------------------
+6. SUBSTRATE C (parallel, discovery-only, provenance-separated)
+--------------------------------------------------------------------------------
+Nothing from this survey was used to design, tune, or justify the canonical
+null; STACKVM_NULL_PROVENANCE.json cites only vm.py and adapter.py.
+
+  ** TIME-SENSITIVE, UNRELATED TO THE SCIENCE: API key prefixes for seven
+  providers are printed in plaintext in
+  archive/bitfrost-core/.../reports/frontier_model_inventory.md, and a .env
+  exists alongside. TREAT AS EXPOSED; ROTATE. **
+
+The ten archived projects are one research program restarted eight times in
+21 days. ALL FIVE PHENOMENON CLASSES RECUR INDEPENDENTLY in codebases with no
+shared code -- and in at least four projects a P1-P4 defect is the DIRECT
+CAUSE of the project's headline result, three of which still stand as claims.
+Highlights: a scoring dimension with ONE distinct value across 6,641 records;
+90% of re-scored items changing quality on re-evaluation (signal-to-noise ~1);
+a "293x amplification" headline resting on a promotion count inflated by a
+no-op mutation bug; 33% byte-identical duplicates awarded extra archive slots;
+an entire probe phase voided by one hardcoded layer constant borrowed from a
+different project; and -- the single most decisive file in 207 MB -- a pure
+n-gram babbler with no LLM outscoring both real models, proving the fitness
+function did not discriminate reasoning from random text.
+
+EFFECT ON THE FIVE CANDIDATES: none promoted, none demoted. Independent
+recurrence raises the prior that these are GENERIC DEFECT CLASSES of this kind
+of research program rather than substrate-specific phenomena -- which if
+anything LOWERS the scientific interest of the stackvm-v1 instances and RAISES
+the value of a cross-cutting audit. A discovery-side judgement carrying no
+admission weight.
+
+--------------------------------------------------------------------------------
+7. LIMITATIONS AND RESIDUAL RISK
+--------------------------------------------------------------------------------
+  L1 Level certification incomplete (200 decoys -> p0 <= 0.015 only).
+  L2 Wall-clock backstop (halt == "wall") is a host-dependent nondeterminism
+     channel; it must be excluded from admissible observables or treated as
+     INFRASTRUCTURE_ABORT. NOT YET IMPLEMENTED.
+  L3 Observable degeneracy unmeasured: for uniform random short programs some
+     intrinsic observables may be near-constant, making them useless in
+     practice. A distributional survey under R2 is required before any
+     specification is registered.
+  L4 Samplers are TRANSCRIBED from the spec, not imported from it, so a spec
+     change could silently desynchronize them. The production sampler must
+     execute the cited source with a pinned hash.
+  L5 Tags are asserted; citation verification confirms file hash and symbol
+     existence but not that the VALUE matches the cited symbol (attack A2).
+  L6 Sampler-selection smuggling (attack C1) is closed only by protocol, not
+     by type.
+
+--------------------------------------------------------------------------------
+8. WHAT I RECOMMEND
+--------------------------------------------------------------------------------
+  N1 ADJUDICATE THE REPLACEMENT STANDARD FIRST. If the level check replaces
+     the entropy gate, that decision propagates to every future admission on
+     every substrate, not just this one.
+  N2 DO NOT PURCHASE. Three of five candidates are unstateable and the level
+     is uncertified; a purchase today would register a claim the protocol
+     cannot express under a null whose level is unmeasured.
+  N3 CLOSE L1 BEFORE ANY REGISTRATION -- ~1e4 decoys per specification is the
+     dominant qualification cost and it is per-specification, not per-campaign.
+  N4 THE HIGHEST-VALUE WORK IN THIS PACKET IS NOT THE ADMISSION LANGUAGE. It
+     is the Substrate C finding that three standing headline claims are
+     artifacts, plus the six-check audit that would have caught all of them
+     and is not in anyone's protocol. That correction needs no new compute.
+  N5 ROTATE THE EXPOSED CREDENTIALS.
+
+================================================================================
+  CLOSING
+  The mission asked whether a stackvm-v1 claim could be made scientifically
+  stateable without deriving its null from the corpus. The answer is a
+  qualified yes -- the substrate's "every byte sequence is a legal program"
+  design makes a corpus-independent reference measure possible, and the type
+  system makes corpus contamination a construction-time error rather than a
+  promise.
+
+  But the same machinery, applied honestly, says most of what the archaeology
+  found cannot yet be asked. That is the protocol working as intended: the
+  null was not reverse-engineered to admit the interesting claims. And the
+  standard the mission asked me to qualify turned out to be refuted by its own
+  mandatory negative control -- which is the most useful thing measured here.
+================================================================================

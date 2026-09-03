@@ -1,0 +1,215 @@
+{
+ "prior_a_star_max_share": 0.02,
+ "prior_m_star_max_share": 0.015,
+ "marginal_guess_rate": {
+  "A": 0.02,
+  "B": 0.005,
+  "C": 0.005,
+  "AB": 0.015,
+  "AC": 0.005,
+  "ABC0": 0.005,
+  "ABC1": 0.005,
+  "ABC2": 0.005
+ },
+ "answer_entropy_bits": {
+  "A": 7.04,
+  "B": 7.64,
+  "C": 7.64,
+  "AB": 7.26,
+  "AC": 7.64,
+  "ABC0": 7.64,
+  "ABC1": 7.64,
+  "ABC2": 7.64
+ },
+ "set_answer_sizes_mean_min_max": {
+  "C": [
+   31.91,
+   22,
+   41
+  ],
+  "AC": [
+   16.18,
+   8,
+   24
+  ],
+  "ABC0": [
+   31.75,
+   14,
+   48
+  ],
+  "ABC1": [
+   31.73,
+   14,
+   48
+  ],
+  "ABC2": [
+   31.86,
+   14,
+   44
+  ]
+ },
+ "KILLED_BC_universal_strategy": {
+  "empty_rate": 0.885,
+  "max_share": 0.885
+ },
+ "empty_answer_rate": {
+  "AC": 0.0,
+  "ABC0": 0.0,
+  "ABC1": 0.0,
+  "ABC2": 0.0
+ },
+ "blind_cost_random": {
+  "A": {
+   "n": 60,
+   "min": 7,
+   "median": 9.0,
+   "mean": 8.75,
+   "max": 14
+  },
+  "B": {
+   "n": 60,
+   "min": 9,
+   "median": 9.0,
+   "mean": 9,
+   "max": 9
+  },
+  "C": {
+   "n": 60,
+   "min": 8,
+   "median": 8.0,
+   "mean": 8,
+   "max": 8
+  }
+ },
+ "cost_C_maxsplit": {
+  "n": 60,
+  "min": 8,
+  "median": 8.0,
+  "mean": 8,
+  "max": 8
+ },
+ "cost_B_basis": {
+  "n": 60,
+  "min": 9,
+  "median": 9.0,
+  "mean": 9,
+  "max": 9
+ },
+ "info_floor_queries": {
+  "A": 7,
+  "B": 9,
+  "C": 7,
+  "all": 23,
+  "basis": "a*, m*: 7 independent linear constraints leave {0, v}; (P2,c2): 72 bits at 8 bits/query"
+ },
+ "master_key_residual_candidates": {
+  "BC_known_to_A": {
+   "n": 100,
+   "min": 252,
+   "median": 255.0,
+   "mean": 254.52,
+   "max": 255
+  },
+  "AB_known_to_C": 254,
+  "AC_known_to_B": "unconstrained: 2^72 minus the a*-preserving affine maps"
+ },
+ "public_data_independent_of_hidden": "generator rejects only on (a*, P1, P3, c1, c3, P2, c2); effects and x0 never inspected",
+ "necessity_determined_rate_with_proper_subset": {
+  "AB|known=none": 0.0,
+  "AB|known=A": 0.0,
+  "AB|known=B": 0.0,
+  "AC|known=none": 0.0,
+  "AC|known=A": 0.0,
+  "AC|known=C": 0.0,
+  "ABC0|known=none": 0.0,
+  "ABC0|known=A": 0.0,
+  "ABC0|known=B": 0.0,
+  "ABC0|known=C": 0.0,
+  "ABC0|known=AB": 0.0,
+  "ABC0|known=AC": 0.0,
+  "ABC0|known=BC": 0.0,
+  "ABC1|known=none": 0.0,
+  "ABC1|known=A": 0.0,
+  "ABC1|known=B": 0.0,
+  "ABC1|known=C": 0.0,
+  "ABC1|known=AB": 0.0,
+  "ABC1|known=AC": 0.0,
+  "ABC1|known=BC": 0.0,
+  "ABC2|known=none": 0.0,
+  "ABC2|known=A": 0.0,
+  "ABC2|known=B": 0.0,
+  "ABC2|known=C": 0.0,
+  "ABC2|known=AB": 0.0,
+  "ABC2|known=AC": 0.0,
+  "ABC2|known=BC": 0.0
+ },
+ "necessity_full_set_correct_rate": 1.0,
+ "necessity_partial_missing_component": {
+  "AC|missing=C@4queries": 0.0,
+  "AB|missing=B@4queries": 0.0,
+  "ABC0|missing=C@4queries": 0.0
+ },
+ "union_vs_composition": {
+  "n": 200,
+  "solved_full": 200,
+  "true_composition": 200,
+  "loso_matches_design": 200,
+  "ancestor_case_not_composition": 40,
+  "ancestor_cases": 40,
+  "examples": [
+   {
+    "world": 0,
+    "task": "AB",
+    "necessary": [
+     "A",
+     "B"
+    ],
+    "needed_by_design": [
+     "A",
+     "B"
+    ]
+   },
+   {
+    "world": 0,
+    "task": "AC",
+    "necessary": [
+     "A",
+     "C"
+    ],
+    "needed_by_design": [
+     "A",
+     "C"
+    ]
+   },
+   {
+    "world": 0,
+    "task": "ABC0",
+    "necessary": [
+     "A",
+     "B",
+     "C"
+    ],
+    "needed_by_design": [
+     "A",
+     "B",
+     "C"
+    ]
+   },
+   {
+    "world": 0,
+    "task": "ABC1",
+    "necessary": [
+     "A",
+     "B",
+     "C"
+    ],
+    "needed_by_design": [
+     "A",
+     "B",
+     "C"
+    ]
+   }
+  ]
+ },
+ "elapsed_s": 3.4
+}

@@ -1,0 +1,89 @@
+{
+ "census": {
+  "I0": {
+   "n": 80,
+   "E2_V0_min": 2,
+   "E2_V0_max": 2,
+   "E2_V0_median": 2.0,
+   "E2_after_full_probe_median": 2.0,
+   "E1_vs_E2_ratio_median": 3.0,
+   "zero_info_frac": 1.0,
+   "identified_frac": 0.0,
+   "has_info_only_probe_frac": 0.0,
+   "passive_cost_median": 1.0,
+   "active_cost_median": 9.0,
+   "active_advantage_frac": 0.0
+  },
+  "I1": {
+   "n": 80,
+   "E2_V0_min": 2,
+   "E2_V0_max": 2,
+   "E2_V0_median": 2.0,
+   "E2_after_full_probe_median": 1.0,
+   "E1_vs_E2_ratio_median": 3.0,
+   "zero_info_frac": 0.0,
+   "identified_frac": 0.0,
+   "has_info_only_probe_frac": 1.0,
+   "passive_cost_median": 9.0,
+   "active_cost_median": 1.0,
+   "active_advantage_frac": 1.0
+  },
+  "I3": {
+   "n": 80,
+   "E2_V0_min": 2,
+   "E2_V0_max": 2,
+   "E2_V0_median": 2.0,
+   "E2_after_full_probe_median": 1.0,
+   "E1_vs_E2_ratio_median": 3.0,
+   "zero_info_frac": 0.0,
+   "identified_frac": 0.0,
+   "has_info_only_probe_frac": 1.0,
+   "passive_cost_median": 1.0,
+   "active_cost_median": 1.0,
+   "active_advantage_frac": 0.0
+  },
+  "I4": {
+   "n": 80,
+   "E2_V0_min": 2,
+   "E2_V0_max": 2,
+   "E2_V0_median": 2.0,
+   "E2_after_full_probe_median": 1.0,
+   "E1_vs_E2_ratio_median": 3.0,
+   "zero_info_frac": 0.0,
+   "identified_frac": 0.0,
+   "has_info_only_probe_frac": 1.0,
+   "passive_cost_median": 1.0,
+   "active_cost_median": 1.0,
+   "active_advantage_frac": 0.0
+  },
+  "I5": {
+   "n": 80,
+   "E2_V0_min": 1,
+   "E2_V0_max": 1,
+   "E2_V0_median": 1.0,
+   "E2_after_full_probe_median": 1.0,
+   "E1_vs_E2_ratio_median": 5.0,
+   "zero_info_frac": 0.0,
+   "identified_frac": 1.0,
+   "has_info_only_probe_frac": 0.0,
+   "passive_cost_median": 0.0,
+   "active_cost_median": 0.0,
+   "active_advantage_frac": 0.0
+  }
+ },
+ "checks": {
+  "all_rungs_populated": false,
+  "ladder_ordering": true,
+  "equiv_rung_collapses": true,
+  "I0_zero_info": true,
+  "I5_identified": true,
+  "no_master_key": true,
+  "info_only_exists": false,
+  "I1_active_advantage": true,
+  "I2_active_fast": false,
+  "poles_vs_middle": true
+ },
+ "verdict_generator": "GENERATOR_NOT_READY",
+ "verdict_instrument": "INSTRUMENT_NOT_READY",
+ "n_worlds": 400
+}

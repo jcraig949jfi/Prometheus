@@ -1,0 +1,20 @@
+==========================================================================
+G15 HOSTILE LEDGER QUALIFICATION
+==========================================================================
+!! ATTACK SUCCEEDED | H1 torn-tail purchase erasure -- acknowledged 1/K purchase erased by crash recovery; verifier accepts the shortened history
+!! ATTACK SUCCEEDED | H2 anchor-window suffix replacement -- purchase between anchors erased; restart accepted the rolled-back log
+!! ATTACK SUCCEEDED | H3 logical-time bomb -- clock advanced to 1152921504606846976; famA open=False
+!! ATTACK SUCCEEDED | H4 geometric reservation grab -- 17 compliant opens captured 99% of the scientific pool, no co-signature
+!! ATTACK SUCCEEDED | H5 free-form rule commitment -- doctored R / tie / betting rules accepted as commitments
+!! ATTACK SUCCEEDED | H6 block-id burn griefing -- attacker consumed the victim's block id; victim refused
+   refused/conserved | H7 namespace laundering -- all three laundering paths refused
+   refused/conserved | H8 canonicalization collisions -- NFC + order + defaults collapse; dup keys and unknown fields refused
+   refused/conserved | H9 replay/reorder/corrupt -- replay: rejected; reorder: rejected; interior-corrupt: rejected
+   refused/conserved | H10 crash injection at every tail byte -- 512 cut points, 0 conservation breaks
+   refused/conserved | H11 second concurrent writer -- exclusive lock held
+!! ATTACK SUCCEEDED | h12_fuzz -- harness crash: ModuleNotFoundError("No module named 'wforge'")
+   refused/conserved | H13 halt-state bypass -- scientific blocked, operator lift refused, calibration allowed
+   refused/conserved | H14 K/TTL boundary cases -- floor/ceiling/reachability all enforced
+==========================================================================
+ATTACKS SUCCEEDED: 7 / 14
+==========================================================================

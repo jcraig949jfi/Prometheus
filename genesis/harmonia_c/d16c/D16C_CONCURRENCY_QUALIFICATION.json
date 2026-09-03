@@ -1,0 +1,219 @@
+{
+ "verdict_name": "D16C_CONCURRENCY_ENVELOPE",
+ "engine_hash": "sha256:5274ddbe9120ddbbd75a36965106d2efe640a3b72278e7bb97b82e356e1fc9fc",
+ "instance": {
+  "kind": "PRIVATE_PINNED",
+  "base": "http://127.0.0.1:8899",
+  "note": "correctness determined here only; NO live bursts were run (no Daedalus window announced) -> no LIVE_ANOMALY rows; live corroboration OUTSTANDING"
+ },
+ "date": "2026-09-02",
+ "invariants_checked": [
+  "write_exact",
+  "budget_exact",
+  "index_contiguous",
+  "seq_increasing",
+  "global_seq_unique",
+  "chain_recompute_ok",
+  "engine_verify_world",
+  "f10_deterministic",
+  "idempotency_same_response",
+  "idempotency_conflict_409",
+  "fork_boundary",
+  "workers_ok==level",
+  "n_errors==0"
+ ],
+ "invariant_definitions": {
+  "write_exact": "per world: HYPOTHESIS_PROPOSED == steps+1 (idempotent duplicate yields exactly one), PREDICTION/OBSERVATION/FAILURE/ARTIFACT counts == client-side counts",
+  "budget_exact": "engine consumed == researcher spend == EXPERIMENT_COMMITTED count; BUDGET_EXHAUSTED iff attempted > B",
+  "index_contiguous/seq_increasing/global_seq_unique": "ledger index 0..n-1 without gaps per world; event_seq strictly increasing; global seq unique across worlds",
+  "chain_recompute_ok": "independent recomputation of the hash chain over (world_id, world_index, event_type, ts, actor, payload, refs, causal, artifacts, prev_hash, schema_ver=1) from raw sqlite rows",
+  "engine_verify_world": "sfe_events.verify_world(cx, wid) for every world",
+  "f10_deterministic": "two F10 calls on the same world/cutoff byte-identical",
+  "idempotency": "two clients, same Idempotency-Key + same body concurrently -> identical response; same key different body -> 409",
+  "fork_boundary": "child F10 == parent F10 at checkpoint seq, for a fork taken under load"
+ },
+ "per_worker_workload": "register, create+start world (enforceable experiments budget B=8), concurrent idempotent duplicate + conflict, 3 LT steps, checkpoint+fork, finish (exceed budget), artifacts, resources, F10 x2, child-vs-parent F10, imports",
+ "levels": [
+  {
+   "level": 1,
+   "verdict": "PASS",
+   "events": 78,
+   "events_per_s": 117.2,
+   "p50_ms": 47.8,
+   "p95_ms": 51.0,
+   "max_ms": 62.2,
+   "errors": 0,
+   "all_invariants": true,
+   "imports_ok": 3,
+   "campaign": "C1_QUALIFIED_ENVELOPE"
+  },
+  {
+   "level": 2,
+   "verdict": "PASS",
+   "events": 152,
+   "events_per_s": 262.7,
+   "p50_ms": 23.9,
+   "p95_ms": 51.3,
+   "max_ms": 92.1,
+   "errors": 0,
+   "all_invariants": true,
+   "imports_ok": 7,
+   "campaign": "C1_QUALIFIED_ENVELOPE"
+  },
+  {
+   "level": 4,
+   "verdict": "PASS",
+   "events": 286,
+   "events_per_s": 328.0,
+   "p50_ms": 53.9,
+   "p95_ms": 95.3,
+   "max_ms": 123.6,
+   "errors": 0,
+   "all_invariants": true,
+   "imports_ok": 16,
+   "campaign": "C1_QUALIFIED_ENVELOPE"
+  },
+  {
+   "level": 8,
+   "verdict": "PASS",
+   "events": 576,
+   "events_per_s": 276.5,
+   "p50_ms": 80.7,
+   "p95_ms": 278.4,
+   "max_ms": 447.6,
+   "errors": 0,
+   "all_invariants": true,
+   "imports_ok": 38,
+   "campaign": "C1_QUALIFIED_ENVELOPE"
+  },
+  {
+   "level": 16,
+   "verdict": "PASS",
+   "events": 1188,
+   "events_per_s": 308.5,
+   "p50_ms": 82.4,
+   "p95_ms": 671.1,
+   "max_ms": 2421.7,
+   "errors": 0,
+   "all_invariants": true,
+   "imports_ok": 90,
+   "campaign": "C1_QUALIFIED_ENVELOPE"
+  },
+  {
+   "level": 32,
+   "verdict": "PASS",
+   "events": 2378,
+   "events_per_s": 327.5,
+   "p50_ms": 128.2,
+   "p95_ms": 1814.3,
+   "max_ms": 3388.4,
+   "errors": 0,
+   "all_invariants": true,
+   "imports_ok": 179,
+   "campaign": "C2_DESTRUCTIVE"
+  },
+  {
+   "level": 64,
+   "verdict": "PASS",
+   "events": 4830,
+   "events_per_s": 461.3,
+   "p50_ms": 242.9,
+   "p95_ms": 5047.9,
+   "max_ms": 8706.9,
+   "errors": 0,
+   "all_invariants": true,
+   "imports_ok": 344,
+   "campaign": "C2_DESTRUCTIVE"
+  },
+  {
+   "level": 128,
+   "verdict": "PASS",
+   "events": 9750,
+   "events_per_s": 562.1,
+   "p50_ms": 879.8,
+   "p95_ms": 3780.8,
+   "max_ms": 13202.8,
+   "errors": 0,
+   "all_invariants": true,
+   "imports_ok": 700,
+   "campaign": "C2_DESTRUCTIVE"
+  },
+  {
+   "level": 256,
+   "verdict": "PASS",
+   "events": 19736,
+   "events_per_s": 620.7,
+   "p50_ms": 2011.0,
+   "p95_ms": 4016.0,
+   "max_ms": 21553.6,
+   "errors": 0,
+   "all_invariants": true,
+   "imports_ok": 1400,
+   "campaign": "C2_DESTRUCTIVE"
+  },
+  {
+   "level": 512,
+   "verdict": "PASS",
+   "events": 39568,
+   "events_per_s": 609.1,
+   "p50_ms": 4579.0,
+   "p95_ms": 6959.8,
+   "max_ms": 22290.4,
+   "errors": 0,
+   "all_invariants": true,
+   "imports_ok": 2802,
+   "campaign": "C2_DESTRUCTIVE"
+  },
+  {
+   "level": 1024,
+   "verdict": "PASS",
+   "events": 78954,
+   "events_per_s": 586.1,
+   "p50_ms": 9925.9,
+   "p95_ms": 13185.2,
+   "max_ms": 31873.6,
+   "errors": 0,
+   "all_invariants": true,
+   "imports_ok": 5539,
+   "campaign": "C2_DESTRUCTIVE"
+  }
+ ],
+ "C1_qualified_operating_envelope": {
+  "levels": [
+   1,
+   2,
+   4,
+   8,
+   16
+  ],
+  "all_pass": true,
+  "max_qualified_level": 16,
+  "p95_ms_at_16": 671.1,
+  "max_ms_at_16": 2421.7,
+  "ecology_may_run_at": "<=16 concurrent lineages on a pinned instance (and only after ED-001 is resolved)"
+ },
+ "C2_destructive": {
+  "levels": [
+   32,
+   64,
+   128,
+   256,
+   512,
+   1024
+  ],
+  "correctness_failures": [],
+  "ENGINE_CORRECTNESS_DEFECT": null,
+  "ENGINE_PERFORMANCE_LIMIT": {
+   "reached_at": 1024,
+   "shape": "throughput saturates at ~600 ev/s from L=128 (562/621/609/586); p50 latency grows ~linearly with L (2.0s@256, 4.6s@512, 9.9s@1024) = queueing on the single serialized writer; max latency 31.9s@1024 exceeds sfclient's default timeout (30.0s, sfclient/client.py:40) -> a stock client begins timing out at 1024 while the engine stays correct",
+   "invariants_intact_at_limit": true,
+   "classification": "ENGINE_PERFORMANCE_LIMIT (latency/queueing), NOT a correctness collapse; no level produced a wrong ledger, wrong budget, wrong F10 or wrong fork frontier"
+  }
+ },
+ "instrument_caveats": [
+  "sfclient opens one TCP connection per request; at L=256 the FIRST run died with WinError 10048 (16,310 sockets in TIME_WAIT) -- ephemeral-port exhaustion on the CLIENT host, not an engine fault. Rerun with a keep-alive client (engine_lineage.KeepAliveClient); 256/512/1024 then passed. The 32/64/128 rows come from the interrupted run (invariants audited from DB after the fact).",
+  "single host: client threads and engine share one machine; latency at 512/1024 includes client-side GIL contention, so the 1024 limit is an upper bound on engine-side queueing",
+  "no live-instance bursts: Amendment 4 corroboration on the live engine requires an announced Daedalus window; not run"
+ ],
+ "five_verdict_isolation": "answers Q6 only; says nothing about crossing correctness (ED-001..003 live in D16C_CROSSING_QUALIFICATION.json)"
+}

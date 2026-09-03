@@ -1,0 +1,187 @@
+{
+ "engine_hash": "sha256:5274ddbe9120ddbbd75a36965106d2efe640a3b72278e7bb97b82e356e1fc9fc",
+ "mode": "C1",
+ "B": 8,
+ "levels": [
+  {
+   "level": 1,
+   "invariants": {
+    "workers_ok": 1,
+    "errors": [],
+    "n_errors": 0,
+    "write_exact": true,
+    "budget_exact": true,
+    "index_contiguous": true,
+    "seq_increasing": true,
+    "global_seq_unique": true,
+    "chain_recompute_ok": true,
+    "engine_verify_world": true,
+    "f10_deterministic": true,
+    "idempotency_same_response": true,
+    "idempotency_conflict_409": true,
+    "fork_boundary": true,
+    "imports_ok": 3,
+    "imports_denied": 0,
+    "exhausted_lineages": 1,
+    "done_lineages": 0,
+    "all_invariants": true
+   },
+   "perf": {
+    "wall_s": 0.67,
+    "events": 78,
+    "events_per_s": 117.2,
+    "req_latency_ms": {
+     "p50": 47.8,
+     "p95": 51.0,
+     "max": 62.2
+    }
+   },
+   "failed_audits": [],
+   "verdict": "PASS"
+  },
+  {
+   "level": 2,
+   "invariants": {
+    "workers_ok": 2,
+    "errors": [],
+    "n_errors": 0,
+    "write_exact": true,
+    "budget_exact": true,
+    "index_contiguous": true,
+    "seq_increasing": true,
+    "global_seq_unique": true,
+    "chain_recompute_ok": true,
+    "engine_verify_world": true,
+    "f10_deterministic": true,
+    "idempotency_same_response": true,
+    "idempotency_conflict_409": true,
+    "fork_boundary": true,
+    "imports_ok": 7,
+    "imports_denied": 0,
+    "exhausted_lineages": 1,
+    "done_lineages": 1,
+    "all_invariants": true
+   },
+   "perf": {
+    "wall_s": 0.58,
+    "events": 152,
+    "events_per_s": 262.7,
+    "req_latency_ms": {
+     "p50": 23.9,
+     "p95": 51.3,
+     "max": 92.1
+    }
+   },
+   "failed_audits": [],
+   "verdict": "PASS"
+  },
+  {
+   "level": 4,
+   "invariants": {
+    "workers_ok": 4,
+    "errors": [],
+    "n_errors": 0,
+    "write_exact": true,
+    "budget_exact": true,
+    "index_contiguous": true,
+    "seq_increasing": true,
+    "global_seq_unique": true,
+    "chain_recompute_ok": true,
+    "engine_verify_world": true,
+    "f10_deterministic": true,
+    "idempotency_same_response": true,
+    "idempotency_conflict_409": true,
+    "fork_boundary": true,
+    "imports_ok": 16,
+    "imports_denied": 0,
+    "exhausted_lineages": 1,
+    "done_lineages": 3,
+    "all_invariants": true
+   },
+   "perf": {
+    "wall_s": 0.87,
+    "events": 286,
+    "events_per_s": 328.0,
+    "req_latency_ms": {
+     "p50": 53.9,
+     "p95": 95.3,
+     "max": 123.6
+    }
+   },
+   "failed_audits": [],
+   "verdict": "PASS"
+  },
+  {
+   "level": 8,
+   "invariants": {
+    "workers_ok": 8,
+    "errors": [],
+    "n_errors": 0,
+    "write_exact": true,
+    "budget_exact": true,
+    "index_contiguous": true,
+    "seq_increasing": true,
+    "global_seq_unique": true,
+    "chain_recompute_ok": true,
+    "engine_verify_world": true,
+    "f10_deterministic": true,
+    "idempotency_same_response": true,
+    "idempotency_conflict_409": true,
+    "fork_boundary": true,
+    "imports_ok": 38,
+    "imports_denied": 0,
+    "exhausted_lineages": 2,
+    "done_lineages": 6,
+    "all_invariants": true
+   },
+   "perf": {
+    "wall_s": 2.08,
+    "events": 576,
+    "events_per_s": 276.5,
+    "req_latency_ms": {
+     "p50": 80.7,
+     "p95": 278.4,
+     "max": 447.6
+    }
+   },
+   "failed_audits": [],
+   "verdict": "PASS"
+  },
+  {
+   "level": 16,
+   "invariants": {
+    "workers_ok": 16,
+    "errors": [],
+    "n_errors": 0,
+    "write_exact": true,
+    "budget_exact": true,
+    "index_contiguous": true,
+    "seq_increasing": true,
+    "global_seq_unique": true,
+    "chain_recompute_ok": true,
+    "engine_verify_world": true,
+    "f10_deterministic": true,
+    "idempotency_same_response": true,
+    "idempotency_conflict_409": true,
+    "fork_boundary": true,
+    "imports_ok": 90,
+    "imports_denied": 0,
+    "exhausted_lineages": 4,
+    "done_lineages": 12,
+    "all_invariants": true
+   },
+   "perf": {
+    "wall_s": 3.85,
+    "events": 1188,
+    "events_per_s": 308.5,
+    "req_latency_ms": {
+     "p50": 82.4,
+     "p95": 671.1,
+     "max": 2421.7
+    }
+   },
+   "failed_audits": [],
+   "verdict": "PASS"
+  }
+ ]
+}

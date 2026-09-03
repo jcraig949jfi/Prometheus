@@ -1,0 +1,133 @@
+==========================================================================
+SELECTION BOUNDARY RESULTS
+==========================================================================
+
+==============================================================================
+TOY SELECTION-BIAS DEMONSTRATIONS
+==============================================================================
+
+[A/B] MAX-OF-N SELECTION vs SELECTION-REPLICATING NULL
+  A naive base-measure test on the winner of N=100:
+      rejection rate 0.9932   (exact prediction 0.9941)
+      INFLATION vs nominal 0.05: 19.9x
+  B selection-replicating null (winner vs winners):
+      rejection rate 0.0432   (target 0.05)
+
+[C] TWO-STAGE SELECTION -- partial replay is not enough
+  historical search = 20 runs x 50 draws
+  replay INNER stage only : 0.5060
+  replay BOTH stages      : 0.0495  (target 0.05)
+
+[D] SPECIFICATION SELECTION -- the menu is a selection channel
+  analyst reports best of 20 specs : 0.6410
+  Bonferroni over the menu         : 0.0000
+  BEACON selects the spec          : 0.0493  (target 0.05)
+
+[F] INCOMPLETE REPLAY -- omitting a stage
+  naive                       : 0.9943
+  replay WITHOUT censoring    : 0.0543
+  replay WITH censoring       : 0.0470  (target 0.05)
+  censoring here happens to make the UNCENSORED replay CONSERVATIVE rather than anti-conservative, because the omitted step removed only LOW draws.
+  The direction of the error depends on which tail the omitted stage cut.
+  See demo_F2 for the anti-conservative direction.
+
+[F2] THE ANTI-CONSERVATIVE DIRECTION -- undercounting the search
+  true search depth N = 100; replay assumes n:
+      n = 100  -> rejection 0.0520  <-- correct
+      n = 50   -> rejection 0.1000
+      n = 20   -> rejection 0.2197
+      n = 10   -> rejection 0.3380
+      n = 1    -> rejection 0.8300
+  UNDERCOUNTING THE HISTORICAL SEARCH IS DIRECTLY
+  ANTI-CONSERVATIVE. If the logs do not say how many artifacts
+  were really examined, the replay CANNOT be trusted.
+==============================================================================
+
+==============================================================================
+CANDIDATE-CONDITIONAL RANDOMIZATION -- THE OPPOSITE CASE
+==============================================================================
+
+[E1/E2] LEVEL vs HISTORICAL SELECTION INTENSITY (null is true)
+  The specimen is chosen as the MAXIMUM of n draws, on the very
+  statistic the analyst cares about. Then a FRESH randomized
+  intervention is run on clones, with assignment drawn after the
+  specimen is fixed.
+      selection depth n = 1        -> rejection 0.0533
+      selection depth n = 100      -> rejection 0.0553
+      selection depth n = 1000     -> rejection 0.0567
+      selection depth n = 200000   -> rejection 0.0647
+  LEVEL IS FLAT IN SELECTION INTENSITY. Arbitrarily extreme
+  historical selection does NOT inflate the randomized causal
+  test, because the null concerns the response to experimenter
+  randomness, not the specimen's provenance.
+
+[E4] AND THE TEST IS NOT VACUOUS (power against real effects)
+      true effect 0.0 -> rejection 0.0625
+      true effect 0.5 -> rejection 0.2150
+      true effect 1.0 -> rejection 0.5850
+      true effect 2.0 -> rejection 0.9788
+
+[E3] THE BOUNDARY WITHIN CLASS E -- TEST selection is NOT free
+  analyst reports best of 20 observables : 0.6475
+  beacon selects the observable         : 0.0525  (target 0.05)
+  CLASS E IS FREE WITH RESPECT TO SPECIMEN SELECTION,
+  NOT WITH RESPECT TO TEST SELECTION. The specimen may be chosen
+  by unlimited hindsight; the intervention, the observable, the
+  tail and the stopping rule may not.
+==============================================================================
+
+============================================================================
+STACKVM-V1 SELECTION PROVENANCE AUDIT
+============================================================================
+   M1_generator               MACHINE  create_random / mutate / recombine recon=True  human=False class=HISTORICALLY_FIXED
+   M2_population_schedule     MACHINE  driver world_objective_v1 with a p recon=True  human=False class=HISTORICALLY_FIXED
+   M3_survivor_selection      MACHINE  objective_ga selection: tournament recon=True  human=False class=HISTORICALLY_FIXED
+   M4_archive                 MACHINE  MAP-Elites style grid archive: ins recon=True  human=False class=HISTORICALLY_FIXED
+   M5_run_nomination          MACHINE  BEST-OF-RUN: each experiment emits recon=True  human=False class=HISTORICALLY_FIXED
+   M6_task_filter             MACHINE  terrain / battery definition gatin recon=True  human=False class=CORPUS_SELECTED
+!! H1_era_restart             HUMAN    two driver eras (objective_ga then recon=False human=True  class=UNDECLARED
+!! H2_archaeological_mining   HUMAN    adaptive post-hoc mining of the le recon=False human=True  class=UNDECLARED
+!! H3_claim_wording           HUMAN    the phenomenon description attache recon=False human=True  class=UNDECLARED
+   S1_spec_menu               SPEC     choice of observable / sampler / t recon=True  human=True  class=CORPUS_SELECTED
+
+channels: 10  load-bearing: 10
+MACHINE layer fully reconstructible: True
+LOAD-BEARING BUT NOT RECONSTRUCTIBLE: ['H1_era_restart', 'H2_archaeological_mining', 'H3_claim_wording']
+ILLEGAL ON NULL PATH AND LOAD-BEARING: ['M6_task_filter', 'H1_era_restart', 'H2_archaeological_mining', 'H3_claim_wording', 'S1_spec_menu']
+
+
+==============================================================================
+SELECTION-REPLAYABILITY AUDIT
+==============================================================================
+  M1_generator               SR0  operator config recorded verbatim AND hashed
+  M2_population_schedule     SR0  driver, budget and seed recorded per experim
+  M3_survivor_selection      SR1  operator, tie_break_policy, tie_break_key, r
+  M4_archive                 SR2  archive rule is deterministic and single-val
+  M5_run_nomination          SR0  EXPERIMENT_FINISHED.best_artifact_id is an e
+  M6_task_filter             SR1  terrain/battery fully specified and hashed (
+  H1_era_restart             SR3  no recorded rule for why the map_elites era 
+  H2_archaeological_mining   SR3  adaptive, model-driven, interactive; branch 
+  H3_claim_wording           SR3  no recorded rule
+  S1_spec_menu               SR2  repairable to SR0-equivalent by BEACON_SELEC
+
+  class counts: {'SR0': 3, 'SR1': 2, 'SR2': 2, 'SR3': 3}
+  WORST LOAD-BEARING CLASS: SR3 (H1, H2, H3)
+
+  SEMANTICS HAZARD bounding M4:
+    ZERO executions carry a wall detail and ZERO ARCHIVE_REJECTs carry detail='no_fitness' (71,683 executions examined)
+    BUT: the era declared adapter_version 0.1.0, and the current source states that 0.1.0 COUNTED A WALLED CASE AS SIMPLY 'NOT PASSED'. Under the era's own semantics a wall therefore leaves a record INDISTINGU
+
+==============================================================================
+REGISTERED CONDITIONAL LEVEL CERTIFICATE (exact, pre-beacon)
+==============================================================================
+  generic_64B        support=16320  hits=13869  alpha_exact=0.8498
+  mostly_dead_64B    support=16320  hits=15820  alpha_exact=0.9694
+
+  A registrant proving a level 'pointwise' from a GENERICITY
+  premise ('a typical 64-byte program has few inert bytes') would
+  price this test at ~0.8498. At the candidate a corpus search can
+  actually surface, the true level is 0.9694 -- a factor of 1x.
+  THE CERTIFICATE IS COMPUTED BEFORE THE BEACON, FROM c AND THE
+  DECLARED LAW OF U ALONE. It needs no fresh randomness, and it
+  refuses the mispriced test at registration.
+==============================================================================

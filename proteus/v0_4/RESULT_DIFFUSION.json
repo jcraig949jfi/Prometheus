@@ -1,0 +1,449 @@
+{
+ "checkpoints": [
+  0,
+  1,
+  10,
+  100,
+  1000,
+  10000
+ ],
+ "connectivity": {
+  "distinct_classes_in_dense_trajectories": 1385,
+  "distinct_observed_transitions": 2809,
+  "max_out_degree": 509,
+  "mean_out_degree": 2.1168048229088168,
+  "top_transitions": [
+   {
+    "from": "65fdb8e41db5",
+    "n": 741,
+    "to": "5067b419e169"
+   },
+   {
+    "from": "5067b419e169",
+    "n": 724,
+    "to": "65fdb8e41db5"
+   },
+   {
+    "from": "e13da054e0a9",
+    "n": 287,
+    "to": "5067b419e169"
+   },
+   {
+    "from": "5067b419e169",
+    "n": 278,
+    "to": "e13da054e0a9"
+   },
+   {
+    "from": "5067b419e169",
+    "n": 163,
+    "to": "ff9db58b6c52"
+   },
+   {
+    "from": "e4c26ed8a5d2",
+    "n": 149,
+    "to": "5067b419e169"
+   },
+   {
+    "from": "ff9db58b6c52",
+    "n": 142,
+    "to": "5067b419e169"
+   },
+   {
+    "from": "5067b419e169",
+    "n": 132,
+    "to": "e4c26ed8a5d2"
+   },
+   {
+    "from": "5067b419e169",
+    "n": 110,
+    "to": "bb916adb2e00"
+   },
+   {
+    "from": "bb916adb2e00",
+    "n": 100,
+    "to": "5067b419e169"
+   },
+   {
+    "from": "e13da054e0a9",
+    "n": 82,
+    "to": "65fdb8e41db5"
+   },
+   {
+    "from": "65fdb8e41db5",
+    "n": 75,
+    "to": "e13da054e0a9"
+   },
+   {
+    "from": "5067b419e169",
+    "n": 73,
+    "to": "fb6d525522d3"
+   },
+   {
+    "from": "65fdb8e41db5",
+    "n": 71,
+    "to": "bb916adb2e00"
+   },
+   {
+    "from": "19bcf5789f8d",
+    "n": 61,
+    "to": "5067b419e169"
+   }
+  ]
+ },
+ "curve": [
+  {
+   "checkpoint": 0,
+   "class_occupancy": {
+    "ceiling_bits": 8.643856189774725,
+    "distinct": 72,
+    "entropy_bits": 3.3878126500119228,
+    "gini": 0.7803472222222222,
+    "top_share": 0.45
+   },
+   "classes_shared_by_multiple_lineages": 15,
+   "cumulative_unique_classes": 72,
+   "cumulative_unique_knockout": 258,
+   "distinct_classes": 72,
+   "distinct_knockout_vectors": 258,
+   "knockout_occupancy": {
+    "ceiling_bits": 8.643856189774725,
+    "distinct": 258,
+    "entropy_bits": 7.439254759919935,
+    "gini": 0.324515503875969,
+    "top_share": 0.07
+   },
+   "mean_length": 17.67,
+   "mean_log2_tape": 6.9025,
+   "nc4_class_occupancy": {
+    "ceiling_bits": 8.643856189774725,
+    "distinct": 52,
+    "entropy_bits": 2.910884315710064,
+    "gini": 0.8159615384615385,
+    "top_share": 0.5025
+   },
+   "nc4_distinct_classes": 52,
+   "nc4_knockout_occupancy": {
+    "ceiling_bits": 8.643856189774725,
+    "distinct": 249,
+    "entropy_bits": 7.41734823357573,
+    "gini": 0.33389558232931726,
+    "top_share": 0.0625
+   },
+   "nc4_silent_fraction": 0.815,
+   "new_classes_at_this_checkpoint": 72,
+   "new_knockout_at_this_checkpoint": 258,
+   "silent_fraction": 0.7725,
+   "status_seq_occupancy": {
+    "ceiling_bits": 8.643856189774725,
+    "distinct": 22,
+    "entropy_bits": 2.134412073979553,
+    "gini": 0.8318181818181818,
+    "top_share": 0.54
+   }
+  },
+  {
+   "checkpoint": 1,
+   "class_occupancy": {
+    "ceiling_bits": 8.643856189774725,
+    "distinct": 73,
+    "entropy_bits": 3.4341534141278003,
+    "gini": 0.7764383561643836,
+    "top_share": 0.45
+   },
+   "classes_shared_by_multiple_lineages": 15,
+   "cumulative_unique_classes": 93,
+   "cumulative_unique_knockout": 325,
+   "distinct_classes": 73,
+   "distinct_knockout_vectors": 248,
+   "knockout_occupancy": {
+    "ceiling_bits": 8.643856189774725,
+    "distinct": 248,
+    "entropy_bits": 7.3640145943774264,
+    "gini": 0.3426008064516129,
+    "top_share": 0.0725
+   },
+   "mean_length": 17.57,
+   "mean_log2_tape": 6.895,
+   "nc4_class_occupancy": {
+    "ceiling_bits": 8.643856189774725,
+    "distinct": 60,
+    "entropy_bits": 3.2250958076191396,
+    "gini": 0.7955833333333333,
+    "top_share": 0.47
+   },
+   "nc4_distinct_classes": 60,
+   "nc4_knockout_occupancy": {
+    "ceiling_bits": 8.643856189774725,
+    "distinct": 256,
+    "entropy_bits": 7.417538349687394,
+    "gini": 0.32380859375,
+    "top_share": 0.08
+   },
+   "nc4_silent_fraction": 0.79,
+   "new_classes_at_this_checkpoint": 21,
+   "new_knockout_at_this_checkpoint": 67,
+   "silent_fraction": 0.76,
+   "status_seq_occupancy": {
+    "ceiling_bits": 8.643856189774725,
+    "distinct": 20,
+    "entropy_bits": 2.0686649076318937,
+    "gini": 0.82775,
+    "top_share": 0.55
+   }
+  },
+  {
+   "checkpoint": 10,
+   "class_occupancy": {
+    "ceiling_bits": 8.643856189774725,
+    "distinct": 62,
+    "entropy_bits": 3.0362705049722494,
+    "gini": 0.8028225806451613,
+    "top_share": 0.51
+   },
+   "classes_shared_by_multiple_lineages": 15,
+   "cumulative_unique_classes": 135,
+   "cumulative_unique_knockout": 462,
+   "distinct_classes": 62,
+   "distinct_knockout_vectors": 232,
+   "knockout_occupancy": {
+    "ceiling_bits": 8.643856189774725,
+    "distinct": 232,
+    "entropy_bits": 7.267959675719796,
+    "gini": 0.3709698275862069,
+    "top_share": 0.055
+   },
+   "mean_length": 17.34,
+   "mean_log2_tape": 6.9625,
+   "nc4_class_occupancy": {
+    "ceiling_bits": 8.643856189774725,
+    "distinct": 68,
+    "entropy_bits": 3.249390208688249,
+    "gini": 0.7888235294117647,
+    "top_share": 0.4725
+   },
+   "nc4_distinct_classes": 68,
+   "nc4_knockout_occupancy": {
+    "ceiling_bits": 8.643856189774725,
+    "distinct": 234,
+    "entropy_bits": 7.268070732878424,
+    "gini": 0.3708119658119658,
+    "top_share": 0.055
+   },
+   "nc4_silent_fraction": 0.795,
+   "new_classes_at_this_checkpoint": 42,
+   "new_knockout_at_this_checkpoint": 137,
+   "silent_fraction": 0.7875,
+   "status_seq_occupancy": {
+    "ceiling_bits": 8.643856189774725,
+    "distinct": 17,
+    "entropy_bits": 1.7886693935630007,
+    "gini": 0.8332352941176471,
+    "top_share": 0.6125
+   }
+  },
+  {
+   "checkpoint": 100,
+   "class_occupancy": {
+    "ceiling_bits": 8.643856189774725,
+    "distinct": 67,
+    "entropy_bits": 2.998788889909898,
+    "gini": 0.7979850746268656,
+    "top_share": 0.56
+   },
+   "classes_shared_by_multiple_lineages": 12,
+   "cumulative_unique_classes": 183,
+   "cumulative_unique_knockout": 593,
+   "distinct_classes": 67,
+   "distinct_knockout_vectors": 251,
+   "knockout_occupancy": {
+    "ceiling_bits": 8.643856189774725,
+    "distinct": 251,
+    "entropy_bits": 7.464937956283024,
+    "gini": 0.3304581673306773,
+    "top_share": 0.0525
+   },
+   "mean_length": 17.3075,
+   "mean_log2_tape": 7.1725,
+   "nc4_class_occupancy": {
+    "ceiling_bits": 8.643856189774725,
+    "distinct": 64,
+    "entropy_bits": 2.9845181581609115,
+    "gini": 0.8009375,
+    "top_share": 0.55
+   },
+   "nc4_distinct_classes": 64,
+   "nc4_knockout_occupancy": {
+    "ceiling_bits": 8.643856189774725,
+    "distinct": 262,
+    "entropy_bits": 7.456361470090075,
+    "gini": 0.31755725190839695,
+    "top_share": 0.055
+   },
+   "nc4_silent_fraction": 0.8025,
+   "new_classes_at_this_checkpoint": 48,
+   "new_knockout_at_this_checkpoint": 131,
+   "silent_fraction": 0.8225,
+   "status_seq_occupancy": {
+    "ceiling_bits": 8.643856189774725,
+    "distinct": 18,
+    "entropy_bits": 1.8278530443276384,
+    "gini": 0.8322222222222222,
+    "top_share": 0.6525
+   }
+  },
+  {
+   "checkpoint": 1000,
+   "class_occupancy": {
+    "ceiling_bits": 8.643856189774725,
+    "distinct": 78,
+    "entropy_bits": 3.425152221341738,
+    "gini": 0.7708974358974359,
+    "top_share": 0.47
+   },
+   "classes_shared_by_multiple_lineages": 14,
+   "cumulative_unique_classes": 238,
+   "cumulative_unique_knockout": 707,
+   "distinct_classes": 78,
+   "distinct_knockout_vectors": 251,
+   "knockout_occupancy": {
+    "ceiling_bits": 8.643856189774725,
+    "distinct": 251,
+    "entropy_bits": 7.36415846374399,
+    "gini": 0.33766932270916333,
+    "top_share": 0.0675
+   },
+   "mean_length": 24.7125,
+   "mean_log2_tape": 8.4275,
+   "nc4_class_occupancy": {
+    "ceiling_bits": 8.643856189774725,
+    "distinct": 69,
+    "entropy_bits": 3.2123415498139516,
+    "gini": 0.7884057971014493,
+    "top_share": 0.49
+   },
+   "nc4_distinct_classes": 69,
+   "nc4_knockout_occupancy": {
+    "ceiling_bits": 8.643856189774725,
+    "distinct": 237,
+    "entropy_bits": 7.138856388877538,
+    "gini": 0.374873417721519,
+    "top_share": 0.0875
+   },
+   "nc4_silent_fraction": 0.7875,
+   "new_classes_at_this_checkpoint": 55,
+   "new_knockout_at_this_checkpoint": 114,
+   "silent_fraction": 0.765,
+   "status_seq_occupancy": {
+    "ceiling_bits": 8.643856189774725,
+    "distinct": 19,
+    "entropy_bits": 1.9726329061258947,
+    "gini": 0.8286842105263158,
+    "top_share": 0.5825
+   }
+  },
+  {
+   "checkpoint": 10000,
+   "class_occupancy": {
+    "ceiling_bits": 8.643856189774725,
+    "distinct": 91,
+    "entropy_bits": 3.864959678914651,
+    "gini": 0.7395054945054945,
+    "top_share": 0.38
+   },
+   "classes_shared_by_multiple_lineages": 15,
+   "cumulative_unique_classes": 307,
+   "cumulative_unique_knockout": 792,
+   "distinct_classes": 91,
+   "distinct_knockout_vectors": 179,
+   "knockout_occupancy": {
+    "ceiling_bits": 8.643856189774725,
+    "distinct": 179,
+    "entropy_bits": 5.955793610379849,
+    "gini": 0.5246927374301676,
+    "top_share": 0.175
+   },
+   "mean_length": 62.0875,
+   "mean_log2_tape": 9.9875,
+   "nc4_class_occupancy": {
+    "ceiling_bits": 8.643856189774725,
+    "distinct": 92,
+    "entropy_bits": 3.8704077709070863,
+    "gini": 0.737554347826087,
+    "top_share": 0.3475
+   },
+   "nc4_distinct_classes": 92,
+   "nc4_knockout_occupancy": {
+    "ceiling_bits": 8.643856189774725,
+    "distinct": 176,
+    "entropy_bits": 5.968560875267049,
+    "gini": 0.5278693181818181,
+    "top_share": 0.1675
+   },
+   "nc4_silent_fraction": 0.7375,
+   "new_classes_at_this_checkpoint": 69,
+   "new_knockout_at_this_checkpoint": 85,
+   "silent_fraction": 0.745,
+   "status_seq_occupancy": {
+    "ceiling_bits": 8.643856189774725,
+    "distinct": 25,
+    "entropy_bits": 2.3866172211125987,
+    "gini": 0.823,
+    "top_share": 0.475
+   }
+  }
+ ],
+ "dense_schedule": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  20,
+  30,
+  40,
+  50,
+  60,
+  70,
+  80,
+  90,
+  100,
+  200,
+  300,
+  400,
+  500,
+  600,
+  700,
+  800,
+  900,
+  1000,
+  2000,
+  3000,
+  4000,
+  5000,
+  6000,
+  7000,
+  8000,
+  9000,
+  10000
+ ],
+ "ensemble": "E0",
+ "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+ "lineages": 400,
+ "population_seed": 8713764358171866027,
+ "prereg_id": "572cc6342b4fd50d308a8169bee5306a445e4d0ed1d3400adf7be90902d0b2aa",
+ "recurrence": {
+  "dense_observations_per_lineage": 38,
+  "lineages_with_at_least_one_return": 400,
+  "mean_dwell_observations": 1.9404210247583742,
+  "total_returns_to_a_previously_left_class": 3748
+ },
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "schema_version": "proteus.diffusion_census.v0_4",
+ "wall_s": 145.1227924823761
+}

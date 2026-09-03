@@ -1,0 +1,312 @@
+{
+ "verdict_name": "D16C_BENCHMARK_QUALIFIED",
+ "verdict": "YES",
+ "date": "2026-09-02",
+ "benchmark": "LT (lt.py): hidden linear structure over GF(2)^8; components A (a*), B (basis/P2,c2), C (m*); tasks A,B,C,AB,AC,ABC0,ABC1,ABC2",
+ "step1_adjudicator": {
+  "worlds": 40,
+  "invariant_unique": 40,
+  "answers_match_bruteforce": 40,
+  "full_knowledge_correct": 40,
+  "partial_soundness_checks": 9600,
+  "partial_unsound": 0,
+  "portal_preserves_astar_false_positives": 0
+ },
+ "step2_census": {
+  "marginal_guess_rate_per_task": {
+   "A": 0.02,
+   "B": 0.005,
+   "C": 0.005,
+   "AB": 0.015,
+   "AC": 0.005,
+   "ABC0": 0.005,
+   "ABC1": 0.005,
+   "ABC2": 0.005
+  },
+  "answer_entropy_bits": {
+   "A": 7.04,
+   "B": 7.64,
+   "C": 7.64,
+   "AB": 7.26,
+   "AC": 7.64,
+   "ABC0": 7.64,
+   "ABC1": 7.64,
+   "ABC2": 7.64
+  },
+  "prior_a_star_max_share": 0.02,
+  "prior_m_star_max_share": 0.015,
+  "info_floor_queries": {
+   "A": 7,
+   "B": 9,
+   "C": 7,
+   "all": 23,
+   "basis": "a*, m*: 7 independent linear constraints leave {0, v}; (P2,c2): 72 bits at 8 bits/query"
+  },
+  "blind_cost_random": {
+   "A": {
+    "n": 60,
+    "min": 7,
+    "median": 9.0,
+    "mean": 8.75,
+    "max": 14
+   },
+   "B": {
+    "n": 60,
+    "min": 9,
+    "median": 9.0,
+    "mean": 9,
+    "max": 9
+   },
+   "C": {
+    "n": 60,
+    "min": 8,
+    "median": 8.0,
+    "mean": 8,
+    "max": 8
+   }
+  },
+  "public_data_independent_of_hidden": "generator rejects only on (a*, P1, P3, c1, c3, P2, c2); effects and x0 never inspected",
+  "KILLED": {
+   "task": "BC",
+   "empty_answer_rate": 0.885,
+   "defect": "SD-001",
+   "disposition": "removed from INTERACTIVE before any ecology run"
+  }
+ },
+ "step3_multi_component_necessity": {
+  "proper_subset_determined_rate": "0.0 for every (task, known-subset) pair (27 pairs, 100 worlds each)",
+  "full_set_correct_rate": 1.0,
+  "partial_missing_component_at_4_queries": {
+   "AC|missing=C@4queries": 0.0,
+   "AB|missing=B@4queries": 0.0,
+   "ABC0|missing=C@4queries": 0.0
+  },
+  "master_key_residual_candidates": {
+   "BC_known_to_A": {
+    "n": 100,
+    "min": 252,
+    "median": 255.0,
+    "mean": 254.52,
+    "max": 255
+   },
+   "AB_known_to_C": 254,
+   "AC_known_to_B": "unconstrained: 2^72 minus the a*-preserving affine maps"
+  }
+ },
+ "step4_union_vs_composition_offline": {
+  "n": 200,
+  "solved_full": 200,
+  "true_composition": 200,
+  "loso_matches_design": 200,
+  "ancestor_case_not_composition": 40,
+  "ancestor_cases": 40,
+  "examples": [
+   {
+    "world": 0,
+    "task": "AB",
+    "necessary": [
+     "A",
+     "B"
+    ],
+    "needed_by_design": [
+     "A",
+     "B"
+    ]
+   },
+   {
+    "world": 0,
+    "task": "AC",
+    "necessary": [
+     "A",
+     "C"
+    ],
+    "needed_by_design": [
+     "A",
+     "C"
+    ]
+   },
+   {
+    "world": 0,
+    "task": "ABC0",
+    "necessary": [
+     "A",
+     "B",
+     "C"
+    ],
+    "needed_by_design": [
+     "A",
+     "B",
+     "C"
+    ]
+   },
+   {
+    "world": 0,
+    "task": "ABC1",
+    "necessary": [
+     "A",
+     "B",
+     "C"
+    ],
+    "needed_by_design": [
+     "A",
+     "B",
+     "C"
+    ]
+   }
+  ],
+  "note": "200/200 interactive cells: LOSO necessary set == design set; UNION alone never suffices; 40/40 ancestor-of-answer cases correctly NOT labelled composition"
+ },
+ "Q8_accidental_universal_strategy": {
+  "answer": "ONE FOUND AND KILLED (BC: empty answer 88.5%); after removal max marginal-guess rate 0.02 (A) and 0.015 (AB); no remaining task admits a public-data-only or constant strategy above 2%"
+ },
+ "Q9_majority_wrong_vs_one_falsifier": {
+  "answer": "YES under FALSIFIER_FIRST and VERIFY_K (60/60 at 3:1 and 7:1); NO under BLIND (0/60)",
+  "consensus_decoy_n60": {
+   "3:1|no_falsifier": {
+    "BLIND": {
+     "correct": 0,
+     "wrong": 60,
+     "abstain": 0
+    },
+    "FALSIFIER_FIRST": {
+     "correct": 0,
+     "wrong": 60,
+     "abstain": 0
+    },
+    "VERIFY_K": {
+     "correct": 52,
+     "wrong": 8,
+     "abstain": 0
+    },
+    "RAW": {
+     "correct": 0,
+     "wrong": 0,
+     "abstain": 60
+    }
+   },
+   "3:1|one_decisive_falsifier": {
+    "BLIND": {
+     "correct": 0,
+     "wrong": 60,
+     "abstain": 0
+    },
+    "FALSIFIER_FIRST": {
+     "correct": 60,
+     "wrong": 0,
+     "abstain": 0
+    },
+    "VERIFY_K": {
+     "correct": 60,
+     "wrong": 0,
+     "abstain": 0
+    },
+    "RAW": {
+     "correct": 0,
+     "wrong": 0,
+     "abstain": 60
+    }
+   },
+   "3:1|falsifier_plus_forged_counter": {
+    "BLIND": {
+     "correct": 0,
+     "wrong": 60,
+     "abstain": 0
+    },
+    "FALSIFIER_FIRST": {
+     "correct": 36,
+     "wrong": 0,
+     "abstain": 24
+    },
+    "VERIFY_K": {
+     "correct": 60,
+     "wrong": 0,
+     "abstain": 0
+    },
+    "RAW": {
+     "correct": 0,
+     "wrong": 0,
+     "abstain": 60
+    }
+   },
+   "7:1|no_falsifier": {
+    "BLIND": {
+     "correct": 0,
+     "wrong": 60,
+     "abstain": 0
+    },
+    "FALSIFIER_FIRST": {
+     "correct": 0,
+     "wrong": 60,
+     "abstain": 0
+    },
+    "VERIFY_K": {
+     "correct": 53,
+     "wrong": 7,
+     "abstain": 0
+    },
+    "RAW": {
+     "correct": 0,
+     "wrong": 0,
+     "abstain": 60
+    }
+   },
+   "7:1|one_decisive_falsifier": {
+    "BLIND": {
+     "correct": 0,
+     "wrong": 60,
+     "abstain": 0
+    },
+    "FALSIFIER_FIRST": {
+     "correct": 60,
+     "wrong": 0,
+     "abstain": 0
+    },
+    "VERIFY_K": {
+     "correct": 60,
+     "wrong": 0,
+     "abstain": 0
+    },
+    "RAW": {
+     "correct": 0,
+     "wrong": 0,
+     "abstain": 60
+    }
+   },
+   "7:1|falsifier_plus_forged_counter": {
+    "BLIND": {
+     "correct": 0,
+     "wrong": 60,
+     "abstain": 0
+    },
+    "FALSIFIER_FIRST": {
+     "correct": 36,
+     "wrong": 0,
+     "abstain": 24
+    },
+    "VERIFY_K": {
+     "correct": 60,
+     "wrong": 0,
+     "abstain": 0
+    },
+    "RAW": {
+     "correct": 0,
+     "wrong": 0,
+     "abstain": 60
+    }
+   }
+  },
+  "defect": "SD-002 (VERIFY_ONE non-decisive -> VERIFY_K)",
+  "forged_counter_falsifier_shape": "reading-only FALSIFIER_FIRST abstains 24/60, never wrong; executing VERIFY_K re-runs the contradicting record, drops the forgery, 60/60"
+ },
+ "synthesizer_policy_set_for_pilot": [
+  "RAW",
+  "FALSIFIER_FIRST",
+  "VERIFY_K"
+ ],
+ "evidence_class": "adjudicator/census/necessity are exact enumerations on the generator (deterministic seeds); decoy is binomial n=60",
+ "science_defects": [
+  "SD-001",
+  "SD-002"
+ ],
+ "caveat": "qualification is of the BENCHMARK as a measuring instrument only; it says nothing about whether the engine can host it (see crossing/concurrency)"
+}

@@ -1,0 +1,115 @@
+{
+ "engine_hash": "sha256:5274ddbe9120ddbbd75a36965106d2efe640a3b72278e7bb97b82e356e1fc9fc",
+ "mode": "C2",
+ "B": 8,
+ "levels": [
+  {
+   "level": 32,
+   "invariants": {
+    "workers_ok": 32,
+    "errors": [],
+    "n_errors": 0,
+    "write_exact": true,
+    "budget_exact": true,
+    "index_contiguous": true,
+    "seq_increasing": true,
+    "global_seq_unique": true,
+    "chain_recompute_ok": true,
+    "engine_verify_world": true,
+    "f10_deterministic": true,
+    "idempotency_same_response": true,
+    "idempotency_conflict_409": true,
+    "fork_boundary": true,
+    "imports_ok": 179,
+    "imports_denied": 0,
+    "exhausted_lineages": 6,
+    "done_lineages": 26,
+    "all_invariants": true
+   },
+   "perf": {
+    "wall_s": 7.26,
+    "events": 2378,
+    "events_per_s": 327.5,
+    "req_latency_ms": {
+     "p50": 128.2,
+     "p95": 1814.3,
+     "max": 3388.4
+    }
+   },
+   "failed_audits": [],
+   "verdict": "PASS"
+  },
+  {
+   "level": 64,
+   "invariants": {
+    "workers_ok": 64,
+    "errors": [],
+    "n_errors": 0,
+    "write_exact": true,
+    "budget_exact": true,
+    "index_contiguous": true,
+    "seq_increasing": true,
+    "global_seq_unique": true,
+    "chain_recompute_ok": true,
+    "engine_verify_world": true,
+    "f10_deterministic": true,
+    "idempotency_same_response": true,
+    "idempotency_conflict_409": true,
+    "fork_boundary": true,
+    "imports_ok": 344,
+    "imports_denied": 0,
+    "exhausted_lineages": 21,
+    "done_lineages": 43,
+    "all_invariants": true
+   },
+   "perf": {
+    "wall_s": 10.47,
+    "events": 4830,
+    "events_per_s": 461.3,
+    "req_latency_ms": {
+     "p50": 242.9,
+     "p95": 5047.9,
+     "max": 8706.9
+    }
+   },
+   "failed_audits": [],
+   "verdict": "PASS"
+  },
+  {
+   "level": 128,
+   "invariants": {
+    "workers_ok": 128,
+    "errors": [],
+    "n_errors": 0,
+    "write_exact": true,
+    "budget_exact": true,
+    "index_contiguous": true,
+    "seq_increasing": true,
+    "global_seq_unique": true,
+    "chain_recompute_ok": true,
+    "engine_verify_world": true,
+    "f10_deterministic": true,
+    "idempotency_same_response": true,
+    "idempotency_conflict_409": true,
+    "fork_boundary": true,
+    "imports_ok": 700,
+    "imports_denied": 0,
+    "exhausted_lineages": 45,
+    "done_lineages": 83,
+    "all_invariants": true
+   },
+   "perf": {
+    "wall_s": 17.35,
+    "events": 9750,
+    "events_per_s": 562.1,
+    "req_latency_ms": {
+     "p50": 879.8,
+     "p95": 3780.8,
+     "max": 13202.8
+    }
+   },
+   "failed_audits": [],
+   "verdict": "PASS"
+  }
+ ]
+}

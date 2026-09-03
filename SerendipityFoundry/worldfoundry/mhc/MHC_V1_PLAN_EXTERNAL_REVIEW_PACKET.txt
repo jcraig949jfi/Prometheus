@@ -1,0 +1,502 @@
+================================================================================
+  PROMETHEUS INCUBATOR --
+  MICROSTRUCTURE OBSERVATORY V1 CALIBRATION PLAN
+  EXTERNAL REVIEW PACKET
+
+  Closing the multiplicity gate with mathematics instead of intuition,
+  and pricing self-deception in a currency we cannot mint.
+
+  Author : Daedalus, maintainer of the Serendipity Foundry Engine (SFE)
+  Date   : 2026-09-03
+  Status : PLAN FROZEN FOR EXTERNAL REVIEW. Ledger mechanics implemented
+           and demonstrated offline. NOTHING exposed to evolved
+           populations. The soup remains unlaunched.
+================================================================================
+
+--------------------------------------------------------------------------------
+0. ORIENTATION FOR AN EXTERNAL REVIEWER (self-contained)
+--------------------------------------------------------------------------------
+The Microstructure Observatory ("microstructure hadron collider", MHC) is the
+second instrument of a distributed evolutionary incubator: digital organisms
+in deterministic, bit-exact-replayable integer worlds, hash-chained ledgers,
+content-addressed artifacts. Its target is R0.00001 -- the earliest
+reproducible departure from flatness that selection could amplify: effects
+that may be tiny, distributed, interaction-only, genealogical, or invisible
+to every outcome metric. It never promotes organisms and never declares
+intelligence. Its success condition is a trustworthy sensitivity instrument
+with calibrated power curves, including honest statements of where it is
+blind.
+
+STATISTICAL CORE (from the v0 packet, already externally reviewed): per-block
+CONDITIONAL RANKS -- a candidate contrast ranked among matched reference
+contrasts constructed to be exchangeable with it under the null -- accumulated
+by an anytime-valid wealth process (mixture betting on top rank; product over
+independent blocks; admission when wealth crosses a threshold K; optional
+stopping safe by Ville's inequality; exact rational arithmetic).
+
+V0 WAS ADJUDICATED:
+  MHC V0 ACCEPTED AS A CALIBRATED DEVELOPMENT INSTRUMENT.
+  NOT CLEARED FOR SCIENTIFIC SEARCH OVER EVOLVED POPULATIONS.
+  SCIENTIFIC_EXPOSURE_PROHIBITED_PENDING_STRUCTURED_BASE_POWER_AND_
+  MULTIPLICITY_CONTROL.
+The adjudicator's two blocking items: B1 (near-zero power on organisms that
+already have intrinsic structure -- the realistic case) and G9 (multiplicity:
+"global family ledger + alpha=.05 per candidate" can still leak false
+admissions through enormous candidate multiplicity; preregister the lifetime
+guarantee FIRST and derive the accounting from it). The adjudicator also
+fixed the permanent detector contract:
+
+  MHC DETECTS CANDIDATE-SPECIFIC DEPARTURES FROM THE RESPONSE DISTRIBUTION
+  INDUCED BY THE FROZEN PERTURBATION OPERATOR. It intentionally cannot
+  detect structure generic to the operator itself, and must never be
+  described as detecting "all weak structure."
+
+THIS PACKET covers the response: the derived multiplicity mechanics (G9a +
+G9b), their adversarial hardening, an offline demonstration of both the
+guarantee and the exploit it forecloses, and the full V1 calibration
+campaign plan under the adjudicator's five mandates. It asks the reviewer to
+adjudicate the guarantee, the mechanics, and six open parameters.
+
+--------------------------------------------------------------------------------
+1. EXECUTIVE SUMMARY
+--------------------------------------------------------------------------------
+
+        G9 CLOSED IN MECHANICS, DERIVED FROM A PREREGISTERED GUARANTEE.
+        THE DRAFT WAS BROKEN THREE WAYS BY ADVERSARIAL REVIEW AND
+        REBUILT. THE CENTRAL LESSON: IN A DETERMINISTIC SUBSTRATE,
+        PROCEDURAL SEALING IS THEATER -- ONLY CRYPTOGRAPHIC SEALING
+        (POST-COMMIT PUBLIC RANDOMNESS) MAKES EVIDENCE UNDERIVABLE
+        AT REGISTRATION TIME.
+
+PROVENANCE. The draft mechanics went to an independent adversarial review
+across three dimensions BEFORE finalization. ALL THREE returned
+UNSOUND_AS_STATED: 10 FATAL, 13 MAJOR, 6 MINOR findings. All are
+incorporated; the ledger FATALs are additionally closed IN CODE with
+demonstrated refusals. The reviewer should assume the unrevised draft would
+have permitted an adversary (or an honest team fooling itself) to certify
+noise at ~200x the guaranteed rate -- a violation we did not merely argue but
+DEMONSTRATED NUMERICALLY (section 4).
+
+--------------------------------------------------------------------------------
+2. THE PREREGISTERED GUARANTEE (stated with its true scope)
+--------------------------------------------------------------------------------
+  PRIMARY. Under the CANDIDATE-LOCAL CONSTRUCTED NULL -- the candidate
+  contrast exchangeable with its matched references GIVEN the full frozen
+  snapshot and all pre-registration data -- the expected number of false
+  ADMITTED_MICROSTRUCTURE records over the INSTRUMENT LIFETIME is
+  <= ALPHA_LIFE. Proposed ALPHA_LIFE = 0.1 (adjudicable, question A1).
+
+  COROLLARY. Since ALPHA_LIFE < 1, Markov's inequality gives
+  P(ANY false admission, ever) <= ALPHA_LIFE: the expected-count guarantee
+  IS a lifetime familywise guarantee at the same level, valid under
+  arbitrary dependence and unbounded adaptive registration -- which
+  classical FWER machinery does not deliver at linear pricing.
+
+  FDR CONSIDERED AND REJECTED: with a one-particle deliverable the
+  denominator is ~1, FDR degenerates to per-comparison error, and its
+  denominator is gameable by admitting easy true positives.
+
+  SCOPE LINE (adversarial finding, accepted): the guarantee bounds
+  CONSTRUCTED-NULL VIOLATIONS ONLY. Structure that is real under the
+  constructed null but is an ARTIFACT OF THE PIPELINE (cloning side
+  effects, snapshot transients, perturbation-ensemble asymmetries) is not
+  bounded by any ledger. Therefore a mandatory ARTIFACT-CONTROL ARM runs
+  sham perturbations through the identical clone/measure path on the
+  scientific population, with a preregistered tripwire: admission-strength
+  signal in the sham arm HALTS ADMISSIONS pending review.
+
+--------------------------------------------------------------------------------
+3. THE ADMISSION-RIGHTS LEDGER (G9a + G9b -- implemented)
+--------------------------------------------------------------------------------
+  * The global ledger opens with wealth ALPHA_LIFE, in admission-risk units.
+  * G9a (GLOBAL FAMILY MULTIPLICITY). A hypothesis family RESERVES wealth
+    at instantiation, whatever its origin -- human, miner, or LLM. The
+    family PROCESS is priced at creation: unbounded family generation is
+    structurally impossible because wealth is finite and debited up front.
+    Enforced: reservation cap (<= 25% of remaining global wealth without
+    adjudicator co-signature -- no land grabs), mandatory TTL, and
+    release-of-unspent-reservation on closure/expiry. The release is
+    PROVABLY SAFE under arbitrary adaptivity because the guarantee counts
+    only PURCHASES (below), never reservations.
+  * G9b (WITHIN-FAMILY CANDIDATE MULTIPLICITY). A candidate admission test
+    PURCHASES a threshold K at price 1/K at REGISTRATION, jointly and
+    immutably committing (K, block budget, m references, betting rule).
+    No candidate holds an independent alpha entitlement because its family
+    paid an entrance fee: every test is individually priced. Enforced:
+    K floor (K_MIN = 100 -- a single cheap-threshold purchase cannot drain
+    the budget), K reachability ceiling (K <= max-multiplier^block-budget:
+    an unwinnable test is not a test), single-purchase cap (<= half the
+    family's original reservation), K immutability.
+  * ADMISSION iff the candidate's anytime wealth ever reaches K on its
+    admission evidence. PURCHASES ARE NEVER REFUNDED: refunding losers
+    reintroduces infinite retry at pay-only-if-you-win, which unbounds the
+    expected false-admission count. (Releasing unspent RESERVATIONS is a
+    different accounting identity, and is safe.)
+
+  THE BOUND AND ITS PROOF SHAPE:
+    E[#false admissions] = sum_c P(E_c >= K_c | local H0_c)
+                        <= sum_c 1/K_c          (Ville, per candidate)
+                        <= ALPHA_LIFE            (ledger conservation)
+  Linearity of expectation makes this valid under ARBITRARY dependence
+  between candidates (shared worlds, shared founders, correlated
+  evidence), unbounded candidate and family counts, and adaptive
+  data-driven family generation. Perfectly correlated variant spam gains
+  nothing: all-or-none crossing at P <= 1/K leaves both the expected count
+  and P(any) unchanged. Candidate definitions are canonicalized at
+  registration and duplicates merged, purely for audit hygiene.
+
+  CAPACITY, STATED PLAINLY: ALPHA_LIFE = 0.1 at K = 200 funds AT MOST 20
+  admission attempts over the instrument lifetime. Attempts are precious
+  BY DESIGN: preservation is free storage, flagging is free annotation,
+  investigation is rationed compute -- and admission tests are rare,
+  priced events. A program whose deliverable is one particle should feel
+  this. More capacity requires raising ALPHA_LIFE explicitly, never
+  quietly.
+
+--------------------------------------------------------------------------------
+4. WHY PROCEDURAL SEALING FAILS -- THE DEMONSTRATED EXPLOIT
+--------------------------------------------------------------------------------
+The draft's precondition was procedural: "K is fixed at registration,
+before admission evidence is unsealed." The red team's deepest finding:
+
+  IN A DETERMINISTIC SUBSTRATE, NOTHING IS SEALED BY ORDERING. The
+  evidence is a computable function, not a random variable that comes
+  into existence at unsealing. An adversary (or an LLM miner, or an
+  honest team with a script) privately re-derives the admission blocks
+  for a million candidate definitions BEFORE registering anything,
+  computes every wealth trajectory offline, then registers ONLY the
+  observed crossers with K set just below the observed supremum. The
+  ledger sees a perfectly compliant order of operations.
+
+DEMONSTRATED NUMERICALLY (mhc/ledger_demo.py, deterministic, reproducible):
+  100,000 simulated null candidates, 64 blocks each, exact field
+  arithmetic (fair conditional ranks, m=3, mixture betting):
+    - honest use: 20 candidates registered at K=200 BEFORE evidence
+      generation -> ledger bound 0.100 spent exactly -> realized false
+      admissions: 0.
+    - the exploit: 626 null candidates crossed wealth 100 somewhere in
+      their trajectory; buying each post hoc at K = observed peak costs
+      3.12 units -> 626 FALSE ADMISSIONS FOR 3.12 UNITS OF SPEND: THE
+      EXPECTATION BOUND IS VIOLATED ~200-FOLD.
+
+THE FIX IS CRYPTOGRAPHIC, NOT PROCEDURAL (and it unifies with the plant-
+sealing protocol the adjudicator already imposed):
+  * Registration commits (candidate definition, family, K, block budget,
+    m, betting rule) to the immutable ledger.
+  * The admission blocks' SEEDS, REFERENCE ASSIGNMENTS, AND CANDIDATE/
+    REFERENCE ROLE PERMUTATIONS are then derived deterministically from
+    PUBLIC BEACON RANDOMNESS occurring AFTER the commit. No one can
+    precompute a wealth trajectory at registration time; anyone can verify
+    the derivation later. The ledger refuses evidence lacking a
+    post-registration beacon attestation.
+  * ONE-TIME-USE BLOCKS: a block is bound to exactly one registration;
+    anything ever unsealed is permanently contaminated for later
+    registrations. This closes the second FATAL -- laundering the peek
+    through blocks unsealed for EARLIER candidates.
+  * THE ROLE PERMUTATION also closes the third FATAL: on evolved organisms
+    the "complete null" never holds, and selection on preservation data
+    searches for exactly the (organism, contrast) pairs where background
+    structure leaks asymmetrically into candidate-vs-reference. Beacon-
+    randomized role assignment makes rank uniformity hold under the LOCAL
+    null BY RANDOMIZATION -- experimenter-controlled randomness, no
+    assumptions about the organism -- for any background structure.
+
+MECHANICAL REFUSALS, ALL DEMONSTRATED (LEDGER_DEMO_RESULTS.txt):
+  [OK] family land-grab (>25% remaining, no co-sign) refused
+  [OK] post-registration K change refused
+  [OK] K below preregistered floor refused
+  [OK] unreachable K within block budget refused
+  [OK] selection/admission evidence overlap refused
+  [OK] evidence without post-registration beacon refused
+  [OK] evidence for unregistered candidate refused
+  [OK] one-time-use block: cross-candidate reuse refused
+
+--------------------------------------------------------------------------------
+5. M1 -- THE B1 PROGRAM (structured-base power)
+--------------------------------------------------------------------------------
+V0's headline blindness: near-zero power for micro-effects on organisms with
+genuine intrinsic structure. The adjudicated estimand moves from absolute
+causal depth to CHANGES IN A STRUCTURED ORGANISM'S CAUSAL FINGERPRINT. The
+red team then showed the naive null for fingerprint CHANGE re-imports the
+wrong-null problem one level up: any structured organism's fingerprint
+drifts under ANY perturbation, so organism-vs-organism comparison detects
+"is structured", not microstructure -- fragility of structure. RESOLUTION,
+now normative:
+
+  THE FINGERPRINT-CHANGE NULL IS PERTURBATION-EXCHANGEABILITY ON CLONES OF
+  THE SAME ORGANISM. Preregister an ensemble {P0..Pm} of perturbations
+  exchangeable with the candidate perturbation under H0; apply each to an
+  independent clone of the SAME organism; rank the candidate
+  perturbation's fingerprint change within the ensemble's changes.
+  Structure-level differences between organisms cancel by construction.
+  ORGANISM-VS-ORGANISM COMPARISONS ARE BANNED AS NULL MATERIAL.
+
+Further hardening:
+  * Reference mechanisms must be CONSTRUCTION-EXCHANGEABLE (permutation /
+    relabel / re-clone symmetries provable a priori), each with a written
+    exchangeability proof in the sealed detector record. Similarity-based
+    "matching" is demoted to a variance-reduction covariate applied
+    identically to candidate and references, so exchangeability survives
+    arbitrary misestimation. Empirical uniformity on the calibration beam
+    is a smoke test, never the justification.
+  * The background/directional/interaction decomposition is preregistered
+    strictly as a VARIANCE-REDUCTION DEVICE (the interaction term is not
+    identifiable without a homogeneity assumption the program rejects);
+    ADMITTED records are forbidden from asserting which variance component
+    carried an effect.
+
+--------------------------------------------------------------------------------
+6. CALIBRATION-BEAM DISCIPLINE (collider rule, hardened)
+--------------------------------------------------------------------------------
+Calibration beam first, unknown beam second. V1 runs on CLONED, QUARANTINED
+EVOLVED ORGANISMS as calibration substrates; NO anomaly discovered during
+calibration is ever eligible to become a scientific candidate. Hardening:
+
+  * FOUNDER-LINEAGE TUNING SPLIT (was FATAL): clones of one organism are
+    the tuning set with different noise, so clone/seed/world-level splits
+    are void. Any lineage touched by ANY tuning iteration is permanently
+    tuning-only; power is reported solely on lineages first opened AFTER
+    the detector-hash commit, with the tuning-iteration count ledgered
+    before reporting lineages unseal.
+  * ONLY TWO DISJOINTNESSES ARE LOAD-BEARING (was MAJOR): (a) no shared
+    founder lineages between calibration and scientific populations --
+    otherwise a calibration anomaly is trivially "re-discovered" and the
+    quarantine rule is void; (b) at least one grammar family held out of
+    ALL calibration and tuning, with frozen-detector transfer power
+    measured on it before scientific exposure. Calibration-grammar power
+    is quoted only as an UPPER BOUND. Seed/world/time disjointness is
+    labeled non-load-bearing (theater) rather than counted.
+  * THE FREEZE COVERS THE COMPLETE INFERENCE ARTIFACT: code + weights +
+    templates + resolved configuration + m, one sealed object; the
+    admission pipeline is a pure function of (sealed artifact, registered
+    candidate record, block data).
+  * ONE CLONING/SNAPSHOT PROCEDURE, hash-committed, used verbatim in both
+    phases; divergence forces recalibration on a sacrificial disjoint
+    lineage before admissions resume.
+
+--------------------------------------------------------------------------------
+7. M3 -- ADVERSARIAL PLANT PROGRAM
+--------------------------------------------------------------------------------
+Classes: structured-base; sign-reversing; late-onset (the class v0's sealed
+holdout proved blind to); basis-cancelling; sandbox-evolved; plus at least
+one class NEVER INSTANTIATED during calibration, reported separately as the
+out-of-class robustness figure.
+
+  THE INDEPENDENCE PARADOX, RESOLVED MECHANICALLY (was MAJOR): a
+  basis-cancelling plant author must know the observable basis to cancel
+  it, but the adjudicator demanded plants authored independently of the
+  detector. SPLIT KNOWLEDGE: the plant author commits a PARAMETRIC
+  GENERATOR with the cancellation direction as a free input; the
+  adjudication seat commits a NEUTRAL COMPOSITION SCRIPT; after both
+  commits, the script computes the direction from the sealed family
+  definition and instantiates plants with post-commit public randomness.
+  No human holds both halves; the ledger holds the composition.
+
+  SANDBOX-EVOLVED PLANTS (was MAJOR): evolving plants needs a fitness
+  signal; an author-built surrogate makes strawmen, raw detector access is
+  collusion. Fitness queries go to an ISOLATED EVALUATION SERVICE running
+  the committed detector artifact: scalar scores only, a preregistered
+  query budget, every query hash ledgered -- residual leakage bounded and
+  auditable rather than denied.
+
+--------------------------------------------------------------------------------
+8. M4 -- EXTERNAL SEAL PROTOCOL v1.1 (four FATALs closed)
+--------------------------------------------------------------------------------
+  S1 COMMIT THE EXECUTION CLOSURE, not a script hash: container/image
+     digest covering code + dependencies + pinned platform. INDEPENDENT
+     BIT-EXACT RE-DERIVATION IS A PROTOCOL GATE: the seat (or any third
+     party) recomputes plant parameters from (bundle, beacon) and must
+     match exactly BEFORE any calibration verdict; mismatch voids the run.
+  S2 THE BEACON ROUND IS FIXED BY RULE, never designated: "first pulse
+     strictly after the commit's external anchor time." One active commit
+     per campaign; abandoned commits are publicly recorded failed
+     attempts. (Closes grinding via round selection and commit spam.)
+  S3 THE LEDGER HEAD IS ANCHORED EXTERNALLY before the eligible round
+     (independent timestamping / public chain / the beacon operator): an
+     insider cannot backdate a commit after seeing the beacon. Derivation
+     is verifiable by everyone; the anchor is what verifies ORDERING.
+  S4 NO UNCOMMITTED DEGREES OF FREEDOM: plant_params = f(committed bundle,
+     beacon value) and NOTHING else; the seat re-executes in an empty
+     environment; any read of an uncommitted input (file, env, network,
+     clock) voids the run. All knobs are literals in the bundle or
+     beacon-derived.
+  S5 ABORTS ARE ADJUDICATED by the seat BEFORE parameters unseal; burned
+     parameters are never reused; preregistered attempt budget; detector
+     modification after any attempt requires fresh commits and a fresh
+     round, with the diff against failed-plant regions disclosed.
+
+--------------------------------------------------------------------------------
+9. M5 -- STERILITY AND MULTI-HOST (observe live, intervene on clones)
+--------------------------------------------------------------------------------
+  * PRE-PARTITIONED SEED SPACE (was FATAL): with a shared RNG allocator,
+    every clone spawn advances the allocator and shifts every subsequent
+    live-world draw -- data-driven cloning becomes an intervention on the
+    scientific target that no per-clone audit can see. Each live world
+    receives its reserved seed block at creation; clones draw from a
+    disjoint namespace. VERIFICATION: replay a live world with and without
+    concurrent clone activity; demand bit-identical state hashes.
+  * RESOURCE ISOLATION BEYOND STATE HASHES (was MAJOR): clone I/O load can
+    censor live telemetry while state checksums pass, and the censoring
+    correlates with candidate interest. Dedicated clone hosts or hard
+    CPU/IO reservations for the live recording path; separate artifact
+    store; scheduled NO-CLONE CONTROL WINDOWS comparing trace-completeness
+    statistics, drop counters, and checkpoint latencies.
+  * READS GO TO REPLICAS (was MAJOR): "passive" observation consumes I/O
+    on evolution hosts, and interest-driven read scheduling censors
+    exactly the interesting episodes. Live traces are write-once and
+    shipped; analysis reads hit replicas only; anything touching live
+    hosts is fixed-rate and preregistered.
+  * CLONE FROM THE CHECKPOINT STREAM ONLY, never the live process image.
+  * SEPARATE STORES for admission-ledger and world event logs; world-side
+    ordering uses engine-issued logical timestamps, never ledger arrival
+    order.
+
+--------------------------------------------------------------------------------
+10. B10 RETENTION (retroactive replayability, hardened)
+--------------------------------------------------------------------------------
+B10 (basis-cancelling microstructure -- real effects whose components cancel
+inside today's coordinates) makes retroactive re-analysis by FUTURE
+observable families a core requirement. Derive-on-demand storage silently
+assumes indefinite bit-exact replay; engine upgrades and platform drift
+break it, at which point basis-cancelling blindness becomes PERMANENT for
+the historical population while the retention policy reports itself
+satisfied (was FATAL). THEREFORE:
+  * RETENTION BUNDLE per encounter: all seeds (candidate AND every matched
+    reference), the complete external input/event stream, the PINNED
+    ENGINE BUILD ARTIFACT (image digest), and the null-construction
+    metadata (matching, block boundaries, sealed/unsealed partition) --
+    without which a future family's per-block ranks are not uniform and
+    its wealth process is invalid from record one.
+  * REPLAY CANARY: scheduled replay of sampled archives with state-hash
+    verification. ON FIRST DRIFT: immediately materialize full raw traces
+    using the last-good engine, before the capability decays further.
+
+--------------------------------------------------------------------------------
+11. EXECUTION ORDER AND GATES
+--------------------------------------------------------------------------------
+  0. (upstream, unchanged) Proteus sampler contract; R12 grammar earned
+     admission; grammar freeze. NOTE: the Proteus seat's V0 build and
+     review packet now exist on main; interface convergence is the natural
+     next cross-seat action.
+  1. Ledger v1.1 productionization on SFE + seal infrastructure (external
+     anchoring, beacon rule, re-derivation gate). CLOSES G9. Proceeds
+     FIRST: the multiplicity gate must exist before any live PEW mining
+     exists to tempt anyone.
+  2. Sterility infrastructure + the with/without-clone bit-identity
+     verification.
+  3. OBSERVABLE_FAMILY_V1 (lived-episode-aware anchors, late-window
+     coordinates, fingerprint-change statistics). V0 stays frozen forever
+     as the first fossil in the record of detector blindness.
+  4. Calibration beam: quarantined cloned evolved organisms; founder-split
+     tuning; the plant program under seal v1.1.
+  5. Freeze V1 (complete inference artifact); held-out grammar-family
+     transfer power; out-of-class plant figure; sham-arm tripwire armed.
+  6. External review of the V1 calibration packet. Only after that
+     adjudication: scientific exposure on a founder-disjoint population.
+
+  GATE STATUS:
+    G9a/G9b  IMPLEMENTED + DEMONSTRATED offline; production = step 1
+    G14      seal protocol fully specified; execution needs the seat
+    G6/G7    (kinship units; selection-matched genealogical controls)
+             exercised on real pedigrees in step 4
+    G8/G11/G12/G13  closed by steps 2, 4, 5 as designed in v0
+  ADMISSION CLAIMS REMAIN FORBIDDEN until all gates close.
+
+--------------------------------------------------------------------------------
+12. RED-TEAM ACCOUNTING (this round; all findings preserved)
+--------------------------------------------------------------------------------
+  Dimensions: ledger mathematics | calibration-beam design | seal &
+  sterility protocol. Verdicts on the draft: UNSOUND_AS_STATED x3.
+  Findings: 10 FATAL, 13 MAJOR, 6 MINOR. Headline FATALs and dispositions:
+    - procedural sealing unenforceable under determinism -> cryptographic
+      sealing via post-commit beacon (CLOSED; exploit demonstrated ~200x)
+    - cross-candidate evidence laundering -> one-time-use blocks (CLOSED
+      IN CODE)
+    - local-null miscalibration under selection -> beacon-randomized
+      candidate/reference role assignment (uniformity by randomization)
+    - zombie-family denial-of-service -> TTL + caps + provably-safe
+      unspent release (CLOSED IN CODE)
+    - clone-level tuning splits certify in-beam power -> founder-lineage
+      splits (NORMATIVE)
+    - tuned matching rules corrupt the exact null -> construction-
+      exchangeable mechanisms only, with written proofs (NORMATIVE)
+    - fingerprint-change fragility null -> perturbation-exchangeability on
+      same-organism clones (NORMATIVE)
+    - seal: unpinned execution, beacon grinding, ledger backdating,
+      uncommitted knobs -> S1-S4 (NORMATIVE)
+    - shared RNG allocator backreaction -> pre-partitioned seed space with
+      bit-identity verification (NORMATIVE)
+    - derive-on-demand decay kills retroactive families -> retention
+      bundles + replay canary (NORMATIVE)
+  NOTHING WAS DISCARDED.
+
+--------------------------------------------------------------------------------
+13. KNOWN LIMITATIONS OF THIS PLAN (read before believing it)
+--------------------------------------------------------------------------------
+  L1  The guarantee is conditional on the LOCAL constructed null; pipeline
+      artifacts are outside it by scope (mitigated by the sham arm, which
+      is a tripwire, not a bound).
+  L2  The ledger demonstration is offline and self-simulated; production
+      enforcement on SFE (step 1) and the beacon infrastructure do not yet
+      exist.
+  L3  B1 remains OPEN: this plan states how V1 will attack it (fingerprint
+      change under perturbation-exchangeability), not that it is solved.
+      If V1 cannot show calibrated power on structured bases, scientific
+      exposure stays prohibited -- that outcome remains possible.
+  L4  Evolved organisms for the calibration beam do not exist yet; they
+      arrive only after the upstream Proteus/R12 gates. Sandbox-bred
+      plant organisms are the interim structured substrate.
+  L5  The capacity arithmetic (20 admission attempts at defaults) may be
+      too tight for a multi-year program; raising it is a legitimate
+      adjudication, not a failure -- but it must be explicit.
+  L6  The independent adjudication seat for the seal does not exist yet;
+      until it does, every seal is a solo seal and is labeled as such.
+
+--------------------------------------------------------------------------------
+14. QUESTIONS REQUIRING EXTERNAL ADJUDICATION
+--------------------------------------------------------------------------------
+  A1  ALPHA_LIFE: confirm 0.1 (=> lifetime FWER <= 0.1; ~20 admission
+      attempts at K=200), or set otherwise -- explicitly, never quietly.
+  A2  K_MIN: 100 (implemented) vs the more conservative 10^3-10^4. At
+      K_MIN = 1000 each purchase costs <= 10^-3 (>= 100 lifetime attempts)
+      but every admission needs ~8 consecutive-quality winning blocks.
+  A3  Which public randomness beacon, and who operates the external
+      timestamp anchor (S3)?
+  A4  Sandbox-plant query budget: proposed 10^3 scalar queries per
+      campaign; adjudicate.
+  A5  Reservation TTL and the co-signature identity for >25% reservations.
+  A6  Does the sham-arm tripwire halt ADMISSIONS only, or all
+      investigation spending as well?
+  A7  Is the expected-count guarantee shape (with its Markov FWER
+      corollary and the FDR rejection) accepted as the program's permanent
+      error philosophy?
+  A8  Do you accept the two load-bearing disjointnesses (founder lineage;
+      held-out grammar family) as sufficient for the calibration/science
+      boundary, or should additional separations be promoted from
+      "theater" to "required"?
+
+--------------------------------------------------------------------------------
+15. REPRODUCTION
+--------------------------------------------------------------------------------
+  location  F:\Prometheus\SerendipityFoundry\worldfoundry\mhc  (repo main)
+  files     MHC_V0_ADJUDICATION_RECORD.txt   (rulings, normative)
+            MHC_V1_CALIBRATION_PLAN.txt      (full plan, sections 1-11)
+            ledger.py / ledger_demo.py       (G9 mechanics + demonstration)
+            LEDGER_DEMO_RESULTS.txt          (bit-reproducible output)
+  run       python -m mhc.ledger_demo        (pure stdlib + wforge; ~2 min;
+            every number in section 4 reproduces bit-identically -- all
+            randomness derives from named xorshift64 streams)
+
+================================================================================
+  FINAL PRINCIPLE
+  The multiplicity gate is not bureaucracy. It is the only thing standing
+  between "we accumulated luminosity for years" and "we manufactured a
+  particle by looking often enough." The ledger makes every look at the
+  admission boundary cost wealth that cannot be minted, the beacon makes
+  every piece of admission evidence underivable before it was promised,
+  and the cemetery keeps everything the thresholds never blessed.
+
+  The soup is earned by the V1 calibration packet this plan produces --
+  power on structured bases, measured under a seal nobody could have
+  gamed. Not before.
+================================================================================

@@ -1,0 +1,133 @@
+{
+ "engine_hash": "sha256:5274ddbe9120ddbbd75a36965106d2efe640a3b72278e7bb97b82e356e1fc9fc",
+ "checks": {
+  "R6_child_inherits_checkpoint_only": {
+   "ok": true,
+   "got": [
+    "sha256:2c3a4249d77070058649dbd822dcaf7957586fce428cfb2ca88b94741eda8b07",
+    "sha256:f55ff16f66f43360266b95db6f8fec01d76031054306ae4a4b380598f6cfd114"
+   ],
+   "a3_leaked": false
+  },
+  "R6_child_basis_fork_inheritance": {
+   "ok": true
+  },
+  "R6_second_child_sees_a3": {
+   "ok": true
+  },
+  "R6_first_available_is_fork_seq": {
+   "ok": true,
+   "fork_seq": 202
+  },
+  "R6_grandchild_transitive": {
+   "ok": true,
+   "got": [
+    "sha256:2c3a4249d77070058649dbd822dcaf7957586fce428cfb2ca88b94741eda8b07",
+    "sha256:f55ff16f66f43360266b95db6f8fec01d76031054306ae4a4b380598f6cfd114"
+   ]
+  },
+  "R7_parent_cutoff_exact": {
+   "ok": true
+  },
+  "R7_child_fail_closed_before_fork": {
+   "ok": true,
+   "before": [],
+   "at": [
+    "sha256:2c3a4249d77070058649dbd822dcaf7957586fce428cfb2ca88b94741eda8b07",
+    "sha256:f55ff16f66f43360266b95db6f8fec01d76031054306ae4a4b380598f6cfd114"
+   ]
+  },
+  "R7_deterministic": {
+   "ok": true
+  },
+  "R7_monotone_in_seq": {
+   "ok": true
+  },
+  "IMPORT_then_fork_inherited": {
+   "ok": true,
+   "got": [
+    {
+     "artifact_id": null,
+     "origin": "INHERITED",
+     "source_world": "wld_8086d21dff27a80d509c623c",
+     "source_artifact": "sha256:a41c4b8b77d5a6933730a7c6b6ed3f53842095b58c4d902a07f3aa40198f2841",
+     "content_hash": "sha256:25a6634263c1b1f6fc4697a04e2b9904ea4b042a89af59dc93ec1f5d44848a26",
+     "first_available_seq": 211,
+     "basis": "fork_inheritance"
+    }
+   ]
+  },
+  "IMPORT_first_available_is_import_seq": {
+   "ok": true
+  },
+  "R8_inherited_entry_survives_native_recreation": {
+   "ok": false,
+   "before": {
+    "artifact_id": null,
+    "origin": "INHERITED",
+    "source_world": "wld_7dd09607499a0b84b37a7914",
+    "source_artifact": "sha256:17a6f3b5b03adde7d2e0d797cb1e9db5b7e90c6e644d1f390e72ad45bd804619",
+    "content_hash": "sha256:f55ff16f66f43360266b95db6f8fec01d76031054306ae4a4b380598f6cfd114",
+    "first_available_seq": 202,
+    "basis": "fork_inheritance"
+   },
+   "after": [
+    {
+     "artifact_id": "sha256:1d5705cfb49e11d71a2e51d8cd7f12c9d5600605030a1c5ddcc46ccf902d40cd",
+     "origin": "NATIVE",
+     "source_world": null,
+     "source_artifact": null,
+     "content_hash": "sha256:f55ff16f66f43360266b95db6f8fec01d76031054306ae4a4b380598f6cfd114",
+     "first_available_seq": 212,
+     "basis": "native_creation"
+    }
+   ]
+  },
+  "R8_first_available_not_later_than_before": {
+   "ok": false,
+   "before_seq": 202,
+   "after_seqs": [
+    212
+   ]
+  },
+  "R8_cutoff_view_still_shows_inheritance": {
+   "ok": true
+  },
+  "R8_import_and_native_both_listed": {
+   "ok": true,
+   "entries": [
+    [
+     "IMPORTED",
+     "legal_import",
+     209
+    ],
+    [
+     "NATIVE",
+     "native_creation",
+     213
+    ]
+   ]
+  }
+ },
+ "R8_note": "F10(now) vs F10(seq=fork) disagree on the basis/first_available_seq of the same content when it is re-created natively after inheritance: the answer to 'when could K1 first know h1' depends on the cutoff asked.",
+ "R8_import_native_entries": [
+  [
+   "IMPORTED",
+   "legal_import",
+   209
+  ],
+  [
+   "NATIVE",
+   "native_creation",
+   213
+  ]
+ ],
+ "summary": {
+  "n": 15,
+  "pass": 13,
+  "fail": [
+   "R8_inherited_entry_survives_native_recreation",
+   "R8_first_available_not_later_than_before"
+  ]
+ }
+}

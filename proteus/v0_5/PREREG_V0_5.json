@@ -1,0 +1,370 @@
+{
+ "affordance_hash": "f1607ee8be680acc33288a95c1a25c09ad4c799a47b0975381be8ca02d7638ce",
+ "arms": [
+  "V0_5",
+  "NC5",
+  "NC1B",
+  "NC2",
+  "NC3",
+  "NC4"
+ ],
+ "brief_sha256": "59314e9da89a1a3c9233de513390ea69bbbc05337e28a7db9c9caded34c1afcd",
+ "confirmatory": {
+  "alpha": 0.05,
+  "claimed_direction": -1,
+  "cohort": "128",
+  "coordinate": "class_halt_yield",
+  "criterion": "same sign AND one-sided p<=0.05 AND sign persists over second half",
+  "horizon": 400,
+  "magnitude_need_not_match": true,
+  "one_dataset_only": true,
+  "one_sided": true,
+  "primary_null": "NC4",
+  "second_half_from": 100
+ },
+ "crucible": {
+  "bootstrap_resamples": 2000,
+  "checkpoints": [
+   0,
+   25,
+   50,
+   100,
+   200,
+   400
+  ],
+  "code_writable": false,
+  "generations": 400,
+  "lineages_per_cohort": 100,
+  "n_regs": 8,
+  "out_cap": 4,
+  "persist": "none",
+  "start_sizes": [
+   1,
+   8,
+   32,
+   128,
+   256
+  ],
+  "tape_words": 1024,
+  "tick_budget": 64
+ },
+ "ensembles": {
+  "E0": "4bba8716b364f9fff1975210a9e1a4027b70963a81fbe108d44a59360978f0bc",
+  "E1": "9110f345248d63ed6dafc8cd4b38e4dff2cce346f8c4cd86f4e1bc28bb5a517b",
+  "E2": "1bf274ee3d3ab274d771a9737cbb8bdeb3d839ba5fa51947f4ab9dfca1a224da",
+  "E3": "ecc73a8f420f36eccfb9d30d63771366828b61e1b749b27e0c20c51eb23b17bf",
+  "E4": "4722afb361f7951edc9c597c9c496fc37bec877d9a3128a4528ef251a4565188",
+  "E5": "126b72993a109a9cb3a12eabd45f7e10bcc54dbba826b6282bf198adbf2624b2"
+ },
+ "frozen_before_any_v0_5_measurement": true,
+ "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+ "grammar_hash_v0_2": "779da90d173fdd0528fdfe98b1056cc9d3fcad1807fdd2f677f3d879250e9796",
+ "grammar_hash_v0_3": "44ae7f598660a523a6fb151ef258dd4f1c886c0822abca5780b32e98e7548289",
+ "grammar_version": "proteus.grammar.v0.4",
+ "holm_fixtures": {
+  "discoveries_across_multiple_cohorts": {
+   "cells": [
+    [
+     [
+      "a",
+      1
+     ],
+     6.5
+    ],
+    [
+     [
+      "a",
+      2
+     ],
+     6.0
+    ],
+    [
+     [
+      "a",
+      3
+     ],
+     5.5
+    ],
+    [
+     [
+      "b",
+      4
+     ],
+     5.0
+    ]
+   ],
+   "expected": [
+    "a@1",
+    "a@2",
+    "a@3",
+    "b@4"
+   ]
+  },
+  "one_discovery": {
+   "cells": [
+    [
+     [
+      "a",
+      1
+     ],
+     5.0
+    ],
+    [
+     [
+      "b",
+      1
+     ],
+     2.3
+    ],
+    [
+     [
+      "a",
+      2
+     ],
+     1.0
+    ],
+    [
+     [
+      "b",
+      2
+     ],
+     0.5
+    ]
+   ],
+   "expected": [
+    "a@1"
+   ]
+  },
+  "several_discoveries": {
+   "cells": [
+    [
+     [
+      "a",
+      1
+     ],
+     6.0
+    ],
+    [
+     [
+      "b",
+      1
+     ],
+     5.0
+    ],
+    [
+     [
+      "a",
+      2
+     ],
+     4.0
+    ],
+    [
+     [
+      "b",
+      2
+     ],
+     0.2
+    ]
+   ],
+   "expected": [
+    "a@1",
+    "a@2",
+    "b@1"
+   ]
+  },
+  "within_cohort_passes_but_global_does_not": {
+   "cells": [
+    [
+     [
+      "c0",
+      1
+     ],
+     0.5
+    ],
+    [
+     [
+      "c1",
+      1
+     ],
+     0.5
+    ],
+    [
+     [
+      "c2",
+      1
+     ],
+     0.5
+    ],
+    [
+     [
+      "c3",
+      1
+     ],
+     0.5
+    ],
+    [
+     [
+      "c0",
+      2
+     ],
+     0.5
+    ],
+    [
+     [
+      "c1",
+      2
+     ],
+     0.5
+    ],
+    [
+     [
+      "c2",
+      2
+     ],
+     0.5
+    ],
+    [
+     [
+      "c3",
+      2
+     ],
+     0.5
+    ],
+    [
+     [
+      "hit",
+      3
+     ],
+     2.4
+    ],
+    [
+     [
+      "other",
+      3
+     ],
+     0.3
+    ]
+   ],
+   "expected": []
+  },
+  "zero_discoveries": {
+   "cells": [
+    [
+     [
+      "a",
+      1
+     ],
+     1.5
+    ],
+    [
+     [
+      "b",
+      1
+     ],
+     1.9
+    ],
+    [
+     [
+      "a",
+      2
+     ],
+     0.4
+    ],
+    [
+     [
+      "b",
+      2
+     ],
+     2.1
+    ]
+   ],
+   "expected": []
+  }
+ },
+ "kernel": {
+  "live_agreement_tolerance": {
+   "action_if_exceeded": "ABORT adjudication",
+   "max_tv_max": 0.05,
+   "median_tv_max": 0.02
+  },
+  "primary_max_len": 64,
+  "primary_samples": 50000,
+  "primary_states": 124,
+  "primary_tapes": [
+   16,
+   32,
+   64,
+   128,
+   256
+  ],
+  "reversible_reference": "Q(i,j)=(pi_i P_ij + pi_j P_ji)/(2 pi_i); targets the measured pi",
+  "sensitivity_max_len": 1024,
+  "sensitivity_samples": 300,
+  "sensitivity_states": 2044,
+  "sensitivity_tapes": [
+   16,
+   32,
+   64,
+   128,
+   256,
+   512,
+   1024,
+   2048,
+   4096
+  ],
+  "state": "(genome_length, tape_words)",
+  "trajectory_steps": 2000000,
+  "truncation": "out-of-space transitions folded into the self-loop (rejection semantics)"
+ },
+ "kernel_classification": [
+  "STRUCTURAL_KERNEL_REVERSIBLE_WITHIN_TESTED_PRECISION",
+  "STRUCTURAL_KERNEL_NONREVERSIBLE_NO_MATERIAL_CURRENT_DETECTED",
+  "STRUCTURAL_KERNEL_NONREVERSIBLE_AUTHORED_CURRENT_DETECTED"
+ ],
+ "multiplicity": {
+  "alpha": 0.05,
+  "cell": "(coordinate, cohort)",
+  "family_size": 350,
+  "procedure": "one global step-down Holm",
+  "two_implementations_must_agree": true,
+  "within_cohort_reported_but_decides_nothing": true
+ },
+ "null_map": {
+  "config_log2_tape_words": {
+   "primary": "NC5",
+   "sensitivity": "NC1B"
+  },
+  "content": {
+   "primary": "NC4",
+   "sensitivity": "NC3"
+  },
+  "genome_length": {
+   "primary": "NC5",
+   "sensitivity": "NC1B"
+  },
+  "other_config": {
+   "primary": "NC1B",
+   "sensitivity": "NC5"
+  },
+  "phenotype": {
+   "primary": "NC4",
+   "sensitivity": "NC3"
+  }
+ },
+ "prereg_doc": "PREREG_V0_5.md",
+ "prereg_doc_sha256": "f579c84b330b0f01792d8fa9d3ea73627afbf2a22b8062c2ef33358c1258a46f",
+ "prereg_id": "1ed728ac2a04decdc41f57a01a87de93009727604c2acfe6831bf2312dad6d6b",
+ "primary_ensemble": "E0",
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "schema_version": "proteus.v0_5_prereg.v1",
+ "seed": 6427004582279911996,
+ "seed_derivation": "int(brief_sha256[:16],16)",
+ "verdict_order": [
+  "INSTRUMENT_INSUFFICIENT_TO_ADJUDICATE",
+  "CONFIRMED_CONTENT_DIRECTIONAL_EFFECT",
+  "V0_4_CONTENT_DISCOVERY_NOT_REPLICATED",
+  "NOT_QUALIFIED_DIRECTIONAL_MUTATION_PRIOR_REMAINS",
+  "NO_REPLICATED_MARGINAL_DIRECTIONAL_PRIOR_DETECTED"
+ ],
+ "zero_grammar_changes": true
+}

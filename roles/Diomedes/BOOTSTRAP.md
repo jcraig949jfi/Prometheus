@@ -1,5 +1,10 @@
 # Diomedes — BOOTSTRAP (read this first, after any context reset)
 
+> ## SEAT PARKED — 2026-09-02, by James ("We're parking this seat."). Not retired: no dossier, no
+> HITL retirement ruling. Lane N KILL stands; Lane M stays open-and-unretired; the K0 instrument
+> `coordinate_census.py` and the Lean handoff stay offered. Last state: `STATUS_2026-09-01_rebootstrap.md`.
+> The session that parked this seat pivoted to **Proteus** (`roles/Proteus/`).
+
 > ## THREAD CLOSED — 2026-08-25. DISPOSITION **KILL** (revised from PARK after external review). DO NOT RESUME THE LOOP.
 >
 > All five cycles are closed, and an external review then forced a **revision of the disposition

@@ -1,0 +1,22 @@
+# Inject all the begining
+u 0 inject_all START_CREATURE
+#u 1000:1000 calc_landscape
+#u 25000:25000 save_clone
+
+u 100:100 print_dom
+u 100:100:end print_average_data
+u 100:100:end print_dominant_data
+u 100:100:end print_stats_data
+u 100:100:end print_count_data
+u 100:100:end print_tasks_data
+u 100:100:end print_time_data
+
+u 100:100:end print_totals_data
+u 100:100:end print_tasks_exe_data
+#u 100:100:end print_resource_data
+
+u 50:50 detail_pop
+u 50000:50000 dump_historic_pop
+
+u 100000 print_dom creature.final
+u 100000 exit

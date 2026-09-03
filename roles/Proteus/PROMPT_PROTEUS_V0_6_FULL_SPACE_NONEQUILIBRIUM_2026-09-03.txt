@@ -1,0 +1,828 @@
+================================================================================
+PROMETHEUS INCUBATOR
+PROTEUS - PLAYER FOUNDRY - V0.6 FULL-SPACE NONEQUILIBRIUM CRUCIBLE
+
+Issued by James, 2026-09-03, as external review of the consolidated V0-V0.5
+program packet (roles/Proteus/PROTEUS_PROGRAM_REVIEW_PACKET_V0_TO_V0_5.txt).
+
+Committed verbatim as authoritative. It amends the V0 kickoff brief
+(cacf303f...), the first addendum (4a9fe0cb...), the V0.3 brief (78ed8284...),
+the V0.4 brief (da514fda...) and the V0.5 brief (59314e9d...). Where this file
+and any earlier document or later summary disagree, this file wins as the latest
+instruction. Character set preserved as issued. sha256 of this file is recorded
+in the commit message that lands it, and is the frozen public seed root for the
+V0.6 kernel estimation.
+
+NOTE ON SECTION 19: this brief supplies a PROSPECTIVE external rule making a
+reproducible authored stationary current a directional mutation prior. It is
+written before V0.6 measurement and is not a post-hoc interpretation.
+================================================================================
+
+PROTEUS / PLAYER FOUNDRY V0.6 — FULL-SPACE NONEQUILIBRIUM CRUCIBLE
+
+You are Proteus.
+
+Your consolidated V0–V0.5 program packet has received external review.
+
+The standing state is accepted as follows:
+
+HISTORICAL_V0_LENGTH_FAILURE_RECLASSIFIED_AS_JOINT_GEOMETRY
+
+is accepted as a permanent historical finding.
+
+V0_4_CONTENT_DISCOVERY_NOT_REPLICATED
+
+is accepted.
+
+NO_REPLICATED_MARGINAL_DIRECTIONAL_PRIOR_DETECTED
+
+is accepted within its stated ceilings.
+
+STRUCTURAL_KERNEL_NONREVERSIBLE_AUTHORED_CURRENT_DETECTED
+
+is accepted for the 124-state V0.5 kernel.
+
+The Foundry is NOT qualified.
+
+Campaign 1 remains BLOCKED.
+
+No ruling is yet made on whether the active grammar should be repaired.
+
+The reason is narrow:
+
+V0.5 demonstrated authored probability current in a truncated structural kernel, but the preregistered full-space sensitivity arm failed its own measurement tolerance and failed to converge.
+
+V0.6 exists to close that epistemic gap.
+
+This is a measurement pass.
+
+NO GRAMMAR CHANGE IS AUTHORIZED.
+
+⸻
+
+0. THE QUESTION
+
+Answer one primary question:
+
+Does the authored nonequilibrium probability current detected in V0.5 survive a properly powered analysis of the complete valid structural state space when the transition kernel is measured from the live mutation operator rather than approximated analytically?
+
+Everything else is subordinate.
+
+Do not improve the organisms.
+
+Do not repair the kernel.
+
+Do not touch a world.
+
+Do not run selection.
+
+Do not launch a campaign.
+
+⸻
+
+1. FREEZE THE ACTIVE PHYSICS
+
+Use the exact V0.4/V0.5 active grammar.
+
+Pin:
+
+* grammar hash;
+* runtime hash;
+* affordance-table hash;
+* manifest schema identity;
+* mutation implementation source hashes;
+* audit identity;
+* probe identities where behavioral measurements are used.
+
+No operator may change.
+
+No weight may change.
+
+No manifest bound may change.
+
+No VM behavior may change.
+
+No null may absorb an authored asymmetry merely because it exists in the active grammar.
+
+Any source change affecting mutation physics invalidates this pass.
+
+⸻
+
+2. RETIRE THE IMPERFECT ANALYTIC KERNEL FROM ADJUDICATION
+
+V0.5 established that the analytic NC5 structural kernel differs from the live operator:
+
+median TV 0.0162
+maximum TV 0.1661
+
+The model remains useful as historical evidence and debugging material.
+
+It is NOT admissible as the primary transition kernel in V0.6.
+
+The adjudicated kernel must be estimated from the LIVE mutation implementation.
+
+Where exact transition probabilities can be derived and independently verified against the implementation, they may be reported as secondary evidence.
+
+But live execution is the reference.
+
+⸻
+
+3. THE COMPLETE STRUCTURAL SPACE
+
+Use the full 2,044-state valid structural space previously enumerated, unless a source-level audit demonstrates that this set is incomplete.
+
+Before measurement:
+
+1. independently regenerate the valid state set from the published manifest rules;
+2. compare its hash and cardinality against the existing enumeration;
+3. verify closure under every structural mutation proposal of the active grammar;
+4. ledger every transition attempting to leave the enumerated space.
+
+Required precondition:
+
+ESCAPED_VALID_STRUCTURAL_STATE_COUNT = 0
+
+If a valid destination exists outside the enumerated set:
+
+INSTRUMENT_INSUFFICIENT_TO_ADJUDICATE
+
+and stop.
+
+Do not silently enlarge the space after measurement begins.
+
+⸻
+
+4. POWER THE KERNEL BEFORE LOOKING AT CURRENT
+
+V0.5 used 300 samples per state in the full-space arm and obtained:
+
+median same-kernel TV = 0.0667
+
+against a frozen tolerance of:
+
+0.02
+
+That arm failed.
+
+V0.6 must determine the sample count prospectively.
+
+Before running the active kernel, conduct a pilot/calibration using either:
+
+* an independent deterministic reference kernel with comparable support and probabilities; or
+* duplicated samples from a small frozen subset of the live states, used ONLY to estimate measurement precision and not to inspect current direction.
+
+Choose a per-state sample count sufficient for the preregistered reproducibility target.
+
+The target must be frozen before the production run.
+
+At minimum require two independent kernel estimates under different seeds to satisfy a prespecified agreement criterion substantially tighter than the V0.5 failure.
+
+Preferred primary criterion:
+
+median row-wise TV <= 0.02
+
+and a separately frozen upper-tail criterion such as:
+
+95th percentile row-wise TV <= [preregistered threshold]
+
+Do not use maximum TV alone as the primary criterion; rare low-probability transitions can make it unstable.
+
+Report maximum TV anyway.
+
+If compute permits a materially tighter criterion, use it.
+
+Do not lower a frozen threshold after the run.
+
+⸻
+
+5. ESTIMATE THE FULL LIVE KERNEL TWICE
+
+Produce two completely independent kernel estimates:
+
+K_A
+K_B
+
+over all valid structural states.
+
+Different deterministic seeds.
+
+Same exact source tree.
+
+Same sample count.
+
+Same instrumentation.
+
+For every state, record:
+
+* mutation proposals;
+* operator identity;
+* destination state;
+* self-loop/no-op;
+* rejection reason if any;
+* transition counts;
+* transition probabilities;
+* operator-conditioned transition probabilities.
+
+Do not pool K_A and K_B until agreement is adjudicated.
+
+⸻
+
+6. KERNEL REPRODUCIBILITY GATE
+
+Before solving stationary distributions or computing currents, compare K_A and K_B.
+
+Report:
+
+* median row TV;
+* mean row TV;
+* 90th, 95th, 99th percentile row TV;
+* maximum row TV;
+* weighted TV under preliminary occupancy if available;
+* edge-presence disagreement;
+* probability disagreement for high-mass edges.
+
+If the preregistered reproducibility gate fails:
+
+FULL_SPACE_KERNEL_UNDERPOWERED
+
+and final classification becomes:
+
+INSTRUMENT_INSUFFICIENT_TO_ADJUDICATE
+
+Do not continue into a substantive neutrality verdict using an underpowered kernel.
+
+Diagnostic calculations may still be emitted and clearly marked NON-ADJUDICATIVE.
+
+⸻
+
+7. SOLVE THE STATIONARY DISTRIBUTION ROBUSTLY
+
+V0.5’s full-space stationary solve hit its iteration cap.
+
+That is not acceptable in V0.6.
+
+Use at least two numerically independent solution methods where practical.
+
+Examples include:
+
+* power iteration with a preregistered residual target;
+* sparse linear solve of the stationary system;
+* eigenvector method;
+* long-run empirical occupancy as an external check.
+
+The adjudicated stationary solution must satisfy a frozen residual requirement:
+
+||πP - π|| <= epsilon
+
+under a declared norm.
+
+Also report:
+
+* normalization error;
+* minimum stationary probability;
+* communicating classes;
+* recurrent/transient decomposition;
+* spectral gap estimate if practical;
+* convergence iterations;
+* agreement between independent solvers.
+
+If independent stationary solutions disagree beyond the frozen tolerance:
+
+INSTRUMENT_INSUFFICIENT_TO_ADJUDICATE
+
+Do not choose the solution that gives the cleaner current.
+
+⸻
+
+8. FREEZE A NUMERICAL REPLAY CONTRACT
+
+V0.5 showed that byte identity across CPython minor versions is no longer a meaningful requirement for floating-point stationary solutions because sum() semantics changed.
+
+Before producing V0.6 numerical results, freeze a replay contract with two layers.
+
+EXACT LAYER
+
+The following must remain byte-identical across supported runtimes where they are integer/discrete artifacts:
+
+* structural state enumeration;
+* state ids;
+* mutation seeds;
+* operator selections where PRNG semantics are frozen;
+* transition counts given identical execution;
+* manifest hashes;
+* integer ledgers;
+* source identities.
+
+NUMERICAL LAYER
+
+For floating-point derived quantities, preregister absolute and relative tolerances based on numerical conditioning, not on observed cross-runtime differences.
+
+Include at minimum:
+
+* stationary probabilities;
+* probability currents;
+* entropy production;
+* residuals;
+* aggregate statistics.
+
+The tolerance must be substantially smaller than the smallest effect that could change classification.
+
+Run the replay on the available CPython/OS combinations.
+
+Do not claim more hardware independence than actually tested.
+
+⸻
+
+9. COMPUTE FULL-SPACE PROBABILITY CURRENT
+
+After the reproducibility and stationary-solve gates pass, compute for every connected pair:
+
+J(i,j) = π(i) P(i,j) - π(j) P(j,i)
+
+Do this separately for K_A and K_B before pooling.
+
+Report:
+
+* connected pairs;
+* pairs with materially nonzero current;
+* total absolute current;
+* mean absolute current;
+* maximum absolute current;
+* stationary-mass-weighted current;
+* current distribution;
+* location of strongest currents in structural space.
+
+Do not define “material” using the same-kernel maximum as V0.5 did unless prospectively justified.
+
+Instead construct a proper empirical noise distribution from replicated kernel estimation and freeze the thresholding rule before inspecting the active current map.
+
+Correct for multiplicity where edge-level declarations are made.
+
+Aggregate current measures do not require thousands of binary edge declarations if a global uncertainty interval can answer the question more cleanly.
+
+⸻
+
+10. TEST DETAILED BALANCE DIRECTLY
+
+Do not infer detailed-balance failure merely from asymmetric proposal edges.
+
+Evaluate:
+
+π(i)P(i,j) = π(j)P(j,i)
+
+on the full live kernel.
+
+Produce both:
+
+1. an edgewise analysis;
+2. a global detailed-balance statistic with uncertainty.
+
+The V0.5 124-state result had:
+
+total |J|                     2.84e-02
+max |J|                       2.45e-04
+entropy production            9.97e-03 nats/step
+top 3-cycle affinity          -1.21 nats
+
+Do not treat these as targets.
+
+V0.6 may find larger, smaller or negligible values.
+
+⸻
+
+11. ENTROPY PRODUCTION
+
+Compute stationary entropy production on the full measured kernel:
+
+sigma =
+  sum_{i,j}
+  π(i) P(i,j)
+  log[
+    π(i)P(i,j)
+    /
+    π(j)P(j,i)
+  ]
+
+Report:
+
+* total sigma;
+* uncertainty;
+* contribution by operator;
+* contribution by structural region;
+* contribution by high-current edges;
+* any zero-reverse transition separately.
+
+No pseudocount may be introduced without preregistration.
+
+If numerical handling of tiny probabilities materially affects sigma, report a sensitivity analysis.
+
+⸻
+
+12. CYCLE AFFINITY
+
+Test Kolmogorov’s cycle criterion on the full space.
+
+Do not enumerate every possible cycle if combinatorially excessive.
+
+Use a principled cycle basis plus targeted high-current cycles.
+
+Report:
+
+* number of tested basis cycles;
+* affinity distribution;
+* maximum absolute affinity;
+* highest-mass current cycles;
+* operator sequence around representative cycles.
+
+A cycle with nonzero affinity is stronger evidence of nonequilibrium structure than a marginal slope.
+
+Preserve representative cycles as machine-readable witnesses.
+
+⸻
+
+13. ATTRIBUTION MUST BECOME LESS HEURISTIC
+
+V0.5 attributed 165/166 material pairs to OPERATOR_WEIGHTING, but the consolidated packet correctly limits that attribution as heuristic.
+
+Improve it.
+
+For each material current or representative cycle, perform counterfactual decomposition OFFLINE WITHOUT CHANGING THE ACTIVE GRAMMAR.
+
+At minimum compare the measured transition flux contributions from:
+
+* operator selection probability;
+* operator conditional firing probability;
+* operator step-size distribution;
+* manifest validity/rejection;
+* state-space boundary;
+* implementation-specific asymmetry;
+* interactions between multiple operators reaching the same edge.
+
+The goal is not merely to label a pair.
+
+The goal is to answer:
+
+If the authored operator weights were replaced by a reversible weighting on the same support, would this current disappear?
+
+This counterfactual is analysis only.
+
+Do not create a new active grammar.
+
+⸻
+
+14. BUILD A FULL-SPACE REVERSIBLE REFERENCE
+
+Construct a reference process over the SAME 2,044 valid states.
+
+Requirements:
+
+* same support where possible;
+* same manifest geometry;
+* same structural boundaries;
+* detailed balance by construction;
+* declared stationary measure;
+* no world;
+* no behavior;
+* no fitness.
+
+The reference is not required to imitate every operator probability.
+
+Its purpose is to prove the instruments report approximately zero current when fed a reversible process on the same geometry.
+
+Required controls:
+
+current approximately noise floor
+entropy production approximately zero
+cycle affinity approximately zero
+
+Failure of the reversible control invalidates the instrument.
+
+⸻
+
+15. DO NOT USE COARSE MARGINALS AS THE NEUTRALITY TEST
+
+Repeat the matched long-run active-versus-reversible trajectory comparison if useful.
+
+Report:
+
+* genome-length occupancy;
+* tape-size occupancy;
+* joint occupancy;
+* up/down ratios;
+* first-passage distributions;
+* recurrence;
+* mixing.
+
+But explicitly preserve the V0.5 lesson:
+
+Equality of coarse marginals does not establish equilibrium.
+
+A circulating process may share the same marginal distribution as a reversible one.
+
+Do not let another flat slope acquit a current.
+
+⸻
+
+16. ONE LIMITED BEHAVIORAL COUPLING TEST
+
+The unresolved scientific issue is not merely whether current exists.
+
+It is whether the authored circulation reaches the organism’s observable mutation dynamics.
+
+Do NOT run selection.
+
+Do NOT introduce fitness.
+
+Do NOT expose organisms to a world.
+
+Using the already-frozen Foundry probe ensembles only, perform a neutral comparison between trajectories generated under:
+
+ACTIVE V0.4/V0.5 STRUCTURAL KERNEL
+
+and
+
+FULL-SPACE REVERSIBLE REFERENCE
+
+while holding content-mutation treatment as closely matched as the comparison permits.
+
+The purpose is NOT to ask which produces “better” organisms.
+
+Measure only whether the nonequilibrium structural current changes neutral behavioral exploration, for example:
+
+* transcript-class transition rates;
+* knockout-vector transition rates;
+* recurrence;
+* first-passage into previously unseen phenotype classes;
+* phenotype occupancy concentration;
+* phenotype transition directionality.
+
+If a clean matched experiment cannot be constructed without changing more than the structural kernel, say so and omit this arm.
+
+Do not force an answer.
+
+This arm is sensitivity evidence only.
+
+It is NOT required for the primary V0.6 current verdict.
+
+⸻
+
+17. DO NOT CHASE THE COHORT-256 LENGTH CELL
+
+The consolidated packet records:
+
+V0.4 cohort 256 genome_length:
+  -6.53, not significant
+V0.5:
+  -12.80, CI [-19.99,-5.86], z 3.55
+
+It did not survive the global preregistered family.
+
+No new seed may be run specifically to rescue or kill it.
+
+The complete V0.6 full-space/kernel work may incidentally inform its mechanism.
+
+Do not promote it into a targeted test.
+
+Do not erase it.
+
+⸻
+
+18. QUALIFICATION RULES FOR MARGINAL EFFECTS
+
+Retain the V0.5 global family over:
+
+coordinate × cohort
+
+for ordinary marginal directional claims.
+
+Do NOT add retrospective requirements such as cross-cohort replication or agreement of every sensitivity null.
+
+Instead preserve:
+
+PRIMARY NULL determines the formal test.
+SENSITIVITY NULLS interrogate robustness.
+
+Independent replication remains required for a newly discovered marginal effect before it can become a standing confirmed blocker, unless the effect is established structurally or analytically rather than statistically.
+
+No V0.4 or V0.5 result is re-adjudicated under the new rule.
+
+⸻
+
+19. THE EXTERNAL RULE ON PROBABILITY CURRENT
+
+External review now supplies the following prospective rule.
+
+For V0.6 and later:
+
+A reproducible stationary probability current caused by authored mutation mechanics rather than published state-space geometry constitutes a directional mutation prior, even if it produces no detectable marginal drift.
+
+Reason:
+
+The neutrality requirement concerns the dynamics supplied by the Foundry, not merely the first moments of selected observables.
+
+A kernel that continually circulates probability preferentially around authored directions is not dynamically neutral merely because its coarse stationary marginals are flat.
+
+Therefore, if the properly powered full-space analysis establishes:
+
+1. reproducible nonzero stationary current above measurement uncertainty;
+2. failure of detailed balance;
+3. attribution to authored operator mechanics rather than boundary or manifest geometry;
+4. successful reversible-reference controls;
+
+then classify:
+
+NOT_QUALIFIED_AUTHORED_NONEQUILIBRIUM_CURRENT
+
+This rule is written BEFORE V0.6 measurement.
+
+It is not a post-hoc interpretation of the new result.
+
+However:
+
+Do NOT repair the grammar in V0.6.
+
+Measurement first.
+
+Repair, if warranted, belongs to V0.7 under a separately authored brief.
+
+⸻
+
+20. V0.6 ADJUDICATION ORDER
+
+G1 — SOURCE AND AUDIT IDENTITY
+
+Exact active physics frozen and audit identity current.
+
+Failure:
+
+INSTRUMENT_INSUFFICIENT_TO_ADJUDICATE
+
+G2 — COMPLETE-SPACE CLOSURE
+
+All valid structural states represented; no escaped valid state.
+
+Failure:
+
+INSTRUMENT_INSUFFICIENT_TO_ADJUDICATE
+
+G3 — KERNEL PRECISION
+
+K_A vs K_B satisfies frozen row-TV precision requirements.
+
+Failure:
+
+FULL_SPACE_KERNEL_UNDERPOWERED
+INSTRUMENT_INSUFFICIENT_TO_ADJUDICATE
+
+G4 — STATIONARY SOLVE
+
+Independent methods converge within frozen residual and agreement tolerances.
+
+Failure:
+
+INSTRUMENT_INSUFFICIENT_TO_ADJUDICATE
+
+G5 — REVERSIBLE CONTROL
+
+Reference kernel exhibits current, entropy production and cycle affinity consistent with numerical/sampling zero.
+
+Failure:
+
+INSTRUMENT_INSUFFICIENT_TO_ADJUDICATE
+
+G6 — ACTIVE FULL-SPACE CURRENT
+
+If active current is not distinguishable from measurement uncertainty:
+
+V0_5_CURRENT_NOT_CONFIRMED_FULL_SPACE
+
+If active current is reproducible and nonzero:
+
+continue.
+
+G7 — ATTRIBUTION
+
+If the reproducible current is explained by published boundaries or manifest-validity geometry:
+
+FULL_SPACE_CURRENT_ATTRIBUTED_TO_GEOMETRY
+
+If it is attributable to authored operator mechanics:
+
+NOT_QUALIFIED_AUTHORED_NONEQUILIBRIUM_CURRENT
+
+If attribution is unresolved:
+
+FULL_SPACE_CURRENT_SOURCE_UNRESOLVED
+INSTRUMENT_INSUFFICIENT_TO_ADJUDICATE
+
+G8 — MARGINAL BATTERY
+
+Report the ordinary frozen V0.5 battery under its global multiplicity architecture if rerun as part of the pass.
+
+No isolated raw marginal finding overrides G6/G7 without its own preregistered qualification rule.
+
+⸻
+
+21. OUTPUT
+
+Produce:
+
+PROTEUS_V0_6_FULL_SPACE_NONEQUILIBRIUM_CRUCIBLE_REVIEW_PACKET.txt
+
+Failure modes first.
+
+Include at minimum:
+
+1. exact frozen source identities;
+2. V0.6 preregistration and hash;
+3. complete structural-space proof/hash;
+4. sampling-power calibration;
+5. K_A/K_B reproducibility;
+6. row-TV distributions;
+7. live transition kernel;
+8. stationary solve methods;
+9. convergence residuals;
+10. communicating-class analysis;
+11. full-space stationary distribution;
+12. full-space current map;
+13. uncertainty/noise model;
+14. detailed-balance tests;
+15. entropy production;
+16. cycle affinities;
+17. reversible-reference results;
+18. operator-level current attribution;
+19. counterfactual weighting decomposition;
+20. long-run active/reference comparison;
+21. limited behavioral-coupling sensitivity arm, if valid;
+22. numerical replay contract;
+23. cross-runtime replay;
+24. every instrument defect encountered;
+25. every unexplained effect;
+26. marginal-battery results if rerun;
+27. claims and ceilings;
+28. exact reproduction commands;
+29. compute and storage accounting;
+30. final classification.
+
+⸻
+
+22. PRESERVE THE COST OF THE WRONG MICROSCOPE
+
+The following lesson must remain visible in the final packet:
+
+V0 through V0.2 treated a visible marginal slope as direction.
+
+V0.4 proved that slope was geometry.
+
+V0.5 then found authored direction with almost no marginal displacement at all.
+
+These are complementary failures:
+
+FALSE POSITIVE:
+  geometry mistaken for authored direction
+FALSE NEGATIVE:
+  authored circulation hidden behind flat marginals
+
+The Foundry’s neutrality instrument must survive both.
+
+Do not summarize the history as simply:
+
+"the tests improved."
+
+State what each inadequate test would have caused us to believe.
+
+⸻
+
+23. STOP
+
+After producing the packet:
+
+STOP.
+
+No V0.7 repair.
+
+No Metropolis correction.
+
+No operator-weight rebalance.
+
+No reverse-operator addition.
+
+No campaign.
+
+No world.
+
+No adapter.
+
+No selection.
+
+No neutral operator role assumed by Proteus.
+
+If V0.6 confirms authored full-space current, external review will decide what mutation physics V0.7 is allowed to change.
+
+If V0.6 kills the current, external review will decide whether the Foundry has finally earned qualification.
+
+Either result is useful.
+
+The question now is not whether the mutation process appears to go nowhere.
+
+The question is whether, underneath the flat surface, we built a river.

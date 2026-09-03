@@ -1,0 +1,107 @@
+{
+ "affordance_hash": "f1607ee8be680acc33288a95c1a25c09ad4c799a47b0975381be8ca02d7638ce",
+ "arms_not_run": {
+  "behavioral_coupling": "omitted: one operator draw produces the structural and content change as a single event, so the structural kernel cannot be substituted while holding content treatment fixed",
+  "cohort_256_length_cell": "no targeted test, no new seed",
+  "marginal_battery": "not rerun; V0.5 fresh-seed result stands under the same global architecture"
+ },
+ "brief_sha256": "d97de9ead687745a3616434b64fc2351246064295b13c4ed1cddd658d602fa96",
+ "frozen_before_production_run": true,
+ "gates": {
+  "current": {
+   "material_multiplier": 1.0,
+   "material_rule": "threshold = 1.0 x p99 of |J_A(e)-J_B(e)| over connected pairs"
+  },
+  "kernel_precision": {
+   "max_row_tv_reported_not_criterion": true,
+   "median_row_tv_max": 0.01,
+   "p95_row_tv_max": 0.02
+  },
+  "reference": {
+   "max_current_max": "the material threshold",
+   "sigma_max": 1e-12
+  },
+  "stationary": {
+   "adjudicated_solution": "power_iteration",
+   "empirical_steps": 5000000,
+   "gs_tol": 1e-14,
+   "power_tol": 1e-14,
+   "residual_l1_max": 1e-10,
+   "solver_agreement_l1_max": 1e-08
+  },
+  "trajectory_steps": 2000000
+ },
+ "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+ "grammar_version": "proteus.grammar.v0.4",
+ "kernel": {
+  "analytic_kernel_admissible": false,
+  "estimated_from": "LIVE grammar.mutate execution",
+  "samples_per_state": 12000
+ },
+ "manifest_schema_hash": "dacb3c7a149af89fc4dc248a663c95dbfa2a9e1e153f15aa363b8ccc9aadd967",
+ "manifest_schema_id": "prometheus/proteus/player_manifest/v0",
+ "numerical_replay_contract": {
+  "exact_layer": [
+   "state enumeration and hash",
+   "state ids",
+   "mutation seeds",
+   "per-state transition counts",
+   "manifest and source identity hashes",
+   "integer ledgers"
+  ],
+  "numerical_layer": {
+   "current_abs": 1e-12,
+   "entropy_production_abs": 1e-09,
+   "residual_abs": 1e-10,
+   "stationary_abs": 1e-09,
+   "stationary_rel": 1e-06
+  },
+  "rationale": "tolerances set by conditioning, each far below the smallest classification-changing quantity; all adjudicated sums use math.fsum which is exactly rounded"
+ },
+ "pilot": {
+  "fit_median_c": 1.0775181625656522,
+  "fit_p95_c": 1.794039001279364,
+  "ladder": [
+   1000,
+   2000,
+   4000,
+   8000
+  ],
+  "note": "precision only; no current, stationary or direction computed",
+  "subset_size": 103
+ },
+ "prereg_doc": "PREREG_V0_6.md",
+ "prereg_doc_sha256": "5b349616e8456f3e1f1ca70ca854d3888e71385aa9569803c105689d315719d6",
+ "prereg_id": "9ced9136d25e4bba4b29f14fa7a44a1162b70df0e8b118f40c70fbb92041a1a6",
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "schema_version": "proteus.v0_6_prereg.v1",
+ "seed_a": 15671939473150014554,
+ "seed_b": 3897376518631596881,
+ "seed_derivation": "seed_a=int(brief[:16],16), seed_b=int(brief[16:32],16)",
+ "space": {
+  "escaped_valid_structural_state_count": 0,
+  "hash": "64e55c9d31b39b6bc37f6e8a5c1d92c5209ae085711116c18dfdcefc93266459",
+  "matches_prior_enumeration": true,
+  "n_states": 2044,
+  "tapes": [
+   16,
+   32,
+   64,
+   128,
+   256,
+   512,
+   1024,
+   2048,
+   4096
+  ]
+ },
+ "verdict_strings": [
+  "INSTRUMENT_INSUFFICIENT_TO_ADJUDICATE",
+  "FULL_SPACE_KERNEL_UNDERPOWERED",
+  "V0_5_CURRENT_NOT_CONFIRMED_FULL_SPACE",
+  "FULL_SPACE_CURRENT_ATTRIBUTED_TO_GEOMETRY",
+  "FULL_SPACE_CURRENT_SOURCE_UNRESOLVED",
+  "NOT_QUALIFIED_AUTHORED_NONEQUILIBRIUM_CURRENT"
+ ],
+ "zero_grammar_changes": true
+}

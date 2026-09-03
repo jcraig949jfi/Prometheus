@@ -1,0 +1,208 @@
+{
+ "engine_hash": "sha256:5274ddbe9120ddbbd75a36965106d2efe640a3b72278e7bb97b82e356e1fc9fc",
+ "constructions": {
+  "C1_CLIENT_FANOUT": {
+   "same_blob": true,
+   "origins": [
+    "NATIVE",
+    "NATIVE"
+   ],
+   "same_client": true,
+   "dependence_flags": [
+    "SAME_CLIENT"
+   ],
+   "engine_verdict": "DEPENDENT_OR_UNRESOLVED"
+  },
+  "C2_FORK_ECHO": {
+   "same_blob": true,
+   "origins": [
+    "NATIVE",
+    "NATIVE"
+   ],
+   "same_client": true,
+   "dependence_flags": [
+    "ANCESTOR_HELD_BEFORE_FORK",
+    "SAME_CLIENT"
+   ],
+   "engine_verdict": "DEPENDENT_OR_UNRESOLVED"
+  },
+  "C3_IMPORT_REPUBLISH": {
+   "same_blob": true,
+   "origins": [
+    "NATIVE",
+    "NATIVE"
+   ],
+   "same_client": false,
+   "dependence_flags": [
+    "PRIOR_HOLDING_IN_SAME_WORLD"
+   ],
+   "engine_verdict": "DEPENDENT_OR_UNRESOLVED"
+  },
+  "C4_TRUE_INDEPENDENT": {
+   "same_blob": true,
+   "origins": [
+    "NATIVE",
+    "NATIVE"
+   ],
+   "same_client": false,
+   "dependence_flags": [],
+   "engine_verdict": "NO_ENGINE_EVIDENCE_OF_DEPENDENCE"
+  },
+  "C5_OUT_OF_BAND": {
+   "same_blob": true,
+   "origins": [
+    "NATIVE",
+    "NATIVE"
+   ],
+   "same_client": false,
+   "dependence_flags": [],
+   "engine_verdict": "NO_ENGINE_EVIDENCE_OF_DEPENDENCE"
+  }
+ },
+ "api_only_note": "get_world/knowledge/events are owner-only (AccessDenied); a synthesis client sees only its own IMPORTED rows: origin/source_world/source_hash. No auditor role exists; the audit above required the raw tables.",
+ "api_cross_client_get_world": "denied 403",
+ "C4_separable_from": {
+  "C1_CLIENT_FANOUT": true,
+  "C2_FORK_ECHO": true,
+  "C3_IMPORT_REPUBLISH": true,
+  "C5_OUT_OF_BAND": false
+ },
+ "verdict": "SUBSTRATE_GAP: EVIDENCE_INDEPENDENCE_NOT_REPRESENTABLE",
+ "indistinguishable_from_C4": [
+  "C5_OUT_OF_BAND"
+ ],
+ "consensus_decoy_n60": {
+  "3:1|no_falsifier": {
+   "BLIND": {
+    "correct": 0,
+    "wrong": 60,
+    "abstain": 0
+   },
+   "FALSIFIER_FIRST": {
+    "correct": 0,
+    "wrong": 60,
+    "abstain": 0
+   },
+   "VERIFY_K": {
+    "correct": 52,
+    "wrong": 8,
+    "abstain": 0
+   },
+   "RAW": {
+    "correct": 0,
+    "wrong": 0,
+    "abstain": 60
+   }
+  },
+  "3:1|one_decisive_falsifier": {
+   "BLIND": {
+    "correct": 0,
+    "wrong": 60,
+    "abstain": 0
+   },
+   "FALSIFIER_FIRST": {
+    "correct": 60,
+    "wrong": 0,
+    "abstain": 0
+   },
+   "VERIFY_K": {
+    "correct": 60,
+    "wrong": 0,
+    "abstain": 0
+   },
+   "RAW": {
+    "correct": 0,
+    "wrong": 0,
+    "abstain": 60
+   }
+  },
+  "3:1|falsifier_plus_forged_counter": {
+   "BLIND": {
+    "correct": 0,
+    "wrong": 60,
+    "abstain": 0
+   },
+   "FALSIFIER_FIRST": {
+    "correct": 36,
+    "wrong": 0,
+    "abstain": 24
+   },
+   "VERIFY_K": {
+    "correct": 60,
+    "wrong": 0,
+    "abstain": 0
+   },
+   "RAW": {
+    "correct": 0,
+    "wrong": 0,
+    "abstain": 60
+   }
+  },
+  "7:1|no_falsifier": {
+   "BLIND": {
+    "correct": 0,
+    "wrong": 60,
+    "abstain": 0
+   },
+   "FALSIFIER_FIRST": {
+    "correct": 0,
+    "wrong": 60,
+    "abstain": 0
+   },
+   "VERIFY_K": {
+    "correct": 53,
+    "wrong": 7,
+    "abstain": 0
+   },
+   "RAW": {
+    "correct": 0,
+    "wrong": 0,
+    "abstain": 60
+   }
+  },
+  "7:1|one_decisive_falsifier": {
+   "BLIND": {
+    "correct": 0,
+    "wrong": 60,
+    "abstain": 0
+   },
+   "FALSIFIER_FIRST": {
+    "correct": 60,
+    "wrong": 0,
+    "abstain": 0
+   },
+   "VERIFY_K": {
+    "correct": 60,
+    "wrong": 0,
+    "abstain": 0
+   },
+   "RAW": {
+    "correct": 0,
+    "wrong": 0,
+    "abstain": 60
+   }
+  },
+  "7:1|falsifier_plus_forged_counter": {
+   "BLIND": {
+    "correct": 0,
+    "wrong": 60,
+    "abstain": 0
+   },
+   "FALSIFIER_FIRST": {
+    "correct": 36,
+    "wrong": 0,
+    "abstain": 24
+   },
+   "VERIFY_K": {
+    "correct": 60,
+    "wrong": 0,
+    "abstain": 0
+   },
+   "RAW": {
+    "correct": 0,
+    "wrong": 0,
+    "abstain": 60
+   }
+  }
+ }
+}

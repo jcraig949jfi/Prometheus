@@ -1,0 +1,294 @@
+PROTEUS / PLAYER FOUNDRY V0 -- REVIEW PACKET FOR THE BRIEF (PRE-EXECUTION)
+2026-09-02. Written for an external reviewer who has not seen the
+originating conversation. Reviews the V0 kickoff BRIEF, the seat as
+chartered, and the design commitments the seat is making BEFORE any
+code exists.
+
+Nothing in this packet is a result. No Foundry code exists. No organism
+has been generated. No world has been touched. No campaign is proposed
+for launch.
+
+====================================================================
+0. WHAT THIS BRIEF ASKS
+====================================================================
+
+Build and qualify a PLAYER FOUNDRY: a deterministic, seeded generator
+that manufactures very large numbers of small, diverse, semantically
+sterile computational organisms from compact manifests, so that a
+neutral operator can drop them into synthetic worlds the Foundry has
+never seen and subject them to selection.
+
+The target is NOT an intelligent agent and NOT a benchmark score. The
+target is the machinery that would let us notice the first reproducible
+deviation from an otherwise flat landscape of failure -- and then freeze
+it for independent falsification rather than exploit it.
+
+Brief committed verbatim at
+  roles/Proteus/PROMPT_PROTEUS_PLAYER_FOUNDRY_V0_2026-09-02.txt
+  sha256 cacf303f3a997e2172cac5ef39021ac194ab3ec82edea21f5dfc8579e70ec5b4
+hashed at issuance. Seat charter at roles/Proteus/RESPONSIBILITIES.md.
+Where charter and brief disagree, the brief wins.
+
+The brief's last line is a hard stop: build the machine, then stop and
+return an external-review packet BEFORE launching the large population.
+This packet is the pre-execution half of that obligation. A second
+packet follows the build.
+
+====================================================================
+1. THE SEAT, IN ONE PARAGRAPH
+====================================================================
+
+Proteus supplies the PLAYER side of the Prometheus Incubator. Daedalus
+maintains the Serendipity Foundry Engine (SFE): worlds as isolation
+units, hash-chained event ledgers, work queues, budgets, provenance.
+SFE is authoritative for what happened. The Incubator's World-0 line
+and the Ludus bench supply worlds. Mnemosyne's Evidence Wiki (PEW)
+holds human-language interpretation over SFE's events. Charon, Elenchus
+and Harmonia adjudicate. A neutral experiment operator -- not yet
+assigned to anyone -- joins players to worlds. Proteus makes the
+population that enters the arena and nothing else: it does not design
+worlds, does not read their internals, does not tune to them, and does
+not judge survivors.
+
+====================================================================
+2. DESIGN COMMITMENTS MADE BEFORE CODE, AND WHAT MAKES EACH CHECKABLE
+====================================================================
+
+The brief states principles. A reviewer needs to know how each becomes
+a test rather than a sentence. Where one cannot, that is said.
+
+  C1. GENOMES ARE DATA, NEVER HOST CODE.
+      A player is a manifest interpreted by a frozen, versioned runtime.
+      This is what makes replay bit-exact, makes "pre/post architecture
+      hash" meaningful, and lets lineage be a property of bytes rather
+      than of a Python class hierarchy. Consistent with the Incubator's
+      own rule for World-0 organisms.
+      Check: replay tests -- same seed + same runtime hash => byte-
+      identical population; different runtime hash => refused.
+
+  C2. SEMANTIC QUARANTINE HAS TWO LAYERS AND ONLY ONE IS MECHANICAL.
+      String layer (executable, CI, fail-closed): allowlisted import
+      graph for the player runtime (no tokenizers, embeddings, corpora,
+      HTTP, LLM clients); every byte a player can read is scanned for
+      natural-language tokens; human-readable names exist only in
+      instrumentation tables outside the player's address space.
+      Ontology layer (REVIEW GATE, not mechanical): every primitive in
+      the instruction set must be justified as a minimal computational
+      affordance -- arithmetic, comparison, branch, memory read/write,
+      indirection, costed random draw, cost query -- never as a
+      cognitive function. The affordance table is published, versioned
+      and hashed into the runtime identity.
+      HONEST LIMIT: "ANALOGIZE encoded as opcode 0x17" is exactly the
+      case no scanner catches. The seat can make the affordance table
+      small, public and reviewed; it cannot make ontology-freedom a
+      unit test. Reviewers should treat the affordance table as the
+      thing to attack.
+
+  C3. MUTATION CARRIES SUBTRACTION WITH PRE-REGISTERED MASS, AND
+      GROWTH IS NOT THE DEFAULT.
+      The grammar includes deletion and simplification operators with
+      non-zero declared probability. Mutation tests include a
+      NEUTRALITY CHECK: under no selection, expected genome size must
+      not drift upward across generations.
+      Check: the neutrality test is a pre-registered gate with its
+      tolerance and its SE stated before the run.
+
+  C4. RESOURCES ARE A VECTOR AT GENERATION TIME.
+      Wall time, CPU/GPU where available, memory, persistent-state
+      footprint, operation count, search spend, adaptation spend --
+      recorded separately per encounter and per adaptation step.
+      Collapsing to a scalar is the operator's choice at experiment
+      time, never the Foundry's.
+      Check: the meter's output schema has no field named fitness.
+
+  C5. THE (M, T, C, Pi) LENS IS INSTRUMENTATION, NOT ARCHITECTURE.
+      Mutations are TAGGED by which lens components they touch, for
+      the operator's benefit. The grammar does not hard-wire four
+      slots. The diversity demonstration must exhibit mutations that
+      touch several components at once and mutations that collapse a
+      distinction the lens draws.
+      Check: the grammar's operator table lists, per operator, the lens
+      tags; at least one operator carries more than one tag, and at
+      least one is tagged "lens-collapsing".
+
+  C6. "MATERIALLY DIFFERENT ORGANISMS" IS MEASURED, NOT ASSERTED.
+      Inherited from the Diomedes seat's standing rule: state the
+      alphabet and its entropy before any diversity claim. Manifest
+      distance is not organism distance. The demonstration pre-declares
+      two signatures:
+        - BEHAVIOURAL: responses on a neutral, world-free probe battery
+          that Proteus owns and that is not a qualification world;
+        - STRUCTURAL: which affordances are load-bearing under ablation.
+      It reports the number of distinct equivalence classes under each,
+      with the trivial floor (all-identical) and the attainable ceiling
+      (population size, or the probe battery's own resolution) stated
+      before the run.
+      Check: the floor/ceiling/alphabet block appears in the
+      demonstration file ABOVE the measured numbers.
+
+  C7. FIREWALL AS A LEDGER, NOT A PROMISE.
+      Every world-side file the seat opens is recorded in
+      roles/Proteus/READ_LEDGER.md with line range and reason.
+      Interfaces are readable; physics, generators, cost tables and
+      world source are not. As of this packet the ledger holds the SFE
+      client API, the heads of two Incubator program documents, two
+      Incubator schemas, and two role documents. Nothing from a world
+      active in qualification.
+
+  C8. IMMUTABLE EXPERIENCE.
+      Player-state changes are append-only and carry the evidence
+      available at the moment of change. The SFE ledger and the
+      player's own transition log are never edited; PEW holds
+      interpretation and may change.
+      Check: the lineage schema has no update path; the transition
+      log is hash-chained like SFE's.
+
+====================================================================
+3. RISKS THE BRIEF DOES NOT COVER
+====================================================================
+
+  R1. THE INTERFACE IS WHERE WORLD KNOWLEDGE LEAKS IN.
+      The brief forbids reading world internals but the Foundry must
+      bind to SOME observation/action shape. If that shape is designed
+      by reading World-0's organism/client interface, the players are
+      shaped by World-0 even without seeing its physics. Mitigation
+      proposed: the world-interface contract is interface-POLYMORPHIC
+      (opaque vectors of declared shape plus a cost signal), with
+      World-0 as the first binding and Ludus worlds reachable without
+      redesign. The seat proceeds on that assumption unless James
+      rules otherwise. Reviewers: is polymorphism itself a leak?
+
+  R2. THE MUTATION GRAMMAR CAN BE AN AUTHORED LADDER.
+      The Incubator's foundational distinction -- never author a
+      reasoning ladder for the organisms -- applies to Proteus more
+      than to anyone. A grammar whose operators are named and weighted
+      by what WE think cognition needs is a ladder. C3 and C5 are
+      partial defences. The full defence is that the grammar is itself
+      evolvable; V0 does not deliver that, and says so.
+
+  R3. THE NEUTRAL PROBE BATTERY (C6) IS A WORLD BY ANOTHER NAME.
+      A probe battery rich enough to separate organisms behaviourally
+      is a small world, and Proteus owning it is a firewall tension.
+      Mitigation: the battery is frozen, public, hashed, and NEVER used
+      for qualification or selection; it exists only to measure
+      distinctness. Reviewers should say whether that is sufficient.
+
+  R4. DIVERSITY CAN BE HIGH AND USELESS.
+      Millions of distinct organisms that all die at trivial
+      qualification is a large alphabet with no survivors. The brief
+      accepts this ("most of your organisms should fail"). The risk is
+      the OPPOSITE reading: that a high distinctness count is presented
+      as progress. It is not. It is a precondition.
+
+  R5. THE PEW CLIENT IS NOT ON MAIN.
+      evidence_wiki/ew/client.py exists only on branch
+      mnemosyne/evidence-wiki-v0 as of 2026-09-02. Deliverable 10 (PEW
+      export) can be SPECIFIED against the documented API but not
+      EXERCISED until the merge.
+
+  R6. NO NEUTRAL OPERATOR EXISTS.
+      Brief section 10 names one. No seat holds the role. Until one is
+      assigned, Proteus can build and self-test but no qualification
+      can run, and any "qualification" the seat runs itself is a
+      firewall breach by construction.
+
+  R7. COMPUTE SHAPE.
+      Millions of cheap manifestations are CPU-bound and embarrassingly
+      parallel. The machines in this program are GPU-described. No
+      machine is assigned. A campaign proposal without a core count is
+      a wish.
+
+  R8. THIS OPERATOR OVER-CLAIMS.
+      The session that wrote this was the Diomedes seat until parked.
+      That seat's calibration ledger is eleven predictions wrong or
+      overstated against five right, with four of the five on
+      experiments a reviewer specified. The brief's anti-wow discipline
+      is the specific correction this record calls for.
+
+====================================================================
+4. DECLARED CONFLICTS
+====================================================================
+
+  D1. Commitment C6 uses roles/Diomedes/coordinate_census.py, written
+      by the same operator under the prior seat. It is arithmetic and
+      reproduces committed answers, but a seat validating its own
+      diversity claim with its own prior instrument is a conflict.
+      Request: name an independent distinctness measure. If none is
+      offered, the demonstration reports both signatures and the
+      reviewer, not the seat, reads them.
+
+  D2. The (M, T, C, Pi) decomposition is the most natural scaffold for
+      a grammar and therefore the most likely way to smuggle a theory
+      of cognition into the organisms. The seat expects to be tempted
+      and has written C5 against itself.
+
+  D3. Nothing of the Diomedes MANDATE carries over. If this seat
+      starts emitting coordinate-adequacy records, that is the prior
+      identity leaking and should be named as such by any reader.
+
+====================================================================
+5. WHAT WILL BE DELIVERED, IN BUILD ORDER
+====================================================================
+
+Per brief section 15, sixteen items, none started. Artifact per item
+in RESPONSIBILITIES.md section 6. Order:
+
+   1 architecture            proteus/ARCHITECTURE.md
+   2 manifest schema         proteus/contracts/player_manifest.schema.v0.json
+   3 mutation grammar        proteus/foundry/grammar.py + MUTATION_GRAMMAR.md
+   4 deterministic generate  proteus/foundry/generate.py
+   5 lineage/checkpoints     proteus/contracts/lineage.schema.v0.json
+   6 resource hooks          proteus/foundry/meter.py
+   7 world interface         proteus/contracts/WORLD_INTERFACE.md + schema
+   8 multiplayer interface   extension of 7
+   9 SFE integration         proteus/contracts/SFE_INTEGRATION.md
+  10 PEW export              proteus/contracts/PEW_EXPORT.md (spec only, R5)
+  11 quarantine audit        proteus/audits/quarantine.py
+  12 diversity demo          proteus/v0/DIVERSITY_DEMO.md + rows
+  13 replay tests            proteus/tests/test_replay.py
+  14 mutation tests          proteus/tests/test_mutation.py
+  15 failure tests           proteus/tests/test_failure.py
+  16 campaign proposal       proteus/v0/CAMPAIGN_1_PROPOSAL.md (NOT launched)
+
+Then the post-build packet. Then stop.
+
+====================================================================
+6. QUESTIONS FOR THE REVIEWER
+====================================================================
+
+  Q1. Is interface polymorphism (R1) a sufficient firewall, or does
+      binding to any declared observation shape already encode the
+      world family?
+  Q2. What is the smallest affordance table (C2) you would accept as
+      ontology-free, and which entry in the seat's proposed list --
+      arithmetic, comparison, branch, memory read/write, indirection,
+      costed random draw, cost query -- do you consider already a
+      theory of cognition?
+  Q3. Name a distinctness measure for C6 that this operator did not
+      write.
+  Q4. Should the neutrality check (C3) be a hard gate on the grammar
+      or a reported statistic? The seat proposes a hard gate.
+  Q5. Is a frozen, public, never-selected-on probe battery (R3) an
+      acceptable way to measure behavioural distinctness, or is any
+      Proteus-owned battery a world?
+
+====================================================================
+7. VERIFICATION AVAILABLE NOW
+====================================================================
+
+The only checkable claims at this stage are provenance:
+
+  git show origin/main:<PATH>   with PATH =
+    roles/Proteus/PROMPT_PROTEUS_PLAYER_FOUNDRY_V0_2026-09-02.txt
+    (pipe the output to sha256sum)
+    expected cacf303f3a997e2172cac5ef39021ac194ab3ec82edea21f5dfc8579e70ec5b4
+  The hash is of the committed blob (LF line endings). A Windows checkout
+  with core.autocrlf rewrites the working copy to CRLF and sha256sum on
+  the FILE then reads b2a530298ad6...; that is a line-ending artifact,
+  not a content change. Hash the blob, not the checkout.
+  git log --format=%H -1 -- roles/Proteus/RESPONSIBILITIES.md
+  cat roles/Proteus/READ_LEDGER.md
+
+No other claim in this packet is testable yet, and none is made.
+
+-- Proteus, pre-execution packet, 2026-09-02. Nothing built.

@@ -1,0 +1,42 @@
+{
+ "design": {
+  "bootstrap_resamples": 500,
+  "code_writable": false,
+  "envelope_gated_starts": [
+   32,
+   128
+  ],
+  "generations": 300,
+  "lineages_per_cohort": 60,
+  "n_regs": 8,
+  "operators_per_generation": 1,
+  "out_cap": 4,
+  "persist": "none",
+  "start_sizes": [
+   8,
+   32,
+   128
+  ],
+  "tape_words": 1024,
+  "tick_budget": 64
+ },
+ "frozen_before_any_run": true,
+ "grammar_hash": "973c7c108c1ec56b0b76ed360ffc001bc069ce088c851fe780b315d72bd51c9c",
+ "prereg_doc": "NEUTRALITY_PREREG.md",
+ "revision_note": "v0.1 prereg after run 1 FAIL under grammar v0. Tolerances UNCHANGED. Lineages per cohort 30 -> 60 because at start 128 the bootstrap CI half-width (0.0305) exceeded the 0.03 tolerance, so that gate was not a gate. Grammar changes: deletion 0.10->0.11, operand_perturbation 0.20->0.19, tape-halving no-op when genome would not fit. Frozen before run 2.",
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "schema_version": "proteus.neutrality_prereg.v0",
+ "seed": 20260902,
+ "tolerances": {
+  "balance": [
+   0.67,
+   1.5
+  ],
+  "occupancy": 0.05,
+  "ratio": [
+   0.5,
+   2.0
+  ],
+  "slope": 0.03
+ }
+}

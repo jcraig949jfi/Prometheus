@@ -1,0 +1,3160 @@
+{
+ "cells": [
+  {
+   "genome_length": 1,
+   "genome_words": 4,
+   "occupancy": 0.25,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 0.9275,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.0,
+     "tape_noop": 0.453125,
+     "tape_proposals": 64,
+     "tape_up": 0.546875
+    },
+    "deletion": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "unreachable_removal": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    }
+   },
+   "tape_words": 16
+  },
+  {
+   "genome_length": 2,
+   "genome_words": 8,
+   "occupancy": 0.5,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 0.9375,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.0,
+     "tape_noop": 0.3968253968253968,
+     "tape_proposals": 63,
+     "tape_up": 0.6031746031746031
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.135,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 1.0,
+     "grew": 0.1675,
+     "shrank": 0.155
+    },
+    "unreachable_removal": {
+     "accepted": 0.075,
+     "grew": 0.0,
+     "shrank": 0.075
+    }
+   },
+   "tape_words": 16
+  },
+  {
+   "genome_length": 3,
+   "genome_words": 12,
+   "occupancy": 0.75,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 0.8975,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.0,
+     "tape_noop": 0.6307692307692307,
+     "tape_proposals": 65,
+     "tape_up": 0.36923076923076925
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.3,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 0.8625,
+     "grew": 0.1775,
+     "shrank": 0.33
+    },
+    "unreachable_removal": {
+     "accepted": 0.1525,
+     "grew": 0.0,
+     "shrank": 0.1525
+    }
+   },
+   "tape_words": 16
+  },
+  {
+   "genome_length": 4,
+   "genome_words": 16,
+   "occupancy": 1.0,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 0.9225,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.0,
+     "tape_noop": 0.5344827586206896,
+     "tape_proposals": 58,
+     "tape_up": 0.46551724137931033
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.47,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 0.62,
+     "grew": 0.0,
+     "shrank": 0.38
+    },
+    "unreachable_removal": {
+     "accepted": 0.2075,
+     "grew": 0.0,
+     "shrank": 0.2075
+    }
+   },
+   "tape_words": 16
+  },
+  {
+   "genome_length": 1,
+   "genome_words": 4,
+   "occupancy": 0.125,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.5571428571428572,
+     "tape_noop": 0.0,
+     "tape_proposals": 70,
+     "tape_up": 0.44285714285714284
+    },
+    "deletion": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "unreachable_removal": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    }
+   },
+   "tape_words": 32
+  },
+  {
+   "genome_length": 2,
+   "genome_words": 8,
+   "occupancy": 0.25,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.3333333333333333,
+     "tape_noop": 0.0,
+     "tape_proposals": 69,
+     "tape_up": 0.6666666666666666
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.1175,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 1.0,
+     "grew": 0.19,
+     "shrank": 0.19
+    },
+    "unreachable_removal": {
+     "accepted": 0.0975,
+     "grew": 0.0,
+     "shrank": 0.0975
+    }
+   },
+   "tape_words": 32
+  },
+  {
+   "genome_length": 4,
+   "genome_words": 16,
+   "occupancy": 0.5,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.4714285714285714,
+     "tape_noop": 0.0,
+     "tape_proposals": 70,
+     "tape_up": 0.5285714285714286
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.475,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 1.0,
+     "grew": 0.3775,
+     "shrank": 0.3325
+    },
+    "unreachable_removal": {
+     "accepted": 0.1925,
+     "grew": 0.0,
+     "shrank": 0.1925
+    }
+   },
+   "tape_words": 32
+  },
+  {
+   "genome_length": 7,
+   "genome_words": 28,
+   "occupancy": 0.875,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 0.905,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.0,
+     "tape_noop": 0.59375,
+     "tape_proposals": 64,
+     "tape_up": 0.40625
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.815,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 0.8275,
+     "grew": 0.1625,
+     "shrank": 0.415
+    },
+    "unreachable_removal": {
+     "accepted": 0.365,
+     "grew": 0.0,
+     "shrank": 0.365
+    }
+   },
+   "tape_words": 32
+  },
+  {
+   "genome_length": 8,
+   "genome_words": 32,
+   "occupancy": 1.0,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 0.8975,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.0,
+     "tape_noop": 0.5540540540540541,
+     "tape_proposals": 74,
+     "tape_up": 0.44594594594594594
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.855,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 0.6225,
+     "grew": 0.0,
+     "shrank": 0.3425
+    },
+    "unreachable_removal": {
+     "accepted": 0.425,
+     "grew": 0.0,
+     "shrank": 0.425
+    }
+   },
+   "tape_words": 32
+  },
+  {
+   "genome_length": 1,
+   "genome_words": 4,
+   "occupancy": 0.0625,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.6142857142857143,
+     "tape_noop": 0.0,
+     "tape_proposals": 70,
+     "tape_up": 0.38571428571428573
+    },
+    "deletion": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "unreachable_removal": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    }
+   },
+   "tape_words": 64
+  },
+  {
+   "genome_length": 2,
+   "genome_words": 8,
+   "occupancy": 0.125,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.4864864864864865,
+     "tape_noop": 0.0,
+     "tape_proposals": 74,
+     "tape_up": 0.5135135135135135
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.0975,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 1.0,
+     "grew": 0.21,
+     "shrank": 0.18
+    },
+    "unreachable_removal": {
+     "accepted": 0.0975,
+     "grew": 0.0,
+     "shrank": 0.0975
+    }
+   },
+   "tape_words": 64
+  },
+  {
+   "genome_length": 8,
+   "genome_words": 32,
+   "occupancy": 0.5,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.5068493150684932,
+     "tape_noop": 0.0,
+     "tape_proposals": 73,
+     "tape_up": 0.4931506849315068
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.815,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 1.0,
+     "grew": 0.3675,
+     "shrank": 0.39
+    },
+    "unreachable_removal": {
+     "accepted": 0.4025,
+     "grew": 0.0,
+     "shrank": 0.4025
+    }
+   },
+   "tape_words": 64
+  },
+  {
+   "genome_length": 15,
+   "genome_words": 60,
+   "occupancy": 0.9375,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 0.925,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.0,
+     "tape_noop": 0.4918032786885246,
+     "tape_proposals": 61,
+     "tape_up": 0.5081967213114754
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.935,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 0.8075,
+     "grew": 0.2,
+     "shrank": 0.3475
+    },
+    "unreachable_removal": {
+     "accepted": 0.665,
+     "grew": 0.0,
+     "shrank": 0.665
+    }
+   },
+   "tape_words": 64
+  },
+  {
+   "genome_length": 16,
+   "genome_words": 64,
+   "occupancy": 1.0,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 0.9175,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.0,
+     "tape_noop": 0.4342105263157895,
+     "tape_proposals": 76,
+     "tape_up": 0.5657894736842105
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.955,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 0.5675,
+     "grew": 0.0,
+     "shrank": 0.35
+    },
+    "unreachable_removal": {
+     "accepted": 0.6575,
+     "grew": 0.0,
+     "shrank": 0.6575
+    }
+   },
+   "tape_words": 64
+  },
+  {
+   "genome_length": 1,
+   "genome_words": 4,
+   "occupancy": 0.03125,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.5079365079365079,
+     "tape_noop": 0.0,
+     "tape_proposals": 63,
+     "tape_up": 0.49206349206349204
+    },
+    "deletion": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "unreachable_removal": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    }
+   },
+   "tape_words": 128
+  },
+  {
+   "genome_length": 2,
+   "genome_words": 8,
+   "occupancy": 0.0625,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.43333333333333335,
+     "tape_noop": 0.0,
+     "tape_proposals": 60,
+     "tape_up": 0.5666666666666667
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.115,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 1.0,
+     "grew": 0.2,
+     "shrank": 0.1525
+    },
+    "unreachable_removal": {
+     "accepted": 0.095,
+     "grew": 0.0,
+     "shrank": 0.095
+    }
+   },
+   "tape_words": 128
+  },
+  {
+   "genome_length": 4,
+   "genome_words": 16,
+   "occupancy": 0.125,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.38461538461538464,
+     "tape_noop": 0.0,
+     "tape_proposals": 78,
+     "tape_up": 0.6153846153846154
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.5375,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 1.0,
+     "grew": 0.44,
+     "shrank": 0.3425
+    },
+    "unreachable_removal": {
+     "accepted": 0.2625,
+     "grew": 0.0,
+     "shrank": 0.2625
+    }
+   },
+   "tape_words": 128
+  },
+  {
+   "genome_length": 16,
+   "genome_words": 64,
+   "occupancy": 0.5,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.5584415584415584,
+     "tape_noop": 0.0,
+     "tape_proposals": 77,
+     "tape_up": 0.44155844155844154
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.9225,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 1.0,
+     "grew": 0.37,
+     "shrank": 0.4225
+    },
+    "unreachable_removal": {
+     "accepted": 0.695,
+     "grew": 0.0,
+     "shrank": 0.695
+    }
+   },
+   "tape_words": 128
+  },
+  {
+   "genome_length": 31,
+   "genome_words": 124,
+   "occupancy": 0.96875,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 0.935,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.0,
+     "tape_noop": 0.4,
+     "tape_proposals": 65,
+     "tape_up": 0.6
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.9725,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 0.815,
+     "grew": 0.215,
+     "shrank": 0.36
+    },
+    "unreachable_removal": {
+     "accepted": 0.905,
+     "grew": 0.0,
+     "shrank": 0.905
+    }
+   },
+   "tape_words": 128
+  },
+  {
+   "genome_length": 32,
+   "genome_words": 128,
+   "occupancy": 1.0,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 0.9175,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.0,
+     "tape_noop": 0.4925373134328358,
+     "tape_proposals": 67,
+     "tape_up": 0.5074626865671642
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.9725,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 0.615,
+     "grew": 0.0,
+     "shrank": 0.3675
+    },
+    "unreachable_removal": {
+     "accepted": 0.8975,
+     "grew": 0.0,
+     "shrank": 0.8975
+    }
+   },
+   "tape_words": 128
+  },
+  {
+   "genome_length": 1,
+   "genome_words": 4,
+   "occupancy": 0.015625,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.55,
+     "tape_noop": 0.0,
+     "tape_proposals": 60,
+     "tape_up": 0.45
+    },
+    "deletion": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "unreachable_removal": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    }
+   },
+   "tape_words": 256
+  },
+  {
+   "genome_length": 2,
+   "genome_words": 8,
+   "occupancy": 0.03125,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.5384615384615384,
+     "tape_noop": 0.0,
+     "tape_proposals": 65,
+     "tape_up": 0.46153846153846156
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.1075,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 1.0,
+     "grew": 0.18,
+     "shrank": 0.1925
+    },
+    "unreachable_removal": {
+     "accepted": 0.075,
+     "grew": 0.0,
+     "shrank": 0.075
+    }
+   },
+   "tape_words": 256
+  },
+  {
+   "genome_length": 8,
+   "genome_words": 32,
+   "occupancy": 0.125,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.5131578947368421,
+     "tape_noop": 0.0,
+     "tape_proposals": 76,
+     "tape_up": 0.4868421052631579
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.835,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 1.0,
+     "grew": 0.375,
+     "shrank": 0.3775
+    },
+    "unreachable_removal": {
+     "accepted": 0.4575,
+     "grew": 0.0,
+     "shrank": 0.4575
+    }
+   },
+   "tape_words": 256
+  },
+  {
+   "genome_length": 32,
+   "genome_words": 128,
+   "occupancy": 0.5,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.6176470588235294,
+     "tape_noop": 0.0,
+     "tape_proposals": 68,
+     "tape_up": 0.38235294117647056
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.9375,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 1.0,
+     "grew": 0.335,
+     "shrank": 0.4125
+    },
+    "unreachable_removal": {
+     "accepted": 0.9125,
+     "grew": 0.0,
+     "shrank": 0.9125
+    }
+   },
+   "tape_words": 256
+  },
+  {
+   "genome_length": 63,
+   "genome_words": 252,
+   "occupancy": 0.984375,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 0.9125,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.0,
+     "tape_noop": 0.4430379746835443,
+     "tape_proposals": 79,
+     "tape_up": 0.5569620253164557
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.9875,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 0.8225,
+     "grew": 0.205,
+     "shrank": 0.3875
+    },
+    "unreachable_removal": {
+     "accepted": 0.9975,
+     "grew": 0.0,
+     "shrank": 0.9975
+    }
+   },
+   "tape_words": 256
+  },
+  {
+   "genome_length": 64,
+   "genome_words": 256,
+   "occupancy": 1.0,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 0.9175,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.0,
+     "tape_noop": 0.4852941176470588,
+     "tape_proposals": 68,
+     "tape_up": 0.5147058823529411
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.98,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 0.6425,
+     "grew": 0.0,
+     "shrank": 0.385
+    },
+    "unreachable_removal": {
+     "accepted": 0.99,
+     "grew": 0.0,
+     "shrank": 0.99
+    }
+   },
+   "tape_words": 256
+  },
+  {
+   "genome_length": 1,
+   "genome_words": 4,
+   "occupancy": 0.0078125,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.5666666666666667,
+     "tape_noop": 0.0,
+     "tape_proposals": 60,
+     "tape_up": 0.43333333333333335
+    },
+    "deletion": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "unreachable_removal": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    }
+   },
+   "tape_words": 512
+  },
+  {
+   "genome_length": 2,
+   "genome_words": 8,
+   "occupancy": 0.015625,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.4666666666666667,
+     "tape_noop": 0.0,
+     "tape_proposals": 60,
+     "tape_up": 0.5333333333333333
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.13,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 1.0,
+     "grew": 0.16,
+     "shrank": 0.2025
+    },
+    "unreachable_removal": {
+     "accepted": 0.075,
+     "grew": 0.0,
+     "shrank": 0.075
+    }
+   },
+   "tape_words": 512
+  },
+  {
+   "genome_length": 16,
+   "genome_words": 64,
+   "occupancy": 0.125,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.5454545454545454,
+     "tape_noop": 0.0,
+     "tape_proposals": 66,
+     "tape_up": 0.45454545454545453
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.9625,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 1.0,
+     "grew": 0.3475,
+     "shrank": 0.3775
+    },
+    "unreachable_removal": {
+     "accepted": 0.7025,
+     "grew": 0.0,
+     "shrank": 0.7025
+    }
+   },
+   "tape_words": 512
+  },
+  {
+   "genome_length": 64,
+   "genome_words": 256,
+   "occupancy": 0.5,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.576271186440678,
+     "tape_noop": 0.0,
+     "tape_proposals": 59,
+     "tape_up": 0.423728813559322
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.9775,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 1.0,
+     "grew": 0.4175,
+     "shrank": 0.3375
+    },
+    "unreachable_removal": {
+     "accepted": 0.9925,
+     "grew": 0.0,
+     "shrank": 0.9925
+    }
+   },
+   "tape_words": 512
+  },
+  {
+   "genome_length": 127,
+   "genome_words": 508,
+   "occupancy": 0.9921875,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 0.93,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.0,
+     "tape_noop": 0.42424242424242425,
+     "tape_proposals": 66,
+     "tape_up": 0.5757575757575758
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.995,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 0.795,
+     "grew": 0.185,
+     "shrank": 0.3975
+    },
+    "unreachable_removal": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    }
+   },
+   "tape_words": 512
+  },
+  {
+   "genome_length": 128,
+   "genome_words": 512,
+   "occupancy": 1.0,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 0.9225,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.0,
+     "tape_noop": 0.5081967213114754,
+     "tape_proposals": 61,
+     "tape_up": 0.4918032786885246
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.995,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 0.585,
+     "grew": 0.0,
+     "shrank": 0.36
+    },
+    "unreachable_removal": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    }
+   },
+   "tape_words": 512
+  },
+  {
+   "genome_length": 1,
+   "genome_words": 4,
+   "occupancy": 0.00390625,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.3898305084745763,
+     "tape_noop": 0.0,
+     "tape_proposals": 59,
+     "tape_up": 0.6101694915254238
+    },
+    "deletion": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "unreachable_removal": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    }
+   },
+   "tape_words": 1024
+  },
+  {
+   "genome_length": 2,
+   "genome_words": 8,
+   "occupancy": 0.0078125,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.6133333333333333,
+     "tape_noop": 0.0,
+     "tape_proposals": 75,
+     "tape_up": 0.38666666666666666
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.1575,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 1.0,
+     "grew": 0.1575,
+     "shrank": 0.16
+    },
+    "unreachable_removal": {
+     "accepted": 0.09,
+     "grew": 0.0,
+     "shrank": 0.09
+    }
+   },
+   "tape_words": 1024
+  },
+  {
+   "genome_length": 32,
+   "genome_words": 128,
+   "occupancy": 0.125,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.40625,
+     "tape_noop": 0.0,
+     "tape_proposals": 64,
+     "tape_up": 0.59375
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.9625,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 1.0,
+     "grew": 0.3475,
+     "shrank": 0.3925
+    },
+    "unreachable_removal": {
+     "accepted": 0.9325,
+     "grew": 0.0,
+     "shrank": 0.9325
+    }
+   },
+   "tape_words": 1024
+  },
+  {
+   "genome_length": 128,
+   "genome_words": 512,
+   "occupancy": 0.5,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.6388888888888888,
+     "tape_noop": 0.0,
+     "tape_proposals": 72,
+     "tape_up": 0.3611111111111111
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.99,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 1.0,
+     "grew": 0.3975,
+     "shrank": 0.3625
+    },
+    "unreachable_removal": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    }
+   },
+   "tape_words": 1024
+  },
+  {
+   "genome_length": 255,
+   "genome_words": 1020,
+   "occupancy": 0.99609375,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 0.915,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.0,
+     "tape_noop": 0.4788732394366197,
+     "tape_proposals": 71,
+     "tape_up": 0.5211267605633803
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.995,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 0.8175,
+     "grew": 0.1775,
+     "shrank": 0.365
+    },
+    "unreachable_removal": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    }
+   },
+   "tape_words": 1024
+  },
+  {
+   "genome_length": 256,
+   "genome_words": 1024,
+   "occupancy": 1.0,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 0.9375,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.0,
+     "tape_noop": 0.4166666666666667,
+     "tape_proposals": 60,
+     "tape_up": 0.5833333333333334
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.9925,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 0.63,
+     "grew": 0.0,
+     "shrank": 0.3775
+    },
+    "unreachable_removal": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    }
+   },
+   "tape_words": 1024
+  },
+  {
+   "genome_length": 1,
+   "genome_words": 4,
+   "occupancy": 0.001953125,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.6129032258064516,
+     "tape_noop": 0.0,
+     "tape_proposals": 62,
+     "tape_up": 0.3870967741935484
+    },
+    "deletion": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "unreachable_removal": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    }
+   },
+   "tape_words": 2048
+  },
+  {
+   "genome_length": 2,
+   "genome_words": 8,
+   "occupancy": 0.00390625,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.47761194029850745,
+     "tape_noop": 0.0,
+     "tape_proposals": 67,
+     "tape_up": 0.5223880597014925
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.1275,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 1.0,
+     "grew": 0.185,
+     "shrank": 0.165
+    },
+    "unreachable_removal": {
+     "accepted": 0.085,
+     "grew": 0.0,
+     "shrank": 0.085
+    }
+   },
+   "tape_words": 2048
+  },
+  {
+   "genome_length": 64,
+   "genome_words": 256,
+   "occupancy": 0.125,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.46875,
+     "tape_noop": 0.0,
+     "tape_proposals": 64,
+     "tape_up": 0.53125
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.98,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 1.0,
+     "grew": 0.37,
+     "shrank": 0.38
+    },
+    "unreachable_removal": {
+     "accepted": 0.995,
+     "grew": 0.0,
+     "shrank": 0.995
+    }
+   },
+   "tape_words": 2048
+  },
+  {
+   "genome_length": 256,
+   "genome_words": 1024,
+   "occupancy": 0.5,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.44,
+     "tape_noop": 0.0,
+     "tape_proposals": 75,
+     "tape_up": 0.56
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.9925,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 1.0,
+     "grew": 0.435,
+     "shrank": 0.345
+    },
+    "unreachable_removal": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    }
+   },
+   "tape_words": 2048
+  },
+  {
+   "genome_length": 511,
+   "genome_words": 2044,
+   "occupancy": 0.998046875,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 0.9275,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.0,
+     "tape_noop": 0.4461538461538462,
+     "tape_proposals": 65,
+     "tape_up": 0.5538461538461539
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.9925,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 0.7975,
+     "grew": 0.2,
+     "shrank": 0.33
+    },
+    "unreachable_removal": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    }
+   },
+   "tape_words": 2048
+  },
+  {
+   "genome_length": 512,
+   "genome_words": 2048,
+   "occupancy": 1.0,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 0.88,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.0,
+     "tape_noop": 0.5454545454545454,
+     "tape_proposals": 88,
+     "tape_up": 0.45454545454545453
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 0.615,
+     "grew": 0.0,
+     "shrank": 0.3475
+    },
+    "unreachable_removal": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    }
+   },
+   "tape_words": 2048
+  },
+  {
+   "genome_length": 1,
+   "genome_words": 4,
+   "occupancy": 0.0009765625,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 0.905,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.4492753623188406,
+     "tape_noop": 0.5507246376811594,
+     "tape_proposals": 69,
+     "tape_up": 0.0
+    },
+    "deletion": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "unreachable_removal": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    }
+   },
+   "tape_words": 4096
+  },
+  {
+   "genome_length": 2,
+   "genome_words": 8,
+   "occupancy": 0.001953125,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 0.915,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.4603174603174603,
+     "tape_noop": 0.5396825396825397,
+     "tape_proposals": 63,
+     "tape_up": 0.0
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.1275,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 1.0,
+     "grew": 0.1875,
+     "shrank": 0.1625
+    },
+    "unreachable_removal": {
+     "accepted": 0.0725,
+     "grew": 0.0,
+     "shrank": 0.0725
+    }
+   },
+   "tape_words": 4096
+  },
+  {
+   "genome_length": 128,
+   "genome_words": 512,
+   "occupancy": 0.125,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 0.895,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.46153846153846156,
+     "tape_noop": 0.5384615384615384,
+     "tape_proposals": 78,
+     "tape_up": 0.0
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.99,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 1.0,
+     "grew": 0.3675,
+     "shrank": 0.3375
+    },
+    "unreachable_removal": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    }
+   },
+   "tape_words": 4096
+  },
+  {
+   "genome_length": 512,
+   "genome_words": 2048,
+   "occupancy": 0.5,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 0.9275,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.5671641791044776,
+     "tape_noop": 0.43283582089552236,
+     "tape_proposals": 67,
+     "tape_up": 0.0
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.9975,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 1.0,
+     "grew": 0.3575,
+     "shrank": 0.3925
+    },
+    "unreachable_removal": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    }
+   },
+   "tape_words": 4096
+  },
+  {
+   "genome_length": 1023,
+   "genome_words": 4092,
+   "occupancy": 0.9990234375,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 0.8625,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.0,
+     "tape_noop": 1.0,
+     "tape_proposals": 55,
+     "tape_up": 0.0
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 1.0,
+     "grew": 1.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 0.8325,
+     "grew": 0.1775,
+     "shrank": 0.335
+    },
+    "unreachable_removal": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    }
+   },
+   "tape_words": 4096
+  },
+  {
+   "genome_length": 1024,
+   "genome_words": 4096,
+   "occupancy": 1.0,
+   "operators": {
+    "config_perturbation": {
+     "accepted": 0.8275,
+     "grew": 0.0,
+     "shrank": 0.0,
+     "tape_down": 0.0,
+     "tape_noop": 1.0,
+     "tape_proposals": 69,
+     "tape_up": 0.0
+    },
+    "deletion": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    },
+    "duplication": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "insertion": {
+     "accepted": 0.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "movement": {
+     "accepted": 0.9975,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "region_swap": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 0.0
+    },
+    "splice": {
+     "accepted": 0.63,
+     "grew": 0.0,
+     "shrank": 0.3875
+    },
+    "unreachable_removal": {
+     "accepted": 1.0,
+     "grew": 0.0,
+     "shrank": 1.0
+    }
+   },
+   "tape_words": 4096
+  }
+ ],
+ "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+ "reversibility_summary": [
+  {
+   "deletion_accept": 0.0,
+   "genome_length": 1,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 1.0,
+   "occupancy": 0.25,
+   "tape_down_rate": 0.0,
+   "tape_up_minus_down": 0.546875,
+   "tape_up_rate": 0.546875,
+   "tape_words": 16
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 2,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 0.0,
+   "occupancy": 0.5,
+   "tape_down_rate": 0.0,
+   "tape_up_minus_down": 0.6031746031746031,
+   "tape_up_rate": 0.6031746031746031,
+   "tape_words": 16
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 3,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 0.0,
+   "occupancy": 0.75,
+   "tape_down_rate": 0.0,
+   "tape_up_minus_down": 0.36923076923076925,
+   "tape_up_rate": 0.36923076923076925,
+   "tape_words": 16
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 4,
+   "insertion_accept": 0.0,
+   "insertion_minus_deletion": -1.0,
+   "occupancy": 1.0,
+   "tape_down_rate": 0.0,
+   "tape_up_minus_down": 0.46551724137931033,
+   "tape_up_rate": 0.46551724137931033,
+   "tape_words": 16
+  },
+  {
+   "deletion_accept": 0.0,
+   "genome_length": 1,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 1.0,
+   "occupancy": 0.125,
+   "tape_down_rate": 0.5571428571428572,
+   "tape_up_minus_down": -0.11428571428571432,
+   "tape_up_rate": 0.44285714285714284,
+   "tape_words": 32
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 2,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 0.0,
+   "occupancy": 0.25,
+   "tape_down_rate": 0.3333333333333333,
+   "tape_up_minus_down": 0.3333333333333333,
+   "tape_up_rate": 0.6666666666666666,
+   "tape_words": 32
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 4,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 0.0,
+   "occupancy": 0.5,
+   "tape_down_rate": 0.4714285714285714,
+   "tape_up_minus_down": 0.05714285714285716,
+   "tape_up_rate": 0.5285714285714286,
+   "tape_words": 32
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 7,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 0.0,
+   "occupancy": 0.875,
+   "tape_down_rate": 0.0,
+   "tape_up_minus_down": 0.40625,
+   "tape_up_rate": 0.40625,
+   "tape_words": 32
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 8,
+   "insertion_accept": 0.0,
+   "insertion_minus_deletion": -1.0,
+   "occupancy": 1.0,
+   "tape_down_rate": 0.0,
+   "tape_up_minus_down": 0.44594594594594594,
+   "tape_up_rate": 0.44594594594594594,
+   "tape_words": 32
+  },
+  {
+   "deletion_accept": 0.0,
+   "genome_length": 1,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 1.0,
+   "occupancy": 0.0625,
+   "tape_down_rate": 0.6142857142857143,
+   "tape_up_minus_down": -0.2285714285714286,
+   "tape_up_rate": 0.38571428571428573,
+   "tape_words": 64
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 2,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 0.0,
+   "occupancy": 0.125,
+   "tape_down_rate": 0.4864864864864865,
+   "tape_up_minus_down": 0.027027027027026973,
+   "tape_up_rate": 0.5135135135135135,
+   "tape_words": 64
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 8,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 0.0,
+   "occupancy": 0.5,
+   "tape_down_rate": 0.5068493150684932,
+   "tape_up_minus_down": -0.013698630136986356,
+   "tape_up_rate": 0.4931506849315068,
+   "tape_words": 64
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 15,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 0.0,
+   "occupancy": 0.9375,
+   "tape_down_rate": 0.0,
+   "tape_up_minus_down": 0.5081967213114754,
+   "tape_up_rate": 0.5081967213114754,
+   "tape_words": 64
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 16,
+   "insertion_accept": 0.0,
+   "insertion_minus_deletion": -1.0,
+   "occupancy": 1.0,
+   "tape_down_rate": 0.0,
+   "tape_up_minus_down": 0.5657894736842105,
+   "tape_up_rate": 0.5657894736842105,
+   "tape_words": 64
+  },
+  {
+   "deletion_accept": 0.0,
+   "genome_length": 1,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 1.0,
+   "occupancy": 0.03125,
+   "tape_down_rate": 0.5079365079365079,
+   "tape_up_minus_down": -0.015873015873015872,
+   "tape_up_rate": 0.49206349206349204,
+   "tape_words": 128
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 2,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 0.0,
+   "occupancy": 0.0625,
+   "tape_down_rate": 0.43333333333333335,
+   "tape_up_minus_down": 0.1333333333333333,
+   "tape_up_rate": 0.5666666666666667,
+   "tape_words": 128
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 4,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 0.0,
+   "occupancy": 0.125,
+   "tape_down_rate": 0.38461538461538464,
+   "tape_up_minus_down": 0.23076923076923078,
+   "tape_up_rate": 0.6153846153846154,
+   "tape_words": 128
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 16,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 0.0,
+   "occupancy": 0.5,
+   "tape_down_rate": 0.5584415584415584,
+   "tape_up_minus_down": -0.11688311688311687,
+   "tape_up_rate": 0.44155844155844154,
+   "tape_words": 128
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 31,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 0.0,
+   "occupancy": 0.96875,
+   "tape_down_rate": 0.0,
+   "tape_up_minus_down": 0.6,
+   "tape_up_rate": 0.6,
+   "tape_words": 128
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 32,
+   "insertion_accept": 0.0,
+   "insertion_minus_deletion": -1.0,
+   "occupancy": 1.0,
+   "tape_down_rate": 0.0,
+   "tape_up_minus_down": 0.5074626865671642,
+   "tape_up_rate": 0.5074626865671642,
+   "tape_words": 128
+  },
+  {
+   "deletion_accept": 0.0,
+   "genome_length": 1,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 1.0,
+   "occupancy": 0.015625,
+   "tape_down_rate": 0.55,
+   "tape_up_minus_down": -0.10000000000000003,
+   "tape_up_rate": 0.45,
+   "tape_words": 256
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 2,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 0.0,
+   "occupancy": 0.03125,
+   "tape_down_rate": 0.5384615384615384,
+   "tape_up_minus_down": -0.07692307692307687,
+   "tape_up_rate": 0.46153846153846156,
+   "tape_words": 256
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 8,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 0.0,
+   "occupancy": 0.125,
+   "tape_down_rate": 0.5131578947368421,
+   "tape_up_minus_down": -0.026315789473684237,
+   "tape_up_rate": 0.4868421052631579,
+   "tape_words": 256
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 32,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 0.0,
+   "occupancy": 0.5,
+   "tape_down_rate": 0.6176470588235294,
+   "tape_up_minus_down": -0.23529411764705888,
+   "tape_up_rate": 0.38235294117647056,
+   "tape_words": 256
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 63,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 0.0,
+   "occupancy": 0.984375,
+   "tape_down_rate": 0.0,
+   "tape_up_minus_down": 0.5569620253164557,
+   "tape_up_rate": 0.5569620253164557,
+   "tape_words": 256
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 64,
+   "insertion_accept": 0.0,
+   "insertion_minus_deletion": -1.0,
+   "occupancy": 1.0,
+   "tape_down_rate": 0.0,
+   "tape_up_minus_down": 0.5147058823529411,
+   "tape_up_rate": 0.5147058823529411,
+   "tape_words": 256
+  },
+  {
+   "deletion_accept": 0.0,
+   "genome_length": 1,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 1.0,
+   "occupancy": 0.0078125,
+   "tape_down_rate": 0.5666666666666667,
+   "tape_up_minus_down": -0.1333333333333333,
+   "tape_up_rate": 0.43333333333333335,
+   "tape_words": 512
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 2,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 0.0,
+   "occupancy": 0.015625,
+   "tape_down_rate": 0.4666666666666667,
+   "tape_up_minus_down": 0.06666666666666665,
+   "tape_up_rate": 0.5333333333333333,
+   "tape_words": 512
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 16,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 0.0,
+   "occupancy": 0.125,
+   "tape_down_rate": 0.5454545454545454,
+   "tape_up_minus_down": -0.09090909090909088,
+   "tape_up_rate": 0.45454545454545453,
+   "tape_words": 512
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 64,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 0.0,
+   "occupancy": 0.5,
+   "tape_down_rate": 0.576271186440678,
+   "tape_up_minus_down": -0.15254237288135597,
+   "tape_up_rate": 0.423728813559322,
+   "tape_words": 512
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 127,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 0.0,
+   "occupancy": 0.9921875,
+   "tape_down_rate": 0.0,
+   "tape_up_minus_down": 0.5757575757575758,
+   "tape_up_rate": 0.5757575757575758,
+   "tape_words": 512
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 128,
+   "insertion_accept": 0.0,
+   "insertion_minus_deletion": -1.0,
+   "occupancy": 1.0,
+   "tape_down_rate": 0.0,
+   "tape_up_minus_down": 0.4918032786885246,
+   "tape_up_rate": 0.4918032786885246,
+   "tape_words": 512
+  },
+  {
+   "deletion_accept": 0.0,
+   "genome_length": 1,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 1.0,
+   "occupancy": 0.00390625,
+   "tape_down_rate": 0.3898305084745763,
+   "tape_up_minus_down": 0.22033898305084748,
+   "tape_up_rate": 0.6101694915254238,
+   "tape_words": 1024
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 2,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 0.0,
+   "occupancy": 0.0078125,
+   "tape_down_rate": 0.6133333333333333,
+   "tape_up_minus_down": -0.22666666666666663,
+   "tape_up_rate": 0.38666666666666666,
+   "tape_words": 1024
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 32,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 0.0,
+   "occupancy": 0.125,
+   "tape_down_rate": 0.40625,
+   "tape_up_minus_down": 0.1875,
+   "tape_up_rate": 0.59375,
+   "tape_words": 1024
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 128,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 0.0,
+   "occupancy": 0.5,
+   "tape_down_rate": 0.6388888888888888,
+   "tape_up_minus_down": -0.27777777777777773,
+   "tape_up_rate": 0.3611111111111111,
+   "tape_words": 1024
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 255,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 0.0,
+   "occupancy": 0.99609375,
+   "tape_down_rate": 0.0,
+   "tape_up_minus_down": 0.5211267605633803,
+   "tape_up_rate": 0.5211267605633803,
+   "tape_words": 1024
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 256,
+   "insertion_accept": 0.0,
+   "insertion_minus_deletion": -1.0,
+   "occupancy": 1.0,
+   "tape_down_rate": 0.0,
+   "tape_up_minus_down": 0.5833333333333334,
+   "tape_up_rate": 0.5833333333333334,
+   "tape_words": 1024
+  },
+  {
+   "deletion_accept": 0.0,
+   "genome_length": 1,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 1.0,
+   "occupancy": 0.001953125,
+   "tape_down_rate": 0.6129032258064516,
+   "tape_up_minus_down": -0.22580645161290325,
+   "tape_up_rate": 0.3870967741935484,
+   "tape_words": 2048
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 2,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 0.0,
+   "occupancy": 0.00390625,
+   "tape_down_rate": 0.47761194029850745,
+   "tape_up_minus_down": 0.04477611940298504,
+   "tape_up_rate": 0.5223880597014925,
+   "tape_words": 2048
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 64,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 0.0,
+   "occupancy": 0.125,
+   "tape_down_rate": 0.46875,
+   "tape_up_minus_down": 0.0625,
+   "tape_up_rate": 0.53125,
+   "tape_words": 2048
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 256,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 0.0,
+   "occupancy": 0.5,
+   "tape_down_rate": 0.44,
+   "tape_up_minus_down": 0.12000000000000005,
+   "tape_up_rate": 0.56,
+   "tape_words": 2048
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 511,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 0.0,
+   "occupancy": 0.998046875,
+   "tape_down_rate": 0.0,
+   "tape_up_minus_down": 0.5538461538461539,
+   "tape_up_rate": 0.5538461538461539,
+   "tape_words": 2048
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 512,
+   "insertion_accept": 0.0,
+   "insertion_minus_deletion": -1.0,
+   "occupancy": 1.0,
+   "tape_down_rate": 0.0,
+   "tape_up_minus_down": 0.45454545454545453,
+   "tape_up_rate": 0.45454545454545453,
+   "tape_words": 2048
+  },
+  {
+   "deletion_accept": 0.0,
+   "genome_length": 1,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 1.0,
+   "occupancy": 0.0009765625,
+   "tape_down_rate": 0.4492753623188406,
+   "tape_up_minus_down": -0.4492753623188406,
+   "tape_up_rate": 0.0,
+   "tape_words": 4096
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 2,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 0.0,
+   "occupancy": 0.001953125,
+   "tape_down_rate": 0.4603174603174603,
+   "tape_up_minus_down": -0.4603174603174603,
+   "tape_up_rate": 0.0,
+   "tape_words": 4096
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 128,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 0.0,
+   "occupancy": 0.125,
+   "tape_down_rate": 0.46153846153846156,
+   "tape_up_minus_down": -0.46153846153846156,
+   "tape_up_rate": 0.0,
+   "tape_words": 4096
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 512,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 0.0,
+   "occupancy": 0.5,
+   "tape_down_rate": 0.5671641791044776,
+   "tape_up_minus_down": -0.5671641791044776,
+   "tape_up_rate": 0.0,
+   "tape_words": 4096
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 1023,
+   "insertion_accept": 1.0,
+   "insertion_minus_deletion": 0.0,
+   "occupancy": 0.9990234375,
+   "tape_down_rate": 0.0,
+   "tape_up_minus_down": 0.0,
+   "tape_up_rate": 0.0,
+   "tape_words": 4096
+  },
+  {
+   "deletion_accept": 1.0,
+   "genome_length": 1024,
+   "insertion_accept": 0.0,
+   "insertion_minus_deletion": -1.0,
+   "occupancy": 1.0,
+   "tape_down_rate": 0.0,
+   "tape_up_minus_down": 0.0,
+   "tape_up_rate": 0.0,
+   "tape_words": 4096
+  }
+ ],
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "schema_version": "proteus.acceptance_maps.v0_4",
+ "trials_per_cell": 400
+}

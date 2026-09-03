@@ -1,0 +1,138 @@
+{
+ "verdict_name": "D16C_CROSSING_QUALIFIED",
+ "verdict": "NO",
+ "companion_verdict": {
+  "D16C_CAUSAL_AUDIT_QUALIFIED": "YES (mechanically) -- the AVAILABLE/CONSUMED/NECESSARY ladder is computable on-engine and matched design 20/20; but AVAILABLE is only trustworthy when read at the fork/import cutoff seq (ED-003) and CONSUMED is CLIENT_ASSERTED (F1 not ledgered)"
+ },
+ "date": "2026-09-02",
+ "engine_hash": "sha256:5274ddbe9120ddbbd75a36965106d2efe640a3b72278e7bb97b82e356e1fc9fc",
+ "instance": "PRIVATE_PINNED http://127.0.0.1:8899 (live engine untouched)",
+ "vocabulary": {
+  "AVAILABLE": "engine-certified: F10 knowledge_set of the synthesis world",
+  "CONSUMED": "client-asserted: F1 artifact_bytes read log",
+  "NECESSARY": "counterfactual: fresh LOSO synthesis world flips verdict"
+ },
+ "step5_origin_laundering": {
+  "defect": "ED-001 GEN21_ORIGIN_LAUNDERING",
+  "severity": "CRITICAL",
+  "variations_laundered": "6/6",
+  "variations": [
+   "byte_identical_same_meta",
+   "byte_identical_meta_changed",
+   "byte_identical_info_kind_changed",
+   "byte_identical_no_meta",
+   "semantically_equivalent_byte_different",
+   "byte_identical_kind_field_changed"
+  ],
+  "H6_control": "C importing the IMPORTED row of B directly: 403 (holds)",
+  "forensic_handle": "byte-identical: content_hash collision inside the F10 of B (1 IMPORTED + 5 NATIVE, same blob_hash) -- visible only to the owner of B or a DB auditor; byte-different semantic equivalent: NO engine-visible trace",
+  "reproducer": "repro/GEN21_ORIGIN_LAUNDERING_repro.py (<1 s, standalone)",
+  "owner": "Daedalus",
+  "disposition": "BLOCKING: pilot (step 10) and threshold freeze (step 11) HELD; not solved in client code; not reinterpreted as rediscovery (engine has no rediscovery/copy discriminator)"
+ },
+ "step6_duplicate_evidence": {
+  "defect": "ED-002 SUBSTRATE_GAP: EVIDENCE_INDEPENDENCE_NOT_REPRESENTABLE",
+  "severity": "MAJOR",
+  "constructions": {
+   "C1_CLIENT_FANOUT": "DEPENDENT_OR_UNRESOLVED",
+   "C2_FORK_ECHO": "DEPENDENT_OR_UNRESOLVED",
+   "C3_IMPORT_REPUBLISH": "DEPENDENT_OR_UNRESOLVED",
+   "C4_TRUE_INDEPENDENT": "NO_ENGINE_EVIDENCE_OF_DEPENDENCE",
+   "C5_OUT_OF_BAND": "NO_ENGINE_EVIDENCE_OF_DEPENDENCE"
+  },
+  "C4_separable_from": {
+   "C1_CLIENT_FANOUT": true,
+   "C2_FORK_ECHO": true,
+   "C3_IMPORT_REPUBLISH": true,
+   "C5_OUT_OF_BAND": false
+  },
+  "indistinguishable_from_C4": [
+   "C5_OUT_OF_BAND"
+  ],
+  "api_only": "NONE separable (get_world/knowledge/events owner-only 403; no auditor role); DB tables needed for C1-C3",
+  "consequence": "cells whose inference needs independence of apparently separate evidence are VOID unless independence is established by construction outside the engine"
+ },
+ "step7_f10_frontier": {
+  "checks": 15,
+  "pass": 13,
+  "fail": [
+   "R8_inherited_entry_survives_native_recreation",
+   "R8_first_available_not_later_than_before"
+  ],
+  "held": "checkpoint-boundary inheritance exact; transitive to grandchildren; cutoff fail-closed, monotone, deterministic; import-then-fork inherits import at import seq",
+  "defect": "ED-003 F10_PROVENANCE_REWRITE_ON_NATIVE_RECREATION (MAJOR): native re-creation of inherited content flips basis fork_inheritance->native_creation and first_available_seq 202->212 in F10(now); F10(seq=fork) still correct",
+  "Q5_answer": "availability SET exact at every merge/fork frontier tested; basis/first_available_seq NOT stable under native re-creation"
+ },
+ "step8_loso_on_engine": {
+  "worlds": 4,
+  "budget": 14,
+  "summary": {
+   "budget_exact_all": true,
+   "budget_rows": 12,
+   "lineages_done": 12,
+   "attribution_matches_design": 20,
+   "attribution_cells": 20,
+   "unsolved_full": 0,
+   "shuffled_source_verdicts": [
+    {
+     "AB": "WRONG",
+     "AC": "CORRECT",
+     "ABC0": "WRONG",
+     "ABC1": "WRONG",
+     "ABC2": "WRONG"
+    },
+    {
+     "AB": "WRONG",
+     "AC": "CORRECT",
+     "ABC0": "WRONG",
+     "ABC1": "WRONG",
+     "ABC2": "WRONG"
+    },
+    {
+     "AB": "WRONG",
+     "AC": "CORRECT",
+     "ABC0": "WRONG",
+     "ABC1": "WRONG",
+     "ABC2": "WRONG"
+    },
+    {
+     "AB": "WRONG",
+     "AC": "CORRECT",
+     "ABC0": "WRONG",
+     "ABC1": "WRONG",
+     "ABC2": "WRONG"
+    }
+   ],
+   "shuffled_denied": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "elapsed_s": 28.2
+  },
+  "attribution": "20/20 interactive cells: NECESSARY == design set (TRUE_COMPOSITION); 0 UNION_ONLY; 0 UNSOLVED_FULL",
+  "budget_exactness": "12/12 lineages: engine consumed == researcher spend (enforceable budget, 409 at cap)",
+  "H5_control": "cross-group import denied 3/3",
+  "SHUFFLED_SOURCE_CONTROL": {
+   "AB": "WRONG 4/4",
+   "ABC0-2": "WRONG 4/4",
+   "AC": "CORRECT 4/4 (does not depend on B)",
+   "shape": "RAW merge treats foreign observations as facts -> WRONG, not abstain; endpoint is source-sensitive (which a composition claim needs), but a wrong source silently poisons rather than being detected"
+  }
+ },
+ "Q1": "YES -- targets non-decomposable (proper-subset determinacy 0/100; UNION never suffices offline 200/200)",
+ "Q2": "YES -- multi-source necessity by LOSO 200/200 offline, 20/20 on-engine",
+ "Q3": "YES, IT LAUNDERS -- 6/6 (CRITICAL, ED-001)",
+ "Q4": "NO -- C5 out-of-band copy is state-identical to true independent replication (ED-002)",
+ "Q5": "SET yes; PROVENANCE no (ED-003)",
+ "Q7": "NOT TESTABLE -- pilot held by the Amendment-2 gate; import cost sensitivity {0,1,HIGH} unrun",
+ "Q10": "NO as-is -- a provenance-clean multi-lineage ecology needs ED-001 fixed and ED-002/ED-003 either fixed or designed around by construction",
+ "engine_defects": [
+  "ED-001",
+  "ED-002",
+  "ED-003"
+ ],
+ "evidence_class": "CLIENT_ASSERTED for all LT observations (hidden-world oracle runs client-side); engine-certified for availability, ledger, budget",
+ "what_would_flip_the_verdict": "ED-001 closed by Daedalus (create_artifact refuses/marks NATIVE rows whose blob_hash matches a prior IMPORTED row in the same world AND a principled rediscovery/copy discriminator for byte-different content, or a design ruling that laundering is out of scope for D16-C cells) + a read-side fix or workaround for ED-003 (always read F10 at cutoff seq)"
+}

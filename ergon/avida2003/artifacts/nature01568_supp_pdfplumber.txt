@@ -1,0 +1,217 @@
+Supplementary Information for Nature article by Lenski,
+Ofria, Pennock & Adami on "The Evolutionary Origin of
+Complex Features" (2003)
+The first three sections below provide some background information on Avida and the logic
+functions that digital organisms perform. The fourth section provides some additional data
+on phenotypic and genomic evolution along the line of descent in the case-study population,
+up to the time of origin of the EQU function.
+The Avida program and configuration files used in our experiments can be obtained free at
+myxo.css.msu.edu/papers/nature2003/. One can also view more background information
+about Avida as well as additional data from our experiments.
+I. Avida instruction set
+Each position in the genome sequence of a digital organism is one of 26 possible instructions.
+The table below shows the alphabetical code for each instruction, its mnemonic, and a brief
+description of its function.
+(a) nop-A No-operation instruction; modifies other instructions
+(b) nop-B No-operation instruction; modifies other instructions
+(c) nop-C No-operation instruction; modifies other instructions
+(d) if-n-equ Test if two registers contain equal values
+(e) if-less Test if one register contains a lesser value than another
+(f) pop Remove a number from a stack and place it in a register
+(g) push Copy the value of a register onto the top of a stack
+(h) swap-stk Toggle the active stack
+(i) swap Swap the contents of two specified registers
+(j) shift-r Shift all the bits on a register one to the right
+(k) shift-l Shift all the bits on a register one to the left
+(l) inc Increment a register
+(m) dec Decrement a register
+(n) add Calculate the sum of the values in two registers
+(o) sub Calculate the difference between the values in two registers
+(p) nand Perform a bitwise NAND on the values in two registers
+(q) IO Output the value in a register and replace with a new input
+(r) h-alloc Allocate memory for an offspring
+(s) h-divide Divide off an offspring contained in memory (specified by heads)
+(t) h-copy Make a copy of a single instruction in memory (specified by heads)
+(u) h-search Find a pattern of nop-instruction in the genome
+(v) mov-head Move a head to point to the same position as the flow-head
+(w) jmp-head Move a head by a fixed amount stored in a register
+(x) get-head Write the position of a specified head into a register
+(y) if-label Test if a specified pattern of nops has recently been copied
+(z) set-flow Move the flow-head to a specified position in memory
+II. One- and two-input logic operations
+There are two distinct one-input logic operations and eight distinct two-input operations. The
+tables below show the output obtained by performing these operations on each possible bit-
+wise input. The bottom rows indicate the minimum number of nand computations required to
+perform each operation, proven through exhaustive search. To receive the reward for doing a
+particular logic function, a digital organism must return the correct values for an entire series
+of 32 bit-wise problems, including multiple examples of each possible combination of inputs.
+1- 2-
+Output Output
+Input Input
+A ECHO NOT A B NAND AND OR_N* OR AND_N* NOR XOR EQU
+0 0 1 0 0 1 0 1 0 0 1 0 1
+1 1 0 0 1 1 0 0 1 0 0 1 0
+1 0 1 0 1 1 1 0 1 0
+# 1 1 0 1 1 1 0 0 0 1
+0 1
+nand
+#
+1 2 2 3 3 4 4 5
+nand
+* The order of the two inputs is arbitrary. Thus, the rewards for performing OR_N and
+AND_N are triggered by the reciprocal operations, in which A and B are reversed.
+III. Shortest hand-written EQU program
+The following hand-written program appears to be the shortest one using the set of available
+instructions that performs the EQU function, and that does not depend on the initial content
+of stacks and registers (whose initial contents are represented by '?' below). However, it has
+not been proven that this is the shortest program. Also, this program does not encode self-
+replication, but only performs the EQU function.
+EQU
+# Inst AX BX CX Stack Output
+1 IO ? X ? ? ?
+2 IO ? X Y ? ?
+2
+3 nop-C
+4 push ? X Y X, ?
+5 nand ? X nand Y Y X, ?
+6 swap ? Y X nand Y X, ?
+7 nand ? X or ~Y X nand Y X, ?
+8 swap X or ~Y ? X nand Y X, ?
+9 nop-A
+10 pop X or ~Y X X nand Y ?
+11 nand X or ~Y Y or ~X X nand Y ?
+12 swap X nand Y Y or ~X X or ~Y ?
+13 nop-C
+14 nand X nand Y X xor Y X or ~Y ?
+15 push X nand Y X xor Y X or ~Y X xor Y, ?
+16 pop X nand Y X xor Y X xor Y ?
+17 nop-C
+18 nand X nand Y X equ Y X xor Y ?
+19 IO X nand Y Z X xor Y ? X equ Y
+IV. Phenotypic and genomic evolution along the line of
+descent in the case-study population through the origin of
+the EQU function at step 111
+The entire line of descent is available at myxo.css.msu.edu/papers/nature2003/ along with
+functional-genomic arrays for all 345 genotypes in the line of descent.
+Legend: PD = phylogenetic depth. Born = update when genotype first appeared. Functions 0
+and 1 denote inability or ability, respectively, to perform nine logic functions: NOT, NAND,
+AND, OR_N, OR, AND_N, NOR, XOR, and EQU. Fit = fitness relative to immediate parent
+calculated as product of replication efficiency and computational merit; gains are shown in
+bold, losses in italics. Mutations are highlighted in bold in the genome sequences, as are
+changes in functions performed.
+PD Born Functions Fit Genome Sequence
+0 0 0 0 0 0 0 0 0 0 0 — rucavccccccccccccccccccccccccccccccccccccutycasvab
+1 32 0 0 0 0 0 0 0 0 0 1.00 rucavccccccccccccccccccccccccccccchccccccutycasvab
+2 93 0 0 0 0 0 0 0 0 0 1.01 rucavcccccccccccccccccccccccccpcccchccccccutycasvab
+3 143 0 0 0 0 0 0 0 0 0 1.36 rucavcccccccccccccccccccccccccp_ccchccccccutycastvab
+4 225 0 0 0 0 0 0 0 0 0 1.01 rucavcccccccccccccccccccccccccpcnchccccccutycastvab
+5 284 0 0 0 0 0 0 0 0 0 1.01 rucavcczccccccccccccccccccccccpcnchccccqcutycastvab
+6 352 0 0 0 0 0 0 0 0 0 1.00 rucavcczccccccccccccccccccccccqcnchccccqcutycastvab
+7 361 0 0 0 0 0 0 0 0 0 1.00 rucavcozccccccccccccccccccccccqcnchccccqcutycastvab
+8 379 0 0 0 0 0 0 0 0 0 1.01 rucavcozcccccccccccccccccccxccqcnchccccqcutycastvab
+9 411 0 0 0 0 0 0 0 0 0 1.00 rucavcozcccccccccccccccccacxccqcnchccccqcutycastvab
+10 567 0 0 0 0 0 0 0 0 0 1.00 rucavcozcccccccccccccccccacxecqcnchccccqcutycastvab
+3
+11 734 0 0 0 0 0 0 0 0 0 1.00 rucavcozcccccccccccccccccamxecqcnchccccqcutycastvab
+12 775 0 0 0 0 0 0 0 0 0 1.00 rucavcozcccscccccccccccccamxecqcnchccccqcutycastvab
+13 793 0 0 0 0 0 0 0 0 0 0.99 rucavcozcccscicccccccccccamxecqcnchccccqcutycastvab
+14 835 0 0 0 0 0 0 0 0 0 1.00 rucavcozcccscicccccccccccamxelqcnchccccqcutycastvab
+15 949 0 0 0 0 0 0 0 0 0 1.00 rucavcozjccscicccccccccccamxelqcnchccccqcutycastvab
+16 963 0 0 0 0 0 0 0 0 0 0.99 rucavcozjccscicccccccccccamxelqcnqhccccqcutycastvab
+17 1118 0 1 0 0 0 0 0 0 0 2.01 rucavcozjccscicccccccccccamxelqcnqhccpcqcutycastvab
+18 1194 0 1 0 0 0 0 0 0 0 1.01 rucavcotzjccscicccccccccccamxelqcnqhccpcqcutycastvab
+19 1250 0 1 0 0 0 0 0 0 0 1.01 rucavcotzjciscicccccccccccamxelqcnqhccpcqcutycastvab
+20 1252 0 0 0 1 0 0 0 0 0 2.01 rucavcotzjciscicccccccccccamxelqcnqhpcpcqcutycastvab
+21 1263 0 0 0 1 0 0 0 0 0 1.00 rucavcotzjciscicccnccccckcamqelqcnqhpcpcqcutycastvab
+22 1289 0 1 0 1 0 0 0 0 0 2.00 rucavcotzjciscicccnccccckcamqelqcpqhpcpcqcutycastvab
+23 1325 0 1 0 1 0 0 0 0 0 1.00 rucavcotzjcisciccdnccccckcamqelqcpqhpcpcqcutycastvab
+24 1433 0 1 0 1 0 0 0 0 0 0.99 rucavcotzjcisciccdnceccckcamqelqcpqhpcpcqcutycastvab
+25 1439 0 1 0 1 0 0 0 0 0 1.15 rucavcotzjcisciccdnceccckcamqelqcpqhpcpcqcutycasttvab
+26 1455 0 1 0 1 0 0 0 0 0 0.99 rucavcotzjcisciccdnceccckramqelqcpqhpcpcqcutycasttvab
+27 1645 0 1 0 1 0 0 0 0 0 1.01 rucavcotzjaisciccdnceccckramqelqcpqhpcpcqcutycasttvab
+28 1910 0 1 0 1 0 0 0 0 0 1.00 rucavcotzjaisciccdncecccyramqelqcpqhpcpcqcutycasttvab
+29 1947 0 1 0 1 0 0 0 0 0 0.98 rucavcotzsaisciccdncecccyramqelqcpqhpcpcqcutycasttvab
+30 2286 0 1 0 1 0 0 0 0 0 1.01 rucavcotzsaisciccdnceiccyramqelqcpqhpcpcqcutycasttvab
+31 2479 0 1 0 1 0 0 0 0 0 1.00 rucavcotzsajsciccdnceiccyramqelqcpqhpcpcqcutycasttvab
+32 2669 0 1 0 1 0 0 0 0 0 1.00 rucavcotdsajsciccdnceiccyramqelqcpqhpcpcqcutycasttvab
+33 2711 0 1 0 1 0 0 0 0 0 1.01 rucavcotdqajsciccdnceiccyramqelqcpqhpcpcqcutycasttvab
+34 2786 1 1 0 1 0 0 0 0 0 2.00 rucavcotdqajsciccdncoiccyramqelqcpqhpcpcqcutycasttvab
+35 2828 1 1 0 1 0 0 0 0 0 1.00 rucavcotdqaqsciccdncoiccyramqelqcpqhpcpcqcutycasttvab
+36 2830 1 1 0 1 0 0 0 0 0 0.99 rucavcotdqaqsciccdncosccyramqelqcpqhpcpcqcutycasttvab
+37 2987 1 1 0 1 0 0 0 0 0 1.00 rucavcotdqaqsciccdncosccyramqetqcpqhpcpcqcutycasttvab
+38 3420 1 1 0 1 0 0 0 0 0 1.03 rucavcotdqaqsqciccdncosccyramqetqcpqhpcpcqcutycasttvab
+39 3551 1 1 0 1 0 0 0 0 0 1.00 rucavcitdqaqsqciccdncosccyramqetqcpqhpcpcqcutycasttvab
+40 3808 0 1 1 1 0 0 0 0 0 2.00 rucavcitdqaqsqcpccdncosccyramqetqcpqhpcpcqcutycasttvab
+41 3914 0 1 1 1 0 0 0 0 0 1.01 rucavcitdqaqsqcpccdncosccypamqetqcpqhpcpcqcutycasttvab
+42 3939 0 1 1 1 0 1 0 0 0 8.00 rucavcitdqaqsqcpcldncosccypamqetqcpqhpcpcqcutycasttvab
+43 4190 0 1 1 1 0 1 0 0 0 1.00 rucavcotdqaqsqcpcldncosccypamqetqcpqhpcpcqcutycasttvab
+44 4646 0 1 1 1 0 1 0 0 0 1.08 rucavcotdqaqsqcpcldncosccypamqetqcpqhpcpcqcutycastttvab
+45 5292 0 1 1 1 0 1 0 0 0 1.00 rucavcotdqaqsqcpcldncosccypamqrtqcpqhpcpcqcutycastttvab
+46 5302 0 1 1 1 0 1 0 0 0 1.00 rucavcotdqaqsqcpcldncosccdpamqrtqcpqhpcpcqcutycastttvab
+47 5323 0 1 1 1 0 1 0 0 0 0.99 ruzavcotdqaqsqcpcldncosccdpamqrtqcpqhpcpcqcutycastttvab
+48 5337 0 1 1 1 0 1 0 0 0 0.99 ruzavcotdqaqsqcpcldncosccdpamqrtqcpqhpgpcqcutycastttvab
+49 5481 0 1 1 1 0 1 0 0 0 1.02 ruzavcotcqaqsqcpcldncosccdpamqrtqcpqhpgpcqcutycastttvab
+50 6067 0 1 1 1 0 1 0 0 0 1.00 ruzavcotiqaqsqcpcldncosccdpamqrtqcpqhpgpcqcutycastttvab
+51 6200 0 1 1 1 0 1 0 0 0 1.00 ruzavcotizaqsqcpcldncosccdpamqrtqcpqhpgpcqcutycastttvab
+52 6520 0 1 1 1 0 1 0 0 0 1.01 ruzavcotizaqsqcpcldncosccdpamqbtqcpqhpgpcqcutycastttvab
+53 6765 0 1 1 1 0 1 0 0 0 1.00 rjzavcotizaqsqcpcldncosccdpamqbtqcpqhpgpcqcutycastttvab
+54 7117 0 1 1 1 0 1 0 0 0 1.01 rjzavcottizaqsqcpcldncosccdpamqbtqcpqhpgpcqcutycastttvab
+55 7478 0 1 1 1 0 1 0 0 0 1.00 rmzavcottizaqsqcpcldncosccdpamqbtqcpqhpgpcqcutycastttvab
+56 7565 0 1 0 1 0 1 1 0 0 4.00 rmzavcottizaqpqcpcldncosccdpamqbtqcpqhpgpcqcutycastttvab
+57 7977 0 1 0 1 0 1 1 0 0 1.01 rmzavcottizaqpqcpcldncoszcdpamqbtqcpqhpgpcqcutycastttvab
+58 8443 0 1 0 1 0 1 1 0 0 0.99 rmzavcottizaqpqcpcldncoszcdpamqgtqcpqhpgpcqcutycastttvab
+59 8742 0 1 0 1 0 1 1 0 0 0.99 rmzavcottizpqpqcpcldncoszcdpamqgtqcpqhpgpcqcutycastttvab
+60 8777 0 1 0 1 0 1 1 0 0 1.00 rmzavcothtizpqpqcpcldncoszcdpamqgtqcpq_pgpcqcutycastttvab
+61 9399 1 1 0 1 0 1 1 0 0 1.98 rmzavcothoiqpqpqcpcldncosztdpamqgtqcpqpgpcqcutycastttvab
+62 9428 1 1 0 1 0 1 1 0 0 1.00 rmzavcothhiqpqpqcpcldncosztdpamqgtqcpqpgpcqcutycastttvab
+63 9582 1 1 0 1 0 1 1 0 0 0.32 rmzavcothhiqpqpqcpcldncosztdpamqgtqcpqpsgpcqcutycastttvab
+64 9590 1 1 0 1 0 1 1 0 0 3.19 rmzavcothhiqpqpqcpcltncosztdpamqgtqcpqpsgpcqcutycastttvab
+65 9823 1 1 0 1 0 1 1 0 0 1.00 rmzavcotehiqpqpqcpcltncosztdpamqgtqcpqpdgpcqcutycastttvab
+66 9993 1 1 0 1 0 1 1 0 0 1.00 rmzavcotehiqpqpqcpcltncorztdpamqgtqcpqpdgpcqcutycastttvab
+67 11029 1 1 0 1 0 1 1 0 0 1.01 rmzavcotehiqpqpqcpctltncorztdpamqgtqcpqpdgpcqcutycastttvab
+68 11584 1 1 0 1 0 1 1 0 0 1.01 rmzavcotehiqptqpqcpctltncorztdpamqgtqcpqpdgpcqcutycastttvab
+69 12028 1 1 0 1 0 1 1 0 0 1.01 rmzavcotebiqptqpqcpctltncorztdpamqgtqcpqpdgpcqcutycastttvab
+70 12671 1 1 0 1 0 1 1 0 0 1.01 rmzavcytebiqptqpqcpctltncorztdpamqbtqcpqpdgpcqcutycastttvab
+71 12853 1 1 0 1 0 1 1 0 0 1.00 rmzavcytebiqptqpqcpctltncorctdpamqbtqcpqpdgpcqcutycastttvab
+72 12947 1 1 0 1 0 1 1 0 0 0.99 rmzavcytebiqptqpqcpctltncorctdpamqztqcpqpdgpcqcutycastttvab
+73 13119 1 1 0 1 0 1 1 0 0 1.00 rmzavcytnbiqptqpqcpctltncorctdpamqztqcpqpdgpcqcutycastttvab
+74 13537 1 1 0 1 0 1 1 0 0 1.00 rmzavcztnbiqptqpqcpctltncorctdpamqztqcpqpdgpcqcutycastttvab
+4
+75 13557 1 1 0 1 0 1 1 0 0 1.00 rmzavcztnbiqptqpqcpctltncorctdpamqstqcpqpdgpcqcutycastttvab
+76 13869 1 1 0 1 0 1 1 0 0 1.00 rmzavcztnbiqptqpqcpctltncorctdpamqdtqcpqpdgpcqcutycastttvab
+77 13952 1 1 0 1 0 1 1 0 0 1.01 rmzavcztnbiqptqpqcpctltncorctdpamqdtqcpqpdbpcqcutycastttvab
+78 14478 1 1 0 1 0 1 1 0 0 1.00 rmzavcztnbiqptqpqcpctltncorctdpamqdtqcpqpcbpcqcutycastttvab
+79 15603 1 1 0 1 0 1 1 0 0 1.00 rmzavcztwbiqptqpqcpctltncorctdpamqdtqcpqpcbpcqcutycastttvab
+80 15769 1 1 0 1 0 1 1 0 0 1.01 rmzavcztwbiqptqpqcpctltncogctdpamqdtqcpqpcbpcqcutycastttvab
+81 15936 1 1 0 1 0 1 1 0 0 1.00 rmzavcztwbiqptqpqcpctltncogctbpamqdtqcpqpcbpcqcutycastttvab
+82 16039 1 1 0 1 0 1 1 0 0 1.00 rmzavcztwbiqptqpqcpctltncogctbnamqdtqcpqpcbpcqcutycastttvab
+83 16090 1 1 0 1 0 1 1 0 0 1.00 rmzavcztwbiqptqpqcpctltncogctbnamqdtqcpqpibpcqcutycastttvab
+84 16672 1 1 0 1 0 1 1 0 0 0.93 rmzavcztwbiqptqpqcpctltncogctbnamqdtqcpqpibpcqcutycastt_vab
+85 16769 1 1 0 0 1 1 1 0 0 1.98 rmzavcztwbiqptqpqcpctltncogctbnamqdtqcpqpifpcqcutycasttvab
+86 16786 1 1 0 0 1 1 1 0 0 0.99 rmzavcztwbiqptqpqcpctltncogctbnamqdtqcpqpifpqqcutycasttvab
+87 16900 1 0 0 1 1 1 1 0 0 2.00 rmzavcztwbiqptqpqcpctltncogctbnamqdtqcpepifpqqcutycasttvab
+88 16979 1 0 0 1 1 1 1 0 0 1.08 rmzavcztwbiqptqpqcpctltncogctbnamqdtqcpepifpqqcutycastttvab
+89 17008 1 0 0 1 1 1 1 0 0 1.00 rmzavcztgbiqptqpqcpctltncogctbnamqdtqcpepifpqqcutycastttvab
+90 17145 1 0 0 1 1 1 1 0 0 1.00 rmzavcjtgbiqptqpqcpctltncogctbnamqdtqcpepifpqqcutycastttvab
+91 17370 1 0 0 1 1 1 1 0 0 1.01 rmzavcjtgbiqptqpqcpctltncogctbnamqdtqcpepifpqtqcutycastttvab
+92 19260 1 0 0 1 1 1 1 0 0 1.01 rmzavcjtgbiqptqpqcpctltncogctbnamqdtqcptepifpqtqcutycastttvab
+93 19828 1 0 0 1 1 1 1 0 0 1.00 rmzavcjtgbiqptqpqcpctltncogctbnamqdtqcptipifpqtqcutycastttvab
+94 20740 1 0 0 1 1 1 1 0 0 0.99 rmzavcjtgbiqptqpqcpctltncogctbnamqdtqcptipifpq_qcutycastttvab
+95 20804 1 0 0 1 1 1 1 0 0 1.00 rmzavcjtgciqptqpqcpctltncogctbnamqdtqcptipifpqqcutycastttvab
+96 21032 1 1 0 1 1 1 1 0 0 2.00 rmzavcjtdciqptqpqcpctltncogctbnamqdtqcptipqfpqqcutycastttvab
+97 21509 1 1 0 1 1 1 1 0 0 1.00 rmzavcjtzciqptqpqcpctltncogctbnamqdtqcptipqfpqqcutycastttvab
+98 22229 1 1 0 1 1 1 1 0 0 1.00 rmzavcatzciqptqpqcpctltncogctbnamqdtqcptipqfpqqcutycastttvab
+99 22240 1 1 0 1 1 1 1 0 0 1.00 rmzavcgtzciqptqpqcpctltncogctbnamqdtqcptipqfpqqcutycastttvab
+100 22404 1 1 1 1 1 1 1 0 0 2.90 rmzavcgtzciqptqpqcpctltncogctbnamqdtqcptipqfpqqcutycuastttvab
+101 22412 1 1 1 1 1 1 1 0 0 1.00 rmzavcgtzciqptqpqcpctltncogctbnamqdtqcptipqfpqqcutycuastttva_
+102 22487 1 1 1 1 1 1 1 0 0 1.00 rmzavcgtmciqptqpqcpctltncogctbnamqdtqcptipqfpqqcutycuastttva
+103 22586 1 1 1 1 1 1 1 0 0 0.99 rmzavcg_mciqptqpqcpctltncogctbnamqdtqcptipqfpqqcutycuastttva
+104 22629 1 1 1 1 1 1 1 0 0 1.05 rmzavcgmciqptqpqcpctletncogctbnamqdtqcptipqfpqqcutycuastttva
+105 22864 1 1 1 1 1 1 1 0 0 1.00 rmzavcgmciqptqpqcpctletncogctbkamqdtqcptipqfpqqcutycuastttva
+106 22886 1 1 1 1 1 1 1 0 0 0.99 rmzavcgmciqptqpqcpctletncogc_bkamqdtqcptipqfpqqcutycuastttva
+107 23002 1 1 1 1 1 1 1 0 0 1.02 rmzavcgmciqqptqpqcpctletncogcbkamqdtqcptipqfpqqcutycuastttva
+108 25881 1 1 1 1 1 1 1 0 0 1.00 rmzavcgmciqqptqpqcpctletncogcbqamqdtqcptipqfpqqcutycuastttva
+109 26343 1 1 1 1 1 1 1 0 0 1.01 rmzavcgmciqqptqpqcpctletncogcbeamqdtqcptipqfpqqcutycuastttva
+110 27437 1 0 1 1 1 1 1 0 0 0.49 rmzavcgmciqqptqpqcpctletncogcbeamqdtqcptipqfpqqxutycuastttva
+111 27450 1 0 0 1 1 1 1 0 1 8.00 rmzavcgmciqqptqpqcpctletncogcbeamqdtqcptipqfpgqxutycuastttva
+5

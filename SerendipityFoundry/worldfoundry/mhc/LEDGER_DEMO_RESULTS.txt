@@ -1,0 +1,30 @@
+========================================================================
+ADMISSION-RIGHTS LEDGER -- GUARANTEE AND EXPLOIT DEMONSTRATION
+========================================================================
+simulating 100000 NULL candidates, 64 blocks each ...
+
+D1. REGISTRATION-BEFORE-EVIDENCE (the guarantee)
+    registered 20 candidates at K=200 (bound = 20/200 = 0.100)
+    realized false admissions: 0   (guarantee: expected <= 0.10)
+
+D2. THE PEEKING EXPLOIT (what refusal prevents)
+    null candidates observed : 100000
+    peaks >= 100 (would-be 'admissions' bought post hoc at K = observed peak): 626
+    ledger spend if post-hoc purchase were allowed: 3.1198
+    -> 626 false admissions for ~3.120 units: the expectation bound is violated ~200-fold.
+    THE LEDGER REFUSES THIS: evidence for an unregistered candidate
+    raises LedgerError; K is immutable after registration.
+
+D3. MECHANICAL REFUSALS
+    [OK] family land-grab (>25% remaining, no co-sign) refused
+    [OK] post-registration K change refused
+    [OK] K below preregistered floor (K_MIN=100) refused
+    [OK] unreachable K within block budget refused
+    [OK] selection/admission evidence overlap refused
+    [OK] evidence without post-registration beacon refused
+    [OK] evidence for unregistered candidate refused
+    [OK] one-time-use block: cross-candidate reuse refused
+
+========================================================================
+LEDGER DEMONSTRATION COMPLETE
+========================================================================

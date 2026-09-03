@@ -1,0 +1,528 @@
+================================================================================
+PROMETHEUS INCUBATOR
+PROTEUS - PLAYER FOUNDRY - V0.4 REVERSIBILITY CRUCIBLE
+
+Issued by James, 2026-09-03, as external review of the V0.3 neutrality crucible
+packet (roles/Proteus/PROTEUS_V0_3_NEUTRALITY_CRUCIBLE_REVIEW_PACKET.txt).
+
+Committed verbatim as authoritative. It amends the V0 kickoff brief
+(sha256 cacf303f...), the first external review addendum (sha256 4a9fe0cb...)
+and the V0.3 crucible brief (sha256 78ed8284...). Where this file and any
+earlier document or later summary disagree, this file wins as the latest
+instruction. Character set preserved as issued. sha256 of this file is recorded
+in the commit message that lands it.
+================================================================================
+
+PROTEUS / PLAYER FOUNDRY V0.4 — REVERSIBILITY CRUCIBLE
+
+You are Proteus.
+
+Your V0.3 Neutrality Crucible has received external review.
+
+The final classification
+
+NOT_QUALIFIED_DIRECTIONAL_MUTATION_PRIOR_REMAINS
+
+is ACCEPTED.
+
+The surviving defect is:
+
+config_log2_tape_words
+
+and its mechanism is accepted as identified:
+
+the V0.2 half-tape rule conditionally suppresses a valid shrinking transition while leaving its growing reverse transition available.
+
+Campaign 1 remains BLOCKED.
+
+This pass has one purpose:
+
+Remove the known asymmetric transition and determine whether the resulting mutation grammar is distinguishable from the geometry of the valid joint manifest space.
+
+Do not improve organisms.
+
+Do not increase activity.
+
+Do not increase diversity.
+
+Do not optimize any measurement.
+
+Do not touch a world.
+
+⸻
+
+0. FREEZE V0.3
+
+Preserve V0, V0.1, V0.2 and V0.3 exactly.
+
+Their grammars, preregistrations, adjudicator defects, failed results, controls and review packets are permanent evidence.
+
+In particular preserve:
+
+* the V0 zeroing/NOP ratchet;
+* the V0/V0.1/V0.2 apparent length failures;
+* the V0.3 tape-size ratchet;
+* the inert Holm implementation;
+* the NC3 length-confounding defect;
+* the NC4 representability crash;
+* the late NC1B implementation;
+* the quarantine-audit coverage failure.
+
+Do not rewrite history after learning what those failures meant.
+
+⸻
+
+1. EXACTLY ONE GRAMMAR CHANGE IS AUTHORIZED
+
+Change only the tape-size transition inside config_perturbation.
+
+Remove the V0.2 rule requiring the genome to occupy at most half of the resulting tape after a halving operation.
+
+A proposed tape transition is valid iff:
+
+1. the destination tape size is inside the already-published manifest bounds; and
+2. the existing genome fits in the destination tape.
+
+Nothing else.
+
+For any pair of valid adjacent tape states:
+
+t
+2t
+
+the primitive proposal probability for:
+
+t -> 2t
+
+must equal the primitive proposal probability for:
+
+2t -> t
+
+before ordinary rejection caused by published state-space bounds.
+
+Assert this property mechanically over the finite tape-state graph for representative genome lengths and, where feasible, exhaustively over every possible genome-length/tape-size pair.
+
+Do NOT:
+
+* add an occupancy threshold;
+* add compensation probabilities;
+* change configuration-field weights;
+* change genome mutation weights;
+* change manifest limits;
+* resize the genome automatically;
+* resize the tape automatically after genome mutations;
+* add a new operator;
+* remove an operator.
+
+This is V0.4.
+
+Give it a new grammar identity.
+
+⸻
+
+2. DO NOT USE THE OLD LENGTH TEST TO JUDGE THIS CHANGE
+
+The earlier V0 tests compared genome-length drift against a one-dimensional criterion.
+
+V0.3’s NC1 improved this by comparing length against a symmetric reflected length walk.
+
+That is still insufficient when tape size constrains genome length.
+
+The relevant state space is coupled.
+
+A genome at a tape boundary does not live in the same mutation geometry as a genome with spare tape capacity.
+
+Therefore V0.4 must introduce a joint null.
+
+⸻
+
+3. NC5 — JOINT REVERSIBLE MANIFEST WALK
+
+Before running V0.4, preregister and freeze:
+
+NC5: JOINT REVERSIBLE MANIFEST WALK
+
+NC5 contains no genome content, no VM, no probes, no fitness and no world.
+
+It models only the structural coordinates required to reproduce mutation geometry.
+
+At minimum include:
+
+genome_length
+tape_words
+
+Include additional configuration coordinates if and only if their current value changes whether a proposed structural mutation is valid.
+
+NC5 must use:
+
+* the published manifest bounds;
+* the same genome-length mutation step-size distributions as the active grammar;
+* the same tape-size step sizes as V0.4;
+* the same validity constraints;
+* the same no-op/rejection semantics at impossible transitions.
+
+But its primitive paired moves must be symmetric by construction.
+
+For every reachable pair of distinct NC5 states A and B connected by one primitive proposal, verify:
+
+q(A -> B) = q(B -> A)
+
+unless the difference is explicitly produced by a published finite-state boundary represented identically in both V0.4 and NC5.
+
+Publish a machine-readable transition audit.
+
+The purpose of NC5 is to distinguish:
+
+DIRECTION CREATED BY THE MUTATION GRAMMAR
+
+from:
+
+DRIFT CREATED BY THE GEOMETRY OF VALID MANIFESTS.
+
+Do not absorb an asymmetric V0.4 rule into NC5 merely because V0.4 contains it.
+
+NC5 is the symmetric reference.
+
+⸻
+
+4. REVISIT THE HISTORICAL LENGTH FAILURE
+
+This is now an explicit scientific question.
+
+V0.1 previously allowed a tape to halve whenever the genome fit.
+
+At the 128-instruction cohort, that could place a 512-word genome in a 512-word tape.
+
+Insertion would then reject while deletion remained possible.
+
+V0.2 treated the resulting genome-length movement as a mutation bias and introduced the half-tape rule.
+
+V0.3 has demonstrated that the half-tape rule itself creates a tape-size bias.
+
+V0.4 must determine whether the original genome-length effect was:
+
+A. a true asymmetric grammar prior;
+
+or:
+
+B. expected drift arising from the geometry of the coupled
+   genome_length x tape_words state space.
+
+Compare V0.4 against NC5 directly.
+
+If the old genome-length drift returns AND NC5 reproduces it, report:
+
+HISTORICAL_V0_LENGTH_FAILURE_RECLASSIFIED_AS_JOINT_GEOMETRY
+
+Do not alter the old verdicts.
+
+They remain correct under their preregistered adjudication rules.
+
+This classification concerns the mechanism learned later.
+
+If V0.4 deviates from NC5, the grammar still contains a structural prior.
+
+⸻
+
+5. RE-RUN THE FULL MULTIDIMENSIONAL BATTERY
+
+Use the V0.3 battery unchanged.
+
+No coordinate may be removed.
+
+No tolerance may be relaxed.
+
+No new scalar score may replace the vector.
+
+At minimum retain:
+
+* genome length;
+* all opcode frequencies;
+* opcode-class frequencies;
+* operand coordinates;
+* all configuration coordinates;
+* halt/yield/budget proportions;
+* executed-instruction fraction;
+* transcript silence;
+* transcript occupancy/concentration/entropy;
+* knockout occupancy/concentration/entropy;
+* status-sequence occupancy;
+* NOP share;
+* mutation-touches-executed fraction.
+
+Use appropriate previously qualified controls.
+
+Use NC5 for structural coordinates whose null depends on coupled manifest geometry.
+
+Use NC4 only for the conditional endpoint questions it can actually answer.
+
+Do not claim that NC4 establishes mutation-path reachability.
+
+⸻
+
+6. MULTIPLICITY
+
+Use the corrected step-down Holm implementation from V0.3.
+
+Before executing V0.4:
+
+* add unit tests with known p-value families;
+* include cases in which Holm rejects none, one, several and all;
+* include a case demonstrating the exact V0.3 buggy implementation would over-declare effects;
+* freeze those fixtures.
+
+Where practical, independently implement the adjudication calculation twice.
+
+A disagreement aborts adjudication.
+
+Do not turn uncertainty into a vote.
+
+⸻
+
+7. AUDIT IDENTITY MUST BE ATOMIC
+
+The V0 packet reported a quarantine PASS produced before export.py entered the audited tree.
+
+That procedural hole is now closed.
+
+Every audit claim in the V0.4 packet must record:
+
+git tree / commit identity
+grammar hash
+runtime hash
+affordance-table hash
+audit-source hash
+audit-result hash
+
+The audit must execute against the exact source tree being classified.
+
+If any covered source changes afterwards, the prior PASS becomes stale automatically.
+
+Implement this mechanically if possible.
+
+Do not rely on prose discipline.
+
+⸻
+
+8. NEUTRAL DIFFUSION: REPEAT ONLY WHAT IS NECESSARY
+
+Do not build a larger diversity experiment merely because V0.3 exposed interesting structure.
+
+The V0.3 diffusion census already rejects the simple behavioral-collapse blocker.
+
+For V0.4, repeat enough of the census to determine whether removing the tape ratchet materially changes:
+
+* genome-length distribution;
+* tape-size distribution;
+* transcript-class concentration;
+* knockout-vector concentration;
+* cumulative class discovery;
+* recurrence structure.
+
+Do not interpret increased activity or diversity as improvement.
+
+The desired result is not “more.”
+
+The desired result is:
+
+no unexplained directional effect beyond the appropriate null.
+
+⸻
+
+9. PAY SPECIAL ATTENTION TO COUPLED COORDINATES
+
+V0 -> content ratchet.
+
+V0.2 -> apparent length correction.
+
+V0.3 -> configuration ratchet.
+
+The recurring failure pattern is that an intervention can move directionality into a neighboring coordinate.
+
+Therefore explicitly examine dependencies among:
+
+tape size
+genome length
+insertion acceptance
+deletion acceptance
+duplication acceptance
+splice acceptance
+tick budget
+output cap
+persistence configuration
+
+For each structural mutation operator, report its acceptance probability conditional on relevant manifest state.
+
+The question is not merely whether marginal drift is zero.
+
+Ask whether some region of state space systematically permits one direction of a reversible-looking operation while suppressing its reverse.
+
+Search for asymmetric edges.
+
+Do not search for cognitive behavior.
+
+⸻
+
+10. OPTIONAL BUT HIGH-VALUE: TRANSITION-GRAPH AUDIT
+
+The structural state space is small enough that some portion may be enumerable.
+
+If computationally feasible, construct the transition graph for the non-content manifest coordinates under V0.4.
+
+For each directed edge A -> B with nonzero probability, ask whether B -> A exists and at what probability.
+
+Partition asymmetries into:
+
+PUBLISHED_BOUNDARY
+MANIFEST_VALIDITY
+OPERATOR_DESIGN
+UNKNOWN
+
+The existence of an asymmetric edge is not automatically a defect.
+
+The purpose is to make the source of asymmetry explicit.
+
+Any OPERATOR_DESIGN asymmetry requires special scrutiny.
+
+Do not change the grammar after seeing this graph.
+
+⸻
+
+11. CROSS-RUNTIME REPLAY
+
+Repeat the existing portability replay for V0.4.
+
+A physically separate host remains desirable but is not a V0.4 blocker if unavailable.
+
+Do not expand the claim beyond the hardware actually tested.
+
+⸻
+
+12. OUTPUT
+
+Produce:
+
+PROTEUS_V0_4_REVERSIBILITY_CRUCIBLE_REVIEW_PACKET.txt
+
+Failure modes first.
+
+Include:
+
+1. exact V0.3 -> V0.4 grammar delta;
+2. frozen preregistration and hashes;
+3. proof/audit of paired tape-transition symmetry;
+4. NC5 definition;
+5. NC5 transition audit;
+6. NC5 results;
+7. complete V0.4 multidimensional battery;
+8. corrected Holm validation;
+9. V0.4 vs NC5 structural drift;
+10. historical re-analysis of the V0/V0.1/V0.2 length effect;
+11. acceptance-rate maps for coupled structural mutations;
+12. transition-graph asymmetries if enumerated;
+13. limited neutral-diffusion comparison;
+14. every surviving content prior;
+15. every surviving structural/configuration prior;
+16. every unexplained directional effect;
+17. adjudicator failures encountered during this pass;
+18. audit identity proof;
+19. cross-runtime replay;
+20. claims, ceilings and break conditions;
+21. exact reproduction commands;
+22. compute/storage accounting.
+
+Do not collapse the result into a “neutrality score.”
+
+⸻
+
+13. ADJUDICATION ORDER
+
+Evaluate in this order:
+
+G1 — INSTRUMENT INTEGRITY
+
+If replay, audit identity, shadow execution, multiplicity adjudication or required null controls are invalid:
+
+INSTRUMENT_INSUFFICIENT_TO_ADJUDICATE
+
+and stop classification.
+
+G2 — KNOWN TAPE ASYMMETRY
+
+Confirm that the V0.3 half-tape asymmetry is absent from V0.4.
+
+If it remains:
+
+NOT_QUALIFIED_KNOWN_TAPE_ASYMMETRY_REMAINS
+
+G3 — JOINT STRUCTURAL NEUTRALITY
+
+Compare structural drift against NC5.
+
+If one or more persistent corrected effects remain beyond NC5:
+
+NOT_QUALIFIED_DIRECTIONAL_MUTATION_PRIOR_REMAINS
+
+Report every coordinate.
+
+G4 — CONTENT NEUTRALITY
+
+If a content coordinate exhibits a persistent corrected directional effect beyond its valid matched null:
+
+NOT_QUALIFIED_DIRECTIONAL_MUTATION_PRIOR_REMAINS
+
+G5 — DIFFUSION COLLAPSE
+
+Only if the limited repeat now shows concentration materially beyond the corresponding geometry reference:
+
+NOT_QUALIFIED_BEHAVIORAL_SPACE_COLLAPSES_UNDER_NEUTRAL_DIFFUSION
+
+Otherwise the collapse blocker remains cleared.
+
+G6 — QUALIFICATION
+
+Only if G1-G5 clear:
+
+QUALIFIED_AS_NEUTRAL_FOUNDRY_WITH_STATED_GEOMETRIC_EFFECTS
+
+This classification means only:
+
+Under the tested horizons, cohorts, mutation kernel, structural nulls and behavioral instruments, no reproducible directional effect attributable to the authored mutation grammar was detected beyond the characterized geometry of the valid state space.
+
+It does NOT mean the Foundry is philosophically neutral.
+
+It does NOT mean its representation is unbiased in every possible measure.
+
+It does NOT mean organisms reason.
+
+It does NOT mean useful evolution will occur.
+
+It means we have failed, with these instruments, to find another authored ratchet.
+
+⸻
+
+14. STOP
+
+After producing the packet:
+
+STOP.
+
+Do not launch Campaign 1.
+
+Even a passing V0.4 result requires external adjudication before world exposure.
+
+Do not read World-0.
+
+Do not build an adapter.
+
+Do not invent selection.
+
+Do not repair a failed V0.4 result.
+
+The scientific question in this pass is narrower:
+
+When a mutation walks from one valid structural state to another, have we made the road itself point somewhere?
+
+Find out.
+
+Then stop.

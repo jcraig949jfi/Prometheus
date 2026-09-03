@@ -1,0 +1,38 @@
+==============================================================================
+HOSTILE TEST -- native stackvm-v1 canonical null
+==============================================================================
+
+[A] CORPUS-FITTED REFERENCE LAW SMUGGLING
+  ok     A1 doctored mutate config, honestly tagged                 refused
+  ok     A2 doctored config MISLABELLED as SPEC_DERIVED             refused
+  ok     A3 genotype-band encoding in 'generic' exclusions          refused
+
+[B] PARAMETER-VALUE ENCODING OF CORPUS OBSERVATIONS
+  ok     B1 step budget from the corpus failure curve               refused
+  ok     B2 same value relabelled PROTOCOL_CONSTANT (late-fixed)    refused
+
+[C] SAMPLER SELECTION AS THE SMUGGLING CHANNEL
+  ok     C1 sampler chosen because candidate looks extreme there    refused
+
+[D] TYPE-TAG STRIPPING AND LAUNDERING
+  ok     D1 tag stripped (raw untagged value)                       refused
+  ok     D2 derived-feature laundering (spec feature, corpus threshold) refused
+  ok     D3 undeclared extra knob                                   refused
+
+[E] DETERMINISTIC VERDICT PRECOMPUTATION
+  (measured empirically by the entropy harness, not by type check)
+  E1 saturating program (JMP 0): Shannon H=0.869 PASSES a 0.5-bit
+     gate; min-entropy 0.494 and attacker accuracy 0.710 do NOT.
+     Empirical level p0=0.16 vs target 1/K=0.001 -- 160x. The
+     LEVEL CHECK is what actually refuses it.
+
+[F] CONTEXT GERRYMANDERING
+  ok     F1 historical task battery as context family               refused
+  ok     F2 arity chosen to match corpus batteries                  refused
+
+[G] SUPPORT-PRESERVING DOCTORED LAW
+  ok     G1 support-preserving tilted reference law                 refused
+
+==============================================================================
+ATTACKS DEFENDED: 13 / 13
+==============================================================================

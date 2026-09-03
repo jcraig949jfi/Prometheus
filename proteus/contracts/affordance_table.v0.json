@@ -1,0 +1,218 @@
+{
+ "affordance_hash": "f1607ee8be680acc33288a95c1a25c09ad4c799a47b0975381be8ca02d7638ce",
+ "categories": {
+  "arithmetic": "modular arithmetic",
+  "comparison": "comparison",
+  "control": "conditional control transfer",
+  "halt_yield": "halt/yield (plus the NOP null element)",
+  "indirection": "tape access addressed by register contents",
+  "logical": "logical/bitwise transformation",
+  "opaque_io": "opaque input/output channels",
+  "randomness": "externally supplied randomness",
+  "read_write": "read/write of registers and constants"
+ },
+ "instruction_words": 4,
+ "knockout_null_rule": "rewrite opcode to NOP (0), operands preserved, per category",
+ "opcodes": [
+  [
+   0,
+   "NOP",
+   "halt_yield",
+   "-",
+   "no effect; null element for knockout"
+  ],
+  [
+   1,
+   "HALT",
+   "halt_yield",
+   "-",
+   "end this tick; instruction pointer resets to 0 next tick"
+  ],
+  [
+   2,
+   "YIELD",
+   "halt_yield",
+   "-",
+   "end this tick; resume at the next instruction next tick"
+  ],
+  [
+   3,
+   "LDC",
+   "read_write",
+   "a,imm",
+   "r[a] = imm (32-bit)"
+  ],
+  [
+   4,
+   "MOV",
+   "read_write",
+   "a,b",
+   "r[a] = r[b]"
+  ],
+  [
+   5,
+   "LD",
+   "indirection",
+   "a,b",
+   "r[a] = tape[r[b] mod tape_words]"
+  ],
+  [
+   6,
+   "ST",
+   "indirection",
+   "a,b",
+   "tape[r[a] mod tape_words] = r[b]; ignored inside a protected genome region"
+  ],
+  [
+   7,
+   "ADD",
+   "arithmetic",
+   "a,b,c",
+   "r[a] = (r[b] + r[c]) mod 2^32"
+  ],
+  [
+   8,
+   "SUB",
+   "arithmetic",
+   "a,b,c",
+   "r[a] = (r[b] - r[c]) mod 2^32"
+  ],
+  [
+   9,
+   "MUL",
+   "arithmetic",
+   "a,b,c",
+   "r[a] = (r[b] * r[c]) mod 2^32"
+  ],
+  [
+   10,
+   "AND",
+   "logical",
+   "a,b,c",
+   "r[a] = r[b] & r[c]"
+  ],
+  [
+   11,
+   "OR",
+   "logical",
+   "a,b,c",
+   "r[a] = r[b] | r[c]"
+  ],
+  [
+   12,
+   "XOR",
+   "logical",
+   "a,b,c",
+   "r[a] = r[b] ^ r[c]"
+  ],
+  [
+   13,
+   "NOT",
+   "logical",
+   "a,b",
+   "r[a] = ~r[b] mod 2^32"
+  ],
+  [
+   14,
+   "SHL",
+   "logical",
+   "a,b,c",
+   "r[a] = (r[b] << (r[c] mod 32)) mod 2^32"
+  ],
+  [
+   15,
+   "SHR",
+   "logical",
+   "a,b,c",
+   "r[a] = r[b] >> (r[c] mod 32)"
+  ],
+  [
+   16,
+   "EQ",
+   "comparison",
+   "a,b,c",
+   "r[a] = 1 if r[b] == r[c] else 0"
+  ],
+  [
+   17,
+   "LT",
+   "comparison",
+   "a,b,c",
+   "r[a] = 1 if r[b] < r[c] (unsigned) else 0"
+  ],
+  [
+   18,
+   "JMP",
+   "control",
+   "off",
+   "ip = ip + 4*off (mod tape_words), off signed"
+  ],
+  [
+   19,
+   "JZ",
+   "control",
+   "a,off",
+   "if r[a] == 0: ip = ip + 4*off"
+  ],
+  [
+   20,
+   "JNZ",
+   "control",
+   "a,off",
+   "if r[a] != 0: ip = ip + 4*off"
+  ],
+  [
+   21,
+   "IN",
+   "opaque_io",
+   "a,b",
+   "r[a] = next unread value on input channel (r[b] mod n_in), or 0 if none"
+  ],
+  [
+   22,
+   "INQ",
+   "opaque_io",
+   "a,b",
+   "r[a] = number of unread values on input channel (r[b] mod n_in)"
+  ],
+  [
+   23,
+   "OUT",
+   "opaque_io",
+   "a,b",
+   "append r[a] to output channel (r[b] mod n_out); dropped beyond out_cap"
+  ],
+  [
+   24,
+   "RND",
+   "randomness",
+   "a",
+   "r[a] = next 32-bit value from the externally supplied random stream"
+  ]
+ ],
+ "storage_bounds": {
+  "genome_words": {
+   "max": 4096,
+   "min": 4
+  },
+  "instruction_words": 4,
+  "n_regs": {
+   "max": 16,
+   "min": 2
+  },
+  "out_cap": {
+   "max": 256,
+   "min": 1
+  },
+  "tape_words": {
+   "max": 4096,
+   "min": 16
+  },
+  "tick_budget": {
+   "max": 65536,
+   "min": 8
+  },
+  "word_bits": 32
+ },
+ "table_version": "proteus.affordances.v0"
+}

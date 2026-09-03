@@ -1,0 +1,42 @@
+{
+ "design": {
+  "bootstrap_resamples": 500,
+  "code_writable": false,
+  "envelope_gated_starts": [
+   32,
+   128
+  ],
+  "generations": 300,
+  "lineages_per_cohort": 60,
+  "n_regs": 8,
+  "operators_per_generation": 1,
+  "out_cap": 4,
+  "persist": "none",
+  "start_sizes": [
+   8,
+   32,
+   128
+  ],
+  "tape_words": 1024,
+  "tick_budget": 64
+ },
+ "frozen_before_any_run": true,
+ "grammar_hash": "779da90d173fdd0528fdfe98b1056cc9d3fcad1807fdd2f677f3d879250e9796",
+ "prereg_doc": "NEUTRALITY_PREREG.md",
+ "revision_note": "v0.2 prereg after run 2 FAIL at cohorts 8 and 128 under v0.1 (PASS at 32). One change: tape halving is a no-op unless the genome would occupy at most half of the new tape. Weights, tolerances, design unchanged. Last revision in V0; cohort-8 reflection expected to persist.",
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "schema_version": "proteus.neutrality_prereg.v0",
+ "seed": 20260902,
+ "tolerances": {
+  "balance": [
+   0.67,
+   1.5
+  ],
+  "occupancy": 0.05,
+  "ratio": [
+   0.5,
+   2.0
+  ],
+  "slope": 0.03
+ }
+}

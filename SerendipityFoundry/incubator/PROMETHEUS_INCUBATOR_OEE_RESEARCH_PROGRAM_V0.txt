@@ -1,0 +1,1136 @@
+================================================================================
+  PROMETHEUS INCUBATOR -- OPEN-ENDED EVOLUTION RESEARCH PROGRAM  v0
+  Reframing: the unsolved problems of OEE become Prometheus experiments
+
+  Author : Daedalus, maintainer of the Serendipity Foundry Engine (SFE)
+  Date   : 2026-09-02
+  Status : PROGRAM DOCUMENT. No world built. No campaign launched.
+  Supersedes the scope (not the method) of the World-0 Design Review packet.
+================================================================================
+
+PROGRAM THESIS. The target is not novelty, not difficulty, not proficiency inside
+a fixed game. The target is EPISTEMIC COMPOUNDING: acquired machinery causally
+increasing the ability to acquire further useful machinery, repeatedly expanding
+the reachable capability space. The signature is a causal chain
+R1 -> R2 -> R3 -> capability region C, with counterfactual evidence that removing
+upstream machinery breaks downstream acquisition.
+
+THE REFRAME. We previously treated the artificial-life / open-ended-evolution
+literature as a parts bin. That was too conservative. The field has spent decades
+producing extraordinarily valuable partial results and extraordinarily informative
+FAILURES. The failures are the opportunity. This document converts them into
+experiments.
+
+THE FOUNDATIONAL DISTINCTION, stated once and never violated:
+  We must NOT author a reasoning ladder for the ORGANISMS.
+  We MAY build a scientific ladder of falsification experiments for OURSELVES.
+Every design decision below is checked against that line.
+
+--------------------------------------------------------------------------------
+1. REVISED WORLD-0 SCOPE (AFTER REMOVING DEPOSITS AND ECOLOGICAL CONSTRUCTION)
+--------------------------------------------------------------------------------
+
+RETAINED (the irreducible core):
+  * deterministic interpreted bytecode VM; genotypes are DATA, never host code
+  * primitive genome; mutation (substitution, insertion, deletion, DUPLICATION)
+  * reproduction, costed
+  * ONE conserved resource: CHARGE
+  * COSTED COMPUTE: VM steps are BOUGHT from the organism's own charge; a per-tick
+    step ceiling exists only as a determinism bound (a ceiling is not an allowance)
+  * WORLD channels only: value sequences from hidden generator programs drawn from
+    a compositional distribution over the same instruction set, unbounded depth;
+    INSTANCES resampled, DISTRIBUTION stable
+  * residual weighting against a FROZEN, MINIMAL null battery (constant,
+    last-value, first-difference, period-p), plus behavioural reject-sampling of
+    candidate generators
+  * lineage identity, generation, ancestry
+  * bit-exact replay
+  * typed failure coordinates, including ABSTENTION as a first-class class
+  * strict containment
+
+REMOVED:
+  deposits; organism-created channels; cultural / epistemic inheritance;
+  host-parasite ecology; communication; spatial locality; LLM anything; Evidence
+  Wiki integration; human-prior (H/X) comparison; multi-level selection.
+
+THE ONE ECOLOGICAL FORCE THAT REMAINS, and it comes free with conservation:
+each WORLD channel injects a FIXED charge budget per tick, split among attached
+organisms in proportion to residual-weighted accuracy share. That makes payout
+RIVALROUS and therefore FREQUENCY-DEPENDENT: if everyone crowds the same channel,
+per-capita return falls, creating pressure toward partitioning across channels.
+This is the minimal ecology, it requires no new machinery, and it is the only
+organism-organism interaction World-0 has.
+
+FOUR CONSEQUENCES OF THE STRIPPING -- THREE OF THEM SCIENTIFIC GAINS:
+
+  (a) THE WASH-TRADING EXPLOIT DISAPPEARS. The previous review's most serious
+      economic defect was that deposit channels let organisms mint charge by
+      predicting each other. With no deposits there is nothing to mint from, and
+      the escrow machinery designed to fix it is UNNECESSARY. "WORLD channels are
+      the only exogenous source" becomes trivially true rather than a rule.
+
+  (b) THE L2 IDENTIFIABILITY CONFOUND DISAPPEARS. Adversarial review found that
+      evolvability was unidentifiable from environmental accumulation: a
+      descendant might acquire faster because the MEDIUM accumulated useful
+      deposits, not because the LINEAGE acquired machinery -- and the
+      environmental explanation was the more likely one. With no deposits there
+      is no medium accumulation, so the environmental component is STRUCTURALLY
+      ZERO and the organismic component is measured directly. The 2x2 transplant
+      factorial collapses to a single clean comparison. This is a real gain.
+
+  (c) K11 (economic degeneracy) becomes moot for World-0. Retained in the
+      criteria set for later worlds that reintroduce deposits.
+
+  (d) THE COST: World-0 has NO coevolution, NO Red Queen, NO endogenous
+      curriculum, and NO endogenous opportunity creation. Accepted deliberately.
+
+*** THE MOST IMPORTANT CONSEQUENCE, AND IT IS A RISK, NOT A GAIN:
+WITH DEPOSITS REMOVED, THE COMPOSITIONAL GENERATOR IS THE SOLE SOURCE OF
+EXPLOITABLE DEPTH IN WORLD-0. There is no longer any second source of structure.
+If the generator's tail is statistically noise rather than exploitable regularity,
+World-0 contains NO DEPTH AT ALL and every downstream question is unanswerable.
+That makes the structure probe (section 21) the single load-bearing measurement
+of the entire program, and it is why it is now the recommended next action. ***
+
+--------------------------------------------------------------------------------
+2. EXACT HYPOTHESIS WORLD-0 TESTS (three nested, in strict order)
+--------------------------------------------------------------------------------
+
+H0-1  STRUCTURE EXISTS.
+      The channel generator distribution contains EXPLOITABLE STRUCTURAL DEPTH:
+      there exist channels on which the frozen null battery fails AND which some
+      reachable VM program predicts; and predictability degrades with generator
+      composition depth in a graded way rather than collapsing to noise past a
+      shallow horizon.
+      NOTE: this is a property of the WORLD ALONE. It requires no organisms, no
+      population, no economy, and no evolution. It is testable first and cheapest.
+
+H0-2  EVOLUTION EXPLOITS IT.
+      Under conserved charge and costed compute, an evolving population discovers
+      machinery that exploits DEEPER structure than compute-matched random search
+      and compute-matched neutral drift.
+      (This is E1/L0 -- adaptation. It is necessary and deeply insufficient.)
+
+H0-3  ACQUIRED MACHINERY REDUCES LATER ACQUISITION COST.
+      Evolved internal structure X reduces the acquisition cost of capability on
+      HELD-OUT channel families relative to matched lineages lacking X, with the
+      dependency established by REMOVAL ABLATION, under matched compute, mutation
+      opportunity, exposure, and population.
+      (This is the E3 evolvability precursor -- the first rung Prometheus
+      actually cares about.)
+
+World-0 succeeds SCIENTIFICALLY if it answers these three in order, WHATEVER the
+answers are, provided the answers are reconstructable.
+
+--------------------------------------------------------------------------------
+3. WHAT WORLD-0 EXPLICITLY DOES NOT TEST
+--------------------------------------------------------------------------------
+Stated so that no result from World-0 is ever over-claimed:
+
+  * epistemic / cultural inheritance and cumulative culture (no deposits)
+  * coevolution, arms races, Red Queen dynamics (no organism-created environment)
+  * endogenous opportunity creation (organisms cannot change the world)
+  * major evolutionary transitions (no multi-level structure or reproduction)
+  * environmental construction / niche construction
+  * communication, signalling, division of labour
+  * the human-prior hypothesis (no H/X arms -- see section 12 for the synthetic
+    substitute that IS runnable)
+  * escape from the ontology ceiling (World-0 can PILOT a measure, section 12,
+    but cannot answer the question)
+  * E4, E5, E6, E7 of the hierarchy in section 9 -- ALL structurally unreachable
+    in World-0. Any apparent E4+ signal in World-0 is a measurement error and
+    should be treated as such until proven otherwise.
+
+--------------------------------------------------------------------------------
+4. OEE FAILURE ATLAS v0
+--------------------------------------------------------------------------------
+UNIT OF ANALYSIS: the FAILED OR LIMITED DYNAMICAL REGIME, not the paper.
+
+The provisional taxonomy F1-F17 (policy saturation; novelty without accumulation;
+complexity without functional expansion; coevolutionary cycling; ontology ceiling;
+representational lock-in; premature convergence; resource trap; exploration
+without retention; retention without metabolization; metabolization without
+transfer; environmental exhaustion; difficulty masquerading as depth;
+scalar-fitness collapse; major-transition failure; evolvability plateau;
+measurement illusion) is ADOPTED AS A WORKING TAXONOMY AND EXPLICITLY NOT
+ASSUMED CORRECT.
+
+STRUCTURAL CRITIQUE OF THE TAXONOMY (before any evidence):
+
+  (i) IT MIXES CAUSES WITH SYMPTOMS. F1 (policy saturation), F3 (complexity
+      without functional expansion) and F13 (difficulty masquerading as depth)
+      are largely SYMPTOMS. F5 (ontology ceiling), F8 (resource trap), F6
+      (representational lock-in) and F12 (environmental exhaustion) are candidate
+      CAUSES. A useful atlas must separate the observable regime from the
+      mechanism producing it, because the intervention attaches to the mechanism.
+
+  (ii) SEVERAL CLASSES ARE NOT DYNAMICALLY DISTINGUISHABLE IN DATA without an
+      ablation. F9/F10/F11 (exploration without retention / retention without
+      metabolization / metabolization without transfer) form a single pipeline,
+      and telling them apart REQUIRES the removal experiments -- they are not
+      separable by observation. Same for F1 vs F16: policy saturation and
+      evolvability plateau look identical on a fitness curve and are separated
+      only by an acquisition-cost measurement on held-out families.
+
+  (iii) F17 (measurement illusion) IS NOT A SIBLING OF THE OTHERS. It is a
+      META-CLASS that gates our ability to detect ANY of the others. It should be
+      treated as a standing methodological threat applied to every claim, not as
+      one regime among seventeen.
+
+  (iv) A CLASS IS MISSING: SELECTION-LEVEL MISMATCH -- where the level at which
+      selection acts is not the level at which the interesting organization would
+      have to be stabilized. This is arguably the true mechanism behind F15
+      (major-transition failure) rather than a separate phenomenon.
+
+  (v) A SECOND CLASS IS ARGUABLY MISSING: VARIATION-OPERATOR CEILING -- where the
+      mutation/recombination operators cannot construct or preserve the class of
+      structures that would be required, independently of selection or ontology.
+      This is distinct from F5 (what the ontology permits) and from F8 (what
+      selection tolerates), and it is directly actionable.
+
+CRITIQUE FROM THE EVIDENCE SURVEY (these are corrections to the taxonomy that the
+literature forces, and several change our own design):
+
+  (vi) F5 AND F12 DO NOT SEPARATE in any system where THE REWARD CHANNEL IS THE
+      ENVIRONMENT -- which is most of the corpus. They separate only when a world
+      contains exploitable structure the reward channel does not price. The
+      taxonomy is missing the term that makes the distinction operational:
+      *** REWARD-CHANNEL BANDWIDTH *** -- distinct both from designer-supplied
+      categories (F5) and from world richness (F12). Avida is the demonstration:
+      its world contains real unpriced structure (spatial position, neighbour
+      identity, timing) that no organism can ever be PAID for exploiting.
+      DIRECT CONSEQUENCE FOR US: World-0's residual-weighted payout IS a reward
+      channel of limited bandwidth. Structure that our null battery cannot see, or
+      that our payoff cannot price, is invisible to selection no matter how much
+      of it the generator produces. THIS IS NOW A FIRST-CLASS DESIGN CONCERN AND A
+      MEASUREMENT TARGET IN THE STRUCTURE PROBE.
+
+  (vii) F13 IS A PROPERTY OF THE OBSERVER'S METRIC, not of a system, and is
+      therefore a special case of F17 -- as is much of F3, where "complexity" is
+      always a chosen measure. F17 is promoted to a META-CLASS with two sub-cases:
+        F17a METRIC ARTIFACT      -- the measure counts the wrong thing;
+        F17b DEFINITION CIRCULARITY -- the measure's categories are the designer's
+             own vocabulary and therefore CANNOT REGISTER VOCABULARY GROWTH.
+      F17b is the deepest: it is the ontology ceiling applied to MEASUREMENT, and
+      it is exactly the trap our own failure-coordinate schema could fall into.
+
+  (viii) F1 AND F16 ARE DIFFERENT DERIVATIVES OF THE SAME CURVE (capability rate
+      vs acquisition-cost rate) and the taxonomy does not pin the axis. Avida
+      after task exhaustion is F1-positive and F16-negative SIMULTANEOUSLY:
+      repertoire frozen while mutational architecture keeps improving. Unless the
+      capability axis is named, these classes will be assigned inconsistently.
+
+  (ix) F2 AND F9 ARE NOT DISTINGUISHABLE in asexual digital systems, where
+      retention is automatic via lineage inheritance. They separate only where a
+      population-level store exists SEPARATE from the lineage. IN WORLD-0
+      (asexual, no archive) THEY COLLAPSE INTO ONE CLASS. Recorded so we do not
+      claim a distinction our substrate cannot express.
+
+  (x) F10 IS CURRENTLY UNDIAGNOSABLE, not merely rare: in every classic system the
+      only available measure of "descendant capability" IS the selection currency,
+      so retention-without-metabolization cannot be separated from scalar-fitness
+      collapse. *** WORLD-0 HAS THE MISSING INGREDIENT: held-out channel families
+      give a capability measure that is NOT the selection currency. This is a
+      genuine methodological advantage of our design and should be exploited. ***
+
+  MISSING CLASSES THE EVIDENCE DEMANDS:
+    F18 REGRESSIVE EROSION -- acquired machinery is ACTIVELY DELETED once its
+        reward is withdrawn, after long successful retention. Not F9 (never
+        retained), not F8 (never acquired), not F10 (retained but inert).
+        COMPOUNDING REQUIRES MACHINERY TO SURVIVE PERIODS OF NON-PAYMENT. The
+        engineering response is near-zero carriage cost for unexpressed structure
+        -- which is exactly the parameter our resource-trap sweep already varies.
+    F19 UNREGISTERED CONSTRUCTION (non-writable substrate) -- inhabitants can
+        build, but the world's physics never reads their construction back, so
+        niche construction has no causal consequence. Not applicable to World-0
+        (no construction) but CRITICAL for World-2+.
+    F20 EXOGENOUSLY DRIVEN ACTIVITY MISTAKEN FOR ENDOGENOUS -- systems requiring a
+        continuous external perturbation pump, whose novelty rate is a monotone
+        function of that pump. *** LIVE RISK IN OUR OWN DESIGN: channel RESAMPLING
+        is an external perturbation. A "continuously resampled" arm could
+        manufacture apparent open-endedness that is really just our resampling
+        rate. Any such arm must be paired with a perturbation-rate sweep. ***
+    F21 DEMOGRAPHIC / DRIFT-LIMITED PLATEAU -- small-population, short-run
+        artifacts misread as structural ceilings. Identified by the survey as
+        THE SINGLE MOST LIKELY SOURCE OF SYSTEMATIC MISDIAGNOSIS when applying
+        this taxonomy to historical results, precisely because the taxonomy has no
+        demographic class and so the cheap control (a scale sweep) never gets run.
+        A SCALE SWEEP IS THEREFORE MANDATORY BEFORE ANY CEILING CLAIM.
+
+  RE-SCOPINGS:
+    F4 IS MIS-STATED AS A FAILURE. Digital host-parasite results indicate that
+       coevolutionary cycling WITH MAINTAINED DIVERSITY is the mechanism with the
+       best evidence for defeating F8, F14 and F16 at once. CYCLING PER SE IS NOT
+       A FAILURE; CYCLING IN A BOUNDED TRAIT SPACE IS. Renamed accordingly, or the
+       taxonomy discourages the most promising mechanism in the literature.
+    F15 NAMES AN ABSENT EVENT, not a dynamical regime, and every system in the
+       corpus exhibits it -- near-zero discriminating power. Demote to an outcome
+       flag and break out the actual causes: no enforced superadditive return to
+       aggregation; no stable group-level inheritance; no defection control.
+    F6 IS ASSERTED THROUGHOUT THE LITERATURE AND, AS FAR AS THE SURVEY COULD
+       DETERMINE, NEVER MEASURED -- no classic system has run the counterfactual of
+       restarting from an alternative early abstraction and comparing reachable
+       capability. It must be marked as a HYPOTHESIS WITH A REQUIRED EXPERIMENT,
+       not a class diagnosable by observation. *** THIS MAKES OUR EXPERIMENT O2
+       (section 12) POTENTIALLY THE FIRST DIRECT MEASUREMENT OF REPRESENTATIONAL
+       LOCK-IN, AND RAISES ITS PRIORITY ACCORDINGLY. ***
+
+PROPOSED REFINEMENT (adopted for sections 5-8): separate SYMPTOMS from MECHANISMS.
+Four symptom classes -- S1 no new machinery; S2 no accumulation across
+generations; S3 no expansion of the frontier; S4 no improvement in acquisition
+cost -- with the F-classes retained as MECHANISMS that produce them, each owning a
+distinguishing intervention. F17 sits above both as the meta-class gating whether
+any of it is measurable. F21 (demographic) must be excluded before any mechanism
+is claimed.
+
+--------------------------------------------------------------------------------
+5. MAPPING PUBLISHED SYSTEMS ONTO FAILURE CLASSES
+--------------------------------------------------------------------------------
+CONFIDENCE DISCIPLINE: every entry carries an evidence-strength mark. Where a
+detail is uncertain it is described qualitatively rather than quoted numerically.
+This section is a research map, not a literature review, and it must be verified
+against primary sources before any of it is cited outward.
+
+  SYSTEM / RESULT             REGIME EVIDENCED            STRENGTH
+  --------------------------  --------------------------  --------
+  Tierra-style self-           F14 GENERATING F1/F3, with    HIGH on the
+  replicating soup             F4 as the surface behaviour.  emergence;
+                               Genome length and replication MEDIUM on
+                               efficiency kept changing;     saturation
+                               parasites, hyperparasites,
+                               cheaters and addressing
+                               exploits kept appearing. What
+                               SATURATED was the functional
+                               repertoire: everything ever
+                               evolved was a variant of
+                               "copy yourself faster, or get
+                               someone else to copy you."
+                               MECHANISM (sharper than the
+                               usual reading): THE SELECTIVE
+                               CURRENCY IS A SINGLE SCALAR --
+                               CPU time per replication.
+                               Every innovation must cash out
+                               as faster self-copying, so the
+                               reachable capability set is
+                               the set of ways to copy fast,
+                               which is finite and quickly
+                               enumerated. Parasitism
+                               enlarges it ONCE, by making
+                               other organisms part of the
+                               exploitable structure, then
+                               cycles in a bounded trait
+                               space.
+                               CAUTIONARY DETAIL: the later
+                               multicellular variant SEEDED
+                               the higher-order unit BY HAND
+                               -- i.e. the transition was
+                               authored, not evolved.
+
+  Avida logic-task evolution   F5, THE DECISIVE CASE, AND     HIGH on the
+  and the removal-of-          THE MOST IMPORTANT ENTRY IN    core results;
+  intermediate-rewards         THIS ATLAS.                    MEDIUM on exact
+  treatment                    In the rewarded environment,   multipliers and
+                               roughly half of 50 populations counts
+                               evolved the most complex
+                               rewarded function, via
+                               genotypically DIFFERENT routes
+                               -- there was no canonical path.
+                               In the treatment where ONLY
+                               the final function was
+                               rewarded and no simpler
+                               function paid anything, NONE
+                               of the 50 populations evolved
+                               it. (Controls: no mutation, or
+                               no selection -> never.)
+                               WHAT IT ACTUALLY SHOWS: a
+                               claim about the REWARD
+                               GRADIENT, not about ontology
+                               per se. Mutation plus
+                               selection could not cross a
+                               landscape with no paid
+                               intermediates at that scale.
+                               *** THE LOAD-BEARING READING
+                               FOR PROMETHEUS IS CLOSE TO THE
+                               OPPOSITE OF THE POPULAR ONE.
+                               The popular reading is
+                               "complexity evolves from
+                               nothing." The correct reading
+                               is that THE ENTIRE COMPOUNDING
+                               EFFECT WAS SUPPLIED BY THE
+                               DESIGNER'S GRADED REWARD
+                               LADDER -- a finite,
+                               pre-enumerated,
+                               complexity-ordered list of
+                               human-chosen functions with
+                               human-chosen graded payoffs.
+                               Remove the authored
+                               intermediates and compounding
+                               STOPS DEAD. ***
+                               AND YET, IMPORTANTLY: there IS
+                               real machinery reuse -- programs
+                               computing the complex function
+                               demonstrably reuse instruction
+                               sequences that computed simpler
+                               ones. So acquired machinery DID
+                               lower the cost of acquiring
+                               further machinery.
+                               THE PRECISE VERDICT IS THEREFORE:
+                               *** AVIDA DEMONSTRATES WEAK,
+                               REAL, INTRA-ONTOLOGY
+                               COMPOUNDING. *** That is exactly
+                               the phenomenon we want -- and
+                               exactly the ceiling we must get
+                               past, because the ontology and
+                               its payoffs were authored.
+                               Also relevant: deleterious
+                               mutations acted as stepping
+                               stones on some lines of descent.
+
+  Digital host-parasite        Evidence AGAINST F4 being     MEDIUM
+  coevolution                  inevitable: parasite pressure
+                               has been reported to sustain
+                               diversity and drive continued
+                               adaptation. Shows coevolution
+                               CAN escalate rather than
+                               merely cycle -- but the
+                               conditions are not fully
+                               characterized.
+
+  Novelty search               F2: rewarding behavioural     HIGH that it
+                               novelty outperforms objective beats objectives
+                               search in deceptive domains,  in deception;
+                               yet novelty alone does not    HIGH that novelty
+                               yield accumulation --         alone does not
+                               descendants are not           accumulate
+                               epistemically advantaged by
+                               the sequence that produced
+                               them. MECHANISM: novelty is a
+                               pressure on the CURRENT
+                               population, with no term
+                               rewarding usefulness to
+                               DESCENDANTS.
+
+  Quality-diversity /          Instrumentally excellent;     HIGH
+  MAP-Elites                   ILLUMINATES a space rather
+                               than expanding it. The
+                               behaviour descriptors are
+                               designer-supplied -> F5 risk
+                               if used as an objective.
+                               RECOMMENDED AS INSTRUMENT.
+
+  Minimal Criterion            Direct attack on F7 and F14:  MEDIUM-HIGH
+  Coevolution / Chromaria      reproduction gated by a
+                               minimal criterion rather than
+                               a scalar rank preserves
+                               diversity and sustains
+                               divergence. The closest
+                               published match to what our
+                               selection model needs.
+
+  POET-style environment-      Attack on F12 and F4: pairs   MEDIUM-HIGH
+  agent coevolution            agents with generated
+                               environments and TRANSFERS
+                               agents between them; the
+                               transfer/goal-switching
+                               component appears essential.
+                               LIMITATION -> F5: the
+                               environment space is a
+                               designer-parameterized
+                               family, so "open-ended"
+                               generation happens inside an
+                               authored envelope.
+
+  Geb / Polyworld and other    F17 primarily: claims of      MEDIUM
+  claimed-OEE systems          open-endedness rest on
+                               specific chosen measures.
+                               Whether the phenomenon
+                               survives a different metric
+                               or a causal ablation is the
+                               open question.
+
+--------------------------------------------------------------------------------
+6. STRONGEST EVIDENCE FOR EACH CLASS
+--------------------------------------------------------------------------------
+The strongest single body of evidence in the field is the EVOLUTIONARY ACTIVITY
+STATISTICS programme (Bedau, Packard and colleagues), which classified long-term
+evolutionary dynamics into qualitative classes and found that the biosphere
+exhibits unbounded adaptive activity while ARTIFICIAL systems characteristically
+DO NOT reach that class. CONFIDENCE: HIGH on the qualitative claim; MEDIUM on the
+precise classification of individual systems.
+
+WHY THIS MATTERS MORE THAN ANY OTHER RESULT FOR PROMETHEUS: it is a NEGATIVE
+result obtained with a purpose-built MEASURE. It simultaneously (a) supports F1/F2
+as the field's characteristic failure, and (b) demonstrates the F17 discipline --
+the claim is only as good as the statistic, so the statistic must be qualified
+first. We adopt evolutionary-activity-style statistics as a COMPARATOR against
+which our failure-topology statistic must prove its worth (section 16). If the
+cheap established statistic predicts as well, we use the cheap statistic.
+
+POSITIVE RESULTS ON INDUCING (rather than merely observing) THE PHENOMENA -- these
+are the most actionable literature for us:
+  * MODULARLY VARYING GOALS: environments whose objectives vary in a modular
+    fashion have been reported to produce modular organization AND faster
+    subsequent adaptation. CONFIDENCE MEDIUM-HIGH. This is one of the few
+    published levers that plausibly acts on EVOLVABILITY ITSELF rather than on
+    fitness, and it is directly portable to a channel-family design.
+  * CONNECTION / WIRING COST: adding a cost term for structural connectivity has
+    been reported to produce modularity. CONFIDENCE MEDIUM. Portable as a
+    genome-size or structure cost.
+  * ROBUSTNESS AND NEUTRAL NETWORKS: the line of work arguing that mutational
+    robustness and neutral genotype networks ENABLE innovation. CONFIDENCE
+    MEDIUM-HIGH. Directly relevant to F8 (resource trap): if carrying currently
+    useless structure is expensive, neutral exploration is suppressed.
+  * HISTORICAL CONTINGENCY AND REPLAY: long-term microbial evolution work
+    established potentiation experimentally BY REPLAYING FROZEN ANCESTORS. The
+    specific trait matters less to us than THE METHOD: replay-from-ancestor is
+    the empirical template for our removal ablations, and it is exactly what
+    checkpoint+fork gives us cheaply.
+  * EXPERIMENTAL INDUCTION OF MULTICELLULARITY: a major-transition-like
+    reorganization has been induced under a selection regime favouring settling
+    of clusters. CONFIDENCE MEDIUM-HIGH. Evidence that transitions can be INDUCED
+    by changing the selective environment, not only described after the fact.
+
+--------------------------------------------------------------------------------
+7. COMPETING EXPLANATIONS (applied to every atlas entry)
+--------------------------------------------------------------------------------
+For any observed plateau, the following must be excluded before a mechanism is
+claimed. This list is deliberately the same one as section 18 of the directive,
+because it is the discipline that separates a research programme from a habit:
+
+  insufficient time * insufficient population * insufficient compute * wrong
+  physics * wrong mutation operators * insufficient environmental opportunity *
+  selection too harsh * selection too weak * measurement insensitive * genuine
+  absence of the phenomenon.
+
+STANDING RULE: SCALE IS AN INTERVENTION, NOT A REFLEX. "Run it longer / make it
+bigger / add agents" must be a declared, preregistered fork with a prediction --
+never the automatic response to a plateau. The world-phylogeny schema carries an
+explicit boolean, scale_is_the_intervention, so that a scaling fork cannot be
+disguised as a mechanistic one.
+
+--------------------------------------------------------------------------------
+8. CANDIDATE MINIMAL SFE WORLDS PER REGIME
+--------------------------------------------------------------------------------
+  REGIME                    SMALLEST WORLD THAT REPRODUCES IT
+  ------------------------  -----------------------------------------------
+  F1 policy saturation      World-0 as specified. If it saturates, we have it.
+  F2 novelty w/o accum.     World-0 + a novelty-rewarding arm as a CONTROL
+                            (never as the main arm).
+  F5 ontology ceiling       World-0 x TWO instruction sets with matched
+                            expressiveness but different primitives
+                            (section 12).
+  F6 representational       World-0 + differently pre-adapted seed populations
+     lock-in                (section 12) -- the runnable synthetic substitute
+                            for the human-prior question.
+  F7 premature converge.    World-0 with selection strength as the swept
+                            parameter (minimal-criterion vs rank).
+  F8 resource trap          World-0 with the COST OF CARRYING NON-EXECUTED
+                            STRUCTURE as the swept parameter. Cheapest and most
+                            informative single sweep available to us.
+  F12 environmental         World-0 with a FIXED finite channel population vs a
+      exhaustion            continuously resampled one.
+  F16 evolvability          World-0 + held-out channel families +
+      plateau               acquisition-cost measurement (section 10).
+  F4 cycling                NOT reproducible in World-0 (no coevolution).
+                            Requires World-2+.
+  F9/F10/F11 pipeline       NOT reproducible in World-0 (no epistemic
+                            inheritance). Requires World-3+.
+  F15 major transition      NOT reproducible in World-0. Requires multi-level
+                            reproduction; World-4+.
+
+--------------------------------------------------------------------------------
+9. PROMETHEUS E0-E7 OPERATIONAL HIERARCHY
+--------------------------------------------------------------------------------
+An OBSERVATIONAL TAXONOMY OF DYNAMICAL REGIMES. Never a task list given to
+organisms. Never a badge. Regression, branching and temporary attainment are all
+expected and must be recordable.
+
+  E0 VARIATION            novel genotypes/behaviours keep appearing.
+                          EVIDENCE: novelty rate above the neutral-drift arm.
+                          Weakest possible condition.
+  E1 ADAPTIVE ACCUM.      historically acquired changes improve descendants'
+                          viability. EVIDENCE: descendant beats reconstructed
+                          ancestor under matched compute.
+  E2 REUSABLE INNOVATION  acquired machinery transfers across structurally
+                          DISTINCT situations. EVIDENCE: held-out family
+                          performance, with the structure ablated as control.
+  E3 EVOLVABILITY         acquired machinery reduces the COST of acquiring
+                          future machinery. EVIDENCE: acquisition-cost
+                          differential under removal ablation (section 10).
+                          *** THE FIRST RUNG PROMETHEUS ACTUALLY CARES ABOUT.
+                          World-0's ceiling. ***
+  E4 OPPORTUNITY CREATION innovations make previously-useless innovations
+                          valuable. EVIDENCE: an opportunity-dependency edge
+                          (section 15). UNREACHABLE IN WORLD-0.
+  E5 REPRESENTATIONAL     new internal organization makes a previously
+     TRANSITION           unreachable functional region accessible. EVIDENCE:
+                          reachability, not rate (zero occupancy before at ANY
+                          compute; non-trivial after; dependency by removal).
+  E6 META-EVOLVABILITY    the mechanisms controlling evolvability themselves
+                          improve cumulatively.
+  E7 SUSTAINED COMPOUNDING repeated E3-E6 chains with no human-authored target
+                          sequence.
+
+CLAIM DISCIPLINE: E2 and above require COUNTERFACTUAL evidence. A trajectory, a
+plot, or a behavioural impression is never sufficient. E4-E7 are structurally
+unreachable in World-0 and any apparent signal there is presumed artifact.
+
+--------------------------------------------------------------------------------
+10. EVOLVABILITY MEASUREMENT PROTOCOL (E3)
+--------------------------------------------------------------------------------
+For a candidate structure X in lineage L:
+
+  MEASURE   acquisition cost of capability family B, defined as
+            interactions-to-criterion (and total VM steps to criterion) on a
+            HELD-OUT family B, for:
+              (i)  descendants carrying X
+              (ii) descendants with X ablated (removal by restricted replay,
+                   holding genotype length and seeds fixed; the ablation must
+                   replace X with matched-length inert or randomized code, never
+                   simply delete it -- otherwise we measure genome length)
+  MATCHED   compute (total VM steps AND charge), mutation opportunity,
+            environmental exposure, population size, and lineage history depth.
+  REPEAT    across MULTIPLE structurally distinct held-out families. A structure
+            that improves ONE family is SPECIALIZED MACHINERY, not evolvability.
+            Evolvability is a claim about the DISTRIBUTION of future tasks.
+  ESTIMATOR survival model (hazard of next acquisition) with lineage frailty and
+            EXPLICIT CENSORING. NEVER a mean over surviving lineages: survivorship
+            biases acquisition cost downward, and the bias GROWS WITH SELECTION
+            STRENGTH -- i.e. it is largest exactly where E3 would be claimed.
+  GUARD     exclude the acquisition event used to SELECT the lineage from the
+            measurement window (otherwise regression to the mean manufactures the
+            effect).
+  NULL      compute-matched random search and neutral drift, both run to the same
+            total steps.
+
+THEN, AND ONLY THEN, THE SECOND-ORDER QUESTION: can mechanisms that improve
+evolvability themselves evolve? That is E6, and it is not a World-0 question.
+
+ABSOLUTE PROHIBITION (section 11 of the directive, restated because it is the
+easiest rule in the programme to violate by accident): NEVER place evolvability,
+generality, novelty, abstraction, modularity, or "learning to learn" into
+selection. Those are SCIENTIST-SIDE MEASUREMENTS. The organism receives
+consequences from the world. If evolvability emerges because it has long-run
+resource consequences, that is evidence. If we reward it, we have authored the
+answer and the result is worthless.
+
+--------------------------------------------------------------------------------
+11. CYCLING-VERSUS-ESCALATION PROTOCOL
+--------------------------------------------------------------------------------
+Mostly a World-2+ protocol (World-0 has no coevolution), specified now so the
+architecture does not preclude it. The ENVIRONMENT-transplant half IS runnable in
+World-0 against ancestral channel families.
+
+  TRANSPLANT MATRIX
+    restore ancestral opponents / ancestral environments
+    transplant current organisms BACKWARD into ancestral conditions
+    transplant ancestors FORWARD into current conditions
+  INTRANSITIVITY TEST
+    if A beats B, B beats C, and C beats A -> CYCLING, not escalation.
+    Cycling is a DIRECTED-GRAPH property and must be tested as one, over many
+    pairs, not inferred from a rising fitness curve.
+  DIRECTIONAL-EXPANSION TEST
+    generation-N organisms reliably exploit conditions that generations 1..N-k
+    could not, AND the responsible machinery TRANSFERS to independent contexts.
+    Specialized counters do not count: the transfer requirement is what separates
+    "better adapted to you" from "more generally capable."
+  DISTINGUISH FIVE OUTCOMES, not two: cyclic adaptation / arms-race escalation /
+  ecological diversification / niche displacement / increasing generality. Only
+  the last two, with transfer evidence, bear on epistemic compounding.
+
+--------------------------------------------------------------------------------
+12. ONTOLOGY-CEILING EXPERIMENTAL PROGRAM
+--------------------------------------------------------------------------------
+THE DEEPEST QUESTION IN THE PROGRAMME. Any synthetic world contains
+designer-supplied physics; we cannot demand metaphysical independence from it. We
+CAN demand increasing DISTANCE between supplied primitives and selected functional
+organization -- and we must be ruthless about what would count.
+
+CANDIDATE DISTANCE MEASURES (all suspect until proven to have downstream utility):
+  * description length of the evolved solution relative to the primitive set
+  * reusable substructure not explicitly represented in the instruction set
+  * emergent equivalence classes over genotypes with stable causal roles
+  * structures whose utility survives a change of SUPERFICIAL ENCODING
+  * intermediate representations that are REQUIRED for a later capability
+
+THE ONLY CRITERION THAT MATTERS: CAUSAL DOWNSTREAM UTILITY. A metric that merely
+rewards complexity is worthless. A structure counts only if removing it degrades
+the acquisition of something else.
+
+EXPERIMENT O1 -- DUAL-ONTOLOGY (the core test).
+  Two instruction sets A and B with MATCHED expressiveness and matched step costs
+  but DIFFERENT primitives. Same channel families, same everything else.
+  IF evolved functional organization converges across A and B -> the WORLD's
+     structure dominates and the ceiling is loose.
+  IF organization stays "A-shaped" in A and "B-shaped" in B, and the solution that
+     is short in B is never found in A even at large compute -> THE CEILING BINDS,
+     and we have measured it rather than asserted it.
+
+EXPERIMENT O2 -- REPRESENTATIONAL LOCK-IN, AND THE HUMAN-PRIOR QUESTION MADE
+RUNNABLE. Seed populations with (i) random genotypes, (ii) genotypes pre-adapted
+to a SHALLOW family. Then measure long-run reachability of a DEEP family under
+matched total compute.
+  IF the pre-adapted seed is PERMANENTLY worse on the deep family despite equal
+  or greater total compute -> representational lock-in (F6) is real and
+  measurable.
+  *** WHY THIS MATTERS BEYOND WORLD-0: this is the scientific core of the
+  human-prior hypothesis -- "an early successful representation may become an
+  attractor that forecloses better ones" -- tested WITHOUT an LLM, WITHOUT a
+  human corpus, and WITHOUT the incoherent compute-matching problem that made the
+  H-vs-P comparison ill-posed. If lock-in is demonstrable between two SYNTHETIC
+  seeds, the mechanism underlying the north-star hypothesis is established on a
+  substrate where we can actually run the counterfactual. ***
+
+--------------------------------------------------------------------------------
+13. MAJOR-TRANSITION EXPERIMENTAL PROGRAM (World-4+)
+--------------------------------------------------------------------------------
+NO SEMANTIC TARGETS. We do not insert multicellularity, society, or language.
+The abstract question: WHEN DO INDEPENDENTLY SELECTED COMPONENTS BECOME PART OF A
+HIGHER-LEVEL PERSISTENT ADAPTIVE UNIT?
+
+Mechanisms later worlds may test: shared inherited structure; dependency between
+organisms; persistent composite structures; reproduction at more than one level;
+alignment or conflict between selection levels.
+
+THE OPERATIONAL CRITERION, and it is strict: a collection is NOT a higher-order
+unit merely because it behaves cooperatively or persists. It qualifies only if it
+exhibits persistent adaptive organization WHOSE LOSS DESTROYS CAPABILITY -- i.e.
+the causal ablation must be run at the level of the composite.
+LEADING SUSPECTED MECHANISM (from the taxonomy critique, section 4.iv):
+SELECTION-LEVEL MISMATCH. If selection acts only on individuals, higher-level
+organization has no stabilizing force, and its absence is unsurprising rather
+than mysterious. The first intervention should therefore be on WHERE SELECTION
+ACTS, not on adding cooperative affordances.
+
+--------------------------------------------------------------------------------
+14. CUMULATIVE-CULTURE EXPERIMENTAL PROGRAM (World-3+)
+--------------------------------------------------------------------------------
+When epistemic inheritance is reintroduced, DISTINGUISH SIX THINGS that are
+routinely conflated: persistence / reuse / recombination / improvement / causal
+dependence / cumulative depth.
+
+AN ARCHIVE FULL OF ARTIFACTS IS NOT CULTURE. A wiki full of entries is not
+metabolization. The question is strictly: DO LATER ORGANISMS ACQUIRE CAPABILITIES
+THAT WOULD HAVE BEEN INACCESSIBLE OR SIGNIFICANTLY MORE EXPENSIVE WITHOUT THE
+INHERITED HISTORICAL SEQUENCE?
+
+REQUIRED INTERVENTIONS: shuffle history; remove critical ancestors; randomize
+artifact order; replace artifacts with matched irrelevant ones; restart
+populations with and without the accumulated structures. Note that the engine's
+information-availability frontier query already computes what was LEGALLY
+AVAILABLE at any point -- explicitly not what was read or used -- which is exactly
+the quantity these ablations need.
+
+--------------------------------------------------------------------------------
+15. ENDOGENOUS-OPPORTUNITY EXPERIMENTAL PROGRAM (World-2+)
+--------------------------------------------------------------------------------
+The decisive property of natural evolution may be that organisms change the world
+in ways that create NEW NICHES. The test is stronger than "generate harder
+environments":
+
+  CAN ONE INNOVATION MAKE ANOTHER, PREVIOUSLY USELESS, INNOVATION VALUABLE?
+
+Instrument the OPPORTUNITY-DEPENDENCY GRAPH: an edge A -> B exists when B's
+selective value is measurably positive only in populations/worlds where A is
+present, established by removal. Do NOT semantically classify the nodes. If that
+graph GROWS over time, we are observing an endogenous ladder -- which is the only
+kind we are allowed to have.
+
+--------------------------------------------------------------------------------
+16. FAILURE-TOPOLOGY QUALIFICATION PLAN (EARN THE TECTONIC HYPOTHESIS)
+--------------------------------------------------------------------------------
+The hypothesis: EVOLUTIONARY REGIME TRANSITIONS DEFORM THE FAILURE LANDSCAPE
+BEFORE OR WHILE CONVENTIONAL CAPABILITY MEASURES CHANGE.
+
+FAILURE GEOMETRY IS NOT EXEMPT FROM FALSIFICATION. Five qualification gates must
+be passed BEFORE the statistic is used to support any claim:
+
+  Q1 PLANTED TRANSITIONS. Construct runs with KNOWN, INJECTED transitions (e.g.
+     switch the channel family distribution at a known generation, or transplant
+     a known-superior genotype). Does the statistic detect them? Establishes
+     SENSITIVITY. An instrument never validated on a known positive is not an
+     instrument.
+  Q2 FRONTIER EXPANSION vs SAMPLING INCREASE. Interaction count is under
+     selection, so denser sampling alone moves every topology statistic. The
+     statistic must be computed under RAREFACTION to a fixed interaction count
+     and must still detect Q1 transitions.
+  Q3 NON-RESTATEMENT. The statistic must be computed ONLY on CAPABILITY-DISJOINT
+     coordinates (VM fault class, fault depth, abstention structure, resource
+     state), with the partition frozen by hash. Coordinates that are monotone
+     functions of the prediction residual restate the capability metric and would
+     "predict" it tautologically.
+  Q4 COMPARISON AGAINST CHEAP METRICS. Evaluate against aggregate fitness,
+     success rate, efficiency, diversity, and evolutionary-activity statistics.
+     *** IF A CHEAP METRIC PREDICTS TRANSITIONS EQUALLY WELL, WE USE THE CHEAP
+     METRIC AND SAY SO. *** Failure geometry earns its place only by telling us
+     WHERE AND WHY the process is stuck -- not because the metaphor is attractive.
+  Q5 FALSE-POSITIVE RATE under neutral drift and compute-matched random search,
+     with block-permutation nulls sized to the measured autocorrelation time.
+
+ONLY AFTER Q1-Q5: the confirmatory test, with one pre-committed statistic
+(occupancy-boundary flux), one capability-transition detector, one lead-time
+window, one threshold, sealed by the engine's irreversible commit boundary.
+Everything else is exploratory and reported as such.
+
+--------------------------------------------------------------------------------
+17. WORLD-FORKING METHODOLOGY
+--------------------------------------------------------------------------------
+World N+1 EXISTS BECAUSE WORLD N EXPOSED A SPECIFIC, CHARACTERIZED CEILING.
+
+    build minimal world -> observe regime -> characterize failure landscape ->
+    identify limiting mechanism -> formulate intervention -> FORK ->
+    test whether the regime changes -> retain or kill
+
+  * Each ceiling spawns SIBLING ARMS that differ by ONE named change, plus a
+    control that changes nothing causal.
+  * Predictions are SEALED before the run via the engine's commit boundary; a
+    fork whose prediction was written after its result is not evidence.
+  * FAILED WORLDS ARE FOSSILS. Never overwritten, never deleted. A world that
+    cleanly exposes a ceiling is often worth more than one that looks successful.
+  * "Run it longer / bigger" is a DECLARED intervention with its own prediction,
+    never the default response to a plateau.
+  * The purpose is NOT to find one perfect world. It is to learn WHICH CHANGES TO
+    SYNTHETIC PHYSICS PRODUCE WHICH CHANGES IN EVOLUTIONARY REGIME.
+
+The engine already supplies the mechanics: checkpoint + fork-by-reference gives
+counterfactual branches sharing a verifiable immutable past; lineage-scoped
+budgets prevent a fork from minting compute; hash-chained ledgers make every
+branch reconstructable.
+
+--------------------------------------------------------------------------------
+18. INCUBATOR WORLD PHYLOGENY
+--------------------------------------------------------------------------------
+Normative schema shipped with this document:
+  incubator/world_phylogeny.schema.v0.json
+
+One record per world: identity and physics hash; parent and sibling arm; the
+ANTECEDENT CEILING that motivated it and the evidence for that ceiling; the
+proposed mechanism; the single intervention; the SEALED preregistration
+(prediction, primary statistic, nulls, decision rule, sealing ledger sequence);
+what was observed (regime classification, highest E-level with counterfactual
+evidence, failure-landscape change, conventional metrics, and THE SCALE ACTUALLY
+RUN including independent-run count); the verdict; which kill criterion fired;
+proposed next forks each flagged for whether scale IS the intervention; and the
+full reconstruction tuple including the analysis-code hash.
+
+Two design rules worth restating: a world added for elegance rather than from a
+measured ceiling must be flagged is_new_program=true; and this file records the
+falsification ladder WE climb and must never become a curriculum the ORGANISMS
+climb.
+
+--------------------------------------------------------------------------------
+19. THE FIVE OPEN PROBLEMS MOST LIKELY TO BLOCK EPISTEMIC COMPOUNDING
+--------------------------------------------------------------------------------
+Ranked by expected blocking power, with reasoning.
+
+P0 (PRECONDITION, NOT A BLOCKER) EXCLUDE THE DEMOGRAPHIC PLATEAU (F21) FIRST.
+   The survey identifies this as THE SINGLE MOST LIKELY SOURCE OF SYSTEMATIC
+   MISDIAGNOSIS in the whole field: small-population, short-run artifacts get
+   labelled as structural ceilings because the taxonomy has no demographic class,
+   so the cheap control is never run. A SCALE SWEEP IS MANDATORY BEFORE ANY
+   CEILING CLAIM IN THIS PROGRAMME. Note this is NOT a licence to answer plateaus
+   with "run it longer" -- it is the opposite: scale must be RULED OUT explicitly,
+   as a declared control, before a mechanism is asserted.
+
+P1 THE ONTOLOGY CEILING (F5) -- REFRAMED AS TWO SEPARABLE CONSTRAINTS.
+   If evolution can only recombine functional categories implicit in the supplied
+   primitives, compounding is bounded a priori and everything else is decoration.
+   The strongest published evidence is the intermediate-reward dependence in
+   digital logic-task evolution: remove the authored intermediates and compounding
+   stops dead, even though genuine intra-ontology machinery reuse does occur.
+   THE SURVEY FORCES A SPLIT, and it applies directly to us:
+     P1a SUPPLIED-CATEGORY CEILING -- what the primitives can express.
+     P1b REWARD-CHANNEL BANDWIDTH -- what the payoff can PRICE. A world may
+         contain abundant unpriced exploitable structure that is invisible to
+         selection because nothing pays for it. Avida's spatial position,
+         neighbour identity and timing are exactly this.
+   *** WORLD-0 IS EXPOSED ON P1b: our residual-weighted payout against a MINIMAL
+   null battery is a deliberately NARROW reward channel. Structure the battery
+   cannot see, or the payoff cannot price, is invisible to selection however much
+   the generator produces. Narrowing the battery to avoid authoring a ladder (K2)
+   DIRECTLY NARROWS THE REWARD CHANNEL. That trade-off is now explicit and must be
+   measured, not assumed away. ***
+   RANKED FIRST because it bounds the ceiling of the entire programme.
+
+P2 EVOLVABILITY IS SECOND-ORDER AND WEAKLY SELECTED -- THE RESOURCE TRAP (F16+F8).
+   Machinery that improves FUTURE acquisition pays off later, diffusely, and often
+   to descendants rather than the bearer. Under tight resource selection, carrying
+   currently-useless exploratory structure is simply a cost. If selection cannot
+   see the benefit, evolvability does not arise -- not because it is impossible but
+   because it is unaffordable. RANKED SECOND because it is the most likely
+   mechanism to stop us in a SMALL world specifically, and because it is directly
+   tunable.
+
+P3 THE METABOLIZATION / TRANSFER GAP (F10+F11).
+   Innovations may persist without making descendants more capable, or help in one
+   niche without ever becoming a reusable primitive. This is precisely the
+   distinction between E1 and E2/E3, and it is invisible without ablation. RANKED
+   THIRD because it is where a programme most easily fools itself: retention looks
+   like accumulation on every conventional plot.
+
+P4 OPPORTUNITY EXHAUSTION (F12, with F4 as its coevolutionary form).
+   A fixed world eventually stops exposing new exploitable structure; adding
+   organisms without endogenous opportunity creation converts the ceiling into
+   cycling rather than removing it. RANKED FOURTH because it is a hard limit on
+   sustained compounding but is comparatively easy to detect and to intervene on.
+
+P5 REPRESENTATIONAL LOCK-IN (F6).
+   Early successful abstractions may make superior alternatives increasingly
+   inaccessible -- a path-dependence that could permanently cap the reachable
+   region. RANKED FIFTH by expected frequency but FIRST by strategic importance to
+   Prometheus, because it is the mechanistic core of the north-star hypothesis
+   that the human corpus may be an attractor rather than merely a bootstrap.
+   *** RAISED IN PRIORITY BY THE SURVEY: F6 is ASSERTED THROUGHOUT THE LITERATURE
+   AND APPARENTLY NEVER MEASURED -- no classic system has run the counterfactual of
+   restarting from an alternative early abstraction and comparing reachable
+   capability. It must be treated as a HYPOTHESIS WITH A REQUIRED EXPERIMENT
+   rather than a diagnosable class. That makes experiment O2 (section 12)
+   potentially the FIRST DIRECT MEASUREMENT of representational lock-in, and it is
+   cheap. It is arguably the highest value-per-unit-cost experiment available to
+   this programme, and it is runnable in World-0 as specified. ***
+
+P6 REGRESSIVE EROSION (F18, added by the survey).
+   Acquired machinery is ACTIVELY DELETED once its reward is withdrawn, after long
+   periods of successful retention -- distinct from never acquiring it, never
+   retaining it, or retaining it inertly. COMPOUNDING REQUIRES MACHINERY TO
+   SURVIVE PERIODS OF NON-PAYMENT, and a world that charges for carrying
+   unexpressed structure actively destroys the substrate of compounding. Not in
+   the original five, but it shares its intervention with P2 (the carriage-cost
+   sweep), so it is measured for free alongside it.
+
+CROSS-CUTTING META-BLOCKER, NOT RANKED WITH THE OTHERS:
+M0 MEASUREMENT ILLUSION (F17). It does not block the phenomenon; it blocks our
+   ability to KNOW. It gates P1-P5 entirely and is why section 16 qualifies the
+   instrument before using it.
+
+--------------------------------------------------------------------------------
+20. FOR EACH BLOCKER: THE SMALLEST BELIEF-CHANGING EXPERIMENT
+--------------------------------------------------------------------------------
+All five are runnable in a tiny deterministic VM world with mutation,
+reproduction, conserved charge, and hidden generative structure. NONE requires
+deposits, culture, coevolution, or an LLM.
+
+P1 ONTOLOGY CEILING -> EXPERIMENT O1 (DUAL-ONTOLOGY), section 12.
+   ARMS: instruction set A vs B, matched expressiveness and cost, identical
+   channel families and economy.
+   MEASURED: whether the functional organization of evolved solutions converges;
+   and whether a solution that is SHORT in B is ever found in A at large compute.
+   FALSIFIES: "the ceiling binds" is falsified by convergence; "the ceiling is
+   loose" is falsified by persistent ontology-shaped divergence plus
+   non-discovery.
+
+P2 RESOURCE TRAP -> THE NEUTRAL-STRUCTURE COST SWEEP.
+   ARMS: sweep the charge cost of carrying NON-EXECUTED genome structure (and,
+   separately, the cost of executed-but-unrewarded exploration) across several
+   levels, including zero.
+   MEASURED: acquisition cost on held-out families (E3 protocol, section 10) as a
+   function of that cost.
+   FALSIFIES: if evolvability is flat across the sweep, the resource trap is NOT
+   the binding constraint in this world and P2 drops in rank. If evolvability
+   rises sharply as the cost falls, we have identified a tunable lever -- and,
+   importantly, one we did not author as a reward.
+   THIS IS THE CHEAPEST HIGH-INFORMATION EXPERIMENT IN THE PROGRAMME.
+
+P3 METABOLIZATION / TRANSFER -> MOTIF ABLATION.
+   METHOD: identify recurring subprograms (motifs) in evolved genotypes by
+   structural recurrence, NOT by semantic interpretation; ablate each by
+   replacing it with matched-length inert or randomized code; measure acquisition
+   cost on multiple held-out families with and without.
+   FALSIFIES: if no motif's removal changes acquisition cost on ANY held-out
+   family, then at this scale innovations are specialized and E2/E3 do not obtain
+   -- a clean, publishable negative.
+
+P4 OPPORTUNITY EXHAUSTION -> THE SATURATION PROBE.
+   ARMS: fixed finite channel population vs continuously resampled population,
+   with rivalrous payout in both.
+   MEASURED: the residual-weighted quantity of UNEXPLOITED structure remaining
+   over time, and whether acquisition rate declines as it is consumed.
+   FALSIFIES: if unexploited structure does not deplete, exhaustion is not the
+   binding constraint at this scale.
+   *** MANDATORY GUARD (F20, added by the survey): CHANNEL RESAMPLING IS AN
+   EXTERNAL PERTURBATION PUMP. A resampled arm can manufacture apparent
+   open-endedness that is nothing but our own resampling rate -- the failure that
+   afflicted externally-driven ALife systems. The resampled arm MUST therefore be
+   run as a PERTURBATION-RATE SWEEP, and any novelty or activity statistic that is
+   a monotone function of the resampling rate is thereby DISQUALIFIED as evidence
+   of endogenous open-endedness. ***
+
+P5 REPRESENTATIONAL LOCK-IN -> EXPERIMENT O2 (SEEDED LOCK-IN), section 12.
+   ARMS: random seed vs shallow-family-pre-adapted seed, matched TOTAL compute
+   (not matched generations).
+   MEASURED: long-run reachability of a deep family.
+   FALSIFIES: if the pre-adapted seed eventually matches or beats the random seed
+   on the deep family, lock-in is not demonstrated at this scale -- which would
+   also be a meaningful negative result for the north-star hypothesis.
+
+--------------------------------------------------------------------------------
+21. RECOMMENDED WORLD-0 CAMPAIGN 0
+--------------------------------------------------------------------------------
+THREE STAGES, IN STRICT ORDER. STAGE A REQUIRES NO ORGANISMS, NO POPULATION, NO
+ECONOMY AND NO EVOLUTION, AND IT CAN KILL THE WHOLE WORLD BY ITSELF.
+
+  C0-A  THE STRUCTURE PROBE  (tests H0-1; the load-bearing measurement)
+        Sample many generator programs from the compositional distribution.
+        MEASURE: (1) the fraction on which the frozen minimal null battery fails
+        (behavioural non-triviality, NOT syntactic depth); (2) whether bounded
+        search -- random and enumerative -- can find predictors for them; (3) how
+        predictability degrades with composition depth; (4) whether "depth"
+        correlates with anything exploitable at all, or whether the tail is
+        simply noise; and (5) REWARD-CHANNEL BANDWIDTH (added after the evidence
+        survey): how much of the structure that bounded search CAN exploit is
+        actually PRICED by the residual-weighted payoff against the minimal null
+        battery. Structure that exists, and is reachable, but that the payoff
+        cannot pay for, is invisible to selection -- the Avida
+        unpriced-structure failure reproduced in our own economy. If a large
+        fraction of exploitable structure is unpriced, the binding constraint is
+        our reward channel rather than the world, and the fork targets the payoff
+        rather than the generator.
+        DECISION: if there is no band of channels that are BOTH non-trivial to the
+        null battery AND reachable by bounded search, WORLD-0 HAS NO EXPLOITABLE
+        DEPTH and the design is dead as specified. Kill criterion K15.
+        *** THIS IS THE CHEAPEST POSSIBLE FALSIFICATION OF THE ENTIRE PROGRAMME
+        AND IT MUST BE RUN FIRST. ***
+
+  C0-B  ECONOMY CALIBRATION AND DETECTOR VALIDATION (only if C0-A passes)
+        Frozen trivial-predictor reference set (constant, last-value,
+        first-difference, matched-length random program) PLUS scripted adversary
+        organisms as PLANTED POSITIVES. With deposits removed the adversary set
+        shrinks to: predict-last-value, predict-constant, do-nothing/hoarder,
+        attach-shopper, and step-waster. (Wash traders, clone colluders and
+        steganographic pairs are no longer expressible -- a direct benefit of the
+        stripped scope.)
+        CALIBRATE costs so a null-battery-equivalent organism nets approximately
+        zero over a long run, and REPORT HOW WIDE THE VIABLE CORRIDOR IS between
+        free-riding and total inertia. A very narrow corridor is itself evidence
+        of fragility.
+        SUCCESS CONDITION, INVERTED: the kill criteria DO fire on the planted
+        positives and DO NOT fire on the honest reference set. We validate the
+        detector before trusting its silence.
+
+  C0-C  REPLAY AND THROUGHPUT AUDIT
+        Bit-exact replay on a random sample (zero divergence tolerance), and a
+        precise throughput measurement that determines HOW MANY GENERATIONS
+        CAMPAIGN 1 CAN ACTUALLY AFFORD. If the affordable budget is far below what
+        an E3 effect plausibly needs, that is a reason to revise scope BEFORE
+        Campaign 1, not to run a hopeful campaign.
+
+HONEST EXPECTED OUTCOME: a kill criterion fires and the physics is revised. That
+is a SUCCESSFUL Campaign 0. A world that survives its own shakedown unmodified
+should be viewed with suspicion.
+
+--------------------------------------------------------------------------------
+22. RECOMMENDED WORLD-0 CAMPAIGN 1 (CONTINGENT ON CAMPAIGN 0)
+--------------------------------------------------------------------------------
+RUNS ONLY IF: C0-A found exploitable depth; C0-B calibrated a non-degenerate
+economy and validated the detectors; C0-C demonstrated bit-exact replay and an
+adequate generation budget; and the kill criteria are frozen.
+
+  ARMS  T0 evolving population
+        N1 compute-matched random search
+        N2 neutral drift (same mutation operator, no selection)
+        all compute-matched on TOTAL VM STEPS, with MULTIPLE INDEPENDENT RUNS
+        (the run is the replicate; a single run supports no population claim).
+
+  TESTS in order: H0-2 (does evolution exploit deeper structure than N1/N2?), then
+  H0-3 (E3 protocol, section 10) if and only if H0-2 holds.
+
+  PRE-COMMITTED AND SEALED before the first run: embedding, primary topology
+  statistic, capability-transition detector, lead-time window, threshold, and the
+  null-model set (section 16).
+
+  TARGET RESULT, deliberately tiny: acquired structure X reduces acquisition cost
+  on held-out families; the effect disappears under removal ablation; and the
+  failure landscape shows X changing WHICH BOUNDARIES descendants reach rather
+  than merely how often they succeed. That is a candidate E3 and it is worth more
+  than an organism becoming ten times better at the world.
+
+--------------------------------------------------------------------------------
+23. EXPLICIT KILL CRITERIA FOR THE REVISED WORLD-0
+--------------------------------------------------------------------------------
+Full definitions in incubator/WORLD0_KILL_CRITERIA.prereg.txt. Status under the
+stripped scope:
+
+  ACTIVE   K0 trivial policy dominates
+           K1 memorization rather than structural adaptation
+           K2 authored-ladder leakage (now includes: the NULL BATTERY must stay
+              minimal, or the world pays for beating designer-chosen model classes)
+           K3 scalar collapse / diversity death
+           K4 novelty without utility (genotype novelty)
+           K5 fitness without evolvability (kills the CLAIM, not the world)
+           K6 compute confound
+           K8 non-reconstructability (ZERO tolerance)
+           K9 semantic contamination (ABSOLUTE)
+           K10 containment failure (ZERO tolerance, immediate halt)
+           K12 tectonic hypothesis not testable as stated
+           K13 unit-of-analysis inflation (run is the replicate)
+           K14 survivorship / regression-to-mean in E3 estimates
+  NEW      K15 NO EXPLOITABLE DEPTH -- C0-A finds no band of channels that are
+               both non-trivial to the null battery and reachable by bounded
+               search. World-0 is dead as specified; the fork targets the
+               generator distribution, not the organisms.
+  N/A IN   K7 inheritance theatre (no epistemic inheritance in World-0)
+  WORLD-0  K11 economic degeneracy (no deposits in World-0)
+           -- both RETAINED for World-3+.
+
+Every criterion must carry its five-tuple (statistic, estimator, null model,
+threshold, data source) before Campaign 0. Stage-B thresholds are calibrated in
+C0-B and frozen before Campaign 1. A criterion may be tightened after data is
+seen; NEVER loosened.
+
+--------------------------------------------------------------------------------
+24. WHAT NOT TO BUILD
+--------------------------------------------------------------------------------
+  * anything with an LLM in the selection path, as adjudicator, curriculum, or
+    fitness term
+  * a scalar intelligence score, or any additive reward for novelty, generality,
+    abstraction, modularity, complexity, or "learning to learn"
+  * deposits, cultural inheritance, communication, host-parasite ecology,
+    spatial locality, or multi-level reproduction -- IN WORLD-0
+  * semantic labels on any evolved configuration
+  * authored task tiers, difficulty levels, or named capability milestones
+  * a rich null battery (it becomes the authored ladder in disguise)
+  * organism-visible telemetry, leaderboards, or engine-generated hints
+  * visualization or UI before the science is settled
+  * World-1 through World-N designed in advance -- worlds must be earned by
+    measured ceilings
+  * "run it longer / bigger" as an undeclared response to a plateau
+  * the H/X human-prior arms (use the synthetic lock-in experiment O2 instead)
+
+--------------------------------------------------------------------------------
+25. ONE RECOMMENDED NEXT IMPLEMENTATION ACTION
+--------------------------------------------------------------------------------
+BUILD ONLY THE GENERATOR AND THE NULL BATTERY, AND RUN C0-A (THE STRUCTURE PROBE).
+
+  IN SCOPE: the compositional channel generator; the frozen minimal null battery;
+  a bounded search harness (random and enumerative); and the measurement of
+  behavioural non-triviality versus composition depth. Placed inside the engine
+  source so it falls within the build-derived release identity from day one.
+  OUT OF SCOPE, DELIBERATELY: no organisms, no population, no charge economy, no
+  mutation, no reproduction, no evolution loop, no service, no port, no UI.
+
+RATIONALE. The previous packet recommended building the whole physics core. That
+is still too much. Stripping deposits made the generator THE SOLE SOURCE OF DEPTH
+in World-0, and whether that depth exists is a property of the generator ALONE --
+measurable with no organisms at all. If C0-A fails, the VM economy, the mutation
+operators, the selection model and the failure-coordinate machinery would all
+have been built to explore a world that contains nothing to find.
+
+This is the smallest artifact in the entire programme that can falsify it, and it
+is a few hundred lines. Build that, run it, and report the answer honestly --
+including, and especially, if the answer is that the tail is noise.
+
+================================================================================
+  FINAL DIRECTIVE, RESTATED
+  The question is no longer "how do we build a world in which intelligence can
+  evolve." It is: WHAT PREVENTS INTELLIGENCE FROM CONTINUING TO INVENT BETTER WAYS
+  OF BECOMING INTELLIGENT, AND WHAT CHANGES TO THE CONDITIONS OF EVOLUTION REMOVE
+  THOSE BARRIERS?
+
+  Worlds are experiments. Evolutionary plateaus are evidence. Failure landscapes
+  locate the pressure. World forks test the cause. The prize is not an excellent
+  synthetic organism -- it is the conditions under which epistemic compounding
+  becomes an open-ended dynamical process.
+
+  Do not merely borrow open-ended evolution. Try to finish some of its unfinished
+  business.
+================================================================================
