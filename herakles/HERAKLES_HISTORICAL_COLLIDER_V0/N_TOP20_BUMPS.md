@@ -1,6 +1,6 @@
 # N. TOP-20 BUMPS — **NOT POPULATED. CANDIDATE POOL ONLY.**
 
-A TOP-20 requires, per `roles/Herakles/METHOD.md` §1a and directive §25, that every entry has `evidence_source ∈ {ARTIFACT_IN_HAND, PRIMARY_SOURCE_READ}` and answers the sixteen questions. **Zero candidates currently qualify.** Every row below is `MODEL_RECALL_UNVERIFIED`.
+A TOP-20 requires, per `roles/Herakles/METHOD.md` §1a and directive §25, that every entry has `evidence_source ∈ {ARTIFACT_IN_HAND, PRIMARY_SOURCE_READ}` and answers the sixteen questions. **Zero candidates currently qualify.** Every row below is `MODEL_RECALL_UNVERIFIED` except `bump-evca-transition`, which was promoted to `PRIMARY_SOURCE_READ` on 2026-09-03 and still does not qualify, because a sourced *rate* is not a sourced *claim about contingency*.
 
 Publishing a ranked twenty from recall would be exactly the failure mode this seat exists to avoid: a list that looks like a measurement and is actually a readout of my own training priors, ranked by fame (§18 forbids it).
 
@@ -30,6 +30,10 @@ Publishing a ranked twenty from recall would be exactly the failure mode this se
 | bump-evoloop-genetic | fam-122 | CA replicators show genuine heritable divergence | rule-driven pattern change | no heritable variation in function |
 
 Eighteen candidates. The pool is deliberately short of twenty: padding it would mean inventing entries.
+
+**2026-09-03 UPDATE to bump-evca-transition (the only pool entry with primary-source backing).** The rate is now a measured number with a denominator: **7/300 = 2.3%** in the PPSN III experiment (Wilson 95% interval [1.1%, 4.7%]), and **0/50** in the Physica D experiment, which used a different configuration and in which the word "particle" does not appear. This entry is still NOT promoted to a ranked list, because the microscopic claim (that the transition is contingent on ancestral rule-table structure) remains untested. What changed is that the test is now designed and powered.
+
+**One candidate was removed by the 2026-09-03 research pass.** `bump-toussaint-sigma` and the general framing behind several of these entries assumed the field had not measured reachability change. Two counterexamples were found (Altenberg 1994 formalism, Mengistu/Lehman/Clune 2016 measurement with precedent to 2011). Entries whose interest depended on that assumption must be re-argued on their specific merits, not on a supposed field-wide gap. See `RESEARCH_PASS_2026-09-03.md`.
 
 ---
 
