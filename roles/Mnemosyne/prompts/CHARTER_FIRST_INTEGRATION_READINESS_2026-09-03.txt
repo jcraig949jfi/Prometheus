@@ -1,0 +1,304 @@
+PROMPT - MNEMOSYNE / PEW
+FIRST PROMETHEUS INTEGRATION READINESS + HARMONIA EVIDENCE HANDOFF
+
+Mnemosyne,
+
+We are preparing the first end-to-end Prometheus integration run:
+
+SFE / WORLD SERVER
+        |
+        v
+  PROTEUS PLAYERS
+        |
+        v
+       PEW
+        |
+        v
+    HARMONIA
+
+Your job is to make the PEW side boring, explicit, reachable, and auditable.
+
+Do NOT broaden the Evidence Wiki / PEW architecture unless an integration defect
+requires it.
+
+Harmonia will run on M2.
+
+She must be able to find one canonical runbook, connect to PEW, verify its
+identity/health, write a known test record, read it back, run the standard PEW
+battery, and then capture/query the evidence produced by a real
+world + player experiment.
+
+This is an INTEGRATION READINESS pass.
+
+===============================================================================
+
+1. PRIMARY OBJECTIVE
+    ===============================================================================
+
+By the end:
+
+[ ] The intended PEW service/write/read path is actually stood up.
+[ ] You have personally tested it through the real external interface.
+[ ] M2 connection instructions are explicit.
+[ ] One canonical Harmonia PEW runbook exists.
+[ ] A standard PEW verification battery exists and has been run.
+[ ] Write-path success is verified by independent read-back.
+[ ] Failure behavior is overt, not silent.
+[ ] World/player/run provenance fields are explicit.
+[ ] Harmonia knows how to query the evidence for one experiment.
+[ ] All integration documentation/fixes are committed and pushed.
+[ ] You produce one ASCII external-review packet in your chat.
+
+Do not equate HTTP success with persisted evidence.
+
+===============================================================================
+2. DOCUMENT THE ACTUAL PEW SURFACE
+
+Record:
+
+- canonical component name
+- repo path
+- service/startup command
+- host machine
+- protocol
+- hostname/IP strategy
+- port
+- health endpoint
+- version/schema endpoint or equivalent
+- write endpoint/API
+- read/query endpoint/API
+- authentication assumptions, if any
+- environment/configuration
+- persistence backend
+- logs
+- restart procedure
+
+Harmonia is on M2. Her exact connection path must be documented.
+
+===============================================================================
+3. CANONICAL HARMONIA PEW RUNBOOK
+
+Create/update ONE obvious document containing:
+
+HARMONIA FIRST INTEGRATION -- PEW
+
+It must tell Harmonia:
+
+1. How to verify PEW health.
+2. How to verify PEW version/schema identity.
+3. How to write one known synthetic integration record.
+4. How to obtain the resulting evidence/event/record ID.
+5. How to read/query that exact record back.
+6. How to verify its persisted fields.
+7. How to submit or ingest a real world/player experiment.
+8. How to query all evidence for a run_id.
+9. How to query by world_id and player_id if supported.
+
+10. How to distinguish accepted, rejected, failed, duplicate, and partial
+    writes.
+11. Where errors/logs appear.
+12. What exact output means PASS.
+
+No hidden institutional knowledge.
+
+===============================================================================
+4. DEFINE THE FIRST-INTEGRATION EVIDENCE CONTRACT
+
+For the first experiment, establish the minimum canonical provenance needed to
+connect:
+
+WORLD
+  to
+PLAYER
+  to
+RUN / EPISODE
+  to
+EVIDENCE
+
+At minimum determine whether PEW can truthfully preserve:
+
+world_id
+world version/hash/schema
+player_id
+player version/hash
+run_id
+episode_id if distinct
+configuration
+seed
+observations/events
+actions/decisions
+score/reward/metric if applicable
+termination state
+errors
+timestamps/order
+producing component versions
+evidence schema version
+
+Do not add fields gratuitously.
+
+But do not permit the first experiment to produce evidence that cannot later be
+joined back to the exact world and player that produced it.
+
+===============================================================================
+5. STANDARD PEW BATTERY
+
+Define and RUN a cheap battery that Harmonia can repeat.
+
+At minimum:
+
+E0 -- service reachable
+E1 -- version/schema identity retrievable
+E2 -- synthetic known-good write accepted
+E3 -- accepted write returns/permits stable evidence identity
+E4 -- independent read-back finds the persisted record
+E5 -- persisted fields equal submitted canonical fields
+E6 -- world_id/player_id/run_id can be queried as documented
+E7 -- duplicate/idempotency behavior is known
+E8 -- malformed payload fails overtly
+E9 -- unavailable backend fails overtly
+E10 -- no silent-success path exists in the tested route
+E11 -- one real/minimal player-run payload can be recorded
+E12 -- that real run can be reconstructed sufficiently for Harmonia to
+       identify world, player, run, and outcome
+
+If pooled write-path containment behavior remains relevant, explicitly verify
+that the first-integration path preserves the accepted fail-loud semantics.
+
+===============================================================================
+6. STANDARD SYNTHETIC RECORD
+
+Freeze one harmless integration-test record or fixture.
+
+It should be unmistakably synthetic and easy to query.
+
+Document:
+
+fixture identity
+payload
+expected response
+expected persisted fields
+cleanup/retention behavior
+
+Do not let integration tests pollute scientific evidence without an explicit
+test marker/namespace.
+
+===============================================================================
+7. REAL EXPERIMENT HANDOFF
+
+Document the smallest sequence Harmonia will follow after SFE + Player batteries
+pass:
+
+obtain world_id
+obtain player_id
+obtain run_id
+execute run
+persist/ingest evidence
+query run evidence
+verify provenance joins
+inspect outcome
+
+If PEW receives events during execution versus ingesting an artifact after the
+run, make that distinction explicit.
+
+If another component performs the write rather than Harmonia, explain exactly
+how Harmonia verifies it occurred.
+
+===============================================================================
+8. CROSS-COMPONENT CONTRACT CHECK
+
+Review the actual current integration surfaces/documentation from Daedalus and
+Proteus that exist in the repository.
+
+Identify any naming/schema mismatch involving:
+
+world_id
+player_id
+run_id
+episode_id
+seed
+schema/version
+timestamps/order
+outcome/metric
+
+Resolve the smallest safe mismatch within PEW's authority, or flag it as a
+specific integration blocker.
+
+Do not silently normalize incompatible identifiers in a way that destroys
+provenance.
+
+===============================================================================
+9. LIVE VERIFICATION
+
+Before declaring ready:
+
+- stand up/restart PEW
+- exercise actual external write path
+- independently read the record back
+- run the entire PEW battery
+- execute/read back at least one minimal world/player-shaped record
+- verify M2 connection path if possible
+- verify documentation against reality
+- commit changes
+- push changes
+- record commit hash
+- record PEW version/schema identity
+
+===============================================================================
+10. DO NOT DO
+
+Do not:
+
+- redesign evidence ontology for elegance
+- widen scope beyond first integration
+- hide failed persistence behind accepted API responses
+- claim evidence durability without read-back
+- silently accept unknown player/world schemas
+- infer missing provenance that producers did not send
+- turn test evidence into scientific evidence
+- weaken existing containment guarantees
+
+===============================================================================
+11. REQUIRED FINAL REVIEW PACKET
+
+When finished, STOP and place one plain ASCII EXTERNAL REVIEW PACKET directly
+into your chat so James can cut and paste it.
+
+It must contain:
+
+- exact readiness verdict
+- pushed commit/hash
+- service machine
+- endpoint/port/protocol
+- PEW version/schema identity
+- canonical Harmonia PEW runbook path
+- synthetic fixture
+- exact battery + every result
+- proof of write + independent read-back
+- first-integration evidence contract
+- world/player/run identifier contract
+- actual minimal real-run-shaped evidence ID
+- query commands Harmonia will use
+- restart instructions
+- known limitations
+- any blocker
+- exact statement of what you personally verified
+- exact statement of what remains unverified
+
+Use a headline such as:
+
+PEW_READY_FOR_FIRST_INTEGRATION
+
+or:
+
+PEW_NOT_READY
+BLOCKER: <specific blocker>
+
+Completion means:
+
+A fresh Harmonia on M2 can find the runbook, connect to PEW, prove writes
+really persist, query evidence by the identifiers produced by SFE/Proteus,
+and independently verify the evidence from the first experiment without
+contacting Mnemosyne.
+
+================================================================================
+END PROMPT

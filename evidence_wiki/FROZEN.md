@@ -2,6 +2,21 @@
 
 State: PEW_FROZEN_WAITING_FOR_INCUBATOR
 
+## Reopened once, under criterion 1 (2026-09-03): first-integration readiness
+
+A real consumer requirement arrived (Harmonia on M2, first end-to-end run
+SFE -> Proteus -> PEW -> Harmonia). Scope was integration defects only:
+run identity, read-back, overt failure. No new science, no V4.
+
+    Canonical runbook ..... docs/HARMONIA_FIRST_INTEGRATION_PEW.md
+    Evidence contract ..... docs/FIRST_INTEGRATION_EVIDENCE_CONTRACT.md
+    Machine-readable ...... GET /api/v1/fossil/contract  (pew.fossil.v1)
+    Battery ............... integration/pew_battery.py  (E0-E12, 14 gates)
+    Fixture ............... integration/fixture_harmonia_v1.json (namespace test)
+
+PEW returns to the frozen posture after this pass. The same reopen criteria
+apply to anything further.
+
 - No V4. No new features, ontology work, tensor machinery, retrieval
   experiments, dashboards, mass ingestion, or synthetic benchmarks.
 - The service keeps running (watchdog MnemosyneEvidenceWikiWatchdog, port

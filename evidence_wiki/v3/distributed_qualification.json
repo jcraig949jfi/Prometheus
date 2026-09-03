@@ -1,12 +1,13 @@
 {
+ "run_tag": "reqal-20260903T161559",
  "workers": {
   "M1": {
    "exit": 0,
-   "out": "{\"machine\": \"M1\", \"n\": 150, \"p50_ms\": 44.5404052734375, \"p95_ms\": 143.62215995788574}"
+   "out": "{\"machine\": \"M1\", \"n\": 40, \"p50_ms\": 3208.0488204956055, \"p95_ms\": 7385.500431060791}"
   },
   "M2": {
    "exit": 0,
-   "out": "{\"machine\": \"M2\", \"n\": 150, \"p50_ms\": 44.67463493347168, \"p95_ms\": 256.547212600708}"
+   "out": "{\"machine\": \"M2\", \"n\": 40, \"p50_ms\": 3125.303268432617, \"p95_ms\": 8963.382005691528}"
   },
   "M3": {
    "exit": 9,
@@ -14,31 +15,32 @@
   },
   "M4": {
    "exit": 0,
-   "out": "{\"machine\": \"M4\", \"n\": 150, \"p50_ms\": 45.22562026977539, \"p95_ms\": 154.30831909179688}"
+   "out": "{\"machine\": \"M4\", \"n\": 40, \"p50_ms\": 3752.0124912261963, \"p95_ms\": 8448.459386825562}"
   },
   "M3_replay": {
    "exit": 0,
-   "out": "{\"machine\": \"M3\", \"n\": 150, \"p50_ms\": 1.7936229705810547, \"p95_ms\": 2.6671886444091797}"
+   "out": "{\"machine\": \"M3\", \"n\": 40, \"p50_ms\": 1022.8800773620605, \"p95_ms\": 3179.1765689849854}"
   }
  },
- "expected_unique": 600,
- "stored_rows": 2600,
- "stored_distinct": 2600,
- "no_silent_duplicates_G21": false,
+ "n_per_worker": 40,
+ "expected_unique": 160,
+ "stored_rows": 160,
+ "stored_distinct": 160,
+ "no_silent_duplicates_G21": true,
  "provenance_failures": 0,
  "writes_logged_by_machine": {
-  "M3": 150,
-  "M1": 150,
-  "M4": 150,
-  "M2": 150
+  "M1": 40,
+  "M2": 40,
+  "M3": 40,
+  "M4": 40
  },
  "reads_during_writes_G17": {
   "ok": 30,
   "of": 30,
-  "p95_ms": 2527.2
+  "p95_ms": 12816.3
  },
  "crash_recovery_G19": true,
- "wall_seconds": 72.4,
- "service_path_events_per_sec": 8.3,
+ "wall_seconds": 238.4,
+ "service_path_events_per_sec": 0.7,
  "cross_host_caveat": "4 concurrent processes with distinct machine identities on M1; LAN legs pending M2-M4 pulling the branch"
 }
