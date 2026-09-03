@@ -1,0 +1,122 @@
+{
+ "frozen_on": "2026-09-03",
+ "directive_sha256": "83b6e197b52f441b007cd2a0585be504661f57d97f4730a9cb4e99bb4494d91e",
+ "model": {
+  "alphabet_size": 8,
+  "alphabet": "abcdefgh",
+  "target": "abcdeabcdeabcdeabcdeabcde",
+  "target_len": 25,
+  "period": 5,
+  "development_steps_T": 1,
+  "lambda_offspring": 100,
+  "mu_parents": 30,
+  "selection_exp1": "correct_only_uniform_mu_lambda",
+  "selection_exp2": "mu_lambda_hamming",
+  "crossover": false
+ },
+ "primary": {
+  "beta_on": 0.1,
+  "beta_off": 0.0,
+  "alpha_low": 0.03,
+  "alpha_high": 0.06,
+  "alpha_indel": "PER-EXPERIMENT, resolved during X2 historical validation",
+  "promoters_mutate": true,
+  "PRIMARY_RUN_LENGTH": 1000,
+  "SHORT_SENSITIVITY": 300,
+  "LONG_SENSITIVITY": 3000,
+  "detector_samples_S": 2000,
+  "beta_probe": 0.1,
+  "primary_detector_statistic": "modular_degree",
+  "primary_acquisition_metric": "best_fitness",
+  "unit_of_analysis": "run",
+  "inference": "paired permutation over run pairs, 10000 perms, Holm over 2 primary checkpoints",
+  "t_primary_early": 100,
+  "t_primary_late": 500,
+  "n_run_pairs_per_alpha": 30,
+  "smoothing": "none",
+  "alpha_indel_exp1": 0.0,
+  "alpha_indel_exp2": "ON: replacement, duplication and deletion at equal probability, all governed by alpha"
+ },
+ "checkpoints": [
+  0,
+  5,
+  10,
+  15,
+  20,
+  30,
+  40,
+  50,
+  65,
+  80,
+  100,
+  125,
+  150,
+  175,
+  200,
+  250,
+  300,
+  350,
+  400,
+  500,
+  600,
+  700,
+  800,
+  900,
+  1000
+ ],
+ "sensitivity_arms": {
+  "beta_on_alt": 0.01,
+  "alpha_indel_alt": 0.03,
+  "promoters_mutate_alt": false,
+  "run_length_alt": [
+   300,
+   3000
+  ]
+ },
+ "mechanical_null": {
+  "definition": "M(P,t) = D(P_t,beta_on) - D(P_t,beta_off) on the SAME frozen population, no selection, no reproduction",
+  "generation_zero_baseline": "E(0) measured on the common initial population; expected 0 up to estimator noise"
+ },
+ "estimator_noise": {
+  "R_seeds": 20,
+  "sweep_S": [
+   125,
+   250,
+   500,
+   1000,
+   2000,
+   4000,
+   8000
+  ]
+ },
+ "denominators": {
+  "modular_degree": "per position i, denominator = number of samples varying at i; positions with zero variation contribute 0 and remain in the average over the 25 positions",
+  "all_probabilities": "denominator is always the full S samples unless stated",
+  "mi_bins": 9,
+  "phenotype_compare_len": 25,
+  "absent_position": "counted as differing"
+ },
+ "fitness": {
+  "definition": "negative fraction of the 25 target positions whose symbol differs from the target; positions beyond a short phenotype count as mismatches; symbols beyond position 25 are ignored",
+  "range": [
+   -1.0,
+   0.0
+  ],
+  "status": "ASSUMED_FOR_RECONSTRUCTION: the historical text says 'negative percentage of symbols of a phenotype that do not match with the correct phenotype' and the recovered API documents dist() as a Hamming distance, but the unequal-length convention is not stated"
+ },
+ "parameter_conflict_resolutions": {
+  "alpha_indel": {
+   "status": "RESOLVED BY NECESSITY during X2, before any HC-T01 outcome was inspected",
+   "evidence": [
+    "Table 1.7 sets insertion/deletion frequency to 0.0 for EXPERIMENT 1, whose population starts as a full-length direct encoding of the 25-symbol target and needs no growth; length-changing mutations there would be non-neutral by construction.",
+    "Section 1.5.4 says alpha applies 'w.r.t. symbol replacement, insertion, and deletion' for EXPERIMENT 2.",
+    "Table 1.6 defines first-type mutations as 'symbol replacement, symbol duplication, and symbol deletion, which occur with equal probabilities'.",
+    "DECISIVE: Experiment 2 starts from the one-symbol egg cell <a>. With replacement-only mutation the genotype can never lengthen, operator creation requires a subsequence of length >= 2, and the run is frozen at length 1 forever. Measured: best fitness pinned at -0.960 in 40/40 runs across all four cells, zero operators ever created."
+   ],
+   "conclusion": "The apparent contradiction is not a contradiction. It is a difference between the two experiments. Experiment 1 is replacement-only; Experiment 2 uses all three kinds at equal probability."
+  },
+  "beta": {
+   "status": "UNRESOLVED, primary 0.1 with 0.01 as a preregistered sensitivity arm, exactly as frozen"
+  }
+ }
+}

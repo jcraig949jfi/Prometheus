@@ -225,6 +225,83 @@ def claim_source():
           "matches the published plants figures exactly")
 
 
+
+
+# ------------------------------------------------- execution-directive gates
+# Required by DIRECTIVE_HC_T01_EXECUTION_2026-09-03.txt section 26:
+# "The verifier must fail if the primary probe operator, checkpoint cadence,
+#  denominator/statistic definitions, mechanical null, or run-level inference
+#  are unspecified."
+def claim_execution_specs():
+    cfgp = os.path.join(HERE, "HC_T01_FROZEN_CONFIG.json")
+    if not os.path.exists(cfgp):
+        check("frozen config present", False, cfgp); return
+    cfg = json.load(open(cfgp, encoding="utf-8"))
+    pri = cfg.get("primary", {})
+
+    check("PRIMARY PROBE OPERATOR is specified",
+          pri.get("beta_probe") is not None,
+          "beta_probe = %s" % pri.get("beta_probe"))
+    check("PRIMARY DETECTOR STATISTIC is specified",
+          bool(pri.get("primary_detector_statistic")),
+          str(pri.get("primary_detector_statistic")))
+    check("PRIMARY ACQUISITION METRIC is specified",
+          bool(pri.get("primary_acquisition_metric")),
+          str(pri.get("primary_acquisition_metric")))
+    cks = cfg.get("checkpoints") or []
+    check("CHECKPOINT CADENCE is specified",
+          len(cks) >= 5 and cks[0] == 0 and sorted(cks) == cks,
+          "%d checkpoints, %s .. %s" % (len(cks), cks[0] if cks else "-", cks[-1] if cks else "-"))
+    check("the two primary inferential checkpoints are named and in the cadence",
+          pri.get("t_primary_early") in cks and pri.get("t_primary_late") in cks,
+          "early=%s late=%s" % (pri.get("t_primary_early"), pri.get("t_primary_late")))
+    den = cfg.get("denominators", {})
+    check("DENOMINATOR / STATISTIC DEFINITIONS are specified",
+          all(k in den for k in ("modular_degree", "all_probabilities", "mi_bins",
+                                 "phenotype_compare_len", "absent_position")),
+          "%d denominator rules" % len(den))
+    mn = cfg.get("mechanical_null", {})
+    check("MECHANICAL NULL is specified",
+          bool(mn.get("definition")) and bool(mn.get("generation_zero_baseline")),
+          "definition and generation-zero baseline both present")
+    check("RUN-LEVEL INFERENCE is specified",
+          pri.get("unit_of_analysis") == "run" and bool(pri.get("inference")),
+          "unit=%s" % pri.get("unit_of_analysis"))
+    check("smoothing rule is frozen",
+          pri.get("smoothing") is not None, "smoothing = %s" % pri.get("smoothing"))
+    check("run lengths are frozen, primary plus two sensitivities",
+          pri.get("PRIMARY_RUN_LENGTH") and pri.get("SHORT_SENSITIVITY")
+          and pri.get("LONG_SENSITIVITY"),
+          "%s / %s / %s" % (pri.get("PRIMARY_RUN_LENGTH"),
+                            pri.get("SHORT_SENSITIVITY"), pri.get("LONG_SENSITIVITY")))
+    check("estimator-noise protocol is specified",
+          (cfg.get("estimator_noise") or {}).get("R_seeds", 0) >= 10,
+          "R = %s detector seeds" % (cfg.get("estimator_noise") or {}).get("R_seeds"))
+    check("both historical parameter conflicts are recorded, not silently guessed",
+          set(cfg.get("parameter_conflict_resolutions", {})) >= {"alpha_indel", "beta"},
+          ", ".join(sorted(cfg.get("parameter_conflict_resolutions", {}))))
+    for f in ("FROZEN_POPULATION_PROBE_SPEC.md", "OPERATOR_HISTORY_DID_SPEC.md",
+              "ESTIMATOR_NOISE_PROTOCOL.md"):
+        check("spec present: " + f, os.path.exists(os.path.join(HERE, f)), "")
+
+
+def claim_simulator():
+    src = os.path.join(HERE, "derived", "hct01.c")
+    if not os.path.exists(src):
+        check("simulator source present", False, src); return
+    t = open(src, encoding="utf-8", errors="replace").read()
+    check("simulator carries the worked-example property test",
+          "cdcdadcdc" in t and "cdadc" in t,
+          "thesis section 1.5.1 example is asserted in selftest")
+    check("simulator asserts the length-11 compact encoding",
+          "genome length %d (thesis says 11)" in t or "thesis says 11" in t, "")
+    check("simulator asserts beta=0 can never create an operator",
+          "creates no operators" in t, "")
+    check("second-type operator creation inserts BEHIND the source sequence",
+          "inserted in the genome BEHIND the sequence p" in t,
+          "order of application matters for hierarchical encodings")
+
+
 if __name__ == "__main__":
     print("HC-T01 T0 claim verification")
     print("=" * 72)
@@ -232,6 +309,8 @@ if __name__ == "__main__":
     claim_thesis()
     claim_2001()
     claim_source()
+    claim_execution_specs()
+    claim_simulator()
     print("=" * 72)
     failed = [n for n, ok, _ in results if not ok]
     print("%d claims checked, %d failed" % (len(results), len(failed)))
