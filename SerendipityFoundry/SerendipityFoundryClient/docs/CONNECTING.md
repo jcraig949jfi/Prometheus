@@ -4,6 +4,12 @@ Everything a client needs to reach the Engine: **where it listens, how to get a
 token, and which cert to trust.** Read this once and you can connect from any
 machine on the LAN.
 
+> **First time integrating?** Read
+> [`integration/HARMONIA_FIRST_INTEGRATION.md`](../../../../integration/HARMONIA_FIRST_INTEGRATION.md)
+> at the repo root and run `integration/sfe_battery.py`. It verifies the whole
+> surface in one command and hands you a working world. This file is the
+> connection reference it builds on.
+
 ---
 
 ## 1. Where the Engine listens
@@ -26,8 +32,22 @@ it survives logout and the lock screen and restarts at boot. If `GET /v2/version
 answers, the Engine is up:
 
 ```json
-{ "api": "v2", "schema_version": 1, "runtime": "serendipity-foundry-sfe" }
+{ "api": "v2", "schema_version": 3, "runtime": "serendipity-foundry-sfe",
+  "registration_open": true,
+  "engine_source_hash": "sha256:5274ddbe9120ddbb…",
+  "source_commit": "a2898d19601b9cfc2619e105418cb637562accb7" }
 ```
+
+`engine_source_hash` and `source_commit` identify the exact build answering you,
+and are also stamped on **every** response as `x-sfe-engine-source-hash`,
+`x-sfe-api-version` and `x-sfe-schema-version`. Record them alongside any result
+you intend to keep: they are what makes a run attributable to a build.
+`registration_open` tells you whether `POST /v2/clients` will issue you a token
+(see §3) before you try.
+
+**Connect by IP, never by hostname.** The certificate carries an IP SAN
+(`192.168.1.202`) and no DNS name, so `https://SKULLPORT:8811` fails
+verification even though it reaches the right machine.
 
 ### Firewall / reachability
 

@@ -1,5 +1,11 @@
 # Onboarding prompt for Harmonia (M2)
 
+> **Start here instead:** [`integration/HARMONIA_FIRST_INTEGRATION.md`](../../integration/HARMONIA_FIRST_INTEGRATION.md)
+> is the canonical, verified-live integration document — copy-paste commands, a
+> runnable 23-check battery (`integration/sfe_battery.py`), the knobs not to
+> touch, and the honest status of the Proteus/PEW seam. This file remains as
+> the short orientation note it always was.
+
 *Cut-and-paste the block below to Harmonia's agent on M2. It is self-contained.*
 
 ---
@@ -12,17 +18,17 @@ message has everything you need to connect from M2 and start running.
 
 **Where it runs**
 - Engine: **`https://192.168.1.202:8811`** (host M1 / SKULLPORT), REST API under `/v2`, TLS.
-- Liveness (no auth): `GET /v2/version` → `{"api":"v2","schema_version":1,"runtime":"serendipity-foundry-sfe"}`.
+- Liveness (no auth): `GET /v2/version` → `{"api":"v2","schema_version":3,"runtime":"serendipity-foundry-sfe","registration_open":true,"engine_source_hash":"sha256:…","source_commit":"…"}`.
 - Interactive docs: `https://192.168.1.202:8811/v2/docs` · OpenAPI: `/v2/openapi.json`.
 - The firewall on M1 admits port **8811 from the whole `192.168.1.0/24` subnet**, so M2 (`192.168.1.191`) is already allowed. If `GET /v2/version` times out, check you can `ping 192.168.1.202`; otherwise tell Daedalus.
 - Do **not** use port `8799` on that host — that is a different, unrelated live service (the D-13 instrument). Yours is `8811`.
 
 **Get the client + certificate (from the Prometheus repo)**
-Everything is committed to the Prometheus GitHub repo on branch
-**`daedalus/serendipity-foundry-engine`**, under `SerendipityFoundry/SerendipityFoundryClient/`:
+Everything is committed to the Prometheus GitHub repo on **`main`**, under
+`SerendipityFoundry/SerendipityFoundryClient/`:
 ```bash
 git fetch origin
-git checkout daedalus/serendipity-foundry-engine
+git checkout main
 cd SerendipityFoundry/SerendipityFoundryClient
 ```
 You want:

@@ -3,6 +3,19 @@
 Operational reference for keeping the Engine alive, healthy, and honest. All
 paths are on **M1 / SKULLPORT** unless noted.
 
+> **This is a maintainer document.** Several steps below run only on M1.
+> If you are *integrating* against the Engine from another machine, read
+> [`integration/HARMONIA_FIRST_INTEGRATION.md`](../../integration/HARMONIA_FIRST_INTEGRATION.md)
+> instead, and run the standard battery:
+> `python integration/sfe_battery.py --cacert SerendipityFoundry/SerendipityFoundryClient/config/m1.crt`
+>
+> Two operator cautions that have already cost time, detailed in that document's
+> §10: the Engine legitimately runs as **two** `python.exe` processes (a launcher
+> stub and its child — killing the parent kills the server), and reachability is
+> answered by `deploy/sfengine.log`, **not** by `Get-NetTCPConnection`, which
+> shows only sockets alive at that instant and will report "no clients" on a
+> service handling thousands of requests.
+
 ## Facts
 
 | | |
@@ -22,7 +35,8 @@ paths are on **M1 / SKULLPORT** unless noted.
 
 ```bash
 curl --cacert config/m1.crt https://192.168.1.202:8811/v2/version
-# → {"api":"v2","schema_version":1,"runtime":"serendipity-foundry-sfe"}
+# → {"api":"v2","schema_version":3,"runtime":"serendipity-foundry-sfe",
+#    "registration_open":true,"engine_source_hash":"sha256:…","source_commit":"…"}
 ```
 ```powershell
 Get-NetTCPConnection -State Listen -LocalPort 8811 | Select LocalAddress,OwningProcess
