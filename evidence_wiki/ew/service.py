@@ -12,7 +12,7 @@ from fastapi import Depends, FastAPI, HTTPException, Query, Request
 from fastapi.responses import HTMLResponse, JSONResponse
 from pydantic import BaseModel
 
-from . import ONTOLOGY_VERSION, SCHEMA_VERSION
+from . import FOSSIL_CONTRACT_VERSION, ONTOLOGY_VERSION, SCHEMA_VERSION
 from . import db as ewdb
 from . import compiler, coords, store, wiki
 
@@ -87,7 +87,46 @@ def revisions(conn):
 @app.get("/api/v1/health")
 def health():
     return {"service": CFG["service_name"], "status": "ok",
-            "schema_version": SCHEMA_VERSION, "ontology_version": ONTOLOGY_VERSION}
+            "schema_version": SCHEMA_VERSION, "ontology_version": ONTOLOGY_VERSION,
+            "fossil_contract": FOSSIL_CONTRACT_VERSION}
+
+
+@app.get("/api/v1/fossil/contract")
+def fossil_contract():
+    """The exact ingest/query shape a producer or consumer codes against.
+    Harmonia verifies identity against this, not against documentation."""
+    return {
+        "fossil_contract": FOSSIL_CONTRACT_VERSION,
+        "schema_version": SCHEMA_VERSION,
+        "row_key": ["encounter_id", "run_id"],
+        "required": ["encounter_id", "sfe_entry_hash"],
+        "accepted_fields": sorted(FossilEncounterIn.model_fields),
+        "unknown_fields": "rejected with 422 (extra=forbid)",
+        "write": {"single": "POST /api/v1/fossil/encounters",
+                  "batch": "POST /api/v1/fossil/encounters/batch",
+                  "world": "POST /api/v1/fossil/worlds",
+                  "player": "POST /api/v1/fossil/players"},
+        "read": {"by_encounter": "GET /api/v1/fossil/encounters/{encounter_id}",
+                 "by_selector": "GET /api/v1/fossil/encounters"
+                                "?run_id=|world_id=|player_id=|episode_id=",
+                 "world": "GET /api/v1/fossil/worlds/{world_id}",
+                 "player": "GET /api/v1/fossil/players/{player_id}"},
+        "write_outcomes": {
+            "inserted": "200, row committed and readable",
+            "duplicate_identical": "200, row already present, byte-identical",
+            "conflict": "409, a row with this key exists and DIFFERS; nothing written",
+            "missing_provenance": "422, sfe_entry_hash required",
+            "unknown_field": "422, producer/consumer schema mismatch",
+            "partial_batch": "impossible: a batch commits whole or not at all"},
+        "identifier_mapping": {
+            "world_id": "SFE world_id",
+            "players[]": "Proteus organism_id (a player IS its manifest)",
+            "encounter_id": "Proteus encounter_identity() -- the SPECIFICATION",
+            "run_id": "the EXECUTION: SFE 'exp_id:work_id'",
+            "episode_id": "no producer mints one today; nullable, never invented",
+            "seed": "encounter seed (SFE world-level seed_root is on the world row)",
+            "sfe_event_seq": "SFE ledger order; PEW revision is NOT producer order"},
+    }
 
 
 @app.get("/api/v1/version")
@@ -578,38 +617,156 @@ def native_fossil_matrix(request: Request, conn=Depends(get_conn)):
             "rev": revisions(conn)["canonical_revision"]}
 
 
+# ---- first-integration ingest (Harmonia handoff, charter 2026-09-03) ------
+# Identity contract, in producers' own vocabulary (never renamed silently):
+#   world_id    <- SFE world_id
+#   players[]   <- Proteus organism_id list (a player IS its manifest)
+#   encounter_id<- Proteus encounter_identity(): the encounter SPECIFICATION
+#   run_id      <- the EXECUTION: SFE "exp_id:work_id". Distinct per re-run.
+# A row is keyed (encounter_id, run_id) because one spec can be executed more
+# than once; before migration 006 the second execution was silently dropped.
+FOSSIL_FIELDS = ("sfe_world_id", "sfe_event_id", "sfe_entry_hash",
+                 "sfe_event_seq", "world_id", "players", "ecology", "seed",
+                 "budget", "outcome", "failure_class", "resources_used",
+                 "occurred_ts", "episode_id", "producer", "namespace")
+
+
 class FossilEncounterIn(BaseModel):
+    # extra="forbid": an unknown field is a producer/consumer schema mismatch
+    # and must fail loudly. Silently dropping it would be a partial write
+    # reported as success.
+    model_config = {"extra": "forbid"}
     encounter_id: str
     sfe_entry_hash: str
+    run_id: str | None = None
+    episode_id: str | None = None
     sfe_world_id: str | None = None
     sfe_event_id: str | None = None
+    sfe_event_seq: int | None = None
     world_id: str | None = None
+    players: list[str] | None = None
+    ecology: dict | None = None
+    seed: str | None = None
+    budget: dict | None = None
     outcome: str | None = None
     failure_class: str | None = None
+    resources_used: dict | None = None
+    occurred_ts: str | None = None
+    producer: dict | None = None
     namespace: str = "prod"
     idempotency_key: str | None = None
+
+
+def _reject(conn, endpoint, ident, reason, key=None, obj=None, code=422):
+    """Every refusal is recorded before it is raised: a rejected write is
+    visible in ew.write_log (accepted=false), never only in a client's
+    traceback."""
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                "INSERT INTO ew.write_log(idempotency_key, endpoint, machine, "
+                "agent, payload_sha256, accepted, reject_reason, "
+                "result_object_id) VALUES (%s,%s,%s,%s,%s,false,%s,%s) "
+                "ON CONFLICT (idempotency_key) DO NOTHING",
+                (key, endpoint, ident["machine"], ident["agent"], "-",
+                 reason, obj))
+        conn.commit()
+    except Exception:
+        conn.rollback()
+    raise HTTPException(code, reason)
+
+
+def _enc_values(e, rev):
+    return (e.encounter_id, e.run_id, e.sfe_world_id, e.sfe_event_id,
+            e.sfe_entry_hash, e.sfe_event_seq, e.world_id, e.players,
+            json.dumps(e.ecology) if e.ecology else None, e.seed,
+            json.dumps(e.budget) if e.budget else None, e.outcome,
+            e.failure_class,
+            json.dumps(e.resources_used) if e.resources_used else None,
+            e.occurred_ts, e.episode_id,
+            json.dumps(e.producer) if e.producer else None, e.namespace, rev)
+
+
+_ENC_INSERT = (
+    "INSERT INTO ew.fossil_encounters(encounter_id, run_id, sfe_world_id, "
+    "sfe_event_id, sfe_entry_hash, sfe_event_seq, world_id, players, ecology, "
+    "seed, budget, outcome, failure_class, resources_used, occurred_ts, "
+    "episode_id, producer, namespace, revision) VALUES ")
+
+
+def _as_instant(v):
+    """Timestamps are compared as INSTANTS, never as strings: the same moment
+    written '...T00:00:00+00:00' and read back in the server's zone is not a
+    conflict, and treating it as one would reject honest idempotent retries."""
+    from datetime import datetime
+    if v is None or isinstance(v, datetime):
+        return v
+    try:
+        return datetime.fromisoformat(str(v).replace("Z", "+00:00"))
+    except ValueError:
+        return None
+
+
+def _utc_iso(v):
+    from datetime import datetime, timezone
+    if not isinstance(v, datetime):
+        return v
+    if v.tzinfo is None:
+        v = v.replace(tzinfo=timezone.utc)
+    return v.astimezone(timezone.utc).isoformat().replace("+00:00", "+00:00")
+
+
+def _classify(existing, e):
+    """inserted | duplicate_identical | conflict. A duplicate that DIFFERS is
+    never absorbed: it is a producer defect and is reported as 409."""
+    if existing is None:
+        return "inserted", []
+    diff = []
+    for f in FOSSIL_FIELDS:
+        new = getattr(e, f)
+        if new is None:
+            continue  # producer did not assert this field; not a conflict
+        old = existing.get(f)
+        if f == "occurred_ts":
+            o, n = _as_instant(old), _as_instant(new)
+            if o is None or n is None or o != n:
+                diff.append(f)
+            continue
+        if isinstance(old, (dict, list)) or isinstance(new, (dict, list)):
+            if json.dumps(old, sort_keys=True, default=str) != \
+               json.dumps(new, sort_keys=True, default=str):
+                diff.append(f)
+        elif str(old) != str(new):
+            diff.append(f)
+    return ("duplicate_identical" if not diff else "conflict"), diff
 
 
 @app.post("/api/v1/fossil/encounters")
 def post_fossil_encounter(body: FossilEncounterIn, request: Request,
                           conn=Depends(get_conn)):
-    """Incubator ingest path: idempotent, provenance-required (an encounter
-    without an SFE entry hash is refused), append-only."""
+    """Incubator/first-integration ingest: provenance-required (no SFE entry
+    hash -> 422), idempotent on an identical replay, and OVERT on a differing
+    duplicate (409). HTTP 200 means the row is committed and readable."""
     ident = identity(request, write=True)
     if not body.sfe_entry_hash or not body.sfe_entry_hash.strip():
-        raise HTTPException(422, "fossil_encounter_requires_sfe_entry_hash")
-    with conn.cursor() as cur:
-        cur.execute("SELECT nextval('ew.canonical_revision_seq')")
-        rev = cur.fetchone()[0]
-        cur.execute(
-            "INSERT INTO ew.fossil_encounters(encounter_id, sfe_world_id, "
-            "sfe_event_id, sfe_entry_hash, world_id, outcome, failure_class, "
-            "namespace, revision) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s) "
-            "ON CONFLICT (encounter_id) DO NOTHING RETURNING encounter_id",
-            (body.encounter_id, body.sfe_world_id, body.sfe_event_id,
-             body.sfe_entry_hash, body.world_id, body.outcome,
-             body.failure_class, body.namespace, rev))
-        inserted = cur.fetchone() is not None
+        _reject(conn, "fossil.encounter", ident,
+                "fossil_encounter_requires_sfe_entry_hash", body.idempotency_key,
+                body.encounter_id)
+    with ewdb.dict_cur(conn) as cur:
+        # run_key is the stored generated column, so this hits the composite
+        # primary key on both columns rather than filtering after the scan.
+        cur.execute("SELECT * FROM ew.fossil_encounters WHERE encounter_id=%s "
+                    "AND run_key=%s", (body.encounter_id, body.run_id or ""))
+        status, diff = _classify(cur.fetchone(), body)
+        if status == "conflict":
+            _reject(conn, "fossil.encounter", ident,
+                    "conflict_existing_row_differs:" + ",".join(diff),
+                    body.idempotency_key, body.encounter_id, code=409)
+        if status == "inserted":
+            cur.execute("SELECT nextval('ew.canonical_revision_seq')")
+            rev = cur.fetchone()["nextval"]
+            cur.execute(_ENC_INSERT + "(" + ",".join(["%s"] * 19) + ")",
+                        _enc_values(body, rev))
         cur.execute(
             "INSERT INTO ew.write_log(idempotency_key, endpoint, machine, "
             "agent, payload_sha256, accepted, result_object_id) "
@@ -618,45 +775,255 @@ def post_fossil_encounter(body: FossilEncounterIn, request: Request,
             (body.idempotency_key, ident["machine"], ident["agent"],
              body.sfe_entry_hash[:64], body.encounter_id))
     conn.commit()
-    return {"encounter_id": body.encounter_id, "inserted": inserted}
+    return {"encounter_id": body.encounter_id, "run_id": body.run_id,
+            "inserted": status == "inserted", "status": status,
+            "read_back": f"/api/v1/fossil/encounters/{body.encounter_id}"}
 
 
 class FossilBatchIn(BaseModel):
+    model_config = {"extra": "forbid"}
     encounters: list[FossilEncounterIn]
+    idempotency_key: str | None = None
 
 
 @app.post("/api/v1/fossil/encounters/batch")
 def post_fossil_batch(body: FossilBatchIn, request: Request,
                       conn=Depends(get_conn)):
-    """Bulk Incubator ingest: one transaction, one revision per batch,
-    per-row idempotency preserved (ON CONFLICT), provenance still required
-    per row (rows without sfe_entry_hash are rejected as a batch)."""
+    """Bulk ingest: ONE transaction, one revision per batch. All-or-nothing --
+    a batch containing any conflicting or unprovenanced row is refused whole,
+    so a 200 never means 'some of your rows landed'."""
     ident = identity(request, write=True)
-    if any(not e.sfe_entry_hash or not e.sfe_entry_hash.strip()
-           for e in body.encounters):
-        raise HTTPException(422, "fossil_encounter_requires_sfe_entry_hash")
-    inserted = 0
-    with conn.cursor() as cur:
+    encs = body.encounters
+    if any(not e.sfe_entry_hash or not e.sfe_entry_hash.strip() for e in encs):
+        _reject(conn, "fossil.batch", ident,
+                "fossil_encounter_requires_sfe_entry_hash",
+                body.idempotency_key, f"batch:{len(encs)}")
+    keys = [(e.encounter_id, e.run_id or "") for e in encs]
+    if len(set(keys)) != len(keys):
+        _reject(conn, "fossil.batch", ident,
+                "batch_contains_duplicate_keys", body.idempotency_key,
+                f"batch:{len(encs)}", code=409)
+    with ewdb.dict_cur(conn) as cur:
+        cur.execute("SELECT * FROM ew.fossil_encounters WHERE "
+                    "(encounter_id, run_key) IN "
+                    "(SELECT * FROM unnest(%s::text[], %s::text[]))",
+                    ([k[0] for k in keys], [k[1] for k in keys]))
+        have = {(r["encounter_id"], r["run_id"] or ""): r for r in cur.fetchall()}
+        fresh, dup, conflicts = [], 0, []
+        for e in encs:
+            status, diff = _classify(have.get((e.encounter_id, e.run_id or "")), e)
+            if status == "conflict":
+                conflicts.append(f"{e.encounter_id}:{','.join(diff)}")
+            elif status == "inserted":
+                fresh.append(e)
+            else:
+                dup += 1
+        if conflicts:
+            _reject(conn, "fossil.batch", ident,
+                    "conflict_existing_rows_differ:" + ";".join(conflicts[:10]),
+                    body.idempotency_key, f"batch:{len(encs)}", code=409)
         cur.execute("SELECT nextval('ew.canonical_revision_seq')")
-        rev = cur.fetchone()[0]
-        args = [(e.encounter_id, e.sfe_world_id, e.sfe_event_id,
-                 e.sfe_entry_hash, e.world_id, e.outcome, e.failure_class,
-                 e.namespace, rev) for e in body.encounters]
-        from psycopg2.extras import execute_values
-        execute_values(cur,
-            "INSERT INTO ew.fossil_encounters(encounter_id, sfe_world_id, "
-            "sfe_event_id, sfe_entry_hash, world_id, outcome, failure_class, "
-            "namespace, revision) VALUES %s ON CONFLICT (encounter_id) DO NOTHING",
-            args)
-        inserted = cur.rowcount
+        rev = cur.fetchone()["nextval"]
+        if fresh:
+            from psycopg2.extras import execute_values
+            execute_values(cur, _ENC_INSERT + "%s",
+                           [_enc_values(e, rev) for e in fresh])
+        cur.execute(
+            "INSERT INTO ew.write_log(idempotency_key, endpoint, machine, "
+            "agent, payload_sha256, accepted, result_object_id) "
+            "VALUES (%s,'fossil.batch',%s,%s,%s,true,%s) "
+            "ON CONFLICT (idempotency_key) DO NOTHING",
+            (body.idempotency_key, ident["machine"], ident["agent"],
+             str(len(encs)), f"batch:{len(encs)}"))
+    conn.commit()
+    return {"received": len(encs), "inserted": len(fresh),
+            "duplicate_identical": dup, "revision": rev}
+
+
+# ---- read-back / query surface (E4-E6, E12) --------------------------------
+def _enc_rows(conn, where, args, limit):
+    with ewdb.dict_cur(conn) as cur:
+        cur.execute("SELECT encounter_id, run_id, episode_id, world_id, "
+                    "players, seed, outcome, failure_class, sfe_world_id, "
+                    "sfe_event_id, sfe_entry_hash, sfe_event_seq, ecology, "
+                    "budget, resources_used, occurred_ts, producer, namespace, "
+                    "revision, created_at FROM ew.fossil_encounters WHERE "
+                    + where + " ORDER BY sfe_event_seq NULLS LAST, revision "
+                    "LIMIT %s", args + [limit])
+        # Wire format is UTC ISO-8601 regardless of the server's timezone, so
+        # a consumer on another machine reads back exactly what was sent.
+        rows = []
+        for r in cur.fetchall():
+            d = dict(r)
+            for tf in ("occurred_ts", "created_at"):
+                d[tf] = _utc_iso(d.get(tf))
+            rows.append(d)
+        return rows
+
+
+@app.get("/api/v1/fossil/encounters/{encounter_id}")
+def get_fossil_encounter(encounter_id: str, request: Request,
+                         run_id: str | None = None, conn=Depends(get_conn)):
+    """Independent read-back of a written encounter. Returns EVERY run of the
+    given encounter spec (a spec may be executed more than once)."""
+    t0 = time.time()
+    ident = identity(request)
+    if run_id is None:
+        rows = _enc_rows(conn, "encounter_id=%s", [encounter_id], 100)
+    else:
+        rows = _enc_rows(conn, "encounter_id=%s AND coalesce(run_id,'')=%s",
+                         [encounter_id, run_id], 100)
+    log_read(conn, "fossil.encounter.get", ident,
+             {"encounter_id": encounter_id, "run_id": run_id}, len(rows), t0)
+    if not rows:
+        raise HTTPException(404, "encounter_not_found")
+    return {"encounter_id": encounter_id, "n_runs": len(rows), "runs": rows}
+
+
+@app.get("/api/v1/fossil/encounters")
+def query_fossil_encounters(request: Request, run_id: str | None = None,
+                            world_id: str | None = None,
+                            player_id: str | None = None,
+                            episode_id: str | None = None,
+                            namespace: str | None = None,
+                            limit: int = 200, conn=Depends(get_conn)):
+    """Query the evidence of one run/world/player. At least one selector is
+    required -- an unfiltered dump is not a query."""
+    t0 = time.time()
+    ident = identity(request)
+    where, args = [], []
+    for col, val in (("run_id", run_id), ("world_id", world_id),
+                     ("episode_id", episode_id), ("namespace", namespace)):
+        if val is not None:
+            where.append(f"{col}=%s")
+            args.append(val)
+    if player_id is not None:
+        where.append("players @> ARRAY[%s]::text[]")
+        args.append(player_id)
+    if not where:
+        raise HTTPException(400, "at_least_one_selector_required")
+    rows = _enc_rows(conn, " AND ".join(where), args, min(limit, 1000))
+    log_read(conn, "fossil.encounters.query", ident,
+             {"run_id": run_id, "world_id": world_id, "player_id": player_id},
+             len(rows), t0)
+    return {"n": len(rows), "encounters": rows}
+
+
+# ---- world / player registration (version anchors for the join) -----------
+class FossilWorldIn(BaseModel):
+    model_config = {"extra": "forbid"}
+    world_id: str
+    manifest_hash: str | None = None
+    world_binding_id: str | None = None
+    sfe_world_id: str | None = None
+    sfe_head_hash: str | None = None
+    seed_root: str | None = None
+    parent_world: str | None = None
+    interface_ver: str | None = None
+    mechanics_ver: str | None = None
+    family: str | None = None
+    producer: dict | None = None
+    namespace: str = "prod"
+
+
+class FossilPlayerIn(BaseModel):
+    model_config = {"extra": "forbid"}
+    player_id: str                      # Proteus organism_id
+    genome_hash: str | None = None      # Proteus manifest hash
+    runtime_hash: str | None = None
+    lineage_id: str | None = None
+    generation: int | None = None
+    arch_hash: str | None = None
+    parent_player: str | None = None
+    sfe_world_id: str | None = None
+    sfe_entry_hash: str | None = None
+    mutation_ref: str | None = None
+    resources: dict | None = None
+    phenotype: dict | None = None
+    producer: dict | None = None
+    namespace: str = "prod"
+
+
+def _upsert_anchor(conn, ident, table, key, body, endpoint):
+    """Registration is append-only and identical-idempotent; a re-registration
+    that DIFFERS is a 409, never an overwrite (history is immutable)."""
+    raw = body.model_dump()          # producer's values, for comparison
+    d = dict(raw)                    # serialized values, for insertion
+    for j in ("producer", "resources", "phenotype"):
+        if d.get(j) is not None:
+            d[j] = json.dumps(d[j])
+    with ewdb.dict_cur(conn) as cur:
+        cur.execute(f"SELECT * FROM ew.{table} WHERE {key}=%s", (d[key],))
+        row = cur.fetchone()
+        if row is not None:
+            # Compare against the producer's values, JSON-normalized: jsonb
+            # comes back as a dict, and comparing it to its own serialization
+            # would make every honest re-registration look like a conflict.
+            diff = []
+            for f, v in raw.items():
+                if v is None or f == key:
+                    continue
+                old = row.get(f)
+                if isinstance(v, (dict, list)) or isinstance(old, (dict, list)):
+                    if json.dumps(old, sort_keys=True, default=str) != \
+                       json.dumps(v, sort_keys=True, default=str):
+                        diff.append(f)
+                elif str(old) != str(v):
+                    diff.append(f)
+            if diff:
+                _reject(conn, endpoint, ident,
+                        "conflict_existing_row_differs:" + ",".join(diff),
+                        None, d[key], code=409)
+            return {key: d[key], "status": "duplicate_identical"}
+        cur.execute("SELECT nextval('ew.canonical_revision_seq')")
+        d["revision"] = cur.fetchone()["nextval"]
+        cols = [c for c in d if d[c] is not None]
+        cur.execute(f"INSERT INTO ew.{table}({','.join(cols)}) VALUES "
+                    f"({','.join(['%s'] * len(cols))})", [d[c] for c in cols])
         cur.execute(
             "INSERT INTO ew.write_log(endpoint, machine, agent, "
             "payload_sha256, accepted, result_object_id) "
-            "VALUES ('fossil.batch',%s,%s,%s,true,%s)",
-            (ident["machine"], ident["agent"],
-             str(len(body.encounters)), f"batch:{len(body.encounters)}"))
+            "VALUES (%s,%s,%s,'-',true,%s)",
+            (endpoint, ident["machine"], ident["agent"], d[key]))
     conn.commit()
-    return {"received": len(body.encounters), "inserted": inserted}
+    return {key: d[key], "status": "inserted"}
+
+
+@app.post("/api/v1/fossil/worlds")
+def post_fossil_world(body: FossilWorldIn, request: Request,
+                      conn=Depends(get_conn)):
+    return _upsert_anchor(conn, identity(request, write=True), "fossil_worlds",
+                          "world_id", body, "fossil.world")
+
+
+@app.post("/api/v1/fossil/players")
+def post_fossil_player(body: FossilPlayerIn, request: Request,
+                       conn=Depends(get_conn)):
+    return _upsert_anchor(conn, identity(request, write=True), "fossil_players",
+                          "player_id", body, "fossil.player")
+
+
+@app.get("/api/v1/fossil/worlds/{world_id}")
+def get_fossil_world(world_id: str, request: Request, conn=Depends(get_conn)):
+    identity(request)
+    with ewdb.dict_cur(conn) as cur:
+        cur.execute("SELECT * FROM ew.fossil_worlds WHERE world_id=%s", (world_id,))
+        row = cur.fetchone()
+    if not row:
+        raise HTTPException(404, "world_not_found")
+    return dict(row)
+
+
+@app.get("/api/v1/fossil/players/{player_id}")
+def get_fossil_player(player_id: str, request: Request, conn=Depends(get_conn)):
+    identity(request)
+    with ewdb.dict_cur(conn) as cur:
+        cur.execute("SELECT * FROM ew.fossil_players WHERE player_id=%s",
+                    (player_id,))
+        row = cur.fetchone()
+    if not row:
+        raise HTTPException(404, "player_not_found")
+    return dict(row)
 
 
 @app.get("/api/v1/native/fossil/anomalies")

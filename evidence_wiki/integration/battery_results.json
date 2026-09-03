@@ -1,0 +1,103 @@
+{
+ "ran_at": "2026-09-03T16:09:34",
+ "n_gates": 15,
+ "n_scored": 15,
+ "n_pass": 15,
+ "n_skipped": 0,
+ "skipped": [],
+ "all_pass": true,
+ "gates": [
+  {
+   "gate": "E0_service_reachable",
+   "pass": true,
+   "skipped": false,
+   "detail": "200 {'service': 'mnemosyne-evidence-wiki', 'status': 'ok', 'schema_version': 3, 'ontology_version': 2, 'fossil_contract': 'pew.fossil.v1'} in 593ms"
+  },
+  {
+   "gate": "E1_version_schema_identity",
+   "pass": true,
+   "skipped": false,
+   "detail": "schema_version=3 ontology_version=2 fossil_contract=pew.fossil.v1 canonical_revision=16515"
+  },
+  {
+   "gate": "E2a_anchor_writes_accepted",
+   "pass": true,
+   "skipped": false,
+   "detail": "world=200:duplicate_identical player=200:duplicate_identical"
+  },
+  {
+   "gate": "E2_known_good_write_accepted",
+   "pass": true,
+   "skipped": false,
+   "detail": "200 {\"encounter_id\":\"TESTFIX-HARMONIA-ENC-0001\",\"run_id\":\"TESTFIX-RUN-0001\",\"inserted\":false,\"status\":\"duplicate_identical\",\"read_back\":\"/api/v1/fossil/encounters/T"
+  },
+  {
+   "gate": "E3_stable_evidence_identity",
+   "pass": true,
+   "skipped": false,
+   "detail": "identity=(TESTFIX-HARMONIA-ENC-0001,TESTFIX-RUN-0001) read_back=/api/v1/fossil/encounters/TESTFIX-HARMONIA-ENC-0001"
+  },
+  {
+   "gate": "E4_independent_read_back",
+   "pass": true,
+   "skipped": false,
+   "detail": "http_get=True direct_sql=True (sql skipped=False)"
+  },
+  {
+   "gate": "E5_persisted_equals_submitted",
+   "pass": true,
+   "skipped": false,
+   "detail": "all fields byte-equal"
+  },
+  {
+   "gate": "E6_query_by_run_world_player",
+   "pass": true,
+   "skipped": false,
+   "detail": "run=1 world=1 player=1 unfiltered=400"
+  },
+  {
+   "gate": "E7_duplicate_and_conflict_semantics",
+   "pass": true,
+   "skipped": false,
+   "detail": "identical_replay=200:duplicate_identical differing=409:{\"detail\":\"conflict_existing_row_differs:outcome\"}"
+  },
+  {
+   "gate": "E8_malformed_fails_overtly",
+   "pass": true,
+   "skipped": false,
+   "detail": "missing_provenance=422 unknown_field=422 blank_provenance=422"
+  },
+  {
+   "gate": "E9_unavailable_backend_fails_overtly",
+   "pass": true,
+   "skipped": false,
+   "detail": "unroutable DB host -> RAISED OperationalError (library layer; service-with-Postgres-down not exercised: shared DB)"
+  },
+  {
+   "gate": "E10_no_silent_success",
+   "pass": true,
+   "skipped": false,
+   "detail": "rejected writes that left rows: none; row count across conflict attempt 1->1; refusals recorded in write_log: 5 kinds"
+  },
+  {
+   "gate": "E13_batch_idempotent_and_atomic",
+   "pass": true,
+   "skipped": false,
+   "detail": "first=200:5 replay=200:dup=5 poisoned_batch=409 rows_after=5 (expect 5: the 3 clean rows in the poisoned batch must NOT land)"
+  },
+  {
+   "gate": "E11_real_run_recorded",
+   "pass": true,
+   "skipped": false,
+   "detail": "200 inserted encounter=SFEREAL-exp_d282adf71fb12bb0e142cbe9 run=exp_d282adf71fb12bb0e142cbe9:wrk_d28d031c9f09469fe405e225"
+  },
+  {
+   "gate": "E12_real_run_reconstructable",
+   "pass": true,
+   "skipped": false,
+   "detail": "world=wld_e49532b4823bfbdb1de7577b player=sfe-work:wrk_d28d031c9f09469fe405e225 run=exp_d282adf71fb12bb0e142cbe9:wrk_d28d031c9f09469fe405e225 outcome=SURVIVED anchor=sha256:b8aff42c2f52b9ed0..."
+  }
+ ],
+ "real_id": "SFEREAL-exp_d282adf71fb12bb0e142cbe9",
+ "real_run": "exp_d282adf71fb12bb0e142cbe9:wrk_d28d031c9f09469fe405e225"
+}

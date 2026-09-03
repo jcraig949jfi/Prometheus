@@ -1,0 +1,46 @@
+{
+  "fixture_id": "pew.integration.fixture.harmonia.v1",
+  "frozen": "2026-09-03",
+  "namespace": "test",
+  "note": "Unmistakably synthetic. Namespace 'test' is excluded from every scientific query in ew/fossil.py (all default namespace='prod'). Append-only substrate: these rows are never deleted, they are quarantined by namespace.",
+  "world": {
+    "world_id": "TESTFIX-WORLD-0001",
+    "manifest_hash": "sha256:TESTFIXTURE-WORLD-MANIFEST-0001",
+    "world_binding_id": "TESTFIX-BINDING-0001",
+    "seed_root": "0",
+    "family": "TESTFIX-FAMILY",
+    "producer": {"component": "pew.integration.fixture", "version": "1"},
+    "namespace": "test"
+  },
+  "player": {
+    "player_id": "TESTFIX-PLAYER-0001",
+    "genome_hash": "sha256:TESTFIXTURE-MANIFEST-0001",
+    "runtime_hash": "sha256:TESTFIXTURE-RUNTIME-0001",
+    "lineage_id": "TESTFIX-LINEAGE-0001",
+    "generation": 0,
+    "producer": {"component": "pew.integration.fixture", "version": "1"},
+    "namespace": "test"
+  },
+  "encounter": {
+    "encounter_id": "TESTFIX-HARMONIA-ENC-0001",
+    "run_id": "TESTFIX-RUN-0001",
+    "sfe_entry_hash": "sha256:TESTFIXTURE-ENTRY-HASH-0001",
+    "sfe_world_id": "TESTFIX-SFE-WORLD-0001",
+    "sfe_event_id": "TESTFIX-EVENT-0001",
+    "sfe_event_seq": 1,
+    "world_id": "TESTFIX-WORLD-0001",
+    "players": ["TESTFIX-PLAYER-0001"],
+    "seed": "0",
+    "outcome": "committed",
+    "failure_class": null,
+    "resources_used": {"ticks": 1},
+    "occurred_ts": "2026-09-03T00:00:00+00:00",
+    "producer": {"component": "pew.integration.fixture", "version": "1"},
+    "namespace": "test"
+  },
+  "expected_response_first_write": {"status": "inserted", "inserted": true},
+  "expected_response_replay": {"status": "duplicate_identical", "inserted": false},
+  "expected_response_differing": {"http": 409, "detail_prefix": "conflict_existing_row_differs:"},
+  "expected_persisted_fields": "every field of .encounter above, byte-equal on read-back, plus server-assigned revision and created_at",
+  "retention": "permanent, namespace='test'; never migrated to 'prod'; never counted in fossil analyses"
+}

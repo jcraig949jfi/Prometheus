@@ -247,3 +247,36 @@ verbatim, sha 0af9193d60ef0c0beb061bdfd55cd05b5787ec82b84c2863a7efd3e3378ef893.
   (remote tip 869755c2b; no peer evidence). Explicitly reported as such.
 - FROZEN.md placed at evidence_wiki/ root. Seat state:
   PEW_FROZEN_WAITING_FOR_INCUBATOR.
+
+## ADDENDUM 7 — 2026-09-03 — FIRST INTEGRATION READINESS (Harmonia handoff)
+Charter committed verbatim, sha 54fe6133b891ea3f19fc0ad9082a3480c33ba006e74b
+863d5837b82ef4342197. Freeze reopened under criterion 1 (real consumer
+requirement); scope held to integration defects.
+- DEFECTS FOUND AND FIXED (all pre-existing, all silent-failure class):
+  (1) encounter_id was PK but Proteus mints it from the encounter SPEC, so a
+      second execution of the same spec was dropped behind HTTP 200. Migration
+      006 keys (encounter_id, run_id); differing duplicate now 409. 10,452
+      rows preserved.
+  (2) players/seed/budget/ecology/resources_used/occurred_ts were COLUMNS but
+      not in the ingest model -> producer sends them, gets 200, data vanishes.
+      Now accepted+persisted; unknown fields 422 (extra=forbid).
+  (3) No read-back or query path existed for fossil rows at all. Added GET
+      by encounter, and by run_id/world_id/player_id/episode_id, plus
+      world/player anchor registration + reads.
+  (4) MINE, caught by the battery: timestamps compared as STRINGS made an
+      identical replay look like a conflict (409) across timezones; jsonb
+      read back as dict vs its serialization did the same on anchors. Both
+      now compare as instants / JSON-normalized. Wire format is UTC ISO-8601.
+- BATTERY: integration/pew_battery.py, E0-E12 + anchor gate = 14/14 PASS.
+  Write proved by INDEPENDENT read-back (different endpoint + direct SQL).
+  E11/E12 use a REAL SFE run (exp_85723eed:wrk_cadfa047, world
+  wld_4ec098bcd0b3bdf280e543d4) written in namespace 'test'.
+- HARNESS FINDING: test_distributed_v3.py seeded its RNG with hash(machine),
+  which PYTHONHASHSEED randomizes per process -> every rerun submitted
+  DIFFERING content under the same encounter ids, and the old ON CONFLICT DO
+  NOTHING hid it. Now sha256-seeded + per-run run_tag; G21 scored by the
+  invariant (stored==distinct for this run).
+- M2 PATH: verified over LAN 192.168.1.202:8377 — M2 token accepted, M2 token
+  claiming M1 = 401, anonymous = 401. Traffic still originated on M1.
+- Schema 3, fossil contract pew.fossil.v1. Runbook:
+  docs/HARMONIA_FIRST_INTEGRATION_PEW.md.

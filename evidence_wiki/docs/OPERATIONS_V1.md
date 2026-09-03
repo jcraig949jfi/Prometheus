@@ -71,3 +71,15 @@ History: the first pooled deployment failed here. Lazy pool init raced under
 errors (overt 500s, no partial rows, provenance_failures 0). Fixed with a
 double-checked lock plus a double-close guard. This is the seam that broke;
 it is why the trigger exists.
+
+## First integration (2026-09-03)
+Harmonia's canonical runbook is `docs/HARMONIA_FIRST_INTEGRATION_PEW.md`; the
+normative shape is `docs/FIRST_INTEGRATION_EVIDENCE_CONTRACT.md` and its
+machine-readable form is `GET /api/v1/fossil/contract`. Repeatable health
+check for any consumer, from `evidence_wiki/`:
+
+    python integration/pew_battery.py [--host <ip>] [--machine M2] [--no-sql]
+
+14 gates (E0-E12 plus an anchor-write gate); `all_pass: true` and exit 0 is
+the only PASS. Results in `integration/battery_results.json`. Run it after any
+service change, and always after a restart on a new machine.
