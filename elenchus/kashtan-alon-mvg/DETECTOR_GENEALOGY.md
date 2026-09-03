@@ -106,8 +106,22 @@ under an intervention that does not touch the variation operator.
 DATE-STAMP, per standing gate 4: as of 2026-09-03, on the evidence retrieved in this pass,
 the local-longitudinal accessibility cell is NOT empty and has not been empty since 2008.
 Any Collider document asserting otherwise should be corrected. What remains genuinely
-unoccupied, in this lineage and in Toussaint's and in Kouvaris's alike, is D5: a
-perturbation OF the accessibility structure, with acquisition measured after.
+unoccupied, IN THIS LINEAGE AND IN TOUSSAINT'S AND IN KOUVARIS'S, is D5: a perturbation OF
+the accessibility structure, with acquisition measured after.
+
+SCOPE WARNING ON THAT DATE-STAMP, added the same day. The three-lineage scoping above is
+deliberate and must not be widened. An independent pass by another seat (commit 62f7a1a1e)
+reports that the frontier for this question sits in the AVIDA literature rather than in the
+GRN lineage, naming Misevic, Ofria & Lenski 2006 and Kumawat, Lalejini, Acosta & Zaman 2024
+(PNAS); the latter is reported to carry an acquisition outcome that avoids the bounded-gain
+trap plus a reciprocal transplant control, which is a D5-shaped design. That pass also finds
+the corpus boundary that hid it: a sweep of 19,986 bibliography entries returns ZERO
+occurrences of "mutational neighbourhood".
+
+This deep-dive did not survey Avida and makes no claim about it. The honest statement is
+that D5 is unoccupied in the three lineages examined here, and that a stronger perturbation
+design may already exist one corpus over. Anyone quoting the date-stamp should quote the
+scope with it.
 
 ================================================================================
 6. SEARCH STATUS -- DESCENDANTS AND CORRECTIONS

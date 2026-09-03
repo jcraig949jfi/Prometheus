@@ -7,7 +7,10 @@ recall. MVG column sourced from this deep-dive's retrieved primaries.
 
 Note on status: HC-T01 has been EXECUTED as of 2026-09-03, and its kill condition K7 fired
 ("the detector predicts acquisition no better than current fitness does"). This matrix is
-written against that outcome, not against HC-T01 as a proposal.
+written against that outcome, not against HC-T01 as a proposal. SEE THE CORRECTION at the
+end of this file: a later adjudication finds K7 was scored against a bounded outcome
+variable that made it structurally unpassable, so its firing is weak evidence about the
+detector.
 
 ================================================================================
 THE MATRIX
@@ -134,17 +137,31 @@ WHAT KASHTAN/ALON ESTABLISHED THAT HC-T01 CANNOT
 BEARING ON HC-T01, GIVEN THAT K7 FIRED
 ================================================================================
 
-HC-T01's executed result is that its detector predicts acquisition no better than current
-fitness does. The MVG corpus is directly relevant to why, and offers one repair.
+*** CORRECTED 2026-09-03, after commits 62f7a1a1e (Lexis HC-T01 adjudication) and
+9c1badfba (RA-1 preregistration) landed. This section originally diagnosed K7's firing
+as a fact about the DETECTOR. It is better explained as a fact about the OUTCOME
+VARIABLE. HC-T01's acquisition measure is gain toward a bounded optimum, so gain is
+capped by (ceiling minus current fitness); current fitness is the sufficient statistic
+for that cap; any predictor correlated with fitness therefore loses by construction, and
+HC-T01 reported marginal Spearman only, never partial. Verbatim from the adjudication:
+"a kill condition that cannot be passed is not a test." The RA-1 audit measures the
+saturation: severe, early, and asymmetric across exactly the arms compared, including a
+horizon at which the treated arm has ONE distinct gain value across 30 runs, where a
+rank statistic is undefined.
+THE INFERENCE FROM K7 TO DETECTOR INADEQUACY IS WITHDRAWN. What follows stands on the
+Text S1 evidence alone, as a recommendation rather than a diagnosis. Full correction in
+EXTERNAL_REVIEW_PACKET.txt section 14. ***
 
 The MVG detector is not a scalar summary of exploration breadth. It is a CONTENT-ADDRESSED
 question: is THIS SPECIFIC previously-useful phenotype one mutation away? The 2008 result
 is not "MVG organisms explore more" -- Text S1 explicitly reports that organisms under
 unstructured variation explore more randomly and score LOWER. The result is that the
-neighbourhood is stocked with particular, identifiable, useful phenotypes.
+neighbourhood is stocked with particular, identifiable, useful phenotypes. That is a
+verified finding about what carries acquisition in THIS lineage, and it is unaffected by
+anything in the correction above.
 
-A breadth-like detector has no reason to beat fitness at predicting acquisition, because
-breadth is not what carries the acquisition. If HC-T01 wants a detector that survives K7,
-the MVG lineage says to measure WHICH phenotypes are reachable relative to a named target
-set, not HOW MANY. That is a concrete, inheritable repair and it costs nothing but a
-redefinition of the statistic over the same sampled offspring.
+On that ground alone, and not as an explanation of K7: measuring WHICH phenotypes are
+reachable relative to a named target set, rather than HOW MANY, is a concrete inheritable
+change that costs only a redefinition of the statistic over the same sampled offspring.
+Whether it would have changed HC-T01's result is now untestable from HC-T01's data,
+because the outcome variable it was scored against was saturated.

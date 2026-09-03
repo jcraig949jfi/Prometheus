@@ -314,14 +314,17 @@ is never varied, discovered or tested.
     Any Collider document asserting that cell is empty should be corrected, date-
     stamped 2026-09-03. It does not preempt the phenomenon Prometheus is chasing,
     because the historical effect is bounded to the authored family.
-    It also offers HC-T01 a concrete repair. HC-T01 executed and its kill condition
-    K7 fired -- its detector predicts acquisition no better than current fitness
-    does. The MVG detector is not a breadth statistic; it is content-addressed --
-    is THIS specific useful phenotype one mutation away. Text S1 explicitly reports
-    that organisms under unstructured variation vary MORE broadly and score LOWER.
-    A breadth-like detector has no reason to beat fitness. Measuring WHICH
-    phenotypes are reachable relative to a named target set, rather than HOW MANY,
-    is inheritable and costs only a redefinition over the same samples.
+    It also offers HC-T01 a concrete repair. *** SEE THE CORRECTION IN SECTION 14.
+    The premise of what follows was overtaken by a commit that landed after this
+    packet was frozen, and the reasoning below is retained only in weakened form. ***
+    HC-T01 executed and its kill condition K7 fired -- its detector predicts
+    acquisition no better than current fitness does. The MVG detector is not a
+    breadth statistic; it is content-addressed -- is THIS specific useful phenotype
+    one mutation away. Text S1 explicitly reports that organisms under unstructured
+    variation vary MORE broadly and score LOWER. A breadth-like detector has no
+    reason to beat fitness. Measuring WHICH phenotypes are reachable relative to a
+    named target set, rather than HOW MANY, is inheritable and costs only a
+    redefinition over the same samples.
 
 12. Is there an untested composition between Toussaint, MVG and Kouvaris?
     YES, and it is better than untested -- it is ASSERTED IN PRINT AND NEVER RUN.
@@ -476,6 +479,65 @@ every finding here rests on has never been independently reproduced by anyone, i
 eighteen years. Runnable third-party implementations exist. Is Prometheus willing
 to be the first independent test of it, or should this specimen be held at
 SINGLE-LABORATORY and kept out of the calibration set until someone is?
+
+--------------------------------------------------------------------------------
+14. CORRECTION FILED AGAINST THIS PACKET AFTER FREEZE
+--------------------------------------------------------------------------------
+Filed 2026-09-03 by the same seat, against its own section 9 answer 11. Left in
+place rather than edited away, per the same discipline that produced the three
+corrections in section 3.
+
+WHAT THIS PACKET SAID: HC-T01's kill condition K7 fired, its detector predicts
+acquisition no better than current fitness does, and the reason is that a
+BREADTH-like detector has no reason to beat fitness -- so the repair is to make
+the detector content-addressed.
+
+WHAT LANDED AFTERWARDS: commit 62f7a1a1e (Lexis HC-T01 adjudication) and commit
+9c1badfba (RA-1 preregistration), both after this packet was frozen. Lexis's
+finding, verbatim from the commit record:
+
+  "HC-T01's acquisition outcome is gain toward a bounded optimum, so gain is
+   capped by (ceiling - current fitness) and current fitness is the sufficient
+   statistic for that cap. Any predictor correlated with fitness inherits the
+   correlation, and HC-T01 reported MARGINAL Spearman only, never partial. This
+   rescues the hypothesis from its strongest-sounding disconfirmation and convicts
+   the design, because a kill condition that cannot be passed is not a test."
+
+The RA-1 data audit puts numbers on it: ceiling saturation is "severe, early and
+ASYMMETRIC across exactly the arms HC-T01 compared", with 63 percent of one arm at
+the optimum by generation 80 and zero percent of the ablated arm there through 175;
+and at one horizon the treated arm has ONE distinct gain value across 30 runs,
+where "a rank statistic there is undefined".
+
+WHY THIS IS A DEFECT IN MY PACKET, NOT MERELY NEW INFORMATION: I offered a
+MECHANISM explanation for K7 without first eliminating a MEASUREMENT explanation.
+If gain is capped by (ceiling minus current fitness), then current fitness is the
+sufficient statistic for the cap and ANY predictor correlated with fitness loses by
+construction -- no property of the detector is required to explain the outcome.
+That is the simplest explanation and it was available to me from the structure of
+the outcome variable alone. Testing the simplest explanation before asserting a
+mechanism is the doctrine this deep-dive invokes against its own specimen four
+times, including at section 7. I did not apply it to my own repair proposal.
+
+WHAT SURVIVES: the recommendation itself, at reduced strength and on different
+grounds. Text S1's finding that unstructured variation produces BROADER and LESS
+USEFUL variation than static environments is verified and unaffected. It remains a
+good reason to prefer a content-addressed accessibility statistic over a breadth
+statistic. It is no longer evidence about why K7 fired, because K7's firing is now
+better explained by a bounded outcome variable than by anything about detectors.
+
+WHAT IS WITHDRAWN: the inference "K7 fired, therefore the detector is inadequate".
+That inference is unsafe and should not be quoted from this packet.
+
+ONE MORE CROSS-REFERENCE, not a correction. Lexis independently reports that the
+frontier for this question is in Avida rather than in the GRN lineage, naming
+Misevic, Ofria & Lenski 2006 and Kumawat, Lalejini, Acosta & Zaman 2024 (PNAS),
+with the latter supplying an acquisition outcome that avoids the ceiling trap
+(time-to-re-adapt rather than gain-to-ceiling) plus a reciprocal transplant
+control. Section 5 of this packet states that D5 is unoccupied "in this lineage
+and in Toussaint's and in Kouvaris's alike". That scoping remains correct as
+written, and readers should not extend it to the Avida literature, which this
+deep-dive did not survey and which may contain a stronger perturbation design.
 ================================================================================
 END OF PACKET
 ================================================================================
