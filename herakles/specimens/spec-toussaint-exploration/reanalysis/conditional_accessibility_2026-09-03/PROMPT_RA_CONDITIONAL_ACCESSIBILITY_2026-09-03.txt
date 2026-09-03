@@ -1,0 +1,723 @@
+================================================================================
+PROMPT – HERAKLES / HC-T01 ZERO-COMPUTE CONDITIONAL-ACCESSIBILITY ADJUDICATION
+RA-1 PRIMARY + RA-2 MACHINERY-PRESENCE DIAGNOSTIC
+
+Issued by James, 2026-09-03. Committed verbatim as the authoritative prompt.
+Where this file and any later summary disagree, this file wins.
+================================================================================
+
+You are Herakles, operating the Historical Collider.
+
+Lexis has completed the HC-T01 prior-art adjudication.
+
+Read, preserve, and treat as upstream evidence:
+
+roles/Lexis/archaeology/hct01_prior_art_2026-09-03/
+LEXIS_HCT01_EXTERNAL_REVIEW_PACKET.txt
+CAUSALITY_AUDIT.md
+L_LITERATURE_SCORECARD.jsonl
+L_STEALABLE_METHODS.jsonl
+L_CORRECTIONS.jsonl
+
+Read alongside the already-executed HC-T01 specimen:
+
+herakles/specimens/spec-toussaint-exploration/
+
+Do not rerun HC-T01.
+
+Do not reconstruct Kouvaris.
+
+Do not perform more literature archaeology.
+
+Do not purchase a new scientific admission right.
+
+This is a bounded re-analysis of ALREADY-COMMITTED HC-T01 rows.
+
+The purpose is to determine whether the K7 kill condition was genuine
+evidence against prospective accessibility, or an artifact of scoring a
+ceiling-bounded outcome with a marginal statistic.
+
+Lexis identified three distinct hazards:
+
+H-1  definitional coupling
+H-2  ceiling-bounded acquisition outcome
+H-3  machinery-presence confound
+
+This pass addresses H-2 directly and H-3 diagnostically.
+
+The primary question is now:
+
+DOES LOCAL ACCESSIBILITY AT TIME t CONTAIN PROSPECTIVE INFORMATION
+ABOUT SUBSEQUENT ACQUISITION AFTER CONDITIONING ON THE CURRENT STATE?
+
+The secondary question is:
+
+IS THE OBSERVED ACCESSIBILITY HISTORY EFFECT EXPLAINED PRIMARILY BY
+HOW MUCH SECOND-TYPE MACHINERY EXISTS IN THE TREATED GENOME?
+
+Nothing else is in scope.
+
+⸻
+
+0. PRESERVATION AND PROVENANCE – REQUIRED
+
+⸻
+
+Before analysis:
+
+1. Preserve this prompt verbatim in the HC-T01 specimen tree.
+2. Record its SHA-256.
+3. Record the exact git commit being analyzed.
+4. Identify every committed input file used.
+5. Hash those inputs or record already-frozen hashes.
+6. Do not alter historical result files.
+7. Put all new analysis in a clearly separated RA directory.
+8. Record every executable analysis command.
+9. Preserve all generated tables, machine-readable outputs and figures.
+
+Suggested location:
+
+herakles/specimens/spec-toussaint-exploration/
+reanalysis/conditional_accessibility_2026-09-03/
+
+Do not overwrite the original HC-T01 verdict packet.
+
+This is an adjudication layer over the frozen experiment.
+
+⸻
+
+1. FIRST TASK – AUDIT THE DATA SHAPE BEFORE DEFINING THE TEST
+
+⸻
+
+Lexis reports:
+
+derived/grid/
+120 per-run CSVs
+30 seeds x 2 alpha x 2 beta
+
+with columns including:
+
+best     current fitness
+md_on    accessibility detector
+nops     operator count
+
+and generation/time.
+
+Verify this from the committed files and derived/analyze.py.
+
+Before computing any scientific statistic, produce a DATA AUDIT containing:
+
+* exact number of runs
+* exact arms
+* generations available
+* missing rows
+* duplicated rows
+* whether seeds are paired across arms
+* fitness convention and direction
+* detector convention and direction
+* distribution/range of nops
+* which generations are at or near the fitness ceiling
+* which time horizons permit a valid t -> t+h acquisition outcome
+* whether subsequent gain contains substantial ties or structural zeros
+* whether any earlier filtering was applied in HC-T01
+
+If the committed rows do not support the analysis described below,
+STOP and say exactly why.
+
+Do not silently improvise a replacement experiment.
+
+⸻
+
+2. FREEZE THE ANALYSIS PLAN BEFORE LOOKING AT RA-1 RESULTS
+
+⸻
+
+Create:
+
+RA1_PREREGISTRATION.md
+
+BEFORE calculating the RA-1 answer.
+
+The preregistration must fix:
+
+A. the acquisition outcome
+B. conditioning variables
+C. time horizons
+D. eligible generations
+E. correlation/statistical estimator
+F. handling of ties
+G. uncertainty method
+H. multiplicity treatment
+I. negative controls
+J. decision rule
+
+The central constraint:
+
+DO NOT CHOOSE THESE AFTER VIEWING WHICH VERSION MAKES ACCESSIBILITY
+LOOK BEST.
+
+You may inspect distributions needed to determine whether a proposed
+estimator is mathematically valid, but preserve that distinction in the
+ledger.
+
+⸻
+
+3. RA-1 – CONDITIONAL PROSPECTIVE ACCESSIBILITY
+
+⸻
+
+The old K7 comparison used marginal Spearman correlations between
+subsequent gain and cheap state metrics such as current fitness, avgfit
+and modular degree.
+
+Lexis argues this was structurally hostile because gain toward a fixed
+optimum is bounded by:
+
+ceiling - current fitness
+
+and current fitness therefore almost determines the maximum possible
+outcome.
+
+The old result MUST NOT simply be repeated.
+
+The target estimand is:
+
+incremental prospective information in accessibility beyond current
+state.
+
+At minimum condition on CURRENT BEST FITNESS.
+
+If another conditioning variable is required by the previously committed
+design, justify it explicitly.
+
+Do not condition indiscriminately on every available variable.
+
+Do not condition on descendants, future variables, or mediators merely
+because they improve fit.
+
+⸻
+
+4. RA-1 PRIMARY ESTIMATOR
+
+⸻
+
+Choose and preregister ONE primary conditional estimator appropriate for
+the data.
+
+A residualization approach is acceptable:
+
+subsequent acquisition ~ current fitness
+
+followed by association of:
+
+residual acquisition vs accessibility at t
+
+but do not assume this is automatically sufficient.
+
+Explicitly evaluate whether rank-based residualization, regression
+residualization, partial Spearman, or another conditional rank statistic
+is the defensible implementation for these distributions.
+
+The chosen estimator must preserve the scientific meaning:
+
+GIVEN WHAT WE ALREADY KNOW FROM CURRENT FITNESS,
+DOES ACCESSIBILITY AT t TELL US ANYTHING ABOUT WHAT HAPPENS LATER?
+
+Report the effect size.
+
+Do not reduce the answer to a p-value.
+
+⸻
+
+5. RA-1 MUST BE LONGITUDINAL
+
+⸻
+
+Do not choose one favorable checkpoint.
+
+Use the Elena & Sanjuan shape identified by Lexis:
+
+at each eligible time t,
+compute the cross-run conditional association between accessibility
+at t and acquisition at t+h.
+
+Produce the full time series for every preregistered horizon.
+
+For each time point report at least:
+
+N
+raw accessibility -> acquisition association
+current fitness -> acquisition association
+conditional accessibility -> acquisition association
+uncertainty
+fraction at ceiling / unable to improve
+
+The last quantity matters because it exposes precisely where H-2
+dominates the outcome.
+
+⸻
+
+6. TIME HORIZONS
+
+⸻
+
+Use only horizons justified from the original HC-T01 sampling cadence
+and acquisition definition.
+
+Do not sweep dozens of horizons looking for one that works.
+
+If the original experiment already committed specific horizons, they
+should receive priority.
+
+If more than one horizon is scientifically necessary, freeze a SMALL
+set before viewing conditional results.
+
+Explain the meaning of each.
+
+⸻
+
+7. MULTIPLICITY AND TEMPORAL DEPENDENCE
+
+⸻
+
+A time series of correlations is not a collection of independent tests.
+
+Do not claim success because one generation happens to cross a
+pointwise threshold.
+
+Preregister a series-level interpretation.
+
+Examples of acceptable shapes include:
+
+* a prespecified aggregate statistic over eligible generations
+* permutation at the run/seed level preserving temporal structure
+* confidence bands appropriate to repeated observations
+* another explicitly justified series-level test
+
+The exact method is yours to choose from the actual data structure.
+
+What is forbidden is post-hoc checkpoint selection.
+
+⸻
+
+8. NEGATIVE CONTROLS – REQUIRED
+
+⸻
+
+Include at least one negative control capable of exposing a spurious
+“prospective” relationship.
+
+Prefer controls that use the existing committed data.
+
+Candidates include, if structurally valid:
+
+* temporally misaligned accessibility
+* future accessibility predicting earlier acquisition
+* within-run time permutation preserving marginal distributions
+* another preregistered null that destroys precedence while retaining
+    relevant distributional structure
+
+Do not invent a null whose only purpose is to be easy to beat.
+
+Record why the selected negative control is scientifically diagnostic.
+
+⸻
+
+9. ARM HANDLING
+
+⸻
+
+Be explicit about whether RA-1 is:
+
+* within beta=0.1
+* within beta=0
+* pooled across arms with arm controlled
+* paired arm difference
+* some combination
+
+Do not pool arms merely to increase N if arm membership creates the
+signal.
+
+Remember H-3:
+
+beta=0 genomes cannot possess the second-type machinery class.
+
+Any pooled result therefore risks turning ARM LABEL into the predictor.
+
+A claim of prospective accessibility must not be a disguised
+beta-on-versus-beta-off comparison.
+
+⸻
+
+10. RA-1 DECISION RULE
+
+⸻
+
+Freeze a rule before evaluating the primary result.
+
+The verdict family is:
+
+RA1_CONDITIONAL_SIGNAL_SURVIVES
+RA1_NO_INCREMENTAL_SIGNAL
+RA1_INDETERMINATE
+
+RA1_CONDITIONAL_SIGNAL_SURVIVES requires more than one isolated positive
+checkpoint.
+
+It requires:
+
+1. prospective direction
+2. incremental information beyond current fitness
+3. a coherent longitudinal pattern under the preregistered series rule
+4. failure of the negative control to reproduce the same pattern
+5. an effect large enough to be scientifically nontrivial, not merely
+    detectable
+
+RA1_NO_INCREMENTAL_SIGNAL applies when the preregistered analysis has
+adequate information but accessibility contributes no meaningful
+conditional prospective signal.
+
+RA1_INDETERMINATE applies when ceiling saturation, ties, insufficient
+variation, low effective N, estimator instability or another structural
+limitation prevents a fair test.
+
+DO NOT collapse INDETERMINATE into NO SIGNAL.
+
+⸻
+
+11. CONSEQUENCE FOR HC-T01
+
+⸻
+
+If:
+
+RA1_CONDITIONAL_SIGNAL_SURVIVES
+
+then:
+
+K7’s original firing is adjudicated as at least partly a
+STATISTICAL/DESIGN ARTIFACT.
+
+HC-T01 may be upgraded from WEAK_SIGNAL_ONLY, but only with carefully
+bounded language.
+
+It still DOES NOT establish:
+
+mechanism -> accessibility -> acquisition mediation
+
+and it still carries H-3.
+
+The surviving result would be:
+
+accessibility contains prospective information beyond current fitness
+in the Toussaint substrate.
+
+Nothing stronger unless separately demonstrated.
+
+If:
+
+RA1_NO_INCREMENTAL_SIGNAL
+
+then:
+
+abandon the acquisition line in the Toussaint substrate.
+
+Do not rewrite HC-T01.
+
+Do not add compute.
+
+Do not rescue it through RA-2.
+
+Bank the accessibility/history finding and close the causal-acquisition
+claim.
+
+If:
+
+RA1_INDETERMINATE
+
+then:
+
+state exactly what information the fixed-target Toussaint substrate
+cannot provide.
+
+Do not automatically authorize a successor.
+
+⸻
+
+12. RA-2 – MACHINERY-PRESENCE DIAGNOSTIC
+
+⸻
+
+RA-2 is SECONDARY.
+
+It cannot rescue RA-1.
+
+Lexis identified H-3:
+
+beta=0 -> nops fixed at zero
+beta=0.1 -> nops varies
+
+Therefore the arm difference in accessibility may simply reflect the
+amount/presence of second-type machinery rather than evolved
+reorganisation of equivalent machinery.
+
+Within the treated arm only, ask:
+
+A. Does accessibility scale with nops?
+B. Does the historical accessibility effect survive conditioning on
+nops?
+C. Is the relationship monotone?
+D. Is nops effectively a sufficient statistic for the arm’s detector
+difference?
+
+Use no beta=0 versus beta=0.1 contrast as evidence for A-C.
+
+The point of RA-2 is to interrogate heterogeneity WITHIN beta=0.1.
+
+⸻
+
+13. RA-2 VERDICT FAMILY
+
+⸻
+
+Freeze appropriate quantitative criteria before viewing the result.
+
+Return one of:
+
+RA2_MACHINERY_COUNT_EXPLAINS_EFFECT
+RA2_HISTORY_EFFECT_SURVIVES_NOPS
+RA2_MIXED
+RA2_INDETERMINATE
+
+Interpret conservatively.
+
+If accessibility is strongly monotone in nops and conditioning on nops
+collapses the apparent history effect:
+
+the machinery-presence explanation is supported.
+
+That should DOWNGRADE any language resembling:
+
+CP-REPRESENTATION-REWRITE
+evolved reorganisation of the generator
+history changed machinery organisation
+
+The defensible statement would instead concern accumulated machinery.
+
+If a substantial history/time/arm-trajectory effect remains among
+genomes with comparable nops:
+
+machinery COUNT is not sufficient.
+
+That still does not prove structural reorganisation.
+
+Do not jump from “not count” to “organisation”.
+
+⸻
+
+14. OPTIONAL RECIPROCAL-TRANSPLANT FEASIBILITY CHECK – NO EXECUTION
+
+⸻
+
+Lexis recommends Kumawat-style reciprocal transplantation as a superior
+mechanical null on evolved genomes.
+
+You MAY inspect the simulator/code to answer only:
+
+Could the committed evolved genotypes be re-evaluated under swapped
+beta/operator settings without rerunning evolution?
+
+Return:
+
+TRANSPLANT_FEASIBLE_ZERO_EVOLUTION
+TRANSPLANT_REQUIRES_NEW_COMPUTE
+TRANSPLANT_NOT_WELL_DEFINED
+
+Do not execute the transplant in this pass.
+
+Do not let this feasibility question expand the task.
+
+⸻
+
+15. HISTORICAL CORRECTIONS TO PROPAGATE
+
+⸻
+
+While touching the HC-T01 documentation, annotate but do not rewrite
+history to reflect the following Lexis corrections:
+
+* Misevic, Ofria & Lenski 2006 is prior art for five of six headline
+    cells and was missing from the original population.
+* Kumawat et al. 2024 supplies the within-run acquisition shape and is
+    also five of six.
+* Petak 2025 DOES contain a variation-regime intervention and should
+    not be described as having no operator-side intervention.
+* the prior missing-cell justification for HC-T01 is obsolete.
+* Kouvaris reconstruction is NOT required as calibration.
+* K7’s original marginal-statistic interpretation is under
+    adjudication by this pass.
+
+Preserve original documents.
+
+Use correction notices / appendices rather than silent edits wherever
+historical fidelity matters.
+
+⸻
+
+16. DO NOT OVERCLAIM THE PRIOR ART RESULT
+
+⸻
+
+Lexis found:
+
+no single historical work with all six cells
+
+but:
+
+Misevic 2006 + Kumawat 2024 cover the union.
+
+Therefore do not say:
+
+“HC-T01 was already published.”
+
+Also do not say:
+
+“HC-T01 was historically novel.”
+
+Use the narrower truth:
+
+the exact intersection appears unoccupied in the surveyed literature,
+but essentially all constituent design ideas were already
+demonstrated in closely adjacent published systems.
+
+The distinction matters.
+
+⸻
+
+17. NO SUCCESSOR DESIGN IN THIS PASS
+
+⸻
+
+Lexis already identified the obvious successor composition:
+
+Misevic-style same-machinery-class intervention
++
+Kumawat-style changing environment / lineage lag
++
+reciprocal transplant on evolved genomes
+
+Do NOT build it.
+
+Do NOT code it.
+
+Do NOT name it HC-T02.
+
+Do NOT purchase a test.
+
+RA-1 decides whether there is enough prospective signal in this lineage
+to justify even discussing such a successor.
+
+⸻
+
+18. REQUIRED OUTPUTS
+
+⸻
+
+Produce at minimum:
+
+RA1_PREREGISTRATION.md
+RA1_DATA_AUDIT.json
+RA1_TIME_SERIES.csv
+RA1_SUMMARY.json
+RA1_NEGATIVE_CONTROLS.csv
+RA2_SUMMARY.json
+RA2_DETAIL.csv
+TRANSPLANT_FEASIBILITY.md          if inspected
+HC_T01_REANALYSIS_CORRECTIONS.md
+REPRODUCTION.md
+REVIEW_PACKET.txt
+
+Preserve executable analysis code.
+
+Machine-readable result files must contain enough information for an
+independent reviewer to reproduce every headline number.
+
+⸻
+
+19. REVIEW PACKET
+
+⸻
+
+When complete, STOP.
+
+Do not continue into a successor experiment.
+
+Create an external-review packet and put the complete packet directly
+in chat as a plain ASCII block that the operator can cut and paste.
+
+The packet must be self-contained and include:
+
+1. exact frozen input commit and artifact hashes
+2. data audit
+3. preregistered RA-1 estimator and why
+4. exact horizons and eligible generations
+5. raw marginal K7 comparison
+6. conditional RA-1 time series
+7. series-level adjudication
+8. negative-control results
+9. RA-1 verdict
+10. RA-2 method and result
+11. RA-2 verdict
+12. whether machinery count is sufficient
+13. reciprocal-transplant feasibility, if inspected
+14. effect on the frozen HC-T01 verdict
+15. corrections propagated from Lexis
+16. every limitation and ambiguity
+17. reproduction commands
+18. exact list of new artifacts
+19. whether any new scientific compute occurred
+
+End with exactly one recommendation from this set:
+
+CLOSE_TOUSSAINT_ACQUISITION_LINE
+PRESERVE_SIGNAL_DESIGN_SUCCESSOR
+EVIDENCE_INDETERMINATE_STOP
+REQUEST_EXTERNAL_ADJUDICATION
+
+Do not recommend more archaeology.
+
+Do not recommend Kouvaris reconstruction.
+
+Do not start the successor.
+
+================================================================================
+GOVERNING PRINCIPLE
+
+HC-T01 has already earned one durable result:
+
+evolutionary history changed its measured local accessibility while
+contemporaneous mechanical knob effects were tiny.
+
+What is unresolved is whether that accessibility contained information
+about what happened NEXT.
+
+The original K7 statistic may have made that question nearly
+unanswerable by construction.
+
+Use the frozen rows to ask the conditional question correctly once.
+
+If the signal disappears, close the line.
+
+If it survives, preserve it – but do not confuse prospective
+association with mediation, machinery amount with machinery
+organisation, or a surviving signal with permission to build the next
+experiment.
+
+Failure remains a result.
+
+Indeterminacy remains different from failure.
+
+Nothing is promoted merely because an old kill condition was defective.
+
+END PROMPT
