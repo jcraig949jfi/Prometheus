@@ -1,0 +1,253 @@
+{
+ "arms": [
+  "V0_4",
+  "NC5",
+  "NC1B",
+  "NC2",
+  "NC3",
+  "NC4"
+ ],
+ "authorized_change": "op_config_perturbation tape transition: valid iff destination in published bounds AND genome fits; V0.2 half-tape occupancy rule REMOVED",
+ "brief_sha256": "da514fda91630c07512dbf4c088d9512f5cf2af81da2e669b97633865737afd8",
+ "crucible": {
+  "bootstrap_resamples": 2000,
+  "checkpoints": [
+   0,
+   25,
+   50,
+   100,
+   200,
+   400
+  ],
+  "code_writable": false,
+  "generations": 400,
+  "lineages_per_cohort": 100,
+  "n_regs": 8,
+  "out_cap": 4,
+  "persist": "none",
+  "start_sizes": [
+   1,
+   8,
+   32,
+   128,
+   256
+  ],
+  "tape_words": 1024,
+  "tick_budget": 64
+ },
+ "derived_from_grammar_hash": "44ae7f598660a523a6fb151ef258dd4f1c886c0822abca5780b32e98e7548289",
+ "diffusion": {
+  "checkpoints": [
+   0,
+   1,
+   10,
+   100,
+   1000,
+   10000
+  ],
+  "lineages": 400
+ },
+ "ensembles": {
+  "E0": "4bba8716b364f9fff1975210a9e1a4027b70963a81fbe108d44a59360978f0bc",
+  "E1": "9110f345248d63ed6dafc8cd4b38e4dff2cce346f8c4cd86f4e1bc28bb5a517b",
+  "E2": "1bf274ee3d3ab274d771a9737cbb8bdeb3d839ba5fa51947f4ab9dfca1a224da",
+  "E3": "ecc73a8f420f36eccfb9d30d63771366828b61e1b749b27e0c20c51eb23b17bf",
+  "E4": "4722afb361f7951edc9c597c9c496fc37bec877d9a3128a4528ef251a4565188",
+  "E5": "126b72993a109a9cb3a12eabd45f7e10bcc54dbba826b6282bf198adbf2624b2"
+ },
+ "frozen_before_any_v0_4_run": true,
+ "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+ "grammar_hash_v0_2": "779da90d173fdd0528fdfe98b1056cc9d3fcad1807fdd2f677f3d879250e9796",
+ "grammar_version": "proteus.grammar.v0.4",
+ "holm_fixtures": {
+  "all_rejected": {
+   "expected_rejected": [
+    "a",
+    "b",
+    "c",
+    "d"
+   ],
+   "items": [
+    [
+     "a",
+     8.0
+    ],
+    [
+     "b",
+     7.5
+    ],
+    [
+     "c",
+     7.0
+    ],
+    [
+     "d",
+     6.5
+    ]
+   ]
+  },
+  "buggy_v0_3_over_declares": {
+   "expected_rejected": [
+    "a"
+   ],
+   "items": [
+    [
+     "a",
+     2.6
+    ],
+    [
+     "b",
+     2.3
+    ],
+    [
+     "c",
+     2.1
+    ],
+    [
+     "d",
+     1.98
+    ]
+   ]
+  },
+  "exactly_one": {
+   "expected_rejected": [
+    "a"
+   ],
+   "items": [
+    [
+     "a",
+     4.5
+    ],
+    [
+     "b",
+     2.0
+    ],
+    [
+     "c",
+     1.0
+    ],
+    [
+     "d",
+     0.2
+    ]
+   ]
+  },
+  "none_rejected": {
+   "expected_rejected": [],
+   "items": [
+    [
+     "a",
+     1.0
+    ],
+    [
+     "b",
+     0.5
+    ],
+    [
+     "c",
+     1.9
+    ],
+    [
+     "d",
+     0.1
+    ]
+   ]
+  },
+  "several": {
+   "expected_rejected": [
+    "a",
+    "b",
+    "c"
+   ],
+   "items": [
+    [
+     "a",
+     6.0
+    ],
+    [
+     "b",
+     5.0
+    ],
+    [
+     "c",
+     4.0
+    ],
+    [
+     "d",
+     0.3
+    ]
+   ]
+  },
+  "step_down_stops_at_first_failure": {
+   "expected_rejected": [
+    "a"
+   ],
+   "items": [
+    [
+     "a",
+     9.0
+    ],
+    [
+     "b",
+     2.0
+    ],
+    [
+     "c",
+     2.2
+    ]
+   ]
+  }
+ },
+ "null_assignment": {
+  "config_log2_tape_words": "NC5",
+  "content": "NC4 (NC3 reported alongside)",
+  "genome_length": "NC5",
+  "other_config": "NC1B",
+  "phenotype": "NC4"
+ },
+ "prereg_doc": "PREREG_V0_4.md",
+ "prereg_doc_sha256": "4707404dd84a2daa6de3aa4c0660ee05aad2873c873846d62d854b1e9609a17a",
+ "prereg_id": "572cc6342b4fd50d308a8169bee5306a445e4d0ed1d3400adf7be90902d0b2aa",
+ "primary_ensemble": "E0",
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "schema_version": "proteus.v0_4_prereg.v1",
+ "seed": 20260904,
+ "structural_state_space": {
+  "config_fields_gating_validity": [
+   "tape_words"
+  ],
+  "n_states": 2044,
+  "tapes": [
+   16,
+   32,
+   64,
+   128,
+   256,
+   512,
+   1024,
+   2048,
+   4096
+  ]
+ },
+ "verdict_order": [
+  "INSTRUMENT_INSUFFICIENT_TO_ADJUDICATE",
+  "NOT_QUALIFIED_KNOWN_TAPE_ASYMMETRY_REMAINS",
+  "NOT_QUALIFIED_DIRECTIONAL_MUTATION_PRIOR_REMAINS",
+  "NOT_QUALIFIED_BEHAVIORAL_SPACE_COLLAPSES_UNDER_NEUTRAL_DIFFUSION",
+  "QUALIFIED_AS_NEUTRAL_FOUNDRY_WITH_STATED_GEOMETRIC_EFFECTS"
+ ],
+ "weights_v0_4": {
+  "config_perturbation": 0.08333333333333334,
+  "deletion": 0.11458333333333334,
+  "duplication": 0.04166666666666667,
+  "insertion": 0.08333333333333334,
+  "movement": 0.08333333333333334,
+  "operand_perturbation": 0.19791666666666669,
+  "randomization": 0.04166666666666667,
+  "reference_redirection": 0.08333333333333334,
+  "region_swap": 0.0625,
+  "replacement": 0.125,
+  "splice": 0.052083333333333336,
+  "unreachable_removal": 0.03125
+ }
+}

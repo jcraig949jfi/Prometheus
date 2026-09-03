@@ -76,7 +76,7 @@ class Mutation(unittest.TestCase):
                 self.assertNotIn(b, low, f"operator {name} description contains '{b}'")
 
     def test_active_grammar_hash_frozen_in_prereg(self):
-        path = os.path.join(ROOT, "proteus", "v0_3", "PREREG_V0_3.json")
+        path = os.path.join(ROOT, "proteus", "v0_4", "PREREG_V0_4.json")
         if not os.path.exists(path):
             self.skipTest("v0.3 prereg not yet written")
         with open(path, encoding="utf-8") as f:
@@ -94,6 +94,13 @@ class Mutation(unittest.TestCase):
         for fn in ("NEUTRALITY_RESULT_grammar_v0_FAIL.json", "NEUTRALITY_RESULT_grammar_v0_1_FAIL.json"):
             with open(os.path.join(v0, fn), encoding="utf-8") as f:
                 self.assertNotEqual(json.load(f)["grammar_hash"], grammar.GRAMMAR_HASH, fn)
+        # the V0.3 preregistration and adjudication must still pin the v0.3 grammar
+        p3 = os.path.join(ROOT, "proteus", "v0_3", "PREREG_V0_3.json")
+        with open(p3, encoding="utf-8") as f:
+            self.assertEqual(json.load(f)["grammar_hash"], grammar.GRAMMAR_HASH_V0_3)
+        a3 = os.path.join(ROOT, "proteus", "v0_3", "ADJUDICATION_V0_3.json")
+        with open(a3, encoding="utf-8") as f:
+            self.assertEqual(json.load(f)["grammar_hash"], grammar.GRAMMAR_HASH_V0_3)
 
     def test_zeroing_removed_and_renormalization_is_mechanical(self):
         self.assertEqual(len(grammar.OPERATORS), 12)

@@ -79,6 +79,11 @@ assert all(abs(w2 * RENORM_DENOMINATOR - w) < 1e-12
 # v0.1 -> v0.2 (2026-09-02): run 2 FAILED at cohort 128 because a halving that fits the genome
 # EXACTLY still lands the cap on the genome. Halving is now a no-op unless the genome would
 # occupy at most half of the new tape. Weights unchanged. Nothing else changed.
+# v0.3 -> v0.4 (2026-09-03): the half-tape rule was itself the directional prior V0.3 measured
+# (config_log2_tape_words, +1.18 log2 words beyond a symmetric bounded null at cohort 128). It is
+# REMOVED. A tape transition is now valid iff the destination is inside published bounds and the
+# genome fits. NOTHING else changed: no weight, no limit, no operator added or removed, no
+# occupancy threshold, no compensation probability, no automatic resizing.
 # v0.2 -> v0.3 (2026-09-03): the zeroing operator ratcheted CONTENT toward the null instruction
 # (+0.133 NOP share over 300 generations under no selection, reported as F2 of the V0 post-build
 # packet). External review authorized exactly one change: remove it, renormalize mechanically.
@@ -87,11 +92,19 @@ GRAMMAR_HASH_V0_2 = hash_obj({"version": GRAMMAR_VERSION_V0_2,
                               "operators": [list(o) for o in OPERATORS_V0_2],
                               "k_range": [1, 4], "delta_range": [-8, 8],
                               "config_tape_halving": "noop_unless_genome_at_most_half_of_new_tape"})
-GRAMMAR_VERSION = "proteus.grammar.v0.3"
+GRAMMAR_VERSION_V0_3 = "proteus.grammar.v0.3"
+GRAMMAR_HASH_V0_3 = hash_obj({"version": GRAMMAR_VERSION_V0_3,
+                              "operators": [list(o) for o in OPERATORS],
+                              "k_range": [1, 4], "delta_range": [-8, 8],
+                              "config_tape_halving": "noop_unless_genome_at_most_half_of_new_tape",
+                              "derived_from": GRAMMAR_HASH_V0_2,
+                              "removed_operator": REMOVED_OPERATOR,
+                              "renorm_denominator": RENORM_DENOMINATOR})
+GRAMMAR_VERSION = "proteus.grammar.v0.4"
 GRAMMAR_HASH = hash_obj({"version": GRAMMAR_VERSION, "operators": [list(o) for o in OPERATORS],
                          "k_range": [1, 4], "delta_range": [-8, 8],
-                         "config_tape_halving": "noop_unless_genome_at_most_half_of_new_tape",
-                         "derived_from": GRAMMAR_HASH_V0_2,
+                         "config_tape_transition": "valid_iff_in_published_bounds_and_genome_fits",
+                         "derived_from": GRAMMAR_HASH_V0_3,
                          "removed_operator": REMOVED_OPERATOR,
                          "renorm_denominator": RENORM_DENOMINATOR})
 
@@ -309,14 +322,20 @@ def op_config_perturbation(m, rng, mate):
         v = m["n_regs"] + rng.choice([-1, 1])
         c["n_regs"] = min(max(v, b["n_regs"]["min"]), b["n_regs"]["max"])
     elif which == "tape_words":
+        # v0.4: the ONLY tape rule. A proposed transition is valid iff the destination is inside
+        # the published bounds AND the existing genome fits in it. The v0.2 half-tape occupancy
+        # rule is REMOVED: it suppressed a valid shrinking transition while leaving its growing
+        # reverse available, which is the directional prior V0.3 measured. Doubling and halving are
+        # proposed with equal primitive probability (1/2 within this field, the field itself chosen
+        # 1 in 6), so t -> 2t and 2t -> t are equiprobable before rejection; rejection is caused
+        # only by a published bound or by manifest validity, never by an occupancy threshold.
         v = m["tape_words"] * 2 if rng.randbelow(2) else m["tape_words"] // 2
-        v = min(max(v, b["tape_words"]["min"]), b["tape_words"]["max"])
-        v -= v % 4
-        # v0.2: a tape change must not move the cap ONTO the genome. Halving is allowed only if the
-        # genome would occupy at most half of the new tape, so the genome keeps at least as much
-        # headroom (in fraction of tape) as the smallest tape it could have been generated on.
-        if v < m["tape_words"] and len(m["genome"]) * 2 > v:
-            return c, {"field": which, "noop": "cap_would_land_on_genome", "from": m["tape_words"], "to": m["tape_words"]}
+        if not (b["tape_words"]["min"] <= v <= b["tape_words"]["max"]):
+            return c, {"field": which, "noop": "published_boundary",
+                       "from": m["tape_words"], "to": m["tape_words"]}
+        if v < len(m["genome"]):
+            return c, {"field": which, "noop": "manifest_validity",
+                       "from": m["tape_words"], "to": m["tape_words"]}
         c["tape_words"] = v
     elif which == "code_writable":
         c["code_writable"] = not m["code_writable"]
@@ -352,6 +371,12 @@ GRAMMARS = {
     GRAMMAR_VERSION:     (NAMES, WEIGHTS, IMPL, GRAMMAR_HASH),
     GRAMMAR_VERSION_V0_2: (NAMES_V0_2, WEIGHTS_V0_2, IMPL_V0_2, GRAMMAR_HASH_V0_2),
 }
+# NOTE on reproducing v0.3: v0.3 and v0.4 share the operator TABLE and differ only in the body of
+# op_config_perturbation. The v0.3 tape rule is therefore not reachable from this module any more,
+# and v0.3 results are reproduced from the committed rows and from the v0.3 tag in git history,
+# not by re-running this file. That is disclosed rather than papered over: unlike the v0.2 table,
+# this change is behavioural, not tabular, and retaining both bodies would mean two code paths in
+# the same operator, which is exactly the kind of conditional the brief forbids.
 
 LENGTH_CHANGING = ("insertion", "deletion", "duplication", "splice", "unreachable_removal")
 
