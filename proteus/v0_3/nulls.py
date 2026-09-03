@@ -153,3 +153,50 @@ def measure_length_kernel(sample_rng: SplitMix64, n_samples: int, sizes: list, t
             counts[d] = counts.get(d, 0) + 1
             total += 1
     return sorted((d, c / total) for d, c in counts.items())
+
+
+# ------------------------------------------------------------------ NC1b: config geometry
+# PREREG section 3 defines NC1 as "the same construction applied to each numeric configuration
+# coordinate". The length half ran first; this is the configuration half, implemented after the
+# V0.3 arm executed but BEFORE any configuration coordinate was examined. Disclosed in
+# PREREG_ADDENDUM_NC4_NC1B.md.
+#
+# The step distribution is SYMMETRIC BY CONSTRUCTION and is blocked only by the PUBLISHED BOUNDS.
+# It deliberately omits the grammar's extra rule that a tape halving is a no-op unless the genome
+# would occupy at most half of the new tape. That rule is an asymmetry of the GRAMMAR, so leaving
+# it out of the null is what allows the crucible to attribute it to the mutation prior rather than
+# to geometry. Including it would hide exactly the effect this control exists to expose.
+CONFIG_FIELDS = ("n_regs", "tape_words", "code_writable", "persist", "tick_budget", "out_cap")
+
+
+def nc1b_config_step(m: dict, rng: SplitMix64, bounds: dict) -> dict:
+    c = dict(m)
+    which = rng.choice(CONFIG_FIELDS)
+    up = rng.randbelow(2) == 1
+    if which == "n_regs":
+        v = m["n_regs"] + (1 if up else -1)
+        if bounds["n_regs"]["min"] <= v <= bounds["n_regs"]["max"]:
+            c["n_regs"] = v
+    elif which == "tape_words":
+        v = m["tape_words"] * 2 if up else m["tape_words"] // 2
+        # Blocked by manifest VALIDITY (the genome must fit on the tape) and by the published
+        # bounds, and by nothing else. The grammar's stricter rule -- no-op unless the genome
+        # would occupy at most HALF the new tape -- is deliberately omitted, because that rule is
+        # a property of the grammar and must remain visible as a mutation prior rather than being
+        # absorbed into the geometry control.
+        if bounds["tape_words"]["min"] <= v <= bounds["tape_words"]["max"] and v >= len(m["genome"]):
+            c["tape_words"] = v
+    elif which == "code_writable":
+        c["code_writable"] = not m["code_writable"]
+    elif which == "persist":
+        others = [p for p in ("none", "regs", "tape", "all") if p != m["persist"]]
+        c["persist"] = rng.choice(others)
+    elif which == "tick_budget":
+        v = m["tick_budget"] * 2 if up else m["tick_budget"] // 2
+        if bounds["tick_budget"]["min"] <= v <= bounds["tick_budget"]["max"]:
+            c["tick_budget"] = v
+    else:
+        v = m["out_cap"] * 2 if up else m["out_cap"] // 2
+        if bounds["out_cap"]["min"] <= v <= bounds["out_cap"]["max"]:
+            c["out_cap"] = v
+    return c

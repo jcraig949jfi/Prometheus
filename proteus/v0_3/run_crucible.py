@@ -160,14 +160,19 @@ def run_arm(arm: str, pre: dict):
     if arm == "NC4":
         with open(os.path.join(HERE, "RESULT_V0_3.json"), encoding="utf-8") as f:
             v3 = json.load(f)
-        nc4_lengths = {c: {k: v["lengths"] for k, v in coh["checkpoints"].items()}
+        # NC4 mirrors each V0.3 organism's LENGTH and CONFIGURATION with fresh uniform content.
+        # The first NC4 implementation pinned the cohort template configuration and could not
+        # represent organisms whose tape_words had drifted (ManifestError: genome longer than
+        # tape). Corrected here, BEFORE any V0.3 coordinate was examined; the correction makes
+        # NC4 a strictly closer geometry match and is recorded in PREREG_ADDENDUM_NC4.md.
+        nc4_lengths = {c: {k: v["per_lineage"] for k, v in coh["checkpoints"].items()}
                        for c, coh in v3["cohorts"].items()}
 
     for L in d["start_sizes"]:
         crng = root.derive("cohort", L)
         lineages = [base_manifest(crng.derive("init", s), L, d) for s in range(S)]
         snapshots = {0: [dict(m, genome=list(m["genome"])) for m in lineages]}
-        if arm in ("V0_3", "NC2", "NC3"):
+        if arm in ("V0_3", "NC2", "NC3", "NC1B"):
             mrngs = [crng.derive("mut", s) for s in range(S)]
             for g in range(1, G + 1):
                 for s in range(S):
@@ -178,19 +183,29 @@ def run_arm(arm: str, pre: dict):
                         m, _rec = grammar.mutate(m, r, mate)
                     elif arm == "NC2":
                         m = nulls.nc2_mutate(m, r)
-                    else:
+                    elif arm == "NC3":
                         m = nulls.nc3_mutate(m, r)
+                    else:  # NC1B: symmetric bounded config walk, genome frozen
+                        from proteus.foundry.affordances import STORAGE_BOUNDS
+                        if r.unit() < dict(zip(grammar.NAMES, grammar.WEIGHTS))["config_perturbation"]:
+                            m = nulls.nc1b_config_step(m, r, STORAGE_BOUNDS)
                     lineages[s] = m
                 if g in ckpts:
                     snapshots[g] = [dict(m, genome=list(m["genome"])) for m in lineages]
         elif arm == "NC4":
             grng = crng.derive("geometry")
             for c in sorted(ckpts):
-                lens = nc4_lengths[str(L)][str(c)]
-                tmpl = {"tape_words": d["tape_words"], "n_regs": d["n_regs"], "persist": d["persist"],
-                        "code_writable": d["code_writable"], "tick_budget": d["tick_budget"],
-                        "out_cap": d["out_cap"]}
-                snapshots[c] = nulls.nc4_population(grng, lens, tmpl)
+                snap = []
+                for row in nc4_lengths[str(L)][str(c)]:
+                    persist = next(p for p in ("none", "regs", "tape", "all")
+                                   if row[f"config_persist_{p}"] == 1.0)
+                    snap.append(nulls.fresh_manifest(
+                        grng, int(row["genome_length"]),
+                        int(round(2 ** row["config_log2_tape_words"])), int(row["config_n_regs"]),
+                        persist, bool(row["config_code_writable"]),
+                        int(round(2 ** row["config_log2_tick_budget"])),
+                        int(round(2 ** row["config_log2_out_cap"]))))
+                snapshots[c] = snap
         coh = {"checkpoints": {}}
         for c in sorted(ckpts):
             rows, pop = population_coords(snapshots[c], probes, cfg, seed_from(pre["seed"], arm, L, c))
@@ -214,8 +229,8 @@ def run_arm(arm: str, pre: dict):
 
 def main():
     arm = sys.argv[1] if len(sys.argv) > 1 else "V0_3"
-    if arm not in ("NC1", "NC2", "NC3", "NC4", "V0_3"):
-        raise SystemExit("arm must be NC1, NC2, NC3, NC4 or V0_3")
+    if arm not in ("NC1", "NC1B", "NC2", "NC3", "NC4", "V0_3"):
+        raise SystemExit("arm must be NC1, NC1B, NC2, NC3, NC4 or V0_3")
     pre = load_prereg()
     print(f"arm {arm} | grammar {grammar.GRAMMAR_HASH[:12]} | prereg {pre['prereg_id'][:12]}")
     out = run_arm(arm, pre)
