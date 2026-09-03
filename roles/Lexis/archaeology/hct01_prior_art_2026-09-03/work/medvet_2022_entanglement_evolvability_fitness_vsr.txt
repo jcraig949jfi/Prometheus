@@ -1,0 +1,627 @@
+     On the Entanglement between Evolvability and Fitness:
+        an Experimental Study on Voxel-based Soft Robots
+
+         Andrea Ferigo1, L. B. Soros2, Eric Medvet3, and Giovanni Iacca1
+
+    1Department of Information Engineering and Computer Science, University of Trento, Italy
+                              2Cross Labs, Cross Compass Ltd., Kyoto, Japan
+
+               3Department of Engineering and Architecture, University of Trieste, Italy
+andrea.ferigo@unitn.it, lisa.soros@cross-compass.com, emedvet@units.it, giovanni.iacca@unitn.it
+
+                              Abstract                               Matznick, 2002)1.
+
+   The concept of evolvability, that is the capacity to produce         What is it about these common ancestors that makes them
+   heritable and adaptive phenotypic variation, is crucial in the    so likely to further evolve into high-quality descendants very
+   current understanding of evolution. However, while its mean-      distinct from themselves? Capturing this property, called
+   ing is intuitive, there is no consensus on how to quantitatively  evolvability, and replicating it inside an algorithmic process
+   measure it. As a consequence, in evolutionary robotics, it is     is a challenge for advancing our theoretical understanding of
+   hard to evaluate the interplay between evolvability and fitness   natural and artificial evolutionary systems. It is also likely
+   and its dependency on key factors like the evolutionary algo-     that figuring out how to discover highly evolvable individ-
+   rithm (EA) or the representation of the individuals. Here, we     uals will have positive practical results for the purposes of
+   propose to use MAP-Elites, a well-established Quality Diver-      optimization by virtue of avoiding premature convergence
+   sity EA, as a support structure for measuring evolvability and    (Squillero and Tonda, 2016).
+   for highlighting its interplay with fitness. We map the solu-
+   tions generated during the evolutionary process to a MAP-            This paper explores the concept of evolvability in the
+   Elites-like grid and then visualize their fitness and evolvabil-  latter sense (as a tool for achieving high performance in
+   ity as maps. This procedures does not affect the EA execution     an engineering context). In particular, we use two funda-
+   and can hence be applied to any EA: it only requires to have      mentally different Evolutionary Algorithms (EAs): a sim-
+   two descriptors for the solutions that can be used to meaning-    ple form of Evolution Strategies (ES) (Beyer and Schwe-
+   fully characterize them. We apply this general methodology        fel, 2002), and the Quality Diversity algorithm MAP-Elites
+   to the case of Voxel-based Soft Robots (VSR), a kind of mod-      (Cully et al., 2015). We apply them to discover highly
+   ular robots with a body composed of uniform elements whose        evolvable morphologies and controllers for Voxel-based Soft
+   volume is individually varied by the robot brain. Namely, we      Robots (VSRs). We choose these EAs as they represent two
+   optimize the robots for the task of locomotion using evolu-       different ways to conduct evolutionary search: one mainly
+   tionary computation. We consider four representations, i.e.,      aimed at exploitation (ES), the other one mainly aimed at ex-
+   ways of transforming a genotype into a robot, two for the         ploration (MAP-Elites). On the other hand, we choose VSRs
+   brain only and two for both body and brain of the VSR, and        for this study mainly due to their modularity, which makes
+   two EAs (MAP-Elites and a simple evolutionary strategy) and       them particular expressive and suitable for constituting an
+   examine the evolvability and fitness maps. The experiments        autonomous robotic ecosystem (e.g., for space exploration
+   suggest that our methodology permits us to discover inter-        applications (Methenitis et al., 2015)) in which evolvability
+   esting patterns in the maps: fitness maps appear to depend        would be a key feature.
+   more on the representation of the solution, whereas evolv-
+   ability maps appear to depend more on the EA. As an aside,           We review the concept of evolvability with a focus on its
+   we find that MAP-Elites is particularly effective in the simul-   applications in artificial evolutionary systems. We introduce
+   taneous evolution of the body and the brain of Voxel-based        a method for keeping track of the evolvability and fitness
+   Soft Robots.                                                      of solutions generated during the execution of potentially
+                                                                     any EA. We use a grid-like structure for storing the most
+                   1 Introduction                                    relevant solutions in a way that enables a convenient visu-
+                                                                     alization of their fitness and evolvability at the end of the
+Evolution in nature has created a diversity of viable ways of
+living occupying vastly different niches (plants, mammals,               1Interestingly, when Darwin wrote about evolution, he con-
+etc.). Yet, despite the rich diversity observed in nature, much      cluded that the diversity of dogs necessarily must result from in-
+of this evolution depends on variation on common ances-              terbreeding of many kinds of wild dogs (Darwin, 1875). However,
+tors. For example, all breeds of domesticated dog (Canis             molecular dating techniques in recent years suggest that this con-
+familiaris), from poodles to Great Danes, are hypothesized           clusion is likely wrong (Wayne et al., 1991).
+to have descended from the grey wolf (Canis lupus) (Cop-
+pinger and Smith, 1983) or some other wild canid (Koler-
+evolutionary process: this methodology only requires two            erated by an individual) instead of rewarding maximizing
+descriptors for characterizing the solutions and does not in-       a domain-specific objective. This algorithm is shown to
+terfere with the EA execution. Since fitness and evolvability       outperform both greedy optimization and novelty search
+of individual solutions are placed in a grid-like structure, the    (Lehman and Stanley, 2011a). The subsequent Evolvability
+analysis of their interplay is facilitated. We apply this gen-      Evolution Strategy (E-ES) (Gajewski et al., 2019) introduces
+eral methodology to the case of the optimization of VSRs            improvements in terms of computational expense to scale
+(brain only and both body and brain) for the task of locomo-        to deep neural networks. Quality Evolvability ES (QE-ES)
+tion. We consider four different representations and com-           (Katona et al., 2021) builds on both of these algorithms, si-
+bine them with the two EAs mentioned above and apply our            multaneously optimizing for both evolvability (as diversity)
+methodology to discover insights about how the EA and the           and fitness with non-dominated sorting, as in NSGA-II (Deb
+representation impact on the interplay between fitness and          et al., 2002). Note that unlike Quality Diversity algorithms
+evolvability.                                                       (Pugh et al., 2016), which seek to discover a diverse pop-
+                                                                    ulation of high-performing individuals, the goal in Quality
+   Results indicate that both the choices of the representation     Evolvability is to discover a single individual with diverse
+and the EA have a major impact not only on the quality of           offspring. The work reported in this current paper will lever-
+the solution, but also on how the search space is explored,         age the Quality Diversity algorithm MAP-Elites (see Sec-
+which ultimately reflects in different observations of evolv-       tion 3) to find diverse populations of highly evolvable indi-
+ability. More precisely, we observe that the fitness distri-        viduals.
+bution in a phenotypic space determined by predefined de-
+scriptors (more on this below) is mostly determined by the                                3 Methods
+adopted representation; on the contrary, the evolvability dis-
+tribution over the same phenotypic space appears to be deter-       In the following, we present the main methods and tools
+mined by the EA. Hence we conclude that fitness and evolv-          we used in our study: the VSRs, the EAs used for evolv-
+ability are somehow "entangled" and that this entanglement          ing them, the descriptors adopted for characterizing evolved
+is affected by multiple aspects of evolutionary systems.            VSRs, and the evolvability metric.
+
+   The rest of the paper is structured as follows. In the next      Voxel-based Soft Robots
+section, we introduce the background concepts and briefly
+summarize the related works. In Section 3, we describe the          First presented by Hiller and Lipson (2011), VSRs are a type
+methods. Then, we present the results in Section 4. Finally,        of modular soft robot composed of cubic elements that can
+we give the conclusions in Section 5.                               vary their volume according to a control signal that is gener-
+                                                                    ated by a controller. In this work, we use the 2D (yet, phys-
+       2 Background and related works                               ically plausible) VSR simulator presented by Medvet et al.
+                                                                    (2020a). In fact, using a two-dimensional model allows to
+Evolvability is essentially a measure of potential for evolu-       reduce the numerical complexity of the robot simulations,
+tionary innovation. However, measures of evolvability dif-          without losing the potential variety of robot shapes and be-
+fer in what features for evolutionary innovation are salient        haviors.
+(Pigliucci, 2008). Per one popular definition, "Evolvabil-
+ity is the ability of a biological system to produce pheno-            From a conceptual level, a VSRs can be seen as a com-
+typic variation that is both heritable and adaptive" (Payne         position of two components: the body, i.e., a set of voxels
+and Wagner, 2019; Nordmoen et al., 2021). It is important           arranged in a given shape, and the brain, i.e., a controller
+to note two distinct components of this definition: that there      that produces the control signal for each voxel in the body.
+is variation (i.e., diversity) being passed from parent to off-     The details of these two components are reported below.
+spring, and that this variation leads to positive effects on fit-
+ness. Interestingly and importantly, measures and studies           Body. The body of a VSR is defined by a number of de-
+from artificial life (a primary domain of interest for evolv-       formable squares, called voxels, arranged (in our case) in a
+ability studies related to artificial evolution) regard evolv-      2D grid (Figure 1). Pairs of adjacent voxels are glued to-
+ability purely as adaptation (Medvet et al., 2017; Veenstra         gether at their two common vertexes. During the simula-
+et al., 2020; Liu et al., 2022; Tarapore and Mouret, 2015), or      tion, each voxel changes its area as a result of the combined
+evolvability as diversification (Mengistu et al., 2016; Gajew-      action of (a) external forces imposed by bodies in contact
+ski et al., 2019; Lehman and Stanley, 2011b, 2013; Lim              with the voxel, namely other voxels and the ground, and
+et al., 2021; Carlo et al., 2021), but not both.                    (b) an internal force that makes the voxel expand or contract.
+                                                                    The internal force at time t is determined by a control value
+   Searching directly for evolvability has become a recently        c(t)  [-1, 1], where -1 means maximum area expansion
+popular trend. In Evolvability Search (Mengistu et al.,             and 1 means maximum area contraction. The control value
+2016), the fitness function of a traditional EA rewards high        is itself determined, for each voxel of the body, by the brain
+evolvability (in this diversity-oriented interpretation, it is the  of the VSR, described in the next section.
+number of distinct behaviors in the set of offspring gen-
+Figure 1: An example VSR with a body enclosed in a 4×            pling parents from the entire population, such that worse, but
+5 grid; namely, one of those obtained in our experiments (see    diverse parents can reproduce too.
+Section 4 and Figure 5a). The color of each voxel depends
+on its current area: green for expanded, red for contracted,        Next, we briefly summarize the salient elements of the
+yellow for equal to the rest area.                               two algorithms. We denote by G the search space, i.e., the
+                                                                 space where individuals are defined. In this study, we have
+   We rely on 2D-VSR-Sim (Medvet et al., 2020a) for sim-         G = Rp, hence we denote individuals as numerical vectors
+ulating the VSR body. In brief, in 2D-VSR-Sim voxels are         g  Rp; we remark that some of the components, namely,
+modeled as an assembly of four masses (at the vertexes of        MAP-Elites, are defined for more general search spaces. We
+the square) and multiple spring-damper systems connecting        also assume that the fitness of an individual, i.e., its quality
+them. The internal force is modeled as an instantaneous          f (g), can be evaluated as a single numerical value, i.e., with
+change of the resting length of the spring-damper systems.       a fitness function f : G  R, for which it holds that the
+                                                                 greater, the better.
+   Clearly, the body of a VSR, together with its brain, plays
+a crucial role in making the robot more or less effective for    Evolution Strategies (ES). In our simple form of ES, we
+a given task. It follows that the body, i.e., how to organize
+voxels in the 2D grid, can be optimized.                         iteratively evolve a fixed-size population of numerical vec-
+                                                                 tors as individuals, i.e., G = Rp, where p is the number of
+Brain. The brain generates the control signal for each
+voxel and hence acts as the controller for the robot. In this    parameters to optimize.
+work, we use an open-loop controller where the control sig-
+nal depends only on the current time t. Namely, we use a si-     Initially, we build the population by randomly generat-
+nusoidal controller for which c(t) = sin(2f t + ). Despite
+appearing trivial, this form of open-loop controller has been    ing npop individuals: namely, we build each individual g
+used for VSRs to achieve effective behaviors in different en-    by sampling from the uniform distribution in [-1, 1], i.e.,
+vironments (Corucci et al., 2018) as well as for investigating
+complex adaptation dynamics (Kriegman et al., 2018).             g = (g1, . . . , gp) and gi  U (-1, 1). Then, we iterate the
+
+   The values of the frequency f and phase  can be different     following steps (generations) until we have done neval fit-
+among the voxels in the body. All together, they constitute                                                       npop
+the parameters of the controller and may be optimized for        ness evaluations.  First, we select the best      4     individuals
+obtaining a desired behavior.
+                                                                 as parents, i.e., those with the greatest fitness in the current
+Evolutionary Algorithms
+                                                                 population, and compute their element-wise mean µ  Rp.
+To optimize VSRs, we use two different EAs: a traditional
+fitness-driven EA, namely a simple form of Evolution Strate-     Then, we build npop - 1 offspring individuals, each one by
+gies (ES) (Beyer and Schwefel, 2002), and a Quality Di-          adding to each element of µ a Gaussian noise  N (0, 2).
+versity algorithm, namely MAP-Elites (ME) (Cully et al.,
+2015).                                                           Finally, we build the next population by taking the offspring
+
+   We decide to employ these two EAs because they support        and the best parent, i.e., we employ a form of elitism.
+diversity, a substrate for evolvability, in radically different
+ways. While in ES the entire offspring is generated from a       At the end of the evolution, ES outputs a single best solu-
+prototype individual deriving from a small subset of the best
+parents, in ME the offspring is generated by randomly sam-       tion being the individual with the largest fitness in the popu-
+
+                                                                 lation at the last iteration of the algorithm.
+
+                                                                 MAP-Elites (ME). Multidimensional Archive of Pheno-
+
+                                                                 typic Elites (commonly known as MAP-Elites, here further
+
+                                                                 abbreviated as ME), was originally introduced by Cully et al.
+
+                                                                 (2015) for evolving robust behaviors in robots.
+
+                                                                 A key requirement in ME is the availability of some nu-
+
+                                                                 merical descriptors of the solutions: the descriptors should
+
+                                                                 be good at characterizing the solutions with respect to the
+
+                                                                 problem being tackled, but, ideally, they should be orthog-
+
+                                                                 onal with respect to the fitness. Formally, we denote by
+                                                                 d : G  Rm the function for computing the descriptors
+                                                                 d(g) = (d1(g), . . . , dm(g)) of an individual g. We assume
+                                                                 that each descriptor di(g) is defined in a bounded interval
+                                                                 Di = [di,min, di,max]. Given a number nbin of bins, each
+                                                                 individual can be mapped to the cell of an m-dimensional
+
+                                                                 grid by considering, for each descriptor di, the index of
+
+                                                                 the equal width bin of Di in which the descriptor value
+                                                                 falls. That is, we define the function c : G  Nm as
+
+                                                                 c(g) = (c1(g), . . . , cm(g)) where ci(g) = k  N such
+
+                                                                 that  di,min  +  k |Di|     di(g)  <  di,min  +  (k  +  1)  |Di |  with
+                                                                                                                             nbin
+                                                                                     nbin
+
+                                                                 |Di| = di,max - di,min. We say that c(g) are the coordinates
+
+                                                                 of g in the descriptor grid.
+   Differently from ES, ME does not evolve a fixed-size pop-      VSR representations. We consider four different ways of
+ulation of individuals: the population, called here archive,
+can increase in size during the evolution, up to mnbin indi-      mapping numerical vectors to VSRs. They result from the
+viduals, yet never decreases. At the beginning of the evo-
+lution, we populate the initially empty archive A by repeat-      combination of two options for two axes: direct vs. indirect
+ing the following steps ninit times: first, we randomly gen-
+erate a new individual g, then, we add g to A if no other         representation; body and brain vs. brain only.
+individual g exists in A at the same coordinates, i.e., such
+that c(g) = c(g), or, otherwise, if such g exists and             The direct representation for brain only optimization (DB)
+f (g)  f (g). In the latter case, we remove g from A.
+                                                                  works as follows. Given a body consisting of n voxels, we
+   After the initialization, we iterate the following steps       map a vector g  Rp, with p = 2n, to a VSR with the given
+(generations) until we have done neval fitness evaluations.
+We select nparent individuals from A with uniform probabil-       body and equipped with the sinusoidal controller where, for
+ity as parents. For each parent g, we apply a genetic operator
+(mutation) o : G  G and obtain a child g = o(g). Then             each i-th voxel, the frequency is the i-th element of the first
+we add g to A as in the initialization procedure, i.e., if no
+other individual g exists in A such that c(g) = c(g) or,          half (f ) of g and the phase is the i-th element of the second
+otherwise, if such g exists and f (g)  f (g). In the latter
+case, we remove g from A.                                         half () of g, with g = [f ]. Since we use, for this rep-
+
+   At the end of the process, the algorithm does not return a     resentation, a 10-voxel body, that we call "biped", with two
+single best individual, but the entire archive A (from which,
+in principle, one may choose as single best solution the one      voxels as "legs" and a "trunk" of 4 × 2 voxels , it follows
+with the highest fitness value).
+                                                                  that for this representation we have p = 20. We schematize
+   Since in this study we work with numerical vectors as
+individuals, also in ME we use as mutation the Gaussian           this representation in Figure 2a.
+mutation that we adopt in ES, i.e., o(g) = g + , where
+ = (1, . . . , p) and i  N (0, 2). Accordingly, we                The indirect representation for brain only optimization
+build each of the ninit initial individuals by sampling the uni-
+form distribution in [-1, 1], as in ES.                           (IB) is based on the concept of Gaussian Mixture Model
+
+Evolving VSRs with ES and ME                                      (GMM) (Lindsay, 1995) and has already been used for
+
+We want to evolve VSRs for the task of locomotion, i.e.,          2D VSRs by Medvet et al. (2020b): it works as follows.
+moving along a surface as fast as possible, using the EAs
+described above. For this purpose, we need to define the          Let nGMM be the number of bi-variate Gaussian models in
+solution representation, i.e., how to map a numerical vector      the mixture and let w × h the size of a 2D grid enclosing
+g  Rp to a VSR, and the fitness function that quantifies the
+degree to which a VSR is doing locomotion. Moreover, for          the VSR body--i.e., in the case of the biped, w = 4,
+ME we also need to define the descriptors, i.e., some quan-
+titative measures suitable for characterizing VSRs doing lo-      h = 3. Each bi-variate Gaussian is described by five
+comotion. In the following, we describe the choices adopted
+in this study for the fitness function, the representation, and   parameters: µx, µy, x, y, and . We first map an
+the descriptors.
+                                                                  individual g  Rp, with p = 2 · 5nGMM to two sets of
+Fitness function for locomotion. Given a VSR, we per-
+form a simulation lasting 60 s (simulated time) where the         nGMM bi-variate Gaussian models, one for the frequency,
+VSR is initially placed right above an terrain. We take
+as fitness of the VSR its average velocity vx along the x-        M f = µfx,i, µyf,i, xf,i, yf,i, f,i i, and one for the
+axis measured by considering its center of mass position at       phase, M  =    µx,i, µy,i, x,i, y,i, ,i
+t = 0 s and at t = 60 s.                                                                                           , of a sinu-
+
+   To make the task slightly more challenging, we consider                                                        i
+a hilly terrain, instead of a flat, even terrain. The height of   soidal controller; when mapping to x and y, we take the
+the terrain varies randomly along the x-axis: we use a single
+randomly generated terrain for all the experiments.               absolute value of the corresponding elements of g. Then,
+
+                                                                  we build a VSR with the given body and with a sinusoidal
+
+                                                                  controller where frequencies and phases are determined as
+
+                                                                  follows. For a voxel at position x, y (in the w × h 2D grid),
+
+                                                                  we set the frequency to f = F x,y = mix(x, y; M f ) =
+
+                                                                           f,i                   + (x-µxf,i) 2  (y-µfy,i) 2
+                                                                  exp - nGMM               1                        yf,i     ,
+                                                                                                     xf,i
+                                                                  i=1 2xf,iyf,i            2
+
+                                                                  where x  =  x  and y  =  y  .  Similarly,  we set the phase to
+                                                                              w            h
+                                                                   = x,y = mix(x, y; M ). In our experiments, we set
+
+                                                                  nGMM = 5 and apply this representation to the biped, hence
+
+                                                                  p = 50. We schematize this representation in Figure 2b.
+
+                                                                  The direct representation for body and brain (DB2) works
+
+                                                                  as follows. Let nsize be the side of a square enclosing the
+
+                                                                  largest representable body, i.e., a square of nsize × nsize vox-
+                                                                  els. We first take the vector g  Rp, with p = 3n2size
+                                                                  and reshape it to three matrices B, F , , each defined in
+                                                                  R . nsize×nsize We transform B to a Boolean matrix B =
+                                                                  {T, F}nsize×nsize where Bx ,y is set to true if and only if bx,y
+                                                                  is greater or equal than the median value of B. Then, we
+
+                                                                  build the body by considering the largest connected compo-
+                                                                  nent of B elements set to true and putting a voxel in the
+
+                                                                  square at the coordinates of each element of such set. Fi-
+
+                                                                  nally, we build a sinusoidal controller for the body where
+
+                                                                  the frequency and phase for each voxel at coordinates x, y
+
+                                                                  are taken from the corresponding elements of F and . In
+             g                f                                seconds of the VSR, we proceed as follows. First, we build
+                                                               two binary signals back, front : [0, tf ]  {0, 1}. At each
+                    (a) Direct brain only (DB)                 t, back(t) is 1 if at least one point of the leftmost half of
+                                                               the VSR was in contact, at t, with the ground, and 0 other-
+      g                                                        wise; with point of the leftmost half we mean a point whose
+                                           F                   x-coordinate is lower than the x-coordinate of the center of
+                                                               mass of the VSR. Similarly, forward(t) considers the right-
+                    Mf M                                       most half of the VSR. Then, we compute the Fast-Fourier
+                                                               Transform for both signals and, for each one, we compute
+                    (b) Indirect brain only (IB)               the amount of energy in the band 0 Hz­2 Hz and in the band
+                                                               0 Hz­5 Hz. Finally, we define the descriptors back and front
+Figure 2: Processing steps of the DB and IB representations    as the rate between the 0 Hz­2 Hz and 0 Hz­5 Hz energies
+                                                               for the back and front signals; both descriptors are defined
+for the brain only, starting from the numerical vector g to    in [0, 1]. Intuitively, the lower the gait pace, the greater the
+                                                               value of the descriptors.
+the final VSR. Grids of gray squares represent vectors (e.g.,
+
+    R3) or matrices (e.g.,  R3×2).                represents
+
+a bi-variate Gaussian model with its 5 parameters.             Measuring and visualizing evolvability
+
+our experiments we set nsize = 10, hence p = 300. We           As discussed earlier, evolvability is a characteristic of an
+schematize this representation in Figure 3a.                   evolutionary system that describes how much it is able to
+                                                               generate different and better performing individuals.
+   Finally, the indirect representation for body and brain
+                                                                  In this study, we define evolvability as a measure of an
+(IB2), based on GMM too, works as follows. Let nsize be the    individual at a given iteration during the execution of an it-
+side of a square enclosing the largest representable body and  erative EA. Formally, we define the evolvability e(g, i) of an
+                                                               individual g at iteration i as:
+let nGMM be the number of bi-variate Gaussian models in the
+
+mixture. We first map a g  Rp, with p = 3 · 5nGMM to three                               1
+                                                                          e(g, i) =
+sets of nGMM bi-variate Gaussian models, M b, M f , and                                 |Cg,i| gCg,i    f (g) - f (g),                (1)
+
+M , as for the IB case. We build a matrix B  Rnsize×nsize
+
+by setting each element Bx,y = mix(x, y; M B), with
+                        . y
+x  =   x     and y  =         Then, we build a body from B     where Cg,i is the multiset of all the individuals generated
+      nsize            nsize                                   from g, i.e., its children, up to iteration i and f (g) is the
+through an intermediate Boolean matrix B, as in the DB2
+
+case, but with 0.5 as threshold instead of the median of B.    fitness of the individual g.
+
+Finally, we build a sinusoidal controller for the body where   While for ME the notion of children of an individual is
+
+the frequency and phase for each voxel at coordinates x, y     trivial, since each (non-initial) individual has exactly one
+are set to f = mix(x, y; M f ) and  = mix(x, y; M ).
+                                                               parent, in ES we assume that all the npop - 1 individuals
+                                                                                                                                npop
+In our experiments we set nsize = 10 and nGMM = 5, thus        generated  at  a  given  iteration  are  children  of  all  the   4    par-
+p = 75. We schematize this representation in Figure 3b.
+                                                               ents chosen at that iteration.
+
+                                                               For providing an aggregate view of the evolvability of
+
+VSR descriptors. We consider two sets of two descrip-          an entire EA execution based on the individual measure
+tors: one characterizes the VSR body only, and the other
+characterizes the behavior, hence implicitly both together     of Equation (1), and with the aim of balancing the trade-
+characterize the body and the brain. We use the former when
+using ME with the DB2 and IB2 representations, hence when      off between detail and compactness of that view, we pro-
+evolving body and brain, and the latter when using ME with
+the DB and IB representations, hence when evolving the         ceed as follows. During the execution of the EA, given
+brain only.
+                                                               some descriptors d1, . . . , dm, each defined as di : G 
+   As body descriptors, we simply consider the width and
+height of the smallest 2D grid enclosing the VSR body.         [di,min, di,max], and a number nbin of bins, we maintain an
+Note that in our experiments, both descriptors are defined     initially empty archive A with the same update policy of
+in [1, 10]  N, since nsize = 10 for DB2, IB2 and bodies are
+at most 10 × 10 large. We denote these descriptors by w and    ME: whenever a new individual g is generated in the EA, it
+h respectively.                                                is added to A if no other individuals exist in A at the same
+
+   For the behavior descriptors, we consider the temporal      coordinates of g and it replaces, if any, the existing individ-
+pattern according to which the VSR touches the ground
+when doing locomotion. In detail, given a simulation of tf     ual at those coordinates. At the end of the evolution, we
+                                                               analyze the individuals in A by looking at their fitness and
+
+                                                               evolvability. Namely, if we use two descriptors, we can plot
+                                                               the values of f (g) and e(g, ilast) of each g  A in the form
+                                                               of two color maps, ilast being the last iteration in the EA ex-
+                                                               ecution. We refer to these plots as fitness and evolvability
+
+                                                               maps, respectively.
+   g
+
+      B     F                                                         B  F     
+
+               (a) Direct body and brain (DB2)
+
+g
+
+   Mb Mf M     B                                               F            B    F            
+
+               (b) Indirect body and brain (IB2)
+
+Figure 3: Processing steps of the DB2 and IB2 representations for body and brain, starting from the numerical vector g to
+
+the final VSR. The visual syntax is the same of Figure 2; moreover, grids of pink squares represent Boolean matrices (e.g.,
+ {T, F }2×2).
+
+   Note that this way of tracking the evolvability of an EA                     Brain only with DB and IB
+execution does not interfere with the EA execution. In par-           10
+ticular, in the case of ME, A and A might be different, if
+based on different descriptors, domains, or numbers of bins.          8
+Nevertheless, we use for A, while executing both ME and
+ES, with the same parameters used for A in ME.                    vx  6
+
+         4 Experiments and discussion                                 4
+
+We performed several evolutionary runs with the aims of               2
+(a) understanding if and how different EAs and represen-
+tations produce different fitness and evolvability maps and           0
+(b) discovering relationships between fitness and evolvabil-
+ity maps.                                                             10 Body and brain with  DB2 and  IB2
+
+   For each of the eight combinations of representation (DB,          8
+IB, DB2, IB2) and EA (ES, ME), we performed 10 evolu-
+tionary runs (with different random seeds) and the following      vx  6
+parameters.
+                                                                      4
+   For both ES and ME, we set 2 = 0.35 and neval =
+25 000. For ES, we set npop = 20. For ME, we set                      2
+nparent = 20, nbin = 10, and, as descriptors, w, h with DB2
+and IB2 and back, front with DB and IB.                               0
+                                                                       0 5 000 10 000 15 000 20 000 25 000
+   For DB and IB, we used the biped body . For IB and
+IB2, we set nGMM = 5. For DB2 and IB2, we set nsize = 10.                      Fitness evaluations
+As a result, the dimension of the search space Rp was 20,
+50, 300, and 75, respectively for DB, IB, DB2, and IB2.           Figure 4: Fitness vx (median ± standard deviation across
+                                                                  the 10 runs) of the best individual in the during the evolution
+   Finally, for computing the fitness and evolvability maps       for the two EAs ( ES and ME) and the 4 represen-
+out of A for each EA execution, we used the same descrip-         tations, grouped in brain only (above) and body and brain
+tors and nbin value used in ES, i.e., nbin = 10 and w, h with     (below).
+DB2 and IB2 and back, front with DB and IB.
+                                                                  task of locomotion. Figure 4 shows the trend of the fitness:
+   The code for the experiments is publicly available at          at each iteration of the EA for each of the 8 combinations,
+https://github.com/ndr09/VSRevo.                                  the figure shows the median ± the standard deviation, com-
+                                                                  puted across the 10 executions, of the fitness vx of the best
+Overview: VSRs fitness and search efficiency                      individual at that iteration.
+
+As initial point, we discuss the outcome of the evolutionary         First of all, we observe that all the approaches are able
+runs in terms of the effectiveness of the evolved VSRs in the     to produce effective solutions, achieving final best fitness
+                                                                  values between 3, with the IB2, and 8 with the DB2+ME
+                                                                  Values are in m s-1; as a reference, the side of each voxel is
+ES+DB2  ES+DB2  ME+DB2  ES+IB2  ME+IB2                                                  (a) VSRs evolved with ES+DB2
+ME+DB2
+ES+IB2      -    1.00   0.0009   0.0030                                                  (b) VSRs evolved with ES+IB2
+ME+IB2   0.016       -  0.0002   0.0002
+         1.00                    1.00                                                   (c) VSRs evolved with ME+DB2
+         1.00    1.00       -
+                 1.00   0.1818      -                                                   (d) VSRs evolved with ME+IB2
+
+Table 1: Table of p-values obtained with the Mann-Whitney           Figure 5: Body of the best robots at the end of the evolution
+U test with Bonferroni correction on the final fitness reached      for the DB2 and IB2 representations and the two EAs.
+in the brain and body evolution. The alternative hypothesis
+was set to check if the distribution in the row was greater         tom row, red-violet colors) maps, one pair of maps for each
+than the one on the column. The entries indicated in bold           combination of EA and representation. Each single map is
+rejects the null hypothesis with the corrected significance         obtained from 10 evolutionary runs: since individual runs
+level of  = 0.003.                                                  can cover different portions of the descriptor grid, each cell
+                                                                    in the overall map results from up to 10 corresponding cells
+3 m long. In the other 5 cases, the final best fitness is  6.       of the individual maps. In particular, we use the median
+   Concerning the efficiency of the evolutionary optimiza-          value of the cell value in the overall map.
+
+tion, we observe that the chosen value for neval appears to            The most apparent finding resulting from Figures 7 and 8
+be large enough to let every combination converge to good           is that the maps for the evolvability are similar for the same
+solutions. Nevertheless, there are some differences among           EA regardless of the representation. On the other hand, the
+the combinations. The convergence happens earlier in the            fitness maps differ for representation and are similar for the
+body and brain case, taking only  2000 and  7000 fitness            EA--the latter being more evident for the brain only case.
+evaluations for IB2 and DB2, respectively, vs. the larger val-
+ues of the brain only case, 13 000 and 19 000 for IB and DB,           As regards the brain only case shown in Figure 7, we
+respectively. In the brain only case, the indirect represen-        recall that the map is based on the behavioral descriptors
+tation seems to enable a faster convergence than the direct         back and front descriptors, i.e., they indicate how the robots
+one, despite the larger search space (p = 50 vs. 20).               move. We can see that faster robots have low back and front
+                                                                    values: their energy is spent more in the 2 Hz to 5 Hz band
+   While in the brain only case there are no apparent differ-       than in the 0 Hz to 2 Hz band, i.e., they move they limbs at
+ences in the final best fitness, i.e., in the effectiveness of the  higher frequencies. Concerning the evolvability, the maps
+evolutionary search, among the four cases, in the body and          show that the evolvability is, generally, smaller than 0. This
+brain case the direct representation appears to be more ef-         indicates that the initial heritable individuals are replaced in
+fective than the indirect one, the former obtaining vx values       the map, as fitter individuals are generated. Moreover, we
+that are 2 to 2.5 times larger than the latter. The EA does not     see a good match between the evolvability and fitness map:
+appear to play a role when coupled with IB2, as confirmed           good fitness is related to low evolvability, which is expected,
+by the Mann-Whitney U test (Table 1).                               as it becomes harder, while the evolution progress, that high
+                                                                    performing individuals produce better offspring.
+   For explaining this performance gap, we observed the
+evolved VSRs for the body and brain case--see Figure 6 for             In the body and brain optimization shown in Figure 8,
+an example of a robot behavior. We show all the 10·4 bodies         maps are based on body descriptors w and h. The maps
+evolved in the body and brain case in Figure 5. The most ap-        shows that almost all the cells are covered, meaning that all
+parent difference between VSRs evolved with DB2 and IB2
+is in the size, i.e., the number of voxels consituting the body.
+IB2 are in general much larger: this is the combined effect of
+the different threshold being applied while building B and
+the fact that IB2, based on GMM, favors regular shape, and
+hence larger connected components, by design. Despite the
+fact that big and regular shapes have potentially more power
+to control the movement, Talamini et al. (2021) show that
+irregularity in the shape is an enabling factor for faster and
+more robust robots.
+
+Fitness and evolvability maps
+
+We here discuss the evolutionary runs in terms of the inter-
+play between evolvability and fitness. Figures 7 and 8 show
+the fitness (top row, greenish colors) and evolvability (bot-
+Figure 6: Frames of the simulation of one of the evolved VSRs (run 2 of ES+IB2, see Figure 5b) doing locomotion. More
+videos of the behavior of evolved VSRs are available at https://youtu.be/nDUjq1VebsE.
+
+  ES+DB ES+IB ME+DB ME+IB                                         vx  of this approach; the filling of the map is driven by the fit-
+                                                                6     ness: hence the historic information about the evolvability
+                                                                4 e   of individuals is lost when they are replaced. We plan to
+                                                                2     address this limitation as future work.
+                                                                0 vx
+                                                                1             5 Conclusions and future works
+                                                                0 e
+                                                                -1    We proposed the use of MAP-Elites as support structure for
+                                                                      the calculation and visualization of evolvability. We tested
+Figure 7: Fitness (top row) and evolvability (bottom row)             this approach on a locomotion task carried out by Voxel-
+maps for the DB and IB representations and the two EAs:               based Soft Robots, where we considered two different EAs
+back and front are used as descriptors.                               (MAP-Elites and Evolution Strategies), with two genotypic
+                                                                      representations (direct and indirect), applied to two opti-
+ ES+DB2 ES+IB2 ME+DB2 ME+IB2                                          mization settings (robot brain only, and body and brain).
+                                                                6
+                                                                4        Our results show that, given a predefined phenotypic
+                                                                2     space (in the form of a descriptor grid, as in MAP-Elites),
+                                                                0     the distribution of evolvability over it (measured as the av-
+                                                                1     erage difference in fitness between the offspring and their
+                                                                0     parents, considering only the offspring inserted in the grid
+                                                                -1    during the evolutionary process), is mostly determined by
+                                                                      the adopted EA. On the other hand, the distribution of fit-
+Figure 8: Fitness (top row) and evolvability (bottom row)             ness over the same phenotypic space depends, in our experi-
+maps for the DB2 and IB2 representations and the two EAs:             ments, on the adopted representation. Overall, these findings
+w and h are used as descriptors.                                      suggest that evolvability is not an intrinsic property of the
+                                                                      fitness landscape, or the genotypic representation, but rather
+the different sizes are found with the difference that DB2            it stems from multiple factors, including the EA being used
+tends to avoid 1 × n (and n × 1) bodies. Differently from the         and its capability to keep diversity and generate better solu-
+previous case, here there are no regions in the grid with high        tions over time.
+fitness values. This is probably because it is harder to find
+good individual, while optimizing both the body and brain.               In future works, we will extend the analysis of evolvabil-
+For what concerns the evolvability map, we note that there            ity to the case of sensor evolution and learning, which have
+are some grid portions with positive evolvability. This is            been recently addressed in the context of VSRs in (Ferigo
+likely because in those areas the individuals are selected just       et al., 2021a, 2022) and (Ferigo et al., 2021b) respectively.
+few times for reproduction, they give origin to high perform-         Moreover, we will investigate how the proposed measure of
+ing offspring, but are never replaced by better individuals.          evolvability correlate with some specific features of the fit-
+                                                                      ness landscape, e.g., modality, as well as the behavior de-
+   Summarizing, the entanglement between the fitness and              scriptors, which in turn may depend on the specific task (in
+evolvability is related to the dynamics of the evolution. Neg-        the case of robots). Another possibility would be to em-
+ative values indicate that individuals in a cell generated less       bed a measure of evolvability into the evolutionary loop, for
+fit offspring, likely because they are themselves fairly fit.         instance in the selection step. However, our preliminary re-
+Positive values show that the individuals produced better             sults in this direction (not reported here for brevity) did not
+children and were not replaced. Unfortunately, it is not pos-         yield promising results. Finally, it would be interesting to
+sible to say if a cell in the map hosted an individual with           test our proposed approach to calculate evolvability on other
+good evolvability before being replaced by a fitter individ-          EAs, including e.g., novelty search (Lehman and Stanley,
+ual later in the evolution. This can be considered a limitation       2011a).
+                       References                                      Lehman, J. and Stanley, K. O. (2013). Evolvability is inevitable:
+                                                                             Increasing evolvability without the pressure to adapt. PloS
+Beyer, H.-G. and Schwefel, H.-P. (2002). Evolution strategies­a              one, 8(4):e62186.
+      comprehensive introduction. Natural computing, 1(1):3­52.
+                                                                       Lim, B., Grillotti, L., Bernasconi, L., and Cully, A. (2021).
+Carlo, M. D., Ferrante, E., Zeeuwe, D., Ellers, J., Meynen, G.,              Dynamics-aware quality-diversity for efficient learning of
+      and Eiben, A. E. (2021). Heritability in morphological robot           skill repertoires. CoRR, abs/2109.08522.
+      evolution. CoRR, abs/2110.11187.
+                                                                       Lindsay, B. G. (1995). Mixture models: theory, geometry and ap-
+Coppinger, R. P. and Smith, C. K. (1983). The domestication of               plications. In NSF-CBMS regional conference series in prob-
+      evolution. Environmental Conservation, 10(4):283­292.                  ability and statistics, pages i­163. JSTOR.
+
+Corucci, F., Cheney, N., Giorgio-Serchi, F., Bongard, J., and          Liu, D., Virgolin, M., Alderliesten, T., and Bosman, P. A. N.
+      Laschi, C. (2018). Evolving soft locomotion in aquatic and             (2022). Evolvability degeneration in multi-objective genetic
+      terrestrial environments: effects of material properties and           programming for symbolic regression.
+      environmental transitions. Soft robotics, 5(4):475­495.
+                                                                       Medvet, E., Bartoli, A., De Lorenzo, A., and Seriani, S. (2020a).
+Cully, A., Clune, J., Tarapore, D., and Mouret, J.-B. (2015). Robots         2d-vsr-sim: A simulation tool for the optimization of 2-d
+      that can adapt like animals. Nature, 521(7553):503­507.                voxel-based soft robots. SoftwareX, 12:100573.
+
+Darwin, C. (1875). The Variation of Animals and Plants under           Medvet, E., Bartoli, A., De Lorenzo, A., and Seriani, S. (2020b).
+      Domestication. John Murray, London, UK.                                Design, Validation, and Case Studies of 2D-VSR-Sim, an
+                                                                             Optimization-friendly Simulator of 2-D Voxel-based Soft
+Deb, K., Pratap, A., Agarwal, S., and Meyarivan, T. (2002). A fast           Robots. arXiv, pages arXiv­2001.
+      and elitist multiobjective genetic algorithm: Nsga-ii. IEEE
+      Transactions on Evolutionary Computation, 6(2):182­197.          Medvet, E., Daolio, F., and Tagliapietra, D. (2017). Evolvability
+                                                                             in grammatical evolution. In Genetic and Evolutionary Com-
+Ferigo, A., Iacca, G., and Medvet, E. (2021a). Beyond body shape             putation Conference, pages 977­984, New York, NY, USA.
+      and brain: Evolving the sensory apparatus of voxel-based               ACM.
+      soft robots. In EvoApplications 2021: Applications of Evolu-
+      tionary Computation, volume 12694, pages 210­226, Cham.          Mengistu, H., Lehman, J., and Clune, J. (2016). Evolvability
+      Springer.                                                              search: directly selecting for evolvability in order to study
+                                                                             and produce it. In Genetic and Evolutionary Computation
+Ferigo, A., Iacca, G., Medvet, E., and Pigozzi, F. (2021b). Evolving         Conference 2016, pages 141­148, New York, NY, USA.
+      hebbian learning rules in voxel-based soft robots. TechRxiv.           ACM.
+
+Ferigo, A., Medvet, E., and Iacca, G. (2022). Optimizing the sen-      Methenitis, G., Hennes, D., Izzo, D., and Visser, A. (2015). Nov-
+      sory apparatus of voxel-based soft robots through evolution            elty search for soft robotic space exploration. In Proceedings
+      and babbling. SN Computer Science, 3(2):1­17.                          of the 2015 annual conference on Genetic and Evolutionary
+                                                                             Computation, pages 193­200.
+Gajewski, A., Clune, J., Stanley, K. O., and Lehman, J. (2019).
+      Evolvability es: scalable and direct optimization of evolvabil-  Nordmoen, J., Veenstra, F., Ellefsen, K. O., and Glette, K. (2021).
+      ity. In Genetic and Evolutionary Computation Conference,               Map-elites enables powerful stepping stones and diversity for
+      pages 107­115, New York, NY, USA. ACM.                                 modular robotics. Frontiers in Robotics and AI, 8:1­17.
+
+Hiller, J. and Lipson, H. (2011). Automatic design and manufacture     Payne, J. L. and Wagner, A. (2019). The causes of evolvability and
+      of soft robots. IEEE Transactions on Robotics, 28(2):457­              their evolution. Nature Reviews Genetics, 20(1):24­38.
+      466.
+                                                                       Pigliucci, M. (2008). Is evolvability evolvable? Nature Reviews
+Katona, A., Franks, D. W., and Walker, J. A. (2021). Quality evolv-          Genetics, 9(1):75­82.
+      ability es: Evolving individuals with a distribution of well
+      performing and diverse offspring. arXiv:2103.10790.              Pugh, J. K., Soros, L. B., and Stanley, K. O. (2016). Quality diver-
+                                                                             sity: A new frontier for evolutionary computation. Frontiers
+Koler-Matznick, J. (2002). The origin of the dog revisited. An-              in Robotics and AI, 3:40.
+      throzoo¨s, 15(2):98­118.
+                                                                       Squillero, G. and Tonda, A. (2016). Divergence of character and
+Kriegman, S., Cheney, N., and Bongard, J. (2018). How morpho-                premature convergence: A survey of methodologies for pro-
+      logical development can guide evolution. Scientific reports,           moting diversity in evolutionary optimization. Information
+      8(1):1­10.                                                             Sciences, 329:782­799.
+
+Lehman, J. and Stanley, K. O. (2011a). Abandoning objectives:          Talamini, J., Medvet, E., and Nichele, S. (2021). Criticality-
+      Evolution through the search for novelty alone. Evolutionary           driven evolution of adaptable morphologies of voxel-based
+      computation, 19(2):189­223.                                            soft-robots. Frontiers in Robotics and AI, 8:172.
+
+Lehman, J. and Stanley, K. O. (2011b). Improving evolvabil-            Tarapore, D. and Mouret, J.-B. (2015). Evolvability signatures of
+      ity through novelty search and self-adaptation. In IEEE                generative encodings: Beyond standard performance bench-
+      Congress of Evolutionary Computation, pages 2693­2700,                 marks. Information Sciences, 313:43­61.
+      New York, NY, USA. IEEE.
+Veenstra, F., de Prado Salas, P. G., Stoy, K., Bongard, J., and Risi,  Wayne, R., Van Valkenburgh, B., and O'Brien, S. J. (1991). Molec-
+      S. (2020). Death and progress: How evolvability is influenced          ular distance and divergence time in carnivores and primates.
+      by intrinsic mortality. Artificial life, 26(1):90­111.                 Molecular Biology and Evolution, 8(3):297­319.
+
