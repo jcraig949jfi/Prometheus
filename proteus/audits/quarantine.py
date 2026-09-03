@@ -32,8 +32,12 @@ FOUNDRY = os.path.join(ROOT, "proteus", "foundry")
 FROZEN_TABLE = os.path.join(ROOT, "proteus", "contracts", "affordance_table.v0.json")
 sys.path.insert(0, ROOT)
 
+# base64 added 2026-09-03 after this audit FAILED on proteus/foundry/export.py. It is a pure
+# byte-to-ASCII encoder, it cannot carry natural language into a player, and export.py is on the
+# outbound SFE path and is never imported by vm.py, probes.py or signatures.py. The allowlist is
+# widened by exactly one stdlib name, with that justification, rather than by excluding the file.
 ALLOWED_STDLIB = {"hashlib", "json", "time", "typing", "math", "struct", "collections",
-                  "itertools", "os", "dataclasses", "__future__"}
+                  "itertools", "os", "dataclasses", "base64", "__future__"}
 FORBIDDEN_ANYWHERE = {"random", "socket", "urllib", "http", "subprocess", "ctypes", "pickle",
                       "importlib", "requests", "numpy", "torch", "transformers", "openai",
                       "anthropic", "tokenizers", "sentencepiece", "gensim", "sklearn"}

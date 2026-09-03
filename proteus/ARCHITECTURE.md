@@ -103,9 +103,10 @@ lineage and ancestry (A7). Refused: any score, any ranking, any label of interes
 - **Static reachability is approximate under self-modification.** `unreachable_removal` uses the
   initial tape; a writable genome may reach code the analysis calls dead. The operator records
   `approx: true` when `code_writable`.
-- **Opcode prior.** `op = word mod 25` gives opcode 0..6 a relative frequency of
-  (1 + 2^-32·…) — negligible but non-zero — over 7..24 because 2^32 mod 25 ≠ 0. Published here so
-  it is not discovered later.
+- **Opcode prior.** `op = word mod 25` is very slightly non-uniform because 2^32 mod 25 = 21.
+  Exactly: opcodes 0..20 have probability 171798692/2^32 and opcodes 21..24 have 171798691/2^32.
+  (Corrected 2026-09-03; this paragraph previously said "0..6", which was wrong. The figures are
+  now the analytic reference used by the V0.3 null controls.)
 - **Uniform initialisation** produces many organisms that halt or spin before emitting anything.
   That is a fact about the initial distribution, not a defect; V0 does not shape it (A8).
 - **The ensemble is small** (4 probes). Transcript equivalence on 4 probes is coarser than on 40;
