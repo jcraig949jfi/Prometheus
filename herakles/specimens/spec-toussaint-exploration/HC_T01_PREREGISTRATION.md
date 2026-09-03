@@ -71,31 +71,65 @@ To be reported: historical n, modern n, and the reason modern replication is req
 
 ---
 
-## 4. PRIMARY DETECTOR STATISTIC — BLOCKED ON T0
+## 4. PRIMARY DETECTOR STATISTIC, now frozen
 
-Cannot be frozen until the historical definition is recovered. It **must be Toussaint's own statistic**, not a Prometheus substitute. GATE-3 is closed: no invented measure.
+T0 has resolved this. The statistic is **Toussaint's own**, per GATE-3.
 
-To be filled from `TOUSSAINT_DETECTOR_SPEC.md`: the exact statistic, the sampling scheme, the sample count and its unit, whether distributions or scalars are retained, and the reported estimator noise.
+**Primary:** the **modular degree**, the summed probability that a variation at phenotype position `i` recurs at `(i + 5k) mod 25` for `k = 1..4`, estimated from 2000 sampled offspring per individual per generation and averaged over the offspring population of 100. It is chosen as primary because it is the statistic that measures the *structure* the mechanism is claimed to create, and because it is the one that cannot be confused with a fitness reading.
 
-If his statistic proves inadequate, that is **reported after the faithful test**, never substituted before it.
+**Secondary:** the **neutral degree**, `n = Xi_sigma(parent phenotype)`, same estimator, same averaging.
 
-## 5. SMOOTHING, LEAD-TIME WINDOW, CHANGE-POINT DEFINITION — BLOCKED ON T0
+**Tertiary, structural, not a scalar test:** the normalised mutual information matrix over the 25 phenotypic variables, tested for the period-5 stripe pattern.
 
-Cannot be chosen without knowing the estimator's noise level, since a change-point threshold below the noise floor is not a gate. This programme has already been burned twice by thresholds set without reference to their own standard error, and once by a gate above the maximum attainable value.
+**Explicitly excluded from the primary analysis:** `avgfit`, the mean fitness of sampled offspring that the recovered source code computes and no publication reports. It is recorded because it is historically interesting and because it is the most direct evolvability statistic in the programme, but it is **mathematically coupled to the outcome by construction** and is therefore inadmissible for the T2 precedence claim. It is reported separately and never as evidence of precedence.
 
-**Rule fixed now:** the detector change threshold must exceed the estimator's own noise, measured empirically in the shakedown, and the attainable range must be computed before the threshold is set.
+## 5. TRAP RESOLUTION, and what it forces
 
-## 6. NULL MODEL — BLOCKED ON T0
+### TRAP 1 is LIVE. The mechanical-effect null is mandatory.
 
-Two nulls are required, and the first is not optional:
-1. **Mechanical-effect null** (section 1): the arms' detector difference with evolution disabled.
-2. A null that perturbs the axis the statistic varies on. Its form depends on the recovered physics.
+`beta` is the rate of second-type mutations, and second-type mutations are part of the very operator that induces `Xi_sigma`. Turning `beta` to zero changes the offspring distribution immediately, at generation zero, before any evolution has occurred. **"The arms differ on the detector" is therefore true by construction and is not a finding.**
 
-## 7. HISTORICAL VALIDATION TARGETS — BLOCKED ON T0
+The preregistered claim is consequently not that the arms differ, but:
 
-At least three independent historical observables must be hit before HC-T01 is interpreted at all. They must be independent of the missing-cell result. Recorded in `HISTORICAL_VALIDATION_TARGETS.md`. If the reconstruction misses them materially, the verdict is `RECONSTRUCTION_FAILS` and HC-T01 is not interpreted.
+> Does the detector divergence between arms **exceed the generation-zero mechanical-effect null**, and does it **grow over generations** as populations restructure themselves?
 
----
+The mechanical-effect null is measured as specified in section 1: identical initial population, each arm's operator settings, no selection, no reproduction, detector read at generation zero. It is run **before** the treatment runs.
+
+If the observed divergence is fully accounted for by the mechanical null at all times, the verdict is **N5-adjacent** and the finding is negative.
+
+### TRAP 2 is NOT fatal, and a genuine plateau exists.
+
+The detector and the outcome are not two readings of one quantity. Fitness in Experiment 2 is the negative percentage of symbols mismatching the target. The modular degree is a property of the offspring distribution's correlation structure. Toussaint himself notes that in Experiment 2, unlike Experiment 1, the pressure on sigma-evolution is "not only the neutral degree but the symmetric structure of the fitness distribution", which is a statement that the two came apart in this experiment.
+
+The coupling check of section 1 is still run, in both forms, before any T2 claim.
+
+A plateau window exists in the historical record and is therefore preregistered as the T2 window:
+- the interval between the early "few small steps" and the later "huge steps of innovation" in the `beta > 0`, `alpha = 0.03` cell;
+- the extended plateau at about 20 percent non-optimal symbols in the `beta = 0`, `alpha = 0.06` cell.
+
+**T2 is attempted only inside a window where the run-level outcome slope is not distinguishable from zero.**
+
+### Consequence for the claim ladder
+
+T1 is available. T2 is available, conditional on the coupling check. **T3 is available**, because acquisition in this experiment is the acquisition of a modular encoding of a structured target, not a scalar speed on a unimodal sphere. This is the decisive difference from the CEC 2002 experiment, and it is why the thesis and not the CEC paper is the specimen.
+
+## 6. SMOOTHING, LEAD-TIME WINDOW, CHANGE-POINT DEFINITION
+
+Still not fixed, and deliberately so. **No threshold will be chosen before the shakedown measures the estimator's own noise**, because the historical record reports no uncertainty of any kind for this detector, so no historical noise floor exists to inherit.
+
+Rules fixed now, before any data:
+1. The detector change threshold must **exceed** the estimator's empirically measured standard error, and the standard error is computed **before** the threshold is chosen.
+2. The **attainable range** of each statistic is computed before any gate is read. The modular degree is a bounded sum of probabilities; the neutral degree is a probability. A gate above the attainable maximum cannot fire, and this programme has already burned a pass that way.
+3. Smoothing, if any, is chosen from the noise measurement and frozen, and the unsmoothed series is reported alongside.
+
+## 7. NULL MODELS
+
+Two, and the first is not optional.
+
+1. **Mechanical-effect null.** Section 5 above. Generation zero, no evolution, per arm.
+2. **A null that perturbs the axis the statistic varies on.** The modular degree is a statement about *which positions co-vary*. The corresponding null is a **position-permutation null**: recompute the modular degree under a random permutation of phenotype positions, which destroys the period-5 structure while preserving every marginal variation probability. A row-shuffle or a run-label shuffle would be degenerate here, because it does not perturb the co-variation axis.
+
+Additionally, and separately from the nulls, the **unit of analysis is the run** as fixed in section 3, and every uncertainty is computed across runs.
 
 ## 8. THE SENTENCE THAT STAYS IN THE REPORT
 
@@ -114,3 +148,25 @@ Broader exploration precedes adaptation. Narrower exploration precedes adaptatio
 And the eight first-class negatives from directive section 20, of which N3, N5 and N7 are currently the most likely on the seat's own reading: the lead is mathematically coupled to the outcome; the mechanism changes fitness without changing accessibility; or the combined experiment already exists historically.
 
 **No direction is preferred, and the missing-cell hypothesis will not be rescued.**
+
+---
+
+## 10. THE SHAKEDOWN, fixed before execution
+
+Per directive section 13, the confirmatory set does not run until a shakedown confirms five things. The shakedown is the first thing that runs if the gate opens, and it is **Experiment 1 only**, which contains no ablation and therefore cannot leak information about the missing-cell result.
+
+1. **Historical baseline reproduces.** Targets V1 and V2 of `HISTORICAL_VALIDATION_TARGETS.md`: genome length 25 down to 11 by about generation 200, neutral degree 0.45 up to 0.7 over the same interval.
+2. **Detector values reproduce historical examples.** V2 is the only historical detector value in the record, so it carries this alone. V4, the period-5 stripe structure of the mutual information matrix, is the structural companion.
+3. **Estimator noise is characterised.** Repeat the 2000-sample estimate `k` times on identical frozen parents and report the standard error of each statistic. **This is the number that sets every later threshold, and it does not exist in the historical record.** Also sweep the sample count below and above 2000 to show where the estimate stabilises, which tells us whether Toussaint's choice was adequate.
+4. **Seeds replay deterministically.** Same seed, same trajectory, bit for bit.
+5. **Treatment ordering resembles the historical paper.** Deferred to the first ablation runs, since Experiment 1 has no arms.
+
+Only after all five pass does the confirmatory grid run. If item 1 or 2 fails, the verdict is `RECONSTRUCTION_FAILS` and HC-T01 is not interpreted, per directive section 14.
+
+## 11. WHAT WOULD MAKE THIS EXPERIMENT WORTHLESS, stated in advance
+
+- The mechanical-effect null accounts for the entire between-arm detector difference at all times. Then the mechanism moves the detector definitionally and we have learned arithmetic.
+- The estimator's noise at 2000 samples is larger than the between-arm difference. Then the historical instrument cannot see its own experiment, which is a real finding about the instrument, reported as N6.
+- The reconstruction misses V1, V2 or V6. Then we are not running Toussaint's experiment and nothing about his record follows.
+
+Each of these is a first-class negative and each is reported, not rescued.

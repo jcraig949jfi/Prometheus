@@ -1,0 +1,1759 @@
+Internal Report IRINI 2001-05
+
+Self-adaptive exploration in evolutionary search
+
+Marc Toussaint May 17, 2001
+Institut f(cid:127)ur Neuroinformatik, Ruhr-Universit(cid:127)at Bochum, ND 04, 44780 Bochum|Germany
+mt@neuroinformatik.ruhr-uni-bochum.de
+
+Abstract
+
+We address a primary question of computational as well as biological research on evolution: How can an exploration
+strategy adapt in such a way as to exploit the information gained about the problem at hand? We (cid:12)rst introduce an
+integrated formalism of evolutionary search that provides a uni(cid:12)ed view on di(cid:11)erent speci(cid:12)c approaches. On this basis
+we discuss the implications of indirect modeling (via a \genotype-phenotype mapping") on the exploration strategy.
+Notions such as modularity, pleiotropy and functional phenotypic complex are discussed as implications.
+
+Then, rigorously re(cid:13)ecting the notion of self-adaptability, we introduce a new de(cid:12)nition that captures self-adaptability
+of exploration: di(cid:11)erent genotypes that map to the same phenotype may represent di(cid:11)erent exploration strategies
+(also topologically di(cid:11)erent); self-adaptability requires a variation of exploration strategies along such a \neutral
+space". By this de(cid:12)nition, the concept of neutrality becomes a central concern of this paper.
+
+Finally, we present examples of these concepts: For a speci(cid:12)c grammar-type encoding, we observe a large variability
+of exploration strategies for a (cid:12)xed phenotype, and a self-adaptive drift towards short representations with highly
+structured exploration strategy that matches the \problem’s structure".
+
+Keywords
+
+Exploration, self-adaptability, evolvability, neutrality, modularity, pleiotropy.
+
+I
+
+Introduction
+
+Typically, when a problem is given, the space of all potential solutions is too large to try all of them in
+reasonable time. If not making any further assumptions on the problem, there neither exists a preferable
+strategy to search for solutions. Usually though, one assumes that the problem is not notoriously arbitrary,
+that it has some \structure" and that there might exist some smart strategies to explore the space. More
+speci(cid:12)cally, one hopes that one can draw information from the quality of previously explored solutions
+on how to choose new explorations. For example, when assuming some \continuity"1 of the problem, one
+may search further in regions of previously explored good solutions.
+
+More generally, one may assume that the statistics of previous explorations characterize the problem.
+Then, a good strategy is to (cid:12)nd correlations between certain characters (parameters) of the solution
+and the solution’s quality, (cid:12)nd mutual information between the characters of good solutions. All this
+information is exploited to choose further explorations. In essence, the latter approach will explore only
+a tiny part of P , strongly dependent on early explorations that have been successful. Found solutions
+may lay no claim to be globally optimal; they are a further development of early successful concepts.
+
+The central questions become: How can we analyze the statistics of previously explored and evaluated
+solutions? How can we represent this gained information? How can we model an exploration strategy
+depending on this information?
+
+A possible, direct approach to these questions are statistical models of exploration. For example, a
+Bayesian network can encode the probability of future explorations (the exploration density) and is trained
+
+1which requires to identify a topology on the search space
+
+1
+
+Internal Report IRINI 2001-05
+
+with previously successful solution parameters (as done by Pelikan, Goldberg, & Cant(cid:19)u-Paz (2000), see
+appendix A).
+
+In contrast, we will argue that the exploration strategy can be modeled by a mapping onto the solution
+space, a genotype-phenotype mapping. This means that a (simple) density on a base space (genotype) is
+lifted to the exploration density on the search space (phenotype). The implications of such an ansatz are
+far-reaching. An exploration density now exists on both, the base space and the search space. In both
+spaces notions as neighborhood or topology are constituted by the exploration density. In this respect,
+the genotype-phenotype mapping is a lift of (topological) structure from the base space to the search
+space.
+
+To investigate the implications, we make the simplifying assumption that the exploration density on
+the base space is one of independent random variables. Then, for a given mapping, we investigate the
+exploration density on the search space; in particular the correlations and mutual information between
+phenotypic variables. This structuredness of phenotypic exploration coherently implies notions as \mod-
+ularity" and \functional phenotypic complex". Concerning the adaption of this structure, we will argue
+for a self-adaptive mechanism in place of a statistical analysis of characters of good solutions. A major
+goal of this paper is formal and notational clarity of such issues.
+
+The outline of the paper is as follows: The next section introduces a general notation of evolutionary
+search that emphasizes the role of the exploration density in the search space and its parameterization.
+Then, in section III, we turn to the idea of indirect modeling, i.e., to organize phenotypic search by
+introducing an additional genotype space and a genotype-phenotype mapping. Next, in section IV, we
+ask how exploration can be adapted, especially in the case of indirect modeling. We re(cid:13)ect and criticize
+the common de(cid:12)nition of self-adaptability and propose a new de(cid:12)nition that is based on the notion
+of neutrality: Di(cid:11)erent genotypes that map to the same phenotype may represent (also topologically)
+di(cid:11)erent exploration densities. By this de(cid:12)nition, neutrality becomes a central concern and we brie(cid:13)y
+review other research on this subject in order to argue for the plausibility of our interpretation. Finally, in
+section V we exemplify all these concepts with a running system. Simulations show that the exploration
+density adapts to the problem structure by (self-adaptive) walks on neutral sets. In particular, the pair-
+wise mutual information between phenotypic variables resembles the modularity of the (cid:12)tness function.
+We also observe and explain a drift towards short representations. The experiments are based on a
+grammar-type recursive encoding, which is motivated by the previously developed concepts.
+
+II The central role of the exploration model
+
+The goal of this section is to show that a central concern of evolutionary search, esp.
+algorithms,
+evolutionary algorithms is their ansatz to model exploration.
+
+evolutionary
+is the modeling of exploration. We will show that the main di(cid:11)erence between speci(cid:12)c
+
+Perhaps the most general idea of stochastic search, global random search, is described by Zhigljavsky
+
+(1991). The formal scheme of global random search reads:
+
+(i) Choose a probability distribution on the search space P .
+
+(ii) Obtain points s(t)
+
+1 ; : : : ; s(t)
+
+(cid:21) by sampling (cid:21) times from this distribution. Evaluate the quality of these
+
+points.
+
+(iii) According to a (cid:12)xed (algorithm dependent) rule construct a new probability distribution on the
+
+search space P .
+
+2
+
+Internal Report IRINI 2001-05
+
+(iv) Check some appropriate stopping condition; if the algorithm is not terminated, then substitute
+
+t   t + 1 and return to step (ii).
+
+This concept is general enough to include also evolutionary algorithms. However, the formulation lacks to
+stress that the exploration density needs to be parameterized (and instead stresses the choice of update
+rule in step (iii)). Our formalism focuses this parameterization of exploration densities:
+
+In general we assume that the task is to (cid:12)nd an element p in a search space P that is \superior" to
+all other points in P . Here, superiority is de(cid:12)ned in terms of a quality measure for the search problem at
+hand (usually a (cid:12)tness function). If P is too large to evaluate the quality of all p 2 P , the strategy is to
+explore only a few points (p1; ::; p(cid:21)), evaluate their quality, and then try to extract information on where
+to perform further explorations. We capture this view on evolutionary search in an abstract formalism
+that is capable to unify the di(cid:11)erent speci(cid:12)c approaches. Below, we exemplify each step of the scheme
+by embedding the Simple Genetic Algorithm (SGA) (Vose 1999) in the formalism. See also (cid:12)gure 1.
+
+De(cid:12)nition 1 (Evolutionary exploration)
+
+(i) The information maintained during evolutionary search is a (cid:12)nite set of parameters q (t) 2 Q that
+uniquely de(cid:12)ne an exploration density Mq(t) on P . Here, we call M the exploration model,
+actually a map from Q to the space (cid:3) of densities over P . In general, the variety MQ = fMq j q 2 Qg
+of representable densities is limited.
+
+(ii) Given some parameters q(t), exploration starts by choosing (cid:21) samples s(t)
+
+i=1::(cid:21) of the exploration
+
+density. We use brackets to indicate this sampling:
+
+s(t) = [Mq(t)](cid:21) 2 P (cid:21) :
+
+(1)
+
+Here and in the following, we disregard the possibility of elitists. Taking them into account would
+require to append selected points (p1; ::; p(cid:22)) of P to s(t),
+
+s(t) = [Mq(t)](cid:21) (cid:8) (p1; ::; p(cid:22)) 2 P (cid:22)+(cid:21) :
+
+(2)
+
+(iii) We require the existence of an evaluation E : P (cid:21) ! (cid:3) that maps the exploration sample (s1; ::; s(cid:21))
+
+to a density over P with support fs1; ::; s(cid:21)g. This evaluation is applied to our exploration points:
+
+Es(t) = E
+
+[Mq(t) ](cid:21)
+
+2 (cid:3) :
+
+(cid:1)
+One should interpret E as \density of quality".
+
+(cid:0)
+
+(iv) Finally, there exists an update operator
+
+A : q(t) (cid:2) Es(t) 7! q(t+1) :
+
+(3)
+
+(4)
+
+In general, this operator is supposed to exploit the information in Es(t).
+
+Example (The Simple Genetic Algorithm, see (Vose 1999))
+
+(i) The SGA (without crossover) is a typical example of population-based modeling: q (t) =
+(p1; ::; p(cid:22)) 2 P (cid:22) is a discrete population and ~Mpi speci(cid:12)es the o(cid:11)spring density for each single
+individual. We call ~Mpi exploration kernels. The total exploration density reads
+
+Mq =
+
+1
+(cid:22)
+
+(cid:22)
+
+Xi=1
+
+~Mpi :
+
+(5)
+
+3
+
+Internal Report IRINI 2001-05
+
+Obviously, a key feature of population-based modeling is its capability to represent multi-modal
+exploration densities.
+
+(ii) In the SGA, s(t) are the o(cid:11)spring. The algorithm does not explicitly construct the complete explo-
+ration density Mq(t); rather, the drawing of mutations for each individual resembles a sampling of
+the exploration kernels.
+
+(iii) For the SGA, evaluation is proportional to a given (cid:12)tness function.
+
+(iv) The update rule of the SGA can be written as
+
+q(t+1) =
+
+Es(t)
+
+h
+
+=
+
+E
+h
+
+(cid:0)
+
+i(cid:22)
+
+[Mq(t) ](cid:21)
+
+:
+
+(cid:1)i(cid:22)
+
+(6)
+
+In words: From the parent population q(t) generate the o(cid:11)spring [Mq(t)](cid:21), evaluate their (cid:12)tness and
+select (cid:22) of them ((cid:22) < (cid:21)) by sampling their evaluation.
+
+We summarize that any algorithm, when embedded in this formalism, is uniquely characterized by the
+choice of model M , the update operator A, the evaluation E (given at hand) and the sampling size (cid:21). Both,
+the choice of model and of the update rule allow a great latitude for the design of evolutionary algorithms.
+However, when a model is chosen, we claim that there exist two ‘natural’ update rules. Natural, because
+they are a straightforward method to approximate the quality density by the exploration density. It is
+only a heuristic but still very interesting observation that many evolutionary algorithms realize just these
+natural update rules. In their speci(cid:12)c language, these update rules appear very di(cid:11)erent, but in a more
+generic language they correspond to the following:
+
+De(cid:12)nition 2 (Natural update rules: Adopting and approaching updates)
+
+We call it the adopting update to choose the update operator such that Mq(t+1) is a best possible
+approximation of Es(t) within the model class MQ (with respect to some distance D on (cid:3), typically the
+Kullback-Leibler distance):
+
+q(t+1) = argmin
+
+q
+
+D(Mq : Es(t)) :
+
+We will abbreviate this formula by the simpli(cid:12)ed notation A = M (cid:0)1:
+
+q(t+1) = M (cid:0)1(Es(t)) :
+
+(7)
+
+(8)
+
+Second, many algorithms realize not an adopting but rather an approaching update by slowly adapting
+q(t). Here, the parameters must be continuous. The generic update rule reads
+
+q(t+1) = (1 (cid:0) (cid:11)) q(t) + (cid:11) M (cid:0)1(Es(t)) ;
+
+for some constant (cid:11) 2 [0; 1].
+
+Example (Update operator of the SGA)
+
+(9)
+
+The update operator of the SGA corresponds to the adopting update: The sampling [Es(t)](cid:22) of the
+evaluation density can be interpreted as \(cid:12)nding new parameters q (t+1) that approximate Es(t) in the
+population-based model". The quality of this approximation is re(cid:13)ected by the sampling error|which
+one tries to minimize.
+
+4
+
+Internal Report IRINI 2001-05
+
+parameters
+q(t+1)
+
+update A
+(e.g., A = M (cid:0)1)
+
+sampling
+
+explored
+points
+
+s(t) =
+
+Mq(t)
+
+(cid:2)
+
+(cid:21)
+(cid:3)
+
+evaluation
+
+new
+information
+Es(t)
+
+parameters
+q(t)
+
+model M
+
+exploration
+density
+Mq(t)
+
+Figure 1: The general scheme of evolutionary search.
+
+In this section, we developed a very general view on evolutionary search. The relevance of this view in
+the context of evolutionary computation is worked out in appendix A. There, we embed four elaborate
+algorithms in our formalism, all of them realizing quite di(cid:11)erent approaches to control exploration. The
+unifying view allows also to point out that their update rules essentially correspond to our natural one|
+accordingly, although these algorithms realize so di(cid:11)erent approaches, their individual character is mainly
+describes by their exploration model. We moved these investigations to appendix A since they distract
+from the major line of our interests. We proceed with a special case of exploration modeling, which is,
+for practical reasons, not commonly used in the realm of evolutionary computation.
+
+III An indirect model of exploration
+
+After we stressed the importance of exploration modeling we concentrate on a speci(cid:12)c case of modeling
+de(cid:12)ned as follows:
+
+De(cid:12)nition 3 (Indirect exploration modeling)
+
+To model an exploration density over P , introduce a base space G = X n and a base density M G
+q
+over G such that the variables x 2 X are independent with respect to M G
+q . Then, introduce a GP-
+q (cid:14) h(cid:0)1 over P . Here, h(cid:0)1(p) (cid:26) G is a
+map h : G ! P that induces the exploration density Mq = M G
+subspace of G called neutral space of p 2 P ; and M G
+is evaluated via integration. The class
+q
+of allowed GP-maps and base densities limits this model M . The triplet (G; h; M G) is also referred to
+as coding.
+
+h(cid:0)1(p)
+
+(cid:2)
+
+(cid:3)
+
+In the following, in order to refer to their biological interpretations, we will also use the names pheno-
+type space for the search space P , genotype space for the base space G, and phenotype-genotype
+mapping for h.
+
+Also, we call the independent variables x 2 X genes and say \we introduce genes on P " when
+introducing such a GP-map and stressing the introducing of a representation via independent variables.
+This can be seen in analogy to the introduction of local coordinates on a manifold by a local map from a
+base space of (Cartesian) variables. There is, however, a crucial di(cid:11)erence: The map h does not need to
+be one-to-one. If h is non-injective, there exist di(cid:11)erent genotypes gi that map to the same phenotype.
+Then there exist di(cid:11)erent neighborhoods Ugi that eventually map to di(cid:11)erent neighborhoods of the same
+phenotype. This change of neighborhood is of major interest. It allows a variability of exploration. The
+next section will address this important issue in detail.
+
+As an example for indirect modeling, note that the CMA (see appendix A) may be interpreted as
+it restricts the class of GP-maps to a(cid:14)ne transformations; the translational part is
+
+indirect modeling:
+
+5
+
+Internal Report IRINI 2001-05
+
+encoded in the population’s center of mass and the linear part is encoded in the covariance matrix; the
+base space is G = Rn with normal density N(0; 1).
+
+Pleiotropy, mutual information, lift of topology, neutrality
+
+The introduction of a GP-map leads to some straightforward de(cid:12)nitions and notions. We use this section
+to brie(cid:13)y introduce some.
+
+Pleiotropy.
+In a biological context one may de(cid:12)ne pleiotropy as \the phenomenon of one gene being
+responsible for or a(cid:11)ecting more than one phenotypic characteristic". Our previous de(cid:12)nitions allow
+to translate this notion into our formalism: Genes are independent (with respect to the base density)
+variables of G. One gene a(cid:11)ecting more than one variable of P means that the change of one variable in G
+leads to the change of many variables in P . Thus pleiotropy means that the base density of independent
+variables is mapped on an exploration density of non-independent variables; pleiotropy may be measured
+by the correlation of variables of P with respect to the exploration density. We refer to this also as
+structure of the exploration density. In particular, we will measure pleiotropy as the mutual information
+contained in the exploration density.
+
+Population-based indirect modeling. Population-based modeling was de(cid:12)ned in section II. We
+brie(cid:13)y clarify notations in the indirect modeling case: The parameters q 2 Q are a population (g 1; ::; g(cid:22)) 2
+G(cid:22) on the base space and the exploration kernels ~M G
+gi are such that the total exploration density reads:
+
+Mq = M G
+
+q (cid:14) h(cid:0)1 =
+
+1
+(cid:22)
+
+h
+
+(cid:22)
+
+~M G
+gi
+
+i
+
+Xi=1
+
+(cid:14) h(cid:0)1 =
+
+1
+(cid:22)
+
+(cid:22)
+
+Xi=1 h
+
+~M G
+
+gi (cid:14) h(cid:0)1
+
+1
+(cid:22)
+
+=:
+
+i
+
+(cid:22)
+
+Xi=1
+
+~Mgi :
+
+(10)
+
+Lift of topology. For population-based modeling, the exploration kernels associate a density of o(cid:11)spring
+to each individual. Form a topological point of view, this de(cid:12)nes a neighborhood (of most probable
+descendants) for each individual, referred to as variational topology.
+
+In the case of indirect modeling, the kernels ~M G
+on the search space. This means a lift of topology.
+
+g on the base space are lifted to kernels ~Mg = ~M G
+
+g (cid:14) h(cid:0)1
+
+Neutrality. The possibility of a non-injective GP-map h automatically leads to the de(cid:12)nition of neu-
+trality.2 In particular we de(cid:12)ne h(cid:0)1(p) as the neutral set of p 2 P . Further, the neutral degree of g 2 G
+is de(cid:12)ned as the probability
+
+~Mg[h(g)] = ~M G
+
+g [h(cid:0)1 (cid:14)h(g)] :
+
+(11)
+
+This reads: Take some individual g 2 G and let N = h(cid:0)1 (cid:14)h(g) be the neutral space \around" g. Now
+measure the probability ~M G
+
+g [N ] for landing in this neutral set when exploring from g.
+
+Such measures are thoroughly discussed by Schuster (1996) and Fontana & Schuster (1998) (see also
+section IV). However,
+in these publications, the variational topology rather than the probability is
+emphasized. For completeness we append de(cid:12)nitions of neutrality refering to the variational topology:
+Let neighborhoods be de(cid:12)ned in G and let Br(g) be the r-ball around g in G (those points linked to G by
+
+2More precisely, if also considering a (cid:12)tness function f : P ! (cid:0)
+
+, we denote non-injectiveness of h by phenotypic
+neutrality and non-injectiveness of f by (cid:12)tness neutrality. In this paper, only phenotypic neutrality will be addressed
+to.
+
+6
+
+at least one chain of no more than r neighbors). We call the maximal connected component N g (cid:26) h(cid:0)1(cid:14)h(g)
+with g 2 Ng neutral network of g 2 G. If G is discrete we de(cid:12)ne
+
+Internal Report IRINI 2001-05
+
+Ng \ B1(g)
+
+(cid:12)
+(cid:12)
+(cid:12)
+
+(cid:12)
+(cid:12)
+(cid:12)
+
+as the neutral degree of g 2 G.
+
+(12)
+
+Relation to biology
+
+One may argue that algorithms as discussed in appendix A are hardly plausible in nature and thus without
+relevance for biology. What mechanisms should keep track of dependencies in nature, model distributions
+by storing a Bayesian network or a covariance matrix, and how should such knowledge be taken into
+account when creating a new o(cid:11)spring?
+
+Nevertheless, a biologist may in principle ask the same questions; we refer to Wagner & Altenberg
+(1996): How comes that some phenotypic characters are obviously correlated and others are not? How
+comes that a single gene in Drosophila can trigger the expression of many others and thereby the growth
+of a whole eye at di(cid:11)erent places on the body? The existence of pleiotropy is obvious; are its speci(cid:12)c
+mechanisms an accident, an unavoidability, or the result of evolutionary optimization? What is optimized
+when adapting pleiotropy?
+
+The idea of Wagner and Altenberg is that in nature the genotype-phenotype mapping is adaptable
+and does adapt in such a way that pleiotropy between independent phenotypic characters is decreased (in
+order to allow for an unbiased, parallel search) while pleiotropy between correlated phenotypic characters
+may increase (in order to stabilize the optimal relative value of these characters). For example, pleiotropy
+between the existence of the eye’s cornea and its photoreceptors is high because one alone won’t contribute
+to selection probability without the other.
+In contrast, pleiotropy between characters of the immune
+system is low in order to allow a fast, parallel adaption of di(cid:11)erent protection mechanisms which each
+separately contribute to selection probability.
+
+Let us discuss such issues in the language of our formalism and thereby re(cid:13)ect some selected quotations
+of Wagner & Altenberg (1996). Concerning the notion of evolvability they say: \Evolvability is the
+genome’s ability to produce adaptive variants when acted upon by the genetic system." [sec 5, par 2 ] In
+our words, evolvability denotes the capability of a system to model a desired exploration density. Further
+they state, \that the genotype-phenotype map is under genetic control and therefore evolvable." [sec 2,
+par 9 ] Of course, in the case of indirect modeling, the GP-map induces the exploration density on P .
+Concluding, though, that evolvability requires a GP-map being \under genetic control" is questionable
+from our point of view. We re(cid:13)ect this circumstance in detail in the section IV.
+
+Finally, Wagner & Altenberg (1996) emphasize the relationship between evolvability and their notion
+of a functional phenotypic complex: \The key feature is that, on average, further improvements in one
+part of the system must not compromise past achievements." [sec 5, par 10 ] \By modularity we mean
+a genotype-phenotype map in which there are few pleiotropic e(cid:11)ects among characters serving di(cid:11)erent
+functions, with pleiotropic e(cid:11)ects falling mainly among characters that are part of a single functional
+complex." [abstract] \Independent genetic representation of functionally distinct character complexes
+can be described as modularity of the genotype-phenotype map." [sec 6, par 1 ] And most interesting:
+\Evolution of complex adaptation requires a match between the functional relationships of the phenotypic
+characters and their genetic representation." [sec 6, par 6 ] In essence, what they address is that the
+exploration density should have the character that some variables in P are mutually independent while
+others are dependent. Re(cid:13)ecting that adaptation can only occur by extracting information from the
+
+7
+
+Internal Report IRINI 2001-05
+
+evaluation density Es we claim that the notion of a \functional complex" or a \functionally distinct
+[phenotypic] character complex" may only be constituted via this evaluation density E s. More precisely,
+we propose to de(cid:12)ne a functional phenotypic complex as a set of variables of P that are highly
+dependent on each other (with high mutual information) but only weakly dependent on other phenotypic
+characters|all with respect to the evaluation density Es. Now, in this language, the \required match"
+between these properties of the exploration density and the evaluation density corresponds exactly to
+what we called a natural update rule: the adopting or approaching update as introduced above. In other
+words: Evolvability requires the exploration density to be able to adapt to the evaluation density. The
+next section is devoted to this adaptability.
+
+IV Neutrality as basis of self-adaptability of exploration
+
+So far, we stressed the importance of exploration modeling and focused on the special case of indirect
+modeling. We did not yet address the problem of how the exploration density can be adapted in the
+indirect modeling case. This section gives an answer by providing a strict de(cid:12)nition of self-adaptability,
+which considers neutrality as a key feature. We will also review other interpretations of neutrality and
+argue in favor of our interpretation.
+
+Obviously, if exploration is described by means of (cid:12)xed kernels around the positions of individuals,
+the exploration density varies when individuals move on. But this does not quite capture what we
+actually meant by requiring variable exploration. Rather it seems intuitive to call for \adaptive codings".
+The review (Eiben, Hinterding, & Michalewicz 1999) summarizes and classi(cid:12)es such approaches. 3 Their
+discussion is based on the assumption that the coding (G; h; M G) depends on some parameters x 2 X
+called strategy parameters; we write (Gx; hx; M G
+x ). They classify di(cid:11)erent approaches by distinguishing
+between di(cid:11)erent choices of X:
+
+(i) X are parameters altered by some deterministic rule (e.g., function in time) independent of any
+
+feedback from the evolutionary process. (deterministic)
+
+(ii) X are parameters depending on feedback from the evolutionary process. (adaptive)
+
+(iii) X is part of the genotype. (self-adaptive)
+
+Option (i) is of no interest here. It is very important to distinguish between (ii) and (iii). Option (ii) means
+to analyze the evolutionary process, namely the evaluation density and the exploration density itself, and
+deterministically deduce an adaptation. Good examples are the algorithms presented in appendix A.
+Option (iii) means that adaptation becomes a stochastic search itself|the search for a good exploration
+density is itself determined by just this exploration.
+
+However, as formulated above, following option (iii) is quite irritating since, after adding some strategy
+parameters X to G, the GP-map h still maps G ! P and it is formally incorrect to think of h as being
+parameterized by variables of G. One might want to escape this circle by splitting G into two parts, the
+strategy part X and the objective part ~G, G = ~G (cid:2) X (as it is commonly done, see Eiben, Hinterding,
+& Michalewicz (1999)). Then, for some strategy parameters x 2 X, one may de(cid:12)ne h : ~G (cid:2) X ! P ,
+(g; x) 7! hx(g) and call hx an adaptive GP-map. However, in general it is unclear which part of G is to
+
+3The idea of adaptive codings (in this context rather ‘(self-)adaptive parameters of evolutionary algorithms’) has a long
+trading starting with early works of Rechenberg and Schwefel in the context of evolution strategies, see their recent books
+(Rechenberg 1994; Schwefel 1995). Their concepts have also been transferred to genetic algorithms (B(cid:127)ack 1992). Refer to
+enumerous reviews (Angeline 1995; Smith & Fogarty 1997; Igel & Kreutz 2001) for further literature.
+
+8
+
+g1
+~M G
+g1
+
+g2
+~M G
+g2
+
+Internal Report IRINI 2001-05
+
+h(g1) = h(g2)
+
+~Mg1 = ~M G
+
+g1 (cid:14) h(cid:0)1
+
+~Mg2 = ~M G
+
+g2 (cid:14) h(cid:0)1
+
+G
+
+h
+(cid:0)!
+
+P
+
+Figure 2: Two di(cid:11)erent points g1; g2 in G are mapped onto the same point in P . The elliptic ranges
+around the points illustrate the exploration kernels by suggesting the range of probable mutants. Thus,
+the two points g1; g2 belong to one neutral set but represent two di(cid:11)erent exploration strategies.
+
+be considered as strategy part and which as objective. Only in some cases, e.g. if simply adding control
+parameters that have no direct e(cid:11)ect on the phenotype (neutral parameters!), this splitting seems to
+be straightforward. Also, one could argue that the mutation rate of the strategy part is kept very low.
+Formally and conceptually, though, these arguments are unsatisfactory and thus we reject the de(cid:12)nition
+of self-adaptability as given by option (iii). Instead, we circumvent such problems by de(cid:12)ning:
+
+De(cid:12)nition 4 (Self-adaptable exploration)
+
+Given an indirect, population-based model M with GP-map h, exploration at x 2 P is de(cid:12)ned self-
+adaptable if the exploration kernel ~Mg = ~M G
+g (cid:14) h(cid:0)1 varies for di(cid:11)erent g 2 h(cid:0)1(x) in the neutral
+set of x. The variety f ~Mg j g 2 h(cid:0)1(x)g of di(cid:11)erent exploration kernels represents the scope of self-
+adaptability.
+
+What does this de(cid:12)nition mean? Assume that one individual g 2 G is drifting in a neutral set h (cid:0)1(x).
+Meanwhile, although its image h(g) is not changing at all, the probability distribution of o(cid:11)spring in P
+(i.e. the exploration kernel ~Mg associated to it) may change very well. This is how the de(cid:12)nition captures
+the ability of exploration to adapt. See (cid:12)gure 2 for an illustration.
+
+As a simple example we note that adding (neutral) mutation rate parameters aligns with this de(cid:12)nition:
+Changing such strategy parameters actually is a neutral walk but varies the exploration kernels (e.g. by
+resizing or deforming them). Such and similar methods, may be understood as \local rescalings of
+neighborhood in P "; distances (probabilities to reach neighbors within one generation) are rescaled.
+However, such methods do not aim at varying the variational topology within P : the probabilities for
+mutations into the neighborhood change, the neighborhood itself though is not varied. The generality
+of our de(cid:12)nition also captures the latter kind of variability and it will be a major goal of this paper to
+exemplify it by introducing neutral variations that do vary the variational topology on P .
+
+In the following we will exclusively focus on self-adaptability of exploration as de(cid:12)ned above.
+
+Note: Focusing only on self-adaptability (neglecting option (ii)), we want to emphasize that we always
+consider the GP-map h to be (cid:12)x, i.e. non-varying during evolution|and that this is not a restriction, not
+a loss of generality. If one would protest and claim that h should be variable by depending on genes in
+G, we veto by stating that the formalism requires to collect all genetic parameters in the space G, that
+by de(cid:12)nition the GP-map h is the map that maps all G on P , and thus it is formally incorrect to speak
+of h as depending on genes in G.
+
+9
+
+Internal Report IRINI 2001-05
+
+Of course, other points of view are possible; e.g. that of Wagner and Altenberg when they profoundly
+state that \the genotype-phenotype map is under genetic control and therefore evolvable." [sec 2, par
+9 ]|though from our point of view a questionable formulation.
+
+Reference to related work on neutrality
+
+It is intuitive to believe that every little detail in nature ful(cid:12)lls \some purpose"; evolution would abandon
+all useless mechanisms and redundancies. The existence of something like neutrality in nature o(cid:11)ends this
+intuition: A typical example is the fact that di(cid:11)erent codons are transcribed into the same amino acid,
+suggesting that certain nucleotide substitutions have no e(cid:11)ect whatever on the phenotype or its (cid:12)tness|
+they are neutral. Such issues initiated many investigations, pioneered by Motoo Kimura’s Neutral Theory
+(Kimura 1983). In a later paper (Kimura 1986), he defends his theory against the selectionists’ criticism,
+who argued that neutral genes would be functionless, mere noise, and thus biologically implausible:
+
+\Sometimes,
+it is remarked that neutral alleles are by de(cid:12)nition not relevant to adaptation, and
+therefore not biologically very important. I think that this is too short-sighted a view. Even if the
+so-called neutral alleles are selectively equivalent under a prevailing set of environmental conditions
+of a species, it is possible that some of them, when a new environmental condition is imposed, will
+become selected. Experiments suggesting this possibility have been reported by Dykhuizen & Hartl
+(1980) who called attention to the possibility that neutral alleles have a ‘latent potential for selection’. I
+concur with them and believe that ‘neutral mutations’ can be the raw material for adaptive evolution."
+[Kimura (1986), page 345 ]
+
+The last section gave a clear statement of how neutrality can be understood as \raw material for adaptive
+evolution". It makes obvious that neutrality is not necessarily redundant: Di(cid:11)erent points in a neutral
+set can encode di(cid:11)erent exploration strategies and thus di(cid:11)erent information; a genotype encodes not
+only the information on the phenotype but also information on further exploration.
+
+The interplay between neutrality and evolvability is a central topic in many other works. E.g., several
+models of (cid:12)tness landscapes with tunable neutrality have been proposed (Barnett 1998; Newman &
+Engelhardt 1998; Reidys & Stadler 2001) in order to analyse the dynamics on neutral sets theoretically
+and analytically. In a more biological context, Fontana & Schuster (1998), when investigating neutrality
+inherent in protein folding, claim that neutrality enables discontinuous transitions in the protein’s shape
+space (the space P ): \[Transitions] can be triggered by a single point mutation only if the rest of the
+sequence [point in G] provides the appropriate context [neighborhood in G]; they are preceded by extended
+periods of neutral drift." [last but one paragraph] Their arguments focus on the connectivity of neutral
+sets which can be analyzed theoretically by percolation theory. We agree on these generic ideas. A
+precondition is that neutral sets exist and, most important, that exploration varies along these neutral
+sets|as we captured in the above de(cid:12)nition. Our formalism clari(cid:12)es how these investigations of Fontana
+and Schuster are related to, e.g., the self-adaptivity approaches in evolutionary computation. A relation
+which should be pro(cid:12)table for both branches of research.
+
+Another intriguing study of such phenomena in nature is the one by Stephens & Waelbroeck (1999).
+They empirically analyze the codon bias and its e(cid:11)ect in HIV sequences. Codon bias means that, although
+there exist several codons that code for the same amino acid (which form a neutral set), HIV sequences
+exhibit a preference of which codon is used to code for a speci(cid:12)c amino acid. More precisely, at some
+places of the sequence codons are preferred that are \in the center of this neutral set" (with high neutral
+degree) and at other places codons are biased to be \on the edge of this neutral set" (with low neutral
+degree). It is clear that these two cases induce di(cid:11)erent exploration densities; the prior case means low
+mutability whereas the latter means high mutability. They go even further by giving an explanation for
+
+10
+
+Internal Report IRINI 2001-05
+
+these two (marginal) exploration strategies: Loci with low mutability (trivially) cause \more resistance to
+the potentially destructive e(cid:11)ect of mutation", whereas loci with high mutability might induce a \change
+in a neutralization epitope which has come to be recognized by the immune system." [introduction, par
+4 ]
+
+V Paradigms of self-adaptable exploration
+
+The goal of this section is to exemplify the principles discussed above by simple and transparent (arti(cid:12)cial)
+systems. We choose a system that encodes the phenotype with a grammar-like genotype. The reason is
+that this leads to a type self-adaptability completely di(cid:11)erent and of a new quality compared to standard
+types of self-adaptability in evolutionary computation:
+it incorporates self-adaptability of variational
+topology.
+
+In order to setup a running system we need to make some further decisions on
+(i) the problem (the space P ),
+(ii) the GP-map (including the choice of G),
+(iii) the base density (population size, mutation rates on G, etc.),
+(iv) the evaluation (implementation of E),
+(v) the update rule A.
+
+In the following P will be strings over some (cid:12)nite alphabet A; the problem is to minimize the (Hamming)
+distance to a given target string. Concerning point (iv) and (v), we will use rank-based selection, i.e.
+we evaluate proportionally to the rank of each individual and update the population by sampling this
+evaluation density. Point (ii) and (iii) need more thorough considerations:
+
+A recursive, grammar-type GP-map. We choose a GP-map that recursively applies on the genotype
+in a grammar-like manner. The genotype consists of a string and an arbitrary number of rules that apply
+on the string. Formally, we write a genotype with r rules as
+
+g =
+
+A ;
+
+(L1; R1); ::; (Lr; Rr)
+
+2 P (cid:2)
+
+A (cid:2) P
+
+r
+
+= Gr :
+
+(13)
+
+(cid:16)
+
+(cid:3)(cid:17)
+
+(cid:2)
+
+(cid:2)
+
+(cid:3)
+Here, the string A 2 P is called axiom, the character Li 2 A is the lhs and the string Ri 2 P the rhs of
+a rule. The space Gr comprises all genotypes with r rules and the space G is the direct sum of all such
+spaces. The GP-map is the composition of single rule applications on the axiom. More speci(cid:12)cally, the
+GP-map applies all rules in given order m-times on (a copy of) the axiom and ‘returns’ the (cid:12)nal string
+as phenotype. In our examples, the recursion depth m is always kept (cid:12)x (in order to avoid the need for
+terminal symbols or other complicated mechanisms).
+
+The motivation for this choice of GP-map is as follows: Structuredness of exploration, as discussed in
+section III, means mutual information between variables that belong to the same phenotypic character
+and less mutual information else. We want the total GP-map to be a composition of ‘smaller’ GP-
+operators, applying on a preliminary phenotype, that represent only elementary correlating e(cid:11)ects (e.g.,
+of interaction). They constitute elementary modules. For example, an elementary correlating e(cid:11)ect is
+that one character depends also on another and a respective operator would map one independent variable
+onto one which depends on other variables. In our case, the rule applications are such GP-operators. 4
+
+Such grammar-type encodings have been investigated in many other respects, e.g. by Prusinkiewicz &
+Hanan (1989) and Prusinkiewicz & Lindenmayer (1990) discussing L-systems as natural representation
+
+4Also an N K-reaction network is a basic example: the operator (the time step transformation) entangles K variables to
+
+a new one.
+
+11
+
+Internal Report IRINI 2001-05
+
+of highly regular, plant-like structures; by Kitano (1990), Gruau (1995), Lucas (1995), and Sendho(cid:11) &
+Kreutz (1998) using grammar-encodings as representation of neural networks. However, these approaches
+are not based and motivated on a discussion of self-adaptable exploration. Thus, although in most cases
+the existence of neutral sets (equivalent representations) in grammar encodings is obvious, the importance
+to introduce (neutral) variations that explore these existing neutral sets and thereby explore di(cid:11)erent
+explorations strategies was not recognized and stressed. The next paragraph concerns the introduction
+of such variations.
+
+Neutral variations in grammar-type encodings. We turn to the choice of base density, i.e. vari-
+ability on G. We assume that there exist standard mutations on P , namely (cid:13)ip (with probability (cid:11)
+per symbol), insertion, duplication and deletion (with probability (cid:13) per string). Since G is composed of
+structures of P these mutations induce standard mutations on G.
+
+However, to take all the considerations of section IV into account, we additionally introduce neutral
+variations on G. These variations are supposed to allow for self-adaptability as de(cid:12)ned above, i.e. they
+should allow neutral variations that vary exploration. In our examples we realize such variations by rule
+substitutions and creations. Speci(cid:12)cally we introduce (cid:12)ve kinds of variations of g 2 G, which are likely
+to be neutral but need not always to be:
+
+(i) Pick one rule and one structure 2 P (any rhs or the axiom) within g; then apply the rule once to
+the structure.
+(ii) Pick one rule and one structure; check if the rhs of the rule is part of the structure; if so, replace
+this part by applying the rule inversely.
+(iii) Pick a structure and create a new rule by extracting a part out of the structure and replacing it
+by a symbol.
+(iv) Delete a rule if it is never applied during recursion.
+
+All of these variations will occur with probability (cid:12) per rule (per structure in case (iii)).
+
+V.1 Basic paradigm
+
+Let P be strings of the alphabet f0; 1; xg. Consider the following two points a; b 2 G to represent the
+same point 0101 in P :
+
+a0 = 01x ;
+b0 = xx ;
+
+a1 = (x 7! 01) ;
+b1 = (x 7! 01) :
+
+If we assume that the rhs of a1 and b1 have considerable mutability, the exploration kernels of a and b are
+quite di(cid:11)erent: Probable (phenotypic) mutants of a are 0111; 0100; 0110, whereas b is likely to produce
+mutants like 1111; 0000; 1010. The di(cid:11)erence of these two exploration densities is of topological nature.
+
+In order to enable a transition between such di(cid:11)erent strategies, the exploration of the corresponding
+neutral set must be possible. In the upper example it is easy to de(cid:12)ne a neutral mutation from a to b:
+The rule itself is to apply to the axiom. The inverse mutation requires an application of the rule from
+right to left, i.e., see if the rhs (cid:12)ts somewhere and substitute by the lhs. Our system incorporates exactly
+these variations.
+
+V.2 Two experiments: Variability of exploration and neutral drift
+
+Let P be the strings over the alphabet fa,b,c,d,e,f,g,hg. The function f is the Hamming distance to the
+(cid:12)xed target string abcdeabcdeabcdeabcdeabcde, i.e. 5 times abcde. To demonstrate a neutral drift
+we consider only one individual and initialize it with an axiom equal to the target and no rule. Selection
+
+12
+
+Internal Report IRINI 2001-05
+
+modular exploration 
+
+0
+
+200
+
+400
+
+600
+
+800
+
+1000
+
+1200
+
+1400
+
+1600
+
+1800
+
+2000
+
+rule usage 
+
+Figure 3: A single individual is tracked when drifting on a neutral set spanned by neutral substitutions
+in its grammar-encoding. Its exploration density is analyzed by taking 10 000 samples at each time step.
+’Modular exploration’ counts the probability for mutations that occur equally at same positions in other
+blocks. These are blocks of 5 symbols as given by the target string: 5 (cid:2) abcde.
+’Rule usage’ counts
+how often rules are applied by the GP-map.
+[Population size (cid:22) = 1; mutation probabilities (cid:11) = 0:001,
+(cid:12) = 0:1; recursion depth m = 10; scaling of y-axes is only relative.]
+
+is (1+1), i.e. at each time step a descendant is produced and selected if equally good or discarded if worse.
+As a result of neutral variations, the number of rules and the probability for regular mutations in the
+exploration density vary in correlation. This kind of variability of exploration is of topological nature.
+The point is, we gave an example where the topological characters of the exploration density vary over a
+connected neutral set. See (cid:12)gure 3.
+
+We enhance this example by considering a population of 100 individuals and non-elitist, rank-based
+In the experiment, the population drifts
+selection. All individuals are initialized as described above.
+towards representations (points in the neutral set of the target string) with high neutrality. In appendix
+B we present a simple setup to demonstrate the dynamics in neutral networks. Using Eigen’s model we
+explain the drift towards high neutral degree, i.e. towards representations of low mutability. Here, a high
+neutral degree coincides with representations of short description length (the sum of lengths of the axiom
+and rhs of rules). In order to achieve such compact representations, more rules are extracted and included
+in the representation. A visualization of the exploration density via mutual information maps exhibits
+its clear structure that corresponds to the target string’s structure. One may interpret that the system
+has \learned the problem’s structure". See (cid:12)gure 4.
+
+13
+
+Internal Report IRINI 2001-05
+
+0.8
+
+0.7
+
+0.6
+
+0.5
+
+0.4
+
+0.3
+
+0.2
+
+0.1
+
+0
+0
+
+neutral degree
+
+description length 
+
+rule usage 
+
+200
+
+400
+
+600
+
+800
+
+1000
+
+1200
+
+1400
+
+1600
+
+1800
+
+2000
+
+25
+
+20
+
+15
+
+10
+
+5
+
+25
+
+20
+
+15
+
+10
+
+5
+
+25
+
+20
+
+15
+
+10
+
+5
+
+5
+
+10
+
+15
+
+20
+
+25
+
+5
+
+10
+
+15
+
+20
+
+25
+
+5
+
+10
+
+15
+
+20
+
+25
+
+Figure 4: Upper plot: A population is tracked when drifting on a neutral set. Selection is non-elitist and
+rank-proportional and thus pushes the population towards higher neutral degree. This is achieved by
+(cid:12)nding representations of shorter description length of the modular target string (5 (cid:2) abcde). (Descrip-
+tion length equals the sum of lengths of the axiom and all rhs). This in turn is achieved by making use
+of rules. Lower plots: The mutual information between the 25 variables in the (phenotypic) exploration
+density is displayed as a matrix. The three plots correspond to times 50, 500, and 2000. The regular,
+[Population size (cid:22) = 100; mutation probabilities
+5-modular structure of exploration is clearly visible.
+(cid:11) = (cid:12) = 0:02; target: 5 (cid:2) abcde; recursion depth m = 3; scaling of y-axes is exact for neutrality, only
+relative for the rest; scaling of gray-shading is only relative.]
+
+14
+
+Internal Report IRINI 2001-05
+
+VI Conclusions
+
+Major parts of this paper are concerned to develop an integrated language for evolutionary search based
+on the formalism of stochastic search and emphasizing the exploration density and its parameterization.
+The bene(cid:12)t is a uni(cid:12)ed view on di(cid:11)erent speci(cid:12)c approaches, their commonness and di(cid:11)erences. For
+example, at (cid:12)rst sight it is hard to see what a CMA evolutionary strategy has in common with the codon
+bias in HIV sequences. The answer is: both of them are concerned to model the variability of future
+o(cid:11)spring, the exploration density; both of them by using a kind of genotype-phenotype mapping (an a(cid:14)ne
+transformation in the (cid:12)rst case). Also notions such as pleiotropy and functional phenotypic complex can
+properly be de(cid:12)ned on the basis of this language. This allows to make contact between biological and
+computational research. The functional meaning of a genotype-phenotype mapping is illuminated by
+interpreting it as a lift of an exploration density and topology on the search space. We showed that a
+non-injective genotype-phenotype mapping can lift di(cid:11)erent exploration strategies, di(cid:11)erent topologies to
+the same phenotype. This is the core of how we de(cid:12)ne self-adaptability of exploration. The de(cid:12)nition
+overcomes the formal weakness of previous de(cid:12)nitions and is as general as the language it is based on.
+The de(cid:12)nition opens a completely new view on the meaning of neutrality.
+
+In the experimental part of this paper we presented elementary examples of these concepts. We
+illustrated the structure of exploration by a gray-shade map of the mutual information within the explo-
+ration density, a gray-shade map of pleiotropy. We exempli(cid:12)ed its variability during neutral drifts. And
+we demonstrated successful self-adaptability of exploration where in the end the structure of exploration
+perfectly matches the structure of the problem. This type of self-adaptability is of a new quality compared
+to common approaches in evolutionary computation: The exploration density is not only reshaped but its
+topology is completely reorganized by (neutral) transitions between di(cid:11)erent grammar representations.
+
+We will now discuss some further implications of the new view we have developed in this paper:
+
+(i) On modularity, structuredness, and evolvability Given a system that functions well, how
+should one de(cid:12)ne what a module or a functional complex is? One only observes that all parts together
+work well as a whole. A common idea is that modules are characterized by high interactivity within
+them. By high interactivity we mean that there are high correlations between units during the time of
+functioning. These are completely di(cid:11)erent kinds of correlations than correlations between units in the
+evolutionary variability. It is though possible to draw a link: Having units that are highly interacting
+during functioning, the (cid:12)tness might strongly depend on their teamwork.
+If this is the case, also the
+evaluation density should incorporate high correlations between the units (i.e. the units form a functional
+phenotypic complex). Now, if the exploration density should approximate the evaluation density, we also
+(cid:12)nd these correlations in the evolutionary variability.
+
+Thus, when talking about modules, one should be aware of the interrelations between these three
+levels of correlations: (1) during functioning, (2) in the evaluation density, (3) in the exploration density.
+Our de(cid:12)nition of a functional phenotypic complex refers to the 2nd level|the evaluation density. Our
+hypothesis is that the advantage of structured systems (and thus the selective pressure towards structure)
+stems from the 3rd level:
+
+Systems are structured, not because this is the only possible way of functioning, but because it is
+advantageous for variability. The advantage of structured variability is its capability to explore by
+approximating the \problem’s structure", the structure of the evaluation density.
+
+This capability should be called evolvability.
+
+For example, parts of a system that contribute separately to (cid:12)tness should be varied and optimized
+in parallel without potentially disturbing correlations; whereas parts of a system that only contribute to
+
+15
+
+Internal Report IRINI 2001-05
+
+(cid:12)tness when they are tuned on each other should be varied in correlation in order to preserve this tuning.
+
+(ii) On redundancy and neutrality Neutrality is often thought of as redundancy. From our point
+of view, this is very misleading. As we pointed out in the context of self-adaptability, although all the
+genotypes in a neutral set encode the same phenotype, they may have very di(cid:11)erent exploration kernels.
+Thus, such genotypes may carry di(cid:11)erent information. One cannot speak of redundancy if di(cid:11)erent
+and relevant information is encoded. If, however, genotypes in a neutral set have identical exploration
+kernels (in the genotype space), then they are indeed redundant. Redundancy is necessarily neutral, but
+neutrality is not necessarily redundant.
+
+(iii) On compact representations Assume we use a Bayesian network to model the structure of
+exploration. Then we will explicitly encode the correlations between all phenotypic variables. In contrast,
+our second example shows how compact representations correspond to highly structured exploration and
+can be found by using recursive codings. The idea is that each recursion introduces correlations in the
+variables. The neutral drift towards high neutral degree (see appendix B) induces a selective pressure
+towards short representations.
+
+(iv) On grammar-type encodings
+In grammar-type encodings, some single genotypic variables
+(genes) might e(cid:11)ectively represent whole groups of phenotypic variables. Thus, when we model dependen-
+cies between variables, we can also model dependencies between whole groups of phenotypic variables and
+not only between single phenotypic variables as in the direct modeling ansatz. This allows to introduce
+deep hierarchical dependencies in the exploration density.
+
+Most existing approaches to grammar encoding are motivated by the fact that grammars can represent
+regular structures with short description length. Instead, we claim that the most interesting point about
+grammars is their capability to introduce structure in the variability, as demonstrated in our examples.
+In order to explore these capabilities in a self-adaptable manner, the inclusion of neutral variations in
+recursive or grammar-type encodings is of crucial importance. This point seems neglected in the existing
+literature.
+
+We rigorously support Kimura’s \belief that ‘neutral mutations’ can be the raw material for adaptive
+
+evolution" (Kimura 1986).
+
+A Exploration models of di(cid:11)erent evolutionary algorithms
+
+To stress the importance of the concept of exploration modeling we want to show that the main di(cid:11)erence
+between speci(cid:12)c evolutionary algorithms is their ansatz to model exploration.
+In order to do so, we
+embed speci(cid:12)c algorithms in our formalism. In particular we chose to analyze the CMA algorithm and
+three recent approaches which belong to the class of \probabilistic model-building genetic algorithms"
+(PMBGAs), see (Pelikan, Goldberg, & Lobo 1999). All of these realize adaptive (but not self-adaptive)
+exploration.
+
+Covariance Matrix Adaptation (CMA),
+(Hansen & Ostermeier 2001). The search space is contin-
+uous, P = Rn. The CMA algorithm5 maintains as parameters q only one (center of mass) point p 2 P , the
+symmetric covariance matrix C. The exploration density Mq is given by a linear transformation (via C) of
+a Gaussian distribution around p. In more detail: the algorithm generates (cid:21) normally distributed muta-
+
+5For the sake of simplicity we neglect here the method of culmination and do not di(cid:11)erentiate between the covariance
+
+matrix C and the step size (cid:27).
+
+16
+
+Internal Report IRINI 2001-05
+
+tion vectors zi 2 Rn; transforms all of these vectors by multiplying a matrix B with property C = B B T ,
+z0
+i = B zi (the transformation by the matrix B transforms a normal Gaussian to one with covariance
+matrix C); and adds these vectors to the center of mass p in order to generate the new (cid:21) samples. After
+evaluation of the samples it is updated as follows: p is moved to the average of the samples weighted by
+their evaluation and C is adapted as
+
+C (t+1) = (1 (cid:0) c) C (t) + c hz0i hz0iT :
+
+(14)
+
+Here, c is an adaption constant and hz 0i is the average of the mutations vectors weighted by the evaluation
+of the respective mutant. The point is that hz 0i hz0iT is in some respect the covariance matrix of the
+evaluation density: Let a mutation vector z 0
+i occur with probability equal to the evaluation the respective
+mutant has received, then hz0i hz0iT is the covariance matrix of this probability distribution. Thus, the
+update rule for C corresponds to our natural approaching update whereas p adopts the new center of
+mass.
+
+(Baluja & Davies 1997). Here, the search space is discrete, P = X n.
+Dependency tree modeling,
+In their algorithm, the parameter q that describes the next exploration density is a dependency tree.
+Thus, the model is restricted to encode only pair-wise dependencies between variables. At each time
+step, (cid:21) samples are generated from this exploration density; the samples are evaluated and the best (cid:22) of
+them are selected. A probability density A of previously selected points is adapted by including those
+newly selected ones (generically A   (1 (cid:0) (cid:11)) A + (cid:11) [Es(t)](cid:22)). Then the dependency tree is updated by
+minimizing the Kullback-Leibler divergence between A and Mq. The tree’s update is an adopting since
+it approximates A, whereas A itself is updated according to an approaching update.
+
+Factorized Distribution Algorithm (FDA),
+(M(cid:127)uhlenbein, Mahnig, & Rodriguez 1999). Again,
+P = X n is discrete. The parameters q describe the conditional dependencies in pairs, triples, quadruples,
+etc. of variables. (To be exact, the algorithm comprises also some elitists.) The model is quite general
+but it relies on pre-(cid:12)xed knowledge on which pairs, triples, etc. exactly are to be parameterized. At each
+time step, the dependencies within the distribution of evaluated and selected points are calculated and
+assigned to q. Therefore, this is an adopting update.
+
+(Pelikan, Goldberg, & Cant(cid:19)u-Paz 2000). P = X n is
+Bayesian Optimization Algorithm (BOA),
+discrete. Here, q is a general Bayesian dependency network that explicitly encodes the exploration density.
+Thus, the model is not limited in representing arbitrary orders of correlation and it is (cid:13)exible in which
+variables are dependent by inserting and deleting connections in the network. After selection, the network
+is recalculated in order to minimize (e.g. with a greedy algorithm) the distance (e.g. with respect to the
+Bayesian Dirichlet Metric) between Mq and the distribution of selected. This is, except for elitists, also
+an adopting update.
+
+B Illustrating neutral dynamics
+
+As an illustration of neutral dynamics we present a simple example. We assume that the search space P
+is discrete and rather small, jP j = (cid:21). (cid:3) denotes the space of densities over P , which actually is a simplex.
+Parameter q 2 Q is such a density, Q = (cid:3), and the exploration density Mq is a mutation (cid:28) q 2 (cid:3) of this
+density. This example omits sampling and thus evaluation E : (cid:3) ! (cid:3) directly applies to Mq = (cid:28) q. The
+
+17
+
+Internal Report IRINI 2001-05
+
+neutral set N (cid:26) P :
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+10
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+10
+
+First experiment
+
+density q 2 (cid:3):
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+10
+
+Second experiment
+
+density q 2 (cid:3):
+
+−20
+
+10
+
+−15
+
+10
+
+−10
+
+10
+
+−5
+
+10
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+10
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+10
+
+0
+
+0.01
+
+0.02
+
+0.03
+
+0.04
+
+0.05
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+10
+
+mutated density (cid:28) q 2 (cid:3):
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+10
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+10
+
+−20
+
+10
+
+−15
+
+10
+
+−10
+
+10
+
+−5
+
+10
+
+mutated
+(cid:28) q 2 (cid:3):
+
+density
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+10
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+10
+
+0
+
+0.01
+
+0.02
+
+0.03
+
+0.04
+
+0.05
+
+Figure 5: The search space P is represented as a 10(cid:2)10 board. The neutral set is embedded as depicted
+on the left. The exploration matrix (cid:28) corresponds to a mutation rate of 0:1 in each of the four directions
+(up,down,right,left). In the (cid:12)rst experiment, when evaluation is straightforward, e.g. (cid:12)tness-proportional,
+it is impressive to see how strong the attraction towards the crossing with neutral degree 1 (with four
+neutral neighbors) is. In the second experiment, where evaluation enforces a kind of local conservation
+of population density, the population is equally distributed on the neutral set, but exploration on places
+with high neutral degree is proportionally higher because they have more neighbors from which they
+\receive" descendants.
+
+update rule is the adopting:
+
+q(t+1) = E (cid:28) q(t) ;
+
+q(t+1)
+i
+
+=
+
+(cid:21)
+
+Xj;k=1
+
+Eij (cid:28)jk q(t)
+k
+
+;
+
+(15)
+
+whereby we actually formulated Eigen’s model (see e.g. (Eigen, McCaskill, & Schuster 1989)) in our
+notation. Finding the eigenvectors of E (cid:28) means (cid:12)nding a stationary population density. Their eigenvalues
+describe their growth factor and the eigenvector with highest eigenvalue will describe the (cid:12)nal attractor|
+the quasi-species. In the presence of a neutral set N (here a set of indices) we assume that only individuals
+on this neutral set are evaluated positively and without co-evolutionary (interacting) e(cid:11)ects, i.e., E is
+diagonal and
+
+E : (cid:3) ! (cid:3) ;
+
+pi 7!
+
+Eij pj = Eii pi =
+
+Xj
+
+0
+ei(p) pi
+
+(cid:26)
+
+i 62 N
+i 2 N
+
+:
+
+(16)
+
+We investigate two options for the evaluation factor ei(p). The (cid:12)rst and straightforward option is that
+
+all positions on the neutral set are evaluated equally, then
+
+e1
+i (p) =
+
+1
+j2N pj
+
+P
+
+(17)
+
+18
+
+is just the appropriate normalization factor. This option is realized e.g. for (cid:12)tness-proportional evaluation
+(when (cid:12)tness on P nN vanishes) but also for fair ranking. For the second option we enforce such positions
+on the neutral set with low neutral degree|inverse-proportionally to the neutral degree:
+
+Internal Report IRINI 2001-05
+
+e2
+i (p) =
+
+1=di
+j2N (pj=dj)
+
+;
+
+di :=
+
+(cid:28)ik :
+
+Xk2N
+
+(18)
+
+P
+
+The quantity di is the probability for an descendant of individual i to be an element of N . Thus, this
+option increases the evaluation of i such that the probability to provide an descendant in N becomes
+equal for all i 2 N . This can be compared to a local conservation of population density: E(cid:11)ectively, each
+parent in N will with equal probability contribute a viable descendant to the next generation. Such a type
+of selection can be realized by local selection mechanisms: From each parent produce a large o(cid:11)spring
+and let only the best of them compete with others. As a result, the quasi-species is simply constant on
+N and vanishes elsewhere, qi2N = 1=jN j, qi62N = 0:
+
+pi = ((cid:28) q)i =
+
+(cid:28)ij qj =
+
+Xj2N
+
+di
+jN j
+
+;
+
+(E (cid:28) q)i2N =
+
+1=di
+j2N (pj=dj)
+
+pi =
+
+1
+jN j
+
+= qi :
+
+(19)
+
+(20)
+
+P
+
+The mutated density pi is proportional to di (which, for individuals out of N , does not denote the neutral
+degree but rather the probability for descendants in N ). Diversity is much higher than for the (cid:12)rst type
+of evaluation. See (cid:12)gure 5.
+
+The (cid:12)rst experiment is an explanation for the dynamics we observe in section V.2. We included the
+second experiment because it realizes what one might intuitively have expected: on a neutral set the
+population is distributed equally and with high diversity. We showed what kind of evaluation one has to
+choose to ful(cid:12)ll this expectation.
+
+The (cid:12)ndings are conform with Nimwegen’s (1999) little examples of random or selective walks on a
+neutral set: A blind ant would try one (random) neighboring genotype and walk to it if it has same (cid:12)tness
+or stay otherwise. A myopic ant would (cid:12)nd all neighbors with same (cid:12)tness and walk to one (random) of
+those. He (cid:12)nds that, in temporal average, the blind ant stays equal times at each genotype of the neutral
+set whereas the myopic ant stays longer at centers of the neutral set (i.e. / the neutral degree). The
+myopic ant, since it always (cid:12)nds a neutral neighbor, corresponds to our second example.
+
+Acknowledgment
+
+I acknowledge support by the German Research Foundation DFG under grant SoleSys SE 251/41-1.
+
+References
+
+Angeline, P. J. (1995). Adaptive and self-adaptive evolutionary computations. In M. Palaniswami, Y. Attikiouzel, R. Marks,
+D. B. F. l, & T. Fukuda (Eds.), Computational Intelligence: A Dynamic Systems Perspective, pp. 152{163. IEEE Press.
+B(cid:127)ack, T. (1992). Self-adaption in genetic algorithms. In F. Varela & P. Bourgine (Eds.), Toward a Practice of Autonomous
+
+Systems: Proceedings of the 1st European Conference on Articial Life, pp. 263{271. MIT Press.
+
+Baluja, S. & S. Davies (1997). Using optimal dependency-trees for combinatorial optimization: Learning the structure
+of the search space. In Proceedings of the Fourteenth International Conference on Machine Learning (ICML-97), pp.
+30{38.
+
+Barnett, L. (1998). Ruggedness and neutrality - the NKp family of (cid:12)tness landscapes. In Sixth International Conference
+
+on Arti(cid:12)cial Life (ALIVE-VI), pp. 18{27.
+
+19
+
+Internal Report IRINI 2001-05
+
+Eiben, A. E., R. Hinterding, & Z. Michalewicz (1999). Parameter control in evolutionary algorithms. IEEE Transactions
+
+on Evolutionary Computation 3, 124{141.
+
+Eigen, M., J. McCaskill, & P. Schuster (1989). The molecular quasispecies. Advances in chemical physics 75, 149{263.
+Fontana, W. & P. Schuster (1998). Continuity in evolution: On the nature of transitions. Science 280, 1431{1433.
+Gruau, F. (1995). Automatic de(cid:12)nition of modular neural networks. Adaptive Behaviour 3, 151{183.
+Hansen, N. & A. Ostermeier (2001). Completely derandomized self-adaption in evolutionary strategies. Evolutionary
+
+Computation 9, 159{195.
+
+Igel, C. & M. Kreutz (2001). Operator adaptation in evolutionary computation and its application to structure optimization
+
+of neural networks. Technical Report IRINI-2001-03, Institut f(cid:127)ur Neuroinformatik.
+
+Kimura, M. (1983). The Neutral Theory of Molecular Evolution. Cambridge University Press.
+Kimura, M. (1986). DNA and the Neutral Theory. Philosophical Transactions, Royal Society of London B312, 343{354.
+Kitano, H. (1990). Designing neural networks using genetic algorithms with graph generation systems. Complex Systems 4,
+
+461{476.
+
+Lucas, S. (1995). Growing adaptive neural networks with graph grammars. In Proceedings of European Symposium on
+
+Arti(cid:12)cial Neural Networks (ESANN ’95), pp. 235{240.
+
+M(cid:127)uhlenbein, H., T. Mahnig, & A. O. Rodriguez (1999). Schemata, distributions and graphical models in evolutionary
+
+optimization. Journal of Heuristics 5, 215{247.
+
+Newman, M. & R. Engelhardt (1998). E(cid:11)ects of neutral selection on the evolution of molecular species. Proceedings of the
+
+Royal Society London B265, 1333{1338.
+
+Nimwegen, E. & J. P. Crutch(cid:12)eld (1999). Neutral evolution of mutational robustness. Santa Fe Working Paper 99-07-041.
+Pelikan, M., D. E. Goldberg, & E. Cant(cid:19)u-Paz (2000). Linkage problem, distribution estimation, and bayesian networks.
+
+Evolutionary Computation 9, 311{340.
+
+Pelikan, M., D. E. Goldberg, & F. Lobo (1999). A survey of optimization by building and using probabilistic models.
+
+Technical Report IlliGAL-99018, Illinois Genetic Algorithms Laboratory.
+
+Prusinkiewicz, P. & J. Hanan (1989). Lindenmayer Systems, Fractals, and Plants, Volume 79 of Lecture Notes in Biomath-
+
+ematics. Springer, New York.
+
+Prusinkiewicz, P. & A. Lindenmayer (1990). The Algorithmic Beauty of Plants. Springer, New York.
+Rechenberg, I. (1994). Evolutionsstrategie ’94. Stuttgart: Friedrich Frommann Holzboog Verlag.
+Reidys, C. M. & P. F. Stadler (2001). Neutrality in (cid:12)tness landscapes. Applied Mathematics and Computation 117,
+
+321{350. Santa Fe Working Paper 98-10-089.
+
+Schuster, P. (1996). Landscapes and molecular evolution. Physica D 107, 331{363.
+Schwefel, H.-P. (1995). Evolution and Optimum Seeking. New York: John Wiley & sons.
+Sendho(cid:11), B. & M. Kreutz (1998). Evolutionary optimization of the structure of neural networks using recursive mapping
+as encoding. In Arti(cid:12)cial Neural Nets and Genetic Algorithms { Proceedins of the 1997 International Conference, pp.
+370{374.
+
+Smith, J. & T. Fogarty (1997). Operator and parameter adaption in genetic algorithms. Soft Computing 1, 81{87.
+Stephens, C. & H. Waelbroeck (1999). Codon bias and mutability in HIV sequences. Molecular Evolution 48, 390{397.
+Vose, M. D. (1999). The Simple Genetic Algorithm. MIT Press, Cambridge.
+Wagner, G. P. & L. Altenberg (1996). Complex adaptations and the evolution of evolvability. Evolution 50, 967{976.
+Zhigljavsky, A. A. (1991). Theory of global random search. Kluwer Academic Publishers.
+
+20
+
+

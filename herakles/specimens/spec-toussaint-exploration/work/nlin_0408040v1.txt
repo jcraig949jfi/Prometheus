@@ -1,0 +1,1477 @@
+4
+0
+0
+2
+
+g
+u
+A
+0
+2
+
+]
+
+O
+A
+.
+n
+i
+l
+n
+[
+
+1
+v
+0
+4
+0
+8
+0
+4
+0
+/
+n
+i
+l
+n
+:
+v
+i
+X
+r
+a
+
+Notes on information geometry
+and evolutionary processes
+
+Marc Toussaint
+
+Institute for Adaptive and Neural Computation, University of Edinburgh, 5 Forrest Hill,
+Edinburgh EH1 2QL, Scotland, UK
+
+mtoussai@inf.ed.ac.uk
+
+September 18, 2018
+
+Abstract.
+In order to analyze and extract diﬀerent structural properties of distribu-
+tions, one can introduce diﬀerent coordinate systems over the manifold of distributions. In
+Evolutionary Computation, the Walsh bases and the Building Block Bases are often used
+to describe populations, which simpliﬁes the analysis of evolutionary operators applying on
+populations. Quite independent from these approaches, information geometry has been de-
+veloped as a geometric way to analyze diﬀerent order dependencies between random variables
+(e.g., neural activations or genes).
+
+In these notes I brieﬂy review the essentials of various coordinate bases and of information
+geometry. The goal is to give an overview and make the approaches comparable. Besides
+introducing meaningful coordinate bases, information geometry also oﬀers an explicit way to
+distinguish diﬀerent order interactions and it oﬀers a geometric view on the manifold and
+thereby also on operators that apply on the manifold. For instance, uniform crossover can be
+interpreted as an orthogonal projection of a population along an m-geodesic, monotonously
+reducing the θ-coordinates that describe interactions between genes.
+
+1
+
+Introduction
+
+Evolution can be understood as a process on the space Λ of distributions over the search Ω.
+Essentially, a parent population can be captured as a (ﬁnite) distribution p ∈ Λ. Mutation
+and recombination operators (MC) applied on the parent population specify a search (oﬀ-
+spring) distribution q ∈ Λ. And a (stochastic) selection operator (Sµ F Sν) maps q to a new
+parent population p′. In this view, evolution can be understood as a process
+
+MC
+7−→ q
+
+p
+
+SµFSν
+
+7−→ p′ MC
+
+7−→ q′ SµFSν
+
+7−→ p′′ MC
+
+7−→ · · ·
+
+We do not need to go into the details of the indicated recombination, mutation, and selection
+operators here. Instead, we would like to emphasize an information theoretic point of view
+on this process. Typically, the mapping p 7→ q (which one could also call search heuristic)
+from the parent population to the search distribution adds entropy whereas selection q 7→
+p′ reduces entropy. Another interesting observable in this process is the structure of the
+distributions—by which we mean the mutual information present in these distributions. For
+instance, one can show that ordinary mutation and crossover operators (on a direct genetic
+representation) generally reduce mutual information, i.e., destroy structural content that
+might have been present in p after selection (Toussaint 2004).
+
+ 
+ 
+ 
+ 
+ 
+ 
+The analysis of the structure of distributions is an important topic in various areas.
+In
+evolutionary computation, the Walsh spectrum is a prominent way to analyze the structure
+of p, often with the aim to transport it to q. The Walsh coeﬃcients may also be considered
+as a way of describing epistasis. In complex systems, certain mutual information measures
+are often used to deﬁne the structuredness (in their terms: complexity) of dynamics systems
+(Langton 1990; Sporns & Tononi 2002).
+
+In these notes, I want to brieﬂy review the information geometric way to describe the struc-
+ture of a distribution (Amari 1999; Amari 2001) and relate it to the ﬁeld of evolutionary
+computation. The ﬁrst step is simply to present the coordinates introduced by Walsh co-
+eﬃcients side-by-side with those used in information geometry to make them comparable.
+This gives an intuition about the “bases” over which distributions can be analyzed and
+reveals, for instance, that the so-called Building-Block-Basis (Chryssomalakos & Stephens
+2004), as introduced in Evolutionary Computation, is the same as Amari’s η-basis. Maybe
+Amari’s θ-bases is most interesting in its capabilities to precisely capture kth-order mutual
+dependencies. It oﬀers a notion of the “order-spectrum of mutual information” alternative
+to the Walsh spectrum. Eventually, Amari’s formalism allows to completely decompose any
+distribution into its diﬀerent kth-oder components.
+
+Finally, the geometry introduced over the space of distributions by Amari gives very in-
+sightful interpretations of distances between distributions. A Pythagoras theorem can be
+formulated for the Kullback-Leibler divergence. Under some conditions, minimizations of
+the Kullback-Leibler divergence can often be interpreted as orthogonal projections. This
+oﬀers a geometric view on some evolutionary operators.
+
+2 Notations
+
+Distributions, log-probabilities, and hypercube bases The most direct “coordinate
+system” that can be introduced on the manifold of distributions is given by the probabilities
+p(x) for all x ∈ Ω itself. To preserve notational uniformity with other coordinate systems we
+write these numbers as px := p(x), which means that px is the x-th component of p ∈ Λ in
+x px = 1, these are only |Ω| − 1
+the direct basis. Because of the normalization constraint
+independent coordinates.
+
+P
+
+Clearly, instead of using px as coordinates, one can also use their log’s lx := − log px. Taking
+the log of probabilities is, very roughly spoken, related to changing to entropic units. (Note
+x px log px = Ep{lx}.) Thus, coordinates
+the deﬁnition of the entropy of p as H(p) = −
+that have some “entropic meaning” (i.e., are related to information theoretic measures like
+entropy, mutual information, or Kullback-Leibler divergence) will be based on these log
+quantities. Namely, this will be the θ-coordinate system introduced by Amari (see Amari
+1999; Amari 2001).
+
+P
+
+In the following we will speek of bases of coordinate systems. Essentially, what we mean are
+basis functions, similar to the sine and cosine in the Fourier transform. For illustration, we
+will always think of Ω as the hypercube; the basis function then correspond to “colorings” of
+the hypercube with function values (mostly 1, 0, or −1). E.g., if ei : Ω = {0, 1}3 → {1, 0, −1}
+is the i-th basis function, then the i-th coordinate of a distributions p in this coordinate
+x∈Ω ei(x) p(x). We illustrate such
+system is the convolution of p with ei: pi = hei, pi :=
+basis functions by 3D-hypercubes,
+where the bullet corresponds to 1, the circle to −1
+
+P
+
+and empty vertices to 0.
+
+The basis of direct coordinate system is the δ-basis: the set of all hypercubes where only
+one vertex is 1 and all others are 0.
+
+2
+
+Marginals over k-tuples of variables and schemata In the following, we will also
+need a compact notation for the diﬀerent marginals of a distribution. Let Ω be a product
+space Ω = Ω1 × · · · × Ωn such that we can deﬁne the marginals of a distributions p over
+single variables but also pairs, triples, and k-tuples of variables. We use indices i, j, .. ∈ I =
+{1, .., n} to indicate variables and write the marginals as pij..,
+
+pij..(a, b, ..) = Pr{xi = a, xj = b, ..} .
+
+The set of all possible marginals is given by considering all single indices i, all pairs i < j, all
+triples i < j < k, etc. To simplify notation (e.g., summation over such objects), we collect
+all these tuples of indices in a set
+
+A = I ∪ {(i, j) | i < j ∈ I} ∪ {(i, j, k) | i < j < k ∈ I} ∪ · · · ∪ {(1, 2, .., n)}
+
+= {1, .., n, (1, 2), (1, 3).., (1, n), (2, 3), (2, 4)..., (n − 1, n), (1, 2, 3), .., (1, 2, 3, .., n)} .
+
+In that way, all marginals of p are given as pa for a ∈ A. Note that |A| = |Ω| − 1.
+
+Besides using a ∈ A to indicate a marginal, one can equivalently use the schemata notation
+of length-n strings in {*, d}n: For a given a, the corresponding schema is the string of all *’s
+except for those positions indicated in the tuple a. E.g., for n = 6:
+
+p245 ≡ p*d*dd*
+
+3 Walsh, η-, θ-, Building Block, and Haar bases
+
+Table 1 captures the basics of the Walsh, η-, θ-, and Haar bases. In all cases, the coordinate
+system is deﬁned by the basis functions ei depicted for the 3D-case as hypercubes. Actually,
+these 3D illustrations of the basis functions ei are already suﬃcient to infer the basis func-
+tions for all n since they are constructed in a very systematic way—which seems obvious by
+simply looking at them and becomes rigorous by considering the transformation matrices
+into these coordinates systems:
+
+The transformation matrices map linearly (mod 2) from the direct coordinates px to the
+x Wyxpx. The rows in these matrices
+new coordinates. E.g., in the Walsh case, wy =
+correspond to the basis functions ey = Wy·. An important property is that in all cases
+(except the Haar bases!), the transformation matrices can be constructed by repeated tensor
+products of a 2D matrix. For instance, for n = 2 in the Walsh case:
+
+P
+
+1
+1
+1 −1
+1
+1 −1 −1
+
+1
+1
+1 −1
+1 −1 −1
+1
+
+
+
+=
+
+
+
+
+
+
+W n=2 = 
+
+
+
+
+
+1
+1
+1 −1 !
+
+⊗
+
+1
+1
+1 −1 !
+
+=:
+
+⊗2
+
+1
+1
+1 −1 !
+
+Here, we introduced the superscript notation ⊗n to indicate the n-fold tensor product.
+
+Table 1 summarizes the most important properties of these transformation matrices: their
+closed form expression, their tensor product construction, and their inverse. When look-
+ing at the table one should ﬁrst observe the self-similar regularity of the transformation
+matrices, which stems from their deﬁnition of repeated tensor products. The meaning of
+the various bases become more intuitive when looking at the hypercube illustrations of the
+basis. The Walsh bases, e.g., can nicely be compared to a Fourier basis: e000 corresponds
+to the constant function 1, e001, e010, e100 could be view as sinus functions along the x-, y-,
+and z-axes, respectively; e011, e101, e110 are products of sinus functions—and capture 2nd
+order dependencies; and e111 is the “highest frequency” bases function capturing 3rd order
+dependencies.
+
+3
+
+ 
+ 
+ 
+x Wyx px
+
+Walsh
+wy =
+px = 1
+y Wxywy
+n
+P
+Wyx = (−1)|x and y|
+P
+⊗n
+
+=
+
+◦ !
+
+W −1 = 1
+
+n W
+
+Amari’s η / BBB
+ηa =
+=
+px =
+
+¯Baxpx
+x
+x(B−1)T
+a BT
+xaηa
+
+P
+P
+P
+¯B = (B−1)T =
+
+axpx
+
+¯B−1 =
+
+  ·
+⊗n
+
+◦
+
+·
+
+!
+
+⊗n
+
+!
+
+Amari’s θ
+θa =
+lx =
+
+x Baxlx
+¯BT
+xaθa
+a
+P
+P
+B = ( ¯B−1)T =
+
+B−1 =
+
+·
+
+⊗n
+
+·
+
+!
+
+◦
+⊗n
+
+!
+
+Haar
+please see (Khuri 1994)
+
+0
+0
+0
+
+1
+0
+0
+
+0
+1
+0
+
+1
+1
+0
+
+0
+0
+1
+
+1
+0
+1
+
+0
+1
+1
+
+1
+1
+1
+
+000
+
+000
+001
+010
+011
+100
+101
+110
+111
+
+◦
+
+◦
+◦ ◦
+
+◦ ◦
+
+◦
+
+◦
+◦ ◦
+
+◦ ◦
+◦ ◦ ◦ ◦
+
+◦
+
+◦ ◦
+◦ ◦ ◦ ◦
+
+◦
+
+◦ ◦
+
+◦
+
+◦
+
+0
+0
+0
+
+1
+0
+0
+
+0
+1
+0
+
+1
+1
+0
+
+0
+0
+1
+
+1
+0
+1
+
+0
+1
+1
+
+1
+1
+1
+
+·
+***
+3 **1 ·
+2 *1* ·
+23 *11 ·
+1 1** ·
+13 1*1 ·
+12 11* ·
+123 111 ·
+0
+0
+0
+
+◦
+◦
+
+·
+3
+2
+23
+1
+13
+12
+123 ◦
+
+◦
+
+·
+·
+·
+·
+·
+·
+1
+0
+0
+
+·
+
+·
+
+·
+·
+·
+·
+·
+0
+1
+0
+
+·
+·
+
+·
+◦ ◦
+·
+·
+·
+◦
+◦
+·
+
+0
+0
+0
+
+1
+0
+0
+
+0
+1
+0
+
+·
+·
+·
+
+·
+·
+
+·
+·
+·
+0
+0
+1
+
+·
+·
+1
+0
+1
+
+·
+
+·
+
+·
+
+·
+0
+1
+1
+
+1
+1
+1
+
+·
+·
+·
+·
+
+◦
+◦
+
+0
+0
+1
+
+·
+·
+·
+·
+·
+
+·
+·
+·
+·
+·
+·
+
+·
+◦ ◦
+0
+1
+1
+0
+1
+1
+
+·
+·
+·
+·
+·
+·
+·
+
+1
+1
+1
+
+·
+·
+·
+·
+1
+1
+0
+
+·
+·
+·
+
+·
+·
+·
+◦
+1
+1
+0
+
+100
+
+010
+
+001
+
+011
+
+101
+
+110
+
+111
+
+·
+
+1
+
+2
+
+3
+
+23
+
+13
+
+12
+
+123
+
+·
+
+1
+
+2
+
+3
+
+23
+
+13
+
+12
+
+123
+
+000
+001
+010
+011 ·
+100
+101 ·
+110 ·
+111 ·
+
+◦ ◦
+·
+·
+·
+·
+◦
+·
+·
+
+·
+·
+
+·
+◦
+·
+·
+·
+
+·
+
+◦ ◦ ◦ ◦
+·
+·
+·
+◦ ◦
+·
+·
+·
+·
+·
+·
+◦
+
+·
+·
+◦
+·
+
+·
+·
+
+·
+
+Table 1: Overview over the diﬀerent bases for the space of distributions. The ﬁrst column
+gives the deﬁnitions of the transformations and their inverse. Note that the θ-bases is deﬁned
+in log-space. The transformation matrices are illustrated in the section column for n = 3
+using the symbols = 1, ◦ = −1, and · = 0. The third column illustrates the bases functions
+ey (or ea) as colorings of the hypercube {0, 1}3. Note that the basis functions correspond to
+rows of the transformation matrix. The 1-norm |x and y| of the and of two binary strings
+counts the 1-bits that they have in common.
+
+4
+
+ 
+ 
+ 
+ 
+The η-bases captures certain marginals relative to the all-1s string:
+
+ηa = pa(11..) .
+
+These can be thought of the marginals over all possible Building-Blocks—thus it is also called
+the Building-Block-Bases (BBB, cf. Chryssomalakos & Stephens 2004). This marginalization
+becomes apparent in the hypercube colorings as the abundance of zeros (non-colored vertices
+and dots in the matrix).
+
+The θ-bases combines the “frequency” idea of the Walsh bases with the marginalization: The
+highest order bases function e123 is analogous to the Walsh bases e111 and detects highest
+order dependencies. Lower order dependencies though are only detected on a marginal.
+
+x Bax log px. We will ﬁnd
+However, note that the θ bases is deﬁned in log-space, θa =
+some implications of this in the next section. Note that the transformation matrices of the
+P
+η- (Building-Block-) and the θ-bases are related via B = ( ¯B−1)T .
+
+It can not be derived as
+For completeness, we also indicated the Haar bases in table 1.
+repeated tensor products and we do not discuss it any further here. One argument made
+about the Haar bases (Khuri 1994) is that the transformation matrix incorporates a lot of
+0s. Thus, the coeﬃcients are more eﬃcient to compute as the Walsh coeﬃcients. We add
+here that the ratio of zeros in the η and θ transformation matrices is 1 − (3/4)n−1 and
+approaches 1 exponentially with the dimension n.
+
+4 Mathematical structure on the manifold Λ
+
+In this section we want to develop a more geometric view on the manifold of distributions,
+following (Amari 1999; Amari 2001). This geometry will put a special emphasis on the η-
+and θ-bases.
+
+m- and e-geodesics An essential ingredient to describe the geometry of a manifold is
+the deﬁnition of the notion of “straight lines”, or geodesics, connecting two points in the
+manifold. In the case of the manifold of distributions, there exist at least two ways of deﬁning
+a straight path connecting two distributions q and r: the one being the linear mixture in
+direct coordinates px, the other being the linear mixture in log coordinates lx,
+
+m-geodesic:
+
+p(x) = (1−α) q(x) + α r(x) ,
+
+e-geodesic:
+
+log p(x) = (1−α) log q(x) + α log r(x) − ψ(x) .
+
+Here m means mixture and e means exponential. The additional term ψ(x) in the e-geodesic
+is necessary to preserve the normalization of p(x).
+
+The fact that there exist two ways of deﬁning geodesics means that there exist two mean-
+ingful aﬃne connections on the manifold. Both deﬁne a notion of ﬂatness: we say that a
+m-geodesic is m-ﬂat and a e-geodesic is e-ﬂat.
+
+It turns out that the coordinate lines (and planes, hyperplanes, etc.) of η are m-ﬂat and
+those of θ are e-ﬂat. The former is obvious, since an m-geodesic can equivalently be written
+in the η coordinate system as ηa(p) = (1−α) ηa(q) + α ηa(r). The second becomes apparent
+when realizing that the Taylor expansion of log p reads
+
+lx =
+
+θixi +
+
+θij xixj +
+
+θijk xixj xk + · · · + θ1..n x1..xn − ψ =
+
+θaX a − ψ
+
+i
+X
+
+i<j
+X
+
+i<j<k
+X
+
+a∈A
+X
+
+where X a is the product of the components xi1 xi2 · · · xik ∈ {0, 1} when a = (i1, i2, .., ik).
+Thus, an e-geodesic is written, in the θ coordinate system, simply as θa(p) = (1−α) θa(q) +
+α θa(r).
+
+5
+
+Fisher metric, Kullback-Leibler divergence On this manifold Λ, there is a metric
+deﬁned, the Fisher metric. In arbitrary coordinates vi (it could be any of the Walsh, log,
+η-, or θ-coordinates), it reads
+
+gij(p) = E
+
+∂ log p
+∂vi
+
+∂ log p
+∂vj (cid:27)
+
+.
+
+(cid:26)
+
+Some intuition can be gained by realizing that, locally, the distance measured by the Fisher
+metric coincides with the distance measured by the Kullback-Leibler divergence:1 Consider
+a point p ∈ Λ and a nearby point p + δp. When we measure the squared length hδp, δpi of
+the variation δp by the Kullback-Leibler divergence we ﬁnd
+
+hδp, δpi = D
+
+p : p + δp
+
+= E {log p − log(p + δp)} ¨= E
+
+−
+
+δp
+p
+
++
+
+δp2
+p2
+
+= E
+
+(cid:27)
+
+(cid:26)
+
+δp2
+p2
+
+.
+
+(cid:27)
+
+(cid:26)
+
+(cid:0)
+
+(cid:1)
+
+Here, the 2nd-order approximation stems from the Taylor expansion of log(p + δp) and
+x δp(x) = 0 to preserve normalization. Note that, in this inﬁnitesimal
+E{δp/p} = 0 since
+neighborhood, the Kullback-Leibler divergence becomes symmetric. Generalizing this to
+P
+two small variations δ1p = ∂vi p := ∂p
+induced by small shifts along
+∂vi
+some coordinates we have
+
+and δ2p = ∂vj p := ∂p
+∂vj
+
+h∂vip, ∂vj pi = E
+
+∂vi p
+p
+
+∂vi p
+p
+
+= E
+
+(cid:27)
+
+(cid:26)
+
+∂ log p
+∂vi
+
+∂ log p
+∂vi (cid:27)
+
+(cid:26)
+
+and retrieve the Fisher metric. In turn, the Fisher metric can also be derived by considering
+the second order derivatives of the Kullback-Leibler divergence:
+
+gij(q) =
+
+1
+2
+
+∂
+∂vi
+
+∂
+∂vj
+
+D
+
+p : p + δv
+
+(cid:0)
+
+.
+
+δv=0
+
+(cid:1)(cid:12)
+(cid:12)
+(cid:12)
+
+Orthogonality of η and θ, the Pythagoras The coordinate systems η and θ have a
+crucial property w.r.t. the Fisher metric—they are mutually orthogonal: At any point p in
+the manifold the variations induced by shifts along θ and η coordinates fulﬁll
+
+h∂θap, ∂ηbpi = δab ,
+
+where δab is the Kronecker delta. Based on this one can derive a Pythagoras theorem: Let
+p, r and q be three distributions where the m-geodesic connecting p and r is orthogonal to
+the e-geodesic connecting r and q, then
+
+D
+
+p : q
+
+= D
+
+p : r
+
++ D
+
+r : q
+
+.
+
+Please ﬁgure 1 for an illustration.
+
+(cid:0)
+
+(cid:1)
+
+(cid:0)
+
+(cid:0)
+
+(cid:1)
+
+(cid:1)
+
+k-cuts Let k denote an order of interactions that we are interested in. Then, the coordi-
+nates split into those describing interactions of order ≤ k and those describing interactions
+of order > k,
+
+ηk := (all ηa of order |a| ≤ k) ,
+p : q
+
+1The Kullback-Leibler divergence D
+
+(also called relative entropy or divergence) is a measure for the
+loss of information (or gain of entropy) when a true distribution p is approximated by a model distributions
+q. For example, when p(x, y) is approximated by p(x) p(y) one looses information on the mutual dependence
+between x and y. Accordingly, the relative entropy D
+is equal to the mutual information
+between x and y. Generally, when knowing the real distribution p one needs on average H(p) (entropy of
+(cid:0)
+p) bits to describe a random sample. If, however, we know only an approximate model q we would need
+on average H(p) + D
+bits to describe a random sample of p. The loss of knowledge about the true
+distribution induces an increase of entropy and thereby an increase of average description length for random
+samples.
+
+p(x, y) : p(x) p(y)
+
+p : q
+
+(cid:0)
+
+(cid:1)
+
+(cid:1)
+
+(cid:1)
+
+(cid:0)
+
+6
+
+Mk(p)
+
+Mk(q)
+
+r
+
+D
+
+q
+p:
+(cid:1)
+p
+q:
+(cid:0)
+D
+(cid:0)
+
+p
+
+q
+
+(cid:1)
+
+′
+
+r
+
+Ek∗ (q)
+
+Ek∗ (p)
+
+Figure 1: The Pythagoras in the case when a certain k-cut is used to deﬁne the m- and e
+geodesics connecting to r, respectively r′. It holds: D
+and
+r′ : p
+D
+
+q : r′
+
+p : r
+
+p : q
+
+= D
+
+r : q
+
+= D
+
++ D
+
++ D
+
+q : p
+
+.
+
+(cid:0)
+
+(cid:1)
+
+(cid:0)
+
+(cid:1)
+
+(cid:0)
+
+(cid:1)
+
+(cid:0)
+
+(cid:1)
+
+(cid:0)
+
+(cid:1)
+
+(cid:0)
+
+(cid:1)
+
+θk∗ := (all θa of order |a| > k) .
+
+These can be mixed into a new coordinate system (ηk, θk∗ ). The point is that those dimen-
+sions spanned by ηk are orthogonal to those spanned by θk∗ . To simplify the discussion we
+call ηk marginals (although they include marginals over k-tuples of variables) and θk∗ higher
+order interactions. Keeping the marginals ηk constant deﬁnes m-ﬂat sub-manifolds Mk(ηk),
+which are disjoint for diﬀerent ηk and cover all Λ. Keeping higher order interactions θk∗
+constant deﬁnes e-ﬂat sub-manifolds Ek∗ (θk∗ ), which are disjoint for diﬀerent θk∗ and cover
+all Λ.
+
+Complete decomposition of diﬀerent order interactions Given a distribution p, we
+deﬁne its kth order reduction p(k) as the distribution with same marginals ηk(p) as p but
+vanishing higher order interactions θk∗ = 0,
+
+p(k) = (ηk(p), θk∗ = 0) .
+
+That is, p(k) is the same distributions as p except that all interactions of order > k have been
+canceled. We call p(k) the kth-order reduction of p. Given the Pythagoras it should be clear
+that p(k) can also be deﬁned as the orthogonal projection of p onto the submanifold Ek∗ (0)
+or as the orthogonal projection of the uniform distribution p(0) onto Mk(ηk(p)), please see
+ﬁgure 2 left,
+
+p(k) = argmin
+∗ (0)
+
+q∈Ek
+
+D
+
+p : q
+
+= argmin
+
+D
+
+q : p(0)
+
+.
+
+q∈Mk(ηk(p))
+
+(cid:0)
+
+(cid:1)
+p(k) : p(k−1)
+
+(cid:0)
+
+(cid:1)
+
+Further, deﬁne Dk(p) = D
+. Then the Pythagoras allows to decompose the
+mutual information I(p) in p (i.e., the measure of all interactions in p) into a sum of diﬀerent
+order interactions:
+
+(cid:1)
+
+(cid:0)
+
+I(p) = D
+
+p : p(1)
+
+=
+
+Dk(p)
+
+n
+
+Please see ﬁgure 2 right for an illustration.
+
+(cid:0)
+
+k=2
+X
+
+(cid:1)
+
+This result should be highlighted. The given formalism allows to explicitly distinguish dif-
+ferent order interactions between variables in a distribution and directly assigns coordinates
+θ to those diﬀerent order interactions. The quantities Dk(p) = D
+measure
+precisely and only the kth-order interactions in entropic units.
+
+p(k) : p(k−1)
+
+(cid:0)
+
+(cid:1)
+
+For instance, consider three random variables X1, X2, X3 which are pair-wise dependent in
+the sense I(Xi|Xj) 6= 0. The question is whether there exist “true” 3rd-order interactions
+or only concatenated 2nd-order interactions—in other terms, can they be described by a
+if D3(p) = 0 it is a
+Markov process X1 → X2 → X3. The formalism gives an answer:
+Markov process, otherwise there exist 3rd-order interactions.
+
+7
+
+Mk(p)
+
+p
+
+D
+
+p : p(k)
+
+(cid:0)
+
+(cid:1)
+
+I(p)
+
+p(k)
+
+I(p(k))
+
+p(1)
+
+Ek∗ (0)
+
+I(p) = D
+
+p : p(1)
+
+p(1)
+
+D
+
+p(2) : p(2)
+
+(cid:0)
+p(3)
+
+(cid:1)
+
+p
+
+(cid:0)
+
+(cid:1)D
+
+p(3) : p(2)
+
+p(2)
+
+(cid:0)
+
+(cid:1)
+
+p(j)
+
+D
+
+p(j) : p(i)
+
+=
+
+j
+k=i+1 D
+
+p(k) : p(k−1)
+
+(cid:0)
+
+(cid:1)
+
+P
+
+(cid:0)
+
+(cid:1)
+
+Figure 2: The left ﬁgure illustrates a distribution p and its kth-order reduction p(k): It is the
+orthogonal projection of p along Mk(p) onto Ek∗ (0). The “distance” D(p : p(k)) measures
+“norm” of θk∗ , i.e., it measures the amount of mutual information of order higher than k.
+The right ﬁgure illustrates the complete decomposition of p in reductions p(k) of all orders.
+Every projection from p(k) to p(k−1) is an orthogonal projection onto E(k−1)∗ (0). Every
+“distance” D(p(k) : p(k−1)) measures the mutual information speciﬁcally of order k.
+
+5 Geometric view on evolution operators
+
+Crossover
+In Evolutionary Algorithms, crossover is one means of mixing a parent pop-
+ulation to an oﬀspring population. Populations can be formalized as distributions p and a
+deﬁnition of a simple form of crossover (uniform crossover parameterized with c ∈ R) reads
+
+Cp = (1 − c) p + c p(1) .
+
+See, for instance, (Toussaint 2003) for a general deﬁnition of a crossover operator in more
+conventional notation and details of when it reduces to this simple form.
+
+This crossover simply mixes the original distribution (or population) p with its 1st-order
+reduction. The 1st-order reduction is the product of all single variable marginals, i.e., it is
+the distribution with the same marginals (gene frequencies) as p but all dependencies (gene
+linkages) between the variables eliminated. From the geometrical point of view, crossover
+makes a step along the m-geodesic connecting p and p(1). It can be illustrated as a step
+along the projection onto the submanifold E1∗ (p), please see ﬁgure 3.
+
+From this view it becomes clear that a reasonable coordinate system to describe crossover
+is (η1, θ1∗ ). Crossover does not change η1 (it operates orthogonally to η1) but continuously
+reduces the θ1∗ variables. That θ1∗ are reduced and not increased is intuitive from ﬁgure 3
+(recall that θ’s are always positive) and becomes apparent from that the “distance” from p
+to p(1), I(p) = D
+
+, is a norm of θ1∗ .
+
+p : p(1)
+
+(cid:0)
+
+(cid:1)
+
+Max Entropy Wright, Poli, Stephens, Langdon, & Pulavarty (2004) recently proposed
+an evolutionary search scheme that constructs the new search distribution (oﬀspring pop-
+ulation) via a maximum entropy principle: From the parent population all second order
+scheme frequencies are calculated. Then, from all the distributions which have the same
+second order schema frequencies, the new oﬀspring distribution is the one with maximum
+entropy.
+
+In our formalism, constraining the schema frequencies corresponds to ﬁxing η2, i.e., con-
+straining the oﬀspring distribution to the submanifold M2(η2). The distribution with maxi-
+mal entropy in M2(η2) must have minimal higher order (3rd-order or higher) interactions θ2∗
+since interactions (mutual information) reduce entropy. Thus, the max entropy rule simply
+
+8
+
+M1(p)
+p
+
+r
+e
+v
+o
+s
+s
+o
+r
+c
+
+I(p) = D
+
+p : p(1)
+
+(cid:0)
+
+(cid:1)
+
+p(1)
+
+E1∗(0)
+
+Figure 3: Crossover is an operator that takes a step along the projection of p towards the
+ﬁrst order reduction p(1).
+
+amounts to setting θ2∗ = 0, i.e., choosing p(2) = (η2, 0) as the new oﬀspring distribution.
+Again, this can be viewed geometrically as the orthogonal projection of the parent population
+p onto E2∗ (0) according to
+
+argmin
+q∈E2
+∗ (0)
+
+D
+
+p : q
+
+(cid:0)
+
+(cid:1)
+
+or as the orthogonal projection of the uniform distribution p(0) onto M2(η2)
+
+argmin
+q∈M2(η2)
+
+D
+
+q : p(0)
+
+.
+
+(cid:0)
+
+(cid:1)
+
+This latter way of writing the max entropy principle is quite intuitive: ﬁnd the distribution
+that fulﬁlls the required constraints (lies on M2(η2)) but is closest to the uniform distribution
+p(0).
+
+Eventually, note the strong analogy of the maximum entropy principle proposed by (Wright,
+Poli, Stephens, Langdon, & Pulavarty 2004) and the simple crossover operator given before:
+Crossover moves p toward p(1), while the search heuristic considered by Wright et. al. chooses
+p(2) as the new search distribution.
+
+6 Discussion
+
+The methods information geometry provides to analyze and describe the structure of distri-
+butions are deeply grounded in information theory. For instance, it seems very beneﬁcial to
+have coordinate systems for distributions which capture precisely arbitrary kth order inter-
+actions between variables and have a direct link to measures like mutual information and
+the Kullback-Leibler divergence. Also the geometric aspects, e.g., that some operations can
+be described as orthogonal to certain submanifolds, add to a more comprehensive picture
+of the space of distributions. In that sense, information geometric methods enhance more
+common approaches in Evolutionary Computation, like the Walsh bases, in describing the
+structure of distributions and operators.
+
+However, the question remains how and whether these methods can be used to (1) actually
+propose new heuristic search algorithms or (2) to provide new theoretical tools to analyze
+the dynamics of evolutionary processes.
+
+9
+
+Acknowledgment
+
+I would like to thank the German Research Foundation (DFG) for their funding of the Emmy
+Noether fellowship TO 409/1-1.
+
+References
+
+Amari, S. (1999). Information geometry on hierarchical decomposition of stochastic interactions.
+
+Citeseer preprint.
+
+Amari, S. (2001). Information geometry on hierarchy of probability distributions. IEEE Trans-
+
+actions on Information Theory 47 (5), 1701–1711.
+
+Chryssomalakos, C. & C. R. Stephens (2004). What basis for genetic dynamics? In 2004 Genetic
+and Evolutionary Computation Conference (GECCO 2004), pp. 1018–1029. Springer, Berlin.
+Khuri, S. (1994). Walsh and Haar functions in Genetic Algorithms. In Proceedings of the 1994
+
+ACM Symposium on Applied Computing, pp. 201–205.
+
+Langton, C. (1990). Cmputation at the edge of chaos: Phase transitions and emergent computa-
+
+tion. Physica D 42, 12.
+
+Sporns, O. & G. Tononi (2002). Classes of network connectivity and dynamics. Complexity 7,
+
+28–38.
+
+Toussaint, M. (2003). The structure of evolutionary exploration: On crossover, buildings blocks,
+and Estimation-Of-Distribution algorithms. In 2003 Genetic and Evolutionary Computation
+Conference (GECCO 2003), pp. 1444–1456.
+
+Toussaint, M. (2004). Non-trivial genotype-phenotype mappings and the evolution of represen-
+
+tations. Evolutionary Computation Journal . Submitted.
+
+Wright, A., R. Poli, C. Stephens, W. Langdon, & S. Pulavarty (2004). An Estimation of Distribu-
+tion Algorithm based on maximum entropy. In 2004 Genetic and Evolutionary Computation
+Conference (GECCO 2004), pp. 343–354. Springer, Berlin.
+
+
