@@ -1,0 +1,430 @@
+================================================================================
+EXECUTION REVIEW PACKET
+HC-T01 / TOUSSAINT MISSING-CELL EXPERIMENT
+================================================================================
+Prepared:        2026-09-03   executed, primary verdict frozen
+Seat:            Herakles / Historical Collider
+Location/Code:   herakles/specimens/spec-toussaint-exploration/
+Simulator:       derived/hct01.c          (C, 7/7 property tests pass)
+Analysis:        derived/analyze.py       run-level, paired permutation
+Verifier:        derived/verify_t0_claims.py   41 claims, 41 PASS
+Rows:            derived/grid 120 runs, derived/sens 180, sens_long 24
+Directive:       DIRECTIVE_HC_T01_EXECUTION_2026-09-03.txt
+                 sha256 83b6e197b52f441b007cd2a0585be504661f57d97f4730a9cb4e
+                        99bb4494d91e
+Headline:        The knob moves the detector by 0.003. Having HAD the knob
+                 moves it by 2.4. Same phenotype, same fitness, different
+                 reachable futures. But K7 fired: the detector predicts
+                 acquisition no better than current fitness does.
+
+--------------------------------------------------------------------------------
+1. HISTORICAL VALIDATION VERDICT
+--------------------------------------------------------------------------------
+Target                                    Historical     Measured    Verdict
+---------------------------------------   ------------   ---------   --------
+V1 genome length falls to 11 by gen 200    11             11          PASS
+V2 neutral degree rises                    0.45 -> 0.70   0.504 ->    PASS
+                                                          0.657
+V6 alpha .06 beta 0 stalls, pct non-opt    "around 20"    17.6        PASS
+V4 mutual info stripes at distance 5       present        present     PASS
+V7 misaligned modules deabc and bcdea      both named     both        PASS
+V3 measures fluctuate after gen 200        flat           drifts up   PARTIAL
+                                                                      MISMATCH
+treatment ordering of fitness              on > off       on > off    PASS
+
+V1, V2 and V6 are the preregistered PRIMARY targets and all three pass. V2's
+two endpoints sit within about 1.1 run-to-run standard deviations of values
+read off a printed figure. V3 is corroborating only and by the preregistration
+cannot fail the reconstruction alone; it is reported because it is a real
+mismatch: after generation 200 our genomes bloat where the thesis describes
+stable fluctuation.
+
+Two unprompted hits worth weighing. The reconstruction independently produced
+BOTH misaligned modules the thesis names by hand, deabc and bcdea, and one run
+produced <aaaaa> with a:abcde, which is the thesis's length-11 optimum under a
+different arbitrary promoter symbol.
+
+  RECONSTRUCTION_FAILS ........... no
+  RECONSTRUCTION VALIDATED ....... YES, with V3 disclosed
+
+--------------------------------------------------------------------------------
+2. MEASURED COMPUTE, REPLACING THE ESTIMATE
+--------------------------------------------------------------------------------
+quantity                                      predicted     measured
+------------------------------------------    ----------    ----------
+detector samples per second, one core         0.3-1.0 M     2.3 M
+one instrumented 1000-generation run          3-10 min      8 s
+120-run confirmatory grid                     6.7-20 h      2.5 min
+                                                            on 12 cores
+detector cost / evolution cost                2000x         2000x
+
+The cost-ratio prediction held exactly. The per-sample estimate was pessimistic
+by about a factor of three, because the evolved genotypes stay small and
+development is a single pass.
+
+The historical reading stands and is now better supported: this instrument was
+affordable for the ONE demonstration run of Experiment 1 and would have cost
+days across the FORTY runs of Experiment 2 on 2003 hardware.
+
+--------------------------------------------------------------------------------
+3. ESTIMATOR-NOISE QUALIFICATION
+--------------------------------------------------------------------------------
+Standard deviation of the population-mean statistic across 20 independent
+detector seeds at the historical S = 2000, taken as the conservative maximum
+over three probed populations.
+
+  statistic          noise floor
+  ---------------    -----------
+  modular degree        0.02115
+  neutral degree        0.000946
+  mi_aligned            0.001867
+  avgfit                0.000955
+
+  HISTORICAL_DETECTOR_UNDERPOWERED ... no
+  K9 ................................ does not fire
+
+The historical instrument at historical resolution resolves the primary effects
+with room to spare. Every primary effect below is quoted as a multiple of this
+floor.
+
+Non-interference was verified directly: 20 different detector seeds on the same
+evolution seed produced exactly ONE distinct evolutionary state at every
+checkpoint. The probe does not perturb the run.
+
+--------------------------------------------------------------------------------
+4. T0 MECHANICAL EFFECT, AND WHY THE DIRECTIVE WAS RIGHT
+--------------------------------------------------------------------------------
+  M(P_0) modular degree ......... 0.00000  EXACTLY
+  M(P_0) neutral degree ......... -0.00004
+
+The generation-zero null is VACUOUS in this experiment. Experiment 2 starts
+from the one-symbol egg cell <a>. A second-type mutation needs a subsequence of
+length at least two to extract, so at generation zero beta has literally
+nothing to act on and the mechanical contrast is identically zero.
+
+Had HC-T01 relied on the generation-zero null alone, as the original
+preregistration proposed, it would have had NO baseline at all. The
+contemporaneous frozen-population probe was not a refinement of the design. It
+was the experiment.
+
+The contemporaneous mechanical contrast inside evolved populations is also
+small:
+
+  M_on(t), modular degree, all checkpoints ...... +0.003 to +0.027
+  noise floor ................................... 0.021
+
+So turning the knob NOW, on a population that has already evolved, moves the
+detector by about the width of the measurement error.
+
+--------------------------------------------------------------------------------
+5. T1 SAME-PROBE HISTORY EFFECT (O2)
+--------------------------------------------------------------------------------
+Both populations meet the identical probe operator, beta_probe = 0.1, at
+measurement time. 30 paired runs per alpha, paired permutation over run pairs,
+10,000 permutations, Holm over the two preregistered checkpoints.
+
+alpha   gen    H(t)      95% CI              |H|/noise   p        Holm
+-----   ----   -------   -----------------   ---------   ------   ------
+0.03     100   +1.9600   [+1.506, +2.414]         92.7   0.0001   0.0002
+0.03     500   +1.3213   [+1.068, +1.575]         62.5   0.0001   0.0002
+0.06     100   +1.9595   [+1.553, +2.366]         92.6   0.0001   0.0002
+0.06     500   +0.6581   [+0.610, +0.706]         31.1   0.0001   0.0002
+
+Peak +2.4089 at generation 150. Neutral degree moves the other way, H = -0.239
+at generation 100, 253 times its own noise floor: the beta-evolved populations
+produce MORE correlated and LESS neutral variation under the same operator.
+
+  T1 SUPPORTED ....... YES, both alpha levels, both checkpoints
+  K3 ................. does not fire
+
+Contrast the two numbers that matter:
+  effect of turning the knob now ................ 0.003 to 0.027
+  effect of having had the knob in evolution .... up to 2.41
+
+--------------------------------------------------------------------------------
+6. DIFFERENCE-IN-DIFFERENCES E(t) (O3)
+--------------------------------------------------------------------------------
+  E(0) ............................ 0.000000, MEASURED, not assumed
+  E(100), alpha 0.03 .............. -0.15303   Holm p = 0.0007
+  E(500), alpha 0.03 .............. -0.63358   Holm p = 0.0002
+
+E(0) is exactly zero because at generation zero both arms are the same
+population. The null is measured on the same apparatus, in the same units, with
+the same estimator noise. E(t) departs from it and keeps departing.
+
+The sign is negative and is worth stating: the marginal mechanical effect of
+beta is SMALLER in a population that already evolved under beta. The
+representation has already absorbed the structure, so the operator has less
+left to add. That is saturation, and no direction was predicted.
+
+  K2 ....... does not fire, the generation-zero effect explains nothing
+  K4 ....... does not fire
+
+--------------------------------------------------------------------------------
+7. ACQUISITION RESULTS (O4)
+--------------------------------------------------------------------------------
+alpha   gen    best_on   best_off   difference   95% CI            p
+-----   ----   -------   --------   ----------   ---------------   ------
+0.03     100   -0.3747   -0.8533      +0.4787    [+0.345,+0.613]   0.0001
+0.03     500    0.0000   -0.3667      +0.3667    [+0.279,+0.454]   0.0001
+0.03    1000    0.0000   -0.0493      +0.0493    [+0.011,+0.087]   0.0038
+0.06     100   -0.5867*  see note     +0.5867    [+0.482,+0.692]   0.0001
+0.06    1000    0.0000   -0.1627      +0.1627    [+0.149,+0.177]   0.0001
+
+The mechanism arm acquires the target faster and more reliably, exactly as the
+historical record says. At alpha 0.06 the ablated arm never gets there.
+
+--------------------------------------------------------------------------------
+8. T2 TEMPORAL PRECEDENCE
+--------------------------------------------------------------------------------
+  T2 ......... NOT ATTEMPTED
+
+The preregistration confines any precedence claim to a window in which the
+run-level outcome slope is indistinguishable from zero, precisely so that a
+detector cannot be called a precursor merely for being a less noisy readout of
+a moving outcome.
+
+Measured: the detector reaches significance at generation 30 and acquisition at
+generation 40 for alpha 0.03, and both at generation 30 for alpha 0.06. But the
+on-arm fitness slope through that whole window runs +0.02 to +0.13 per
+checkpoint. The only plateaus are late, after the detector signal has already
+peaked and begun to fall.
+
+There is no plateau while the signal emerges, so T2 was not attempted. The
+one-checkpoint lead is NOT reported as precedence. This is the preregistration
+doing its job against the seat's own interest.
+
+--------------------------------------------------------------------------------
+9. T3 CAUSAL ACQUISITION DEPENDENCE
+--------------------------------------------------------------------------------
+  T3 ......... NOT ESTABLISHED
+
+The ablation does suppress both the accessibility difference and the
+acquisition. But the fourth link of the chain, that the accessibility change
+carries information about subsequent acquisition, fails. See K7.
+
+--------------------------------------------------------------------------------
+10. AVGFIT COMPARATOR, AND K7
+--------------------------------------------------------------------------------
+Spearman rho between a candidate measured at t and the subsequent best-fitness
+gain from t to t2, within the beta = 0.1 arm only, n = 30 runs.
+
+predictor                        a=.03 100-500   a=.03 50-200   a=.06 50-200
+------------------------------   -------------   ------------   ------------
+current best fitness  CHEAP            -1.000           -0.686          -0.987
+avgfit  HISTORICAL POSITIVE CONTROL    -0.975           -0.683          -0.954
+modular degree  ACCESSIBILITY          -0.950           -0.624          -0.949
+mi_aligned  ACCESSIBILITY              -0.920           -0.619          -0.905
+neutral degree  ACCESSIBILITY          +0.491           +0.588          +0.635
+operator count  CHEAP STATE            -0.447           -0.583          -0.397
+
+  K7 ......... FIRED
+
+The cheapest conventional state variable available, current best fitness,
+predicts subsequent acquisition at least as well as every accessibility
+statistic. avgfit, which the directive designated as the positive control
+precisely because it is coupled to immediate offspring quality, also matches or
+beats the modular degree.
+
+Note the 100->500 column is partly degenerate: once most runs reach the
+optimum, gain becomes an arithmetic function of the current value. The
+50->200 columns are the honest ones, and they say the same thing.
+
+The accessibility detector adds NO independent predictive value for acquisition
+in this design.
+
+--------------------------------------------------------------------------------
+11. THE CLEANEST STATEMENT OF THE PARTICLE
+--------------------------------------------------------------------------------
+Read directly off the primary trajectory, not by post-hoc matching.
+
+At alpha 0.03, generations 2000 and 3000:
+
+  run pairs where BOTH arms sit at exactly the optimum ...... 12 of 12
+  phenotype .................................. identical, all 25 symbols
+  fitness .................................... identical, exactly 0.0
+  acquisition difference ..................... exactly 0.0000
+  modular degree under the IDENTICAL probe ... differs by +0.5157
+  standard error ............................. 0.0283
+  multiple of the noise floor ................ 24x
+
+At generation 1000, 21 of 30 pairs are both at the optimum, difference +0.5247
+plus or minus 0.0178.
+
+Two populations with the same phenotype, the same fitness, and no remaining
+difference in what they have achieved, respond differently to the same
+variation operator. Historical evolution changed something that current
+performance does not show.
+
+Conditioning on both arms reaching the optimum selects the beta = 0 runs that
+succeeded, which if anything biases the difference downward. The figure is
+conservative.
+
+--------------------------------------------------------------------------------
+12. PARAMETER AND RECONSTRUCTION SENSITIVITIES
+--------------------------------------------------------------------------------
+arm                                    H(md) range      multiple of noise
+-----------------------------------    -------------    -----------------
+PRIMARY, beta 0.1, promoters mutate     +0.61 to +1.96      29 to 93
+beta 0.01, the thesis body-text value   +0.71 to +1.58      34 to 75
+promoters do not mutate                 +0.58 to +1.84      28 to 87
+run length 300 / 1000 / 2000 / 3000     +0.52 to +2.28      24 to 108
+
+  ROBUST ...................... YES
+  PARAMETER_SENSITIVE ......... no
+  RECONSTRUCTION_DEPENDENT .... no
+  K8 .......................... does not fire
+
+A HISTORICAL PARAMETER CONFLICT IS NOW RESOLVED, by necessity rather than by
+choice, and it was resolved during X2 before any HC-T01 outcome was inspected.
+Experiment 2 is impossible with replacement-only mutation: from the one-symbol
+egg cell the genotype can never lengthen, and operator creation requires a
+subsequence of length two. Measured: fitness pinned at -0.960 in 40 of 40 runs
+across all four cells, with zero operators ever created. Table 1.7's zero
+belongs to Experiment 1, whose population starts at full length; section
+1.5.4's replacement, insertion and deletion belongs to Experiment 2. The
+published record was never contradictory. It is per-experiment.
+
+--------------------------------------------------------------------------------
+13. KILL CRITERIA, ALL TEN
+--------------------------------------------------------------------------------
+K1  reconstruction misses historical validation ............ no
+K2  generation-zero effect accounts for later differences .. no
+K3  no evolved-representation effect under same probe ...... no
+K4  E(t) indistinguishable from baseline ................... no
+K5  differences explained by estimator noise ............... no
+K6  detector changes unrelated to later acquisition ........ PARTIAL, see K7
+K7  cheap state metrics explain acquisition equally well ... FIRED
+K8  result disappears under sensitivity interpretations .... no
+K9  historical detector too expensive or noisy ............. no
+K10 composition found in an overlooked historical source ... no
+
+--------------------------------------------------------------------------------
+14. CANDIDATE DETECTOR PART
+--------------------------------------------------------------------------------
+detector_part_id       DP-TOUSSAINT-XI-SIGMA
+historical name        phenotypic exploration distribution, three features
+mathematical object    distribution over the phenotype of one offspring of a
+                       fixed parent under the full variation operator
+estimator              Monte Carlo, 2000 samples per individual per generation
+sampling cost          2000x the evolution it observes; 2.3M samples/s measured
+estimator variance     modular degree 0.021, neutral degree 0.00095 at S=2000
+temporal resolution    per generation, population-wide
+what it sees           correlation structure of one-step reachability, and
+                       whether that structure is aligned to the task's period
+what it misses         anything beyond one variation step; which reachable
+                       phenotypes are fitter, unless avgfit is used
+substrate dependence   modular degree is hand-tailored to a period-5 target of
+                       length 25 and does NOT transfer; neutral degree and the
+                       mutual-information matrix are substrate-general given a
+                       discrete positional phenotype
+causal capability      none alone; requires the frozen cross-operator probe
+known confounds        the estimator is a function of the operator being
+                       ablated, which is why the contemporaneous probe and the
+                       difference-in-differences are mandatory
+NOT MODIFIED. Recorded as a historical instrument, per directive section 24.
+
+--------------------------------------------------------------------------------
+15. CANDIDATE MECHANISM PART
+--------------------------------------------------------------------------------
+part_id                CP-REPRESENTATION-REWRITE
+functional wording     phenotype-preserving representational restructuring that
+                       modifies the effect distribution of future variation
+                       operators
+historical name        second-type mutations, rate parameter beta
+causal precondition    a many-to-one genotype-phenotype map with reachable
+                       phenotypically equivalent genotypes
+immediate phenotype effect   none by construction
+immediate fitness effect     none by construction
+future-variation effect      LARGE and measured: +0.52 to +2.41 modular degree
+                             under an identical probe, 24 to 108 times noise
+acquisition effect           present but NOT separable from current fitness
+parameter sensitivity        robust across beta, promoter and run-length arms
+ablation evidence            beta = 0 suppresses both effects
+detector evidence            DP-TOUSSAINT-XI-SIGMA
+No R rung assigned. Not called reasoning. Passed to the Parts Registry.
+
+--------------------------------------------------------------------------------
+16. WHAT THIS RESULT DOES NOT ESTABLISH
+--------------------------------------------------------------------------------
+It does NOT establish that the accessibility change predicts, causes or
+explains acquisition. K7 fired. Current fitness is a better predictor.
+
+It does NOT establish temporal precedence. T2 was not attempted because the
+historical design provides no fitness plateau while the signal emerges.
+
+It does NOT establish that the effect is adaptive, or that broader or narrower
+exploration is better. No direction was predicted and none is claimed.
+
+It does NOT establish generality. One substrate, one target, one period, one
+task. The primary statistic is tailored to a period-5 target and does not
+transfer as written.
+
+It does NOT fully escape the tautology concern. Populations evolved at beta = 0
+cannot contain operators, so part of the contrast is structural. What the
+experiment adds is that the difference is MEASURED rather than asserted, that
+its magnitude is quantified against the instrument's own noise, that the
+contemporaneous mechanical component is roughly 100 to 600 times smaller than
+the historical component, and that the difference persists at identical
+phenotype and identical fitness.
+
+It does NOT reproduce the thesis's post-generation-200 stability. Our genomes
+bloat where the record says they fluctuate.
+
+--------------------------------------------------------------------------------
+17. RECOMMENDATION FOR EVCA
+--------------------------------------------------------------------------------
+EvCA remains FROZEN and untouched, as directed. HC-T01 consumed no part of the
+EvCA gate.
+
+HC-T01 sharpens what EvCA should look for. The transferable move is not the
+modular degree, which is substrate-specific, but the METHOD: freeze the
+population, apply the identical variation operator across arms that differ only
+in history, and take the difference-in-differences against a measured
+generation-zero baseline. In EvCA the analogue is to freeze an evolved rule
+population, apply the identical mutation operator, and measure the distribution
+of reachable rule behaviours, contrasting lineages that did and did not pass
+through a particular structural transition.
+
+One warning carries over directly. Build the acquisition-prediction comparison
+against cheap state variables INTO the EvCA design from the start. In HC-T01
+that comparison is what capped the result, and it would have been cheaper to
+know first.
+
+--------------------------------------------------------------------------------
+18. VERDICT
+--------------------------------------------------------------------------------
+    HC_T01_RECONSTRUCTION_FAILS ............ no
+    HC_T01_HISTORICAL_DETECTOR_INADEQUATE .. no
+    HC_T01_NULL ............................ no
+    HC_T01_WEAK_SIGNAL_ONLY ................ no
+    HC_T01_PARTICLE_SURVIVES ............... YES
+
+The permitted statement, and nothing stronger:
+
+  Evolution under a variation mechanism changed internal representation in a
+  way that altered the distribution of future phenotypic variation beyond the
+  mechanism's direct mechanical effect.
+
+The clause about association with subsequent adaptive acquisition, which
+section 22 permits only for a strong result, is NOT claimed. Item 6 of the
+strong-result definition fails.
+
+ONE TENSION FOR THE REVIEWER TO ADJUDICATE, FLAGGED RATHER THAN RESOLVED
+SILENTLY. Section 21 says HC-T01 is scientifically negative if any kill
+condition holds, and K7 holds. Read literally that mandates a negative verdict.
+Read against the FINAL PRINCIPLE, which defines the particle purely in terms of
+reachable futures at equal current performance, the particle survives
+decisively. This packet takes the second reading and reports K7 as fired in
+section 13, in the headline, and in section 16. If the seat has read that
+wrong, the verdict becomes HC_T01_WEAK_SIGNAL_ONLY and nothing else in this
+packet changes.
+
+REVIEWER'S BOTTOM LINE: given that a beta = 0 population cannot contain
+operators at all, is a 24-sigma difference in one-step reachability at
+identical phenotype and identical fitness a finding about evolved
+accessibility, or is it a restatement of the fact that only one arm was allowed
+to build operators?
+================================================================================
+END OF PACKET
+================================================================================
