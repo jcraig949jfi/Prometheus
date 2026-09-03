@@ -1,0 +1,46 @@
+You are searching the historical literature for the Prometheus/Herakles seat. This is the highest-priority lane of a directive. Report only what you actually read; documented negatives are valuable, undocumented ones are worthless.
+
+THE PHENOMENON, named neutrally as HISTORY-CONDITIONED ACCESSIBILITY:
+A difference in the distribution of future states reachable under an IDENTICAL variation process, between two systems whose PRESENT measured performance and phenotype match.
+
+WHY NEUTRAL GENOTYPE NETWORKS ARE THE CLEANEST POSSIBLE NATURAL CONTROL: many genotypes map to the SAME phenotype, so two systems can be phenotypically identical, equal in fitness, and built from identical machinery, while occupying different positions in genotype space. Their mutational neighbourhoods may still differ enormously. That removes the confound that spoils our own experiment, in which only one treatment arm was permitted to build a class of representational machinery at all.
+
+CLASSIFY EACH WORK ON THIS FIVE-LEVEL SCALE. Do not collapse levels.
+  H0 STATE DIFFERENCE ONLY - history changes current phenotype or fitness. Not relevant.
+  H1 HIDDEN ORGANIZATION DIFFERENCE - present phenotype and fitness can be matched but internal representation differs; no accessibility measurement.
+  H2 SAME-PROBE ACCESSIBILITY DIFFERENCE - matched present state plus an identical probe yields a different distribution of reachable future states, MEASURED.
+  H3 ACQUISITION ASSOCIATION - the accessibility difference predicts subsequent acquisition BETTER THAN matched current-state variables such as fitness, robustness, genotype length or phenotype complexity. This is the level we most need and the one our own experiment failed.
+  H4 CAUSAL ACCESSIBILITY EFFECT - perturbing or removing the historical organization changes BOTH the future distribution AND subsequent acquisition.
+
+WORKS TO SCREEN (search primary sources; add any you find that fit better):
+1. Andreas Wagner 2008, "Robustness and evolvability: a paradox resolved", Proc R Soc B.
+2. Wagner's genotype-network and innovation work, including Ferrada and Wagner on RNA and protein genotype networks.
+3. Draghi, Parsons, Wagner and Plotkin 2010, "Mutational robustness can facilitate adaptation", Nature, AND its Supplementary Information section 6. We specifically need to know whether any LONGITUDINAL accessibility measurement on evolving populations appears in the SI.
+4. Fontana and Schuster 1998, "Continuity in evolution: on the nature of transitions", Science, and the related "Shaping space" paper. Plastogenetic congruence and accessibility of phenotypes from neutral networks.
+5. Cowperthwaite, Meyers and Ancel on RNA neutral networks and phenotype accessibility.
+6. Payne and Wagner 2019, "The causes of evolvability and their evolution", Nature Reviews Genetics. This is a REVIEW: read it specifically for whether it reports anyone achieving H3, and for pointers.
+7. Greenbury, Ahnert, Louis and colleagues on genotype-phenotype map bias and phenotype accessibility.
+8. Aguirre, Manrubia and colleagues on genotype networks and navigability.
+9. Any work measuring "phenotypic accessibility" or "novel phenotypes in the mutational neighbourhood" as a function of POSITION on a neutral network.
+
+FOR EACH work report EXACTLY these fields:
+  work: author year short title
+  access: FULL_TEXT_READ or ABSTRACT_ONLY or NOT_FOUND, plus the exact URL used
+  substrate: RNA secondary structure, protein, Boolean network, etc
+  present_state_matchable: YES/NO, can two systems be matched on phenotype AND fitness
+  machinery_class_matched: YES/NO, same representation class in both, no on/off asymmetry
+  identical_variation_operator: YES/NO
+  future_distribution_measured: YES/NO plus HOW, enumerated all one-mutant neighbours, Monte Carlo sampled, how many
+  subsequent_acquisition_measured: YES/NO plus how
+  conditioned_on_cheap_state: YES/NO, did they check the accessibility measure beats current fitness, robustness or length as a predictor
+  causal_intervention: YES/NO
+  H_LEVEL: H0, H1, H2, H3 or H4
+  surviving_artifacts: code, data, supplementary, exact URLs if any
+  confounds: the strongest alternative explanation
+  one_sentence: what it actually measured
+
+CRITICAL QUESTION TO ANSWER EXPLICITLY AT THE END: has ANYONE measured position on a neutral network at time t, then the one-step reachable phenotype distribution, then subsequent innovation at time t plus n, and shown that the accessibility term carries information beyond current-state variables? If yes, name the paper and the figure. If no, say so plainly and state which paper comes closest and exactly what it is missing.
+
+Also flag any case where a same-state different-future effect EXISTS but does NOT matter for subsequent acquisition. Those are our negative controls and we want them.
+
+End with a full SEARCH LOG: every query string, every URL fetched, and what each returned. Be polite about rate limits. Do not pad and do not editorialise.
