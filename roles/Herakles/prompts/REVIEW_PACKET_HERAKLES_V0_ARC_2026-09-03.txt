@@ -1,0 +1,418 @@
+================================================================================
+EXTERNAL REVIEW PACKET
+PROMETHEUS / HERAKLES -- HISTORICAL COLLIDER V0
+SEAT INSTALL -> VERIFICATION -> RULING -> SURVEY -> FIRST ARTIFACT RECOVERY
+================================================================================
+Prepared:        2026-09-03   draft; one specimen recovered, no experiment run
+Location:        roles/Herakles/  herakles/HERAKLES_HISTORICAL_COLLIDER_V0/
+                 herakles/specimens/spec-evca-density/
+Branch:          herakles/historical-collider-v0  (all commits push-verified as
+                 ancestors of origin via merge-base --is-ancestor)
+Commits:         815053e2e  seat install + V0 deliverables A-P
+                 a74e3d176  pre-execution review packet
+                 d2799dd70  research pass 1 (specimens verified)
+                 12a6d8081  ruling absorbed (thesis replaced)
+                 d75c766c9  survey 1 (six candidates cleared)
+                 83ef98885  artifact recovery, GATE-1 opens
+Directive:       roles/Herakles/prompts/
+                 DIRECTIVE_HISTORICAL_COLLIDER_V0_2026-09-02.txt
+                 sha256 c1301d794950a66d52b3d47e2b1779e5c05b6f7c17
+                        fed24c624c9d8c4187df17
+Ruling:          roles/Herakles/prompts/
+                 RULING_V0_CONTINUE_HYPOTHESIS_DAMAGED_2026-09-03.txt
+                 sha256 31816dc2bb7c40c7a5252e164a7fdcb2285093889
+                        27459279d45ca18fa10811a
+Headline:        SIX EVOLVED GENOMES FROM 1993-1995 RECOVERED AND VERIFIED BY
+                 EXECUTION. TWO EXIST IN NO OTHER PUBLICATION. THE SEAT'S OWN
+                 OPENING THESIS WAS KILLED EN ROUTE AND IS NOT BEING RESCUED.
+
+--------------------------------------------------------------------------------
+1. WHAT THIS SEAT IS
+--------------------------------------------------------------------------------
+Herakles is the RETROSPECTIVE instrument of a research programme. It excavates
+roughly forty years of artificial life, evolutionary computation, genetic
+programming, artificial chemistry and cellular automata.
+
+It does NOT ask whether any historical system produced intelligence. It asks
+whether any contained microscopic changes in computational organization that
+altered what subsequent search could reach.
+
+Its counterpart, Daedalus, owns the prospective instrument (a durable
+multi-world research runtime). Herakles is chartered in part to prove Daedalus
+wrong.
+
+--------------------------------------------------------------------------------
+2. THE CLAIM UNDER REVIEW, AND THE ONE THAT DIED
+--------------------------------------------------------------------------------
+OPENING THESIS, now DEAD:
+  "Historical instruments measured STATE (fitness, complexity, diversity) and
+   almost never measured CHANGE IN WHAT IS REACHABLE."
+
+Killed by two counterexamples, both unanimous under adversarial verification,
+and BOTH WERE ON THE SEAT'S OWN LIST OF PLACES TO LOOK:
+
+  Altenberg 1994 (Advances in Genetic Programming, ch.3) defines evolvability
+  as a property of the OFFSPRING FITNESS DISTRIBUTION and, in Theorem 4, gives
+  a RATE LAW FOR ITS CHANGE via Price's theorem. His own words: "Fisher's
+  fundamental theorem of Natural Selection, but applied not to the fitness of
+  the evolving programs, but to their evolvability." That is a
+  reachability-change formalism from 32 years ago.
+
+  Mengistu, Lehman and Clune 2016 (GECCO pp.141-148) make the offspring-effect
+  distribution the FITNESS FUNCTION ITSELF, then transfer the most evolvable
+  organism into an unseen environment and measure how much of it the offspring
+  cloud reaches. The measure is INHERITED, not invented: the anchor date is
+  Lehman and Stanley 2011 or earlier.
+
+REPLACEMENT THESIS (narrower, sharper, and stated so it can die cleanly):
+  "Across historically important adaptive-computation experiments, how often
+   was the local offspring / reachable distribution measured REPEATEDLY ACROSS
+   POPULATION LINEAGES, in a way that permits changes in future accessibility
+   to be reconstructed over evolutionary time?"
+
+--------------------------------------------------------------------------------
+3. KEY DEFINITIONS
+--------------------------------------------------------------------------------
+THE D-LADDER. Every detector is classified on it.
+
+  D0 ... no accessibility measure; only state variables
+  D1 ... accessibility measured for SELECTED INDIVIDUALS only
+  D2 ... accessibility measured POPULATION-WIDE, at SNAPSHOTS
+  D3 ... LONGITUDINAL population accessibility
+  D4 ... longitudinal accessibility PLUS the subsequent acquisition outcome
+  D5 ... CAUSAL PERTURBATION showing accessibility change altered acquisition
+
+TWO ORTHOGONAL PROVENANCE AXES, enforced on every row.
+
+  Evidence source of a claim:
+    ARTIFACT_IN_HAND ......... bytes held, sha256 in the manifest
+    PRIMARY_SOURCE_READ ...... original read, locator cited
+    SECONDARY_SUMMARY ........ review or retrospective only
+    MODEL_RECALL_UNVERIFIED .. model memory, no source touched
+
+  Provenance class of an object:
+    ORIGINAL_SPECIMEN / RECOVERED_SPECIMEN / REIMPLEMENTATION /
+    APPROXIMATE_RECONSTRUCTION / CONCEPTUAL_REPRODUCTION
+
+MODEL_RECALL_UNVERIFIED rows are barred from every ranked list. That is why the
+directive's TOP-20 / TOP-20 / TOP-10 deliverables are still labelled candidate
+pools rather than rankings.
+
+--------------------------------------------------------------------------------
+4. PRIMARY RESULT A -- THE ARTIFACT RECOVERY
+--------------------------------------------------------------------------------
+TARGET: the EvCA programme (Santa Fe Institute / UC Davis, 1993-1999;
+Mitchell, Crutchfield, Das, Hraber, Hordijk). Genetic-algorithm-evolved
+one-dimensional binary cellular automata for density classification.
+
+RECOVERED: six complete 128-bit rule tables -- four GA-evolved on different
+runs, plus hand-designed majority and GKL rules. They survived ONLY as printed
+hexadecimal in published tables. TWO OF THE SIX APPEAR IN NO OTHER PUBLICATION.
+
+VERIFIED BY EXECUTION, NOT TRANSCRIPTION. Two of the six are derivable from
+their own mathematical definitions. Both were derived independently and matched
+the published hexadecimal in ALL 32 DIGITS. They then calibrate the other four.
+
+  Rule         Published   Measured   Difference   Source
+  ---------    ---------   --------   ----------   ----------------------
+  maj              0.000      0.000       +0.000   review Table 1
+  exp              0.652      0.664       +0.012   review + PNAS
+  par              0.769      0.765       -0.004   review + PNAS
+  particle1        0.742      0.733       -0.009   PNAS ONLY
+  particle2        0.755      0.742       -0.013   PNAS ONLY
+  GKL              0.816      0.820       +0.004   PNAS Table 1
+
+  Performance measure: fraction correct over 10,000 unbiased initial
+  conditions at lattice size N=149. Measurement SE approximately 0.004-0.005.
+  The paper's own reported standard deviation is 0.004.
+
+MANIFEST: 14 hashed rows (13 ORIGINAL_SPECIMEN papers, 1 RECOVERED_SPECIMEN).
+Evidence tiers across all registries now: 18 ARTIFACT_IN_HAND,
+8 PRIMARY_SOURCE_READ, 63 MODEL_RECALL_UNVERIFIED.
+
+--------------------------------------------------------------------------------
+5. PRIMARY RESULT B -- THE ERROR THAT WOULD HAVE BURNED THE EXPERIMENT
+--------------------------------------------------------------------------------
+The seat's seeded registry recorded the particle-strategy discovery rate as a
+single figure described as "rare". IT IS TWO DIFFERENT EXPERIMENTS.
+
+  Experiment                    Runs   Particle strategies found
+  --------------------------    ----   -------------------------
+  Physica D 1994                  50   ZERO
+  PPSN III 1994                  300   7  (2.3%)
+
+In the Physica D results text the word "particle" does not occur at all; its
+epochs 3 and 4 are block-expanding strategies. A reconstruction aimed at that
+configuration would have targeted a setup in which the phenomenon of interest
+NEVER OCCURRED, then spent compute interpreting a null that was a configuration
+error.
+
+Additional Physica D figures, now serving as validation targets (section 8):
+  46/50 runs show the same four-epoch best-fitness signature
+   4/50 runs never exceed fitness 0.5
+  37/50 stuck at 0.5 when crossover is DISABLED
+
+--------------------------------------------------------------------------------
+6. PRIMARY RESULT C -- THE D-LEVEL SURVEY
+--------------------------------------------------------------------------------
+Six named candidates cleared, plus three bonus checks. NO CLEAN D4 OR D5 FOUND.
+The replacement thesis survived its first serious attack.
+
+  Candidate                              D-level   Note
+  ----------------------------------     -------   ----------------------------
+  Wagner & Altenberg 1996                D0 / D3   paper D0; Figure 3 is D3
+  Hu & Banzhaf, main line                D2        enumeration, no population
+  Hu, Banzhaf & Moore PPSN 2014          D3        n=1 run, robustness proxy
+  Dolson & Ofria MODES 2019              D0        activity, not accessibility
+  Toussaint 2001; thesis 2003            D3        Monte Carlo estimator
+  Toussaint FOGA 2003; arXiv 2002        D0        titles promise, papers do not
+  Toussaint & Igel CEC 2002              D3        best-designed perturbation
+  Andreas Wagner 2008                    D3        prior said D2 -- WRONG
+  Ciliberti, Martin & Wagner 2007        D2        selection excluded outright
+  Bedau & Packard 1992-1998              D0        usage/persistence counters
+  Draghi et al. 2010 (bonus)             D5-synth  accessibility is a PARAMETER
+  Cowperthwaite et al. 2008 (bonus)      D2+out    closest template for a D4
+  Franke et al. 2011 (bonus)             D0        no "generation" at all
+
+THE FINDING THAT MATTERS MOST -- A DETECTOR COMPOSITION NOBODY MADE.
+
+By 2003 Marc Toussaint held ALL FOUR parts of a D4/D5 detector:
+  1. a formal definition of the phenotypic exploration distribution
+  2. a working Monte Carlo estimator (2000 samples per individual per
+     generation)
+  3. a population-wide longitudinal readout over 1000-2000 generations
+  4. a clean 2x2 ablation of the mechanism that changes accessibility
+
+HE NEVER RAN THE ESTIMATOR INSIDE THE ABLATION. Where he measured
+accessibility, selection was flat by design so nothing could be acquired.
+Where acquisition happened and the mechanism was ablated, only fitness was
+plotted. Running his own estimator inside his own ablation would have produced
+this programme's target result in 2003, with no new theory and no new
+instrument.
+
+That is "microscopes were built but rarely assembled" instantiated inside ONE
+researcher's own work across two years, not across decades and disciplines. It
+changes the seat's search target: not only "find a detector nobody built" but
+"find pairs of instruments a single programme already had and never pointed at
+each other". Logged as composition candidate comp-11.
+
+A weaker second instance: the MODES toolbox already runs a per-generation,
+population-wide single-site knockout and null-substitution scan on every
+organism, then REDUCES IT to a scalar count of informative sites. One step from
+a D3 accessibility detector; the step is not taken.
+
+--------------------------------------------------------------------------------
+7. CONTROLS AND ADVERSARIAL CHECKS THAT ACTUALLY FIRED
+--------------------------------------------------------------------------------
+EXECUTION AS A TRANSCRIPTION CHECK. Two extraction hazards produced
+SYNTACTICALLY VALID BUT WRONG 128-bit tables: PDF row mis-pairing (each rule's
+second hex row lands on the next rule's line) and a broken Computer Modern
+ligature map. Discriminating power confirmed directly -- a deliberately
+mis-paired rule scores 0.010 against a correct 0.769.
+
+A PUBLISHED ERROR FOUND AND CONFIRMED. The 1995 PNAS table prints the majority
+rule wrong at hex positions 15 and 23 (a 7 where an f is required). Confirmed
+by independent first-principles derivation, not merely reported: those
+positions cover neighbourhood indices 60-63 and 92-95, every one of which has
+at least 4 cells set out of 7, so a majority rule must output 1 for all of
+them. The review paper prints it correctly.
+
+AN AGENT'S REPORTED ANOMALY DID NOT REPRODUCE. The recovering agent reported
+that rule particle2 showed performance RISING with lattice size, which would be
+backwards. Independent measurement gives 0.750 / 0.695 / 0.694 across N of
+149 / 599 / 999 -- normal monotone degradation. Attributed to the agent's own
+scoring; the rule is retained. Logged as a FAILED_REPLICATION row, because an
+agent's anomaly is a LEAD exactly like a historical paper's anomaly.
+
+A SELF-CAUGHT CITATION ERROR. Two paper titles the seat supplied in its own
+research brief appear in NEITHER named author's bibliographic record. They were
+recall-tier citations that survived into a brief because briefs were not held
+to registry evidence standards. Now fixed by a standing gate.
+
+CORRECTIONS ABSORBED FROM VERIFICATION:
+  - the impossibility bound is on PERFECT classification, and the 1994 paper
+    cites "C. Moore, personal communication", NOT Land and Belew, which
+    postdates it by a year
+  - the verified Lindgren source is the ECAL93 SPATIAL LATTICE model with
+    Nordahl, NOT the 1991 replicator model; its parameters must not be quoted
+    as "Lindgren's IPD parameters"
+  - "no artifact survives" for the EvCA code was REFUTED 0-3 as an asserted
+    negative, and has been replaced by a DOCUMENTED one
+
+--------------------------------------------------------------------------------
+8. THE FIRST EXPERIMENT, AND WHY IT IS NOW DIAGNOSABLE
+--------------------------------------------------------------------------------
+SPECIMEN: EvCA, PPSN III configuration. Chosen against fame; Tierra and Avida
+are far more cited.
+
+VERIFIED PHYSICS (all confirmed in print): k=2, r=3, periodic boundaries;
+128-bit rule table over a 2^128 space; N=149; population 100; elite 20;
+single-point crossover between elite parents chosen WITH replacement; exactly
+2 point mutations per offspring; 100 initial conditions per evaluation,
+REGENERATED EVERY GENERATION INCLUDING FOR THE ELITE; relaxation time drawn
+from a Poisson with mean 320.
+
+TWO CONFOUNDS, BOTH SELF-REPORTED BY THE ORIGINAL AUTHORS:
+  - initial conditions sampled uniformly over density, NOT unbiased binomial;
+    the authors state this "turns out to impede the GA in later generations"
+  - the fitness measure has a noise floor of about 0.02, which the authors
+    identify as what prevented them resolving GKL-quality rules
+  Both push AGAINST finding late-run innovation.
+
+CIRCULARITY BROKEN -- and this only became visible after recovery. If the sole
+validation target for the genetic algorithm were the 7/300 transition rate,
+Stage 1 would be simultaneously validation and measurement, and a failure would
+be uninterpretable. The recovered artifacts supply four INDEPENDENT targets:
+the four-epoch signature (46/50), the 4/50 never above 0.5, the 37/50 stuck at
+0.5 with crossover disabled (a differential signal on ONE operator), and the
+fitness of the recovered rules under the biased measure. RECONSTRUCTION_FAILS
+is now diagnosable rather than merely declarable.
+
+PRE-REGISTERED OUTCOMES. Original rate 7/300 = 0.0233,
+Wilson 95% interval [0.0113, 0.0474], normal-approximation SE 0.0087.
+
+  Replication    Expected transitions    SE        95% half-width
+  -----------    --------------------    ------    --------------
+  n =  1,000                       23    0.0048            0.0094
+  n = 10,000                      233    0.0015            0.0030
+
+  HISTORICAL_PHENOMENON_RECURS ... rate lands inside [0.0113, 0.0474]
+  RECONSTRUCTION_FAILS ........... it does not; name the parameter
+  CONTINGENT ..................... replay from precursor beats matched control
+  NOT_CONTINGENT ................. indistinguishable; the candidate DIES
+  NO_PARTICLE_STRATEGIES ......... zero in 10,000; probability of order e^-233
+                                   under the historical rate, so this would
+                                   indict the reconstruction, not the finding
+
+THE GATE, COMPUTED BEFORE THE RUN AND SHOWN REACHABLE:
+
+  Forks per arm    Min detectable precursor rate    Enrichment needed
+  -------------    -----------------------------    -----------------
+          1,000                           0.0381                 1.7x
+          3,000                           0.0312                 1.4x
+
+  Control rate 0.023. Attainable range of the difference is 0 to 1 and the gate
+  sits 0.015 above control, so THE GATE CAN FIRE ON REAL INPUTS. This closes a
+  defect behind two earlier programme failures: one gate sat closer to the
+  observed value than its own standard error, another sat above the maximum
+  attainable value.
+
+--------------------------------------------------------------------------------
+9. GATES, AND WHAT IS AND IS NOT AUTHORISED
+--------------------------------------------------------------------------------
+  GATE-1 compute ......... OPEN for spec-evca-density ONLY. Per-specimen, not
+                           global. Opened by ARTIFACT_IN_HAND plus proven-exact
+                           CA physics.
+  GATE-2 blindness claim . CLOSED. Awaits two unread papers that are D4-shaped
+                           on their face: Draghi and Wagner 2008 (Evolution
+                           62(2):301-315) and 2009 (J Evol Biol 22(3):599-611).
+  GATE-3 invented measures CLOSED by default. No Prometheus-native quantity
+                           until the detector registry records whether the
+                           field already has a better one.
+  GATE-4 decaying claims . Every "nobody has measured this" carries a date.
+  GATE-5 brief citations . Citations in briefs carry registry evidence tiers.
+
+AUTHORISED NOW: validating the genetic algorithm against the four independent
+targets; Stage 1 faithful physics with pinned seeds; Stage 2 instrumentation
+that adds observation without touching physics.
+
+NOT AUTHORISED: compute on any other specimen.
+
+--------------------------------------------------------------------------------
+10. KNOWN LIMITATIONS AND CAVEATS
+--------------------------------------------------------------------------------
+  NO EXPERIMENT HAS BEEN RUN. Zero reconstructions built, zero worlds created.
+  63 of 89 registry rows are still MODEL_RECALL_UNVERIFIED. Only three of
+    roughly 120 mapped research families are sourced.
+  The field map over-represents anglophone, well-cited work -- exactly the fame
+    bias the directive forbids in ranking. Stratification is scheduled, NOT
+    done.
+  The EvCA simulation SOURCE CODE was not found. That negative is documented
+    (site fully enumerated via directory indexing; papers only; FTP host
+    DNS-dead; first-party corroboration from Hordijk's own retrospective) but
+    ONE channel is unchecked: the Internet Archive replay interface returned
+    rate-limit errors on roughly 14 retries while confirming snapshots exist.
+  The genetic-algorithm half of the reconstruction is SPECIFIED BUT NOT YET
+    VALIDATED. Only the cellular-automaton half is proven exact.
+  Lindgren quotes are visual transcriptions from an image-only scan with no
+    text layer. Two independent readers agreed, but any load-bearing digit must
+    be re-checked. The 1991/1992 model is still not obtained.
+  The survey covered EIGHT SELF-NOMINATED candidates. That is not a base rate
+    over the field and must not be quoted as one.
+  The replacement thesis is time-sensitive. The evolvability-measurement
+    literature is active, so it decays continuously and carries a date stamp.
+  The exp rule sits about 2.5 measurement SE from its published value,
+    plausibly a stopping-rule convention difference. Not resolved.
+
+--------------------------------------------------------------------------------
+11. REPRODUCTION
+--------------------------------------------------------------------------------
+  git fetch origin herakles/historical-collider-v0
+  git show --stat 83ef98885
+
+  Verify the directive hash matches the one stamped at issuance:
+    sha256sum roles/Herakles/prompts/
+      DIRECTIVE_HISTORICAL_COLLIDER_V0_2026-09-02.txt
+    expect c1301d794950a66d52b3d47e2b1779e5c05b6f7c17fed24c624c9d8c4187df17
+
+  Re-run the rule-table verification from scratch (derives two rules from
+  first principles, executes all six, and runs the mis-pairing control):
+    python herakles/specimens/spec-evca-density/derived/verify_rule_tables.py
+
+  Confirm the manifest is populated and every artifact hash still matches:
+    python -c "import json,hashlib;
+      [print(r['id'], hashlib.sha256(open(r['path'],'rb').read()).hexdigest()
+      == r['sha256']) for r in map(json.loads, open(
+      'herakles/HERAKLES_HISTORICAL_COLLIDER_V0/'
+      'J_RECOVERED_ARTIFACT_MANIFEST.jsonl', encoding='utf-8'))]"
+
+  Count evidence tiers across all registries:
+    python -c "import json,glob,collections;
+      c=collections.Counter(json.loads(l)['evidence_source']
+      for f in glob.glob('herakles/HERAKLES_HISTORICAL_COLLIDER_V0/*.jsonl')
+      for l in open(f,encoding='utf-8') if l.strip()); print(dict(c))"
+    expect ARTIFACT_IN_HAND 18, PRIMARY_SOURCE_READ 8,
+           MODEL_RECALL_UNVERIFIED 63
+
+--------------------------------------------------------------------------------
+12. DECLARED CONFLICTS
+--------------------------------------------------------------------------------
+The seat proposed the hypothesis it then tested, chose the specimen that best
+exhibits it, and wrote the initial registries from its own recall. Three risks
+follow, and the record shows how each has gone so far.
+
+  a  CONFIRMATION SHAPE. "Historical detectors were blind" is convenient for a
+     seat whose value proposition is new instrumentation. It was tested and
+     PARTLY KILLED, by counterexamples the seat itself nominated. The
+     replacement is narrower and carries an explicit closed gate.
+  b  RETRIEVAL BIAS. Acknowledged and NOT yet corrected.
+  c  MODEL AS JUDGE. The programme bars an LLM from establishing causal
+     equivalence, replication, historical fact without a source, or
+     significance. Enforcement is the evidence tier. It has now been tested
+     twice under pressure: an agent's reported anomaly was rejected on the
+     seat's own measurement, and the seat's own brief citations were caught as
+     phantoms.
+
+--------------------------------------------------------------------------------
+13. VERDICT / STATE
+--------------------------------------------------------------------------------
+  SEAT INSTALLED, DIRECTIVE + RULING HASHED ....... yes
+  DELIVERABLE SET A-P, PLUS Q ..................... yes (17 letters)
+  ARTIFACTS RECOVERED ............................. YES -- 14 manifest rows
+  RECOVERED SPECIMEN VERIFIED BY EXECUTION ........ YES -- 2 rules derived from
+                                                    first principles match all
+                                                    32 published digits
+  COMPUTE GATE .................................... OPEN, one specimen only
+  OPENING THESIS .................................. DEAD; replacement stated
+  BLINDNESS CLAIM ................................. NOT MADE, gate closed
+  ANY EXPERIMENT RUN .............................. no
+  ANY TOP LIST POPULATED .......................... no, by design
+
+REVIEWER'S BOTTOM LINE: the cheapest remaining test of this whole programme is
+not the cellular-automata reconstruction at all -- it is running Toussaint's own
+2003 estimator inside Toussaint's own 2003 ablation, which needs no new theory
+and no new instrument. Is that the right next experiment, ahead of the specimen
+the seat has just spent a day recovering?
+================================================================================
+END OF PACKET
+================================================================================
