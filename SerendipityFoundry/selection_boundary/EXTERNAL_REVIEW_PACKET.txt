@@ -1,0 +1,436 @@
+================================================================================
+  PROMETHEUS INCUBATOR --
+  THE SELECTION BOUNDARY: CAN AN ALREADY-SELECTED HISTORICAL ARTIFACT
+  HAVE A NON-VACUOUS ADMISSION NULL?
+  EXTERNAL REVIEW PACKET
+
+  Author : Daedalus, maintainer of the Serendipity Foundry Engine (SFE)
+  Date   : 2026-09-03
+  Status : STOPPED FOR EXTERNAL ADJUDICATION (mission stop condition A+C).
+           No admission right purchased. No sampler repaired. No frozen
+           candidate run. No null broadened. Nothing translated to World
+           Foundry grammar. Neither live service touched.
+================================================================================
+
+--------------------------------------------------------------------------------
+0. ORIENTATION (self-contained; no prior context assumed)
+--------------------------------------------------------------------------------
+Prometheus runs a CONSERVED-RISK ADMISSION LEDGER. A scientific test purchases
+a threshold K at price 1/K from a permanent lifetime budget ALPHA_LIFE = 0.1
+(~100 tests EVER at the scientific floor K_MIN = 1000). Purchases are
+irrevocable. Admission evidence must derive from a public randomness beacon
+whose value did not exist until after the registration was committed and
+externally anchored.
+
+THE SUBSTRATE. stackvm-v1 is a metered stack/register VM whose design charter
+makes EVERY BYTE SEQUENCE A LEGAL PROGRAM (opcode = byte % 33; operand bytes
+past the end read 0; empty-stack pop = 0; div/mod by zero pushes 0). It is
+bit-deterministic in (code, inputs, max_steps). A historical corpus of 183,856
+hash-chained records holds 71,683 executions, 30,121 artifacts, 40,796 lineage
+edges, two driver eras, and 7 successes. Five candidate phenomena were frozen
+from it in an earlier pass and are currently held as
+PRESERVED_UNREGISTERABLE_UNDER_CURRENT_ADMISSION_LANGUAGE.
+
+THE QUESTION THIS PASS INVESTIGATED, exactly: can an already-selected
+historical artifact have a non-vacuous admission null WITHOUT reproducing the
+process that caused it to become interesting?
+
+PROCESS NOTE, FIRST. The previous pass published a verdict while its
+independent review was still running, and the verdict had to be retracted.
+This pass commissioned the review FIRST and stated nothing until it returned.
+It returned four dimensions, all UNSOUND_AS_STATED, and corrected my theory in
+five places. Those corrections are the substance of this packet.
+
+--------------------------------------------------------------------------------
+1. EXECUTIVE VERDICT
+--------------------------------------------------------------------------------
+
+  THE ANSWER IS: YES FOR ONE CLAIM CLASS, NO FOR ANOTHER, AND FOR A THIRD THE
+  OBSTACLE IS FACTUAL AND REMEDIABLE RATHER THAN METAPHYSICAL.
+
+  CC  CANDIDATE-CONDITIONAL CLAIMS SURVIVE. A claim about a specimen's
+      response to a FRESH randomized intervention can be tested with valid
+      level no matter how extreme the historical selection was. Measured:
+      rejection 0.0533 at selection depth 1 versus 0.0647 at depth 200,000 --
+      flat within ~2 SE -- with real power (0.98 at effect 2.0).
+      *** BUT selection freedom applies to the SPECIMEN ONLY, never to the
+      TEST. Reporting the best of 20 observables on the same specimen rejects
+      at 0.648; letting the beacon choose the observable restores 0.0525. ***
+
+  SR  RARITY CLAIMS REQUIRE SELECTION REPLAY, and the naive form of that
+      replay is not an artifact test at all (section 4).
+
+  U   RARITY CLAIMS ABOUT THE FIVE FROZEN CANDIDATES ARE CURRENTLY
+      INADMISSIBLE FOR LACK OF A BOUNDED SELECTION SIGMA-FIELD -- a factual,
+      remediable status, NOT an impossibility. The remedy is architectural and
+      is stated in section 11.
+
+  DELIVERED ALSO: a constructive instrument, the REGISTERED CONDITIONAL LEVEL
+  CERTIFICATE, which makes the theorem's premise verifiable exactly, before the
+  beacon, at zero randomness cost (section 5).
+
+--------------------------------------------------------------------------------
+2. THE THEOREM, AND THE THREE WAYS I HAD IT WRONG
+--------------------------------------------------------------------------------
+Let D be the selection sigma-field -- EVERYTHING knowable before a candidate
+became a candidate, including human decisions and adaptive mining. Let C be
+D-measurable (chosen by any rule, however hindsight-laden). Let U be
+post-commit beacon randomness, independent of D. Let theta be the ENTIRE test
+object: statistic, threshold, decoder from beacon bytes to intervention,
+support and law of U, conditioning event, tie rule, censoring rule, stopping
+rule.
+
+  THEOREM 1. If P_U(phi_theta(c,U)=1) <= alpha AT THE REALIZED c, then
+  P(reject) <= alpha for ANY selection rule producing C.
+
+CORRECTION 1 -- "sup over c" was the wrong premise. It is simultaneously TOO
+STRONG (sup_c = 1 for most tests worth running, so it rejects valid tests) and,
+as practised, TOO WEAK (registrants verify on average and sincerely believe
+they have it pointwise). The right premise is the level at the REALIZED
+candidate -- and it is certifiable (section 5).
+
+CORRECTION 2 -- MY CENTRAL DIAGNOSTIC WAS FALSE. I claimed a clean dichotomy:
+selection is free when the null's randomness is created after the candidate is
+fixed, and fatal when the null is a measure over the space the candidate was
+selected from. FRESHNESS OF U IS NECESSARY, NEVER SUFFICIENT. Three
+counterexamples, all realizable here:
+  * SELECTED SUPPORT -- draw a fresh beacon-uniform byte position, but narrow
+    the intervention class to "positions in the executed region" after mining
+    the corpus. U is fresh, independent, applied to a fixed c, and the
+    rejection probability goes to 1.
+  * SELECTED STATISTIC/THRESHOLD -- fresh beacon inputs, threshold set at a
+    corpus quantile. No base measure anywhere; the threshold is D-measurable.
+  * SELECTED CONDITIONING EVENT -- condition on the candidate's archive cell,
+    when the archive is itself a selection device on that event.
+In all three a registrant can truthfully say "my null uses randomness created
+after the candidate was fixed" and be wrong.
+
+  REPLACEMENT CRITERION:
+  SELECTION OVER c IS FREE. SELECTION OVER theta IS NOT.
+  theta must be committed and hash-anchored BEFORE the beacon, and the level
+  must hold at the realized c.
+
+CORRECTION 3 -- GENERICITY PREMISES ARE BANNED. Practical "pointwise" proofs
+here almost always hide a "for a generic program" step. Because every byte
+sequence is a legal program, the corpus is a search engine for the exceptional
+set. MEASURED EXACTLY on the real interpreter, enumerating the entire
+intervention support (64 positions x 255 replacements = 16,320 mutants), for
+the test "reject iff a single-byte perturbation leaves (steps,output,halt)
+unchanged":
+
+     halts immediately (JMP self + padding)   alpha = 0.9694
+     random 64B                               alpha = 0.8398
+     random 64B (other seed)                  alpha = 0.8072
+     loop-heavy                               alpha = 0.1837
+     all-NOP (every byte executed)            alpha = 0.1176
+     dense arithmetic (ADD chain)             alpha = 0.0243
+
+  RANGE 0.024 TO 0.969 -- A FACTOR OF 40. No single pointwise claim covers
+  them. Note the direction that matters: a GENERIC random program is already
+  ~84% inert, so a test premised on "few inert bytes" is mispriced for
+  essentially EVERY program, not merely for adversarially chosen ones.
+
+  ADMISSIBILITY RULE: a level argument is admissible only if it is (i) exact
+  finite enumeration over supp(U); (ii) an exchangeability/orbit argument with
+  an EXPLICIT STABILIZER CLAUSE and a conservative tie rule (>=, never a seeded
+  tie-break); or (iii) a per-candidate certificate. Any proof containing
+  "generic", "typical", or "almost every" is an average-case bound and is
+  rejected.
+
+--------------------------------------------------------------------------------
+3. WHAT SURVIVES: THE CANDIDATE-CONDITIONAL ROUTE (measured)
+--------------------------------------------------------------------------------
+Specimen chosen as the MAXIMUM of n draws ON THE VERY STATISTIC LATER REPORTED
+-- the most hindsight-laden selection possible -- then a fresh randomized
+intervention on clones, assignment drawn after the specimen is fixed, inference
+by permuting the assignment labels:
+
+     selection depth n = 1        -> rejection 0.0533
+     selection depth n = 100      -> rejection 0.0553
+     selection depth n = 1,000    -> rejection 0.0567
+     selection depth n = 200,000  -> rejection 0.0647
+
+  LEVEL IS FLAT IN SELECTION INTENSITY (endpoints ~2 SE apart at 1,500
+  trials). Power: 0.215 / 0.585 / 0.979 at effects 0.5 / 1.0 / 2.0 -- not
+  vacuous.
+
+  THE BOUNDARY INSIDE THIS CLASS: report the best of 20 observables on the
+  same specimen -> 0.6475. Let the beacon select the observable -> 0.0525.
+  CLASS CC IS FREE WITH RESPECT TO SPECIMEN SELECTION, NOT TEST SELECTION.
+
+--------------------------------------------------------------------------------
+4. WHAT DOES NOT SURVIVE: RARITY, AND WHY MY REPLAY WAS THE WRONG OBJECT
+--------------------------------------------------------------------------------
+CORRECTION 4. I proposed a single "selection-replicating null" whose unit is
+"the artifact the complete pipeline nominates". THAT IS NOT AN ARTIFACT TEST.
+
+Let the pipeline propose X_1..X_N and nominate C* = argmax_i S(X_i). If the
+null is the law of a fresh pipeline's nominee, then C* and C'* are i.i.d.
+draws from that law, so the p-value is EXACTLY Uniform(0,1) for every artifact
+and every statistic. It never conditions on C*. Its only power is against
+"the pipeline is not the pipeline you modelled."
+
+  D1 REPLICATION NULL ......... tests pipeline misspecification; unit of
+                                inference is THE PIPELINE; never licenses an
+                                artifact claim
+  D2 CONDITIONAL/SELECTIVE .... tests the artifact; valid where the selection
+                                is a measurable event
+  D3 RARITY AMONG OUTPUTS ..... PROVABLY VACUOUS when the statistic is
+     with T measurable wrt S     measurable wrt the selection functional:
+                                 conditional on nomination T(C*) = max_i S,
+                                 Var(T|S) = 0, p ~ Uniform with power exactly
+                                 alpha against EVERY alternative.
+                                 Escape requires an ORTHOGONALITY CERTIFICATE.
+
+THE INFLATION LAW FOR INCOMPLETE REPLAY. Matching operator chain, generation
+count and population size fixes only the proposal kernel. Omitting a stage that
+retained competition fraction q inflates the level by ~1/q, and omissions
+compose multiplicatively. Measured, true search depth N = 100:
+
+     replay assumes n = 100 (correct) -> 0.052    <-- target 0.05
+     replay assumes n = 50            -> 0.100
+     replay assumes n = 20            -> 0.220
+     replay assumes n = 10            -> 0.338
+     replay assumes n = 1             -> 0.830
+
+  UNDERCOUNTING THE HISTORICAL SEARCH IS DIRECTLY AND MONOTONICALLY
+  ANTI-CONSERVATIVE. Two-stage selection shows the same law: replaying only
+  the inner stage gives 0.506 against 0.0495 for the full replay.
+  REQUIREMENT: every registered rarity claim publishes a RETENTION LEDGER --
+  per stage, cardinality in and out, hence the factor, hence
+  K_eff = K / prod(1/q_i).
+
+--------------------------------------------------------------------------------
+5. THE CONSTRUCTIVE RESULT: REGISTERED CONDITIONAL LEVEL CERTIFICATE (RCLC)
+--------------------------------------------------------------------------------
+Theorem 1's premise is NOT unverifiable. At registration c is already known (it
+is D-measurable) and the law of U is declared. So
+
+      alpha(c) = P_U( phi_theta(c,U) = 1 )
+
+is a deterministic functional of two known objects. Evaluating it requires NO
+FRESH RANDOMNESS -- the beacon is needed only for the single real draw. For
+single-byte interventions the support is 16,320 and alpha(c) is computed
+EXACTLY, in seconds (section 2's table IS that computation).
+
+  RCLC: before the beacon, publish hash(c), hash(theta), and alpha_hat(c) --
+  exact where enumerable, else a Clopper-Pearson upper bound -- plus the hash
+  of the certifying computation. THE COURT DEBITS max(alpha_nominal,
+  alpha_hat_upper). If alpha_hat_upper > alpha_nominal the test is mispriced
+  and must be re-specified before the beacon.
+
+  ECONOMIC COROLLARY: certifying a 1/K tail costs ~K evaluations, so
+  CERTIFICATION COST LOWER-BOUNDS THE PRICE. A test you cannot afford to
+  certify is a test you cannot afford to buy. The exposure this closes is
+  large: a test priced at 2.4e-4 whose true level at a searchable candidate is
+  ~0.97 would consume NINE TIMES THE ENTIRE LIFETIME BUDGET in one purchase.
+
+--------------------------------------------------------------------------------
+6. HUMAN ATTENTION, AND THE CORRECTION THAT MATTERS MOST
+--------------------------------------------------------------------------------
+CORRECTION 5. I argued: the five candidates were nominated by adaptive
+model-driven mining; that is not a function of preserved inputs; therefore
+rarity claims about them are retrospectively unstateable. THE MIDDLE STEP IS A
+NON SEQUITUR.
+
+Selective inference does not replay the analyst. It conditions on the selection
+EVENT.
+
+  THEOREM 2. If the selection S is measurable with respect to ANY sigma-field
+  G, a null computed conditional on G has valid level for EVERY selection rule
+  in G. One never needs to know which rule was used, and conditioning on a
+  SUPERSET is conservative, not invalid.
+
+So the operative question is not "was the nomination rule a function?" but
+"IS THE SIGMA-FIELD THE MINER CONSULTED BOUNDED STRICTLY INSIDE sigma(D)?"
+
+For the five frozen candidates the answer is factual and it is NO: the
+archaeological mining READ THE RAW JSONL LEDGER FILES DIRECTLY with ad-hoc
+code, bypassing any query interface, so no access log bounds G. Correct status:
+
+      INADMISSIBLE FOR LACK OF A BOUNDED SELECTION SIGMA-FIELD
+
+Factual and REMEDIABLE, not metaphysical. Representability of human attention:
+
+  contemporaneous logged rule .... recovers the rule IF one existed; none was
+  reconstructed ranking function . recovers a MODERN rule -- tests a DIFFERENT
+                                   claim; it did not generate the artifact
+  blinded replay panel ........... recovers a fresh nomination distribution,
+                                   not the original UNBLINDED decision
+  external frozen procedure ...... fixes the future, recovers nothing past
+
+--------------------------------------------------------------------------------
+7. HISTORICAL SELECTION MAP AND REPLAYABILITY (read-only, procedural only)
+--------------------------------------------------------------------------------
+Ten load-bearing channels. All facts below are PROCEDURAL, read from the
+ledger's own configuration records; no outcome distribution was used to build
+any null (mission section 21).
+
+  M1 generator ............ SR0  operator config recorded AND hashed; single
+                                 source_tree_hash 50b5c232 across all 261
+                                 experiments -- the code did not change
+  M2 population schedule ... SR0  driver/budget/seed per experiment, 27 seeds
+  M3 survivor selection .... SR1  operator, tie policy, tie key, root_seed and
+                                 candidate pool all recorded -- BUT 85 of 87
+                                 selections were FULLY TIED, so the winner is a
+                                 seeded draw OVER THE REALIZED POOL. Perturbing
+                                 pool membership by one flips the winner with
+                                 probability 1/(m+1); across 85 tied selections
+                                 a free-running replay diverges almost surely.
+                                 Replay must be POOL-CONDITIONAL.
+  M4 archive ............... SR2  deterministic rule, single reject reason --
+                                 but capped by the hazard below
+  M5 run nomination ........ SR0  EXPERIMENT_FINISHED.best_artifact_id is an
+                                 EXPLICIT FROZEN max-of-N nomination. This is
+                                 why anything here is replayable at all.
+  M6 task filter ........... SR1  terrain/battery hashed; corpus-material as a
+                                 scientific reference
+  H1 era restart ........... SR3  no recorded rule
+  H2 archaeological mining . SR3  adaptive, interactive, unlogged sigma-field
+  H3 claim wording ......... SR3  no recorded rule
+  S1 spec menu ............. SR2  repairable via beacon selection from a
+                                 committed menu
+
+  THE M4 HAZARD, VERIFIED IN SOURCE AND SUBTLER THAN EITHER SIDE ASSUMED.
+  adapter.py:215-239 returns fitness=None, behavior=None when halt == "wall",
+  and archives/simple_grid.py:69 then refuses insertion with
+  detail="no_fitness". So whether an evaluation is ELIGIBLE FOR NOMINATION AT
+  ALL depends on time.perf_counter() versus host CPU contention, not on
+  (code, inputs, max_steps). EMPIRICALLY the corpus shows ZERO wall records and
+  ZERO no_fitness rejections across 71,683 executions. THAT IS NOT REASSURANCE:
+  the era declared adapter_version 0.1.0, and the current source states that
+  0.1.0 COUNTED A WALLED CASE AS SIMPLY "NOT PASSED" -- under the era's own
+  semantics a wall leaves a record INDISTINGUISHABLE from ordinary
+  step-exhaustion. The channel is UNFALSIFIABLE FROM THE RECORD and cannot be
+  raised above SR2.
+
+--------------------------------------------------------------------------------
+8. CLASSIFICATION OF THE FIVE FROZEN CANDIDATES (taxonomy only)
+--------------------------------------------------------------------------------
+Not run. Not inspected further. Not promoted, demoted, or given custom nulls.
+Several split into two DIFFERENT scientific questions (mission section 17); the
+second does NOT inherit the evidentiary force of the first.
+
+  WOW-C-001 adversarial sham (401-700 band) ....... MIXED
+      as RARITY: U -- band boundaries are corpus statistics and nomination ran
+      through H2. as MECHANISM: CC, if theta is committed and RCLC-certified.
+  WOW-C-002 9bc2b861 transfer probe ............... MIXED
+      as RARITY: U -- H2 nomination, plus D3 vacuity if the statistic is what
+      the pipeline optimized. as MECHANISM on the frozen specimen: CC.
+  WOW-C-003 sterile-band mechanism ................ CC
+      the underlying question -- does mutation from long parents yield viable
+      offspring -- is a fresh-intervention question, not a rarity question.
+      Specimen selection is free. Band boundaries must NOT enter the null.
+  WOW-C-004 reproductive isolation ................ MIXED
+      crossing RATES are CC; "the historical population WAS isolated" is SR and
+      is blocked by H2.
+  WOW-C-005 convergent task solvability ........... U
+      rarity + corpus task battery + H2 nomination; all three routes blocked.
+
+--------------------------------------------------------------------------------
+9. GATE TABLE
+--------------------------------------------------------------------------------
+  G16 SELECTION BOUNDARY IDENTIFIED ....... PASS -- ten channels mapped with
+      provenance classes, load-bearing flags, and evidence citations
+  G17 CLAIM CLASSIFIED .................... PASS -- seven claim classes and all
+      five candidates classified CC / SR / U / MIXED
+  G18 REPLAYABILITY ESTABLISHED ........... FAIL FOR RARITY CLAIMS -- H1/H2/H3
+      are SR3 and M4 is capped at SR2 by an unfalsifiable channel. THIS IS AN
+      ACCEPTABLE FINAL RESULT per the mission.
+  G19 SELECTION-BIAS HARNESS QUALIFIED .... PASS -- naive max-of-N rejects at
+      0.993 against an exact prediction of 0.994 (19.9x inflation); the
+      selection-replicating correction restores 0.043; two-stage, spec-menu and
+      incomplete-replay channels all reproduced and corrected
+  G20 NO NULL SANITIZATION ................ PASS BY CONSTRUCTION for the toys
+      (the defects ARE the null); NOT ESTABLISHED for stackvm, because M4's
+      censoring channel cannot be reproduced from a record that cannot
+      distinguish it
+
+--------------------------------------------------------------------------------
+10. LIMITATIONS
+--------------------------------------------------------------------------------
+  L1 The toys are Gaussian/permutation models, not stackvm executions. They
+     establish the LAWS (inflation, correction, level-flatness); they do not
+     establish magnitudes for any real stackvm claim.
+  L2 The RCLC was demonstrated only for single-byte interventions, where the
+     support is small enough to enumerate. Richer intervention laws need
+     Clopper-Pearson bounds and the ~K certification cost is then real.
+  L3 Theorem 2 (G-conditional validity) is stated and used but not
+     independently re-derived here; it is standard selective inference and
+     should be checked by the reviewer against a source they trust.
+  L4 The 0.0533 -> 0.0647 drift across selection depth is ~2 SE. I report it as
+     flat; a reviewer may reasonably want 10x the trials before accepting that.
+  L5 I did NOT open the observer store index (var/observer/index.sqlite), which
+     appears live. If it turns out to log queries, section 6's factual finding
+     for FUTURE mining changes -- though not for the five candidates, whose
+     mining bypassed it.
+
+--------------------------------------------------------------------------------
+11. QUESTIONS REQUIRING ADJUDICATION
+--------------------------------------------------------------------------------
+  Q1 Adopt the RCLC as a mandatory registration object, with the Court debiting
+     max(alpha_nominal, alpha_hat_upper)? This is the single highest-value
+     change available and it propagates to every substrate.
+  Q2 Adopt the genericity ban (section 2, admissibility rule)? It will reject
+     level arguments that currently look rigorous.
+  Q3 Adopt "selection over c is free, selection over theta is not" as the
+     replacement for the source-of-randomness dichotomy?
+  Q4 THE ARCHITECTURAL REMEDY: mandate that all future mining run through a
+     LOGGED QUERY INTERFACE, so the consulted sigma-field is bounded by
+     construction and G-conditional rarity nulls become available. This is the
+     one change that converts rarity claims from inadmissible to admissible.
+  Q5 Make the selection functional recorded-measurable going forward: run
+     scored evaluations with timeout_s = None so the deterministic step meter
+     is the only termination bound, and emit an explicit censoring indicator.
+  Q6 Should the CC-route mechanism claims on WOW-C-001/002/003/004 be permitted
+     to proceed to specification, given they are NEW experiments on old
+     specimens that do NOT inherit the original rarity intuition's force?
+  Q7 Is the retention ledger (K_eff = K / prod(1/q_i)) accepted as a mandatory
+     field for any future rarity claim?
+
+--------------------------------------------------------------------------------
+12. REPRODUCTION AND ARTIFACTS
+--------------------------------------------------------------------------------
+  location  F:\Prometheus\SerendipityFoundry\selection_boundary  (repo main)
+
+  SELECTION_REPLICATING_NULL_THEORY.md ... the formal document (15 sections)
+  selection_provenance.py ................ the ten-channel provenance graph
+  selection_replay_audit.py .............. SR classification + the RCLC
+  toy_selection_bias.py .................. demonstrations A, B, C, D, F, F2
+  toy_candidate_conditional_randomization.py .. demonstrations E1-E4
+  STACKVM_SELECTION_REPLAYABILITY.json ... machine-readable SR classification
+  STACKVM_CLAIM_CLASSIFICATION.json ...... machine-readable claim taxonomy
+  SELECTION_BOUNDARY_RESULTS.txt ......... full captured output
+  FAILED_VERSIONS/ ....................... the four refuted formulations, with
+                                           the refutation of each
+
+  run   python toy_selection_bias.py
+        python toy_candidate_conditional_randomization.py
+        python selection_provenance.py
+        python selection_replay_audit.py
+  All randomness derives from named SHA-256-seeded streams; no wall clock, no
+  OS entropy; results are bit-reproducible. The corpus was read streaming and
+  read-only; the engine database was never opened; both live services (ports
+  8799 and 8811) were left running and untouched.
+
+================================================================================
+  CLOSING
+  The mission warned against two opposite errors, and both were live risks.
+
+  The first is believing that a historical specimen can be shown RARE by
+  comparing it to fresh random draws. It cannot: that null is a statement about
+  the specimen's provenance, which selection falsifies for every selected
+  specimen, and the naive version of the repair turns out to test the pipeline
+  rather than the artifact.
+
+  The second is concluding that retrospective candidates can never be tested at
+  all. They can. A specimen chosen by unlimited hindsight remains a perfectly
+  valid subject for a NEW randomized causal experiment, and the level of that
+  experiment is flat in how extremely the specimen was selected -- measured
+  here across five orders of magnitude of selection depth.
+
+  The line between those two is the deliverable, and it is not where I first
+  drew it. My original criterion turned on where the randomness came from.
+  The correct criterion turns on what was committed: the specimen may be chosen
+  by hindsight; the test may not.
+================================================================================

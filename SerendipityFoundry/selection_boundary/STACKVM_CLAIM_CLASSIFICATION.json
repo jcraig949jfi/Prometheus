@@ -1,0 +1,79 @@
+{
+ "schema": "stackvm_claim_classification/v1",
+ "classes": {
+  "CC_candidate_conditional": "testable by fresh randomized intervention conditional on the specimen; specimen selection is FREE",
+  "SR_selection_replicating": "concerns rarity among artifacts that could have become candidates; requires replicating the selection process",
+  "U_unstateable": "currently unstateable",
+  "MIXED": "different subclaims fall in different classes"
+ },
+ "claim_classes": [
+  {
+   "id": "A_base_measure_deviation",
+   "route": "U_unstateable",
+   "why": "null is a statement about the specimen PROVENANCE (is C a draw from nu). Selection falsifies it for every selected C, so rejection certifies only that the artifact was selected."
+  },
+  {
+   "id": "B_post_selection_deviation",
+   "route": "SR_selection_replicating",
+   "why": "rarity among selected outputs; needs the selection process"
+  },
+  {
+   "id": "C_lineage_conditional",
+   "route": "SR_selection_replicating",
+   "why": "needs lineage survival replay; M3 is SR1 (pool-conditional) so replay is possible only pool-by-pool"
+  },
+  {
+   "id": "D1_pipeline_misspecification",
+   "route": "SR_selection_replicating",
+   "why": "VALID but the unit of inference is THE PIPELINE, never a specimen. Cannot license an artifact claim."
+  },
+  {
+   "id": "D2_artifact_rarity_among_outputs",
+   "route": "U_unstateable",
+   "why": "PROVABLY VACUOUS whenever the statistic is measurable wrt the selection functional: conditional on nomination T(C*)=max S by construction, Var(T|S)=0, p ~ Uniform for every artifact. Requires an ORTHOGONALITY CERTIFICATE to escape."
+  },
+  {
+   "id": "E_mechanism_causal",
+   "route": "CC_candidate_conditional",
+   "why": "null concerns the response to experimenter randomness; level is flat in selection intensity (measured 0.053 at n=1 vs 0.065 at n=200,000). REQUIRES the whole test object theta committed pre-beacon AND a per-candidate level certificate."
+  },
+  {
+   "id": "F_historical_task_success",
+   "route": "U_unstateable",
+   "why": "task battery is corpus-material; and the claim is a rarity claim, inheriting B/D2 problems"
+  }
+ ],
+ "five_frozen_candidates": [
+  {
+   "id": "WOW-C-001",
+   "name": "adversarial sham, 401-700 band",
+   "route": "MIXED",
+   "why": "as a RARITY claim: U (band boundaries are corpus statistics; nomination via H2 is SR3). As a MECHANISM claim (does a sterile-band genotype respond to intervention like others): CC, provided theta is committed and RCLC-certified."
+  },
+  {
+   "id": "WOW-C-002",
+   "name": "9bc2b861 transfer probe",
+   "route": "MIXED",
+   "why": "as RARITY (is this success unusual): U -- nominated by H2, and D2 vacuity applies if the statistic is what the pipeline optimized. As MECHANISM on the frozen specimen: CC."
+  },
+  {
+   "id": "WOW-C-003",
+   "name": "sterile-band mechanism",
+   "route": "CC_candidate_conditional",
+   "why": "the underlying question -- does mutation from long parents yield viable offspring -- is a fresh randomized intervention question, not a rarity question. Selection of the specimen is free. Band boundaries must NOT enter the null."
+  },
+  {
+   "id": "WOW-C-004",
+   "name": "reproductive isolation",
+   "route": "MIXED",
+   "why": "crossing RATES are CC (fresh intervention); the claim that the historical population WAS isolated is SR and blocked by H2/SR3."
+  },
+  {
+   "id": "WOW-C-005",
+   "name": "convergent task solvability",
+   "route": "U_unstateable",
+   "why": "rarity + corpus task battery + H2 nomination; all three routes blocked"
+  }
+ ],
+ "note": "TAXONOMY ONLY. No candidate promoted, demoted, run, or given a custom null."
+}

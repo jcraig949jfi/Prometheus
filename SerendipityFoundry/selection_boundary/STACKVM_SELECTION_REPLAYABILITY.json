@@ -1,0 +1,79 @@
+{
+ "schema": "stackvm_selection_replayability/v1",
+ "sr_scale": {
+  "SR0": "exactly replayable",
+  "SR1": "stochastically replayable",
+  "SR2": "partially replayable",
+  "SR3": "non-replayable"
+ },
+ "channels": [
+  {
+   "id": "M1_generator",
+   "sr": "SR0",
+   "reason": "operator config recorded verbatim AND hashed; op+seed on every artifact event; source_tree_hash single-valued (50b5c232) across all 261 experiments -- the code did not change during the era"
+  },
+  {
+   "id": "M2_population_schedule",
+   "sr": "SR0",
+   "reason": "driver, budget and seed recorded per experiment; 27 distinct seeds"
+  },
+  {
+   "id": "M3_survivor_selection",
+   "sr": "SR1",
+   "reason": "operator, tie_break_policy, tie_break_key, root_seed, candidate_pool_hash and candidate/rejected id lists are all recorded. BUT 85 of 87 selections were fully tied, so the winner is a seeded_uniform draw OVER THE REALIZED POOL: perturbing pool membership by one member re-randomizes the winner with probability 1/(m+1). Trajectory replay is therefore pool-conditional, not free-running -- SR1, not SR0"
+  },
+  {
+   "id": "M4_archive",
+   "sr": "SR2",
+   "reason": "archive rule is deterministic and single-valued (simple_grid, reject reason always 'not_better'). BUT insertion eligibility depends on a scored fitness, and a wall-clock abort yields fitness=None -> detail='no_fitness' -> never inserted, never an elite, never nominated. Whether an evaluation walls is a function of host CPU contention, not of (code, inputs, max_steps)"
+  },
+  {
+   "id": "M5_run_nomination",
+   "sr": "SR0",
+   "reason": "EXPERIMENT_FINISHED.best_artifact_id is an explicit, frozen, deterministic max-of-N nomination, recorded per run"
+  },
+  {
+   "id": "M6_task_filter",
+   "sr": "SR1",
+   "reason": "terrain/battery fully specified and hashed (train_battery_hash, heldout_battery_hash); replayable as a procedure, though corpus-material as a scientific reference"
+  },
+  {
+   "id": "H1_era_restart",
+   "sr": "SR3",
+   "reason": "no recorded rule for why the map_elites era began after observing the objective_ga era"
+  },
+  {
+   "id": "H2_archaeological_mining",
+   "sr": "SR3",
+   "reason": "adaptive, model-driven, interactive; branch points depended on intermediate results never logged as a rule; the analysis itself declared the effective hypothesis count NOT ESTIMABLE. Critically, the mining read the raw JSONL ledger files directly, bypassing any query interface, so no access log bounds the consulted sigma-field"
+  },
+  {
+   "id": "H3_claim_wording",
+   "sr": "SR3",
+   "reason": "no recorded rule"
+  },
+  {
+   "id": "S1_spec_menu",
+   "sr": "SR2",
+   "reason": "repairable to SR0-equivalent by BEACON_SELECTED_FROM_COMMITTED_MENU, but only if every member is individually valid AND the claim is invariant across members"
+  }
+ ],
+ "semantics_hazard": {
+  "mechanism": "wall-clock abort removes an evaluation from nomination eligibility entirely",
+  "code_evidence": [
+   "adapter.py:215  elif last.halt == 'wall': walled += 1",
+   "adapter.py:237-239  returns exact_success=None, cases_passed=None, fitness=None, behavior=None",
+   "archives/simple_grid.py:69  ArchiveDecision(inserted=False, detail='no_fitness')",
+   "adapter.py:184,264  time.perf_counter() -- host wall clock"
+  ],
+  "empirical_in_corpus": "ZERO executions carry a wall detail and ZERO ARCHIVE_REJECTs carry detail='no_fitness' (71,683 executions examined)",
+  "why_that_is_not_reassuring": "the era declared adapter_version 0.1.0, and the current source states that 0.1.0 COUNTED A WALLED CASE AS SIMPLY 'NOT PASSED'. Under the era's own semantics a wall therefore leaves a record INDISTINGUISHABLE from ordinary step-exhaustion. The absence of TIMEOUT records is consistent both with 'no wall ever occurred' and with 'walls occurred and were silently scored'. THE CHANNEL IS UNFALSIFIABLE FROM THE RECORD.",
+  "consequence": "M4 cannot be raised above SR2 on the evidence available."
+ },
+ "summary": {
+  "machine_layer": "SR0-SR2",
+  "human_layer": "SR3",
+  "worst_load_bearing": "SR3",
+  "verdict": "the MACHINE pipeline is replayable; the HUMAN nomination layer is not"
+ }
+}
