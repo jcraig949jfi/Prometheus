@@ -1,6 +1,6 @@
 # E. COMPOSITION SEARCH REPORT
 
-**Status: IN-CORPUS SEARCH COMPLETE. DESCENDANTS SEARCH PARTIALLY COMPLETE.** Verdict at the foot of this file.
+**Status: COMPLETE.** Verdict at the foot of this file.
 
 ## The claim under attack
 
@@ -93,9 +93,26 @@ The two near misses fall on opposite sides of the same fault line, which is itse
 
 A lead surfaced by this slice, Reisinger, Stanley and Miikkulainen 2005, "Towards an Empirical Measure of Evolvability", GECCO 2005 Workshop Program pp. 257-264, was recovered in full and screened directly by this seat. It does **not** contain the composition: its measure is the average best fitness over the 100 generations following a target reset, and its "average of the local search space" is a developmental-variance noise mechanism inside fitness evaluation, not a recorded detector output.
 
-### Slices B and C
+### Slices B and C, complete
 
-Screening in flight at the time of writing. Slice B covers the Galvan-Lopez and Poli neutrality line including its 2011 review, the Downing binary-decision-diagram line, the Vanneschi neutrality studies and the Verel local-optima networks. Slice C covers the closest systems, namely grammar, L-system and developmental encodings with neutrality: Bornhofen and Lattaud, Luerssen and Powers, Matos and Suzuki, Hill and O'Riordan, Bercachi and Collard, Kouvaris and Clune and Watson, and Rieffel and Pollack.
+Full per-work results are in `DESCENDANTS_SCREENING_LOG.md`. **Twenty-four works screened in total, none containing the composition.**
+
+Slice B covered the neutrality-measurement line: Galvan-Lopez and Poli, their 2011 review of the whole neutrality literature, Downing's binary-decision-diagram thesis, Vanneschi's GP neutrality studies and Verel's local-optima networks. Slice C covered the closest systems by construction: grammar, L-system and developmental encodings with neutrality.
+
+**The failure mode is the same in all three slices, and it is the finding.** The field split this composition in half and never reassembled it.
+
+- Where a **sampled variation detector** exists, it is applied to a **static landscape or a static encoding, outside any run**. Vanneschi samples neighbourhoods by Metropolis-Hastings over the search space. Poli and Galvan-Lopez estimate a phenotypic mutation rate from 10,000 mutants of a uniform random population, once per encoding. Reisinger runs a genuine offspring sample at exactly two time points.
+- Where a **per-generation series inside a representational manipulation** exists, the tracked quantity is a **structural genotype statistic, a realised selection-filtered population flow, or realised population fitness**, never a sampled offspring distribution. Downing tracks pleiotropic utility over a genotype's edges and the implied complexity of a variable ordering. Seys and Beer track realised leg-length change. Hill and O'Riordan track pairwise Hamming diversity of the standing population.
+
+### The strongest documented negative is the field's own
+
+Poli and Galvan-Lopez computed the static distribution of phenotypic mutation rates across the strings of a neutral encoding, anticipated exactly this composition, and wrote that it was not done:
+
+> "To some extent, we would expect evolution to exploit these differences... However, at this stage, we do not know how important this effect is in a mutation-based EA."
+
+The 2011 review of the neutrality literature reports no instance of the composition, and its Open Issues section asks for encodings, theory and predictors rather than for longitudinal exploration-distribution measurement inside an ablation.
+
+An assertion that nobody did something is weak evidence. A leading practitioner writing in print that they did not do it, and a field review that does not even list it as an open problem, is strong evidence.
 
 ### Documented access gaps, which are gaps and not negatives
 
@@ -106,4 +123,18 @@ Screening in flight at the time of writing. Slice B covers the Galvan-Lopez and 
 
 ## Verdict
 
-**Deferred until slices B and C report.** On the evidence in hand the in-corpus half of the claim is established beyond reasonable doubt and the descendants half is unrefuted, but a verdict of `MISSING_CELL_SUPPORTED` requires the complete search log, and this programme has already had one asserted negative refuted 0-3 by adversarial review precisely because it was asserted rather than documented.
+### On Toussaint's own programme: `MISSING_CELL_CONFIRMED`
+
+This is not an inference from absence in one paper. Sixteen publications were read, the term census is robust to the ligature and whitespace artifacts that produced a false negative on the first attempt, the chapter figure inventory is complete, and the section-level localisation is exact: the detector statistics occur only inside the detector experiment, the ablation has one figure and it is fitness, and the plants experiment is detector-free. Every one of these claims is re-derived from the committed artifacts by `derived/verify_t0_claims.py`, which checks 22 claims and currently passes all 22.
+
+### On the wider literature: `MISSING_CELL_SUPPORTED`, with a stated narrowing
+
+Twenty-four descendants screened against a fixed four-element criterion, with the full search log recorded. No work contains the composition. Five access gaps are documented as gaps rather than counted as negatives, and three of those are not load-bearing because a superseding full text was read.
+
+**The narrowing is real and is stated rather than buried.** Kouvaris, Clune, Kounios, Brede and Watson 2017 satisfies longitudinal measurement, all arms, and a link to adaptation rate, with a Monte Carlo sampled phenotype distribution. It differs in that its sample is drawn uniformly over the whole genotype space as a drift approximation rather than from the one-step offspring neighbourhood, its manipulated variable is selective pressure rather than an operator switch, and its acquisition link is arm-level on frozen architectures rather than within-run.
+
+So the defensible claim is **not** "nobody has measured accessibility longitudinally under an intervention". It is that nobody has done so with a **one-variation-step offspring distribution**, inside an **on/off ablation of a variation operator**, related to acquisition **within runs**. That is narrower than the claim this seat set out with, and it is what the evidence supports.
+
+### What this does not establish
+
+That the cell is worth filling. The search establishes that it is empty. Whether filling it produces a finding or a first-class negative is what HC-T01 would determine, and the preregistration names in advance the three outcomes that would make the experiment worthless.

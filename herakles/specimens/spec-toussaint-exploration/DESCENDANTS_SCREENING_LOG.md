@@ -8,7 +8,7 @@ Citation graph pulled from OpenAlex for six seed works: the FOGA 2002 exploratio
 
 **134 citing works; 117 after removing Toussaint self-citations.** Full record: `work/descendants_union.json`.
 
-Of these, twenty were selected for full screening on the criterion that they plausibly measure variability or evolvability inside a representational manipulation. The remainder are No-Free-Lunch theory, island models, coarse-graining, metaheuristic applications, or reviews of unrelated topics.
+Of these, twenty-four were selected for full screening on the criterion that they plausibly measure variability or evolvability inside a representational manipulation. The remainder are No-Free-Lunch theory, island models, coarse-graining, metaheuristic applications, or reviews of unrelated topics.
 
 ## Screening criterion, applied identically
 
@@ -44,7 +44,20 @@ A measurement made once, at the end, or by static enumeration of a landscape doe
 | Bercachi, Collard, Clergue and Verel 2009, Do not Choose Representation just Change | partial | no | no | no | not the composition |
 | Rieffel and Pollack 2004, Emergence of Ontogenic Scaffolding | no | no | no | no | not the composition |
 
-Slice B, covering the Galvan-Lopez and Poli neutrality line and its 2011 review, the Downing binary-decision-diagram line, the Vanneschi neutrality studies and the Verel local-optima networks, is appended below when it reports.
+### Slice B, the neutrality-measurement line
+
+| work | A | B | C | D | verdict |
+|---|---|---|---|---|---|
+| Galvan-Lopez and Poli 2006, Some Steps Towards Understanding How Neutrality Affects Evolutionary Search | no | partial | no | no | not the composition |
+| Poli and Galvan-Lopez 2007 and 2012, Effects of Bit-Wise Neutrality on Phenotypic Mutation Rates | partial | **no** | no | partial | not the composition |
+| Galvan-Lopez and Poli 2011, Neutrality in Evolutionary Algorithms, What do we know? | n/a | n/a | n/a | n/a | **review: reports no instance, and does not ask for one** |
+| **Downing 2006, 2007 and 2008 thesis, BDD evolvability in neutral spaces** | **no** | yes | partial | partial | **closest in slice B** |
+| Vanneschi et al. 2006 and 2012, Neutrality of Boolean function landscapes in GP | partial | **no** | partial | partial | not the composition |
+| Verel, Ochoa and Tomassini 2010 and 2011, Local Optima Networks of NK Landscapes with Neutrality | no | no | partial | no | not the composition |
+
+Slice B's failure mode is the sharpest of the three and it is consistent. **Where a sampled variation detector exists, it is applied once to a static landscape or a static encoding, outside any run.** Vanneschi samples neighbourhoods by Metropolis-Hastings over the search space, not over an evolving population. Poli and Galvan-Lopez estimate a phenotypic mutation rate from 10,000 mutants of a uniform random population, once, per encoding. **Where a per-generation series inside a manipulation exists, the tracked quantity is a structural genotype statistic or a realised, selection-filtered population flow, never a sampled offspring distribution.** Downing's pleiotropic utility is computed deterministically over a genotype's edges; his implied solution complexity is a property of the variable ordering; Galvan-Lopez and Poli's family trees count realised parent-to-offspring transitions after selection.
+
+Downing's 2008 thesis is the closest artifact in this slice, and the only one that puts a per-generation variational measure inside both arms of a representation contrast and reads it against fitness gain. It fails element A.
 
 ---
 
@@ -66,11 +79,22 @@ Its A is **qualified, not absent**: the sample is drawn uniformly over the whole
 
 These are gaps, not negatives, and they are the honest limit of this search.
 
+0. **Two Downing conference papers and one Vanneschi conference paper** were paywalled, but each is superseded by a full text that WAS read: Downing 2006 and 2007 are chapters 7 and 9 of the 2008 thesis by its own account, and Vanneschi 2006 is extended by the 2012 journal version. **These gaps are not load-bearing.**
 1. **Webb 2016 thesis, University of Manchester.** Cloudflare challenge defeated four retrieval routes. Its estimator is described as sampled and used repeatedly during runs, but its manipulated mechanism is selection rather than representation, so it fails element C on the stated criterion regardless of what the full text says about A and B. The EGS chapter was never published separately.
 2. **Bornhofen and Lattaud 2008.** Closed access, no repository copy, no author copy. Its system, evolving L-systems with neutral networks and junk code, is the closest *system* to Toussaint's in the whole descendant set, and the abstract names no sampled offspring distribution. **This is the most material gap.**
 3. **Bercachi et al. 2008 book chapter.** Closed access, nothing beyond the title recoverable.
 4. **Matos, Suzuki and Arita 2009.** Closed access. Ruled out on B, C and D from a complete abstract; element A unverified.
 5. **Lehre and Haddow 2006.** Closed access. Ruled out on B, C and D from a complete abstract describing a static genospace survey; element A unverified.
+
+## The field's own admission, which is the strongest documented negative found
+
+Poli and Galvan-Lopez computed the static distribution of phenotypic mutation rates across the strings of a neutral encoding, anticipated exactly the composition sought here, and stated in print that it was not done:
+
+> "To some extent, we would expect evolution to exploit these differences... However, at this stage, we do not know how important this effect is in a mutation-based EA."
+
+And the 2011 review of the whole neutrality literature reports no instance of the composition and, in its own Open Issues section, asks for new encodings, mathematical frameworks and predictive tools rather than for longitudinal exploration-distribution measurement inside an ablation.
+
+An assertion that nobody did something is weak. A leading practitioner writing that they did not do it, and a field review not even listing it as an open problem, is strong.
 
 ## Retrieval methods that worked, recorded for reuse
 

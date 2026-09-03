@@ -1,0 +1,356 @@
+================================================================================
+EXTERNAL REVIEW PACKET
+HC-T01 / TOUSSAINT MISSING-CELL EXPERIMENT -- T0 GATE
+================================================================================
+Prepared:        2026-09-03   T0 complete, pre-execution, gate CLOSED
+Seat:            Herakles / Historical Collider
+Location/Code:   herakles/specimens/spec-toussaint-exploration/
+Artifacts:       23 hashed items in RECOVERED_ARTIFACT_MANIFEST.jsonl
+                 16 publications, 6 code artifacts, 1 screened descendant
+Directive:       roles/Herakles/prompts/
+                 DIRECTIVE_HC_T01_TOUSSAINT_MISSING_CELL_2026-09-03.txt
+                 sha256 5cc0241fe85567e71201416cd16a88fd0672ff5cc4ae9219
+                        96606e33c30b0354
+Verifier:        derived/verify_t0_claims.py -- 22 claims, 22 PASS
+Headline:        MISSING_CELL_CONFIRMED. The detector and the ablation both
+                 exist, in one thesis, and the detector was never run inside
+                 the ablation. Recommendation: RUN_HC_T01.
+
+--------------------------------------------------------------------------------
+1. CLAIM UNDER REVIEW
+--------------------------------------------------------------------------------
+Asserted: by 2003 Marc Toussaint's programme already contained every component
+of a longitudinal accessibility detector -- a formal exploration-distribution
+concept, a working Monte Carlo estimator, per-generation population-wide
+application, and a mechanism ablation with an adaptive outcome -- but the
+estimator was never run inside the ablation.
+
+This packet answers only whether that is historically true, and whether the
+experiment that fills the cell is reconstructable. It reports NO experimental
+result, because no compute has been run.
+
+What would have killed the claim, pre-stated:
+  - the combined experiment existing anywhere in Toussaint's corpus
+  - the combined experiment existing in any bibliographic descendant
+  - the ablation turning out not to be a real 2x2, or to lack acquisition
+  - parameters too under-specified to reconstruct
+
+--------------------------------------------------------------------------------
+2. SOURCE RECOVERY METHOD
+--------------------------------------------------------------------------------
+A prior pass supplied candidate titles. Under GATE-5 those were demoted to
+leads and the bibliography was re-derived from scratch, because this seat has
+previously caught itself supplying two paper titles that exist in no author's
+bibliographic record.
+
+Two authoritative indexes were queried directly, not recalled: the arXiv API
+author listing, and the DBLP publication API paged in full (320 records).
+Full texts came from the author's own archive at argmin.lis.tu-berlin.de and
+from arXiv. Source code came from the Internet Archive capture of the 2003
+Bochum site, reached from a pointer in the GECCO 2003 plants paper.
+
+Recovered: 16 publications spanning 2001-2007, every evolutionary-computation
+item in the author's pre-2008 record, plus 6 code artifacts.
+
+--------------------------------------------------------------------------------
+3. THE DETECTOR, AS RECOVERED
+--------------------------------------------------------------------------------
+Source: PhD thesis, Ruhr-Universitaet Bochum, dated 31 March 2003, section
+1.5.3, Table 1.7, Figures 1.4 to 1.6.
+
+  Object        phenotypic exploration distribution Xi_sigma: the distribution
+                over the phenotype of ONE offspring of a fixed parent, under
+                the model's full mutation operator
+  Estimator     Monte Carlo, 2000 samples PER INDIVIDUAL PER GENERATION
+  Coverage      whole offspring population, lambda = 100
+  Longitudinal  yes, 1000 generations
+  Statistics    neutral degree n = Xi_sigma(parent phenotype)
+                normalised mutual information matrix over 25 phenotypic
+                  variables, I' = 2 I_ij / (H_i + H_j)
+                modular degree: summed probability that a variation at
+                  position i recurs at (i + 5k) mod 25, k = 1..4
+  Uncertainty   NONE REPORTED, anywhere, ever. Experiment 1 is a single run.
+
+Two prior seat doubts are resolved AGAINST the seat and in favour of the
+original recall:
+  - the remembered 2000 is a real parameter row, not a misread axis label
+  - the separately remembered 10 000 belongs to the 2001 paper, a different
+    experiment with a single individual under (1+1) selection
+
+--------------------------------------------------------------------------------
+4. THE ABLATION, AS RECOVERED
+--------------------------------------------------------------------------------
+Source: same thesis, section 1.5.4, Figure 1.7.
+
+  Design        a genuine 2x2, confirmed against the seat's own doubt
+  Axis 1        second-type mutations, beta = 0.1 versus beta = 0
+  Axis 2        first-type mutation rate, alpha = 0.03 versus alpha = 0.06
+  Replicates    10 independent trials per cell, 40 runs
+  Mechanism     second-type mutations are the structural rewrites that create,
+                apply, invert and delete production rules. beta = 0 freezes
+                the representation as a direct encoding.
+  Outcome       fitness only: negative percentage of symbols not matching the
+                target 5 x abcde
+  Acquisition   REAL. Starts from a one-symbol egg cell with no operators and
+                must acquire a modular encoding. This is the decisive
+                difference from the CEC 2002 sphere experiment, where there is
+                no what, only a how fast. Claim level T3 is therefore
+                available.
+
+--------------------------------------------------------------------------------
+5. COMPOSITION SEARCH PROCEDURE
+--------------------------------------------------------------------------------
+In-corpus. All 16 texts searched after stripping every non-alphanumeric
+character and normalising both the (cid:NN) codes and the real Unicode
+ligature codepoints. This matters: a naive search produced false negatives on
+the first attempt, and the verifier caught a second false negative of the same
+kind in the seat's own normaliser.
+
+Descendants. Citation graph from OpenAlex over six seed works. 134 citing
+works, 117 excluding self-citations. 24 screened in full against a fixed
+four-element criterion applied identically to each:
+  A  a detector sampling the one-step reachable phenotype distribution
+  B  applied longitudinally over generations DURING a run
+  C  inside ALL arms of an ablation of a representational mechanism
+  D  related to subsequent adaptive acquisition
+
+Static enumeration of a landscape does not satisfy B. Comparing final fitness
+across encodings does not satisfy A.
+
+--------------------------------------------------------------------------------
+6. PRIMARY RESULT
+--------------------------------------------------------------------------------
+Detector-statistic occurrences, whitespace and ligature robust:
+
+  term                        thesis   2001 paper   CEC/NatComp   all others
+  ------------------------    ------   ----------   -----------   ----------
+  modular degree                   9            0             0            0
+  neutral degree                  26           15             3            0
+
+Localisation inside the thesis, by section:
+
+  section                     content                          detector?
+  ------------------------    ---------------------------      ---------
+  1.5.3 Experiment 1          the detector, 3 figures          YES, all 6
+                                                               modular-degree
+                                                               occurrences
+  1.5.4 Experiment 2          THE ABLATION, 1 figure           NO. Fitness
+                                                               only.
+  1.5.5 Experiment 3          plants, 2 figures                NO. None.
+
+Inside the ablation section the only detector-term occurrences are an
+ASSERTION and a theoretical remark. The assertion is the load-bearing
+sentence, and it is quoted verbatim:
+
+  "...huge steps of innovation occur when 2nd-type mutations have generated
+   operators, CHANGED THE EXPLORATION DISTRIBUTION, and enabled a modular and
+   self-similar growth of the phenotype"
+
+The middle link of that causal chain is exactly what the detector measures,
+and it was not measured in this experiment. It was transferred by analogy from
+Experiment 1, which had no fitness and no ablation, to Experiment 2, which had
+both and no detector. That transfer is the missing cell.
+
+Descendants, 24 works screened, none containing the composition. Nearest:
+
+  work                                        A     B     C     D
+  ----------------------------------------    ---   ---   ---   ---
+  Kouvaris et al 2017 (closest anywhere)      qual  yes   yes   yes
+  Reisinger + Miikkulainen 2007               yes   NO    yes   no
+  Seys + Beer 2007                            NO    yes   yes   yes
+  Downing 2008 thesis                         NO    yes   part  part
+
+--------------------------------------------------------------------------------
+7. RECOVERED CODE, AND WHY IT SHARPENS THE CLAIM
+--------------------------------------------------------------------------------
+The GECCO 2003 plants paper says source code was on the author's home page.
+That page is gone; the Internet Archive holds the 2003 site. Recovered: the
+FULL SOURCE of 02-stringRuleJTB/main.cpp, the driver for the string-rule
+experiments, plus MT/evolution.h and the plants driver.
+
+Three facts follow, all machine-checked:
+
+  1. The string-rule driver's monitor() computes the detector for the best
+     individual AND loops it over the entire population, and the loop is
+     enabled, not compiled out.
+  2. evolution.h calls monitor() once per generation. The instrument was wired
+     into the simulation loop, not bolted onto one experiment.
+  3. The plants driver's monitor() computes NO detector, exactly matching the
+     published plants figures.
+
+So the same instrumented binary plausibly produced detector output for BOTH
+string-rule experiments, and only Experiment 1's output was ever plotted. This
+is tagged INFERRED, not verified: the headers containing spectrum() were never
+crawled and no run logs survive.
+
+The code also computes a FIFTH statistic that appears in no figure anywhere:
+avgfit, the mean fitness of the sampled offspring, per individual, per
+generation. It is the most direct evolvability measure in the whole programme
+and it was never reported.
+
+--------------------------------------------------------------------------------
+8. PARAMETER CERTAINTY AND RECONSTRUCTABILITY
+--------------------------------------------------------------------------------
+Most parameters are VERIFIED_EXACT from Tables 1.6 and 1.7. Two conflicts in
+the published record are logged rather than guessed, and both get a
+sensitivity arm:
+
+  parameter                   conflict                          tag
+  ------------------------    ------------------------------    --------------
+  beta, enabled arm           0.1 in Figure 1.7 caption and     VERIFIED_RANGE
+                              Table 1.7; 0.01 twice in the
+                              body of section 1.5.4
+  insertion/deletion rate     0.0 in Table 1.7; implied         VERIFIED_RANGE
+                              non-zero in section 1.5.4 text
+  run length, Experiment 2    not stated at all                 UNSPECIFIED
+
+No assumption is load-bearing on the missing-cell question, because that
+question turns on whether the detector separates beta > 0 from beta = 0, and
+beta = 0 is unambiguous.
+
+  NOT_RECONSTRUCTABLE ............ no
+  RECONSTRUCTABLE with sensitivity arms ... YES
+
+--------------------------------------------------------------------------------
+9. COMPUTE MODEL
+--------------------------------------------------------------------------------
+  quantity                                        value
+  ------------------------------------------      ---------
+  detector samples per generation                   200,000
+  detector samples per 1000-generation run             2.0e8
+  fitness evaluations of the evolution itself          1.0e5
+  DETECTOR COST / EVOLUTION COST                       2000x
+
+  scenario                    samples    at 1 us    at 3 us
+  ------------------------    -------    -------    -------
+  one Experiment-1 run          2.0e8    3.3 min     10 min
+  historical 40-run grid        8.0e9     2.2 h      6.7 h
+  modern 120-run grid          2.4e10     6.7 h       20 h
+
+Runs are embarrassingly parallel. On eight cores the modern grid is one to
+three hours. Wall-clock rows are ESTIMATED and must be replaced by a measured
+benchmark at the shakedown.
+
+On 2003 hardware the same 40-run grid is 44 hours to 5.5 days. That is a
+concrete, quantitative and falsifiable explanation for why the cell is empty,
+and it is a better explanation than oversight. It is offered as a hypothesis
+about the historical record, not as a finding.
+
+--------------------------------------------------------------------------------
+10. CONTROLS AND PRE-STATED WAYS THIS COULD BE VACUOUS
+--------------------------------------------------------------------------------
+TRAP 1 IS LIVE. beta parameterises the very operator that induces the
+detector, so "the arms differ on the detector" is TRUE BY CONSTRUCTION and is
+not a finding. A generation-zero MECHANICAL-EFFECT NULL is therefore mandatory
+-- same initial population, each arm's operator settings, no selection, no
+reproduction. The preregistered claim is the EXCESS over that null, and
+whether the excess GROWS as populations restructure.
+
+TRAP 2 IS NOT FATAL. The detector and the outcome are not two readings of one
+quantity, and a genuine fitness plateau exists in the historical record, so a
+T2 precedence window is available conditional on an explicit coupling check.
+avgfit is excluded from the precedence analysis as coupled by construction.
+
+Pre-stated conditions that make the experiment worthless, each a first-class
+negative to be reported and not rescued:
+  - the mechanical null accounts for the whole between-arm difference at all
+    times, so the mechanism moves the detector definitionally
+  - estimator noise at 2000 samples exceeds the between-arm difference, so the
+    historical instrument cannot see its own experiment
+  - the reconstruction misses validation target V1, V2 or V6
+
+Unit of analysis is frozen as THE RUN. Not the generation, individual,
+offspring sample or lineage point.
+
+--------------------------------------------------------------------------------
+11. KNOWN LIMITATIONS AND CAVEATS
+--------------------------------------------------------------------------------
+THE CLAIM IS NARROWER THAN THE SEAT SET OUT WITH, AND THIS IS THE MOST
+IMPORTANT CAVEAT. Kouvaris, Clune, Kounios, Brede and Watson 2017 measures a
+Monte Carlo sampled phenotype distribution longitudinally across all arms of a
+manipulation and relates arm to adaptation rate. It differs in three specific
+ways: it samples uniformly over the whole genotype space as a drift
+approximation rather than the one-step offspring neighbourhood; its
+manipulated variable is selective pressure rather than an operator switch; and
+its acquisition link is arm-level on frozen architectures rather than
+within-run. So the defensible claim is that nobody has composed a
+ONE-VARIATION-STEP offspring distribution inside an ON/OFF ABLATION of a
+variation operator related to acquisition WITHIN RUNS.
+
+Five documented access gaps, recorded as gaps and not counted as negatives.
+Three are not load-bearing because a superseding full text was read. The two
+that remain:
+  - Webb 2016 thesis, Manchester: Cloudflare defeated four retrieval routes.
+    Fails criterion C regardless, since it manipulates selection.
+  - Bornhofen and Lattaud 2008, evolving L-systems with neutral networks:
+    closed access, no repository, no author copy. This is the closest SYSTEM
+    to Toussaint's in the whole descendant set and it is the most material
+    gap. This seat also failed to close it.
+
+The inference that the same instrumented binary produced Experiment 2 is
+INFERRED and cannot be verified. It is not required for the verdict.
+
+No compute has been run. Nothing here is an experimental result.
+
+The seat proposed this claim and it is convenient for the programme. The
+in-corpus negative is machine-checkable; the descendants negative rests on 24
+screenings with a full search log, and a reviewer who wants to attack this
+should attack the screening criterion or the five access gaps.
+
+--------------------------------------------------------------------------------
+12. REPRODUCTION
+--------------------------------------------------------------------------------
+From herakles/specimens/spec-toussaint-exploration/ :
+
+    python derived/verify_t0_claims.py
+
+Re-derives 22 load-bearing claims from the committed artifacts: every hash,
+the thesis date, the 2000-sample row and its per-individual scope, the figure
+inventory, the 2x2 arms, the 10 trials per cell, the section-level
+localisation of the detector terms, the assertion sentence inside the
+ablation, the beta inconsistency, the 2001 paper's different sample count, and
+all six code facts. Exits non-zero on any failure. Currently 22/22 PASS.
+
+Spot checks a reviewer can run in two minutes:
+    grep -n "modular degree" work/03-toussaint-phd.txt
+      -> six hits, all between lines 4482 and 4812, section 1.5.3
+    grep -n -o "Figure 1\.[0-9]*:.\{0,70\}" work/03-toussaint-phd.txt
+      -> Figure 1.7, the only ablation figure, is fitness
+    grep -n "spectrum" recovered_code/02-stringRuleJTB_main.cpp.txt
+      -> the detector call, and the population loop
+    grep -n "spectrum" recovered_code/02-plantEvo_2main_8cpp-example.txt
+      -> no hits
+
+--------------------------------------------------------------------------------
+13. VERDICT AND EXECUTION-GATE DECISION
+--------------------------------------------------------------------------------
+Directive section 0 verdict ladder:
+
+    CLAIM_FALSE ........................... no
+    ALREADY_MEASURED_HISTORICALLY ......... no
+    HISTORICAL_RECORD_AMBIGUOUS ........... no
+    NOT_RECONSTRUCTABLE ................... no
+    PARTIAL_COMPOSITION_ONLY .............. no
+    MISSING_CELL_CONFIRMED ................ YES
+
+Wider literature, separately: MISSING_CELL_SUPPORTED, with the narrowing in
+section 11 stated rather than buried.
+
+Directive section 24 execution gate, exactly one recommendation:
+
+    ABANDON_COMPOSITION_CLAIM ............. no
+    NOT_RECONSTRUCTABLE ................... no
+    ALREADY_MEASURED_HISTORICALLY ......... no
+    MORE_ARCHAEOLOGY_REQUIRED ............. no
+    RUN_HC_T01 ............................ YES
+
+No experiment runs until this packet is reviewed. GATE-1 for the EvCA
+specimen is untouched and EvCA remains frozen and ready.
+
+REVIEWER'S BOTTOM LINE: given that beta parameterises the very operator that
+induces the detector, is the generation-zero mechanical-effect null enough to
+make the excess-over-null claim non-tautological, or does the whole experiment
+collapse into measuring the knob we turned?
+================================================================================
+END OF PACKET
+================================================================================
