@@ -1,0 +1,481 @@
+================================================================================
+EXTERNAL REVIEW PACKET
+HISTORICAL COLLIDER -- KASHTAN / ALON MODULARLY VARYING GOALS LINEAGE
+ADVERSARIAL DEEP-DIVE (ELENCHUS)
+================================================================================
+Prepared:        2026-09-03   frozen
+Seat:            Elenchus (adversarial historical forensics), assigned against
+                 Herakles (survey) and Ergon (specimen deep-dives)
+Location/Code:   elenchus/kashtan-alon-mvg/  (18 deliverables + sources/)
+Artifacts:       3 primary papers + 1 supplement recovered, hashed, full text
+                 held locally; every verbatim quote grepped from retrieved bytes
+Version/Hash:    parter2008_plos.xml  sha256 f95b30c7a1ae...fe418c4
+                 parter2008_TextS1.doc sha256 9fe6a4bab671...4667075
+                 kashtan2007_pmc.html sha256 2f923fbff047...2868bed
+                 kashtan2005_pmc.html sha256 a82289a386f5...e427518
+VERDICT:         MVG_EFFECT_IS_AUTHORED_CURRICULUM
+Headline:        They measured the adjacent possible in 2008, longitudinally,
+                 with 30-40 replicates and a non-tautological intervention -- and
+                 then showed themselves that the benefit vanishes outside the goal
+                 family they wrote. The instrument preempts us. The phenomenon
+                 does not. And the one arm anyone ever tried to replicate
+                 independently came out with the SIGN REVERSED.
+
+--------------------------------------------------------------------------------
+1. CLAIM UNDER REVIEW
+--------------------------------------------------------------------------------
+Assigned question: did the Kashtan/Alon programme causally demonstrate that
+exposure to structured environmental variation changes an evolving computational
+representation in a way that reduces the cost of acquiring future adaptive
+functionality -- and did they MEASURE the change in the local adjacent possible
+that mediates it, or only infer it from modularity and faster adaptation?
+
+The second half was expected to be the easy no. It is a yes.
+
+--------------------------------------------------------------------------------
+2. WHAT WAS RECOVERED
+--------------------------------------------------------------------------------
+Kashtan & Alon 2005, PNAS 102:13773   full text, PMC mirror
+Kashtan, Noor & Alon 2007, PNAS 104:13711   full text, PMC mirror (pnas.org 403)
+Parter, Kashtan & Alon 2008, PLoS CB 4:e1000206   publisher XML + PDF + PMC
+Text S1 to the 2008 paper   3.02 MB Word doc, 11 sections, RECOVERED
+
+NOT recovered: PNAS 2005 supporting information (HTTP 403; contains the circuit
+genome encoding and genotype-phenotype map -- the single largest gap); PNAS 2007
+SI Appendix (per-model parameters); any source code (no availability statement
+exists in any of the three papers); any dataset (none published).
+
+Consequence: a Prometheus rebuild is a RE-SPECIFICATION, not a replication. The
+2005 genotype-phenotype map cannot be restored from open sources.
+
+--------------------------------------------------------------------------------
+3. METHOD, AND TWO CORRECTIONS IT PRODUCED
+--------------------------------------------------------------------------------
+Every load-bearing claim was extracted twice: once by an automated page reader,
+once by direct download, text conversion and grep. The two disagreed twice, both
+times with the automated reader overstating. Recorded because it bears on how
+much weight any single-pass literature summary deserves.
+
+  CORRECTION 1  reader: MVG on random goals is "as slow, or even slower" than FG.
+                text:  "not significantly different from FG's". A null, not a
+                       reversal. Building a lock-in finding on the reader's
+                       version would have manufactured a cost the data deny.
+  CORRECTION 2  reader: no structural-but-non-evolved control exists.
+                text:  Figure 9B/9C carry exactly that control.
+
+A THIRD correction was made against this review's own earlier draft. Before Text
+S1 was recovered, this deep-dive recorded that the 2008 accessibility experiments
+lacked an unstructured-variation arm and named that the corpus's most serious
+unaddressed confound. Text S1 section 2.1 contains that arm. The finding was
+withdrawn and the correction left visible rather than edited away.
+
+--------------------------------------------------------------------------------
+4. THE ACCESSIBILITY MEASUREMENT -- THE CENTRAL FINDING
+--------------------------------------------------------------------------------
+Verbatim, 2008: "we considered the phenotypic neighborhood [37]-[39], defined as
+the set of phenotypes that are accessible from a given genotype by a single point
+mutation." And: "The genetic neighborhood is defined as the set of all genomes
+different in one position from the wild type genomes."
+
+This is the adjacent possible, measured under the system's own variation
+operator, in phenotype space. Not an analogy to what HC-T01 proposes. The same
+measurement -- and EXHAUSTIVE rather than sampled, because B = 104 bits.
+
+It is longitudinal: "Mean FV measure (+-SE) vs. generations of 500 best-fitness
+circuits in each population is shown. Statistics are for 30 independent
+experiments."
+
+Ladder position: NOT_MEASURED and SELECTED_INDIVIDUALS_ONLY and
+POPULATION_SNAPSHOT are all exceeded. LONGITUDINAL is met. LINKED_TO_ACQUISITION
+is met AT ARM LEVEL. CAUSALLY_PERTURBED is met only on the cause, never on the
+mediator.
+
+--------------------------------------------------------------------------------
+5. D-LEVEL ADJUDICATION
+--------------------------------------------------------------------------------
+  Kashtan & Alon 2005 ............................. D0
+  Kashtan, Noor & Alon 2007 ....................... D1-adjacent
+  Parter, Kashtan & Alon 2008 ..................... D4 (weak form)
+  PROGRAMME MAXIMUM ............................... D4 (weak form)
+
+D4 is weak because accessibility and acquisition are joined at the treatment arm,
+not within runs: nobody asked whether the runs with the steepest facilitated-
+variation rise are the runs that later adapt fastest.
+
+D5 fails for one reason only. The "genetic triggers" -- genomic positions found by
+mutual information with the environment -- are never knocked out, frozen,
+transplanted or randomised. The one perturbation present runs the wrong way: make
+the environment constant and the property decays. That manipulates the cause and
+measures the mediator. D5 needs the reverse.
+
+THE MISSING EXPERIMENT, stated so it can be run: take MVG-evolved genomes,
+disable the trigger positions while HOLDING fitness on the current goal and the
+modularity measure CONSTANT, then present a novel-module goal and measure
+adaptation time. If accessibility is the mediator, the advantage collapses. If
+modularity is, it survives. B = 104 bits, populations of 5000, triggers "readily
+detected for all MVG cases tested". It was affordable in 2008 and was not run.
+
+--------------------------------------------------------------------------------
+6. PRIMARY RESULTS, VERIFIED
+--------------------------------------------------------------------------------
+Speedup, S_max, hardest goals only (T_FG > G_max/2), mean +- SE, 2007 Table 1:
+
+  Model                                  MVG        RVG_v      VG_0       RVG_c
+  ------------------------------------   --------   --------   --------   ------
+  1 logic circuits (NAND)                 95 +- 45   45 +- 20   2.5 +- 2    <1
+  2 feed-forward circuits                265 +-150  160 +- 80  190 +- 90  1.3+-0.3
+  3 feed-forward neural nets             700 +-450   10 +-  5   1.5 +- 1    <1
+  4 feed-forward continuous circuits      60 +- 10    3 +-  1   3   +- 2    <1
+  5 RNA secondary structure               25 +-  5      <1        <1        <1
+
+Modularity, 2005: circuits FG 0.12+-0.02 vs MVG 0.54+-0.02; neural 0.15 vs 0.35.
+Mutational effects, 2008 Table 1:
+  intra-module    circuits 0.12->0.14 (p<1e-4); RNA 0.28->0.36 (p<1e-9)
+  pleiotropy      circuits 0.04->0.01 (p<1e-4); RNA 0.057->0.053 (NOT SIGNIFICANT)
+Adaptation to a seen goal: 1-2 mutations, often within one generation. FG needs
+"a dozen times more generations" and "about five times more mutations".
+
+--------------------------------------------------------------------------------
+7. THE TWO DISSOCIATIONS THAT BREAK THE STANDARD STORY
+--------------------------------------------------------------------------------
+D1. SPEED WITHOUT MODULARITY. 2005 reports randomly varying goals produce no
+modular structure. 2007 reports they produce 45x, 160x, 10x and 3x speedups in
+four of five models. In feed-forward circuits, alternating with NO SELECTION AT
+ALL (VG_0) gives 190x against MVG's 265x. Modularity is not necessary for the
+acceleration, and most of the acceleration is generic plateau escape: RVG_v
+"seems to help by pushing the population in a random direction, thereby rescuing
+it from fitness plateaus or local maxima."
+
+D2. THE NBVG CONTROL, recovered from Text S1 and absent from the main text. The
+authors built goal pairs that are explicitly NOT decomposable but whose NEUTRAL
+NETWORKS COME CLOSE in genotype space. Verbatim: "the evolutionary dynamics of
+NBVG is very similar to that of MVG, with respect to the rapid adaptation when
+environment changes. The design and the mechanisms that underlie this rapid
+adaptation are equivalent to that of MVG and include the location of genomes at
+the border of the neutral networks and the evolution of small number of genetic
+triggers."
+
+But MVG and NBVG DIFFER on neighbourhood composition and on the facilitated-
+variation measure (Figure S4). The resulting ordering is NON-MONOTONIC in
+environmental variability:
+  MVG (structured variation) ..... HIGH facilitated variation
+  FG  (no variation) ............. MEDIUM (from robustness)
+  unstructured variation ......... VERY LOW
+Unstructured change is worse than no change. That is the strongest evidence in
+the corpus that STRUCTURE, not CHANGE, builds the biased neighbourhood.
+
+THE TWO-LAYER READING THIS FORCES:
+  layer 1  speed and memory of seen goals <- successive goals having adjacent
+           solution sets. Modularity NOT required.
+  layer 2  biased neighbourhood and in-family generalisation <- the shared
+           structure being modular specifically.
+Anyone saying "modularly varying goals speed evolution because they make
+organisms modular" is wrong on layer 1 by the authors' own control.
+
+--------------------------------------------------------------------------------
+7b. THE FAILED REPLICATION
+--------------------------------------------------------------------------------
+Clune, Beckmann, McKinley & Ofria 2010 (GECCO '10, 635-642) attempted Kashtan &
+Alon's RETINA problem WITH A DIRECT-ENCODING CONTROL, and the sign reversed:
+
+  "the MVG regimes performed worse than the FG-AND regime, which was the opposite
+   of what occurred in Kashtan and Alon's study. Our result raises questions as to
+   the generality of Kashtan and Alon's discovery ... the differences are
+   relatively small and should not preclude such a seemingly general result."
+
+They closed the obvious confounds: both switching rates including Kashtan's own
+E = 20, faster and slower rates reported as not qualitatively different, 20 runs
+per treatment, population 500, extended to 30,000 generations.
+
+Their diagnosis converges with Kashtan's own hidden NBVG control from the opposite
+direction. They attribute the discrepancy to DISCRETENESS -- binary inputs, step
+activations with three thresholds, few discrete weights -- because "Mutations
+between a few discrete values may have a larger effect on the network output,
+making it more likely that single mutations can switch between a solution to FG-OR
+and FG-AND." That is the same statement as "goals whose neutral networks come
+close". Two groups, one trying to confirm and one trying to refute, land on
+genotype-space proximity as the operative condition.
+
+They also record, in 2010, that "the description of their model is not complete" --
+an external confirmation that the 2005 paper cannot be exactly reproduced from its
+own text, which matches this pass's finding that the genotype-phenotype map is
+UNSPECIFIED and no code was ever released.
+
+SCOPE, AND IT IS THE CRITICAL CAVEAT OF THIS PACKET: this is the retina arm only.
+*** THE NAND LOGIC-CIRCUIT ARM -- WHICH CARRIES EVERY ACCESSIBILITY RESULT IN THIS
+REVIEW -- HAS NEVER BEEN INDEPENDENTLY REPLICATED OR REFUTED BY ANYONE. ***
+
+Further, from the same pass: the lineage's own descendant Kouvaris et al. 2017
+reports "We find no rate of environmental variation capable of causing evolution by
+natural selection to evolve a developmental organisation that produces the entire
+class" -- generalisation required added noise and regularisation. Friedlander et al.
+2013, from the Alon lab itself, reports that with sum-rule mutations -- Kashtan's own
+rule -- modular goals "generally do not" produce modularity. Espinosa-Soto 2018
+independently confirms the decay: "Once fluctuations stop, modularity drops
+abruptly."
+
+NOT challenges, and explicitly withdrawn as such: Hintze & Adami 2008 (their
+environments vary RANDOMLY, the condition Kashtan & Alon predicted would fail; the
+authors disclaim it themselves) and Crombach & Hogeweg 2008 (no sub-goal
+decomposition; zero occurrences of "modular" in the body).
+
+--------------------------------------------------------------------------------
+8. THE BOUNDARY -- THE SPECIMEN
+--------------------------------------------------------------------------------
+Verbatim: "We find that MVG's outperformance occurred only toward goals within
+the modularity language. MVG adaptation toward non-modular goals was not
+significantly different from FG's (Figure 6E)." And: "In experiments toward
+randomly chosen goals, populations had equal chance to be taken over by either FG
+or MVG genomes."
+
+The out-of-family goals were difficulty-matched by an explicit procedure: the
+entire genotype space of a smaller 38-bit circuit model was enumerated (~1e11
+genotypes) and goal hardness estimated by number of solutions. The obvious
+loophole was closed by the authors themselves.
+
+Authored family size, canonical circuit case: g,h in {XOR,EQ}, f in {AND,OR} gives
+8 goals, of which six were studied. The comparison space of 4-input 1-output truth
+tables has 65,536 members. The advantage exists on roughly 1e-4 of the phenotype
+space -- the part the experimenter wrote down.
+
+The input partition ({x,y} vs {w,z}) is fixed for every run in every condition and
+is never varied, discovered or tested.
+
+--------------------------------------------------------------------------------
+9. THE TWELVE REQUIRED ANSWERS
+--------------------------------------------------------------------------------
+ 1. Did MVG causally increase future acquisition efficiency?
+    YES for in-family targets, with replication and controls. Causal in the sense
+    that the environment was manipulated and the outcome moved; NOT causal at the
+    level of the proposed mediator, which was never perturbed.
+
+ 2. Did it change the local phenotypic adjacent possible, or is that inferred?
+    MEASURED. Exhaustively, over all single-point mutants, in phenotype space.
+    Not inferred.
+
+ 3. Did the investigators measure that local change longitudinally?
+    YES. Facilitated variation vs generations, 500 best-fitness circuits per
+    population, 30-40 independent runs, over 1e5 generations, per arm.
+
+ 4. Was the future target genuinely novel or a new combination of known modules?
+    BOTH WERE TESTED. new-comb (recombination) succeeded in both substrates
+    (~68% RNA, ~75% circuits takeover). novel-module (a previously UNSEEN
+    sub-function) succeeded in LOGIC CIRCUITS ONLY (~70% takeover) and was NULL
+    in RNA. Genuinely new CONTENT is acquired faster; a genuinely new SCHEME was
+    never presented.
+
+ 5. How much of the benefit came from human-authored structure in the goal family?
+    All of the generalisation benefit. The advantage is switched off by leaving the
+    authored language. The composition scheme, arity, module count and input
+    partition are authored and invariant; only the slot fillers vary.
+
+ 6. Is modularity itself causal, or merely correlated with another change?
+    BOTH, at different layers. Not causal for the speed effect (NBVG and RVG
+    dissociate it). Causal for the neighbourhood bias (MVG and NBVG differ on
+    exactly that). The hidden property underneath layer 1 is neutral-network-border
+    positioning plus localized triggers.
+
+ 7. Broad evolvability, or narrow evolvability along the historical decomposition?
+    NARROW. But note carefully: narrow WITHOUT a measured penalty. Outside the
+    family the result is PARITY, not inversion. No ceiling was demonstrated. The
+    mechanically-predicted cost (reduced pleiotropy should hurt targets needing
+    cross-module coordination) was never tested, because random goals are not
+    adversarial against the partition.
+
+ 8. What transfers to a synthetic world with unrelated physics?
+    The DETECTOR and the CONTROLS, not the result. Portable: exhaustive 1-mutant
+    phenotypic neighbourhood; the non-evolved phenotype-matched control; the
+    three-arm environment design; the switching-period band (below the objective's
+    reconfiguration time, above the unaided solution time -- three orders of
+    magnitude wide here); the neutral-network-proximity recipe for constructing
+    related-but-non-modular objectives. NOT portable: the facilitated-variation
+    measure's usefulness predicate, which is defined by the authored decomposition
+    and would be tautological if imported unchanged.
+
+ 9. What does Toussaint measure that MVG does not?
+    An EVOLVABLE VARIATION OPERATOR. In MVG the operator is a fixed constant of
+    the experiment; what moves is the genotype-phenotype map. Toussaint's
+    second-type mutations make the representation itself mutable with a direct
+    control parameter, and permit a phenotype-preserving intervention -- "same
+    phenotype, same fitness, different reachable futures". MVG has no analogue.
+
+10. What does MVG establish that Toussaint does not?
+    A NON-TAUTOLOGICAL INTERVENTION. HC-T01's TRAP 1 is declared live: its ablated
+    parameter directly parameterises the variation operator that induces its own
+    detector. MVG intervenes on the GOAL SCHEDULE, causally remote from the
+    mutation operator, which is never touched. Also: held-out target families with
+    a difficulty-matched negative; 30-40 replicates with reported uncertainty
+    against a Toussaint record with no noise floor at all; and a three-arm
+    environmental design with a non-monotonic outcome.
+
+11. Does this lineage threaten, complement, or preempt HC-T01?
+    It PREEMPTS THE INSTRUMENT and COMPLEMENTS THE QUESTION. The local,
+    longitudinal, population-level accessibility cell has been occupied since 2008.
+    Any Collider document asserting that cell is empty should be corrected, date-
+    stamped 2026-09-03. It does not preempt the phenomenon Prometheus is chasing,
+    because the historical effect is bounded to the authored family.
+    It also offers HC-T01 a concrete repair. HC-T01 executed and its kill condition
+    K7 fired -- its detector predicts acquisition no better than current fitness
+    does. The MVG detector is not a breadth statistic; it is content-addressed --
+    is THIS specific useful phenotype one mutation away. Text S1 explicitly reports
+    that organisms under unstructured variation vary MORE broadly and score LOWER.
+    A breadth-like detector has no reason to beat fitness. Measuring WHICH
+    phenotypes are reachable relative to a named target set, rather than HOW MANY,
+    is inheritable and costs only a redefinition over the same samples.
+
+12. Is there an untested composition between Toussaint, MVG and Kouvaris?
+    YES, and it is better than untested -- it is ASSERTED IN PRINT AND NEVER RUN.
+    Fernando, Szathmary & Husbands 2012 (Front Comput Neurosci 6:24) state the
+    composition directly: the Parter/Kashtan/Alon effect "occurs if there is
+    non-trivial neutrality as described by Toussaint (2003)", citing the same PhD
+    thesis the house Toussaint specimen is built on -- and the demonstration they
+    offer is a different paper on a different substrate. Nobody ran it on
+    Kashtan/Alon's systems. Reisinger & Miikkulainen 2006 is a near-miss that
+    generalises Kashtan's varying fitness function but never engages Toussaint's
+    neutrality line in its prose. Kouvaris 2017 and Watson & Szathmary 2016 both
+    cite Toussaint only inside bulk background brackets, with zero occurrences of
+    his name in body text: co-citation without composition.
+    The reason it matters: the historical mechanism is a MIRROR, not a ratchet --
+    the property decays when the environment stops supplying structure (2008
+    Fig 9D; 2005 Fig 3; independently confirmed by Espinosa-Soto 2018). It cannot
+    compound, because nothing carries the alignment forward except the pressure
+    that created it. Toussaint supplies a heritable, self-adapting variation
+    operator, which is a candidate for what could hold the reflection.
+    Residual uncertainty: a full forward-citation sweep of the thesis was blocked
+    by HTTP 429, so a composition could hide in an unindexed conference paper.
+
+--------------------------------------------------------------------------------
+10. VERDICT
+--------------------------------------------------------------------------------
+HC_T01_PREEMPTED_BY_MVG ........................ no
+MVG_STRONGER_BUT_DIFFERENT ..................... no (runner-up; see below)
+MVG_COMPLEMENTARY .............................. no (true but buries the finding)
+MVG_SHOWS_ACCELERATION_NOT_ACCESSIBILITY ....... no (they measured accessibility)
+MVG_EFFECT_IS_AUTHORED_CURRICULUM .............. YES
+MORE_ARCHAEOLOGY_REQUIRED ...................... no
+SPECIMEN_NOT_RECONSTRUCTABLE ................... no
+
+Against the six conditions that would have made this a recovered solution rather
+than a precursor (assignment section 23):
+  1 representational restructuring ............... YES
+  2 accessibility measured longitudinally ........ YES
+  3 accessibility change precedes acquisition .... PARTIAL (arm level, not
+                                                   within-run)
+  4 intervention abolishes both .................. PARTIAL (cause perturbed,
+                                                   mediator never)
+  5 transfers to structurally novel targets ...... NO -- decisively, by the
+                                                   authors' own null
+  6 no direct evolvability reward ................ YES
+Four of six, with condition 5 failing on measured evidence. Not a recovered
+solution.
+
+WHY NOT MVG_STRONGER_BUT_DIFFERENT: it is defensible and it is the label Ergon
+gave Kouvaris. It is refused because it describes the relationship to HC-T01 and
+leaves the specimen's own boundary unnamed, and the boundary is the finding. The
+strength is real and is recorded throughout this packet; it does not need the
+verdict slot to survive.
+
+WHAT WOULD FLIP THE VERDICT: a demonstration that the advantage survives a change
+of DECOMPOSITION -- train on f(g(x,y),h(w,z)), test on f(g(x,w),h(y,z)), same
+operators and arity, different partition. That experiment has never been run in
+this lineage or in Kouvaris's. On the evidence I expect a null, and a null there
+would harden this verdict rather than change it.
+
+Classified honestly per assignment section 24:
+FACILITATED_REUSE_UNDER_AUTHORED_STRUCTURE, with genuine acquisition of novel
+module CONTENT inside a fixed scheme, and no evidence of open-ended epistemic
+compounding.
+
+--------------------------------------------------------------------------------
+11. KNOWN LIMITATIONS OF THIS REVIEW
+--------------------------------------------------------------------------------
+- THE SPECIMEN IS NOT SAFELY REPLICATED, and this is the limitation that most
+  constrains use. One independent replication attempt exists for one arm, and it
+  reversed the sign. The NAND circuit arm, which carries every accessibility
+  result quoted in this packet, has never been independently replicated OR
+  refuted. Third-party reimplementations of the circuit arm exist and report
+  supporting results, but none is peer-reviewed. Treat every quantitative figure
+  in section 6 as SINGLE-LABORATORY.
+- CONSEQUENCE FOR CALIBRATION: house calibration particle cal-08 (Kashtan-Alon,
+  fam-161) cannot be used to pass or fail a Prometheus detector as things stand.
+  A calibration particle requires a known treatment effect; this one has a
+  contested effect in the tested arm and an untested effect in the arm we would
+  use. SFE_MVG_CALIBRATION_PROPOSAL.md carries the amended scoring.
+- The Kouvaris genealogy in this packet is established STRUCTURALLY, from two
+  physics specs side by side. Direct citation confirmation was attempted: Kouvaris
+  2017 cites Toussaint only inside a bulk background bracket with zero body-prose
+  mentions. The MVG-to-Kouvaris link remains structural rather than cited.
+- A full forward-citation sweep of Toussaint's thesis was blocked by HTTP 429, so
+  the "composition never run" finding carries residual uncertainty.
+- Still unverified after the search: Hoverstad 2011 (publisher 403/418), any PNAS
+  Letter responding to the 2007 paper, the five TREE comments on Watson &
+  Szathmary 2016, and Kashtan's PhD thesis (the Weizmann repository returns empty
+  shells for all queries including controls, so its absence is not evidence).
+- Text S1's typeset algebra did not survive OLE2 text extraction, so the exact
+  facilitated-variation formula and the mutational-modularity measure are
+  reconstructed from prose and tagged INFERRED.
+- The 2005 genotype-phenotype map is UNSPECIFIED (supplement HTTP 403).
+- The 2007 per-model parameters are UNSPECIFIED (SI Appendix not retrieved).
+- CONFOUND NOT CLOSED BY THE SOURCES: the FG arm in the 2008 facilitated-variation
+  comparison carried a gate-minimisation penalty the MVG arm did not. Structural
+  differences between those arms are not cleanly attributable to the goal regime.
+- S_max is computed over the hardest goals only, with FG times censored at G_max.
+  The reported speedups are lower bounds on a conditioned subpopulation. Neither
+  paper discusses the censoring.
+- THE PROGRAMME'S BLIND SPOT, inherited by this review: every transfer test in the
+  corpus is single-step. Evolve, then present ONE new goal. There is no second hop.
+  A lineage that adapts fast to goal 2 and is crippled for goal 3 would be
+  invisible to every experiment in this lineage. No claim about compounding can be
+  sourced here in either direction.
+
+--------------------------------------------------------------------------------
+12. REPRODUCTION
+--------------------------------------------------------------------------------
+All sources and derived text are under elenchus/kashtan-alon-mvg/sources/.
+
+  sha256sum elenchus/kashtan-alon-mvg/sources/*.xml *.doc *.html
+
+  # the decisive boundary quote
+  grep -o "MVG's outperformance occurred only[^.]*\." \
+       elenchus/kashtan-alon-mvg/sources/parter2008_text.txt
+
+  # the accessibility definition
+  grep -o "defined as the set of phenotypes[^.]*\." \
+       elenchus/kashtan-alon-mvg/sources/parter2008_text.txt
+
+  # the NBVG dissociation (supplement)
+  grep -o "the evolutionary dynamics of NBVG[^.]*\." \
+       elenchus/kashtan-alon-mvg/sources/parter2008_TextS1_text.txt
+
+  # the non-monotonic FV ordering (supplement)
+  grep -o "Environments that change in a more random fashion[^.]*\." \
+       elenchus/kashtan-alon-mvg/sources/parter2008_TextS1_text.txt
+
+  # 2007 speedup table and switching band
+  grep -o "For efficient speedup[^.]*\." \
+       elenchus/kashtan-alon-mvg/sources/kashtan2007_text.txt
+
+Re-retrieval, if the local copies are lost:
+  https://pmc.ncbi.nlm.nih.gov/articles/PMC1236541/      (2005)
+  https://pmc.ncbi.nlm.nih.gov/articles/PMC1948871/      (2007; pnas.org 403s)
+  https://journals.plos.org/ploscompbiol/article/file?id=10.1371/journal.pcbi.1000206&type=manuscript
+  https://journals.plos.org/ploscompbiol/article/file?id=10.1371/journal.pcbi.1000206.s001&type=supplementary
+
+--------------------------------------------------------------------------------
+13. REVIEWER'S BOTTOM LINE
+--------------------------------------------------------------------------------
+The one question to confirm or contest: given that the local, longitudinal,
+population-level accessibility measurement has existed since 2008 with a cleaner
+intervention than HC-T01 -- and that the effect it detects is switched off by
+leaving the experimenter's own goal language -- is the Historical Collider still
+looking for a missing measurement, or is it now looking for a world whose
+decomposition nobody wrote down?
+
+And the operational one, which is cheaper to settle: the NAND circuit arm that
+every finding here rests on has never been independently reproduced by anyone, in
+eighteen years. Runnable third-party implementations exist. Is Prometheus willing
+to be the first independent test of it, or should this specimen be held at
+SINGLE-LABORATORY and kept out of the calibration set until someone is?
+================================================================================
+END OF PACKET
+================================================================================
