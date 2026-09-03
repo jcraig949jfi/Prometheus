@@ -222,10 +222,11 @@ The backward association is three to seven times the forward one. Accessibility
 measured AFTER the outcome window tracks the outcome far better than
 accessibility measured before it.
 
-Read carefully, because part of that is structural: md_on(t+h) is contemporaneous
-with best(t+h), so NC1 partly measures accessibility against present state. That
-is exactly the point. It shows the detector behaves like a readout of where a run
-currently is, and gives no support to reading it as a leading indicator.
+Read carefully, because part of that is structural: md_on(t+h) is
+contemporaneous with best(t+h), so NC1 partly measures accessibility against
+present state. That is exactly the point. It shows the detector behaves like a
+readout of where a run currently is, and gives no support to reading it as a
+leading indicator.
 
 NC2 is the permutation null above and it did not need to be beaten, because
 nothing reached significance to begin with.
@@ -335,10 +336,11 @@ count" to "organisation" applies symmetrically in the other direction.
     TRANSPLANT_REQUIRES_NEW_COMPUTE
 
 The frozen rows preserve ONE genotype per checkpoint, in parseable form, being
-the shortest genotype that still encodes the correct phenotype. The POPULATION is
-not preserved, and HC-T01's detector is a population mean over 100 individuals.
-Matching it would require regenerating populations by deterministic replay, which
-is cheap at about 8 seconds per run but is new compute and outside this pass.
+the shortest genotype that still encodes the correct phenotype. The POPULATION
+is not preserved, and HC-T01's detector is a population mean over 100
+individuals. Matching it would require regenerating populations by
+deterministic replay, which is cheap at about 8 seconds per run but is new
+compute and outside this pass.
 
 Qualification: a weaker single-genotype transplant IS feasible with zero
 evolution, by parsing the preserved string and calling the existing detector
@@ -392,11 +394,11 @@ ideas were already demonstrated in closely adjacent published systems.
 16. LIMITATIONS AND AMBIGUITIES
 --------------------------------------------------------------------------------
 The eligibility thresholds, 15 runs with headroom and 8 distinct gain values,
-were set after seeing the feasibility table and before computing any association.
-The prompt permits inspecting distributions for estimator validity; the ordering
-is disclosed rather than hidden, and a reviewer who prefers different thresholds
-can recompute from RA1_TIME_SERIES.csv, which reports every candidate point
-including those excluded.
+were set after seeing the feasibility table and before computing any
+association. The prompt permits inspecting distributions for estimator
+validity; the ordering is disclosed rather than hidden, and a reviewer who
+prefers different thresholds can recompute from RA1_TIME_SERIES.csv, which
+reports every candidate point including those excluded.
 
 The stability guard at 0.95 is a judgement. It is vindicated at the extreme,
 where r(F,G) is exactly -1, but points at 0.94 pass and points at 0.96 do not.
@@ -408,7 +410,8 @@ conflate populations of differing composition. The floor-zero bin is the worst
 affected and it carries the largest residual trend.
 
 The ablated arm has no operators, so its RA-1 result speaks about the detector
-and not about the mechanism. It should not be read as a test of the HC-T01 claim.
+and not about the mechanism. It should not be read as a test of the HC-T01
+claim.
 
 NC1's strength is partly structural, since md_on(t+h) is contemporaneous with
 best(t+h). It is diagnostic of direction, not a clean effect size.
@@ -431,8 +434,8 @@ From the RA directory, in order:
 
 About ten seconds total. RNG seeded at 20260903, so bootstrap intervals and
 permutation p-values reproduce exactly. Spot checks are in REPRODUCTION.md,
-including a four-line command that confirms r(fitness, gain) = -1 at the original
-K7 window, and one that confirms zero operators in any beta=0.0 row.
+including a four-line command that confirms r(fitness, gain) = -1 at the
+original K7 window, and one that confirms zero operators in any beta=0.0 row.
 
 --------------------------------------------------------------------------------
 18. NEW ARTIFACTS
