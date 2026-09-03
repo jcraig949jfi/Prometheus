@@ -1,0 +1,127 @@
+================================================================================
+HERAKLES -> ERGON DEEP-DIVE BRIEF 3 of 3
+ERGON_AVIDA2003_EQU
+
+Issued by Herakles, 2026-09-03, under James's ruling
+roles/Herakles/prompts/RULING_V0_CONTINUE_HYPOTHESIS_DAMAGED_2026-09-03.txt
+sha256 31816dc2bb7c40c7a5252e164a7fdcb228509388927459279d45ca18fa10811a
+authorisation 3.
+
+NOTE ON SCOPE. James's ruling says "Ergon still does the deep Avida job we just
+wrote." If a fuller Avida brief already exists in Ergon's tree, THAT brief is
+authoritative and this one is a supplement recording only what Herakles adds:
+the base-rate question, the archival question, and the demotion of Avida from
+thesis-carrier to one specimen among three.
+================================================================================
+
+TARGET
+
+Lenski, Ofria, Pennock & Adami (2003), "The evolutionary origin of complex
+features", Nature 423:139-144.
+Related: Covert, Lenski, Wilke & Ofria (2013), "Experiments on the role of
+deleterious mutations as stepping stones in adaptive evolution", PNAS.
+
+Starting points reached by an earlier research fan-out but which produced NO
+surviving verified claims, so treat them as unexplored leads:
+  https://www.nature.com/articles/nature01568
+  https://pmc.ncbi.nlm.nih.gov/articles/PMC3752215/
+  https://datadryad.org/dataset/doi:10.5061/dryad.4hp5n
+  https://web.archive.org/web/20250401231840/https://lenski.mmg.msu.edu/papers/nature2003/Supp1.html
+  https://bmcecolevol.biomedcentral.com/articles/10.1186/s12862-015-0361-x
+
+THE ROLE AVIDA NOW PLAYS, per the ruling
+
+Avida is DEMOTED from carrying the Historical Collider thesis to being one
+specimen in a three-part detector suite:
+
+    EvCA               tests future-accessibility COLLAPSE
+    Avida              tests historical ACCUMULATION and stepping stones
+    Altenberg/Mengistu test evolvability MEASUREMENT itself
+
+Avida is the historical-dependency and precursor-circuit specimen. It should
+not be asked to prove anything about detector blindness generally.
+
+THE ONE NUMBER THAT MATTERS MOST
+
+The 2003 detector was GOOD on the successful lineage: complete line of descent,
+reward-scaffold ablation, and mutation reversion. It was BLIND on the
+population. It could measure the deleterious intermediate ON THE LINEAGE THAT
+SUCCEEDED, but not:
+
+    the population-wide base rate of the SAME deleterious intermediate arising
+    and leading NOWHERE.
+
+Without that base rate, "deleterious stepping stone" is a survivorship
+description rather than a mechanism. This is a conditioning-on-success problem,
+and it is the cleanest instance of it in the whole specimen registry.
+
+Estimated cost of the measurement today: of order one CPU-day.
+
+WHAT THE DEEP-DIVE MUST PRODUCE
+
+1. HAS THE BASE RATE ALREADY BEEN MEASURED? This is the primary question and
+   an earlier pass returned NO surviving claims on it, which is a gap in that
+   pass and NOT evidence of absence. Search properly: Covert et al. 2013,
+   later valley-crossing and contingency work in Avida, work on the
+   distribution of fitness effects in Avida, and anything measuring
+   population-wide occupancy of intermediates rather than lineage occupancy.
+   A clean, well-documented "not measured" is the single strongest licence the
+   Historical Collider programme could obtain. A finding that it HAS been
+   measured is equally valuable and cheaper to act on. Do not prefer either.
+
+2. WHAT EXACTLY DID THE 2003 ABLATIONS TEST? State the reward-scaffold ablation
+   and the mutation-reversion experiment precisely, with what was varied, how
+   many replicates, and what the reported effect sizes and uncertainties were.
+   The seat has recorded this as a CALIBRATION PARTICLE, meaning a Prometheus
+   detector must be able to flag the deleterious intermediate BEFORE EQU
+   appears, WITHOUT being told the outcome. That calibration is only valid if
+   the ground truth is stated exactly.
+
+3. ARCHIVAL STATUS. Are the 2003 configuration files, ancestral genomes, and
+   line-of-descent data publicly archived and retrievable? Is the
+   contemporaneous Avida source version obtainable, and does it still build and
+   run? Hash anything actually retrieved. This bears directly on the HARD GATE
+   below: an ARTIFACT_IN_HAND here would unlock compute for the whole seat.
+
+4. CONFIG PARITY. If the 2003 configuration is recoverable, determine what
+   differs between it and current Avida. Enumerate every parameter that has
+   changed default or semantics. Where a parameter is unrecoverable, say so and
+   propose plausible variants rather than choosing the convenient one.
+
+5. D-LEVEL. Assign a D-level (defined in
+   herakles/HERAKLES_HISTORICAL_COLLIDER_V0/Q_DETECTOR_PARTS_REGISTRY.md) to
+   the 2003 work and to any successor. Note carefully: line-of-descent
+   reconstruction is longitudinal about WHAT HAPPENED but is D1 with respect to
+   ACCESSIBILITY, because it conditions on success. Do not let "we have the
+   full lineage" be mistaken for "we measured what was reachable".
+
+6. THE COMPOSITION THAT UPGRADES IT. Line-of-descent plus mass replay from
+   checkpoints converts D1 into D5. Specify what that would require in Avida
+   concretely: checkpoint granularity, determinism guarantees, seed control,
+   and the number of replays needed for a given precision. Design only.
+
+EVIDENCE DISCIPLINE
+
+  - Primary sources; locators on every claim; UNVERIFIED on anything from
+    background knowledge.
+  - Distinguish sharply between "the paper reports X" and "X is true of Avida".
+  - Report a documented negative rather than a casual one: name the URLs
+    checked and what each returned. An earlier negative inventory claim about a
+    different specimen was REFUTED 0-3 precisely because it was asserted rather
+    than documented.
+
+HARD GATE
+
+Ruling authorisation 5: no evolutionary compute until at least one specimen
+reaches ARTIFACT_IN_HAND, or a reconstruction is proven sufficiently exact.
+Retrieving and hashing archived Avida data IS artifact recovery and is
+authorised. RUNNING Avida is not, until the gate opens. If retrieval succeeds,
+report it immediately, because it opens the gate for the whole seat.
+
+DELIVERABLE
+
+A document in Ergon's tree; manifest rows for
+herakles/HERAKLES_HISTORICAL_COLLIDER_V0/J_RECOVERED_ARTIFACT_MANIFEST.jsonl
+for anything actually retrieved and hashed; and an updated calibration-particle
+specification for cal-01 in H_CALIBRATION_PARTICLES.md.
+================================================================================

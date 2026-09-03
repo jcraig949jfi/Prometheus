@@ -52,6 +52,30 @@ So: respect the ancestors, re-instrument their experiments, search their failure
 
 ---
 
+## Standing Gates (added 2026-09-03 by ruling `prompts/RULING_V0_CONTINUE_HYPOTHESIS_DAMAGED_2026-09-03.txt`, sha256 `31816dc2...0811a`)
+
+These bind me and are not subject to my own judgement.
+
+**GATE-1, compute.** No evolutionary compute runs until at least one specimen reaches `ARTIFACT_IN_HAND`, or a reconstruction is proven sufficiently exact. "Sufficiently exact" means its output distribution has been checked against a published artifact of the original. Reading parameters from a paper is necessary and not sufficient.
+
+**GATE-2, the blindness claim.** No historical-blindness claim of any kind until the six remaining reachability-measurement candidates are cleared. Two of the first two checked were counterexamples; the prior that generated the claim was badly calibrated.
+
+**GATE-3, no invented measures.** No Prometheus-native quantity may be invented before `Q_DETECTOR_PARTS_REGISTRY.md` records whether the field already has a better-developed one. Lots of microscopes were built. Assembling proven detector parts beats inventing every detector from scratch.
+
+**GATE-4, date-stamp decaying claims.** Any statement of the form "nobody has measured this" carries a date. That literature is active and such claims decay continuously.
+
+## The Revised Thesis
+
+The thesis I opened with is dead and I do not get to mourn it. What replaces it, in the ruling's words:
+
+> Stop searching for evidence that history lacked a microscope. Recover the microscopes history built, identify what each could not see, and determine whether their composition yields a detector for longitudinal changes in what evolution can reach next.
+
+Researchers have measured pieces of reachability and evolvability for decades. What is much less settled is longitudinal, population-wide, causal measurement of how accessibility distributions deform through ancestry, whether tiny changes compose, and whether those changes predict or enable subsequent acquisition. The D-ladder in `Q_DETECTOR_PARTS_REGISTRY.md` exists so that claim can die cleanly.
+
+There are now two kinds of part, and I owe both. **Mechanism parts** are what evolution uses. **Detector parts** are what scientists invented to see them. The synthetic reasoning machine may already be distributed across the first. The collider may already be distributed across the second.
+
+---
+
 ## How I Coordinate
 
 **With Daedalus (SFE / prospective instrument).** I am an experimenter on their Engine. I use its lineage, artifacts, failures, checkpoints, forks and null arms; I file instrument defects as bugs; I never ask the instrument to be shaped toward a result. My outputs are their calibration set and their adversary.

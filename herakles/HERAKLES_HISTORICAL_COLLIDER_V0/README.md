@@ -11,7 +11,8 @@ Seat docs: `roles/Herakles/RESPONSIBILITIES.md`, `CHARTER.md`, `METHOD.md`. Reco
 | Date | State |
 |---|---|
 | 2026-09-02 | V0 SKELETON + SEED. Seat installed. All sixteen deliverable files exist. Every seeded row `MODEL_RECALL_UNVERIFIED`. Nothing recovered, nothing run. |
-| 2026-09-03 | **RESEARCH PASS 1 COMPLETE.** Primary sources read for three families. Six rows promoted to `PRIMARY_SOURCE_READ`. **The seat's opening hypothesis is partly dead** (two counterexamples, both on its own candidate list). The first experiment survives, better specified, with a powered gate. Still zero artifacts recovered and zero code run. See `RESEARCH_PASS_2026-09-03.md`. |
+| 2026-09-03a | **RESEARCH PASS 1 COMPLETE.** Primary sources read for three families. Six rows promoted to `PRIMARY_SOURCE_READ`. **The seat's opening hypothesis is partly dead** (two counterexamples, both on its own candidate list). The first experiment survives, better specified, with a powered gate. Still zero artifacts recovered and zero code run. See `RESEARCH_PASS_2026-09-03.md`. |
+| 2026-09-03b | **RULING: CONTINUE, HYPOTHESIS PRODUCTIVELY DAMAGED.** Execution order replaced with a two-track H1/H2/H3 (microscopes first, specimens second). `Q_DETECTOR_PARTS_REGISTRY.md` added as a first-class artifact with the D0-D5 ladder. Four standing gates now bind the seat, including **no compute until an artifact is in hand**. Three Ergon deep-dive briefs issued. Artifact recovery and the six-candidate sweep are in flight. |
 
 ## Honest reading of this version
 
@@ -43,12 +44,32 @@ Seat docs: `roles/Herakles/RESPONSIBILITIES.md`, `CHARTER.md`, `METHOD.md`. Reco
 | P | `P_TOP10_UNTESTED_COMPOSITIONS.md` | candidate pool only, no ranking |
 | — | `FIRST_EXPERIMENT_PROPOSAL.md` | **verified physics, quantitative pre-registration, powered gate** |
 | — | `DISCARDED_LANGUAGE_LEXICON.md` | per-field lead vocabulary |
-| — | `RESEARCH_PASS_2026-09-03.md` | **what verified, what was corrected, what is still open** |
+| **Q** | `Q_DETECTOR_PARTS_REGISTRY.md` | **NEW, first-class**: the detectors history built, each with its blindness clause and D-level |
+| — | `RESEARCH_PASS_2026-09-03.md` | what verified, what was corrected, what is still open |
+
+## The revised thesis (2026-09-03)
+
+The opening thesis is dead. What replaces it:
+
+> Stop searching for evidence that history lacked a microscope. Recover the microscopes history built, identify what each could not see, and determine whether their composition yields a detector for longitudinal changes in what evolution can reach next.
+
+Lots of microscopes were built. They were pointed at different things, at different scales, in different disciplines, and rarely assembled into one instrument. Assembling proven detector parts is much easier than inventing every detector from scratch, so the seat now owes **two** registries: mechanism parts in E, detector parts in Q.
+
+The sharpened, killable question, with its D0-D5 ladder in Q:
+
+> Across historically important adaptive-computation experiments, how often was the local offspring / reachable distribution measured repeatedly across population lineages, in a way that permits changes in future accessibility to be reconstructed over evolutionary time?
+
+## Standing gates
+
+1. **No compute** until a specimen reaches `ARTIFACT_IN_HAND` or a reconstruction is proven sufficiently exact against a published artifact.
+2. **No historical-blindness claim** until the six remaining reachability candidates are cleared.
+3. **No invented measure** before Q records whether the field already has a better one.
+4. **Date-stamp** every "nobody has measured this" claim.
 
 ## Next actions (see `roles/Herakles/todo_2026-09-03.md`)
 
-1. **Decide the first experiment** between the EvCA reconstruction and the Avida population base rate. The research pass did not settle it: the Avida question came back entirely unanswered, which raises rather than lowers its value.
-2. Re-read the hex rule tables from the 1996 review, pinning the neighbourhood-ordering convention.
-3. Run the dedicated EvCA artifact hunt. Record a documented negative if that is the outcome; "no artifact survives" was refuted and may not be asserted.
-4. Clear the six unchecked reachability-measurement candidates before quoting the residual hypothesis anywhere.
-5. Obtain Lindgren 1991/1992 (Artificial Life II) for the population dynamics, run counts and extinction cutoff.
+**H1, in flight.** Recover the evolvability microscopes. Three Ergon briefs issued in `roles/Herakles/handoffs/`: Altenberg 1994, Mengistu/Lehman/Clune 2016, Avida 2003 EQU. A six-candidate D-level sweep is running.
+
+**H2, gated.** EvCA reconstruction, targeting the PPSN III configuration. Blocked on artifact recovery, which is running and is the critical path.
+
+**H3.** Avida, as the historical-accumulation specimen only. It no longer carries the thesis.
