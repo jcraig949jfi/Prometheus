@@ -62,6 +62,23 @@ def kernel_from_operator_counts(OP, states, weights):
     return P
 
 
+def _persist(states, P, n, name):
+    """Write integer transition counts as soon as a kernel exists.
+
+    The n=12,000 attempt discarded 100 minutes of measurement because the counts were only
+    written after the gates. Persisting here means a gate failure never destroys the compute and
+    a later higher-power run can pool batches instead of restarting.
+    """
+    counts = LK.counts_from(P, n)
+    with open(os.path.join(HERE, f"COUNTS_{name}_n{n}.json"), "w", encoding="utf-8",
+              newline="\n") as f:
+        json.dump({"samples_per_state": n,
+                   "counts": {repr(list(i)): {repr(list(j)): c for j, c in sorted(row.items())}
+                              for i, row in sorted(counts.items())}},
+                  f, sort_keys=True, separators=(",", ":"))
+        f.write("\n")
+
+
 def region(st):
     L, T = st
     cap = T // IW
@@ -86,8 +103,10 @@ def main():
 
     PA, OPA, NOOPA, ESCA = LK.measure_kernel_parallel(states, n, pre["seed_a"], "K_A")
     print(f"  K_A measured ({time.time()-t0:.0f}s)")
+    _persist(states, PA, n, "K_A")
     PB, OPB, NOOPB, ESCB = LK.measure_kernel_parallel(states, n, pre["seed_b"], "K_B")
     print(f"  K_B measured ({time.time()-t0:.0f}s)")
+    _persist(states, PB, n, "K_B")
 
     esc = sum(sum(r.values()) for r in ESCA.values()) + sum(sum(r.values()) for r in ESCB.values())
 

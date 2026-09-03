@@ -15,7 +15,8 @@
   "kernel_precision": {
    "max_row_tv_reported_not_criterion": true,
    "median_row_tv_max": 0.01,
-   "p95_row_tv_max": 0.02
+   "p95_row_tv_max": 0.02,
+   "thresholds_unchanged_after_failure": true
   },
   "reference": {
    "max_current_max": "the material threshold",
@@ -36,7 +37,18 @@
  "kernel": {
   "analytic_kernel_admissible": false,
   "estimated_from": "LIVE grammar.mutate execution",
-  "samples_per_state": 12000
+  "sample_count_history": [
+   {
+    "n": 12000,
+    "outcome": "GATE FAILED: median row TV 0.010333 > 0.010; p95 0.016333 <= 0.020 PASS; edge-presence disagreements 0",
+    "result_file": "RESULT_FULL_n12000_GATE_FAIL.json"
+   },
+   {
+    "n": 20000,
+    "reason": "effort increased to MEET the unchanged target; the pilot constant 1.0775 underestimated the full-space constant 1.1320 by 5.1% and n=12,000 carried only 1.7% margin. Predicted median 0.0080, p95 0.0127. The failed run stopped BEFORE any current, stationary distribution or substantive quantity was computed, so this decision cannot be outcome-motivated."
+   }
+  ],
+  "samples_per_state": 20000
  },
  "manifest_schema_hash": "dacb3c7a149af89fc4dc248a663c95dbfa2a9e1e153f15aa363b8ccc9aadd967",
  "manifest_schema_id": "prometheus/proteus/player_manifest/v0",
