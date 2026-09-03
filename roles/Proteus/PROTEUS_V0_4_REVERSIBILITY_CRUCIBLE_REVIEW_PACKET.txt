@@ -1,0 +1,720 @@
+PROTEUS / PLAYER FOUNDRY V0.4 -- REVERSIBILITY CRUCIBLE REVIEW PACKET
+2026-09-03. For a reviewer who has not seen the originating conversation.
+
+Brief: roles/Proteus/PROMPT_PROTEUS_V0_4_REVERSIBILITY_CRUCIBLE_2026-09-03.txt
+  sha256 da514fda91630c07512dbf4c088d9512f5cf2af81da2e669b97633865737afd8
+
+The question:
+
+  When a mutation walks from one valid structural state to another, have we
+  made the road itself point somewhere?
+
+For the tape coordinate the answer is now no, and that is proved rather than
+measured: over all 2,044 valid structural states the number of cases where a
+FITTING shrink was blocked went from 510 to 0. Structural drift now tracks a
+symmetric joint reference at every cohort. But one CONTENT coordinate fires the
+preregistered rule at one cohort, and I am not overturning that rule to reach a
+pass. The classification is therefore negative again, on much weaker evidence
+than last time, and the weakness is stated rather than used.
+
+====================================================================
+0. FAILURE MODES, FIRST
+====================================================================
+
+F1. ONE CONTENT COORDINATE FIRES G4, AND IT DOES NOT REPLICATE.
+    class_halt_yield (the share of instructions whose opcode is NOP, HALT or
+    YIELD), at cohort 128 only:
+
+      v0.4 -0.0123   NC4 +0.0069   delta -0.0191  CI [-0.0303,-0.0090]
+      z = 3.53, Holm-significant, sign persists over the second half
+
+    Everything about it is weak except the number itself:
+      cohort   1: delta -0.0072  CI [-0.0920,+0.0782]  sign does not persist
+      cohort   8: delta -0.0425  CI [-0.0885,+0.0044]  does not exclude zero
+      cohort  32: delta +0.0106  CI [-0.0206,+0.0402]  SIGN FLIPS
+      cohort 128: delta -0.0191  CI [-0.0303,-0.0090]  FIRES
+      cohort 256: delta +0.0024  CI [-0.0045,+0.0093]  SIGN FLIPS
+    Against the second content null (NC3) it excludes zero at NO cohort.
+    Cross-cohort multiplicity is not corrected by the preregistered rule: five
+    cohort families each controlled at FWER 5% gives roughly a 23% chance of at
+    least one false positive somewhere, and this is one coordinate of 70 in one
+    of five families. I have NO verified mechanism for it (see F2).
+
+    I could have reached QUALIFIED by any of three moves -- correcting across
+    cohorts, requiring agreement between the two content nulls, or demanding
+    replication. Each is defensible. None was preregistered. Making one of them
+    now, after seeing that it flips the verdict, is exactly the post-hoc rescue
+    this program forbids, so the rule stands as written and the verdict is
+    negative. What the reviewer should decide is whether the RULE should be
+    amended for V0.5, not whether this number should be waived.
+
+F2. I CANNOT EXPLAIN F1, AND MY BEST GUESS PREDICTS THE WRONG SIGN.
+    The plausible mechanism is unreachable_removal: static reachability stops at
+    HALT, so instructions after a HALT are frequently unreachable and get
+    deleted, which should trim a genome down toward its reachable prefix ENDING
+    in a HALT and therefore RAISE the halt_yield share. The measured sign is
+    negative. So the obvious story is wrong, and I am reporting an unexplained
+    directional effect rather than inventing a better story for it.
+
+F3. THE V0.3 TAPE RULE IS NO LONGER A LIVE CODE PATH.
+    v0.3 and v0.4 share the operator table and differ only in the body of
+    op_config_perturbation. Retaining both bodies would need a conditional
+    inside the operator, which the brief forbids. So unlike the v0.2 TABLE --
+    which remains executable and is still exercised by a unit test -- the v0.3
+    RULE is reproducible only from its committed rows and from git history. This
+    is a real reduction in reproducibility and it is disclosed rather than
+    hidden. The v0.3 rule IS still modelled exactly in nc5.transition_graph
+    ("v0_3"), which is how its 510 blocked shrinks are shown in this packet.
+
+F4. NC5 IS A MODEL OF THE STRUCTURAL KERNEL, NOT THE KERNEL ITSELF.
+    NC5 walks (genome_length, tape_words) using an ANALYTIC form of the length
+    kernel. If that analytic form is wrong, every structural comparison in this
+    packet inherits the error. Two guards: the analytic kernel is cross-checked
+    against the empirically measured one, and the tape rule is cross-checked
+    against the LIVE operator by sampling at every grid point (test
+    `test_live_operator_matches_the_modelled_rule`). Neither guard covers the
+    length kernel's interaction with splice's two-sided k draw as thoroughly as
+    I would like.
+
+F5. THE DIFFUSION COMPARISON IS INCOMPLETE IN ONE COORDINATE.
+    The V0.4 census records mean tape size; the V0.3 census did not, because the
+    field was added for this pass. So "did removing the tape ratchet change the
+    tape-size distribution under diffusion" is answered for V0.4 alone
+    (log2 tape 6.90 -> 9.99 over 10,000 events) with no V0.3 number to compare
+    against. Re-running V0.3's census is impossible without restoring the v0.3
+    rule as a live path, which F3 explains I did not do.
+
+F6. NO NEW ADJUDICATOR DEFECT WAS FOUND, WHICH IS NOT THE SAME AS NONE EXISTING.
+    V0.3 shipped two adjudicator defects. This pass added frozen Holm fixtures,
+    a second independent Holm implementation that aborts on disagreement, and
+    300 random families of cross-checks. All passed. That raises the cost of a
+    silent multiplicity error; it does not prove the adjudicator is correct.
+
+F7. FIXTURE ARITHMETIC ERROR, CAUGHT BY THE FIXTURES.
+    My first Holm fixtures asserted the wrong expected answers for two families
+    (I had not computed the step-down thresholds). Both implementations agreed
+    with each other and disagreed with my hand-written expectation, which is the
+    fixtures working. Corrected by computing the thresholds explicitly
+    (m=4: 2.4977 / 2.3940 / 2.2414 / 1.9600) and recording them in the fixture
+    comments.
+
+F8. THIS OPERATOR'S CALIBRATION RECORD, UNCHANGED.
+    V0: a content ratchet I introduced. V0.2: a length fix that created a
+    configuration ratchet. V0.3: an inert Holm and a length-confounded null.
+    V0.4: the pattern did not repeat in the structural coordinates, which is the
+    first pass where a fix did not visibly relocate the defect. One pass is not
+    a trend.
+
+====================================================================
+1. EXACT V0.3 -> V0.4 GRAMMAR DELTA
+====================================================================
+
+One operator body. op_config_perturbation, the tape_words branch.
+
+REMOVED (v0.2/v0.3):
+    a halving is a no-op unless the genome would occupy at most HALF of the
+    destination tape
+
+REPLACED BY (v0.4): a proposed tape transition is valid iff
+    1. the destination is inside the published bounds [16, 4096]; and
+    2. the existing genome fits in the destination (len(genome) <= destination)
+
+Nothing else changed. No weight, no limit, no operator added or removed, no
+occupancy threshold, no compensation probability, no automatic resizing of
+genome or tape. Asserted by unit test: the twelve weights still equal their v0.2
+values divided by 0.96, the operator names and descriptions are unchanged, and
+STORAGE_BOUNDS is unchanged.
+
+    grammar v0.2
+      779da90d173fdd0528fdfe98b1056cc9d3fcad1807fdd2f677f3d879250e9796
+    grammar v0.3
+      44ae7f598660a523a6fb151ef258dd4f1c886c0822abca5780b32e98e7548289
+    grammar v0.4
+      5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832
+
+====================================================================
+2. FROZEN PREREGISTRATION AND HASHES
+====================================================================
+
+    proteus/v0_4/PREREG_V0_4.md
+      sha256 4707404dd84a2daa6de3aa4c0660ee05... (full value in the JSON)
+    proteus/v0_4/PREREG_V0_4.json
+      prereg_id 572cc6342b4fd50d308a8169bee5306a445e4d0ed1d3400adf7be90902d0b2aa
+
+Frozen and committed (dfd2e2604) before any V0.4 arm ran, together with the
+grammar change, NC5, the Holm fixtures and the audit-identity machinery. The
+runners refuse to execute against any other grammar or runtime hash.
+
+====================================================================
+3. PAIRED TAPE-TRANSITION SYMMETRY: THE PROOF
+====================================================================
+
+The structural state space is small enough to enumerate exactly: tape_words in
+{16,32,64,128,256,512,1024,2048,4096} and genome_length in [1, tape/4] gives
+2,044 valid states. Nothing here is sampled.
+
+PRIMITIVE PROPOSAL PROBABILITY. config_perturbation is chosen with weight
+0.0833333333, then one of six fields uniformly, then up or down with probability
+one half:
+
+    q(t -> 2t) = q(2t -> t) = 0.0833333333 / 6 / 2 = 0.0069444444
+
+Equal by construction, and equal in both V0.4 and NC5.
+
+REALISED EDGES. For every state, the only permitted causes of rejection are a
+published bound or manifest validity. Counting the cases where a shrink was
+blocked even though the genome FITS in the destination:
+
+    grammar v0.3 :  510 of 1020 state pairs   <- the defect V0.3 measured
+    grammar v0.4 :    0 of 1020 state pairs
+    NC5          :    0 of 1020 state pairs
+
+LIVE-OPERATOR CROSS-CHECK. The model is checked against the code, not merely
+described: for a grid of states the real op_config_perturbation is sampled 400
+times and every valid destination must be observed and every invalid one must
+never be observed. Passes at every grid point.
+
+Every tape edge in the v0.4 graph satisfies p(A->B) == p(B->A) to 1e-15
+(test_tape_edges_are_symmetric_under_v0_4).
+
+====================================================================
+4. NC5 -- DEFINITION
+====================================================================
+
+A joint reversible manifest walk over (genome_length, tape_words). No genome
+content, no VM, no probes, no fitness, no world.
+
+Coordinate selection is computed, not asserted: a configuration field is
+included only if its value changes whether a structural proposal is valid, and
+only tape_words does. n_regs, tick_budget, out_cap, code_writable and persist
+are excluded on that test.
+
+NC5 uses the published bounds, the grammar's own step sizes, the same validity
+constraints and the same no-op rejection semantics. Its primitive paired moves
+are symmetric by construction: the length kernel is replaced by
+p_sym(d) = (p(d) + p(-d))/2, and tape doubling and halving are equiprobable.
+NC5 inherits NO asymmetric V0.4 rule. Every unit of drift NC5 shows is therefore
+produced by the reflecting bounds and by the coupled validity constraint that a
+genome must fit on its tape, and by nothing else.
+
+====================================================================
+5. NC5 TRANSITION AUDIT (machine-readable: RESULT_TRANSITION_AUDIT.json)
+====================================================================
+
+Exact over all 2,044 states.
+
+    rule    directed edges   asymmetric pairs   classification
+    v0_3            17,702             16,682   all OPERATOR_DESIGN
+    v0_4            18,212             16,172   all OPERATOR_DESIGN
+    nc5             18,212                  0   --
+
+Two things to read here.
+
+  (a) v0.4 has MORE edges than v0.3 (18,212 vs 17,702). Those 510 extra edges
+      are exactly the shrinks the half-tape rule was suppressing.
+  (b) v0.4 still has 16,172 asymmetric directed-edge pairs, and every one of
+      them is in the LENGTH kernel, none in the tape kernel. They are
+      OPERATOR_DESIGN by the brief's taxonomy: insertion (0.0833), deletion
+      (0.1146), duplication (0.0417), splice (0.0521) and unreachable_removal
+      (0.0313) carry unequal weights, so p(L -> L+k) does not equal
+      p(L+k -> L) for essentially every interior length edge. Detailed balance
+      does not hold in the length coordinate.
+
+That is a real, exactly quantified, operator-design asymmetry and the brief asks
+for it to be given special scrutiny. It is reported and NOT repaired: the brief
+authorizes exactly one grammar change and it was spent on the tape rule. Note
+that unequal edge probabilities do not by themselves imply drift -- the expected
+length displacement per mutation is near zero by weight construction -- and G3
+below tests the drift directly against NC5, which is symmetric. The honest
+summary is: the length kernel is NOT reversible, and its irreversibility did not
+produce a detectable directional effect at these horizons.
+
+====================================================================
+6. NC5 RESULTS
+====================================================================
+
+400 generations, 100 lineages per cohort. NC5 is the symmetric reference, so
+these numbers ARE the coupled geometry:
+
+    start    genome_length          log2 tape_words
+        1     1.00 -> 17.66          10.00 -> 9.06
+        8     8.00 -> 24.31          10.00 -> 9.63
+       32    32.00 -> 33.82          10.00 -> 9.66
+      128   128.00 -> 121.63         10.00 -> 10.81
+      256   256.00 -> 250.90         10.00 -> 11.21
+
+The tape coordinate moves in OPPOSITE directions at the two ends purely from
+geometry: a short genome can shrink its tape freely, so the walk drifts down; a
+long genome cannot shrink its tape without violating validity, so the walk
+drifts up. A single-coordinate null could never have shown this, which is why
+the brief required a joint one.
+
+====================================================================
+7. THE COMPLETE V0.4 MULTIDIMENSIONAL BATTERY
+====================================================================
+
+The V0.3 battery, unchanged, no coordinate removed, no tolerance relaxed, no
+scalar score substituted: 70 scalar coordinates per organism plus 9 population
+coordinates -- genome length; 25 opcode frequencies; 9 opcode-class frequencies;
+operand coordinates (mean normalized, fraction below 2^16, zero fraction, 16-bin
+top-nibble histogram); all configuration coordinates (n_regs, log2 tape_words,
+code_writable, log2 tick_budget, log2 out_cap, four persist shares);
+halt/yield/budget proportions; executed-instruction fraction; transcript
+silence; transcript occupancy, concentration and entropy; knockout occupancy,
+concentration and entropy; status-sequence occupancy; NOP share;
+mutation-touches-executed fraction.
+
+Null assignment (preregistered): structural (genome_length,
+config_log2_tape_words) -> NC5; other configuration -> NC1B; content -> NC4 with
+NC3 reported alongside; phenotype -> NC4. NC4 is used only for conditional
+endpoint questions; no claim is made that it establishes mutation-path
+reachability -- that is what NC5 is for.
+
+====================================================================
+8. CORRECTED HOLM VALIDATION
+====================================================================
+
+Two independent implementations:
+  holm_by_z -- step-down comparing |effect|/se against the normal quantile for
+               the Holm alpha at each rank
+  holm_by_p -- step-down on two-sided p-values derived from erfc, p <= a/(m-i)
+  holm_agree -- runs both and RAISES on any disagreement. Adjudication calls
+                only this. Uncertainty is never turned into a vote.
+
+Frozen fixtures, with thresholds computed rather than guessed
+(m=4: 2.4977 / 2.3940 / 2.2414 / 1.9600; m=3: 2.3940 / 2.2414 / 1.9600):
+
+    family                             expected rejected
+    none_rejected                      []
+    exactly_one                        [a]
+    several                            [a, b, c]
+    all_rejected                       [a, b, c, d]
+    step_down_stops_at_first_failure   [a]    (b has z=2.0 > 1.96 and is still
+                                               NOT rejected, because c fails the
+                                               rank-1 threshold first)
+    buggy_v0_3_over_declares           [a]    corrected
+                                       [a,b,c,d] under the V0.3 implementation
+
+Both implementations reproduce every expected answer, agree on all six fixtures
+and on 300 random families. The V0.3 defect is demonstrated rather than
+described: at 70 coordinates all with z = 2.0, the buggy version rejects all 70
+and the corrected version rejects none -- its bar was BELOW the raw 95% interval
+test. No disagreement occurred during the V0.4 adjudication.
+
+====================================================================
+9. V0.4 vs NC5 -- STRUCTURAL DRIFT, EVERY COORDINATE, EVERY COHORT
+====================================================================
+
+    coh  coordinate            v0.4      NC5    delta  CI95
+      1  genome_length       +18.64   +16.66   +1.98  [-2.02,+5.84]
+      1  log2_tape_words      -0.08    -0.94   +0.86  [+0.36,+1.38] *
+      8  genome_length       +10.78   +16.31   -5.53  [-9.74,-1.18] *
+      8  log2_tape_words      -0.40    -0.37   -0.03  [-0.54,+0.50]
+     32  genome_length        -0.22    +1.82   -2.04  [-8.19,+3.99]
+     32  log2_tape_words      -0.05    -0.34   +0.29  [-0.21,+0.79]
+    128  genome_length        -6.70    -6.37   -0.33  [-7.20,+7.09]
+    128  log2_tape_words      +0.64    +0.81   -0.17  [-0.46,+0.12]
+    256  genome_length       -11.63    -5.10   -6.53  [-13.52,+0.46]
+    256  log2_tape_words      +1.07    +1.21   -0.14  [-0.34,+0.07]
+
+    No coordinate survives the step-down Holm correction. Rows marked * exclude
+    zero raw only. log2_tape_words is config_log2_tape_words.
+
+NO structural coordinate survives correction at any cohort. G3 clears.
+
+Compare against V0.3, where config_log2_tape_words was +1.18 beyond a symmetric
+null at cohort 128 and +0.48 at cohort 256, both surviving correction. Under
+V0.4 the same coordinate is -0.17 and -0.14. The ratchet is gone, and it is gone
+in the direction and magnitude the mechanism predicted.
+
+Both raw exceedances point the same way and are worth naming: at cohort 1 the
+tape drifts up relative to NC5 (+0.86) and at cohort 8 the genome grows less
+than NC5 (-5.53). Neither survives correction, and they are in opposite
+coordinates, so I make no claim about them.
+
+====================================================================
+10. HISTORICAL RE-ANALYSIS OF THE V0 / V0.1 / V0.2 LENGTH EFFECT
+====================================================================
+
+The old failures, in instructions per generation (OLS slope), against a fixed
+0.03 tolerance and no geometry control:
+
+    grammar  cohort 8   cohort 32   cohort 128
+    v0        +0.0707     +0.0209     -0.0234
+    v0.1      +0.0412     -0.0020     -0.0280
+    v0.2      +0.0328     +0.0086     -0.0136
+
+Under V0.4, expressed the same way (drift over 400 generations / 400):
+
+    v0.4      +0.0270     -0.0006     -0.0168
+    NC5       +0.0408     +0.0046     -0.0159
+
+The old effect RETURNS under V0.4 -- positive at cohort 8, negative at cohort
+128, small in between -- and NC5, which is symmetric by construction and
+therefore has no mutation prior at all, REPRODUCES IT, at cohort 8 more strongly
+than V0.4 itself and at cohort 128 to within 0.001 instructions per generation.
+
+Therefore, as the brief specifies:
+
+    HISTORICAL_V0_LENGTH_FAILURE_RECLASSIFIED_AS_JOINT_GEOMETRY
+
+This is answer B: expected drift arising from the geometry of the coupled
+genome_length x tape_words state space, not a true asymmetric grammar prior.
+The old verdicts are NOT altered. They were correct under the adjudication rules
+they declared; those rules simply had no joint null available. The cost of that
+gap was two grammar revisions chasing an effect the space itself was producing,
+the second of which introduced a real ratchet that took another whole pass to
+find and remove.
+
+====================================================================
+11. ACCEPTANCE-RATE MAPS FOR COUPLED STRUCTURAL MUTATIONS
+====================================================================
+
+Measured on the live operators, 400 trials per cell. Acceptance = the operator
+actually changed the manifest. Selected rows (full grid in
+RESULT_ACCEPTANCE_MAPS.json):
+
+    L     T   occ    ins    del   ins-del   tape_up  tape_dn  up-dn
+    1   128  0.03  1.000  0.000   +1.000      0.492    0.508  -0.016
+    2   128  0.06  1.000  1.000    0.000      0.567    0.433  +0.133
+   16   128  0.50  1.000  1.000    0.000      0.442    0.558  -0.117
+   31   128  0.97  1.000  1.000    0.000      0.600    0.000  +0.600
+   32   128  1.00  0.000  1.000   -1.000      0.507    0.000  +0.507
+   64  2048  0.12  1.000  1.000    0.000      0.531    0.469  +0.062
+  512  4096  0.50  1.000  1.000    0.000      0.000    0.567  -0.567
+ 1024  4096  1.00  0.000  1.000   -1.000      0.000    0.000   0.000
+
+Three one-directional regions exist, and each has a named, published cause:
+
+  (a) occupancy = 1.00 (genome fills the tape): insertion accepts 0.000,
+      deletion accepts 1.000. MANIFEST_VALIDITY.
+  (b) length = 1 (the minimum): deletion accepts 0.000, insertion 1.000.
+      PUBLISHED_BOUNDARY.
+  (c) occupancy > 0.5: tape halving accepts 0.000 while doubling accepts about
+      0.5, because halving would leave the genome not fitting.
+      MANIFEST_VALIDITY.
+      At tape 4096 doubling accepts 0.000. PUBLISHED_BOUNDARY.
+
+Every one of these is present identically in NC5, which is why the structural
+drift matches. None is OPERATOR_DESIGN. The V0.3 defect was a fourth region --
+occupancy between 0.5 and 1.0 blocked from shrinking by an occupancy threshold
+rather than by validity -- and it is gone.
+
+====================================================================
+12. TRANSITION-GRAPH ASYMMETRIES (enumerated, not sampled)
+====================================================================
+
+See section 5 for the counts. Partitioned by the brief's taxonomy over v0_4:
+
+    PUBLISHED_BOUNDARY :      0
+    MANIFEST_VALIDITY  :      0
+    OPERATOR_DESIGN    : 16,172
+    UNKNOWN            :      0
+
+The zero in the first two rows deserves a caveat: boundary and validity effects
+show up in this audit as SELF-LOOPS (a rejected proposal is a no-op), not as
+asymmetric edge pairs, so they are counted in the acceptance maps of section 11
+rather than here. The 16,172 OPERATOR_DESIGN pairs are all length edges with
+unequal forward and reverse probability. The grammar was NOT changed after
+seeing this graph.
+
+====================================================================
+13. LIMITED NEUTRAL-DIFFUSION COMPARISON
+====================================================================
+
+400 lineages, 10,000 mutation events, identical design to V0.3 except the
+grammar.
+
+  V0.4
+    events   cls   cum  top%     H    kv  silent    len  log2T
+         0    72    72  45.0  3.39   258   77.2%   17.7   6.90
+         1    73    93  45.0  3.43   248   76.0%   17.6   6.89
+        10    62   135  51.0  3.04   232   78.8%   17.3   6.96
+       100    67   183  56.0  3.00   251   82.2%   17.3   7.17
+      1000    78   238  47.0  3.43   251   76.5%   24.7   8.43
+     10000    91   307  38.0  3.86   179   74.5%   62.1   9.99
+
+  V0.3 (same design, previous grammar; tape size was not recorded, see F5)
+    events   cls   cum  top%     H    kv  silent    len
+         0    72    72  45.0  3.39   258   77.2%   17.7
+         1    70    84  44.5  3.37   249   77.2%   17.7
+        10    67   127  50.7  3.13   248   80.0%   17.6
+       100    61   169  54.0  3.01   253   78.2%   18.0
+      1000    69   217  46.0  3.31   211   80.0%   29.7
+     10000    86   274  39.0  3.80   154   73.0%   76.2
+
+  recurrence    V0.4: 400/400 lineages return, 3,748 returns, dwell 1.94
+                V0.3: 400/400 lineages return, 3,848 returns, dwell 1.93
+  connectivity  V0.4: 1,385 classes, 2,809 transitions,
+                      out-degree 2.12 (max 509)
+                V0.3: 1,349 classes, 2,810 transitions,
+                      out-degree 2.16 (max 496)
+
+What materially changed: mean genome length at 10,000 events fell from 76.2 to
+62.1. That is the expected coupling -- with the tape no longer ratcheting
+upward, less headroom is manufactured and insertion is rejected more often.
+Concentration, entropy, silence, recurrence and connectivity are unchanged
+within noise. Cumulative discovery is slightly higher (307 vs 274); per the
+brief that is not an improvement and is not read as one.
+
+G5: against its own geometry reference at 10,000 events, V0.4 sits at top-class
+share 0.380 vs NC4 0.347 and entropy 3.86 vs 3.87, distinct 91 vs 92, silence
+0.745 vs 0.738. Not materially beyond the geometry reference. The collapse
+blocker remains cleared.
+
+====================================================================
+14. EVERY SURVIVING CONTENT PRIOR
+====================================================================
+
+One, and it is F1: class_halt_yield at cohort 128, delta -0.0191 against the
+length-matched geometry reference, z = 3.53, Holm-significant, sign persists.
+Non-replicating across cohorts, absent against NC3, mechanism unknown.
+
+Raw exceedances at every cohort, for completeness (none of the others survives
+correction, and the counts are at or near the 3.5 expected by chance):
+  cohort   1: config_log2_tape_words, operand_top4_00
+  cohort   8: config_persist_regs, config_persist_tape, genome_length,
+              opcode_08, operand_top4_05, status_budget, status_halt
+  cohort  32: class_opaque_io, opcode_01, opcode_07, opcode_14, opcode_20,
+              opcode_23, operand_mean_norm, operand_top4_15
+  cohort 128: class_halt_yield, nop_share, opcode_01, opcode_03
+  cohort 256: class_randomness, config_log2_tick_budget, opcode_24,
+              operand_mean_norm, operand_top4_13
+
+The V0 zeroing/NOP ratchet remains absent: NOP-share drift at cohort 128 is
+-0.0046 against +0.0024 for the null, and it does not survive correction.
+
+====================================================================
+15. EVERY SURVIVING STRUCTURAL / CONFIGURATION PRIOR
+====================================================================
+
+None. Every structural coordinate at every cohort is within the joint geometry
+null after correction (section 9). config_log2_tick_budget excludes zero raw at
+cohort 256 against NC1B and does not survive Holm; the two persist-policy shares
+do the same at cohort 8. The V0.3 tape ratchet is gone by proof (section 3) and
+by measurement (section 9).
+
+====================================================================
+16. EVERY UNEXPLAINED DIRECTIONAL EFFECT
+====================================================================
+
+One: F1 / F2, class_halt_yield at cohort 128. My candidate mechanism predicts
+the opposite sign, so I have none.
+
+Everything else in this packet that points in a direction has a named cause:
+the length walls (published minimum, tape capacity), the tape walls (published
+maximum, genome fit), and the length kernel's unequal operator weights
+(16,172 OPERATOR_DESIGN edge pairs, no detectable drift).
+
+====================================================================
+17. ADJUDICATOR FAILURES ENCOUNTERED DURING THIS PASS
+====================================================================
+
+One, and it was caught by the new fixtures before any arm ran: my hand-written
+expected answers for two Holm families were arithmetically wrong (F7). Both
+implementations agreed with each other and disagreed with me. No disagreement
+between the two implementations occurred at any point, on the fixtures, on 300
+random families, or during the adjudication itself.
+
+Not a defect but a stated limitation: the preregistered rule corrects
+multiplicity WITHIN a cohort and not ACROSS the five cohorts. That is what makes
+F1 fireable on a single-cohort result. It was preregistered that way in V0.3 and
+carried forward unchanged, and changing it now would be a post-hoc rescue.
+
+====================================================================
+18. AUDIT IDENTITY PROOF
+====================================================================
+
+    audit             proteus/audits/quarantine.py
+    audit result      PASS
+    audited tree      3ae4ee8b773e0fcf...  (per-file digests in the stamp)
+    grammar hash      5043f5e11a726b63...
+    runtime hash      73f110e21b9df879...
+    affordance hash   f1607ee8be680acc...
+    stamp id          6ccbee62c7dc0735...
+    git commit/tree   recorded in proteus/audits/AUDIT_IDENTITY.json
+
+The staleness mechanism is DEMONSTRATED, not asserted. Appending a single
+comment line to a covered file (proteus/foundry/export.py) makes
+`audit_identity.py verify` print STALE and name the changed file, and restoring
+the file returns FRESH. The V0 hole -- a quarantine PASS produced before
+export.py entered the audited tree -- cannot recur silently, because the stamp
+binds a per-file digest of every covered source and the verifier recomputes it.
+
+====================================================================
+19. CROSS-RUNTIME REPLAY
+====================================================================
+
+Identical digest on three runtimes, two operating systems:
+
+    ac1ef90dc995b608ceec827b5e848d56863e4f15948dd91cc2daaea0fffd3ba2
+
+    A  CPython 3.12.10  Windows 11                   AMD64
+    B  CPython 3.11.9   Windows 11                   AMD64
+    C  CPython 3.12.3   Linux 6.6 (WSL2, glibc 2.39) x86_64
+
+The V0.4 artifact additionally covers the exhaustive structural transition audit
+and the symmetry proof, so the exact edge counts in sections 5 and 12 are
+themselves replicated on all three runtimes. Not done: a physically separate
+host. None is available. The claim is bounded to two CPython minor versions and
+two operating systems on one machine.
+
+====================================================================
+20. CLAIMS, CEILINGS AND BREAK CONDITIONS
+====================================================================
+
+C1  The V0.3 half-tape asymmetry is absent from V0.4. EXHAUSTIVE over all 2,044
+    valid structural states: fitting shrinks blocked 510 -> 0; every tape edge
+    reversible to 1e-15; live operator agrees with the model.
+    CEILING: a statement about the tape transition only.
+    BREAKS IF: any state is found where a valid shrink is refused for a reason
+    other than a published bound or genome fit.
+
+C2  No structural coordinate shows a directional effect beyond NC5 at any of
+    five cohorts after correction.
+    CEILING: 400 generations, 100 lineages per cohort, one starting tape,
+    NC5's analytic length kernel (F4).
+    BREAKS IF: a longer horizon separates them, or the analytic kernel is shown
+    to misstate the real one.
+
+C3  The historical V0/V0.1/V0.2 genome-length failure is reproduced by a
+    symmetric joint walk and is therefore joint geometry, not a grammar prior.
+    CEILING: shown at cohorts 8, 32 and 128, the ones the old runs reported.
+    BREAKS IF: NC5's kernel is wrong (F4), which would invalidate the
+    reclassification along with C2.
+
+C4  One content coordinate, class_halt_yield at cohort 128, exceeds its
+    length-matched null after correction with the sign persisting.
+    CEILING: one cohort of five, one of two content nulls, one of 70
+    coordinates, no mechanism, no replication.
+    BREAKS IF: it fails to reappear in an independent replication at the same
+    cohort under a fresh seed -- which is the single cheapest next measurement
+    and is deliberately NOT run here, because running it now would be choosing
+    the test after seeing the result.
+
+C5  Under neutral diffusion to 10,000 events, removing the tape ratchet reduced
+    mean genome length (76.2 -> 62.1) and left concentration, entropy, silence,
+    recurrence and connectivity unchanged within noise.
+    CEILING: 400 lineages, one ensemble, one initialization; V0.3's tape
+    distribution was not recorded (F5).
+
+C6  The multiplicity machinery is two independent implementations that abort on
+    disagreement, validated against six frozen fixtures and 300 random families.
+    CEILING: agreement between two implementations by one author is evidence
+    against a coding slip, not against a shared misconception.
+
+C7  Audit claims are bound to the exact tree they were produced on, and
+    staleness was demonstrated.
+    CEILING: covers proteus/foundry, the two audit sources and the affordance
+    table; it does not cover the v0_3 or v0_4 experiment runners.
+
+No claim is made about intelligence, reasoning, capability, emergence, progress
+or the fitness of any organism.
+
+====================================================================
+21. EXACT REPRODUCTION COMMANDS
+====================================================================
+
+From a checkout of origin/main:
+
+  python -m pytest proteus/tests -q
+      # 43 pass: Holm fixtures, exhaustive tape symmetry, live-operator
+      # cross-check, frozen-evidence pins, zeroing unreachable
+  python proteus/audits/audit_identity.py stamp
+  python proteus/audits/audit_identity.py verify        # FRESH iff tree matches
+  python proteus/v0_4/run_crucible.py NC5
+  python proteus/v0_4/run_crucible.py NC1B
+  python proteus/v0_4/run_crucible.py NC2
+  python proteus/v0_4/run_crucible.py NC3
+  python proteus/v0_4/run_crucible.py V0_4
+  python proteus/v0_4/run_crucible.py NC4     # requires RESULT_V0_4.json
+  python proteus/v0_4/run_adjudicate.py       # writes ADJUDICATION_V0_4.json
+  python proteus/v0_4/run_acceptance_maps.py
+  python proteus/v0_4/run_diffusion.py
+  python proteus/v0_4/run_crosshost.py out.json   # compare the DIGEST line
+
+  Committed results are gzipped where large; gunzip before comparing.
+  Runners refuse any grammar or runtime hash other than the preregistered ones.
+
+  Hashes to pin (sha256; hash committed files as blobs with
+  git show origin/main:<path> | sha256sum):
+
+    V0.4 brief
+      da514fda91630c07512dbf4c088d9512f5cf2af81da2e669b97633865737afd8
+    prereg id
+      572cc6342b4fd50d308a8169bee5306a445e4d0ed1d3400adf7be90902d0b2aa
+    grammar v0.4
+      5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832
+    grammar v0.3
+      44ae7f598660a523a6fb151ef258dd4f1c886c0822abca5780b32e98e7548289
+    grammar v0.2
+      779da90d173fdd0528fdfe98b1056cc9d3fcad1807fdd2f677f3d879250e9796
+    affordance table
+      f1607ee8be680acc33288a95c1a25c09ad4c799a47b0975381be8ca02d7638ce
+    cross-runtime artifact
+      ac1ef90dc995b608ceec827b5e848d56863e4f15948dd91cc2daaea0fffd3ba2
+
+====================================================================
+22. COMPUTE AND STORAGE ACCOUNTING
+====================================================================
+
+Single-core pure Python, one host. No GPU, no LLM, no API, no spend.
+
+    unit tests (43)                                    < 1 s
+    exhaustive transition audit + symmetry proof        ~3 s
+    arms NC5 / NC1B / NC2 / NC3 / V0_4 / NC4    0 / 16 / 51 / 15 / 27 / 18 s
+    adjudication (70 coords x 5 cohorts, 2,000-resample
+      bootstrap, dual nulls for content, dual Holm)     ~180 s
+    acceptance maps (45 cells x 8 operators x 400)      ~40 s
+    diffusion census (400 lineages x 10,000 events)      145 s
+    cross-runtime replay, three runtimes             ~35 s each
+
+    Storage added, gzipped: ~2.3 MB arm rows, 95 KB transition audit, 62 KB
+    acceptance maps, 44 KB diffusion rows, ~90 KB cross-runtime artifacts,
+    plus source, preregistration and the audit stamp.
+
+====================================================================
+23. VERDICT
+====================================================================
+
+Evaluated in the preregistered order.
+
+  G1 INSTRUMENT INTEGRITY -- clears. Cross-runtime digest identical on three
+     runtimes. Audit identity FRESH and its staleness detector demonstrated.
+     Shadow decoder never diverged. The two Holm implementations never
+     disagreed. All required nulls ran, including NC5.
+
+  G2 KNOWN TAPE ASYMMETRY -- clears, by exhaustive proof over 2,044 states:
+     fitting shrinks blocked 510 -> 0, every tape edge reversible.
+
+  G3 JOINT STRUCTURAL NEUTRALITY -- clears. No structural coordinate exceeds
+     NC5 after correction at any cohort. Every coordinate reported in section 9.
+
+  G4 CONTENT NEUTRALITY -- FIRES. class_halt_yield at cohort 128, delta -0.0191
+     against the length-matched null, z = 3.53, Holm-significant, sign
+     persisting. Non-replicating, absent against the second content null,
+     mechanism unknown.
+
+  G5 DIFFUSION COLLAPSE -- would not have fired; concentration matches the
+     geometry reference. The collapse blocker remains cleared.
+
+Also reported, per the brief's section 4, as a separate non-verdict
+classification:
+
+    HISTORICAL_V0_LENGTH_FAILURE_RECLASSIFIED_AS_JOINT_GEOMETRY
+
+Final classification:
+
+NOT_QUALIFIED_DIRECTIONAL_MUTATION_PRIOR_REMAINS
+
+The road no longer points anywhere in the coordinate this pass was convened to
+fix, and the length failure that started three revisions ago turns out to have
+been the shape of the space rather than the shape of the grammar. What blocks
+qualification now is a single content coordinate at a single cohort that I
+cannot explain, cannot replicate across cohorts, and will not explain away. The
+cheapest next measurement is an independent replication of that one cell under a
+fresh seed, and I have deliberately not run it, because choosing a test after
+seeing the result it would rescue is the failure mode this whole sequence exists
+to prevent.
+
+-- Proteus, V0.4 reversibility crucible, 2026-09-03. Built. Measured. Stopped.
