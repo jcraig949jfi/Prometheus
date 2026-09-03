@@ -1,0 +1,463 @@
+================================================================================
+HISTORICAL COLLIDER DEEP-FORENSICS PACKET
+KOUVARIS ET AL. 2017 AS A POTENTIAL PRIOR SOLUTION TO HC-T01
+================================================================================
+Prepared:    2026-09-03   complete; verdict frozen; nothing run
+Seat:        Ergon lane, executed by this session (Ergon tied up)
+Location:    ergon/kouvaris2017/
+Directive:   ergon/kouvaris2017/PROMPT_KOUVARIS2017_2026-09-03.txt
+             body sha256 c823c32cca29518747274da6d137e1fd33205cfc12908d
+             dc17f2282846e16d63  (one string; wrapped here)
+Specimen:    Kouvaris K, Clune J, Kounios L, Brede M, Watson RA (2017)
+             "How evolution learns to generalise", PLOS Comput Biol
+             13(4):e1005358
+Recovered:   18 artifacts, all hashed: published XML + PDF, the complete
+             Supporting Information, the arXiv preprint and its LaTeX
+             source, the Kouvaris PhD thesis, the Kounios MPhil thesis,
+             THREE AUTHOR SOURCE-CODE REPOSITORIES, two ancestors, four
+             descendants. One access gap (Watson 2014, paywalled).
+
+VERDICT:     KOUVARIS_STRONGER_BUT_DIFFERENT
+
+SECOND FINDING, which matters more than the verdict: the forward search
+found two post-2017 works and one 2016 sibling that between them hold
+every element HC-T01 claims is missing. HC-T01 survives, but its
+justification document is now wrong as written and must be rewritten
+before it runs.
+
+--------------------------------------------------------------------------------
+1. THE QUESTION PUT TO THIS PASS
+--------------------------------------------------------------------------------
+Did Kouvaris 2017 already measure longitudinal change in a population's
+reachable phenotype distribution under an intervention, and causally
+relate it to subsequent acquisition, strongly enough to make HC-T01
+redundant?
+
+Answer: NO. But the reasons are not the ones the programme expected, and
+three of the findings below count AGAINST HC-T01.
+
+--------------------------------------------------------------------------------
+2. WHAT THE SPECIMEN ACTUALLY DID
+--------------------------------------------------------------------------------
+Physics. A single genotype [G,B] under strong-selection-weak-mutation.
+G is 16 embryonic gene-expression values; B is a 16x16 regulatory matrix
+that develops G into an adult phenotype over T steps of a recurrent
+non-linear map. Targets are 8 patterns built from 4 independent binary
+modules; 3 are selected for (training), 5 are never selected (test).
+Selection is benefit minus lambda times a cost on B.
+
+Detector. Draw 5000 points uniformly in the cube [-1,1]^16 using a
+scrambled Sobol sequence. Develop each through the CURRENT B. Bin by
+sign. Count against target patterns. Compare by chi-squared against the
+training set and against the whole class. Repeat for every stored B
+along the trajectory.
+
+Interventions, all four of them:
+  environmental switching interval K
+  Gaussian noise on the target, scale kappa
+  L2 cost lambda * sum b_ij^2
+  L1 cost lambda * sum |b_ij|
+
+Acquisition. Freeze the evolved B, re-randomise G, evolve G alone for
+2500 generations, count generations to target, 1000 runs per target per
+arm, all 8 targets, failures censored at the ceiling.
+
+--------------------------------------------------------------------------------
+3. THE FOUR-ELEMENT SCORE
+--------------------------------------------------------------------------------
+Element             Score      Basis
+------------------  ---------  --------------------------------------------
+A  distribution     YES        5000-point Monte Carlo estimate
+A-local             NO         uniform over the WHOLE cube, not one-step
+B  longitudinal     YES        error vs evolutionary time, all four arms
+B-within-run        YES*       * runs never counted, no uncertainty
+C  all arms         YES        one Fig 3 panel per arm, shared probe set
+C-mechanism         NO         all four knobs are selection or environment
+D  acquisition      YES        generations-to-target, 1000 runs per cell
+D-within-run        NO         endpoint only, on frozen architecture
+
+HC-T01 targets A-local + C-mechanism + D-within-run.
+The specimen satisfies NONE of the three. No hedging is required.
+
+--------------------------------------------------------------------------------
+4. D-LADDER
+--------------------------------------------------------------------------------
+D0  no accessibility measure ................. exceeded
+D1  selected individuals only ................ exceeded
+D2  snapshot accessibility .................... ACHIEVED
+D3  longitudinal accessibility ............... ACHIEVED (unreplicated)
+D4  plus subsequent acquisition outcome ...... ACHIEVED AT ARM LEVEL
+D5  causal: accessibility change alters
+    subsequent acquisition ................... NOT ACHIEVED
+
+D5 fails for three independent reasons, each sufficient:
+  (a) No mediation. The knobs change fitness, fitness changes B, and
+      BOTH readouts are then read off B. Common cause is not excluded.
+  (b) The two readouts are deterministic functionals of the SAME frozen
+      B over the SAME genotype space through the SAME map. If B cannot
+      express a phenotype from anywhere, hill-climbing under B will not
+      find it either. Their agreement is close to definitional. The
+      paper notices the agreement and reports it correctly as a
+      consistency check, which is what it is.
+  (c) No run-level uncertainty exists to support a causal claim.
+
+--------------------------------------------------------------------------------
+5. THE PHYSICS RECORD IS CONTRADICTORY, AND THE CODE IS WHAT SHOWED IT
+--------------------------------------------------------------------------------
+Recovering the author's MATLAB was the highest-value act of this pass.
+It is an independent failure mode against the paper's own prose, and it
+fired.
+
+Quantity                 Methods    Results    Code       Class
+-----------------------  ---------  ---------  ---------  ---------------
+P(B mutates per step)    1/15       1/2        1          CONTRADICTORY
+sigmoid gain alpha       0.5 (S1)   --         0.3        CONTRADICTORY
+developmental steps T    10  (S1)   --         15         CONTRADICTORY
+B mutation magnitude     0.1/(15N^2)  --       mm/l^2     EXACT MATCH
+G mutated in main runs?  yes        yes        NO: G is
+                                               clamped to
+                                               the target,
+                                               mutate_gene
+                                               commented out CONTRADICTORY
+
+The magnitude formula in the published Methods is a literal
+transcription of the code, which is strong evidence the code is the
+right implementation family. That the PROBABILITY is stated three
+different ways in three primary sources is a genuine defect in the
+record. Caveat carried: these are working research scripts with many
+commented alternatives, so this is two primary sources disagreeing, not
+proof the paper is wrong.
+
+Replication: the number of evolutionary runs behind every longitudinal
+figure is NEVER STATED, the string "seed" occurs zero times in the
+article body, no error bars appear on any trajectory, and the recovered
+main script contains no replicate loop. The only error bars in the work
+are on an analysis that REPLACES evolution with Hebb's rule.
+
+--------------------------------------------------------------------------------
+6. WHERE THE SPECIMEN IS STRONGER THAN HC-T01
+--------------------------------------------------------------------------------
+Recorded because the directive forbids protecting HC-T01.
+
+  1. NON-TAUTOLOGICAL INTERVENTION. No Kouvaris knob touches the
+     variation operator, so 100 percent of the detector's movement is an
+     evolved response. HC-T01's beta IS the rate of second-type
+     mutations, i.e. a parameter of the operator that induces the
+     exploration distribution. Herakles's own preregistration declares
+     this TRAP 1 LIVE and mandates a generation-zero mechanical-effect
+     null. Kouvaris needs no such null. On intervention cleanliness the
+     2017 design is simply better.
+  2. A REAL TRAIN/TEST SPLIT over environments, by construction.
+     HC-T01 has no held-out environment set at all.
+  3. ACQUISITION INCLUDES UNREACHABILITY. Censored outliers separate
+     "cannot express" from "slow to find". HC-T01's current acquisition
+     metric is best_fitness, which cannot.
+  4. SAME-PROBE COUNTERFACTUAL by construction: one fixed 5000-point
+     Sobol set reused at every epoch and in every arm.
+
+--------------------------------------------------------------------------------
+7. THREE FINDINGS THAT DAMAGE HC-T01
+--------------------------------------------------------------------------------
+7a. AN A-LOCAL DETECTOR ALREADY EXISTED IN THIS LINEAGE AND WAS NEVER
+    REPORTED. The recovered repository
+    KKouvaris/Phenotypic-Plasticity-Logical-Inference contains
+    computeM.m and evalMutCorr.m: 300 SINGLE mutations applied to EVERY
+    individual in a population, mutant phenotypes developed, mutational
+    effect vectors differenced, mutational variance and pairwise
+    mutational correlations computed. The mutation draws are generated
+    once, saved, and REUSED ACROSS REPLICATES. That is a working,
+    population-wide, same-probe, LOCAL detector. It appears in no
+    publication and ZERO times in 159 pages of the thesis. It is
+    endpoint-only; making it longitudinal is a loop, not a research
+    problem.
+    Consequence: the one-step offspring detector is not an instrument
+    the field lacked the capability to build. HC-T01's novelty is a
+    COMPOSITION AND REPORTING novelty, not an instrument novelty.
+    Note this is the SECOND time this programme has found unreported
+    detector code beside a published experiment that omits it; the
+    first was Toussaint's own avgfit. Two is a pattern, and it weakens
+    every argument of the form "nobody measured X".
+
+7b. THE FORWARD SEARCH FOUND THE COMPOSITION, QUALIFIED.
+    102 distinct citing works enumerated (OpenAlex 106 records, Semantic
+    Scholar cross-check), 18 screened in full. Two carry the conclusion
+    and both were re-verified from primary source by this seat, not
+    taken from a summary.
+
+    TISO 2024, thesis ch.3, Groningen, "The evolution of mutational
+    transformers". A-local, verified quote: "produced by 1000 different
+    mutations at each locus of the best-performing GRN at a certain time
+    point". B-within-run, verified: "Distributions of the phenotypic
+    effects of mutations at four different time points during the
+    simulation". C-mechanism: arms are GRN architecture x transfer
+    function with environment and selection held fixed. D-within-run:
+    descriptive link between detector state and recovery speed early
+    versus late in the same run.
+    HAS ALL FOUR ELEMENTS. Its three defects are what leave HC-T01
+    anything: the detector is NOT reported for the trivial network,
+    which is the negative-control arm; the within-run link is
+    descriptive, n=1, over "a representative simulation", with no
+    statistic relating detector at t to adaptation at t+n; and it was
+    never published.
+
+    PETAK ET AL. 2025, PNAS. A-local with the REAL operator, verified
+    quote: "Offspring were generated with the same mutation operation
+    used in the evolutionary runs". B-within-run, verified: the axes are
+    "the slopes of the lines of best fit of the percentage of offspring
+    with higher fitness than the parent after each environmental change
+    over time". 15 replicates with 95 percent confidence intervals.
+    Intervention is selection-side; acquisition link is arm-level.
+    Strictly stronger than the specimen on A and B, and published.
+
+    KOUNIOS ET AL. 2016, arXiv 1612.05955, same lineage, four months
+    EARLIER than the specimen. A genuine representational on/off
+    ablation: one-to-one G-P map versus evolving GRN, with the mutation
+    operator on G identical in both. Longitudinal outcome in both arms
+    over 30 replicates with min/max bands and Mann-Whitney U tests. It
+    also tracks a real accessibility quantity over evolutionary time,
+    the developmental basin of attraction, "the number of G vectors that
+    map into the concentric squares phenotype". Still not the
+    composition: the basin detector runs in ONE unablated condition, and
+    in the ablated arms the longitudinal quantity IS the outcome.
+
+7c. THE COUPLING HAZARD IS NOT A TOUSSAINT DEFECT, IT IS A PROPERTY OF
+    THIS WHOLE FAMILY. Herakles preregistered detector/outcome
+    mathematical coupling as TRAP 2, specific to Toussaint. It is
+    present in Kouvaris too, and in Kounios. Any design where both
+    readouts are functionals of one frozen map has it.
+
+--------------------------------------------------------------------------------
+8. WHAT SURVIVES FOR HC-T01
+--------------------------------------------------------------------------------
+The three ingredients exist SEPARATELY in this lineage and have never
+been assembled with rigour:
+
+  local detector .......... computeM.m (unreported), Petak 2025, Tiso
+  mechanism ablation ...... Kounios 2016, Tiso 2024
+  within-run acquisition .. Tiso 2024 (descriptive), Kounios (weak)
+
+No single work has all three QUANTITATIVELY, IN EVERY ARM INCLUDING THE
+CONTROL, WITH RUN-LEVEL UNCERTAINTY, under an on/off operator ablation,
+with a preregistered mechanical-effect null separating the definitional
+part of the arm difference from the evolved part.
+
+That is a real cell. It is a METHODOLOGICAL-RIGOUR cell, not an
+unexplored-territory cell, and HC-T01 should say so.
+
+--------------------------------------------------------------------------------
+9. FALSIFICATION QUESTIONS F1-F6
+--------------------------------------------------------------------------------
+F1 effect is immediate generalisation, not faster acquisition
+   PARTLY FALSE. Both are present and distinguished: censored outliers
+   show REACHES_PREVIOUSLY_UNREACHABLE under L1, medians show
+   ACQUIRES_FASTER. This is a strength of the paper, not a defect.
+F2 detector samples a global distribution not the one-step
+   adjacent possible ....................................... TRUE
+F3 manipulated variable changes selection, not variation
+   machinery ............................................... TRUE
+F4 result is treatment-level, lacking within-run precursor
+   evidence ................................................ TRUE, with
+   the qualification that the longitudinal DETECTOR does exist; it is
+   the ACQUISITION side that is endpoint-only.
+F5 effect disappears when architectures are matched
+   NOT TESTABLE from the record. No architecture-matched arm exists.
+F6 the experiment already contains a stronger causal
+   accessibility test than Toussaint ....................... FALSE for
+   the specimen. Its accessibility test is global and its causal
+   identification is weaker than a clean on/off ablation. But TRUE-ish
+   for the SIBLING, Kounios 2016, on the causal axis: a representational
+   on/off with 30 replicates and a non-parametric test is stronger
+   causal machinery than anything in Toussaint's corpus.
+
+--------------------------------------------------------------------------------
+10. THE DIRECTIVE'S FINAL QUESTION
+--------------------------------------------------------------------------------
+If Prometheus had existed in April 2017 and been handed the complete
+Kouvaris experiment, what question about changes in future computational
+accessibility would still have remained unanswered?
+
+NOT "none". Three, in the order that matters:
+
+  1. Does what is reachable FROM WHERE THE LINEAGE STANDS track what the
+     map can express FROM ANYWHERE? Only the second is measured. In this
+     model the one-step neighbourhood is a perturbation of at most 0.1
+     on one of sixteen coordinates, a vanishing fraction of the cube the
+     detector samples. The two can move independently and nothing in the
+     paper would notice if they did.
+  2. Is the accessibility change a CAUSE of the acquisition change or a
+     co-symptom of the same change in B? The design cannot tell.
+  3. Does any of it exceed the noise of a single run? Unknown; no
+     replication was reported.
+
+Question 1 is what HC-T01 proposes to answer. Question 2 is what
+Prometheus most wants and is hardest. Question 3 is cheap and a
+reconstruction settles it first.
+
+--------------------------------------------------------------------------------
+11. WHAT WAS FOUND WORTH STEALING
+--------------------------------------------------------------------------------
+Seven detector parts and three mechanism parts are recorded in
+L_HISTORICAL_DETECTOR_PARTS.jsonl and
+M_CANDIDATE_COMPUTATIONAL_PARTS.jsonl. The four that matter:
+
+  FIXED SHARED PROBE. Draw the sampling randomness once, reuse it at
+  every checkpoint and in every arm. Removes probe noise from every
+  contrast for free. HC-T01 specifies a sample count but not shared
+  draws; it should.
+
+  ENTROPY WITH A STRUCTURALLY DERIVED TARGET. For k independent modules
+  the generalising optimum is EXACTLY k bits. A gate with an attainable
+  range computed before the run, which this literature almost never
+  supplies and which Prometheus doctrine demands.
+
+  CENSORED ACQUISITION. Report runs that never reach the target
+  separately from the median time of those that do. Distinguishes three
+  outcome types instead of one.
+
+  KEEP THE REJECTED MUTANTS. The specimen's own SSWM loop generated one
+  real one-step offspring sample per generation for 9e6 generations and
+  discarded every one. Logging them costs one write per generation and
+  converts the paper's own design into an A-local longitudinal detector
+  with NO change to the physics. This is the single highest-value change
+  available and it was available in 2017.
+
+--------------------------------------------------------------------------------
+12. RECONSTRUCTION PROPOSAL, NOT AUTHORISED, NOT RUN
+--------------------------------------------------------------------------------
+Ranked by expected information gain:
+  1 DETECTOR CALIBRATION. Reconstruct the four arms, hand a Prometheus
+    detector the trajectories BLIND to arm, ask it to rank arms by
+    generalisation and locate the over-fitting change point. Ground
+    truth is published and was set by someone else. A detector that
+    cannot recover a known strong effect is not ready for an unknown
+    one.
+  2 COMPOSITION TEST, nearly free on top of 1: log rejected mutants,
+    obtain the A-local longitudinal detector, ask whether local
+    accessibility moves before global expressibility.
+  3 CONVERT TREATMENT-LEVEL TO WITHIN-RUN: freeze B at several points
+    ALONG one run and run the paper's own Fig 5 assay at each. No new
+    instrument. The authors were one sweep away from this.
+  4 positive control (by-product of 1).
+  5 transfer test under held-out worlds. NOT recommended now; it would
+    test a Prometheus construct rather than recover a historical one.
+
+BLOCKER: ambiguity 1 must be resolved first. If G is clamped to the
+target in the main runs, as the committed code has it, then there is no
+stream of rejected G mutants and rank 2 does not exist.
+
+Validation targets fixed in advance: entropy converges to 4 bits under
+L1; untrained map reads 16 bits; L1 generalisation error reaches zero
+over ln(lambda) in [0.15,0.35] and fails at 0.4. Primary targets scored
+against the reconstruction's own run-to-run spread, with the spread
+computed BEFORE any tolerance is chosen.
+
+Cost: CPU-hours to CPU-days. No GPU, no model in the loop, no external
+service.
+
+--------------------------------------------------------------------------------
+13. THE COMPOSITION CANDIDATE, RECORDED AND NOT RUN
+--------------------------------------------------------------------------------
+Toussaint supplies a variation operator that can be switched off and a
+detector of what that operator actually produces. Kouvaris supplies a
+selection regime that provably shapes the machinery producing future
+variation, plus a constructed class with held-out environments.
+
+The composition: variation machinery that changes itself under selection
+pressures favouring generalisable future variation.
+
+Two warnings recorded with it. The tautology hazard COMPOUNDS if the
+operator's own parameters are heritable and the detector is the
+distribution that operator induces. And the coupling hazard persists
+unless acquisition is scored on genuinely held-out environments, which
+is the Kouvaris half. The two halves need each other.
+
+--------------------------------------------------------------------------------
+14. LIMITATIONS OF THIS PASS
+--------------------------------------------------------------------------------
+  - Watson et al. 2014, the direct model ancestor, is PAYWALLED and was
+    not read. Three routes tried, all refused. Not load-bearing: the
+    Supporting Information reproduces the equations in full and the
+    model is re-implemented in recovered code. What is lost is an
+    independent reading of whether Watson 2014 itself holds the
+    composition; it fails C-mechanism regardless, since its manipulation
+    is the environment.
+  - The code is working research scripts with many commented-out
+    alternatives. That the committed configuration differs from the
+    published Methods does NOT prove the published figures came from the
+    committed configuration. Every disagreement is tagged as two primary
+    sources disagreeing.
+  - Descendant enumeration and first-pass triage were delegated. The two
+    works that carry the conclusion, Tiso and Petak, were re-verified
+    from primary source by this seat. Every other screening row is at
+    screening confidence.
+  - One item in the citing union, the Bernatskiy 2018 dissertation, was
+    not read in full and is recorded as a gap, not a negative.
+  - Rappeport and Nitzan 2026 was read as arXiv v1, not the version of
+    record. Geoffroy and Andre 2021 was read as the preprint.
+  - Directive section 22 obeyed: no Prometheus-native metric was
+    invented. Directive section 21 obeyed: the learning-theory language
+    is treated as the authors' analogy and never used as evidence.
+  - CONFLICT DECLARED: this pass was commissioned to attack a target the
+    programme wants to run, and it returns the convenient answer that
+    the target survives. Section 7 lists the three findings that cut the
+    other way; a reviewer should weigh those first.
+
+--------------------------------------------------------------------------------
+15. REPRODUCTION
+--------------------------------------------------------------------------------
+  All artifacts and hashes:
+    ergon/kouvaris2017/B_RECOVERED_ARTIFACT_MANIFEST.jsonl
+
+  Re-derive the detector claim from the published record:
+    grep -A5 "Estimating the empirical distributions" \
+      ergon/kouvaris2017/work/body.txt
+
+  Re-derive it from the code:
+    sed -n '1,40p' ergon/kouvaris2017/work/code_KostasKouvaris_Evolva\
+      bility/*/findErrors.m
+
+  Confirm the operator is identical in every arm:
+    cat .../mutate_gene.m .../mutate_weights_v2.m
+    (both parameterless, hard-coded constants)
+
+  Confirm the unreported local detector:
+    cat .../code_KKouvaris_Phenotypic-Plasticity-Logical-Inference/\
+      */computeM.m
+    grep -ci "mutational correlation" \
+      ergon/kouvaris2017/work/kouvaris_thesis_soton_423467.txt   -> 0
+
+  Verify hashes:
+    cd ergon/kouvaris2017/original && sha256sum *
+
+--------------------------------------------------------------------------------
+16. VERDICT AND DECISION LADDER
+--------------------------------------------------------------------------------
+HC_T01_HISTORICALLY_REDUNDANT ............... no
+KOUVARIS_NOT_D4_D5 .......................... no (D4 IS reached, at
+                                              arm level; only D5 fails)
+KOUVARIS_COMPLEMENTARY ...................... true but understates it
+MORE_ARCHAEOLOGY_REQUIRED ................... no (paper, SI, preprint,
+                                              thesis and CODE recovered)
+SPECIMEN_NOT_RECONSTRUCTABLE ................ no (7 ambiguities, all
+                                              enumerable)
+KOUVARIS_STRONGER_BUT_DIFFERENT ............. YES
+
+Actions this implies, in order:
+  1 REWRITE HC-T01's justification. Its missing-cell finding about
+    Toussaint's own programme STANDS. Its wider claim about the
+    literature does not survive Tiso 2024, Petak 2025 and Kounios 2016.
+  2 Re-justify HC-T01 against Kounios's replication standard and Petak's
+    detector, not against Toussaint's corpus alone.
+  3 Adopt the four stealable parts in section 11 before running.
+  4 Treat the coupling hazard as a family-wide property, not a
+    Toussaint-specific trap.
+
+Reviewer's bottom line: given that a local offspring detector, an on/off
+representational ablation, and a within-run acquisition link all exist
+separately in this lineage, and that one unpublished 2024 thesis chapter
+has all three in qualified form, is HC-T01 still worth running as a
+rigour-completing experiment, or should Prometheus instead reconstruct
+Kouvaris 2017 to calibrate its own detector against a known result?
+================================================================================
+END OF PACKET
+================================================================================

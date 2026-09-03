@@ -1,0 +1,43 @@
+SEED: Kouvaris, Clune, Kounios, Brede, Watson (2017) PLOS Comput Biol 13(4):e1005358
+OpenAlex W2578730668 | cited_by_count 106 (OpenAlex) / 93 (Semantic Scholar)
+
+SEED'S OWN BASELINE (from PMC5383015 Methods, "Estimating the empirical distributions"):
+ A = GLOBAL. "5000 embryonic phenotypes, P(0) = G, are uniformly generated at random in the
+     hypercube [-1,1]^N" -- uniform over genotype space, evolved B held constant. NOT the
+     one-mutation neighbourhood of the parent.
+ B = NO. Distributions estimated on evolved endpoint systems.
+ C = SELECTION. Manipulated variables: rate of environmental switching K; environmental noise;
+     connection-cost term lambda*c (L1/L2) in the fitness function.
+ D = ARM-LEVEL. chi^2 of evolved distribution vs test-set class, compared across scenarios.
+
+KEY FILES:
+ kouvaris_seed.json      - OpenAlex seed record
+ kouvaris_cited_by.json  - all 106 OpenAlex citing works (single page, no cursor needed)
+ ss_cites.json           - Semantic Scholar citing list (93)
+ citing_list.tsv         - flattened citing list
+ ft/*.xml, ft/*.txt      - Europe PMC full texts pulled and screened
+
+SCREENED ROWS (A / B / C / D -> verdict)
+ SEED Kouvaris 2017          global / no  / selection / arm      (baseline)
+ Kounios 2016 arXiv (SIBLING, NOT a citer)
+                             global / YES / mechanism(not all arms) / weak-within-run
+ Petak 2025 PNAS             LOCAL  / YES / selection / arm       <-- strongest descendant
+ Moreno 2018 GECCO           LOCAL  / no  / mechanism / arm
+ Kriegman 2017 GECCO         global / no  / mechanism / arm
+ Beaulieu 2018 GECCO         none   / no  / mechanism / none
+ Ng & Kinjo 2023 SciRep      pop-level(gen1 only) / no / mechanism / arm
+ Ng & Kinjo 2024 PeerJ       same as above
+ Shreesha & Levin 2023       none   / no  / mechanism / arm
+ Hartl et al 2024 Entropy    none   / no  / mechanism / arm
+ Brun-Usan 2020 PLOS CB      GLOBAL(1e5 random GRNs) / no / none / none
+ Rago 2019 PLOS CB           none   / no  / mixed / none
+ Szilagyi 2020 PLOS CB       local(endpoint perturbation) / no / none / none
+ Tsuru & Furusawa 2025 NatCo local(MA lineages, empirical) / no / none / none
+ Nichol 2019 JRSI            REVIEW of GP-map models, no new experiment
+ La Grove 2021 Artif Life    none   / no  / selection(noise colour) / none
+ Vasylenko 2020 Biol Direct  none   / no  / none / none
+ Uller 2018 Genetics         REVIEW, no original simulation
+
+VERDICT: NO descendant achieves A-local + B + C-mechanism + D-within-run.
+Binding constraint across the whole descendant set is B (longitudinal within-run
+variational detector) and, consequently, D-within-run.
