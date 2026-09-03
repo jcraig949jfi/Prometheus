@@ -1,0 +1,313 @@
+PROTEUS / PLAYER FOUNDRY V0.6 -- INTERIM REVIEW PACKET No. 2
+GATES G1-G3 CLEARED.  EQUILIBRIUM ANALYSIS STILL RUNNING.
+2026-09-03.
+
+*** THIS PACKET STILL CONTAINS NO CURRENT AND NO CLASSIFICATION. ***
+
+Supersedes the earlier interim preregistration packet. What is new since it: the
+production kernel has been measured twice at full power over the complete state
+space, the precision gate has been adjudicated, and one production attempt
+FAILED its own gate and was handled. What is still absent: the stationary
+distribution, the probability-current map, entropy production, cycle affinities,
+attribution and any V0.6 verdict. The stationary solve is executing now.
+
+Brief:
+roles/Proteus/PROMPT_PROTEUS_V0_6_FULL_SPACE_NONEQUILIBRIUM_2026-09-03.txt
+  sha256 d97de9ead687745a3616434b64fc2351246064295b13c4ed1cddd658d602fa96
+Prereg: proteus/v0_6/PREREG_V0_6.{md,json}
+  prereg_id 9ced9136d25e4bba4b29f14fa7a44a1162b70df0e8b118f40c70fbb92041a1a6
+
+====================================================================
+0. FAILURE MODES, FIRST
+====================================================================
+
+F1. MY PRECISION GATE FAILED ON THE FIRST PRODUCTION ATTEMPT, BY 0.0003.
+    The frozen G3 gate is median row TV <= 0.010 and p95 <= 0.020 between two
+    independent full-space kernel estimates. At the frozen n = 12,000:
+
+        median row TV   0.010333   limit 0.010   FAIL
+        p95    row TV   0.016333   limit 0.020   PASS
+        p99    row TV   0.018833
+        max    row TV   0.023250   (reported, never a criterion)
+        edge-presence disagreements   0
+        escaped valid structural states  0
+
+    The run stopped there, by design, before computing any current, stationary
+    distribution, entropy production, cycle affinity or attribution. Preserved
+    as RESULT_FULL_n12000_GATE_FAIL.json. Cost: about 100 minutes of
+    measurement.
+
+F2. THE CAUSE WAS THE MARGIN I CHOSE, NOT THE FIT.
+    The pilot fitted median TV = 1.0775/sqrt(n) on a 103-state positional subset
+    (every 20th state). The full space gives 1.1320/sqrt(n) -- the pilot
+    constant was 5.1% LOW, because a stride-20 positional subset
+    under-represents the rows with larger support. I then sized n = 12,000
+    against a predicted median of 0.00984, leaving 1.7% margin. A 5% error in
+    the constant was therefore fatal. A positional subset is unbiased in
+    position and NOT unbiased in support size; that is the lesson, and it is
+    mine.
+
+F3. THE COUNTS WERE WRITTEN AFTER THE GATES, SO THE FAILURE DESTROYED THE
+COMPUTE.
+    The first attempt's transition counts were only persisted after the gate
+    block, so the gate failure discarded roughly 100 minutes of measurement that
+    could have been pooled with a second batch. Counts are now written
+    immediately after each kernel is measured. This is an engineering defect
+    that cost time rather than correctness, and it is reported because it
+    changed what the second attempt had to do.
+
+F4. THE METROPOLIS CONTROL DID NOT HIT ITS OWN TARGET (found before production).
+    I used plain Metropolis acceptance, min(1, tgt_j/tgt_i), with a
+    uniform-neighbour proposal. On an irregular graph that proposal is
+    ASYMMETRIC, so detailed balance fails and the chain converges somewhere
+    other than its declared measure -- caught converging to 0.0625 where uniform
+    is 0.0833. Corrected to the Hastings ratio min(1, tgt_j*k_i / (tgt_i*k_j)).
+    A control whose only job is to read zero, silently missing its own target,
+    would have produced a confident wrong answer about the instrument.
+
+F5. THE ANALYSIS TOOLS ASSUMED A CLOSED STATE SET (found before production).
+    On a truncated subset a leaking row is not a stochastic matrix, which made
+    the two stationary solvers disagree by L1 0.026 and made the Metropolis
+    control raise. Escape folding is now explicit and is a NO-OP on the
+    production space, which is proved closed. The defect was in how I exercised
+    the tools and would have stayed invisible had I only ever run them on the
+    full space.
+
+====================================================================
+1. WHAT THE THRESHOLD FAILURE DID *NOT* CAUSE
+====================================================================
+
+The frozen threshold was NOT lowered, loosened or re-expressed. Median <= 0.010
+and p95 <= 0.020 stand exactly as committed before the first attempt.
+
+What increased was EFFORT: n = 20,000 per state per kernel. Increasing effort to
+meet an unchanged target is not moving a goalpost.
+
+That this cannot be outcome-motivated is structural rather than a promise. The
+precision gate is evaluated BEFORE any substantive quantity is computed, and the
+process exited at exactly that point. The only thing observed from the full
+space at that moment was a precision statistic. The gate ordering was chosen so
+that a power failure could be repaired without contaminating the result, and
+that is what happened.
+
+Recorded in proteus/v0_6/PREREG_ADDENDUM_2026-09-03.md and committed (d5185d092)
+before the second attempt started.
+
+====================================================================
+2. G1 -- SOURCE AND AUDIT IDENTITY: PASS
+====================================================================
+
+    grammar    proteus.grammar.v0.4
+      5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832
+    runtime    73f110e21b9df879...
+    affordance f1607ee8be680acc...
+    manifest schema  prometheus/proteus/player_manifest/v0
+    audit stamp      5de328849043c86f...  binding tree 3ae4ee8b773e0fcf...
+
+Asserted by unit test before every runner. The twelve operator weights still
+equal their v0.2 values divided by 0.96; STORAGE_BOUNDS is untouched. No
+operator, weight, VM rule, manifest bound, initialization rule, probe or
+configuration rule changed anywhere in this pass. No repair was authorized and
+none was made. 67 tests pass.
+
+====================================================================
+3. G2 -- COMPLETE-SPACE CLOSURE: PASS
+====================================================================
+
+The state set was regenerated from the PUBLISHED manifest rules -- the committed
+manifest JSON schema plus the affordance table's storage bounds -- by walking
+the tape ladder from the published minimum, a different construction from the
+hard-coded tape tuple V0.4 and V0.5 used. It was then compared, not assumed
+equal:
+
+    regenerated states     2,044
+    space hash             64e55c9d31b39b6b...
+    prior enumeration      2,044, EXACT SET EQUALITY, identical hash
+    tapes                  16, 32, 64, 128, 256, 512, 1024, 2048, 4096
+    support per state      min 5, median 10, mean 9.8, max 11
+
+    closure probe          400 x 2,044 = 817,600 live proposals
+    ESCAPED_VALID_STRUCTURAL_STATE_COUNT = 0
+
+    production run         escaped valid structural states = 0 on both kernels
+
+====================================================================
+4. G3 -- KERNEL PRECISION: PASS, AND THE FORECAST WAS EXACT
+====================================================================
+
+Two independent full-space kernels, each estimated by EXECUTING grammar.mutate
+20,000 times per state, marginalising over uniformly random genome content, with
+self-loops from rejected proposals included:
+
+                      predicted   observed   limit
+    median row TV       0.0080     0.00800   0.010   PASS
+    p95    row TV       0.0127     0.01265   0.020   PASS
+    max    row TV          --      0.01860   reported only
+    edge-presence disagreements     0
+
+The predictions come from the constant re-estimated off the FAILED attempt
+(1.1320/sqrt(n) and 1.7892/sqrt(n)). Both landed on the forecast to three
+decimal places, which is a check that the corrected model -- not merely the
+corrected sample count -- was right.
+
+    total live mutations   2 x 20,000 x 2,044 = 81.8 million
+    K_A measured           5,514 s
+    K_B measured           11,101 s cumulative
+    counts persisted       COUNTS_K_A_n20000.json, COUNTS_K_B_n20000.json
+
+PARALLELISM IS EXACT, not approximate. Each state's stream is root.derive(L, T)
+and derive does not advance the parent, so a state's samples depend only on
+(seed, tag, L, T) and are independent of how work is split across the 15 worker
+processes. A unit test asserts serial and 4-worker measurement produce identical
+counts. The zero edge-presence disagreement across 2,044 rows is consistent with
+that.
+
+THE ANALYTIC KERNEL IS RETIRED FROM ADJUDICATION, per the brief. V0.5 showed it
+differs from the live operator by median TV 0.0162 and maximum 0.1661.
+Everything above is live execution.
+
+====================================================================
+5. WHAT IS STILL PENDING
+====================================================================
+
+Executing now, in the preregistered order:
+
+    stationary solve      power iteration (adjudicated), Gauss-Seidel, and
+                          5,000,000-step empirical occupancy; required residual
+                          ||pi P - pi||_1 <= 1e-10 and solver agreement L1 <=
+                          1e-8
+    reversible controls   additive symmetrisation targeting the measured pi, and
+                          Metropolis-Hastings targeting declared uniform;
+                          both must read max |J| <= the material threshold and
+                          |sigma| <= 1e-12 or the instrument is invalid
+    currents              on K_A and K_B separately, before pooling
+    noise model           material threshold = the 99th percentile of
+                          { |J_A(e) - J_B(e)| }, fixed before the map is seen
+    detailed balance      edgewise and as a global statistic
+    entropy production    total, by structural region, by operator, with
+                          zero-reverse transitions reported separately
+    cycle affinity        spanning-tree fundamental cycle basis, not a 3-cycle
+                          census
+    counterfactual        exact offline operator reweighting from the recorded
+                          per-operator destination counts
+
+V0.5's full-space stationary solve hit its iteration cap without converging;
+that is the specific step now under way and the reason the residual is gated.
+
+====================================================================
+6. THE BRANCH TABLE, FIXED IN ADVANCE
+====================================================================
+
+  * solver or reversible-control gate fails
+        -> INSTRUMENT_INSUFFICIENT_TO_ADJUDICATE
+  * current indistinguishable from measurement uncertainty
+        -> V0_5_CURRENT_NOT_CONFIRMED_FULL_SPACE
+  * current reproducible, explained by published boundaries or manifest-validity
+    geometry
+        -> FULL_SPACE_CURRENT_ATTRIBUTED_TO_GEOMETRY
+  * current reproducible, attributable to authored operator mechanics
+        -> NOT_QUALIFIED_AUTHORED_NONEQUILIBRIUM_CURRENT
+  * attribution unresolved
+        -> FULL_SPACE_CURRENT_SOURCE_UNRESOLVED
+
+I do not know which of these it will be and this packet does not guess. For
+reference, the V0.5 truncated 124-state kernel gave total |J| 2.84e-02, max |J|
+2.45e-04, entropy production 9.97e-03 nats per step and top three-cycle affinity
+-1.21 nats, with 165 of 166 material pairs attributed to operator weighting. The
+brief is explicit that these are not targets and that V0.6 may find larger,
+smaller or negligible values.
+
+====================================================================
+7. ARMS DECLARED NOT RUN, IN ADVANCE
+====================================================================
+
+BEHAVIORAL COUPLING -- OMITTED with the reason. Under the active grammar a
+single operator draw produces the structural change and the content change as
+ONE event: an insertion both lengthens the genome and writes random
+instructions. The structural kernel therefore cannot be substituted while
+holding content treatment fixed without altering more than the structural
+kernel, and a rejection filter forcing structural reversibility would also
+change which content mutations survive. The brief instructs that this be said
+and the arm omitted rather than forced, and it was recorded before the run
+rather than after a failure.
+
+MARGINAL BATTERY -- not rerun. V0.5's fresh-seed result under the same global
+(coordinate x cohort) architecture stands, and V0.6 changes no grammar.
+
+COHORT-256 LENGTH CELL -- no targeted test, no new seed. Recorded, unchased.
+
+====================================================================
+8. THE COST OF THE WRONG MICROSCOPE
+====================================================================
+
+Required by the brief to stay visible, and to say more than "the tests
+improved". What each inadequate test would have made us BELIEVE:
+
+  V0 through V0.2 measured a marginal length slope with no geometry control. It
+  failed three times and we believed the grammar had a length ratchet. Acting on
+  that belief I revised the grammar twice. THE BELIEF WAS FALSE: a
+  symmetric-by-construction joint walk reproduces the same slope. The second
+  revision introduced a REAL tape ratchet that cost another whole pass to find.
+  FALSE POSITIVE -- geometry mistaken for authored direction, and the repair did
+  the damage.
+
+  V0.3 and V0.4 then tested marginal drift against proper geometry nulls and
+  found nothing surviving correction. Had the sequence stopped there we would
+  have believed the Foundry was dynamically neutral. THE BELIEF WOULD HAVE BEEN
+  FALSE: V0.5 found authored circulation with almost no marginal displacement,
+  because detailed balance is far stronger than zero drift. FALSE NEGATIVE --
+  authored direction hidden behind flat marginals.
+
+  A third failure was live in this pass and the gate caught it: an underpowered
+  full-space kernel would have let us believe the truncated finding did not
+  generalise. At n = 12,000 the measurement was not good enough to tell, and the
+  design refused to let it answer. That is the first time in this sequence an
+  instrument stopped itself before producing a believable wrong number.
+
+====================================================================
+9. STANDING STATE THIS PACKET DOES NOT CHANGE
+====================================================================
+
+    HISTORICAL_V0_LENGTH_FAILURE_RECLASSIFIED_AS_JOINT_GEOMETRY   accepted
+    V0_4_CONTENT_DISCOVERY_NOT_REPLICATED                         accepted
+    NO_REPLICATED_MARGINAL_DIRECTIONAL_PRIOR_DETECTED             accepted
+    STRUCTURAL_KERNEL_NONREVERSIBLE_AUTHORED_CURRENT_DETECTED     accepted
+                                                        (124-state kernel)
+
+The Foundry is NOT qualified. Campaign 1 remains BLOCKED. No world touched, no
+adapter, no selection, and Proteus has not acted as its own neutral operator.
+
+====================================================================
+10. REPRODUCTION AND IDENTITIES
+====================================================================
+
+    python -m pytest proteus/tests -q                # 67 pass
+    python proteus/audits/audit_identity.py verify
+    python proteus/v0_6/run_space_audit.py           # closure, escapes = 0
+    python proteus/v0_6/run_pilot.py                 # precision only
+    python proteus/v0_6/run_full.py                  # n = 20,000 production
+    python proteus/v0_6/run_replay.py out.json       # two-layer replay contract
+
+    brief      d97de9ead687745a3616434b64fc2351246064295b13c4ed1cddd658d602fa96
+    prereg id  9ced9136d25e4bba4b29f14fa7a44a1162b70df0e8b118f40c70fbb92041a1a6
+    grammar    5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832
+    space      64e55c9d31b39b6b...   2,044 states, closed, zero escapes
+    seeds      seed_a = int(brief[:16],16) = 15671939473150014554
+               seed_b = int(brief[16:32],16) = 3897376518631596881
+
+NUMERICAL REPLAY CONTRACT, frozen before the run. EXACT layer, byte-identical
+across tested runtimes: state enumeration and hash, state ids, seeds, per-state
+transition COUNTS, manifest and source identity hashes, integer ledgers.
+NUMERICAL layer, tolerances set by conditioning rather than by observed
+differences: stationary probabilities 1e-9 absolute or 1e-6 relative, currents
+1e-12, entropy production 1e-9, residuals 1e-10. Every adjudicated sum uses
+math.fsum, which is exactly rounded, so the CPython 3.12 sum() change that broke
+V0.5's byte-identity cannot enter an adjudicated quantity by construction.
+
+COMPUTE SO FAR: space audit 108 s; pilot 927 s; failed n=12,000 attempt 6,109 s;
+n=20,000 kernels 11,101 s; stationary solve in progress. 131 million live
+mutations across the two attempts, single machine, 15 worker processes, no GPU,
+no LLM, no API, no spend.
+
+-- Proteus, V0.6 interim packet No. 2, 2026-09-03.
+   Three gates cleared. Equilibrium analysis running. No current claimed.
