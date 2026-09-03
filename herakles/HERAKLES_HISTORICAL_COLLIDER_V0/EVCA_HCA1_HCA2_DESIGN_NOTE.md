@@ -246,10 +246,37 @@ of increasing ambition:
    because HC-T01's TRAP 2 coupling concern was real and, per the Ergon lane, is
    a property of this whole experimental family rather than a Toussaint defect.
 
-**Recommendation: candidate 3 as primary, candidate 2 as the interpretable
-secondary, candidate 1 as the cheap-state baseline it really is.** Choosing a
+**AMENDED 2026-09-03. The original recommendation here was candidate 3 as
+primary, and it was wrong.** See `HC_R01_CORRECTION_2026-09-03.md`.
+
+The Elenchus seat's reading of Parter et al. 2008 Text S1 supplies a diagnosis of
+why K7 fired in HC-T01: "the MVG detector is content-addressed, not a breadth
+statistic... organisms under unstructured variation vary MORE broadly and score
+LOWER. A breadth detector has no reason to beat fitness at predicting
+acquisition."
+
+Candidate 3, the behavioural-distance cloud, is a breadth statistic. So is
+candidate 1. So were all three of HC-T01's statistics. Choosing any of them as
+primary would reproduce K7 rather than escape it.
+
+**Corrected recommendation: the primary detector must be CONTENT-ADDRESSED.**
+Not how widely the neighbourhood spreads, but how much of it lands in a NAMED
+TARGET SET. Two concrete forms in this substrate:
+
+  4. **Held-out-regime hit count.** The number of the 128 neighbours that
+     classify a density regime the parent fails, or that hold performance on a
+     lattice size the parent was never evaluated at. This is target-addressed
+     and it is cheap.
+  5. **Named-interaction hit count.** The number of neighbours exhibiting a
+     particle interaction from a named catalogue that the parent lacks. This is
+     the strongest form and it requires the particle-filtering prerequisite in
+     section 8.
+
+Candidates 1, 2 and 3 become SECONDARY descriptors, reported alongside, and mean
+neighbour performance remains a cheap-state baseline. Choosing a
 performance-based detector and then testing it against a performance baseline is
-how K7 fires.
+how K7 fires; choosing a target-blind detector is the other way it fires, and
+HC-T01 fell into the second.
 
 Candidate 2 requires recovering the historical particle-filtering method as a
 detector part. That work is not done and it is the main prerequisite this note

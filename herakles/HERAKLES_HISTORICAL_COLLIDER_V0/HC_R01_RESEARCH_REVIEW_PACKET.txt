@@ -1,24 +1,24 @@
 ================================================================================
-RESEARCH REVIEW PACKET
-HC-R01 / CROSS-SPECIMEN ACCESSIBILITY RECURRENCE
+RESEARCH REVIEW PACKET HC-R01 / CROSS-SPECIMEN ACCESSIBILITY RECURRENCE
 ================================================================================
-Prepared:        2026-09-03   first pass, no compute run
-Seat:            Herakles / Historical Collider
-Location:        herakles/HERAKLES_HISTORICAL_COLLIDER_V0/
-Deliverables:    Q HISTORY_CONDITIONED_ACCESSIBILITY_REGISTRY.jsonl   16 rows
+Prepared: 2026-09-03 first pass, no compute run Seat: Herakles / Historical
+Collider Location: herakles/HERAKLES_HISTORICAL_COLLIDER_V0/ Deliverables: Q
+HISTORY_CONDITIONED_ACCESSIBILITY_REGISTRY.jsonl 16 rows
                  R ACCESSIBILITY_WITHOUT_ACQUISITION_NEGATIVES.jsonl   8 rows
                  S HCA_DETECTOR_COMPARISON.jsonl                      14 rows
                  T HCA_MECHANISM_RECURRENCE_GRAPH.jsonl                2 rows
                  U ACCESSIBILITY_CONTROLLER_CANDIDATES.jsonl           9 rows
                  V EVCA_HCA1_HCA2_DESIGN_NOTE.md
                  W this packet
-Directive:       DIRECTIVE_HC_R01_ACCESSIBILITY_RECURRENCE_2026-09-03.txt
+Directive: DIRECTIVE_HC_R01_ACCESSIBILITY_RECURRENCE_2026-09-03.txt
                  sha256 6c21f6cd85c197a1d0963bf54ea7f887fca1ed9d07ba4613cb5e
                         db1c76820d60
-Correction:      HC-T01 verdict downgraded to HC_T01_WEAK_SIGNAL_ONLY and its
-                 wider-literature claim withdrawn. See
+Corrections: HC-T01 verdict downgraded to HC_T01_WEAK_SIGNAL_ONLY and its
+                 wider-literature claim withdrawn, see
                  spec-toussaint-exploration/HC_T01_CORRECTION_2026-09-03.md
-Headline:        S3 AND S4 BOTH FIRE. HCA-1 was settled in RNA in 2008 by exact
+                 THIS PACKET's section 6 was WRONG and is corrected, see
+                 HC_R01_CORRECTION_2026-09-03.md
+Headline: S3 AND S4 BOTH FIRE. HCA-1 was settled in RNA in 2008 by exact
                  enumeration. HCA-2 is cleared once, thinly, by Petak 2025. An
                  H4-shaped causal result exists, Zheng 2019. And the
                  conditioning method HC-T01 lacked is published with code,
@@ -54,7 +54,10 @@ directly. See section 4.
                                                               qualified
  5 Which detector does it best? .......................... Wagner 2023 for the
                                                             METHOD, Petak 2025
-                                                            for the SETTING
+                                                            for the SETTING,
+                                                            Parter 2008 for
+                                                            being CONTENT-
+                                                            ADDRESSED
  6 Which mechanism most reliably changes accessibility
    while preserving current phenotype? ................... neutral drift on a
                                                             genotype network,
@@ -68,8 +71,8 @@ directly. See section 4.
                                                             case INVERTS the
                                                             sign of history
  9 Has anyone evolved an accessibility controller? ........ NO
-10 Does shaper + detector + controller exist? ............. NO
-11 How must EvCA change? ................................. see section 11 and
+10 Does shaper + detector + controller exist? ............. NO 11 How must EvCA
+change? ................................. see section 11 and
                                                             the design note
 12 Promote CP-REPRESENTATION-REWRITE? .................... NO
 
@@ -200,28 +203,83 @@ must exhibit the estimate and the feedback pathway, never the outcome. Recorded
 as a standing rule in registry R.
 
 --------------------------------------------------------------------------------
-6. PRIORITY A IS WEAKER THAN THE DIRECTIVE ASSUMED
+6. PRIORITY A: THIS SECTION WAS WRONG AND IS CORRECTED
 --------------------------------------------------------------------------------
-The Kashtan and Alon modularly-varying-goals line is machinery-matched, which
-is its attraction, and it is H1 only.
+CORRECTED 2026-09-03. Full notice in HC_R01_CORRECTION_2026-09-03.md.
 
-  Kashtan and Alon 2005 ......... H1
-  Kashtan, Noor and Alon 2007 ... H1
-  Kashtan et al. 2009 ........... H1, and structurally cannot be higher because
-                                  the model is deterministic
-  all three ..................... NEVER measured an offspring or variant
-                                  distribution. The dependent variable
-                                  throughout is time-to-goal.
+This section originally stated that the Kashtan and Alon line is H1 and that
+all three papers never measured an offspring or variant distribution. That is
+wrong.
 
-And a load-bearing caveat that must now travel with every MVG citation in this
-programme: an open replication attempt (AI Safety Camp 2022, reimplementing the
-retina task) reported "non-modular messes both for fixed goals and Modularly
-Varying Goals across a wide range of experimental parameters". The base
-modularity effect did not reproduce at all. The authors left unresolved whether
-their setup was inadequate or the original does not generalise.
+PARTER, KASHTAN AND ALON 2008, "Facilitated variation", Text S1 section 7,
+"Complete characterization of the phenotypic neighborhood", measured it and
+more:
 
-MVG is the mirror image of Toussaint: matched machinery, no detector. Toussaint
-had the detector and the operator ablation, and unmatched machinery.
+  detector ......... A-LOCAL AND EXHAUSTIVE. "Neutrality was defined as the
+                     fraction of 1-mutant circuits that compute the same Boolean
+                     function as the wild-type." The genome is 104 bits, so the
+                     one-mutant neighbourhood is ENUMERATED. No sampling error.
+  statistics ....... several, not one: maximal next-goal fitness in the
+                     neighbourhood, averaged modularity of neighbouring
+                     circuits, counts of modular and non-modular goals in it
+  arms ............. ALL THREE, fixed goal, modularly varying goal, and a
+                     non-block-varying-goal control absent from the main text
+  uncertainty ...... mean and standard error per scenario over 30 simulations,
+                     which is better statistical practice than Toussaint 2003 or
+                     Kouvaris 2017
+  acquisition ...... linked, per the Elenchus seat's reading
+
+Two sibling seats retrieved the Text S1 independently and their sha256 matches
+byte for byte. One disagreement between them is recorded and NOT adjudicated
+here: Elenchus reads the measurement as longitudinal and scores it D4-weak;
+Ergon reads "genomes from the end of the last G1-epoch population were
+analyzed" as endpoint-per-arm.
+
+THE LOCAL-LONGITUDINAL ACCESSIBILITY CELL HAS NOT BEEN EMPTY SINCE 2008.
+
+  AND THE PHENOMENON IS WEAKER THAN A FAILED REPLICATION, IN A SHARPER WAY
+
+The original caveat here was one open replication attempt. The Elenchus seat's
+verdict is better evidenced: MVG_EFFECT_IS_AUTHORED_CURRICULUM.
+
+The authors' own difficulty-matched null: "MVG's outperformance occurred only
+toward goals within the modularity language. MVG adaptation toward non-modular
+goals was not significantly different from FG's." The advantage lives on about
+1e-4 of the phenotype space, and it is the part the experimenter wrote.
+
+Two dissociations break the standard causal story. Randomly varying goals
+produce NO modularity yet give 45x to 160x speedups. Alternation with no
+selection at all gives 190x against MVG's 265x. Modularity is a correlate of
+the speed effect, not its cause; the operative condition is genotype-space
+proximity between successive goals.
+
+And an independent replication REVERSED THE SIGN: Clune, Beckmann, McKinley and
+Ofria 2010, retina arm, with a direct-encoding control at Kashtan's own
+switching rate out to 30,000 generations. The NAND-circuit arm, which carries
+every accessibility result in the line, has never been independently replicated
+or refuted by anyone.
+
+House consequence: calibration particle cal-08 must be marked CONTESTED and
+held out of the detector-scoring set.
+
+  WHY K7 FIRED, WHICH IS THE MOST USEFUL THING IN THIS CORRECTION
+
+From the Elenchus seat, addressed to HC-T01 explicitly:
+
+  the MVG detector is content-addressed, not a breadth statistic. Text S1
+  reports that organisms under unstructured variation vary MORE broadly and
+  score LOWER. A breadth detector has no reason to beat fitness at predicting
+  acquisition. Measuring WHICH phenotypes are reachable relative to a named
+  target set is an inheritable repair.
+
+HC-T01's modular degree, mutual information and neutral degree are ALL breadth
+or structure statistics. Not one of them asks whether the reachable set
+contains anything the population is trying to reach.
+
+On this reading K7 was not bad luck, and not a property of accessibility
+detectors in general. It was the predictable consequence of choosing a
+target-blind statistic. That is a repair, not a post-mortem, and section 11 is
+amended accordingly.
 
 --------------------------------------------------------------------------------
 7. THE DETECTOR STACK, AND TWO THINGS WORTH STEALING
@@ -432,12 +490,17 @@ The cheap-state baseline is specified first, not last, and includes mean
 neighbour performance, which is the EvCA analogue of the avgfit statistic that
 beat our structured detector. The detector must beat that or it is another K7.
 
-The detector must not be performance-based. Choosing a performance-derived
-detector and then testing it against a performance baseline is how K7 fires.
-The recommendation is a behavioural-distance cloud over the 128 neighbours as
-primary, with the historical particle and domain descriptors as the
-interpretable secondary. Recovering the historical particle-filtering method as
-a detector part is the main prerequisite and it is not done.
+The detector must be CONTENT-ADDRESSED, not a breadth statistic. AMENDED
+2026-09-03. This note previously recommended a behavioural-distance cloud over
+the 128 neighbours as the primary detector. A behavioural-distance cloud is a
+breadth statistic, and by the Elenchus diagnosis in section 6 it would
+reproduce K7 rather than escape it. The corrected recommendation is to measure
+how much of the neighbourhood lands in a NAMED TARGET SET: neighbours that
+classify a held-out density regime correctly, or that exhibit a named particle
+interaction the parent lacks. Breadth statistics become secondary descriptors,
+and mean neighbour performance stays a cheap-state baseline. Recovering the
+historical particle-filtering method as a detector part is still the main
+prerequisite and is still not done.
 
 One question for James, flagged rather than decided: Stage 0 is pure
 archaeology on six recovered genomes and consumes nothing. Stage 1 onward
