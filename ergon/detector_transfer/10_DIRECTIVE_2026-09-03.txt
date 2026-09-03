@@ -1,0 +1,212 @@
+======================================================================
+ERGON - AVIDA 2003 IS FROZEN. PREPARE THE LATENT-NEIGHBOURHOOD DETECTOR
+FOR TRANSFER.
+
+Issued by James, 2026-09-03. Committed verbatim as the authoritative brief
+for this pass. Where this file and any later summary disagree, this file wins.
+======================================================================
+
+Your Avida 2003 final bounded pass is ACCEPTED. The historical lane is now
+CLOSED.
+
+Do not perform further Avida archaeology, attempt H1A/H1B, generate substitute
+historical populations, or spend additional effort recovering Avida 1.6 unless
+one of the explicit reopening conditions in the frozen packet occurs.
+
+Accepted into the record:
+
+1. The historical population comparison set is now adequately classified as
+   KNOWN_GENERATED_BUT_NEVER_PUBLISHED on the recovered publication/archive
+   axis.
+2. The seven supposedly damaged lineage genomes were not damaged. The V0.1
+   transcription-loss diagnosis was wrong; the blue asterisks were documented
+   deletion markers.
+3. The correction, withdrawal of the evaluator-based repair justification, and
+   preservation of the original evidence are scientifically important.
+   Preserve this correction trail permanently.
+4. Reward-map degeneracy establishes only that the scalar reward/merit
+   projection can discard phenotype information. It does NOT establish that
+   Avida 1.6 lacked instrumentation capable of observing that information.
+5. Therefore the historical instrumentation claim remains suspended.
+6. The interesting surviving object is T_: the substrate-independent
+   latent-neighbourhood measurement.
+
+Your next job is NOT to execute T_. Your job is to convert T_ into a clean
+transfer artifact for the modern Prometheus collider.
+
+GOAL
+
+Produce a substrate-independent LATENT-NEIGHBOURHOOD DETECTOR CONTRACT that
+can be handed to the modern integration stack without importing undocumented
+Avida assumptions.
+
+Intended future architecture, approximately:
+
+    Proteus      -> supplies controlled players
+    Daedalus/SFE -> supplies controlled worlds / execution substrate
+    Harmonia     -> operates the end-to-end experiment
+    Ergon        -> supplies this detector / measurement contract
+
+Do not assume that this division is already implemented correctly. Specify what
+the detector requires; do not redesign the other systems.
+
+A. FREEZE THE SCIENTIFIC QUESTION
+
+State the surviving question precisely. At minimum distinguish: realized
+behavior / lineage; scalar historical fitness channel; richer phenotype
+channel; local mutational neighbourhood; substitution neighbourhood; insertion
+neighbourhood; deletion neighbourhood.
+
+The central quantity currently described as H(P(g') | historical fitness class,
+g) must be made operationally unambiguous. Specify exactly: what g is; what g'
+ranges over; what P means; what constitutes a historical/scalar fitness class;
+what probability distribution the entropy is taken over; whether enumeration is
+uniform over mutations or weighted; how duplicate resulting genotypes are
+treated; how lethal/invalid/nonterminating neighbours are represented; how
+indels are handled; what normalization, if any, is permitted.
+
+Do not silently resolve ambiguities. Surface them and freeze the chosen
+semantics.
+
+B. DEFINE THE MINIMUM WORLD API
+
+Write the smallest abstract interface a controlled modern world must expose for
+T_ to be executable. Determine whether the detector requires equivalents of:
+genotype serialization; deterministic execution; scalar fitness / historical
+selection observable; phenotype vector; mutation operator enumeration;
+substitution generation; insertion generation; deletion generation; validity /
+termination state; execution seed; environmental state; resource state;
+execution trace.
+
+Do not require fields merely because Avida had them. Separate REQUIRED,
+OPTIONAL, FORBIDDEN-TO-INFER. The detector must fail closed when required
+observables are absent.
+
+C. PRESERVE THE INFORMATION-LOSS QUESTION
+
+Define measurements capable of distinguishing at least: phenotype variation
+with scalar fitness variation; phenotype variation within equal scalar fitness;
+phenotype invariance within equal scalar fitness; apparent variation caused
+only by execution stochasticity; apparent variation caused only by
+mutation-class mixture; variation caused by invalid/lethal neighbours.
+
+Make explicit what observation would constitute a genuine latent-neighbourhood
+signal. Do NOT define "positive" merely as entropy > 0.
+
+D. PORT THE FROZEN BASELINES
+
+Inventory the eight cheap baselines already frozen in T_. For each provide:
+exact definition; purpose; expected failure mode caught; required inputs;
+interpretation if it fires. Preserve their preregistered status. If translation
+requires changing a baseline, do not silently edit it. Record ORIGINAL,
+TRANSLATED, REASON, SCIENTIFIC CONSEQUENCE.
+
+E. DEFINE NEGATIVE RESULTS
+
+Predefine the major negative outcomes, including at least:
+NO_PHENOTYPE_VARIATION; PHENOTYPE_VARIATION_FULLY_FITNESS_VISIBLE;
+LATENT_VARIATION_PRESENT_BUT_BASELINE_EXPLAINED;
+LATENT_VARIATION_PRESENT_BUT_TOO_SPARSE; MUTATION_CLASS_DEPENDENT_ONLY;
+EXECUTION_STOCHASTICITY_DOMINATES; DETECTOR_UNIDENTIFIABLE;
+WORLD_API_INSUFFICIENT. Use better names if appropriate. For each, say what
+scientific claim is killed or weakened and what, if anything, remains alive.
+
+F. INTERNAL CALIBRATION
+
+Port the 14 historical Avida acquisitions only as INTERNAL CALIBRATION CASES.
+They are not evidence that a modern world contains the effect. Document what
+each calibration case tests about the detector. Remember the historical result
+already established: all 14 realized phenotype transitions were merit-visible.
+That fact must remain a calibration constraint, not be converted into support
+for the latent-neighbourhood hypothesis.
+
+G. MODERN COLLIDER CANDIDATES
+
+Inspect the current interfaces/documentation available from the modern
+Prometheus stack, especially the Daedalus/SFE and Proteus player surfaces.
+Nominate a SMALL number of candidate world/player combinations where T_ could
+eventually be tested with controlled provenance.
+
+For each candidate report: why it satisfies the detector API; what phenotype
+observable exists; what scalar selection/fitness observable exists; whether
+exact local mutation enumeration is feasible; expected neighbourhood size;
+deterministic/stochastic execution status; estimated computational cost; major
+confound; missing instrumentation.
+
+Do NOT run the detector. Do NOT select a candidate because you expect a
+positive result. Prefer the simplest world capable of killing the hypothesis
+cleanly.
+
+H. INTEGRATION HANDOFF
+
+Produce documentation sufficient for Harmonia eventually to invoke the detector
+without needing this conversation. The handoff should answer: What inputs do I
+provide? What command/API do I call? What outputs do I receive? What
+constitutes detector failure? What constitutes a scientifically interpretable
+negative? What provenance must be recorded? What must never be inferred from
+missing fields? How do I know the measurement corresponds to frozen T_?
+
+If the current stack cannot support such an interface, identify the exact
+missing seam. Do not repair another seat's subsystem unless explicitly
+authorized.
+
+I. PRESERVE THE AVIDA CORRECTION
+
+Make sure the permanent record prominently preserves the V0.1 correction:
+
+    ORIGINAL CLAIM: seven lineage genomes were damaged by
+        extraction/transcription loss
+    CORRECTION: zero were damaged; blue asterisks were documented deletion
+        markers
+    CONSEQUENCE: evaluator-based lineage-repair justification withdrawn
+    GENERAL LESSON: independent extractors agreeing does not establish semantic
+        correctness when both faithfully reproduce a misunderstood source
+        notation
+
+Do not turn this into a generic methodological essay. Preserve it because it is
+a concrete Prometheus failure specimen.
+
+STOP CONDITIONS
+
+STOP before: executing T_; purchasing any admission right; modifying the
+scientific threshold after seeing results; generating an Avida replacement
+population; reopening Avida archaeology; claiming historical precursor status;
+claiming novelty; claiming a positive detector result; modifying Proteus,
+Daedalus, Harmonia, or SFE production systems.
+
+This is a transfer and qualification pass only.
+
+DELIVERABLES
+
+Check in: (1) the frozen detector contract; (2) minimum-world API
+specification; (3) baseline translation table; (4) negative-result taxonomy;
+(5) calibration-case specification; (6) candidate modern-collider matrix;
+(7) Harmonia-facing invocation/provenance documentation; (8) permanent Avida
+V0.1 correction record; (9) all research/findings produced during this pass;
+(10) this directive itself.
+
+Preserve source material, research notes, intermediate findings and provenance
+rather than leaving the reasoning only in chat.
+
+At completion, create an EXTERNAL REVIEW PACKET. Put the complete packet in
+chat as a single ASCII block of text that can be cut and pasted. The packet
+must be self-contained for a reviewer who has never seen this conversation.
+
+Include: commit/hash; artifacts produced; detector definition; unresolved
+semantic choices; minimum API; frozen baselines; negative taxonomy; calibration
+status; candidate modern worlds; integration seams discovered; exact
+recommendation for first execution candidate; explicit statement that NOTHING
+WAS EXECUTED; explicit statement that NO ADMISSION RIGHT WAS PURCHASED;
+explicit statement that AVIDA REMAINS FROZEN.
+
+The purpose of this pass is not to rescue Avida. Avida has already paid for
+itself by giving us a historical specimen, a falsifiable measurement, and a
+documented case where our own detector-development process confidently misread
+the evidence.
+
+Now determine whether that measurement can survive contact with a world whose
+provenance we actually control.
+
+======================================================================
+END DIRECTIVE
+======================================================================
