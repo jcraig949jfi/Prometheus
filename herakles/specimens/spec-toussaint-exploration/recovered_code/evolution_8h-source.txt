@@ -1,0 +1,468 @@
+
+
+evolution.h Source File
+
+  overview  
+  classes
+
+  examples
+  Shark -
+  LEDA -
+  STL -
+  QT -
+  OpenGL
+goto: 
+[]
+
+evolution.h00001 #ifndef MT_evolution_h
+00002 #define MT_evolution_h
+00003 
+00004 #include<MT/std.h>
+00005 #include<MT/array.h>
+00006 #include<MT/statistics.h>
+00007 #include<MT/permutation.h>
+00008 
+00009 enum
+00010 { selectMy=0,selectScaleProp=1,selectRankProp=2,selectMuLambda=3,selectMuPlusLambda=4 };
+00011 
+00012 #define maxGenBits 1000
+00013 
+00014 MT_NAMESPACE
+00015 class EvolutionShare{
+00016 public:
+00017   static Parameter<uint> _generations_;
+00018   static Parameter <uint> _selection_;
+00019   static Parameter <bool> _crossover_;
+00020   static Parameter <bool> _intermediateCross_;
+00021   static Parameter <uint> _selectMu_;
+00022   static Parameter <uint> _populationSize_;
+00023 
+00024   static Parameter<uint> _spectralTests_;
+00025   static Parameter<uint> _periodicity_;
+00026   static Parameter<String> genFile;
+00027   static Parameter<String> evoFile;
+00028 };
+00029 #ifdef MT_IMPLEMENTATION
+00030 Parameter<uint> EvolutionShare::_selection_("selection",3);
+00031 Parameter<bool> EvolutionShare::_crossover_("crossover",0);
+00032 Parameter<bool> EvolutionShare::_intermediateCross_("intermediateCross",1);
+00033 Parameter<uint> EvolutionShare::_selectMu_("parentSize");
+00034 Parameter<uint> EvolutionShare::_populationSize_("populationSize");
+00035 Parameter<uint> EvolutionShare::_generations_("generations");
+00036 
+00037 Parameter<uint> EvolutionShare::_spectralTests_("spectralTests",0);
+00038 Parameter<uint> EvolutionShare::_periodicity_("periodicity");
+00039 Parameter<String> EvolutionShare::evoFile("evoReportFile","evo");
+00040 Parameter<String> EvolutionShare::genFile("evoGenomFile","gen");
+00041 #endif
+00042 MT_NAMESPACE_STOP
+00043 
+00044 
+00045 //--------------------------------------------------------------------------------
+00046 
+00047 MT_NAMESPACE
+00078 template<class Genotype>
+00079 class Evolution:public EvolutionShare,public Array<Genotype>{
+00080 public:
+00081   uint generation;
+00082   uint fitnessEvaluations;
+00083   Genotype *best;
+00084 
+00085 
+00086 protected:
+00087   Array<Genotype> parents; //< the
+00088 
+00089   Genotype jim,joe;
+00090   uint avg [100][maxGenBits];
+00091   double avgfitness,longAvgMuts;
+00092   bool isInitialized;
+00093 
+00094   std::ofstream _evo,_gen;
+00095 
+00096 public:
+00098   Evolution():EvolutionShare(){
+00099     resize(_populationSize_,false);
+00100     best=0; generation=0; fitnessEvaluations=0;
+00101     avgfitness=longAvgMuts=0.;
+00102     isInitialized=false;
+00103     MT::open(_evo,evoFile());
+00104     MT::open(_gen,genFile());
+00105   }
+00106 
+00107   virtual ~Evolution(){}
+00108 
+00109 
+00110 public://{ Core methods
+00111 
+00113   virtual double fitness(Genotype& g){
+00114     HALT("Evolution::fitness() needs overload!");
+00115     return -1.;
+00116   }
+00117 
+00122   void evolve(uint generations=_generations_){
+00123     CHECK(isInitialized,"cannot iterate evolution: population is not initialized!");
+00124     for(uint i=0;i<generations;i++){
+00125       generation++;
+00126       switch(_selection_){
+00127       case selectMy: break; //selMy(); break;
+00128       case selectScaleProp: selScaleProportional(); break;
+00129       case selectRankProp: selSportsRankProportional(); break;
+00130       case selectMuLambda: selMuLambda(); break;
+00131       case selectMuPlusLambda: selMuPlusLambda(); break;
+00132       }
+00133       monitor();
+00134     }
+00135   }
+00136 
+00137 
+00138 public://{ Access 
+00139 
+00141   void findBest(){
+00142     uint max=0;
+00143     for(uint i=1;i<N();i++) if(F(elem(i))>F(elem(max))) max=i;
+00144     best=&elem(max);
+00145   }
+00146 
+00147 
+00148 public://{ Assignment
+00149 
+00151   void resetFitness(){
+00152     for(uint i=0;i<N();i++) elem(i).resetFitness();
+00153   }
+00154 
+00156   void random(){
+00157     for(uint i=0;i<N();i++) elem(i).random();
+00158     isInitialized=true;
+00159   }
+00160 
+00162   void init(const Genotype& initialization){
+00163     for(uint i=0;i<N();i++) elem(i)=initialization;
+00164     isInitialized=true;
+00165   }
+00166 
+00167   
+00170   template<class Phenotype>
+00171   void initPhenos(const Phenotype& initialization){
+00172     for(uint i=0;i<N();i++) elem(i).init(initialization);
+00173     isInitialized=true;
+00174   }
+00175 
+00176 
+00177 private://}
+00178   double F(Genotype& g){
+00179     if(g.fitness==-1){
+00180       g.buildPhenotype();
+00181       g.fitness=fitness(g);
+00182     }
+00183     return g.fitness;
+00184   }
+00185 
+00186   /*
+00187   void selMy(){
+00188     CHECKO(N()>0);
+00189     unsigned i;
+00190     byte mom,dad;
+00191     Genotype *better;
+00192     int r;
+00193 
+00194     if(N()==1){
+00195       mom=0;
+00196       jim.derive(elem(mom));
+00197       if(compete(elem(mom),jim)<1) elem(mom).clone(jim);
+00198       return;
+00199     }
+00200     for(i=0;i<N()/2;i++){
+00201       dad=rnd(N()); mom=rnd(N()-1); if (mom>=dad) mom++;
+00202       if(elem(mom).breed == elem(dad).breed){
+00203   jim.derive(elem(mom));
+00204   joe.derive(elem(dad));
+00205   r=compete(elem(mom),elem(dad));
+00206   if(!r){
+00207     if(compete(elem(mom),jim)<1) elem(mom).clone(jim);
+00208     if(compete(elem(dad),joe)<1) elem(dad).clone(joe);
+00209   }else{
+00210     if(compete(jim,joe)>0) better=&jim; else better=&joe;
+00211     if(r) elem(dad).clone(*better);
+00212     else elem(mom).clone(*better);
+00213     i++;
+00214   }
+00215       }
+00216     }
+00217   }
+00218   */
+00219   void selProportional(){
+00220     //following T. Baeck "EA in Theo. and Prac." p179
+00221     uint i;
+00222     double Z;
+00223 
+00224     for(Z=0,i=0;i<N();i++) Z+=F(elem(i));
+00225     if(Z==0.0)
+00226       for(i=0;i<N();i++) elem(i).selectionProb=1.0/N();
+00227     else
+00228       for(i=0;i<N();i++) elem(i).selectionProb=F(elem(i))/Z;
+00229     selSUS();
+00230   }
+00231 
+00232   void selScaleProportional(double etaMinus=0){
+00233     uint i;
+00234     double Z,min,max;
+00235 
+00236     min=max=F(elem(0));
+00237     for(Z=0,i=0;i<N();i++){
+00238       Z+=F(elem(i));
+00239       if(min>F(elem(i))) min=F(elem(i));
+00240       if(max<F(elem(i))) max=F(elem(i));
+00241     }
+00242     if(min==max)
+00243       for(i=0;i<N();i++) elem(i).selectionProb=1.0/N();
+00244     else{
+00245       if(etaMinus!=0) min-=etaMinus/(1-etaMinus)*(max-min);
+00246       Z-=N()*min;
+00247       for(i=0;i<N();i++) elem(i).selectionProb=1/Z*(F(elem(i))-min);
+00248     }
+00249     selSUS();
+00250   }
+00251 
+00252   void selSportsRankProportional(){
+00253     //in opposite to T. Baeck "EA in Theo. and Prac." p169 !!
+00254     uint i,j,k;
+00255     uint *order=new uint [N()];
+00256     double *rank=new double [N()];
+00257 
+00258     sort(order);
+00259     for(i=0;i<N();){
+00260       for(j=i+1;j<N() && F(elem(order[j]))==F(elem(order[i]));j++);
+00261       for(k=i;k<j;k++) rank[order[k]]=0.5*(i+(j-1));
+00262       i=j;
+00263     }
+00264 
+00265     if(N()>1){
+00266       double Z=0.5*N()*(N()-1);
+00267       for(i=0;i<N();i++) elem(i).selectionProb=1/Z*((N()-1)-rank[i]);
+00268     }else elem(0).selectionProb=1;
+00269 
+00270     selSUS();
+00271     delete[] order;
+00272     delete[] rank;
+00273   }
+00274 
+00275   void selMuLambda(){
+00276     CHECK(_selectMu_<=N(),"for (mu,lambda) selection you need mu<=lambda");
+00277     //following T. Baeck "EA in Theo. and Prac." p179
+00278     uint i;
+00279     uint *order=new uint [N()];
+00280 
+00281     sort(order);
+00282     for(i=0;i<_selectMu_;i++) elem(order[i]).selectionProb=1.0/_selectMu_;
+00283     for(;i<N();i++) elem(order[i]).selectionProb=0.0;
+00284     selSUS();
+00285   
+00286     delete[] order;
+00287   }
+00288 
+00289   void selMuPlusLambda(){
+00290     CHECK(_selectMu_<=N(),"for (mu+lambda) selection you need mu<=lambda");
+00291     uint i;
+00292     uint *order=new uint [N()];
+00293 
+00294     sort(order);
+00295     for(i=0;i<_selectMu_;i++) elem(order[i]).selectionProb=1.0/_selectMu_-1.0/N();
+00296     for(;i<N();i++) elem(order[i]).selectionProb=0.0;
+00297     selSUS(_selectMu_,order);
+00298 
+00299     delete[] order;
+00300   }
+00301 
+00302   void selSUS(uint elitists=0,uint* order=0){
+00303     //following T. Baeck "EA in Theo. and Prac." p120
+00304     uint i,j,E=elitists;
+00305     parents.resize(N(),true);
+00306     double ptr,sum;
+00307 
+00308     j=0;
+00309     for(i=0;i<E;i++){ parents(j).clone(elem(order[i])); j++; }
+00310     sum=0;
+00311     ptr=rnd.uni();
+00312     for(i=0;i<N();i++){
+00313       sum+=elem(i).selectionProb*N();
+00314       while(sum>ptr){ parents(j).clone(elem(i)); j++; ptr+=1.0; }
+00315     }
+00316     if(j!=N()){ HALT("error in selectSUS"); }
+00317 
+00318     // cloning, crossing and mutating clones for the new population:
+00319     if(_intermediateCross_){
+00320       Array<double> avg; uint i;
+00321       avg=log(parents(0).reals);
+00322       for(i=1;i<N();i++) avg+=log(parents(i).reals);
+00323       avg/=(double)N();
+00324       avg=exp(avg);
+00325       for(i=0;i<N();i++) parents(i).reals=avg;
+00326     }
+00327     for(i=0;i<E;i++) elem(i).clone(parents(i));
+00328     if(_crossover_){
+00329       Permutation pi; pi.random(N()-E);
+00330       for(i=E;i<N()-1;i++) elem(i).derive(parents(E+pi(i-E)),parents(E+pi(i+1-E)));
+00331       elem(N()-1).derive(parents(E+pi(N()-1-E)),parents(E+pi(0)));
+00332     }else{
+00333       for(i=E;i<N();i++) elem(i).derive(parents(i));
+00334     }
+00335   }
+00336 
+00337   void sort(uint *order){
+00338     uint i,j,k,better;
+00339     Permutation p;
+00340     p.random(N());
+00341     for(i=0;i<N();i++) order[i]=p(i);
+00342     for(i=0;i<N();i++){
+00343       for(j=0;j<i && F(elem(order[j]))>F(elem(order[i]));j++);
+00344       better=order[i];
+00345       for(k=i;k>j;k--) order[k]=order[k-1];
+00346       order[j]=better;
+00347     }
+00348   }
+00349 
+00350 
+00351 public://{ Analysis
+00353   double avgMutations(){
+00354     double muts=0;
+00355     uint i;
+00356     for(i=0;i<N();i++) muts+=elem(i).mutations;
+00357     return double(muts)/N();
+00358   }
+00359 
+00361   double longAvgMutations(){
+00362     longAvgMuts+=0.01*(avgMutations()-longAvgMuts);
+00363     return longAvgMuts;
+00364   }
+00365   
+00366   void resetLongAvgMutations(){ longAvgMuts=0.; }
+00367 
+00368 
+00369 public://{ online monitoring and I/O
+00370 
+00372   virtual void monitor(){
+00373     //HALT("you need to implement your own `void Evolution<?,?>::monitor()' method!");
+00374 
+00375     //population report in evo-file
+00376     _evo <<fitnessEvaluations <<"\t" <<MT::cpuTime() <<"\t";
+00377     report(_evo);
+00378 
+00379     //best genotype in gen-file
+00380     findBest();
+00381     _gen <<"generation: " <<generation <<"\n"
+00382    <<*best <<"\n"
+00383    <<"fitness: " <<F(*best) <<std::endl;
+00384 
+00385     //spectrum of best in evo-file
+00386     double neudeg,avgfit,moddeg,rules,length;
+00387     Statistics<int> stat;
+00388     Array<Array<int> > data;
+00389     neudeg=avgfit=moddeg=rules=length=0.;
+00390     spectrum(*best,neudeg,avgfit,moddeg,rules,length,data);
+00391     _evo <<neudeg <<"\t" <<avgfit <<"\t" <<moddeg <<"\t"
+00392    <<rules <<"\t" <<length <<"\t";
+00393 #if 0
+00394     stat.range=1<<_alpha_;
+00395     stat.copyData(data,25);
+00396     stat.calcH_MI();
+00397     display(stat.MI);
+00398     //std::cout <<stat.MI;
+00399 #endif
+00400 
+00401 #if 1
+00402     //average spectrum of all
+00403     uint i;
+00404     double n,a,m,r,l;
+00405     neudeg=avgfit=moddeg=rules=length=0.;
+00406     for(i=0;i<N();i++){
+00407       spectrum(elem(i),n,a,m,r,l,data);
+00408       neudeg+=n;avgfit+=a;moddeg+=m;rules+=r;length+=l;
+00409     }
+00410     _evo <<neudeg/i <<"\t" <<avgfit/i <<"\t" <<moddeg/i <<"\t"
+00411    <<rules/i <<"\t" <<length/i <<"\t";
+00412 #endif
+00413     _evo <<std::endl;
+00414   }
+00415 
+00422   void spectrum(Genotype &parent,
+00423     double& neutral,double& avg,double& modmutes,
+00424     double& usage,double& length,Array<Array<int> >& data){
+00425     uint k;
+00426     Genotype off;
+00427     usage=parent.totUsage();
+00428     length=parent.usedSize();
+00429     neutral=avg=modmutes=0.0;
+00430     data.resize(_spectralTests_,false);
+00431     if(!_spectralTests_) return;
+00432 
+00433     for(k=0;k<_spectralTests_;k++){
+00434       off.derive(parent);
+00435       if(F(off)==F(parent)) neutral++;
+00436       avg+=F(off);
+00437       //modmutes+=off.periodicDifferenceSelfSimilarity(parent,_periodicity_);
+00438       //off.getLabels(data(k));
+00439     }
+00440     neutral/=_spectralTests_;
+00441     avg/=_spectralTests_;
+00442     modmutes/=_spectralTests_;
+00443   }
+00444 
+00446   void dump(std::ostream& os){
+00447     os <<"<Evolution [" <<nelem() <<"]>\n";
+00448     for(uint i=0;i<N();i++) os <<"[" <<i <<"]:" <<elem(i) <<endl;
+00449   }
+00450 
+00453   void report(std::ostream& os){
+00454     uint i;
+00455     double max,min,sum;
+00456     //uint j,k; long int d;
+00457 
+00458     max=min=sum=F(elem(0));
+00459     for(i=1;i<N();i++){
+00460       sum+=F(elem(i));
+00461       if(F(elem(i))>max) max=F(elem(i));
+00462       if(F(elem(i))<min) min=F(elem(i));
+00463     }
+00464     avgfitness=sum/N();
+00465     os <<sum/N() <<" " <<max <<" " <<min <<" ";
+00466 
+00467 #ifdef genoHasReals
+00468     uint j;
+00469     for(j=0;j<elem(0).reals.nelem();j++){
+00470       sum=0;
+00471       for(i=0;i<N();i++) sum+=elem(i).reals(j);
+00472       os <<sum/N() <<" ";
+00473     }
+00474 #endif
+00475 
+00476     /*
+00477     Genotype *all [N()];
+00478     for(i=0;i<N();i++) all[i]=&(elem(i));
+00479     f=elem(0).dist(all,N());
+00480     os <<f <<" ";
+00481     //if (f>=0.5) eps=0; else eps=(0.5-f)/10;
+00482     */
+00483 
+00484     /*
+00485     memmove(&avg[1],&avg[0],99*sizeof(avg[0]));
+00486     for(j=0;j<elem(0).NofBits();j++){
+00487       for(k=0,i=0;i<N();i++) if(bit((byte*)&elem(i),j)) k++;
+00488       avg[0][j]=k;
+00489     }
+00490     for (sum=0,j=0;j<elem(0).genS*8;j++){
+00491       d=avg[0][j]-avg[1][j]; sum+=d*d;
+00492     } 
+00493     os <<sum/N()/N() <<" ";
+00494     for (sum=0,j=0;j<elem(0).NofBits();j++){
+00495       d=avg[0][j]-avg[50][j]; sum+=d*d;
+00496     }
+00497     os <<sum/N()/N()/sqrt(elem(0).NofBits()) <<" ";
+00498     */
+00499 
+00500   }
+00501   //}
+00502 };
+00503 MT_NAMESPACE_STOP
+00504 
+00505 #endif
+

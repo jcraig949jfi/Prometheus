@@ -1,0 +1,109 @@
+
+
+Example Documentation
+
+  overview  
+  classes
+
+  examples
+  Shark -
+  LEDA -
+  STL -
+  QT -
+  OpenGL
+goto: 
+[]
+
+02-plantEvo/main.cpp
+
+#define MT_IMPLEMENTATION
+#define MT_QT
+
+#include<MT/proPlant.h>
+#include<MT/stringRule.h>
+#include<MT/genotype.h>
+#include<MT/evolution.h>
+
+using namespace std;
+
+typedef Genotype<StringRule,StringRule> genoT;
+
+Parameter<String> outpath ("outpath");
+Parameter<uint> seed("seed",0);
+ProPlant *pro;
+
+double Evolution<genoT>::fitness(genoT& g){
+  g.pheno.getString(pro->plant.str); 
+  return pro->value();
+}
+
+void Evolution<genoT>::monitor(){
+  //best genotype in gen-file
+  findBest();
+  best->pheno.getString(pro->plant.str); 
+  pro->value();
+
+  _gen <<"generation: " <<generation <<"\n"
+   <<*best
+   <<"\nf:" <<pro->plant.fitness
+   <<"\te:" <<pro->plant.elements
+   <<"\tw:" <<pro->plant.weight
+   <<"\to:" <<best->totUsage()
+   <<"\tg:" <<best->totSize()
+   <<"/" <<best->rule.N()
+   <<"\n";
+
+  cout <<generation
+   <<":\tf:" <<pro->plant.fitness
+   <<"\te:" <<pro->plant.elements
+   <<"\tw:" <<pro->plant.weight
+   <<"\to:" <<best->totUsage()
+   <<"\tg:" <<best->totSize()
+   <<"/" <<best->rule.N()
+   <<endl;
+
+  pro->displayPlant(String()()<<generation);
+
+  if(generation && !(generation%100)){
+    static Image img;
+    img.resize(pro->opengl->width(),pro->opengl->height(),4,false);
+    pro->opengl->grabImage(img);
+    img.save(String()()<<outpath()<<"pic-"<<seed()<<"-"<<generation<<".bmp","BMP");
+  }
+
+  _evo <<generation <<"\t";
+  report(_evo);
+  _evo <<longAvgMutations() <<"\t"
+  <<pro->weightFactor*pro->plant.weight <<"\t"
+  <<pro->plant.elements <<"\t"
+  <<pro->plant.weight <<"\t"
+  <<best->totUsage() <<"\t"
+  <<best->totSize() <<"\t"
+  <<best->rule.N() <<"\t"
+  <<"\n";
+
+  //mutation rate adaptation:
+  if(longAvgMutations()>10.){
+    for(uint i=0;i<N();i++) elem(i).reals(1)/=10.;
+    resetLongAvgMutations();
+  }
+}
+
+int main( int argc, char **argv )
+{
+  MT::setLog(argc,argv);
+
+  EvolutionShare::evoFile=outpath() + "evo-" + seed();
+  EvolutionShare::genFile=outpath() + "gen-" + seed();
+
+  pro=new ProPlant;
+
+  Evolution<genoT> evo;
+
+  evo.initPhenos(Parameter<StringRule>("init")());
+  evo.evolve();
+
+  delete pro;
+  return 0;
+}
+

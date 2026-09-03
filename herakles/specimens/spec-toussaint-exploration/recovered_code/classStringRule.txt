@@ -1,0 +1,142 @@
+
+
+StringRule class Reference
+
+  overview  
+  classes
+
+  examples
+  Shark -
+  LEDA -
+  STL -
+  QT -
+  OpenGL
+goto: 
+[]
+
+StringRule Class ReferenceList of all members.Detailed Description
+A string object that implements grammar-rule methods.
+
+The string is simply represented as an array of chars. The first char has a very special meaning - similar to the plug of a graph. When interpreted as a grammar rule the first char represents the lhs whereas the rest gives the rule's rhs.
+
+A single grammar rule realizes the methods necessary to apply (also inversely) a grammar rule on a given structure. Each application is meant as a transformation step of a genotype-phenotype mapping. The grammar rule itself is also a structure: the rule structure basically represents the rule's rhs; a marked unit of the structure is the lhs Examples: 
+
+02-stringRuleJTB/main.cpp, and plant/main.cpp.
+
+Definition at line 24 of file stringRule.h.
+
+Public Methods
+
+ StringRule ()
+ standard constructor
+required rule methods
+
+uint apply (StringRule &S, uint t=0)
+ scans S and applies whenever the rule fits; when the time t is given and the rule fits, it is stored as hierarchy of the rule
+
+void inverseapply (StringRule &S, double tolerance=.0)
+ calls S.substituteSimilarSubstructureByUnit(rhs,lhs)
+
+byte becomeNewRule (StringRule &S)
+ extracts a new rule randomly out of the structure S
+access
+
+uint N () const
+ length of string [str.dim(0)]
+
+uint totSize ()
+ size of the strin [N()]
+
+void getString (ArrayMT< char > &a)
+ returns an ArrayMT<char>
+
+void getLabels (ArrayMT< int > &a)
+ returns an ArrayMT<int>
+
+void convertInto (ArrayMT< uint > &data)
+ converts into an array of unsigned ints instead of chars
+
+void getTurtleInterpretation (ArrayMT< char > &a) const
+ gives the turtle interpretation for drawing plants (Pruisinkiewicz etc.) of this string
+random & mutate
+
+void random (uint n=_maxUnits_)
+ random string of random size in [0,_maxUnits_]
+
+void randomN (uint n)
+ random string with fixed size n
+
+void randomModular (uint n, uint mod)
+ random string of length n with mod identical modules of length n/mod
+
+void modifyModular (uint mod)
+ make a single point mutation and copy it identically to all modules
+
+uint mutate (double mutations=.01)
+ mutates; mutations*N() gives the Poisson mean of the total number of mutations made
+rule methods
+
+void extractSubstring (StringRule &s, uint i, uint n)
+ copies the substring [i,i+n) of this into s
+
+bool substituteUnitByStructure (uint &i, StringRule &s)
+ substitues the ith bit of this string by the rhs (=all but first char) of s
+
+void substituteSubstructureByUnit (uint pos, uint n, byte sym)
+ substitutes the positions [pos,pos+n] by the single char sym
+
+uint substituteSimilarSubstructureByUnit (StringRule &s, double tolerance=.0)
+ substitutes all substrings that match s by the symbol s.str(0)
+
+byte substituteRandomSubstructureByUnit (StringRule &s, uint n)
+ selects a random substring, copies it in s and replaces it by the single symbol sym
+
+uint ruleApplyOn (StringRule &s)
+ scans the string 
+ and applies whenever the plug fits; returns the number of substitutions
+analysis
+
+StringRule & operator= (const StringRule &s)
+ same as str==s.str
+
+bool operator== (const StringRule &s) const
+ same as str==s.str
+
+byte subDist (byte *S, uint n)
+ returns the Hamming distance of its rhs to the string starting at S
+
+double dist (const StringRule &a, const StringRule &b)
+ returns the Hamming distance between a and b
+
+double periodicSelfSimilarity (uint period)
+ a measure of modularity; period determines the length of periodicity, i.e. the module size;
+
+double periodicDifferenceSelfSimilarity (const StringRule &relative, uint period)
+ a measure of modularity of the (XOR) difference between this string and the relative
+
+void assignToXOR (const StringRule &a, const StringRule &b)
+ this string becomes the XOR difference between a and b, e.g., the mutation string
+I/O
+
+std::ostream & write (std::ostream &os) const
+ writes the string with letters [A,B,..]
+
+std::istream & read (std::istream &is)
+ writes the string with letters [A,B,..]
+Public Attributes
+
+ArrayMT< byte > str
+ the string buffer
+
+double use
+ couter of rule applications
+
+double change
+ a trace indicator (like eligibility traces) for mutations
+
+byte hierarchy
+ the time of application during rule transformations
+
+The documentation for this class was generated from the following file:
+stringRule.h
+
