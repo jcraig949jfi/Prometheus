@@ -1,0 +1,25 @@
+==========================================================================
+RANDOMIZATION-INTERFACE QUALIFICATION (production derivation path)
+==========================================================================
+
+R1. SHARP NULL x pathological value functions (exact enumeration, 4096 beacon values)
+             ok | huge slot effects (value = 10^6 * slot-structure)    ranks=[1023, 1055, 988, 1030] chi2=2.2 -> UNIFORM
+             ok | all-tied constants (pure tie-break)                  ranks=[1048, 1007, 1069, 972] chi2=5.5 -> UNIFORM
+             ok | periodic near-degenerate (value = slot % 2)          ranks=[1045, 973, 1047, 1031] chi2=3.5 -> UNIFORM
+             ok | context-coupled slot chaos (value = H(slot, beacon)) ranks=[1035, 1033, 1001, 1027] chi2=0.7 -> UNIFORM
+
+R2. ADVERSARIAL SELECTION ON NOISE, beacon-fresh evidence (exact enumeration, stratified by aggressiveness)
+             ok | argmax-of-100 preservation extrema, fresh contexts   ranks=[984, 1064, 1004, 1044] chi2=3.9 -> UNIFORM
+             ok | argmax-of-10000 preservation extrema, fresh contexts ranks=[1001, 1022, 1098, 975] chi2=8.2 -> UNIFORM
+
+R3. PREDICTED FAILURE MODES (must be NON-uniform; the lemma's honest boundary)
+             ok | persistently atypical delta* (H0_LOCAL genuinely FALSE) ranks=[3029, 675, 328, 64] chi2=5417.8 -> NON-UNIFORM
+             ok | selection-on-noise + STALE preservation evidence     ranks=[4014, 82, 0, 0] chi2=11645.1 -> NON-UNIFORM
+
+==========================================================================
+RANDOMIZATION QUALIFICATION: PASS
+  Lemma 1 exactness on pathological substrates: verified
+  Lemma 2 selection-immunity on fresh evidence : verified
+  Predicted failure boundary (persistent atypicality, stale
+  evidence): demonstrated, labeled, and excluded by protocol
+==========================================================================

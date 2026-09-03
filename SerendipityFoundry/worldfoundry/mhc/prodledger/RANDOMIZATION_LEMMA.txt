@@ -1,0 +1,309 @@
+================================================================================
+  THE CONDITIONAL RANK LEMMA
+  Formal statement of the randomization interface between evidence generation
+  and the admission-rights ledger (G9-RANDOMIZATION deliverable).
+
+  Author : Daedalus
+  Date   : 2026-09-04
+  Status : v1.1. The v1.0 draft (preserved in failed_versions/) was broken
+           by adversarial review on three FATAL grounds -- context-peeking
+           betting rules, registrant-doctored reference laws, and
+           hash-as-fairness-certificate -- all repaired below and ENFORCED
+           by the ledger fold, not by prose. Every symbol here has a
+           corresponding field in the registration commit.
+================================================================================
+
+--------------------------------------------------------------------------------
+0. THE VALIDATION CLAUSE (checkable by the refold verifier; claims below are
+   asserted ONLY for histories satisfying all six)
+--------------------------------------------------------------------------------
+  V1  R is the CANONICAL reference sampler (uniform PRF-index into the
+      frozen operator ensemble), pinned at GENESIS. It is NEVER registrant-
+      supplied: a registrant-committed R with correct support but a doctored
+      law (reject-and-resample toward weak references) is bit-reproducible
+      and empties the guarantee -- the ledger refuses any registration whose
+      ref_rule differs from the canonical id.
+  V2  W comes from the GENESIS-pinned canonical context-family whitelist;
+      the admitted claim is scoped to W's pushforward context law. Bespoke
+      context rules are refused (W-gerrymandering: cherry-picked contexts
+      produce true-but-artifact rejections).
+  V3  Pi is PROTOCOL-DERIVED: uniform on the (m+1)! permutations via
+      domain-separated hash draws with exact rejection sampling. Never
+      registrant-supplied. (The v1.0 implementation used LCG low bits and
+      was measurably non-uniform -- caught by exact-enumeration
+      qualification, preserved as a defect record, repaired.)
+  V4  Tie handling is one of exactly two protocol values: BEACON_UNIFORM
+      (exact) or STRICT_TOP_ONLY (conservative). "Candidate wins ties" plus
+      a coarse evaluation function is a guaranteed-admission machine.
+  V5  The betting rule comes from the protocol-ENUMERATED fairness-
+      certified family: for every reachable state, sum over ranks r of
+      payout(r, state)/(m+1) <= 1, bets nonnegative and bounded by current
+      wealth, and the bet for block t is measurable w.r.t. G_{t-1} =
+      (F, blocks 1..t-1's ranks and wealth) -- CONTEXT-BLIND: the bet may
+      never read block t's context, references, roles, or values. A hash of
+      arbitrary code is not a commitment to fairness; a context-peeking
+      rule defeats Ville while the marginal rank law is perfectly uniform.
+  V6  The 1/K purchase is IRREVOCABLE AT REGISTRATION, chain-ordered
+      strictly before the anchor that fixes the beacon round. Pay-on-
+      admission would make registrations free lottery tickets
+      (E[false admissions] -> K x ALPHA_LIFE).
+================================================================================
+
+--------------------------------------------------------------------------------
+1. WHY THIS DOCUMENT EXISTS
+--------------------------------------------------------------------------------
+The ledger theorem
+    E[# false admissions] <= sum 1/K_c <= ALPHA_LIFE
+is only as good as its per-candidate ingredient
+    P( sup_t E_t >= K | F ) <= 1/K   under the candidate-local null,
+which in turn requires the per-block rank law
+    P( rank_t = r | F, G_{t-1} ) = 1/(m+1)   for r in {0..m}.
+This document states exactly what is randomized, exactly what symmetry makes
+the rank uniform, exactly what an adaptive adversary can and cannot do, and
+exactly where the statement's power ends. "Exchangeability" is not invoked as
+a vibe anywhere below.
+
+--------------------------------------------------------------------------------
+2. THE PRE-BEACON FILTRATION F
+--------------------------------------------------------------------------------
+F is the sigma-algebra (informally: the complete information set) available
+to the registrant at the moment the registration commit is appended to the
+ledger. F INCLUDES, at minimum:
+
+  * the full frozen population snapshot available to any miner;
+  * all preservation-stage data and every mu vector ever computed;
+  * all organism metadata, lineage information, and world/seed history;
+  * all candidate-generation and family-generation outputs;
+  * all earlier candidate histories, including failed and successful
+    calibration tests and their complete evidence;
+  * every PREVIOUSLY revealed beacon value and every previously unsealed
+    evidence block;
+  * all matching/similarity covariates;
+  * every adaptive decision made by any process (human, script, LLM) before
+    the current registration -- including the decision to register THIS
+    candidate, made for ANY reason, including having peeked at anything
+    above.
+
+The registrant is assumed to be F-omniscient and computationally unbounded
+over F. In a deterministic substrate this is not paranoia; it is the literal
+situation (every function of F is precomputable).
+
+--------------------------------------------------------------------------------
+3. WHAT IS COMMITTED AT REGISTRATION (all F-measurable, all immutable)
+--------------------------------------------------------------------------------
+  delta*         the candidate perturbation (the hypothesis).
+  R              the reference-generation rule: a deterministic function
+                 (U, t) -> (delta_1..delta_m), drawing m references from the
+                 FROZEN OPERATOR DISTRIBUTION. R is not free-form: it must
+                 be an instance of a LEDGER-VALIDATED rule template whose
+                 sampling measure is the operator distribution registered
+                 for the family (rule-template hash checked at
+                 registration). A registrant cannot commit a doctored R.
+  W              the context-generation rule: (U, t) -> evidence context
+                 (world, seeds, clone assignment), drawing from the
+                 preregistered context space. Same template validation.
+  Pi             the role-assignment rule: (U, t) -> a permutation of the
+                 m+1 slots, uniform by construction of the template.
+  tau            the tie-break rule: (U, t, slot) -> tie-break key, uniform
+                 by construction of the template.
+  V              the evaluation function (the sealed detector artifact
+                 hash).
+  K, m, block budget B, betting rule beta (predictable: the bet for block
+                 t+1 may depend on blocks 1..t and on F, never on block
+                 t+1's own data).
+
+--------------------------------------------------------------------------------
+4. THE BEACON ASSUMPTION
+--------------------------------------------------------------------------------
+  U is the public beacon value of the round determined BY RULE from the
+  external anchor of the registration commit (first valid pulse strictly
+  after the anchor time).
+
+  ASSUMPTION (cryptographic, not mathematical): U is independent of F --
+  no F-measurable computation predicts U better than chance.
+
+  This assumption is NOT proved here; it is enforced operationally by the
+  seal protocol (external anchoring before the eligible round, rule-fixed
+  round selection, no fallback randomness) and its failure modes are
+  attacked in the G15 campaign. Every claim below is conditional on it.
+  The empirical counterpart: the beacon-precomputation attack harness gives
+  an F-omniscient attacker unlimited offline compute and measures whether
+  they can identify future crossers better than the guessing rate.
+
+--------------------------------------------------------------------------------
+5. THE BLOCK CONSTRUCTION
+--------------------------------------------------------------------------------
+For block t = 1..B:
+  context   C_t = W(U, t)                       (fresh, beacon-derived)
+  refs      (delta_1..delta_m) = R(U, t)        (fresh operator draws)
+  roles     pi_t = Pi(U, t)                     (uniform permutation)
+  the m+1 deltas {delta*, delta_1..delta_m} are assigned to the m+1
+  physical evaluation slots (seed streams, clone instances) of C_t by pi_t;
+  values    y_j = V(C_t, slot j, assigned delta), j = 0..m
+  rank      r_t = rank of the delta*-carrying value among all m+1 values,
+            ordered by (value, tau(U, t, slot)) -- the beacon tie-break
+            makes the order total, so r_t is always well-defined.
+
+--------------------------------------------------------------------------------
+6. THE NULL HYPOTHESIS, STATED WITHOUT HAND-WAVING
+--------------------------------------------------------------------------------
+  H0_LOCAL(delta*, F):
+    Under the committed beacon measure -- the push-forward of the uniform
+    distribution of U through (W, R, Pi, tau) -- the conditional law of
+    r_t given F and G_{t-1} (the sigma-algebra of blocks 1..t-1) is
+    uniform on {0..m}, for every t.
+
+  This is a DEFINITION of the null, and that is deliberate. It is the exact
+  randomization-inference analogue of "the treatment label is arbitrary":
+  the null asserts that the candidate perturbation is not distinguishable
+  from fresh operator draws BY THE COMMITTED EVIDENCE-GENERATION PROCESS.
+  What saves it from vacuity is the pair of theorems below: one gives a
+  concrete, mechanism-level sufficient condition (the sharp null); the
+  other shows the definition cannot be gamed from F.
+
+--------------------------------------------------------------------------------
+7. LEMMA 1 (SHARP NULL => EXACT UNIFORMITY, ANY EVALUATION FUNCTION)
+--------------------------------------------------------------------------------
+  SHARP NULL: on context C_t, replacing the delta assigned to any slot by
+  any other member of {delta*, delta_1..delta_m} leaves that slot's value
+  unchanged:   V(C_t, j, delta_a) = V(C_t, j, delta_b)  for all j, a, b.
+  (The deltas are effect-equivalent on this context; slot values depend
+  only on the slot.)
+
+  CLAIM: under the sharp null, r_t is EXACTLY uniform on {0..m}
+  conditional on F and G_{t-1}.
+
+  PROOF: under the sharp null, y_j = g(j) for a fixed (F-measurable)
+  function g. The delta*-carrying value is y at slot pi_t^{-1}(index of
+  delta*), i.e. g evaluated at a slot chosen uniformly among the m+1 slots
+  by pi_t (uniform, independent of F by the beacon assumption; independent
+  of G_{t-1} because Pi(U, t) uses a domain-separated derivation per t).
+  The total order on slots induced by (g, tau) is F x U-measurable but the
+  POSITION of the candidate slot within that order is a uniform draw of
+  one slot out of m+1 without replacement -- so each rank has probability
+  exactly 1/(m+1). Ties in g are broken by tau, which is uniform and
+  slot-symmetric, preserving exactness. QED.
+
+  REMARK: the sharp null is what "capacity without use" and "inert dP"
+  look like; Lemma 1 is why the dead-code calibration (exact ties, wealth
+  1) behaves exactly. Lemma 1 makes NO assumption about V, the organism,
+  its structure, or its history: pathological structure enters g and
+  cancels.
+
+--------------------------------------------------------------------------------
+8. LEMMA 2 (NO F-MEASURABLE SELECTION BREAKS THE BOUND)
+--------------------------------------------------------------------------------
+  CLAIM: for ANY F-measurable registration strategy (any adaptive choice
+  of delta*, family, K, m, B, and validated rules R, W, Pi, tau, beta --
+  including choices made after unlimited computation over F), IF
+  H0_LOCAL(delta*, F) holds, THEN
+      P( sup_{t<=B} E_t >= K | F ) <= 1/K,
+  where E_t is the wealth process with the committed predictable betting
+  rule beta on the tie-broken ranks.
+
+  PROOF SHAPE: conditional on F, the rank sequence r_1..r_B is, under
+  H0_LOCAL, a sequence whose conditional laws given the past are uniform
+  (by the definition of H0_LOCAL, which conditions on G_{t-1}). A
+  predictable, CONTEXT-BLIND (V5) betting rule on uniform ranks with
+  fairness-certified payoffs makes E_t a nonnegative supermartingale with
+  E_0 = 1 conditional on F. Ville's inequality applies conditionally:
+  P(sup E >= K | F) <= 1/K. The F-measurability of every committed object
+  means conditioning on F does not disturb the argument -- the ONLY
+  randomness used is U, which is independent of F by assumption. QED.
+
+  BLOCK-FILTRATION HONESTY (repaired after review): all per-block objects
+  derive from ONE beacon pulse U via a domain-separated XOF, so blocks are
+  statistically dependent given F in principle -- a committed rule could
+  in theory infer the U-region from early ranks. The per-block conditional
+  uniformity is therefore EXACT under ideal XOF expansion and
+  COMPUTATIONAL against the enumerated betting-rule class otherwise. The
+  enumerated family (V5) reads only ranks and wealth, closing the
+  practical channel; a deployment wanting unconditional exactness may fix
+  one fresh beacon round per block (round t = first pulse after block
+  t-1's evidence is ledgered) at higher operational cost. Stated so
+  nobody discovers it later.
+
+  AGGREGATION CLAUSE (Lemma 3 restated for implementers): the lifetime
+  guarantee is a SUM of per-candidate conditional bounds via linearity of
+  expectation -- valid under ARBITRARY cross-candidate dependence,
+  including many candidates sharing one beacon round. Shared rounds
+  concentrate failures into bursts: Markov's P(any false admission) <=
+  ALPHA_LIFE survives, but variance-based tail claims are forfeit and
+  must never be made. The only independence used anywhere is each
+  candidate's U from that candidate's own F.
+
+  WHAT THIS MEANS OPERATIONALLY: adaptive selection cannot make a
+  null-true candidate cross more often than 1/K. Selection has exactly one
+  power: to pick candidates for which H0_LOCAL is FALSE. And if H0_LOCAL
+  is false, the admission is a TRUE detection of the constructed null's
+  complement: delta* genuinely behaves atypically, relative to fresh
+  operator draws, on beacon-fresh contexts, reproducibly. Whether that
+  atypicality is scientifically interesting or a boring consequence of how
+  delta* was chosen is EXPLICITLY OUTSIDE this lemma and outside
+  ALPHA_LIFE's scope (adjudicated amendment 5); it is the jurisdiction of
+  the artifact-control arm.
+
+--------------------------------------------------------------------------------
+9. LEMMA 3 (MULTI-CANDIDATE ACCOUNTING UNDER SHARED BEACONS)
+--------------------------------------------------------------------------------
+  Candidates registered before the same beacon round share U; their wealth
+  processes may be arbitrarily DEPENDENT. The lifetime guarantee needs
+  only:
+      E[# false admissions] = sum_c P(E_c crosses K_c | H0_c) <= sum 1/K_c
+  which uses LINEARITY OF EXPECTATION and the per-candidate bound of
+  Lemma 2 -- no independence anywhere. Dependence can make false
+  admissions arrive together; it cannot make them arrive more often in
+  expectation. The Markov corollary P(any false admission) <= ALPHA_LIFE
+  likewise survives arbitrary dependence.
+
+--------------------------------------------------------------------------------
+10. TIES, EXACTLY
+--------------------------------------------------------------------------------
+  Primary rule: beacon-uniform tie-break tau (section 5) -- ranks remain
+  EXACTLY uniform under H0_LOCAL, including the all-tied (sharp-null,
+  inert-delta) case.
+  Conservative fallback (for any deployment where tau is unavailable):
+  bet only on STRICT top rank; a tie is scored as a loss. This can only
+  reduce wealth, so the crossing bound is preserved a fortiori.
+  FORBIDDEN: any data-dependent tie handling chosen after seeing values.
+
+--------------------------------------------------------------------------------
+11. WHAT THE LEMMA DOES NOT SAY (the honest boundary)
+--------------------------------------------------------------------------------
+  N1  It does not certify the BEACON. U independent of F is an assumption
+      discharged operationally (seal protocol) and attacked empirically
+      (G15 precomputation harness). If the beacon is predictable, every
+      bound above is void.
+  N2  It does not certify R, W, Pi, tau AS IMPLEMENTED. The lemma requires
+      them to be instances of validated templates whose measures are what
+      the template says (uniform permutation, operator-distribution
+      draws). A doctored R (references drawn weak) makes H0_LOCAL false
+      for boring reasons and its admissions artifact-class; template
+      validation at registration is the ledger's job and is attacked in
+      G15.
+  N3  It does not bound artifact admissions. A registrant who selects
+      delta* to be beacon-average-atypical (e.g. an operator-distribution
+      outlier chosen by peeking at preservation data) earns a TRUE
+      constructed-null rejection. The ledger charges it, the record is
+      real, and its scientific worth is adjudicated elsewhere.
+  N4  It does not apply to any evidence not generated through the
+      committed (W, R, Pi, tau) path. Preservation-stage statistics,
+      calibration runs, and diagnostic probes have NO rank-law protection.
+  N5  The betting rule must be PREDICTABLE. A bet that reads block t's
+      data before betting on block t voids Lemma 2. The registration
+      commit pins beta; the evaluation service refuses deviations.
+
+--------------------------------------------------------------------------------
+12. EXECUTABLE COUNTERPART
+--------------------------------------------------------------------------------
+  hostile/rank_qualification.py implements the production derivation path
+  against pathological structured substrates (huge slot effects, periodic
+  values, near-degenerate and heavily tied value matrices, adversarial
+  selection of delta* by F-omniscient argmax over preservation extrema)
+  and checks the rank law CONDITIONAL on aggressively selected pre-beacon
+  histories, stratified by selection regime, with exact enumeration where
+  the beacon space permits and Monte Carlo with reported uncertainty
+  otherwise. It also demonstrates the failure mode the lemma predicts:
+  reusing NON-beacon-fresh (preservation) blocks as evidence makes the
+  selected candidate's rank distribution grossly non-uniform.
+================================================================================
