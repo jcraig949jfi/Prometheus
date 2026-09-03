@@ -1,0 +1,102 @@
+# Should be input tasks, then output tasks (otherwise, they will get reordered)
+# Bonus types can be:
+#	*  ->  merit *= bonus
+#	+  ->  merit += bonus
+#	^  ->  merit = pow(merit,bonus)
+#
+# Use "+ 0" for no bonus
+#
+# Last bonus type can be "d" which will be a "diminish value"
+# For example, "* 1.8  * 1.7  d .5" will give bonuses of:
+#  1st time: merit *= 1.8
+#  2rd time: merit *= 1.8 * 1.7
+#  3rd time: merit *= 1.8 * (1 + (.7 * .5))
+#  4th time: merit *= 1.8 * (1 + (.7 * .5*.5))
+#  5th time: merit *= 1.8 * (1 + (.7 * .5.*.5*.5))
+#
+# Task	type bonus type bonus ...	# Meaning & Difficulty
+
+# IO - Depends only on executing the instructions (no logic)
+get	-	+ 0
+put	-	+ 0
+
+logic	1a	+ 0	# Echo
+logic	1b	* 1	+ 0	# Not
+
+logic	2f	* 1	+ 0	# A nand B	- 1 nand
+logic	2a	* 1	+ 0	# A and B	- 2 nands
+logic	2c	* 1	+ 0	# A or ~B	- 2 nands
+logic	2b	* 1	+ 0	# A or B	- 3 nands
+logic	2d	* 1	+ 0	# A and ~B	- 3 nands
+logic	2e	* 1	+ 0	# A nor B	- 4 nands
+logic	2g	* 1	+ 0	# A xor B	- 4 nands
+logic	2h	* 33554432 + 0	# A equ B	- 5 nands
+
+logic	3a	+ 0	# A and B and C
+logic	3b	+ 0	# A and B and ~C
+logic	3c	+ 0	# A and ~B and ~C
+logic	3d	+ 0	# ~A and ~B and ~C
+logic	3e	+ 0	# A and (B xor C)
+logic	3f	+ 0	# A & (B | C)
+logic	3g	+ 0	# A + B + C = 2
+logic	3h	+ 0	# A + B + C >= 2
+logic	3i	+ 0	# A & ~(B xor C)
+logic	3j	+ 0	# A xor (B & C)
+logic	3k	+ 0	# A | (B & C)
+logic	3l	+ 0	# A & (B | ~C)
+logic	3m	+ 0	# (A & ~B) | (~A & B & C)
+logic	3n	+ 0	# (A & ~B) | (B & C)
+logic	3o	+ 0	# A & (B nand C)
+logic	3p	+ 0	# A xor (B & C)
+logic	3q	+ 0	# A | (B & C)
+logic	3r	+ 0	# (A xor B) & ~C
+logic	3s	+ 0	# ~A & ( B xor C) ) | (A & B & C)
+logic	3t	+ 0	# (A & ~B) | (~A & B & ~C)
+logic	3u	+ 0	# A & (B | ~C) | (~A & ~B & C)
+logic	3v	+ 0	# (A xor B) | (A & C)
+logic	3w	+ 0	# (A nor B) nor C
+logic	3x	+ 0	# (~A & (B | C)) | (B & C)
+logic	3y	+ 0	# (~A & B) | (~A & C) | (B & ~C)
+logic	3z	+ 0	# A | (B & ~C)
+logic	3aa	+ 0	# (A & ~B) | (A & ~C) | (~A & B)
+logic	3ab	+ 0	# A + B + C = 1
+logic	3ac	+ 0	# A xor B xor C
+logic	3ad	+ 0	# (A & ~C) | (B & ~C) | (~A & ~B & C)
+logic	3ae	+ 0	# ???
+logic	3af	+ 0	# ???
+logic	3ag	+ 0	# A | (B xor C)
+logic	3ah	+ 0	# ~( (A & B & C) | (~A & ~B & ~C) )
+logic	3ai	+ 0	# A or B or C
+logic	3aj	+ 0	# (A & B & C) | (~A & ~B & ~C)
+logic	3ak	+ 0	# A nor (B xor C)
+logic	3al	+ 0	# ???
+logic	3am	+ 0	# ???
+logic	3an	+ 0	# (C & (A | B)) | (~A & ~B & ~C)
+logic	3ao	+ 0	# A xor ~(B xor C)
+logic	3ap	+ 0	# A + B + C != 1
+logic	3aq	+ 0	# (~A & ~B) | (A & B & C)
+logic	3ar	+ 0	# (A xor B) nor (A & C)
+logic	3as	+ 0	# ~A & (B | ~C)
+logic	3at	+ 0	# (A & ~B) | (A & C) | (~B & ~C)
+logic	3au	+ 0	# ???
+logic	3av	+ 0	# ???
+logic	3aw	+ 0	# ???
+logic	3ax	+ 0	# A | (B nor C)
+logic	3ay	+ 0	# (~A & (~B | C)) | (A & (B xor C))
+logic	3az	+ 0	# A | ~(B xor C)
+logic	3ba	+ 0	# A nor (B & C)
+logic	3bb	+ 0	# A equ (B & C)
+logic	3bc	+ 0	# (A & ~B) nor (B & C)
+logic	3bd	+ 0	# (A & ~B) nor (~A & B & C)
+logic	3be	+ 0	# A nor (B & C)
+logic	3bf	+ 0	# A equ (B & C)
+logic	3bg	+ 0	# A nand B nand C
+logic	3bh	+ 0	# ~A | (B & ~C)
+logic	3bi	+ 0	# A nand ~(B xor C)
+logic	3bj	+ 0	# ~A | B | C
+logic	3bk	+ 0	# A + B + C <= 1
+logic	3bl	+ 0	# A + B + C != 2
+logic	3bm	+ 0	# A nand (B | C)
+logic	3bn	+ 0	# A nand (B xor C)
+logic	3bo	+ 0	# ~A | ~B | C
+logic	3bp	+ 0	# ~A | ~B | ~C
