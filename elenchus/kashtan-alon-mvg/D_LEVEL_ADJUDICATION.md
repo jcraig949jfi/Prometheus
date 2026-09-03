@@ -54,6 +54,24 @@ PARTER, KASHTAN & ALON 2008 ............................................ D4 (wea
       third variable that differs between arms could drive both. The paper does not
       report the within-run correlation, so the mediation is asserted structurally rather
       than estimated.
+
+  PRECEDENCE HAZARD, added 2026-09-03 from commit d51d1fa82 and recorded against this
+      seat's own award. A reverse-precedence control in a related substrate (RA-1's NC1)
+      found that accessibility measured AFTER the outcome window tracked the outcome
+      three to seven times better than accessibility measured BEFORE it, and concluded
+      that "the detector behaves like a readout of where a run currently is, not a
+      leading indicator of where it will go."
+      D3 and D4 both presuppose that a longitudinal accessibility measurement is a
+      PRECURSOR. If the measurement is instead concurrent with the state it appears to
+      predict, a trajectory that looks like a leading indicator is a lagging one, and the
+      rung is not earned. Parter 2008 never ran a reverse-precedence control, and neither
+      did Toussaint's corpus or Kouvaris's.
+      This does not retract the D4-weak award, because the award was already qualified on
+      exactly this ground. It converts the qualifier from a methodological caution into a
+      measured hazard with an effect size attached, and it supplies the cheapest possible
+      first test of any reproduction: re-order the data you already have and check whether
+      the detector leads or lags. That test costs nothing and no one in these three
+      lineages has run it.
   D5 NOT satisfied: no perturbation of the accessibility structure. The genetic triggers
       are identified by mutual information and then never touched -- no knockout, no
       freezing, no transplant, no randomisation. The one perturbation that exists runs the
