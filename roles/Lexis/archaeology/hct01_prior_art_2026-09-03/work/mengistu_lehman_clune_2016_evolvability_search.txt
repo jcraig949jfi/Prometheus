@@ -1,0 +1,526 @@
+Evolvability Search: Directly Selecting for Evolvability in
+                   order to Study and Produce It
+
+    Henok Mengistu                Joel Lehman                                                             Jeff Clune
+
+       Evolving AI Lab     Robotics, Evolution, and Art                                                  Evolving AI Lab
+Dept. of Computer Science             Laboratory                                                  Dept. of Computer Science
+
+   University of Wyoming   IT University of Copenhagen                                               University of Wyoming
+    hmengist@uwyo.edu                 jleh@itu.dk                                                     jeffclune@uwyo.edu
+
+ABSTRACT                                                                                          extinction or to establish new niches [3, 13]. For all these
+                                                                                                  reasons, encouraging evolvability is an important goal in
+One hallmark of natural organisms is their significant evolv-                                     evolutionary computation. Yet producing the evolvability of
+ability, i.e., their increased potential for further evolution.                                   natural organisms remains a challenge [5, 16, 18, 35].
+However, reproducing such evolvability in artificial evolution
+remains a challenge, which both reduces the performance                                              Optimization in traditional objective-based evolutionary
+of evolutionary algorithms and inhibits the study of evolv-                                       search, i.e. where the fitness function is a static estimate
+able digital phenotypes. Although some types of selection in                                      of solution quality based on only one or a few objectives,
+evolutionary computation indirectly encourage evolvability,                                       need not result in increased evolvability [18]. The reason
+one unexplored possibility is to directly select for evolvabil-                                   is that there is no necessary connection between increasing
+ity. To do so, we estimate an individual's future potential                                       performance and increasing evolutionary potential; often,
+for diversity by calculating the behavioral diversity of its                                      pressure to adapt in particular ways implicitly penalizes
+immediate offspring, and select organisms with increased                                          deviations which may nonetheless increase evolvability.
+offspring variation. While the technique is computationally
+expensive, we hypothesized that direct selection would better                                        Because evolvability does not tend to emerge unaided in
+encourage evolvability than indirect methods. Experiments                                         Evolutionary Computation (EC), a variety of mechanisms
+in two evolutionary robotics domains confirm this hypothesis:                                     for indirectly increasing evolvability have been explored [12,
+in both domains, such Evolvability Search produces solutions                                      16, 18, 20, 27, 30]. Some approaches change the fitness func-
+with higher evolvability than those produced with Novelty                                         tion over time in various ways to encourage the ability for
+Search or traditional objective-based search algorithms. Fur-                                     genomes to more quickly adapt to such changes [12, 20, 30].
+ther experiments demonstrate that the higher evolvability                                         Another approach is to include a vast number of objectives,
+produced by Evolvability Search in a training environment                                         which approximates the infinite number of niches created by
+also generalizes, producing higher evolvability in a new test                                     the ever-changing natural world [27]. Further approaches
+environment without further selection. Overall, Evolvabil-                                        include Novelty Search [18], and periodically extincting most
+ity Search enables generating evolvability more easily and                                        organisms in niches [16]. While such indirect methods can be
+directly, facilitating its study and understanding, and may                                       effective, an unexplored possibility is instead to directly select
+inspire future practical algorithms that increase evolvability                                    for evolvability. This paper introduces Evolvability Search,
+without significant computational overhead.                                                       a new class of evolutionary algorithm wherein the fitness
+                                                                                                  function is a direct measure of an individual's evolvability.
+Keywords
+                                                                                                     There is no overall agreement on evolvability's definition
+Evolvability; Evolutionary Algorithms; Divergent Search                                           or measurement [28], which complicates operationalizing it
+                                                                                                  as a criterion for optimization. The definition adopted here
+1. INTRODUCTION                                                                                   follows one mainstream conception of evolvability as pheno-
+                                                                                                  typic variability (irrespective of fitness) [3, 13, 28], i.e. the
+   An important factor in the prolific creativity of natural                                      tendency of an individual's offspring to exhibit phenotypic
+evolution is its drive towards increased evolvability, which                                      diversity. However, it is important to acknowledge that
+involves increasing an organism's or population's capacity                                        there are other definitions, and that evolvability itself may
+for further evolution [3, 8]. In addition to accelerating the                                     represent a cluster of related concepts [28]. For example,
+evolutionary process as a whole, such evolvability confers                                        another major class of definitions stress evolvability's relation
+advantages to individual species by allowing them to avoid                                        to adaptation, e.g. the rate of adaptation or the production
+                                                                                                  of adaptive variation [35]. While distinct, these conceptions
+Permission to make digital or hard copies of all or part of this work for personal or             are also connected: Increasing the ability to produce pheno-
+classroom use is granted without fee provided that copies are not made or distributed             typic variation can also increase how quickly a lineage can
+for profit or commercial advantage and that copies bear this notice and the full citation         adapt [3, 13, 16]. One advantage of the definition chosen here
+on the first page. Copyrights for components of this work owned by others than ACM                is that it affords a concrete measure of evolvability that is
+must be honored. Abstracting with credit is permitted. To copy otherwise, or republish,           independent of the particular goal of search, i.e. how much
+to post on servers or to redistribute to lists, requires prior specific permission and/or a       phenotypic variety exists within an organism's mutational
+fee. Request permissions from permissions@acm.org.                                                neighborhood [13, 16, 18, 19]. Evolvability Search optimizes
+GECCO '16, July 20-24, 2016, Denver, CO, USA                                                      this measure directly by generating many offspring from
+ c 2016 ACM. ISBN 978-1-4503-4206-3/16/07. . . $15.00
+DOI: http://dx.doi.org/10.1145/2908812.2908838
+
+                                                                                             141
+an individual, and setting its fitness to a measure of the               searchers have proposed many approaches for encouraging
+phenotypic variety among the offspring.                                  evolvability [5, 6, 12, 16, 18, 20, 27, 30]. However, most such ap-
+                                                                         proaches encourage evolvability only through indirect mech-
+   The primary purpose of Evolvability Search is to provide              anisms. For example, Novelty Search selects for individuals
+a tool for researchers in EC to more easily produce evolvable            demonstrating novel behavior relative to those previously
+organisms, thereby aiding the study of evolvability. An                  produced by the search [17]; rewarding novelty indirectly en-
+additional motivation is to investigate whether searching only           courages evolvability because mechanisms that consistently
+for evolvability is itself an effective search algorithm. That is,       enable novelty (and will thereby be consistently selected) also
+optimizing evolvability alone may indeed result in increased             enable phenotypic variability [18]. A related approach is to
+evolvability, but such search may not be effective for solving           set a vast number of separate, diverse evolutionary objectives,
+tasks. However, the pressure to increase diversity among an              which approximates the infinite number of niches created by
+individual's offspring will also increase population diversity           the ever-changing natural world [27]. Such optimization leads
+as a byproduct, i.e. individuals selected for reproduction               to frequent "goal-switching," as lineages fit on one objective
+by definition will have more diverse offspring. As a result,             invade other objectives, which rewards lineages that produce
+Evolvability Search may in performance resemble diversity-               behaviorally diverse offspring and increases evolvability [27].
+seeking algorithms such as Novelty Search, which are often
+effective in practice [7, 25, 26, 31].                                      Another family of approaches encourage evolvability by
+                                                                         systematically altering the fitness function during evolu-
+   We investigate the potential of the proposed method in two            tion [12, 30]. For example, the Modularly Varying Goals idea
+Evolutionary Robotics domains from previous evolvability                 creates indirect selective pressure for evolvability by repeat-
+studies [16, 18], i.e. maze navigation and biped locomotion.             edly changing the evolutionary goal in a modular way [12].
+In these domains, we compare the performance of Evolvabil-               The motivation is that to persist consistently through chang-
+ity Search with two other Evolutionary Algorithms (EAs),                 ing conditions requires the meta-ability to adapt more quickly
+both a traditional objective-driven algorithm and Novelty                between such conditions. Imposing periodic catastrophic
+Search, which has previously been shown to increase evolv-               events similarly create pressure to adapt more quickly [16];
+ability [16, 18]. We test the hypothesis that Evolvability               such events indiscriminately wipe out most of the organisms
+Search produces more evolvable solutions (as measured by                 in niches, thereby creating evolutionary bottlenecks. Evolv-
+the ability to generate phenotypic variability) as well as               able organisms are indirectly favored, because lineages able
+the hypothesis that Evolvability Search can effectively solve            to radiate through multiple niches have better chances of
+tasks. Finally, we test whether the evolvability produced                persisting across such bottlenecks.
+is general, by transferring organisms from the environment
+they were evolved within to a new environment, and validat-                 A final approach is to add a cost for connections within
+ing that they remain evolvable after such transfer. Indeed,              evolved networks, which encourages sparsity, modularity,
+the experimental results show that Evolvability Search sig-              and hierarchy. Such properties in turn improve evolvabil-
+nificantly increases evolvability and produces generalizable             ity [5, 9, 11, 22]. This connection cost technique is inspired
+evolvability. Similar to other divergent EAs [7, 25, 26, 31], it         by the energy costs paid by biological organisms to build,
+also increases population diversity and evolves solutions to             use, and maintain components such as neural connections.
+deceptive problems.                                                      Such connection costs may also serve function similar to
+                                                                         regularization in machine learning, creating a pressure to-
+   Because evolvability has proven difficult to produce in-              wards parsimony that prevents over-specific solutions and
+directly, scientists have lacked the ability to study highly             promotes generalization to new environments (a form of
+evolvable, digital phenotypes. Our results show that through             evolvability) [14].
+direct selection, Evolvability Search can produce highly evolv-
+able organisms, thereby providing scientists the opportunity                Interestingly, however, to the best of our knowledge, past
+to study them. Such opportunity may aid both the design                  studies have not investigated the effects of increasing evolv-
+of EAs and the study of evolvability itself. In this way,                ability through direct selection, i.e. by quantifying evolv-
+Evolvability Search may serve as a stepping stone for con-               ability to serve as the fitness function. Exploring such an
+sidering the relationship between EAs and evolvability in                approach is the primary contribution of this paper.
+new ways. What distinguishes this algorithm is that it is
+explicitly `long-sighted,' unlike natural evolution and most             2.2 NeuroEvolution of Augmenting Topologies
+EAs, which normally short-sightedly select by criteria related
+only to current performance (and not future potential). The                 In the experiments in this paper, robots are controlled
+main conclusion is that Evolvability Search is a helpful tool            by Artificial Neural Networks (ANNs) evolved through the
+for producing and studying evolvable organisms; thus it may              widely used [1, 2, 32, 33] NeuroEvolution of Augmenting
+also help stimulate further algorithms able to more efficiently          Topologies (NEAT) technique [32, 33]. Motivating its choice,
+generate evolvability, which could prove helpful across EC               NEAT has been used in several previous EC studies of evolv-
+as a whole.                                                              ability [16, 18, 19]. Note that this section only briefly reviews
+                                                                         NEAT; for further details see [32, 33].
+2. BACKGROUND
+                                                                            The NEAT algorithm starts from a population of sim-
+   This section reviews previous approaches to encourage                 ple ANNs and complexifies them during evolution through
+evolvability in EC and also the neuroevolution algorithm                 mutations that add nodes and connections. The algorithm
+employed in the experiments.                                             divides the population into distinct niches in a process called
+                                                                         speciation [32, 33]. Each species consists of ANNs that share
+2.1 Evolvability in Evolutionary Computation                             common ancestry and network topology. Such speciation
+                                                                         allows individuals with novel ANN structures an opportunity
+   Reproducing the evolvability of natural organisms is an               to adapt by limiting competition to be only within species.
+important yet unmet research goal in EC. Accordingly, re-                In this way, speciation avoids premature extinction of poten-
+
+                                                                    142
+tially promising ANN structures. In NEAT, new nodes and                objective-based search, which is a baseline control; and (2)
+connections are assigned a unique marking number, which                Novelty Search, which is representative of divergent search
+allows NEAT to perform meaningful crossover. That is,                  algorithms. All three algorithms are compared in the two
+aligning genes with the same historical markings enables               evolutionary robotics domains described next, i.e. maze nav-
+connections to be swapped that are likely to serve similar             igation and biped locomotion.
+functional roles. The NEAT implementation from [18] is
+adapted to implement Evolvability Search.                              4.1 Maze Navigation Experiment
+
+3. EVOLVABILITY SEARCH                                                    The maze navigation domain is an appropriate domain for
+                                                                       testing Evolvability Search because it is complex enough to be
+   Evolvability Search is motivated by the important biologi-          interesting, but is also easy to visualize and understand [17,
+cal property of evolvability, which is a key enabler of nature's       23]. Furthermore, the domain is deceptive (i.e. it is difficult
+ability to create complex, diverse creatures [3, 8]. The main          to solve by only moving closer to the goal), a property that
+idea is to select more evolvable individuals directly, i.e. the        commonly complicates search in complex domains [17].
+fitness function quantifies an individual's evolvability.
+                                                                                Left/Right Forward/Back
+   The evolvability measure in this paper is adopted from
+previous evolvability studies [16, 18, 19] and stems from one                 Evolved Topology
+common conception of evolvability, i.e. an organism's ability
+to generate heritable phenotypic variation (irrespective of            Rangefinder        Radar Bias
+fitness) [3]. We approximate an individual's capacity to gen-            Sensors         Sensors
+erate future phenotypic variation by measuring phenotypic
+variability among a sample of the individual's simulated off-                       (a)                                  (b)
+spring (which are discarded). Such variability is quantified as
+the number of unique behaviors; in particular, each offspring          Figure 1: The neural network controller (a) and map
+is considered sequentially and added to a list of unique be-           (b) for the maze navigation domain. Robots must nav-
+haviors only if its behavior is significantly different from the       igate the map from the start location (larger circle) to the
+behaviors of organisms already in the list. Two behaviors are          goal location (smaller circle). Figures from [18] .
+considered different if the distance between them according
+to a domain-specific behavioral distance metric is above a                In the maze navigation domain, a simulated robot con-
+pre-specified threshold (here 0.01).                                   trolled by an ANN (Fig. 1a) must successfully navigate a
+                                                                       maze (the so called "hard maze" [18]; Fig. 1b) within 400
+   Evolvability Search, like divergent search algorithms [18],         time steps. The robot (Fig. 2) has six rangefinder sensors
+does not directly pursue the underlying objective. Instead             that enable it to estimate its distance to nearby walls, and
+it attempts to broadly reward intermediate stepping stones             has four pie-slice radar sensors that activate when the goal is
+that could potentially lead to it. However, the heuristic of           detected within a pie-slice. The robot also has two effectors,
+Evolvability Search differs from that of methods like Novelty          one enabling it to turn left or right, and the other to move
+Search because it selects individuals with a greater potential         forward or backward.
+for diversity, rather than diversity itself.
+                                                                                         Rangefinder
+   Interestingly, the pressure to increase diversity among an
+individual's offspring indirectly elevates population diversity.                         Heading
+That is, selected individuals will by definition tend to have
+more diverse offspring, which will form the next generation's                                         Radar
+population, and thus further diversify the population. This                                           (pieslice sensor)
+tendency to diversify suggests that Evolvability Search may
+share performance characteristics with diversity-driven algo-          Figure 2: The maze-navigating robot. The outgoing
+rithms, which often perform well when applied to deceptive             arrows indicate the six rangefinder sensors, which allow the
+problems [7, 24­26, 31].                                               robot to estimate its distance to nearby obstacles. At the
+                                                                       front, back, and both sides of the robot, there are four pie-
+   One clear liability of Evolvability Search is that fitness          slice sensors that activate when the goal falls within that
+calculation is computationally expensive; one must evaluate a          sensor's angular range. The robot's heading is indicated by
+sufficient sample of offspring to estimate a single individual's       the solid, blue arrow. Figure from [18].
+evolvability. However, the algorithm can be easily parallelized
+and can therefore leverage benefits from increasing computa-              The objective-based search algorithm employs a fitness
+tional power and multi-core machines. While computational              function that favors robots that end up closer to the goal.
+efficiency is often an important consideration, ultimately in          The fitness f of a robot is given by: f = bf - dg, where bf is
+some domains--or for some types of research (e.g. into the             a constant value that ensures positive fitness, and dg is the
+nature of evolvability)--achieving highly-evolvable solutions          robot's final distance to the goal at the end of its evaluation.
+may be more important. The next section introduces experi-
+ments that highlight the potential of Evolvability Search to
+achieve such ends.
+
+4. EXPERIMENTS
+
+   The experiments described in this section compare Evolv-
+ability Search with two representative search methods also
+used in previous evolvability studies [16, 18]: (1) traditional
+
+                                                                  143
+Figure 3: A simulated biped robot. In the biped locomo-                 trol how strong mutations affect particular connections. The
+tion domain, artifical neural networks are evolved to controll          reason is that self-adaptation has been shown to enable
+the robot shown in this visualization. Figure from [18].                greater capacity for evolvability in the biped domain [16, 18].
+                                                                        To implement self-adaptation, the NEAT genome is extended
+   Novelty Search instead applies a novelty metric to quantify          with three pairs of mutation settings, which themselves mu-
+how novel a robot's behavior is relative to the current and             tate at fixed rates (to escape infinite regress) [4, 15]. Each
+past populations. As in [17], the behavior of a robot is defined        pair contains two parameters: a connection mutation power,
+as its final Cartesian location within the maze. For a new              which regulates the magnitude by which a mutation changes
+individual, the novelty metric computes the average distance            the weight of a connection; and a connection mutation rate,
+between it and its k nearest neighbors. Such calculation                which encodes the probability of a mutation occurring to a
+requires a distance metric, which in this domain is defined as          particular connection. Thus, with self-adaptation, a con-
+the squared Euclidean distance between the final locations              nection could be exempted from mutational changes, or
+of any pair of robots. Evolvability Search applies this same            conversely, prone to many more (and intense) mutations. All
+behavioral distance to determine the number of distinct                 self-adaptation parameters are the same as in [18]. See [18]
+behaviors among an organism's offspring, i.e. the organism's            for a detailed description of this feature.
+evolvability.
+                                                                           The population size for the biped experiment is 500 indi-
+   For all algorithms, 200 offspring are generated and eval-            viduals and evolution proceeds for 2, 000 generations. When
+uated to calculate the evolvability of an organism. Sim-                measuring evolvability, 200 offspring are created from each
+ilar to other evolvability studies in the maze navigation               individual. As in [18], the evolvability of individuals in the
+domain [16, 18], the evolvability of the population in the              Novelty Search and objective-driven treatments is measured
+Novelty and objective-based treatments is measured every                every 200 generations. The robot that travels the farthest
+100 generations. The population size is 250 and each run                in each run is considered the solution for that run. Other
+lasts 1000 generations. A maze-navigating solution is defined           algorithmic parameters are the same as in [18], and all biped
+as one that finishes within five units of the goal. All other           simulation parameters are from [17].
+parameters are the same as in [18].
+                                                                        5. RESULTS
+4.2 Biped Locomotion Experiment
+                                                                        5.1 Maze Navigation Results
+   The second domain, biped locomotion, is adapted from [17].
+Neural networks are evolved with the goal of controlling a                 Deception in the hard maze prevents objective-driven
+simulated biped robot to walk as far as possible (Fig. 3). The          search from often solving the problem [17], a result repli-
+domain is challenging because the controller must combine               cated here: Objective-based search solved the task only three
+balancing with oscillatory motion to produce a stable walking           times in 50 runs. In contrast, Evolvability Search produced
+gait [17].                                                              solutions in 49 out of 50 runs. Moreover, individuals in
+                                                                        Evolvability Search exhibited diverse navigational behav-
+   The simulated biped robot has two degrees of movement                iors (Fig. 4a), affirming that population diversity increases
+in each hip joint (pitch and roll) and one degree in each knee          as a byproduct of encouraging evolvability. As in previous
+joint (pitch), resulting in a total of six degrees of freedom.          work [17], Novelty Search evolved solutions in all 50 runs.
+The robot is controlled by a Continuous-Time Recurrent                  The number of successful runs of Evolvability Search and
+Neural Network (CTRNN). CTRNNs, which are commonly                      Novelty Search was significantly higher than that of objective-
+applied in such experiments [21, 29], are suitable for ex-              driven search (p < 0.0001, Fisher's exact test), but did not
+pressing cyclic dynamics like those found in natural gaits.             significantly differ from each other.
+Reflecting the goal of an effective robot gait, the fitness func-
+tion for objective-driven search is how far the robot walks,               Fig. 4b compares the average evolvability of populations
+measured as the Euclidean distance from the robot's start               across different methods, showing that Evolvability Search
+location. Evaluation of a controller is terminated if the robot         produces significantly more evolvable populations (p < 0.05).
+falls or when the allotted time period (15 seconds) expires.            Similarly, if the maximum evolvability of individuals pro-
+                                                                        duced during runs is compared across methods, Evolvability
+   For Novelty and Evolvability Search, the behavioral char-            Search again outperforms the controls (data not plotted,
+acterization is formed by sampling the biped's center of mass           p < 0.001). To compare the evolvability of solutions, i.e.
+once per second. Each biped's behavior is represented by 15             individuals that solve the maze, we performed as many runs
+points within an x - y plane (ignoring the vertical z com-              as were necessary to obtain 45 distinct successful runs per
+ponent). Temporal information is recorded in this domain                method. No additional runs were required for Evolvability
+to enable Novelty and Evolvability Search because temporal              Search or Novelty Search (solutions are taken from the first
+dynamics are a key aspect of walking gaits. For this domain,            45 runs). However, 550 additional runs were required for
+behavioral distance is measured as the square root of the sum           objective-based search (thus 600 objective-based runs were
+of squared differences between two individuals' behavioral              conducted in total). As shown in Fig. 4c, Evolvability Search
+characterizations, as is in [17].                                       again produces significantly higher evolvability by this metric.
+                                                                        Note that unless otherwise stated, all statistical tests are
+   Following [18], in this domain NEAT is augmented with                Mann-Whitney-Wilcoxon rank-sum tests.
+self-adapting mutation rates, which enable evolution to con-
+                                                                           Another aspect of performance is the number of evaluations
+                                                                        taken to produce solutions (irrespective of such solutions'
+                                                                        evolvability). The average number of macro-evaluations (i.e.
+                                                                        counting only the number of organism evaluations, which
+                                                                        discounts the 200 offspring evaluations required for each or-
+
+                                                                   144
+(a)                                                             (b)            (c)
+
+Figure 4: Maze navigation results. (a) The final locations visited by individuals are shown for one final population from
+Evolvability Search. The distribution of individuals shows that the algorithm avoids deception and can produce controllers that
+solve the problem. (b) Evolvability Search produces significantly higher evolvability than Novelty Search and objective-based
+search. As previously shown [18], Novelty Search produces significantly more evolvable populations than objective-based
+search. The curves represent means over all runs. Significant differences (p < 0.05) are shown comparing Evolvability Search
+to other methods, and are indicated below the plot every 100 generations for Novelty Search (circles) and objective-based
+search (squares). (c) Averaging evolvability over solutions (the first organism from each run that reaches the goal) instead of
+over the population, produces the same qualitative results.
+
+ganism in Evolvability Search) needed for objective-based            (a)  (b)
+search to solve the task is significantly higher than that re-
+quired by Novelty Search or Evolvability Search (Fig. 5a,            Figure 5: Evaluations required to solve the hard
+p < 0.001). However, the macro-evaluations needed to                 maze. (a) Objective-based search requires significantly more
+solve the task do not differ significantly between Novelty           macro-evaluations than Novelty Search and Evolvability
+and Evolvability Search (Fig. 5a, p > 0.05). A more accu-            Search. The difference between the number of macro-
+rate reflection of computational expense is given by Fig. 5b,        evaluations required by Evolvability Search and Novelty
+which counts how many total evaluations of genomes in                Search is not significant. (b) However, the number of ef-
+the maze simulation are conducted, i.e. the offspring eval-          fective evaluations (i.e. actual maze simulations) required by
+uations in Evolvability Search are also accounted for. By            Evolvability Search is significantly higher than both Novelty
+such accounting, Evolvability Search requires significantly          Search and objective-based search. Significance is measured
+more evaluations to produce solutions than Novelty Search            by the Mann-Whitney-Wilcoxon rank-sum test.
+or objective-based search (p < 0.001).
+                                                                     (Fig. 7c, p < 0.001). These results suggest that in some
+   Because Evolvability Search is afforded more computa-             domains there may be a trade-off between performance and
+tion per generation, we tested whether Novelty Search or             evolvability. As in the maze navigation domain, when ex-
+objective-based search would produce comparable levels of            tending the duration of evolution for Novelty Search and
+evolvability if they were run longer. We thus performed              objective-based search, evolvability seems to plateau below
+extended experiments that lasted 5, 000 generations (the de-         that produced by Evolvability Search (Fig. 6b). Overall, the
+fault runs lasted 2, 000 generations), which is as many as           biped domain results are qualitatively similar to those in the
+were possible given limited computational resources. A plot          maze navigation domain, suggesting they may represent a
+of evolvability over time shows that average evolvability in         general tendency.
+both Novelty Search and objective-based search appears to
+plateau at levels much lower than that produced by Evolv-            6. EVOLVABILITY GENERALITY TEST
+ability Search. Thus the expectation is that such search
+methods could not match Evolvability Search even if granted             While the measure of evolvability adopted here (i.e. phe-
+the same amount of computational resources (Fig. 6a).                notypic variability within a fixed environment) captures one
+                                                                     important aspect of evolvability, another intuition about
+5.2 Biped Locomotion Results                                         evolvability is that it enables individuals to adjust more
+                                                                     quickly to new environments, i.e. adaptability. One possi-
+   In the biped locomotion domain, Evolvability Search pro-
+duced controllers able to travel significantly farther than
+the best from objective-based search (Fig. 7a, p < 0.001).
+However, Novelty Search produced controllers significantly
+outperforming both Evolvability Search and objective-based
+search (Fig. 7a, p < 0.001). As in the maze domain, however,
+Evolvability Search produced significantly higher evolvability
+than the control methods, whether measured as the aver-
+age evolvability of individuals in the population (Fig. 7b,
+p < 0.05), the maximum evolvability individual evolved in
+a given run (p < 0.001), or in champion individuals only
+
+                                                                145
+bility is that the offspring from an evolvable individual will           in natural evolution, replicating nature's evolvability in EC
+yield a greater diversity of behaviors than a less evolvable             remains an unmet challenge [5, 16, 18, 35]. However, unlike in
+one even when both are transferred to a new environment.                 nature, the results here show that EAs can gain advantage
+Importantly, among such greater variety may be found the                 from leveraging foresight to select individuals with greater
+seeds of useful adaptations. Because adaptability is an im-              potential to generate future diversity.
+portant property in EC, this section describes a test designed
+to investigate whether evolvability particular to one envi-                 Furthermore, there may be ways to apply Evolvability
+ronment also generalizes to one unseen by evolution. The                 Search that reduce computational cost. For example, it may
+original and new environments are analogous to the concepts              benefit indirect encodings to encourage evolvability of neural
+of training set and testing set in machine learning.                     structures, i.e. in what variety of ANN topologies are reach-
+                                                                         able from a current individual. While the mapping between
+   As an initial exploration, this evolvability generality test is       ANN structure and behavior is inconsistent, the cost of com-
+performed only in the maze navigation domain. We extract                 puting ANN evolvability is likely trivial compared to full
+the most evolvable organism from each run for each treatment             behavioral evaluations of offspring; and such neural evolv-
+evolved on the hard maze. For each organism, we generate                 ability may be an important ingredient to improve search
+200 offspring and evaluate them without further evolution                with indirect encodings.
+in a new maze (the mega maze [34]; Fig. 8a). The name
+of the mega maze reflects that is more than twice as large                  Evolvability Search may also be applied intermittently,
+(450 units ×450 units) as the hard maze (200 units ×200                  especially when domain evaluations are computationally ex-
+units). The mega maze also contains many independent                     pensive. For example, solutions produced through other
+pathways. Thus, it is unlikely that a controller that has                algorithms (e.g. through Novelty Search) could be refined
+memorized a particular trajectory on the hard maze will                  afterwards, applying Evolvability Search to optimize evolv-
+result in substantial exploration of the mega maze.                      ability under the constraint of retaining the ability to solve
+                                                                         the task. The organisms could then be further evolved in
+   If an organism's evolvability generalizes to the new envi-            the same or different environments.
+ronment, then the behaviors exhibited by its offspring will
+be more diverse. One way to measure behavioral diversity                    Another interesting avenue for future work is to encourage
+in the new environment is to count how many areas of the                 different distributions of offspring behaviors. That is, instead
+mega maze are explored by the 200 transferred offspring of               of maximizing variance in offspring behaviors, novelty can
+each evolvable organism [34]. Following [34], we overlay a               be maximized in the behavioral distributions of offspring.
+450 × 450 grid on the mega maze and track the percentage                 Doing so may cause organisms to canalize in different ways
+of grid cells that are visited at least once by any of an or-            (e.g. some produce limbs whose lengths are all correlated,
+ganism's transferred offspring. This metric captures some                others produce limbs with uncorrelated limb lengths, still
+aspect of generalizable evolvability, because it measures the            others could correlate hind legs, but not forelegs, etc.). The
+phenotypic diversity of an organism's offspring in a novel               overall product may be a significantly more evolvable pop-
+environment. The results of this test show that Evolvability             ulation, consisting of evolvable individuals predisposed to
+Search scores higher on this metric than both Novelty Search             different types of variation [36]. In this way, explicitly en-
+and objective-based search (p < 0.001, Fig. 8b­d & 9)                    couraging search in the space of canalizations may benefit
+                                                                         search, reflecting the perceived importance of canalization
+(a)  (b)                                                                 for evolvability in biology [10].
+
+Figure 6: Extended evolutionary runs suggest that                           Apart from direct practical applications, the algorithm
+the evolvability produced by Novelty Search and                          may help shed light on the structure of evolvability. For
+objective-based search would not rise to the level                       example, optimizing evolvability in more ambitious domains
+of that produced by Evolvability Search irrespective                     may reveal if evolvability is often a deceptive property. In
+of how long the algorithms are run. Average evolvabil-                   other words, do the stepping stones to increased evolvability
+ity is shown per generation for both (a) the maze-navigation             tend to be evolvable? With Evolvability Search it may be
+domain and (b) the biped locomotion domain. The dashed                   possible to empirically examine how often the gradients of
+line at the top of each plot indicates the level of evolvability         evolvability align with the gradients of novelty or of objective-
+that Evolvability Search produced after 2000 generations.                driven fitness. In this way, Evolvability Search may be a
+                                                                         useful tool to help understand the evolution of evolvability
+7. DISCUSSION                                                            and how our current algorithms encourage it (or why they
+                                                                         fail to). Such understanding could lead to further algorithmic
+   The results of these experiments highlight that directly              improvements in EC.
+selecting for evolvability, although computationally expensive,
+is a viable approach to produce evolvable and adaptable                     The cost of Evolvability Search may be somewhat miti-
+individuals. Because there remains uncertainty about the                 gated by the trend of increasing computational power and
+exact indirect selective forces by which evolvability emerges            access to many CPU cores, because the algorithm is triv-
+                                                                         ially parallelizable. Regardless, our results show that the
+                                                                         computational cost may be necessary if researchers wish to
+                                                                         reach levels of evolvability higher than those produced by
+                                                                         other known algorithms; in some cases such computational
+                                                                         cost may be a small price to pay relative to the benefits of
+                                                                         easily and consistently generating highly evolvable organisms,
+                                                                         which also enables their study.
+
+                                                                            Finally, some readers may object to the definition of evolv-
+                                                                         ability adopted here because it measures phenotypic variation
+                                                                         without including any measure of adaptation or fitness. We
+
+                                                                    146
+     (a)                                                        (b)  (c)
+
+Figure 7: Biped Locomotion Results. (a) Novelty Search produces robots that travel significantly farther than those
+from Evolvability Search and objective-based search. However, impressively, Evolvability Search does significantly outperform
+objective-based search. (b) Most importantly, Evolvability Search produces significantly more evolvability than Novelty Search
+or objective-based search. That result holds when averaged across the entire population (b) and when averaged across the best
+organism from the final population of each run (c). As in [18], the corresponding statistics for Novelty Search are significantly
+higher than objective-based search. Plotted are means over all runs. p values < 0.05 vs. Evolvability Search are indicated
+below the plot for Novelty Search (circles) and objective-based search (squares) every 200 generations.
+
+(a)       (b)
+
+                                                                     Figure 9: Evolvability from Evolvability Search gen-
+                                                                     eralizes significantly more. Plotted is the percent of the
+                                                                     mega maze explored by the offspring of the most evolvable
+                                                                     organism from each treatment without further evolution.
+
+(c)       (d)                                                        notions of evolvability (e.g. selecting for adaptive variation
+                                                                     or explicitly encouraging novel canalizations).
+Figure 8: Evolvability Generality Test. (a) The mega
+maze. The larger and smaller circles represent the start and         8. CONCLUSIONS
+goal, respectively. The area covered by offspring of the most
+evolvable Evolvability Search individual (b) is larger than             This paper introduces Evolvability Search, a method for
+for Novelty Search (c) and objective-based search (d).               producing evolvability by selecting for it directly. The results
+                                                                     demonstrate that Evolvability Search is an effective method
+note that Evolvability Search could also be with alternative         to produce organisms and solutions with increased evolvabil-
+definitions of evolvability. While we chose the definition in        ity, thereby providing scientists with a new tool to create
+this paper because it is principled, easy to measure, and            and study more evolvable organisms. By introducing an EA
+enjoys support in the biological literature, an exciting re-         with explicit foresight, the hope is also to foster research
+search question for future work is to how to encourage other         into new kinds of effective long-sighted algorithms. While
+types of evolvability; such alternate evolvability measures          computationally expensive, Evolvability Search may be the
+could include aspects of improving adaptability both within          most viable approach when highly evolvable solutions and
+an environment or problem, or to new ones. For example,              populations are essential.
+the current method selects for maximizing production of any
+type of variation. However, such impartiality may undermine             Acknowledgements: Support came from an NSF CA-
+evolving useful constraints on such variation, like canalizing       REER award (CAREER: 1453549) to Jeff Clune and via
+useful dimensions of variation and thereby reducing the gen-         computers provided by the US NSF and DOE's Open Science
+eration of unhelpful behaviors. Thus an interesting idea for         Grid. We thank J.Huizinga and R.Velez for helpful feedback
+future work is to investigate how to promote more complex            and discussions.
+
+                                                                     9. REFERENCES
+
+                                                                      [1] T. Aaltonen et al. Measurement of the top-quark mass
+                                                                           with dilepton events selected using neuroevolution at
+                                                                           CDF. Physical Review Letters, 102(15):152001, 2009.
+
+                                                                147
+ [2] B. Allen and P. Faloutsos. Complex networks of simple                increasing evolvability without the pressure to adapt.
+      neurons for bipedal locomotion. In Intelligent Robots               PloS one, 8(4):e62186, 2013.
+      and Systems (IROS), pages 4457­4462. IEEE, 2009.              [20] P. J. B. Lipson, H. and N. P. Suh. On the origin of
+                                                                          modular variation. Evolution, International Journal of
+ [3] J. Brookfield. Evolution: the evolvability enigma.                   Organic Evolution, 56(8):1549­1556, 2002.
+      Current Biology, 11(3):R106­R108, 2001.                       [21] G. McHale and P. Husbands. Gasnets and other
+                                                                          evolvable neural networks applied to bipedal
+ [4] J. Clune, D. Misevic, C. Ofria, R. Lenski, S. Elena, and             locomotion. From Animals to Animats, pages 163­172,
+      R. Sanjua´n. Natural selection fails to optimize                    2004.
+      mutation rates for long-term adaptation on rugged             [22] H. Mengistu, J. Huizinga, J.-B. Mouret, and J. Clune.
+      fitness landscapes. PLoS Computational Biology,                     The evolutionary origins of hierarchy. PLoS
+      4(9):e1000187, 2008.                                                Computational Biology, To appear, 2016.
+                                                                    [23] J.-B. Mouret. Novelty-based multiobjectivization. In
+ [5] J. Clune, J.-B. Mouret, and H. Lipson. The                           New horizons in evolutionary robotics, pages 139­154.
+      evolutionary origins of modularity. Proceedings of the              Springer, 2011.
+      Royal Society B, 280(20122863), 2013.                         [24] J.-B. Mouret and J. Clune. Illuminating search spaces
+                                                                          by mapping elites. arXiv preprint arXiv:1504.04909,
+ [6] J. Clune, K. Stanley, R. Pennock, and C. Ofria. On the               2015.
+      performance of indirect encoding across the continuum         [25] J.-B. Mouret and S. Doncieux. Overcoming the
+      of regularity. IEEE Transactions on Evolutionary                    bootstrap problem in evolutionary robotics using
+      Computation, 15(4):346­367, 2011.                                   behavioral diversity. In IEEE Congress on Evolutionary
+                                                                          Computation, pages 1161­1168. IEEE, 2009.
+ [7] S. Doncieux and J.-B. Mouret. Behavioral diversity             [26] J.-B. Mouret and S. Doncieux. Encouraging behavioral
+      measures for evolutionary robotics. In Evolutionary                 diversity in evolutionary robotics: An empirical study.
+      Computation (CEC), 2010 IEEE Congress on, pages                     Evolutionary computation, 20(1):91­133, 2012.
+      1­8. IEEE, 2010.                                              [27] A. Nguyen, J. Yosinski, and J. Clune. Innovation
+                                                                          engines: Automated creativity and improved stochastic
+ [8] D. J. Earl and M. W. Deem. Evolvability is a selectable              optimization via deep learning. In Proc. of the Genetic
+      trait. Proceedings of the National Academy of Sciences              and Evolutionary Computation Conference, 2015.
+      of the USA, 101(32):11531­11536, 2004.                        [28] M. Pigliucci. Is evolvability evolvable? Nature Reviews
+                                                                          Genetics, 9(1):75­82, 2008.
+ [9] K. O. Ellefsen, J.-B. Mouret, J. Clune, and J. C.              [29] T. Reil and P. Husbands. Evolution of central pattern
+      Bongard. Neural modularity helps organisms evolve to                generators for bipedal walking in a real-time physics
+      learn new skills without forgetting old skills. PLoS                environment. Evolutionary Computation, IEEE
+      Comput Biol, 11(4):e1004128, 2015.                                  Transactions on, 6(2):159­168, 2002.
+                                                                    [30] J. Reisinger and R. Miikkulainen. Selecting for
+[10] S. Gould. Ontogeny and phylogeny. Harvard University                 evolvable representations. In Proceedings of the 8th
+      Press, 1977.                                                        annual conference on Genetic and evolutionary
+                                                                          computation, pages 1297­1304. ACM, 2006.
+[11] J. Huizinga, J.-B. Mouret, and J. Clune. Evolving              [31] S. Risi, S. D. Vanderbleek, C. E. Hughes, and K. O.
+      neural networks that are both modular and regular:                  Stanley. How novelty search escapes the deceptive trap
+      Hyperneat plus the connection cost technique. In                    of learning to learn. In Proceedings of the Genetic and
+      Proceedings of the Genetic and Evolutionary                         Evolutionary Computation Conference, pages 153­160,
+      Computation Conference, pages 697­704, 2014.                        2009.
+                                                                    [32] K. Stanley and R. Miikkulainen. Evolving neural
+[12] N. Kashtan and U. Alon. Spontaneous evolution of                     networks through augmenting topologies. Evolutionary
+      modularity and network motifs. Proc. of the National                Computation, 10(2):99­127, 2002.
+      Academy of Sciences, 102(39):13773­13778, 2005.               [33] K. Stanley and R. Miikkulainen. Competitive
+                                                                          coevolution through evolutionary complexification.
+[13] M. Kirschner and J. Gerhart. Evolvability. Proc. of the              Journal of Artificial Intelligence Research, 21(1):63­100,
+      National Academy of Sciences, 95(15):8420­8427, 1998.               2004.
+                                                                    [34] R. Velez and C. J. Novelty search creates robots with
+[14] K. Kouvaris, J. Clune, L. Kounios, M. Brede, and R. A.               general skills for exploration. In Proceedings of the
+      Watson. How evolution learns to generalise: Principles              Genetic and Evolutionary Computation Conference,
+      of under-fitting, over-fitting and induction in the                 pages 737­44, 2014.
+      evolution of developmental organisation. arXiv preprint       [35] G. Wagner and L. Altenberg. Complex adaptations and
+      arXiv:1508.06854, 2015.                                             the evolution of evolvability. Evolution, 50(3):967­976,
+                                                                          1996.
+[15] O. Kramer. Evolutionary self-adaptation: a survey of           [36] B. Wilder and K. Stanley. Reconciling explanations for
+      operators and strategy parameters. Evolutionary                     the evolution of evolvability. Adaptive Behavior,
+      Intelligence, 3(2):51­65, 2010.                                     23(3):171­179, 2015.
+
+[16] J. Lehman and R. Miikkulainen. Enhancing divergent
+      search through extinction events. In Proceedings of the
+      2015 on Genetic and Evolutionary Computation
+      Conference, pages 951­958. ACM, 2015.
+
+[17] J. Lehman and K. Stanley. Abandoning objectives:
+      Evolution through the search for novelty alone.
+      Evolutionary Computation, 19(2):189­223, 2011.
+
+[18] J. Lehman and K. O. Stanley. Improving evolvability
+      through novelty search and self-adaptation. In
+      Evolutionary Computation (CEC), 2011 IEEE
+      Congress on, pages 2693­2700. IEEE, 2011.
+
+[19] J. Lehman and K. O. Stanley. Evolvability is inevitable:
+
+                                                               148
+

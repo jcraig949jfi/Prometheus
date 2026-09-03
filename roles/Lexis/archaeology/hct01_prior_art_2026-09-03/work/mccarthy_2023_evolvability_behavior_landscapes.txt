@@ -1,0 +1,798 @@
+                                        ON EVOLVABILITY AND BEHAVIOR LANDSCAPES IN
+                                            NEUROEVOLUTIONARY DIVERGENT SEARCH
+
+                                                                              A PREPRINT
+
+arXiv:2306.09849v1 [cs.NE] 16 Jun 2023                Bruno Gasperov                                   Marko Ðurasevic´
+                                           University of Zagreb, Faculty of                  University of Zagreb, Faculty of
+                                        Electrical Engineering and Computing              Electrical Engineering and Computing
+
+                                                     Zagreb, Croatia                                   Zagreb, Croatia
+                                              bruno.gasperov@fer.hr                            marko.durasevic@fer.hr
+
+                                                                                            ABSTRACT
+
+                                                   Evolvability refers to the ability of an individual genotype (solution) to produce offspring with
+                                                   mutually diverse phenotypes. Recent research has demonstrated that divergent search methods,
+                                                   particularly novelty search, promote evolvability by implicitly creating selective pressure for it.
+                                                  The main objective of this paper is to provide a novel perspective on the relationship between
+                                                   neuroevolutionary divergent search and evolvability. In order to achieve this, several types of walks
+                                                   from the literature on fitness landscape analysis are first adapted to this context. Subsequently, the
+                                                   interplay between neuroevolutionary divergent search and evolvability under varying amounts of
+                                                   evolutionary pressure and under different diversity metrics is investigated. To this end, experiments
+                                                   are performed on Fetch Pick and Place, a robotic arm task. Moreover, the performed study in
+                                                   particular sheds light on the structure of the genotype-phenotype mapping (the behavior landscape).
+                                                   Finally, a novel definition of evolvability that takes into account the evolvability of offspring and is
+                                                   appropriate for use with discretized behavior spaces is proposed, together with a Markov-chain-based
+                                                   estimation method for it.
+
+                                        Keywords neuroevolution, divergent search, novelty search, evolvability, genetic algorithms
+
+                                        1 Introduction
+
+                                        Recent years have seen a strong surge of interest in a number of evolutionary computation and population-based search
+                                        approaches rooted in the ideas of divergent search and open-endedness [1]. When combined with neuroevolution,
+                                        these approaches offer a promising alternative [2, 3] to more canonical gradient-based algorithms for training deep
+                                        reinforcement learning agents, especially for tasks that include sparse or deceptive rewards, or require generation of a
+                                        large number of high-performing yet behaviorally diverse solutions. Within this realm, the novelty search [4] and quality
+                                        diversity [5] families of approaches have gained considerable attention in the research community. Novelty search
+                                        is a class of divergent search algorithms based on abandoning objectives altogether and solely pursuing behavioral
+                                        novelty instead. Novelty is typically evaluated by comparing the behavior of an individual to the behavior of the
+                                        current population and a record of previously encountered individuals, known as the archive. On the other hand,
+                                        quality-diversity approaches (as the name itself implies) consider both the objective quality of solutions and their
+                                        diversity, aiming to discover a diverse set of high-performing solutions that occupy different niches, each of which
+                                        represents a different type of behavior. As these algorithms "illuminate" the fitness potential of feature space areas, they
+                                        are sometimes referred to as illumination algorithms [6]. The underlying thread of all divergent search algorithms is
+                                        their emphasis on enabling the necessary conditions for open-ended processes to occur, which requires a high level of
+                                        what is known as "evolvability".
+
+                                        The concept of evolvability has been frequently studied, both in the area of natural evolution [7] and evolutionary
+                                        computing [8, 9]. Despite the abundance of various, even somewhat conflicting definitions [10], we see evolvability as
+                                        the capacity of an individual (genotype) to produce offspring with diverse phenotypes. Following this, evolvability can
+                                        be considered an indicator of the individual's ability to exhaustively explore the solution space through its offspring.
+On Evolvability and Behavior Landscapes in Neuroevolutionary Divergent Search A PREPRINT
+
+While the importance of evolvability for divergent search can hardly be overstated, given that it increases the potential for
+future evolution [11], this area of research remains relatively unexplored, especially in combination with neuroevolution.
+It has been shown that novelty search in itself promotes evolvability [12] (measured via reachability and sampling
+uniformity of the offspring) on both individual and population level [13], with some caveats1 [14, 15, 16]. Yet
+novelty search boils down to greedily choosing the most diverse individuals within each generation without taking
+into account their other characteristics, including evolvability itself, which might lead to less diversity in the long run.
+Similar considerations have led researchers [11, 9] to propose algorithms that instead search directly for evolvability.
+The successes of these approaches in generalizing well and producing higher evolvability even in unseen testing
+environments, as well as in yielding solutions that can be quickly adapted for different tasks, are demonstrated. A
+somewhat different path is taken by Katona et al. [17] who propose the Quality Evolvability Evolutionary Strategy. In
+their work, a population of diverse and well-performing solutions is obtained indirectly - by finding a single individual
+with such a distribution of offspring. In [13], the authors list several properties, characteristics, and mechanisms which
+were demonstrated to be conducive to improving evolvability, including extinction events [18] and reduction of the cost
+of connections between network nodes [19]. Ferigo et al. [20] first define evolvability as the mean difference in fitness
+between the parents and their offspring, and then use a grid-like structure for studying the interplay between evolvability
+and fitness. Their main findings suggest that evolvability is not an intrinsic property of the fitness landscape, but that it
+rather heavily depends on the used evolutionary algorithm. Finally, we mention the newer work of Doncieux et al. [21]
+who treat evolvability as reachability in the task space and provide a theoretical perspective on the underlying problem.
+
+Our research lies at the intersection of (behavior) landscape analysis, neural network weight neuroevolution, and
+evolvability research, exploring the strong links between the three topics. Following definitions from [13], we are
+primarily concerned with individual evolvability, measured via a form of reachability, as opposed to population
+evolvability [8, 12]. Furthermore, unlike the authors in [20], we study behavior for its own sake and do not rely on
+any particular fitness function. We particularly explore the effect of the use of different diversity metrics and levels of
+evolutionary pressure on evolvability in the context of neuroevolutionary divergent search.
+
+The main contributions of this study are the following. First, we introduce a number of metrics related to evolvability
+and behavior landscape analysis. Then we adapt the concept of walks from the existing literature on fitness landscape
+analysis to the context of behavior landscape analysis. We also propose "dissimila", points with low evolvability that
+play a role in novelty search that we suspect is similar to that of local optima in standard fitness-driven search. Second,
+we propose a diversity metric based on the use of Gaussian kernel density estimates. Third, we study the sensitivity of
+individual evolvability to the level of evolutionary pressure. By varying the level of evolutionary pressure present in
+the environment, we aim to generalize existing research on the connections between novelty search and evolvability.
+Positive links between evolvability and the level of evolutionary pressure present in the environment would provide
+additional evidence on the significance of novelty search for promoting evolvability. Fourth, we investigate the effect
+of different diversity metrics on evolvability, with a focus on the aforementioned kernel density estimation-based
+metric. A suitable diversity metric is a key heuristic in a divergent search algorithm as it plays a vital role in assessing
+the diversification of the solutions produced by the algorithm. Fifth and finally, we put forth a novel definition of
+evolvability that also considers the evolvability of offspring and is suitable for use with discretized behavior spaces,
+together with an associated Markov-chain-based estimation method.
+
+The paper is organized as follows. Section 2 introduces definitions and metrics which represent the prerequisites for
+further work. In particular, concepts such as evolvability, sensitivity, and walks are expounded on in great detail, and
+a number of diversity metrics are listed. Section 3 presents the experimental setup, including the task description,
+operators, neural network architecture, and hyperparameters. In Section 4, the experimental results are presented.
+Section 5 proposes a novel evolvability definition together with an associated estimation method. Finally, Section 6
+concludes the paper by summarizing the findings and offering suggestions for future research in the field.
+
+2 Definitions and metrics
+
+2.1 Behavior function and descriptors
+
+A behavior function  :   B is a mapping from genotypes (in neuroevolution represented by parameters of a neural
+
+network) to phenotypes (behavior vectors):
+
+                                            () = b,                                                                   (1)
+
+where  is the set of genotypes, B is the behavior space (BS), i.e., the set of all behavior vectors (BVs),  is a genotype,
+and b its phenotype. Typically, B  Rn with n  2. The components of a BV are referred to as behavior descriptors.
+
+For example, a common choice of behavior descriptors in evolutionary robotics is given by the final position of the
+
+1A distinction should be made between novelty search for neuroevolution of weights and neuroevolution of topologies.
+
+                                            2
+On Evolvability and Behavior Landscapes in Neuroevolutionary Divergent Search A PREPRINT
+
+robot's body along two dimensions, i.e., b = (xT , yT ) where T is the terminal time. In some approaches (e.g., the
+MAP-Elites algorithm [6]), the BS is split into niches - regions or subspaces containing solutions with similar behavior,
+which can be obtained by simply discretizing the BS into a grid. As an alternative, centroidal Voronoi tessellation
+[22], which ensures scalability to high-dimensional BSs, might be used. The use of niches gives rise to an alternative
+categorical representation of BVs in the form of one-hot vectors b = (. . . , 1behavior in the niche i, . . .), with the i-th entry set
+to 1 if the BV belongs to the i-th niche, and 0 otherwise. However, it is important to notice that this encoding discards
+the original relationships between the niches and eliminates any naturally occurring distance metrics between them.
+
+2.2 Behavior landscape
+
+A behavior landscape is an abstraction that represents the genotype-behavior mapping, i.e., the function . We define it
+analogously to the fitness landscape, which deals with genotype-fitness mapping and has been thoroughly studied in
+various contexts, and the behavior-fitness mapping, considered widely in quality-diversity approaches. This triad of
+mappings forms a bridge between classical evolutionary algorithms and new illumination-based approaches. Behavior
+landscapes are intricate and complex structures influenced by a number of factors, such as the choice of the behavior
+function, the topology of the (neural network) controller2, the interaction of the resulting controls with the environment,
+and the environment's own internal mechanics. They are typically highly rugged, showing significant epistasis [23],
+and more difficult to visualize than fitness landscapes [24], given the possible high dimensionality of the BS. A fitness
+landscape is usually considered difficult if it has a large number of peaks and valleys (local optima) or if the paths to
+global optima are not easy to traverse. In behavior landscape analysis, different criteria are required, and ruggedness is
+not necessarily a hindrance, as it is closely related to diversity. A difficult behavior landscape could be seen as one
+in which a divergent search algorithm struggles to explore the BS easily due to the presence of inaccessible regions.
+Therefore, different topographical aspects (compared to classical fitness landscape analysis), such as the distribution of
+different niches in the behavior landscape, should be scrutinized. On a related note, we remark that some studies suggest
+that behaviorally diverse solutions lie concentrated in a small subset of the genotype space called the hypervolume3
+[25, 26, 27].
+
+It has also been noted [13] that, in the context of novelty search, the fitness function is dynamic and contingent upon the
+set of individuals comprising the current population and archive. In contrast, the behavior landscape is static4, rendering
+it less recalcitrant to analysis. Yet the research area remains mainly understudied with some notable exceptions [28],
+while even the broader domain of neuroevolutionary fitness landscapes has received very limited scholarly attention
+[29].
+
+2.3 Local sensitivity
+
+A behavior function  is said to be locally sensitive at  if small steps around it can lead to large changes in the ensuing
+behavior. More formally, the local sensitivity of a behavior function  at    can be defined as:
+
+                       LS() = max |() - ()|,           (2)
+                                N ()
+
+where N () is the set of all neighbours of , associated with a certain mutation operator M.  is a neighbor of  if
+and only if  can be reached from  through a single mutation. This relation is not necessarily symmetric5. Large
+
+LS() values point to the existence of neighbors that are significantly behaviorally different from  but say nothing
+about their frequency. On the contrary, small LS() values indicate high levels of behavioral neutrality [30] locally
+around . Note that, when training neural networks via neuroevolution, mutations are often given as random samples
+
+from a multivariate (normal) distribution used for perturbing its weights, in which case N () = , rendering the notion
+
+of the set of neighbors meaningless. However, this can be easily addressed by truncating the underlying distribution or
+by otherwise enforcing genotypic proximity given by | - | < c, for some positive constant c. As previously hinted
+
+at, Eq. 2 is sensitive to outliers due to the use of the max operator. A more robust alternative can be provided. First,
+consider the sampling distribution over the set of neighbors N () induced by M and denote it by F. Now simply
+define the expected local sensitivity as:
+
+                       LS()  =         E |()  -  ()|.  (3)
+
+                                F (N ())
+
+    2A controller simply determines the mapping from the set of observations (states) to the set of actions, which can be represented
+
+by a reinforcement learning agent.
+    3In [25], the emphasis is put on elite hypervolumes in the sense of quality-diversity.
+    4In stochastic environments, where behaviors are noisy, behavior descriptors (which are now random variables) can be replaced
+
+by their expected values, thereby preserving the static nature of the behavior function.
+    5E.g., consider removal of a neural network weight as a mutation operator.
+
+                                3
+                    On Evolvability and Behavior Landscapes in Neuroevolutionary Divergent Search A PREPRINT
+
+Eq. 3 measures the expected distance between  and its randomly selected neighbor. It can be estimated by sampling
+
+and taking the mean value:
+
+                                LS()       =           1               |() - ()|,                      (4)
+                                                 card(S ())
+                                                                 S ()
+
+where S()  N () is a sample from the set of neighbours of  and card(. . .) denotes cardinality.
+
+2.4 Global sensitivity
+
+The global sensitivity of  is defined as:
+
+                                  GS          =        max      |()    -  ()|.                         (5)
+
+                                                 , N ()
+
+It is equal to the local sensitivity of the genotype  that has the largest local sensitivity. The expected global sensitivity
+is defined in analogy to Eq. 3 but is not provided here for the sake of brevity.
+
+2.5 Evolvability
+
+Evolvability [13] can be conceptualized as a gauge of an individual's capacity to produce offspring with mutually
+diverse phenotypes (in our case BVs). Although there is no consensus on its definition, we use the following one:
+
+                                  ()             =  ,  max      |()    -  ()|,                         (6)
+
+                                                       N ()
+
+where () denotes the evolvability of solution . Hence, evolvability corresponds to the diameter of the cluster
+comprising the neighbors of . The same caveats that apply to Eq. 2 apply here as well. By comparing Eq. 2 and Eq.
+
+6 it is clear that, due to the triangle inequality, ()  2 LS(), and the two metrics are expected to be positively
+correlated. Again, similarly to Eq. 3, the expected evolvability is a robust alternative given by:
+
+                                 ()        =  ,          E              |()  -  ()|                    (7)
+
+                                                 F (,        N ())
+
+and its estimator:                                1
+                                                 card(S ()
+                         ()  =  card(S ())                   -  1)              |() - ()|.             (8)
+
+                                                                    , S()
+
+                                                                       = 
+
+Under a one-hot representation of BVs, evolvability can be estimated relative to the sample size, as:
+
+                                                 (; card(S()))         d
+                                                                    =    ,                             (9)
+                                                                       n
+
+where n is the total number of niches, and d the number of niches occupied by solutions from the sample S().
+Although our focus is on individual-level evolvability, we also present the following expression used to estimate the
+expected population evolvability:
+
+                             (i)  =          1         - 1)               |() - ()|,                   (10)
+                                     ni+1(ni+1
+                                                             ,   Gi+1
+
+                                                                 =
+
+where  (i) denotes the expected population evolvability of the i-th generation, Gi the set of all members of the i-th
+evolutionary generation, and ni its cardinality. Finally, it is worth noting that evolvability is generally computationally
+expensive, and in some cases, even prohibitively so, since it requires evaluating the fitness function (which can itself be
+
+costly) on the whole N () or a sufficiently large sample of it.
+
+2.6 Local "optima"
+
+Consider the ratio of evolvability and local sensitivity:
+
+                                                    r() = () ,                                         (11)
+                                                           LS() + 
+
+                                                             4
+On Evolvability and Behavior Landscapes in Neuroevolutionary Divergent Search A PREPRINT
+
+where protected division is employed (for some infinitesimal  > 0). It can be shown that 0  r() < 2. Also, consider
+
+its probabilistic variant:
+
+                                             r()  =      ()        .                                    (12)
+                                                     LS() +       
+
+These local metrics provide insight into the relationship between  and its neighbors. Solutions with relatively small
+r() values are analogous to local optima in classical fitness landscapes - due to their large (in relative terms) expected
+
+local sensitivity they are likely to be selected in NS-like algorithms, despite their low expected evolvability. Hence, we
+
+suspect that they could represent points of deception and that their presence is expected to ramp up the difficulty of
+the respective behavior landscape. We refer to such solutions as "dissimila", in analogy to "optima". On the contrary,
+solutions with relatively large r() values represent highly evolvable points in the behavior landscape that might be
+
+difficult to find because of their relatively low expected local sensitivity, i.e. their relative similarity to their neighbors.
+
+2.7 Walks
+
+A walk [31] W on a behavior landscape is a sequence (time series) of behavior vectors (b0, . . . , bi, . . . , bT), associated
+with a sequence of genotypes, (0, . . . , i, . . . , T ), via the relation bi = (i). The underlying sequence of genotypes
+is generated by some process A (e.g. an evolutionary algorithm), i.e., A(i) = i+1. This ensures that actual segments
+of the search space traversed by the respective (novelty search) algorithm are considered [29]. Solution i+1 is
+called the child of i, and conversely, i is referred to as the parent of i+1. Unless stated otherwise, real-valued
+(non-categorical) BVs are assumed. Also, all walks are assumed to be of finite length T + 1. We highlight that walks are
+particularly well-suited to evolvability analysis, as they involve a single parent generating a large number of offspring
+(neighbors) during each step.
+
+2.7.1 Highly selective walk
+
+In a highly selective walk, the best (according to some criterion) solution from S(i) is chosen, i.e.:
+
+                             A(i) = i+1 = argmaxG(()),                                                  (13)
+
+                                                      S (i )
+
+where G is a (novelty-based) fitness metric and S(i)  N (i) is defined as earlier. This type of walk represents
+
+situations in which there is a large amount of evolutionary pressure. If niches are considered, an alternative definition is
+
+possible, given by:          A(i) = i+1 = argmax G(()),
+
+                                                                                                        (14)
+
+                                                      S (i )
+
+                                                  N (())=N ((i))
+
+where N (()) denotes the niche to which () belongs. Hence, among solutions that fall into a dif-
+ferent niche than i, the best one is accepted. The corresponding walk through niches is given by:
+(N ((0)), . . . , N ((i)), . . . , N ((T ))).
+
+2.7.2 Adaptive walk
+
+In an adaptive walk, any solution "better" than i is accepted. It is an intermediate type of walk between a highly
+selective and a random walk. Consider first the subset of children of i, given by Ca = {  S(i) | G(()  a} for
+some a which is a proxy for evolutionary pressure. Depending on the model, a can be constant or change dynamically
+
+in time. Now simply:
+
+                                             i+1  Unif(Ca),                                             (15)
+
+where Unif denotes the uniform distribution. Hence, unlike the case with highly selective walks, a random solution that
+
+surpasses a certain threshold is selected instead. If no such solution exists, set i+1 = i and sample from S(i+1)
+
+again. Let us also consider adaptive walks when using BVs expressed as one-hot vectors. In that case, consider the
+subset Ca = {  S(i) | N (()) = N ((i))} and sample uniformly from it to obtain i+1. Similarly as before,
+if Ca is an empty set, let i+1 = i. We emphasize that a highly selective walk can also be considered adaptive, with a
+selected in such a way that card(Ca) = 1. Finally, we raise attention to the connections between biological evolution
+
+by natural selection and the concept of adaptive walks [32, 33].
+
+2.7.3 Random walk
+
+In a random walk, any neighbor is accepted:
+
+                                             i+1  Unif(S(i)).                                           (16)
+
+It describes the conditions under which there is no evolutionary pressure altogether.
+
+                                                     5
+On Evolvability and Behavior Landscapes in Neuroevolutionary Divergent Search A PREPRINT
+
+2.7.4 Multi-state walk
+
+In a multi-state walk, at each step i, a set of genotypes is selected, resulting in a matrix Zi filled with BVs. For the sake
+of simplicity, in what follows the focus is solely on single-state walks. By doing this we abstract the key aspects of
+divergent search, stripping it to its barest minimum and focusing on the evolvability of individuals.
+
+2.8 Diversity metrics
+There are various options available when selecting the diversity metric G. Here we list and propose several:
+
+2.8.1 K-nearest neighbors distance to other individuals in the population and the archive
+
+This case corresponds to the vanilla novelty search algorithm [4]:
+
+                                      G(()) =                       |µk() - ()|                               (17)
+
+                                                          1kK
+
+where µk() is the phenotype of the k-th nearest (in the BS) individual to , with µk() = (),   S(i)  X .
+X is the archive of previous novel (or randomly selected) individuals. The Euclidean distance is typically used.
+
+2.8.2 Distance to ancestors
+
+If the distance to the parent is used as a metric, we have:
+
+                                      G(()) = |(i) - ()|.                                                     (18)
+
+Observe the similarity to Eq. 2; if S(i) = N (i), the distance between consecutive BVs in the respective walk is
+maximum and equal to the local sensitivity at . Alternatively, it is possible to consider not only i but also the entire
+chain of ancestors, which then acts as a simplified archive. More formally:
+
+                                      G(()) =                       |(j) - ()|.                               (19)
+
+                                                          0ji
+
+The Markovian property no longer holds with Eq. 19.
+
+2.8.3 Gaussian kernel density estimation-based metric.
+
+Finally, it is possible to set:
+
+                                 G(()) = 1                    -KH (() - ()) (),                               (20)
+                                                card(Y )
+                                                           Y
+
+where Y = (S(i)  X ) \ {}, KH is the Gaussian kernel, H is the bandwidth6 matrix and the rest of the notation is
+the same as before. The Gaussian kernel is given by:
+
+                                      KH(x)  =  (2        )-d/2  |H|-1/2  e-  1  , xT H-1 x                   (21)
+                                                                              2
+
+with d denoting the number of dimensions. The idea is to select solutions that are located remotely from the areas
+already explored. However, since visiting previously seen regions (i.e., backtracking) can even be beneficial [28], we
+introduce a discount function  that ensures that recently explored regions are avoided more strongly than those visited
+long ago, as well as use an archive with a finite size. In the context of biological evolution, this approach could resemble
+a group of individuals searching for food while avoiding areas depleted of resources by previous inhabitants, in an
+environment that slowly replenishes resources over time. Note that by using such a metric, the archive is implicitly
+contained in the shape of the kernel density estimate, which plays the role of a memory container. Also, observe that
+the choice of the matrix H is a subtle one, as it determines the amount of smoothing applied to the density estimate,
+with small (large) bandwidths resulting in more peaked (smoother) estimates.
+
+6Also known as the smoothing matrix.
+
+                                                                 6
+                     On Evolvability and Behavior Landscapes in Neuroevolutionary Divergent Search A PREPRINT
+
+Figure 1: Visualization of the Fetch "Pick and Place" environment rendered in observable mode. A robotic arm is
+shown moving around the table, about to grab the block.
+
+3 Experimental setup
+
+Experiments on an evolutionary robotics task are conducted to examine the effect of evolutionary pressure and the
+use of different diversity metrics on evolvability. Although the used environment in its original form includes an
+explicit goal, e.g. moving a block to a target location, our study focuses solely on the diversity of learned behaviors and
+disregards any other goals. The experiments are implemented using Gymnasium [34], an open-source Python library
+for reinforcement learning, and its associated collection of environments, Gymnasium Robotics. Parallel processing
+is achieved with Ray, a toolkit for scaling Python applications to clusters. The environment used for the experiments is
+illustrated in Fig. 1.
+
+3.1 Task description
+The experiments are performed on a toy episodic reinforcement learning task provided within the Fetch "Pick and
+Place" environment [35]. The environment is based on the Fetch Mobile Manipulator, a seven-degree-of-freedom
+robotic arm equipped with a two-fingered parallel gripper as its end-effector, which can be either closed or open. The
+robot is controlled by moving the gripper in a Cartesian space. In the original task, the goal is to use the manipulator to
+pick up and move a block from an initial position to a target position. The block is initially located on a table, while the
+target position can either be on the table or in mid-air. In the task formulation with rewards, a positive reward is given
+upon completing the goal (if using a sparse reward formulation) or moving the block closer (if using a dense reward
+formulation) to the target position. The manipulator is controlled at a frequency of f = 25 Hz and each simulation
+time-step has a duration of dt = 0.002 s. The observation space consists of 25 variables, including the current positions,
+displacements, rotations, and velocities of various parts of the end-effector and the block. Kinematic information is
+provided through Mujoco [36] bodies attached to both the block and the end-effector. The action space consists of four
+variables: Cartesian displacements dx, dy, and dz of the end-effector, and one variable controlling the closing and
+opening of the gripper. The episode is truncated when its duration reaches the maximum number of steps, which is set
+to 50 by default. The determinism of the environment is ensured by fixing the initial conditions, more specifically, the
+initial and the target position of the block.
+
+3.2 Behavior space and descriptors
+In the considered environment, the BS is two-dimensional and the BVs are given by b = (xT , yT ) where xT (yT )
+denotes the final position of the block in the x (y) axis direction.
+
+3.3 Neural network controllers
+A fully-connected feed-forward neural network architecture was used for the experiments. The first layer consists of
+25 input neurons that encode the state (observation) space features. It is followed by two hidden layers, each with
+32 neurons. The output layer contains only 4 neurons (the same as the cardinality of the action space) which are
+responsible for controlling the robotic manipulator. The rectified linear unit (ReLU) activation function was used in all
+
+                                                                      7
+On Evolvability and Behavior Landscapes in Neuroevolutionary Divergent Search A PREPRINT
+
+Table 1: Hyperparameter values
+
+             Hyperparameter             Value
+
+   Num. of offspring per generation     30
+          Smoothing parameter           0.5
+             Archive size limit         1200
+                                        50
+Num. of walks (runs) per configuration  15
+      Num. of nearest neighbors k
+
+places, with the exception of the output layer, where the hyperbolic tangent (tanh) activation function was employed to
+ensure that the actions produced by the network are within the [-1, 1] range, as required by the used reinforcement
+learning environment. The choice of the neural network architecture was guided partly by prior works that showed the
+effectiveness of relatively shallow designs (with only 2 hidden layers) on various reinforcement learning tasks with
+low-dimensional state spaces [37], and partly by our initial experimentation. The resulting policies are deterministic in
+the sense that states are mapped to specific actions as opposed to probability distributions over the action space. The
+Xavier normal7 initialization was used for the weights, while the biases were initialized to a constant value of 0. The
+topology of the neural network remains constant, and only the weights are updated during the search.
+
+3.4 Variation operator
+
+The choice of mutation operator is pivotal as it defines the set of neighbors and the probability distribution over it,
+thereby affecting the search through the behavior landscape. We use the standard Cauchy distribution (also known as
+the Student's t-distribution with a single degree of freedom) to perturb the weights of the employed neural network. For
+simplicity, the crossover is not utilized in our experiments. This choice was partly inspired by recent work in which an
+evolutionary algorithm based on the use of Cauchy deviates (simple Cauchy mutations) was shown to have favorable
+convergence properties [38], although this was done outside of the context of neuroevolution. It should be noted that,
+due to the distribution's leptokurtosis, the use of Cauchy-based mutations tends to frequently cause small changes to the
+respective genotype, and occasionally large ones.
+
+3.5 Hyperparameters
+
+The size of the archive is limited, and new solutions are randomly added to it with a probability of P = 10%. The
+values for the remaining hyperparameters can be found in Table 1 and in the captions of the respective figures. The
+selection of certain hyperparameters, such as the number of walks (run) or the walk length, was made in such a way as to
+ensure that the simulations were manageable within the budget of our available computational resources. Additionally,
+the parameter a (required for generating adaptive walks) is set dynamically such that in each generation, the top x% of
+individuals pass the threshold.
+
+4 Results
+
+4.1 Evolutionary pressure
+
+We start by analyzing the effect of evolutionary pressure on evolvability. Fig. 2 shows the mean evolvability under a
+fixed number of runs as a function of the walk step number, for walks with different levels of evolutionary pressure. The
+number of walk steps is set to 50. Since highly selective walks instigate evolvability, adaptive walks employing novelty
+as a criterion are also expected to do this, albeit to a smaller degree. The parameter (given in parentheses) specifies the
+fraction of the best children that comprise the set from which the next parent is randomly picked. Thus, higher values
+indicate lower degrees of evolutionary pressure. Extremes are represented by the highly selective walk, in which the
+best single child is always selected, and the random walk (in essence a random search in the genotype space) in which
+any child is chosen. Observe that, after starting from approximately the same mean evolvability value, the trajectories
+spread out in a manner that suggests a positive correlation between evolvability and the level of evolutionary pressure.
+We use evolvabilities at the end of the walk (step 50) and the corresponding levels of evolutionary pressure to determine
+the Spearman rank-order correlation coefficient r, which is a measure of the monotonicity of the relationship between
+two variables. The obtained correlation coefficient equals r = 0.7106 (p < 10-46), demonstrating a strong positive
+
+    7Weights are sampled from a normal distribution with mean 0 and variance inversely proportional to the sum of the number of
+inputs and outputs to the layer.
+
+                                                                      8
+                     On Evolvability and Behavior Landscapes in Neuroevolutionary Divergent Search A PREPRINT
+
+Figure 2: Comparison of mean evolvability for selective (sel.), adaptive (ad.), and random walks on the behavior
+landscape of the Fetch Pick and Place environment. The figure displays the means and 95% confidence intervals for a
+fixed number of task runs.
+
+correlation. Also note that, while the random walk trajectory leads to a clear degradation of evolvability over time,
+even modest amounts of evolutionary pressure are sufficient to preserve (or even enhance) it for all of the considered
+trajectories. In summary, the obtained results are in accordance with recent findings on novelty search promoting
+evolvability [13] and also offer additional perspective on the relationship between evolvability and evolutionary pressure.
+We also leave for further work the following question: Is it possible to devise neural network initialization schemes that
+lead to high levels of evolvability at the very beginning, introducing one-shot evolvability and facilitating the ensuing
+search process? This is hoped to lead to even faster evolvability gains.
+
+4.2 Different metrics
+
+In this Subsection, we analyze the effect of different diversity metrics on evolvability. Fig. 3 shows the results on
+the Fetch "Pick and Place" environment, with the number of walk steps set to 50. We emphasize that the distance to
+ancestors metric takes into account the whole chain of ancestors, up until the very beginning of the walk. As seen in
+the figure, the metric based on Gaussian kernel density estimation seems to dominate over the alternatives, while the
+k-nearest neighbors without the archive variant yields the lowest evolvability values. To corroborate this observation
+statistically, consider first the sets of evolvability values at walk step 100 associated with each of the evaluated metrics.
+To this end, we turn to the non-parametric Kruskal-Wallis H-test, which does not require the assumption of normality,
+while its other assumptions (independence of samples, random sampling, ordinal or continuous dependent variable) are
+met. It is then used to test the null hypothesis that the population medians of all of the considered sets are equal. The
+obtained p-value equals p = 0.01943, rejecting the null hypothesis at  = 0.05 significance level. The Conover's test
+is used as a post-hoc test to make pairwise comparisons, with the choice of the Holm method for adjusting p-values.
+The p-values comparing the Gaussian kernel density estimates to (a) the KNN method, (b) KNN without an archive,
+and (c) the distance to ancestors-based metric are, in order: 0.053031, 0.052218, and 0.040418. All the other p-values
+are equal to 1. Hence, given the  = 0.05 significance level, we cannot conclude that there is a significant difference
+between the mean ranks of these groups, except for the Gaussian kernel density estimates/distance to ancestors pair.
+Nevertheless, the results do indicate that the use of the Gaussian kernel density estimate-based metric provides a
+competitive, if not superior, alternative that could be added to the arsenal of existing metrics. An important difference
+between the Gaussian kernel density estimate-based metric and the one based on KNN with Euclidean distance should
+be highlighted. Consider, for example, points A and B in a BS and the line connecting them. KNN with Euclidean
+distance (assuming k = 2) would be indifferent between the points on the line, which represents a contour line in the
+corresponding contour graph. In contrast, a Gaussian kernel density estimate-based metric would favor the mid-point.
+
+                                                                      9
+On Evolvability and Behavior Landscapes in Neuroevolutionary Divergent Search A PREPRINT
+
+Figure 3: Comparison of different metrics on the behavior landscape of the Fetch Pick and Place environment. Means
+and confidence intervals (95%) are shown for a fixed number of runs on the task. The  discount factor associated with
+the Gaussian kernel density-based metric is simply set to 1.
+
+While the results are so far limited to a single reinforcement learning environment, further work should test generalization
+across multiple environments. Finally, keep in mind that highly selective walks represent a very simplified version
+of novelty search with only a single parent in each generation. Consequently, it is possible and even likely that the
+presented results underestimate the evolvability levels that would appear in a fully-fledged novelty search algorithm.
+
+5 More on evolvability
+
+5.1 Towards better evolvability definitions
+
+It has been observed, already in the original MAP-Elites paper [6], that most solutions are positioned in the BS relatively
+close to their parents [6]. Donciex et al. [13] measure evolvability by estimating reachability (with a simple ratio) and
+uniformity separately (by using the Jensen-Shannon distance). The authors emphasize that separating the two aspects
+facilitates interpretation and prevents informational overlap, as the same Jensen-Shannon Distance (JSD) can result
+from sets of points with varying coverage. While valuable, we argue that this separation alone does not deal with the
+central problem because two sets of points with identical coverage and JSD can greatly vary in terms of their actual
+evolvability. More specifically, the ensuing definition is highly myopic in the sense that it does not take into account
+the evolvability of the offspring themselves. To illustrate this, consider from example solutions A and B, each with
+two children, belonging to niches 1 and 2, and 3 and 4, respectively. A and B clearly have the same coverage and JSD.
+However, if solutions from niches 3 and 4 are more likely to generate offspring belonging to other niches than solutions
+from niches 1 and 2, it could be argued that B should be considered more evolvable. Furthermore, the evolvability of
+the visited niches should also be accounted for, some of which might serve as "wormholes", generating offspring in
+remote or hardly reachable regions of the BS. Therefore, evolvability metrics should consider not only the coverage and
+uniformity but also the very structure of the behavior landscape, i.e. the mutual reachability of different niches (regions)
+in it and the very structure of the genotype-phenotype mapping. With this goal in mind, we suggest the following
+criterion, which presents a generalization, applicable when the BS is split into niches:
+Evolvability in discretized BSs: A solution  is said to be more l-evolvable than solution  if and only if:
+
+                        E(card(Dl,U )) > E(card(Dl,U )),                                                    (22)
+
+where card(Dl, U ) denotes the cardinality of the set of all niches visited at least once by descendants of  up to their
+l-th generation, assuming a total of U descendants. The parameter l captures the level of long-sightedness, with l = 1
+
+corresponding to the simple coverage of the children, as introduced in [13]. In non-discretized BSs, the number of
+
+visited niches could be replaced, for example, by the hypervolume of the convex hull spanned by the descendants. In
+
+what follows, we lay out a procedure for estimating the evolvability of solution  under such a definition:
+
+                                             10
+                     On Evolvability and Behavior Landscapes in Neuroevolutionary Divergent Search A PREPRINT
+
+       1. Use a grid to split the BS into niches
+
+       2. Generate the offspring of  and calculate their discrete distribution D over the set of all niches
+
+       3. Use MAP-Elites [6] or other NS-like algorithm to estimate the probability matrix T = (ti,j), where ti,j is the
+           probability of solution in niche i generating a child in niche j
+
+       4. Construct a Markov chain with T as its transition matrix, the set of niches as its state space, and D as its initial
+           distribution
+
+       5. Perform U random walks of length l + 1 on the constructed Markov chain and obtain the discrete distribution
+           D of the visited niches over the set of all niches, cumulatively for all U walks
+
+       6. Apply an evolvability metric to D, i.e. coverage (in accordance with Expression 22)
+
+       7. Repeat steps (5) and (6) multiple times, and use the mean to approximate the evolvability of 
+
+Additionally, it is possible to define the evolvability of niche i by using the appropriate initial distribution (i.e. a one-hot
+vector) as D. We remark on several aspects. Firstly, selecting the correct number of niches (i.e. the grid size) in the
+first step is a delicate matter, as having too few niches could result in the matrix T with mostly close-to-zero values in
+all its non-diagonal entries, while having too many can lead to a large number of unvisited niches. Secondly, note the
+similarity with the curiosity score [39, 40] used in quality-diversity approaches. The shortcoming of the method (in the
+presented form) lies in the fact that it can only be used a posteriori, i.e. after the entire BS has already been explored.
+Despite this limitation, it provides a useful tool for better exploring the structure of the behavior landscape, primarily
+through the estimation of the transition matrix T . Also, by evaluating T in an online fashion, it could also be integrated
+with other methods that search directly for evolvability [11].
+
+6 Conclusion and further work
+
+This paper explores evolvability in neuroevolutionary divergent search from the perspective of a behavior landscape
+analysis. In particular, the results confirm the positive correlation between evolvability and the amount of evolutionary
+pressure present in the environment. Moreover, they indicate that the use of Gaussian kernel density estimate-based
+metrics should be added to the arsenal of existing diversity metrics in the context of evolvability promotion. Finally, a
+new definition of evolvability, that considers the offsprings' evolvability as well and takes into account the very structure
+of the behavior landscape, is proposed, along with a method for its estimation.
+
+As part of further work, generalization to a wider range of environments should be studied, along with the use
+of alternative operators and behavior space descriptors. The relationship between the newly proposed definition of
+evolvability and the curiosity score should also be experimentally studied. Another possible path forward is to investigate
+the links between the evolvability of neural network controllers and their sensitivity to initial conditions in stochastic
+(noisy) reinforcement learning environments, i.e., a form of Lyapunov stability [41]. More specifically, the phenotypic
+sensitivity to environmental noise (with a fixed genotype) could be used as a behavior (meta)-descriptor. Further ideas
+rely on the direct evolvability search [11] and lead it into new directions. One idea would be to take it a step further and
+consider direct meta-evolvability search: instead of optimizing for evolvability, optimize for the potential for evolvability.
+Another possible avenue is to encode the parameters of the mutation operator's distribution into the genotype, thereby
+also performing a search through the space of heuristics. More generally, the use of hyperheuristics such as genetic
+programming might help uncover heuristics with the capacity to further enhance evolvability. Further studies could also
+test the use of Gaussian kernel density estimate-based distance metrics in the context of population-level evolvability
+[12]. Finally, the effects of optimization with conflicting objectives [42] on evolvability could also be considered.
+
+References
+
+ [1] Kenneth O Stanley. Why open-endedness matters. Artificial life, 25(3):232­235, 2019.
+
+ [2] Felipe Petroski Such, Vashisht Madhavan, Edoardo Conti, Joel Lehman, Kenneth O Stanley, and Jeff Clune.
+      Deep neuroevolution: Genetic algorithms are a competitive alternative for training deep neural networks for
+      reinforcement learning. arXiv preprint arXiv:1712.06567, 2017.
+
+ [3] Tim Salimans, Jonathan Ho, Xi Chen, Szymon Sidor, and Ilya Sutskever. Evolution strategies as a scalable
+      alternative to reinforcement learning. arXiv preprint arXiv:1703.03864, 2017.
+
+ [4] Joel Lehman and Kenneth O Stanley. Novelty search and the problem with objectives. Genetic programming
+      theory and practice IX, pages 37­56, 2011.
+
+                                                                     11
+                     On Evolvability and Behavior Landscapes in Neuroevolutionary Divergent Search A PREPRINT
+
+ [5] Justin K Pugh, Lisa B Soros, and Kenneth O Stanley. Quality diversity: A new frontier for evolutionary
+      computation. Frontiers in Robotics and AI, page 40, 2016.
+
+ [6] Jean-Baptiste Mouret and Jeff Clune. Illuminating search spaces by mapping elites. arXiv preprint
+      arXiv:1504.04909, 2015.
+
+ [7] Richard Dawkins. The evolution of evolvability. In Artificial life, pages 201­220. Routledge, 2019.
+
+ [8] Bryan Wilder and Kenneth Stanley. Reconciling explanations for the evolution of evolvability. Adaptive Behavior,
+      23(3):171­179, 2015.
+
+ [9] Alexander Gajewski, Jeff Clune, Kenneth O Stanley, and Joel Lehman. Evolvability es: scalable and direct
+      optimization of evolvability. In Proceedings of the Genetic and Evolutionary Computation Conference, pages
+      107­115, 2019.
+
+[10] Massimo Pigliucci. Is evolvability evolvable? Nature Reviews Genetics, 9(1):75­82, 2008.
+
+[11] Henok Mengistu, Joel Lehman, and Jeff Clune. Evolvability search: directly selecting for evolvability in order
+      to study and produce it. In Proceedings of the Genetic and Evolutionary Computation Conference 2016, pages
+      141­148, 2016.
+
+[12] Joel Lehman, Bryan Wilder, and Kenneth O Stanley. On the critical role of divergent selection in evolvability.
+      Frontiers in Robotics and AI, 3:45, 2016.
+
+[13] Stephane Doncieux, Giuseppe Paolo, Alban Laflaquière, and Alexandre Coninx. Novelty search makes evolvability
+      inevitable. In Proceedings of the 2020 Genetic and Evolutionary Computation Conference, pages 85­93, 2020.
+
+[14] Joel Lehman and Kenneth O Stanley. Improving evolvability through novelty search and self-adaptation. In 2011
+      IEEE congress of evolutionary computation (CEC), pages 2693­2700. IEEE, 2011.
+
+[15] Giuseppe Cuccu, Faustino J Gomez, et al. When novelty is not enough. In EvoApplications (1), pages 234­243,
+      2011.
+
+[16] David Shorten and Geoff Nitschke. How evolvable is novelty search? In 2014 IEEE International Conference on
+      Evolvable Systems, pages 125­132. IEEE, 2014.
+
+[17] Adam Katona, Daniel W Franks, and James Alfred Walker. Quality evolvability es: Evolving individuals with a
+      distribution of well performing and diverse offspring. arXiv preprint arXiv:2103.10790, 2021.
+
+[18] Joel Lehman and Risto Miikkulainen. Extinction events can accelerate evolution. PloS one, 10(8):e0132886,
+      2015.
+
+[19] Jeff Clune, Jean-Baptiste Mouret, and Hod Lipson. The evolutionary origins of modularity. Proceedings of the
+      Royal Society b: Biological sciences, 280(1755):20122863, 2013.
+
+[20] Andrea Ferigo, LB Soros, Eric Medvet, Giovanni Iacca, et al. On the entanglement between evolvability and
+      fitness: an experimental study on voxel-based soft robots. In ALIFE: PROCEEDINGS OF THE ARTIFICIAL
+      LIFE CONFERENCE. MIT press, 2022.
+
+[21] Stephane Doncieux, Alban Laflaquière, and Alexandre Coninx. Novelty search: a theoretical perspective. In
+      Proceedings of the Genetic and Evolutionary Computation Conference, pages 99­106, 2019.
+
+[22] Vassilis Vassiliades, Konstantinos Chatzilygeroudis, and Jean-Baptiste Mouret. Using centroidal voronoi tessella-
+      tions to scale up the multidimensional archive of phenotypic elites algorithm. IEEE Transactions on Evolutionary
+      Computation, 22(4):623­630, 2017.
+
+[23] Yuval Davidor. Epistasis variance: A viewpoint on ga-hardness. In Foundations of genetic algorithms, volume 1,
+      pages 23­35. Elsevier, 1991.
+
+[24] Erik Pitzer and Michael Affenzeller. A comprehensive survey on fitness landscape analysis. Recent advances in
+      intelligent engineering systems, pages 161­191, 2012.
+
+[25] Vassiiis Vassiliades and Jean-Baptiste Mouret. Discovering the elite hypervolume by leveraging interspecies
+      correlation. In Proceedings of the Genetic and Evolutionary Computation Conference, pages 149­156, 2018.
+
+[26] Nemanja Rakicevic, Antoine Cully, and Petar Kormushev. Policy manifold search: Exploring the manifold
+      hypothesis for diversity-based neuroevolution. In Proceedings of the Genetic and Evolutionary Computation
+      Conference, pages 901­909, 2021.
+
+[27] Adam Gaier, Alexander Asteroth, and Jean-Baptiste Mouret. Discovering representations for black-box op-
+      timization. In Proceedings of the 2020 Genetic and Evolutionary Computation Conference, pages 103­111,
+      2020.
+
+                                                                     12
+                     On Evolvability and Behavior Landscapes in Neuroevolutionary Divergent Search A PREPRINT
+
+[28] Achkan Salehi, Alexandre Coninx, and Stephane Doncieux. Geodesics, non-linearities and the archive of novelty
+      search. arXiv preprint arXiv:2205.03162, 2022.
+
+[29] Nuno M Rodrigues, Sara Silva, and Leonardo Vanneschi. A study of fitness landscapes for neuroevolution. In
+      2020 IEEE Congress on Evolutionary Computation (CEC), pages 1­8. IEEE, 2020.
+
+[30] Edgar Galván and Peter Mooney. Neuroevolution in deep neural networks: Current trends and future challenges.
+      IEEE Transactions on Artificial Intelligence, 2(6):476­493, 2021.
+
+[31] Peter F Stadler. Fitness landscapes. In Biological evolution and statistical physics, pages 183­204. Springer, 2002.
+[32] John H Gillespie. Molecular evolution over the mutational landscape. Evolution, pages 1116­1129, 1984.
+[33] Stuart Kauffman and Simon Levin. Towards a general theory of adaptive walks on rugged landscapes. Journal of
+
+      theoretical Biology, 128(1):11­45, 1987.
+[34] Greg Brockman, Vicki Cheung, Ludwig Pettersson, Jonas Schneider, John Schulman, Jie Tang, and Wojciech
+
+      Zaremba. Openai gym, 2016.
+[35] Matthias Plappert, Marcin Andrychowicz, Alex Ray, Bob McGrew, Bowen Baker, Glenn Powell, Jonas Schneider,
+
+      Josh Tobin, Maciek Chociej, Peter Welinder, Vikash Kumar, and Wojciech Zaremba. Multi-goal reinforcement
+      learning: Challenging robotics environments and request for research, 2018.
+[36] Emanuel Todorov, Tom Erez, and Yuval Tassa. Mujoco: A physics engine for model-based control. In 2012
+      IEEE/RSJ international conference on intelligent robots and systems, pages 5026­5033. IEEE, 2012.
+[37] Mateusz Kurek and Wojciech Jas´kowski. Heterogeneous team deep q-learning in low-dimensional multi-agent
+      environments. In 2016 IEEE Conference on Computational Intelligence and Games (CIG), pages 1­8. IEEE,
+      2016.
+[38] Drazen Bajer, Goran Martinovic´, and Janez Brest. A population initialization method for evolutionary algorithms
+      based on clustering and cauchy deviates. Expert Systems with Applications, 60:294­310, 2016.
+[39] Antoine Cully and Yiannis Demiris. Quality and diversity optimization: A unifying modular framework. IEEE
+      Transactions on Evolutionary Computation, 22(2):245­259, 2017.
+[40] Daniele Gravina, Antonios Liapis, and Georgios N Yannakakis. Quality diversity through surprise. IEEE
+      Transactions on Evolutionary Computation, 23(4):603­616, 2018.
+[41] Theodore J Perkins and Andrew G Barto. Lyapunov design for safe reinforcement learning. Journal of Machine
+      Learning Research, 3(Dec):803­832, 2002.
+[42] Davy Smith, Laurissa Tokarchuk, and Geraint Wiggins. Exploring conflicting objectives with madns: Multiple
+      assessment directed novelty search. In Proceedings of the 2016 on Genetic and Evolutionary Computation
+      Conference Companion, pages 23­24, 2016.
+
+                                                                     13
+

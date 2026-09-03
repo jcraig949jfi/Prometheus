@@ -1,0 +1,825 @@
+IIASA
+International Institute for Applied Systems Analysis ∑ A-2361 Laxenburg ∑ Austria Tel: +43 2236 807 ∑ Fax: +43 2236 71313 ∑ E-mail: info@iiasa.ac.at ∑ Web: www.iiasa.ac.at
+
+INTERIM REPORT
+
+IR-98-004 / February
+
+Shaping Space: The Possible and the Attainable in RNA Genotype-Phenotype Mapping
+
+Walter Fontana (fontana@iiasa.ac.at) Peter Schuster (pks@tbi.univie.ac.at)
+
+Approved by Ulf Dieckmann (dieckman@iiasa.ac.at) Project Coordinator, Adaptive Dynamics Project
+
+Interim Reports on work of the International Institute for Applied Systems Analysis receive only limited review. Views or opinions expressed herein do not necessarily represent those of the Institute, its National Member Organizations, or other organizations supporting the work.
+
+IIASA STUDIES IN ADAPTIVE DYNAMICS NO. 24
+
+ADN
+
+The Adaptive Dynamics Network at IIASA fosters the development of new mathematical and conceptual techniques for understanding the evolution of complex adaptive systems.
+Focusing on these long-term implications of adaptive processes in systems of limited growth, the Adaptive Dynamics Network brings together scientists and institutions from around the world with IIASA acting as the central node.
+Scientific progress within the network is reported in the IIASA Studies in Adaptive Dynamics series.
+
+THE ADAPTIVE DYNAMICS NETWORK
+The pivotal role of evolutionary theory in life sciences derives from its capability to provide causal explanations for phenomena that are highly improbable in the physicochemical sense. Yet, until recently, many facts in biology could not be accounted for in the light of evolution. Just as physicists for a long time ignored the presence of chaos, these phenomena were basically not perceived by biologists. Two examples illustrate this assertion. Although Darwin's publication of "The Origin of Species" sparked off the whole evolutionary revolution, oddly enough, the population genetic framework underlying the modern synthesis holds no clues to speciation events. A second illustration is the more recently appreciated issue of jump increases in biological complexity that result from the aggregation of individuals into mutualistic wholes. These and many more problems possess a common source: the interactions of individuals are bound to change the environments these individuals live in. By closing the feedback loop in the evolutionary explanation, a new mathematical theory of the evolution of complex adaptive systems arises. It is this general theoretical option that lies at the core of the emerging field of adaptive dynamics. In consequence a major promise of adaptive dynamics studies is to elucidate the long-term effects of the interactions between ecological and evolutionary processes. A commitment to interfacing the theory with empirical applications is necessary both for validation and for management problems. For example, empirical evidence indicates that to control pests and diseases or to achieve sustainable harvesting of renewable resources evolutionary deliberation is already crucial on the time scale of two decades. The Adaptive Dynamics Network has as its primary objective the development of mathematical tools for the analysis of adaptive systems inside and outside the biological realm.
+
+IIASA STUDIES IN ADAPTIVE DYNAMICS
+
+No. 1
+No. 2 No. 3 No. 4 No. 5 No. 6 No. 7 No. 8 No. 9
+
+Metz JAJ, Geritz SAH, Mesze¥na G, Jacobs FJA, van Heerwaarden JS: Adaptive Dynamics: A Geometrical Study of the Consequences of Nearly Faithful Reproduction.
+IIASA Working Paper WP-95-099.
+van Strien SJ, Verduyn Lunel SM (eds.): Stochastic and Spatial Structures of Dynamical Systems, Proceedings of the Royal Dutch Academy of Science (KNAW Verhandelingen), North Holland, Amsterdam, pp. 183-231 (1996).
+
+Dieckmann U, Law R: The Dynamical Theory of Coevolution: A Derivation from Stochastic Ecological Processes.
+IIASA Working Paper WP-96-001.
+Journal of Mathematical Biology (1996) 34, 579≠612.
+
+Dieckmann U, Marrow P, Law R: Evolutionary Cycling of Predator-Prey Interactions: Population Dynamics and the Red Queen.
+Journal of Theoretical Biology (1995) 176, 91≠102.
+
+Marrow P, Dieckmann U, Law R: Evolutionary Dynamics of Predator-Prey Systems: Perspective.
+IIASA Working Paper WP-96-002.
+Journal of Mathematical Biology (1996) 34, 556≠578.
+
+An Ecological
+
+Law R, Marrow P, Dieckmann U: On Evolution under Asymmetric Competition.
+IIASA Working Paper WP-96-003.
+Evolutionary Ecology (1997) 11, 485≠501.
+
+Metz JAJ, Mylius SD, Diekmann O: When Does Evolution Optimise? On the Relation between Types of Density Dependence and Evolutionarily Stable Life History Parameters.
+IIASA Working Paper WP-96-004.
+
+Ferrie`re R, Gatto M: Lyapunov Exponents and the Mathematics of Invasion in Oscillatory or Chaotic Populations.
+Theoretical Population Biology (1995) 48, 126≠171.
+
+Ferrie`re R, Fox GA: Chaos and Evolution.
+Trends in Ecology and Evolution (1995) 10, 480≠485.
+
+Ferrie`re R, Michod RE: The Evolution of Cooperation in Spatially Heterogeneous Populations.
+IIASA Working Paper WP-96-029.
+American Naturalist (1996) 147, 692≠717.
+
+No. 10 No. 11 No. 12 No. 13 No. 14 No. 15 No. 16 No. 17 No. 18 No. 19 No. 20
+
+Van Dooren TJM, Metz JAJ: Delayed Maturation in Temporally Structured Populations with NonEquilibrium Dynamics.
+IIASA Working Paper WP-96-070. Journal of Evolutionary Biology (1997) in press.
+Geritz SAH, Metz JAJ, Kisdi E, Mesze¥na G: The Dynamics of Adaptation and Evolutionary Branching.
+IIASA Working Paper WP-96-077. Physical Review Letters (1997) 78, 2024≠2027.
+Geritz SAH, Kisdi E, Mesze¥na G, Metz JAJ: Evolutionarily Singular Strategies and the Adaptive Growth and Branching of the Evolutionary Tree.
+IIASA Working Paper WP-96-114. Evolutionary Ecology (1997) in press.
+Heino M, Metz JAJ, Kaitala V: Evolution of Mixed Maturation Strategies in Semelparous Life-Histories: the Crucial Role of Dimensionality of Feedback Environment.
+IIASA Working Paper WP-96-126. Philosophical Transactions of the Royal Society of London Series B (1997) in press.
+Dieckmann U: Can Adaptive Dynamics Invade?
+IIASA Working Paper WP-96-152. Trends in Ecology and Evolution (1997) 12, 128≠131.
+Mesze¥na G, Czibula I, Geritz SAH: Adaptive Dynamics in a Two-Patch Environment: a Simple Model for Allopatric and Parapatric Speciation.
+IIASA Interim Report IR-97-001. Journal of Biological Systems (1997) in press.
+Heino M, Metz JAJ, Kaitala V: The Enigma of Frequency-Dependent Selection.
+IIASA Interim Report IR-97-061.
+Heino M: Management of Evolving Fish Stocks.
+IIASA Interim Report IR-97-062.
+Heino M: Evolution of Mixed Reproductive Strategies in Simple Life-History Models.
+IIASA Interim Report IR-97-063.
+Geritz SAH, van der Meijden E, Metz JAJ: Evolutionary Dynamics of Seed Size and Seedling Competitive Ability.
+IIASA Interim Report IR-97-071.
+Galis F, Metz JAJ: Why are there so many Cichlid Species? On the Interplay of Speciation and Adaptive Radiation.
+IIASA Interim Report IR-97-072. Trends in Ecology and Evolution (1998) 13, 1≠2.
+
+No. 21
+No. 22 No. 23 No. 24
+
+Boerlijst MC, Nowak MA, Sigmund K: Equal Pay for all Prisoners. / The Logic of Contrition.
+IIASA Interim Report IR-97-073. AMS Monthly (1997) 104, 303≠307. Journal of Theoretical Biology (1997) 185, 281≠294.
+Law R, Dieckmann U: Symbiosis without Mutualism and the Merger of Lineages in Evolution.
+IIASA Interim Report IR-97-074.
+Klinkhamer PGL, de Jong TJ, Metz JAJ: Sex and Size in Cosexual Plants.
+IIASA Interim Report IR-97-078. Trends in Ecology and Evolution (1997) 12, 260≠265.
+Fontana W, Schuster P: Shaping Space: The Possible and the Attainable in RNA GenotypePhenotype Mapping.
+IIASA Interim Report IR-98-004.
+
+Issues of the IIASA Studies in Adaptive Dynamics series can be obtained free of charge. Please contact:
+Adaptive Dynamics Network International Institute for Applied Systems Analysis Schloﬂplatz 1 A≠2361 Laxenburg Austria
+Telephone +43 2236 807, Telefax +43 2236 71313, E-Mail adn@iiasa.ac.at, Internet http://www.iiasa.ac.at/Research/ADN
+
+Contents
+
+1 Introduction
+
+1
+
+2 Generic properties of folding
+
+2
+
+3 Secondary structure
+
+4
+
+4 A relation of accessibility
+
+5
+
+5 Boundary statistics
+
+6
+
+6 Statistical topology
+
+7
+
+7 The set of all boundary shapes
+
+8
+
+8 Not all shapes are equally important
+
+12
+
+9 The choice of frequency
+
+17
+
+10 Nearness
+
+19
+
+11 The substructure relation
+
+20
+
+12 Boundary conditions
+
+25
+
+13 Evolution in phenotype space: the relay series
+
+26
+
+14 Patterns of history
+
+29
+
+15 Conclusions
+
+38
+
+References
+
+41
+
+About the Authors
+Walter Fontana Institut fu®r Theoretische Chemie
+Universit®at Wien A-1090-Vienna, Austria
+and International Institute for Applied Systems Analysis
+A-2361-Laxenburg, Austria and
+Santa Fe Institute Santa Fe, NM 87501, USA
+Peter Schuster Institut fu®r Theoretische Chemie
+Universit®at Wien A-1090 Vienna, Austria
+
+Abstract
+Understanding which phenotypes are accessible from which genotypes is fundamental for understanding the evolutionary process. This notion of accessibility can be used to define a relation of nearness among phenotypes, independently of their similarity. Because of neutrality, phenotypes denote equivalence classes of genotypes. The definition of neighborhood relations among phenotypes relies, therefore, on the statistics of neighborhood relations among equivalence classes of genotypes in genotype space. The folding of RNA sequences (genotypes) into secondary structures (phenotypes) is an ideal case to implement these concepts. We study the extent to which the folding of RNA sequences induces a "statistical topology" on the set of minimum free energy secondary structures. The resulting nearness relation suggests a notion of "continuous" structure transformation. We can, then, rationalize major transitions in evolutionary trajectories at the level of RNA structures by identifying those transformations which are irreducibly discontinuous. This is shown by means of computer simulations. The statistical topology organizing the set of RNA shapes explains why neutral drift in sequence space plays a key role in evolutionary optimization.
+Keywords: evolutionary trajectories, neutral evolution, neutral networks, optimization, RNA secondary structures, statistical topology
+
+1. Introduction
+Molecular genetics views the course of evolution as a lineage of genotypes, while paleontology sees a lineage of phenotypes as manifested in the fossil record. The problem is to understand how the two are related. There is widespread agreement that the temporal succession of phenotypes reflects the selective boundary conditions operating during the evolutionary process. In this context the notion of "fitness" proved useful to reason about the conditions under which a given mutant can invade a population. However, some would contend that an evolutionary history also reflects the variational constraints which are intrinsic to an evolving entity. The term "variational constraints" is used to collectively denote causes which channel evolution in fitness-independent ways. "Fitness" is a notion which emphasizes the fate of a genotype mediated by the reproductive success of its phenotype in a given demographic and environmental context, while variational constraints point at the fact that not all possible phenotypes are equally accessible (or accessible at all) through variation of a given genotype. When focussing on the variational process, the objective of understanding successions of evolutionary innovations becomes one of explaining how each innovation affects the potential for further evolution [1]. This requires reasoning about the "evolutionary potential" of an evolving entity. The primary theoretical difficulty derives from finding adequate representations of phenotypes, and a model of how they are generated from genotypes.
+In the present paper we pursue these issues in the context of a very special phenotype and genotype-to-phenotype map. We show how a rather obvious concept of "phenotypic nearness" induces a meaningful topology on the set of possible phenotypes. This topology enables us to understand some key features of evolutionary trajectories as observed, for example, in computer experiments. Extensions to in vitro evolution appear feasible and straightforward.
+1
+
+Seen from a wider perspective, our contribution is limited in several regards. First, we are concerned with the simplest relevant (and the only currently available) genotype-phenotype mapping we know of: RNA folding. The situation is extreme in that we are dealing with a single molecule which can play both parts in the game, being simultaneously genotype and phenotype. An RNA molecule is a sequence that can be replicated. By folding back on itself it forms a shape which is the target of selection [19]. Furthermore, evolution is here reduced to the simplest case: independent (asexual) replication in a constant environment. Accordingly, we shall not be concerned with networks of interacting molecules, but rather focus on the problem of how individual RNA shapes evolve within a population under selection for a specific target shape. Understanding the "evolutionary potential" of an evolving entity may certainly be more interesting and daunting for complex functional organizations, such as cells or multicellular organisms. Nevertheless, we believe that the RNA case is fundamental and at least of heuristic interest in thinking about the bigger picture, because it combines conceptual simplicity with realism and experimental accessibility. Second, our present study is mostly a numerical investigation of the properties of RNA folding as captured by present day computational techniques and empirical parameters. The level of molecular shape we are concerned with is known as the secondary structure of RNA. It represents a biologically meaningful and widely used notion of structure which can be predicted from sequences by fast algorithms. Our work is, therefore, intermediate in abstraction: it approximates an empirical situation, while aiming at generally valid regularities which may serve as axioms for more abstract mathematical models (see, for example, [15]).
+2. Generic properties of folding
+The term "folding" is used here to denote a surjection f : S   from the set S of all sequences of fixed length over the AUGC-alphabet onto the set  of all minimum free energy (mfe) secondary structures for that length. The map is
+2
+
+established implicitly by a state-of-the-art folding algorithm based on thermodynamic data [8, 11, 21]. In past work we have found three generic properties of the RNA folding map [18]. They are surveyed in this paragraph, since they are of immediate interest in the context of the current study. By "generic properties" we mean statistically robust features obtained by folding large samples of sequences.
+The folding map is many-to-one, reflecting sequence redundancy of structures. Property 1 ("frequent structures") is a statement about the size of equivalence classes of sequences with respect to structure: Some structures occur significantly more frequently than others. The property of being "frequent" is made more precise by the observation that in the limit of long chains the fraction of such structures tends to zero (their number grows nevertheless exponentially), while the fraction of sequences folding into them tends to one [7]1. The remaining properties hold only for frequent structures. Property 2 ("neutral networks") is a statement about the connectivity within an equivalence class: Two sequences in a class are connected by paths of sequences within the same class which differ by one or two point mutations [18]. The structure-neutral sequences, therefore, form connected and extended networks in sequence space. Property 3 ("shape space covering") is a statement about the mutual entanglement of networks belonging to different structures in the high dimensional sequence space: All frequent structures are realized within a small neighborhood of any arbitrarily chosen sequence (for example, 15 mutations are sufficient for a chain of length l = 100, see [16]).
+It is important to realize that the contemplated features are largely independent of the predictive accuracy of the algorithm for individual sequences. That is, even if the algorithm fails to reproduce details of the actual secondary structure of a particular sequence (as determined, say, by phylogenetic comparisons),
+1A particular definition of "frequent" is given by the notion of "common" [17]: A structure is common, when it its formed by more sequences than the average, #(all sequences) #(all structures).
+3
+
+it still captures the logic of constrained base-pair optimization characteristic of RNA folding. There is indeed evidence that properties 2 and 3 hold in nature [2, 14]. Our claims are further substantiated by observing that the properties we call "generic" have been found to be insensitive to the choice of the criteria of structure formation (minimizing free energy or maximizing base pairing or kinetic folding), as long as one structure is assigned to every sequence. They are also numerically robust to variations in the set of empirical energy parameters or the thermodynamic level of description (one mfe structure versus the Boltzmann ensemble for a given sequence)2 [20].
+These statistical properties, in particular neutrality, have led to a mathematical model based on percolation in random graphs [15]. In recent work we began to link the properties of the folding map with features observed in evolutionary dynamics. Model RNA populations in a flow reactor were subject to selection for a prespecified target structure. In particular, we found diffusion of the population on a neutral network, and recovered the fixation rates expected from Kimura's theory [12], thus establishing a microscopic model for neutral evolution [10].
+3. Secondary structure
+In what follows it will be very useful to shift back and forth between two levels of resolution for secondary structures, fine grained and coarse grained structures. The fine grained level corresponds to the conventional definition of secondary structure, as the set P of paired positions which minimize free energy subject to the condition that if (i, j) and (k, l) are both in P , then i < k < j implies i < l < j. This condition means that no pseudoknots are being considered. For example, a line-oriented representation of a "Y"-shaped secondary structure of length 29 would look like "((((.(((...))).(((...))).))))". Matching parentheses indicate positions which are paired with one another.
+2Similar properties have been recently discovered in lattice models of protein folding [5, 6, 13].
+4
+
+The coarse grained level is defined by discarding information about the size of stacks and loops. The only information retained about a structural element is its type: stack (symbolized by a pair of matching parentheses ()), hairpin loop (H), internal loop (I), left (B) or right (b) bulge, and multiloop with more than two branches (M). Thus, the above "Y"-structure would read as "((H)(H)M)". Renderings which better convey the topological nature of secondary structure at both levels of graining can be seen in figure 1.
+4. A relation of accessibility
+A natural metric for sequences is given by the Hamming distance indicating the number of positions d(a, b) at which two sequences a and b differ. This metric is natural for situations conserving chain length where point mutations are the exclusive source of variation. The Hamming metric then mirrors the physical processes interconverting sequences. In natural populations point mutations are indeed more frequent than insertions and deletions.
+It is, however, far less clear what constitutes a natural metric for structures. Common practice defines distance measures for structures directly on some suitable representation of structure. For example, the root mean square deviation between two sets of three-dimensional coordinates, or the edit distance between tree representations of RNA secondary structures, or overlaps between contact maps of protein structures. However, from an evolutionary point of view any definition based on a syntactic notion of (dis)similarity is bound to be artificial, since there are no physical processes which directly and inheritably modify structures at this level of representation. To modify a structure evolutionarily, requires modifying its underlying sequence. It is at once clear, then, that a structure  which is highly dissimilar from a structure  on syntactic grounds might nonetheless be "near" to  on the count of being accessible from  by a small mutation in 's sequence. Alternatively, among two syntactically highly similar structures, one might nonetheless fail to be evolutionarily "accessible" from the other. Notice
+5
+
+that such a relation of accessibility does not quantify distance, but expresses a weaker notion of neighborhood. Pursuing this line we are led to a topology rather than a metric on the set of phenotypes.
+More specifically, we consider the set S of sequences which fold into a given structure  and define its boundary B  S to consist of all sequences at Hamming distance 1 from any sequence in S. Similarly, we call the set of sequences at distance d from S its d-boundary, and let "boundary" stand as a shorthand for 1-boundary. We next fold all sequences in B to obtain their set    of mfe structures. We refer to  as the set of 1-accessible structures of . The d-accessible structures are defined similarly. We will, however, focus only on 1accessibility, or accessibility for short, since it turns out to be sufficient for the interpretation of computer experiments at low mutation rates.
+In sum, we shall say that  is accessible from , or   , if there exists a pair a, b  S with d(a, b) = 1 and f(a) =  and f(b) = . In this notation the set of structures accessible from  is written as  = { |   }. We defer a definition of "nearness" to a later section.
+Recall that the generic property 2 above states that we can think of S as an extended network of neighboring points in sequence space having equal structure . This view is quite useful at times, but unless otherwise noted we continue thinking in terms of the set S. The only difference is that in the latter case the shape  is included in  (S  B = , but {neutral network}  B = ), and the existence of neutral neighbors is expressed by the reflexivity of the accessibility relation.
+5. Boundary statistics
+No resources are available to completely identify the set of structure-neutral sequences, S, not even for moderate chain lengths, let alone to exhaustively fold its boundary. We must, therefore, resort to sampling S. We start by fixing a secondary structure  of length l, and generate by "inverse folding" [8] a sample
+6
+
+of n sequences which have  as their mfe configuration. For each sequence in the sample we fold all its 3l neighbors, obtaining the structures of 3ln sequences in the boundary of S. These structures constitute a sample of .
+Our interest is not just in the accessible structures, but also in how often they occur. Each structure    has two multiplicities associated with it. One multiplicity, N(, ), counts the total number of sequence-neighborhoods of  in which structure  occurs at least once. We normalize it by the size N of S, and call it the neighborhood frequency: (, ) = N(, )/N. It reflects the likelihood of finding structure  in the one-mutation neighborhood of a randomly chosen sequence of S. The other multiplicity refers to the total number of occurrences, Nt(, ), of structure  in B. Each neighborhood of a sequence in S is, therefore, weighted with the actual instances of  in that neighborhood. We normalize it by 3lN, and call it the occurrence frequency: (, ) = Nt(, )/3lN. (, ) and (, ) are estimated by sampling  as mentioned above.
+6. Statistical topology
+In discussing the topological structure of a set, we may start with a notion of neighborhood for each member of that set. Often the set one starts with is already a metric space, and the neighborhoods of a point x are defined by means of -balls consisting of all points at a distance less than from x. As remarked previously, we lack an evolutionarily relevant metric on the set of shapes, and there need not exist one. Instead, we define sets playing a role similar to -balls as a neighborhood base. Let    and consider the sets
+ () = {   | (, )  } ,
+where 0 <  1 and 0  (, )  1 denotes a measure for the frequency of  in the boundary of S, such as (, ) or (, ) defined above. Clearly, 1 > 2 implies  1()   2(). We note that (, ) is not a metric; in general (, )
+7
+
+is neither symmetric, nor does the triangle inequality hold. Technically speaking, a neighborhood of  is any set  (∑) containing .
+The actual topology of  depends on exactly what shapes those  () contain for any   . The contents of these sets are not arbitrary, but rather a property of RNA folding (as captured by the folding algorithm), and must be obtained from a numerical investigation of (, ). A rigorous topology is invariably spoiled by the complexities of folding, and, hence, what matters here are statistical patterns. Moreover, given the combinatorial vastness of the space of possible sequences, we can only proceed by example. This means in particular, that our findings can be reasonably expected to hold only for the set of frequent shapes referred to previously.
+Neighborhoods in shape space can also be thought of as "correlation sets", reflecting conditional structure correlations between pairs of nearest neighbors in sequence space, one of them folding into a fixed structure . We call the topology based on such correlation sets a statistical topology. In the remainder of this paper we describe the contents of the  (), we then give a simple interpretation of the emerging topology, and make the connection with evolutionary trajectories obtained from computer simulations.
+7. The set of all boundary shapes
+As an example we start with the statistical profile of the shapes realized in the boundary of a tRNA clover-leaf structure, and consider first the contents of the biggest set in the neighborhood basis - the set of all shapes realized in the boundary of StRNA, tRNA = {   | (, tRNA) > 0} (=  (tRNA), where is the smallest frequency greater than zero, a lower bound being simply 1/4l). It is difficult to say something precise about the contents of this set, since our sample never catches all the shapes which occur just once in the boundary of StRNA. Some useful information, however, can be obtained by looking at the considerably smaller universe of coarse grained secondary structures defined previously. The
+8
+
+question we ask is whether there is anything tRNA-specific to tRNA at the coarse grained level.
+Our sample (described in figure 1) yielded 5,882 distinct coarse grained shapes. We denote the coarse grained tRNA with tcRNA, and probe specificity by intersecting ctRNA with a pool of coarse grained random structures. The pool consisted of 1,578 unique shapes based on the coarse grained folds of 11,000 random sequences of length l = 76. 90.4 % of the shapes in the random pool were found in tcRNA. The same procedure was applied to four other structures  of the same length l = 76. The sample size of their c sets was about half the size of the tRNA sample. Their overlaps with the random pool were 82.4 %, 78.5 %, 73.3 %, and 81.7 %3.
+A further test set of 169 coarse grained structures was obtained from 10,000 random sequences of length l = 45. It's overlap with the c -sample of a randomly chosen structure  of that length was 87.6 %. Similarly, a pool of 32 shapes, generated by 20,000 random sequences of length l = 29, was intersected with the cY-sample (74 shapes) of the "Y" shape,"((((.(((...))).(((...))).))))". The overlap was 100 %.
+We draw the conclusion that the set of coarse grained shapes realized in the boundary of a random structure contains the overwhelming majority of all coarse grained shapes realized by sequences of fixed length. While feasible sample sizes remain insufficient to collect true low frequency shapes, it is nonetheless tempting to conjecture that the boundary of a shape does contain all frequent coarse grained shapes realized by a given chain length.
+Let us recall the generic property 3, shape space covering, which states that for any two frequent structures  and , the distance between two sequences folding into  and  will not be larger than a certain value which is small compared to
+3The corresponding structures were: ".........((((........)))).(((((.......))))).....(((((.......)))))...........", "...((((.((((((....))))))..)).))....(((((...)))))......((.((((......))))))...", "....((((................))))((((((((.(((.........))).)))..((((...)))).))))).", ".......(((((((....))))))).(((((.((((((.....))))))....(((......))).....))))).".
+9
+
+A
+B 10
+
+Figure 1: Shapes in the tRNA neighborhood. Part A shows the 12 highest ranked shapes with regard to neighborhood frequency (left to right, top to bottom). The series is the same with regard to the frequency of occurrence, except that #8 ranks first (and all others are shifted by one rank). Part B shows the set of 12 topmost coarse grained structures ranked according to frequency of occurrence. All but the last shape are also found (in somewhat different ranking) within the top 15 with regard to neighborhood frequency. The last shape ranks 25th. All structures of A are represented by the first two coarse grained structures of this list. (The sample comprised 5,051 sequences with tRNA fine grained structure. Of the 1,151,628 one-error mutants a fraction of 0.39 were neutral with respect to the coarse grained tRNA structure, the remaining 703,476 sequences realized 5,881 different coarse grained structures.)
+the diameter of sequence space. Our conjecture here corresponds to the obviously much stronger claim that this value is Hamming-distance one. Let us refer to it as the adjacency conjecture. At the fine grained level of secondary structure the adjacency conjecture is unlikely to hold. In fact, for the binary GC-only sequence space of length l = 25 the claim is false. Exhaustive folding of that space reveals, however, that there is a substantial fraction of shapes which are common to the shape boundaries  of the most frequent shapes . This shared subset comprises between 30 % and 70 % of the individual . It is likely to be even larger for AUGC sequences. In contrast, the intersection of the  of several rare structures turns out to be empty. It turns out that for coarse grained secondary structures the picture is different: In the case of GC-only sequences of length 25 the adjacency conjecture was found to hold.
+As a consequence of the shape space covering property, an evolutionary process has to explore only a restriced (yet still substantial) l-dimensional volume of sequence space, in order to find an arbitrary frequent shape. However, when advantageous mutants are not immediatley accessible to a given population of sequences, mutation dynamics and selection pressure confine the population to drift on a (much) lower dimensional slice of sequence space given by the neutral network of the temporarily fittest shape [10]. Huynen [9] pointed out that while drifting, a population keeps exploring the network's one-error boundary. The point added by the adjacency conjecture is that selective confinement to a neutral network does,
+11
+
+in principle, not preempt the process from eventually reaching any of the frequent coarse grained shapes.
+8. Not all shapes are equally important
+The contents of the other  (tRNA) depend on the frequency of accessible shapes. Figure 2 shows a log-log plot of the rank ordered distributions of the neighborhood frequency, (, ) (curve 1), and the occurrence frequency, (, ) (curve 3), for fine grained structures. The main feature is the existence of two regimes with distinct exponents. The first regime includes a small set of about 30 shapes which are considerably more frequent (and thin out substantially faster with increasing rank) than the dominant tail regime which covers several orders of magnitude. This signals the existence of structures which are characteristic neighbors of the tRNA, in the sense of occurring with high probability among the one-error mutants of only those random sequences which fold into the tRNA structure.
+The most frequent structure is the reference structure , and percolating neutrality is expressed by the fact that (, ) = 1. This being the case for any frequent shape  (generic property 2), we will omit the reference structure  from its fine grained distribution data and the rankings. Figure 1A shows the 12 most frequent fine grained structures ranked according to (, ). Figure 1B summarizes the top neighboring structures at the coarse grained level. The coarse grained "neutral" is included here, because it represents a variety of distinct fine grained variants. However, in the corresponding frequency distributions, figure 2A curves 3 and 4, the contribution due to fine grained, or "true", neutrality has been subtracted. The two topmost coarse grained structures in figure 1B represent most of the high frequency fine grained neighborhood. Other frequent coarse grained structures include variants lacking the multiloop, or having stems interrupted by (small) internal loops.
+With one exception, all high ranking fine grained structures are very similar to the reference. They arise from shortening or lengthening a stacking region by
+12
+
+Neighborhood frequency
+
+Frequency of occurrence
+
+1 10-1
+
+4 3
+
+10-2
+
+10-3
+
+2 1
+
+10-1 10-2 10-3 10-4 10-5
+
+100
+
+101
+
+102
+
+103
+
+104
+
+10510-6
+
+Rank
+
+A
+1.0
+
+0.8
+
+Fraction of neutral mutants
+
+0.6
+
+0.4
+
+0.2
+
+0.0 ((((((. . . ((((. . . . . . . . )))). (((((. . . . . . . ))))). . . . . (((((. . . . . . . ))))). )))))). . . . Structure
+B
+
+13
+
+Figure 2: Shapes in the tRNA boundary. 2199 sequences folding into the tRNA clover-leaf reference structure (length l=76, inset of plot A) were sampled. All their one-error mutants (2199∑76∑3 = 501,372 sequences) were folded. A fraction of 0.28 (142,847 sequences) had the same structure as the reference. The remaining 358,525 sequences folded into 141,907 distinct shapes. Curve 1 is a log-log plot of their rank ordered neighborhood frequency (thick line, left ordinate) and curve 3 shows their rank ordered frequency of occurrence (thin line, right ordinate). The dotted vertical line is meant to separate regions with different scaling. In a second sample (of 5,051 sequences with reference structure) we collected the statistics pertaining to coarse grained shapes. The corresponding data sets 2 and 4 are analogous to curves 1 and 3, respectively. The fraction of fine grained neutrals was subtracted from the coarse grained neutral. Plot B shows the neutral mutation frequency as a function of the position mutated (sample of 6,597 sequences per position) for the fine grained case (black impulses) and for the coarse grained case (sample of 15,153 sequences per position; grey impulses). The abscissa shows the reference structure with pairs of matching parentheses representing base pairs at the corresponding positions along the sequence. Note the lower, but non-zero, level of neutrality in the paired regions due to GU pairing.
+one base pair with the concomitant lengthening or shortening of the affected loop region. These structures all share the same coarse grained shape. In reference structures with long stacks, the blocking of a base pair often produces small "bubbles" (internal loops or bulges), while conserving the overall hairpin architecture. In figure 2B the high frequency neighbors of the tRNA shape can be immediately identified by comparing the fraction of neutral mutations per position of the fine grained (black) and the coarse grained (grey) case. Large differences between both levels flag exactly those positions whose modification yields fine grained variants indistinguishable from the coarse grained reference structure.
+The notable exception to the series of slight variants is the three-hairpin structure ranked #8 in terms of neighborhood frequency (0.52). It even ranks first in terms of frequency of occurrence (0.03; all others shown in figure 1A shift down in rank by one). This shape deserves further attention and we shall give it the name: tRNA8.
+Consider now the  of tRNA8 (see figure 3 for shapes and figure 4, curve 1, for the frequency distribution). Observations analogous to those made for the tRNA case apply here as well. The main point, however, concerns the relation between
+14
+
+the two structures: the tRNA structure was never sampled in the boundary of tRNA8. Every second sequence in StRNA is susceptible to the destruction of the multiloop closing stem upon a single point mutation in that region. In strong contrast, extremely few sequences in StRNA8 meet the constraints for the creation of any closing stem from an open region in one mutation. Evidently, the relation between phenotypes induced by a frequency weigthed genotypic accessibility is not symmetric.
+This statistical asymmetry has a counterpart in sequence space at the level of the corresponding neutral networks. The neutral network of the tRNA8 structure is substantially larger than the one of the tRNA. The fact that the tRNA8 network is persistently found one step away from the tRNA network, suggests a kind of "embedding": seen from the smaller network, the larger one appears almost everywhere in its boundary, while from the viewpoint of the larger one, the smaller appears almost nowhere.
+Similar asymmetric relations hold between the tRNA8 structure and some of its topmost boundary shapes. For example, with high frequency any of the remaining stacks of tRNA8 can disappear in a single point mutation (see the shape ranked #4 in the coarse grained neighborhood, figure 3). Two-stack structures of this kind are even found among the high frequency ranks of the tRNA boundary. This is due to the existence of sequences whose tRNA structure contains a hairpin stem which is stabilized only in the context of the multiloop. If a mutation destroys the multiloop, the multiloop sensitive stack opens as well.
+At the coarse grained level, the intersection of ctRNA with ctRNA8 (3,344 coarse grained structures in the sample) shows an overlap of 81.1 %, as expected from the previous intersection results with random pools. All top 30 coarse grained structures realized in the boundary of StRNA8 occur among the top 91 realized in the boundary of StRNA.
+15
+
+A
+B
+Figure 3: Shapes in the tRNA8 neighborhood. The arrangement of shapes is as in figure 1. The highest ranked shape not shown (#13) in terms of neighborhood frequency lacks the 5 hairpin stem. The sample consisted of 2,200 sequences folding into the tRNA8 structure. Of the 501,600 one-error mutants a fraction of 0.36 were neutral with respect to the fine grained structure. The remaining sequences in the boundary sample realized 130,668 distinct fine grained shapes and 3,344 distinct coarse grained shapes.
+16
+
+1 3
+10-1
+
+2 1
+
+Neighborhood frequency
+
+10-2
+
+1
+
+2 10-3
+3
+
+100
+
+102
+
+104
+
+Rank
+
+Figure 4: RNA boundary distributions for non-tRNA structures. Log-log plots of rank ordered neighborhood frequency distributions of other RNA shapes. Curve 1 (thick line) belongs to tRNA8, curve 2 belongs to a randomly chosen structure of the same length (l=76), and curve 3 to a Y-shaped structure of length l=29.
+
+9. The choice of frequency
+Consider a structure which occurs once among the one-error mutants of each of 10,000 sequences in the sample, and one that occurs 100 times around 100 sequences. Both are indistinguishable in terms of the occurrence frequency, (, ), but the former ranks much higher with respect to the neigborhood frequency, (, ). Whether the two frequencies emphasize different notions of neighborhood, depends on the actual distribution of occurrences of  per sequence neighborhood of .
+Figure 5 shows three typical scenarios for the tRNA case. The neutral structure has a wide distribution ranging from 25 to as much as 109 occurrences per
+17
+
+one-error neighborhood. This is in contrast to most accessible variants, an example of which is shown in the inset of figure 5. Their occurrences range typically between 1 and less than 10 per sequence neighborhood, which doesn't make a big difference between (, ) and (, ). The exception is again tRNA8, whose distribution is bimodal. This bimodality is found with all accessible structures lacking the multiloop closing stem, and indicates that there are many sequences in which an extended shape feature ≠ here the multiloop closing stem ≠ is marginally stable. For example, the tRNA multiloop closing stem comprises 12 nucleotides, yielding 36 possible one-error mutants each of them blocking the affected base pair with probability 4/6 or 5/6, depending on whether or not it is a GU pair. Assuming the limiting case that the stack is so marginally stable that removal of any one pair destroys the entire stem, one expects 24 to 30 instances per sequence neighborhood. The maximum for tRNA8 in figure 5 is 31. In general, one expects the frequency with which an extended shape feature is marginally realized to match roughly the frequency with which it is stably realized (giving rise to only few occurrences per neighborhood), since strong and weak stacking interactions between Watson-Crick pairs are balanced. Non-Watson-Crick GU pairing affects this balance only slightly, because excessive GU pairing destabilizes a stack to such an extent that it doesn't form at all.
+The majority of frequently realized modifications are limited to local shape features, such as individual base pairs. These can necessarily be realized only a few times per neighborhood, as there are only few positions for a mutation to affect the feature in the first place. The corresponding occurrence distributions are similar to each other, and resemble the one shown in the inset of figure 5.
+While the shape space neighborhood structures induced by (, ) and (, ) appear quite similar, we prefer (, ) as it treats large and small shape features on an equal footing.
+18
+
+Fraction of sequence neighborhoods
+
+0.09 0.08 0.07 0.06 0.05 0.04 0.03 0.02 0.01 0.00
+0
+
+0.4
+
+0.3
+
+0.2
+
+0.1
+
+0.0
+
+0
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+20
+
+40
+
+60
+
+80
+
+100
+
+120
+
+Occurrences per sequence neighborhood
+
+Figure 5: Occurrence distribution in sequence neighborhhoods. The plot shows for three tRNA boundary shapes how often each of them occurs in how many sequence neighborhoods (Each neighborhood allows for a maximum of 76∑3=228 occurences). The right side (dark) and the left side (light) of the plot refer to the neutral shape (tRNA) and the tRNA8, respectively. (The two plots barely overlap). For tRNA8, the area under the low incidence region roughly equals the area under the high incidence region (0.54 up to the minimum at 10, separating both regions), indicating that the multiloop closing stem is realized stably and marginally with approximately the same frequency. The inset shows the distribution for the most frequent boundary shape after the neutral one. See text for details.
+
+10. Nearness The form of the rank-ordered boundary shape distributions (figures 2 and 4) indicates an -(shape)-dependent value  separating the characteristic set of high frequency structures from a low frequency background shared to a large extent with any other reference shape. This suggests to describe the topological structure of
+19
+
+RNA shape space by considering for each shape  only the shapes accessible from  with a frequency of at least . For moderate chain lengths, like those considered here,  is not sharply defined. The purpose of the procedure, however, is to emphasize the major qualitative aspects of the shape space organization. In this vein, the neighborhood base becomes () = {   | (, )   }. We refer to the largest such set, (), as the characteristic set of . The set of all boundary shapes, , is obtained by relaxing the threshold ,  = lim0  = 00.
+At both levels of resolution, coarse and fine graining, the highest ranking structures occur with almost the same frequency, as evidenced by the initial flat region of the distribution. To caricature the qualitative aspects, we may also discretize the variation of by a suitable step size  (-1 integer), = 1 - n, n = 1, 2, . . . , -1, considering [n]() = {   | (, )  1 - n  }. The smallest set, [1](), contains all shapes accessible from  with frequencies in the top range [1 - , 1].
+We finally proceed to define nearness. A shape  is defined to be near a set of shapes , if every neighborhood [n]() contains a shape of . By abuse of language we call a shape  near a shape , if  is near the characteristic set of . In this sense the tRNA8 shape is near the tRNA, but not vice versa. However, for many shapes  in the top set [1]() the nearness relation to  is symmetric. Consider, for example, a hairpin structure  with a single stack of length s. Almost every sequence folding into  will have among its 1-error mutants some in which the loop closing terminal base pair of the stack has been destroyed, yielding a shape  with a single stack of length s - 1. Conversely, given a sequence which folds into , it is easy to access  by rebuilding that base pair through a single mutation.
+11. The substructure relation
+It is instructive to compare this topology with a different relation. Secondary structures are partially ordered by the subset relation on the set of their base
+20
+
+pairs P:  <  (read:  is a substructure of ), if P  P. This relation can be visualized as a directed graph on . In the present context we are interested only in the undirected version of that graph, that is, two structures are connected by an edge if they are comparable. Obviously, two structures are comparable, if they arise from one another by either removing or adding base pairs (subject to the no-pseudoknot condition). Conversely, two structures are incomparable, if their interconversion involves both removing and adding base pairs. In the latter case it is useful to distinguish whether the interconversion is a generalized shift. We define a change of base pairing to be a generalized shift, if for each base pair changed at least one base remains paired. This includes the standard shift, where paired strands slide past each other, typically by a few positions (figure 6). A generalized shift, however, also covers transformations such as the "roll-over", the "flip", and the "double flip" sketched in figure 6.
+Structures that differ by generalized shifts are called shift-incomparable. For example,   "(((.....)))..((((...))))" and   "((((...))))..(((.....)))" are incomparable but not shift-incomparable, while  and µ  "(((......))).((((...))))" are shift-incomparable, as are  and   ".(((.....))).((((...))))".
+Our previous observations indicate that if a structure  is near a structure , then  and  are comparable. The converse is not quite true, however. Consider, for example, the pair  = tRNA8 and  = tRNA. Rather, if two structures are comparable and their symmetric difference (, ) = (P - P)  (P - P) is small, such as one or two base pairs, then both  and  are near one another.
+Notice that, by definition, if  is near , we can pass from  to  directly, that is, in one step, without leaving the characteristic set of . For the sake of simplicity, let us refer to the characteristic set of  as "the" neighborhood of . If  is not near , the one-step transition from  to  requires leaving the neighborhood of  (figure 7A). A transition from  to  need not be in one step, but may occur in several stages. If this prevents neighborhood boundaries from being crossed, we call the transition continuous (figure 7B). An example is given by the previously men-
+21
+
+shift
+
+roll-over
+
+a
+
+a
+
+Aa
+
+flip
+
+double flip
+
+A
+
+Aa
+
+AB
+
+bB
+
+b
+
+Figure 6: Generalized shifts. The figure shows the shift types bundled under the term generalized shift. In a standard shift (upper left) one strand of a stacked region slides past the other. (Light lines indicate the new pairing pattern.) The result is the growth of a loop. In a "roll-over" (upper right) both strands of a stack shift by the same amount; as a result the loop maintains its size and, in the example, "rolls" towards the 5 end. A "flip" denotes a big slide where the new position of the shifted strand does not overlap with the old position (lower left), while a "double flip" refers to the analogous situation in which both strands flip. In all cases, for each base pair involved, at least one position remains paired before and after the change.
+
+tioned structures  and . They are incomparable, and a direct transition from, say,  to  leaves the neighborhood of . However, the transition is reducible, since there is an intermediate structure  = "((((...))))..((((...))))" which is comparable with  and (,  ) is small. From the numerical neighborhood profile of  we can infer that the transition from  to  does not leave the neighborhood
+22
+
+characteristic set of  (a)
+ 
+
+characteristic set of 
+
+(b) cs of 1
+cs of 2
+
+cs of 3
+
+1 2 3
+
+cs of 4
+4
+
+characteristic set (cs) of 
+
+
+
+cs of 
+Figure 7: Continuity of transitions. The upper drawing shows a situation in which  is in the characteristic set of , but not vice versa. By definition this simply means that accessing  from  is easy on average, while accessing  from  is not. The former transition is termed continuous, the latter discontinuous (dotted arrow). The lower drawing illustrates how a discontinuous one-step transition from  to  becomes continuous by means of a suitable series of intermediates accessible through continuous one-step transitions.
+
+23
+
+Table 1: Substructure relations and the nature of one-step transitions. Transitions from  to  are classified by "yes" and "no" depending on whether or not they remain in the neighborhood of . Asterisks mark irreducibly discontinuous transitions (see text).
+
+Case
+1 2 3 4 5
+
+Substructure relation , 
+
+Class
+
+
+
+comparable comparable comparable shift-incomparable incomparable
+
+small (1bp) stack length,  < 
+large,  <  -- --
+
+Transition continuous
+yes yes no  no  no
+
+of . Moreover, since  is similarly related to , the transition from  to  doesn't leave the neighborhood of  either. Hence, there is a continuous multi-step transition from  to . In contrast, there is no continuous transition from tRNA8 to the tRNA. The table 1 summarizes the observed regularities.
+In general, if  is not near  and there exists a series of structures   0 1 ∑ ∑ ∑ i-1 i ∑ ∑ ∑ n   such that i is near i-1, the overall (multistep) transition from  to  is continuous. A transition is irreducibly discontinuous, if no such series exists. The irreducibly discontinuous transitions are realized by two scenarios: (1)  and  are comparable, but in passing from  to  a long stacking region, such as a multiloop closing stem, must be created from scratch (the symmetric difference is large and  < ), or (2)  and  are shift-incomparable. Both cases have one feature in common: the transition cannot be done incrementally on thermodynamic grounds. Case (1) reflects the fact that a minimum stack size is needed to compensate for the destabilizing free energy contribution resulting from the loop created by the new stack. This nucleation size depends on the nature of the stacking pairs, the terminal mismatches, and the nature and the size of the loop. Case (2) reflects the fact that shifting a stretch of contiguous base pairs requires their synchronous displacement. The pairs cannot shift in random sequential order without violating obvious steric
+24
+
+constraints (and, formally, the no-pseudoknot constraint). Moreover, if a shift were to happen in stages, unpaired bubbles arise which need stabilization by a minimum stack size on either side. Shifts of long stretches are indeed likely to happen in stages, but typically not shifts involving stacks of size 4. The irreducibly discontinuous transitions are, hence, determined by the thermodynamics of folding. These observations are the key to understanding the evolutionary dynamics of simulated RNA populations to which we turn next.
+12. Boundary conditions
+The influence of the genotype-to-phenotype map on evolutionary dynamics is potentially blurred by the composition with a phenotype-to-fitness function. The latter introduces a further type of neutrality resulting from different shapes having the same fitness. As a consequence, phenotypically distinct neutral networks in genotype space are merged into one larger fitness-neutral network. While the phenotype-to-fitness map can be largely arbitrary and directly influenced in laboratory evolution experiments, we believe that the two cases studied here delimit a wide class of meaningful functions. We have in mind a fairly generic situation in which RNA sequences evolve towards a shape capable of binding to some chosen molecule, as is indeed the case in SELEX-type experiments producing small RNA binders called "aptamers" [3]. Since we are interested in evolutionary trajectories rather than searching for a shape with some predefined property, we specify in advance what the final shape ought to look like. Our mapping from shapes to replication rate constants (fitness), then, becomes a simple function of the syntactic distance of a given shape to a prespecified target shape (see below). Given a distance measure d, a shape replicates faster, the more it resembles the target. In all simulations reported here, the replication rate ri of a sequence i of length l with shape  at distance d(,  ) from a target shape  is given by ri = (0.01 + d(,  )/l)-1. Using an exponential or a linear function did not make any difference with regard to the issues we are interested in. We used a rate of 8
+25
+
+errors per 1000 nucleotides copied (For a tRNA length of l = 76 this corresponds to a per nucleotide error rate of p = 0.001). At this rate, the difference between parent and a modified offspring sequence is mostly one point mutation. These conditions are thus appropriate for a statistical topology based on 1-accessibility.
+Two quite distinct distance measures on shapes were considered. One is given by the Hamming distance between two shapes in their parenthesized representation, and the other is given by the "base pair distance". Both treat corresponding sequence positions which differ in their pairing state as errors contributing to distance (unpaired versus paired and upstream-paired versus downstream-paired). The difference, however, derives from base pair distance treating a base pair as a unit, while Hamming distance treats a paired position as the unit. As a consequence, base pair distance will count as errors situations which do not contribute towards Hamming distance. For example, consider two shift-incomparable shapes, "((((....))))" and ".((((...))))". Their Hamming distance is 2 (only positions 1 and 5 differ), while their base pair distance is 9 (all of the paired positions differ).
+Our simulation of an RNA population subject to selection in a constrained flow reactor according to stochastic chemical kinetics is a continuous time model of Spiegelman's classic serial transfer experiments [19]. It's implementation is described elsewhere [4, 10].
+13. Evolution in phenotype space: the relay series
+In order to study the influence of the statistical topology on evolutionary dynamics, we focus on the temporal succession of shapes rather than individual sequences. Stated in terms of sequences this means that we focus on the succession of equivalence classes of sequences represented by a neutral network corresponding to a shape. If we were to track over time which shape gives rise to which shape, we would end up with a vast and highly interconnected network of phylogenies (Circular paths at the level of individual sequences are a common result of mutational
+26
+
+backflow in the population and this backflow must be substantially larger, if we
+
+consider entire equivalence classes of sequences with respect to shapes). Besides
+
+the computational complexities associated with handling hundreds of megabytes
+
+of history data pouring from a simulation of this kind, we would still need to know
+
+which pathways are the relevant ones.
+
+Our solution to this involves two steps. First, we consider the phylogenetic
+
+network of only those shapes that literally made history: we only record informa-
+
+tion about events which generate a "relative innovation", that is, a shape which is
+
+new in the population at the time t of its appearance. This does not neccesarily
+
+imply that the shape hasn't been in the population in the past; it could have gone
+
+extinct some time and it might be "rediscovered" at time t. This provision re-
+
+moves the large backflow among extant shapes within a population, which doesn't
+
+proceed into new phenotypic territory. For each relative innovation  we record
+
+entry times, li, and exit times hi . In a second step, after the evolutionary process has found the target or has
+
+been stopped, we trace back through the history data in the following way. Con-
+
+sider the set of "live intervals" L = {[li, hi ], li < hi < li+1}, marking the presence of shape  in the flow reactor during the simulation. Each live interval
+
+[li, hi ] of  has a unique ancestor with shape  which spawned that interval at time li, meaning that a sequence folding into  produced at time li a mutant which folded into , and  was not in the population at that time. Let  be the
+
+target shape, and [li, hi] one of its live intervals whose ancestor is -1. Among the L-1 there is a unique live interval [lj-1, hj -1 ] containing the time instant li, and we proceed searching for the unique ancestor of [lj-1, hj-1 ]. Upon repeating
+this procedure we eventually end up at one of the initial shapes. At this point we
+
+have reconstructed a chain of shapes   -n -n+1 ∑ ∑ ∑ -i ∑ ∑ ∑ -1 0   connecting an initially present shape  with the target (or final) shape . This chain
+
+is uninterrupted in time, in the sense that for every n  i  1, -i is ancestor of
+
+-i+1
+
+and
+
+there
+
+exists
+
+a
+
+pair
+
+[lr-i , hr -i ]
+
+[ls-i+1
+
+,
+
+h-i+1
+s
+
+]
+
+with
+
+lr-i
+
+<
+
+l-i+1
+s
+
+<
+
+hr-i .
+
+The chain depends on the live interval of the final shape  from where the trace
+
+27
+
+starts, but it is unique for that interval. On rare occasions there may be more than one such interval for the target shape, since stochastic fluctuations may wipe out the target which must be generated again to get established in the population. By default we consider the last live interval of the target shape at the time the simulation has been stopped.
+Because of the chain's connectedness in time and its uniqueness relative to a live interval of the final shape, we think of it as the causal chain of phenotypic innovations leading from  to . We term it the relay series, in analogy to a relay-race in which a team races to goal in stages, each runner covering a segment of the trail and handing over the baton to the successor. Of course, our relay series can only be known in retrospect.
+In computer experiments it is easy to record a unique identifier for every mutation event. When reconstructing the relay series, we obtain the identifier of each event that caused the passage from one relay shape to the next. Equipped with this hindsight, we rerun the same history (by using the same random seeds), but this time selectively recording the actual succession of sequences underlying the relay series (Recording such information a priori would flood most computer systems, because we have no foresight into the sequence of stochastic events and thus the relay series is accessible only by backtracking of trajectories).
+Notice that the relay series is not defined by appealing to concentration or fitness and, hence, the relay shapes need neither coincide with the succession of dominant nor fittest shapes in the population. Moreover, the definition does not prevent the relay series from containing cycles. Finally, the uniqueness of the relay series (per target live interval) refers only to a given computer experiment. Different simulations may proceed through different phenotypic paths leading from  to . In the next section we study the relationship between the relay series and the shape space topology.
+28
+
+14. Patterns of history
+We monitor a macroscopic and a microscopic aspect of the evolutionary process. The macroscopic one is given by the time evolution of the average distance (average fitness) of the population to the target shape. The microscopic one is a description of the temporal succession of phenotypes, as given by the relay series. We discuss evolution towards a tRNA shape as an exemplar representing a variety of simulations carried out with different target shapes.
+14.1. Hamming distance In the following simulations the shape distance function is Hamming distance. Figure 8 juxtaposes the micro and macro aspects mentioned. The relay series shown in figure 9 consists of 42 shapes, indexed from 41 (start shape) through 0 (target shape). Figure 8 also shows the live intervals of all relay shapes separated vertically by index. The step trace indicates the time segment of the relay history occupied by each relay shape. The left boundary of each segment coincides (by definition) with the beginning of a live interval generated by the previous relay shape. The right boundary marks the time instant at which the corresponding relay shape has generated its successor in the relay series.
+The shape space topology induced by the folding map has little influence on the early phases of evolution. This results from the fact that whatever change a random shape undergoes, it is likely to narrow the gap to most targets. Moreover, major changes are likely to occur when shapes contain long unpaired random regions. Chains with long unpaired stretches, or even the open chain, are not frequent structures for the lengths considered here, and our topology fails. Once the opportunities deriving from this initial "latent" structural variability have been exploited for a quick gain in fitness, the stage is set for the shape space topology to shape the long course of the remaining history.
+In order to show that the shape space neighborhoods underlie the relay series, we consider the sets of live intervals of two consecutive relay shapes, -i and
+29
+
+50
+
+Average structure distance to target
+flip double flip
+shift shift shift
+
+40
+
+A
+
+A
+
+30
+B
+
+B
+
+20
+
+B
+
+10 0 0
+
+B B
+
+250
+
+500
+
+750
+
+1000
+
+1250
+
+Time
+
+Figure 8: Major transitions towards a tRNA shape. The figure shows how much optimization has progressed at the macro level by plotting the average Hamming distance to the target structure. The fitness curve is superimposed by the relay trace showing the flow of causality from start shape to target (see text for definitions). The major transitions are marked by vertical lines. The corresponding generalized shifts are named, and the shapes before and after the transition are shown (Except for the first standard shift to avoid congestion of the figure). The flow reactor was stochastically constrained to maintain an average of 1,000 sequences and the error rate was 0.001 per nucleotide.
+
+-i+1, during a period in which the fitness average of the population remains constant. In such a period relay transitions occur typically among fitness neutral shapes, and most relay shapes are significantly populated during some of their live intervals. If -i+1 is near -i, we should observe a series of live intervals
+30
+
+Figure 9: Relay series. The full series of relay shapes for the simulation in figure 8 is shown. See text for details.
+31
+
+belonging to -i+1, indicating its intermittent presence starting with the arrival of -i. This signals the fact that -i+1 is repeatedly generated from -i, and, thus, "unavoidable". Conversely, if -i is near -i+1, we should observe a similar pattern of live intervals for -i, once -i+1 has become the relay shape. Consider, for example, the patterns around the relay transitions marked A in figure 8. The relay segment of the incoming shape -i (the ancestor) is followed by a series of (non-relay) live intervals, and the relay segment of the outgoing shape -i+1 (the offspring) is preceded by a series of (non-relay) live intervals. This pattern indicates that -i and -i+1 are both near each other. A pattern in which either one of the series of non-relay live intervals is absent, indicates that the shape associated with that series is near the one lacking it, but not vice versa. Thus, the patterns at the instants marked B in figure 8 signal that the transition from -i to -i+1 leaves the characteristic set of -i. Yet in all but the last cases -i is near -i+1, since the presence of -i+1 entails the presence of -i.
+During the extended periods of constant average fitness most relay shape passages are continuous, in the sense of proceeding within neighborhoods. On rare occasions a discontinuous relay transition ≠ an escape from a neighborhood ≠ occurs without having an impact on fitness (such as instant B on the plateau around time 450 in figure 8). The main observation, however, runs in the opposite direction: each change in fitness (vertical dotted lines in figure 8) is associated with the escape from a shape space neighborhood. Either the fitness change is caused directly by the escape, or it is shortly preceded by it. This observation holds for all target choices we made. In fact, that choice can only affect which neighborhood escapes have an impact on fitness.
+Then, the basic pattern of a phenotypic path is the following. In the early phase of the process some random restructuring may take place, and the overlap between stacks present and the target is maximized by growing or shrinking stacks one or two base pairs at a time. According to the shape space topology outlined before these latter adjustments are continuous. This phase of the process necessarily stops when no continuous improvements are possible. At this point some
+32
+
+stacks are positioned more or less correctly, while others consist of one strand overlapping with its target analogue, yet pairing to an entirely misplaced region. The fine tuning of stack positions without loss of fitness must proceed through shifts (for example, the first transition indicated in figure 8). Similarly, if one strand of a stack is correct, but pairs wrongly, a generalized shift of the "flip"-type (figure 6) must occur (second transition indicated in figure 8). The latter case is put to an extreme when the position and the pairing orientation (upstream or downstream) of both strands of a stack agree with the target, but the strands do not pair with each other in the target. To correct such a situation under strong selection, a double flip (figure 6) must occur (see figure 8 and 9). By means of flips and double flips the correct overall architecture of the shape is eventually achieved, which is then fine tuned by further standard shifts. At high replication accuracy, the vast majority of generalized shifts is triggered by a single point mutation.
+Recall that the statistical topology structures the set of shapes only in the high accessibility regime up to the threshold value  suggested by the neighborhood frequency distribution. Yet, the set of all boundary shapes  extends far beyond it. The escape from the neighborhood system of , that is, from its characteristic set, is possible, because other shapes (presumably all frequent coarse grained shapes) are accessible from  with low probability. This includes shapes  which differ by a generalized shift from . When selection confines a population to a dominant master shape , escaping 's neighborhood can only occur through random drift on the neutral network of . This random drift enables a specific sequence context to be set without loss of viability, such that a single point mutation can trigger the structural rearrangement to . This causes long waiting times on average. A statistics of such waiting times and a study of how they depend (if at all) on the proximity to the target, remains to be done.
+Notice that standard shift differences to the target are also a major cause of neutrality in this context. Consider, for example, a target structure (or substructure)   "(((....)))." and a shift-incomparable shape   ".(((...)))." at Hamming distance 2. Elongating 's stack by a base pair, "((((...))))",
+33
+
+constitutes a transition to a shape near  and leaves the Hamming distance to  unchanged. This is precisely what happens during neutral drift periods. It is easily seen that a situation with multiple stacks can lead to cycles in the relay series. There are two instances of this sort in figure 9: relay shapes #12 and #7 are identical, as well as shapes #5 and #3.
+A few details at the sequence level are worth mentioning. The mutation which caused the double flip from relay shape #18 to relay shape #17 (figure 9) occurred at a site remote from the sites involved in the flipping. It extended the hairpin stack near the 3' end by one base pair, which provided sufficient stabilization for the double flip to occur. The necessary sequence context for this event arose during the preceding long phase of random drift on the fitness-neutral network of shapes #26 through #18.
+Furthermore, shape #1 in figure 9 seems a strange intermediate in the shift event leading from shape #2 to the target (#0). The shift actually happened in two stages (first #2 to #1, then #1 to target). If the two mutation events had occurred in the reverse order, a different intermediate shape would have made the shift process more obvious. With the specific sequences involved, the actual order of events forced a more dramatic constriction of the multiloop. A computer experiment whose initial population consisted of the population at time 1000 in figure 8, confirmed that shape #1 is not a necessary relay shape for the corresponding shift. There are alternative histories. That simulation (not shown) produced the target once after 73 time units. A fluctuation then wiped it from the population, and the target shape was produced again some 20 time units later, when it finally took over. Two relay series, differing slightly in their final stages, are associated with these two live intervals. In the first relay series the target was produced by a shift directly from what is shape #4 in figure 9. In the second relay series the target arose via #3 ( #5) by a silent roll-over and a standard shift.
+34
+
+14.2. Base pair distance The dominance of generalized shifts in structural transitions is linked to the evaluation of shapes by means of a Hamming metric which considers each strand of a stack separately. The Hamming metric implies that selection pressure can hold in place one strand of a stacking region, while the other is free to shift or to flip. Indeed, starting from different random initial conditions, the route to the major structural tRNA feature ≠ the multiloop ≠ always involved a double flip. Generalized shift differences to the target are small in the Hamming metric. Yet, shift transitions are difficult to achieve, and the evolutionary process guided by Hamming distance "hangs" whenever such a transition is required. Direct formation of a multiloop closing stem (the other kind of irreducibly discontinuous transition) can be forced to occur, when starting with a homogeneous population consisting of the tRNA8 shape. As expected, a long period of drift precedes the closing of the multiloop (not shown).
+It is, thus, instructive to consider the impact of base pair distance on evolutionary trajectories. In terms of base pair distance shifts appear as large differences, and selection pressure is exerted on individual base pairs rather than individual positions, that is, the two strands of a helix cannot evolve independently. Figure 10 shows two runs of the optimization process for tRNA, both starting from identical initial conditions. The macroscopic picture exhibits the same phenomena as discussed in detail for the Hamming case. The main difference, however, is at the microlevel. Transitions are now predominantly de novo constructions of stacking regions rather than shifts. Whether a sequence segment folds into a stack shifted by one position relative to the target or whether that segment doesn't fold at all makes only a slight difference from the point of view of base pair distance. To effectively shift a stack, the stack is undone and subsequently generated from scratch in the shifted position. As indicated in figure 10, during some neutral drift periods both neutral shape versions, with and without a wrongly positioned stack, were present in high concentration.
+35
+
+36
+
+B
+
+Time
+
+800
+
+600
+
+400
+
+200
+
+0
+
+0
+
+20
+
+Average structure distance to target
+
+1
+
+2
+
+2
+
+1 2
+
+1
+
+2
+
+1
+
+<>
+
+44
+
+1
+
+3
+
+3
+
+0 0
+60 40
+
+A
+
+Time
+
+800
+
+600
+
+400
+
+200
+
+Average structure distance to target
+
+20
+
+2
+
+de novo stack
+
+1
+
+<>
+
+1
+
+2
+
+<>
+de novo stack
+
+de novo stack
+
+1
+60
+40
+
+3
+
+1
+2 3
+
+4
+
+2
+
+1
+
+2
+
+2
+
+1
+
+1
+
+Figure 10: Evolutionary trajectory under base pair distance. As in figure 8 the evolutionary approach towards a tRNA target shape is shown in terms of average structure distance and the relay series. The difference to figure 8 is that the similarity between structures is measured as a base pair distance. This distance function is virtually "blind" to shifts. As a result, the de novo creation of a stacking region ≠ the second type of discontinuous transition in the shape space topology ≠ becomes prominent. Selected relay shapes documenting the arrival of relevant structure motifs are shown. Correctly positioned stacks are labelled in the order of their appearance. Neutrality between coexisting dominant shapes is indicated by double arrows.
+The relationship between neighborhood transitions and the relay series is seen by means of the live interval trace in much the same way as in the Hamming case. There is one seeming exception in figure 10A at the second transition. That transition is not about the creation of a new stack, but rather about the shortening and lengthening by one base pair of the stacks labelled "1" and "2", respectively. However, according to the shape space topology described previously, these transitions are continuous and should not be preceded by a long period of drift. In fact, consider the live interval trace of the relay shape  succeeding the relay shape  present during the drift period. The trace shows that  was generated rapidly and repeatedly after  entered the population ≠ as it should be, since  is obviously near . The problem is that the base pair distance to the target is large at this point in the process, and given our specific fitness function, a distance improvement of 2 units is too weak to trigger a sharp selective response. Once  accumulated in the population, and generated its own mutants, it gave immediately rise to a (near) shape with a lengthened stack labelled "2". This increased the fitness gain to 4 units, triggering a fast selection response. Such a spurious drift period is absent from figure 10B.
+The correctly positioned stacks of the relay shapes shown in figure 10 are numbered in the order of their appearance. The modularity of RNA secondary structures permits many permutations in the sequence of transition events leading to a target shape. However, in all runs perfomed, the multiloop closing stem was the last to form.
+Hamming distance caricatures better than base pair distance the in vivo or
+37
+
+in vitro evaluation of RNA shapes under selection constraints similar to those considered here. More sophisticated distance criteria, such as tree edit distance [18], produce a picture which is very similar to the Hamming case.
+The main point of the comparison is to show that even dramatic changes in the phenotypic evaluation function only affect which of the two discontinuous transitions dominates, not the fact that they dominate. The high degree to which the RNA folding map constrains evolutionary trajectories in a recognizable way seems largely independent of the fitness map imposed on the phenotypes.
+The shape space organization appears not nearly as obvious for binary sequences. GC-only sequences of a given shape cannot exhibit neutrality within paired regions. This is enough to make the escape from shape space neighborhoods through neutral drift extremely difficult. While GC-only sequences with a tRNA shape were easily found by inverse folding, extensive simulations failed entirely to evolve anything close to a tRNA shape in a GC-only setting. A similar situation might hold for AU-only sequences. However, our inability to find AU-only tRNA shapes by inverse folding suggests that they don't even exist.
+15. Conclusions
+In order to understand evolutionary histories, we need to organize the set of possible phenotypes in a way that reflects their attainability through genotypic changes. This induces a different organization than one based on moves performed on some direct representation of the phenotypes. The latter emphasizes a purely syntactic similarity of phenotypes, while the former connects with the genotypic level in a fashion mediated by development (here folding).
+"Development" and "genetic changes" are treated here in their probably simplest non-trivial realization given by RNA folding and point mutations. Since our folding algorithm computes the shapes (phenotypes) from sequences (genotypes) by a mathematical procedure which does not necessarily reflect the actual process
+38
+
+of folding, we deal with a static (yet statistically accurate) genotype-to-phenotype map.
+The set of RNA minimum free energy secondary structures is organized as a topological space by means of a frequency weighted relation of accessibility. One-error mutants of sequences sharing a common minimum free energy structure preferentially fold into certain shapes. Accessibility, thus, captures nearest neighbor correlations at the level of neutral networks, which are equivalence classes of sequences with respect to shape.
+The numerical analysis of the accessibility relation implied by a widely used folding algorithm yielded three basic findings. First, for any frequent shape , there exists a set of accessible shapes which is characteristic for  from a frequency point of view. Second, a notion of nearness, based on this characteristic set, leads to the notion of a "continuous transformation" of structure. Informally, the transformation of a structure  into  is continuous, if it proceeds through a sequence of neighboring genotypes such that the structure of each offspring is near to the structure of its parent. The discontinuous transitions are precisely those structural changes that cannot be sequentialized in an incremental fashion, but rather require the synchronized change of several base pairs. Such transitions involve a generalized shift or the formation of a longer stacking region, such as a multiloop closing stem. Third, independently of fitness criteria, the RNA shape space topology strongly influences evolutionary trajectories approaching a target in all but the very early stages of the process.
+Effecting a discontinuous transition in shape space by a small genetic change (here one point mutation) poses stringent conditions on candidate sequences. Optimization generally requires discontinuous transitions in shape space, and this entails long average waiting times during which selection pressure confines the population to drift along neutral networks. Transitions coincide with an escape from a shape space neighborhood made possible by the fact that the boundary of a neutral network contains beyond its characteristic set a very large number of very low frequency shapes. Our study suggests that this set of shapes virtually
+39
+
+includes all frequent coarse grainedstructures. It is, however, precisely the neutral drift resulting from the hung process which enables the transition to actually occur. Neutral drift eventually leads to a suitable sequence context which gives rise to the major structural rearrangement upon a single point mutation.
+The temporal sequence of major structural transitions are not made predictable by the shape space topology considered here. The indeterminacy derives from the additive modularity of RNA secondary structure. A complex base pairing pattern, such as the tRNA clover leaf, can be assembled by constructing the components (hairpins) in virtually any order. What becomes predictable, however, is the nature of the major structural transitions, and the fact that they must be preceded by a period of neutral drift leading to generalized shifts or de novo stack formation. Once the early phase of evolution has elapsed, a fairly educated guess about the number of such transitions needed to reach a target is possible.
+Point mutations alone are probably impractical in the evolutionary design of large structures in the laboratory. The use of chain elongations and concatenations is likely to be more effective. In view of what we have shown here, it will be important to understand how the shape space topology responds to these changes in sequence space.
+Acknowledgements
+Discussions with Leo Buss, Ivo Hofacker, and Christian Reidys are gratefully acknowledged. We thank Martijn Huynen for critical comments on previous drafts of this paper. Stephan Kopp has kindly provided the boundary analysis of an exhaustively folded sequence space. Financial support was provided by the Austrian Fonds zur Fo®rderung der wissenschaftlichen Forschung (Projects P-10578 and P11065), by IIASA Laxenburg, Austria, by the Commission of the European Union (Contract Study PSS*0884), and by the integrative core research at the Santa Fe Institute.
+40
+
+References
+[1] L. W. Buss. The Evolution of Individuality. Princeton University Press, Princeton, 1987.
+[2] E. H. Ekland, J. W. Szostak, and D. P. Bartel. Structurally complex and highly active RNA ligases derived from random RNA sequences. Science, 269:364≠370, 1995.
+[3] A. D. Ellington. RNA selection. Aptamers achieve the desired recognition. Current Biology, 4:427≠429, 1994.
+[4] W. Fontana and P. Schuster. A computer model of evolutionary optimization. Biophys. Chem., 26:123≠147, 1987.
+[5] S. Govindarajan and R. A. Goldstein. Why are some protein structures so common. Proc. Natl. Acad. Sci. USA, 93:3341≠3345, 1996.
+[6] S. Govindarajan and R. A. Goldstein. The foldability landscape of model proteins. in press, 1997.
+[7] W. Gru®ner, R. Giegerich, D. Strothmann, C. Reidys, J. Weber, I. L. Hofacker, P. F. Stadler, and P. Schuster. Analysis of RNA sequence structure maps by exhaustive enumeration. II. Structure of neutral networks and shape space covering. Mh.Chem., 127:375≠389, 1996.
+[8] I. L. Hofacker, W. Fontana, P. F. Stadler, S. Bonhoeffer, M. Tacker, and P. Schuster. Fast folding and comparison of RNA secondary structures. Mh. Chem., 125:167≠188, 1994.
+[9] M. A. Huynen. Exploring phenotype space through neutral evolution. J. Mol. Evol., 43:165≠169, 1996.
+[10] M. A. Huynen, P. F.Stadler, and W. Fontana. Smoothness within ruggedness: The role of neutrality in adaptation. Proc. Natl. Acad. Sci. USA, 93:397≠401, 1996.
+[11] J. Jaeger, D. Turner, and M. Zuker. Improved predictions of secondary structures for RNA. Proc. Natl. Acad. Sci. USA, 86:7706≠7710, 1989.
+[12] M. Kimura. The Neutral Theory of Molecular Evolution. Cambridge University Press, Cambridge, UK, 1983.
+[13] H. Li, R. Helling, C. Tang, and N. Wingreen. Emergence of preferred structures in a simple model of protein folding. Science, 273:666≠669, 1996.
+[14] J. Pu®tz, J. D. Puglisi, C. Florentz, and R. Gieg¥e. Identity elements for specific aminoacylation of yeast tRNAAsp. Science, 252:1696≠1699, 1991.
+[15] C. Reidys, P. F. Stadler, and P. Schuster. Generic properties of combinatory maps - Neutral networks of RNA secondary structures. Bull. Math. Biol., 59:339≠397, 1997.
+[16] P. Schuster. How to search for RNA structures. Theoretical concepts in evolutionary biotechnology. Journal of Biotechnology, 41:239≠257, 1995.
+41
+
+[17] P. Schuster. Genotypes with phenotypes: Adventures in an RNA toy world. Biophys. Chem., 66:75≠110, 1997.
+[18] P. Schuster, W. Fontana, P. F. Stadler, and I. L. Hofacker. From sequences to shapes and back: A case study in RNA secondary structures. Proc.Roy.Soc.(London)B, 255:279≠284, 1994.
+[19] S. Spiegelman. An approach to the experimental analysis of precellular evolution. Quart. Rev. Biophys., 4:213≠253, 1971.
+[20] M. Tacker, P. F. Stadler, E. G. Bornberg-Bauer, I. L. Hofacker, and P. Schuster. Algorithm independent properties of RNA secondary structure predictions. Eur.Biophys.J., 25:115≠130, 1996.
+[21] M. Zuker and P. Stiegler. Optimal computer folding of larger RNA sequences using thermodynamics and auxiliary information. Nucleic Acids Research, 9:133≠148, 1981.
+42
+
+

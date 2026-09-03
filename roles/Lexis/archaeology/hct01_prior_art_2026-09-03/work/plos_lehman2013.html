@@ -1,0 +1,1621 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:dc="http://purl.org/dc/terms/"
+      xmlns:doi="http://dx.doi.org/"
+      lang="en" xml:lang="en"
+      itemscope itemtype="http://schema.org/Article"
+      class="no-js">
+
+
+
+<head prefix="og: http://ogp.me/ns#">
+
+
+
+
+<link rel="stylesheet" href="/resource/css/screen.css?eef27bb1f6db634b1f334e4d0eb17c4c"/>
+  <!-- allows for  extra head tags -->
+
+
+<!-- hello -->
+<link rel="stylesheet" type="text/css"
+      href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600">
+
+<link media="print" rel="stylesheet" type="text/css"  href="/resource/css/print.css"/>
+    <script type="text/javascript">
+        var siteUrlPrefix = "/plosone/";
+    </script>
+  <script src="/resource/js/vendor/modernizr-v2.7.1.js" type="text/javascript"></script>
+  <script src="/resource/js/vendor/detectizr.min.js" type="text/javascript"></script>
+
+  <link rel="shortcut icon" href="/resource/img/favicon.ico" type="image/x-icon"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+
+
+
+
+
+  <link rel="canonical" href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0062186" />
+  <meta name="description" content="Why evolvability appears to have increased over evolutionary time is an important unresolved biological question. Unlike most candidate explanations, this paper proposes that increasing evolvability can result without any pressure to adapt. The insight is that if evolvability is heritable, then an unbiased drifting process across genotypes can still create a distribution of phenotypes biased towards evolvability, because evolvable organisms diffuse more quickly through the space of possible phenotypes. Furthermore, because phenotypic divergence often correlates with founding niches, niche founders may on average be more evolvable, which through population growth provides a genotypic bias towards evolvability. Interestingly, the combination of these two mechanisms can lead to increasing evolvability without any pressure to out-compete other organisms, as demonstrated through experiments with a series of simulated models. Thus rather than from pressure to adapt, evolvability may inevitably result from any drift through genotypic space combined with evolution's passive tendency to accumulate niches." />
+
+  <meta name="citation_abstract" content="Why evolvability appears to have increased over evolutionary time is an important unresolved biological question. Unlike most candidate explanations, this paper proposes that increasing evolvability can result without any pressure to adapt. The insight is that if evolvability is heritable, then an unbiased drifting process across genotypes can still create a distribution of phenotypes biased towards evolvability, because evolvable organisms diffuse more quickly through the space of possible phenotypes. Furthermore, because phenotypic divergence often correlates with founding niches, niche founders may on average be more evolvable, which through population growth provides a genotypic bias towards evolvability. Interestingly, the combination of these two mechanisms can lead to increasing evolvability without any pressure to out-compete other organisms, as demonstrated through experiments with a series of simulated models. Thus rather than from pressure to adapt, evolvability may inevitably result from any drift through genotypic space combined with evolution's passive tendency to accumulate niches.">
+
+
+  <meta name="keywords" content="Robots,Organismal evolution,Behavior,Population growth,Robotic behavior,Genetic drift,Genomics,Artificial neural networks" />
+
+
+<meta name="citation_doi" content="10.1371/journal.pone.0062186"/>
+<meta name="citation_author" content="Joel Lehman"/>
+  <meta name="citation_author_institution" content="Department of Computer Science, The University of Texas at Austin, Austin, Texas, United States of America"/>
+<meta name="citation_author" content="Kenneth O. Stanley"/>
+  <meta name="citation_author_institution" content="Department of Electrical Engineering and Computer Science, University of Central Florida, Orlando, Florida, United States of America"/>
+
+<meta name="citation_title" content="Evolvability Is Inevitable: Increasing Evolvability without the Pressure to Adapt"/>
+<meta itemprop="name" content="Evolvability Is Inevitable: Increasing Evolvability without the Pressure to Adapt"/>
+<meta name="citation_journal_title" content="PLOS ONE"/>
+<meta name="citation_journal_abbrev" content="PLOS ONE"/>
+<meta name="citation_date" content="Apr 24, 2013"/>
+<meta name="citation_firstpage" content="e62186"/>
+<meta name="citation_issue" content="4"/>
+<meta name="citation_volume" content="8"/>
+<meta name="citation_issn" content="1932-6203"/>
+<meta name="citation_publisher" content="Public Library of Science"/>
+
+  <meta name="citation_pdf_url" content="https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0062186&type=printable">
+
+  <meta name="citation_article_type" content="Research Article">
+
+<meta name="dc.identifier" content="10.1371/journal.pone.0062186" />
+
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="plosone"/>
+    <meta name="twitter:title" content="Evolvability Is Inevitable: Increasing Evolvability without the Pressure to Adapt" />
+    <meta property="twitter:description" content="Why evolvability appears to have increased over evolutionary time is an important unresolved biological question. Unlike most candidate explanations, this paper proposes that increasing evolvability can result without any pressure to adapt. The insight is that if evolvability is heritable, then an unbiased drifting process across genotypes can still create a distribution of phenotypes biased towards evolvability, because evolvable organisms diffuse more quickly through the space of possible phenotypes. Furthermore, because phenotypic divergence often correlates with founding niches, niche founders may on average be more evolvable, which through population growth provides a genotypic bias towards evolvability. Interestingly, the combination of these two mechanisms can lead to increasing evolvability without any pressure to out-compete other organisms, as demonstrated through experiments with a series of simulated models. Thus rather than from pressure to adapt, evolvability may inevitably result from any drift through genotypic space combined with evolution's passive tendency to accumulate niches." />
+    <meta property="twitter:image" content="https://journals.plos.org/plosone/article/figure/image?id=10.1371/journal.pone.0062186.g013&size=inline" />
+
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0062186"/>
+<meta property="og:title" content="Evolvability Is Inevitable: Increasing Evolvability without the Pressure to Adapt"/>
+<meta property="og:description" content="Why evolvability appears to have increased over evolutionary time is an important unresolved biological question. Unlike most candidate explanations, this paper proposes that increasing evolvability can result without any pressure to adapt. The insight is that if evolvability is heritable, then an unbiased drifting process across genotypes can still create a distribution of phenotypes biased towards evolvability, because evolvable organisms diffuse more quickly through the space of possible phenotypes. Furthermore, because phenotypic divergence often correlates with founding niches, niche founders may on average be more evolvable, which through population growth provides a genotypic bias towards evolvability. Interestingly, the combination of these two mechanisms can lead to increasing evolvability without any pressure to out-compete other organisms, as demonstrated through experiments with a series of simulated models. Thus rather than from pressure to adapt, evolvability may inevitably result from any drift through genotypic space combined with evolution's passive tendency to accumulate niches."/>
+<meta property="og:image" content="https://journals.plos.org/plosone/article/figure/image?id=10.1371/journal.pone.0062186.g013&size=inline"/>
+
+
+<meta name="citation_reference" content="Dawkins R (2003) The evolution of evolvability. On Growth, Form and Computers: 239–255."/>
+<meta name="citation_reference" content="citation_title=Evolvability is a selectable trait;citation_author=D Earl;citation_author=M Deem;citation_journal_title=Proceedings of the National Academy of Sciences of the United States of America;citation_volume=101;citation_number=101;citation_first_page=11531;citation_last_page=11536;citation_publication_date=2004;"/>    
+<meta name="citation_reference" content="citation_title=Evolvability;citation_author=M Kirschner;citation_author=J Gerhart;citation_journal_title=Proceedings of the National Academy of Sciences of the United States of America;citation_volume=95;citation_number=95;citation_first_page=8420;citation_publication_date=1998;"/>    
+<meta name="citation_reference" content="citation_title=Complex adaptations and the evolution of evolvability;citation_author=G Wagner;citation_author=L Altenberg;citation_journal_title=Evolution;citation_volume=50;citation_number=50;citation_first_page=967;citation_last_page=976;citation_publication_date=1996;"/>    
+<meta name="citation_reference" content="citation_title=Is evolvability evolvable?;citation_author=M Pigliucci;citation_journal_title=Nature Reviews Genetics;citation_volume=9;citation_number=9;citation_first_page=75;citation_last_page=82;citation_publication_date=2008;"/>    
+<meta name="citation_reference" content="citation_title=Evolution: The evolvability enigma;citation_author=J Brookfield;citation_journal_title=Current Biology;citation_volume=11;citation_number=11;citation_first_page=R106;citation_last_page=R108;citation_publication_date=2001;"/>    
+<meta name="citation_reference" content="citation_title=Robustness and evolvability: a paradox resolved;citation_author=A Wagner;citation_journal_title=Proceedings of the Royal Society B: Biological Sciences;citation_volume=275;citation_number=275;citation_first_page=91;citation_last_page=100;citation_publication_date=2008;"/>    
+<meta name="citation_reference" content="citation_title=Protein stability promotes evolvability;citation_author=J Bloom;citation_author=S Labthavikul;citation_author=C Otey;citation_author=F Arnold;citation_journal_title=Proceedings of the National Academy of Sciences;citation_volume=103;citation_number=103;citation_first_page=5869;citation_last_page=5874;citation_publication_date=2006;"/>    
+<meta name="citation_reference" content="citation_title=Plasticity, evolvability, and modularity in rna;citation_author=LW Ancel;citation_author=W Fontana;citation_journal_title=Journal of Experimental Zoology;citation_volume=288;citation_number=288;citation_first_page=242;citation_last_page=283;citation_publication_date=2000;"/>    
+<meta name="citation_reference" content="citation_title=Evolution of evolvability in gene regulatory networks;citation_author=A Crombach;citation_author=P Hogeweg;citation_journal_title=PLoS computational biology;citation_volume=4;citation_number=4;citation_first_page=e1000112;citation_publication_date=2008;"/>    
+<meta name="citation_reference" content="citation_title=Phenotypic neighborhood and micro-evolvability;citation_author=M Dichtel-Danjoy;citation_author=M Félix;citation_journal_title=Trends in Genetics;citation_volume=20;citation_number=20;citation_first_page=268;citation_last_page=276;citation_publication_date=2004;"/>    
+
+<meta name="citation_reference" content="Lenski R, Ofria C, Pennock R, Adami C (2003) The evolutionary origin of complex. Nature."/>
+
+<meta name="citation_reference" content="Nolfi S, Floreano D (2000) Evolutionary Robotics. Cambridge: MIT Press."/>
+<meta name="citation_reference" content="citation_title=Abandoning objectives: Evolution through the search for novelty alone;citation_author=J Lehman;citation_author=KO Stanley;citation_journal_title=Evol Comp;citation_volume=19;citation_number=19;citation_first_page=189;citation_last_page=223;citation_publication_date=2011;"/>    
+<meta name="citation_reference" content="citation_title=Encouraging behavioral diversity in evolutionary robotics: an empirical study;citation_author=JB Mouret;citation_author=S Doncieux;citation_journal_title=Evolutionary Computation;citation_volume=20;citation_number=20;citation_first_page=91;citation_last_page=133;citation_publication_date=2012;"/>    
+
+<meta name="citation_reference" content="Risi S, Hughes C, Stanley K (2010) Evolving plastic neural networks with novelty search. Adaptive Behavior."/>
+
+<meta name="citation_reference" content="Lehman J, Stanley KO (2011) Improving evolvability through novelty search and self-adaptation. In: Evolutionary Computation (CEC), 2011 IEEE Congress on. IEEE, 2693–2700."/>
+<meta name="citation_reference" content="citation_title=Evolving neural networks through augmenting topologies;citation_author=KO Stanley;citation_author=R Miikkulainen;citation_journal_title=Evolutionary Computation;citation_volume=10;citation_number=10;citation_first_page=99;citation_last_page=127;citation_publication_date=2002;"/>    
+
+
+<script type="text/javascript">
+    var WombatConfig = WombatConfig || {};
+    WombatConfig.journalKey = "PLoSONE";
+    WombatConfig.journalName = "PLOS One";
+    WombatConfig.figurePath = "/plosone/article/figure/image";
+    WombatConfig.figShareInstitutionString = "plos";
+    WombatConfig.doiResolverPrefix = "https://dx.plos.org/";
+</script>
+
+<script type="text/javascript">
+  var WombatConfig = WombatConfig || {};
+  WombatConfig.metrics = WombatConfig.metrics || {};
+  WombatConfig.metrics.referenceUrl      = "http://lagotto.io/plos";
+  WombatConfig.metrics.googleScholarUrl  = "https://scholar.google.com/scholar";
+  WombatConfig.metrics.googleScholarCitationUrl  = WombatConfig.metrics.googleScholarUrl + "?hl=en&lr=&q=";
+  WombatConfig.metrics.crossrefUrl  = "https://www.crossref.org";
+</script>
+<script defer="defer" src="/resource/js/defer.js?d9d3f0b96eec19b974a3"></script><script src="/resource/js/sync.js?d9d3f0b96eec19b974a3"></script>
+<script src="/resource/js/vendor/jquery.min.js" type="text/javascript"></script>
+
+          <script type="text/javascript" src="https://widgets.figshare.com/static/figshare.js"></script>
+
+<script src="/resource/js/vendor/fastclick/lib/fastclick.js" type="text/javascript"></script>
+<script src="/resource/js/vendor/foundation/foundation.js" type="text/javascript"></script>
+<script src="/resource/js/vendor/underscore-min.js" type="text/javascript"></script>
+<script src="/resource/js/vendor/underscore.string.min.js" type="text/javascript"></script>
+<script src="/resource/js/vendor/moment.js" type="text/javascript"></script>
+
+
+<script src="/resource/js/vendor/jquery-ui-effects.min.js" type="text/javascript"></script>
+
+<script src="/resource/js/vendor/foundation/foundation.tooltip.js" type="text/javascript"></script>
+<script src="/resource/js/vendor/foundation/foundation.dropdown.js" type="text/javascript"></script>
+<script src="/resource/js/vendor/foundation/foundation.tab.js" type="text/javascript"></script>
+<script src="/resource/js/vendor/foundation/foundation.reveal.js" type="text/javascript"></script>
+<script src="/resource/js/vendor/foundation/foundation.slider.js" type="text/javascript"></script>
+
+<script src="/resource/js/util/utils.js" type="text/javascript"></script>
+<script src="/resource/js/components/toggle.js" type="text/javascript"></script>
+<script src="/resource/js/components/truncate_elem.js" type="text/javascript"></script>
+<script src="/resource/js/components/tooltip_hover.js" type="text/javascript"></script>
+<script src="/resource/js/vendor/jquery.dotdotdot.js" type="text/javascript"></script>
+
+
+<!-- DoubleClick overall ad setup script -->
+<script type='text/javascript'>
+  var googletag = googletag || {};
+  googletag.cmd = googletag.cmd || [];
+  if (window.plosCookieConsent?.hasConsented('advertising')) {
+    (function() {
+      var gads = document.createElement('script');
+      gads.async = true;
+      gads.type = 'text/javascript';
+      var useSSL = 'https:' == document.location.protocol;
+      gads.src = (useSSL ? 'https:' : 'http:') +
+          '//www.googletagservices.com/tag/js/gpt.js';
+      var node = document.getElementsByTagName('script')[0];
+      node.parentNode.insertBefore(gads, node);
+    })();
+  }
+</script>
+
+<!-- DoubleClick ad slot setup script -->
+
+  <script id="doubleClickSetupScript" type='text/javascript'>
+    googletag.cmd.push(function() {
+  googletag.defineSlot('/75507958/PONE_728x90_ATF', [728, 90], 'div-gpt-ad-1458247671871-0').addService(googletag.pubads());
+  googletag.defineSlot('/75507958/PONE_160x600_BTF', [160, 600], 'div-gpt-ad-1458247671871-1').addService(googletag.pubads());
+      googletag.pubads().enableSingleRequest();
+      googletag.enableServices();
+    });
+  </script>
+
+<!--For Google Tag manager to be able to track site information  -->
+<script>
+
+  dataLayer = [{
+    'mobileSite': 'false',
+    'desktopSite': 'true'
+  }];
+
+</script>
+
+    <title>Evolvability Is Inevitable: Increasing Evolvability without the Pressure to Adapt | PLOS One</title>
+</head>
+
+<body class="article plosone">
+
+
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TP26BH"
+                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TP26BH');
+</script>
+
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-MQQMGF"
+                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MQQMGF');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Start of HubSpot Embed Code -->
+<script>
+  // from https://developers.hubspot.com/docs/reference/api/analytics-and-events/cookie-banner/cookie-banner-api#example-using-a-third-party-cookie-banner-to-control-hubspot-cookies
+  window.disableHubSpotCookieBanner = true;
+  window._hsp = window._hsp || [];
+  window._hsp.push(['setHubSpotConsent',
+      {
+        analytics: window.plosCookieConsent?.hasConsented('analytics'),
+        advertisement: window.plosCookieConsent?.hasConsented('advertising'),
+        functionality: window.plosCookieConsent?.hasConsented('functionality')
+      }
+    ]);
+</script>
+<script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/44092021.js"></script>
+<!-- End of HubSpot Embed Code -->
+
+<!-- New Relic -->
+<script type="text/javascript">
+  ;window.NREUM||(NREUM={});NREUM.init={distributed_tracing:{enabled:true},privacy:{cookies_enabled:true},ajax:{deny_list:["bam.nr-data.net"]}};
+  window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){var o=e[n]={exports:{}};t[n][0].call(o.exports,function(e){var o=t[n][1][e];return r(o||e)},o,o.exports)}return e[n].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<n.length;o++)r(n[o]);return r}({1:[function(t,e,n){function r(t){try{s.console&&console.log(t)}catch(e){}}var o,i=t("ee"),a=t(32),s={};try{o=localStorage.getItem("__nr_flags").split(","),console&&"function"==typeof console.log&&(s.console=!0,o.indexOf("dev")!==-1&&(s.dev=!0),o.indexOf("nr_dev")!==-1&&(s.nrDev=!0))}catch(c){}s.nrDev&&i.on("internal-error",function(t){r(t.stack)}),s.dev&&i.on("fn-err",function(t,e,n){r(n.stack)}),s.dev&&(r("NR AGENT IN DEVELOPMENT MODE"),r("flags: "+a(s,function(t,e){return t}).join(", ")))},{}],2:[function(t,e,n){function r(t,e,n,r,s){try{l?l-=1:o(s||new UncaughtException(t,e,n),!0)}catch(f){try{i("ierr",[f,c.now(),!0])}catch(d){}}return"function"==typeof u&&u.apply(this,a(arguments))}function UncaughtException(t,e,n){this.message=t||"Uncaught error with no additional information",this.sourceURL=e,this.line=n}function o(t,e){var n=e?null:c.now();i("err",[t,n])}var i=t("handle"),a=t(33),s=t("ee"),c=t("loader"),f=t("gos"),u=window.onerror,d=!1,p="nr@seenError";if(!c.disabled){var l=0;c.features.err=!0,t(1),window.onerror=r;try{throw new Error}catch(h){"stack"in h&&(t(14),t(13),"addEventListener"in window&&t(7),c.xhrWrappable&&t(15),d=!0)}s.on("fn-start",function(t,e,n){d&&(l+=1)}),s.on("fn-err",function(t,e,n){d&&!n[p]&&(f(n,p,function(){return!0}),this.thrown=!0,o(n))}),s.on("fn-end",function(){d&&!this.thrown&&l>0&&(l-=1)}),s.on("internal-error",function(t){i("ierr",[t,c.now(),!0])})}},{}],3:[function(t,e,n){var r=t("loader");r.disabled||(r.features.ins=!0)},{}],4:[function(t,e,n){function r(){U++,L=g.hash,this[u]=y.now()}function o(){U--,g.hash!==L&&i(0,!0);var t=y.now();this[h]=~~this[h]+t-this[u],this[d]=t}function i(t,e){E.emit("newURL",[""+g,e])}function a(t,e){t.on(e,function(){this[e]=y.now()})}var s="-start",c="-end",f="-body",u="fn"+s,d="fn"+c,p="cb"+s,l="cb"+c,h="jsTime",m="fetch",v="addEventListener",w=window,g=w.location,y=t("loader");if(w[v]&&y.xhrWrappable&&!y.disabled){var x=t(11),b=t(12),E=t(9),R=t(7),O=t(14),T=t(8),P=t(15),S=t(10),M=t("ee"),N=M.get("tracer"),C=t(23);t(17),y.features.spa=!0;var L,U=0;M.on(u,r),b.on(p,r),S.on(p,r),M.on(d,o),b.on(l,o),S.on(l,o),M.buffer([u,d,"xhr-resolved"]),R.buffer([u]),O.buffer(["setTimeout"+c,"clearTimeout"+s,u]),P.buffer([u,"new-xhr","send-xhr"+s]),T.buffer([m+s,m+"-done",m+f+s,m+f+c]),E.buffer(["newURL"]),x.buffer([u]),b.buffer(["propagate",p,l,"executor-err","resolve"+s]),N.buffer([u,"no-"+u]),S.buffer(["new-jsonp","cb-start","jsonp-error","jsonp-end"]),a(T,m+s),a(T,m+"-done"),a(S,"new-jsonp"),a(S,"jsonp-end"),a(S,"cb-start"),E.on("pushState-end",i),E.on("replaceState-end",i),w[v]("hashchange",i,C(!0)),w[v]("load",i,C(!0)),w[v]("popstate",function(){i(0,U>1)},C(!0))}},{}],5:[function(t,e,n){function r(){var t=new PerformanceObserver(function(t,e){var n=t.getEntries();s(v,[n])});try{t.observe({entryTypes:["resource"]})}catch(e){}}function o(t){if(s(v,[window.performance.getEntriesByType(w)]),window.performance["c"+p])try{window.performance[h](m,o,!1)}catch(t){}else try{window.performance[h]("webkit"+m,o,!1)}catch(t){}}function i(t){}if(window.performance&&window.performance.timing&&window.performance.getEntriesByType){var a=t("ee"),s=t("handle"),c=t(14),f=t(13),u=t(6),d=t(23),p="learResourceTimings",l="addEventListener",h="removeEventListener",m="resourcetimingbufferfull",v="bstResource",w="resource",g="-start",y="-end",x="fn"+g,b="fn"+y,E="bstTimer",R="pushState",O=t("loader");if(!O.disabled){O.features.stn=!0,t(9),"addEventListener"in window&&t(7);var T=NREUM.o.EV;a.on(x,function(t,e){var n=t[0];n instanceof T&&(this.bstStart=O.now())}),a.on(b,function(t,e){var n=t[0];n instanceof T&&s("bst",[n,e,this.bstStart,O.now()])}),c.on(x,function(t,e,n){this.bstStart=O.now(),this.bstType=n}),c.on(b,function(t,e){s(E,[e,this.bstStart,O.now(),this.bstType])}),f.on(x,function(){this.bstStart=O.now()}),f.on(b,function(t,e){s(E,[e,this.bstStart,O.now(),"requestAnimationFrame"])}),a.on(R+g,function(t){this.time=O.now(),this.startPath=location.pathname+location.hash}),a.on(R+y,function(t){s("bstHist",[location.pathname+location.hash,this.startPath,this.time])}),u()?(s(v,[window.performance.getEntriesByType("resource")]),r()):l in window.performance&&(window.performance["c"+p]?window.performance[l](m,o,d(!1)):window.performance[l]("webkit"+m,o,d(!1))),document[l]("scroll",i,d(!1)),document[l]("keypress",i,d(!1)),document[l]("click",i,d(!1))}}},{}],6:[function(t,e,n){e.exports=function(){return"PerformanceObserver"in window&&"function"==typeof window.PerformanceObserver}},{}],7:[function(t,e,n){function r(t){for(var e=t;e&&!e.hasOwnProperty(u);)e=Object.getPrototypeOf(e);e&&o(e)}function o(t){s.inPlace(t,[u,d],"-",i)}function i(t,e){return t[1]}var a=t("ee").get("events"),s=t("wrap-function")(a,!0),c=t("gos"),f=XMLHttpRequest,u="addEventListener",d="removeEventListener";e.exports=a,"getPrototypeOf"in Object?(r(document),r(window),r(f.prototype)):f.prototype.hasOwnProperty(u)&&(o(window),o(f.prototype)),a.on(u+"-start",function(t,e){var n=t[1];if(null!==n&&("function"==typeof n||"object"==typeof n)){var r=c(n,"nr@wrapped",function(){function t(){if("function"==typeof n.handleEvent)return n.handleEvent.apply(n,arguments)}var e={object:t,"function":n}[typeof n];return e?s(e,"fn-",null,e.name||"anonymous"):n});this.wrapped=t[1]=r}}),a.on(d+"-start",function(t){t[1]=this.wrapped||t[1]})},{}],8:[function(t,e,n){function r(t,e,n){var r=t[e];"function"==typeof r&&(t[e]=function(){var t=i(arguments),e={};o.emit(n+"before-start",[t],e);var a;e[m]&&e[m].dt&&(a=e[m].dt);var s=r.apply(this,t);return o.emit(n+"start",[t,a],s),s.then(function(t){return o.emit(n+"end",[null,t],s),t},function(t){throw o.emit(n+"end",[t],s),t})})}var o=t("ee").get("fetch"),i=t(33),a=t(32);e.exports=o;var s=window,c="fetch-",f=c+"body-",u=["arrayBuffer","blob","json","text","formData"],d=s.Request,p=s.Response,l=s.fetch,h="prototype",m="nr@context";d&&p&&l&&(a(u,function(t,e){r(d[h],e,f),r(p[h],e,f)}),r(s,"fetch",c),o.on(c+"end",function(t,e){var n=this;if(e){var r=e.headers.get("content-length");null!==r&&(n.rxSize=r),o.emit(c+"done",[null,e],n)}else o.emit(c+"done",[t],n)}))},{}],9:[function(t,e,n){var r=t("ee").get("history"),o=t("wrap-function")(r);e.exports=r;var i=window.history&&window.history.constructor&&window.history.constructor.prototype,a=window.history;i&&i.pushState&&i.replaceState&&(a=i),o.inPlace(a,["pushState","replaceState"],"-")},{}],10:[function(t,e,n){function r(t){function e(){f.emit("jsonp-end",[],l),t.removeEventListener("load",e,c(!1)),t.removeEventListener("error",n,c(!1))}function n(){f.emit("jsonp-error",[],l),f.emit("jsonp-end",[],l),t.removeEventListener("load",e,c(!1)),t.removeEventListener("error",n,c(!1))}var r=t&&"string"==typeof t.nodeName&&"script"===t.nodeName.toLowerCase();if(r){var o="function"==typeof t.addEventListener;if(o){var a=i(t.src);if(a){var d=s(a),p="function"==typeof d.parent[d.key];if(p){var l={};u.inPlace(d.parent,[d.key],"cb-",l),t.addEventListener("load",e,c(!1)),t.addEventListener("error",n,c(!1)),f.emit("new-jsonp",[t.src],l)}}}}}function o(){return"addEventListener"in window}function i(t){var e=t.match(d);return e?e[1]:null}function a(t,e){var n=t.match(l),r=n[1],o=n[3];return o?a(o,e[r]):e[r]}function s(t){var e=t.match(p);return e&&e.length>=3?{key:e[2],parent:a(e[1],window)}:{key:t,parent:window}}var c=t(23),f=t("ee").get("jsonp"),u=t("wrap-function")(f);if(e.exports=f,o()){var d=/[?&](?:callback|cb)=([^&#]+)/,p=/(.*)\.([^.]+)/,l=/^(\w+)(\.|$)(.*)$/,h=["appendChild","insertBefore","replaceChild"];Node&&Node.prototype&&Node.prototype.appendChild?u.inPlace(Node.prototype,h,"dom-"):(u.inPlace(HTMLElement.prototype,h,"dom-"),u.inPlace(HTMLHeadElement.prototype,h,"dom-"),u.inPlace(HTMLBodyElement.prototype,h,"dom-")),f.on("dom-start",function(t){r(t[0])})}},{}],11:[function(t,e,n){var r=t("ee").get("mutation"),o=t("wrap-function")(r),i=NREUM.o.MO;e.exports=r,i&&(window.MutationObserver=function(t){return this instanceof i?new i(o(t,"fn-")):i.apply(this,arguments)},MutationObserver.prototype=i.prototype)},{}],12:[function(t,e,n){function r(t){var e=i.context(),n=s(t,"executor-",e,null,!1),r=new f(n);return i.context(r).getCtx=function(){return e},r}var o=t("wrap-function"),i=t("ee").get("promise"),a=t("ee").getOrSetContext,s=o(i),c=t(32),f=NREUM.o.PR;e.exports=i,f&&(window.Promise=r,["all","race"].forEach(function(t){var e=f[t];f[t]=function(n){function r(t){return function(){i.emit("propagate",[null,!o],a,!1,!1),o=o||!t}}var o=!1;c(n,function(e,n){Promise.resolve(n).then(r("all"===t),r(!1))});var a=e.apply(f,arguments),s=f.resolve(a);return s}}),["resolve","reject"].forEach(function(t){var e=f[t];f[t]=function(t){var n=e.apply(f,arguments);return t!==n&&i.emit("propagate",[t,!0],n,!1,!1),n}}),f.prototype["catch"]=function(t){return this.then(null,t)},f.prototype=Object.create(f.prototype,{constructor:{value:r}}),c(Object.getOwnPropertyNames(f),function(t,e){try{r[e]=f[e]}catch(n){}}),o.wrapInPlace(f.prototype,"then",function(t){return function(){var e=this,n=o.argsToArray.apply(this,arguments),r=a(e);r.promise=e,n[0]=s(n[0],"cb-",r,null,!1),n[1]=s(n[1],"cb-",r,null,!1);var c=t.apply(this,n);return r.nextPromise=c,i.emit("propagate",[e,!0],c,!1,!1),c}}),i.on("executor-start",function(t){t[0]=s(t[0],"resolve-",this,null,!1),t[1]=s(t[1],"resolve-",this,null,!1)}),i.on("executor-err",function(t,e,n){t[1](n)}),i.on("cb-end",function(t,e,n){i.emit("propagate",[n,!0],this.nextPromise,!1,!1)}),i.on("propagate",function(t,e,n){this.getCtx&&!e||(this.getCtx=function(){if(t instanceof Promise)var e=i.context(t);return e&&e.getCtx?e.getCtx():this})}),r.toString=function(){return""+f})},{}],13:[function(t,e,n){var r=t("ee").get("raf"),o=t("wrap-function")(r),i="equestAnimationFrame";e.exports=r,o.inPlace(window,["r"+i,"mozR"+i,"webkitR"+i,"msR"+i],"raf-"),r.on("raf-start",function(t){t[0]=o(t[0],"fn-")})},{}],14:[function(t,e,n){function r(t,e,n){t[0]=a(t[0],"fn-",null,n)}function o(t,e,n){this.method=n,this.timerDuration=isNaN(t[1])?0:+t[1],t[0]=a(t[0],"fn-",this,n)}var i=t("ee").get("timer"),a=t("wrap-function")(i),s="setTimeout",c="setInterval",f="clearTimeout",u="-start",d="-";e.exports=i,a.inPlace(window,[s,"setImmediate"],s+d),a.inPlace(window,[c],c+d),a.inPlace(window,[f,"clearImmediate"],f+d),i.on(c+u,r),i.on(s+u,o)},{}],15:[function(t,e,n){function r(t,e){d.inPlace(e,["onreadystatechange"],"fn-",s)}function o(){var t=this,e=u.context(t);t.readyState>3&&!e.resolved&&(e.resolved=!0,u.emit("xhr-resolved",[],t)),d.inPlace(t,y,"fn-",s)}function i(t){x.push(t),m&&(E?E.then(a):w?w(a):(R=-R,O.data=R))}function a(){for(var t=0;t<x.length;t++)r([],x[t]);x.length&&(x=[])}function s(t,e){return e}function c(t,e){for(var n in t)e[n]=t[n];return e}t(7);var f=t("ee"),u=f.get("xhr"),d=t("wrap-function")(u),p=t(23),l=NREUM.o,h=l.XHR,m=l.MO,v=l.PR,w=l.SI,g="readystatechange",y=["onload","onerror","onabort","onloadstart","onloadend","onprogress","ontimeout"],x=[];e.exports=u;var b=window.XMLHttpRequest=function(t){var e=new h(t);try{u.emit("new-xhr",[e],e),e.addEventListener(g,o,p(!1))}catch(n){try{u.emit("internal-error",[n])}catch(r){}}return e};if(c(h,b),b.prototype=h.prototype,d.inPlace(b.prototype,["open","send"],"-xhr-",s),u.on("send-xhr-start",function(t,e){r(t,e),i(e)}),u.on("open-xhr-start",r),m){var E=v&&v.resolve();if(!w&&!v){var R=1,O=document.createTextNode(R);new m(a).observe(O,{characterData:!0})}}else f.on("fn-end",function(t){t[0]&&t[0].type===g||a()})},{}],16:[function(t,e,n){function r(t){if(!s(t))return null;var e=window.NREUM;if(!e.loader_config)return null;var n=(e.loader_config.accountID||"").toString()||null,r=(e.loader_config.agentID||"").toString()||null,f=(e.loader_config.trustKey||"").toString()||null;if(!n||!r)return null;var h=l.generateSpanId(),m=l.generateTraceId(),v=Date.now(),w={spanId:h,traceId:m,timestamp:v};return(t.sameOrigin||c(t)&&p())&&(w.traceContextParentHeader=o(h,m),w.traceContextStateHeader=i(h,v,n,r,f)),(t.sameOrigin&&!u()||!t.sameOrigin&&c(t)&&d())&&(w.newrelicHeader=a(h,m,v,n,r,f)),w}function o(t,e){return"00-"+e+"-"+t+"-01"}function i(t,e,n,r,o){var i=0,a="",s=1,c="",f="";return o+"@nr="+i+"-"+s+"-"+n+"-"+r+"-"+t+"-"+a+"-"+c+"-"+f+"-"+e}function a(t,e,n,r,o,i){var a="btoa"in window&&"function"==typeof window.btoa;if(!a)return null;var s={v:[0,1],d:{ty:"Browser",ac:r,ap:o,id:t,tr:e,ti:n}};return i&&r!==i&&(s.d.tk=i),btoa(JSON.stringify(s))}function s(t){return f()&&c(t)}function c(t){var e=!1,n={};if("init"in NREUM&&"distributed_tracing"in NREUM.init&&(n=NREUM.init.distributed_tracing),t.sameOrigin)e=!0;else if(n.allowed_origins instanceof Array)for(var r=0;r<n.allowed_origins.length;r++){var o=h(n.allowed_origins[r]);if(t.hostname===o.hostname&&t.protocol===o.protocol&&t.port===o.port){e=!0;break}}return e}function f(){return"init"in NREUM&&"distributed_tracing"in NREUM.init&&!!NREUM.init.distributed_tracing.enabled}function u(){return"init"in NREUM&&"distributed_tracing"in NREUM.init&&!!NREUM.init.distributed_tracing.exclude_newrelic_header}function d(){return"init"in NREUM&&"distributed_tracing"in NREUM.init&&NREUM.init.distributed_tracing.cors_use_newrelic_header!==!1}function p(){return"init"in NREUM&&"distributed_tracing"in NREUM.init&&!!NREUM.init.distributed_tracing.cors_use_tracecontext_headers}var l=t(29),h=t(18);e.exports={generateTracePayload:r,shouldGenerateTrace:s}},{}],17:[function(t,e,n){function r(t){var e=this.params,n=this.metrics;if(!this.ended){this.ended=!0;for(var r=0;r<p;r++)t.removeEventListener(d[r],this.listener,!1);e.aborted||(n.duration=a.now()-this.startTime,this.loadCaptureCalled||4!==t.readyState?null==e.status&&(e.status=0):i(this,t),n.cbTime=this.cbTime,s("xhr",[e,n,this.startTime,this.endTime,"xhr"],this))}}function o(t,e){var n=c(e),r=t.params;r.hostname=n.hostname,r.port=n.port,r.protocol=n.protocol,r.host=n.hostname+":"+n.port,r.pathname=n.pathname,t.parsedOrigin=n,t.sameOrigin=n.sameOrigin}function i(t,e){t.params.status=e.status;var n=v(e,t.lastSize);if(n&&(t.metrics.rxSize=n),t.sameOrigin){var r=e.getResponseHeader("X-NewRelic-App-Data");r&&(t.params.cat=r.split(", ").pop())}t.loadCaptureCalled=!0}var a=t("loader");if(a.xhrWrappable&&!a.disabled){var s=t("handle"),c=t(18),f=t(16).generateTracePayload,u=t("ee"),d=["load","error","abort","timeout"],p=d.length,l=t("id"),h=t(24),m=t(22),v=t(19),w=t(23),g=NREUM.o.REQ,y=window.XMLHttpRequest;a.features.xhr=!0,t(15),t(8),u.on("new-xhr",function(t){var e=this;e.totalCbs=0,e.called=0,e.cbTime=0,e.end=r,e.ended=!1,e.xhrGuids={},e.lastSize=null,e.loadCaptureCalled=!1,e.params=this.params||{},e.metrics=this.metrics||{},t.addEventListener("load",function(n){i(e,t)},w(!1)),h&&(h>34||h<10)||t.addEventListener("progress",function(t){e.lastSize=t.loaded},w(!1))}),u.on("open-xhr-start",function(t){this.params={method:t[0]},o(this,t[1]),this.metrics={}}),u.on("open-xhr-end",function(t,e){"loader_config"in NREUM&&"xpid"in NREUM.loader_config&&this.sameOrigin&&e.setRequestHeader("X-NewRelic-ID",NREUM.loader_config.xpid);var n=f(this.parsedOrigin);if(n){var r=!1;n.newrelicHeader&&(e.setRequestHeader("newrelic",n.newrelicHeader),r=!0),n.traceContextParentHeader&&(e.setRequestHeader("traceparent",n.traceContextParentHeader),n.traceContextStateHeader&&e.setRequestHeader("tracestate",n.traceContextStateHeader),r=!0),r&&(this.dt=n)}}),u.on("send-xhr-start",function(t,e){var n=this.metrics,r=t[0],o=this;if(n&&r){var i=m(r);i&&(n.txSize=i)}this.startTime=a.now(),this.listener=function(t){try{"abort"!==t.type||o.loadCaptureCalled||(o.params.aborted=!0),("load"!==t.type||o.called===o.totalCbs&&(o.onloadCalled||"function"!=typeof e.onload))&&o.end(e)}catch(n){try{u.emit("internal-error",[n])}catch(r){}}};for(var s=0;s<p;s++)e.addEventListener(d[s],this.listener,w(!1))}),u.on("xhr-cb-time",function(t,e,n){this.cbTime+=t,e?this.onloadCalled=!0:this.called+=1,this.called!==this.totalCbs||!this.onloadCalled&&"function"==typeof n.onload||this.end(n)}),u.on("xhr-load-added",function(t,e){var n=""+l(t)+!!e;this.xhrGuids&&!this.xhrGuids[n]&&(this.xhrGuids[n]=!0,this.totalCbs+=1)}),u.on("xhr-load-removed",function(t,e){var n=""+l(t)+!!e;this.xhrGuids&&this.xhrGuids[n]&&(delete this.xhrGuids[n],this.totalCbs-=1)}),u.on("xhr-resolved",function(){this.endTime=a.now()}),u.on("addEventListener-end",function(t,e){e instanceof y&&"load"===t[0]&&u.emit("xhr-load-added",[t[1],t[2]],e)}),u.on("removeEventListener-end",function(t,e){e instanceof y&&"load"===t[0]&&u.emit("xhr-load-removed",[t[1],t[2]],e)}),u.on("fn-start",function(t,e,n){e instanceof y&&("onload"===n&&(this.onload=!0),("load"===(t[0]&&t[0].type)||this.onload)&&(this.xhrCbStart=a.now()))}),u.on("fn-end",function(t,e){this.xhrCbStart&&u.emit("xhr-cb-time",[a.now()-this.xhrCbStart,this.onload,e],e)}),u.on("fetch-before-start",function(t){function e(t,e){var n=!1;return e.newrelicHeader&&(t.set("newrelic",e.newrelicHeader),n=!0),e.traceContextParentHeader&&(t.set("traceparent",e.traceContextParentHeader),e.traceContextStateHeader&&t.set("tracestate",e.traceContextStateHeader),n=!0),n}var n,r=t[1]||{};"string"==typeof t[0]?n=t[0]:t[0]&&t[0].url?n=t[0].url:window.URL&&t[0]&&t[0]instanceof URL&&(n=t[0].href),n&&(this.parsedOrigin=c(n),this.sameOrigin=this.parsedOrigin.sameOrigin);var o=f(this.parsedOrigin);if(o&&(o.newrelicHeader||o.traceContextParentHeader))if("string"==typeof t[0]||window.URL&&t[0]&&t[0]instanceof URL){var i={};for(var a in r)i[a]=r[a];i.headers=new Headers(r.headers||{}),e(i.headers,o)&&(this.dt=o),t.length>1?t[1]=i:t.push(i)}else t[0]&&t[0].headers&&e(t[0].headers,o)&&(this.dt=o)}),u.on("fetch-start",function(t,e){this.params={},this.metrics={},this.startTime=a.now(),this.dt=e,t.length>=1&&(this.target=t[0]),t.length>=2&&(this.opts=t[1]);var n,r=this.opts||{},i=this.target;"string"==typeof i?n=i:"object"==typeof i&&i instanceof g?n=i.url:window.URL&&"object"==typeof i&&i instanceof URL&&(n=i.href),o(this,n);var s=(""+(i&&i instanceof g&&i.method||r.method||"GET")).toUpperCase();this.params.method=s,this.txSize=m(r.body)||0}),u.on("fetch-done",function(t,e){this.endTime=a.now(),this.params||(this.params={}),this.params.status=e?e.status:0;var n;"string"==typeof this.rxSize&&this.rxSize.length>0&&(n=+this.rxSize);var r={txSize:this.txSize,rxSize:n,duration:a.now()-this.startTime};s("xhr",[this.params,r,this.startTime,this.endTime,"fetch"],this)})}},{}],18:[function(t,e,n){var r={};e.exports=function(t){if(t in r)return r[t];var e=document.createElement("a"),n=window.location,o={};e.href=t,o.port=e.port;var i=e.href.split("://");!o.port&&i[1]&&(o.port=i[1].split("/")[0].split("@").pop().split(":")[1]),o.port&&"0"!==o.port||(o.port="https"===i[0]?"443":"80"),o.hostname=e.hostname||n.hostname,o.pathname=e.pathname,o.protocol=i[0],"/"!==o.pathname.charAt(0)&&(o.pathname="/"+o.pathname);var a=!e.protocol||":"===e.protocol||e.protocol===n.protocol,s=e.hostname===document.domain&&e.port===n.port;return o.sameOrigin=a&&(!e.hostname||s),"/"===o.pathname&&(r[t]=o),o}},{}],19:[function(t,e,n){function r(t,e){var n=t.responseType;return"json"===n&&null!==e?e:"arraybuffer"===n||"blob"===n||"json"===n?o(t.response):"text"===n||""===n||void 0===n?o(t.responseText):void 0}var o=t(22);e.exports=r},{}],20:[function(t,e,n){function r(){}function o(t,e,n,r){return function(){return u.recordSupportability("API/"+e+"/called"),i(t+e,[f.now()].concat(s(arguments)),n?null:this,r),n?void 0:this}}var i=t("handle"),a=t(32),s=t(33),c=t("ee").get("tracer"),f=t("loader"),u=t(25),d=NREUM;"undefined"==typeof window.newrelic&&(newrelic=d);var p=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],l="api-",h=l+"ixn-";a(p,function(t,e){d[e]=o(l,e,!0,"api")}),d.addPageAction=o(l,"addPageAction",!0),d.setCurrentRouteName=o(l,"routeName",!0),e.exports=newrelic,d.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(t,e){var n={},r=this,o="function"==typeof e;return i(h+"tracer",[f.now(),t,n],r),function(){if(c.emit((o?"":"no-")+"fn-start",[f.now(),r,o],n),o)try{return e.apply(this,arguments)}catch(t){throw c.emit("fn-err",[arguments,this,t],n),t}finally{c.emit("fn-end",[f.now()],n)}}}};a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(t,e){m[e]=o(h,e)}),newrelic.noticeError=function(t,e){"string"==typeof t&&(t=new Error(t)),u.recordSupportability("API/noticeError/called"),i("err",[t,f.now(),!1,e])}},{}],21:[function(t,e,n){function r(t){if(NREUM.init){for(var e=NREUM.init,n=t.split("."),r=0;r<n.length-1;r++)if(e=e[n[r]],"object"!=typeof e)return;return e=e[n[n.length-1]]}}e.exports={getConfiguration:r}},{}],22:[function(t,e,n){e.exports=function(t){if("string"==typeof t&&t.length)return t.length;if("object"==typeof t){if("undefined"!=typeof ArrayBuffer&&t instanceof ArrayBuffer&&t.byteLength)return t.byteLength;if("undefined"!=typeof Blob&&t instanceof Blob&&t.size)return t.size;if(!("undefined"!=typeof FormData&&t instanceof FormData))try{return JSON.stringify(t).length}catch(e){return}}}},{}],23:[function(t,e,n){var r=!1;try{var o=Object.defineProperty({},"passive",{get:function(){r=!0}});window.addEventListener("testPassive",null,o),window.removeEventListener("testPassive",null,o)}catch(i){}e.exports=function(t){return r?{passive:!0,capture:!!t}:!!t}},{}],24:[function(t,e,n){var r=0,o=navigator.userAgent.match(/Firefox[\/\s](\d+\.\d+)/);o&&(r=+o[1]),e.exports=r},{}],25:[function(t,e,n){function r(t,e){var n=[a,t,{name:t},e];return i("storeMetric",n,null,"api"),n}function o(t,e){var n=[s,t,{name:t},e];return i("storeEventMetrics",n,null,"api"),n}var i=t("handle"),a="sm",s="cm";e.exports={constants:{SUPPORTABILITY_METRIC:a,CUSTOM_METRIC:s},recordSupportability:r,recordCustom:o}},{}],26:[function(t,e,n){function r(){return s.exists&&performance.now?Math.round(performance.now()):(i=Math.max((new Date).getTime(),i))-a}function o(){return i}var i=(new Date).getTime(),a=i,s=t(34);e.exports=r,e.exports.offset=a,e.exports.getLastTimestamp=o},{}],27:[function(t,e,n){function r(t){return!(!t||!t.protocol||"file:"===t.protocol)}e.exports=r},{}],28:[function(t,e,n){function r(t,e){var n=t.getEntries();n.forEach(function(t){"first-paint"===t.name?p("timing",["fp",Math.floor(t.startTime)]):"first-contentful-paint"===t.name&&p("timing",["fcp",Math.floor(t.startTime)])})}function o(t,e){var n=t.getEntries();if(n.length>0){var r=n[n.length-1];if(c&&c<r.startTime)return;p("lcp",[r])}}function i(t){t.getEntries().forEach(function(t){t.hadRecentInput||p("cls",[t])})}function a(t){if(t instanceof v&&!g){var e=Math.round(t.timeStamp),n={type:t.type};e<=l.now()?n.fid=l.now()-e:e>l.offset&&e<=Date.now()?(e-=l.offset,n.fid=l.now()-e):e=l.now(),g=!0,p("timing",["fi",e,n])}}function s(t){"hidden"===t&&(c=l.now(),p("pageHide",[c]))}if(!("init"in NREUM&&"page_view_timing"in NREUM.init&&"enabled"in NREUM.init.page_view_timing&&NREUM.init.page_view_timing.enabled===!1)){var c,f,u,d,p=t("handle"),l=t("loader"),h=t(31),m=t(23),v=NREUM.o.EV;if("PerformanceObserver"in window&&"function"==typeof window.PerformanceObserver){f=new PerformanceObserver(r);try{f.observe({entryTypes:["paint"]})}catch(w){}u=new PerformanceObserver(o);try{u.observe({entryTypes:["largest-contentful-paint"]})}catch(w){}d=new PerformanceObserver(i);try{d.observe({type:"layout-shift",buffered:!0})}catch(w){}}if("addEventListener"in document){var g=!1,y=["click","keydown","mousedown","pointerdown","touchstart"];y.forEach(function(t){document.addEventListener(t,a,m(!1))})}h(s)}},{}],29:[function(t,e,n){function r(){function t(){return e?15&e[n++]:16*Math.random()|0}var e=null,n=0,r=window.crypto||window.msCrypto;r&&r.getRandomValues&&(e=r.getRandomValues(new Uint8Array(31)));for(var o,i="xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx",a="",s=0;s<i.length;s++)o=i[s],"x"===o?a+=t().toString(16):"y"===o?(o=3&t()|8,a+=o.toString(16)):a+=o;return a}function o(){return a(16)}function i(){return a(32)}function a(t){function e(){return n?15&n[r++]:16*Math.random()|0}var n=null,r=0,o=window.crypto||window.msCrypto;o&&o.getRandomValues&&Uint8Array&&(n=o.getRandomValues(new Uint8Array(31)));for(var i=[],a=0;a<t;a++)i.push(e().toString(16));return i.join("")}e.exports={generateUuid:r,generateSpanId:o,generateTraceId:i}},{}],30:[function(t,e,n){function r(t,e){if(!o)return!1;if(t!==o)return!1;if(!e)return!0;if(!i)return!1;for(var n=i.split("."),r=e.split("."),a=0;a<r.length;a++)if(r[a]!==n[a])return!1;return!0}var o=null,i=null,a=/Version\/(\S+)\s+Safari/;if(navigator.userAgent){var s=navigator.userAgent,c=s.match(a);c&&s.indexOf("Chrome")===-1&&s.indexOf("Chromium")===-1&&(o="Safari",i=c[1])}e.exports={agent:o,version:i,match:r}},{}],31:[function(t,e,n){function r(t){function e(){t(s&&document[s]?document[s]:document[i]?"hidden":"visible")}"addEventListener"in document&&a&&document.addEventListener(a,e,o(!1))}var o=t(23);e.exports=r;var i,a,s;"undefined"!=typeof document.hidden?(i="hidden",a="visibilitychange",s="visibilityState"):"undefined"!=typeof document.msHidden?(i="msHidden",a="msvisibilitychange"):"undefined"!=typeof document.webkitHidden&&(i="webkitHidden",a="webkitvisibilitychange",s="webkitVisibilityState")},{}],32:[function(t,e,n){function r(t,e){var n=[],r="",i=0;for(r in t)o.call(t,r)&&(n[i]=e(r,t[r]),i+=1);return n}var o=Object.prototype.hasOwnProperty;e.exports=r},{}],33:[function(t,e,n){function r(t,e,n){e||(e=0),"undefined"==typeof n&&(n=t?t.length:0);for(var r=-1,o=n-e||0,i=Array(o<0?0:o);++r<o;)i[r]=t[e+r];return i}e.exports=r},{}],34:[function(t,e,n){e.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(t,e,n){function r(){}function o(t){function e(t){return t&&t instanceof r?t:t?f(t,c,a):a()}function n(n,r,o,i,a){if(a!==!1&&(a=!0),!l.aborted||i){t&&a&&t(n,r,o);for(var s=e(o),c=m(n),f=c.length,u=0;u<f;u++)c[u].apply(s,r);var p=d[y[n]];return p&&p.push([x,n,r,s]),s}}function i(t,e){g[t]=m(t).concat(e)}function h(t,e){var n=g[t];if(n)for(var r=0;r<n.length;r++)n[r]===e&&n.splice(r,1)}function m(t){return g[t]||[]}function v(t){return p[t]=p[t]||o(n)}function w(t,e){l.aborted||u(t,function(t,n){e=e||"feature",y[n]=e,e in d||(d[e]=[])})}var g={},y={},x={on:i,addEventListener:i,removeEventListener:h,emit:n,get:v,listeners:m,context:e,buffer:w,abort:s,aborted:!1};return x}function i(t){return f(t,c,a)}function a(){return new r}function s(){(d.api||d.feature)&&(l.aborted=!0,d=l.backlog={})}var c="nr@context",f=t("gos"),u=t(32),d={},p={},l=e.exports=o();e.exports.getOrSetContext=i,l.backlog=d},{}],gos:[function(t,e,n){function r(t,e,n){if(o.call(t,e))return t[e];var r=n();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(t,e,{value:r,writable:!0,enumerable:!1}),r}catch(i){}return t[e]=r,r}var o=Object.prototype.hasOwnProperty;e.exports=r},{}],handle:[function(t,e,n){function r(t,e,n,r){o.buffer([t],r),o.emit(t,e,n)}var o=t("ee").get("handle");e.exports=r,r.ee=o},{}],id:[function(t,e,n){function r(t){var e=typeof t;return!t||"object"!==e&&"function"!==e?-1:t===window?0:a(t,i,function(){return o++})}var o=1,i="nr@id",a=t("gos");e.exports=r},{}],loader:[function(t,e,n){function r(){if(!P++){var t=T.info=NREUM.info,e=v.getElementsByTagName("script")[0];if(setTimeout(f.abort,3e4),!(t&&t.licenseKey&&t.applicationID&&e))return f.abort();c(R,function(e,n){t[e]||(t[e]=n)});var n=a();s("mark",["onload",n+T.offset],null,"api"),s("timing",["load",n]);var r=v.createElement("script");0===t.agent.indexOf("http://")||0===t.agent.indexOf("https://")?r.src=t.agent:r.src=h+"://"+t.agent,e.parentNode.insertBefore(r,e)}}function o(){"complete"===v.readyState&&i()}function i(){s("mark",["domContent",a()+T.offset],null,"api")}var a=t(26),s=t("handle"),c=t(32),f=t("ee"),u=t(30),d=t(27),p=t(21),l=t(23),h=p.getConfiguration("ssl")===!1?"http":"https",m=window,v=m.document,w="addEventListener",g="attachEvent",y=m.XMLHttpRequest,x=y&&y.prototype,b=!d(m.location);NREUM.o={ST:setTimeout,SI:m.setImmediate,CT:clearTimeout,XHR:y,REQ:m.Request,EV:m.Event,PR:m.Promise,MO:m.MutationObserver};var E=""+location,R={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-spa-1212.min.js"},O=y&&x&&x[w]&&!/CriOS/.test(navigator.userAgent),T=e.exports={offset:a.getLastTimestamp(),now:a,origin:E,features:{},xhrWrappable:O,userAgent:u,disabled:b};if(!b){t(20),t(28),v[w]?(v[w]("DOMContentLoaded",i,l(!1)),m[w]("load",r,l(!1))):(v[g]("onreadystatechange",o),m[g]("onload",r)),s("mark",["firstbyte",a.getLastTimestamp()],null,"api");var P=0}},{}],"wrap-function":[function(t,e,n){function r(t,e){function n(e,n,r,c,f){function nrWrapper(){var i,a,u,p;try{a=this,i=d(arguments),u="function"==typeof r?r(i,a):r||{}}catch(l){o([l,"",[i,a,c],u],t)}s(n+"start",[i,a,c],u,f);try{return p=e.apply(a,i)}catch(h){throw s(n+"err",[i,a,h],u,f),h}finally{s(n+"end",[i,a,p],u,f)}}return a(e)?e:(n||(n=""),nrWrapper[p]=e,i(e,nrWrapper,t),nrWrapper)}function r(t,e,r,o,i){r||(r="");var s,c,f,u="-"===r.charAt(0);for(f=0;f<e.length;f++)c=e[f],s=t[c],a(s)||(t[c]=n(s,u?c+r:r,o,c,i))}function s(n,r,i,a){if(!h||e){var s=h;h=!0;try{t.emit(n,r,i,e,a)}catch(c){o([c,n,r,i],t)}h=s}}return t||(t=u),n.inPlace=r,n.flag=p,n}function o(t,e){e||(e=u);try{e.emit("internal-error",t)}catch(n){}}function i(t,e,n){if(Object.defineProperty&&Object.keys)try{var r=Object.keys(t);return r.forEach(function(n){Object.defineProperty(e,n,{get:function(){return t[n]},set:function(e){return t[n]=e,e}})}),e}catch(i){o([i],n)}for(var a in t)l.call(t,a)&&(e[a]=t[a]);return e}function a(t){return!(t&&t instanceof Function&&t.apply&&!t[p])}function s(t,e){var n=e(t);return n[p]=t,i(t,n,u),n}function c(t,e,n){var r=t[e];t[e]=s(r,n)}function f(){for(var t=arguments.length,e=new Array(t),n=0;n<t;++n)e[n]=arguments[n];return e}var u=t("ee"),d=t(33),p="nr@original",l=Object.prototype.hasOwnProperty,h=!1;e.exports=r,e.exports.wrapFunction=s,e.exports.wrapInPlace=c,e.exports.argsToArray=f},{}]},{},["loader",2,17,5,3,4]);
+  ;NREUM.loader_config={accountID:"804283",trustKey:"804283",agentID:"402703674",licenseKey:"cf99e8d2a3",applicationID:"402703674"}
+  ;NREUM.info={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",licenseKey:"cf99e8d2a3",
+    // Modified this value from the generated script, to pass prod vs dev
+    applicationID: window.location.hostname.includes('journals.plos.org') ? "402703674" : "402694889",
+    sa:1}
+</script>
+<!-- End New Relic -->
+
+
+
+<header>
+  <div id="topslot" class="head-top">
+  <a id="skip-to-content" tabindex="0" class="button" href="#main-content">
+    Skip to main content
+  </a>
+
+<div class="center">
+<div class="title">Advertisement</div>
+<!-- DoubleClick Ad Zone -->
+  <div class='advertisement' id='div-gpt-ad-1458247671871-0' style='width:728px; height:90px;'>
+    <script type='text/javascript'>
+      googletag.cmd.push(function() { googletag.display('div-gpt-ad-1458247671871-0'); });
+    </script>
+  </div>
+</div>
+  </div>
+
+  <div id="user" class="nav" data-user-management-url="https://community.plos.org">
+  </div>
+  <div id="pagehdr">
+
+    <nav class="nav-main">
+
+
+
+
+<h1 class="logo">
+  <a href="/plosone/.">PLOS One</a>
+</h1>
+
+<section class="top-bar-section"> 
+
+<ul class="nav-elements">
+
+
+    <li class="multi-col-parent menu-section-header has-dropdown" id="publish">
+    Publish
+      <div class="dropdown mega ">
+        <ul class="multi-col" id="publish-dropdown-list">
+
+  <li class="menu-section-header " id="submissions">
+    <span class="menu-section-header-title">  Submissions </span>
+
+    <ul class="menu-section "
+        id="submissions-dropdown-list">
+      <li>
+    <a href="/plosone/s/getting-started" >Getting Started</a>
+  </li>
+
+      <li>
+    <a href="/plosone/s/submission-guidelines" >Submission Guidelines</a>
+  </li>
+
+      <li>
+    <a href="/plosone/s/figures" >Figures</a>
+  </li>
+
+      <li>
+    <a href="/plosone/s/tables" >Tables</a>
+  </li>
+
+      <li>
+    <a href="/plosone/s/supporting-information" >Supporting Information</a>
+  </li>
+
+      <li>
+    <a href="/plosone/s/latex" >LaTeX</a>
+  </li>
+
+      <li>
+    <a href="/plosone/s/what-we-publish" >What We Publish</a>
+  </li>
+
+      <li>
+    <a href="/plosone/s/preprints" >Preprints</a>
+  </li>
+
+      <li>
+    <a href="/plosone/s/revising-your-manuscript" >Revising Your Manuscript</a>
+  </li>
+
+      <li>
+    <a href="/plosone/s/submit-now" >Submit Now</a>
+  </li>
+
+      <li>
+    <a href="https://collections.plos.org/s/calls-for-papers" >Calls for Papers</a>
+  </li>
+
+    </ul>
+
+  </li>
+
+
+  <li class="menu-section-header " id="policies">
+    <span class="menu-section-header-title">  Policies </span>
+
+    <ul class="menu-section "
+        id="policies-dropdown-list">
+      <li>
+    <a href="/plosone/s/best-practices-in-research-reporting" >Best Practices in Research Reporting</a>
+  </li>
+
+      <li>
+    <a href="/plosone/s/human-subjects-research" >Human Subjects Research</a>
+  </li>
+
+      <li>
+    <a href="/plosone/s/animal-research" >Animal Research</a>
+  </li>
+
+      <li>
+    <a href="/plosone/s/competing-interests" >Competing Interests</a>
+  </li>
+
+      <li>
+    <a href="/plosone/s/disclosure-of-funding-sources" >Disclosure of Funding Sources</a>
+  </li>
+
+      <li>
+    <a href="/plosone/s/licenses-and-copyright" >Licenses and Copyright</a>
+  </li>
+
+      <li>
+    <a href="/plosone/s/data-availability" >Data Availability</a>
+  </li>
+
+      <li>
+    <a href="/plosone/s/complementary-research" >Complementary Research</a>
+  </li>
+
+      <li>
+    <a href="/plosone/s/materials-software-and-code-sharing" >Materials, Software and Code Sharing</a>
+  </li>
+
+      <li>
+    <a href="/plosone/s/ethical-publishing-practice" >Ethical Publishing Practice</a>
+  </li>
+
+      <li>
+    <a href="/plosone/s/authorship" >Authorship</a>
+  </li>
+
+      <li>
+    <a href="/plosone/s/corrections-expressions-of-concern-and-retractions" >Corrections, Expressions of Concern, and Retractions</a>
+  </li>
+
+    </ul>
+
+  </li>
+
+
+  <li class="menu-section-header " id="manuscript-review-and-publication">
+    <span class="menu-section-header-title">  Manuscript Review and Publication </span>
+
+    <ul class="menu-section "
+        id="manuscript-review-and-publication-dropdown-list">
+      <li>
+    <a href="/plosone/s/criteria-for-publication" >Criteria for Publication</a>
+  </li>
+
+      <li>
+    <a href="/plosone/s/editorial-and-peer-review-process" >Editorial and Peer Review Process</a>
+  </li>
+
+      <li>
+    <a href="https://explore.plos.org/editor-resources" >Editor Center</a>
+  </li>
+
+      <li>
+    <a href="/plosone/s/reviewer-guidelines" >Guidelines for Reviewers</a>
+  </li>
+
+      <li>
+    <a href="/plosone/s/accepted-manuscripts" >Accepted Manuscripts</a>
+  </li>
+
+      <li>
+    <a href="/plosone/s/comments" >Comments</a>
+  </li>
+
+    </ul>
+
+  </li>
+        </ul>
+          <div class="calloutcontainer">
+
+
+
+  <h3 class="callout-headline">Submit Your Manuscript</h3>
+
+  <div class="action-contain">
+  <p class="callout-content">
+  Discover a faster, simpler path to publishing in a high-quality journal. <em>PLOS ONE</em> promises fair, rigorous peer review,
+  broad scope, and wide readership – a perfect fit for your research every time.
+  </p>
+
+  <p class="button-contain special">
+    <a class="button button-default" href="/plosone/static/publish">
+     Learn More
+    </a>
+    <a class="button-link" href="https://www.editorialmanager.com/pone/default.asp">
+      Submit Now
+    </a>
+  </p>
+  </div>  <!-- opens in siteMenuCalloutDescription -->
+
+
+          </div>
+      </div>
+    </li>
+
+
+
+  <li class="menu-section-header has-dropdown " id="about">
+    <span class="menu-section-header-title">  About </span>
+
+    <ul class="menu-section dropdown "
+        id="about-dropdown-list">
+      <li>
+    <a href="/plosone/static/publish" >Why Publish with PLOS ONE</a>
+  </li>
+
+      <li>
+    <a href="/plosone/s/journal-information" >Journal Information</a>
+  </li>
+
+      <li>
+    <a href="/plosone/s/staff-editors" >Staff Editors</a>
+  </li>
+
+      <li>
+    <a href="/plosone/static/editorial-board" >Editorial Board</a>
+  </li>
+
+      <li>
+    <a href="/plosone/s/section-editors" >Section Editors</a>
+  </li>
+
+      <li>
+    <a href="/plosone/s/advisory-groups" >Advisory Groups</a>
+  </li>
+
+      <li>
+    <a href="/plosone/s/find-and-read-articles" >Find and Read Articles</a>
+  </li>
+
+      <li>
+    <a href="/plosone/s/publishing-information" >Publishing Information</a>
+  </li>
+
+      <li>
+    <a href="https://plos.org/publication-fees" >Publication Fees</a>
+  </li>
+
+      <li>
+    <a href="https://plos.org/press-and-media" >Press and Media</a>
+  </li>
+
+      <li>
+    <a href="/plosone/s/contact" >Contact</a>
+  </li>
+
+    </ul>
+
+  </li>
+
+  <li data-js-tooltip-hover="trigger" class="subject-area menu-section-header">
+  Browse
+  </li>
+
+<script src="/resource/js/vendor/jquery.hoverIntent.js" type="text/javascript"></script>
+<script src="/resource/js/components/menu_drop.js" type="text/javascript"></script>
+<script src="/resource/js/components/hover_delay.js" type="text/javascript"></script>
+      <li id="navsearch" class="head-search">
+
+
+    <form name="searchForm" action="/plosone/search" method="get">
+      <fieldset>
+        <legend>Search</legend>
+        <label for="search">Search</label>
+        <div class="search-contain">
+          <input id="search" type="text" name="q" placeholder="SEARCH" required/>
+          <button id="headerSearchButton" type="submit" aria-label="Submit search">
+            <i title="Submit search" class="search-icon"></i>
+          </button>
+        </div>
+      </fieldset>
+      <input type="hidden" name="filterJournals" value="PLoSONE"/>
+    </form>
+
+    <a id="advSearch"
+       href="/plosone/search">
+      advanced search
+    </a>
+
+
+
+
+<script src="/resource/js/components/placeholder_style.js" type="text/javascript"></script>
+      </li>
+
+      </ul>     
+      </section>  
+    </nav>
+  </div>
+
+</header>
+<section id="taxonomyContainer">
+
+<script src="/resource/js/taxonomy-browser.js" type="text/javascript"></script>
+<div id="taxonomy-browser" class="areas" data-search-url="/plosone/browse">
+  <div class="wrapper">
+    <div class="taxonomy-header">
+      Browse Subject Areas
+      <div id="subjInfo">?</div>
+      <div id="subjInfoText">
+        <p>Click through the PLOS taxonomy to find articles in your field.</p>
+        <p>For more information about PLOS Subject Areas, click
+          <a href="https://github.com/PLOS/plos-thesaurus/blob/master/README.md" target="_blank" title="Link opens in new window">here</a>.
+        </p>
+      </div>
+    </div>
+    <div class="levels">
+      <div class="levels-container cf">
+        <div class="levels-position"></div>
+      </div>
+      <a href="#" class="prev"></a>
+      <a href="#" class="next active"></a>
+    </div>
+  </div>
+  <div class="taxonomy-browser-border-bottom"></div>
+</div>
+</section>
+<main id="main-content"> <div class="set-grid">
+
+<header class="title-block">
+
+
+
+<script src="/resource/js/components/signposts.js" type="text/javascript"></script>
+
+<ul id="almSignposts" class="signposts">
+  <li id="loadingMetrics">
+    <p>Loading metrics</p>
+  </li>
+</ul>
+
+<script type="text/template" id="signpostsGeneralErrorTemplate">
+  <li id="metricsError">Article metrics are unavailable at this time. Please try again later.</li>
+</script>
+
+<script type="text/template" id="signpostsNewArticleErrorTemplate">
+  <li></li><li></li><li id="tooSoon">Article metrics are unavailable for recently published articles.</li>
+</script>
+
+<script type="text/template" id="signpostsTemplate">
+    <li id="almSaves">
+      <%= s.numberFormat(saveCount, 0) %>
+      <div class="tools" data-js-tooltip-hover="trigger">
+        <a class="metric-term" href="/plosone/article/metrics?id=10.1371/journal.pone.0062186#savedHeader">Save</a>
+        <p class="saves-tip" data-js-tooltip-hover="target"><a href="/plosone/article/metrics?id=10.1371/journal.pone.0062186#savedHeader">Total Mendeley and Citeulike bookmarks.</a></p>
+      </div>
+    </li>
+
+    <li id="almCitations">
+      <%= s.numberFormat(citationCount, 0) %>
+      <div class="tools" data-js-tooltip-hover="trigger">
+        <a class="metric-term" href="/plosone/article/metrics?id=10.1371/journal.pone.0062186#citedHeader">Citation</a>
+        <p class="citations-tip" data-js-tooltip-hover="target"><a href="/plosone/article/metrics?id=10.1371/journal.pone.0062186#citedHeader">Paper's citation count computed by Dimensions.</a></p>
+      </div>
+    </li>
+
+    <li id="almViews">
+      <%= s.numberFormat(viewCount, 0) %>
+      <div class="tools" data-js-tooltip-hover="trigger">
+        <a class="metric-term" href="/plosone/article/metrics?id=10.1371/journal.pone.0062186#viewedHeader">View</a>
+        <p class="views-tip" data-js-tooltip-hover="target"><a href="/plosone/article/metrics?id=10.1371/journal.pone.0062186#viewedHeader">PLOS views and downloads.</a></p>
+      </div>
+    </li>
+
+    <li id="almShares">
+      <%= s.numberFormat(shareCount, 0) %>
+      <div class="tools" data-js-tooltip-hover="trigger">
+        <a class="metric-term" href="/plosone/article/metrics?id=10.1371/journal.pone.0062186#discussedHeader">Share</a>
+        <p class="shares-tip" data-js-tooltip-hover="target"><a href="/plosone/article/metrics?id=10.1371/journal.pone.0062186#discussedHeader">Sum of Facebook, Twitter, Reddit and Wikipedia activity.</a></p>
+      </div>
+    </li>
+</script>
+
+    <div class="article-meta">
+
+<div class="classifications">
+  <p class="license-short" id="licenseShort">Open Access</p>
+  <p class="peer-reviewed" id="peerReviewed">Peer-reviewed</p>
+
+<div class="article-type" >
+  <p class="type-article" id="artType">Research Article</p>
+</div>
+
+
+</div>
+    </div>
+    <div class="article-title-etc">
+
+
+
+<div class="title-authors">
+  <h1 id="artTitle"><?xml version="1.0" encoding="UTF-8"?>Evolvability Is Inevitable: Increasing Evolvability without the Pressure to Adapt</h1>
+
+<ul class="author-list clearfix"  data-js-tooltip="tooltip_container" id="author-list">
+
+
+
+<li
+  data-js-tooltip="tooltip_trigger"
+  
+>
+   <a  data-author-id="0" class="author-name" >
+Joel Lehman <span class="email">  </span>,</a>    <div id="author-meta-0" class="author-info" data-js-tooltip="tooltip_target">
+
+  
+  <p id="authCorresponding-0"> <span class="email">* E-mail:</span> <a href="mailto:joel@cs.utexas.edu">joel@cs.utexas.edu</a></p>
+  <p id="authAffiliations-0"><span class="type">Affiliation</span>
+    Department of Computer Science, The University of Texas at Austin, Austin, Texas, United States of America
+  </p>
+
+      <a data-js-tooltip="tooltip_close" class="close" id="tooltipClose0"> &#x02A2F; </a>
+    </div>
+</li>
+
+<li
+  data-js-tooltip="tooltip_trigger"
+  
+>
+   <a  data-author-id="1" class="author-name" >
+Kenneth O. Stanley</a>    <div id="author-meta-1" class="author-info" data-js-tooltip="tooltip_target">
+
+  
+  
+  <p id="authAffiliations-1"><span class="type">Affiliation</span>
+    Department of Electrical Engineering and Computer Science, University of Central Florida, Orlando, Florida, United States of America
+  </p>
+
+      <a data-js-tooltip="tooltip_close" class="close" id="tooltipClose1"> &#x02A2F; </a>
+    </div>
+</li>
+
+</ul>
+<script src="/resource/js/components/tooltip.js" type="text/javascript"></script>
+
+</div>
+
+
+<div id="floatTitleTop" data-js-floater="title_author" class="float-title" role="presentation">
+  <div class="set-grid">
+    <div class="float-title-inner">
+      <h1><?xml version="1.0" encoding="UTF-8"?>Evolvability Is Inevitable: Increasing Evolvability without the Pressure to Adapt</h1>
+
+<ul id="floatAuthorList" data-js-floater="floated_authors">
+
+  <li data-float-index="1">Joel Lehman,&nbsp;
+
+  </li>
+  <li data-float-index="2">Kenneth O. Stanley
+
+  </li>
+
+</ul>
+
+
+
+    </div>
+    <div class="logo-close" id="titleTopCloser">
+      <img src="/resource/img/logo-plos-full-color.svg" style="height: 2em" alt="PLOS" />
+      <div class="close-floater" title="close">x</div>
+    </div>
+  </div>
+</div>
+
+      <ul class="date-doi">
+        <li id="artPubDate">Published: April 24, 2013</li>
+        <li id="artDoi">
+<a   href="https://doi.org/10.1371/journal.pone.0062186">https://doi.org/10.1371/journal.pone.0062186</a>
+        </li>
+        <li class="flex-spacer"></li>
+      </ul>
+
+    </div>
+  <div>
+
+  </div>
+</header>
+  <section class="article-body">
+
+
+
+<ul class="article-tabs">
+
+          <li class="tab-title active" id="tabArticle">
+            <a href="/plosone/article?id=10.1371/journal.pone.0062186" class="article-tab-1">Article</a>
+        </li>
+
+
+              <li class="tab-title " id="tabAuthors">
+            <a href="/plosone/article/authors?id=10.1371/journal.pone.0062186" class="article-tab-2">Authors</a>
+        </li>
+
+
+          <li class="tab-title " id="tabMetrics">
+            <a href="/plosone/article/metrics?id=10.1371/journal.pone.0062186" class="article-tab-3">Metrics</a>
+        </li>
+
+
+          <li class="tab-title " id="tabComments">
+            <a href="/plosone/article/comments?id=10.1371/journal.pone.0062186" class="article-tab-4">Comments</a>
+        </li>
+
+  <li class="tab-title" id="tabRelated">
+    <a class="article-tab-5" id="tabRelated-link" target="_blank" href="http://plos.altmetric.com/details/doi/10.1371/journal.pone.0062186">Media Coverage</a>
+  </li>
+</ul>
+
+    <div class="article-container">
+
+
+<div id="nav-article">
+  <ul class="nav-secondary">
+
+    <li class="nav-comments" id="nav-comments">
+      <a href="article/comments?id=10.1371/journal.pone.0062186">Reader Comments</a>
+    </li>
+
+    <li id="nav-figures"><a href="#" data-doi="10.1371/journal.pone.0062186">Figures</a></li>
+  </ul>
+  <div id="nav-data-linking" data-data-url="">
+  </div>
+</div>
+<script src="/resource/js/components/scroll.js" type="text/javascript"></script>
+<script src="/resource/js/components/nav_builder.js" type="text/javascript"></script>
+<script src="/resource/js/components/floating_nav.js" type="text/javascript"></script>
+
+<div id="figure-lightbox-container"></div>
+
+<script id="figure-lightbox-template" type="text/template">
+  <div id="figure-lightbox" class="reveal-modal full" data-reveal aria-hidden="true"
+       role="dialog">
+    <div class="lb-header">
+      <h1 id="lb-title"><%= articleTitle %></h1>
+
+      <div id="lb-authors">
+            <span>Joel Lehman</span>
+            <span>Kenneth O. Stanley</span>
+      </div>
+
+      <div class="lb-close" title="close">&nbsp;</div>
+    </div>
+    <div class="img-container">
+      <div class="loader"> <i class="fa-spinner"></i> </div>
+      <img class="main-lightbox-image" src=""/>
+      <aside id="figures-list">
+        <% figureList.each(function (ix, figure) { %>
+        <div class="change-img" data-doi="<%= figure.getAttribute('data-doi') %>">
+          <img class="aside-figure" src="/plosone/article/figure/image?size=inline&id=<%= figure.getAttribute('data-doi') %>" />
+        </div>
+        <% }) %>
+        <div class="dummy-figure">
+        </div>
+      </aside>
+    </div>
+    <div id="lightbox-footer">
+
+      <div id="btns-container" class="lightbox-row <% if(figureList.length <= 1) { print('one-figure-only') } %>">
+        <div class="fig-btns-container reset-zoom-wrapper left">
+          <span class="fig-btn reset-zoom-btn">Reset zoom</span>
+        </div>
+        <div class="zoom-slider-container">
+          <div class="range-slider-container">
+            <span id="lb-zoom-min"></span>
+            <div class="range-slider round" data-slider data-options="start: 20; end: 200; initial: 20;">
+              <span class="range-slider-handle" role="slider" tabindex="0"></span>
+              <span class="range-slider-active-segment"></span>
+              <input type="hidden">
+            </div>
+            <span id="lb-zoom-max"></span>
+          </div>
+        </div>
+        <% if(figureList.length > 1) { %>
+        <div class="fig-btns-container">
+          <span class="fig-btn all-fig-btn"><i class="icon icon-all"></i> All Figures</span>
+          <span class="fig-btn next-fig-btn"><i class="icon icon-next"></i> Next</span>
+          <span class="fig-btn prev-fig-btn"><i class="icon icon-prev"></i> Previous</span>
+        </div>
+        <% } %>
+      </div>
+      <div id="image-context">
+      </div>
+    </div>
+  </div>
+</script>
+
+<script id="image-context-template" type="text/template">
+  <div class="footer-text">
+    <div id="figure-description-wrapper">
+      <div id="view-more-wrapper" style="<% descriptionExpanded? print('display:none;') : '' %>">
+        <span id="figure-title"><%= title %></span>
+        <p id="figure-description">
+          <%= description %>&nbsp;&nbsp;
+        </p>
+        <span id="view-more">show more<i class="icon-arrow-right"></i></span>
+
+      </div>
+      <div id="view-less-wrapper" style="<% descriptionExpanded? print('display:inline-block;') : '' %>" >
+        <span id="figure-title"><%= title %></span>
+        <p id="full-figure-description">
+          <%= description %>&nbsp;&nbsp;
+          <span id="view-less">show less<i class="icon-arrow-left"></i></span>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div id="show-context-container">
+    <a class="btn show-context" href="<%= showInContext(strippedDoi) %>">Show in Context</a>
+  </div>
+  <div id="download-buttons">
+    <h3>Download:</h3>
+    <div class="item">
+      <a href="/plosone/article/figure/image?size=original&download=&id=<%= doi %>" title="original image">
+        <span class="download-btn">TIFF</span>
+      </a>
+      <span class="file-size"><%= fileSizes.original %></span>
+    </div>
+    <div class="item">
+      <a href="/plosone/article/figure/image?size=large&download=&id=<%= doi %>" title="large image">
+        <span class="download-btn">PNG</span>
+      </a>
+      <span class="file-size"><%= fileSizes.large %></span>
+    </div>
+
+  </div>
+</script>
+      <div class="article-content">
+
+
+
+
+  <div class="amendment amendment-correction toc-section">
+  <a data-toc="amendment-0" title="Correction" id="amendment-0" name="amendment-0"></a>
+
+  <h2>Correction</h2>
+    <div class="amendment-citation">
+      <p>
+          <span class="amendment-date">
+            6 May 2013:
+          </span>
+
+
+Lehman&nbsp;J,
+Stanley&nbsp;KO
+
+
+  (2013)
+
+    <?xml version="1.0" encoding="UTF-8"?>Correction: Evolvability Is Inevitable: Increasing Evolvability without the Pressure to Adapt.
+
+PLOS ONE  8(5): 10.1371/annotation/f4c5a0f3-cb53-4c05-a84c-f0aead483b77.
+
+<a   href="https://doi.org/10.1371/annotation/f4c5a0f3-cb53-4c05-a84c-f0aead483b77">https://doi.org/10.1371/annotation/f4c5a0f3-cb53-4c05-a84c-f0aead483b77</a>
+
+
+            <span class="link-separator"> </span>
+            <a href="/plosone/article?id=10.1371/annotation/f4c5a0f3-cb53-4c05-a84c-f0aead483b77" class="amendment-link">
+              View correction
+            </a>
+      </p>
+    </div>
+  </div>
+
+
+<div id="figure-carousel-section">
+  <h2>Figures</h2>
+
+  <div id="figure-carousel">
+
+    <div class="carousel-wrapper">
+      <div class="slider">
+
+          <div class="carousel-item lightbox-figure" data-doi="10.1371/journal.pone.0062186.g001">
+
+                <img src="/plosone/article/figure/image?size=inline&amp;id=10.1371/journal.pone.0062186.g001"
+                     loading="lazy"
+                     alt="Figure 1"
+                />
+
+            </div>
+
+          <div class="carousel-item lightbox-figure" data-doi="10.1371/journal.pone.0062186.g002">
+
+                <img src="/plosone/article/figure/image?size=inline&amp;id=10.1371/journal.pone.0062186.g002"
+                     loading="lazy"
+                     alt="Figure 2"
+                />
+
+            </div>
+
+          <div class="carousel-item lightbox-figure" data-doi="10.1371/journal.pone.0062186.g003">
+
+                <img src="/plosone/article/figure/image?size=inline&amp;id=10.1371/journal.pone.0062186.g003"
+                     loading="lazy"
+                     alt="Figure 3"
+                />
+
+            </div>
+
+          <div class="carousel-item lightbox-figure" data-doi="10.1371/journal.pone.0062186.g004">
+
+                <img src="/plosone/article/figure/image?size=inline&amp;id=10.1371/journal.pone.0062186.g004"
+                     loading="lazy"
+                     alt="Figure 4"
+                />
+
+            </div>
+
+          <div class="carousel-item lightbox-figure" data-doi="10.1371/journal.pone.0062186.g005">
+
+                <img src="/plosone/article/figure/image?size=inline&amp;id=10.1371/journal.pone.0062186.g005"
+                     loading="lazy"
+                     alt="Figure 5"
+                />
+
+            </div>
+
+          <div class="carousel-item lightbox-figure" data-doi="10.1371/journal.pone.0062186.g006">
+
+                <img src="/plosone/article/figure/image?size=inline&amp;id=10.1371/journal.pone.0062186.g006"
+                     loading="lazy"
+                     alt="Figure 6"
+                />
+
+            </div>
+
+          <div class="carousel-item lightbox-figure" data-doi="10.1371/journal.pone.0062186.g007">
+
+                <img src="/plosone/article/figure/image?size=inline&amp;id=10.1371/journal.pone.0062186.g007"
+                     loading="lazy"
+                     alt="Figure 7"
+                />
+
+            </div>
+
+          <div class="carousel-item lightbox-figure" data-doi="10.1371/journal.pone.0062186.g008">
+
+                <img src="/plosone/article/figure/image?size=inline&amp;id=10.1371/journal.pone.0062186.g008"
+                     loading="lazy"
+                     alt="Figure 8"
+                />
+
+            </div>
+
+          <div class="carousel-item lightbox-figure" data-doi="10.1371/journal.pone.0062186.g009">
+
+                <img src="/plosone/article/figure/image?size=inline&amp;id=10.1371/journal.pone.0062186.g009"
+                     loading="lazy"
+                     alt="Figure 9"
+                />
+
+            </div>
+
+          <div class="carousel-item lightbox-figure" data-doi="10.1371/journal.pone.0062186.g010">
+
+                <img src="/plosone/article/figure/image?size=inline&amp;id=10.1371/journal.pone.0062186.g010"
+                     loading="lazy"
+                     alt="Figure 10"
+                />
+
+            </div>
+
+          <div class="carousel-item lightbox-figure" data-doi="10.1371/journal.pone.0062186.g011">
+
+                <img src="/plosone/article/figure/image?size=inline&amp;id=10.1371/journal.pone.0062186.g011"
+                     loading="lazy"
+                     alt="Figure 11"
+                />
+
+            </div>
+
+          <div class="carousel-item lightbox-figure" data-doi="10.1371/journal.pone.0062186.g012">
+
+                <img src="/plosone/article/figure/image?size=inline&amp;id=10.1371/journal.pone.0062186.g012"
+                     loading="lazy"
+                     alt="Figure 12"
+                />
+
+            </div>
+
+          <div class="carousel-item lightbox-figure" data-doi="10.1371/journal.pone.0062186.g013">
+
+                <img src="/plosone/article/figure/image?size=inline&amp;id=10.1371/journal.pone.0062186.g013"
+                     loading="lazy"
+                     alt="Figure 13"
+                />
+
+            </div>
+      </div>
+    </div>
+
+    <div class="carousel-control">
+      <span class="button previous"></span>
+      <span class="button next"></span>
+    </div>
+    <div class="carousel-page-buttons">
+
+    </div>
+  </div>
+</div>
+<script src="/resource/js/vendor/jquery.touchswipe.js" type="text/javascript"></script>
+<script src="/resource/js/components/figure_carousel.js" type="text/javascript"></script>
+<script src="/resource/js/vendor/jquery.dotdotdot.js" type="text/javascript"></script>
+
+
+        <div class="article-text" id="artText">
+          
+
+
+
+<div xmlns:plos="http://plos.org" class="abstract toc-section abstract-type-"><a id="abstract0" name="abstract0" data-toc="abstract0" class="link-target" title="Abstract"></a><h2>Abstract</h2><div class="abstract-content"><a id="article1.front1.article-meta1.abstract1.p1" name="article1.front1.article-meta1.abstract1.p1" class="link-target"></a><p>Why evolvability appears to have increased over evolutionary time is an important unresolved biological question. Unlike most candidate explanations, this paper proposes that increasing evolvability can result without any pressure to adapt. The insight is that if evolvability is heritable, then an unbiased drifting process across genotypes can still create a distribution of phenotypes biased towards evolvability, because evolvable organisms diffuse more quickly through the space of possible phenotypes. Furthermore, because phenotypic divergence often correlates with founding niches, niche founders may on average be more evolvable, which through population growth provides a genotypic bias towards evolvability. Interestingly, the combination of these two mechanisms can lead to increasing evolvability without any pressure to out-compete other organisms, as demonstrated through experiments with a series of simulated models. Thus rather than from pressure to adapt, evolvability may inevitably result from any drift through genotypic space combined with evolution's passive tendency to accumulate niches.</p>
+</div></div>
+
+
+<div xmlns:plos="http://plos.org" class="articleinfo"><p><strong>Citation: </strong>Lehman J, Stanley KO (2013) Evolvability Is Inevitable: Increasing Evolvability without the Pressure to Adapt. PLoS ONE 8(4):
+           e62186.
+        
+        https://doi.org/10.1371/journal.pone.0062186</p><p><strong>Editor: </strong>Sebastian D. Fugmann, Chang Gung University, Taiwan</p><p><strong>Received: </strong>February 7, 2013; <strong>Accepted: </strong>March 18, 2013; <strong>Published: </strong> April 24, 2013</p><p><strong>Copyright: </strong> © 2013 Lehman, Stanley. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</p><p><strong>Funding: </strong>This research was supported by Defense Advanced Research Projects Agency (DARPA) and Army Research Office through DARPA grant N11AP20003 (Computer Science Study Group Phase 3), and United States Army Research Office grant Award No. W911NF-11-1-0489. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</p><p><strong>Competing interests: </strong> The authors have declared that no competing interests exist.</p></div>
+
+
+
+
+
+<div xmlns:plos="http://plos.org" id="section1" class="section toc-section"><a id="s1" name="s1" data-toc="s1" class="link-target" title="Introduction"></a><h2>Introduction</h2><a id="article1.body1.sec1.p1" name="article1.body1.sec1.p1" class="link-target"></a><p>An unbroken hereditary chain links the simplest early replicators to the most complex modern macroscopic organisms. Observing this evolutionary trajectory raises the question of the <em>cause</em> for the appearance of increasing evolutionary potential, i.e. increasing <em>evolvability</em> <a href="#pone.0062186-Dawkins1" class="ref-tip">[1]</a>. Although the cause of such increase is still debated, most candidate explanations for evolvability rely on selection pressure <a href="#pone.0062186-Dawkins1" class="ref-tip">[1]</a>–<a href="#pone.0062186-Bloom1" class="ref-tip">[8]</a>, reflecting natural selection's significant explanatory power in other contexts. For example, selection on mutation or recombination rates <a href="#pone.0062186-Earl1" class="ref-tip">[2]</a>, species-level selection to adapt <a href="#pone.0062186-Dawkins1" class="ref-tip">[1]</a>, <a href="#pone.0062186-Kirschner1" class="ref-tip">[3]</a>, selection for stability of evolved structures <a href="#pone.0062186-Kirschner1" class="ref-tip">[3]</a>, <a href="#pone.0062186-Bloom1" class="ref-tip">[8]</a>, and persisting through fluctuating selective environments <a href="#pone.0062186-Pigliucci1" class="ref-tip">[5]</a> have all been proposed as partial explanations for increasing evolvability. However, adaptive explanations may be unnecessary or at least merit more scrutiny if increasing evolvability is demonstrated <em>without</em> any pressure to adapt, that is, if evolvability results from a more fundamental (and potentially passive) process.</p>
+<a id="article1.body1.sec1.p2" name="article1.body1.sec1.p2" class="link-target"></a><p>This paper investigates two such alternative hypotheses for evolvability. The first hypothesis is that if evolvability itself is heritable, then even a passive drifting process over genotypes will differentiate the evolvability of organisms, and the more evolvable of these organisms will be more likely to become phenotypically diverse and spread through niches. That is, a biased distribution of phenotypes can result from a passive drift over genotypes.</p>
+<a id="article1.body1.sec1.p3" name="article1.body1.sec1.p3" class="link-target"></a><p>Intuitively, in a passive drift some mutations may increase an organism's evolutionary potential, while others may decrease it. Importantly, note that such passive drifting does not cause an inherent drive towards increasing evolvability when averaged over all genotypes in the entire population. However, it turns out that evolvability averaged <em>over niches</em> may still rise even in a purely drifting model (i.e. a model with a fixed-size population that evolves solely through genetic drift). This conclusion follows from one widely-held conception of evolvability as the capacity of an organism to “generate heritable phenotypic variation” <a href="#pone.0062186-Kirschner1" class="ref-tip">[3]</a>, which is also the definition adopted in this paper. While evolvability is also sometimes discussed in relation to adaptation <a href="#pone.0062186-Ancel1" class="ref-tip">[9]</a>, <a href="#pone.0062186-Crombach1" class="ref-tip">[10]</a>, the chosen definition reflects a growing consensus in biology that phenotypic variability in its own right deserves study in the context of evolvability <a href="#pone.0062186-Kirschner1" class="ref-tip">[3]</a>, <a href="#pone.0062186-Wagner1" class="ref-tip">[4]</a>, <a href="#pone.0062186-Brookfield1" class="ref-tip">[6]</a>, <a href="#pone.0062186-DichtelDanjoy1" class="ref-tip">[11]</a>. Thus, following this definition, those organisms that are least evolvable will on average change less phenotypically from repeated mutation, while those that are more evolvable will change more, i.e. more evolvable organisms will have a higher average <em>velocity</em> of phenotypic change.</p>
+<a id="article1.body1.sec1.p4" name="article1.body1.sec1.p4" class="link-target"></a><p>As a result, the phenotype space itself can act as a filter, whereby more evolvable organisms will be separated from the less evolvable over time as they radiate at different velocities throughout the phenotypic space. This sorting mechanism is similar to how a centrifuge or a western blot separates particles of different densities or charges. In other words, at any point in time the least evolvable organisms are most likely to be found clustered together within the phenotypic space, occupying niches near their evolutionary origins. In contrast, the more evolvable organisms are more likely to diverge phenotypically over time to inhabit niches divergent from their ancestors. Thus, even if the genotypic space is evolving without direction, the resulting distribution in the phenotypic space can still become biased towards the more evolvable. That is, uniformly sampling the genotype space (which is unbiased) would on average choose less evolvable organisms than would uniformly sampling the phenotype space (which is biased). The bias in the distribution of phenotypes is that less evolvable organisms are likely to be found densely concentrated in only a few niches (near their evolutionary origin), while the more evolvable organisms are more likely to spread <em>throughout</em> reachable niches.</p>
+<a id="article1.body1.sec1.p5" name="article1.body1.sec1.p5" class="link-target"></a><p>Thus if a population is drifting through a genotypic space, from surveying only the phenotypic space it might be mistakenly inferred that the average evolvability over all organisms had <em>increased</em>, i.e. that there is a genotypic bias towards evolvability. Furthermore, the cause of this apparent increase might be misattributed to selection pressure. In reality, however, there is no selection pressure, and the average evolvability of genotypes will not have significantly changed: Only the average evolvability per niche (i.e. averaged over divergent phenotypes) will have increased. The interesting implication is that the deceptive appearance of increasing evolvability can result from a random walk over genotypes. However, the main insight is that evolvability may be self-reinforcing: A drifting process in the genotypic space may warp the phenotypic distribution in proportion to evolvability, and given a sufficiently large population, the <em>maximum</em> evolvability may also increase over time, which further warps the phenotypic space. Supporting this hypothesis, experiments with both an abstract mathematical model and simulated evolved machines reveal the appearance of increasing evolvability through only a drifting process.</p>
+<a id="article1.body1.sec1.p6" name="article1.body1.sec1.p6" class="link-target"></a><p>However, while genetic drift biases only the phenotypic distribution of organisms towards greater evolvability, an additional non-adaptive mechanism may also similarly bias the <em>genotypic</em> distribution. This genotypic bias can result from the correlation between phenotypic divergence and establishing new niches. In other words, evolvable organisms may be more likely to lead to new ways of life <a href="#pone.0062186-Kirschner1" class="ref-tip">[3]</a>. Thus more evolvable organisms may become over-represented as founders of new niches, causing the resulting population growth from niche foundation to bias the genetic space also towards increasing evolvability. Thus the second hypothesis for non-adaptive evolvability increase is that founder effects in new niches tend to amplify more evolvable organisms on average. The end result is that <em>overall</em> evolvability, i.e. not just its appearance, may also increase over time in nature – but not due to adaptive pressure to out-compete other organisms, which is a foundational assumption that underlies many other theories for the rise of evolvability <a href="#pone.0062186-Dawkins1" class="ref-tip">[1]</a>–<a href="#pone.0062186-Bloom1" class="ref-tip">[8]</a>.</p>
+<a id="article1.body1.sec1.p7" name="article1.body1.sec1.p7" class="link-target"></a><p>Supporting this second hypothesis, further experiments with growing populations in which evolution is initiated within a single niche, and where each niche has a limited capacity (but where selection is random within a niche) demonstrate a significant trend towards increasing <em>genotypic</em> evolvability over time. Importantly, the drive towards overall increasing genotypic evolvability in these experiments is qualitatively more substantial than in the drifting models alone (where the appearance of increasing evolvability results only when averaged over niches). Another abstract model and two additional models with evolved machines exhibit the same trend towards increasing genotypic evolvability without selection pressure for adaptation. The surprising conclusion is that increasing evolvability may not result from selective pressure to adapt, but may instead be an inevitable byproduct of how evolvability warps the distribution of phenotypes and the tendency for founding new niches to amplify evolvable organisms.</p>
+</div>
+
+<div xmlns:plos="http://plos.org" id="section2" class="section toc-section"><a id="s2" name="s2" data-toc="s2" class="link-target" title="Experiments"></a><h2>Experiments</h2><a id="article1.body1.sec2.p1" name="article1.body1.sec2.p1" class="link-target"></a><p>The next sections describe experimental models that investigate the hypotheses in this paper.</p>
+
+<div id="section1" class="section toc-section"><a id="s2a" name="s2a" class="link-target" title="Appearance of Increasing Evolvability in Passive Drift Models"></a>
+<h3>Appearance of Increasing Evolvability in Passive Drift Models</h3>
+<a id="article1.body1.sec2.sec1.p1" name="article1.body1.sec2.sec1.p1" class="link-target"></a><p>The first set of experiments illustrate that evolvability can appear to increase as a result of a passive drifting process over genotypes. That is, if evolvability is heritable then a drifting process in a genotype space can separate the more evolvable organisms from the less evolvable ones over time, inducing a distorted distribution in phenotype space that yields the deceptive impression of overall increasing evolvability. This first hypothesis is explored in two models, a highly-abstract model and a model based on simulated evolved robots.</p>
+
+<div id="section1" class="section toc-section"><a id="s2a1" name="s2a1" class="link-target" title="Abstract passive drift model"></a><h4>Abstract passive drift model.</h4><a id="article1.body1.sec2.sec1.sec1.p1" name="article1.body1.sec2.sec1.sec1.p1" class="link-target"></a><p>The highly-abstract model consists of a population of abstract organisms that evolve solely due to genetic drift (i.e. there is no selection pressure nor population growth). The idea is to investigate whether genetic drift can yield the appearance of increasing evolvability in a minimal model. Thus each organism in this model has only two hereditary properties: the niche that it occupies and its evolvability, both of which are subject to mutation. An organism's niche is represented as a two-dimensional point within a discrete grid, which mutation perturbs by shifting the point one unit in either dimension. In other words, the genotype-to-phenotype map is trivial in this model: The niche specified in an organism's genotype maps directly into its phenotypic niche (which is the two-dimensional point in the discrete grid). The evolvability of an organism is thus specified as the probability that an organism's niche will be perturbed through mutation, which reflects the assumption that more evolvable organisms have greater phenotypic variability <a href="#pone.0062186-Kirschner1" class="ref-tip">[3]</a>, <a href="#pone.0062186-Wagner1" class="ref-tip">[4]</a>, <a href="#pone.0062186-Brookfield1" class="ref-tip">[6]</a>, <a href="#pone.0062186-DichtelDanjoy1" class="ref-tip">[11]</a>. In contrast to the initial probability for an organism's niche to be perturbed (i.e. the organism's <em>initial</em> evolvability), evolvability itself mutates more infrequently through small perturbations (exact parameter settings can be found in the <a href="#s4">Methods</a> Section). In other words, the assumption is that evolvability tends to evolve at slower rates than typical hereditary properties. Note that all organisms are initially identical, i.e. they begin in the same niche (in the center of the grid) with the same level of evolvability.</p>
+<a id="article1.body1.sec2.sec1.sec1.p2" name="article1.body1.sec2.sec1.sec1.p2" class="link-target"></a><p>The idea is that as the population drifts in this model, the evolvability of each organism undergoes a random walk. Thus over time the evolvability of organisms will become differentiated as by chance mutation some become more evolvable and some become less so. However, across the entire population, evolvability will remain constant on average because increasing and decreasing are equiprobable. Concurrent with changes in evolvability, the niches of organisms are also evolving stochastically. Recall that in this model the probability of an organism's niche mutating is linked to its evolvability.</p>
+<a id="article1.body1.sec2.sec1.sec1.p3" name="article1.body1.sec2.sec1.sec1.p3" class="link-target"></a><p>The interesting effect of such linkage is that it causes the niche space to act as a filter that over time separates the less evolvable organisms from the more evolvable. In other words, if all organisms are initialized to start from the same niche, on average the organisms that become most evolvable (by chance mutation) will also evolve to be farthest in the niche space from the starting location (because evolvability here correlates with an increased future chance of changing niches). That is, the most evolvable organisms have a higher phenotypic velocity of change. As a result, the least evolvable organisms will on average cluster near the initial niche, and the most evolvable organisms are more likely to be found along the peripheral niches. Thus by observing the distribution of evolvability across the <em>niche space</em> (which is equivalent to the phenotypic space in this simplified model) one might falsely conclude that evolvability in general has increased. In other words, the average evolvability <em>per niche</em> will have increased.</p>
+<a id="article1.body1.sec2.sec1.sec1.p4" name="article1.body1.sec2.sec1.sec1.p4" class="link-target"></a><p>However, evolvability across the <em>population</em> remains unchanged on average; it is only evolvability's distribution over the space of <em>niches</em> that becomes biased during evolution. This bias, and the unbiased population-wide average of evolvability are shown in <a href="#pone-0062186-g001">figure 1</a>. More clearly illustrating the bias over the niche space, <a href="#pone-0062186-g002">figure 2</a> shows a heat-map of evolvability over the grid of niches at the end of a simulation and <a href="#pone-0062186-g003">figure 3</a> shows how evolvability varies as a function of a niche's distance from the starting niche. Note that there is a strong monotonic relationship between the distance of an organism from the starting niche at the end of a simulation and its evolvability (<span class="inline-formula"><img src="article/file?type=thumbnail&amp;id=10.1371/journal.pone.0062186.e004" loading="lazy" class="inline-graphic"></span>; Pearson's r).</p>
+<a class="link-target" id="pone-0062186-g001" name="pone-0062186-g001"></a><div class="figure" data-doi="10.1371/journal.pone.0062186.g001"><div class="img-box"><a title="Click for larger image" href="article/figure/image?size=medium&amp;id=10.1371/journal.pone.0062186.g001" data-doi="10.1371/journal.pone.0062186" data-uri="10.1371/journal.pone.0062186.g001"><img src="article/figure/image?size=inline&amp;id=10.1371/journal.pone.0062186.g001" alt="thumbnail" class="thumbnail" loading="lazy"></a><div class="expand"></div></div><div class="figure-inline-download">
+          Download:
+          <ul><li><a href="article/figure/image?download&amp;size=large&amp;id=10.1371/journal.pone.0062186.g001"><div class="definition-label">PNG</div><div class="definition-description">larger image</div></a></li><li><a href="article/figure/image?download&amp;size=original&amp;id=10.1371/journal.pone.0062186.g001"><div class="definition-label">TIFF</div><div class="definition-description">original image</div></a></li></ul></div><div class="figcaption"><span>Figure 1. </span> Evolvability in the abstract passive drift model.</div><p class="caption_target"><a id="article1.body1.sec2.sec1.sec1.fig1.caption1.p1" name="article1.body1.sec2.sec1.sec1.fig1.caption1.p1" class="link-target"></a><p>How the evolvability of organisms changes over generations is shown averaged (in different ways) over 50 independent simulations that last 3,000 generations each. If evolvability is averaged <em>within</em> each niche and then <em>over</em> all niches, then evolvability <em>appears</em> to increase. However, if instead evolvability is simply averaged over all organisms in the population, there is no significant overall increase in evolvability over time.</p>
+</p><p class="caption_object"><a href="https://doi.org/10.1371/journal.pone.0062186.g001">
+              https://doi.org/10.1371/journal.pone.0062186.g001</a></p></div><a class="link-target" id="pone-0062186-g002" name="pone-0062186-g002"></a><div class="figure" data-doi="10.1371/journal.pone.0062186.g002"><div class="img-box"><a title="Click for larger image" href="article/figure/image?size=medium&amp;id=10.1371/journal.pone.0062186.g002" data-doi="10.1371/journal.pone.0062186" data-uri="10.1371/journal.pone.0062186.g002"><img src="article/figure/image?size=inline&amp;id=10.1371/journal.pone.0062186.g002" alt="thumbnail" class="thumbnail" loading="lazy"></a><div class="expand"></div></div><div class="figure-inline-download">
+          Download:
+          <ul><li><a href="article/figure/image?download&amp;size=large&amp;id=10.1371/journal.pone.0062186.g002"><div class="definition-label">PNG</div><div class="definition-description">larger image</div></a></li><li><a href="article/figure/image?download&amp;size=original&amp;id=10.1371/journal.pone.0062186.g002"><div class="definition-label">TIFF</div><div class="definition-description">original image</div></a></li></ul></div><div class="figcaption"><span>Figure 2. </span> Evolvability heat map for the abstract passive drift model.</div><p class="caption_target"><a id="article1.body1.sec2.sec1.sec1.fig2.caption1.p1" name="article1.body1.sec2.sec1.sec1.fig2.caption1.p1" class="link-target"></a><p>The average evolvability of organisms in each niche at the end of a simulation is shown averaged over 50 independent runs. The lighter the color, the more evolvable individuals are within that niche. The overall result is that evolvability increases with increasing distance from the starting niche in the center.</p>
+</p><p class="caption_object"><a href="https://doi.org/10.1371/journal.pone.0062186.g002">
+              https://doi.org/10.1371/journal.pone.0062186.g002</a></p></div><a class="link-target" id="pone-0062186-g003" name="pone-0062186-g003"></a><div class="figure" data-doi="10.1371/journal.pone.0062186.g003"><div class="img-box"><a title="Click for larger image" href="article/figure/image?size=medium&amp;id=10.1371/journal.pone.0062186.g003" data-doi="10.1371/journal.pone.0062186" data-uri="10.1371/journal.pone.0062186.g003"><img src="article/figure/image?size=inline&amp;id=10.1371/journal.pone.0062186.g003" alt="thumbnail" class="thumbnail" loading="lazy"></a><div class="expand"></div></div><div class="figure-inline-download">
+          Download:
+          <ul><li><a href="article/figure/image?download&amp;size=large&amp;id=10.1371/journal.pone.0062186.g003"><div class="definition-label">PNG</div><div class="definition-description">larger image</div></a></li><li><a href="article/figure/image?download&amp;size=original&amp;id=10.1371/journal.pone.0062186.g003"><div class="definition-label">TIFF</div><div class="definition-description">original image</div></a></li></ul></div><div class="figcaption"><span>Figure 3. </span> Evolvability vs. distance from the initial niche for the abstract passive drift model.</div><p class="caption_target"><a id="article1.body1.sec2.sec1.sec1.fig3.caption1.p1" name="article1.body1.sec2.sec1.sec1.fig3.caption1.p1" class="link-target"></a><p>The evolvability of organisms at the end of a simulation is shown as a function of distance from the initial starting niche (averaged over 50 independent runs). The main result is that there is a significant correlation between increasing distance from the initial niche and increasing evolvability in this model. The plotted line indicates the line of best fit by linear regression.</p>
+</p><p class="caption_object"><a href="https://doi.org/10.1371/journal.pone.0062186.g003">
+              https://doi.org/10.1371/journal.pone.0062186.g003</a></p></div></div>
+
+<div id="section2" class="section toc-section"><a id="s2a2" name="s2a2" class="link-target" title="Passive DRIFT with evolved robots"></a><h4>Passive DRIFT with evolved robots.</h4><a id="article1.body1.sec2.sec1.sec2.p1" name="article1.body1.sec2.sec1.sec2.p1" class="link-target"></a><p>To augment the evidence provided by the purely-abstract model in the previous section, a more concrete genetic space is considered in this model, which has a richer genotype-to-phenotype map. The idea is to begin exploring whether the results from the abstract passive drift model reflect a general tendency or if they are overly specific to parameters or assumptions in the simple model. As an initial such exploration, a genotype-phenotype mapping and simulated environment are implemented in the spirit of digital evolution <a href="#pone.0062186-Lenski1" class="ref-tip">[12]</a> and evolutionary robotics (ER; <a href="#pone.0062186-Nolfi1" class="ref-tip">[13]</a>). In particular, a genotype-phenotype map for a simulated robot controlled by evolved artificial neural networks (ANNs) is adapted from prior ER experiments <a href="#pone.0062186-Lehman1" class="ref-tip">[14]</a>–<a href="#pone.0062186-Risi1" class="ref-tip">[16]</a>.</p>
+<a id="article1.body1.sec2.sec1.sec2.p2" name="article1.body1.sec2.sec1.sec2.p2" class="link-target"></a><p>In this model, genotypes encode ANNs that control simple wheeled robots embedded in a simulated maze. The motivation is to abstract at a high level how evolved neural structures influence an organism's behavior in its environment. In other words, a genotype in this model ultimately maps to the behavior of a robot in a simulated maze environment. Though other domains could be applied, this environment is well-studied <a href="#pone.0062186-Lehman1" class="ref-tip">[14]</a>–<a href="#pone.0062186-Risi1" class="ref-tip">[16]</a> and offers a non-trivial genotype-phenotype mapping. Niches in this model are specified by creating a discrete grid over a space of possible robot <em>behaviors</em>, i.e. what the robot actually does in the simulation, as opposed to a characterization of its genotype or of the ANN controller itself to which the genotype maps. So in this model, as in nature, the niche space is a many-to-one mapping from the space of phenotypes, i.e. many similar phenotypic behaviors will map into the same niche. The idea is that different classes of behaviors are what facilitate niches, not simple differentiation of genotypes or encoded neural structures. Thus a robot is mapped into a niche as a function of its behavior.</p>
+<a id="article1.body1.sec2.sec1.sec2.p3" name="article1.body1.sec2.sec1.sec2.p3" class="link-target"></a><p>While there there is no overall consensus on how to quantify evolvability <a href="#pone.0062186-Pigliucci1" class="ref-tip">[5]</a>, a growing body of work supports that evolvability is related to phenotypic variability <a href="#pone.0062186-Kirschner1" class="ref-tip">[3]</a>, <a href="#pone.0062186-Wagner1" class="ref-tip">[4]</a>, <a href="#pone.0062186-Brookfield1" class="ref-tip">[6]</a>, <a href="#pone.0062186-DichtelDanjoy1" class="ref-tip">[11]</a>. Thus the evolvability of genotypes in this model (also following precedent in ER <a href="#pone.0062186-Lehman2" class="ref-tip">[17]</a>), is given by quantifying the amount of behavioral variety (i.e. the number of different behavioral niches) reachable on average by random mutations from a particular genotype. In other words, an evolvable organism is more likely to lead to phenotypic divergence. Note that in this model evolvability is not directly encoded into the genotype as in the abstract model, but is a quantifiable emergent product of the genotype-phenotype map, more closely resembling the situation in biological evolution. Specific parameters and details about the evolvability measure are given in the <a href="#s4">Methods</a> Section.</p>
+<a id="article1.body1.sec2.sec1.sec2.p4" name="article1.body1.sec2.sec1.sec2.p4" class="link-target"></a><p>The general motivation for this model is that passively drifting with a relatively large population (e.g. on the order of millions) composed of this kind of more concrete genotype may exhibit the same appearance of increasing evolvability as observed in the abstract passive drift model. A larger population is necessary in this experiment because most random genotypes in this more realistic genotypic space represent similarly trivial behaviors, i.e. most randomly-connected ANNs encode no meaningful information, and the appearance of increasing evolvability will only emerge when drifting over a sufficient quantity of differentiated non-trivial behaviors. Thus to facilitate these experiments in a computationally efficient way, a limited genetic space of ANNs that was tractable to exhaustively characterize and explore was enumerated (i.e. a discrete subset was considered from a much larger space of ANNs with continuous weights and variable network topologies). Then each one of the enumerated genotypes in the space (which consisted of 38.7 million different genotypes) were evaluated in the maze environment to quantify its behavior and evolvability. For each simulation the population was uniformly initialized to a randomly chosen genotype (i.e. the population is always initially homogeneous) and subject to differentiating genetic drift for 250 generations. Importantly, supporting the assumption that evolvability is heritable, despite overall wide variance in evolvability over the entire genetic space, the evolvability of a parent and its offspring are well correlated (<span class="inline-formula"><img src="article/file?type=thumbnail&amp;id=10.1371/journal.pone.0062186.e007" loading="lazy" class="inline-graphic"></span>; Pearson's r). The details of the particular neural model applied can also be found in the <a href="#s4">Methods</a> Section.</p>
+<a id="article1.body1.sec2.sec1.sec2.p5" name="article1.body1.sec2.sec1.sec2.p5" class="link-target"></a><p>Interestingly, a plot of evolvability over time from this model also demonstrates the appearance of increasing evolvability over time (<a href="#pone-0062186-g004">figure 4</a>), providing evidence that the hypothesis that genetic drift can lead to the appearance of increasing evolvability may hold true not only in abstract theoretical circumstances.</p>
+<a class="link-target" id="pone-0062186-g004" name="pone-0062186-g004"></a><div class="figure" data-doi="10.1371/journal.pone.0062186.g004"><div class="img-box"><a title="Click for larger image" href="article/figure/image?size=medium&amp;id=10.1371/journal.pone.0062186.g004" data-doi="10.1371/journal.pone.0062186" data-uri="10.1371/journal.pone.0062186.g004"><img src="article/figure/image?size=inline&amp;id=10.1371/journal.pone.0062186.g004" alt="thumbnail" class="thumbnail" loading="lazy"></a><div class="expand"></div></div><div class="figure-inline-download">
+          Download:
+          <ul><li><a href="article/figure/image?download&amp;size=large&amp;id=10.1371/journal.pone.0062186.g004"><div class="definition-label">PNG</div><div class="definition-description">larger image</div></a></li><li><a href="article/figure/image?download&amp;size=original&amp;id=10.1371/journal.pone.0062186.g004"><div class="definition-label">TIFF</div><div class="definition-description">original image</div></a></li></ul></div><div class="figcaption"><span>Figure 4. </span> Evolvability of evolved robots with the passive drift model.</div><p class="caption_target"><a id="article1.body1.sec2.sec1.sec2.fig1.caption1.p1" name="article1.body1.sec2.sec1.sec2.fig1.caption1.p1" class="link-target"></a><p>The evolvability of evolved robots subject to passive drift is shown averaged (in different ways) over 50 independent runs that lasted 250 generations each. If evolvability is averaged within each niche and then over all niches, it appears to increase. If instead evolvability is averaged over all organisms, there is no significant increase.</p>
+</p><p class="caption_object"><a href="https://doi.org/10.1371/journal.pone.0062186.g004">
+              https://doi.org/10.1371/journal.pone.0062186.g004</a></p></div></div>
+</div>
+
+<div id="section2" class="section toc-section"><a id="s2b" name="s2b" class="link-target" title="Population Growth with Limited Capacity Niches Increases Evolvability"></a>
+<h3>Population Growth with Limited Capacity Niches Increases Evolvability</h3>
+<a id="article1.body1.sec2.sec2.p1" name="article1.body1.sec2.sec2.p1" class="link-target"></a><p>The previous models demonstrate how a purely random drifting process can create the deceptive appearance of increasing overall evolvability. The next experiments explore the hypothesis that a qualitatively more pervasive increase in evolvability (i.e. an overall bias towards genotypes with higher evolvability) can result from population growth and niches with limited capacity. First, an extension of the abstract passive drift model is considered.</p>
+
+<div id="section1" class="section toc-section"><a id="s2b1" name="s2b1" class="link-target" title="Abstract model with limited capacity niches"></a><h4>Abstract model with limited capacity niches.</h4><a id="article1.body1.sec2.sec2.sec1.p1" name="article1.body1.sec2.sec2.sec1.p1" class="link-target"></a><p>This section considers a variation of the abstract model introduced earlier, but where the size of the population varies dynamically (previously this size was fixed). In particular, the population grows geometrically (i.e. each organism is replaced by two offspring in the next generation), but the overall size of the population remains tractable because in this model niches are limited in capacity (i.e. when a new generation is created, niches can grow only to a certain size, after which further individuals entering that niche are discarded). The idea is to roughly model the concept of limited resources in natural evolution and explore its effect on evolvability. Importantly, this extended model still imposes no <em>direct</em> selection pressure for evolvability, and if the model started at equilibrium (i.e. with all niches at full capacity), there would be no expectation of evolvability increasing over time. In other words, what is important for evolvability in this model is spreading through the space of niches. Furthermore, selection <em>within</em> a niche is purely random–there is no selection for adaptation to the niche nor any way for one organism to reliably <em>out-compete</em> another. Thus this is a model without adaptive pressure.</p>
+<a id="article1.body1.sec2.sec2.sec1.p2" name="article1.body1.sec2.sec2.sec1.p2" class="link-target"></a><p>However, despite this lack of adaptive pressure, as evolution progresses in this model the passive filtering effect of the phenotypic space demonstrated in the fixed-sized population model is amplified. The explanation is that the resulting population growth from founding a new niche (by mutating out of the zone of previously explored niches) <em>indirectly</em> rewards increasing evolvability in this model: The more evolvable organisms (which because of their higher velocity of phenotypic change are more likely to mutate into new niches) are continually amplified from population growth as they diffuse through niches. Thus as more niches are discovered and filled, the population becomes increasingly biased towards evolvability; in effect, the reward for discovering a new niche in this model accelerates the filtering process that is purely passive in the passive drifting model. This acceleration is shown in <a href="#pone-0062186-g005">figure 5</a>, which compares evolvability in this model to that of the passive drift model introduced earlier. Note that the figure shows growth in overall evolvability (i.e. averaged over all organisms) in the limited capacity niche model that greatly outpaces the growth in the passive drift model (which is only significant when averaged over niches). In other words, superficial niche-level evolvability in the passive drift model grows more slowly than evolvability over all genotypes in the limited capacity niche model. This result is important because it demonstrates a true increase in average evolvability over a population without selection pressure to out-compete other organisms.</p>
+<a class="link-target" id="pone-0062186-g005" name="pone-0062186-g005"></a><div class="figure" data-doi="10.1371/journal.pone.0062186.g005"><div class="img-box"><a title="Click for larger image" href="article/figure/image?size=medium&amp;id=10.1371/journal.pone.0062186.g005" data-doi="10.1371/journal.pone.0062186" data-uri="10.1371/journal.pone.0062186.g005"><img src="article/figure/image?size=inline&amp;id=10.1371/journal.pone.0062186.g005" alt="thumbnail" class="thumbnail" loading="lazy"></a><div class="expand"></div></div><div class="figure-inline-download">
+          Download:
+          <ul><li><a href="article/figure/image?download&amp;size=large&amp;id=10.1371/journal.pone.0062186.g005"><div class="definition-label">PNG</div><div class="definition-description">larger image</div></a></li><li><a href="article/figure/image?download&amp;size=original&amp;id=10.1371/journal.pone.0062186.g005"><div class="definition-label">TIFF</div><div class="definition-description">original image</div></a></li></ul></div><div class="figcaption"><span>Figure 5. </span> True increasing evolvability in the abstract model with limited capacity niches.</div><p class="caption_target"><a id="article1.body1.sec2.sec2.sec1.fig1.caption1.p1" name="article1.body1.sec2.sec2.sec1.fig1.caption1.p1" class="link-target"></a><p>How the average evolvability of organisms in the population changes over time is shown (averaged over 50 independent simulations that lasted 1000 generations each). Note that the line shown for the passive model (reproduced from figure 0) represents only the <em>appearance</em> of increasing evolvability in that model when evolvability is averaged over niches.</p>
+</p><p class="caption_object"><a href="https://doi.org/10.1371/journal.pone.0062186.g005">
+              https://doi.org/10.1371/journal.pone.0062186.g005</a></p></div><a id="article1.body1.sec2.sec2.sec1.p3" name="article1.body1.sec2.sec2.sec1.p3" class="link-target"></a><p>Similarly to the first model, <a href="#pone-0062186-g006">figure 6</a> shows a heat-map of evolvability over the niche space averaged over all runs, and <a href="#pone-0062186-g007">figure 7</a> shows how evolvability varies over the niche space as a function of a niche's distance from the starting niche. There is a strong significant monotonic relationship between the distance from starting niche and evolvability (<span class="inline-formula"><img src="article/file?type=thumbnail&amp;id=10.1371/journal.pone.0062186.e008" loading="lazy" class="inline-graphic"></span>; Pearson's r).</p>
+<a class="link-target" id="pone-0062186-g006" name="pone-0062186-g006"></a><div class="figure" data-doi="10.1371/journal.pone.0062186.g006"><div class="img-box"><a title="Click for larger image" href="article/figure/image?size=medium&amp;id=10.1371/journal.pone.0062186.g006" data-doi="10.1371/journal.pone.0062186" data-uri="10.1371/journal.pone.0062186.g006"><img src="article/figure/image?size=inline&amp;id=10.1371/journal.pone.0062186.g006" alt="thumbnail" class="thumbnail" loading="lazy"></a><div class="expand"></div></div><div class="figure-inline-download">
+          Download:
+          <ul><li><a href="article/figure/image?download&amp;size=large&amp;id=10.1371/journal.pone.0062186.g006"><div class="definition-label">PNG</div><div class="definition-description">larger image</div></a></li><li><a href="article/figure/image?download&amp;size=original&amp;id=10.1371/journal.pone.0062186.g006"><div class="definition-label">TIFF</div><div class="definition-description">original image</div></a></li></ul></div><div class="figcaption"><span>Figure 6. </span> Evolvability heat map for the abstract model with limited capacity niches.</div><p class="caption_target"><a id="article1.body1.sec2.sec2.sec1.fig2.caption1.p1" name="article1.body1.sec2.sec2.sec1.fig2.caption1.p1" class="link-target"></a><p>The average evolvability of organisms in each niche at the end of a simulation is shown. The lighter the color, the more evolvable individuals are within that niche. The overall result is that, as in the first model, evolvability increases with increasing distance from the starting niche in the center.</p>
+</p><p class="caption_object"><a href="https://doi.org/10.1371/journal.pone.0062186.g006">
+              https://doi.org/10.1371/journal.pone.0062186.g006</a></p></div><a class="link-target" id="pone-0062186-g007" name="pone-0062186-g007"></a><div class="figure" data-doi="10.1371/journal.pone.0062186.g007"><div class="img-box"><a title="Click for larger image" href="article/figure/image?size=medium&amp;id=10.1371/journal.pone.0062186.g007" data-doi="10.1371/journal.pone.0062186" data-uri="10.1371/journal.pone.0062186.g007"><img src="article/figure/image?size=inline&amp;id=10.1371/journal.pone.0062186.g007" alt="thumbnail" class="thumbnail" loading="lazy"></a><div class="expand"></div></div><div class="figure-inline-download">
+          Download:
+          <ul><li><a href="article/figure/image?download&amp;size=large&amp;id=10.1371/journal.pone.0062186.g007"><div class="definition-label">PNG</div><div class="definition-description">larger image</div></a></li><li><a href="article/figure/image?download&amp;size=original&amp;id=10.1371/journal.pone.0062186.g007"><div class="definition-label">TIFF</div><div class="definition-description">original image</div></a></li></ul></div><div class="figcaption"><span>Figure 7. </span> Evolvability vs. distance from the initial niche for the abstract model with limited-capacity niches.</div><p class="caption_target"><a id="article1.body1.sec2.sec2.sec1.fig3.caption1.p1" name="article1.body1.sec2.sec2.sec1.fig3.caption1.p1" class="link-target"></a><p>The average evolvability of organisms in the final population is shown as a function of distance from the initial starting niche averaged over 50 independent simulations. The main result is that there is a significant correlation between increasing distance from the initial niche and increasing evolvability. The plotted line indicates the line of best fit by linear regression.</p>
+</p><p class="caption_object"><a href="https://doi.org/10.1371/journal.pone.0062186.g007">
+              https://doi.org/10.1371/journal.pone.0062186.g007</a></p></div></div>
+
+<div id="section2" class="section toc-section"><a id="s2b2" name="s2b2" class="link-target" title="Evolved robots model with limited capacity niches"></a><h4>Evolved robots model with limited capacity niches.</h4><a id="article1.body1.sec2.sec2.sec2.p1" name="article1.body1.sec2.sec2.sec2.p1" class="link-target"></a><p>Like the previous extension to the abstract model, this section extends the drifting model with simulated evolved robots to include population growth and limited capacity niches. The idea is to explore whether this more realistic genotype-phenotype mapping will also exhibit the same <em>accelerated</em> increase of evolvability seen from extending the abstract model. The results of this experiment are shown in <a href="#pone-0062186-g008">figure 8</a>, and confirm that limiting niche capacity also biases population growth more strongly towards increasing evolvability in this more concrete genetic space. In other words, the limited niche capacity models (both the abstract model and the model with evolved robots) demonstrate a bias towards true evolvability (i.e. when averaged over the entire population) while the passive drift models exhibit a weaker bias towards evolvability that is significant only when averaged over niches.</p>
+<a class="link-target" id="pone-0062186-g008" name="pone-0062186-g008"></a><div class="figure" data-doi="10.1371/journal.pone.0062186.g008"><div class="img-box"><a title="Click for larger image" href="article/figure/image?size=medium&amp;id=10.1371/journal.pone.0062186.g008" data-doi="10.1371/journal.pone.0062186" data-uri="10.1371/journal.pone.0062186.g008"><img src="article/figure/image?size=inline&amp;id=10.1371/journal.pone.0062186.g008" alt="thumbnail" class="thumbnail" loading="lazy"></a><div class="expand"></div></div><div class="figure-inline-download">
+          Download:
+          <ul><li><a href="article/figure/image?download&amp;size=large&amp;id=10.1371/journal.pone.0062186.g008"><div class="definition-label">PNG</div><div class="definition-description">larger image</div></a></li><li><a href="article/figure/image?download&amp;size=original&amp;id=10.1371/journal.pone.0062186.g008"><div class="definition-label">TIFF</div><div class="definition-description">original image</div></a></li></ul></div><div class="figcaption"><span>Figure 8. </span> True increasing evolvability in the evolved robots model with limited capacity niches.</div><p class="caption_target"><a id="article1.body1.sec2.sec2.sec2.fig1.caption1.p1" name="article1.body1.sec2.sec2.sec2.fig1.caption1.p1" class="link-target"></a><p>The evolvability of organisms is shown averaged over 50 independent simulations that lasted 250 generations each. It is important to note that because the population size in the limited-niche model is much smaller, <em>one</em> generation of the passive model encompasses more individuals (2,000,000) than is considered over <em>all</em> generations in the niched model (<span class="inline-formula"><img src="article/file?type=thumbnail&amp;id=10.1371/journal.pone.0062186.e001" loading="lazy" class="inline-graphic"></span> on average). In other words, the limited-niche model is more directedly and more efficiently biased towards evolvability. In particular, the difference in evolvability between the limited-niche model and the passive model is significant for all comparisons after the 50th generation (<span class="inline-formula"><img src="article/file?type=thumbnail&amp;id=10.1371/journal.pone.0062186.e002" loading="lazy" class="inline-graphic"></span>; Student's t-test).</p>
+</p><p class="caption_object"><a href="https://doi.org/10.1371/journal.pone.0062186.g008">
+              https://doi.org/10.1371/journal.pone.0062186.g008</a></p></div></div>
+
+<div id="section3" class="section toc-section"><a id="s2b3" name="s2b3" class="link-target" title="Practical ER model with limited capacity niches"></a><h4>Practical ER model with limited capacity niches.</h4><a id="article1.body1.sec2.sec2.sec3.p1" name="article1.body1.sec2.sec2.sec3.p1" class="link-target"></a><p>Finally, the last model explores evolvability in a less restricted space of ANNs. The idea is to examine whether the hypotheses in this paper hold even in a commonly used practical ER system. In particular, this model explores a limited-capacity niched model (as in the previous two experiments) but with a well-established practical neuroevolution method called NEAT <a href="#pone.0062186-Stanley1" class="ref-tip">[18]</a>. Instead of having only three discrete settings for ANN connection weights (i.e. inhibitory, excitatory, or neutral), the connection weights in NEAT can vary continuously in strength. Additionally, to facilitate increasingly complex evolved behaviors, the topology of the ANN can itself become increasingly complex because of mutations that incrementally introduce new connections and nodes during evolution. As a result of continuous weights and increasing complexity, the space of ANNs that NEAT explores is effectively infinite and cannot be fully enumerated as in the previous model. However, the benefit is that this class of genetic space is more analogous to that provided by DNA in nature, which is also open-ended in a similar way.</p>
+<a id="article1.body1.sec2.sec2.sec3.p2" name="article1.body1.sec2.sec2.sec3.p2" class="link-target"></a><p>Because the space cannot be fully enumerated due to computational limits, it is impossible to fully characterize the genotypic space and precisely calculate evolvability (as was done in the fully passive model). This full characterization of the space also facilitated efficient simulation of millions of evolved robots through a precomputed look-up table that mapped a genotype to its niche and evolvability. Such a table is impossible to construct for the practical ER model, and thus only the limited niche capacity setup is implemented here (because it exhibits a driven trend towards evolvability increase that is not dependent on a large population size). As in the prior robot controller models, the niche space consists of a discretized grid of the possible locations to which a robot can navigate within the maze. The evolvability of a genotype is estimated (because the space cannot be exhaustively enumerated) by counting how many phenotypic niches are reachable from many independent random mutations of the original genotype. As a control to show that niching robots in a structured way is having a positive effect on evolvability, a comparison experiment is also run where niching is random (i.e. an ANN's niche is specified by a random number generator instead of being derived from the robot's behavior). In other words, the random control does not consistently reward behaviors that are different from those already present in the system.</p>
+<a id="article1.body1.sec2.sec2.sec3.p3" name="article1.body1.sec2.sec2.sec3.p3" class="link-target"></a><p>The results of these experiments are shown in <a href="#pone-0062186-g009">figure 9</a>, which reinforce the hypotheses in this paper by similarly demonstrating the benefits for evolvability of population growth with limited niche capacity in a more realistic genetic setting. Note that as in the previous two experiments, limiting niche capacity encourages true evolvability growth.</p>
+<a class="link-target" id="pone-0062186-g009" name="pone-0062186-g009"></a><div class="figure" data-doi="10.1371/journal.pone.0062186.g009"><div class="img-box"><a title="Click for larger image" href="article/figure/image?size=medium&amp;id=10.1371/journal.pone.0062186.g009" data-doi="10.1371/journal.pone.0062186" data-uri="10.1371/journal.pone.0062186.g009"><img src="article/figure/image?size=inline&amp;id=10.1371/journal.pone.0062186.g009" alt="thumbnail" class="thumbnail" loading="lazy"></a><div class="expand"></div></div><div class="figure-inline-download">
+          Download:
+          <ul><li><a href="article/figure/image?download&amp;size=large&amp;id=10.1371/journal.pone.0062186.g009"><div class="definition-label">PNG</div><div class="definition-description">larger image</div></a></li><li><a href="article/figure/image?download&amp;size=original&amp;id=10.1371/journal.pone.0062186.g009"><div class="definition-label">TIFF</div><div class="definition-description">original image</div></a></li></ul></div><div class="figcaption"><span>Figure 9. </span> Evolvability in the practical ER model with limited capacity niches.</div><p class="caption_target"><a id="article1.body1.sec2.sec2.sec3.fig1.caption1.p1" name="article1.body1.sec2.sec2.sec3.fig1.caption1.p1" class="link-target"></a><p>The average evolvability of organisms in the population over evolutionary time is shown, which is itself averaged over 50 independent simulations that lasted 50,000 evaluations each. Note that evolvability of an organism is measured as the average number of different behaviors generated through 300 random mutations. The main result is that niching based on behavior significantly increases evolvability over a control that randomly assigns niches independently of an organism's behavior (<span class="inline-formula"><img src="article/file?type=thumbnail&amp;id=10.1371/journal.pone.0062186.e003" loading="lazy" class="inline-graphic"></span> for all comparisons after 2,500 evaluations; Student's t-test).</p>
+</p><p class="caption_object"><a href="https://doi.org/10.1371/journal.pone.0062186.g009">
+              https://doi.org/10.1371/journal.pone.0062186.g009</a></p></div></div>
+</div>
+</div>
+
+<div xmlns:plos="http://plos.org" id="section3" class="section toc-section"><a id="s3" name="s3" data-toc="s3" class="link-target" title="Conclusions"></a><h2>Conclusions</h2><a id="article1.body1.sec3.p1" name="article1.body1.sec3.p1" class="link-target"></a><p>This paper presented evidence for two non-adaptive explanations for the appearance of increasing evolvability over the course of biological evolution. The first is that an unbiased drifting process over genotypes can nonetheless produce a distribution of phenotypes (where multiple individuals in the population may have the same phenotype) biased towards increasing evolvability, and the second is that founder effects for discovering niches can provide a genotypic bias towards true evolvability increase. While such non-adaptive explanations do not contradict more popular adaptive explanations, they call them into question because the mechanisms shown here require fewer assumptions, i.e. they result from the structure of the genotype-phenotype map and founder effects from uncovering new niches instead of particular transient selective pressures. In fact, the results from the passive drift models suggest even caution in the assumption that evolvability in general has truly increased over evolutionary time; the superficial <em>appearance</em> of overall increasing evolvability can result from evolvable organisms filling a larger volume of phenotypic space.</p>
+<a id="article1.body1.sec3.p2" name="article1.body1.sec3.p2" class="link-target"></a><p>However, even assuming that evolvability has truly increased, these results still illustrate the danger in habitually viewing evolution through the lens of selection pressure. An alternative perspective through which to interpret the results is to view evolution as a process driven to diversity as it expands through new niches. Such niche expansion is a ratcheting process, whereby niches rarely go unfilled after being discovered. The founder effect and population growth from uncovering new niches serve to bias the genotypic space towards increasing evolvability because they amplify genomes that diverge phenotypically, which on average tend to be those that are more evolvable. Thus if the assumption of evolvability's heritability holds, then such founder effects in establishing new niches may yield a persistent bias towards increasing evolvability – even in the absence of adaptive competition between organisms.</p>
+<a id="article1.body1.sec3.p3" name="article1.body1.sec3.p3" class="link-target"></a><p>In this view increasing evolvability may simply be an inevitable result of open-ended exploration of a rich genetic space. Importantly, in nature this passive drive towards evolvability may have bootstrapped the evolution of the genotype-phenotype map itself. That is, the genotypic code and biological development themselves are encoded within organisms, and mutations that alter the structure of the genetic space or genotype-phenotype map may also lead to more or less phenotypic possibilities. In this way, the emergence of a complex evolvable genotypic code and biological development may have been bootstrapped from far simpler reproductive processes by similar non-adaptive mechanisms. In other words, there may be no selective benefit for development or a complex genetic system, which may do no more than potentiate greater phenotypic possibilities. In this way the story of biological evolution may be more fundamentally about an accelerating drive towards diversity than competition over limited resources.</p>
+</div>
+
+<div xmlns:plos="http://plos.org" id="section4" class="section toc-section"><a id="s4" name="s4" data-toc="s4" class="link-target" title="Methods"></a><h2>Methods</h2><a id="article1.body1.sec4.p1" name="article1.body1.sec4.p1" class="link-target"></a><p>The following sections provide more details on the experimental models used in the experiments in this paper. Note that all error bars in figures indicate 95% confidence intervals around the mean, and statistically significant differences are measured by Student's t-test with a p-value of 0.01 unless otherwise noted.</p>
+
+<div id="section1" class="section toc-section"><a id="s4a" name="s4a" class="link-target" title="Abstract Model Details"></a>
+<h3>Abstract Model Details</h3>
+<a id="article1.body1.sec4.sec1.p1" name="article1.body1.sec4.sec1.p1" class="link-target"></a><p>For both abstract models, at the beginning of the simulation each individual's evolvability was initialized to 0.05. At the beginning of each generation, an individual's niche is perturbed with a probability equivalent to its evolvability, and its evolvability itself is perturbed with a fixed probability (0.01). Changes in evolvability are drawn from a uniform distribution between −0.005 and 0.005.</p>
+<a id="article1.body1.sec4.sec1.p2" name="article1.body1.sec4.sec1.p2" class="link-target"></a><p>In the abstract passive drift model, the population consisted of 40,000 individuals that evolved solely due to genetic drift for 3,000 generations. In the model with limited capacity niches, niches were limited to 5 individuals each, and the population was initialized in the first generation with a single individual. Each individual has two offspring in the next generation, which results in geometric population growth except when the niche of an offspring is already filled. Evolution proceeds for 3,000 generations.</p>
+</div>
+
+<div id="section2" class="section toc-section"><a id="s4b" name="s4b" class="link-target" title="Evolved Robot Model Details"></a>
+<h3>Evolved Robot Model Details</h3>
+<a id="article1.body1.sec4.sec2.p1" name="article1.body1.sec4.sec2.p1" class="link-target"></a><p>In all experiments with evolved machines, a genome that maps to an ANN controls a simulated wheeled robot (<a href="#pone-0062186-g010">figure 10</a>) with rangefinder sensors in a maze environment (<a href="#pone-0062186-g011">figure 11</a>). The experimental setup follows prior precedent <a href="#pone.0062186-Lehman1" class="ref-tip">[14]</a>.</p>
+<a class="link-target" id="pone-0062186-g010" name="pone-0062186-g010"></a><div class="figure" data-doi="10.1371/journal.pone.0062186.g010"><div class="img-box"><a title="Click for larger image" href="article/figure/image?size=medium&amp;id=10.1371/journal.pone.0062186.g010" data-doi="10.1371/journal.pone.0062186" data-uri="10.1371/journal.pone.0062186.g010"><img src="article/figure/image?size=inline&amp;id=10.1371/journal.pone.0062186.g010" alt="thumbnail" class="thumbnail" loading="lazy"></a><div class="expand"></div></div><div class="figure-inline-download">
+          Download:
+          <ul><li><a href="article/figure/image?download&amp;size=large&amp;id=10.1371/journal.pone.0062186.g010"><div class="definition-label">PNG</div><div class="definition-description">larger image</div></a></li><li><a href="article/figure/image?download&amp;size=original&amp;id=10.1371/journal.pone.0062186.g010"><div class="definition-label">TIFF</div><div class="definition-description">original image</div></a></li></ul></div><div class="figcaption"><span>Figure 10. </span> Wheeled robot.</div><p class="caption_target"><a id="article1.body1.sec4.sec2.fig1.caption1.p1" name="article1.body1.sec4.sec2.fig1.caption1.p1" class="link-target"></a><p>The simulated mobile robot is shown that is used in the experiments with evolved machines. Rangefinder sensors allow the robot to perceive obstacles, and the motors controlling its wheels enable the robot to traverse its environment.</p>
+</p><p class="caption_object"><a href="https://doi.org/10.1371/journal.pone.0062186.g010">
+              https://doi.org/10.1371/journal.pone.0062186.g010</a></p></div><a class="link-target" id="pone-0062186-g011" name="pone-0062186-g011"></a><div class="figure" data-doi="10.1371/journal.pone.0062186.g011"><div class="img-box"><a title="Click for larger image" href="article/figure/image?size=medium&amp;id=10.1371/journal.pone.0062186.g011" data-doi="10.1371/journal.pone.0062186" data-uri="10.1371/journal.pone.0062186.g011"><img src="article/figure/image?size=inline&amp;id=10.1371/journal.pone.0062186.g011" alt="thumbnail" class="thumbnail" loading="lazy"></a><div class="expand"></div></div><div class="figure-inline-download">
+          Download:
+          <ul><li><a href="article/figure/image?download&amp;size=large&amp;id=10.1371/journal.pone.0062186.g011"><div class="definition-label">PNG</div><div class="definition-description">larger image</div></a></li><li><a href="article/figure/image?download&amp;size=original&amp;id=10.1371/journal.pone.0062186.g011"><div class="definition-label">TIFF</div><div class="definition-description">original image</div></a></li></ul></div><div class="figcaption"><span>Figure 11. </span> Maze environment.</div><p class="caption_target"><a id="article1.body1.sec4.sec2.fig2.caption1.p1" name="article1.body1.sec4.sec2.fig2.caption1.p1" class="link-target"></a><p>A top-down view of the maze is shown that robots navigate in the experiments with evolved machines. The circle indicates where a robot begins its trial in the maze, which lasts for 400 simulated timesteps.</p>
+</p><p class="caption_object"><a href="https://doi.org/10.1371/journal.pone.0062186.g011">
+              https://doi.org/10.1371/journal.pone.0062186.g011</a></p></div><a id="article1.body1.sec4.sec2.p2" name="article1.body1.sec4.sec2.p2" class="link-target"></a><p>A uniform 20×20 grid is superimposed over the maze for calculating robots' niches. A robot's behavioral niche (applied for measuring evolvability in both experiments, as well as to limit population growth in the limited niche capacity experiment) is determined by the grid square within which the robot ends at the termination of an evaluation.</p>
+<a id="article1.body1.sec4.sec2.p3" name="article1.body1.sec4.sec2.p3" class="link-target"></a><p>The fixed-topology ANN providing the basis for the enumerated genotypic space of ANNs is shown in <a href="#pone-0062186-g012">figure 12</a>. In particular, the genetic space spans variants of a fully-connected recurrent ANN with two input nodes, three hidden nodes, and two output nodes. In total, this kind of ANN has eighteen possible ANN connections that can either be disabled, excitatory, or inhibatory. Thus the space investigated with this model consists of 3<sup>18</sup>, or 38.7 million possible genotypes. The evolvability of each genome is calculated by first enumerating the genomes reachable from it by all possible single connection mutations, and then counting the unique number of behavioral niches that those genomes encode when evaluated in the maze navigation environment.</p>
+<a class="link-target" id="pone-0062186-g012" name="pone-0062186-g012"></a><div class="figure" data-doi="10.1371/journal.pone.0062186.g012"><div class="img-box"><a title="Click for larger image" href="article/figure/image?size=medium&amp;id=10.1371/journal.pone.0062186.g012" data-doi="10.1371/journal.pone.0062186" data-uri="10.1371/journal.pone.0062186.g012"><img src="article/figure/image?size=inline&amp;id=10.1371/journal.pone.0062186.g012" alt="thumbnail" class="thumbnail" loading="lazy"></a><div class="expand"></div></div><div class="figure-inline-download">
+          Download:
+          <ul><li><a href="article/figure/image?download&amp;size=large&amp;id=10.1371/journal.pone.0062186.g012"><div class="definition-label">PNG</div><div class="definition-description">larger image</div></a></li><li><a href="article/figure/image?download&amp;size=original&amp;id=10.1371/journal.pone.0062186.g012"><div class="definition-label">TIFF</div><div class="definition-description">original image</div></a></li></ul></div><div class="figcaption"><span>Figure 12. </span> Fixed-topology ANN.</div><p class="caption_target"><a id="article1.body1.sec4.sec2.fig3.caption1.p1" name="article1.body1.sec4.sec2.fig3.caption1.p1" class="link-target"></a><p>The figure illustrates the fully-connected recurrent ANN with 18 possible connections that serves as a space of possible controllers for robots embedded in a maze navigation environment. Each connection can either be excitatory (a weight of 1.0), inhibitory (<span class="inline-formula"><img src="article/file?type=thumbnail&amp;id=10.1371/journal.pone.0062186.e005" loading="lazy" class="inline-graphic"></span>) or neutral (0.0). The activation function in the ANN is a steepened sigmoid function <a href="#pone.0062186-Stanley1" class="ref-tip">[18]</a>. The ANN has three rangefinder sensor inputs, two hidden neurons, and two motor outputs.</p>
+</p><p class="caption_object"><a href="https://doi.org/10.1371/journal.pone.0062186.g012">
+              https://doi.org/10.1371/journal.pone.0062186.g012</a></p></div><a id="article1.body1.sec4.sec2.p4" name="article1.body1.sec4.sec2.p4" class="link-target"></a><p>The drifting model in the enumerated ANN space starts with two million genotypes initialized in each run to the same random starting genotype. The system then drifts for 250 generations.</p>
+</div>
+
+<div id="section3" class="section toc-section"><a id="s4c" name="s4c" class="link-target" title="Practical ER Model Details"></a>
+<h3>Practical ER Model Details</h3>
+<a id="article1.body1.sec4.sec3.p1" name="article1.body1.sec4.sec3.p1" class="link-target"></a><p>The practical ER model experiment uses the NEAT algorithm <a href="#pone.0062186-Stanley1" class="ref-tip">[18]</a>, which relaxes the constraints of fixed ANN topology and discrete connection weights. The ANN also provides a greater resolution of sensors, i.e. six rangefinder sensors instead of three. Note that the resolution was reduced in the fixed topology ANN models for combinatorial reasons. The initial NEAT network topology is shown in <a href="#pone-0062186-g013">figure 13</a>. All NEAT parameters are the same as those in Lehman and Stanley <a href="#pone.0062186-Lehman1" class="ref-tip">[14]</a>, which has the same experimental ER maze setup.</p>
+<a class="link-target" id="pone-0062186-g013" name="pone-0062186-g013"></a><div class="figure" data-doi="10.1371/journal.pone.0062186.g013"><div class="img-box"><a title="Click for larger image" href="article/figure/image?size=medium&amp;id=10.1371/journal.pone.0062186.g013" data-doi="10.1371/journal.pone.0062186" data-uri="10.1371/journal.pone.0062186.g013"><img src="article/figure/image?size=inline&amp;id=10.1371/journal.pone.0062186.g013" alt="thumbnail" class="thumbnail" loading="lazy"></a><div class="expand"></div></div><div class="figure-inline-download">
+          Download:
+          <ul><li><a href="article/figure/image?download&amp;size=large&amp;id=10.1371/journal.pone.0062186.g013"><div class="definition-label">PNG</div><div class="definition-description">larger image</div></a></li><li><a href="article/figure/image?download&amp;size=original&amp;id=10.1371/journal.pone.0062186.g013"><div class="definition-label">TIFF</div><div class="definition-description">original image</div></a></li></ul></div><div class="figcaption"><span>Figure 13. </span> NEAT ANN.</div><p class="caption_target"><a id="article1.body1.sec4.sec3.fig1.caption1.p1" name="article1.body1.sec4.sec3.fig1.caption1.p1" class="link-target"></a><p>The initial topology of the ANN in the practical ER model is shown. Topologies change during evolution from structural mutations that add new nodes and connections. In addition, unlike in the restricted ANN space, connection weights can vary continuously, i.e. weight mutations perturb connections with values drawn from the uniform distribution, and weights are capped between <span class="inline-formula"><img src="article/file?type=thumbnail&amp;id=10.1371/journal.pone.0062186.e006" loading="lazy" class="inline-graphic"></span> and 3.0.</p>
+</p><p class="caption_object"><a href="https://doi.org/10.1371/journal.pone.0062186.g013">
+              https://doi.org/10.1371/journal.pone.0062186.g013</a></p></div><a id="article1.body1.sec4.sec3.p2" name="article1.body1.sec4.sec3.p2" class="link-target"></a><p>Note that the evolvability of a genome is calculated similarly to how it is with the enumerated ANN space, i.e. by counting the unique number of niches encoded by genomes in its mutational neighborhood. However, because <em>all</em> reachable mutations cannot be feasibly enumerated in the practical model, instead 200 mutations of a given genome are randomly sampled to generate a reasonable <em>estimate</em> of its evolvability.</p>
+</div>
+</div>
+
+
+
+<div xmlns:plos="http://plos.org" class="contributions toc-section"><a id="authcontrib" name="authcontrib" data-toc="authcontrib" title="Author Contributions"></a><h2>Author Contributions</h2><p>Conceived and designed the experiments: JAL KOS. Performed the experiments: JAL. Analyzed the data: JAL KOS. Wrote the paper: JAL KOS.</p></div><div xmlns:plos="http://plos.org" class="toc-section"><a id="references" name="references" class="link-target" data-toc="references" title="References"></a><h2>References</h2><ol class="references"><li id="ref1"><span class="order">1.
+            </span><a name="pone.0062186-Dawkins1" id="pone.0062186-Dawkins1" class="link-target"></a>Dawkins R (2003) The evolution of evolvability. On Growth, Form and Computers: 239–255. <ul class="find-nolinks"></ul></li><li id="ref2"><span class="order">2.
+            </span><a name="pone.0062186-Earl1" id="pone.0062186-Earl1" class="link-target"></a>Earl D, Deem M (2004) Evolvability is a selectable trait. Proceedings of the National Academy of Sciences of the United States of America 101: 11531–11536. <ul class="reflinks"><li><a href="#" data-author="Earl" data-cit="EarlD%2C%20DeemM%20%282004%29%20Evolvability%20is%20a%20selectable%20trait.%20Proceedings%20of%20the%20National%20Academy%20of%20Sciences%20of%20the%20United%20States%20of%20America%20101%3A%2011531%E2%80%9311536." data-title="Evolvability%20is%20a%20selectable%20trait" target="_new" title="Go to article in CrossRef">
+                      View Article
+                    </a></li><li><a href="http://scholar.google.com/scholar?q=Evolvability+is+a+selectable+trait+Earl+2004" target="_new" title="Go to article in Google Scholar">
+                      Google Scholar
+                    </a></li></ul></li><li id="ref3"><span class="order">3.
+            </span><a name="pone.0062186-Kirschner1" id="pone.0062186-Kirschner1" class="link-target"></a>Kirschner M, Gerhart J (1998) Evolvability. Proceedings of the National Academy of Sciences of the United States of America 95: 8420. <ul class="reflinks"><li><a href="#" data-author="Kirschner" data-cit="KirschnerM%2C%20GerhartJ%20%281998%29%20Evolvability.%20Proceedings%20of%20the%20National%20Academy%20of%20Sciences%20of%20the%20United%20States%20of%20America%2095%3A%208420." data-title="Evolvability" target="_new" title="Go to article in CrossRef">
+                      View Article
+                    </a></li><li><a href="http://scholar.google.com/scholar?q=Evolvability+Kirschner+1998" target="_new" title="Go to article in Google Scholar">
+                      Google Scholar
+                    </a></li></ul></li><li id="ref4"><span class="order">4.
+            </span><a name="pone.0062186-Wagner1" id="pone.0062186-Wagner1" class="link-target"></a>Wagner G, Altenberg L (1996) Complex adaptations and the evolution of evolvability. Evolution 50: 967–976. <ul class="reflinks"><li><a href="#" data-author="Wagner" data-cit="WagnerG%2C%20AltenbergL%20%281996%29%20Complex%20adaptations%20and%20the%20evolution%20of%20evolvability.%20Evolution%2050%3A%20967%E2%80%93976." data-title="Complex%20adaptations%20and%20the%20evolution%20of%20evolvability" target="_new" title="Go to article in CrossRef">
+                      View Article
+                    </a></li><li><a href="http://scholar.google.com/scholar?q=Complex+adaptations+and+the+evolution+of+evolvability+Wagner+1996" target="_new" title="Go to article in Google Scholar">
+                      Google Scholar
+                    </a></li></ul></li><li id="ref5"><span class="order">5.
+            </span><a name="pone.0062186-Pigliucci1" id="pone.0062186-Pigliucci1" class="link-target"></a>Pigliucci M (2008) Is evolvability evolvable? Nature Reviews Genetics 9: 75–82. <ul class="reflinks"><li><a href="#" data-author="Pigliucci" data-cit="PigliucciM%20%282008%29%20Is%20evolvability%20evolvable%3F%20Nature%20Reviews%20Genetics%209%3A%2075%E2%80%9382." data-title="Is%20evolvability%20evolvable%3F" target="_new" title="Go to article in CrossRef">
+                      View Article
+                    </a></li><li><a href="http://scholar.google.com/scholar?q=Is+evolvability+evolvable%3F+Pigliucci+2008" target="_new" title="Go to article in Google Scholar">
+                      Google Scholar
+                    </a></li></ul></li><li id="ref6"><span class="order">6.
+            </span><a name="pone.0062186-Brookfield1" id="pone.0062186-Brookfield1" class="link-target"></a>Brookfield J (2001) Evolution: The evolvability enigma. Current Biology 11: R106–R108. <ul class="reflinks"><li><a href="#" data-author="Brookfield" data-cit="BrookfieldJ%20%282001%29%20Evolution%3A%20The%20evolvability%20enigma.%20Current%20Biology%2011%3A%20R106%E2%80%93R108." data-title="Evolution%3A%20The%20evolvability%20enigma" target="_new" title="Go to article in CrossRef">
+                      View Article
+                    </a></li><li><a href="http://scholar.google.com/scholar?q=Evolution%3A+The+evolvability+enigma+Brookfield+2001" target="_new" title="Go to article in Google Scholar">
+                      Google Scholar
+                    </a></li></ul></li><li id="ref7"><span class="order">7.
+            </span><a name="pone.0062186-Wagner2" id="pone.0062186-Wagner2" class="link-target"></a>Wagner A (2008) Robustness and evolvability: a paradox resolved. Proceedings of the Royal Society B: Biological Sciences 275: 91–100. <ul class="reflinks"><li><a href="#" data-author="Wagner" data-cit="WagnerA%20%282008%29%20Robustness%20and%20evolvability%3A%20a%20paradox%20resolved.%20Proceedings%20of%20the%20Royal%20Society%20B%3A%20Biological%20Sciences%20275%3A%2091%E2%80%93100." data-title="Robustness%20and%20evolvability%3A%20a%20paradox%20resolved" target="_new" title="Go to article in CrossRef">
+                      View Article
+                    </a></li><li><a href="http://scholar.google.com/scholar?q=Robustness+and+evolvability%3A+a+paradox+resolved+Wagner+2008" target="_new" title="Go to article in Google Scholar">
+                      Google Scholar
+                    </a></li></ul></li><li id="ref8"><span class="order">8.
+            </span><a name="pone.0062186-Bloom1" id="pone.0062186-Bloom1" class="link-target"></a>Bloom J, Labthavikul S, Otey C, Arnold F (2006) Protein stability promotes evolvability. Proceedings of the National Academy of Sciences 103: 5869–5874. <ul class="reflinks"><li><a href="#" data-author="Bloom" data-cit="BloomJ%2C%20LabthavikulS%2C%20OteyC%2C%20ArnoldF%20%282006%29%20Protein%20stability%20promotes%20evolvability.%20Proceedings%20of%20the%20National%20Academy%20of%20Sciences%20103%3A%205869%E2%80%935874." data-title="Protein%20stability%20promotes%20evolvability" target="_new" title="Go to article in CrossRef">
+                      View Article
+                    </a></li><li><a href="http://scholar.google.com/scholar?q=Protein+stability+promotes+evolvability+Bloom+2006" target="_new" title="Go to article in Google Scholar">
+                      Google Scholar
+                    </a></li></ul></li><li id="ref9"><span class="order">9.
+            </span><a name="pone.0062186-Ancel1" id="pone.0062186-Ancel1" class="link-target"></a>Ancel LW, Fontana W (2000) Plasticity, evolvability, and modularity in rna. Journal of Experimental Zoology 288: 242–283. <ul class="reflinks"><li><a href="#" data-author="Ancel" data-cit="AncelLW%2C%20FontanaW%20%282000%29%20Plasticity%2C%20evolvability%2C%20and%20modularity%20in%20rna.%20Journal%20of%20Experimental%20Zoology%20288%3A%20242%E2%80%93283." data-title="Plasticity%2C%20evolvability%2C%20and%20modularity%20in%20rna" target="_new" title="Go to article in CrossRef">
+                      View Article
+                    </a></li><li><a href="http://scholar.google.com/scholar?q=Plasticity%2C+evolvability%2C+and+modularity+in+rna+Ancel+2000" target="_new" title="Go to article in Google Scholar">
+                      Google Scholar
+                    </a></li></ul></li><li id="ref10"><span class="order">10.
+            </span><a name="pone.0062186-Crombach1" id="pone.0062186-Crombach1" class="link-target"></a>Crombach A, Hogeweg P (2008) Evolution of evolvability in gene regulatory networks. PLoS computational biology 4: e1000112. <ul class="reflinks"><li><a href="#" data-author="Crombach" data-cit="CrombachA%2C%20HogewegP%20%282008%29%20Evolution%20of%20evolvability%20in%20gene%20regulatory%20networks.%20PLoS%20computational%20biology%204%3A%20e1000112." data-title="Evolution%20of%20evolvability%20in%20gene%20regulatory%20networks" target="_new" title="Go to article in CrossRef">
+                      View Article
+                    </a></li><li><a href="http://scholar.google.com/scholar?q=Evolution+of+evolvability+in+gene+regulatory+networks+Crombach+2008" target="_new" title="Go to article in Google Scholar">
+                      Google Scholar
+                    </a></li></ul></li><li id="ref11"><span class="order">11.
+            </span><a name="pone.0062186-DichtelDanjoy1" id="pone.0062186-DichtelDanjoy1" class="link-target"></a>Dichtel-Danjoy M, Félix M (2004) Phenotypic neighborhood and micro-evolvability. Trends in Genetics 20: 268–276. <ul class="reflinks"><li><a href="#" data-author="Dichtel-Danjoy" data-cit="Dichtel-DanjoyM%2C%20F%C3%A9lixM%20%282004%29%20Phenotypic%20neighborhood%20and%20micro-evolvability.%20Trends%20in%20Genetics%2020%3A%20268%E2%80%93276." data-title="Phenotypic%20neighborhood%20and%20micro-evolvability" target="_new" title="Go to article in CrossRef">
+                      View Article
+                    </a></li><li><a href="http://scholar.google.com/scholar?q=Phenotypic+neighborhood+and+micro-evolvability+Dichtel-Danjoy+2004" target="_new" title="Go to article in Google Scholar">
+                      Google Scholar
+                    </a></li></ul></li><li id="ref12"><span class="order">12.
+            </span><a name="pone.0062186-Lenski1" id="pone.0062186-Lenski1" class="link-target"></a>Lenski R, Ofria C, Pennock R, Adami C (2003) The evolutionary origin of complex. Nature. <ul class="find-nolinks"></ul></li><li id="ref13"><span class="order">13.
+            </span><a name="pone.0062186-Nolfi1" id="pone.0062186-Nolfi1" class="link-target"></a>Nolfi S, Floreano D (2000) Evolutionary Robotics. Cambridge: MIT Press. <ul class="find-nolinks"></ul></li><li id="ref14"><span class="order">14.
+            </span><a name="pone.0062186-Lehman1" id="pone.0062186-Lehman1" class="link-target"></a>Lehman J, Stanley KO (2011) Abandoning objectives: Evolution through the search for novelty alone. Evol Comp 19: 189–223. <ul class="reflinks"><li><a href="#" data-author="Lehman" data-cit="LehmanJ%2C%20StanleyKO%20%282011%29%20Abandoning%20objectives%3A%20Evolution%20through%20the%20search%20for%20novelty%20alone.%20Evol%20Comp%2019%3A%20189%E2%80%93223." data-title="Abandoning%20objectives%3A%20Evolution%20through%20the%20search%20for%20novelty%20alone" target="_new" title="Go to article in CrossRef">
+                      View Article
+                    </a></li><li><a href="http://scholar.google.com/scholar?q=Abandoning+objectives%3A+Evolution+through+the+search+for+novelty+alone+Lehman+2011" target="_new" title="Go to article in Google Scholar">
+                      Google Scholar
+                    </a></li></ul></li><li id="ref15"><span class="order">15.
+            </span><a name="pone.0062186-Mouret1" id="pone.0062186-Mouret1" class="link-target"></a>Mouret JB, Doncieux S (2012) Encouraging behavioral diversity in evolutionary robotics: an empirical study. Evolutionary Computation 20: 91–133. <ul class="reflinks"><li><a href="#" data-author="Mouret" data-cit="MouretJB%2C%20DoncieuxS%20%282012%29%20Encouraging%20behavioral%20diversity%20in%20evolutionary%20robotics%3A%20an%20empirical%20study.%20Evolutionary%20Computation%2020%3A%2091%E2%80%93133." data-title="Encouraging%20behavioral%20diversity%20in%20evolutionary%20robotics%3A%20an%20empirical%20study" target="_new" title="Go to article in CrossRef">
+                      View Article
+                    </a></li><li><a href="http://scholar.google.com/scholar?q=Encouraging+behavioral+diversity+in+evolutionary+robotics%3A+an+empirical+study+Mouret+2012" target="_new" title="Go to article in Google Scholar">
+                      Google Scholar
+                    </a></li></ul></li><li id="ref16"><span class="order">16.
+            </span><a name="pone.0062186-Risi1" id="pone.0062186-Risi1" class="link-target"></a>Risi S, Hughes C, Stanley K (2010) Evolving plastic neural networks with novelty search. Adaptive Behavior. <ul class="find-nolinks"></ul></li><li id="ref17"><span class="order">17.
+            </span><a name="pone.0062186-Lehman2" id="pone.0062186-Lehman2" class="link-target"></a>Lehman J, Stanley KO (2011) Improving evolvability through novelty search and self-adaptation. In: Evolutionary Computation (CEC), 2011 IEEE Congress on. IEEE, 2693–2700. <ul class="find-nolinks"></ul></li><li id="ref18"><span class="order">18.
+            </span><a name="pone.0062186-Stanley1" id="pone.0062186-Stanley1" class="link-target"></a>Stanley KO, Miikkulainen R (2002) Evolving neural networks through augmenting topologies. Evolutionary Computation 10: 99–127. <ul class="reflinks"><li><a href="#" data-author="Stanley" data-cit="StanleyKO%2C%20MiikkulainenR%20%282002%29%20Evolving%20neural%20networks%20through%20augmenting%20topologies.%20Evolutionary%20Computation%2010%3A%2099%E2%80%93127." data-title="Evolving%20neural%20networks%20through%20augmenting%20topologies" target="_new" title="Go to article in CrossRef">
+                      View Article
+                    </a></li><li><a href="http://scholar.google.com/scholar?q=Evolving+neural+networks+through+augmenting+topologies+Stanley+2002" target="_new" title="Go to article in Google Scholar">
+                      Google Scholar
+                    </a></li></ul></li></ol></div>
+
+
+
+          <div class="ref-tooltip">
+            <div class="ref_tooltip-content">
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </section>
+  <aside class="article-aside">
+
+
+<!--[if IE 9]>
+<style>
+.dload-xml {margin-top: 38px}
+</style>
+<![endif]-->
+<div class="dload-menu">
+  <div class="dload-pdf">
+    <a href="/plosone/article/file?id=10.1371/journal.pone.0062186&type=printable"
+       id="downloadPdf" target="_blank">Download PDF</a>
+  </div>
+  <div data-js-tooltip-hover="trigger" class="dload-hover">&nbsp;
+    <ul class="dload-xml" data-js-tooltip-hover="target">
+      <li><a href="/plosone/article/citation?id=10.1371/journal.pone.0062186"
+             id="downloadCitation">Citation</a></li>
+      <li><a href="/plosone/article/file?id=10.1371/journal.pone.0062186&type=manuscript"
+             id="downloadXml">XML</a>
+      </li>
+    </ul>
+
+  </div>
+</div>
+
+<div class="aside-container">
+  <div class="print-article" id="printArticle" data-js-tooltip-hover="trigger">
+    <a href="#" onclick="window.print(); return false;" class="preventDefault" id="printBrowser">Print</a>
+  </div>
+  <div class="share-article" id="shareArticle" data-js-tooltip-hover="trigger">
+    Share
+    <ul data-js-tooltip-hover="target" class="share-options" id="share-options">
+
+      <li><a href="https://www.reddit.com/submit?url=https%3A%2F%2Fdx.plos.org%2F10.1371%2Fjournal.pone.0062186" id="shareReddit" target="_blank" title="Submit to Reddit"><img src="/resource/img/icon.reddit.16.png" width="16" height="16" alt="Reddit">Reddit</a></li>
+
+      <li><a href="https://www.facebook.com/share.php?u=https%3A%2F%2Fdx.plos.org%2F10.1371%2Fjournal.pone.0062186&t=Evolvability Is Inevitable: Increasing Evolvability without the Pressure to Adapt" id="shareFacebook" target="_blank" title="Share on Facebook"><img src="/resource/img/icon.fb.16.png" width="16" height="16" alt="Facebook">Facebook</a></li>
+
+      <li><a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fdx.plos.org%2F10.1371%2Fjournal.pone.0062186&title=Evolvability Is Inevitable: Increasing Evolvability without the Pressure to Adapt&summary=Checkout this article I found at PLOS"  id="shareLinkedIn" target="_blank" title="Add to LinkedIn"><img src="/resource/img/icon.linkedin.16.png" width="16" height="16" alt="LinkedIn">LinkedIn</a></li>
+
+      <li><a href="https://www.mendeley.com/import/?url=https%3A%2F%2Fdx.plos.org%2F10.1371%2Fjournal.pone.0062186"  id="shareMendeley" target="_blank" title="Add to Mendeley"><img src="/resource/img/icon.mendeley.16.png" width="16" height="16" alt="Mendeley">Mendeley</a></li>
+
+      <li><a href="https://bsky.app/intent/compose?text=Checkout%20this%20article%20I%20found%20at%20PLOS:%20https%3A%2F%2Fdx.plos.org%2F10.1371%2Fjournal.pone.0062186"  id="shareBluesky" target="_blank" title="Share on Bluesky"><img src="/resource/img/icon.bluesky.light.png" width="16" height="16" alt="Bluesky">Bluesky</a></li>
+
+      <li><a href="mailto:?subject=Evolvability Is Inevitable: Increasing Evolvability without the Pressure to Adapt&body=I%20thought%20you%20would%20find%20this%20article%20interesting.%20From%20PLOS ONE:%20https%3A%2F%2Fdx.plos.org%2F10.1371%2Fjournal.pone.0062186"  id="shareEmail" rel="noreferrer" aria-label="Email"><img src="/resource/img/icon.email.16.png" width="16" height="16" alt="Email">Email</a></li>
+    </ul>
+  </div>
+</div>
+
+
+     <!-- Crossmark 2.0 widget -->
+    <script src="https://crossmark-cdn.crossref.org/widget/v2.0/widget.js"></script>
+    <a aria-label="Check for updates via CrossMark" data-target="crossmark">
+      <img alt="Check for updates via CrossMark" width="150" src="https://crossmark-cdn.crossref.org/widget/v2.0/logos/CROSSMARK_BW_horizontal.svg">
+    </a>
+    <!-- End Crossmark 2.0 widget -->
+
+
+  <div class="related-articles-container">
+    <h3>
+Related PLOS Articles
+</h3>
+    <ul class="related-articles">
+        <li>
+          <b>
+has CORRECTION          </b>
+        </li>
+            <li>
+<?xml version="1.0" encoding="UTF-8"?>Correction: Evolvability Is Inevitable: Increasing Evolvability without the Pressure to Adapt              <ul class="related-article-links">
+                <li class="related-article-link-page">
+                  <a href="/plosone/article?id=10.1371/annotation/f4c5a0f3-cb53-4c05-a84c-f0aead483b77">View Page</a>
+                </li>
+                <!--  Annotations and issue images do not have printables. They can be filtered by doi. -->
+              </ul>
+            </li>
+    </ul>
+  </div>
+
+<div class="aside-container collections-aside-container"><!-- React Magic --></div>
+
+
+<div class="skyscraper-container">
+  <div class="title">Advertisement</div>
+<!-- DoubleClick Ad Zone -->
+  <div class='advertisement' id='div-gpt-ad-1458247671871-1' style='width:160px; height:600px;'>
+    <script type='text/javascript'>
+      googletag.cmd.push(function() { googletag.display('div-gpt-ad-1458247671871-1'); });
+    </script>
+  </div>
+</div>
+
+
+
+
+<div class="subject-areas-container">
+  <h3>Subject Areas <div id="subjInfo">?</div>
+    <div id="subjInfoText">
+      <p>For more information about PLOS Subject Areas, click
+        <a href="https://github.com/PLOS/plos-thesaurus/blob/master/README.md" target="_blank" title="Link opens in new window">here</a>.</p>
+      <span class="inline-intro">We want your feedback.</span> Do these Subject Areas make sense for this article? Click the target next to the incorrect Subject Area and let us know. Thanks for your help!
+
+
+    </div>
+  </h3>
+  <ul id="subjectList">
+      <li>
+              <a class="taxo-term" title="Search for articles about Robots"
+                 href="/plosone/search?filterSubjects=Robots&filterJournals=PLoSONE&q=">Robots</a>
+        <span class="taxo-flag">&nbsp;</span>
+        <div class="taxo-tooltip" data-categoryname="Robots"><p class="taxo-explain">Is the Subject Area <strong>"Robots"</strong> applicable to this article?
+          <button id="noFlag" data-action="remove">Yes</button>
+          <button id="flagIt" value="flagno" data-action="add">No</button></p>
+          <p class="taxo-confirm">Thanks for your feedback.</p>
+        </div>
+      </li>
+      <li>
+              <a class="taxo-term" title="Search for articles about Organismal evolution"
+                 href="/plosone/search?filterSubjects=Organismal+evolution&filterJournals=PLoSONE&q=">Organismal evolution</a>
+        <span class="taxo-flag">&nbsp;</span>
+        <div class="taxo-tooltip" data-categoryname="Organismal evolution"><p class="taxo-explain">Is the Subject Area <strong>"Organismal evolution"</strong> applicable to this article?
+          <button id="noFlag" data-action="remove">Yes</button>
+          <button id="flagIt" value="flagno" data-action="add">No</button></p>
+          <p class="taxo-confirm">Thanks for your feedback.</p>
+        </div>
+      </li>
+      <li>
+              <a class="taxo-term" title="Search for articles about Behavior"
+                 href="/plosone/search?filterSubjects=Behavior&filterJournals=PLoSONE&q=">Behavior</a>
+        <span class="taxo-flag">&nbsp;</span>
+        <div class="taxo-tooltip" data-categoryname="Behavior"><p class="taxo-explain">Is the Subject Area <strong>"Behavior"</strong> applicable to this article?
+          <button id="noFlag" data-action="remove">Yes</button>
+          <button id="flagIt" value="flagno" data-action="add">No</button></p>
+          <p class="taxo-confirm">Thanks for your feedback.</p>
+        </div>
+      </li>
+      <li>
+              <a class="taxo-term" title="Search for articles about Population growth"
+                 href="/plosone/search?filterSubjects=Population+growth&filterJournals=PLoSONE&q=">Population growth</a>
+        <span class="taxo-flag">&nbsp;</span>
+        <div class="taxo-tooltip" data-categoryname="Population growth"><p class="taxo-explain">Is the Subject Area <strong>"Population growth"</strong> applicable to this article?
+          <button id="noFlag" data-action="remove">Yes</button>
+          <button id="flagIt" value="flagno" data-action="add">No</button></p>
+          <p class="taxo-confirm">Thanks for your feedback.</p>
+        </div>
+      </li>
+      <li>
+              <a class="taxo-term" title="Search for articles about Robotic behavior"
+                 href="/plosone/search?filterSubjects=Robotic+behavior&filterJournals=PLoSONE&q=">Robotic behavior</a>
+        <span class="taxo-flag">&nbsp;</span>
+        <div class="taxo-tooltip" data-categoryname="Robotic behavior"><p class="taxo-explain">Is the Subject Area <strong>"Robotic behavior"</strong> applicable to this article?
+          <button id="noFlag" data-action="remove">Yes</button>
+          <button id="flagIt" value="flagno" data-action="add">No</button></p>
+          <p class="taxo-confirm">Thanks for your feedback.</p>
+        </div>
+      </li>
+      <li>
+              <a class="taxo-term" title="Search for articles about Genetic drift"
+                 href="/plosone/search?filterSubjects=Genetic+drift&filterJournals=PLoSONE&q=">Genetic drift</a>
+        <span class="taxo-flag">&nbsp;</span>
+        <div class="taxo-tooltip" data-categoryname="Genetic drift"><p class="taxo-explain">Is the Subject Area <strong>"Genetic drift"</strong> applicable to this article?
+          <button id="noFlag" data-action="remove">Yes</button>
+          <button id="flagIt" value="flagno" data-action="add">No</button></p>
+          <p class="taxo-confirm">Thanks for your feedback.</p>
+        </div>
+      </li>
+      <li>
+              <a class="taxo-term" title="Search for articles about Genomics"
+                 href="/plosone/search?filterSubjects=Genomics&filterJournals=PLoSONE&q=">Genomics</a>
+        <span class="taxo-flag">&nbsp;</span>
+        <div class="taxo-tooltip" data-categoryname="Genomics"><p class="taxo-explain">Is the Subject Area <strong>"Genomics"</strong> applicable to this article?
+          <button id="noFlag" data-action="remove">Yes</button>
+          <button id="flagIt" value="flagno" data-action="add">No</button></p>
+          <p class="taxo-confirm">Thanks for your feedback.</p>
+        </div>
+      </li>
+      <li>
+              <a class="taxo-term" title="Search for articles about Artificial neural networks"
+                 href="/plosone/search?filterSubjects=Artificial+neural+networks&filterJournals=PLoSONE&q=">Artificial neural networks</a>
+        <span class="taxo-flag">&nbsp;</span>
+        <div class="taxo-tooltip" data-categoryname="Artificial neural networks"><p class="taxo-explain">Is the Subject Area <strong>"Artificial neural networks"</strong> applicable to this article?
+          <button id="noFlag" data-action="remove">Yes</button>
+          <button id="flagIt" value="flagno" data-action="add">No</button></p>
+          <p class="taxo-confirm">Thanks for your feedback.</p>
+        </div>
+      </li>
+  </ul>
+</div>
+<div id="subjectErrors"></div>
+  </aside>
+</div>
+
+
+
+
+</main>
+<footer id="pageftr">
+  <div class="row">
+    <div class="block x-small">
+
+<ul class="nav nav-secondary">
+    <li class="ftr-header"><a href="https://plos.org/our-journals/">Publications</a></li>
+    <li><a href="/agingandhealth/" id="ftr-age">PLOS Aging and Health</a></li>
+    <li><a href="/plosbiology/" id="ftr-bio">PLOS Biology</a></li>
+    <li><a href="/climate/" id="ftr-climate">PLOS Climate</a></li>
+    <li><a href="/complexsystems/" id="ftr-complex-systems">PLOS Complex Systems</a></li>
+    <li><a href="/ploscompbiol/" id="ftr-compbio">PLOS Computational Biology</a></li>
+    <li><a href="/digitalhealth/" id="ftr-digitalhealth">PLOS Digital Health</a></li>
+    <li><a href="/ecosystems/" id="ftr-eco">PLOS Ecosystems</a></li>
+    <li><a href="/plosgenetics/" id="ftr-gen">PLOS Genetics</a></li>
+  </ul>
+    </div>
+    <div class="block x-small">
+
+<ul class="nav nav-secondary">
+    <li class="ftr-header">&nbsp;</li>
+    <li><a href="/globalpublichealth/" id="ftr-globalpublichealth">PLOS Global Public Health</a></li>
+    <li><a href="/plosmedicine/" id="ftr-med">PLOS Medicine</a></li>
+    <li><a href="/mentalhealth/" id="ftr-mental-health">PLOS Mental Health</a></li>
+    <li><a href="/plosntds/" id="ftr-ntds">PLOS Neglected Tropical Diseases</a></li>
+    <li><a href="/plosone/" id="ftr-one">PLOS One</a></li>
+    <li><a href="/plospathogens/" id="ftr-path">PLOS Pathogens</a></li>
+    <li><a href="/sustainabilitytransformation/" id="ftr-sustainabilitytransformation">PLOS Sustainability and Transformation</a></li>
+    <li><a href="/water/" id="ftr-water">PLOS Water</a></li>
+</ul>
+    </div>
+    <div class="block xx-small">	
+
+
+<ul class="nav nav-tertiary">
+  <li>
+    <a href="https://plos.org" id="ftr-home">Home</a>
+  </li>
+  <li>
+    <a href="https://blogs.plos.org" id="ftr-blog">Blogs</a>
+  </li>
+  <li>
+    <a href="https://collections.plos.org/" id="ftr-collections">Collections</a>
+  </li>
+  <li>
+    <a href="mailto:customercare@plos.org" id="ftr-feedback">Give feedback</a>
+  </li>
+  <li>
+    <a href="/plosone/lockss-manifest" id="ftr-lockss">LOCKSS</a>
+  </li>
+</ul>
+    </div>
+    <div class="block xx-small">
+
+<ul class="nav nav-primary">
+  <li><a href="https://plos.org/privacy-policy" id="ftr-privacy">Privacy Policy</a></li>
+  <li><a href="https://plos.org/terms-of-use" id="ftr-terms">Terms of Use</a></li>
+  <li><a href="https://plos.org/advertise/" id="ftr-advertise">Advertise</a></li>
+  <li><a href="https://plos.org/media-inquiries" id="ftr-media">Media Inquiries</a></li>
+  <li><a href="https://plos.org/contact" id="ftr-contact">Contact</a></li>
+</ul>
+    </div>
+  </div>
+  <div class="row">
+    <p>
+
+<img src="/resource/img/logo-plos-footer.png" alt="PLOS" class="logo-footer"/>
+
+
+<span class="footer-non-profit-statement">PLOS is a nonprofit 501(c)(3) corporation, #C2354500, based in California, US</span>    </p>
+    <div class="block">
+    </div>
+  </div>
+ 
+<script src="/resource/js/global.js" type="text/javascript"></script>
+</footer>
+
+
+
+
+<script type="text/javascript">
+  var ArticleData = {
+    doi: '10.1371/journal.pone.0062186',
+    title: '<article-title xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">Evolvability Is Inevitable: Increasing Evolvability without the Pressure to Adapt<\/article-title>',
+    date: 'Apr 24, 2013'
+  };
+</script>
+<script src="/resource/js/components/show_onscroll.js" type="text/javascript"></script>
+<script src="/resource/js/components/pagination.js" type="text/javascript"></script>
+<script src="/resource/js/vendor/spin.js" type="text/javascript"></script>
+<script src="/resource/js/pages/article.js" type="text/javascript"></script>
+<script src="/resource/js/pages/article_references.js" type="text/javascript"></script>
+<script src="/resource/js/pages/article_sidebar.js" type="text/javascript"></script>
+<script src="/resource/js/vendor/foundation/foundation.dropdown.js" type="text/javascript"></script>
+  <script src="/resource/js/components/table_open.js" type="text/javascript"></script>
+
+        <script src="/resource/js/components/figshare.js" type="text/javascript"></script>
+  <script src="/resource/js/vendor/jquery.panzoom.min.js" type="text/javascript"></script>
+  <script src="/resource/js/vendor/jquery.mousewheel.js" type="text/javascript"></script>
+
+  <script src="/resource/js/components/lightbox.js" type="text/javascript"></script>
+
+  <script src="/resource/js/pages/article_body.js" type="text/javascript"></script>
+
+
+<!-- This file should be loaded before the renderJs, to avoid conflicts with the FigShare, that implements the MathJax also. -->
+
+<!--  mathjax configuration options  -->
+<!-- more can be found at http://docs.mathjax.org/en/latest/ -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  "HTML-CSS": {
+    scale: 100,
+    availableFonts: ["STIX","TeX"],
+    preferredFont: "STIX",
+    webFont: "STIX-Web",
+    linebreaks: { automatic: false }
+  },
+  jax: ["input/MathML", "output/HTML-CSS"]
+});
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=MML_HTMLorMML"></script>
+
+<div class="reveal-modal-bg"></div>
+</body>
+</html>

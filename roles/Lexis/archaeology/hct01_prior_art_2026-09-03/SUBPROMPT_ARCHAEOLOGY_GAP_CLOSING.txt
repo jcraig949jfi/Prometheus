@@ -1,0 +1,28 @@
+SUBORDINATE PROMPT, issued by Lexis 2026-09-03, delegated to a general-purpose
+subagent. Preserved verbatim per directive section 9. Purpose: close the
+remaining archaeology gaps on the five required targets and on three gaps that
+the HC-R01 lane recorded as unresolved.
+---8<--- BODY ---8<---
+ARCHAEOLOGY GAP CLOSING. Work in F:\Prometheus. Download into F:\Prometheus\roles\Lexis\archaeology\hct01_prior_art_2026-09-03\recovered\ (create it). Use curl via Bash (Git Bash, POSIX), WebSearch, WebFetch. Report ONLY what you actually retrieved and verified on disk. For every file: filename, source URL, sha256, bytes. For every failure: exact URLs tried and the HTTP status or reason.
+
+CONTEXT: a previous pass recovered a paper's main article but missed its 3MB supplementary Text S1, and then wrongly concluded the paper lacked a key measurement. The standing rule now is: "recovered the paper" does NOT mean "recovered the record". Your job is to close the remaining gaps.
+
+ALREADY RECOVERED, DO NOT RE-DOWNLOAD (in F:\Prometheus\ergon\kouvaris2017\original\ and F:\Prometheus\elenchus\kashtan-alon-mvg\sources\):
+Kouvaris 2017 PLOS CB article XML+PDF+S1 Appendix; its arXiv preprint 1508.06854 + LaTeX source; Kouvaris PhD thesis (Soton 423467); Kounios MPhil thesis (Soton 453036); Kounios arXiv 1612.05955 PDF + LaTeX source; three Kouvaris GitHub code tarballs; Parter et al. 2008 PLOS CB article PDF+XML AND its Text S1 .doc; Kashtan 2005 and 2007 PMC HTML; Tiso 2024 Groningen thesis PDF; Rago 2019; Watson 2016 Evolutionary Connectionism; Kovacs 2020.
+
+YOUR TARGETS, in priority order:
+
+1. PETAK ET AL. 2025, PNAS, "The variability of evolvability: Properties of dynamic fitness landscapes determine how phenotypic variation evolves" (PMC12745803). We have only the Europe PMC full-text XML. GET: (a) the SUPPLEMENTARY / SI Appendix PDF (the paper cites "Appendix 01 (PDF)"); (b) any DATA or CODE availability - look for a GitHub/Zenodo/Dryad/OSF link in the Data Availability statement and if found, download or snapshot it; (c) the publisher PDF. Then answer from the SI, quoting exactly: does the paper measure the offspring/mutational distribution at MORE THAN ONE time point per run (longitudinally within a run)? Is there any arm where a VARIATION OPERATOR or the genotype-phenotype MAP is changed, as opposed to only the environment/fitness landscape being static vs variable? Is the offspring measurement done in ALL arms including the static-environment control?
+
+2. TISO 2024, University of Groningen PhD thesis, chapter 3 "The evolution of mutational transformers". We have the thesis PDF. GET: (a) whether chapter 3 has been PUBLISHED anywhere since (search for the chapter title, and for the author with co-authors - likely supervisor Franjo Weissing or similar at Groningen; check bioRxiv, PLOS, Journal of Evolutionary Biology, Evolution, eLife); (b) any code/data repository for the thesis or that chapter (check the thesis front matter and back matter for a data-availability statement, and search Zenodo/GitHub/Dataverse/DANS EASY); (c) the thesis's own supplementary files on pure.rug.nl if separate from the main PDF. Report the author's full name and the exact chapter-3 figure captions for figures showing mutational-effect distributions.
+
+3. WATSON, WAGNER, PAVLICEV, WEINREICH & MILLS 2014, "The Evolution of Phenotypic Correlations and 'Developmental Memory'", Evolution 68(4):1124-1138, doi 10.1111/evo.12337. PAYWALLED at Wiley; three routes already failed (Wiley pdfdirect 403, eprints.soton.ac.uk/361183 404, OUP 403). TRY HARDER: PMC, Europe PMC, ResearchGate, academia.edu, Semantic Scholar open-access PDF field, CORE.ac.uk, OpenAIRE, Unpaywall API (https://api.unpaywall.org/v2/10.1111/evo.12337?email=jcraig949@gmail.com), the Soton ePrints SEARCH (not a guessed ID), Yale/Wagner lab page, Pavlicev's page, and any SI files. Also get its SUPPORTING INFORMATION if any.
+
+4. THREE GAPS another lane recorded as unresolved - try to close them:
+   (a) Payne & Wagner 2019 review on evolvability (likely "The causes of evolvability and their evolution", Nature Reviews Genetics 2019). ZORA bot-challenged every endpoint. Try PMC/EuropePMC/Unpaywall/author pages.
+   (b) Ferrada & Wagner - never resolved to titles or URLs. Find their joint papers (Emanuel Ferrada + Andreas Wagner) and list titles/years/DOIs/URLs.
+   (c) Fontana & Schuster 1998, "Shaping space: the possible and the attainable in RNA genotype-phenotype mapping", J Theor Biol 194(4):491-515. Recorded NOT_FOUND across two threads. Try harder.
+
+5. KOUNIOS ET AL. arXiv 1612.05955 - determine definitively whether a PEER-REVIEWED version was ever published (check DOI resolvers, OpenAlex, Semantic Scholar, Google Scholar, and the Kounios MPhil thesis chapter 5 which is believed to be the same work). Report yes/no with evidence.
+
+DELIVERABLE: a plain report, organised by target, with the file table (filename, URL, sha256, bytes), the exact quoted answers to the questions asked in item 1 and 2, and a clear ACCESS GAP list for anything you could not get. Do not interpret the science beyond answering the specific questions asked.

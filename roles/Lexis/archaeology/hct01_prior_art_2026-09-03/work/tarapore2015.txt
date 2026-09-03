@@ -1,0 +1,1658 @@
+D. Tarapore and J.B. Mouret. Evolvability signatures of generative encodings: beyond standard perfor-
+mance benchmarks. Information Sciences, 2015 (in press).
+
+      Evolvability signatures of generative encodings:
+          beyond standard performance benchmarks
+
+                              Danesh Tarapore and Jean-Baptiste Mouret
+
+arXiv:1410.4985v2 [cs.NE] 28 Mar 2015   Evolutionary robotics is a promising approach to au-                        tilegged robots following unforeseen mechanical damages
+                                     tonomously synthesize machines with abilities that resem-                      (Bongard et al., 2006; Koos et al., 2013; Cully and Mouret,
+                                     ble those of animals, but the field suffers from a lack                        2013). However, even the most advanced evolved artifacts
+                                     of strong foundations. In particular, evolutionary sys-                        are still far behind the state of the art in mainstream robotics
+                                     tems are currently assessed solely by the fitness score their                  (Kajita and Espiau, 2008; Bongard, 2013): conventionally en-
+                                     evolved artifacts can achieve for a specific task, whereas                     gineered robots are capable of operating successfully in a
+                                     such fitness-based comparisons provide limited insights                        wide variety of indoor and outdoor environments (e.g., lo-
+                                     about how the same system would evaluate on different                          comotion with the BigDog quadruped robot, Raibert et al.
+                                     tasks, and its adaptive capabilities to respond to changes in                  (2008)), whereas the best evolved robots are still only capa-
+                                     fitness (e.g., from damages to the machine, or in new situa-                   ble of simplistic behaviors (e.g., walking in a straight line
+                                     tions). To counter these limitations, we introduce the con-                    on a flat terrain, or avoiding obstacles in an enclosed in-
+                                     cept of "evolvability signatures", which picture the post-                     door arena). To progress further, ER needs to go beyond
+                                     mutation statistical distribution of both behavior diver-                      the mere "stamp collecting" of proofs of concept, evident in
+                                     sity (how different are the robot behaviors after a muta-                      the infancy of many scientific fields (Hayes, 2004), and build
+                                     tion?) and fitness values (how different is the fitness after                  strong theoretical and methodological foundations for future
+                                     a mutation?). We tested the relevance of this concept by                       research. The objective of the present study is to move in this
+                                     evolving controllers for hexapod robot locomotion using                        direction.
+                                     five different genotype-to-phenotype mappings (direct en-
+                                     coding, generative encoding of open-loop and closed-loop                          In most ER studies, fitness comparison is the main instru-
+                                     central pattern generators, generative encoding of neural                      ment used to compare different evolutionary systems and
+                                     networks, and single-unit pattern generators (SUPG)). We                       assess their progress. Such a benchmark-based comparative
+                                     observed a predictive relationship between the evolvabil-                      approach has led to incremental improvements in the robot's
+                                     ity signature of each encoding and the number of genera-                       performance in specific tasks (e.g., for multilegged robot lo-
+                                     tions required by hexapods to adapt from incurred dam-                         comotion, the inclusion of evolved gaits on the commercial
+                                     ages. Our study also reveals that, across the five inves-                      release of Sony's AIBO Hornby et al. (2005); Valsalam and
+                                     tigated encodings, the SUPG scheme achieved the best                           Miikkulainen (2008), and the progressive improvements in
+                                     evolvability signature, and was always foremost in recov-                      walking speed of the QuadraBot Yosinski et al. (2011); Lee
+                                     ering an effective gait following robot damages. Over-                         et al. (2013)), and is sufficient if excelling at the given func-
+                                     all, our evolvability signatures neatly complement exist-                      tion is the ultimate goal for the robot. Nonetheless, if the
+                                     ing task-performance benchmarks, and pave the way for                          evaluated task is treated as a tool to compare different evo-
+                                     stronger foundations for research in evolutionary robotics.                    lutionary systems, and as a stepping stone to harder prob-
+                                                                                                                    lems, then a mere comparison of performance does not suf-
+                                     1 Introduction                                                                 fice. This is because such a methodology of comparison only
+                                                                                                                    provides a very limited amount of information about the be-
+                                     Evolutionary robotics (ER) is a promising approach to                          havior of the system. In particular, it does not provide any
+                                     achieve one of the prominent long-term goals of artificial in-                 insights on, (i) how efficiently does the evolutionary process
+                                     telligence research: creating machines with the adaptive and                   explore the search space (e.g., can it also lead to solutions
+                                     cognitive abilities of animals. Since the eighties, the ER field               for other similar tasks, or is it biased to the type of solutions
+                                     has made amazing progress to both design sophisticated                         useful only for a very specific task?), and (ii) what capabil-
+                                     artifacts and to endow machines with impressive adaptive                       ities are provided to the evolved population to respond to
+                                     abilities. For instance, it allows for the automated construc-                 novel situations (e.g., an unexpected breakage of the multi-
+                                     tion of modular, three-dimensional, physically locomoting                      legged robot's limbs, or changes to its weight distribution).
+                                     robots, (Hornby et al., 2003), to synthesize neural networks                   Furthermore, while adaptive evolutionary systems utilize a
+                                     to control robot behaviors (e.g., Lehman and Stanley (2011b);                  variety of population-diversity maintenance methods to op-
+                                     Mouret and Doncieux (2012); Kubota (2005); Santos et al.                       erate in changing environments Jin and Branke (2005), they
+                                     (2001)), and discover a multitude of walking gaits for mul-                    are mostly concerned with numerical optimization prob-
+                                                                                                                    lems (e.g., Morrison and De Jong (1999)), and constrained
+                                      Danesh Tarapore and Jean-Baptiste Mouret are with the ISIR, Universite´       to fitness-based indices to evaluate available approaches We-
+                                         Pierre et Marie Curie-Paris 6, CNRS UMR 7222, F-75252, Paris Cedex 05,     icker (2002). In summary, there is a need for additional met-
+                                         France. Contact: daneshtarapore@gmail.com                                  rics when comparing evolutionary systems, especially if one
+                                                                                                                    is interested in the adaptive abilities provided by evolution.
+
+                                                                                                                 1
+   In benchmark-based comparative approaches, the fitness                   (2) open-loop CPG based on non-linear oscillators Crespi
+value in an evolutionary system is often used as a proxy                    et al. (2013), evolved with a Compositional Pattern Genera-
+for the evolvability provided by the system Gruau (1994);                   tor (CPPN) Stanley (2007), (3) closed-loop CPG evolved with
+Komosin´ ski and Rotaru-Varga (2001); Hornby et al. (2003);                 a CPPN, (4) artificial neural network (ANN) evolved with
+Clune et al. (2009a) -- the capacity of the evolved popula-                 CPPN, inspired by HyperNEAT Stanley et al. (2009); Clune
+tion to rapidly adapt to novel environments Hu and Banzhaf                  et al. (2011), and (5) the recently introduced single-unit pat-
+(2010). However, such a fitness-based proxy provides lit-                   tern generator (SUPG) Morse et al. (2013). For all these en-
+tle information on the potential of the evolutionary sys-                   codings, the pertinent questions are the same: are these en-
+tem to generate novel phenotypes, and consequently rapidly                  codings facilitating evolvability, and are the encoded indi-
+adapt to new, untested environments. While fitness land-                    viduals capable of adapting rapidly to novel situations? Fur-
+scape models can provide interesting insights on search diffi-              thermore, does the inclusion of a sensory feedback mecha-
+culty in the Genotype-to-Fitness map (Provine, 1989; Wright,                nism improve the evolvability provided, and the adaptive
+1932), the models 3D landscape can be deceptive when an-                    capabilities of the individual? To both answer these ques-
+alyzing highly multidimensional genotypes (Kaplan, 2008;                    tions and evaluate the relevance of our measure of evolvabil-
+Gavrilets, 1997; McCandlish, 2011). Additionally, in NK fit-                ity, our experiments are divided into two phases: first, we
+ness landscape models (Kauffman, 1993; Tomassini et al.,                    compare the evolvability signature obtained with each en-
+2008), the value of K that controls the degree of epistasis                 coding, and consequently predict their adaptability to novel
+is not easily transferable to more complex and open-ended                   scenarios, then we evaluate the accuracy of our predictions
+Genotype-to-Fitness mappings. Also, the individual solu-                    by analyzing the ability of each encoding to effectively deal
+tions in all these models are positioned in the landscape                   with the new scenarios (here, when some of the robot's legs
+solely based on their measured fitness. In the present paper,               are damaged).
+to counter the limitations of the fitness measure, we intro-
+duce a new evolvability metric that features both the qual-                 2 Related work
+ity and quantity of phenotypic variation following genetic
+change. With this new metric, we can visualize evolvability                 The section reviews the different Genotype-to-Phenotype
+in the behavior-diversity/performance space and predict the                 mapping schemes implemented in evolutionary computa-
+performance of the population in previously untested envi-                  tion studies. We also review the functional characteristics
+ronments1. Such predictive insights on the adaptive char-                   of encodings that facilitate evolvability both in natural and
+acteristics of evolved individuals is particularly important,               artificial systems, and the empirical methods available to es-
+since it is difficult if not impossible to consider and evaluate            timate evolvability. The encodings compared in this study
+a priori every possible scenario the robot may encounter dur-               are described in detail in Sec. 5.
+ing its operation. We employ our new approach to "signa-
+turize" evolvability to compare many different encodings of                 2.1 Encoding schemes
+controllers extracted from the literature. Numerous encod-
+ings have been proposed in ER, taking inspiration from nat-                 A mapping from the Genotype-to-Phenotype is a model of
+ural developmental processes, in particular, to evolve con-                 the process that "develops" an individual's phenotype from
+trol systems for robots (e.g., Gruau (1994); Kodjabachian and               the information available in the genotype (Johannsen, 1911).
+Meyer (1998); Clune et al. (2009a); Cheney et al. (2013); Lee               In natural organisms, the elaborate and intricate develop-
+et al. (2013); Lewis et al. (1992); Morse et al. (2013)). Given             mental systems comprise intra-cellular mechanisms of tran-
+the multitude of available encodings, it is crucial to compare              scription and translation of proteins (Freeland and Hurst,
+them and understand their differences, so that the ER com-                  1998; Novozhilov et al., 2007) and regulation of gene expres-
+munity can focus on the most promising ones. In the selec-                  sion (Alberts et al., 1994), and the inter-cellular mechanisms
+tion of encodings investigated in our study, both direct and                of cell differentiation and specialization (Michod and Roze,
+generative schemes are considered. Direct encodings encom-                  2001; Grosberg and Strathmann, 2007). Furthermore, these
+pass a one-to-one mapping between genes and phenotypic                      complex developmental processes are a result of billions of
+traits, and are the simplest form of encoding thus serving as               years of natural selection (Javaux et al., 2010).
+a reference for comparison (e.g., Koos et al. (2013)). We also
+evaluate the more complex generative encodings character-                      Many different genetic encodings have been implemented
+ized by a one-to-many mapping between genes and pheno-                      in the field of evolutionary computation, from the early
+typic traits, i.e., a single gene describes several phenotypic              deterministic and fixed Genotype-to-Phenotype mappings
+traits (Stanley and Miikkulainen, 2002; Stanley, 2007). These               (Friedberg, 1959; Koza, 1992), to the recent, plastic and more
+state of the art encodings are expected to exploit geomet-                  naturalistic schemes (Stanley, 2007; Tonelli and Mouret,
+ric information of the robot morphology to generate regular                 2013). In this review, we broadly classify the available en-
+and modular phenotypic patterns (e.g., (Stanley et al., 2009;               codings based on their degree of genotypic reuse, i.e., the ex-
+Clune et al., 2011; Morse et al., 2013)).                                   tent to which genes are allowed to be reused in developing
+                                                                            the phenotype, into direct encodings, and generative or de-
+   Overall, we investigate five encodings for the classical                 velopmental encodings (for detailed review see Stanley and
+ER problem of legged robot locomotion Lewis et al. (1992);                  Miikkulainen (2003)).
+Gruau (1994); Hornby et al. (2005); Clune et al. (2009a); Bon-
+gard et al. (2006); Clune et al. (2009b, 2011); Yosinski et al.             2.1.1 Direct encodings
+(2011); Koos et al. (2013); Lee et al. (2013): (1) open-loop cen-
+tral pattern generator (CPG) evolved with a direct encoding,                Direct encodings are characterized by the complete absence
+                                                                            of any genotypic reuse, wherein each gene of the genotype
+ 1A preliminary study on our approach to visualize evolvability is pub-     is utilized at most once to determine the phenotype (Hornby
+    lished in a conference paper Tarapore and Mouret (2014).
+
+                                                                         2
+and Pollack, 2002). Such a mapping has been used since the                follow more complex implementations, determined by their
+advent of evolutionary computation and genetic program-                   level of abstraction of development.
+ming research (Friedberg, 1959), and is the most widely used
+encoding scheme in the field. Moreover, direct encodings                     Existing generative encodings model the underlying nat-
+are easy to implement, and have been applied successfully                 ural developmental processes at several different levels of
+for the evolution of various robot behaviors such as loco-                abstraction, ranging from the low-level cell chemistry sim-
+motion gaits for multilegged and tensegrity platforms (e.g.,              ulations to the high-level grammatical approaches (Stanley,
+Lewis et al. (1992); Te´llez et al. (2006); Koos et al. (2013); Iscen     2007). The cell chemistry methods simulate the local intra-
+et al. (2013)), navigation and obstacle avoidance for wheeled             cellular and inter-cellular interactions between genes and
+robots (e.g., Nolfi and Floreano (2001)), body-brain evolution            protein products, modulated by signals from a gene regu-
+in artificial life systems (Hornby and Pollack, 2002), and co-            latory network (e.g., Furusawa and Kaneko (1998)). These
+operative foraging in robot swarms (e.g., Waibel et al. (2009);           microscopic approaches are based on the philosophy that the
+Dorigo et al. (2005); Kernbach (2013)).                                   vital functions that allow development to assemble complex
+                                                                          phenotypes are located in the low-level cellular interactions
+   Researchers in evolutionary robotics have recently sought              occurring in a developing embryo. By contrast, the gram-
+to evolve increasingly complex artifacts (Eiben, 2014). How-              matical approaches simulate development with a set of high-
+ever, in using the direct encoding scheme, as the size of the             level symbol replacement rules (e.g., Mjolsness et al. (1991)).
+genotype grows linearly, the possible combination of allelic              These approaches grow a final structure from a single seed
+values for the genotype (the solution search space) grows                 symbol, by the repeated application of grammar rules on
+exponentially (Yao, 1999). The consequent scalability prob-               specified target symbols. Consequently, local interactions
+lem prevents the usage of a direct Genotype-to-Phenotype                  and temporal unfolding control the phenotype development
+mapping to evolve solutions for complex problems. For ex-                 through the grammars (Stanley and Miikkulainen, 2003).
+ample, the human brain consists of approximately 86 billion
+neurons and 100 trillion neural connections (Azevedo et al.,                 In most studies comparing encoding schemes, the gener-
+2009), and therefore successfully evolving a directly encoded             ative encoded individuals frequently outperform their di-
+in silico brain-like cognitive device is almost surely impossi-           rectly encoded counterparts for a range of diverse tasks
+ble.                                                                      such as, designing 3D objects (e.g., Hornby (2005); Clune
+                                                                          and Lipson (2011)), game playing (e.g., Reisinger and Mi-
+2.1.2 Generative encodings                                                ikkulainen (2007); Gauci and Stanley (2010)), pattern match-
+                                                                          ing (e.g., Clune et al. (2011)), and multilegged robot lo-
+Natural systems are much more sophisticated than the state                comotion (e.g., Hornby and Pollack (2002); Seys and Beer
+of the art solutions from artificial evolution. Inspired by the           (2007)). The generatively encoded individuals achieve
+complexity of biological systems (Lipson, 2007), researchers              a better task performance, and a faster rate of evolu-
+have abstracted the underlying developmental processes,                   tion (e.g., see Gruau (1994); Komosin´ ski and Rotaru-Varga
+to formulate generative or developmental Genotype-to-                     (2001)). Furthermore, generative encodings also attain a
+Phenotype maps for artificial systems (e.g., Bongard and                  higher proportion of beneficial genetic mutations (e.g., Clune
+Pfeifer (2001); Komosin´ ski and Rotaru-Varga (2001); Gruau               et al. (2009a); Reisinger and Miikkulainen (2007)), and are
+(1994); Hornby and Pollack (2002); Stanley (2007); Mouret                 capable of exploring a larger range of phenotypes from ge-
+et al. (2010); Devert et al. (2011)). The generative encodings            netic change (e.g., Reisinger et al. (2005); Lehman and Stan-
+can be broadly defined as, encodings that map the genotype to             ley (2013)).
+the phenotype through a process of growth from a simple geno-
+type in a low-dimensional search space to a complex phenotype             2.2 Evolvability
+in a high-dimensional space. These encodings have been ap-
+plied successfully to various application problems, from al-              The process of evolution in natural systems comes from the
+lowing a computer to design antennas for satellites (Hornby               cooperation of, (i) exploratory genotypic variation, (ii) the
+et al., 2006), designing tables (Hornby, 2005, 2004) and cre-             corresponding phenotypic variation, and (iii) selection op-
+ating tessellating tile shapes (Bentley and Kumar, 1999), to              erators that preserves the improvements in heritable pheno-
+evolving locomotion gaits for both soft robots (e.g., Ch-                 typic traits over previous generations. The crucial coordina-
+eney et al. (2013)) and conventional multilegged robots (e.g.,            tion between these three forces yields the evolvability of an
+Clune et al. (2009a)).                                                    evolutionary system (Alberch, 1991; Hu and Banzhaf, 2010;
+                                                                          Pavlicev and Wagner, 2012).
+   The many implemented generative encodings are all com-
+monly characterized by a one-to-many mapping between an                      The first formal definition of evolvability stems from re-
+element of the genotype and many elements of the pheno-                   search in computer science. In experiments with opti-
+type. In the resulting Genotype-to-Phenotype mappings,                    mization algorithms using genetic programming, Lee Al-
+each gene of the genotype encodes for many phenotypic                     tenberg defined evolvability as "the ability of a population
+traits, thus allowing for genotype reuse. Consequent to the               to produce variants fitter than any yet existing" (Altenberg,
+capability of the encoding to reuse parts of the genotype to              1994). In natural evolutionary systems, Kirschner and Ger-
+affect different phenotypes, generative encodings in compar-              hart (Kirschner and Gerhart, 1998) describe evolvability, also
+ison to direct encodings, (i) exhibit higher efficiency in repre-         called evolutionary adaptability, as "the capacity to generate
+senting complex phenotypes, (ii) operate in a more tractable              heritable, selectable phenotypic variation". Marrow (Mar-
+solution search space, (iii) scale well to large phenotypic               row et al., 1999) considers evolvability as a characteristic
+spaces, and (iv) are capable of generating regular and mod-               relevant to both artificial and natural evolutionary systems,
+ular control architectures (Stanley and Miikkulainen, 2003;               and viewed as the capability of a population to evolve. In a
+Clune et al., 2009b; Stanley et al., 2009). However, while di-            summary of results from both evolutionary biology and evo-
+rect encodings are easy to implement, generative encodings                lutionary computer science, Wagner and Altenberg (Wag-
+                                                                          ner and Altenberg, 1996) view evolvability as "the ability
+
+                                                                       3
+of random variations to sometimes produce improvements".                of fitness (quality-feature) and behavior diversity (quantity-
+These incremental improvements are critically dependent on              feature), following multiple independent, randomly sam-
+the Genotype-to-Phenotype encoding. Mappings facilitating               pled mutations. The two features are treated separately in-
+evolvability, confer on the individual a robustness to lethal           stead of being combined into a single quantitative measure
+mutations, and exhibit a modular architecture wherein genes             of evolvability, to consider the trade-offs between them in
+preferably only affect traits with the same function (Pavlicev          their individual influence on evolvability Deb (2001).
+and Wagner, 2012).
+                                                                           Feature 1: Deleteriousness of mutations. The first feature
+   Although the concept of evolvability is still very much un-          in our signature of evolvability is computed as the propor-
+der discussion, for our study we adopt the definition pertain-          tion decrease in the fitness of a mutated individual.
+ing to adaptability, and the generation of major phenotypic
+breakthroughs Pigliucci (2008); Clune et al. (2013): Evolvabil-            For an individual i and the mutant i , we have,
+ity is the capability of a population to rapidly adapt to novel and
+challenging environments.                                               f1  =  Fi  -   Fi                               (1)
+                                                                                   Fi
+   The measurement of evolvability conferred by an encod-
+ing is a complex and difficult problem. Phenotypic fitness or           where Fi and Fi , are the fitness values before and after the
+task performance is a directly observable measure, and a cri-           application of a random genetic mutation, respectively.
+teria for selection. However, the potential to generate a better
+fitness, evolvability, is a less tangible type of observable and           The feature f1 reflects the behavior quality following ben-
+is more difficult to measure (Hu and Banzhaf, 2010). While              eficial (f1 > 0), neutral (f1  0), and deleterious (f1 < 0)
+a formal method to quantify evolvability has not yet been               genetic change. Additionally, mutations that prove lethal are
+agreed upon in the literature, some empirical methods have
+been proposed notwithstanding.                                          associated with f1 values less than -1, reflecting a 100% or
+                                                                        larger decrease in individual fitness.
+   In Gerhart and Kirschner's theory of facilitated variation
+Gerhart and Kirschner (2007), which unifies most earlier                Feature 2: Diversity of behaviors. Following the theory of
+findings of cellular and developmental processes with char-
+acteristics of evolvability, the capacity of an individual to           facilitated variation Gerhart and Kirschner (2007), the sec-
+evolve is considered to have two functional components:
+(i) to curtail the proportion of lethal mutations; and (ii) to          ond feature in our signature of evolvability evaluates the
+decrease the number of mutations necessary to evolve di-
+verse or novel phenotypes. Nonetheless, most studies mea-               diversity of phenotypes than can be reached from a given
+suring evolvability focus mainly on one only of these two
+aspects. Most comparisons estimate evolvability solely as               individual. The phenotype can here be understood in two
+the proportion of mutations that are beneficial to an individ-
+ual (e.g., Hornby et al. (2003); Clune et al. (2011); Hornby            ways: in an evolutionary biology perspective, the phenotype
+and Pollack (2002); Clune et al. (2009a); Reisinger and Mi-
+ikkulainen (2007)), and irrespective of the phenotypic nov-             can describe both morphological traits and behaviors Arnold
+elty of the resultant offspring. In other work, Iba´n~ ez-Marcelo
+and Alarco´ n Iba´n~ ez-Marcelo and Alarco´ n (2014) characterize       (1992); Dawkins (1999), whereas in a evolutionary robotics
+evolvability as the number of viable mutations required to
+reach different phenotypes, but do not take into account the            perspective, only morphological traits are considered to be
+novelty or the amount of diversity between the different phe-
+notypes. By contrast, Lehman and Stanley (2011b); Reisinger             parts of the phenotype (e.g., the parameters and the topology
+et al. (2005); Lehman and Stanley (2013) quantify evolvabil-
+ity only on the basis of the amount of phenotypic diversity             of an evolved networks form the phenotype) Stanley and Mi-
+resulting from genetic change, usually without considering
+the quality of the change. However, both factors are essen-             ikkulainen (2003). The distinction between phenotype and
+tial to quantify evolvability, to discount for, (i) mutations that
+generate very diverse phenotypes, but prove lethal to the or-           behaviors avoids potential confusions when working on de-
+ganism, and (ii) mutations resulting in small increments in
+performance that improve on a trait, but may not be able to             velopmental encodings (genotype-phenotype maps), which
+generate novel phenotypes. Therefore, for our comparison
+between encodings, evolvability is visualized by characteriz-           focus on morphological traits, or when working on selective
+ing both the nature of the genetic mutation, and the quantity
+of generated phenotypic variation.                                      pressures, which often focus more on the behavior than on
+
+3 Evolvability signature                                                the representation Doncieux and Mouret (2014).
+
+In this study, the evolvability provided by a Genotype-to-              In the present study, we focus on the diversity of behav-
+Phenotype mapping is described by a distinct signature fea-
+turing information on the effect of genetic mutations on                iors, as done in evolutionary biology, because it best dis-
+both, the quality of mutated individuals (their viability), and
+the quantity of generated phenotypic variation. Our signa-              tinguishes promising individuals from the poor perform-
+ture pictures these two features as a statistical distribution
+                                                                        ers when evolving robot controllers Lehman and Stanley
+
+                                                                        (2011a); Mouret and Doncieux (2012). For instance, all the
+
+                                                                        neural-networks that are not connected to the robot's actu-
+
+                                                                        ators lead to the same stopped-robot behavior, whereas the
+
+                                                                        morphological traits (synaptic parameters and topology of
+
+                                                                        the neural-network) can be widely different. A second ad-
+
+                                                                        vantage of looking at behaviors instead of morphological
+
+                                                                        traits is that the behavior representation can be independent
+
+                                                                        of the implementation of the controller, thus allowing us to
+
+                                                                        compare the evolvability of very different controllers like
+
+                                                                        CPGs, neural networks, and SUPG controllers.
+
+                                                                        Measuring behavioral differences recently received a lot
+
+                                                                        of attention in evolutionary robotics because several exper-
+
+                                                                        iments showed that explicitly encouraging the diversity of
+
+                                                                        evolved behaviors helps to mitigate the issue of premature
+
+                                                                        convergence Mouret (2011); Mouret and Doncieux (2012);
+
+                                                                        Doncieux and Mouret (2013, 2014). It is also the main driv-
+
+                                                                        ing force in the Novelty Search algorithm, which leads to
+
+                                                                        high-performing individuals in deceptive domains by only
+
+                                                                        searching for novel behaviors and disregarding task-fitness
+
+                                                                        values Lehman and Stanley (2011a). Following this interest
+
+                                                                        in measuring behavioral differences, many behavioral diver-
+
+                                                                        sity metrics have been proposed, ranging from task-specific
+
+                                                                        metrics (e.g., difference between end points of a robot's tra-
+
+                                                                     4
+jectory), to more task-agnostic measures (e.g., differences in                      (a) Hexapod robot    (b) Kinematic scheme
+the robot sensory-motor flow), and various information the-
+oretic measures (detailed review in Doncieux and Mouret                             Figure 1: (a) Snapshot of an 18-DOF simulated hexapod
+(2014) and in Mouret and Doncieux (2012)).                                                      robot walking on a horizontal surface, with con-
+                                                                                                tacts simulated. (b) Kinematic scheme of the robot,
+   Among the investigated measures, the mutual informa-                                         with cylinders representing actuated pivot joints.
+tion diversity metric provides a general approach to com-                                       The three servos on each leg, s1, s2 and s3, are la-
+pute a non-linear, non-monotonic relationship between be-                                       beled in increasing order of distance to robot torso.
+haviors, that is applicable to numerical and symbolic behav-
+ioral representations, both in the continuous and discrete do-
+mains Cover and Thomas (1991); Kraskov et al. (2004). For
+our signature of evolvability, we compute the behavioral di-
+versity as the normalized mutual information between be-
+haviors of an individual, before and after its genome is mu-
+tated.
+
+   Assuming that the behavior of an individual i can be rep-
+resented as a discrete vector Bi (details in Mouret and Don-
+cieux (2012)), for the behaviors Bi and Bi, of individual i and
+mutant i , we have:
+
+H(Bi) = -                          p(bi) log p(bi)                         (2a) 4 Hexapod robot locomotion problem
+
+                            bi Bi
+
+H(Bi, Bi) = -                          p(bi, bi) log p(bi, bi)             (2b) The evolution of locomotion gaits for multilegged robots
+                                                                                  is a classical problem in evolutionary robotics, addressed
+                            biBi biBi
+                                                                                  in many studies utilizing both direct and generative en-
+               f2     =  1  -  H(Bi) + H(Bi) - H(Bi,        Bi)            (2c) codings, on bipedal (e.g., Liu and Iba (2004)), quadrupedal
+                                     max(H(Bi), H(Bi)
+                                                                                  (e.g., Clune et al. (2011); Hornby et al. (2005); Risi and Stan-
+
+where H(Bi) is the entropy of the behavior Bi comprising                            ley (2013); Te´llez et al. (2006); Valsalam and Miikkulainen
+the individual states bi with probability p(bi), H(Bi, Bi) is                       (2008)), and hexapedal robots (e.g., Valsalam and Miikku-
+the joint entropy between behaviors Bi and Bi with joint                            lainen (2008); Zykov et al. (2004); Barfoot et al. (2006)) ­ em-
+probability density function p(bi, bi), and f2 denotes the in-                      ployed here for the comparison of different encodings. In
+verse of the normalized mutual information between the two                          most existing studies on evolved locomotion gaits, the per-
+behaviors.                                                                          formance of an individual is analyzed solely by its walk-
+                                                                                    ing speed and the required number of generations of evo-
+   The entropy and joint entropy are computed by first ap-                          lution. The rate of evolution and evolved performance has
+proximating p(bi) and p(bi, bi), by counting the number of in-                      also been linked to evolvability provided by the encoding
+stances of each behavior state. Systematic errors in the prob-                      scheme, wherein controllers achieving a higher task fitness
+ability estimates, consequent to the limited number of avail-                       and requiring fewer generations to evolve are considered
+able data samples, is compensated for by adding a corrective                        more evolvable (e.g., see Hornby et al. (2003); Clune et al.
+term E to the computed entropy: E = (Si - 1) /2T (where                             (2009a); Gruau (1994); Komosin´ ski and Rotaru-Varga (2001)).
+T is the size of the temporal window over which the en-                             While these approaches provide interesting insights on the
+tropy is computed, and Si is the number of states for which                         performance of the Genotype-to-Phenotype mapping, they
+p(bi) = 0), and E = (Si + Si - Si,i - 1) /2T to the joint en-                       largely ignore its capabilities to generate viable phenotypic
+tropy (where Si, Si , Si,i , and T have an analogous meaning                        variations (diverse gaits in case of legged robots). However,
+to the previous case). These corrective terms compensate for                        the diversity of evolved walking gaits is important for the
+the systematic and random errors in the observed entropy                            legged robot to recover rapidly from faults such as, the loss
+of a series, that systematically bias downwards the expected                        of one or more limbs, or motor malfunctions (Koos et al.,
+value of the observed entropy from the true entropy (derived                        2013), and for the robot to adapt to previously unencoun-
+in Roulston (1999)). Integrating the corrective term to the                         tered environmental changes. Furthermore, an efficient re-
+equations for entropy and joint entropy, we have:                                   covery is particular relevant for hexapedal legged robots,
+
+                                                                                    wherein the probability of component failure is high, con-
+
+H(Bi) = -             p(bi) log p(bi)  +  Si -  1                          (3a)     sequent to the large number of moving parts.
+                                            2T
+               bi Bi                                                                   Hexapod platform details: The hexapod robot is simu-
+                                                                                    lated on a flat, horizontal surface (Fig. 1a), with the Open
+H(Bi, Bi) = -               p(bi, bi) log p(bi, bi)  +  Si  +  Si  - Si,i  -1       Dynamics Engine2 (ODE) physics simulator. The robot has
+                                                                   2T               18 Degrees of Freedom (DOF), 3 for each leg (Fig. 1b), and
+               biBi biBi                                                            each DOF is actuated by a single servo. The first servo on
+
+                                                                           (3b)
+
+   Estimates of the corrected entropy (eq. 3a) and joint en-                        each leg (s1) actuates the horizontal orientation of the leg
+tropy (eq. 3b) are then used to update the mutual informa-                          within range [-/8, /8] radians. The second (s2) and third
+tion distance between behaviors. The resulting feature f2                           (s3) servos control the leg elevation and extension, respec-
+represents the quantity of behavioral variation following ge-                       tively, each within the range of [-/4, /4] radians.
+netic change, and is indicative of the ability of the evolution-
+                                                                                       Angular positions are sent to the 18 servos once every
+
+ary system to produce novel behaviors.                                              2http://www.ode.org
+
+                                                                                 5
+15 ms. Furthermore, in order to maintain the last subseg-              5.1 Encoding CPGs with CPPNs
+ment of each leg vertical (for enhanced stability), the control
+signal for the third servo (s3) is always in antiphase to that         A CPG is a biological neural network, comprising a dis-
+of the second servo (s2). Consequently, the robot is reduced           tributed array of neurons located along the spinal cord of
+to a 12 DOF system, despite being actuated by 18 motors.               vertebrates (Frigon and Rossignol, 2006). The spinal neural
+                                                                       centers exhibit rhythmic activity, generating complex high-
+   Hexapod gait representation: The behavioral diversity in            dimensional signals for the control of coordinated periodic
+our signature of evolvability corresponds to the inter-gait di-        movements required for animal locomotion. In recent years,
+versity in the hexapod robot locomotion problem. For this              bio-inspired engineering approaches have led researchers
+diversity, a hexapod gait is represented using a gait dia-             to model these CPGs as coupled dynamical oscillatory sys-
+gram (Kajita and Espiau, 2008, p. 379), comprising a binary            tems (Ijspeert, 2008), to generate locomotion control policies
+matrix C of leg-surface contacts:                                      for biped (Aoi and Tsuchiya, 2005; Taga, 1994), quadruped
+                                                                       (Righetti and Ijspeert, 2008, 2006; Fukuoka et al., 2003) and
+                  1 if leg i makes surface contact at time-step t,     hexapod robots (Ren et al., 2014), as well as modular (Sproe-
+       Ctl =                                                           witz et al., 2008) and swimming/walking salamander-like
+                                                                       robots (Ijspeert et al., 2007; Crespi et al., 2013).
+                  0 otherwise.
+                                                                          The design of CPG-based control policies for robot loco-
+where t  {0 . . . T }, the gait is evaluated for T time-steps,         motion offers many advantages (Ijspeert, 2008). The main
+and the hexapod legs l  {0 . . . 5}.                                   advantage of using such controllers is the stable limit cycle
+                                                                       behaviors of the coupled dynamical system. Additionally,
+   The hexapod gait for an individual i is represented by bi-          the CPGs maintain a smooth transient response to changes
+nary vector Bi, comprising the contacts in C concatenated in           to external inputs (e.g., from sensory feedback). Another ad-
+row-major order, Bi = [C00, C10 . . . CT 5]. Diversity between         vantage of CPGs is the intrinsic properties of inter-oscillator
+two gaits is measured as the normalized mutual information             synchronization, allowing for coordinated interactions be-
+between the corresponding gait vectors (eq. 2c).                       tween the robot and its environment. Finally, using CPGs for
+                                                                       generating coordinated policies reduces the search space of
+5 Encoding schemes analyzed                                            the control problem, as opposed to using other approaches
+                                                                       such as continuous-time recurrent neural networks (Beer
+Generative encodings for evolving our hexapod locomo-                  and Gallagher, 1992).
+tion controllers are based on CPPNs (Stanley, 2007). The
+CPPN abstracts the processes of embryonic development by                  In most studies investigating CPGs for robot locomotion,
+determining the attributes of phenotypic components as a               the parameters of the model are hand-tuned by the designer
+function of their geometric location in the individual, in-            (e.g., Aoi and Tsuchiya (2005); Righetti and Ijspeert (2008);
+stead of simulating complex inter-cellular interactions and            Crespi et al. (2013)). While such an approach does provide
+chemical morphogen gradients to determine component lo-                interesting coordinated robot movements, the system is un-
+cation (Carroll, 2005). In nature, cells differentiate them-           able to autonomously explore a rich diversity of different lo-
+selves into different lineages, influenced by their immedi-            comotion gaits. Furthermore, the parameters of the model
+ate environment (the epigenetic landscape, Goldberg et al.             are required to be re-tuned in response to changes in the en-
+(2007)). Analogously, the CPPN genome outputs the fate of              vironment, or to damages incurred by the robot. To over-
+an organismal component as a function of its geometric co-             come these issues, we seek to evolve parameters of gener-
+ordinates in the individual.                                           atively encoded CPGs, thus combining the advantages of
+                                                                       CPG models with that of generative encodings. The follow-
+   The CPPN genome is represented as a directed graph,                 ing two CPPN-encoded CPG models are investigated: (i) an
+comprising a set of Sine, Gaussian, Sigmoid, and Linear type of        open-loop model wherein the control policies are not influ-
+nodes, connected by weighted links. The node type indicates            enced by any sensory feedback; (ii) a closed-loop model,
+the activation function applied to the sum of its weighted in-         with sensory feedback from touch sensors on each of six
+puts, to compute the node output. Selected activation func-            hexapod legs influencing the resultant gait.
+tions can succinctly encode a wide variety of phenotypic
+patterns, such as symmetry (e.g., a Gaussian function) and             5.1.1 Open-loop CPG
+repetition (e.g., a Sine function), that evolution can exploit.
+Mutations to the CPPN genome can change the connection                 The open-loop generatively encoded CPG system is com-
+weights and node type, and add or remove nodes from the                prised of 12 coupled amplitude-controlled phase oscilla-
+graph. Consequently, the topology of the CPPN is uncon-                tors (Ijspeert et al., 2007), governing the actuation of the 12
+strained, open-ended, and can represent any possible rela-             servos (s1 and s2, on each of 6 robot legs). Each oscillator is
+tionship between the input coordinates of the phenotypic               modeled by the following set of ordinary differential equa-
+component and its output attributes (see details in Stanley            tions:
+(2007)).
+                                                                       i = 2Fi + j wi,j sin (j - i - i,j )  (4a)
+   In this study, the CPPN genotype is mapped to four
+very different phenotypes to control hexapod locomotion,                 j
+open-loop CPGs, closed-loop CPGs, ANNs (minimal Hyper-
+NEAT), and SUPGs (summarized in Table 1). The SUPG is a                
+new type of macro-neuron introduced by Morse et al. Morse              ¨i =  4 (Ai - i) - i                 (4b)
+et al. (2013) to genetically encode spatio-temporal oscillatory
+patterns.                                                              i = i cos (i)                        (4c)
+
+                                                                       where i and i denote the amplitude and phase of the os-
+                                                                       cillator i, Ai represents its intrinsic amplitude (in radians),
+
+                                                                    6
+                 Table 1: Summary of encoding schemes to evolve controllers for hexapod robot locomotion.
+
+Encoding         Signal generator  Feedback   Summary                                                         References
+Open-loop CPG    Phase oscillator                                                                             Ijspeert et al. (2007); Righetti and Ijspeert
+Closed-loop CPG  Phase oscillator             An amplitude-controlled phase oscillator is used to gener-      (2006); Crespi et al. (2013); Ijspeert (2008)
+HyperNEAT        ANN                          ate locomotion gaits. The 12 amplitude parameters, and 11
+                                              inter-oscillator phase bias parameters of the oscillator, are   Aoi and Tsuchiya (2005); Fukuoka et al. (2003);
+SUPG             CPPN                         generatively encoded with a CPPN.                               Righetti and Ijspeert (2008)
+
+Direct           Phase oscillator             A generatively encoded amplitude-controlled phase oscilla-      Stanley et al. (2009); Clune et al. (2011); Yosin-
+                                              tor is extended with the inclusion of a phase resetting mech-   ski et al. (2011); Lee et al. (2013)
+                                              anism. The extension introduces a sensory feedback mecha-
+                                              nism that modulates the oscillations produced by the CPG,       Morse et al. (2013)
+                                              adapting the oscillation period depending on the locomo-
+                                              tion gait and terrain.                                          Koos et al. (2013); Cully and Mouret (2013)
+
+                                              A widely used generative encoding scheme, used to evolve
+                                              large-scale ANNs. The weights of the neural network are en-
+                                              coded with a CPPN. Evolved ANNs have been successfully
+                                              deployed to generated symmetric and coordinated gaits for
+                                              both simulated and physical quadruped robots.
+
+                                              A recently developed encoding scheme, wherein a CPPN en-
+                                              codes the attributes of a SUPG. The SUPG is a macro-neuron,
+                                              that upon receiving an external trigger, produces a single cy-
+                                              cle of an oscillatory signal. Repeated triggering of the SUPG
+                                              generates a periodic gait for a multilegged robot. In previous
+                                              work, the SUPG outperformed HyperNEAT encodings in
+                                              evolving locomotion gaits for a simulated quadruped robot,
+                                              thus encouraging further study.
+
+                                              A simple locomotion controller, used as reference for com-
+                                              parison between encoding schemes. The robot is controlled
+                                              with a amplitude controlled phase oscillator, the 12 ampli-
+                                              tude parameters, and 11 inter-oscillator phase bias parame-
+                                              ters, are directly encoded.
+
+ Source Target                    s2 s1       s1 s2                     the oscillators. In this study, all 12 oscillator of the CPG have
+oscillator oscillator                                                   the same frequency (Fi = 1 Hz), and the bidirectional cou-
+ (xi yi) (xj yj) Bias                  Leg 5    Leg 0                   pling between oscillators is such that i,j = -j,i. Further-
+                                              7 10                      more, we ensure that the sum of all the phase biases in every
+           CPPN            0.5 1 4                                      closed loop of inter-oscillation couplings is a multiple of 2,
+                                                Leg 1                   so that all the phase biases in a loop are consistent. In such
+                                       Leg 4                            a parameter regime, the oscillator phases grow linearly at a
+                                              8 11 y                    common rate Fi and with an inter-oscillator phase difference
+                             02 5                                       of i,j. The second equation (eq. 4b) is a critically damped
+                                                Leg 2                   second order linear differential equation, with Ai as the sta-
+                                       Leg 3  9 12                      ble fixed point. Therefore, from any initial condition the os-
+                                                                        cillator amplitude i will asymptotically and monotonically
+                           -0.5 3 6                                     converge to the intrinsic amplitude Ai, allowing the ampli-
+                                                                        tude to be smoothly modulated. Finally, utilizing the ampli-
+  Amplitude Phase bias             -0.6 -0.4 x 0.4 0.6                  tude and the phase of the oscillator (eq. 4c), the output of the
+                                                                        oscillator i governs servo actuation.
+(a) CPPN encoding CPG pa-             (b) CPG substrate.
+    rameters.                                                              In this first generative encoding evaluated, a CPPN en-
+                                                                        codes the intrinsic amplitudes Ai and inter-oscillator phase
+Figure 2: Encoding CPGs with CPPNs. The intrinsic ampli-                biases i,j of 12 oscillators of the CPG (Fig. 2a). The oscilla-
+            tude Ai of each oscillator is encoded by the CPPN           tors are placed in a 2-D Cartesian grid termed the substrate,
+            as a function of its position in the substrate. Phase       so that each oscillator has a distinct (x, y) coordinate, and so
+            biases i,j of inter-oscillator couplings are deter-         as to reflect the hexapod robot morphology (Fig. 2b). The in-
+            mined by querying the CPPN with the coordinates             trinsic amplitude of each oscillator i is obtained by inputting
+            of every pair of adjacent source (xi, yi) and target        to the CPPN the coordinates (xi, yi), and setting the inputs
+            (xj, yj) oscillators. For every pair of adjacent oscil-     (xj, yj) to 0. Amplitudes output are scaled to the allowable
+            lators, the query is made only once as i,j = -j,i.          angular range of the corresponding motors. In the CPG, ad-
+                                                                        jacent oscillators are coupled together (Fig. 2b). The phase
+and Fi the intrinsic frequency (in Hz). The oscillator am-              bias for every pair of adjacent oscillators i and j is obtained
+plitude i converges to the intrinsic amplitude Ai at a rate             by querying the CPPN with inputs (xi, yi) and (xj, yj), and
+determined by positive constant  (set to 10 rad/s for rapid             scaling the output to range [0, 2]. Furthermore, the follow-
+convergence). Couplings between oscillators are defined by              ing two constraints are introduced: (i) couplings are bilater-
+weights wi,j, and phase biases i,j. The coupling weights                ally symmetrical, i.e., i,j = -j,i. For every pair of adjacent
+define the strength of the coupling, and influence the time to          oscillators, the phase bias is queried only once; (ii) phase bi-
+synchronize between oscillators (all weights prefixed at 20             ases 2,1, 2,3, 7,4, 9,6, 10,11 and 12,11 are not queried, but
+to enable rapid inter-oscillator synchronization). The phase            computed such that the sum of phase biases in every closed
+bias i,j determines the phase difference between the oscil-             loop of the CPG is a multiple of 2 (oscillators numbered in
+lators i and j. The output of the oscillator is denoted by i,           Fig. 2b). Therefore, the total number of CPG parameters gen-
+and is computed using the Euler integration method with a               eratively encoded by the CPPN is 23 (12 intrinsic amplitude
+step-size of 20 ms.                                                     and 11 phase bias parameters).
+
+   Oscillator equations (eq. 4a,b and c) were designed such
+that the output of the oscillator i exhibits a limit cycle be-
+havior, producing a stable periodic output. The first equa-
+tion (eq. 4a) determines the time evolution of the phase i of
+
+                                                                     7
+               Normal step duration                       Actual step duration                                            Actual step duration
+ 2                                    2                                                                      2
+
+AEP                                                            Touch sensor                                               Touch sensor
+                                                                                                            AEP
+                                     AEP
+Phase ( )
+                                             Phase ( )
+                                                                                                 Phase ( )
+
+0                                    0                                                                       0
+
+     Swing phase Stance phase           Swing phase                         Stance phase                       Swing phase Stance phase
+
+               time                                                   time                                              time
+
+  (a) Normal step cycle                 (b) Extended step cycle                                             (c) Attenuated step cycle
+
+Figure 3: An illustration of the normal and actual phase i of oscillator i over time. The phase of an oscillator governing leg
+            horizontal orientation (servo s1) is reset to AEP following a signal from the touch sensor, resulting in changes to
+
+            the step cycle.
+
+5.1.2 Closed-loop CPG                                                    When the foot touches the ground, the phase of the corre-
+                                                                      sponding oscillator is reset to AEP , the normal phase value
+The second generative encoding scheme evaluated is an ex-             where the transition from the swing phase to the stance
+tension of the open-loop scheme (see Sec. 5.1.1). While the           phase is supposed to occur. Consequently, in the oscilla-
+generatively encoded CPG parameters and the CPPN en-                  tor's step cycle the actual duration of the swing phase is not
+coding remains the same as in the open-loop model (Fig. 2),           fixed, but is dependent on the timing of the foot touching the
+the modification introduced is a sensory feedback mecha-              ground (see Fig. 3), and the resulting oscillator's step cycle is
+nism that modulates the oscillations produced by the CPG.             thus modulated by sensory feedback.
+In this closed-loop encoding scheme, feedback signals from
+the touch sensors attached to each of the six legs of the hexa-       5.2 Encoding ANNs with CPPNs (minimal
+pod trigger a phase-resetting mechanism Aoi and Tsuchiya                   HyperNEAT)
+(2005), that adapts the oscillation period depending on the
+gait and the terrain. For the phase-resetting mechanism, two          The third generative encoding scheme evaluated is a simpli-
+extreme positions of the horizontal orientation of the robot          fied version of HyperNEAT indirect encoding3 In previous
+leg are introduced with respect to the robot trunk, (i) the an-       work, the CPPN has been used successfully to evolve modu-
+terior extreme position (AEP), where the swing phase tran-            lar and regular patterns in the connection space of the ANN,
+sitions to the stance phase, and (ii) the posterior extreme po-       resulting in symmetric and coordinated gaits for both sim-
+sition (PEP), where the stance phase transitions to the swing         ulated and physical quadruped robots (Stanley et al., 2009;
+phase.                                                                Clune et al., 2011; Yosinski et al., 2011; Lee et al., 2013). The
+                                                                      results encourage us to include the HyperNEAT encoding in
+   The phase of the oscillator at the AEP, AEP is determined          our comparative study.
+by the following equations.
+                                                                         The CPPNs encode the weights of a fixed topology, single-
+   =  TST                                                             layer feedforward ANN, featuring 2-D Cartesian grids of in-
+                                                                      puts, hidden and output neurons (Fig. 4). Neurons of the
+      TST + TSW                                                       ANN are positioned in the substrate, in accordance with the
+                                                                      hexapod robot morphology. Using the encoding, the CPPN
+AEP = 2 (1 - )                                                        is iteratively queried the positions of all source (x1, y1) and
+                                                                      target (x2, y2) neurons in proximal layers, along with a con-
+where TSW is the duration of the swing phase, TST is the              stant bias, and it outputs the corresponding weights of the
+duration of the stance phase, and  (0 <  < 1) is the duty             input-hidden and hidden-output neuron connections.
+ratio, i.e., the ratio between the stance phase duration and
+the total step cycle (Kajita and Espiau, 2008). In this study,           The ANN receives as input the previously requested an-
+is prefixed at 0.5, resulting in AEP to be at .                       gles (actual angles unknown) for each of the 12 pivot joints
+                                                                      of the hexapod robot (s1 and s2, for 6 legs). In addition,
+   Utilizing AEP for the oscillators governing horizontal ori-        sine and cosine waves of frequency 1 Hz are also input to
+entation on each of six legs of the robot (oscillators i              the ANN, to facilitate periodic oscillations at the output neu-
+{4, 5 . . . 9}, see Fig. 2), the phase equation (eq. 4a) is modi-     rons. The output from the ANN at each time-step are 12
+fied while keeping the equations for the amplitude (eq. 4b)           numbers (one for each of s1 and s2, on each of 6 legs) in in-
+and the oscillator output (eq. 4c) unchanged.                         terval [-1, 1], that are scaled to the allowable angular range
+                                                                      of the corresponding motors, and indicate the next position
+i = 2Fi + j wi,j sin (j - i - i,j ) + gi (5a)                         of each motor.
+
+j                                                                        In preliminary experiments, the HyperNEAT encoding
+                                                                      evolved ANNs that exhibited high frequency output oscil-
+gi = AEP - i (mod 2)  tliand - t        (5b)                          lations (in excess of 20 Hz). In the resultant gaits, the robot
+                                                                      could traverse large distances by vibrating its legs rapidly,
+where tliand is the time when the foot of the leg being hor-          and in unison. Such high frequency pronking gaits would
+izontally oriented by oscillator i lands on the ground, and
+ (·) is the Dirac delta function ([·] : R  [0, )) defined as 0         3The CPPN is evolved with a simple multiobjective evolutionary algo-
+for all arguments except at the origin, where it is 1. The func-          rithm, instead of the NEAT method (details in Tonelli and Mouret
+tion gi resets the phase i of oscillator i to the normal value            (2013)).
+AEP instantaneously when the foot of the leg lands on the
+
+ground.
+
+                                                                   8
+Source Target          0.5    s2       5Isn1put  layse1r                          Hidden layer   next Output layer
+ node node            0.25
+(xi yi) (xj yj) Bias         curLr eg  curr                        s2                                    next
+                         0                   sin curLr eg
+       CPPN           -0.25  curLr eg  4                          0                              next next          next
+                      -0.5             curr                       curr                                                      next
+
+                             curLr eg 3      cos  curLr eg 1                                     next               next
+                                     curr                 curr                                           next               next
+
+                             -0.6 -0.4 0          curLr eg 2            y                                           next
+                                                          curr                                                              next
+
+For all nodes from input layer to hixdde0n.4laye0r.6
+
+For all nodes from hidden layer to output layer
+
+Figure 4: Encoding ANNs with CPPNs (inspired by Clune et al. (2011); Yosinski et al. (2011); Lee et al. (2013)). Inter-neuron
+            connection weights are encoded as function of the position of source and target neurons of each neural connection.
+            The CPPN outputs the weights of input-hidden and hidden-output neuron connections, for each source (xi, yi) and
+            target (xj, yj) neuron in proximal layers. The ANN is input the requested angles of the previous time-step for the
+            first two servos (s1 and s2) on each leg, and a sine and cosine wave. The output neurons specify the new joint
+            angles for the current time-step.
+
+clearly not be replicable on the physical robots, and result            Bias x y        Trigger         s2 s1       s1 s2
+in overly taxed servos Yosinski et al. (2011). To resolve this
+problem, and as suggested by Lee et al. (2013), we gener-                         time                       Leg 5    Leg 0
+ated joint angular positions with a time-step of 15 ms, by
+averaging over four consecutive pseudo-positions generated                 CPPN Timer            0.5                  Leg 1
+at 3.75 ms intervals. The number of evolved ANN con-                                offset
+trollers outputting high frequency oscillation was thus re-                                                  Leg 4              y
+duced, with oscillations at 2.44 ± 1.95 Hz (Median±IQR in               SUPG output
+20 replicates, with the frequency at each replicate averaged                                       0                  Leg 2
+across 18 servos).                                                      (a) A single SUPG.
+                                                                                                             Leg 3
+5.3 Encoding SUPGs with CPPNs                                           Timer 1
+                                                                                                 -0.5
+
+                                                                        output 0  time 1         -0.6 -0.4 x 0.4 0.6
+
+                                                                        Trigger event               (c) SUPG substrate.
+
+                                                                        (b) Timer of SUPG.
+
+In the fourth generative encoding scheme evaluated, the              Figure 5: Encoding SUPGs with CPPNs (inspired by Morse
+CPPN encodes the attributes of a SUPG. The SUPG is a                             et al. (2013)). (a) The SUPG output is a function
+macro-neuron that upon receiving an external trigger, pro-                       of its coordinates (x, y) in the substrate, and the
+duces a single cycle of a CPPN encoded oscillatory signal.                       elapsed time since last trigger (output of Timer).
+Consequently, the repeated triggering of the SUPG generates                      The time of first trigger is determined by an off-
+a periodic pattern, used to govern the actuation of a multi-                     set. (b) Once triggered, the SUPG timer ramps up-
+legged robot. In a previous work, the SUPG outperformed                          ward linearly from 0 to 1 and stays there, until it
+HyperNEAT encodings in evolving locomotion gaits for a                           is re-triggered. (c) Positions of the 12 SUPGs in the
+simulated quadruped robot (Morse et al., 2013). The resul-                       substrate, outputting the desired angles for the first
+tant SUPG gaits appeared faster and steadier in extended                         two servos (s1 and s2), on each leg of the hexapod.
+evaluations, encouraging us to study the encoding both in
+terms of performance, and the evolvability provided.                 length of an optimal robot-walking step. Rather, the oscilla-
+                                                                     tion period can be adjusted depending on the gait and the
+   In this encoding, the CPPN is input the position (x, y)           terrain by restarting the SUPG whenever its associated foot
+of the SUPG in the substrate, and the elapsed time since             touches the ground, thus producing a closed-loop control.
+the SUPG was last triggered (Fig. 5a). The elapsed time              In our hexapod robot, the two SUPGs actuating each leg
+is recorded by an internal timer, individual to each SUPG,           (Fig. 5c), are simultaneously triggered by the corresponding
+and ramps upwards from an initial value of 0 to a maxi-              foot touching the ground.
+mum value of 1, in one period of the SUPG's output signal
+(Fig. 5b). Therefore, the SUPG's output is a function of both,          At the start of the simulation, all six legs of the robot are
+its position in the substrate, and the time since its last cycle     in contact with the ground, resulting in all the SUPGs be-
+was triggered. Applying the SUPGs for hexapod locomo-                ing triggered simultaneously. To avoid the resulting hopping
+tion, the substrate comprises 12 SUPGs positioned to reflect         gaits, the first trigger to each SUPG is delayed by an offset.
+the robot morphology (Fig. 5c). The outputs of the SUPGs             The offset output of the CPPN is determined for the s1 SUPG
+at each time-step specify the desired angles for the first and       on each leg by supplying its coordinates as input, and setting
+second servos (s1 and s2), on each leg of the robot.                 the time input to 0. The same offset value is also applied to
+                                                                     the s2 SUPG on the leg, allowing both the oscillators on each
+   The internal timer of the SUPG can be restarted from 0, fol-      leg to start simultaneously.
+lowing the occurrence of an external trigger event (Fig. 5b).
+Consequently, the SUPG cycle does not need to match the
+
+                                                                  9
+5.4 Direct encoding                                                         (Direct, CPG and CPG-f/b) converged more rapidly as com-
+                                                                            pared to those encoded with the ANN and SUPG schemes
+Locomotion controllers evolved with direct encoding are de-                 (Fig. S4, generations 0 to 8, 000). After 8, 000 generations,
+signed to be simple, wherein the actuation along each DOF                   the performance in forward displacement of the Direct, CPG,
+of the robot is governed by the periodic signal of an open-                 CPG-f/b, ANN and SUPG encodings was 1.92 ± 0.19, 1.79 ±
+loop amplitude controlled phase oscillator. With this encod-                0.08, 1.68 ± 0.13, 2.93 ± 1.60 and 2.78 ± 1.43 m, respectively
+ing, hexapod leg actuation is governed by the differential                  (Median±IQR, see Fig. 6b, Kruskal-Wallis test: p < 0.001).
+equation model (eq. 4a, b and c). There are 12 evolved pa-                  The ANN and SUPG schemes achieved the highest perfor-
+rameters for the intrinsic amplitudes of oscillators, govern-               mance values across all five encodings (d.f. = 38, all p <
+ing the actuation of the two servos s1 and s2, on each of six               0.001, using Matlab's Mann-Whitney test, which is the de-
+legs of the hexapod. In addition, 11 inter-oscillator phase                 fault statistical test unless otherwise specified), but with no
+bias parameters are also evolved (see Fig. 2b, and Sec. 5.1.1               significant difference in performance between them. Fur-
+for details on constraints on phase biases). Consequently, a                thermore, amongst the Direct, CPG, and CPG-f/b encodings,
+directly encoded controller for the hexapod robot is fully rep-             a decrease in performance was detected with a generative
+resented by 23 parameters.                                                  encoding, and with the inclusion of a feedback mechanism
+                                                                            (d.f. = 38, p < 0.001). However, this decrease in perfor-
+6 Experiments                                                               mance was small, and did not exceed 12% (detailed statisti-
+                                                                            cal comparison provided in Table S1).
+We conducted 8, 000 generations of artificial selection in pop-
+ulations consisting of 100 individuals (8, 000 × 100 evalua-                   Importantly, intrinsic inter-encoding differences existed in
+tions). Our aim was to evolve controllers for the hexapod                   the frequencies of oscillation governing leg actuation. The
+robot to walk forward, evaluated for a period of 5 s (334 time-             frequency of the CPG oscillations was prefixed at 1 Hz, irre-
+steps). The Nondominated sorting genetic algorithm II (Deb                  spective of the sensory feedback provided, and the direct or
+et al., 2002) was used to simultaneously optimize the follow-               generative nature of the encoding. By contrast, the individ-
+ing three objectives:                                                       uals evolved with ANN and SUPG schemes were capable of
+                                                                            expressing higher frequency oscillations (2.44 ± 1.95 Hz for
+                                                                            ANN, and 3.81 ± 0.73 Hz for SUPG), and the frequency of
+               -Fi                                                          the gait may itself be under selection. Consequently, an as-
+                                                                            sessment of the encodings solely on the basis of the performance is
+                                                                            biased, and other measures are needed to compare encodings.
+Maximize -|i|                         (6)
+                                                                            6.2 Evolvability analysis
+                 1  j=N  D(Bi,  Bj )
+                    j=0                                                     The evolvability provided by the encoding schemes is an-
+                                                                            alyzed by mutating the best individual of each replicate at
+                 N                                                          generation 8, 000, and reporting the following: (i) The pro-
+                                                                            portion decrease in performance consequent to the muta-
+where for individual i in the population, Fi is the fitness                 tion (eq. 1); and (ii) The gait diversity, computed as the mu-
+computed as the distance between the final position of i and                tual information between gait vectors of the original and mu-
+a goal located 25 m directly in front of the robot's initial po-            tated individual (eq. 2c). The individual is mutated at a pre-
+sition, i denotes the angle of the robot's trajectory with re-              determined mutation rate as used during selection, in 1, 000
+spect to the normal forward walking direction, D(Bi, Bj) is                 separate and independent instances. Finally, a kernel den-
+the hamming distance between the binary gait vectors of in-                 sity estimation5 (Scott, 2009) is used to visualize the resul-
+dividual i and j, and N is the size of the population.                      tant landscape of 20, 000 data points (1, 000 mutations × 20
+                                                                            replicates), pooled together from all replicates.6
+   In eq. 6, the first and second objectives reward individu-
+als to walk forward large distances towards a goal, unattain-                  Distinct evolvability signatures were exhibited by the Di-
+able by the robot within the experiment evaluation time.                    rect, CPG, CPG-f/b, ANN, and SUPG encoding schemes, af-
+The third objective is introduced to facilitate the exploration             ter 8, 000 generations of selection (see Fig. S2). In evolvability
+of diverse solutions and avoid premature convergence to                     analysis with a direct encoding, a conservative exploration of
+suboptimal solutions at local minima Mouret and Doncieux                    the phenotype, limited to solutions close to the unmutated
+(2012).                                                                     individuals was found (11.9% and 0.33, median decrement
+                                                                            in performance and gait diversity, respectively). A genera-
+   Artificial selection was conducted in 20 independent repli-              tive encoding of the CPG model had only a minor effect on
+cates, for the Direct encoding, and the four generative en-                 the evolvability provided (performance decrement of 12.7%
+codings, (i) CPG (open-loop controller), (ii) CPG-f/b (closed-              and gait diversity of 0.36). The inclusion of a feedback mech-
+loop controller), (iii) ANN (minimal HyperNEAT), and                        anism in the generatively encoded CPG model resulted in
+(iv) SUPG4. Performance and evolvability analysis are re-                   more diverse gaits (0.74), but with not much change in the
+ported for the best individual of each replicate, selected to               performance loss (16.6%) following mutations. By contrast,
+have the highest fitness in the population, and with an an-                 the generative encoded ANN and SUPG schemes were much
+gle of trajectory in the range of ±1 (simulation source code                more aggressive in the exploration of the phenotypic land-
+can be downloaded from http://pages.isir.upmc.
+fr/evorob_db.)                                                               5A commonly used non-parametric technique for the estimation of the
+                                                                                probability density function of a random variable, from a finite data sam-
+6.1 Performance                                                                 ple.
+
+In all five encodings, the performance of the best indi-                     6Bivariate density estimation, with Gaussian type kernels over a grid of
+viduals rapidly increased with a quasi-stable equilibrium                       100 × 100 equidistant points.
+being reached with less than 5, 000 generations of selec-
+tion (Fig. 6a). Additionally, individuals with evolved CPGs
+
+ 4A single evolution replicate required about 24h of computational time on
+    a 8-cores Intel Xeon E5520 at 2.27 Ghz.
+
+                                      10
+                                 4                                                                     4
+
+                Performance (m)  2                                                    Performance (m)  2
+
+                                                                        Direct
+
+                                 0                                      CPG                            0
+                                                                        CPG-f/b
+
+                                                                        ANN
+
+                                                                        SUPG
+
+                                    0       2000  4000         6000             8000                      Direct CPG CPG-f/b ANN SUPG
+                                                                                                               Encodings
+                                                  Generations
+
+                                            (a) Performance time-line.                                    (b) Final performance.
+
+Figure 6: Performance in forward displacement for the Direct, CPG, CPG-f/b, ANN and SUPG encoding schemes: (a) Me-
+            dian performance for 8, 000 generations of selection; and (b) Performance of encodings at generation 8, 000.7
+
+                                    Direct        CPG                   CPG-f/b                           ANN                     SUPG
+
+Gait diversity                                                                                                                          % of mutations
+
+                                                               Proportion change in performance
+
+Figure 7: Evolvability signatures for different encodings: Gait diversity and the proportion decrease in performance, fol-
+            lowing 20, 000 independent mutations of the best individuals, for the Direct, CPG, CPG-f/b, ANN, and SUPG
+            encoding schemes after 8, 000 generations of selection, pooled from all 20 replicates. In good evolvability signa-
+            tures, mutations are located in the upper-right corner of the signature space, indicating high gait diversity, and a
+            robustness to deleterious and lethal mutations.
+
+scape, with the gait diversity of mutated individuals at 0.95                         achieved by the Direct and CPG encoding schemes (not sig-
+for ANN, and 0.99 for the SUPG encodings. However, differ-                            nificantly different from each other p = 0.03, but different
+ences existed in the severity of negative effects of mutations                        from the three other encodings, all three p < 0.001). Thus,
+amongst the two encoding schemes. The ANN encoded indi-                               across the five encoding schemes, the SUPG approach pro-
+viduals were sensitive to the effects of deleterious mutations,                       vided the highest evolvability, with the capability to explore
+resulting in a 78.9% drop in performance. In comparison, in-                          very different but viable gaits. Additionally, with a stricter
+dividuals evolved with the SUPG encoding were much more                               definition of viable mutants resulting in no more than 50%
+resilient to the negative effects of mutations, with a smaller                        drop in performance, the SUPG still achieved the highest
+decrement of 43.1% in performance following mutation.                                 beneficial mutation count (all p < 0.001), with no difference
+                                                                                      between the other four encodings (see Fig. S1).
+   The evolvability provided by the encodings is further an-
+alyzed by computing the number of mutations in the evolv-                             6.2.1 Evolvability under varying mutation intensities
+ability signature (Fig. S2), that are both non-lethal and result
+in diverse locomotion gaits. Mutations are classified as lethal                       In this section, we study the sensitivity of our signature
+if they result in performance decrement in excess of 100%                             of the evolvability provided by the Direct, CPG, CPG-f/b,
+(f1 < -1, see eq. 1), corresponding to the failure of any for-                        ANN and SUPG encodings with respect to the parameters of
+ward movement by the robot. Similarly, a mutation is con-                             the variation operator used to generate mutants. The main
+sidered to generate a diverse gait, if the inter-gait diversity                       questions are, if and how differences in the mutation opera-
+exceeds 0.5 (f2 > 0.5, see eq. 2c).                                                   tor affect our conceived signature of evolvability? We ran a
+                                                                                      series of experiments to access evolvability, with genetic mu-
+   The proportion of viable and diverse-gait generating mu-                           tants generated at different intensities. Mutations were con-
+tations was affected by the encoding scheme (see Fig. S1 and                          sidered at the standard mutation rate and mutation step-size
+Table S2, Kruskal-Wallis test: p < 0.001). Across the five en-
+codings, the SUPG scheme was most efficient at generating                              7On each box, the mid-line marks the median, and the box extends from
+such mutations (d.f. = 38, all p < 0.001). Both the ANN                                   the lower to upper quartile below and above the median. Whisker out-
+and the CPG-f/b encodings led to an intermediate number                                   side the box generally indicate the maximum and minimum values, ex-
+of viable and diversity generating mutations (ANN signifi-                                cept in case of outliers, which are shown as crosses. Outliers are data
+cantly higher than CPG-f/b, and both different from all other                             points outside of 1.5 times the interquartile range from the border of the
+encodings, all p < 0.001). The lowest mutation count was                                  box.
+
+                                                                                 11
+1
+
+Behaviorally diverse and viable mutants0.8
+                                                                                            Gait diversity
+0.6
+
+0.4
+
+0.2
+
+0            CPG CPG-f/b ANN                                     SUPG          Proportion change in performance
+     Direct             Encodings
+                                                                       (b) Shaded region of beneficial muta-
+(a) Beneficial mutations generated by different encodings.                 tions.
+
+Figure 8: Proportion of viable mutants with gait diversity in excess of 0.5, from 1, 000 independent mutations of the best
+            individuals at generation 8, 000 in each of 20 replicates, for the Direct, CPG, CPG-f/b, ANN and SUPG encoding
+            schemes. These beneficial mutations are counted from the shaded region of each encoding's evolvability signature.
+
+as used during selection (medium intensity), and at a four-      In separate preliminary experiments, the use of the entire
+fold decrease (low intensity) and a four-fold increase (high     population at generation 8, 000 (instead of the best individu-
+intensity) of the standard mutation operator parameters of       als) did not change our results of the adaptability provided
+both rate and step-size.                                         by different encodings. Individuals in the damage recovery
+                                                                 population were mutated at the standard mutation rate and
+   In order to analyze the effect of the variation operator      step size used during selection. A further 10, 000 genera-
+on our signature of evolvability, in Fig. 9 we outline the       tions of artificial selection was conducted on the populations
+perimeter of the evolvability signatures generated from low,     of amputee hexapods for each of the following three dam-
+medium and high intensity mutations (see Fig. S2 for interior    age scenarios: (i) an asymmetrical damage, following the re-
+of signature). In all five encodings, the distribution of mu-    moval of one leg of the robot (leg 1, Fig. 10a); (ii) a symmet-
+tants shift towards more diverse gaits and is accompanied by     rical damage occurs, wherein the two middle legs on either
+larger loss in performance, following increments in the mu-      side of the robot are removed (legs 1 and 4, Fig. 10b); and
+tation intensity. A 16-fold increment in the mutation rate and   (iii) a highly asymmetrical damage occurs consequent to the
+step-size (low to high mutation intensity) resulted in a 0.94,   removal of the middle leg on one side and the rear leg on the
+0.96 and 0.98 difference in mutant gait diversity for the Di-    opposing side of the hexapod (legs 1 and 3, Fig. 10c). The
+rect, CPG and CPG-f/b encodings respectively (see Fig. S3a,      number of generations required to regain an effective gait
+b and c). By contrast, the ANN and SUPG schemes achieved         and the proportion of the original performance (undamaged
+highly diverse gaits at the lowest mutation intensity (0.94      robot's performance at generation 8, 000) recovered for each
+for ANN and 0.99 for SUPG), and an increment from low to         of the three damage scenarios is analyzed.
+high mutation intensity only resulted in a 6.0% for ANN, and
+0.4% for SUPG further increase in the mutated gaits diversity       In the 10, 000 generations of selection, all the five encod-
+(Fig. S3d and e). The increment from low to high mutation        ings were capable of recovering a majority of their origi-
+intensity also resulted in a drop in mutant performance of       nal performance in forward displacement, irrespective of the
+63.7%, 90.5%, 93.5%, 98.6% and 54.9%, for the Direct, CPG,       damage to the hexapod robot (see Fig. S4). After 10, 000
+CPG-f/b, ANN, and SUPG encodings respectively (Fig. S3f-         generations post robot damage, the Direct, CPG, CPG-f/b,
+j). In summary, the SUPG encoding facilitates the exploration    ANN and SUPG schemes all recovered the highest propor-
+of diverse gaits even when mutants are generated at a low        tion of their original performance in the first damage sce-
+mutation intensity. Furthermore, across all five encodings,      nario (0.89 ± 0.07, Median±IQR across all encodings), fol-
+the SUPG scheme provides the most resilience against the         lowed by an intermediate recovery in the second (0.78±0.07),
+deleterious nature of high intensity mutations.                  and third (0.72 ± 0.05) scenarios (Fig. 11a, b and c, Kruskal-
+                                                                 Wallis test: d.f. = 4, p < 0.001 for first two scenarios, and
+6.3 Damage recovery                                              p = 0.018 for third scenario). Across all five encodings,
+                                                                 the SUPG was most efficient in recovering its original per-
+The significance of our evolvability signatures of the Direct,   formance in the first (1.02 ± 0.14) and second (0.99 ± 0.23)
+CPG, CPG-f/b, ANN and SUPG encodings was investigated            scenarios (for both, all p < 0.001), while in both scenarios no
+by analyzing the adaptation of the evolved robot's gait, fol-    significant difference in recovery was registered between the
+lowing the removal of one or more of its legs. We expect that    remaining four encodings (Fig. 11a and b). In the third sce-
+for the encodings registering a better evolvability signature,   nario which was the hardest, the SUPG again achieved the
+the corresponding evolved individuals would require fewer        highest performance recovery (0.88 ± 0.3), although perfor-
+generations to recover an effective walking gait.                mance was no longer significantly different between encod-
+                                                                 ings (Fig. 11c).
+   In these experiments, the new (damage recovery) popula-
+tions were comprised of 100 mutated individuals of the best         In order to analyze the time required by damaged
+individual of each replicate at generation 8, 000 of selection.  hexapods to recover an effective gait, in Fig. 12 we have plot-
+
+                                   12
+Direct                             CPG  CPG-f/b                            ANN  SUPG
+
+                                                                                                       H
+
+                                                                                                       M
+                                                                                                       L
+Gait diversity
+                                                                                                                                             Mutation rate
+
+                                        Proportion change in performance
+
+Figure 9: Contours of the evolvability signature for the Direct, CPG, CPG-f/b, ANN, and SUPG encoding schemes with
+            mutations generated at low (L), medium (M), and high (H) intensity, of the best individuals at generation 8, 000
+            of selection. The low, medium, and high mutation intensities were quantitatively 0.25, 1, and 4 times respectively,
+            the mutation rate and step-size used during selection. Individual contours encompass a 0.025% or higher density
+            of mutants.
+
+(a) Scenario 1: Removal of right-       (b) Scenario 2: Removal of right-       (c) Scenario 3: Removal of right-
+    middle leg.                             middle and left-middle legs.            middle and left-rear legs.
+
+Figure 10: The three damage scenarios imposed on the hexapod robot (undamaged robot in Fig. 1).
+
+ted the number of generations required to restore 85% of         7 Discussion
+the original performance in forward displacement. Across
+the three robot-damage scenarios, amputee hexapods in the        In this study, we introduce a methodology to compare ge-
+first scenario achieved the highest recovery rate (13 ± 3.25     netic encoding schemes, utilizing our novel approach to sig-
+of 20 replicates restored performance in 10, 000 generations,    naturize evolvability. The evolvability provided by the gen-
+across all encodings), followed by an intermediate recovery      eratively encoded CPG, CPG-f/b, ANN (Clune et al., 2011;
+rates in the second (4 ± 7.75 replicates), and third scenarios   Yosinski et al., 2011) and SUPG (Morse et al., 2013) schemes
+(1±8.25 replicates). In the first two scenarios (Kruskal-Wallis  and a direct encoding, is characterized by quantifying both,
+test: d.f. = 4, both p < 0.001), the SUPG encoded individu-      (i) the quality of the genetic mutations, and (ii) the quantity
+als recovered at least an order of magnitude faster (373 and     of behavioral variation generated from genetic change. Our
+957 generations in scenarios 1 and 2, respectively) than in-     evolvability based inter-encoding comparison methodology
+dividuals with the Direct, CPG, CPG-f/b and ANN encod-           provides insights on the adaptability of evolved individu-
+ings (see Fig. 12a and b, all p < 0.001). In both scenarios,     als to novel scenarios. To this effect, the significance of our
+no significant difference in recovery was registered between     conceived signature of evolvability is evaluated by the indi-
+these four encoding schemes. In the third scenario (Kruskal-     vidual adaptation response to morphological changes previ-
+Wallis test: d.f. = 4, p < 0.001), the SUPG encoded amputee      ously unencountered by the hexapod robot.
+hexapods continued to exhibit the fastest recovery (8466.5
+generations), although it was no longer significantly differ-       Our results revealed a direct relationship between the esti-
+ent from ANN encoded hexapods (see Fig. 12c, p = 0.25).          mated evolvability provided by the encodings, and the capa-
+Furthermore, in this scenario, all three CPG based encodings     bility of the evolved individuals to adapt to severe changes
+(Direct, CPG, and CPG-f/b) performed poorly, with only one       in morphology, simulated by the amputation of one or more
+replicate making the 85% mark in the 10, 000 generations         of the hexapod legs. Amongst the five encodings evaluated,
+of selection. In summary, across all five encoding schemes,      the SUPGs (Morse et al., 2013) had the best evolvability sig-
+the SUPG encoded individuals had the fastest recovery, de-       nature, and their encoded individuals were also foremost to
+spite being in increasingly difficult robot-damage scenarios     recover following sustained damages. In both the easy and
+wherein most of the individuals encoded by the other en-         the intermediate robot-damage scenarios (scenarios 1 and 2),
+codings failed to recover an effective walking gait (detailed    the SUPG encoded individuals were capable of recovering
+comparison of damage recovery in Tables S3, S4 and S5).          85% of their performance on the undamaged robot in all but
+                                                                 two replicates, and did so more than an order of magnitude
+                                                                 faster than the other four encodings. Furthermore, even in
+                                                                 the most difficult robot-damage scenario (scenario 3), the
+                                                                 SUPG scheme achieved the fastest recovery in the majority
+                                                                 of the evaluated replicates.
+
+                                        13
+Proportion performance recovered    1                                               1Proportion performance recovered            1Proportion performance recovered
+                                  0.8                                             0.8                                          0.8
+                                  0.6                                             0.6                                          0.6
+                                  0.4                                             0.4                                          0.4
+                                  0.2                                             0.2                                          0.2
+
+                                    0                                               0                                            0
+                                        Direct CPG CPG-f/b ANN SUPG                    Direct CPG CPG-f/b ANN SUPG                  Direct CPG CPG-f/b ANN SUPG
+                                                           Encodings                                       Encodings                                    Encodings
+
+                                (a) Scenario 1: Removal of right-middle leg.  (b) Scenario 2: Removal of right-middle and  (c) Scenario 3: Removal of right-middle and
+                                                                                  left-middle legs.                            left-rear legs.
+
+Figure 11: Proportion of the original performance in forward displacement restored 10, 000 generations after the three dam-
+             age scenarios, across 20 replicates, for the Direct, CPG, CPG-f/b, ANN and SUPG encoding schemes.
+
+                                10000                                                                 10000                                        10000
+
+Generations to recover            8000                                        Generations to recover            8000       Generations to recover            8000
+
+                                  6000                                                                          6000                                         6000
+
+                                  4000                                                                          4000                                         4000
+
+                                  2000                                                                          2000                                         2000
+
+       0                                                                              0                                            0
+          Direct CPG CPG-f/b ANN SUPG                                                    Direct CPG CPG-f/b ANN SUPG                  Direct CPG CPG-f/b ANN SUPG
+                            Encodings                                                                       Encodings                                    Encodings
+
+(a) Scenario 1: Removal of right-middle leg.                                  (b) Scenario 2: Removal of right-middle and  (c) Scenario 3: Removal of right-middle and
+                                                                                  left-middle legs.                            left-rear legs.
+
+Figure 12: The number of generations of selection required to restore 85% of the original performance of the undamaged
+             hexapod in forward displacement across 20 replicates, for the Direct, CPG, CPG-f/b, ANN, and SUPG encoding
+             schemes. In replicates unable to attain the 85% mark, the recovery time was set to the upper limit of 10, 000
+             generations.
+
+   The ANN encoding scheme (minimal HyperNEAT) was                                                                        coded CPGs for our hexapod locomotion problem, perhaps
+capable of producing highly diverse hexapod gaits, follow-                                                                consequent to the already low-dimensional search space for
+ing genetic mutations. The high behavioral diversity gen-                                                                 the directly encoded locomotion controllers. For example,
+erated is consistent with the earlier use of this encoding to                                                             our directly encoded CPGs for hexapod locomotion com-
+evolve gaits for the QuadraBot robot (Clune et al., 2009a,                                                                prise 23 amplitude and phase bias parameters, in contrast
+2011). However, in our ANN implementation, most of ge-                                                                    to the 800 Fixed-Topology NEAT (FT-NEAT) encoded neu-
+netic mutations producing diverse gaits were highly dele-                                                                 ral weight parameters for quadruped locomotion controllers
+terious, and resulted in little forward hexapod movement.                                                                 (Clune et al., 2009a). Thus, the potential benefits of pheno-
+Consequently, an estimate of evolvability solely on the basis                                                             typic scalability in utilizing generative encoding schemes are
+of the generated behavioral diversity (Lehman and Stanley,                                                                reduced in our study.
+2011b; Reisinger et al., 2005; Lehman and Stanley, 2013) is not
+reliable, and both the quality (individual viability) and quan-                                                              For our signature of evolvability, we mutated the individ-
+tity of phenotypic variation consequent to genetic change is                                                              uals with a predetermined mutation rate, tuned to allow a
+required to characterize evolvability. Furthermore, the poor                                                              speedy convergence of the evolved solutions. This is a criti-
+evolvability signature for the ANN encoding scheme is re-                                                                 cal consideration as variations to the mutation rate can affect
+flected in its poor recovery from sustained robot damages.                                                                the viability and gait diversity of generated mutants. A com-
+                                                                                                                          parison of the evolvability provided by encodings at low and
+   In studies on evolution of multilegged robot locomotion,                                                               high mutation intensities suggests that with an increase in
+the generative encodings exploit the symmetry of the robot                                                                mutation rate, the peak of the distribution of mutants shifts
+morphology to generate regular and coordinated gait pat-                                                                  towards more diverse gaits with a larger decrease in task per-
+terns that often outperform gaits evolved with direct encod-                                                              formance. However, the overall shape of the distribution,
+ings (e.g., Clune et al. (2011)). Generative encodings also fa-                                                           highlighting desirable regions of the evolvability landscape,
+cilitate scalability, wherein evolution in the low-dimensional                                                            remained the same for all five encodings. Importantly, across
+genetic search space is capable of evolving complex pheno-                                                                the five encodings, the SUPG scheme continued to provide
+types comprising of many more dimensions (Stanley and Mi-                                                                 the highest resilience to deleterious genetic change, despite
+ikkulainen, 2003). However, no difference in performance                                                                  a 16-fold increase in mutation intensity.
+was registered between the directly and generatively en-
+                                                                                                                             The high evolvability and rapid recovery provided by the
+
+                                                                                                                      14
+SUPGs may be consequent to the closed-loop control in-            coded individuals were foremost in adapting to various new
+grained in the encoding scheme. Such a feedback mecha-            and challenging scenarios. Our biologically-relevant "finger-
+nism provides an adaptive period of the SUPG oscillations,        print" of the evolvability provided by an encoding accounts
+that can be adjusted to the new step size of a gait more ap-      for both the quantity and quality of phenotypic variation re-
+propriate for a four or five legged robot, after the hexapod      sulting from genetic change, and results in distinct evolv-
+has suffered damages. Alternatively, the better performance       ability signatures for the different encodings, despite simi-
+of SUPGs may be consequent to the open-ended encoding of          lar task-fitness values. These evolvability signatures allow
+control signals by these oscillators. In contrast to the simple   for a discrimination between encoding schemes, based on
+sinusoidal waves of the CPG-based schemes wherein only            their capability of producing highly adaptable individuals
+the signal amplitude and phase difference is encoded, no          for novel, and importantly, a priori unknown scenarios. In
+constrains are imposed on the CPPNs encoding the SUPG             summary, our evolvability signatures for encoding compari-
+output signals. The resulting unconstrained encoding may          son serves as a comprehensive analysis tool beyond the stan-
+help for example in adjusting the duty ratio for each oscilla-    dard task-fitness performance benchmarks commonly em-
+tor to match the new swing and stance phase durations of the      ployed in the evolutionary robotics field.
+remaining undamaged hexapod legs. Furthermore, since the
+inclusion of feedback in the CPG encoding (CPG-f/b) regis-        Acknowledgment
+tered no improvement in task-performance, evolvability or
+damage recovery, a combination of the SUPG closed-loop            This study was supported by the ANR Creadapt project
+system and the open-ended encoding of its oscillatory signal      (ANR-12-JS03-0009).
+may be responsible for its high performance and adaptive
+capabilities.                                                     Supplemental data
+
+   In our evolvability signatures, the phenotypic variation       Movies of the hexapod robot walking behaviors are available
+from genetic change was associated with the mutual infor-         online at http://goo.gl/uyY1RX.
+mation between hexapod gaits. The diversity may also be
+computed for the gaits of bipedal and quadrupedal type of         References
+robots. Similarly, behavioral diversity may be computed
+for other benchmark problems such as, the final position          P. Alberch. From genes to phenotype: dynamical systems
+of a robot in a maze navigation task (Lehman and Stan-               and evolvability. Genetica, 84(1):5­11, 1991.
+ley, 2011b; Mouret and Doncieux, 2012), the final positions
+of balls in an arena for the robot ball-collecting task (Don-     B. Alberts, D. Bray, J. Lewis, M. Raff, K. Roberts, and J. D.
+cieux and Mouret, 2009, 2010), and a vector of board piece           Watson. Molecular biology of the cell. Garland, New York,
+moves in game playing tasks (Reisinger and Miikkulainen,             1994.
+2007; Gauci and Stanley, 2010). Consequently, our approach
+to estimate evolvability is easily applicable to a wide range of  L. Altenberg. The evolution of evolvability in genetic pro-
+tasks, commonly used in evolutionary robotics experiments.           gramming. Advances in Genetic Programming, 3:47­74, 1994.
+
+   The systematic building and organizing of knowledge, a         S. Aoi and K. Tsuchiya. Locomotion control of a biped robot
+requirement in any scientific discipline, can not be achieved        using nonlinear oscillators. Autonomous Robots, 19(3):219­
+without a wide assortment of quantifiable measures to com-           232, 2005.
+pare and contrast concepts, hypotheses, testable explana-
+tions and predictions. In the field of evolutionary robotics,     S. J. Arnold. Constraints on phenotypic evolution. American
+task-performance has been prominently and often solely               Naturalist, pages S85­S107, 1992.
+used as such a quantifiable measure to form links between
+the different available evolutionary systems. However, the        F. A. Azevedo, L. R. Carvalho, L. T. Grinberg, J. M. Farfel,
+evaluated fitness by its very nature, is limited to the specific     R. E. Ferretti, R. E. Leite, R. Lent, S. Herculano-Houzel,
+problem for which the individual solutions are tested. By            et al. Equal numbers of neuronal and nonneuronal cells
+contrast, an estimate of evolvability facilitated by an evolu-       make the human brain an isometrically scaled-up primate
+tionary process, may be applicable to a much broader scope           brain. Journal of Comparative Neurology, 513(5):532­541,
+of scenarios, allowing the formation of a more generic re-           2009.
+lationship between existing evolutionary system implemen-
+tations. An evolvability-based approach of comparison be-         T. D. Barfoot, E. J. Earon, and G. M. D'Eleuterio. Experi-
+tween evolutionary processes may help to extrapolate to un-          ments in learning distributed control for a hexapod robot.
+evaluated problem regions in-between existing evaluations,           Robotics and Autonomous Systems, 54(10):864­872, 2006.
+and consequently better lend itself to building a strong theo-
+retical foundation for future research in the field.              R. D. Beer and J. C. Gallagher. Evolving dynamical neural
+                                                                     networks for adaptive behavior. Adaptive Behavior, 1(1):
+8 Conclusion                                                         91­122, 1992.
+
+A novel approach to compare encoding schemes is proposed          P. Bentley and S. Kumar. Three ways to grow designs: A
+in this paper, using evolvability instead of task-fitness, and       comparison of evolved embryogenies for a design prob-
+demonstrated for the problem of evolving locomotion gaits            lem. In Proc. GECCO, pages 35­43. ACM, New York, NY,
+for a hexapod robot. From the different direct and gener-            1999.
+ative encodings evaluated, the single-unit pattern genera-
+tor had the best evolvability signature. Furthermore, its en-
+
+15
+J. Bongard, V. Zykov, and H. Lipson. Resilient machines          A. Devert, N. Bredeche, and M. Schoenauer. Robustness and
+   through continuous self-modeling. Science, 314(5802):            the halting problem for multicellular artificial ontogeny.
+   1118­1121, 2006.                                                 IEEE Transactions on Evolutionary Computation, 15(3):387­
+                                                                    404, June 2011.
+J. C. Bongard. Evolutionary robotics. Communications of the
+   ACM, 56(8):74­83, 2013.                                       S. Doncieux and J.-B. Mouret. Behavioral diversity with mul-
+                                                                    tiple behavioral distances. In Proc. CEC, pages 1427­1434.
+J. C. Bongard and R. Pfeifer. Repeated structure and disso-         IEEE Press, 2013.
+   ciation of genotypic and phenotypic complexity in artifi-
+   cial ontogeny. In Proc. GECCO, pages 829­836. ACM, New        S. Doncieux and J.-B. Mouret. Single step evolution of robot
+   York, NY, 2001.                                                  controllers for sequential tasks. In Proc. GECCO, pages
+                                                                    1771­1772. ACM, New York, NY, 2009. ISBN 978-1-60558-
+S. B. Carroll. Endless forms most beautiful: The new science of     325-9.
+   evo devo and the making of the animal kingdom. Number 54.
+   WW Norton & Company, 2005.                                    S. Doncieux and J.-B. Mouret. Behavioral diversity measures
+                                                                    for evolutionary robotics. In Proc. CEC, pages 1­8. IEEE
+N. Cheney, R. MacCurdy, J. Clune, and H. Lipson. Unshack-           Press, Piscataway, NJ, July 2010.
+   ling evolution: evolving soft robots with multiple materi-
+   als and a powerful generative encoding. In Proc. GECCO,       S. Doncieux and J.-B. Mouret. Beyond black-box optimiza-
+   pages 167­174. ACM, New York, NY, 2013.                          tion: a review of selective pressures for evolutionary
+                                                                    robotics. Evolutionary Intelligence, 7(2):71­93, 2014. ISSN
+J. Clune and H. Lipson. Evolving 3D objects with a                  1864-5909.
+   generative encoding inspired by developmental biology.
+   SIGEVOlution, 5(4):2­12, 2011. ISSN 1931-8499.                M. Dorigo, E. Tuci, R. Groß, V. Trianni, T. H. Labella,
+                                                                    S. Nouyan, C. Ampatzis, J.-L. Deneubourg, G. Baldassarre,
+J. Clune, B. E. Beckmann, C. Ofria, and R. T. Pennock. Evolv-       S. Nolfi, F. Mondada, D. Floreano, and L. M. Gambardella.
+   ing coordinated quadruped gaits with the hyperneat gen-          The swarm-bots project. In Proc. SAB (SAB-04 Workshop
+   erative encoding. In Proc. CEC, pages 2764­2771. IEEE            on Swarm Robotics), pages 31­44, Berlin, Heidelberg, 2005.
+   Press, Piscataway, NJ, 2009a.                                    Springer-Verlag.
+
+J. Clune, C. Ofria, and R. T. Pennock. The sensitivity of hy-    A. Eiben. Grand challenges for evolutionary robotics. Fron-
+   perneat to different geometric representations of a prob-        tiers in Robotics and AI, 1(4), 2014.
+   lem. In Proc. GECCO, pages 675­682, New York, NY, USA,
+   2009b. ACM. ISBN 978-1-60558-325-9.                           S. J. Freeland and L. D. Hurst. The genetic code is one in a
+                                                                    million. Journal of Molecular Evolution, 47(3):238­248, 1998.
+
+J. Clune, K. O. Stanley, R. T. Pennock, and C. Ofria. On the     R. M. Friedberg. A learning machine: Part II. IBM Journal of
+   performance of indirect encoding across the continuum of         Research and Development, 3:183­191, 1959.
+   regularity. IEEE Transactions on Evolutionary Computation,
+   15(3):346­367, 2011.                                          A. Frigon and S. Rossignol. Experiments and models of sen-
+                                                                    sorimotor interactions during locomotion. Biological Cyber-
+J. Clune, J.-B. Mouret, and H. Lipson. The evolutionary ori-        netics, 95(6):607­627, 2006.
+   gins of modularity. Proceedings of the Royal Society B: Bio-
+   logical Sciences, 280(1755):20122863, 2013.                   Y. Fukuoka, H. Kimura, and A. H. Cohen. Adaptive dynamic
+                                                                    walking of a quadruped robot on irregular terrain based
+T. M. Cover and J. A. Thomas. Elements of information theory.       on biological concepts. International Journal of Robotics Re-
+   John Wiley & Sons, Inc., 1991.                                   search, 22(3-4):187­202, 2003.
+
+A. Crespi, K. Karakasiliotis, A. Guignard, and A. Ijspeert.      C. Furusawa and K. Kaneko. Emergence of multicellular or-
+   Salamandra robotica II: An amphibious robot to study             ganisms with dynamic differentiation and spatial pattern.
+   salamander-like swimming and walking gaits. IEEE Trans-          Artif. Life, 4(1):79­93, 1998.
+   actions on Robotics, 29(2):308­320, April 2013. ISSN 1552-
+   3098.                                                         J. Gauci and K. O. Stanley. Autonomous evolution of topo-
+                                                                    graphic regularities in artificial neural networks. Neural
+A. Cully and J.-B. Mouret. Behavioral repertoire learning in        Comput., 22(7):1860­1898, 2010.
+   robotics. In Proc. GECCO, pages 175­182. ACM, New York,
+   NY, 2013.                                                     S. Gavrilets. Evolution and speciation on holey adaptive
+                                                                    landscapes. Trends in Ecol. & Evol., 12(8):307­312, 1997.
+
+R. Dawkins. The extended phenotype: The long reach of the gene.  J. Gerhart and M. Kirschner. The theory of facilitated vari-
+   Oxford University Press, 1999.                                   ation. Proc. Natl. Acad. Sci. USA., 104(Suppl 1):8582­8589,
+                                                                    2007.
+K. Deb. Multi-objective optimization using evolutionary algo-
+   rithms. Wiley, 2001. ISBN 978-0-471-87339-6.                  A. D. Goldberg, C. D. Allis, and E. Bernstein. Epigenetics: a
+                                                                    landscape takes shape. Cell, 128(4):635­638, 2007.
+K. Deb, A. Pratap, S. Agarwal, and T. Meyarivan. A
+   fast and elitist multiobjective genetic algorithm: NSGA-      R. K. Grosberg and R. R. Strathmann. The evolution of mul-
+   II. IEEE Transactions on Evolutionary Computation, 6(2):182­     ticellularity: a minor major transition? Annual Review of
+   197, 2002.                                                       Ecology, Evolution, and Systematics, pages 621­654, 2007.
+
+16
+F. Gruau. Automatic definition of modular neural networks. J. Kaplan. The end of the adaptive landscape metaphor? Bi-
+
+Adapt. Behav., 3(2):151­183, 1994.                                ology & Philosophy, 23(5):625­638, 2008.
+
+B. Hayes. Undisciplined science. American Scientist, 92(4): S. A. Kauffman. The origins of order: Self-organization and se-
+
+306­310, 2004.                                                    lection in evolution. Oxford university press, 1993.
+
+G. S. Hornby. Functional scalability through generative rep-      S. Kernbach. Handbook of Collective Robotics: Fundamentals and
+   resentations: the evolution of table designs. Environment         Challenges. Pan Stanford, 2013. ISBN 9789814316422.
+   and Planning B, 31(4):569­588, 2004.
+                                                                  M. Kirschner and J. Gerhart. Evolvability. Proc. Natl. Acad.
+G. S. Hornby. Measuring, enabling and comparing mod-                 Sci. USA., 95(15):8420­8427, 1998.
+   ularity, regularity and hierarchy in evolutionary design.
+   In Proc. GECCO, pages 1729­1736. ACM, New York, NY,            J. Kodjabachian and J.-A. Meyer. Evolution and devel-
+   2005.                                                             opment of neural controllers for locomotion, gradient-
+                                                                     following, and obstacle-avoidance in artificial insects.
+G. S. Hornby and J. B. Pollack. Creating high-level compo-           IEEE Transactions on Neural Networks, 9(5):796­812, 1998.
+   nents with a generative representation for body-brain evo-
+   lution. Artif. Life, 8(3):223­246, 2002.                       M. Komosin´ ski and A. Rotaru-Varga. Comparison of differ-
+                                                                     ent genotype encodings for simulated three-dimensional
+G. S. Hornby, H. Lipson, and J. B. Pollack. Generative repre-        agents. Artificial Life, 7(4):395­418, 2001.
+   sentations for the automated design of modular physical
+   robots. IEEE Trans. Robot. Automat., 19(4):703­719, 2003.      S. Koos, A. Cully, and J.-B. Mouret. Fast damage recovery in
+                                                                     robotics with the T-resilience algorithm. Int. J. Robot. Res.,
+G. S. Hornby, S. Takamura, T. Yamamoto, and M. Fujita. Au-           32(14):1700­1723, 2013.
+   tonomous evolution of dynamic gaits with two quadruped
+   robots. IEEE Trans. Robot., 21(3):402­410, 2005.               J. R. Koza. Genetic programming: on the programming of com-
+                                                                     puters by means of natural selection, volume 1. MIT press,
+G. S. Hornby, A. Globus, D. S. Linden, and J. D. Lohn. Au-           1992.
+   tomated antenna design with evolutionary algorithms. In
+   Proc. AIAA Space Conference, pages 1­8. American Institute     A. Kraskov, H. Sto¨ gbauer, and P. Grassberger. Estimating
+   of Aeronautics and Astronautics, Reston, VA, 2006.                mutual information. Physical Review E, 69(6):066138, 2004.
+
+T. Hu and W. Banzhaf. Evolvability and speed of evolution-        N. Kubota. Computational intelligence for structured learn-
+   ary algorithms in light of recent developments in biology.        ing of a partner robot based on imitation. Information-
+   J. Artif. Evol. App., 2010:1:1­1:28, January 2010. ISSN 1687-     Sciences, 171(4):403 ­ 429, 2005.
+   6229.
+
+E. Iba´n~ ez-Marcelo and T. Alarco´ n. The topology of ro-        S. Lee, J. Yosinski, K. Glette, H. Lipson, and J. Clune. Evolv-
+   bustness and evolvability in evolutionary systems with            ing gaits for physical robots with the hyperneat genera-
+   genotype­phenotype map. Journal of Theoretical Biology,           tive encoding: The benefits of simulation. In A. Esparcia-
+   356:144­162, 2014.                                                Alczar, editor, Applications of Evolutionary Computation,
+                                                                     volume 7835 of LNCS, pages 540­549. Springer Berlin Hei-
+A. J. Ijspeert. Central pattern generators for locomotion con-       delberg, 2013. ISBN 978-3-642-37191-2.
+   trol in animals and robots: a review. NeuralNetworks, 21(4):
+   642­653, 2008.                                                 J. Lehman and K. O. Stanley. Abandoning objectives: Evo-
+                                                                     lution through the search for novelty alone. Evolutionary
+A. J. Ijspeert, A. Crespi, D. Ryczko, and J.-M. Cabelguen.           Computation, 19(2):189­223, 2011a.
+   From swimming to walking with a salamander robot
+   driven by a spinal cord model. Science, 315(5817):1416­        J. Lehman and K. O. Stanley. Improving evolvability through
+   1420, 2007.                                                       novelty search and self-adaptation. In Proc. CEC, pages
+                                                                     2693­2700. IEEE Press, Piscataway, NJ, 2011b.
+A. Iscen, A. Agogino, V. SunSpiral, and K. Tumer. Control-
+   ling tensegrity robots through evolution. In Proc. GECCO,      J. Lehman and K. O. Stanley. Evolvability is inevitable: In-
+   pages 1293­1300. ACM, New York, NY, 2013.                         creasing evolvability without the pressure to adapt. PloS
+                                                                     One, 8(4):e62186, 2013.
+E. J. Javaux, C. P. Marshall, and A. Bekker. Organic-walled
+   microfossils in 3.2-billion-year-old shallow-marine silici-    M. A. Lewis, A. H. Fagg, and A. Solidum. Genetic program-
+   clastic deposits. Nature, 463(7283):934­938, 2010.                ming approach to the construction of a neural network for
+                                                                     control of a walking robot. In Proc. IEEE ICRA, pages 2618­
+Y. Jin and J. Branke. Evolutionary optimization in uncertain         2623. IEEE Press, Piscataway, NJ, 1992.
+   environments-a survey. IEEE Transactions on Evolutionary
+   Computation, 9(3):303­317, June 2005.                          H. Lipson. Principles of modularity, regularity, and hierar-
+                                                                     chy for scalable systems. Journal of Biological Physics and
+W. Johannsen. The genotype conception of heredity. Ameri-            Chemistry, 7(4):125­128, 2007.
+   can Naturalist, 45(531):129­159, 1911.
+
+S. Kajita and B. Espiau. Springer handbook of robotics. In H. Liu and H. Iba. A hierarchical approach for adaptive hu-
+
+B. Siciliano and O. Khatib, editors, Springer handbook of manoid robot control. In Proc. CEC, volume 2, pages 1546­
+
+robotics, chapter 16. Springer Berlin Heidelberg, 2008.           1553 Vol.2. IEEE Press, Piscataway, NJ, June 2004.
+
+                                                         17
+P. Marrow, M. Heath, and I. I. Re. Evolvability: Evolution,       G. Ren, W. Chen, S. Dasgupta, C. Kolodziejski, F. Wo¨ rgo¨ tter,
+   computation, biology. In Proc. GECCO (GECCO-99 Work-              and P. Manoonpong. Multiple chaotic central pattern gen-
+   shop on Evolvability), pages 30­33. ACM, New York, NY,            erators with learning for legged locomotion and malfunc-
+   1999.                                                             tion compensation. InformationSciences, 2014.
+
+D. M. McCandlish. Visualizing fitness landscapes. Evolution,      L. Righetti and A. J. Ijspeert. Design methodologies for cen-
+   65(6):1544­1558, 2011.                                            tral pattern generators: An application to crawling hu-
+                                                                     manoids. In Proc. RSS. MIT Press, Cambridge, 2006.
+R. E. Michod and D. Roze. Cooperation and conflict in the
+   evolution of multicellularity. Heredity, 86(1):1­7, 2001.      L. Righetti and A. J. Ijspeert. Pattern generators with sen-
+                                                                     sory feedback for the control of quadruped locomotion. In
+E. Mjolsness, D. H. Sharp, and J. Reinitz. A connectionist           Proc. IEEE ICRA, pages 819­824. IEEE Press, Piscataway,
+   model of development. Journal of Theoretical Biology, 152         NJ, 2008.
+   (4):429­453, 1991.
+                                                                  S. Risi and K. O. Stanley. Confronting the challenge of learn-
+R. Morrison and K. De Jong. A test problem generator for             ing a flexible neural controller for a diversity of morpholo-
+   non-stationary environments. In Proc. CEC, volume 3,              gies. In Proc. GECCO, pages 255­262. ACM, New York,
+   pages 2047­2053, 1999.                                            NY, 2013.
+
+G. Morse, S. Risi, C. R. Snyder, and K. O. Stanley. Single- M. S. Roulston. Estimating the errors on measured entropy
+
+unit pattern generators for quadruped locomotion. In Proc. and mutual information. Physica D: Nonlinear Phenomena,
+
+GECCO, pages 719­726. ACM, New York, NY, 2013.                    125(3):285­294, 1999.
+
+J.-B. Mouret and S. Doncieux. Encouraging behavioral di-          J. Santos, R. Duro, J. Becerra, J. Crespo, and F. Bellas. Consid-
+   versity in evolutionary robotics: An empirical study. Evol.       erations in the application of evolution to the generation
+   Comput., 20(1):91­133, 2012.                                      of robot controllers. InformationSciences, 133(34):127 ­ 148,
+                                                                     2001.
+J.-B. Mouret. Novelty-based multiobjectivization. In S. Don-
+   cieux, N. Bredche, and J.-B. Mouret, editors, New Horizons     D. W. Scott. Multivariate density estimation: theory, practice, and
+   in Evolutionary Robotics, volume 341 of Studies in Compu-         visualization, volume 383. John Wiley & Sons, Inc., 2009.
+   tational Intelligence, pages 139­154. Springer Berlin Heidel-
+   berg, 2011.                                                    C. W. Seys and R. D. Beer. Genotype reuse more important
+                                                                     than genotype size in evolvability of embodied neural net-
+J.-B. Mouret, S. Doncieux, and B. Girard. Importing the              works. In Proc. ECAL, pages 915­924. Springer Berlin Hei-
+   computational neuroscience toolbox into neuro-evolution-          delberg, 2007.
+   application to basal ganglia. In Proc. GECCO, pages 587­
+   594. ACM, New York, NY, 2010.                                  A. Sproewitz, R. Moeckel, J. Maye, and A. J. Ijspeert. Learn-
+                                                                     ing to move in modular robots using central pattern gen-
+S. Nolfi and D. Floreano. Evolutionary Robotics. The Biology,        erators and online optimization. International Journal of
+   Intelligence, and Technology of Self-organizing Machines. MIT     Robotics Research, 27(3-4):423­443, 2008.
+   Press, 2001.
+                                                                  K. Stanley and R. Miikkulainen. Evolving neural networks
+A. S. Novozhilov, Y. I. Wolf, and E. V. Koonin. Evolution of         through augmenting topologies. Evolutionary Computation,
+   the genetic code: partial optimization of a random code           10(2):99­127, 2002.
+   for robustness to translation error in a rugged fitness land-
+   scape. Biology Direct, 2(24):1­24, 2007.                       K. O. Stanley. Compositional pattern producing networks: A
+                                                                     novel abstraction of development. GeneticProgrammingan-
+M. Pavlicev and G. P. Wagner. Coming to grips with evolv-            dEvolvableMachines, 8(2):131­162, 2007.
+   ability. Evol. Educ. Outreach, 5(2):231­244, 2012.
+                                                                  K. O. Stanley and R. Miikkulainen. A taxonomy for artificial
+M. Pigliucci. Is evolvability evolvable? Nature Reviews Ge-          embryogeny. Artif. Life, 9(2):93­130, 2003.
+   netics, 9(1):75­82, 2008.
+                                                                  K. O. Stanley, D. B. D'Ambrosio, and J. Gauci. A hypercube-
+W. B. Provine. Sewall Wright and evolutionary biology. Univer-       based encoding for evolving large-scale neural networks.
+   sity of Chicago Press, 1989.                                      Artif. Life, 15(2):185­212, 2009.
+
+M. Raibert, K. Blankespoor, G. Nelson, R. Playter, et al.         G. Taga. Emergence of bipedal locomotion through entrain-
+   Bigdog, the rough-terrain quadruped robot. In Proc.               ment among the neuro-musculo-skeletal system and the
+   IFAC, pages 10823­10825. IFAC Publications Office, Else-          environment. Physica D: Nonlinear Phenomena, 75(1):190­
+   vier Ltd., Oxford, UK, 2008.                                      208, 1994.
+
+J. Reisinger and R. Miikkulainen. Acquiring evolvability          D. Tarapore and J.-B. Mouret. Comparing the evolvability of
+   through adaptive representations. In Proc. GECCO, pages           generative encoding schemes. In Proc. ALife, volume 14,
+   1045­1052. ACM, New York, NY, 2007.                               pages 1­8, 2014.
+
+J. Reisinger, K. O. Stanley, and R. Miikkulainen. Towards an      R. A. Te´llez, C. Angulo, and D. E. Pardo. Evolving the
+   empirical measure of evolvability. In Proc. GECCO, pages          walking behaviour of a 12 DOF quadruped using a dis-
+   257­264. ACM, New York, NY, 2005.                                 tributed neural architecture. In A. Ijspeert, T. Masuzawa,
+                                                                     and S. Kusumoto, editors, Biologically Inspired Approaches
+
+                                                18
+   to Advanced Information Technology, volume 3853 of LNCS,
+   pages 5­19. Springer Berlin Heidelberg, 2006. ISBN 978-3-
+   540-31253-6.
+
+M. Tomassini, S. Verel, and G. Ochoa. Complex-network
+   analysis of combinatorial spaces: The NK landscape case.
+   Physical Review E, 78(6):066114, 2008.
+
+P. Tonelli and J.-B. Mouret. On the relationships between
+   generative encodings, regularity, and learning abilities
+   when evolving plastic artificial neural networks. PloS One,
+   8(11):e79138, 2013.
+
+V. K. Valsalam and R. Miikkulainen. Modular neuroevolu-
+   tion for multilegged locomotion. In Proc. GECCO, pages
+   265­272. ACM, New York, NY, 2008.
+
+G. P. Wagner and L. Altenberg. Perspective: Complex adap-
+   tations and the evolution of evolvability. Evolution, 50(3):
+   967­976, 1996.
+
+M. Waibel, L. Keller, and D. Floreano. Genetic team composi-
+   tion and level of selection in the evolution of cooperation.
+   IEEE Transactions on Evolutionary Computation, 13(3):648­
+   660, June 2009. ISSN 1089-778X.
+
+K. Weicker. Performance measures for dynamic environ-
+   ments. In Parallel Problem Solving from Nature ­ PPSN VII,
+   pages 64­73. Springer Berlin Heidelberg, 2002.
+
+S. Wright. The roles of mutation, inbreeding, crossbreeding,
+   and selection in evolution. In Proc. of the Sixth International
+   Congress on Genetics, volume 1, pages 355­366, 1932.
+
+X. Yao. Evolving artificial neural networks. Proceedings of the
+   IEEE, 87(9):1423­1447, 1999.
+
+J. Yosinski, J. Clune, D. Hidalgo, S. Nguyen, J. Zagal, and
+   H. Lipson. Evolving robot gaits in hardware: the hyper-
+   neat generative encoding vs. parameter optimization. In
+   Proc. ECAL, pages 890­897. MIT Press, Cambridge, 2011.
+
+V. Zykov, J. Bongard, and H. Lipson. Evolving dynamic gaits
+   on a physical robot. In Proc. GECCO, volume 4. ACM, New
+   York, NY, 2004.
+Supplemental dataBehaviorally diverse and highly viable mutants
+
+               1
+
+                                                0.8
+
+                                                0.6                                                                Gait diversity
+
+                                                0.4
+
+                                                0.2
+
+                                                0            CPG CPG-f/b ANN       SUPG                                  Proportion change in performance
+                                                     Direct             Encodings
+                                                                                                                   (b) Shaded region of highly beneficial mutations.
+                                                (a) Highly beneficial mutations generated by different encodings.
+
+Figure S1: Proportion of mutants generating gait diversity in excess of 0.5, and performance loss not exceeding 50%, from
+              1, 000 independent mutations of the best individuals at generation 8, 000 in each of 20 replicates, for the Direct,
+              CPG, CPG-f/b, ANN and SUPG encoding schemes. These highly beneficial mutations are counted from the
+              shaded region of each encoding's evolvability signature.
+
+                                                     Direct  CPG                   CPG-f/b                         ANN             SUPG
+
+Gait diversity                                                                                                                           % of mutations
+
+                                                                  Proportion change in performance
+
+                                                                             (a) Low mutation intensity
+
+                                                     Direct  CPG                   CPG-f/b                         ANN             SUPG
+
+Gait diversity                                                                                                                           % of mutations
+
+                                                                  Proportion change in performance
+
+                                                                          (b) Medium mutation intensity
+
+                                                     Direct  CPG                   CPG-f/b                         ANN             SUPG
+
+Gait diversity                                                                                                                           % of mutations
+
+                                                            Proportion change in performance
+
+                                                                                    (c) High mutation intensity
+
+Figure S2: Gait diversity and the proportion decrease in performance, following 20, 000 independent mutations of different
+              intensities, for the Direct, CPG, CPG-f/b, ANN and SUPG encoding schemes after 8, 000 generations of selection,
+              pooled from all 20 replicates. Mutations at low, medium and high intensity, corresponded to 0.25, 1 and 4 times,
+              respectively, the mutation rate and step-size used during selection.
+Gait diversity     1                          Gait diversity     1                          Gait diversity     1                          Gait diversity     1                          Gait diversity     1
+                 0.8                                           0.8                                           0.8                                           0.8                                           0.8
+                 0.6                                           0.6                                           0.6                                           0.6                                           0.6
+                 0.4                                           0.4                                           0.4                                           0.4                                           0.4
+                 0.2                                           0.2                                           0.2                                           0.2                                           0.2
+
+                   0                                             0                                             0                                             0                                             0
+                       Low Medium High                               Low Medium High                               Low Medium High                               Low Medium High                               Low Medium High
+                          Mutation intensity                            Mutation intensity                            Mutation intensity                            Mutation intensity                            Mutation intensity
+
+                         (a) Direct                                     (b) CPG                                    (c) CPG-f/b                                     (d) ANN                                       (e) SUPG
+
+Performance (m)   4                           Performance (m)   4                           Performance (m)   4                           Performance (m)   4                           Performance (m)   4
+                  2                                             2                                             2                                             2                                             2
+                  0                                             0                                             0                                             0                                             0
+                 -2                                            -2                                            -2                                            -2                                            -2
+                 -4                                            -4                                            -4                                            -4                                            -4
+
+                       Low Medium High                               Low Medium High                               Low Medium High                               Low Medium High                               Low Medium High
+                          Mutation intensity                            Mutation intensity                            Mutation intensity                            Mutation intensity                            Mutation intensity
+
+                         (f) Direct                                     (g) CPG                                    (h) CPG-f/b                                      (i) ANN                                       (j) SUPG
+
+Figure S3: Mutant performance in forward displacement and the gait diversity resulting from mutation, for the Direct, CPG,
+              CPG-f/b, ANN and SUPG encoding schemes. Each box corresponds to the median of 1, 000 mutants, in each of
+              20 replicates. Mutations were generated at low (×0.25), medium (×1) and high (×4) times mutation rate and
+              step-size used during selection, and applied to the best individuals at generation 8, 000 of selection. Dotted lines
+              (f-j) indicate the median performance of best individuals across 20 replicates, after 8, 000 generation of selection.
+
+Proportion performance recovered1                                       1                                                                                                     1
+                                                                      Proportion performance recovered
+                                                                                                                                            Proportion performance recovered0.80.80.8
+
+0.6                                                                     0.6                                                                                                   0.6
+
+0.4                                                            Direct   0.4                                                               Direct                              0.4                        Direct
+
+                                                               CPG                                                                        CPG                                                            CPG
+
+0.2                                                            CPG-f/b  0.2                                                               CPG-f/b                             0.2                        CPG-f/b
+                                                               ANN                                                                        ANN                                                            ANN
+
+                                          SUPG                                                                    SUPG                                                                                                  SUPG
+0                                                                       0                                                                                                     0
+
+ 0 2 4 6 8 10 12 14 16 18                                                0 2 4 6 8 10 12 14 16 18                                                                              0 2 4 6 8 10 12 14 16 18
+               Generations (x 1000)                                                    Generations (x 1000)                                                                                  Generations (x 1000)
+
+(a) Scenario 1: Removal of right-middle leg.                            (b) Scenario 2: Removal of right-middle and                                        (c) Scenario 3: Removal of right-middle and
+                                                                            left-middle legs.                                                                  left-rear legs.
+
+Figure S4: The proportion of performance in forward displacement before (generations 0 to 8, 000) and after (generations
+              8001 to 18, 000) the three robot-damage scenarios, for the Direct, CPG, CPG-f/b, ANN and SUPG encoding
+              schemes.
+Table S1: Performance comparison of the Direct, Open-loop CPG, Closed-loop CPG, HyperNEAT, and SUPG encoding
+            schemes.
+
+Encodings        p-Value*    Effect size**
+
+Direct           8.0 × 10-5  0.85
+Open-loop CPG
+
+Direct           7.0 × 10-7  0.90
+Closed-loop CPG
+
+Direct           0.0142      0.30
+HyperNEAT
+
+Direct           1.2 × 10-7  0.02
+SUPG
+
+Open-loop CPG    3.0 × 10-4  0.81
+Closed-loop CPG
+
+Open-loop CPG    4.2 × 10-4  0.21
+HyperNEAT
+
+Open-loop CPG    1.7 × 10-8  0.0
+SUPG
+
+Closed-loop CPG  4.8 × 10-6  0.09
+HyperNEAT
+
+Closed-loop CPG  3.4 × 10-8  0.0
+SUPG
+
+HyperNEAT        0.1860      0.42
+SUPG
+
+*Significance computed with the Mann-Whitney-Wilcoxon non-
+parametric test, at 0.05 significance level.
+
+**Effect size estimated as ratio of Mann-Whitney U statistic and
+the product of two sample sizes.
+
+Table S2: Comparison of the number of beneficial mutations generated by the Direct, Open-loop CPG, Closed-loop CPG,
+            HyperNEAT, and SUPG encoding schemes.
+
+Encodings        p-Value*    Effect size**
+Direct           0.0304      0.30
+Open-loop CPG    1.5 × 10-5  0.10
+Direct           6.8 × 10-8  0.0
+Closed-loop CPG  6.7 × 10-8  0.0
+Direct
+HyperNEAT
+Direct
+SUPG
+
+Open-loop CPG    5.1 × 10-4  0.18
+Closed-loop CPG  6.8 × 10-8  0.0
+Open-loop CPG    6.8 × 10-8  0.0
+HyperNEAT        2.5 × 10-4  0.16
+Open-loop CPG    3.4 × 10-7  0.03
+SUPG
+Closed-loop CPG
+HyperNEAT
+Closed-loop CPG
+SUPG
+
+HyperNEAT        9.1 × 10-8  0.01
+SUPG
+
+*Significance computed with the Mann-Whitney-Wilcoxon non-
+parametric test, at 0.05 significance level.
+
+**Effect size estimated as ratio of Mann-Whitney U statistic and
+the product of two sample sizes.
+Table S3: Comparison of number of generations of selection required to restore 85% of the original performance of the
+            undamaged hexapod, for the Direct, CPG, CPG-f/b, ANN, and SUPG encoding schemes, in the first damage
+            scenario (removal of right-middle leg).
+
+Encodings        p-Value*    Effect size**
+
+Direct           0.4182      0.48
+Open-loop CPG
+
+Direct           0.3538      0.47
+Closed-loop CPG
+
+Direct           0.4393      0.52
+HyperNEAT
+
+Direct           0.0003      0.81
+SUPG
+
+Open-loop CPG    0.4505      0.49
+Closed-loop CPG
+
+Open-loop CPG    0.3045      0.55
+HyperNEAT
+
+Open-loop CPG    0.0010      0.81
+SUPG
+
+Closed-loop CPG  0.0045      0.55
+HyperNEAT
+
+Closed-loop CPG  3.4 × 10-7  0.79
+SUPG
+
+HyperNEAT        9.1 × 10-8  0.74
+SUPG
+
+*Significance computed with the Mann-Whitney-Wilcoxon non-
+parametric test, at 0.05 significance level.
+
+**Effect size estimated as ratio of Mann-Whitney U statistic and
+the product of two sample sizes.
+
+Table S4: Comparison of number of generations of selection required to restore 85% of the original performance of the
+            undamaged hexapod, for the Direct, CPG, CPG-f/b, ANN, and SUPG encoding schemes, in the second damage
+            scenario (removal of right-middle and left-middle legs).
+
+Encodings        p-Value*    Effect size**
+Direct           0.4768      0.50
+Open-loop CPG    0.1979      0.45
+Direct           0.0286      0.65
+Closed-loop CPG  3.9 × 10-6  0.90
+Direct
+HyperNEAT
+Direct
+SUPG
+
+Open-loop CPG    0.2231      0.46
+Closed-loop CPG  0.0286      0.65
+Open-loop CPG    1.8 × 10-6  0.91
+HyperNEAT        0.0052      0.69
+Open-loop CPG    4.8 × 10-7  0.93
+SUPG
+Closed-loop CPG
+HyperNEAT
+Closed-loop CPG
+SUPG
+
+HyperNEAT        0.0026      0.76
+SUPG
+
+*Significance computed with the Mann-Whitney-Wilcoxon non-
+parametric test, at 0.05 significance level.
+
+**Effect size estimated as ratio of Mann-Whitney U statistic and
+the product of two sample sizes.
+Table S5: Comparison of number of generations of selection required to restore 85% of the original performance of the
+            undamaged hexapod, for the Direct, CPG, CPG-f/b, ANN, and SUPG encoding schemes, in the third damage
+            scenario (removal of right-middle and left-rear legs).
+
+Encodings        p-Value*    Effect size**
+
+Direct           0.1711      0.48
+Open-loop CPG
+
+Direct           0.1711      0.47
+Closed-loop CPG
+
+Direct           0.0082      0.67
+HyperNEAT
+
+Direct           0.0001      0.78
+SUPG
+
+Open-loop CPG    0.5         0.50
+
+Closed-loop CPG
+
+Open-loop CPG    0.0023      0.67
+HyperNEAT
+
+Open-loop CPG    3.3 × 10-5  0.80
+SUPG
+
+Closed-loop CPG  0.0023      0.68
+HyperNEAT
+
+Closed-loop CPG  3.3 × 10-5  0.80
+SUPG
+
+HyperNEAT        0.2460      0.56
+SUPG
+
+*Significance computed with the Mann-Whitney-Wilcoxon non-
+parametric test, at 0.05 significance level.
+
+**Effect size estimated as ratio of Mann-Whitney U statistic and
+the product of two sample sizes.
+

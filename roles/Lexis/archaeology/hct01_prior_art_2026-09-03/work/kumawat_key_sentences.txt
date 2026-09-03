@@ -1,0 +1,135 @@
+- The evolved mutational neighborhoods allow rapid adaptation to previously encountered environments, whereas higher mutation rates aid adaptation to completely new environmental conditions.
+- By precisely tracking evolving lineages and the phenotypes of their mutants, we show that evolving populations localize on phenotypic boundaries between distinct regions of genotype space.
+- The set of mutants accessible from existing genotypes in a population and their corresponding phenotypes (i.e., the mutational neighborhood) specifies the fraction of mutations that are ultimately beneficial ( 27 ).
+- Collectively, the mutation rate and mutational neighborhood govern the pace at which populations generate new phenotypes, providing the raw materials on which natural selection can act ( 22 ).
+- We measure evolvability both indirectly (in terms of changes to the mutation rate and mutational neighborhood) and directly by measuring the rate of adaptation to new and historic environments.
+- The computational nature of this systems affords us unparalleled precision in tracking the mutational changes that occur along lineages over evolutionary time, while recording information about the external environment when those mutations arise.
+- It also allows an in-depth analysis of the local mutational landscapes of these lineages, examining up to two mutational steps and encompassing over three million mutants per genotype.
+- Using this framework, we study the mutation rates and structure of the mutational neighborhoods that evolve as a result of exposure to different treatments ( Fig.
+- Our findings demonstrate the existence of specific modes of environment change where the mutation rate and mutational neighborhoods evolve in ways that enhance further evolutionary innovation synergistically ( Fig.
+- Finally, the evolutionary dynamics show signatures of an insufficiently explored nonequilibrium evolutionary process that captures evolving lineages on boundaries between phenotypes in the space of genotypes ( Fig.
+- However, at intermediate rates (purple curve), increasing mutation rate favor alternate phenotype mutants in the mutational neighborhood.
+- When mutation rates evolve, the intermediate environments lead to high mutation rates as well as a large number of alternative phenotypes in the mutational neighborhood.
+- ( C ) This multifaceted increase in evolvability can be partly explained by the localization of evolving lineages on boundaries between phenotypic regions in the genotype space.
+- Here, this localization is shown as the intermediate lineage (purple) zig-zagging across the boundary between A and B-adapted phenotypes.
+- Open in a new tab 
+ Evolution in changing environment shapes the mutational neighborhood.
+- ( D ) NPMIs between task pairs for dominant genotypes isolated from populations evolved in different regimes (averaged over 20 replicates).
+- Results 
+ Evolution of the Mutational Neighborhood.
+- Starting with a naive ancestral genotype, we evolved Avida populations under six different environment change regimes for approximately 30,000 generations (300,000 Avida updates).
+- Genotypes isolated from the Cyclic regime had a markedly larger pool of mutants expressing the alternative phenotype when compared to genotypes from constant environments (median for Cyclic = 45802.5 versus median for Const − A = 1.0 ; Mann–Whitney U = 6 , n = 20 , P = 1.4 × 10 − 7 , two-tailed.
+- This escalation in alternate phenotypes was contingent on a predictable environment; the Random regime lacked genotypes with increased accessibility of alternate phenotypes (median for Random= 16.0 versus median for Const-A = 1.0 ; Mann–Whitney U = 224 , n = 20 , p = 0.221 , two-tailed).
+- Notably, genotypes isolated from the intermediate Cyclic regime—with switches every 30 generations—generated more alternate phenotypes on mutation compared to other regimes (median for Cyclic ( Slow ) = 4556.0 , median for Cyclic = 45802.5 ; Mann–Whitney U = 312 , n = 20 , P = 0.0019 , two-tailed).
+- To test whether these alternative phenotypes were enriched in the mutational neighborhood at the expense of robustness, we measured the correlation between the number of four different classes of mutants—alternate (perfectly adapted to the alternate environment), terminal (perfectly adapted to the terminal environment), intermediate (perfectly adapted to neither environments), and inviable (unable to self-replicate).
+- To test whether the mutational neighborhoods of evolved genotypes encode measurable information about the historic environment states, we analyzed the normalized pointwise mutual information (NPMI) between tasks.
+- The NPMI metric calculates whether the co-occurrence of any two tasks within a genotype’s mutational neighborhood is significantly higher than expected assuming independent task probabilities ( Materials and Methods ).
+- We observed that the mutational neighborhood of organisms from changing environments systematically captured the pattern of tasks rewarded in different environmental states.
+- This allowed a total quantification of information about the environment that was encoded in the mutational neighborhood.
+- The median total NPMIs for Cyclic and Cyclic (Slow) genotypes were considerably larger than NPMIs from the static regimes (Median for Const-A = 3.43 , median for Cyclic = 10.28 ; Mann–Whitney U = 46 , P = 8.17 × 10 − 6 , two-tailed).
+- Even without the contributions from these mutants, the Cyclic and Cyclic (Slow) genotypes had larger total NPMIs (Median NPMI for Const-A = − 0.43 , Cyclic median = 
+ 3.59 ; Mann–Whitney U = 52 , P = 2.138 × 10 − 5 , two-tailed).
+- These results demonstrate a twofold effect of evolution in predictably switching environments: genotypes both had access to more mutants with an alternate phenotype, and their mutational neighborhoods reflected traits in a manner that mimicked the structure of environments the population had encountered in the past.
+- To investigate the dynamics that shaped the mutational neighborhood, we isolated the lineage of the dominant genotypes all the way to the ancestral genotype, giving us a complete record of the mutations that occurred during evolution.
+- We then calculated the mismatch between the environment state and the phenotypic state of the lineage over evolutionary time (see Materials and Methods ; Fig.
+- Lineages from Cyclic and Cyclic (Slow) regimes had a lower overall mismatch compared to Random and Cyclic (Fast) regimes (Median mismatch index for C y c l i c = 0.238 , median for Random = 0.930 ; Mann–Whitney U = 2 , n = 20 , P = 5.8 × 10 − 11 , two-tailed).
+- Moreover, Cyclic lineages show a mismatch only about three times that of Cyclic (Slow) even though these lineages evolved in an environment that switched ten times as frequently (Median mismatch index for C y c l i c = 0.238 , median for Cyclic ( Slow ) = 0.072 ; Mann–Whitney U = 353 , n = 20 , P = 9.65 × 10 − 6 , two-tailed).
+- To estimate the rate of adaptation on the lineage, we analyzed the number of elapsed updates before dominant lineages were adapted to a changed environment—a measure we denote as lineage lag (see Materials and Methods ; SI Appendix , Fig.
+- In comparison to Random or Cyclic (Slow), lineages that evolved under the Cyclic regime exhibited a substantially faster phenotypic response following environmental change (median lineage lag for Cyclic = 3.0 , median for Cyclic ( Slow ) = 19.0 ; Mann–Whitney U = 50 , P = 4.94 × 10 − 5 , two-tailed; Fig.
+- Open in a new tab 
+ Lineages from Cyclic regime adapt better and faster to their environments ( A ) Moving window average of the mismatch between environment and lineage phenotypes over evolutionary time (window size = 10,000 updates).
+- Width of the ribbons is SE from 20 replicates.
+- ( B ) Lineage lag between the environment and the lineage phenotypes.
+- Lineage lag is calculated as the number of updates elapsed until the lineage achieves a perfectly adapted phenotype after the environment switches.
+- Only lineages from Random, Cyclic (Slow), and Cyclic regimes are shown here as they consistently achieved perfect adaptation within 100 updates after a switch.
+- Each point is the median lineage lag from different environmental switches over an experiment.
+- We extended our analyses to the mutational neighborhoods of the sequences on the lineage, specifically near environmental switches.
+- We found that mutational neighborhoods for Cyclic lineages appeared to anticipate the environment change; these lineages showed a high concentration of alternate mutants before the environment switched, unlike lineages under the Cyclic (Slow) regime that only developed such adaptations gradually after the switch.
+- Unifying our observations thus far, we hypothesized that the lineages evolved in cyclic environments localized on phenotypic boundaries in the genotype space, allowing them to switch rapidly between alternate phenotypes ( Fig.
+- Prior theoretical work suggests that lineages positioned along such boundaries are more competitive in the long run than those further away ( 29 , 48 , 49 ).
+- We tested evolved lineages for this localization by calculating the mutational trade-offs between adjacent sequences along a line of descent.
+- Essentially, we measured the change in the number of mutants adapted to both environments A and B whenever there was a mutation on the lineage ( Materials and Methods ).
+- Lineages that localize on boundaries between well-adapted phenotypes will show the development of strong mutant phenotype trade-offs when comparing temporally adjacent genotypes ( SI Appendix , Fig.
+- Lineages from both Cyclic and Cyclic (Slow) regimes exhibit trade-offs, but Cyclic lineages show the strongest signature.
+- ( A ) Median number of lineage sequence mutants that are adapted to environment B before and after the environment switches A → B.
+- The x-axis denotes the number of updates before and after a switch where lineage mutants are recorded.
+- Gray squares denote points where lineages mutate but do not have any B-adapted mutants.
+- White squares denote points where the lineage does not mutate within the time span of observation.
+- ( B ) Trade-offs between mutants on the lineage.
+- The x and y axes plot the concurrent change in number of mutants adapted to A and B during mutation events on a lineage.
+- Points along the y = − x line denote a 1-to-1 trade-off between mutant phenotype distributions whenever the lineage has a mutation ( SI Appendix , Fig.
+- Points from 20 replicates are aggregated to calculate the density.
+- The utility of the evolved mutational neighborhoods thus persisted across fluctuation rates but evolved only under a specific rate of environmental change.
+- Together, these results demonstrate that selection under changing conditions actively shapes the mutational landscape of populations in a manner that is dependent on the rate and nature of environmental change.
+- To explore the dynamic interaction between mutation rate evolution and the evolution of the mutational neighborhood, we conducted experiments allowing the mutation rates to evolve naturally.
+- Environments undergoing intermediate fluctuations—specifically, the Cyclic and Random regimes—were conducive to the evolution of higher mutation rates (with initial mutation rate of 10 − 3 , median evolved mutation rate in Cyclic = 9.19 × 10 − 4 , median in Const − A = 7.37 × 10 − 6 ; Mann–Whitney U = 400 , n = 20 , P = 1.45 × 10 − 11 , two-tailed).
+- This trend toward greater mutation rates in Cyclic held true across all starting mutation rates studied (with an initial mutation rate of 10 − 4 , median evolved mutation rate for Cyclic = 1.88 × 10 − 4 , median for Const − A = 1.611 × 10 − 5 ; Mann–Whitney U = 387 , n = 20 , P = 5.41 × 10 − 9 , two-tailed).
+- Open in a new tab 
+ Concurrent evolution of mutation rates and mutational neighborhoods under fluctuations.
+- Center lines represent the average mutation rates calculated from 20 distinct replicates.
+- 5 B ; for initial mutation rate of 10 − 3 , median number of alternate mutants for Cyclic = 16378.5 , median for Const − A = 0.0 , Const − A mean = 27.5 ; Mann–Whitney U = 399 , n = 20 , P = 2.86 × 10 − 8 , two-tailed).
+- The number of alternate mutants in the evolving mutation rate experiments were comparable to the fixed mutation rate case (median number of alternate mutants in Cyclic with fixed mutation rate = 45802.5 , Cyclic with an initial mutation rate of 0.001 median = 
+ 16378.5 ; Mann–Whitney U = 139 , n = 20 , P = 0.102 , two-tailed).
+- We found no marked differences in the rate of adaptation for genotypes evolved in different regimes in this new environment (Kruskal–Wallis χ 2 on the number of tasks evolved at the end, for fixed mutation rate genotypes = 
+ 4.1292 , d f = 5 , P = 0.531 ).
+- By contrast, genotypes from the evolving mutation rate experiments exhibited significant variation in their adaptive success in this new environment (Kruskal–Wallis χ 2 for the number of tasks evolved for evolving mutation rate genotypes = 94.221 , d f = 5 , P < 2.2 × 10 − 16 ).
+- Notably, genotypes from Random and Cyclic regimes that previously underwent mutation rate escalation acquired more functions than the ancestral genotype (median tasks evolved by ancestral genotype= 30 , median tasks evolved by Cyclic genotypes = 
+ 42.3 , 18 of 18 samples evolved more tasks than the ancestral median, P = 7.629 × 10 − 6 , two-tailed one-sample sign test).
+- Inversely, genotypes conditioned to Const-A, Const-B, and Cyclic (Fast) evolved fewer tasks compared to their ancestor (median tasks evolved by Cyclic (Fast) genotypes = 
+ 17.9 , 19 of 19 samples evolved fewer tasks than the ancestral median, P = 3.815 × 10 − 6 , two-tailed one-sample sign test).
+- To test whether mutation rate was the key driver of these observed differences, we transplanted the evolved mutation rates into organisms from the fixed rate experiments.
+- This exchange recapitulated the difference in the rate of adaptation seen between treatments in this new environment ( SI Appendix , Fig.
+- S8 C ; Kruskal–Wallis χ 2 for the number of tasks evolved at the end for fixed mutation rate genotypes transplanted with evolved mutation rates = 
+ 95.167 , d f = 5 , P < 2.2 × 10 − 16 ).
+- Conversely, when the ancestral mutation rates were transplanted into genotypes from the evolving mutation rate experiment, their rate of adaptation remained largely unchanged (Kruskal–Wallis χ 2 for the number of tasks evolved at the end for the evolution mutation rate genotypes transplanted with the ancestral mutation rates = 
+ 3.5192 , d f = 5 , P = 0.6205 ).
+- Interaction between evolution of the mutation rate and the mutational neighborhood.
+- Thus, we expect that different mutation rates would lead to distinct evolved mutational neighborhoods.
+- To probe this idea we evolved twenty replicate populations at five different fixed mutation rates in three different environmental regimes ( Fig.
+- We see that the effect of the mutation rate on the evolution of the mutational neighborhood is tied to the way the environments changed.
+- As the mutation rate increased, the drive toward robustness seemed to overpower the evolution of more variable mutational neighborhoods in these slowly shifting environments.
+- Open in a new tab 
+ Interaction between mutation rate and environmental change shapes the mutational neighborhood.
+- The data are plotted for evolution experiments in three different regimes with different values of a fixed mutation rate (x-axis).
+- The pink circle and error bars denote the mean and quartiles of alternate phenotype counts observed during the evolving mutation rate experiments presented in Fig.
+- Discussion 
+ In this work, we experimentally study the simultaneous evolution of the primary determinants of evolvability (the mutational neighborhood and the mutation rate), uncover their interaction with one another, and tie their emergence to the mode of environmental change.
+- We show that mutational neighborhoods can evolve such that organisms have an elevated number of alternate phenotypes that allow them to adapt to changing environments quickly.
+- We devise a mutual information metric that captures the extent to which the mutational neighborhood reflects the mode of environmental change.
+- We note an interesting macroevolutionary consequence of this result, where one would expect a lineage that had adapted to changing environments to show greater phenotypic variation than lineages adapted to more stable environments.
+- As a corollary, the variation revealed through mutation can offer clues to the kinds of environments encountered by lineages in the past ( 38 , 59 ).
+- Yet, the frequency of such deleterious mutations is contingent upon an organism’s local mutational neighborhood.
+- In these environments, the value of evolved mutation rates approaches those required for the evolution of the most evolvable mutational neighborhoods (as inferred from static mutation rate experiments).
+- The effect of fluctuations on evolving mutation rates was also observed in a recent study, where populations evolved elevated mutation rates when population bottlenecks were applied at intermediate frequencies during experimental evolution ( 18 ).
+- On the other hand, elevated mutation rates allow quick adaptation in completely new environments, where the mutational neighborhood is of little help.
+- The intermediate-rate environmental fluctuations are also able to overcome the otherwise overwhelming selection for mutational robustness; when the mutation rate is artificially forced high, mutational neighborhoods evolve few alternative phenotypes, except when the environment fluctuates at intermediate rates.
+- Together, adaptation in a predictable intermediate environment primes genotypes for rapid adaptation to both historical and novel environments through modifications to the mutational neighborhood and mutation rate.
+- The emergence of evolvability in this manner is inherently tied to the structure of genotype space ( 62 – 65 ).
+- Moreover, such boundaries may not always be accessible through evolution from the ancestral genotype.
+- In conclusion, we show that evolution under specific modes of environmental change promotes high mutation rates and simultaneously shapes the local mutational neighborhood of populations.
+- By measuring the rate of adaptation of evolved organisms in new environments, we show that increases in evolvability acquired through these two mechanisms play distinct roles in historical and novel environments.
+- We initiated all primary evolution experiments with identical ancestral organisms with a genome that was 100 instructions in length and did not perform any tasks.
+- For experiments with a fixed mutation rate, we used a copy mutation rate of 0.001, which created approximately one substitution out of every 1,000 instructions copied.
+- Characterizing the Mutational Neighborhood.
+- We performed an exhaustive survey of the two-step mutational neighborhood of the dominant genotype from the end of the experiments ( SI Appendix , Fig.
+- We tested each mutant for viability (i.e., the ability to self-replicate) and measured the phenotypes for viable mutants (i.e., the set of tasks the mutant could perform).
+- We also isolated the lineages of the dominant genotypes and performed a similar mutational neighborhood analysis on the entire lineage.
+- Only single-point mutations were assayed for lineages.
+- The mutant phenotype data from lineages were used to measure the mismatch index, lineage lag, and mutational tradeoffs (see below).
+- [4] 
+ We use this total NPMI metric to compare the information encoded on the mutational neighborhood of the dominant genotypes obtained from different regimes.
+- We calculated the mismatch index for lineages as the Hamming distance between the lineage phenotype and the phenotype most fit in the current environment.
+- Lineage lag refers to the time required for the genotypes accumulating along a lineage to become adapted to the environment after it changes ( SI Appendix , Fig.
+- We surveyed 100 updates both before and after environment switches to see whether the lineage ever acquired a phenotype perfectly fit for the new environment.
+- Then, we calculated the amount of time between when the lineage became perfectly adapted and the environment switch.
+- This number is positive if the lineage switched after the environment changed and negative if it switched before the environment.
+- To measure mutational trade-offs along the lineage, we calculated the change in the fraction of mutants adapted to environment A ( Δ A ) and environment B ( Δ B ) between genotypes occurring along the dominant lineage ( SI Appendix , Fig.
+- Points along the axes of the 2D plane indicate mutation events along the lineage where an increase or decrease in mutants with one adaptation was not accompanied by a change in the number of mutants with the other adaptation.
+- We evolved the dominant genotypes—isolated from both fixed and evolving mutation rate experiments—under different regimes to test their performance directly.
+- Mutation rates were set based on whether the genotypes were isolated from a fixed or evolving mutation rate experiment but were not allowed to evolve.
+- The performance of these genotypes was measured by calculating the time-averaged mismatch and average lineage lag as described earlier.
+- We then performed a secondary evolution experiment for 300,000 updates where the organisms evolved under a fixed mutation rate.
+- For genotypes isolated from evolving mutation rate conditions, the mutation rate was set to the rate they had evolved to during primary evolution.
+- To account for the direct effect of mutation rates, we also performed reciprocal experiments where the organisms that evolved in evolving mutation rates were assigned a mutation rate of 0.001, and the organisms that evolved under fixed mutation rates were assigned the mean mutation rate that evolved in the evolving mutation rate treatments.
+- R., Rapid climate change and the rate of adaptation: Insight from experimental quantitative genetics: Tansley review.
+- D., Lachmann M., Evolution of genetic potential.

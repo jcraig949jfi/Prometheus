@@ -1,0 +1,1315 @@
+Article https://doi.org/10.1038/s41467-023-39321-8
+Evolvability-enhancing mutations in the
+ﬁtness landscapes of an RNA and a protein
+Andreas Wagner 1,2,3
+Can evolvability— the ability to produce adaptive heritable variation— itself
+evolve through adaptive Darwinian evolution? If so, then Darwinian evolution
+may help create the conditions that enable Darwinian evolution. Here I pro-
+pose a framework that is suitable to address this question with available
+experimental data on adaptive landscapes. I introduce the notion of an
+evolvability-enhancing mutation, which increases the likelihood that sub-
+sequent mutations in an evolving organism, protein, or RNA molecule are
+adaptive. I search for such mutations inthe experimentally characterized and
+combinatorially completeﬁtness landscapes of a protein and an RNA mole-
+cule. I ﬁnd that such evolvability-enhancing mutations indeed exist. They
+constitute a small fraction of all mutations, which shift the distribution of
+ﬁtness effects of subsequent mutations towards less deleterious mutations,
+and increase the incidence of beneﬁcial mutations. Evolving populations which
+experience such mutations can evolve signiﬁcantly higherﬁtness. The study of
+evolvability-enhancing mutations opens many avenues of investigation into
+the evolution of evolvability.
+All biological systems are to some extent evolvable. That is, they are
+capable of bringing forth variation that is both adaptive and heritable,
+and that enables them to respond to natural selection. The causes of
+such evolvability are increasingly well-studied
+1–6.T h e ya r ea l s ov e r y
+broad. At one extreme are global org anizational features of living
+systems, such as the rate at which they create DNA mutations, or their
+ability to buffer the deleterious effects of mutations. Some of these
+features, such as the structure of the genetic code, have been in place
+since life’s early days, and they no longer change substantially
+7.A tt h e
+other extreme are more ephemeral properties8–11,s u c ha st h el o c a t i o n
+of evolving organisms in a ﬁtness landscape— an analog of a physical
+landscape that helps to understand the dynamics of Darwinian
+evolution
+12. Such local properties can change very rapidly in evolution.
+For example, single-point mutations can alter the evolvability of bac-
+terial populations, and predispose them to adapt more rapidly to a
+given environment
+8–10.
+Much less well-studied than the causes of evolvability is their
+evolution. Can evolvability itself be a product of adaptive Darwinian
+evolution?4, 5 The question is important, because a positive answer
+implies that Darwinian evolution can help create the conditions under
+which Darwinian evolution becomes possible. Here I address part of
+this question from a genetic perspective. That is, I identify and study
+DNA mutations that increase evolvability. And I deﬁne such mutations
+by how they inﬂuence the phenotypic effects of subsequent mutations.
+A major challenge in answering the above question is that evol-
+vability is a dispositional trait. It refers to the potential of a biological
+system to bring forth adaptive variation, for example through DNA
+mutations
+13–15. As opposed to traits that directly affect an organism ’s
+survival or reproduction, and are thus directly affected by natural
+selection, dispositional traits may be subject to a more indirect form of
+selection on their future consequences. Such selection has also been
+called second-order selection, to distinguish it from direct (ﬁrst-order)
+selection. It can enhance evolvability only under restrictive conditions,
+such as large population sizes or high mutation rates, which are not
+met by all organisms
+16–19.
+This problem can in principle be overcome through DNA muta-
+tions that increase not only the evolvability of an organism but also its
+ﬁtness20. Such DNA mutation would be able to spread through a
+Received: 26 September 2022
+Accepted: 5 June 2023
+Check for updates
+1Department of Evolutionary Biology and Environmental Studies, University of Zurich, Zurich, Switzerland.2Swiss Institute of Bioinformatics, Quartier Sorge-
+Batiment Genopode, Lausanne, Switzerland.3The Santa Fe Institute, Santa Fe, NM, USA. e-mail: andreas.wagner@ieu.uzh.ch
+Nature Communications|         (2023) 14:3624 1
+1234567890():,;
+1234567890():,;
+population via their direct effects onﬁtness, without requiring second-
+order selection. And in doing so, they could also enhance evolvability.
+Such “dual effect ” mutations— evolvability-enhancing and ﬁtness-
+enhancing— do indeed exist
+21–25. For example, a recent laboratory
+evolution experiment aiming to change the color of a ﬂuorescent
+protein’s light emission identiﬁed mutations that change both the ﬁt-
+ness (ﬂuorescence intensity) and the evolvability of the protein. They
+did so by increasing the ability of the protein to fold, which increased
+its potential to accommodate mutations that can increaseﬁtness even
+further
+25.
+Because evolution experiments are not designed to quantify the
+incidence of such mutations, I here use different kinds of data to
+identify and characterize evolvability-enhancing mutations. This data
+comes from experimentally characterizedﬁtness landscapes
+26,27.E a c h
+location in such a landscape corresponds to a genotype. The elevation
+at that location is the ﬁtness of that genotype. Current technologies
+allow us to measure the ﬁtness or a proxy of ﬁtness for thousands of
+protein or RNA genotypes within a larger collection or“space” of such
+genotypes.26,28–43, and to analyze the topography of the resulting
+landscape. A small subset of landscapes characterized to date are
+combinatorially complete or nearly so
+26,27,34,43–46. In a combinatorially
+complete landscape, for any two genotypes whose ﬁtness is known,
+the ﬁtness of all genotypes that lie on the shortest mutational paths
+between these genotypes is also known. Combinatorial completeness
+is important for my purpose, because it permits the evaluation of a
+mutant genotype and its interactions with other genotypes in multiple
+genetic backgrounds.
+I will ﬁrst de ﬁne the notion of an evolvability-enhancing (EE)
+mutation quantitatively. I will focus mostly on beneﬁcial EE mutations,
+which themselves increase ﬁtness while at the same time enhancing
+evolvability, because beneﬁcial mutations spread most easily through
+populations via direct selection. I then study the incidence and dis-
+tribution ofﬁtness effects of EE mutations, as well as their evolutionary
+dynamics in experimentally characterized adaptive landscapes. The
+landscapes I study must fulﬁll several criteria. First, organismalﬁtness
+and not just a proxy ofﬁt n e s sm u s th a v eb e e nm e a s u r e di nv i v o ,i nt h e
+form of a microbial growth rate. Second, the landscapes need to be
+large (>10
+3 genotypes), partly because EE mutations may be rare, and it
+may thus be necessary to evaluate many mutations for their effects on
+ﬁtness and evolvability. Finally, the landscapes need to be combina-
+torially complete or nearly so. These requirements are fulﬁlled by few
+experimentally characterized landscapes
+26,27,46. I chose two that
+represent different kinds of molecules and organisms. Theﬁrst is the
+protein ﬁtness landscape of an E. coli toxin-antitoxin system, which
+comprises ﬁtness values for 7882 antitoxin protein genotypes 27.T h e
+second is an RNA ﬁtness landscape of 4176 yeast (Saccharomyces cer-
+evisiae) transfer RNA (tRNA) genotypes.
+In this work, I use these landscapes to show that EE mutations
+exist and comprise a small minority of all mutations that can improve
+the ﬁtness effects of subsequent mutations dramatically. A population
+that encounters evolvability-enhancing mutations during adaptive
+evolution on such landscapes can achieve signiﬁcantly higher ﬁtness.
+Results
+Deﬁning evolvability-enhancing (EE) mutations
+To de ﬁne an evolvability-enhancing (EE) DNA mutation, consider
+some wild-type genotype wt with ﬁtness wðwtÞ and a 1-mutant
+neighbor m with ﬁtness wmðÞ , i.e., a genotype that can be produced
+from the wild-type through a point mutation that changes a single
+nucleotide in the wild-type. Even though the word enhancing may
+suggest that an evolvability-enhancing mutation actively changes the
+effects of other mutations, that would be an unintended anthro-
+pomorphism. An EE mutation simply creates a genetic backgroundm
+in which mutations are more likely to be adaptive than in the wild-type
+background wt.
+To make this property more precise, I ﬁrst denote the set of all
+1-mutant neighbors of the wt (excluding m itself) as n
+wt
+/C8/C9
+=
+nwt,1, ... ,nwt,k
+/C8/C9
+: In other words, these are all genotypes that can be
+reached through a single mutation from the wild-type genetic “back-
+ground”.D e n o t et h e i rﬁtness values as wðnwt,1Þ, ... ,wðnwt,k Þ
+/C8/C9
+and
+their mean ﬁtness as /C22wðnwt Þ. Likewise, denote the set of all 1-mutant
+neighbors ofm (excluding thewt)a s nm
+/C8/C9
+= nm,1, ... ,nm,k
+/C8/C9
+. All these
+are genotypes that can be reached through a single mutation in the
+mutant genetic background. Denote their ﬁt n e s sv a l u e sa s
+wðn
+m,1Þ, ... ,wðnm,k Þ
+/C8/C9
+and their mean ﬁtness as /C22wðnmÞ.
+One possible deﬁnition of an EE mutation is that m must increase
+the ﬁtness of all possible such point mutations. In other words, one
+might require that theﬁtness of each mutant in nm
+/C8/C9
+should be higher
+than the ﬁtness of each mutant in nwt
+/C8/C9
+: wðnm,iÞ > wðnwt,iÞ for all
+neighbors i. However, this would be an unrealistic expectation,
+because some mutations (such as nonsense mutations) may always be
+equally deleterious, regardless of the genetic background in which
+they occur. For this reason, I will only require that an EE mutation
+increases the ﬁtness bene ﬁt of subsequent mutations on aver-
+age (Fig. 1a).
+The following considerations apply to both beneﬁcial and neutral
+EE mutations (Δw = wmðÞ /C0 wðwtÞ ≥ 0; see Supplementary Methods for
+ad eﬁnition of deleterious EE mutations).
+For a neutral mutation ðΔw =0 Þ to be EE, I require that
+/C22wn
+m
+/C0/C1
+/C0 /C22wðnwt Þ >0 ð1Þ
+This means that the mutation m causes the ﬁtness of mutations
+that occur in its background to be higher than that of mutations in the
+wild-type background on average. If m is bene ﬁcial, this condition
+needs to be modi ﬁed for the following reason. If mutations interact
+additively in their effect on ﬁtness, the condition /C22wn
+m
+/C0/C1
+/C0 /C22wðnwt Þ >0
+would be trivially met as a result of the fact that the mutationm itself is
+beneﬁcial Δw>0ðÞ . To see this, note that in case of additivity
+/C22wðnmÞ/C0 /C22wðnwt Þ = 1
+k
+/C18/C19 Xk
+i =1
+ðwðnm,iÞ/C0 wðnwt,iÞÞ
+= 1
+k
+/C18/C19 Xk
+i =1
+ðwðnwt,iÞ + Δw /C0 wðnwt,iÞÞ = Δw>0
+Thus, for a bene ﬁcial mutation m to be EE, it is necessary to
+require more, namely that m increases the ﬁtness of other mutations
+beyond its own ﬁtness beneﬁt, that is:
+/C22wn m
+/C0/C1
+/C0 /C22wðnwt Þ > Δw ð2Þ
+This requirement is mathematically equivalent to
+/C22wn m
+/C0/C1
+/C0 wmðÞ > /C22wn wt
+/C0/C1
+/C0 ww tðÞ ð 3Þ
+In plain words, the neighbors of m must have higher ﬁtness
+(relative tom) than the neighbors of the wild-type (relative to the wild-
+type). This condition is equivalent to requiring thatm shows on aver-
+age positive epistasis with the mutations leading to its neighbors
+(Supplementary Methods). I deﬁne but do not explicitly study neutral
+EE mutations further here, because such mutations cannot be reliably
+identiﬁed in large populations with today ’s technology to measure
+ﬁtness.
+EE mutations are rare in the protein adaptive landscape
+I ﬁrst study the ﬁtness landscape formed by genetic variants at
+three amino acid positions of the antitoxin protein ParD3 from the
+pseudomonad bacterium Mesorhizobium opportunistum (Fig. 1b
+and Supplementary Methods). When expressed inE. coli, this protein is
+Article https://doi.org/10.1038/s41467-023-39321-8
+Nature Communications|         (2023) 14:3624 2
+one member of a toxin-antitoxin pair whose speci ﬁc binding to the
+toxin protein ParE3 is necessary for E. coli growth. Mutations in the
+antitoxin that reduce such binding allow the toxin to inhibit cell
+growth through its interaction with DNA gyrase47. Toxin-antitoxin pairs
+like these are widespread in bacteria, occur both on plasmids and
+chromosomes, are frequently horizontally transferred, and may have
+important biological roles, such as to help maintain plasmids in a
+population
+48, 49.
+I use data from a study whose authors employed mutagenesis to
+randomize three key antitoxin amino acids that affect the antitoxin’s
+binding speciﬁcity to the toxin and thus ﬁtness27 (Fig. 1b). I will refer
+here to the genotype of the unmutated antitoxin (D61, K64, and E80)
+as the reference or M. opportunistum genotype. Starting from this
+reference, the authors created a library of all possible 20 3 = 8000
+antitoxin variants, expressed them from plasmids in E. coli,a n dm e a -
+sured the ﬁtness of E. coli cells expressing these variants through
+helix α1
+helix α2
+helix α3
+D61
+K64
+E80
+d
+b
+a
+e
+f
+c
+P=8×10-151
+w(wt)
+w(m)
+w(nwt)
+w(nm)
+g
+Fig. 1 | Beneﬁcial EE mutations in a protein adaptive landscape. aThe notion of
+a beneﬁcial EE mutation. Gray circles indicate theﬁtness /C22w of a hypothetical wild-
+type (wt) and mutant (m) genotype. Lower (upper) black circles and vertical bars
+indicate mean and standard deviation of the ﬁtness of the 1-mutant neighbors of
+the hypothetical wild-type (mutant). Each black circle is drawn below the nearest
+gray circle to reﬂect the observation that mutations are on average deleterious50.
+An EE mutation reduces the deleterious effects of mutations and increases the
+incidence of beneﬁcial mutations, as indicated by the shorter distance of the upper
+black circle to the gray circle symbolizing mutantﬁtness.b Tertiary structure of the
+ParD3 antitoxin (blue) in complex with its cognate toxin ParE3 (gray; protein
+database (PDB) ﬁle: 5CEG; https://doi.org/10.2210/pdb5CEG/pdb;r e f .74). The
+residues D61, K64, and E80 (red) of the M. opportunistum reference antitoxin
+sequence are part of antitoxin helix 2 and 3
+27.c Distribution of the meanﬁtness of
+all neighbors of the wild-type ( /C22wn wt
+/C0/C1
+, black), as well as of all neighbors of the
+mutant (/C22wn m
+/C0/C1
+, gray), for all pairs of neighbors and their beneﬁcial EE mutants in
+the ParD3 antitoxin ﬁtness landscape of27. Inset: scatterplot of /C22wn wt
+/C0/C1
+and /C22wn m
+/C0/C1
+;
+diagonal: /C22wn wt
+/C0/C1
+= /C22wn m
+/C0/C1
+. d Distribution of the meanﬁtness of all neighbors of the
+wild-type adjusted by the ﬁtness of the wild-type ( /C22wn wt
+/C0/C1
+/C0 wðwtÞ,b l a c k ) ,a s
+well as of all neighbors of the mutant adjusted by the ﬁtness of the mutant
+( /C22wn m
+/C0/C1
+/C0 wðmÞ, gray), for all pairs of neighbors and their beneﬁcial EE mutants in
+the protein landscape. Inset: scatterplot of the same quantities.e Distribution of
+the fraction of beneﬁcial neighbors (neighbors with greaterﬁtness) of the wild-type
+(black) as well as of the corresponding mutant (gray), for all n = 681 pairs of wild-
+type sequences and the corresponding beneﬁcial EE mutants. Inset: box plot of this
+fraction (box height: interquartile range (IQR), horizontal bar: median; whisker
+length: 1.5 × IQR) f ﬁtness evolution (vertical axis) during 100 stochastic adaptive
+walks on the protein landscape. Red edges correspond to EE mutations that occur
+during an adaptive walk.g The ﬁtness difference attained after step three of 10
+4
+adaptive walks between walkers that experienced no (EE = 0) and at least one
+(EE > 0) EE mutations is highly signiﬁcant (P =8×1 0 −151,t w o - s i d e dM a n n–Whitney
+U = 7,390,352,n = 6778 independent random walks). Circles and vertical bars show
+means and one standard deviation. Fitness values in (f, g) are normalized to lie in
+the interval (0,1). Source data are provided as a Source Data ﬁle.
+Article https://doi.org/10.1038/s41467-023-39321-8
+Nature Communications|         (2023) 14:3624 3
+Illumina sequencing after mass selection27 (Supplementary Methods).
+The published data contains ﬁtness information on 98.5% (7882) of
+these variants. I analyze this data as an adaptive landscape, and con-
+sider those variants neighbors of each other that differ in a single
+amino acid, and where the differing amino acids can be reached from
+each other through a single-point mutation (“Methods”).
+I ﬁrst examined all 175,552 pairs of neighboring variants, considered
+one member of the pair as the “wild-type”, and asked whether the
+mutation creating the neighbor meets criterion (2) for being beneﬁcial
+and evolvability-enhancing (“Methods”). I found that such beneﬁcial EE
+mutations comprise only 0.39% (681) of all mutations in the landscape.
+Figure 1c shows histograms of the meanﬁtness of the neighbors of the
+wild-type (black) as well as of the mutant (gray), for all bene ﬁcial EE
+mutations. The gray histogram is shifted far to the right, indicating that
+the mean ﬁtness of the neighbors of the mutant is substantially higher
+than that of the neighbors of the wild-type. Indeed, when averaged over
+all beneﬁcial EE mutations, the mean ﬁtness of the neighbors of the
+mutant /C22wn
+m
+/C0/C1
+= 0.85, which is 77% higher than the meanﬁtness of the
+wild-type /C22wn wt
+/C0/C1
+= 0.48, a difference that is highly signi ﬁcant
+(P =3 . 8×1 0−148,t w o - s i d e dM a n n–WhitneyU =4 3 , 7 5 0 ,n =6 8 1 ) .
+Considering only the difference in the ﬁt n e s so fn e i g h b o r so fa
+mutant and of a wild-type ignores the ﬁtness differences that exist
+between the wild-type and the m utant themselves. To take this
+ﬁtness difference into account, Fig. 1d shows histograms of the
+mean ﬁtness of the wild-type ’s neighbors adjusted for the ﬁtness of
+the wild-type ( /C22wn wt
+/C0/C1
+/C0 ww tðÞ ), as well as the analogous quantity for
+the mutants ( /C22wn m
+/C0/C1
+/C0 wmðÞ ). Even with this adjustment, the pro-
+nounced right shift of the distribution persists. More speci ﬁcally,
+averaged over all beneﬁcial EE mutations /C22wn wt
+/C0/C1
+/C0 ww tðÞ = −0.21 and
+/C22wn m
+/C0/C1
+/C0 wmðÞ = −0.004, a difference that is again highly signi ﬁcant
+(P =4 . 9×1 0−185, two-sided Mann –Whitney U = 21329, n = 681). I note
+t h a tt h es i g no fb o t hq u a n t i t i e si sn e g a t i v e ,w h i c hi sc o n s i s t e n tw i t ht h e
+general principle that mutations are on average deleterious
+50.T h i s
+observation raises the question whether EE mutations, as deﬁned here,
+only render deleterious mutations more weakly deleterious on aver-
+age, instead of increasing the propensity of mutations to be beneﬁcial?
+The inset of Fig.1d, which plots/C22wn
+m
+/C0/C1
+/C0 wmðÞ against /C22wn wt
+/C0/C1
+/C0 ww tðÞ ,
+already hints that this is not the case. Its upper left quadrant contains
+EE mutations whose neighbors are on average bene ﬁcial
+( /C22wn m
+/C0/C1
+/C0 wmðÞ > 0), whereas the same mutations in the wild-type are
+on average deleterious ( /C22wn wt
+/C0/C1
+/C0 ww tðÞ < 0). There are 119 such
+mutations or 17.4% of all beneﬁcial EE mutations. Figure 1es h o w st h e
+distribution of the fraction of beneﬁcial neighbors both for the wild-
+type and each corresponding EE mutant. This distribution is again
+shifted rightward, towards a higher fraction of beneﬁcial mutation in
+the neighborhood of EE mutations. Overall, 20.6% of wild-type neigh-
+bors are on average beneﬁcial, whereas 36.3% of EE mutant neighbors
+are (Fig. 1e, inset), an increase of 76% that is statistically highly sig-
+niﬁcant (P =4 . 9×1 0
+−32, two-sided Mann–Whitney U = 146,432,n =6 8 1 ) .
+In addition, 72.5% of EE mutants (494 of 681) have more bene ﬁcial
+neighbors than their wild-type ancestors. In sum, EE mutations do not
+just shift the distribution of mutational effect toward less deleterious
+mutations. Their neighbors are also more likely to be bene ﬁcial.
+Deleterious EE mutations share these main properties with beneﬁcial
+EE mutations (Supplementary Fig. 1).
+Beneﬁcial EE mutations are rare in the lowest ﬁtness regions of
+the landscape (Supplementary Fig. 3a). However, beneﬁcial EE muta-
+tions do not themselves cause higher or lower ﬁtness gains ΔwðÞ than
+other bene ﬁcial mutations ( P = 0.34, two-sided Mann –Whitney
+U = 29,022,948,n
+1 =6 8 1 ,n2 =8 7 0 7 6 ;m e a nΔw=0.16 and meanΔw=0.17
+for beneﬁcial EE mutations and beneﬁcial non-EE mutations).
+An examination of the most strongly evolvability-enhancing
+mutations shows that they fall into only three categories. They com-
+prise mutations towards the amino acid D at position 61 (Fig. 1b),
+mutations toward the amino acid K at position 64, and mutations away
+from a proline at position 81 (Supplementary Table 1). All of these
+changes show pronounced nonadditive interactions with subsequent
+mutations that render such mutations less deleterious and more likely
+to be beneﬁcial (Supplementary Table 1).
+Adaptive walks with EE mutations lead to higher ﬁtness in the
+protein landscape
+I next asked whether the occurrence of an evolvability-enhancing
+mutation in an evolving population would in ﬂuence the speed of
+adaptive evolution. To model adaptive evolution, I mostly consider a
+weak-mutation scenario
+18,51,52, because I study the evolution of a small
+section of a gene in which mutations are much rarer than in whole
+genomes. In this scenario, adaptive evolution can be modeled as an
+adaptive random walk of a single g enotype changing through point
+mutations (“Methods”).
+I modeled this adaptive walk stochastically, using Kimura ’s for-
+mula for the probability p
+fi x that a mutation goes to ﬁxation in a
+haploid population under the inﬂuence of selection and drift (“Meth-
+ods”). At the large population sizes of E. coli (N =1 . 8×1 08)53,d e l e t e r -
+ious mutations are very unlikely to go to ﬁxation, such that beneﬁcial
+mutations dominate the evolutionary dynamics.
+Ia n a l y z e d1 04 stochastic adaptive walks of maximally ten muta-
+tional steps each, which started outf r o mr a n d o m l yc h o s e ng e n o t y p e s
+from the bottom 5% of the ﬁtness distribution, and for a population
+size similar to that of E. coli (N =1 08)53. An adaptive walk can terminate
+prematurely if it reaches a global or local ﬁtness peak, i.e., a genotype
+whose neighbors all have ﬁtness lower than itself. Figure 1fs h o w s
+the evolutionary trajectories of a sample of 100 of these walks, with EE-
+enhancing mutation shown in red. Theﬁgure shows that adaptive walks
+approach the highest possible ﬁtness values within a mere few steps,
+implying that the landscape is highly navigable. In fact, by the fourth
+step, the medianﬁtness among all 10
+4 walks has reached more than 90%
+of the maximally possibleﬁtness (medianw =0 :94). Thus, EE mutations
+can make a difference only early during a adaptive walk, before most
+trajectories have reached highﬁtness. Here I study the preceding (third)
+s t e po ft h ea d a p t i v ew a l k s ,a tw h i c ht h ed i f f e r e n c eb e t w e e nt h em a x -
+imum and the minimumﬁtness among all walks is 0.8, i.e., it covers 80%
+of the possible ﬁtness range. I determined the averageﬁtness increase
+that the 10
+4 adaptive walks had achieved by the third step of the
+adaptive walk. This increase was 7.7% higher for adaptive walks that had
+experienced at least one EE mutation (meanΔw =0 :81) than for adap-
+tive walks that had experienced no EE mutations (mean Δw =0 :75), a
+difference that is highly signi ﬁcant (Fig. 1g, P =8×1 0
+−151,t w o - s i d e d
+Mann–WhitneyU =7 , 3 9 0 , 3 5 2 ,n = 6778). More generally, adaptive walks
+that experienced more EE mutations also experienced a signi ﬁcantly
+higher increase in meanﬁtness (Spearman’s r =0 . 2 7 ,P =1 . 2×1 0−161,t w o -
+sided, n =1 04). I also observed that 83.6% of adaptive walks terminated
+b e f o r et e ns t e p sh a db e e nr e a c h e d ,e v e nt h o u g ho n l y6 6 . 1 %o fa d a p t i v e
+walks reached the maximalﬁtness after ten steps. This means that many
+adaptive walks become trapped at localﬁtness peaks. EE mutations may
+help prevent a population from becoming trapped, because adaptive
+walks with more EE mutations last longer (Spearman ’s r =0 . 2 8 ,
+P =1 . 1×1 0−179,t w o - s i d e d ,n =1 04). Indeed, 19.8% (1282/6485) of adaptive
+w a l k sw i t ha tl e a s to n eE Em u t a t i o nd on o tt e r m i n a t ee a r l y ,w h e r e a st h e
+same holds for only about half as many adaptive walks with no EE
+mutation (10.2%, 359 of 3515), a difference that is highly signi ﬁcant
+(P =1 0
+−34, Chi-square = 151.0, 1 df). Analogous simulations for smaller
+population sizes and without the assumption of weak mutation also
+show that EE mutations are associated with signiﬁcant ﬁtness increases
+(Supplementary Note 1).
+EE mutations are more frequent but have smallerﬁtness effects
+in an RNA adaptive landscape
+In e x ts t u d i e dt h eﬁtness landscape of an arginine-CCU transfer RNA
+(tRNA) from the yeast Saccharomyces cerevisiae (Fig. 2a). Previous
+Article https://doi.org/10.1038/s41467-023-39321-8
+Nature Communications|         (2023) 14:3624 4
+work measured the ﬁtness of 4176 tRNA variants that differ at one or
+more of 10 nucleotide positions, with two or three variable nucleotides
+per position that occur naturally in seven yeast species
+26. The authors
+expressed a library of these variants from a centromeric yeast plasmid
+in a S. cerevisiae strain from which the native (single-copy) geneHSX1,
+which encodes the tRNA, had been deleted. To quantify ﬁtness, the
+authors deep-sequenced the library before and after selection in an
+environment where the tRNA is essential for growth (Supplementary
+Methods)
+26. This procedure allowed them to estimate the ﬁtness of
+individual variants by estimating their pre-and post-selection sequen-
+cing read counts. Data are reported as logarithmically transformed
+ratios of post-selection read counts of the focal variant and the refer-
+ence tRNA, that is, the tRNA encoded by the S. cerevisiae genome. On
+this logarithmic measurement scale, w(g) > 0 ( < 0) means that geno-
+type g grows faster (more slowly) than the S. cerevisiae genotype. Fit-
+ness values for the 4176 tRNA variants range between−0.86 and 0.09.
+Although this range differs from that of the protein landscape, I note
+that the measurement scale (a logarithmically transformed read count
+c
+ba
+d
+fe
+1 71
+6
+27 0
+69
+66
+46
+4327
+3’
+5’
+P=8×10-151
+Fig. 2 | Beneﬁcial EE mutations in an RNA adaptive landscape. a Schematic of
+tRNA secondary structure. Paired bases in stems (helices) are indicated by short
+straight lines. Black circles indicate those ten positions at which the nucleotide
+sequence was varied to map the adaptive landscape26. The vertical stem on top is
+the acceptor stem, which contains most of the variable sites.b Distribution of the
+mean ﬁtness of all neighbors of the wild-type ( /C22wn wt
+/C0/C1
+, black), as well as of all
+neighbors of the mutant ( /C22wn m
+/C0/C1
+, gray), for all pairs of neighbors and their bene-
+ﬁcial EE mutants in the yeast tRNA ﬁtness landscape26. Inset: scatterplot of /C22wn wt
+/C0/C1
+and /C22wn m
+/C0/C1
+; diagonal line: /C22wn wt
+/C0/C1
+= /C22wn m
+/C0/C1
+. c Distribution of the meanﬁtness of all
+neighbors of the wild-type adjusted by theﬁtness of the wild-type (/C22wn wt
+/C0/C1
+/C0 wðwtÞ,
+black), as well as of all neighbors of the mutant adjusted by the ﬁtness of the
+mutant ( /C22wn m
+/C0/C1
+/C0 wðmÞ, gray), for all pairs of neighbors and their beneﬁcial EE
+mutants in the tRNA landscape. Inset: Scatterplot of the same quantities.
+d Distribution of the fraction of beneﬁcial neighbors (neighbors with greaterﬁt-
+ness) of the wild-type (black) as well as of the corresponding EE mutant, for all pairs
+of wild-type sequences and their beneﬁcial EE mutants. Inset: box plot of this
+fraction (n = 2983 wild-type/mutant pairs; box height: interquartile range (IQR),
+horizontal bar: median; whisker length: 1.5 × IQR).e Fitness evolution (vertical axis)
+during 100 stochastic adaptive walks (horizontal axis: mutational steps) on the
+RNA landscape. Red edges correspond to EE mutations that occur during an
+adaptive walk.f The ﬁtness difference attained after step three of 104 adaptive
+walks between walkers that experienced no (EE = 0) and at least one (EE > 0) EE
+mutations is highly signiﬁcant (P =2 . 2×1 0−39, two-sided Mann–Whitney
+U = 10,237,878,n = 4109). Circles and vertical bars show means and one standard
+deviation. Fitness values for (e, f) are normalized to the interval (0,1). Source data
+are provided as a Source Data ﬁle.
+Article https://doi.org/10.1038/s41467-023-39321-8
+Nature Communications|         (2023) 14:3624 5
+ratio) is comparable between the two landscapes (Supplementary
+Methods)27. Except where otherwise mentioned, I use the originally
+reported ﬁtness scale.
+In the RNA landscape, 5.7% of mutations (2983 of 52672) are
+beneﬁcial and EE-enhancing. For these beneﬁcial EE mutations, Fig.2b
+shows histograms of the meanﬁtness of the neighbors of the wild-type
+(black) as well as of the mutant (gray). As for proteins, the neighbors of
+EE mutants tend to have higher ﬁtness than those of the wild-type.
+Indeed, for all bene ﬁcial EE mutations, /C22wn
+m
+/C0/C1
+= −0.15 compared to
+/C22wn wt
+/C0/C1
+= −0.25, a difference that is highly signi ﬁcant (P =3 . 5×1 0−297,
+two-sided Mann–WhitneyU = 1,998,287,n = 2983). Figure2cs h o w st h e
+histograms of the mean ﬁtness of the wild-type’s neighbors adjusted
+for the ﬁtness of the wild-type ( /C22wn wt
+/C0/C1
+/C0 ww tðÞ ), as well as the analo-
+gous quantity for the mutants ( /C22wn m
+/C0/C1
+/C0 wmðÞ ). The right shift of the
+mean ﬁtness distribution persists with this adjustment. More speciﬁ-
+cally, averaged over all beneﬁcial EE mutations/C22wn wt
+/C0/C1
+/C0 ww tðÞ = −0.05
+and /C22wn m
+/C0/C1
+/C0 wmðÞ = +0.005, a difference that is again highly sig-
+niﬁcant ( P =5 . 3×1 0−241,t w o - s i d e dM a n n–Whitney U = 224,935,
+n = 2983). The positive (albeit small value) of/C22wn m
+/C0/C1
+/C0 wmðÞ shows that
+at least some neighbors of mutants are typically bene ﬁcial. Indeed
+there are 968 (32.4%) of beneﬁcial EE mutations whose neighbors are
+on average bene ﬁcial ( /C22wn m
+/C0/C1
+/C0 wmðÞ > 0), whereas the same muta-
+tions in the wild-type are on average deleterious (/C22wn wt
+/C0/C1
+/C0 ww tðÞ <0 ,
+inset of Fig. 2c, upper left quadrant). Figure2d shows the distribution
+of the fraction of beneﬁcial neighbors both for the wild-type and each
+corresponding EE mutant. This distribution is again shifted towards a
+higher fraction of bene ﬁcial mutation in the neighborhood of EE
+mutations. Overall, 34.3% of wild-type neighbors are on average
+beneﬁcial, whereas 50.9% of EE mutant neighbors are (Fig. 2d, inset),
+an increase of 48% ( P =1 . 9×1 0
+−145, two-sided Mann –Whitney
+U = 2,741,913, n = 2983). In addition, 76.4% of bene ﬁcial EE mutants
+(2279) have more beneﬁcial neighbors than their wild-type ancestors.
+In sum, like in the protein landscape, the neighbors of bene ﬁcial EE
+mutations are also more likely to be bene ﬁcial. Deleterious EE muta-
+tions (7.0% of all mutations) share their main properties with beneﬁcial
+EE mutations (Supplementary Fig. 2).
+As in the protein landscape, beneﬁcial EE mutations are more rare
+in low-ﬁtness regions of the RNA landscape, but wild-types of inter-
+mediate ﬁtness are most likely to give rise to EE-enhancing mutations
+(Supplementary Fig. 3c). Another noteworthy difference to the protein
+landscapes is that beneﬁcial EE mutations themselves tend to cause a
+signiﬁcantly lower ﬁtness increase (mean Δw=0.04) than bene ﬁcial
+non-EE mutations (meanΔw=0.11; P <1 0
+−297,t w o - s i d e dM a n n–Whitney
+U =1 4 , 6 1 9 , 1 9 8 ,n1 =2 9 8 3 ,n2 = 23,336).
+When examining the mutations that enhance evolvability to the
+greatest extent, I found that they all occur in the tRNA acceptor stem
+(Fig. 2a). They fall into few categories and tend to stabilize the tRNA
+secondary structure, for example by creating a G–Cb a s ef r o mam i s -
+matched base pair or from a G –U base pair (Supplementary Table 2).
+Thus, in a genetic background that confers greater RNA structural
+stability, subsequent mutations may be less deleterious and more
+likely to be beneﬁcial.
+Adaptive walks with EE mutations also lead to higher ﬁtness
+gains in the RNA landscape
+As in the protein landscape, Iﬁrst studied 104 stochastic adaptive walks
+that started out from randomly chosen genotypes within the bottom
+5% of the ﬁtness distribution, but with the effective population size of
+yeast (N = 7.8 × 10
+6)53. Figure2e shows the evolutionary trajectories of a
+sample of 100 of these walks, with EE mutational steps shown in red.
+Most adaptive walks rapidly reach aﬁtness plateau, but the landscape
+appears less navigable than the protein landscape. It takes six instead
+of just four steps to reach a median ﬁtness that exceeds 90% of the
+maximally possibleﬁtness, and even after ten steps, the medianﬁtness
+reached by 10
+4 adaptive walks is /C22w =0 :92, 8% below the maximum.
+Figure 2e suggests that only a small fraction of adaptive walks over-
+comes a suboptimalﬁtness plateau. Indeed, among 104 adaptive walks,
+none reach the maximalﬁtness within ten steps, and only 6% reached a
+ﬁtness within 5% of the maximum. Relatedly, many more adaptive
+walks (9576 of 10,000) terminate before 10 steps than in the protein
+landscape (8359 of 10,000).
+As in the protein landscape, I study the role of EE mutations after
+the third step of the adaptive walks. After this step, the difference
+between the maximum and the minimum ﬁtness among all walks still
+covers 56% of the totalﬁtness range. Adaptive walks that experience at
+least one EE mutation had reached a ﬁtness of /C22w =0 :51 after the third
+step, 7.0% higher than adaptive walks that experience no EE mutations
+( /C22w =0 :48), a highly signi ﬁcant difference (Fig. 2f; P =2 . 2×1 0
+−39,t w o -
+sided Mann–Whitney U = 10,237,878,n = 4109). More generally, adap-
+tive walks that experience more EE mutations also experience a sig-
+niﬁcantly higher increase in mean ﬁtness (Spearman ’s r =0 . 1 5 ,
+P =8 . 7×1 0−52, two-sided, n =1 04). Finally, adaptive walks with more EE
+mutations are signiﬁcantly longer (Spearman’s r =0 . 6 7 ,P <1 0−297,t w o -
+sided, n =1 04). Relatedly, adaptive walks with EE mutations are 140
+times less likely to become trapped at a local peak than adaptive walks
+with no EE mutations (5.7% [440/7751] vs. 0.04% [1/2249] of walks with
+and without EE mutations do not terminate prematurely;
+P = 4.4 × 10
+−30, Chi-Square = 129.8, 1 df). Adaptive walks at smaller
+population sizes and without the weak-mutation assumption also
+achieve higher ﬁtness when EE mutations are present (Supplemen-
+tary Note 1).
+Biological landscapes contain more beneﬁcial EE mutations than
+expected by chance
+The mere existence of EE mutations in biologicalﬁtness landscapes is
+biologically signiﬁcant if they help populations evolve higher ﬁtness
+during adaptive evolution, as they do in the landscapes I study. This
+biological signi ﬁcance is the main focus of my work, but it is also
+sensible to ask about the statistical signi ﬁcance of EE mutations, i.e.,
+would such mutations be expected to occur “by chance alone ” in a
+suitably deﬁned null model of a “random” ﬁtness landscape? I asked
+this question for each of the two empirical landscapes by randomly
+permuting the landscape’s ﬁtness values, determining the incidence
+of beneﬁcial EE mutations, and repeating this procedure 100 times. In
+the randomized protein landscape, only 0.0013 ± 8.7 × 10
+−6 (s. dev.)%
+of mutations (2.3 ± 1.5 mutations) on average are bene ﬁcial, a much
+smaller proportion than the 0.39% of bene ﬁcial EE mutations (681
+mutations) in the actual protein landscape. Thus, the protein land-
+scape has over 300 times more bene ﬁcial EE mutations than expec-
+ted from the randomized landscape. Also, not a single one of the 100
+randomized landscapes has as many bene ﬁcial EE mutations as the
+protein landscape. Thus, the number of EE mutations in the protein
+landscape is greater than expected by chance alone at a statistical
+signiﬁcance of P < 0.01. In the randomized RNA landscape, 1.8 ± 0.08
+(s. dev.)% of mutations (971 ± 40 mutations) are bene ﬁcial and EE,
+whereas in the RNA landscape, 5.7% of mutations (2983 mutations)
+are beneﬁcial and EE. In other words, the RNA landscape contains 3.1
+times more bene ﬁcial EE mutations than expected by chance. This
+difference is also statistically signi ﬁcant at P < 0.01. In sum, both
+landscapes contain signi ﬁcantly more bene ﬁcial EE mutations than
+expected by chance, and dramatically more so for the protein
+landscape.
+Discussion
+Multiple properties of biological systems have been linked to
+evolvability1,4,40,54. Some of them, such as the shortness of the amino
+acid motifs recognized by regulatory protein kinases, or the structure
+of the genetic code
+1,40,54,55, are global organizational properties of life
+that do not evolve on short evolutionary time scales. This makes them
+poorly suited to study the evolution of evolvability.
+Article https://doi.org/10.1038/s41467-023-39321-8
+Nature Communications|         (2023) 14:3624 6
+Other, more local properties are better suited, because they can
+evolve rapidly. Among them is a genotype ’s potential to experience
+mutations that are adaptive (or at least only weakly deleterious). Single
+EE mutations can affect this potential. They belong in a broader class of
+mutations that modify the distribution ofﬁtness effects (DFEs) of other
+mutations. Because knowledge about the DFE is necessary to under-
+stand the evolutionary dynamics of populations, techniques to quan-
+tify it from empirical data have been developed
+50.D F Em o d iﬁers have
+also been studied theoretically, albeit in other contexts 56,57.F o r
+example, theory predicts that DFE modi ﬁers that render mutations
+more deleterious may help drive viral populations to extinction56.
+EE mutations are DFE modiﬁers that shift the DFE towards greater
+ﬁtness. In both the protein and the RNA landscape, beneﬁcial (as well
+as deleterious) EE mutations exist and comprise a small minority of
+mutations. They increase the meanﬁtness of other mutations, reduce
+the deleterious effects of deleterious mutations, and increase the
+fraction of mutations that are beneﬁcial. In other words, they do not
+just make maladaptive mutations less maladaptive, but also increase
+the incidence of adaptive mutations. Some single EE mutations can
+shift the DFE dramatically toward more bene ﬁcial mutations. The
+occurrence of EE mutations during adaptive evolution can increase the
+ﬁtness of an evolving population signiﬁcantly.
+Ab e n eﬁcial EE mutation that renders another beneﬁcial mutation
+even more bene ﬁcial provides an example of a positively epistatic
+(nonadditive) interaction, where the combined effect of two mutations
+is stronger than that of both mutations individually (Supplementary
+Methods). Positive epistasis is the exception
+58,59, and negative epistasis
+is the rule in adaptive landscapes29,33,38,39,60–62,w h i c hm a yh e l pe x p l a i n
+why EE mutations are rare. Consistent with this observation, most ﬁt-
+ness landscapes show a form of negative epistasis known as dimin-
+ishing returns epistasis
+11,31,63–65, in which bene ﬁcial mutations become
+less beneﬁcial as an evolving population becomes increasingly well-
+adapted to its environment.
+In o t et h a tm u l t i p l ea l t e r n a t i v ed eﬁnitions of an EE mutation are
+conceivable. First, a mutation could be considered EE if it merely helps
+reduce the deleterious effects of other mutations, even if it does not
+itself increase the incidence of bene ﬁcial mutations. Mutations that
+render proteins more stable have this effect, and their suppression of
+deleterious mutation can help enzymes evolve new catalytic
+activities
+21. Second, one might require that an EE mutation must
+increase the proportion of subsequent mutations that are bene ﬁcial.
+Many but not all of the EE mutations I identify have this property.
+Third, one could exclude all neighbors of a wild-type/mutant pair with
+very low ﬁtness from further analysis, because they may play little role
+in adaptive evolution. Fourth, one could require that an EE mutation
+increases the ﬁtness of two, three, and higher mutant neighbors (and
+not just those in the immediate neighborhood of the mutant). Finally,
+one could also average neighbor ﬁtness in different ways, or use dif-
+ferent measurement scales forﬁtness. Which deﬁnition turns out to be
+most useful may well depend on the question asked and on the land-
+scape studied.
+I focused here on EE mutations that are themselves bene ﬁcial,
+because under the high population sizes that are typically of microbes,
+deleterious mutations are very unlikely to go toﬁxation. For example,
+at E. coli’s population size ofN =1 . 8×1 0
+8, a deleterious mutation whose
+ﬁtness is lower than that of the wild-type by a mere s = 10 −7 has a
+negligible probability of P =4 . 6×1 0−23 to go to ﬁxation66. However,
+exceptions may exist. For example, in a long-term E. coli evolution
+experiment, initially deleterious mutations increased a population ’s
+potential to evolve the ability to extract energy from a new carbon
+source, which allowed these mutations to persist in the population10.I t
+is thus important that the main properties of deleterious EE mutations
+are similar to those of beneﬁcial EE mutations (Supplementary Figs. 1
+and 2).
+Both the protein and RNA landscapes I study harbor EE muta-
+tions, but they differ in many other respects. First, bene ﬁcial EE
+mutations are many times less abundant in the protein landscape
+(0.39 vs. 5.7%). Second, EE mutations in the protein landscape
+increase the ﬁtness of other mutations more strongly
+( /C22wn
+m
+/C0/C1
+/C0 /C22wn wt
+/C0/C1/C0/C1
+/C0 Δw ≈ 0:21) than in the RNA landscape
+( /C22wn m
+/C0/C1
+/C0 /C22wn wt
+/C0/C1/C0/C1
+/C0 Δw ≈ 0:055).Third, in the protein landscape the
+ﬁtness beneﬁt of bene ﬁcial EE mutations is similar to that of non-EE
+mutations. In contrast, in the RNA landscape, the ﬁtness beneﬁto fE E
+mutations is smaller than that of non-EE mutations. This property
+may help explain why EE mutations that occur during adaptive walks
+lead to a smaller ﬁtness increase in the RNA landscape than in protein
+landscapes. Which, if any, of these differences may be universal dif-
+ferences of protein and RNA landscapes is an exciting question for
+future work. Answering it will become possible as more such land-
+scapes are being characterized.
+The evolutionary dynamics on landscapes with EE mutations may
+be complex. For example, on landscapes like that of the tRNA (Fig.2a)
+the ﬁrst mutation(s) to be ﬁxed will probably not be EE-enhancing if
+adaptive evolution starts out in a low- ﬁtness region (Supplementary
+Fig. 3). The reason is that EE mutations are rare in such regions. Once
+such an EE mutation becomes ﬁxed, it may increase or decrease the
+likelihood that further mutations are EE. Furthermore, interactions
+between mutations may also affect the adaptive bene ﬁto fE Em u t a -
+tions. For example, consider a large population with a high mutation
+rate, in which multiple beneﬁcial clones that compete with each other
+for ﬁxation occur at the same time. Such clones will be subject to clonal
+interference
+67–71, which may prevent EE mutations (with a smallﬁtness
+beneﬁt) from going to ﬁxation and favor non-EE mutations (with a
+larger ﬁtness bene ﬁt). As experimental data on more landscapes
+become available, the evolutionary dynamics of EE mutations may also
+become a rewarding study subject.
+One limitation of my analysis is that it considers only the small
+number of variable sites used in mapping the protein and RNA land-
+scape. This is an unavoidable limitation, because it would be impos-
+sible to construct a combinatorially complete adaptive landscape for
+even a short RNA molecule like a tRNA ( ≈70 nucleotides), an entire
+protein, or an entire genome. To mitigate this limitation experimen-
+tally, one could (i) engineer speci ﬁc pairs of wild-type molecules
+(protein or RNA) and their putative EE mutants based on landscape
+analysis, (ii) subject them to random mutagenesis over the entire
+length of the molecule, and (iii) measure the (mean) ﬁtness of the
+randomized variants. If a mutation is truly EE, one would expect that
+this mean ﬁtness is higher in the EE mutant background. A second
+limitation is that my quantitative observations may not be directly
+comparable between landscapes, because of differences in howﬁtness
+is reported
+26,27. Such a comparison is not central for my purpose, but
+where it is, different landscapes may have to be mapped with the same
+experimental protocols. Third, I only studied the consequences of EE
+mutations on adaptive evolution in the short term. In the long term,
+they may have additional consequences. For example, they may
+increase the mutational load of a population.
+In sum, my analysis shows that EE mutations exist in both protein
+and RNA landscapes, and that they can help increase ﬁtness during
+adaptive evolution. Do such EE mutations exist in all proteins or RNA
+molecules? Do they differ in their abundance among different kinds
+of such molecules? Do they create evolutionary contingencies, where
+populations that encounter such mutations take different evolu-
+tionary paths than those that do not. Do such mutations enhance
+evolvability across different environments? Can they help make
+qualitatively new phenotypes accessible to Darwinian evolution? As
+more and larger landscapes are being characterized, these and other
+questions will open many avenues for research on the evolution of
+evolvability.
+Article https://doi.org/10.1038/s41467-023-39321-8
+Nature Communications|         (2023) 14:3624 7
+Methods
+F o rb o t ht h ep r o t e i na n dR N Al a n d s c a p e ,Iﬁrst identiﬁed all pairs of
+sequences that are (one-mutant) neighbors of each other, i.e., they
+differ only in a single residue, and arbitrarily designated one as the
+“wild-type” (wt) and the other as the mutant ( m). I then classiﬁed the
+mutant as bene ﬁcial if Δw = wmðÞ /C0 ww tðÞ > 0, and as deleterious if
+Δw <0 : I do not explicitly study neutral EE mutations here, because
+such mutations cannot be reliably identiﬁed for large populations with
+today’s technology to measure ﬁtness, and the number of 1-mutant
+neighbor pairs where bothﬁtness measurements happen to be exactly
+equal is so small as to be negligible (38 pairs or 0.02% of all pairs for the
+protein dataset and 34 or 0.06% for the RNA dataset). I then deter-
+mined all k
+wt one-mutant neighbors of the wt sequence, excluding
+those sequences that differ from thewt at the same residue at whichm
+differs from it. For these neighbors, I computed the mean ﬁtness
+/C22wn wt
+/C0/C1
+and its standard deviation σ nwt
+/C0/C1
+. I repeated this calculation
+for the km neighbors of the mutant m to obtain their mean ﬁtness
+/C22wn m
+/C0/C1
+and its standard deviationσ nm
+/C0/C1
+. I note that kwt ≠ km may hold,
+because for a small fraction of genotypes,ﬁtness data is not available.
+The maximally possible number of neighbors of any genotype in the
+RNA landscape equals k =6×1+4×2=1 4 .
+With this information in hand, I then tested the null hypothesis
+that the mutation wt ! m is not evolvability-enhancing. To this end, I
+used a two-sided one-sample t test of the null hypothesis that
+/C22wn
+m
+/C0/C1
+/C0 /C22wn wt
+/C0/C1
+≤ Δw, which is equivalent to asking whether
+/C22wn m
+/C0/C1
+/C0 wmðÞ ≤ /C22wn wt
+/C0/C1
+/C0 ww tðÞ . If the null hypothesis is rejected, i.e.,
+if the difference /C22wn m
+/C0/C1
+/C0 /C22wn wt
+/C0/C1
+is signiﬁcantly greater than the dif-
+ference Δw in ﬁtness between the wild-type and the mutant, the
+mutation is evolvability-enhancing, according to inequality (2). To
+compute the standard deviation of /C22wn
+m
+/C0/C1
+/C0 /C22wn wt
+/C0/C1
+,w h i c hi sn e c e s -
+sary for the t test, I took advantage of the fact that the standard
+deviation of the difference of two independent random variatesx and y
+(with individual standard deviations σx and σx )i sg i v e nb y
+σy/C0 x =
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ ﬃ
+σ2
+x + σ2
+y
+q
+. Thus, the standard deviation of /C22wn m
+/C0/C1
+/C0 /C22wn wt
+/C0/C1
+,
+computes as σ2ðΔ /C22wðnÞÞ =
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ ﬃ
+σ2 nwt
+/C0/C1
++ σ2 nm
+/C0/C1q
+. I used min ðkwt,kmÞ, i.e.,
+the smaller of the two numbers of neighbors of the wild-type and
+mutant genotype, as the degrees of freedoms for this t test. This
+procedure renders the t test conservative. I performed such t tests
+for all bene ﬁcial mutations in both data tests, and used a
+Benjamini–Hochberg correction
+72 with a false discovery rate (FDR) of
+0.01 to correct for multiple testing. Supplementary Methods describe
+an analogous procedure to identify deleterious EE mutations.
+The published protein landscape data contains only information
+on the ﬁtness of each amino acid sequence variant of the antitoxin, but
+not on the DNA genotype encoding this variant. Due to the structure of
+the genetic code
+73, not all 20 amino acids can be reached from one
+another through single-point mutations. In my analysis of this land-
+scape, I admitted only those genotypes as 1-mutant neighbors that
+differ in a single amino acid, and where the two differing amino acids
+(i.e., amino acid a
+1 in genotype 1 and a2 in genotype 2) are accessible
+from each other through a single-point mutation. This means that
+there must exist at least one codonc
+1 for a1, and at least one codon c2
+for a2,s u c ht h a tc o d o n sc1 and c2 differ by only a single nucleotide. The
+Supplementary Methods provide further information on ﬁtness
+measurements.
+To model adaptive evolution on the two landscapes, I focus on a
+weak-mutation scenario18,51,52, which is appropriate, because I study the
+evolution of small parts of single genes in which mutations are much
+rarer than in whole genomes. The scenario requires that the popula-
+tion mutation rate, i.e., the product of (effective) population sizeN and
+per-nucleotide mutation rateμ is small, i.e., Nμ <1 . F o re x a m p l e , i nE.
+coli, with a per-nucleotide mutation rate ofμ =2×1 0
+−10 and an effective
+population size of N =1 . 8×1 08, the per-generation population muta-
+tion rate in the three amino acid (nine nucleotide) region of the gene I
+study is given by 9 Nμ = 0.32, and only a fraction of these mutations
+would be non-synonymous, creating a new amino acid sequence
+53.
+Likewise, in the yeastS. cerevisiae, μ =2 . 6×1 0−10,a n dN =7 . 8×1 06,s u c h
+that 10Nμ = 0.02 for the ten-nucleotide RNA landscape I study53). In the
+weak-mutation scenario, a population is monomorphic most of the
+time until a mutation occurs that goes to ﬁxation. Most mutations do
+so rapidly relative to the waiting time for the next mutation that goes
+to ﬁxation, and after such aﬁxation event the population again remains
+monomorphic until this next mutation occurs, and so on. In other
+words, adaptive evolution can be modeled as if it was an adaptive walk
+of a single genotype changing through point mutations.
+To model this adaptive walk, I took advantage of Kimura ’s
+formula for the probability p
+fi x that a mutation goes to ﬁxation in a
+haploid population under the in ﬂuence of selection and drift,
+pfi x = ð1 /C0 e/C0 2s Þ\ð1 /C0 e/C0 2Ns Þ (Equation 3.11 of ref. 66). Here, N is the
+e f f e c t i v ep o p u l a t i o ns i z ea n ds denotes the selection coefﬁcient of the
+mutant, i.e., its difference in ﬁtness from the pre-mutated (wild-type)
+s t a t e .I fs>0( s<0 )t h em u t a t i o ni sb e n eﬁcial (deleterious). At the large
+population sizes of E. coli and yeast, deleterious mutations are very
+unlikely to go to ﬁxation, and the same holds for neutral mutations
+ðs =0 ,pfi x =1 =NÞ, such that bene ﬁcial mutations dominate the evolu-
+tionary dynamics.
+To simulate adaptive evolution on each of the two adaptive
+landscapes, Iﬁrst constructed a graph whose nodes are the genotypes
+of the landscape. Two nodes are connected by a directed edge if they
+are one-mutant neighbors. For a given population size N,It h e nc o m -
+puted for each edge the ﬁxation probabilityp
+fi x of the corresponding
+mutational step, where I calculated the selection coef ﬁcient s of the
+respective mutation as the difference inﬁtness between the genotype
+after and before mutation. I note that in this graph, for each“forward”
+edge connecting two neighboring genotypes gi and gj (and its pfi x)
+there is a corresponding “backward” edge connecting gj and gi,
+together with an associated probabilitypfi x .
+Starting from any one genotype g on an adaptive landscape, I
+s i m u l a t e de a c hs t e po fa na d a p t i v ew a l ka sf o l l o w s .Id i v i d e d(“nor-
+malized”)t h eﬁxation probabilitypfi x of each neighbor ofg by the sum
+of the ﬁxation probabilities of all neighbors. Subsequently, I chose one
+of these neighbors at random, such that each neighbor had an equal
+likelihood to be chosen, and generated a (pseudo)random number on
+the interval (0,1). If this random number was smaller than the (nor-
+malized) ﬁxation probability of the mutational step leading to this
+neighbor, the corresponding mutation goes toﬁxation, i.e., the adap-
+tive walk progresses by one step towards this neighbor. If not, I repe-
+ated the procedure, choosing another neighbor, and another random
+number, and so on, until I had found a successful ﬁxation event.
+The above normalization of ﬁxation probabilities is necessary to
+render the adaptive walks computationally feasible. The reason is that
+the ﬁxation probabilities of all neighbors of a genotype g can be very
+small if the ﬁtness of these neighbors is very similar to that ofg.I nt h i s
+case, waiting times for a successful ﬁxation event become excessive.
+The normalization helps avoid this problem while preserving the
+important relative magnitude of the ﬁxation probabilities. I note that
+as a result of this normalization, information on the time scale of
+adaptive evolution is lost.
+With this procedure, I performed 10
+4 adaptive walks, each with a
+maximum of 10 mutational steps. The initial genotype for each adap-
+tive walk I chose at random (with uniform distribution) from the
+genotypes within the lowest 5% (the 5th percentile) of the ﬁtness dis-
+tribution on the landscape. Whenever such an adaptive walk reached a
+genotype g for which all neighbors had a smaller ﬁtness than g and a
+ﬁxation probability ofp
+fi x = 0, I considered a local adaptive peak in the
+landscape to have been reached. In this case, I terminated the adaptive
+walk and recorded the number of steps from the starting genotype to
+the local peak.
+To explore the consequences of relaxing the assumption of weak
+mutation, I also simulated adaptive evolution under a simple model of
+Article https://doi.org/10.1038/s41467-023-39321-8
+Nature Communications|         (2023) 14:3624 8
+clonal interference, a phenomenon that occurs at high population
+mutation rates and that leads to the co-occurrence of multiple bene-
+ﬁcial mutations that compete with each other for ﬁxation
+67–71.I nt h i s
+model, only the ﬁttest mutation goes to ﬁxation. I modeled this sce-
+nario through a “greedy” adaptive walk, in which the most bene ﬁcial
+neighbor of the current genotype always goes to ﬁxation. For the
+display of adaptive walks, I normalized ﬁt n e s sv a l u e so fb o t hl a n d -
+scapes to the interval (0,1) to facilitate visual comparison between RNA
+and protein landscapes (Figs.1f, g and 2e, f). To test for differences in
+the location of statistical distributions, I used two-sided
+Mann–Whitney U tests implemented in scipy (version 1.9.1) of
+Python (version 3.8.5).
+Reporting summary
+Further information on research design is available in the Nature
+Portfolio Reporting Summary linked to this article.
+Data availability
+All landscape data analyzed here has been obtained from previous
+publications. Speciﬁcally, RNA landscape data are publicly available as
+Supplementary Table S1 from the Supplementary Information section
+of ref. 26. Protein data is taken from ref. 27 and publicly available
+through accession number GSE153897 from the NCBI Gene Expression
+Omnibus database. The protein structure shown in Fig.1bi sb a s e do n
+data in protein database (pdb) ﬁle 5CEG ( https://doi.org/10.2210/
+pdb5CEG/pdb) Source data are provided with this paper.
+Code availability
+Scripts to analyze the landscape data are publicly available at https://
+github.com/andreas-wagner-uzh/EE_mutations.
+References
+1. Gerhart, J. & Kirschner, M. Cells, Embryos, and Evolution(Black-
+well, 1998).
+2 . H a n s e n ,T .F . ,H o u l e ,D . ,P a v l i c e v ,M .&P e l a b o n ,C .in Vienna Series
+in Theoretical Biology(MIT Press, 2023).
+3. de la Rosa, L. N. Computing the extended synthesis: mapping the
+dynamics and conceptual structure of the evolvability research
+front. J .E x p .Z o o l .P a r tB :M o l .D e v .E v o l .328,3 9 5–411 (2017).
+4. Payne, J. L. & Wagner, A. The causes of evolvability and their evo-
+lution. Nat. Rev. Genet. 20,2 4–38 (2019).
+5. Pigliucci, M. Is evolvability evolvable? Nat. Rev. Genet. 9,7 5–82
+(2008).
+6. Hansen, T. F. & Houle, D. Measuring and comparing evolvability and
+constraint in multivariate characters.J. Evol. Biol. 21,1 2 0 1–1219
+(2008).
+7. Knight, R. D., Freeland, S. J. & Landweber, L. F. Rewiring the key-
+board: evolvability of the genetic code.Nat. Rev. Genet. 2,4 9–58
+(2001).
+8. Dellus-Gur, E. et al. Negative epistasis and evolvability in TEM-1 β-
+lactamase—t h et h i nl i n eb e t w e e na ne n z y m e’s conformational
+freedom and disorder.J. Mol. Biol. 427,2 3 9 6–2409 (2015).
+9. Gifford, D. R., Toll ‐Riera, M. & MacLean, R. C. Epistatic interactions
+between ancestral genotype and beneﬁcial mutations shape evol-
+vability in Pseudomonas aeruginosa. Evolution 70,1 6 5 9–1666
+(2016).
+10. Woods, R. J. et al. Second-order se lection for evolvability in a large
+Escherichia colipopulation.Science 331,1 4 3 3–1436 (2011).
+1 1 . K r y a z h i m s k i y ,S . ,R i c e ,D .P . ,J e r i s o n ,E .R .&D e s a i ,M .M .G l o b a l
+epistasis makes adaptation predictable despite sequence-level
+stochasticity.Science 344,1 5 1 9–1522 (2014).
+12. Svensson, E. & Calsbeek, R. The Adaptive Landscape in Evolutionary
+Biology (Oxford University Press, 2012).
+1 3 . M i l l s ,S .K .&B e a t t y ,J .H .P r o p e n s i t yi n t e r p r e t a t i o no fﬁtness. Philos.
+Sci. 46,2 6 3–286 (1979).
+14. Bigelow, J. & Pargetter, R. Functions. J. Philos. 84,1 8 1–196 (1987).
+15. Mitchell, S. D. Function, ﬁtness and disposition.Biol. Philos. 10,
+39–54 (1995).
+16. Weber, M. Evolutionary plasticity in prokaryotes: a Panglossian view
+—evolutionary plasticity in prokaryotes.Biol. Philos. 11,6 7–88
+(1996).
+1 7 . R a y n e s ,Y . ,G a z z a r a ,M .R .&S n i e g o w s k i ,P .D .M u t a t o rd y n a m i c si n
+sexual and asexual experimental populations of yeast.BMC Evolut.
+Biol. 11, 158 (2011).
+18. van Nimwegen, E., Crutch ﬁeld, J. & Huynen, M. Neutral evolution of
+mutational robustness.Proc. Natl Acad. Sci. USA 96,9 7 1 6–9720
+(1999).
+19. Tenaillon, O., Toupance, B., Le N a g a r d ,H . ,T a d d e i ,F .&G o d e l l e ,B .
+Mutators, population size, adaptive landscape and the adaptation
+of asexual populations of bacteria.Genetics 152,4 8 5–493 (1999).
+20. Wagner, A. Adaptive evolvability through direct selection instead of
+indirect, second-order selection.J. Exp. Zool. B -- Mol. Dev. Evol.
+338,3 9 5–404 (2021).
+21. Bloom, J. D., Labthavikul, S. T., Otey, C. R. & Arnold, F. H. Protein
+stability promotes evolvability.P r o c .N a t lA c a d .S c i .U S A103,
+5869–5874 (2006).
+2 2 . B l o o m ,J .D .&A r n o l d ,F .H .I nt h el i g h to fd i r e c t e de v o l u t i o n :
+pathways of adaptive protein evolution.Proc. Natl Acad. Sci. USA
+106, 9995–10000 (2009).
+2 3 . B r o w n ,N .G . ,P e n n i n g t o n ,J .M . ,H u a n g ,W . ,A y v a z ,T .&P a l z k i l l ,T .
+Multiple global suppressors of protein stability defects facilitate the
+evolution of extended-spectrum TEMβ-lactamases.J. Mol. Biol.
+404,8 3 2–846 (2010).
+2 4 . F a s a n ,R . ,M e h a r e n n a ,Y .T . ,S n o w ,C .D . ,P o u l o s ,T .L .&A r n o l d ,F .H .
+Evolutionary history of a specialized P450 propane mono-
+oxygenase.J. Mol. Biol. 383,1 0 6 9–1080 (2008).
+25. Zheng, J., Guo, N. & Wagner, A. Selection enhances protein evol-
+vability by increasing mutational robustness and foldability.Sci-
+ence 370, eabb5962 (2020).
+26. Domingo, J., Diss, G. & Lehner, B. Pairwise and higher-order genetic
+interactions during the evolution of a tRNA.Nature 558, 117–121
+(2018).
+27. Lite, T.-L. V. et al. Uncovering the basis of protein-protein interaction
+speciﬁcity with a combinatorially complete library.Elife 9, e60924
+(2020).
+28. Palmer, A. C. et al. Delayed commitment to evolutionary fate in
+antibiotic resistanceﬁtness landscapes.Nat. Commun. 6,1 –8
+(2015).
+2 9 . L i ,C . ,Q i a n ,W . ,M a c l e a n ,C .J .&Z h a n g ,J .T h eﬁtness landscape of a
+tRNA gene. Science 352,8 3 7–840 (2016).
+30. Li, C. & Zhang, J. Multi-environment ﬁtness landscapes of a tRNA
+gene. Nat. Ecol. Evol. 2,1 0 2 5( 2 0 1 8 ) .
+3 1 . C h o u ,H . - H . ,C h i u ,H . - C . ,D e l a n e y ,N .F . ,S e g r è ,D .&M a r x ,C .J .
+Diminishing returns epistasis among beneﬁcial mutations decele-
+rates adaptation.Science 332, 1190–1192 (2011).
+32. Hall, D. W., Agan, M. & Pope, S. C. Fitness epistasis among 6 bio-
+synthetic loci in the budding yeast Saccharomyces cerevisiae.J.
+Heredity 101,S 7 5–S84 (2010).
+33. Sarkisyan, K. S. et al. Local ﬁtness landscape of the green ﬂuor-
+escent protein. Nature 533,3 9 7–401 (2016).
+34. Poelwijk, F. J., Socolich, M. & Ranganathan, R. Learning the pattern
+of epistasis linking genotype and phenotype in a protein.Nat.
+Commun. 10, 4213 (2019).
+35. Zheng, J., Payne, J. L. & Wagner, A. Cryptic genetic variation
+accelerates evolution by opening access to diverse adaptive peaks.
+Science 365,3 4 7–353 (2019).
+Article https://doi.org/10.1038/s41467-023-39321-8
+Nature Communications|         (2023) 14:3624 9
+36. Diss, G. & Lehner, B. The genetic landscape of a physical interaction.
+eLife 7,e 3 2 4 7 2( 2 0 1 8 ) .
+37. Wu, N. C., Dai, L., Olson, C. A., Lloyd-Smith, J. O. & Sun, R. Adap-
+tation in protein ﬁtness landscapes is facilitated by indirect paths.
+eLife 5, e16965 (2016).
+38. Olson, C. A., Wu, N. C. & Sun, R. A comprehensive biophysical
+description of pairwise epistasis throughout an entire protein
+domain. Curr. Biol. 24, 2643–2651 (2014).
+39. Melamed, D., Young, D. L., Gamble , C. E., Miller, C. R. & Fields, S.
+Deep mutational scanning of an RRM domain of the Saccharomyces
+cerevisiae poly(A)-binding protein.RNA 19,1 5 3 7–1551 (2013).
+40. Aguilar-Rodriguez, J., Payne, J. A. & Wagner, A. 1000 Empirical
+adaptive landscapes and their navigability.Nat. Ecol. Evol. 1,
+0045 (2017).
+41. Li, X., Lalic, J., Baeza-Centurion, P., Dhar, R. & Lehner, B. Changes in
+gene expression predictably shift and switch genetic interactions.
+Nat. Commun. 10, 3886 (2019).
+42. Yang, G. et al. Higher-order epistasis shapes the ﬁtness landscape
+of a xenobiotic-degrading enzyme.Nat. Chem. Biol. 15, 1120–1128
+(2019).
+4 3 . B e n d i x s e n ,D .P . ,C o l l e t ,J . ,O s t m a n ,B .&H a y d e n ,E .J .G e n o t y p e
+network intersections promote evolutionary innovation.PLoS Biol.
+17, e3000300 (2019).
+44. Baeza-Centurion, P., Miñana, B., Schmiedel, J. M., Valcárcel, J. &
+Lehner, B. Combinatorial genetics reveals a scaling law for the
+effects of mutations on splicing.Cell 176,5 4 9–563. e523 (2019).
+4 5 . W e i n r e i c h ,D .M . ,L a n ,Y . ,J a f f e ,J .&H e c k e n d o r n ,R .B .T h ei nﬂuence
+of higher-order epistasis on biologicalﬁtness landscape topo-
+graphy. J. Stat. Phys. 172,2 0 8–225 (2018).
+46. Pokusaeva, V. O. et al. An experimental assay of the interactions of
+amino acids from orthologous sequences shaping a complexﬁt-
+ness landscape. PLoS Genet. 15,e 1 0 0 8 0 7 9( 2 0 1 9 ) .
+47. Muthuramalingam, M., White, J. C., Murphy, T., Ames, J. R. & Bourne,
+C. R. The toxin from a ParDE toxin‐antitoxin system found in Pseu-
+domonas aeruginosaoffers protection to cells challenged with anti‐
+gyrase antibiotics.Mol. Microbiol. 111, 441–454 (2019).
+48. Fraikin, N., Goormaghtigh, F. & Van Melderen, L. Type II toxin-
+antitoxin systems: evolution and revolutions.J. Bacteriol. 202,
+e00763
+–00719 (2020).
+49. Van Melderen, L. & Saavedra De Bast, M. Bacterial toxin –antitoxin
+systems: more than selﬁsh entities? PLoS Genet. 5,e 1 0 0 0 4 3 7
+(2009).
+50. Eyre-Walker, A. & Keightley, P. D. The distribution of ﬁtness effects
+of new mutations. Nat. Rev. Genet. 8,6 1 0–618 (2007).
+5 1 . D e s a i ,M .M . ,F i s h e r ,D .S .&M u r r a y ,A .W .T h es p e e do fe v o l u t i o na n d
+maintenance of variation in asexual populations.Curr. Biol. 17,
+385–394 (2007).
+5 2 . G i l l e s p i e ,J .H .M o l e cular evolution over the mutational landscape.
+Evolution 38, 1116–1129 (1984).
+53. Lynch, M. et al. Genetic drift, selection and the evolution of the
+mutation rate. Nat. Rev. Genet. 17,7 0 4–714 (2016).
+54. Kirschner, M. & Gerhart, J. Evolvability.P r o c .N a t lA c a d .S c i .U S A95,
+8420–8427 (1998).
+5 5 . P i n e s ,G . ,W i n k l e r ,J .D . ,P i n e s ,A .&G i l l ,R .T .R e f a c t o r i n gt h eg e n e t i c
+code for increased evolvability.MBio 8,e 0 1 6 5 4–01617 (2017).
+5 6 . B a n k ,C . ,S c h m i t z ,M .A .&M o r a l e s - A r c e ,A .Y .E v o l u t i o n a r ym o d e l s
+predict potential mechanisms of escape from mutational melt-
+down. Front. Virol. 2, 886655 (2022).
+57. Sydykova, D. K., LaBar, T., Adami, C. & Wilke, C. O. Moderate
+amounts of epistasis are not evolutionarily stable in small popula-
+tions. J. Mol. Evol. 88,4 3 5–444 (2020).
+58. Trindade, S. et al. Positive epistasis drives the acquisition of multi-
+drug resistance.PLoS Genet. 5,e 1 0 0 0 5 7 8( 2 0 0 9 ) .
+59. Steinberg, B. & Ostermeier, M. Environmental changes bridge
+evolutionary valleys.Sci. Adv. 2, e1500921 (2016).
+60. Bank, C., Matuszewski, S., Hietpas, R. T. & Jensen, J. D. On the (un)
+predictability of a large intragenicﬁtness landscape.Proc. Natl
+A c a d .S c i .U S A113,1 4 0 8 5–14090 (2016).
+6 1 . B a n k ,C . ,H i e t p a s ,R .T . ,J e n s e n ,J .D .&B o l o n ,D .N .As y s t e m a t i c
+survey of an intragenic epistatic landscape.Mol. Biol. Evol. 32,
+229–238 (2015).
+62. Puchta, O. et al. Network of epistatic interactions within a yeast
+snoRNA. Science
+352,8 4 0–844 (2016).
+6 3 . W i s e r ,M .J . ,R i b e c k ,N .&L e n s k i ,R .E .L o n g - t e r md y n a m i c so f
+adaptation in asexual populations.Science 342,1 3 6 4–1367 (2013).
+6 4 . K h a n ,A .I . ,D i n h ,D .M . ,S c h n e i d e r ,D . ,L e n s k i ,R .E .&C o o p e r ,T .F .
+Negative epistasis between beneﬁcial mutations in an evolving
+bacterial population.Science 332, 1193–1196 (2011).
+65. Wünsche, A. et al. Diminishing-returns epistasis decreases adapt-
+ability along an evolutionary trajectory.Nat. Ecol. Evol.1,1 –6( 2 0 1 7 ) .
+66. Kimura, M. The Neutral Theory of Molecular Evolution(Cambridge
+University Press, 1983).
+6 7 . d eV i s s e r ,J .A .G .&R o z e n ,D .E .L i m i t st oa d a p t a t i o ni na s e x u a l
+populations.J. Evol. Biol. 18,7 7 9–788 (2005).
+68. Wilke, C. O. The speed of adaptation in large asexual populations.
+Genetics 167,2 0 4 5–2053 (2004).
+69. Lang, G. I. et al. Pervasive genetic hitchhiking and clonal inter-
+ference in forty evolving yeast populations.Nature 500,
+571–574 (2013).
+7 0 . G e r r i s h ,P .J .&L e n s k i ,R .E .T h ef a t eo fc o m p e t i n gb e n eﬁcial
+mutations in an asexual population.Genetica 102,1 2 7–144 (1998).
+71. de Visser, A. J. G. M., Zeyl, C. W., Gerrish, P. J., Blanchard, J. L. &
+Lenski, R. E. Diminishing returns from mutation supply rate in
+asexual populations.Science 283,4 0 4–406 (1999).
+72. Benjamini, Y. & Hochberg, Y. Controlling the false discovery rate—a
+practical and powerful approach to multiple testing.J. R. Stat. Soc.
+Ser. B - Methodol. 57,2 8 9–300 (1995).
+73. Grif ﬁths, A. et al. An Introduction to Genetic Analysis(Free-
+man, 2004).
+74. Aakre, C. D. et al. Evolving new p rotein-protein interaction speciﬁ-
+city through promiscuous intermediates.Cell 163,5 9 4–606 (2015).
+Acknowledgements
+This work was supported by the European Research Council (Grant
+Agreement No. 739874), and by the Swiss National Science Foundation
+(grants 31003A_172887 and 310030_208174).
+Author contributions
+A.W. designed and executed all aspects of this study and wrote the
+article.
+Competing interests
+The author declares no competing interests.
+Additional information
+Supplementary informationThe online version contains
+supplementary material available at
+https://doi.org/10.1038/s41467-023-39321-8.
+Correspondenceand requests for materials should be addressed to
+Andreas Wagner.
+Peer review informationNature Communicationsthanks the anon-
+ymous reviewer(s) for their contribution to the peer review of this work.
+Reprints and permissions informationis available at
+http://www.nature.com/reprints
+Publisher’s note Springer Nature remains neutral with regard to jur-
+isdictional claims in published maps and institutional afﬁliations.
+Article https://doi.org/10.1038/s41467-023-39321-8
+Nature Communications|         (2023) 14:3624 10
+Open Access This article is licensed under a Creative Commons
+Attribution 4.0 International License, which permits use, sharing,
+adaptation, distribution and reproduction in any medium or format, as
+long as you give appropriate credit to the original author(s) and the
+source, provide a link to the Creative Commons license, and indicate if
+changes were made. The images or other third party material in this
+article are included in the article’s Creative Commons license, unless
+indicated otherwise in a credit line to the material. If material is not
+included in the article’s Creative Commons license and your intended
+use is not permitted by statutory regulation or exceeds the permitted
+use, you will need to obtain permission directly from the copyright
+holder. To view a copy of this license, visithttp://creativecommons.org/
+licenses/by/4.0/.
+© The Author(s) 2023
+Article https://doi.org/10.1038/s41467-023-39321-8
+Nature Communications|         (2023) 14:3624 11

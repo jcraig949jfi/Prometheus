@@ -1,0 +1,520 @@
+                                        Quality Evolvability ES: Evolving Individuals With a Distribution of Well
+                                                                 Performing and Diverse Offspring
+
+                                                           Adam Katona1, Daniel W. Franks1 and James Alfred Walker1
+
+                                                                        1Department of Computer Science, University of York, UK
+                                                                                                ak1774@york.ac.uk
+
+arXiv:2103.10790v2 [cs.NE] 20 Jul 2021                                Abstract                               that are critical to consider when designing an evolution of
+                                                                                                             evolvability algorithm. The reason it is possible for evolu-
+                                           One of the most important lessons from the success of deep        tion to increase its ability to evolve in the future is similar to
+                                           learning is that learned representations tend to perform much     how it is possible for learning to generalize to unseen data
+                                           better at any task compared to representations we design by       (Watson and Szathma´ry, 2016). It requires finding general
+                                           hand. Yet evolution of evolvability algorithms, which aim         patterns in past experiences. If some aspect of a genome was
+                                           to automatically learn good genetic representations, have re-     useful for generating adaptations in many different past en-
+                                           ceived relatively little attention, perhaps because of the large  vironments, it might be useful in new, unseen environments
+                                           amount of computational power they require. The recent            as well. The job of an algorithm that aims to increase evolv-
+                                           method Evolvability ES allows direct selection for evolvabil-     ability is to find these general patterns.
+                                           ity with little computation. However, it can only be used to
+                                           solve problems where evolvability and task performance are           Looking at evolvability from a learning theory perspec-
+                                           aligned. We propose Quality Evolvability ES, a method that        tive, we identify three questions that need to be investigated
+                                           simultaneously optimizes for task performance and evolvabil-      before we are able to realize the vision of evolution of evolv-
+                                           ity and without this restriction. This is achieved by using       ability. These cover the three basic blocks of any learning
+                                           nondominated sorting inside the ES update. Our proposed           process, data containing a general pattern, a model with ca-
+                                           approach Quality Evolvability has similar motivation to Qual-     pacity to learn, and an algorithm to drive learning.
+                                           ity Diversity algorithms, but with some important differences.
+                                           While Quality Diversity aims to find an archive of diverse        Evolvability Data
+                                           and well-performing, but potentially genetically distant indi-
+                                           viduals, Quality Evolvability aims to find a single individual    The first question is how to provide evolution with suffi-
+                                           with a diverse and well-performing distribution of offspring.     ciently diverse data that makes it possible for evolvability to
+                                           By doing so Quality Evolvability is forced to discover more       evolve. This requires evaluating the evolvability of genes in
+                                           evolvable representations. We demonstrate on robotic loco-        multiple settings, otherwise, generalization is not possible.
+                                           motion control tasks that Quality Evolvability ES, similarly      This data can come from a single run, but at different stages
+                                           to Quality Diversity methods, can learn faster than objective-    of evolution (what worked in the past), like in nature. How-
+                                           based methods and can handle deceptive problems.                  ever, this makes evolvability prone to forgetting. There is no
+                                                                                                             way to go back and check if a gene still has the ability to
+                                                              Introduction                                   be evolvable in past environments. A more powerful way to
+                                                                                                             provide diverse data is to simultaneously evaluate genomes
+                                        Evolution of evolvability is an unintuitive concept. Even            in a distribution of environments, similarly to the meta learn-
+                                        the question of whether evolvability evolves at all (Pigliucci,      ing problem formulation (Vilalta and Drissi, 2002). Another
+                                        2008) is unclear, and there is still debate as to whether evolu-     key piece of the puzzle might be algorithms that co-evolve
+                                        tion of evolvability is caused by natural selection, or is a by-     environments with agents in order to maximize learning, like
+                                        product of other evolutionary mechanisms (Pigliucci, 2008;           the POET algorithm (Wang et al., 2019).
+                                        Payne and Wagner, 2019). While this subject remains highly
+                                        debated among biologists, researchers within the field of            Evolvability Model
+                                        evolutionary computation are also increasingly captivated.
+                                        Evolution of evolvability is desirable because it allows the         The second question is how to provide evolution with a
+                                        possibility of accumulating the ability to evolve for a long         model which has sufficient capacity to learn evolvability. A
+                                        time, potentially enabling the speed up of future evolution          powerful source of such capacity is the developmental pro-
+                                        by many orders of magnitude, allowing us to utilize evolu-           gram, which provides the instructions to translate a geno-
+                                        tion in areas that were not practical before.                        type into a phenotype. Different generative encodings can
+                                                                                                             result in varying amount of evolvabilityTarapore and Mouret
+                                           Recent work has enhanced our understanding by examin-
+                                        ing the evolution of evolvability from a learning theory per-
+                                        spective (Watson and Szathma´ry, 2016), leading to insights
+(2015). With a well-chosen developmental program, evo-            uses nondominated sorting to simultaneously select for di-
+lution is able to turn random genotypic variation into an         versity and fitness is that our work selects for the ex-
+advantageous distribution of phenotypic variation (Watson         pected diversity of the offspring, compared to the diver-
+and Szathma´ry, 2016). A simple example to demonstrate            sity of the population. This is possible to do efficiently
+how such developmental decisions are able to affect evolv-        because of the special properties of ES to estimate gra-
+ability is to imagine how the leg length of an animal is en-      dients of expectations. Our source code is available at:
+coded (Huizinga et al., 2018). By utilizing symmetry early        https://github.com/adam-katona/QualityEvolvabilityES.
+in development, evolution can become more likely to ex-
+plore the configurations where both legs are the same length,                           Background
+and avoid exploring the probably poorly performing pheno-
+types with different left and right leg lengths.                  In this paper, we define evolvability as the ability to gener-
+                                                                  ate phenotypic variation, a definition used by previous works
+   Additionally, there is another source of learning capac-       (Mengistu et al., 2016; Gajewski et al., 2019). This variation
+ity, which is simply selecting points in the genotype-space       is measured in certain dimensions of interest defined by the
+with good quality neighborhoods. In the case of direct en-        behavioral characterization (BC) function. In this section,
+coding, this is the only source, since there is no develop-       we discuss why we chose this evolvability definition and ex-
+mental program. The meta learning algorithm MAML (Finn            plore other definitions and their relevance to evolutionary
+et al., 2017) demonstrated the existence of such good quality     computation. We also review existing algorithms that either
+neighborhoods in the search space of large neural networks.       indirectly or directly select for evolvability.
+MAML is able to find points in the search space which are
+a few steps away from good solutions to many previously           Evolvability Concepts
+unseen problems.
+                                                                  There is an evolvability concept concerned with the ability
+Evolvability Algorithm                                            of a population to respond to selection (Flatt, 2005), which
+                                                                  mainly depends on the amount of standing genetic varia-
+The third question is how to efficiently select for evolvabil-    tion. This is the evolvability concept selective breeders care
+ity. It is not clear under which conditions evolvability can      about. The term "introducing new blood" refers to introduc-
+emerge in nature (Pigliucci, 2008), whether it requires se-       ing alleles to the gene pool which were lost during the do-
+lection, or if it is a result of unsupervised learning (Watson    mestication process (McCouch, 2004). The population be-
+and Szathma´ry, 2016). In the case of evolutionary compu-         comes more responsive to selection as we increase the stand-
+tation, we have the ability to directly select for evolvability.  ing genetic variation. We argue that this is not as interesting
+There are several existing algorithms that aim to indirectly      for evolutionary computation. Standing variation can only
+select for evolvability, and a few that directly select for it.   explain short term evolvability, for evolvability to be sus-
+We give an overview of these methods in the Background            tained for a long time, a steady supply of variation needs to
+Section.                                                          be generated. Differences in long-term evolvability depend
+                                                                  on the ability to generate variation rather than the currently
+Contributions                                                     available variation in the population.
+
+The aim of this paper is to contribute to the third question by      The evolvability concepts that are more interesting for
+finding algorithms that can directly and effectively select for   evolutionary computation are concerned with the ability to
+evolvability. This paper makes the following contributions:       generate phenotypic variation. This kind of evolvability is
+                                                                  about the potential to generate variation, whether it is real-
+· We propose Quality Evolvability, an approach that di-           ized or not. There are several different ways to quantify phe-
+   rectly selects for evolvability by finding individuals with a  notypic variation, we will discuss three of them in the next
+   diverse and well-performing distribution of offspring, and     section, and why they might be interesting for evolutionary
+   we present Quality Evolvability ES a method based on           computation.
+   Evolvability ES, which is able to select for Quality Evolv-
+   ability with a low computational cost.                         Quantifying Evolvability
+
+· We demonstrate on robotic locomotion tasks, that Quality        The decision on how to quantify evolvability should be
+   Evolvability ES is able to outperform the objective based      based on which kind of evolvability is best suited for gener-
+   variant of the algorithm, can be applied to problems where     alizing for future environments. We describe three different
+   evolvability and performance are not aligned, and is able      ways evolvability can be quantified, all of them capturing a
+   to handle deceptive problems.                                  different aspect of evolvability.
+
+   The main difference between our work, and previous             Adaptiveness The first approach to quantify evolvabil-
+work (Mouret, 2011; Lehman and Stanley, 2011b) which              ity is to measure adaptiveness: which is often a measure
+                                                                  of both how often offspring have higher fitness than their
+parents, and the magnitude of the difference in their fit-        with this kind of evolvability definition is that if we can find
+nesses. (Wagner and Altenberg, 1996; Altenberg et al.,            the patterns which made an individual good at generating in-
+1994) define evolvability as "the ability of the genetic op-      novation in the past, maybe these patterns will be useful for
+erator/representation scheme to produce offspring that are        generating innovation in the future. An algorithm that di-
+fitter than their parents".                                       rectly selects for this kind of evolvability is Novelty Search
+                                                                  ES (NS-ES) (Conti et al., 2017).
+   One algorithm which directly selects for adaptiveness is
+ES-MAML (Song et al., 2019), an evolutionary version of           Evolvability Algorithms
+the meta learning algorithm MAML (Finn et al., 2017). To
+evolve evolvability that can generalize to new environments,      There are various existing algorithms which select for evolv-
+ES-MAML is trained in a set of environments with the ex-          ability either directly or indirectly.
+pectation that there is a common pattern between the training
+environments that allows faster adaptation in the unseen test     Indirect Selection There are various mechanisms that
+environments.                                                     produce indirect selection for evolvability (Mengistu et al.,
+                                                                  2016). One mechanism is to introduce regular mass extinc-
+Behavioural Diversity The second approach to quantify             tion events (Lehman and Miikkulainen, 2015), freeing up
+evolvability is to measure the behavioural diversity of the       many niches. Evolvability is indirectly rewarded because
+offspring. Diversity can be measured by the variance or en-       lineages that have the ability to radiate to the empty niches
+tropy of the distribution of behaviours. This approach re-        faster have a higher chance of surviving the next extinction
+quires a user defined behaviour characterization (BC) func-       event. A similar situation can be achieved with constant goal
+tion, which turns some aspect of the agents behaviour into        switching (Nguyen et al., 2015), which indirectly rewards
+real valued numbers. Examples of what kind of BCs were            individuals that developed the ability to adapt between the
+used in the past include: final position of the robot (Gajew-     goals faster. Novelty search is another method that rewards
+ski et al., 2019), ratio of time each leg of a robot is in con-   radiating into new niches, and therefore indirectly rewards
+tact with the ground (Cully et al., 2015) and the concatenated    evolvability. Another mechanism is innovation protection,
+RAM state for each step for Atari games (Conti et al., 2017).     which protects new genes for a few generations. This pro-
+Care must be taken to define a BC where achieving diversity       tection allows genes that increase evolvability to stay alive
+requires individuals to develop skills, so that evolution can-    long enough to realize the benefits of increased evolvability
+not simply exploit the BC function in a similar way to how it     (Stanley and Miikkulainen, 2002; Risi and Stanley, 2019).
+can exploit loopholes in not carefully designed fitness func-
+tions (Lehman et al., 2020). For example, in a closed maze,          These are all indirect methods, because they do not di-
+the only way to reach new places is to learn to navigate and      rectly reward evolvability, but create a situation where lin-
+not run into walls. However, if the maze is open on one           eages that are evolvable have some benefit. For this reason,
+side, evolution can create individuals that wander outside of     these methods are vulnerable to being exploited by individ-
+the maze, achieving high diversity of final positions without     uals which happen to be novel without being evolvable.
+ever learning navigation skills (Lehman and Stanley, 2011a).
+Existing algorithms using this definition of evolvability are     Direct Selection Even though techniques to increase
+Evolvability Search (Mengistu et al., 2016) and Evolvability      evolvability have been discussed for several decades, the
+ES (Gajewski et al., 2019).                                       first technique to directly select for evolvability, Evolvability
+                                                                  Search (Mengistu et al., 2016), was only reported recently.
+Innovation The third approach is to define evolvability as        Evolvability Search quantifies evolvability by calculating
+the ability to generate innovation. Brookfield (2001) de-         the behavioural diversity of offspring. This is achieved by
+fines evolvability as "the proportion of radically different de-  sampling and evaluating the offspring of every individual
+signs created by mutation that are viable and fertile". How-      in the population, only to discard all these evaluations after
+ever, innovation or "radically different" are subjective terms.   evolvability is calculated. Discarding all these evaluations
+Furthermore, something that was an innovation in the past,        makes this technique extremely computationally expensive.
+may no longer be considered innovative now. One way to
+measure innovation is to calculate novelty compared to an            Another similarly expensive technique is ES-MAML
+archive of previously observed behaviours. This is a similar      (Song et al., 2019), the evolutionary version of the meta
+concept to Novelty Search (Lehman and Stanley, 2011a). It         learning technique MAML. ES-MAML selects for the adap-
+is important to note that while novelty can be used to quan-      tiveness aspect of evolvability. The adaptiveness can be cal-
+tify evolvability, Novelty Search does not directly select for    culated by applying various adaptation operators. For ex-
+evolvability. Evolvability search is interested in discovering    ample, the adaptation operator can be another ES update,
+individuals which are good at generating novelty, whereas         which includes evaluating and subsequently discarding the
+Novelty Search aims to find novel individuals. The hope           offspring of each individual in the population.
+
+                                                                     Finally, there are two algorithms that directly select for
+                                                                  evolvability without a large computational cost; both are
+variants of the Evolution Strategy (ES) algorithm (Salimans       defined in (Salimans et al., 2017). This is not to be con-
+et al., 2017). Evolvability ES (E-ES) (Gajewski et al., 2019)     fused with what has traditionally been referred to as Evolu-
+selects for the behavioural diversity aspect of evolvability,     tion Strategies (ES) (for example, a 1 + 1 ES).
+while Novelty Search ES (NS-ES) (Conti et al., 2017) se-
+lects for the innovation aspect of evolvability. We discuss       ES
+how ES can achieve this without a large computational cost
+in Methodology Section.                                           ES is special case of the Natural Evolution Strategies
+                                                                  (NES)(Wierstra et al., 2008) algorithm, which aims to cal-
+                 Quality Evolvability                             culate the gradient of the expected fitness of a parameterized
+                                                                  search distribution p with respect to the distribution param-
+We propose Quality Evolvability (QE), an approach that            eters . In case of ES, this is an isotropic normal distribu-
+aims to find individuals with both a diverse and well per-        tion, parametarized by a center individual:  = N (, )
+forming distribution of offspring.                                where   R. The cost function is defined as an expectation
+                                                                  over the distribution J = Ep()F (). The update rule
+   The main motivation for Quality Evolvability is to benefit     is derived by applying the "log-likelihood trick" (Wierstra
+from an increased ability to evolve in cases where looking        et al., 2008) so the gradient of the expectation can be ex-
+for evolvability alone is not sufficient to find solutions to a   pressed with the expectation of a gradient (eq.1), which can
+task. This is similar to the motivation behind Quality Diver-     be approximated with samples.
+sity (QD) (Pugh et al., 2016): to benefit from the divergent,
+stepping stone finder nature of Novelty Search (Lehman and        Ep F () = Ep {F ()logp()}                         (1)
+Stanley, 2011c), even in cases when seeking novelty alone
+is not sufficient to find solutions to a task. In short Quality   Previous work found that using a rank based futness shaping
+Evolvability is to Evolvability Search what Quality Diver-        tend to improve performance by reducing the effect of out-
+sity is to Novelty Search. Even though Quality Evolvability       liers in the population (Salimans et al., 2017). We included
+and Quality Diversity have similar motivations, there are im-     this step in the description of the algorithms with the func-
+portant differences between the two approaches, which are         tion fitness shaping.
+summarized in Table 1.
+                                                                  Algorithm 1: ES
+   The unique property of Quality Evolvability is that it is
+forced to become more evolvable, because it needs to adapt        Input: Noise standard deviation , initial policy
+a single individual to diverse behaviours. While Quality Di-
+versity can benefit from developing evolvability, it is not            parameters 0, population size n, gradient
+forced to do so; it can achieve diversity by collecting a set of       optimizer, fitness function F
+genetically distant individuals, without any enhanced ability
+to adapt.                                                         for t = 0, 1, 2, . . . do
+
+   Quality Diversity will explore a large section of the search   Sample 1... n  N (0, I)
+space, aiming to find every possible behaviour that exists.
+For this reason, it can be used to illuminate search spaces,      Fi = F (t +  i) for i = 1, ..., n
+or to find many possible solutions to a problem. Quality
+Evolvability does not have this property, it focuses its search   r = fitness shaping(F )
+on a small volume of the search space.
+                                                                  grad  =   1      n         ri  i
+   Quality Diversity excels at solving deceptive problems                  n       i=1
+because it will increase the pressure to find novelty until
+the pressure is high enough to overcome the deceptiveness.        t+1 = optimizer(t, grad)
+Quality Evolvability should also be helpful at escaping de-
+ceptive local minima to some degree since it aims to find off-    end
+spring with diverse behaviours. However, for Quality Evolv-
+ability, this pressure is constant and not ever increasing. If       ES has several differences compared to traditional finite
+the trap is large enough to allow a large amount of diversity,    difference approximators. The effect of optimizing for the
+Quality Evolvability is expected to stay trapped.                 expectation over a normal distribution can be imagined as
+                                                                  using normal gradient descent on a blurred version of the
+                     Methodology                                  fitness landscape (Salimans et al., 2017). Another conse-
+                                                                  quence of optimizing for expected fitness instead of the fit-
+In this section, we describe our proposed method, Quality         ness, is that ES aims to find solutions that are robust to per-
+Evolvability ES (QE-ES), which simultaneously selects for         turbations (Lehman et al., 2018).
+both evolvability and fitness. We also discuss the methods
+which QE-ES is based on, Evolvability ES (E-ES) and ES.           Evolvability ES
+Here, we use the term ES to refer to the recent algorithm
+                                                                  Evolvability ES (Gajewski et al., 2019) is a variant of ES
+                                                                  which directly selects for evolvability. Evolvability is de-
+                                                                  fined as either the variance or the entropy of the distribution
+                                                                  of behaviour (as measured by the behaviour characterization
+                                                                  (BC) function). In this work, we use the variance, because
+                                                                  it is simpler and seems to work equally as well as entropy
+                             Table 1: Comparison of Quality Diversity and Quality Evolvability
+
+     Metric                      Quality Diversity (QD)                  Quality Evolvability (QE)
+
+     Approach objective          Find an archive of diverse and          Find an individual with diverse and
+     Solving deceptive problems  well performing individuals             well performing offspring
+     Illuminating search spaces  Yes, ever increasing                    Yes, constant
+     Encouraging adaptability    pressure to escape                      pressure to escape
+                                 Yes, will explore many ways             No, only explores a small volume
+                                 to solve the problem                    of the search space
+                                 No, QD is allowed to use an archive of  Yes, QE is forced to adapt a single
+                                 genetically distant individuals         individual to many different behaviors
+
+(Gajewski et al., 2019). Therefore, evolvability is defined      Quality Evolvability ES
+as:
+                                                                 Our proposed method Quality Evolvability ES (QE-ES)
+   Evolvability() = Ep (BC() - BCmean)2 (2)                      combines the objectives of ES and E-ES, to simultaneously
+                                                                 optimize for both evolvability and fitness. To achieve this we
+The simplest way to create an ES variant that directly selects   use non-dominated sorting (nd sort) on the evolvability and
+for evolvability is to replace fitness with evolvability in the  fitness objectives. Non-dominated sorting is done the same
+cost function: J = Ep()Evolvability(). However, this             way as in the well-known NSGA-II (Deb et al., 2002) algo-
+way requires the evaluation of the evolvability of the whole     rithm. Individuals are first sorted by which non-dominated
+population, which requires sampling the offspring of each        front they belong to, then a crowding metric is used to sort
+individual in the population, making this approach compu-        the individual within the fronts. The crowding metric en-
+tationally expensive.                                            sures that a diverse set of evolvability-fitness trade-offs are
+                                                                 maintained.
+   Gajewski et al. (2019) recognized that there is a differ-
+ent way of creating an ES algorithm that directly selects for    Algorithm 3: Quality Evolvability ES
+evolvability. Evolvability is itself defined as an expectation
+(both the variance or entropy versions), so the log-likelihood   Input: Noise standard deviation , initial policy
+trick which is used to derive the ES update rule can be ap-
+plied directly to evolvability, instead of the expected evolv-        parameters 0, population size n, gradient
+ability. The resulting algorithm, Evolvability ES, has the            optimizer, fitness function F , behaviour
+cost function: J = Evolvability(). Evolvability ES no
+longer needs to calculate the evolvability of every individ-          characterization BC
+ual, making Evolvability ES as fast as normal fitness based
+ES. It is important to note that the new algorithm no longer     for t = 0, 1, 2, . . . do
+has the blurring and robustness seeking property of ES, and          Sample 1... n  N (0, I)
+is more like a traditional finite difference approximator.           Fi = F (t +  i) for i = 1, ..., n
+                                                                     EV Oi = (BC(t +  i) - BCmean)2 for
+                                                                       i = 1, ..., n
+
+                                                                 r = fitness shaping(nd sort(F, EV O))
+
+                                                                 grad    =   1  n    ri  i
+                                                                            n   i=1
+
+                                                                 t+1 = optimizer(t, grad)
+
+Algorithm 2: Evolvability ES                                     end
+
+Input: Noise standard deviation , initial policy
+
+     parameters 0, population size n, gradient                                        Experiments
+     optimizer, behaviour characterization BC
+                                                                 We evaluated our method on the robotics locomotion tasks
+for t = 0, 1, 2, . . . do                                        Ant and Humanoid. An evaluation is comprised of running
+                                                                 a full episode until the maximum number of allowed time
+    Sample 1... n  N (0, I)                                      steps is reached or until the robot falls over. In the default
+    EV Oi = (BC(t +  i) - BCmean)2 for                           version of the task, fitness is defined as the distance traveled
+                                                                 in the x direction, while behaviour is characterized by the
+      i = 1, ..., n                                              final x and y coordinates of the robot.
+
+r = fitness shaping(EV O)                                           We used the more accessible PyBullet implementation of
+                                                                 the environments, which has a free software license, rather
+grad  =       1  n    ri  i
+             n   i=1
+
+t+1 = optimizer(t, grad)
+
+end
+(a) Deceptive Ant task  (b) Deceptive Humanoid task             steps. However, ES parallelizes well (linear scaling (Sali-
+                                                                mans et al., 2017)). We run our experiments on a distributed
+Figure 1: For the deceptive variant of the tasks, a trap box    CPU cluster using 120 cores for each run. With this set-
+is put in front of the agent. This obstacle creates a decep-    ting, a Humanoid run took around 1-2 days, depending on
+tive local optimum. Once the agent discovers how to walk        the average episode length, while an Ant run took around 6-
+into the box, it cannot improve further without developing      12 hours. We used the base ES implementation provided by
+the ability to walk around the obstacle. The sides of the trap  (Gajewski et al., 2019).
+however make walking around it difficult, requiring the fit-
+ness to decrease first. Greedy objective based algorithms are      To test different properties of our method, we used three
+susceptible to such deceptive local optima.                     modified versions of the environments.
+
+than the commonly used MuJuCo commercial implementa-            Task 1: Normal Locomotion For the first experiment, we
+tion. An important difference between the implementations       used the default environments, which we simply refer to as
+is that PyBullet implements the observations differently in     Ant and Humanoid. In this task, evolvability and fitness are
+the case of the Humanoid environment, providing only a          aligned. Purely maximizing evolvability will also result in
+ R44 observation vector compared to MuJuCo which pro-           high fitness. This is because evolvability is measured as the
+vides  R376 dimensional observation, containing a more          variation of the final positions, and the way to maximize
+detailed motion state of the robot. This makes the Humanoid     evolvability is to learn to walk far in every direction. This in-
+experiments more challenging in PyBullet. While with pre-       cludes the forward direction, which means that maximizing
+vious experiments using the MuJuCo version of Humanoid,         evolvability will also maximize fitness.
+ES was able to find policies that reliably solved the task.
+In our experiments, ES only finds policies that sometimes       Task 2: Directional Locomotion For the second exper-
+solved the task, but not reliably, and not every training run   iment, we used modified environments, which we call Di-
+finds such policies. With the Ant environment, there are no     rectional Ant and Directional Humanoid. Our goal with this
+significant differences between the implementations, and we     experiment is to test our method in a case where evolvabil-
+could replicate previous results.                               ity and fitness are unaligned. For these experiments, for
+                                                                each episode, we randomly select a direction from 8 possible
+   Evolution evolves the parameters of a 2-hidden-layer fully   directions that are evenly distributed around a circle in 45
+connected neural network with 256 neurons for both hidden       degree increments for each episode. The networks receive
+layers, resulting in a total of 75k parameters for the Ant en-  this direction, represented as a unit vector, as an observation
+vironment and 81k for the Humanoid environments. The            which increases the number of observations by 2.
+network maps the observations to the actions, with both be-
+ing real numbers.                                                  To perform well in this task, the agent needs to turn in the
+                                                                correct direction and walk. Maximizing diversity alone is
+   For all experiments, we used the same hyperparameter         not enough to achieve high fitness anymore; the agent also
+values used in (Gajewski et al., 2019). The population size     needs to learn to walk in the correct direction. Evolvability
+was 10,000, the noise standard deviation  was 0.02. We          ES is expected to have zero mean fitness on this task because
+used the Adam optimizer with a learning rate  of 0.01 and       it equally prefers every direction.
+L2 regularization of 0.005. We used mirrored sampling and
+centered rank normalization. The Ant experiments were run       Task 3: Deceptive Locomotion For the third experiment,
+for 200 generations, the more difficult Humanoid experi-        we used a deceptive variant of the environments, similarly
+ments were run for 800 generations.                             to previous work (Conti et al., 2017). We call these environ-
+                                                                ments Deceptive Ant and Deceptive Humanoid. A U-shaped
+   ES methods are less sample efficient compared to rein-       trap is placed in front of the agent, which allows it to make
+forcement learning methods. In our experiments, a sin-          progress for a while until it runs into a wall (Fig.1). The
+gle run consisted of simulating several billion steps. For      walls on the side prevent the agent to easily go around the
+example, in the case of the successful humanoid run, we         obstacle, forming a trap, a local optimum, which is hard to
+have a population size of 10,000, which is evolved for 800      escape. For Deceptive Humanoid, we used the same trap
+generations, where each evaluation takes around 800 time        box configuration as in (Conti et al., 2017), for the Decep-
+                                                                tive Ant environment we slightly increased the dimensions
+                                                                of the box from 3 meters to 4 meters in order to make the
+                                                                trap large enough for the physically wider Ant robot.
+
+                                                                                         Results
+
+                                                                We use three kinds of plots to present and compare the re-
+                                                                sult achieved with the different algorithms. To show the be-
+                                                                haviour of the population in the final generation of a single
+(a) Humanoid, ES  (b) Humanoid, E-ES                               (a) Ant  (b) Humanoid
+
+                          (c) Humanoid, QE-ES                      (c) Ant  (d) Humanoid
+
+Figure 2: 2D histogram of the final positions of the popula-       Figure 3: Mean distance walked for the Ant (a,c) and
+tion from the last generation for the Humanoid environment,        Humanoid (b,d) tasks where evolvability and fitness are
+which highlights the different aims of the three algorithms.       aligned. The shaded area corresponds to the standard devia-
+(a) ES only cares about fitness, thus only finds policies that     tion. In (a,c), E-ES finds policies that walk almost as far as
+walk forward. (b) E-ES only cares about diversity and finds        ES. As evolvability and fitness are aligned in this task, QE-
+policies that walk in various directions. (c) QE-ES cares          ES performs similarly to E-ES. In (b,d), we found that E-ES
+about both fitness and diversity, so it finds policies that walk   finds policies that on average walk further than ES (looking
+forward in a diverse way.                                          for evolvability resulted in faster learning). The performance
+                                                                   of QE-ES is between the two since it simultaneously looks
+run, we use a 2d histogram which shows the frequency of            for fitness (aim of ES) and evolvability (aim of E-ES).
+the final x, y positions of the robot. The box and strip plots
+show the mean of the population in the last generation (fit-       in environments where evolvability and fitness are aligned,
+ness or distance walked), over repeated runs. Finally, the         the performance of QE-ES is expected to be between the two
+learning curves show the mean of the population averaged           methods (ES and E-ES), which is what we observe. When
+over repeated runs throughout the generations.                     we look at the diversity of the population, it is also as ex-
+                                                                   pected, E-ES having the most diversity, ES having the least,
+   For each task and each algorithm, we repeated the runs at       while QE-ES is in between the two (see Fig. 2).
+least 10 times. We found that there is a high variance in the
+results with different random seeds, especially in the case of     Task 2: Directional Locomotion The second experiment
+the more difficult Humanoid task. This agrees with previ-          was done in the directional environments, where evolvability
+ously reported results in this domain (Conti et al., 2017).        and fitness are no longer aligned (see Fig 4). Evolvability ES
+                                                                   has zero expected fitness on this problem since it completely
+Task 1: Normal Locomotion The first experiment was                 ignores the fitness function. Both on the Directional Ant and
+done with the default environments where fitness and evolv-        the Directional Humanoid tasks, QE-ES achieves higher fit-
+ability are aligned (Fig 3.). In case of the Ant environment       ness than ES. On the Directional Ant environment, the dif-
+we got similar results as presented in the literature previ-       ference is relatively small and both methods can find good
+ously (Gajewski et al., 2019). ES performs slightly bet-           policies. On the more challenging Directional Humanoid
+ter then Evolvability ES, finding policies which on average        environment, the challenge to simultaneously learn to walk
+walk further. In the humanoid environment however, Evolv-          and to turn in the correct direction proved to be too difficult
+ability ES performs better than ES, suggesting that in some        for ES. In contrast, QE-ES makes some progress. These re-
+cases, searching for evolvability alone results in better task     sults show that selecting for evolvability can not only result
+performance than searching for fitness. This result is sim-        in faster learning, but it can also allow making progress in
+ilar to how novelty search can outperform objective based          cases where objective based learning gets stuck.
+search. By encouraging evolvability, Evolvability ES can
+acquire the ability to discover skills which are not immedi-       Task 3: Deceptive Locomotion The final experiment was
+ately useful for fitness, but can lead to progress in the future.  done on the deceptive variant of the environment, to test
+Since Quality Evolvability ES is a mix of the two methods,         which algorithm can deal with deceptive problems (see Fig 5
+                                                                (a) Deceptive Ant, ES  (b) Deceptive Ant, QE-ES
+
+(a) Directional Ant  (b) Directional Humanoid
+
+(c) Directional Ant  (d) Directional Humanoid                    (c) Deceptive Humanoid, ES (d) Deceptive Humanoid, QE-
+                                                                                                         ES
+Figure 4: Mean fitness for the Directional Ant (a,c) and Di-
+rectional Humanoid (b,d) tasks, where evolvability and fit-     Figure 6: 2D histogram of the final positions of the popula-
+ness are not aligned. In (a), both algorithms are able to find  tion from the last generation for the Deceptive Ant and De-
+good policies, but QE-ES receives higher fitness on average.    ceptive Humanoid tasks. The red lines represent the walls
+In the more difficult task (b), ES fails to learn to walk and   of the trap, which makes the problem deceptive. For both
+turn in the right direction at the same time, while QE-ES is    environments, ES ends up trapped, (a) and (c), while QE-ES
+able to makes progress.                                         is able to overcome the local optimum, (b) and (d). Please
+                                                                note the change in scale.
+(a) Deceptive Ant    (b) Deceptive Humanoid
+                                                                and Fig 6). Both with the Deceptive Ant and Deceptive Hu-
+(c) Deceptive Ant    (d) Deceptive Humanoid                     manoid environments, ES failed to escape the trap, a result
+                                                                consistent with previous work (Conti et al., 2017). QE-ES
+Figure 5: Mean distance walked for the Deceptive Ant (a,c)      had no problem escaping the trap in both experiments. This
+and Deceptive Humanoid (b,d) tasks. For both environ-           result demonstrates that Quality Evolvability ES is able to
+ments, ES gets trapped every time. For Ant (a,c), QE-ES         cope with at least some level of deceptiveness, even though
+manages to escape the trap for every run. For the more diffi-   it does not have the ever increasing pressure to escape like
+cult Humanoid (b,d), QE-ES escapes for the majority of the      Quality Diversity algorithms.
+runs.
+                                                                                      Conclusion
+
+                                                                We have presented Quality Evolvability ES, a technique to
+                                                                simultaneously select for evolvability and fitness. QE-ES
+                                                                allows us to benefit from evolvability in cases when evolv-
+                                                                ability and fitness are not aligned. While our experiments
+                                                                demonstrated that evolvability can increase the performance
+                                                                of evolution in a single environment, it is yet to be deter-
+                                                                mined whether the learned evolvability is general enough to
+                                                                be useful in different environments and with different be-
+                                                                haviour characterizations.Quality Evolvability and Quality
+                                                                Diversity are not mutually exclusive approaches. In future
+                                                                work, we aim to explore the direction of looking for an
+                                                                archive of diverse and evolvable individuals.
+
+                                                                                 Acknowledgements
+
+                                                                This work was supported by the EPSRC Centre for Doctoral
+                                                                Training in Intelligent Games & Game Intelligence (IGGI)
+                                                                [EP/L015846/1].
+                       References                                        Mengistu, H., Lehman, J., and Clune, J. (2016). Evolvability
+                                                                               search: directly selecting for evolvability in order to study
+Altenberg, L. et al. (1994). The evolution of evolvability in genetic          and produce it. In Proceedings of the Genetic and Evolution-
+      programming. Advances in genetic programming, 3:47­74.                   ary Computation Conference 2016, pages 141­148.
+
+Brookfield, J. (2001). Evolution: the evolvability enigma. Current       Mouret, J.-B. (2011). Novelty-based multiobjectivization. In New
+      Biology, 11(3):R106­R108.                                                horizons in evolutionary robotics, pages 139­154. Springer.
+
+Conti, E., Madhavan, V., Such, F. P., Lehman, J., Stanley, K. O.,        Nguyen, A. M., Yosinski, J., and Clune, J. (2015). Innovation
+      and Clune, J. (2017). Improving exploration in evolution                 engines: Automated creativity and improved stochastic op-
+      strategies for deep reinforcement learning via a population              timization via deep learning. In Proceedings of the 2015 An-
+      of novelty-seeking agents. arXiv preprint arXiv:1712.06560.              nual Conference on Genetic and Evolutionary Computation,
+                                                                               pages 959­966.
+Cully, A., Clune, J., Tarapore, D., and Mouret, J.-B. (2015). Robots
+      that can adapt like animals. Nature, 521(7553):503­507.            Payne, J. L. and Wagner, A. (2019). The causes of evolvability and
+                                                                               their evolution. Nature Reviews Genetics, 20(1):24­38.
+Deb, K., Pratap, A., Agarwal, S., and Meyarivan, T. (2002). A fast
+      and elitist multiobjective genetic algorithm: Nsga-ii. IEEE        Pigliucci, M. (2008). Is evolvability evolvable? Nature Reviews
+      transactions on evolutionary computation, 6(2):182­197.                  Genetics, 9(1):75.
+
+Finn, C., Abbeel, P., and Levine, S. (2017). Model-agnostic meta-        Pugh, J. K., Soros, L. B., and Stanley, K. O. (2016). Quality diver-
+      learning for fast adaptation of deep networks. In International          sity: A new frontier for evolutionary computation. Frontiers
+      Conference on Machine Learning, pages 1126­1135. PMLR.                   in Robotics and AI, 3:40.
+
+Flatt, T. (2005). The evolutionary genetics of canalization. The         Risi, S. and Stanley, K. O. (2019). Improving deep neu-
+      Quarterly review of biology, 80(3):287­316.                              roevolution via deep innovation protection. arXiv preprint
+                                                                               arXiv:2001.01683.
+Gajewski, A., Clune, J., Stanley, K. O., and Lehman, J. (2019).
+      Evolvability es: scalable and direct optimization of evolvabil-    Salimans, T., Ho, J., Chen, X., Sidor, S., and Sutskever, I. (2017).
+      ity. In Proceedings of the Genetic and Evolutionary Compu-               Evolution strategies as a scalable alternative to reinforcement
+      tation Conference, pages 107­115.                                        learning. arXiv preprint arXiv:1703.03864.
+
+Huizinga, J., Stanley, K. O., and Clune, J. (2018). The emergence        Song, X., Gao, W., Yang, Y., Choromanski, K., Pacchiano, A., and
+      of canalization and evolvability in an open-ended, interactive           Tang, Y. (2019). Es-maml: Simple hessian-free meta learn-
+      evolutionary system. Artificial life, 24(3):157­181.                     ing. arXiv preprint arXiv:1910.01215.
+
+Lehman, J., Chen, J., Clune, J., and Stanley, K. O. (2018). Es           Stanley, K. O. and Miikkulainen, R. (2002). Evolving neural net-
+      is more than just a traditional finite-difference approximator.          works through augmenting topologies. Evolutionary compu-
+      In Proceedings of the Genetic and Evolutionary Computation               tation, 10(2):99­127.
+      Conference, pages 450­457.
+                                                                         Tarapore, D. and Mouret, J.-B. (2015). Evolvability signatures of
+Lehman, J., Clune, J., Misevic, D., Adami, C., Altenberg, L.,                  generative encodings: beyond standard performance bench-
+      Beaulieu, J., Bentley, P. J., Bernard, S., Beslon, G., Bryson,           marks. Information Sciences, 313:43­61.
+      D. M., et al. (2020). The surprising creativity of digital evolu-
+      tion: A collection of anecdotes from the evolutionary compu-       Vilalta, R. and Drissi, Y. (2002). A perspective view and survey of
+      tation and artificial life research communities. Artificial life,        meta-learning. Artificial intelligence review, 18(2):77­95.
+      26(2):274­306.
+                                                                         Wagner, G. P. and Altenberg, L. (1996). Perspective: complex
+Lehman, J. and Miikkulainen, R. (2015). Enhancing divergent                    adaptations and the evolution of evolvability. Evolution,
+      search through extinction events. In Proceedings of the 2015             50(3):967­976.
+      Annual Conference on Genetic and Evolutionary Computa-
+      tion, pages 951­958.                                               Wang, R., Lehman, J., Clune, J., and Stanley, K. O. (2019). Paired
+                                                                               open-ended trailblazer (poet): Endlessly generating increas-
+Lehman, J. and Stanley, K. O. (2011a). Abandoning objectives:                  ingly complex and diverse learning environments and their
+      Evolution through the search for novelty alone. Evolutionary             solutions. arXiv preprint arXiv:1901.01753.
+      computation, 19(2):189­223.
+                                                                         Watson, R. A. and Szathma´ry, E. (2016). How can evolution learn?
+Lehman, J. and Stanley, K. O. (2011b). Evolving a diversity of vir-            Trends in ecology & evolution, 31(2):147­157.
+      tual creatures through novelty search and local competition.
+      In Proceedings of the 13th annual conference on Genetic and        Wierstra, D., Schaul, T., Peters, J., and Schmidhuber, J. (2008).
+      evolutionary computation, pages 211­218.                                 Natural evolution strategies. In 2008 IEEE Congress on Evo-
+                                                                               lutionary Computation (IEEE World Congress on Computa-
+Lehman, J. and Stanley, K. O. (2011c). Novelty search and the                  tional Intelligence), pages 3381­3387. IEEE.
+      problem with objectives. In Genetic programming theory and
+      practice IX, pages 37­56. Springer.
+
+McCouch, S. (2004). Diversifying selection in plant breeding.
+      PLoS Biol, 2(10):e347.
+

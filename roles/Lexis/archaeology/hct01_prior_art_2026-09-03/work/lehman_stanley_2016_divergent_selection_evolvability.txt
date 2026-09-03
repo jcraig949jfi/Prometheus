@@ -1,0 +1,395 @@
+                                                                          Perspective
+                                                            published: 02 August 2016
+                                                       doi: 10.3389/frobt.2016.00045
+
+                                              On the critical role of Divergent
+                                              selection in evolvability
+
+                                              Joel Lehman1*, Bryan Wilder2 and Kenneth O. Stanley3
+
+                                              1Center for Computer Games Research, IT University of Copenhagen, Copenhagen, Denmark, 2Department of Computer
+                                              Science, University of Southern California, Los Angeles, CA, USA, 3Department of EECS, University of Central Florida,
+                                              Orlando, FL, USA
+
+                                Edited by:    An ambitious goal in evolutionary robotics (ER) is to evolve increasingly complex robotic
+                    Stephane Doncieux,        behaviors with minimal human design effort. Reaching this goal requires evolutionary
+                Pierre-and-Marie-Curie        algorithms that can unlock from genetic encodings their latent potential for evolvabil-
+                                              ity. One issue clouding this goal is conceptual confusion about evolvability that often
+                       University, France     obscures important or desirable aspects of evolvability. The danger from such con-
+                                              fusion is that it may establish unrealistic goals for evolvability that prove unproductive
+                           Reviewed by:       in practice. An important issue separate from conceptual confusion is the common
+                 Jean-Baptiste Mouret,        misalignment between selection and evolvability in ER. While more expressive encod-
+      French Institute for Research in        ings can represent higher-level adaptations (e.g. sexual reproduction or developmental
+Computer Science and Automation,              systems) that increase long-term evolutionary potential (i.e. evolvability), realizing such
+                                              potential requires gradients of fitness and evolvability to align. In other words, selection
+                                     France   is often a critical factor limiting increasing evolvability. Thus, drawing from a series of
+           Anders Lyhne Christensen,          recent papers, this article seeks to both (1) clarify and focus the ways in which the term
+          University Institute of Lisbon      evolvability is used within artificial evolution and (2) argue for the importance of one type
+                                              of selection, i.e. divergent selection, for enabling evolvability. The main argument is that
+                   (ISCTE-IUL), Portugal      there is a fundamental connection between divergent selection and evolvability (on both
+                                              the individual and population level) that does not hold for typical goal-oriented selection.
+                    *Correspondence:          The conclusion is that selection pressure plays a critical role in realizing the potential for
+                              Joel Lehman     evolvability and that divergent selection in particular provides a principled mechanism for
+                                 jleh@itu.dk  encouraging evolvability in artificial evolution.
+
+                     Specialty section:       Keywords: evolutionary robotics, evolvability, divergent selection, encodings, evolution of complexity
+         This article was submitted to
+                                              1. INTRODUCTION
+                 Evolutionary Robotics,
+                 a section of the journal     Natural evolution is an unguided process that has produced organisms with functionalities far
+          Frontiers in Robotics and AI        exceeding the products of current human engineering. Although biological evolution is well studied,
+                                              the abstract mechanisms through which cascades of increasingly complex functionalities evolve
+           Received: 30 March 2016            are not deeply understood. Supporting this claim, artificial evolutionary processes so far cannot
+              Accepted: 08 July 2016          reproduce biological levels of behavioral complexity.
+
+         Published: 02 August 2016               This problem is well known within the evolutionary robotics (ER) community, given its aim
+                                              to create complex robotic behaviors through algorithmic evolution. Note that while this paper
+                                  Citation:   focuses on ER, the insights likely generalize to many applications of evolutionary algorithms (EAs)
+Lehman J, Wilder B and Stanley KO             beyond the black box setting (Doncieux and Mouret, 2014); for this reason, the term EA assumes
+                                              domains in which observable behavior results from an evaluation. While ER's aims are ambitious,
+         (2016) On the Critical Role of
+   Divergent Selection in Evolvability.
+
+                  Front. Robot. AI 3:45.
+      doi: 10.3389/frobt.2016.00045
+
+Frontiers in Robotics and AI | www.frontiersin.org  1  August 2016|Volume 3|Article 45
+Lehman et al.                                                               Divergent Selection in Evolvability
+
+in practice evolved behaviors have remained simple relative to              2. EVOLVABILITY IN EVOLUTIONARY
+biological organisms, and ER does not compete commercially
+with mainstream robotics approaches. Thus, it is natural to seek            ROBOTICS
+the cause of the qualitative gulf between natural organisms and
+ER's current products. One hypothesis is that evolvability, i.e.            Because evolutionary computation (EC) as a whole struggles with
+the speed of evolutionary innovation, stagnates in ER systems,              evolvability (Wagner and Altenberg, 1996; Reisinger et al., 2005;
+whereas in biological evolution, second-order mechanisms (e.g.              Hu and Banzhaf, 2010), the subfield of ER naturally confronts the
+sexual reproduction or developmental systems) often evolve that             same issue (Lehman and Stanley, 2011b; Tarapore and Mouret,
+accelerate innovation.                                                      2015). A distracting complication when discussing or quantifying
+                                                                            evolvability is the lack of consensus on evolvability's definition
+   Accordingly, this paper argues that an important limiting fac-           across biology (Pigliucci, 2008), EC in general (Altenberg, 1994;
+tor in ER is bounded evolvability, which manifests on different             Reisinger et al., 2005), or ER in particular (Lehman and Stanley,
+structural levels. First, there are limits to the evolvability possible     2011b; Tarapore and Mouret, 2015).
+to attain within particular ER models, because the search space
+does not contain certain possibilities. For example, most encod-               Overall, evolvability definitions largely can be divided into two
+ings do not enable an organism to influence how its offspring               main families. One focuses on the ability to respond to particular
+are generated, even if such influence could increase evolvability.          adaptive challenges (Reisinger et al., 2005; Pigliucci, 2008; Clune
+Second, there are limits in practice to what levels of evolvability         et al., 2013), while the other focuses more generally on future
+will be attained, given how the chosen environment, form of                 creative potential, i.e. the variety of phenotypes reachable from
+selection pressure, and encoding interact. In particular, because           an individual or population (Wagner and Altenberg, 1996;
+the gradients of task performance and evolvability often fail to            Dichtel-Danjoy and Félix, 2004; Lehman and Stanley, 2011b).
+align conveniently, selection may prune hereditary pathways that            Encompassing these narrower viewpoints, a larger-scale con-
+lead to increased evolvability. This paper focuses on this latter           ception of evolvability is the ability to create major phenotypic,
+factor, because while there exist many interesting proposals for            behavioral, or morphological breakthroughs (Pigliucci, 2008),
+more expressive encodings (Spector and Robinson, 2002; Risi                 e.g. the de novo evolution of a developmental system. A unify-
+et al., 2010; Lehman and Stanley, 2011b), in practice realizing             ing point is that this kind of large-scale evolvability is evident
+their potential for evolvability remains difficult (Edmonds, 2001;          in natural evolution and is what researchers ultimately aspire to
+Spector and Robinson, 2002; Clune et al., 2008). The position               recreate. The hope is that studying and learning how to encourage
+taken here is that this challenge largely results from applying             lower levels of evolvability may aid this latter pursuit.
+selection pressure uncorrelated with evolvability.
+                                                                               Such plurality of definitions is not inherently problematic;
+   A further issue is that the term evolvability is defined across ER       evolvability as an overarching concept may simply take on dif-
+studies in disjoint and conflicting ways, which conflates distinct          ferent meanings when considered across different functional
+concepts. The result is confusion over what challenges evolvabil-           goals (e.g. whether privileging adaptation to a specific target or
+ity poses for ER and even over what outcomes are most desirable             potential for founding new niches through creative divergence)
+or possible. One particular source of confusion addressed here              or levels of organization (e.g. whether considered over individu-
+concerns the level of organization (e.g. the level of the individual        als, populations, or species) (Pigliucci, 2008). Thus, rather than
+or the population) in which it is most important to consider and            absolute truth, the choice of evolvability definition may instead
+encourage evolvability.                                                     reflect the aims of a particular research agenda. That is, if one
+                                                                            hopes to create an ER algorithm that directly solves any ambitious
+   To address such confusion, this paper aggregates from an                 problem through optimization, the most fitting characterization
+ongoing research agenda (Lehman and Stanley, 2011b; Wilder                  of evolvability may be one aligned with increasing the value of a
+and Stanley, 2015) one coherent vision of evolvability. Rather than         static fitness function. Yet when adopting a particular definition
+focus on an individual's hereditary potential to achieve particular         and devising a measure of it for ER, it is important that the result-
+goals, the idea is to encourage the population's hereditary poten-          ing measure still respects what is ultimately realistic or possible.
+tial for creative divergence. The argument is that this conception          The measure can then identify limitations in current algorithms
+of evolvability is more realistic and productive than alternative           and highlight possible improvements, in service of a particular
+visions, and that it aligns well with researchers' expectations of          research agenda.
+ER and intuitions about natural evolution's creativity.
+                                                                               However, some overarching aims of ER may be more realistic
+   Viewing evolvability from this perspective of accelerating               than others. For example, while the optimization-based abstrac-
+creativity has consequences for algorithm design. In particular,            tion of evolution has long dominated ER (Lehman and Stanley,
+this paper argues that divergent selection, i.e. selection that             2010), growing evidence suggests that such an approach is
+encourages simultaneous exploration of diverse solutions, aligns            misaligned with how ambitious objectives are actually achieved
+systematically with this type of evolvability; in contrast, more            (Doncieux and Mouret, 2014; Stanley and Lehman, 2015) and
+traditional objective-based selection, i.e. selection for improving         does not scale in practice (Lehman and Stanley, 2011c; Lehman
+objective performance, has no such consistent alignment. Thus,              et al., 2013; Nguyen et al., 2015). Thus, viewing evolvability
+to create more prolific ER algorithms may require increasing the            through the lens of optimization (i.e. evolvability as the potential
+potential for evolvability in encodings, focusing on population-            for solving particular adaptive challenges) may draw focus to
+level evolvability instead of on individual-level evolvability, and         desirable but ultimately unrealistic goals, like the design of an
+guiding search through divergent selection.                                 algorithm that can successfully optimize toward any arbitrarily
+
+Frontiers in Robotics and AI | www.frontiersin.org                       2  August 2016|Volume 3|Article 45
+Lehman et al.                                                              Divergent Selection in Evolvability
+
+complex robotic behavior. So while defining evolvability this way          explicitly as a property of a population (Wilder and Stanley, 2015).
+is valid, it may not fruitfully steer ER research.                         For example, one such measure is the diversity of phenotypes
+                                                                           accessible within the mutational neighborhood of all individuals
+   In contrast, this paper instead frames evolvability by consider-        in the population.
+ing ER's most ambitious creative goals (i.e. evolvability as future
+creative potential) where creativity is defined here as the ability to        Both conceptions are logically consistent, but they imply
+create novel functionally complex artifacts. The argument is that          different goals for ER. That is, benchmarking methods by their
+framing evolvability this way draws focus to more realistic goals,         production of individual-level evolvability sets the implicit goal
+because it better reflects how complex behaviors evolve in practice.       of producing maximally evolvable individuals. Even if individual
+That is, evolution does not craft highly complex functionalities           evolvability is aggregated over the population by considering
+because such behaviors are an explicit engineering objective, but          mean or maximum evolvability, both common aggregations can
+instead cobbles them together through opportunistic tinkering              be maximized by a population converged to a single maximally
+(Jacob, 1977). Indeed, according to one mainstream biological              evolvable individual. In contrast, benchmarking on population-
+opinion, complexity in biological evolution results from explora-          level evolvability stresses the need for maximally evolvable
+tory diffusion through the space of complexity rather than from            populations, which may result from a diversity of individuals with
+any pervasive selective advantage that such complexity provides            complementary and specialized evolutionary potentials.
+(Miconi, 2008; McShea and Brandon, 2010; Gould, 2011; Stanley
+and Lehman, 2015). In this view, complex behavior emerges as                  The fundamental problem with guiding ER by individual-level
+evolution creatively expands through a growing space of ecologi-           evolvability stems from the logical conclusion of its maximiza-
+cal niches (Kauffman, 2000; Schluter, 2000; Kelly, 2010), driven           tion. For evolvability measures focused on adapting to new goals,
+by opportunistic exaptation (Gould and Vrba, 1982) or ecological           maximization requires an individual that can very quickly evolve
+pressures toward diversity such as competitive exclusion (Hardin,          to achieve any possible goal. For evolvability measures focused on
+1960). Empirically, this understanding is supported by studies             creative potential, maximization requires an individual who can
+showing that complex functionalities fail to evolve without the            quickly lead to any possible phenotype. While such outcomes are
+scaffolding of functionally simpler niches (Lenski et al., 2003;           certainly desirable, neither of these extreme visions are realistic
+Arthur and Polak, 2004), that bacteria colonies tend naturally to          nor do they reflect intuitions about terrestrial evolvability.
+generate and maintain vast phenotypic diversity (Saint-Ruf et al.,
+2014), and that biodiversity begets further biodiversity (Jousset             To highlight the benefits of population-level evolvability for
+et al., 2016). Furthermore, viewing evolution as an open-ended             ER, consider two controllers for a biped robot, one that locomotes
+creative process aligns with a similar understanding of cultural           with a one-legged hop and the other that uses both legs to achieve
+processes such as technological growth (Arthur, 2009; Kelly,               a smooth walking gait. To achieve their distinct gaits, both con-
+2010; Stanley and Lehman, 2015). Thus, if evolution's productiv-           trollers contain specialized knowledge and thus are only locally
+ity largely derives from its capacity to diverge creatively, then          evolvable, e.g. mutating the hopping controller yields many
+accelerating such capacity is a logical aim for ER. This paper             hopping gait variations, while mutating the walking controller
+accordingly argues for measuring and encouraging evolvability              likewise generates many variations of walking. Through the lens
+as the potential for creative divergence, while acknowledging that         of individual-level evolvability, if both controllers had equivalent
+other views may better fit alternative research agendas.                   quantities of evolvability, there is no preference to preserve both
+                                                                           in a population. In contrast, population-level evolvability recog-
+   One representative such measure of divergent potential is to            nizes the greater span of evolutionary potential when the hopper
+quantify the phenotypic variability of an individual (Dichtel-             and the walker are both viable leaping-off points (see Figure 1).
+Danjoy and Félix, 2004; Pigliucci, 2008), i.e. the phenotypic diver-
+sity accessible within an individual's mutational neighborhood.               In this way, population-level evolvability may be a more
+This measure is used in practice (Lehman and Stanley, 2011b) and           principled guiding light for ER than individual-level evolvability.
+captures an important facet of an individual's potential for crea-         As a result, increased focus on population-level evolvability may
+tive divergence. However, as explored in the next section, such            have implications for improving the design and creativity of ER
+individual-level focus neglects the greater possibilities enabled by       algorithms and may illuminate promising research trajectories.
+considering the population as a whole (Wilder and Stanley, 2015).          In this spirit, the next section argues that divergent selection is
+                                                                           an important algorithmic feature for cultivating such population-
+                                                                           level evolvability.
+
+3. EVOLVABILITY OF POPULATIONS AND                                         4. DIVERGENT SELECTION
+INDIVIDUALS                                                                AND EVOLVABILITY
+
+When evolvability is measured and encouraged in ER, most                   One necessary condition for the evolution of evolvability is that
+often it is considered a property of an individual (Clune et al.,          selection must encourage (or at minimum, not oppose) trajecto-
+2013; Lehman and Stanley, 2013; Velez and Clune, 2014), often              ries through the search space leading to evolvable genotypes. Even
+aggregated across the population by taking the mean or maxi-               if highly evolvable individuals exist within the search space, they
+mum value. However, simple aggregations obscure important                  are unlikely to be discovered if selection and evolvability are com-
+properties unique to the population level, such as to what extent          pletely decorrelated. Just as degeneracy is over-represented rela-
+the population contains a complementary diversity of evolvable             tive to functionality within complex search spaces (i.e. a mutation
+individuals. An alternative approach is to consider evolvability           more often causes catastrophe than novel functionality), there is
+
+Frontiers in Robotics and AI | www.frontiersin.org                      3  August 2016|Volume 3|Article 45
+Lehman et al.                                                                 Divergent Selection in Evolvability
+
+FIGURE 1 | Encouraging evolvability on different levels of organization. Both figures show an abstract space of phenotypes, where black circles indicate
+individuals and gray circles indicate phenotypes accessible within an individual's mutational neighborhood. Thus, a more expansive radius of gray circles indicates a
+more evolvable individual. When considering (A) individual-level evolvability, its maximization is achieved by a single highly evolvable individual. However, when
+considering (B) population-level evolvability, its maximization is achieved by accumulating a diversity of complementarily evolvable individuals. In this way,
+encouraging population-level evolvability is a more productive goal, because a broader set of phenotypes can be reached through mutations of the resulting
+population than through mutations of any singularly evolvable individual.
+
+no reason to expect an arbitrary genome to be highly evolvable.               regardless if other reachable adaptations hold greater future
+Thus it is important to explore the relationship between different            potential.
+forms of selection pressure and evolvability. Note that a similar
+argument related to the evolution of complexity is provided by                   A second more fundamental problem results from deception,
+Miconi (2008).                                                                i.e. the tendency in objective-based search for short-term fitness
+                                                                              increases to themselves anticorrelate with long-term potential;
+   The dominant form of selection pressure in ER is objective-                such deception seems to increase in frequency and severity
+based fitness: a heuristic measure of progress to some fixed objec-           as problems scale in complexity (Zaera et al., 1996; Ficici and
+tive. Search driven to optimize such a measure often converges,               Pollack, 1998; Lehman and Stanley, 2011c; Stanley and Lehman,
+because as the population's fitness rises the set of admissible               2015). When objective-based fitness is itself a broken compass,
+improvements shrinks. This objective-based perspective derives                then even if lineage-level selection could lead to evolutionary
+from abstracting natural evolution as an optimization process                 acceleration, the end effect would only be faster discovery of an
+(Lehman and Stanley, 2011a), i.e. from considering optimiza-                  ultimately unsatisfactory local optimum.
+tion as the key ingredient that enables impressive evolutionary
+products.                                                                        An alternative to objective-driven search is to explicitly
+                                                                              abstract evolution as a creative process, reflecting that a key char-
+   One might intuitively assume that evolvability will naturally              acteristic of biological evolution is its divergent accumulation of
+increase with objective-based selection, because increased evolv-             novelty. Practical examples of such selection in EAs are given by
+ability will hitchhike as a byproduct of selecting the adaptations            novelty search (Lehman and Stanley, 2011a), behavioral diversity
+such evolvability enables. That is, an evolvable individual will be           (Mouret and Doncieux, 2012), and MAP-Elites (Mouret and
+more likely than an unevolvable one to produce useful adaptions               Clune, 2015). In such algorithms, novelty or divergence is directly
+(i.e. increases in fitness); therefore, evolvability will consistently be     selected for, serving as a proxy for important creative processes in
+favored as a result of selecting high-fitness individuals. However,           biology that are overlooked when evolution is treated only as an
+this intuition does not hold up to closer scrutiny or empirical               optimizer, e.g. negative frequency-dependent selection (Endler
+studies (Lehman and Stanley, 2011b).                                          and Greenwood, 1988) and adaptive radiation (Schluter, 2000).
+
+   First, there is no necessary logical connection between nar-                  In contrast to objective-driven search, a consistent relation-
+rowly increasing fitness and long-term potential. For example,                ship often holds between divergent selection and evolvability
+in ER there may be many genomes with varying evolvability that                (Lehman and Stanley, 2011b, 2013; Lehman and Miikkulainen,
+express the same high-fitness behavior (e.g. a low-evolvability               2015; Wilder and Stanley, 2015; Mengistu et al., 2016).
+memorized list of motor commands vs. a higher evolvability                    Importantly, unlike with static measures of progress, measures of
+generic wall following policy); yet short-term fitness optimiza-              divergence are relative to the current and past states of the search
+tion cannot distinguish between them. For more evolvable line-                process. As a result, seeking divergence is self-defeating in a way
+ages to reliably distinguish themselves requires competition                  that pursuing a fixed goal is not (see Figure 2). When objective-
+between sufficiently different lineages with differing potentials.            driven search is stuck within a local optimum, a high-fitness
+Yet maintaining such diversity is in direct tension with objective-           individual retains such fitness indefinitely; selection in such cases
+based selection's tendency to converge. As a result, in most EAs              is antagonistic to evolvability, because phenotypic deviations are
+an adaptation quickly propagates throughout the population,                   overwhelmingly unlikely to be adaptive. However, with divergent
+
+Frontiers in Robotics and AI | www.frontiersin.org                         4  August 2016|Volume 3|Article 45
+Lehman et al.                                                            Divergent Selection in Evolvability
+
+FIGURE 2 | Contrast between optimizing absolute and relative measures. Both figures show a plot of the maximum of an optimization measure present in
+the population over generations. When optimizing a static measure of progress, as in (A) objective-driven search, a high-fitness individual remains so indefinitely. As
+a result, adaptations quickly sweep through the entire population. Such convergence precludes lineages from distinguishing themselves by producing adaptations at
+differential rates. In contrast, when optimizing a measure of divergence, as in (B) novelty search, novel innovations cause only a temporary spike in the maximum
+novelty of the population. In this way, selection can maintain many diverging lineages that can distinguish themselves by more consistently producing novelty than
+the other ones. Plots are the characteristic result from running search in the medium maze domain of Lehman and Stanley (2011a).
+
+selection, a lineage must continually innovate to remain novel.          objective-based search often cannot fully exploit features that
+Thus there is consistent pressure to diverge, meaning mecha-             enable greater potential for evolvability, e.g. allowing individuals
+nisms that enhance the ability to diverge can hitchhike along            to control aspects of mutation (Clune et al., 2008; Lehman and
+with the divergences they enable. Furthermore, because divergent         Stanley, 2011b) or of reproduction (Spector and Robinson, 2002).
+algorithms like novelty search and MAP-Elites are designed to            One important caveat for interpreting these results is that nearly
+simultaneously maintain many distinct lineages (Lehman et al.,           all such studies focus on individual-level evolvability (Wilder
+2012; Gomes et al., 2015; Nguyen et al., 2015), evolvable lineages       and Stanley, 2015), meaning that further studies focusing on
+can therefore distinguish themselves by consistently producing           population-level evolvability are needed to validate the theory.
+novelty. In this way, divergent selection systematically aligns with     But, taken as a whole, evidence is accumulating that divergent
+evolvability. Note that the choice of how to measure divergence          selection is a critical ingredient for encouraging evolvability in
+will significantly impact the evolvability generated by a divergent      ER.
+EA, similarly to how such choice significantly impacts algorith-
+mic performance (Mouret and Doncieux, 2012; Doncieux and                 5. CONCLUSION
+Mouret, 2013); how to best align behavioral distance metrics with
+evolvability without relying on human domain expertise remains           This paper addressed two connected aspects of ER: (1) what
+an open research question.                                               is a coherent vision that realistically relates evolvability to the
+                                                                         goals of ER, and (2) what algorithmic considerations align
+   Importantly, this argument gracefully extends to the popula-          with achieving that vision. The idea is that it is both realistic
+tion level. Because divergence is the primary selection criteria,        and desirable to create divergent EAs that indirectly optimize
+individuals are directly incentivized to diversify and spread over       population-level evolvability, formalized as the potential for
+the space of possible phenotypes. The product is thus a diverse          a population to realize phenotypic variety. Such an approach
+set of leaping-off points that enable a significant base level of        agrees with intuitions about and understanding of natural
+population-level evolvability. At the same time, by the argument         evolution, and respects limitations about what ultimately is
+above, lineages are indirectly rewarded to consistently produce          algorithmically possible.
+diversity, which encourages individual evolvability that is fit
+to an individual's local phenotypic neighborhood. In this way,              While divergent search methods seem more aligned with evolv-
+divergent selection encourages a population of individuals with          ability than convergent search, a vast gulf still remains between
+complementary evolvabilities, resulting in a much wider range of         the dynamics of such algorithms and those of natural evolution.
+reachable phenotypes than that would result from considering             One hope is that an explicit focus on population-level evolvability
+any single individual.                                                   may lead to algorithmic improvements that enhance evolvability.
+                                                                         However, a more fundamental problem is that existing measures
+   Beyond theoretical arguments, empirical studies have                  of divergence in EAs are relatively simplistic and do not enable the
+demonstrated that divergent search often results in higher evolv-        seemingly endless and interesting innovation observed in natural
+ability than objective-based search (Lehman and Stanley, 2011b,          evolution. Interesting proposals for more sophisticated divergent
+2013; Lehman and Miikkulainen, 2015; Wilder and Stanley,                 selection pressure are beginning to emerge (Liapis et al., 2013;
+2015; Mengistu et al., 2016). Other studies have highlighted that
+
+Frontiers in Robotics and AI | www.frontiersin.org                    5  August 2016|Volume 3|Article 45
+Lehman et al.                                                                               Divergent Selection in Evolvability
+
+Nguyen et al., 2015; Pugh et al., 2015), and are an important direc-                        FUNDING
+tion for future research.
+                                                                                            This work was supported by the National Science Foundation
+AUTHOR CONTRIBUTIONS                                                                        under grant no. IIS-1421925. Any opinions, findings, and conclu-
+                                                                                            sions or recommendations expressed in this material are those
+JL, BW, and KS, each contributed to the conception and writing                              of the authors and do not necessarily reflect the views of the
+of this article.                                                                            National Science Foundation.
+
+REFERENCES                                                                                  Lehman, J., and Stanley, K. O. (2010). "Revising the evolutionary computation
+                                                                                                abstraction: minimal criteria novelty search," in Proceedings of the Genetic and
+Altenberg, L. (1994). The evolution of evolvability in genetic programming. Adv.                Evolutionary Computation Conference (GECCO-2010) (New York, NY: ACM),
+    Genet. Program. 3, 47­74.                                                                   103­110.
+
+Arthur, W. B. (2009). The Nature of Technology: What It Is and How It Evolves. New          Lehman, J., and Stanley, K. O. (2011a). Abandoning objectives: evolution
+    York, NY: Simon and Schuster.                                                               through the search for novelty alone. Evol. Comput. 19, 189­223. doi:10.1162/
+                                                                                                EVCO_a_00025
+Arthur, W. B., and Polak, W. (2004). The evolution of technology within a simple
+    computer model. Complexity 11, 23­31. doi:10.1002/cplx.20130                            Lehman, J., and Stanley, K. O. (2011b). "Improving evolvability through novelty
+                                                                                                search and self-adaptation," in Proceedings of the 2011 Congress on Evolutionary
+Clune, J., Misevic, D., Ofria, C., Lenski, R. E., Elena, S. F., and Sanjun, R. (2008).          Computation (CEC 2011) (Washington, DC: IEEE), 2693­2700.
+    Natural selection fails to optimize mutation rates for long-term adaptation on
+    rugged fitness landscapes. PLoS Comput. Biol. 4:e1000187. doi:10.1371/journal.          Lehman, J., and Stanley, K. O. (2011c). "Novelty search and the problem with
+    pcbi.1000187                                                                                objectives," in Genetic Programming Theory and Practice IX, eds T. McConaghy,
+                                                                                                E. Vladislavleva, and R. Riolo (Berling, Heidelberg: Springer), 37­56.
+Clune, J., Mouret, J.B., and Lipson, H. (2013). The evolutionary origins of modu-
+    larity. Proc. Biol. Sci. 280, 20122863. doi:10.1098/rspb.2012.2863                      Lehman, J., and Stanley, K. O. (2013). Evolvability is inevitable: increasing evolv-
+                                                                                                ability without the pressure to adapt. PLoS ONE 8:e62186. doi:10.1371/journal.
+Dichtel-Danjoy, M.-L., and Félix, M.-A. (2004). Phenotypic neighborhood                         pone.0062186
+    and micro-evolvability. Trends Genet. 20, 268­276. doi:10.1016/j.tig.2004.
+    03.010                                                                                  Lehman, J., Stanley, K. O., and Miikkulainen, R. (2013). "Effective diversity main-
+                                                                                                tenance in deceptive domains," in Proceedings of the Genetic and Evolutionary
+Doncieux, S., and Mouret, J.-B. (2013). "Behavioral diversity with multiple behav-              Computation Conference (GECCO-2013) (New York, NY: ACM), 215­222.
+    ioral distances," in 2013 IEEE Congress on Evolutionary Computation (CEC)
+    (Washington, DC: IEEE), 1427­1434.                                                      Lenski, R. E., Ofria, C., Pennock, R. T., and Adami, C. (2003). The evolutionary
+                                                                                                origin of complex features. Nature 423, 139­144. doi:10.1038/nature01568
+Doncieux, S., and Mouret, J.-B. (2014). Beyond black-box optimization: a review of
+    selective pressures for evolutionary robotics. Evol. Intell. 7, 71­93. doi:10.1007/     Liapis, A., Martinez, H. P., Togelius, J., and Yannakakis, G. N. (2013). "Transforming
+    s12065-014-0110-x                                                                           exploratory creativity with delenox," in Proceedings of the Fourth International
+                                                                                                Conference on Computational Creativity (Cambridge, MA: AAAI Press), 56­63.
+Edmonds, B. (2001). Meta-genetic programming: co-evolving the operators of
+    variation. Turk. J.Elec. Engin. 9, 13­29.                                               McShea, D. W., and Brandon, R. N. (2010). Biology's First Law: The Tendency
+                                                                                                for Diversity and Complexity to Increase in Evolutionary Systems. Chicago:
+Endler, J.A., and Greenwood, J.J.D. (1988). Frequency-dependent predation,                      University of Chicago Press.
+    crypsis and aposematic coloration [and discussion]. Philos. Trans. R. Soc. Lond.
+    B Biol. Sci. 319, 505­523. doi:10.1098/rstb.1988.0062                                   Mengistu, H., Lehman, J., and Clune, J.(2016). "Evolvability search: directly
+                                                                                                selecting for evolvability in order to study and produce it," in Proceedings of the
+Ficici, S., and Pollack, J.B. (1998). "Challenges in coevolutionary learning: arms-             Genetic and Evolutionary Computation Conference (GECCO-2016) (New York,
+    race dynamics, open-endedness, and mediocre stable states," in Proceedings                  NY: ACM).
+    of the Sixth International Conference on Artificial Life (Cambridge, MA: MIT
+    Press), 238­247.                                                                        Miconi, T. (2008). Evolution and complexity: the double-edged sword. Artif. Life
+                                                                                                14, 325­344. doi:10.1162/artl.2008.14.3.14307
+Gomes, J., Mariano, P., and Christensen, A. L. (2015). "Devising effective novelty
+    search algorithms: a comprehensive empirical study," in Proceedings of the 2015         Mouret, J.-B., and Clune, J.(2015). Illuminating search spaces by mapping elites.
+    on Genetic and Evolutionary Computation Conference (New York, NY: ACM),                     arXiv preprint arXiv:1504.04909.
+    943­950.
+                                                                                            Mouret, J.-B., and Doncieux, S. (2012). Encouraging behavioral diversity in evo-
+Gould, S. J.(2011). Full House. Cambridge, MA: Harvard University Press.                        lutionary robotics: an empirical study. Evol. Comput. 20, 91­133. doi:10.1162/
+Gould, S. J., and Vrba, E. S. (1982). Exaptationa missing term in the science of form.          EVCO_a_00048
+
+    Paleobiology 8, 4­15. doi:10.1017/S0094837300004310                                     Nguyen, A., Yosinski, J., and Clune, J.(2015). "Innovation engines: automated cre-
+Hardin, G. (1960). The competitive exclusion principle. Science 131, 1292­1297.                 ativity and improved stochastic optimization via deep learning," in Proceedings
+                                                                                                of the Genetic and Evolutionary Computation Conference. New York, NY.
+    doi:10.1126/science.131.3409.1292
+Hu, T., and Banzhaf, W. (2010). Evolvability and speed of evolutionary algo-                Pigliucci, M. (2008). Is evolvability evolvable? Nat. Rev. Genet. 9, 75­82.
+                                                                                                doi:10.1038/nrg2278
+    rithms in light of recent developments in biology. J.Artif. Evol. Appl. 2010, 1.
+    doi:10.1155/2010/568375                                                                 Pugh, J.K., Soros, L., Szerlip, P. A., and Stanley, K. O. (2015). "Confronting the
+Jacob, F. (1977). Evolution and tinkering. Science 196, 1161­1166. doi:10.1126/                 challenge of quality diversity," in Proceedings of the Genetic and Evolutionary
+    science.860134                                                                              Computation Conference. New York, NY.
+Jousset, A., Eisenhauer, N., Merker, M., Mouquet, N., and Scheu, S. (2016). High
+    functional diversity stimulates diversification in experimental microbial com-          Reisinger, J., Stanley, K. O., and Miikkulainen, R. (2005). "Towards an empirical
+    munities. Sci. Adv. 2, e1600124. doi:10.1126/sciadv.1600124                                 measure of evolvability," in Genetic and Evolutionary Computation Conference
+Kauffman, S. A. (2000). Investigations. Oxford: Oxford University Press.                        (GECCO2005) Workshop Program (Washington, DC: ACM Press), 257­264.
+Kelly, K. (2010). What Technology Wants. London: Penguin.
+Lehman, J., and Miikkulainen, R. (2015). "Enhancing divergent search through                Risi, S., Lehman, J., and Stanley, K. O. (2010). "Evolving the placement and density
+    extinction events," in Proceedings of the 2015 on Genetic and Evolutionary                  of neurons in the hyperneat substrate," in Proceedings of the 12th Annual
+    Computation Conference (New York, NY: ACM), 951­958.                                        Conference on Genetic and Evolutionary Computation (New York, NY: ACM),
+Lehman, J., Risi, S., and Stanley, K. O. (2012). "On the benefits of divergent search           563­570.
+    for evolved representations," in Proceedings of the EvoNet 2012 Workshop at
+    ALIFE XIII. Cambridge, MA.                                                              Saint-Ruf, C., Garfa-Traoré, M., Collin, V., Cordier, C., Franceschi, C., and Matic, I.
+                                                                                                (2014). Massive diversification in aging colonies of Escherichia coli. J.Bacteriol.
+                                                                                               196, 3059­3073. doi:10.1128/JB.01421-13
+
+                                                                                            Schluter, D. (2000). The Ecology of Adaptive Radiation. Oxford: OUP Oxford.
+
+Frontiers in Robotics and AI | www.frontiersin.org                                       6  August 2016|Volume 3|Article 45
+Lehman et al.                                                                              Divergent Selection in Evolvability
+
+Spector, L., and Robinson, A. (2002). Genetic programming and autoconstructive             Zaera, N., Cliff, D., and Bruten, J.(1996). "(Not) evolving collective behaviours
+   evolution with the push programming language. Genet. Program. Evolvable                     in synthetic fish," in From Animals to Animats 4: Proceedings of the Fourth
+   Mach. 3, 7­40. doi:10.1023/A:1020945110902                                                  International Conference on Simulation of Adaptive Behavior (Cambridge, MA:
+                                                                                               MIT Press Bradford Books).
+Stanley, K. O., and Lehman, J.(2015). Why Greatness Cannot Be Planned. Berlin,
+   Heidelberg: Springer Science Business Media, 978­983.                                   Conflict of Interest Statement: The authors declare that the research was con-
+                                                                                           ducted in the absence of any commercial or financial relationships that could be
+Tarapore, D., and Mouret, J.-B. (2015). Evolvability signatures of generative              construed as a potential conflict of interest.
+   encodings: beyond standard performance benchmarks. Inf. Sci. 313, 43­61.
+   doi:10.1016/j.ins.2015.03.046                                                           Copyright © 2016 Lehman, Wilder and Stanley. This is an open-access article
+                                                                                           distributed under the terms of the Creative Commons Attribution License (CC BY).
+Velez, R., and Clune, J.(2014). "Novelty search creates robots with general skills for     The use, distribution or reproduction in other forums is permitted, provided the
+    exploration," in Proceedings of the 2014 Conference on Genetic and Evolutionary        original author(s) or licensor are credited and that the original publication in this
+    Computation (New York, NY: ACM), 737­744.                                              journal is cited, in accordance with accepted academic practice. No use, distribution
+                                                                                           or reproduction is permitted which does not comply with these terms.
+Wagner, G., and Altenberg, L. (1996). Complex adaptations and the evolution of
+    evolvability. Evolution 50, 967­976. doi:10.2307/2410639
+
+Wilder, B., and Stanley, K. (2015). Reconciling explanations for the evolution of
+    evolvability. Adapt. Behav. 23, 171­179. doi:10.1177/1059712315584166
+
+Frontiers in Robotics and AI | www.frontiersin.org                                      7  August 2016|Volume 3|Article 45
+

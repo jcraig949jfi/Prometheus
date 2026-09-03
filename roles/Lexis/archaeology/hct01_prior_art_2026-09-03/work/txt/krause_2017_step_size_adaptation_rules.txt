@@ -1,0 +1,712 @@
+                    Qualitative and Quantitative Assessment
+                           of Step Size Adaptation Rules
+
+                  Oswin Krause                              Tobias Glasmachers                      Christian Igel
+
+             Department of Computer                        Institut für Neuroinformatik        Department of Computer
+                         Science                           Ruhr-Universität Bochum                         Science
+
+             University of Copenhagen                           Bochum, Germany                University of Copenhagen
+              Copenhagen, Denmark                                                               Copenhagen, Denmark
+                                                            tobias.glasmachers
+            oswin.krause@di.ku.dk                                 @ini.rub.de                       igel@di.ku.dk
+
+ABSTRACT                                                                                       This paper is concerned with the conceptual and empiri-
+                                                                                               cal comparison of a number of state-of-the-art mechanisms
+We present a comparison of step size adaptation methods                                        for controlling the algorithm's step size .
+for evolution strategies, covering recent developments in the
+field. Following recent work by Hansen et al. we formulate                                        Step size control mechanisms have been a core component
+a concise list of performance criteria: a) fast convergence                                    of ESs, dating back to Rechenberg's famous 1/5-rule [16].
+of the mean, b) near-optimal fixed point of the normalized                                     Consequently there exists a plethora of step size adaptation
+step size dynamics, and c) invariance to adding constant di-                                   (SA) mechanisms [15, 5, 12, 9, 1]
+mensions of the objective function. Our results show that
+algorithms violating these principles tend to underestimate                                       Comparing these algorithms is a problematic task. The
+the step size or are unreliable when the function does not fit                                 traditional approach is to judge the competitors on a set
+to the algorithm's tuned hyperparameters. In contrast, we                                      of benchmark problems. However, such a comparison relies
+find that cumulative step size adaptation (CSA) and two-                                       heavily on the tuning of the algorithms' hyperparameters.
+point adaptation (TPA) provide reliable estimates of the                                       Relying on previously tuned settings of the hyperparame-
+optimal step size. We further find that removing the evolu-                                    ters does not lead to a fair comparison as tuning always in-
+tion path of CSA still leads to a reliable algorithm without                                   volves a trade-off between performance and the stability of
+the computational requirements of CSA.                                                         the algorithm on unknown functions, which might lead to a
+                                                                                               much more conservative tuning which can often be improved
+Categories and Subject Descriptors                                                             for specific tasks. Moreover, even assuming well tuned al-
+                                                                                               gorithms, in a regime where one algorithm does not domi-
+[Continuous Optimization]                                                                      nate all others on every tested benchmark function it is not
+                                                                                               straightforward to rank the algorithms.
+Keywords
+                                                                                                  Recently a new, more qualitative approach was proposed.
+evolution strategies, step size adaptation, comparison                                         It is based on how the behavior of an algorithm matches
+                                                                                               a desired reference behavior [7]. Only a small set of simple
+1. INTRODUCTION                                                                                benchmark functions is used and algorithms are not assessed
+                                                                                               by their optimization performance alone, but according to
+We consider minimization of a "black-box" function f :                                         how they achieve it. Thus it is not only important how fast
+                                                                                               an algorithm finds a solution of given accuracy. In addition
+   d    R  defined  on  a  d-dimensional     real  vector  space.    For                       it is judged according to how effective and robust its internal
+                                                                                               mechanisms work. This type of analysis gives deeper insight
+R                                                                                              into the algorithm's behavior. Consequently, tuning plays
+                                                                                               a much smaller role than in a purely benchmark function
+optimization we consider Evolution Strategies (ES) using a                                     based comparison.
+
+normal  search  distribution  N (m, 2C)      with    mean  m            d  ,                      The present comparison study is similar in nature and
+                                                                                               draws heavily from the approach proposed by [7]. We mod-
+                                                                     R                         ify the original catalog of desiderata only slightly for our
+                                                                                               comparison, most significantly by adding the criterion of in-
+covariance  matrix  C           d×d  ,  and  global  step  size    >  0.                       variance under the addition of insignificant variables. We
+                                                                                               include two relatively recent methods, namely the median
+                             R                                                                 success rule [1] and the population step size adaptation [12].
+                                                                                               For simplicity and clarity we perform our analysis for an ES
+Adaptation of the step size enables linear convergence on                                      without CMA mechanism (fixing C to the identity matrix).
+
+scale invariant functions [2], while covariance matrix adap-                                      The paper is organized as follows. In the next section we
+                                                                                               introduce the simple ES with step size adaptation. Then we
+tation (CMA) [8] renders the asymptotic convergence rate                                       formulate a list of desirable properties for step size adapta-
+independent of the conditioning number of the Hessian.1                                        tion methods (section 3). In section 4 we review a variety of
+                                                                                               existing SA methods and list their properties as far as they
+1This statement requires a twice continuously differentiable                                   can be derived analytically. This analysis is enriched with
+function with strictly positive definite Hessian in the isolated
+optimum.
+
+Permission to make digital or hard copies of all or part of this work for personal or
+classroom use is granted without fee provided that copies are not made or distributed
+for profit or commercial advantage and that copies bear this notice and the full citation
+on the first page. Copyrights for components of this work owned by others than the
+author(s) must be honored. Abstracting with credit is permitted. To copy otherwise, or
+republish, to post on servers or to redistribute to lists, requires prior specific permission
+and/or a fee. Request permissions from permissions@acm.org.
+
+FOGA '17, January 12 - 15, 2017, Copenhagen, Denmark
+
+ c 2017 Copyright held by the owner/author(s). Publication rights licensed to ACM.
+ISBN 978-1-4503-4651-1/17/01. . . $15.00
+
+DOI: http://dx.doi.org/10.1145/3040718.3040725
+           Table 1: Constants used in the ES.                     average or worst case performance. What is missing is an
+                                                                  assessment of whether the tuning makes sense or whether
+      constant                     value                          it is a byproduct of over-fitting to the chosen benchmark
+                                                                  functions.
+          wi                  4 + 3 log(d)
+                                                                     The primary example is an SA algorithm that naturally
+          0             max{0,log(/2+1/2)-log(i)}                 adapts the step sizes to too small values. Honest tuning of
+                                                                  the algorithm might result in hyperparameter settings that
+                            max{0,log(/2+1/2)-log(j)}             slow down the adaptation so much that the observed step
+                     j=1                                          sizes are on the right scale. It is obvious that the tuning re-
+                                   1                              sult is fragile and may yield sub-optimal step sizes on other
+                                      d                           problems. Thus, severe flaws of an SA method can be hid-
+                                                                  den and the chosen parameters might only work reasonably
+empirical data in section 5. The results obtained in sections     well on the given set of benchmark functions, while the per-
+4 and 5 culminate in a discussion (section 6), from which we      formance on unseen functions might be much worse. In the
+extract our conclusions (section 7).                              example above, if a new function is chosen so that the opti-
+                                                                  mizer can approach the optimum only slowly, then the step
+2. EVOLUTION STRATEGIES                                           size has more time to adapt and thus the SA method will
+                                                                  select a too small step size. This could be observed, e.g.,
+   Throughout this paper we consider the following ES. At         when tuning on the Sphere function and testing the tuned
+the beginning of each iteration t it samples a new offspring      SA algorithm on an Ellipsoid function.
+population xt,1, . . . , xt, of size  from its Gaussian search
+distribution with density                                            One way of dealing with this problem is to require tuning
+                                                                  on an extensive predefined set of objective functions. How-
+                     1                   x - mt  2                ever, this makes tuning even harder, and new methods have
+                                            2t2                   to compete with well-known and thus well tuned algorithms.
+      pt(x)    =              exp  -                ,             Also the benefit of this approach can be disputed since even
+                       2ddtd                                      an extensive set of benchmark functions might not give us a
+                                                                  deep understanding of the method.
+which is parameterized by the current mean mt and the step
+                                                                     Therefore we follow a different route proposed in [7]: step
+size (standard deviation) t. In the next step it computes         size adaptation methods are judged according to whether
+                                                                  and to which degree they fulfill a set of requirements. The
+the function values f (xt,i) and sorts the offspring by fitness,  properties we consider in this paper are:
+
+so that f (xt,i)  f (xt,i+1). The next mean mt+1 is obtained         1. Mean Progress. The mean mt is the ES's best cur-
+                                                                         rent estimate of the optimum, hence it should improve
+as a convex combination of the offspring using weights wi                over time. The SA should optimize this progress by
+                                                                         maximizing (1). This means that the optimal step
+with  i=1  wi  =  1                                                      sizes found by the algorithm should be close to the
+                                                                         one that optimizes progress in each single step and
+                                                                         that this estimate is reliable over different problems.
+
+                     mt+1 = wixt,i .                                 2. Fixed Point dynamics of . We require that for
+                                                                         a properly tuned algorithm the realized step sizes are
+                                      i=1                                close to the fixed-point dynamics of the step size adap-
+                                                                         tation algorithm. This entails that the fixed point is a
+Truncation selection is encoded by giving non-zero weights               meaningful estimate of the optimal step size and thus
+only to the first µ = /2 points. Finally a step size adapta-             the learning rates merely govern how fast and how well
+tion (SA) algorithm computes t+1. Even though t appears                  the algorithm tracks it.
+only in the sampling of offspring points it is a crucial param-
+eter since it governs the length of the step µt+1 - µt. For the      3. Invariance to Constant Dimensions. The step size
+parameters  and wi we use the default values of CMA-ES                   should be independent of the addition of variables in
+[8], which are given in Table 1.                                         which the objective function values are constant (i.e.,
+                                                                         the function does not depend on these variables). This
+3. REQUIREMENTS FOR SA METHODS                                           is important in a black-box setting in which we can-
+                                                                         not find a reparameterization that would remove an
+   The prime measure of performance of an optimization al-               irrelevant subspace.
+gorithm operating on a continuous domain is its rate of con-
+vergence. However, the convergence rate can be measured           Checking these requirements makes it easier to compare al-
+in different ways, e.g., based on distance in search and ob-      gorithms and, more importantly, to judge whether a given
+jective space. In the following, we will focus our discussion     empirical comparison is fair or not. For example, comparing
+on scale invariant functions, that is functions for which hold    an algorithm fulfilling the requirement of the quality of the
+f (a  x) = g(a) · f (x), x  Rd, a  R. On these functions,         stationary distribution to one that does not, might not be
+most evolution strategies exhibit convergence to the isolated     fair since the latter could be tuned to a small set of bench-
+optimum x at a linear rate, which is defined in accordance        mark functions while the former is inherently stable across
+with [7] as2                                                      a larger set of problems.
+
+      r = lim exp 1 log f (xt) - f (x)                 .  (1)
+           t            2t         f (x1) - f (x)
+
+   Comparing SA methods empirically based on the achieved
+rate of convergence is hard since their performance depends
+crucially on their tuning parameters. In practice, the heuris-
+tics are tuned on a set of benchmark functions to show good
+
+2In contrast to the ES, this definition is not invariant under
+monotonic transformations of fitness values. However, it
+is well-defined for quadratic objective functions, which are
+used in the experimental evaluation.
+   In addition to these requirements Hansen et al. [7] con-             method's global step size parameter, and xNES allows to
+sider the following goals: on a random or flat fitness log(t)           control the learning rate for this scale parameter indepen-
+should perform an unbiased random walk, t should grow                   dent of the learning rates for the shape of the distribution.
+exponentially fast on a linear function, and the algorithm
+should be invariant under translation and rotation of the                  The IGO framework treats all parameters of the search
+search space. We are not testing these since the desired be-            distribution the same, irrespective of their role. Hence there
+havior on a random or flat fitness is debatable, and in our             is no dedicated mechanism for the adaptation of the step
+setup all considered algorithms grow t at an exponentially              size, instead the parameter is adapted just like the mean
+rate on a linear function and fulfill the invariance properties         and the remaining covariance parameters. The update rule
+by design.                                                              is derived from stochastic natural gradient descent on the
+                                                                        statistical manifold spanned by the search distribution pa-
+4. ALGORITHMS                                                           rameters, where the offspring population serves as a Monte
+                                                                        Carlo sample. For details we refer the interested reader to [5,
+   In this section we introduce seven different step size adap-         14].
+tation (SA) algorithms and analyze them in terms of the
+requirements listed in section 3.                                          The simplistic step size adaptation rule of the xNES al-
+                                                                        gorithm can be extracted as a standalone method, subse-
+                                                                        quently referred to as xNES SA. The update rule reads
+
+4.1 Cumulative Step Size Adaptation (CSA)                               t+1 = t · exp c ·  wi ·          Ct-1/2  xt,i -  mt  2
+                                                                                                  d i=1              t
+   Cumulative Step Size Adaptation (CSA) is the current                                                                        -d     ,
+state-of-the-art used in the CMA-ES algorithm. It is based
+on the assumption that when the step size is well adapted,              where c > 0 is a hyperparameter. The rule is based solely
+steps taken will become uncorrelated [15] on average. The               on the immediate offspring xt,i, which enter the stateless ex-
+CSA computes an evolution path, a long-term average of                  ponential update term as standardized samples. The squared
+previous steps, and compares its length with the length ex-             norms of these samples are compared to their expectation
+pected for uncorrelated steps. When samples are drawn from              (the dimension d). If highly weighted offspring correspond
+a normal distribution with mean mt and covariance matrix                to steps longer than the expectation, then the argument of
+Ct, the update of the evolution path p,t is given by                    the exponential is positive and the step size is increased. If
+                                                                        successful steps are shorter, the step size is decreased.
+                                       cp )µeff Ct-1/2  mt+1 -  mt
+p,t+1 = (1 - cp)p,t +         c (1  -                        t      .
+                                                                        4.3 mean-xNES SA
+Here, µeff =         wi2  -1  is the effective sample size of the
+                i=1                                                        In a variant of xNES SA we replace the samples by the
+                                                                        actual step taken. This leads to an update similar to the
+weighted individuals, cp is a hyperparameter, and Ct-1/2 is             CSA without an evolution path
+                                          C -1/2 mt+1-mt
+the matrix square root.       The   term  t             t       is the
+
+last step of the mean transformed into a coordinate sys-                               c ·        Ct-1/2  mt+1 -  mt     2
+                                                                                       d                       t
+tem which is independent of t and Ct, and c(1 - c)µeff                  t+1 = t · exp       µeff                           -d      .
+
+is a normalization term ensuring       p,t    N (0, Id) assuming
+                                       Thus,   p can be com-
+  µeff  Ct-1/2  mt+1 -mt   N (0, Id).                                   We call this the mean-xNES SA. In contrast to the xNES
+                      t                                                 SA, we scale the 2-statistic by d-1, not d-1/2, motivated
+pared with the expected length of a sample from the stan-               by our experimental findings in Section 6. The difference
+                                                                        in scaling factor does not matter in most cases as it can be
+dard normal distribution. If it is longer (shorter), then the           compensated by the learning rate. However, when changing
+                                                                        the learning rate this scaling turns out to be more stable
+step size in increased (decreased) in an exponential manner.            across different dimensions.
+
+The resulting update reads
+
+        t+1 = t exp           c     p,t+1 - 1           ,
+                              d       d
+                                                                        4.4 xNES SA with Log-normal Prior
+where d is another damping factor and d is the expecta-
+tion of the  distribution with d degrees of freedom.                       One disadvantage of xNES SA and mean-xNES SA is that
+                                                                        they do not compare a-priori defined step sizes, but only
+   The CSA method is not invariant w.r.t. the addition of               a-posteriori observed step sizes, which are not invariant un-
+constant dimensions because all individuals and hence the               der the addition of constant dimensions. We can expand
+mean take on random values in these components, which                   the xNES approach by introducing a prior probability dis-
+adds noise to the path vector. The fixed point dynamics of              tribution on  and amend the ES by sampling individu-
+the CSA is not independent of its hyperparameters, as the               als as pt(x) = pt(x|)pt() by sampling t,i  pt() and
+learning rate of the evolution path changes how correlation is          xx,i  pt(x|t,i), for i = 1, . . . , . We choose pt() as the
+measured. In the extreme case c = 1 correlation is ignored              log-normal distribution with density
+completely and only the length of the current step is taken
+into account.                                                           pt() = 1 exp              - (log() - log(t))2
+                                                                                    2                          2
+4.2 xNES SA
+                                                                        and pt(x|) as a normal distribution with mean mt and stan-
+   The exponential Natural Evolution Strategy (xNES) al-                dard deviation . Applying the same derivation as in the
+gorithm [5, 18] is an instance of the information geometric             xNES SA on t we arrive at the update
+optimization (IGO) method [14]. The xNES algorithm ap-
+plies multi-variate Gaussian distributions with mean m and              t+1 = t1-c exp                          
+covariance matrix C. The square root  = 2d det(C) of the
+geometric mean of the eigenvalues of C is interpreted as the                                             c wi log(t,i)
+
+                                                                                                              i=1
+with learning rate c. The update can be interpreted as            (1 - cz)zt + cz(ut - b). The update of t is then again
+a geometric update of the old step size using the weighted        performed in an exponential fashion
+geometric mean of the current iteration. The hyperparam-
+eters are the learning rate c and the variance parameter                                t+1 = t exp         zt+1
+of the log-normal distribution. This update is close to the                                                  d
+update rule of the CMSA [3] with c = 1 and exchanging
+the geometric average of t,i by an arithmetic average. The        with damping factor d.
+geometric average leads to an unbiased estimate of the mean          The bias b serves two roles: It corrects for the fact that
+on a flat or random function and therefore to random walk
+behaviour.                                                        any successful step of the mean mt will improve the sampled
+                                                                  points compared to the previous iterations and thus setting
+   The xNES SA and the mean-xNES SA are not invariant             b = 0 would increase the step size until no progress can be
+w.r.t. the addition of constant dimensions due to the vari-       seen any more. The second role is to force the algorithm to
+ability of xt,i in these dimensions. This defect is fixed by      shrink its step size once the progress seen is smaller than the
+the introduction of a prior, because the step size t,i is in-     expected value.
+dependent of the actual step.
+                                                                     Median Rule and Population SA are perfectly invariant
+4.5 Median Rule                                                   w.r.t. the addition of constant dimensions. This is because
+                                                                  they rely solely on function values f (xt,i), not on the under-
+   The Median Rule was proposed in [1] as a way to adapt          lying vectors xt,i, where random fluctuation in these com-
+Rechenberg's 1/5-rule [16] to non-elitist algorithms. The         ponents would show. On the other hand, they rely on the
+idea is to compare the objective function values f (xt,1)         assumption that the optimal step size is coupled to a fixed
+· · ·  f (xt,) of the current iteration to a chosen quantile      success rate. This assumption is fragile, as the optimal suc-
+of the function values f (xt-1,1)  · · ·  f (xt-1,) of the        cess rate is problem independent. For example, on an ill-
+previous iteration. Let  be the rank of the individual in the     conditioned ellipsoid, the success rate will be very small un-
+previous generation that represents the threshold f (xt-1,).      less individuals are sampled with small variance. Thus a
+Then we estimate the probability that a newly sampled point       fixed target success rate might entail small steps.
+has a smaller function value as
+                                                                  4.7 Two-point Step Size Adaptation (TPA)
+
+       1                                                          The Two-point Step Size Adaptation (TPA) is one of the
+ut = 
+               1 {f (xt,i)  f (xt-1,)}  .                         most simple adaptation rules. It was introduced in [17],
+
+          i=1                                                     adopted in [6] and reformulated in [7]. Its idea can be viewed
+
+The rank  is a hyperparameter. It is chosen so that with an       as a simplified line-search approach. The version we use
+optimal step size the probability that a currently sampled
+point has a smaller function value than f (xt-1,) is 1/2 on       here is closer to [6], as [7] is incompatible with the ES de-
+the Sphere function. Normalizing the values of ut to [-1, 1]
+so that a success rate of 1/2 transforms to 0 we define the       fined in section 2. We further deviate from [6] by using the
+time averaged statistic
+                                                                  step size proposal from [17] since it showed better results in
+
+                                                                  our experiments. Further improvements can be obtained by
+
+                                                                  swapping the order of updating t and xt in the ES, which
+
+                                                                  is more in line with the line-search motivation and closer to
+
+zt+1 = (1 - cz)zt + cz(2ut - 1)                                   the approach in [17].
+
+and t is updated in an exponential fashion according to           After a step in direction st is performed with the current
+
+                                                                  step size  we are at the point mt+1 = mt +tst. We want to
+
+                 zt+1                                             know whether it would have been beneficial to have taken a
+                  d
+t+1 = t exp            ,                                          longer or shorter step. In a non-black-box method we could
+
+                                                                  check  the  sign  of  the  derivative  d  =  sTt         f  (mt+1  ).  A
+                                                                                                                     mt+1
+where d is a damping factor controlling the speed of adap-
+tation.                                                           positive (negative) value indicates that a shorter (longer)
+
+                                                                  step would have made more progress. Hence we should de-
+
+4.6 Population SA                                                 crease (increase) the step size.
+
+   This algorithm has recently been introduced as part of         In a black-box setting we cannot compute derivatives, but
+the Limited Memory CMA-ES [12] as an improvement to
+the Median-Rule, motivated by the need to overcome the            we can estimate the sign numerically simply by comparing
+runtime complexity problems of CSA. This success-based
+rule increases the step size when the new samples are more        two points created by making the step shorter and longer.
+successful than the previous ones. The measure of success
+is based on a Whitney-U rank sum statistic.                       We choose to decrease the step size by a factor  < 1 and
+
+   Let rt,i be the rank of the point xt,i and ot,i the rank       increase it by a factor  > 1, evaluate ft, = f (xt + st)
+of the individual xt-1,i in the combined set f (xt-1,1), . . . ,
+f (xt-1,), f (xt,1), . . . , f (xt,) . We define the rank-sum     and ft, = f (xt + st), and estimate the sign as sign(d) =
+
+                                                                  sign(ft, - ft,). We compute the time-average
+
+                                                                         zt+1 = (1 - cz)zt + cz log()1{ft, < ft, }
+                                                                                            + cz log()1{ft,  ft,}
+
+                                                                  and finally perform the exponential update
+
+                         1                                                              t+1 = t exp      zt+1       .
+                 ut = 2 (ot,i - rt,i)  [-1, 1] .                                                          d
+
+                                            i=1                   Analog to [17] we choose  =        1   in our experiments.         This
+                                                                                                     
+When ut > 0 then the current population is more success-
+ful than the previous one. A target success rate b > 0 is         amounts to increasing or decreasing log() by the same value
+subtracted and the statistic is time averaged by zt+1 =
+                                                                  | log()| = | log()|.
+Table 2: Theoretical and empirical properties of the studied        isotropic search distributions, which poses a challenge to SA
+algorithms as described in section 3.                               methods. The Constant Sphere function should be no harder
+                                                                    to optimize than the Sphere function, provided that the SA
+Algorithm       Mean     Fixed  Const.                              method is invariant under the addition of constant dimen-
+               Progress  Point   Dim.                               sions.
+Cumulative SA
+Median SA         yes     yes     no                                   Well-tuned default values are available for the various SA
+Population SA      no      no     yes                               methods, usually from the papers where they were originally
+xNES SA            no      no     yes                               proposed. However, tuning can be performed aggressively
+prior-xNES SA      no      no     no                                or conservatively, on different benchmark suits and problem
+mean-xNES SA       no      no     yes                               dimensions, and with different goals. The resulting opti-
+Two-point SA      yes     yes     no                                mization performance can differ significantly [13].
+                  yes     yes     yes
+                                                                       Therefore, in order to remove possible biases and to make
+   The two-point method is completely invariant under the           our comparison fair, we first tuned all algorithms with the
+addition of constant dimensions.                                    same setup. All parameters were tuned on the Sphere func-
+                                                                    tion at varying dimensionality for optimal performance. In
+   In this study, we considered the original variant of two-        many cases, the parameters found were close to those pub-
+point step size adaptation, which uses two additional func-         lished in earlier literature, often only differing by a constant
+tion evaluations per generation. This makes it the only             factor which lead to less conservative, larger learning rates.
+method in our comparison that requires additional evalu-            In subsequent experiments the algorithms are analyzed with
+ations of the objective function. However, newer variants           the pre-tuned parameters. The parameters we found are
+of two-point step size adaptation do not suffer from this           summarized in Table 3. The experiments can be reproduced
+drawback [7]. If the step size adaptation is delayed by one         with the source code provided as supplementary material.
+generation, the individuals used for the two-point method
+can be part of the next offspring population, for details and       Experiment 1: Optimization Performance.
+further enhancements of the two-point method we refer to
+[7].                                                                   In this experiment we measured the performance of all
+                                                                    tuned algorithms on the Sphere function. We varied the
+5. EXPERIMENTS                                                      dimensionality d  {4, 8, 16, 32, 64, 128} and measured the
+                                                                    number of function evaluations until reaching the target ob-
+   While properties like invariance under the addition of con-      jective value of 10-14. We report median and lower and
+stant dimensions (and the need for additional function eval-        upper quantiles over 100 trials.
+uations) can be determined from the algorithm description,
+this is not (always) the case for the progress of the mean             We repeated this experiment on the Constant Sphere func-
+and steady state stability. Therefore these properties are          tion to asses how the algorithms are affected by meaningless
+investigated experimentally in the following.                       variables. We performed this experiment in two variants:
+                                                                    firstly, we set the learning rates exactly as on the Sphere
+   For all our experiments we utilize the family of quadratic       function with ambient dimension d, and secondly, we set
+functions                                                           the values as for dimension d = d~ = 4, which makes the
+                                                                    results comparable to the underlying 4-dimensional Sphere
+                                                             d      problem. In the latter experiment, an algorithm that is com-
+                                                                    pletely invariant to constant dimensions must show identical
+                            fy(x) = yixi2 .                         performance.
+
+                                                           i=1      Experiment 2: Distribution of Step Sizes.
+
+This family of functions has the property of scale invariance,         In our second experiment we compare the realized (nor-
+i.e., all (non-optimal) level sets share the same shape up to       malized) step sizes of the different algorithms to the optimal
+scaling. For the quadratic functions above this is ensured by       step size. This provides first insights into why an algorithm
+the relation f (ax) = a2f (x). For any given point x, setting       performs well or not. Scale invariance of the objective func-
+a =  1 , we can always "normalize" the algorithm state              tion as well as the algorithms under consideration implies
+                                                                    that the algorithm state given by mt, t and other state
+              f (x)                                                 variables such as evolution paths and stored function values
+                                                                    from previous iterations, normalized by the scaling factor
+to the unit level set f (ax) = 1.                                    1 , forms a Markov chain, the stationary distribution of
+   A special case of this family is the Sphere function fs(x) =
+ x 2, which is distinguished in this study for exhibiting the           f (mt)
+
+same symmetries as the Gaussian search distribution. In             which gives rise to its long-term behavior [4]. Hence the nor-
+addition we consider the Ellipsoid
+                                                                    malized step size t/ f (mt) can be estimated by the mean
+               d                                                    or median over a large number of iterations. Numerically
+                                                                    more stable results are achieved by instead re-normalizing
+fell,k(x) =         k i/d xi2                                       the algorithm state after each iteration.
+
+               i=1                                                     In all experiments we first perform 50, 000 iterations to
+                                                                    let the algorithm converge to its long term behavior and
+and the sphere function with d - d~ constant dimensions             then compute the median normalized step size over the next
+("Constant Sphere")                                                 50, 000 iterations. We again analyze problem dimensions
+                                                                    d  {4, 8, 16, 32, 64, 128} and report the results on Ellipsoid
+                                                                d~  functions of various difficulties with k  {1, 10, 100}.
+
+                             fcs(x) = x2i .
+
+                                                              i=1
+
+We set d~ = 4 in all of our experiments. The ill-conditioned
+Ellipsoid problem is well known to be difficult to solve with
+            105                                                              105
+
+Iterations  104                                                  Iterations  104
+
+            103                                                              103
+
+            102                  xNES-SA  128                                102                         CSA
+                  4      prior-xNES-SA                                             4                      TPA
+                         Population-SA                                                  mean-xNES-SA
+            105
+                              Median-SA                                               8 16 32 64 128
+
+                     8 16 32 64                                                              Dimension
+
+                            Dimension
+
+                                          (a) Sphere
+
+                                                       105
+
+Iterations  104                                                  Iterations  104
+
+            103                  xNES-SA                                     103                         CSA
+                         prior-xNES-SA                                                                    TPA
+            102          Population-SA                                       102        mean-xNES-SA
+                  4                                                                4
+                              Median-SA                                               8 16 32 64 128
+            105
+                     8 16 32 64 128                                                          Dimension
+
+                            Dimension
+
+                     (b) Constant Sphere
+
+                                          105
+
+Iterations  104                                                  Iterations  104
+
+            103                  xNES-SA                                     103                         CSA
+                         prior-xNES-SA                                                                    TPA
+            102          Population-SA                                       102        mean-xNES-SA
+                  4                                                                4
+                              Median-SA                                               8 16 32 64 128
+
+                     8 16 32 64 128                                                          Dimension
+
+                            Dimension
+
+                     (c) Constant Sphere, d = 4 rates
+
+Figure 1: Number of iterations needed by the different algorithms to reach the target threshold at varying dimensionality.
+From top to bottom: Sphere, Sphere with d - 4 constant dimensions, and Sphere with d - 4 constant dimensions and learning
+rates of d = 4. The shaded areas depict the 25% and 75% percentile. Note that due to the tuning all curves are largely
+overlapping on Sphere.
+
+   This experiment reveals the realized normalized step sizes    value obtained at the fixed point, as the update step of t
+while approaching the optimum. On scale invariant func-          will update it in direction of the current true unnormalized
+tions, the realized step sizes will on average overestimate the  step size, while with every successful step the true unnor-
+malized step size will shrink. To obtain the fixed point, we                        Table 3: Parameters used by the algorithms in the experi-
+                                                                                    ments after tuning on Sphere.
+perform the same re-normalization as in the previous exper-
+
+iment, but do not re-normalize t. As the renomalization                             constant       value
+
+normalizes to the f (mt) = 1 iso-surface, this allows the al-                           cp    CSA
+
+gorithm to let its value of t converge to the value of the                              d     µeff + 2
+
+normalized step size at its fixed-point.                                                      d + µeff + 5
+                                                                                        cz
+We estimated the optimal normalized step size by per-                                   d     1                    µeff - 1 - 1
+                                                                                        cz    4 1 + cp + 2 max 0,   d+1
+forming a grid search over / f (m) for maximal conver-                                   b
+                                                                                        d
+gence rate. We used a two stage grid (coarse to fine), first
+                                                                                        c
+obtaining  the  best   ^0    {10-3+    3    i  |  i  =  1, .  . . , 20}  and  then             Median-Rule
+                                      20                                                c                1 + µeff 1
+                                                                                                                d
+finding  the  best  0      {^010-  1  +  2   i    | i = 1, . . . , 30}.                                       0.4
+                                   5     5  30                                          c                      1
+
+6. RESULTS AND DISCUSSION                                                                     Population SA
+                                                                                        cz
+   When interpreting the experimental results we are pri-                               d                     0.4
+marily interested in identifying sub-optimal behavior, and                                                    0.4
+we focus in particular on how and why different SA mech-                                                       1
+anisms break. We intend to provide insights and potential
+starting points for improving SA mechanisms in the future.                                        xNES SA
+                                                                                                             µeff 
+   The results of the first experiment are illustrated in Fig-
+ure 1. On Sphere (Figure 1, left) all algorithms performed                                               2 log(d) d
+essentially the same. This is of course an artifact of tuning                                 mean-xNES SA
+on this very function. More interestingly, on Sphere with
+constant dimensions (Figure 1, middle) we see large differ-                                                    1
+ences between algorithms. While xNES SA, prior-xNES SA,
+and mean-xNES SA performed the same as on the Sphere                                          prior-xNES SA
+function, CSA required more iterations, while the remaining                                               log 2
+algorithms required less. When setting learning rates and                                                   d log(d)
+population size to the values of the four-dimensional Sphere                                                 9µeff
+problem (Figure 1, right), we saw that CSA performance im-                                                  10 d
+proved to the level of mean-xNES SA and xNES SA, while
+for the remaining algorithms the number of iterations be-                                      Two-point SA
+came independent of the ambient problem dimension.
+                                                                                                              0.7
+   These results can be explained as follows. CSA, xNES SA,                                                   0.5
+and mean-xNES SA compare lengths of vectors (either steps                                                      1
+or a path) to the expected length under random selection.
+In this case only four dimensions are relevant for selection,                       is that the former are based on distances of sampled points
+hence the ES performs a random walk in the orthogonal                               from the mean, while the latter consider the lengths of steps
+subspace. The squared norm of the vectors in the orthogonal                         of the mean. This is an important difference, as it is im-
+subspace follows the d2-4 distribution with variance 2(d-4).                        probable to create a sample in the optimal direction, while
+Thus, to keep the algorithms stable, the learning rate must                         the mean of the selected samples is a much more stable es-
+be scaled to reduce the overall variance in the update of the                       timate of this direction. However, when the direction is not
+step size. This is achieved by the factor 1/d or 1/ d in the                        optimal, then the optimal step size in this direction will very
+update rules of the algorithms, which slows down learning                           likely be smaller than in the optimal direction, which holds
+of the meaningful dimensions for d 4.                                               especially true on Ellipsoid with large k. This results in
+                                                                                    a bias towards smaller step sizes, which is pronounced for
+   The results of the second experiment are given in Figure 2.                      methods relying on properties of selected individuals.
+Since all algorithms were tuned on Sphere (k = 1, left col-
+umn), the realized step sizes were close to optimal. Still, the                        The population-based algorithms Median-Rule and Pop-
+fixed-point step sizes of xNES SA and prior-xNES SA were                            ulation SA suffer from their definition of success. With in-
+underestimating the optimal step size.                                              creasing k the probability to draw a point that is better
+                                                                                    than the current median decreases. Thus the distributions
+   On the Ellipsoid problem, the gap between the optimal                            of ranks overlap more and more. Therefore, for optimal per-
+and the realized step size increased with increasing condi-                         formance, with growing k the success rates or percentiles
+tioning k. For xNES SA and prior-xNES SA the gap in-                                would need to be adapted to smaller values.
+creased further as they converged to their fixed-point. Also,
+the fixed points of Population SA and Median SA were                                   The algorithms CSA, TPA, and mean-xNES SA suffered
+clearly inferior to CSA and TPA, where CSA was superior to                          the least losses in performance on the Ellipsoid. Although
+TPA for large conditioning numbers k. We observe that for                           for k = 10 they were close to the optimal learning rate,
+large k algorithms relying on a statistic on the mean (CSA,                         there was still a relevant loss in performance. This is be-
+TPA and mean-xNES SA) outperformed xNES SA relying                                  cause the Euclidean length of a step gives less information
+on the length of individual steps and the population-based                          than on Sphere about how much progress was made. For
+variants relying purely on ranking information.                                     CSA there is another problem. Samples are selected more
+                                                                                    aggressively in some directions than in others, thus the dis-
+   The biggest difference between xNES SA and prior-xNES                            tribution of the observed noise is not as expected and the
+SA on the one hand and CSA and TPA on the other hand                                noise level of uncorrelated steps changes. TPA suffers from
+                                                                                    a similar problem because it adapts the step size based on
+the expected success probability of a larger or smaller step.      8. REFERENCES
+This leads to a more conservative choice of the step size in
+cases where the probability of success is small but the gain        [1] O. Ait Elhara, A. Auger, and N. Hansen. A median
+of a successful step is large.                                           success rule for non-elitist evolution strategies: Study
+                                                                         of feasibility. In Proceedings of the Genetic and
+7. CONCLUSION                                                            Evolutionary Computation Conference (GECCO),
+                                                                         pages 415­422. ACM, 2013.
+   We have analyzed the behavior of a set of step size adap-
+tation (SA) algorithms based on a predefined set of require-        [2] A. Auger. Convergence results for the (1, )-SA-ES
+ments. Some of the requirements can be checked based on                  using the theory of -irreducible Markov chains.
+obvious properties of the SA methods. Others required an                 Theoretical Computer Science, 334(1­3):35­69, 2005.
+empirical investigation, which could be limited to a small
+set of easy to analyze benchmark functions found in many            [3] H.-G. Beyer and B. Sendhoff. Covariance matrix
+of the current benchmark sets.                                           adaptation revisited­the CMSA evolution strategy. In
+                                                                         Parallel Problem Solving from Nature (PPSN), pages
+   We focus on the following aspects: Is the algorithm in-               123­132. Springer, 2008.
+variant to the addition of constant dimensions or does its
+performance suffer? Does the normalized step size converge          [4] A. Chotard, A. Auger, and N. Hansen. Markov chain
+to a reasonable fixed-point on scale invariant functions? And            analysis of evolution strategies on a linear constraint
+is this fixed point close to optimal across different objective          optimization problem. In Evolutionary Computation
+functions?                                                               (CEC), 2014 IEEE Congress on, pages 159­166.
+                                                                         IEEE, 2014.
+   We argue that an algorithm can only be competitive on a
+wide range of black-box functions if it fulfills (at least) these   [5] T. Glasmachers, T. Schaul, Y. Sun, D. Wierstra, and
+requirements, since otherwise its performance will depend                J. Schmidhuber. Exponential natural evolution
+crucially on the tuning of its parameters.                               strategies. In Proceedings of the Genetic and
+                                                                         Evolutionary Computation Conference (GECCO),
+   It turns out that only one of the analyzed algorithms, the            2010.
+two-point adaptation method TPA, fulfills all these require-
+ments. This makes the new variant of TPA, which does not            [6] N. Hansen. CMA-ES with two-point step-size
+require additional objective function evaluations, an inter-             adaptation. arXiv N. arXiv:0805.0231, 2008.
+esting alternative to CSA in the CMA-ES [7], also because
+it should work seamlessly with the novel efficient covariance       [7] N. Hansen, A. Atamna, and A. Auger. How to assess
+matrix update scheme proposed in [11, 10].                               step-size adaptation mechanisms in randomised
+                                                                         search. In Parallel Problem Solving from Nature
+   We show that algorithms that are based on information                 (PPSN), pages 60­69. Springer, 2014.
+geometric optimization (natural gradients) under-estimate
+the step size, an effect that gets even worse for ill-conditioned   [8] N. Hansen and A. Ostermeier. Completely
+problems. This explains the conservatively tuned learning                derandomized self-adaptation in evolution strategies.
+rates of the xNES algorithm, which has significantly smaller             Evolutionary Computation, 9(2):159­195, 2001.
+default learning rates than all of its competitors. We argue
+that this is the case because most offspring are not sampled        [9] C. Igel, T. Suttorp, and N. Hansen. A computational
+in the direction towards the optimum, but instead more and               efficient covariance matrix update and a (1+1)-CMA
+more orthogonal with growing problem dimension. Thus                     for evolution strategies. In Proceedings of the Genetic
+the step size adaptation mechanisms take steps into account              and Evolutionary Computation Conference (GECCO),
+which the overall algorithm does not take. As in these di-               pages 453­460. ACM, 2006.
+rections successful steps are typically smaller, this results in
+a too small step size. We showed that this is indeed the case      [10] O. Krause, D. R. Arbon`es, and C. Igel. CMA-ES with
+by implementing a new algorithm that performs the update                 optimal covariance update and storage complexity. In
+using the actual step taken. This leads to a competitive                 Advances in Neural Information Processing Systems
+algorithm, which is however not derived from information                 (NIPS), 2016.
+geometry, but instead closely resembles CSA without tem-
+poral integration.                                                 [11] O. Krause and C. Igel. A more efficient rank-one
+                                                                         covariance matrix update for evolution strategies. In
+   While present SA methods work quite satisfactory in many              J. He, T. Jansen, G. Ochoa, and C. Zarges, editors,
+situations, it is still easy to construct problems resulting in          Foundations of Genetic Algorithms (FOGA 2015),
+far from optimal step sizes. In this paper we have systemat-             pages 129­136. ACM Press, 2015.
+ically investigated the weak spots of the underlying adapta-
+tion mechanisms. The currently available algorithms differ         [12] I. Loshchilov. A computationally efficient limited
+quite widely in their working principles and also in their rel-          memory CMA-ES for large scale optimization. In
+ative strengths and weaknesses. We therefore believe that                Proceedings of the Genetic and Evolutionary
+there is room for developing techniques that combine the                 Computation Conference (GECCO), pages 397­404.
+strengths of all present SA algorithms.                                  ACM, 2014.
+
+Acknowledgements                                                   [13] I. Loshchilov, M. Schoenauer, M. Sebag, and
+                                                                         N. Hansen. Maximum likelihood-based online
+Oswin Krause acknowledges support from the Danish Na-                    adaptation of hyper-parameters in cma-es. In Parallel
+tional Advanced Technology Foundation through the project                Problem Solving from Nature (PPSN), pages 70­79.
+"Personalized breast cancer screening".                                  Springer, 2014.
+
+                                                                   [14] Y. Ollivier, L. Arnold, A. Auger, and N. Hansen.
+                                                                         Information-geometric optimization algorithms: a
+                                                                         unifying picture via invariance principles. arXiv
+                                                                         preprint arXiv:1106.3708v3, 2014.
+
+                                                                   [15] A. Ostermeier, A. Gawelczyk, and N. Hansen.
+                                                                         Step-size adaptation based on non-local use of
+      selection information. In Parallel Problem Solving
+      from Nature (PPSN), pages 189­198. Springer, 1994.
+
+[16] I. Rechenberg. Evolutionsstrategie: Optimierung
+      technischer Systeme nach Prinzipien der biologischen
+      Evolution. Frommann-Holzboog, 1973.
+
+[17] R. Salomon. Evolutionary algorithms and gradient
+      search: similarities and differences. IEEE Transactions
+      on Evolutionary Computation, 2(2):45­55, 1998.
+
+[18] D. Wierstra, T. Schaul, T. Glasmachers, Y. Sun,
+      J. Peters, and J. Schmidhuber. Natural Evolution
+      Strategies. Journal of Machine Learning Research,
+      15:949­980, 2014.
+                        102                                                      102
+
+Normalized x Dimension   101                             Normalized x Dimension  101
+
+                      ¡ 100             xNES-SA-¢x                             ¡ 100       CSA-¢x
+
+                        10-1                  xNES-SA                                          CSA
+                        10-2
+                                  prior-xNES-SA-¢x                                         TPA-¢x
+                               4
+                                      prior-xNES-SA                              10-1                           TPA
+                         102
+                                  Population-SA-¢x                                         mean-xNES-SA-¢x
+
+                                      Population-SA                                        mean-xNES-SA
+
+                                     Median-SA-¢x                                10-2      optimal
+
+                                           Median-SA                                   4 8 16 32 64 128
+                                                optimal
+                                                                                           Dimension
+                                  8 16 32 64 128
+
+                                         Dimension
+
+                                  (a) Sphere, k = 1
+                                                     102
+
+Normalized x Dimension  101                              Normalized x Dimension  101
+
+                         100                                                      100
+
+                      ¡                                                        ¡
+
+                        10-1                                                     10-1
+
+                        10-2      8 16 32 64 128                                 10-2      8 16 32 64 128
+                               4        Dimension                                       4        Dimension
+
+                        102       (b) k = 10
+                                                102
+
+Normalized x Dimension  101                              Normalized x Dimension  101
+
+                         100                                                      100
+
+                      ¡                                                        ¡
+
+                        10-1                                                     10-1
+
+                        10-2      8 16 32 64 128                                 10-2      8 16 32 64 128
+                               4        Dimension                                       4        Dimension
+
+                                  (c) k = 100
+
+Figure 2: Normalized step sizes times dimensions obtained by the algorithms on the ellipsoid function, with growing difficulty
+k  {1, 10, 100} from top to bottom. The plots compare the progress of the fixed-point of the step size adaptation(dashed
+lines) and the progress of the step size of the optimization dynamics to the progress with optimal step size. Note that for
+large k fixed-point and normal dynamics are overlapping.
+
