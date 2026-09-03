@@ -20,8 +20,11 @@ from .vm import PERSIST_POLICIES, validate_manifest
 MASK32 = 0xFFFFFFFF
 IW = 4  # instruction words
 
-# name -> (weight, description). Weights sum to 1.00. Frozen; changing them changes GRAMMAR_HASH.
-OPERATORS = (
+# ---------------------------------------------------------------- v0.2, FROZEN EVIDENCE
+# The v0.2 table is retained VERBATIM and executable so that the committed v0/v0.1/v0.2 results
+# remain reproducible (V0.3 brief section 0: preserve the evidence exactly). It is not the active
+# grammar. Selecting it requires naming it explicitly.
+OPERATORS_V0_2 = (
     ("insertion",             0.08, "insert k in [1,4] uniformly random instructions at an aligned position"),
     ("deletion",              0.11, "delete k in [1,4] contiguous instructions at an aligned position"),
     ("duplication",           0.04, "copy k in [1,4] contiguous instructions and insert the copy at an aligned position"),
@@ -36,9 +39,36 @@ OPERATORS = (
     ("unreachable_removal",   0.03, "delete one instruction not statically reachable from ip=0 by fallthrough or jump targets (no offset fixup; approximate when code_writable)"),
     ("config_perturbation",   0.08, "step one manifest limit (n_regs, tape_words, code_writable, persist, tick_budget, out_cap) within published bounds"),
 )
+NAMES_V0_2 = tuple(o[0] for o in OPERATORS_V0_2)
+WEIGHTS_V0_2 = tuple(o[1] for o in OPERATORS_V0_2)
+assert abs(sum(WEIGHTS_V0_2) - 1.0) < 1e-9
+
+# ------------------------------------------------------- v0.3, THE ONE AUTHORIZED CHANGE
+# V0.3 brief section 1: remove the zeroing operator, do not replace it, do not introduce another
+# nulling operator, do not rebalance by judgment, renormalize the remaining twelve MECHANICALLY.
+#
+# The transformation is executed here rather than transcribed, so the code IS the record:
+#
+#     REMOVED   = "zeroing"                       (weight 0.04 in v0.2)
+#     DENOM     = 1.0 - 0.04 = 0.96               (the removed operator's weight)
+#     w'_i      = w_i / DENOM   for each of the twelve survivors, in their v0.2 order
+#
+# No weight is touched by hand, no order changes, no description changes, and no implementation
+# changes. op_zeroing() below remains defined ONLY so the v0.2 table stays executable for
+# reproduction of frozen evidence; it is absent from IMPL and unreachable from the active grammar.
+REMOVED_OPERATOR = "zeroing"
+_REMOVED_WEIGHT = dict((n, w) for n, w, _ in OPERATORS_V0_2)[REMOVED_OPERATOR]
+RENORM_DENOMINATOR = 1.0 - _REMOVED_WEIGHT
+OPERATORS = tuple((n, w / RENORM_DENOMINATOR, d)
+                  for n, w, d in OPERATORS_V0_2 if n != REMOVED_OPERATOR)
 NAMES = tuple(o[0] for o in OPERATORS)
 WEIGHTS = tuple(o[1] for o in OPERATORS)
+assert len(OPERATORS) == 12
+assert REMOVED_OPERATOR not in NAMES
 assert abs(sum(WEIGHTS) - 1.0) < 1e-9
+assert all(abs(w2 * RENORM_DENOMINATOR - w) < 1e-12
+           for (n, w, _), (n2, w2, _d) in zip(
+               [o for o in OPERATORS_V0_2 if o[0] != REMOVED_OPERATOR], OPERATORS))
 
 # v0 -> v0.1 (2026-09-02): neutrality run 1 FAILED (proteus/v0/NEUTRALITY_RESULT_grammar_v0_FAIL.json).
 # Two changes, both to LENGTH behaviour only: deletion 0.10 -> 0.11 and operand_perturbation
@@ -49,10 +79,21 @@ assert abs(sum(WEIGHTS) - 1.0) < 1e-9
 # v0.1 -> v0.2 (2026-09-02): run 2 FAILED at cohort 128 because a halving that fits the genome
 # EXACTLY still lands the cap on the genome. Halving is now a no-op unless the genome would
 # occupy at most half of the new tape. Weights unchanged. Nothing else changed.
-GRAMMAR_VERSION = "proteus.grammar.v0.2"
+# v0.2 -> v0.3 (2026-09-03): the zeroing operator ratcheted CONTENT toward the null instruction
+# (+0.133 NOP share over 300 generations under no selection, reported as F2 of the V0 post-build
+# packet). External review authorized exactly one change: remove it, renormalize mechanically.
+GRAMMAR_VERSION_V0_2 = "proteus.grammar.v0.2"
+GRAMMAR_HASH_V0_2 = hash_obj({"version": GRAMMAR_VERSION_V0_2,
+                              "operators": [list(o) for o in OPERATORS_V0_2],
+                              "k_range": [1, 4], "delta_range": [-8, 8],
+                              "config_tape_halving": "noop_unless_genome_at_most_half_of_new_tape"})
+GRAMMAR_VERSION = "proteus.grammar.v0.3"
 GRAMMAR_HASH = hash_obj({"version": GRAMMAR_VERSION, "operators": [list(o) for o in OPERATORS],
                          "k_range": [1, 4], "delta_range": [-8, 8],
-                         "config_tape_halving": "noop_unless_genome_at_most_half_of_new_tape"})
+                         "config_tape_halving": "noop_unless_genome_at_most_half_of_new_tape",
+                         "derived_from": GRAMMAR_HASH_V0_2,
+                         "removed_operator": REMOVED_OPERATOR,
+                         "renorm_denominator": RENORM_DENOMINATOR})
 
 GMIN = STORAGE_BOUNDS["genome_words"]["min"] // IW
 GMAX = STORAGE_BOUNDS["genome_words"]["max"] // IW
@@ -291,7 +332,7 @@ def op_config_perturbation(m, rng, mate):
     return c, {"field": which, "from": m[which], "to": c[which]}
 
 
-IMPL = {
+IMPL_V0_2 = {
     "insertion": op_insertion, "deletion": op_deletion, "duplication": op_duplication,
     "movement": op_movement, "replacement": op_replacement,
     "operand_perturbation": op_operand_perturbation, "reference_redirection": op_reference_redirection,
@@ -299,16 +340,35 @@ IMPL = {
     "randomization": op_randomization, "unreachable_removal": op_unreachable_removal,
     "config_perturbation": op_config_perturbation,
 }
+assert set(IMPL_V0_2) == set(NAMES_V0_2)
+
+# The active table. op_zeroing is deliberately absent: it cannot be selected by weight and cannot
+# be forced by name under the active grammar.
+IMPL = {k: v for k, v in IMPL_V0_2.items() if k != REMOVED_OPERATOR}
 assert set(IMPL) == set(NAMES)
+
+# version -> (names, weights, impl, hash). v0.2 is retained for reproduction of frozen evidence.
+GRAMMARS = {
+    GRAMMAR_VERSION:     (NAMES, WEIGHTS, IMPL, GRAMMAR_HASH),
+    GRAMMAR_VERSION_V0_2: (NAMES_V0_2, WEIGHTS_V0_2, IMPL_V0_2, GRAMMAR_HASH_V0_2),
+}
 
 LENGTH_CHANGING = ("insertion", "deletion", "duplication", "splice", "unreachable_removal")
 
 
-def mutate(manifest: dict, rng: SplitMix64, mate: dict | None = None, name: str | None = None):
-    """Apply one operator (chosen by frozen weights unless named). Returns (child, op_record)."""
+def mutate(manifest: dict, rng: SplitMix64, mate: dict | None = None, name: str | None = None,
+           version: str = GRAMMAR_VERSION):
+    """Apply one operator (chosen by frozen weights unless named). Returns (child, op_record).
+
+    `version` selects the operator table; it defaults to the active grammar. Naming an older
+    version reproduces frozen evidence and is never the default.
+    """
+    names, weights, impl, _h = GRAMMARS[version]
     if name is None:
-        name = rng.weighted(NAMES, WEIGHTS)
-    child, args = IMPL[name](manifest, rng, mate)
+        name = rng.weighted(names, weights)
+    if name not in impl:
+        raise KeyError(f"operator {name!r} is not in grammar {version}")
+    child, args = impl[name](manifest, rng, mate)
     validate_manifest(child)
     rec = {"operator": name, "args": args,
            "len_before": len(manifest["genome"]) // IW, "len_after": len(child["genome"]) // IW}

@@ -15,7 +15,7 @@ from proteus.foundry.vm import validate_manifest  # noqa: E402
 REQUIRED_LINEAGE_FIELDS = {"schema_version", "organism_id", "lineage_id", "generation", "parent_ids",
                            "mutation_seed", "operators", "pre_hash", "post_hash",
                            "state_inheritance_policy", "resource_budget", "runtime_hash",
-                           "grammar_hash", "record_id"}
+                           "grammar_hash", "grammar_version", "record_id"}
 
 
 def _pop(seed, n):
@@ -75,13 +75,49 @@ class Mutation(unittest.TestCase):
             for b in banned:
                 self.assertNotIn(b, low, f"operator {name} description contains '{b}'")
 
-    def test_grammar_hash_frozen_in_prereg(self):
-        path = os.path.join(ROOT, "proteus", "v0", "NEUTRALITY_PREREG.json")
+    def test_active_grammar_hash_frozen_in_prereg(self):
+        path = os.path.join(ROOT, "proteus", "v0_3", "PREREG_V0_3.json")
         if not os.path.exists(path):
-            self.skipTest("neutrality prereg not yet written")
+            self.skipTest("v0.3 prereg not yet written")
         with open(path, encoding="utf-8") as f:
             prereg = json.load(f)
         self.assertEqual(prereg["grammar_hash"], grammar.GRAMMAR_HASH)
+        self.assertEqual(prereg["grammar_version"], grammar.GRAMMAR_VERSION)
+
+    def test_frozen_evidence_pins_are_intact(self):
+        """The v0/v0.1/v0.2 preregs and results must keep pointing at the grammars that made them."""
+        v0 = os.path.join(ROOT, "proteus", "v0")
+        for fn, expect in (("NEUTRALITY_PREREG_grammar_v0_2.json", grammar.GRAMMAR_HASH_V0_2),
+                           ("NEUTRALITY_RESULT_grammar_v0_2_FAIL.json", grammar.GRAMMAR_HASH_V0_2)):
+            with open(os.path.join(v0, fn), encoding="utf-8") as f:
+                self.assertEqual(json.load(f)["grammar_hash"], expect, fn)
+        for fn in ("NEUTRALITY_RESULT_grammar_v0_FAIL.json", "NEUTRALITY_RESULT_grammar_v0_1_FAIL.json"):
+            with open(os.path.join(v0, fn), encoding="utf-8") as f:
+                self.assertNotEqual(json.load(f)["grammar_hash"], grammar.GRAMMAR_HASH, fn)
+
+    def test_zeroing_removed_and_renormalization_is_mechanical(self):
+        self.assertEqual(len(grammar.OPERATORS), 12)
+        self.assertNotIn("zeroing", grammar.NAMES)
+        self.assertNotIn("zeroing", grammar.IMPL)
+        self.assertIn("reference_redirection", grammar.NAMES)
+        self.assertAlmostEqual(sum(grammar.WEIGHTS), 1.0, places=12)
+        survivors = [o for o in grammar.OPERATORS_V0_2 if o[0] != "zeroing"]
+        self.assertEqual([o[0] for o in survivors], list(grammar.NAMES))
+        for (n, w, d), (n2, w2, d2) in zip(survivors, grammar.OPERATORS):
+            self.assertEqual(n, n2)
+            self.assertEqual(d, d2)
+            self.assertAlmostEqual(w2, w / 0.96, places=12)
+        with self.assertRaises(KeyError):
+            grammar.mutate(_pop(1, 1)[0]["manifest"], SplitMix64(1), None, "zeroing")
+
+    def test_v0_2_grammar_still_executable_for_evidence(self):
+        pop = _pop(3, 3)
+        child, rec = lineage.descend(pop[0], 1, mate=pop[1],
+                                     grammar_version=grammar.GRAMMAR_VERSION_V0_2)
+        self.assertEqual(rec["grammar_hash"], grammar.GRAMMAR_HASH_V0_2)
+        c2, r2 = lineage.descend(pop[0], 1, mate=pop[1],
+                                 grammar_version=grammar.GRAMMAR_VERSION_V0_2)
+        self.assertEqual(child["organism_id"], c2["organism_id"])
 
     def test_static_reachability_basic(self):
         # HALT at instruction 0: only instruction 0 reachable

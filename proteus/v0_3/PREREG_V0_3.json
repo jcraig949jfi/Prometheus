@@ -1,0 +1,131 @@
+{
+ "analytic_opcode_p": [
+  0.0400000000372529,
+  0.0400000000372529,
+  0.0400000000372529,
+  0.0400000000372529,
+  0.0400000000372529,
+  0.0400000000372529,
+  0.0400000000372529,
+  0.0400000000372529,
+  0.0400000000372529,
+  0.0400000000372529,
+  0.0400000000372529,
+  0.0400000000372529,
+  0.0400000000372529,
+  0.0400000000372529,
+  0.0400000000372529,
+  0.0400000000372529,
+  0.0400000000372529,
+  0.0400000000372529,
+  0.0400000000372529,
+  0.0400000000372529,
+  0.0400000000372529,
+  0.03999999980442226,
+  0.03999999980442226,
+  0.03999999980442226,
+  0.03999999980442226
+ ],
+ "brief_sha256": "78ed8284294b33abea3f7b1a4c0f89f3d95582ea22b337bb3b4e4357ff5679d9",
+ "crucible": {
+  "bootstrap_resamples": 2000,
+  "checkpoints": [
+   0,
+   25,
+   50,
+   100,
+   200,
+   400
+  ],
+  "code_writable": false,
+  "generations": 400,
+  "lineages_per_cohort": 100,
+  "n_regs": 8,
+  "out_cap": 4,
+  "persist": "none",
+  "start_sizes": [
+   1,
+   8,
+   32,
+   128,
+   256
+  ],
+  "tape_words": 1024,
+  "tick_budget": 64
+ },
+ "decision_rule": "delta = v0.3 drift - matched null drift; lineage-cluster bootstrap 95% CI on the difference; effect declared iff CI excludes zero AND sign persists over the second half; Holm-corrected set used for the verdict",
+ "derived_from_grammar_hash": "779da90d173fdd0528fdfe98b1056cc9d3fcad1807fdd2f677f3d879250e9796",
+ "diffusion": {
+  "checkpoints": [
+   0,
+   1,
+   10,
+   100,
+   1000,
+   10000
+  ],
+  "lineages": 400
+ },
+ "ensembles": {
+  "E0": "4bba8716b364f9fff1975210a9e1a4027b70963a81fbe108d44a59360978f0bc",
+  "E1": "9110f345248d63ed6dafc8cd4b38e4dff2cce346f8c4cd86f4e1bc28bb5a517b",
+  "E2": "1bf274ee3d3ab274d771a9737cbb8bdeb3d839ba5fa51947f4ab9dfca1a224da",
+  "E3": "ecc73a8f420f36eccfb9d30d63771366828b61e1b749b27e0c20c51eb23b17bf",
+  "E4": "4722afb361f7951edc9c597c9c496fc37bec877d9a3128a4528ef251a4565188",
+  "E5": "126b72993a109a9cb3a12eabd45f7e10bcc54dbba826b6282bf198adbf2624b2"
+ },
+ "frozen_before_any_v0_3_run": true,
+ "grammar_hash": "44ae7f598660a523a6fb151ef258dd4f1c886c0822abca5780b32e98e7548289",
+ "grammar_version": "proteus.grammar.v0.3",
+ "nulls": [
+  "NC1_reflected_length_walk",
+  "NC2_whole_genome_uniform",
+  "NC3_single_site_uniform",
+  "NC4_geometry_reference"
+ ],
+ "prereg_doc": "PREREG_V0_3.md",
+ "prereg_doc_sha256": "c62859720128944628c623b78902ede34ead521c78baeff0016eaee95e840726",
+ "prereg_id": "075a40d965fe7bcf76c8eefd92855479b713b6f7b11d626609a3131c66f3a3ac",
+ "primary_ensemble": "E0",
+ "removed_operator": "zeroing",
+ "renorm_denominator": 0.96,
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "schema_version": "proteus.v0_3_prereg.v1",
+ "seed": 20260903,
+ "verdict_order": [
+  "INSTRUMENT_INSUFFICIENT_TO_ADJUDICATE",
+  "NOT_QUALIFIED_DIRECTIONAL_MUTATION_PRIOR_REMAINS",
+  "NOT_QUALIFIED_BEHAVIORAL_SPACE_COLLAPSES_UNDER_NEUTRAL_DIFFUSION",
+  "QUALIFIED_AS_NEUTRAL_FOUNDRY_WITH_STATED_BOUNDARY_EFFECTS"
+ ],
+ "weight_transformation": "w_i / 0.96 over the twelve survivors in v0.2 order",
+ "weights_v0_2": {
+  "config_perturbation": 0.08,
+  "deletion": 0.11,
+  "duplication": 0.04,
+  "insertion": 0.08,
+  "movement": 0.08,
+  "operand_perturbation": 0.19,
+  "randomization": 0.04,
+  "reference_redirection": 0.08,
+  "region_swap": 0.06,
+  "replacement": 0.12,
+  "splice": 0.05,
+  "unreachable_removal": 0.03,
+  "zeroing": 0.04
+ },
+ "weights_v0_3": {
+  "config_perturbation": 0.08333333333333334,
+  "deletion": 0.11458333333333334,
+  "duplication": 0.04166666666666667,
+  "insertion": 0.08333333333333334,
+  "movement": 0.08333333333333334,
+  "operand_perturbation": 0.19791666666666669,
+  "randomization": 0.04166666666666667,
+  "reference_redirection": 0.08333333333333334,
+  "region_swap": 0.0625,
+  "replacement": 0.125,
+  "splice": 0.052083333333333336,
+  "unreachable_removal": 0.03125
+ }
+}

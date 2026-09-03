@@ -8,7 +8,7 @@ encounter and tick it was taken at, so that any adaptive transition can be repla
 from __future__ import annotations
 
 from .generate import organism_record
-from .grammar import GRAMMAR_HASH, mutate
+from .grammar import GRAMMAR_HASH, GRAMMAR_VERSION, GRAMMARS, mutate
 from .identity import RUNTIME_HASH, hash_obj
 from .prng import SplitMix64, seed_from
 
@@ -18,7 +18,8 @@ STATE_INHERITANCE = ("PRISTINE", "INHERIT")
 
 
 def descend(parent: dict, mutation_seed: int, mate: dict | None = None,
-            state_inheritance: str = "PRISTINE", n_ops: int = 1, force_operator: str | None = None):
+            state_inheritance: str = "PRISTINE", n_ops: int = 1, force_operator: str | None = None,
+            grammar_version: str = GRAMMAR_VERSION):
     """Produce one child organism and its lineage record from one parent (and an optional mate).
 
     mutation_seed is the caller's; the operator stream is derived from (seed, parent id, mate id)
@@ -27,11 +28,13 @@ def descend(parent: dict, mutation_seed: int, mate: dict | None = None,
     if state_inheritance not in STATE_INHERITANCE:
         raise ValueError("unknown state inheritance policy")
     rng = SplitMix64(seed_from("proteus.descend.v0", mutation_seed, parent["organism_id"],
-                               mate["organism_id"] if mate else "", GRAMMAR_HASH))
+                               mate["organism_id"] if mate else "",
+                               GRAMMARS[grammar_version][3]))
     m = parent["manifest"]
     ops = []
     for _ in range(n_ops):
-        m, rec = mutate(m, rng, mate["manifest"] if mate else None, force_operator)
+        m, rec = mutate(m, rng, mate["manifest"] if mate else None, force_operator,
+                        version=grammar_version)
         ops.append(rec)
     child = organism_record(m, parent["lineage_id"], parent["generation"] + 1)
     record = {
@@ -47,7 +50,8 @@ def descend(parent: dict, mutation_seed: int, mate: dict | None = None,
         "state_inheritance_policy": state_inheritance,
         "resource_budget": {k: m[k] for k in ("tick_budget", "tape_words", "n_regs", "out_cap")},
         "runtime_hash": RUNTIME_HASH,
-        "grammar_hash": GRAMMAR_HASH,
+        "grammar_hash": GRAMMARS[grammar_version][3],
+        "grammar_version": grammar_version,
     }
     record["record_id"] = hash_obj(record)
     return child, record

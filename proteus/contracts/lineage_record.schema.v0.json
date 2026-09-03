@@ -5,7 +5,7 @@
   "description": "One record per descent event. Append-only; never edited; record_id = sha256 of the record without itself. Carries every field brief S8 requires. Produced by proteus.foundry.lineage.descend.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_version", "organism_id", "lineage_id", "generation", "parent_ids", "mutation_seed", "operators", "pre_hash", "post_hash", "state_inheritance_policy", "resource_budget", "runtime_hash", "grammar_hash", "record_id"],
+  "required": ["schema_version", "organism_id", "lineage_id", "generation", "parent_ids", "mutation_seed", "operators", "pre_hash", "post_hash", "state_inheritance_policy", "resource_budget", "runtime_hash", "grammar_hash", "grammar_version", "record_id"],
   "properties": {
     "schema_version": {"const": "proteus.lineage_record.v0"},
     "organism_id":  {"type": "string", "pattern": "^[0-9a-f]{64}$", "description": "sha256 of the child's canonical manifest"},
@@ -22,6 +22,7 @@
                         "properties": {"tick_budget": {"type": "integer"}, "tape_words": {"type": "integer"}, "n_regs": {"type": "integer"}, "out_cap": {"type": "integer"}}},
     "runtime_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
     "grammar_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "grammar_version": {"type": "string", "description": "the operator table used, e.g. proteus.grammar.v0.3; older versions remain selectable only to reproduce frozen evidence"},
     "record_id":    {"type": "string", "pattern": "^[0-9a-f]{64}$"}
   }
 }
