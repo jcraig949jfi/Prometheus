@@ -1,0 +1,490 @@
+================================================================================
+  PROMETHEUS INCUBATOR --
+  STACKVM-V1 ADMISSION LANGUAGE + VERDICT-ENTROPY QUALIFICATION
+  CONSOLIDATED EXTERNAL REVIEW PACKET
+
+  Author : Daedalus, maintainer of the Serendipity Foundry Engine (SFE)
+  Date   : 2026-09-03
+  Status : STOPPED FOR EXTERNAL ADJUDICATION. No admission right purchased.
+           No archaeological candidate run. Nothing translated into World
+           Foundry grammar. Both live services untouched.
+
+  THIS PACKET SUPERSEDES AN EARLIER ONE THAT REPORTED A DIFFERENT VERDICT.
+  THE EARLIER VERDICT IS WITHDRAWN. SEE SECTION 1.
+================================================================================
+
+--------------------------------------------------------------------------------
+0. ORIENTATION (self-contained; no prior context assumed)
+--------------------------------------------------------------------------------
+Prometheus runs a CONSERVED-RISK ADMISSION LEDGER. A scientific test purchases
+a threshold K at price 1/K from a permanent lifetime budget ALPHA_LIFE = 0.1,
+so at the scientific floor K_MIN = 1000 the program can buy roughly ONE HUNDRED
+admission tests EVER. Purchases are irrevocable. Admission evidence must derive
+from a public randomness beacon whose value did not exist until after the
+registration was committed and externally anchored. The guarantee is
+
+    E[# false admissions over the instrument lifetime]
+        = SUM_c P(ADMIT_c | H0_c) <= SUM_c 1/K_c <= ALPHA_LIFE
+
+with a Markov corollary P(any false admission ever) <= ALPHA_LIFE.
+
+TWO CONSTITUTIONAL RULES, both established by earlier adversarial review:
+
+  RULE A.  HINDSIGHT IN THE HYPOTHESIS IS FREE.
+           HINDSIGHT IN THE NULL IS FATAL.
+    A candidate may be selected using unlimited historical knowledge: it is
+    corpus-measurable, and for a null whose distribution GIVEN the candidate
+    does not depend on the corpus, P(reject|H0) <= 1/K survives ANY
+    corpus-measurable selection rule. No multiplicity is owed for the search.
+    That premise dies the moment the reference sampler, matching law, context
+    family, or exclusions are FITTED to the same corpus.
+
+  RULE B.  FRESH INPUT IS NOT FRESH EVIDENCE.
+    In a deterministic substrate, beacon-derived future inputs do not seal a
+    test if the registrant can compute the VERDICT before registration.
+
+THE SUBSTRATE. stackvm-v1 is a metered stack/register VM. Its design charter
+makes EVERY BYTE SEQUENCE A LEGAL PROGRAM (opcode = byte % 33; operand bytes
+past the end read as 0; empty-stack pop = 0; div/mod by zero pushes 0;
+addresses wrap mod 256; registers mod 8; arithmetic mod 2^64). There are no
+invalid programs and no exceptions. run_program is bit-deterministic in
+(code, inputs, max_steps).
+
+THE MISSION. Build the machinery that would make a future stackvm-v1 claim
+scientifically stateable WITHOUT deriving its null from the historical corpus:
+a native canonical reference sampler and context family from corpus-independent
+sources only; a provenance type system; a verdict-entropy harness; a
+qualification of the proposed "H >= 0.5 bits" standard; and a hostile test.
+Explicitly NOT to test the five frozen archaeological candidates, and NOT to
+purchase a right.
+
+--------------------------------------------------------------------------------
+1. VERDICT, AND A RETRACTION
+--------------------------------------------------------------------------------
+
+                        STACKVM_NULL_COMPROMISED
+
+I FIRST REPORTED "STACKVM_ADMISSION_LANGUAGE_QUALIFIED_WITH_LIMITATIONS" AND
+COMMITTED IT. THAT VERDICT WAS WRONG AND IS WITHDRAWN.
+
+An independent adversarial review returned AFTER I had committed and reported,
+carrying measured findings that invalidate the qualification. I reproduced its
+load-bearing measurements on the real interpreter before accepting them.
+
+PROCESS FAILURE, STATED PLAINLY AND FIRST:
+  I ran a hostile suite THAT I WROTE MYSELF (13 of 13 attacks defended) and
+  treated that as qualification, while an independent red team was still
+  running. My suite tested the attacks I had thought of. It did not test
+  whether my samplers were EXCHANGEABLE, whether my observables were
+  DEGENERATE, or whether the MENU of specifications was itself a selection
+  channel -- the three things that actually broke. A self-authored adversarial
+  suite is a weaker instrument than an independent one, and I published on the
+  weaker instrument. The reviewer should weight my other self-assessments in
+  this packet accordingly.
+
+--------------------------------------------------------------------------------
+2. WHAT I VERIFIED MYSELF BEFORE ACCEPTING THE DOWNGRADE
+--------------------------------------------------------------------------------
+  claim                          red team    my independent measurement
+  ----------------------------   ---------   -------------------------------
+  `steps` observable saturates     43.6%     44.3%  (n=600, uniform 64B
+                                                     programs, arity 4,
+                                                     max_steps 2000)
+  `halt` saturates identically     same      44.3%, only 2 distinct values
+  R2 level under true              exact     P(top) = 0.0625 = 1/16 EXACTLY
+    exchangeability                          (n=400)
+  R1 exchangeability fails         yes       P(top) = 0.0800 vs 0.0625
+                                             expected (n=400, ~1.4 SE;
+                                             suggestive, and the STRUCTURAL
+                                             argument is decisive regardless)
+
+ONE RED-TEAM FINDING DOES NOT APPLY TO THIS IMPLEMENTATION, and a retraction
+should be precise about that. Their headline 43.6% LEVEL INFLATION assumed a
+STRICT-TIE rank p-value, p = (1 + #{ref > cand})/(m+1), under which a saturated
+candidate can never be strictly exceeded and the p-value collapses to its floor.
+My implementation uses BEACON-UNIFORM TIE-BREAKING, which I measured to give
+exactly 1/(m+1) under genuine exchangeability. My tests are therefore NOT
+level-inflated by that mechanism.
+
+BUT THEIR DEEPER POINT SURVIVES IN FULL AND IS WORSE THAN MY OWN STATED
+LIMITATION. With 44.3% saturation, on nearly half of all blocks every arm is
+tied and the beacon tie-break decides the winner -- a pure coin flip carrying
+ZERO INFORMATION ABOUT THE CANDIDATE. The test stays level-correct and becomes
+nearly powerless. My limitation said observable degeneracy was "unmeasured".
+Measured, it is 44%.
+
+--------------------------------------------------------------------------------
+3. THE SEVEN FINDINGS THAT FORCE THE DOWNGRADE
+--------------------------------------------------------------------------------
+
+C1  R1 IS NOT A VALID RANK NULL (mathematical, not empirical).
+    R1 drew references as mutate(candidate, seed_i). The joint law of
+    (C, ref_1..ref_m) is NOT permutation-invariant: C is the PARENT and the
+    references are its CHILDREN, drawn from a law conditioned on C. A rank
+    p-value has NO 1/(m+1) bound under a non-exchangeable joint law, so any
+    test using R1 has an UNDEFINED level regardless of what any harness
+    measures. My justification -- "the operator law is the substrate's own
+    definition of a neighbour" -- is a statement about semantics that does not
+    establish exchangeability. RETIRE R1, or rebuild it on a pivot: draw a
+    parent P, then assign the candidate's role uniformly among
+    {C} union {mutate(P, seed_i)} so all arms share one parent.
+
+C2  R3's SUPPORT HOLE VOIDS EXCHANGEABILITY.
+    I presented "R3's support is [16,96] and is DELIBERATELY NOT BROADENED" as
+    principled restraint (a protocol that refuses an interesting claim is
+    better than one reverse-engineered to admit it). It is ALSO a mathematical
+    hole: a candidate outside that range has reference-measure ZERO, so
+    exchangeability fails outright and p0 <= 1/(m+1) is not loose but
+    UNDEFINED. Correct handling is a FOLD-TIME SUPPORT-CONTAINMENT CHECK that
+    REFUSES the specification, not a note that R3 is "inapplicable".
+
+C3  R1 AND R2 ARE SELECTION-DETECTORS, NOT EVIDENCE-DETECTORS.
+    Measured: 12 programs hill-climbed on final stack depth using the verbatim
+    spec-default mutate operator -- a pure stand-in for "selection acted",
+    with no scientific content -- reject at nominal 1/200 in 10 of 12 cases
+    under BOTH samplers; unselected controls reject 0 of 12. Every candidate
+    that will ever be nominated is BY CONSTRUCTION the output of a selection
+    process, so both nulls are FALSE A PRIORI for every real candidate.
+    Rule A does not rescue this: it guarantees P(reject|H0) <= 1/K, but here
+    H0 is uniformly false, so the bound is VACUOUSLY SATISFIED WHILE THE
+    LEDGER PAYS K FOR A TAUTOLOGY. A rejection certifies "this artifact was
+    optimized" -- knowable before the beacon is drawn, and not the claim.
+
+C4  SPEC-MENU MULTIPLICITY (I understated this as a residual).
+    3 samplers x 5 observables x 2 tails x arity choices x max_steps choices
+    gives a menu J ~ 10^2 - 10^3. Each element individually carries clean tags
+    and individually has level <= 1/K; the SELECTION AMONG THEM is untyped,
+    because the type system types PARAMETER VALUES, not the choice of which
+    typed object to instantiate. Max-selection gives P(reject|H0) <= J/K, i.e.
+    a TRUE LEVEL of 0.1 - 1.0 against a price of 0.001. My verdict-entropy
+    harness is STRUCTURALLY BLIND to it, because it conditions on the frozen
+    spec -- the very object that was selected. Rule B recurs one level up: the
+    beacon randomizes WHICH DRAW, never WHICH TEST.
+    FIX (elegant, and exactly level-preserving): commit the FULL MENU
+    pre-beacon; the BEACON selects the index uniformly. Then
+    P(reject) = (1/J) SUM_j P(reject_j) <= 1/K, and stuffing the menu cannot
+    help because every element is individually bounded.
+
+C5  "PROTOCOL_CONSTANT" ARITY RESTRUCTURES THE NULL BY THREE ORDERS OF
+    MAGNITUDE. Measured, uniform 64-byte programs, max_steps = 20000:
+        arity 0 -> median steps    29
+        arity 3 -> median steps 20000  (the ceiling)
+    Mechanism is pure program semantics: LOOP pops its iteration count from
+    the stack, and a uniform 64-bit input word exceeds LOOP_ITER_MAX = 65535
+    with probability 1 - 2^-48, so every reachable loop clamps to maximum.
+    A VALUE CHOSEN PER TEST AFTER CORPUS INSPECTION IS NOT A CONSTANT OF THE
+    PROTOCOL; IT IS A FREE PARAMETER WEARING A CONSTANT'S TAG. My type system
+    accepted it because I tagged it PROTOCOL_CONSTANT with the justification
+    "fixed by protocol" and never pinned it in a versioned bundle.
+
+C6  THE ENTROPY GATE IS FORMALLY VACUOUS, not merely empirically weak.
+    My original packet argued from measurement. There is a stronger formal
+    result: for any threshold h < 1 there exist specifications with
+    H(verdict) >= h and ZERO claim entropy. Proof: take V = A AND N with N an
+    independent fair coin; then H(V) = 1 bit regardless of A, including
+    P(A) = 1. VERDICT ENTROPY IS INVARIANT UNDER COMPOSITION WITH INDEPENDENT
+    RANDOMIZATION, so it cannot separate claim entropy from nuisance entropy.
+    It certifies only that SOME coordinate of the beacon moved.
+
+C7  THE DECOY LAW IS ITSELF AN UNTYPED NULL-PATH OBJECT.
+    p0 and p1 are both measured UNDER the decoy law, so my own type system
+    should have tagged it and did not. Synthetic decoys differ from the real
+    beacon law (which carries version fields, monotone timestamps, chained
+    values) and an attacker can branch on the difference; decoys derived from
+    real beacon history are corpus-adjacent. Clean resolution: REMOVE DECOY
+    MEASUREMENT FROM THE CRITICAL PATH -- under a genuinely exchangeable
+    construction p0 is exact combinatorics (1/(m+1)) needing no draws at all.
+    Retain decoys only for the beacon-dependence check.
+
+--------------------------------------------------------------------------------
+4. THE RESULT THAT STANDS, AND IS STRENGTHENED: THE ENTROPY STANDARD IS DEAD
+--------------------------------------------------------------------------------
+The mission instructed me to treat "H(verdict) >= 0.5 bits" as a hypothesis to
+qualify, not a constant. It does not survive, and this section is unaffected by
+the retraction.
+
+MANDATORY NEGATIVE CONTROL (preserved as required): the offline-oracle attack.
+On this substrate the cheapest instance is a SATURATING PROGRAM -- `JMP 0`,
+two bytes, a legal program by spec -- whose `steps` observable is pinned at the
+ceiling on every context the beacon can produce, so the attacker knows the
+verdict before registering. Measured over 300 decoy beacons:
+
+    Shannon entropy H              0.869 bits   -> PASSES a 0.5-bit gate
+    min-entropy H_inf              0.494 bits
+    attacker best-prediction       0.710
+    empirical level p0             0.160        (target 1/K = 0.001)
+
+THE 0.5-BIT SHANNON GATE WAVES THE ATTACK THROUGH. Shannon entropy is an
+average code length, not a bound on prediction; a distribution with 0.71 mass
+on its modal class has H = 0.869.
+
+THE OBVIOUS REPAIR -- min-entropy >= 1.0 bits -- rejects the attack (0.494) but
+ALSO REJECTS EVERY HONEST TEST. Honest specifications in the same run had
+p1 = 0.000 and attacker accuracy = 1.000: a correctly calibrated test at
+threshold K admits with probability 1/K, so its verdict is overwhelmingly
+predictable ("it will refuse"). PREDICTABILITY OF THE VERDICT IS THE SIGNATURE
+OF CORRECT CALIBRATION, NOT OF AN EXPLOIT.
+
+Both directions fail because two different unknowables were being conflated:
+  * IS THE VERDICT UNKNOWN? -- irrelevant. Knowing you will lose is no exploit.
+  * CAN THE REGISTRANT CHOOSE A (candidate, spec) PAIR WHOSE ADMISSION
+    PROBABILITY UNDER A TRUE NULL EXCEEDS 1/K? -- this is the whole question,
+    and the only thing the conserved-risk arithmetic depends on.
+
+ANSWER TO THE MISSION'S QUESTION -- "what exactly must remain unknowable before
+purchase for the 1/K guarantee to retain its meaning?"
+
+    NOTHING ABOUT THE VERDICT NEED BE UNKNOWABLE.
+
+What must hold is a property of the TEST, not of the attacker's knowledge:
+  (1) LEVEL. P(ADMIT | subject null-true under the canonical reference law)
+      <= 1/K, measured by the HARNESS (never the registrant) with the
+      candidate REPLACED BY A REFERENCE DRAW.
+  (2) BEACON DEPENDENCE. Evidence is genuinely a function of the beacon --
+      distinct evidence hashes across decoys -- so the admission event is not
+      constant on the beacon fibre.
+  (3) NULL PROVENANCE. Every null-path element is
+      SPEC_DERIVED | PROTOCOL_CONSTANT | EXTERNAL_RANDOMNESS, never
+      CORPUS_DERIVED.
+  (4) [ADDED BY THE REVIEW] NON-SELECTION. The specification itself must not
+      have been max-selected from a menu (C4), and the null must not be false
+      a priori for the candidate class (C3).
+Entropy appears nowhere in the final standard.
+
+--------------------------------------------------------------------------------
+5. WHAT THE LEVEL CHECK EXPOSED IN MY OWN DEFAULT CONFIGURATION
+--------------------------------------------------------------------------------
+Before any science was attempted, the level check found a two-order-of-magnitude
+error in the configuration I would have shipped:
+
+  n_refs  n_blocks    K     p0(attack)  p0(honest)  level OK
+     3       24     1000      0.160       0.000        no
+     3       12     1000      0.070       0.000        no
+     3        8     1000      0.010       0.000        no
+     7        8     1000      0.020       0.000        no
+     7        6     1000      0.010       0.000        no
+    15        5     1000      0.000       0.000        yes*
+    15        4     1000      0.000       0.000        yes*
+
+  * "no admissions in 200 decoys" = p0 <= 0.015 at 95%. NOT a 1e-3
+    certification. Certifying p0 <= 1/K needs N ~ 1e4 decoys per specification
+    (with N decoys and zero admissions the 95% upper bound is ~3/N).
+
+Mechanism: under a true null the subject ranks top with probability
+1/(1+n_refs). At n_refs = 3 that is 1/4, and about five consecutive tops inside
+24 blocks reaches K -- far more likely than 1/1000. No entropy measurement
+would have revealed this.
+
+--------------------------------------------------------------------------------
+6. WHAT SURVIVES THE DOWNGRADE
+--------------------------------------------------------------------------------
+* THE PROVENANCE TYPE SYSTEM. Four tags -- SPEC_DERIVED, PROTOCOL_CONSTANT,
+  EXTERNAL_RANDOMNESS, CORPUS_DERIVED -- with CORPUS_DERIVED structurally
+  illegal on the scientific null path and refused AT CONSTRUCTION, not by
+  policy. Fourteen required null-path fields; an UNDECLARED EXTRA FIELD is
+  refused, because an unlisted knob is how a corpus-derived value hides.
+  SPEC_DERIVED requires a source citation, verified by re-reading the file,
+  checking its pinned SHA-256, and confirming the symbol exists. It defended
+  13 of 13 attacks in its own class (corpus-fitted reference laws,
+  parameter-value encoding of corpus observations, sampler-selection
+  smuggling, tag stripping, derived-feature laundering, undeclared knobs,
+  context gerrymandering, support-preserving doctored laws).
+  C7 adds a FIFTEENTH required field: the decoy law.
+* THE LEVEL-OVER-ENTROPY CONCLUSION (section 4), now on firmer ground.
+* THE MEASURED FACTS: 44.3% observable saturation; the ~160x default
+  miscalibration; the arity dependence of the null.
+* THE SUBSTRATE C ARCHAEOLOGY (section 8), a separate provenance-isolated
+  workstream, unaffected.
+
+ALSO WORTH RECORDING: the reason a corpus-independent null was possible AT ALL
+is the substrate's charter that EVERY BYTE SEQUENCE IS A LEGAL PROGRAM, which
+makes the uniform measure over byte strings a well-defined canonical measure on
+program space. On a substrate where most byte strings were invalid, the only
+available "distribution over programs" would have been the programs that
+actually occurred -- i.e. the corpus -- and Rule A would have made this
+impossible IN PRINCIPLE. That is a property of this instrument's design, not a
+general fact, and a future substrate lacking it cannot reuse this approach.
+
+--------------------------------------------------------------------------------
+7. EXPRESSIBILITY -- WHAT THE PROTOCOL REFUSES TO SAY
+--------------------------------------------------------------------------------
+Per the mission, no single universal null was forced, and the canonical family
+was NOT broadened to accommodate the five frozen archaeological candidates.
+
+UNSTATEABLE, recorded rather than worked around:
+  1. ANY TASK-SUCCESS CLAIM. The task corpus is CORPUS_DERIVED, so task
+     success is not a canonical observable. Every archaeological success
+     (12/12 or 8/8 case pass) is a statement about corpus tasks.
+  2. Any claim needing R3 for a candidate outside [16,96] -- and per C2 this
+     is now an exchangeability failure, not merely an inapplicable sampler.
+  3. Any claim whose reference set is "the artifacts that actually existed".
+  4. Any claim about discovered population bands (band boundaries are corpus
+     statistics; using them on the null path is a type error).
+
+CONSEQUENCE FOR THE FIVE FROZEN CANDIDATES:
+  WOW-C-001  adversarial sham (401-700 band) ...... NOT_CURRENTLY_STATEABLE
+  WOW-C-002  9bc2b861 transfer probe ............. NOT_CURRENTLY_STATEABLE
+  WOW-C-003  sterile-band mechanism .............. PARTIALLY STATEABLE
+  WOW-C-004  reproductive isolation ............. PARTIALLY STATEABLE
+  WOW-C-005  convergent task solvability ........ NOT_CURRENTLY_STATEABLE
+
+Three of five cannot be stated. The two partial ones require restatement over
+a SPEC-DEFINED length parameterization instead of discovered modes -- which
+changes the claim, and the restated version does not inherit the historical
+support. AND PER C3, even the restated versions would be tested against nulls
+that are false a priori, so they are not currently registrable either.
+
+--------------------------------------------------------------------------------
+8. PARALLEL WORKSTREAM: SUBSTRATE C ARCHAEOLOGY (discovery only)
+--------------------------------------------------------------------------------
+Provenance-separated: nothing from this survey was used to design, tune, or
+justify the canonical null (STACKVM_NULL_PROVENANCE.json cites only vm.py and
+adapter.py). Read-only throughout; no service touched, no database opened.
+
+  *** TIME-SENSITIVE AND UNRELATED TO THE SCIENCE ***
+  A .env exists at archive/bitfrost-core/bitfrost-core/src/api/.env (not
+  opened), and archive/bitfrost-core/.../reports/frontier_model_inventory.md
+  PRINTS API KEY PREFIXES FOR SEVEN PROVIDERS IN PLAINTEXT (sk-or-v1-...,
+  gsk_8dn..., ghp_JDm..., csk-mwv..., AIzaSy..., xai-O63...).
+  TREAT AS EXPOSED. ROTATE.
+
+The ten archived sub-projects (~207 MB) are not ten projects. They are ONE
+RESEARCH PROGRAM RESTARTED EIGHT TIMES IN TWENTY-ONE DAYS (2026-03-09 to
+2026-03-30). And:
+
+  ALL FIVE PHENOMENON CLASSES FROM THE EARLIER ARCHAEOLOGY RECUR
+  INDEPENDENTLY HERE, in codebases with no shared code -- four of them
+  multiple times. In at least FOUR of the ten projects, a defect is the
+  DIRECT CAUSE of the project's headline result, and THREE of those results
+  still stand as claims in the program's evidence documents.
+
+Selected verified findings:
+  * A scoring dimension with EXACTLY ONE DISTINCT VALUE across 6,641 records
+    (zero information), and 90% of re-scored items changing quality on
+    re-evaluation -- signal-to-noise ~= 1, so selection over 6,641 evaluations
+    was drift.
+  * A "293x amplification" headline resting on a promotion statistic inflated
+    by a no-op mutation bug (18 of 20 promoted blocks got a majority of their
+    "appearances" from mutation re-emissions).
+  * 33% of one archive's entries are byte-identical duplicates AWARDED EXTRA
+    ARCHIVE SLOTS, because the cell coordinate derives from properties of
+    stochastic model output rather than of the genome.
+  * An entire probe phase producing ZERO output across five completed cycles,
+    from ONE hardcoded layer constant borrowed from a different project
+    (LAYER_BANDS sized for a 28-layer model, run against a 24-layer model).
+  * THE SINGLE MOST DECISIVE FILE IN 207 MB: a pure n-gram babbler with no LLM
+    at all reaches HIGHER best fitness (0.9312) than either real model
+    (0.8779, 0.8380). The fitness function never discriminated reasoning from
+    random text. Neither this nor the probe-failure log is mentioned in any
+    summary document.
+  * The program PRE-SPECIFIED the drift control that would have caught it
+    (a --fitness-mode random arm) and never built it.
+
+EFFECT ON THE FIVE CANDIDATES: none promoted, none demoted. Independent
+recurrence raises the prior that these are GENERIC DEFECT CLASSES OF THIS KIND
+OF RESEARCH PROGRAM rather than substrate-specific phenomena -- which if
+anything LOWERS the scientific interest of the stackvm-v1 instances and RAISES
+the value of a cross-cutting audit. A discovery-side judgement with no
+admission weight.
+
+--------------------------------------------------------------------------------
+9. SEVEN PREREQUISITES BEFORE ANY RE-QUALIFICATION
+--------------------------------------------------------------------------------
+ 1. RETIRE R1, or rebuild it on a pivot construction with uniform role
+    assignment so candidate and references are genuinely exchangeable.
+ 2. REPLACE BASE-MEASURE NULLS WITH PROCESS-MATCHED NULLS: references produced
+    by re-running the SAME selection process (same operator chain, same
+    generation count, same population schedule) under beacon-derived seeds, so
+    "was selected" is held fixed and only the claimed property varies. Without
+    this, admissions certify tautologies (C3).
+ 3. BEACON-SELECTED SPECIFICATION from a pre-committed menu (C4).
+ 4. PIN EVERY PROTOCOL_CONSTANT in one versioned, hash-committed bundle fixed
+    before the corpus era under test; the ledger refuses a registration citing
+    a bundle created after the candidate's corpus (C5).
+ 5. FOLD-TIME SUPPORT-CONTAINMENT CHECK: refuse any spec where
+    P_ref(candidate) = 0 (C2).
+ 6. FOLD-TIME RANK-MEASURABILITY AND NULL-SATURATION CHECKS: refuse any
+    observable whose null saturation mass exceeds 1/K (44.3% for `steps`).
+ 7. TYPE THE DECOY LAW; prefer exact combinatorial p0 over decoy measurement
+    (C7).
+
+UNTIL 1-7 ARE BUILT AND INDEPENDENTLY ATTACKED, NO STACKVM-V1 SPECIFICATION
+SHOULD BE REGISTERED AND NO ADMISSION RIGHT PURCHASED.
+
+--------------------------------------------------------------------------------
+10. QUESTIONS REQUIRING EXTERNAL ADJUDICATION
+--------------------------------------------------------------------------------
+ Q1 Is the level check (section 4, conditions 1-4) accepted as the permanent
+    replacement for the entropy gate? This decision propagates to EVERY future
+    admission on EVERY substrate, not only this one.
+ Q2 Is the process-matched null (prerequisite 2) the right answer to C3, or is
+    the correct conclusion that a claim about ALREADY-SELECTED artifacts
+    cannot be tested against any base measure and must be reformulated
+    entirely?
+ Q3 Does beacon-selection of the specification from a committed menu (C4)
+    conflict with any part of the existing admission protocol, which currently
+    assumes the registrant fixes the spec?
+ Q4 Given ~1e4 decoys per specification for level certification, and given
+    that ~100 rights exist in total, is per-specification qualification
+    affordable at program scale?
+ Q5 Should the five frozen archaeological candidates be formally retired
+    rather than held pending, given that three are unstateable and the other
+    two would be tested against a priori false nulls?
+ Q6 Who authors the independent adversarial review for the NEXT iteration? The
+    process failure in section 1 is an argument that this seat must not be
+    filled by the builder.
+
+--------------------------------------------------------------------------------
+11. ARTIFACTS AND REPRODUCTION
+--------------------------------------------------------------------------------
+  location  F:\Prometheus\SerendipityFoundry\stackvm_admission  (repo: main)
+
+  VERDICT_CORRECTION.md ............ the retraction, in full
+  EXTERNAL_REVIEW_PACKET.txt ....... v1, retraction stamped at the head
+  STACKVM_ADMISSION_SPEC.md ........ canonical family + expressibility
+  STACKVM_NULL_PROVENANCE.json ..... tagged null path; SHA-256 of vm.py and
+                                     adapter.py pinned; tag census verified to
+                                     contain NO CORPUS_DERIVED entry
+  NULL_PATH_TYPE_SYSTEM.md ......... the four tags, enforcement, and residuals
+  VERDICT_ENTROPY_THEORY.md ........ derivation of the replacement standard
+  VERDICT_ENTROPY_HARNESS.py ....... harness incl. the mandatory negative
+                                     control
+  VERDICT_ENTROPY_RESULTS.txt ...... measured entropy + level results
+  HOSTILE_STACKVM_NULL_RESULTS.txt . the self-authored suite (13/13) -- read
+                                     section 1 before trusting it
+  SUBSTRATE_C_ARCHAEOLOGY.md ....... the parallel discovery workstream
+  UPDATED_WOW_ADMISSION_QUEUE.jsonl  five candidates with expressibility
+  provenance.py / canonical_null.py / hostile_null.py
+  FAILED_VERSIONS/ ................. EXTERNAL_REVIEW_PACKET_v1_WRONG_VERDICT,
+                                     STACKVM_ADMISSION_SPEC_v1,
+                                     ENTROPY_RUN1_shannon_gate_failed (the run
+                                     in which the 0.5-bit gate PASSED the
+                                     negative control), and the harness whose
+                                     default config was miscalibrated ~160x
+
+  run   python VERDICT_ENTROPY_HARNESS.py     (entropy + level)
+        python hostile_null.py                (self-authored suite)
+  All randomness derives from named SHA-256/xorshift streams; results are
+  bit-reproducible. Both live services (ports 8799 and 8811) were left
+  running and untouched throughout; the engine database was read only from a
+  forensic copy whose integrity check passed.
+
+================================================================================
+  CLOSING
+  The mission asked whether a stackvm-v1 claim could be made scientifically
+  stateable without deriving its null from the corpus. The honest answer today
+  is NO -- not because the idea is unsound, but because the specific family I
+  built has two samplers whose rank bound is undefined, a null that is false a
+  priori for every candidate that would ever be nominated, and a specification
+  menu that inflates the true level by two to three orders of magnitude.
+
+  The standard I was asked to qualify turned out to be refuted by its own
+  mandatory negative control, and then proved formally vacuous. That is the
+  most useful thing measured here, and it survives the retraction.
+
+  The least comfortable finding is in section 1: I certified my own work with
+  my own adversarial suite and published before the independent review landed.
+  The machinery of this program exists precisely to make that kind of error
+  expensive and visible. It worked -- but only because the independent review
+  was already running.
+================================================================================
