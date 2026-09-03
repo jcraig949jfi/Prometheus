@@ -1,0 +1,27 @@
+============================================================================
+VERDICT-ENTROPY HARNESS -- stackvm-v1 canonical admission family
+============================================================================
+
+[1] MANDATORY NEGATIVE CONTROL: offline-oracle attack
+    (attacker precomputes the verdict; inputs are beacon-fresh)
+  ATTACK: saturating program (steps) p1=0.290 p0=0.1600  H=0.869  Hinf=0.494  attacker_acc=0.710
+
+[2] HONEST SPECS under the canonical family
+  honest: random 40B, steps          p1=0.000 p0=0.0000  H=0.000  Hinf=-0.000  attacker_acc=1.000
+  honest: random 40B, n_opcodes      p1=0.033 p0=0.1600  H=0.211  Hinf=0.049  attacker_acc=0.967
+  honest: random 64B vs uniform      p1=0.000 p0=0.0267  H=0.000  Hinf=-0.000  attacker_acc=1.000
+
+[3] DECOY-COUNT SENSITIVITY (attack spec)
+    n_decoys=50                      p1=0.260 p0=0.1500  H=0.827  Hinf=0.434  attacker_acc=0.740
+    n_decoys=100                     p1=0.250 p0=0.1500  H=0.811  Hinf=0.415  attacker_acc=0.750
+    n_decoys=200                     p1=0.280 p0=0.1500  H=0.856  Hinf=0.474  attacker_acc=0.720
+    n_decoys=400                     p1=0.302 p0=0.1600  H=0.884  Hinf=0.520  attacker_acc=0.698
+
+============================================================================
+GATE EVALUATION
+============================================================================
+  attack spec: attacker_best_accuracy = 0.7100
+  attack spec: Shannon H = 0.8687 bits | min-entropy = 0.4941 bits
+  rejected by Shannon>=0.5 gate?      False
+  rejected by min-entropy>=1.0 gate?  True
+  level check (p0 <= 1/K = 0.0010):     False

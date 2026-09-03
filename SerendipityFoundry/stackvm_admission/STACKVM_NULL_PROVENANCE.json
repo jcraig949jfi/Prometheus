@@ -1,0 +1,156 @@
+{
+ "constitutional_rules": {
+  "A": "HINDSIGHT IN THE HYPOTHESIS IS FREE; HINDSIGHT IN THE NULL IS FATAL",
+  "B": "FRESH INPUT IS NOT FRESH EVIDENCE"
+ },
+ "engine_id": "stackvm-v1",
+ "forbidden_inputs": [
+  "success frequencies",
+  "failure frequencies",
+  "genotype-length distribution",
+  "lineage outcomes",
+  "discovered population bands",
+  "candidate neighborhoods",
+  "step-limit outcome curves",
+  "archaeological candidate statistics",
+  "empirically favorable matching covariates"
+ ],
+ "null_path": {
+  "betting_rule": {
+   "fixed_at_seq": 0,
+   "justification": "fairness-certified mixture from the admission protocol",
+   "source_file": "",
+   "source_symbol": "",
+   "tag": "PROTOCOL_CONSTANT",
+   "value": "'LAM-MIX-V1'"
+  },
+  "context_arity": {
+   "fixed_at_seq": 0,
+   "justification": "fixed by protocol; must be justified without reference to any recorded outcome",
+   "source_file": "",
+   "source_symbol": "",
+   "tag": "PROTOCOL_CONSTANT",
+   "value": "4"
+  },
+  "context_family": {
+   "fixed_at_seq": -1,
+   "justification": "inputs are machine words per vm.machine_word; uniform is the canonical measure on that space",
+   "source_file": "F:/SerendipityD/foundry/engines/gp/stackvm/vm.py",
+   "source_symbol": "machine_word",
+   "tag": "SPEC_DERIVED",
+   "value": "'W1_uniform_words'"
+  },
+  "exclusions": {
+   "fixed_at_seq": 0,
+   "justification": "no exclusions; an exclusion set is a classic corpus-smuggling channel",
+   "source_file": "",
+   "source_symbol": "",
+   "tag": "PROTOCOL_CONSTANT",
+   "value": "()"
+  },
+  "matching_law": {
+   "fixed_at_seq": -1,
+   "justification": "matching is to the CANDIDATE's own length (hypothesis-side, free under Rule A), never to a discovered band",
+   "source_file": "F:/SerendipityD/foundry/engines/gp/stackvm/vm.py",
+   "source_symbol": "run_program",
+   "tag": "SPEC_DERIVED",
+   "value": "'none'"
+  },
+  "max_steps": {
+   "fixed_at_seq": 0,
+   "justification": "resource ceiling fixed by protocol, NOT chosen from any observed step-limit outcome curve",
+   "source_file": "",
+   "source_symbol": "",
+   "tag": "PROTOCOL_CONSTANT",
+   "value": "2000"
+  },
+  "n_blocks": {
+   "fixed_at_seq": 0,
+   "justification": "block budget fixed by protocol",
+   "source_file": "",
+   "source_symbol": "",
+   "tag": "PROTOCOL_CONSTANT",
+   "value": "5"
+  },
+  "n_references": {
+   "fixed_at_seq": 0,
+   "justification": "reference count fixed by protocol",
+   "source_file": "",
+   "source_symbol": "",
+   "tag": "PROTOCOL_CONSTANT",
+   "value": "15"
+  },
+  "observable": {
+   "fixed_at_seq": -1,
+   "justification": "intrinsic ExecResult field defined by the VM",
+   "source_file": "F:/SerendipityD/foundry/engines/gp/stackvm/vm.py",
+   "source_symbol": "ExecResult",
+   "tag": "SPEC_DERIVED",
+   "value": "'steps'"
+  },
+  "reference_config": {
+   "fixed_at_seq": -1,
+   "justification": "adapter default config transcribed verbatim; not tuned",
+   "source_file": "F:/SerendipityD/foundry/engines/gp/stackvm/adapter.py",
+   "source_symbol": "_DEFAULT_MUTATE",
+   "tag": "SPEC_DERIVED",
+   "value": "{'p_point': 0.5, 'p_insert': 0.2, 'p_delete': 0.2, 'p_dup_block': 0.1, 'max_point_sites': 3, 'max_indel': 4, 'max_block': 16}"
+  },
+  "reference_sampler": {
+   "fixed_at_seq": -1,
+   "justification": "canonical sampler defined from operator/program-space semantics",
+   "source_file": "F:/SerendipityD/foundry/engines/gp/stackvm/adapter.py",
+   "source_symbol": "_DEFAULT_MUTATE",
+   "tag": "SPEC_DERIVED",
+   "value": "'R1_mutation_local'"
+  },
+  "role_rule": {
+   "fixed_at_seq": -1,
+   "justification": "beacon-derived uniform permutation of slots",
+   "source_file": "",
+   "source_symbol": "",
+   "tag": "EXTERNAL_RANDOMNESS",
+   "value": "'beacon_uniform_permutation'"
+  },
+  "stopping_rule": {
+   "fixed_at_seq": 0,
+   "justification": "fixed in advance; no data-dependent stopping",
+   "source_file": "",
+   "source_symbol": "",
+   "tag": "PROTOCOL_CONSTANT",
+   "value": "'fixed_block_budget'"
+  },
+  "tie_rule": {
+   "fixed_at_seq": -1,
+   "justification": "beacon-derived uniform tie-break",
+   "source_file": "",
+   "source_symbol": "",
+   "tag": "EXTERNAL_RANDOMNESS",
+   "value": "'beacon_uniform'"
+  }
+ },
+ "schema": "stackvm_null_provenance/v1",
+ "spec_constants": {
+  "MEMORY_SIZE": 256,
+  "NUM_REGISTERS": 8,
+  "N_OPCODES": 33,
+  "STACK_MAX": 1024,
+  "create_random_support": {
+   "max_len": 96,
+   "min_len": 16
+  },
+  "mutate_defaults": {
+   "max_block": 16,
+   "max_indel": 4,
+   "max_point_sites": 3,
+   "p_delete": 0.2,
+   "p_dup_block": 0.1,
+   "p_insert": 0.2,
+   "p_point": 0.5
+  }
+ },
+ "spec_sources": {
+  "F:/SerendipityD/foundry/engines/gp/stackvm/adapter.py": "ccf1fe6852546de757db23f848f1d80dd26b48bca2bdd43d9decd01651b6ee68",
+  "F:/SerendipityD/foundry/engines/gp/stackvm/vm.py": "d14e2d7a7d58bab72b05023b1f5d9e227d2a4bad09163309af735ea534cc8163"
+ }
+}
