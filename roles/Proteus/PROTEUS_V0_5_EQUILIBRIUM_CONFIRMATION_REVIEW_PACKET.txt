@@ -139,7 +139,17 @@ F7. THE V0.4 MULTIPLICITY ARCHITECTURE WOULD HAVE OVER-DECLARED AGAIN.
     discoveries prospectively, on live data, in the first pass after it was
     introduced.
 
-F8. THIS OPERATOR'S CALIBRATION RECORD.
+F9. MY PREREGISTERED SENSITIVITY ARM WAS UNDER-POWERED, BY MY OWN TOLERANCE.
+    I froze 300 samples per state for the 2,044-state sensitivity space to fit
+    the compute budget, and froze a live-agreement tolerance of 0.02 median TV.
+    The arm ran and returned median TV 0.0667, max 0.14 -- it fails the check I
+    wrote for it. Its stationary solve also hit the iteration cap without
+    converging. So the preregistered answer to "is the primary result a
+    truncation artifact" is INCONCLUSIVE rather than negative, and section 8
+    says so. I chose the sample size before seeing anything, which is the right
+    order, but I chose it badly.
+
+F10. THIS OPERATOR'S CALIBRATION RECORD.
     V0 content ratchet; V0.2 fix that created a configuration ratchet; V0.3
     inert Holm and a length-confounded null; V0.4 an analytic kernel now shown
     to be off by up to 0.17 TV. The V0.4 halt/yield discovery, which I reported
@@ -345,7 +355,61 @@ The chain is ergodic on the whole space. pi is close to uniform but not uniform,
 and its shape is dominated by short genomes at large tapes -- geometry, not
 current.
 
-[SENSITIVITY_SPACE_PLACEHOLDER]
+SENSITIVITY SPACE, and it did NOT pass its own frozen check.
+
+The preregistered sensitivity analysis is the full, untruncated space: tapes
+16..4096, genome length up to min(1024, tape/4), 2,044 states, 300 samples per
+state. It ran to completion in 2,407 s and it FAILS the live-agreement tolerance
+that the same preregistration froze:
+
+    median TV   0.0667   tolerance 0.02   FAIL
+    maximum TV  0.1400   tolerance 0.05   FAIL
+
+At 300 samples per state, two independent samples of the SAME kernel differ by
+more than the tolerance, so the sensitivity kernel is under-sampled by its own
+standard. Its stationary solve also hit the 200,000-iteration cap with an L1
+change of 5.96e-07 rather than converging to 1e-14. Both facts mean this arm
+cannot confirm or deny the primary result; it is reported as INCONCLUSIVE, and
+its "1 pair above the noise floor" is a statement about the sample size, not
+about the kernel.
+
+What it does show, qualitatively and in the same direction as the primary:
+
+    communicating classes            1, closed, all 2,044 states, 0 transient
+    truncated mass                   0.0 exactly (the full space is closed, so
+                                     the primary space's truncation is the only
+                                     artificial boundary anywhere in this pass)
+    attribution, all 9,087 pairs     OPERATOR_WEIGHTING 8,085
+                                     PUBLISHED_BOUNDARY 507
+                                     OPERATOR_IMPLEMENTATION 495
+    entropy production               3.65e-02 nats/step over 17,772 terms
+    one-way edges                    201  (see below)
+    top 3-cycle affinities           -2.54, -2.49, -2.23 nats
+    largest currents                 interior length edges at large tape,
+                                     e.g. (34,2048)->(35,2048), all
+                                     OPERATOR_WEIGHTING
+    reversible reference max |J|     2.71e-20
+
+Two things must be said plainly about it. First, 201 one-way edges appear here
+where the primary space had zero, so on the full space the entropy-production
+sum has terms with a zero reverse probability that were excluded from the total;
+with those edges present the true sigma is unbounded above, and the 3.65e-02
+figure is a lower bound over the reversible-support terms only. At 300 samples
+a genuinely rare reverse transition is indistinguishable from an impossible one,
+so I cannot say whether those edges are real one-way transitions or sampling
+zeros. Second, the trajectory comparison on this space (active mean length 57.9
+against reference 221.3, occupancy TV 0.458) is run on an unconverged stationary
+distribution over 2,044 states with only 200,000 steps and is not interpretable;
+it is recorded and not used.
+
+The truncation question is therefore only partly answered. What supports the
+primary result against a truncation artifact: the full space is closed with zero
+escaped mass, the primary space's escaped mass is at most 0.0075 per state, the
+primary's largest currents are interior length edges at fixed tape rather than
+anything touching the tape boundary, and PUBLISHED_BOUNDARY contributes 4 of 506
+pairs with none above the noise floor. What is not settled: a properly powered
+full-space run. That is the single most valuable next measurement and it needs
+roughly two orders of magnitude more sampling than this pass could afford.
 
 ====================================================================
 9. LIVE-OPERATOR / KERNEL VALIDATION
