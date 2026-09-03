@@ -1,0 +1,89 @@
+{
+ "error_model": {
+  "correlation_prediction_error": 0.002316480649138808,
+  "implied_noise_sd_per_edge": 0.03806348608643848,
+  "noise_sd_per_cycle": 0.4845277231275029,
+  "observed_correlation": 0.8454742747379008,
+  "observed_sign_agreement": 0.7914483930341215,
+  "predicted_correlation": 0.843157794088762,
+  "predicted_sign_agreement": 0.8193060704561719,
+  "sign_prediction_error": 0.027857677422050364,
+  "signal_to_noise": 2.3185846619650556,
+  "true_affinity_sd": 1.1234185471402793
+ },
+ "interpretation": "Individual cycle affinities on a spanning-tree basis are NOT reliable: each cycle accumulates per-edge sampling error over hundreds of edges. The affinity DISTRIBUTION nevertheless carries real signal, and the error model's predicted correlation and sign agreement are checked against the observed values. Entropy production is the basis-independent statistic and is what this pass leans on.",
+ "max_cycle_length": 513,
+ "mean_cycle_length": 162.03921846240974,
+ "min_cycle_length": 3,
+ "n_cycles": 7063,
+ "observed": {
+  "correlation": 0.8454742747379008,
+  "max_abs_K_A": 3.0006793575744646,
+  "max_abs_K_B": 3.6332300097852306,
+  "mean_abs_K_A": 0.9365740158425305,
+  "mean_abs_K_B": 1.0228897881962622,
+  "mean_abs_pooled": 0.9412355358229728,
+  "median_abs_difference": 0.398820884322537,
+  "sd_K_A": 1.177331208496726,
+  "sd_K_B": 1.2678974400855278,
+  "sd_of_difference": 0.6852256773926706,
+  "sign_agreement": 0.7914483930341215
+ },
+ "schema_version": "proteus.v0_6_cycle_error.v1",
+ "winners_curse": {
+  "select_on_A_read_on_B": [
+   {
+    "k": 1,
+    "mean_abs_on_other_kernel": 0.3177636432633285,
+    "mean_abs_on_selecting_kernel": 3.0006793575744646,
+    "shrinkage": 0.8941027662748392
+   },
+   {
+    "k": 10,
+    "mean_abs_on_other_kernel": 0.6857552078871954,
+    "mean_abs_on_selecting_kernel": 2.943806015141312,
+    "shrinkage": 0.7670514957982797
+   },
+   {
+    "k": 100,
+    "mean_abs_on_other_kernel": 1.7449154251305592,
+    "mean_abs_on_selecting_kernel": 2.669518285416508,
+    "shrinkage": 0.3463556947098
+   },
+   {
+    "k": 500,
+    "mean_abs_on_other_kernel": 1.8513897682010545,
+    "mean_abs_on_selecting_kernel": 2.3862603063272534,
+    "shrinkage": 0.22414593106542935
+   }
+  ],
+  "select_on_B_read_on_A": [
+   {
+    "k": 1,
+    "mean_abs_on_other_kernel": 2.11879798535951,
+    "mean_abs_on_selecting_kernel": 3.6332300097852306,
+    "shrinkage": 0.41682800713055945
+   },
+   {
+    "k": 10,
+    "mean_abs_on_other_kernel": 2.112010343716594,
+    "mean_abs_on_selecting_kernel": 3.399112337504819,
+    "shrinkage": 0.3786582689800261
+   },
+   {
+    "k": 100,
+    "mean_abs_on_other_kernel": 1.844501554747772,
+    "mean_abs_on_selecting_kernel": 3.01267362228881,
+    "shrinkage": 0.3877526124630606
+   },
+   {
+    "k": 500,
+    "mean_abs_on_other_kernel": 1.7237117361108765,
+    "mean_abs_on_selecting_kernel": 2.579926211586541,
+    "shrinkage": 0.33187556746017566
+   }
+  ],
+  "top1_K_A_value": 3.0006793575744646,
+  "top1_same_cycle_on_K_B": 0.3177636432633285
+ }
+}
