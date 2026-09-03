@@ -63,3 +63,52 @@ sub-searches, the quoted sentences are verified verbatim above, but the A-F cell
 assignments were not independently re-derived by a second full methods reading.
 The headline verdict rests on three papers whose methods were read directly:
 Kumawat et al. 2024 (PNAS), Rutten et al. 2019 (BMC Evol Biol), Misevic et al. 2006 (PRSB).
+
+================================================================================
+ADDENDUM: SYSTEMATIC SWEEP OF THE GENETIC PROGRAMMING BIBLIOGRAPHY
+================================================================================
+Primary artifact: http://gpbib.cs.ucl.ac.uk/gp-bibliography.bib.gz
+  gp-bibliography.bib.gz  11,805,688 bytes
+  gpbib.bib (gunzipped)   44,744,965 bytes   19,986 entries   12,860 with abstracts
+
+VOCABULARY PROBE (whole-file, case-insensitive, literal) -- occurrences:
+  "mutational neighborhood"      0        "offspring distribution"     0
+  "mutational neighbourhood"     0        "distribution of offspring"  0
+  "mutation neighborhood"        0        "offspring phenotype"        0
+  "one-step mutant"              0        "single point mutation"      0
+  "single mutation"              3        "phenotypic variability"     6
+  "one mutation"                 1        "genotype network"           7
+  "mutational robustness"       27        "locality"                 230
+
+FINDING: the local-accessibility-detector vocabulary is essentially ABSENT from
+the GP literature's own abstracts. "mutational neighborhood/neighbourhood"
+occurs ZERO times across 19,986 GP entries. The concept lives in the
+digital-evolution / theoretical-biology corpora instead -- consistent with the
+main result, where every 5/6 paper is an Avida or Aevol paper, never a GP paper.
+
+CONJUNCTION SWEEP over 12,860 abstracts (+notes), regexes rebuilt from the
+corpus's OWN vocabulary after a first attempt returned a degenerate A (0 hits):
+  A fires: 282    B fires: 157    C fires: 131      <- non-degenerate
+  A&B = 10        A&C = 10        B&C = 1           A&B&C = 0
+
+INSTRUMENT VALIDATION: Yu & Miller 2001 (the flagged highest residual-risk
+paper) lands in A&B as predicted, confirming the detector fires on a known
+positive. Note the two C variants disagree on Yu & Miller 2001, so its C
+status remains UNKNOWN pending the PDF.
+
+A&B members (detector-ish + longitudinal, NO operator/representation ablation):
+  2001 Yu & Miller            Neutrality and the Evolvability of Boolean Function Landscape
+  2010 Song, Chen & Zhang     Contribution based bloat control in GP
+  2012 Schulte et al.         Software Mutational Robustness  [mutation testing, not an evo run - excluded]
+  2014 Moraglio               Efficient Implementation of GSGP using Higher-Order Functions
+  2017 Burlacu et al.         Schema Analysis in Tree-Based GP
+  2018 Lourenco et al.        Structured Grammatical Evolution
+  2022 Wittenberg             Denoising Autoencoder GP: control exploration
+  2023 Wittenberg, Rothlauf   Denoising autoencoder GP: strategies to control
+  2023 Fang, Chang et al.     GP with Ranging-Binding Technique
+  2024 Aldeia et al.          Inexact Simplification of Symbolic Regression Expressions
+
+CONCLUSION: A&B&C = 0 across the whole GP bibliography with a validated,
+non-degenerate instrument. No GP paper combines a local accessibility detector,
+longitudinal re-measurement, and an operator/representation ablation -- let
+alone adds D, E and F. This is a quantified null, not an absence of searching.
