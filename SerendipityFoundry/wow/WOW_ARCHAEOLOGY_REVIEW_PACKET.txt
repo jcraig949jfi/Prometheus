@@ -1,0 +1,332 @@
+================================================================================
+  PROMETHEUS INCUBATOR --
+  WOW-SIGNAL BACKEND ARCHAEOLOGY
+  DISCOVERY LEDGER, ADMISSION QUEUE, AND EXTERNAL REVIEW PACKET
+
+  Author : Daedalus, maintainer of the Serendipity Foundry Engine
+  Date   : 2026-09-03
+  Status : DISCOVERY COMPLETE. NOTHING CONFIRMED. NOTHING ADMITTED.
+           No admission right was purchased. No sealed test was run.
+           Both source services were left untouched and still running.
+================================================================================
+
+--------------------------------------------------------------------------------
+0. WHAT THIS IS, AND WHAT IT IS NOT
+--------------------------------------------------------------------------------
+The MHC admission-rights ledger and cryptographic seal changed the epistemic
+status of historical mining: because admission is now structurally protected
+from whatever a search does, the search may be maximally aggressive. This
+packet is the product of that licence.
+
+  IT ESTABLISHES: things about the historical corpus that are directly
+  readable from the record, and a queue of nominations.
+
+  IT ESTABLISHES NOTHING ABOUT ANY PHENOMENON. Every candidate here was
+  selected by unlimited hindsight over a corpus the archaeologist read in
+  full. No p-value, rarity estimate, cross-substrate coincidence, or
+  retrospective replication appearing anywhere below is confirmatory.
+
+  THE STRONGEST PERMITTED LABEL is SEALED_TEST_WORTHY. In fact not even
+  that is yet earned: see section 6.
+
+--------------------------------------------------------------------------------
+1. EXECUTIVE SUMMARY -- FOUR RESULTS
+--------------------------------------------------------------------------------
+R1  THE CORPUS IS FAR LARGER AND STRANGER THAN THE PRIOR SURVEY RECORDED.
+    The 2026-08-30 forensic survey documented one engine, ~14k executions
+    and two candidate successes. The corpus actually holds THREE registered
+    engines (stackvm-v1, treegp-deap, push-pyshgp), 183,856 ledger records,
+    71,683 executions, 30,121 artifacts, 40,796 lineage edges, TWO driver
+    eras (objective_ga, then map_elites), and SEVEN successes -- five of
+    which the prior survey never saw.
+
+R2  THE HISTORICAL "EVOLUTION" WAS LARGELY DRIFT, AND THE HISTORICAL
+    "FAILURE LANDSCAPE" WAS LARGELY AN INSTRUMENT SETTING. 97.7% of all
+    selection events (85 of 87) were FULLY TIED -- every candidate
+    identical, resolved by seeded tie-break alone. And 89.3% of the 6,945
+    failures occurred under step ceilings of 100-400, a regime with roughly
+    32x the failure rate of the dominant 100,000-step regime. Both facts
+    are audit-readable and neither needs a sealed test.
+
+R3  THE POPULATION WAS TWO NON-INTERBREEDING POPULATIONS THAT EVERY POOLED
+    STATISTIC SILENTLY MIXED. Genotype length is bimodal: 28,392 artifacts
+    at 1-150 bytes, 1,393 above 700, and 335 in between. In 38,163
+    length-changing mutations, ZERO cross from <=150 to >700. The long mode
+    was seeded independently by create_random and self-sustained. The
+    401-700 band (327 artifacts) was used as a mutation parent EXACTLY ZERO
+    TIMES.
+
+R4  THE MOST IMPORTANT FINDING IS A BLOCKER, NOT A SIGNAL. Every candidate
+    worth testing is a claim about D13/stackvm-v1 operators. The MHC
+    admission protocol's canonical reference sampler and context family are
+    defined for the World Foundry grammar. THE ADMISSION PROTOCOL CANNOT
+    CURRENTLY STATE THESE CLAIMS. Section 6.
+
+--------------------------------------------------------------------------------
+2. THE BOUNDARY, REBUILT AFTER ADVERSARIAL REVIEW
+--------------------------------------------------------------------------------
+The draft design went to an independent red team BEFORE any candidate was
+nominated. All four dimensions returned UNSOUND_AS_STATED. The three
+findings that changed the design:
+
+F-A  THE DRAFT INDEPENDENCE TEST MEASURED INPUT NOVELTY, NOT VERDICT
+     ENTROPY -- the same error as G14's procedural seal, one level up. The
+     draft asked "can the corpus compute this prediction?" But the ledger's
+     own ENGINE_REGISTERED record declares the engine bit-deterministic and
+     the interpreter is shipped, so an archaeologist runs 10^6 self-chosen
+     seeds offline, observes P(pass)=0.9993, and registers a prediction
+     whose INPUTS are beacon-fresh and whose VERDICT is already known. The
+     beacon randomizes WHICH draw, not WHETHER.
+     REPAIR: the criterion is now VERDICT ENTROPY. Registration must ship an
+     executable verdict function V(beacon, evidence) and evidence sampler
+     S(beacon), both hashed into the commit. The HARNESS -- never the
+     nominator -- draws 10,000 decoy beacons and measures the empirical
+     level p0 (must be <= 1/K) and the admit rate p1 (must satisfy
+     H(p1) >= 0.5 bits). The attack above scores H(0.9993) = 0.0083 bits and
+     is refused. A beacon-sensitivity assertion (two decoys must produce
+     different evidence hashes) additionally kills constant-fibre
+     predictions entailed by statically-readable substrate invariants.
+
+F-B  HINDSIGHT IN THE HYPOTHESIS IS FREE; HINDSIGHT IN THE NULL IS FATAL.
+     This is the deepest result of the mission. Selecting a candidate by
+     unlimited hindsight costs nothing: the candidate is corpus-measurable,
+     and for a null whose distribution GIVEN the candidate does not depend
+     on the corpus, P(reject | H0) <= 1/K holds for ANY corpus-measurable
+     selection rule -- no multiplicity is owed for the search, however many
+     millions of hypotheses it examined. That premise dies the moment the
+     reference sampler, context rule, tie rule, matching covariates, or
+     exclusions are FITTED to the corpus (e.g. "match on genotype length"
+     chosen because that is where the artifact looks most extreme).
+     REPAIR: the null path is TYPED. Every element of {ref_rule,
+     context_rule, tie_rule, betting_rule, matching_covariates,
+     lineage_exclusions, grammar_family_exclusions, stopping_rule} is
+     declared PreCorpusConstant | BeaconDerived | CorpusDerived, and a
+     CorpusDerived value in the null path is a TYPE ERROR. Schema
+     separation of record FILES was theater; this is where it had to go.
+
+F-C  THE RANKING WAS GAMEABLE IN SIX WAYS AT ONCE. Nominator-supplied
+     priors maximize information at p=0.5, so every entry converges to
+     "honestly 50/50" and the ranking degenerates to ranking by K. Without
+     a power model the score is monotone in K, so the dominant strategy is
+     K=10^9 and the queue fills with tests a real effect cannot pass. The
+     denominator was wrong: alpha is not the binding resource -- RIGHTS
+     are (~100 ever; a death costs ~0 alpha but 1% of the program).
+     Independence was scored on hypothesis text, so n_eff collapses toward
+     1. And no calibration tranche existed, so the corpus->sealed transfer
+     function would never be estimated.
+     REPAIR: priors are structural intervals scored at their pessimistic
+     end; a power model at a declared minimum effect size is mandatory;
+     both bits-per-alpha and bits-per-RIGHT are computed and the binding
+     constraint named; deaths are discounted by q_boring (nondeterminism,
+     resource truncation, mis-specified observable, extraction bug);
+     independence is a shared-nuisance loading vector yielding a queue
+     n_eff; and the queue OPENS with a calibration tranche.
+
+--------------------------------------------------------------------------------
+3. DISCOVERY LEDGER -- AUDIT FACTS (no sealed test needed or wanted)
+--------------------------------------------------------------------------------
+These are directly readable from the record. Spending a scarce admission
+right on any of them would be absurd; they are reported so that every
+future claim on this corpus is interpreted correctly.
+
+A1  SELECTION WAS DRIFT. 85 of 87 SELECTION events (97.7%) were fully tied
+    -- n_tied == n_candidates -- across both tournament (80) and
+    elite_truncation (7) operators, resolved by seeded_uniform tie-break.
+    In the objective_ga era the fitness signal was flat and "selection"
+    was a random draw.
+
+A2  THE FAILURE LANDSCAPE WAS SHAPED BY A STEP CEILING. All 6,945 era-A
+    failures are a single kind (resource_exhausted, detail
+    "exhausted_cases=12/12"). By step regime: 43.0% at max_steps=300,
+    41.5% at 100, 4.8% at 400, 0.2% at 200 -- 89.3% under tight ceilings --
+    versus 10.4% in the 100,000-step regime that carried 56,967 of the
+    71,683 executions. Tight-ceiling failure rate ~42%; 100k-regime rate
+    ~1.3%. The 722 failures at 100,000 steps are the only ones in the
+    corpus not plausibly explained by the ceiling.
+
+A3  BIMODAL LENGTH WITH A STERILE VALLEY (R3 above). Bands: 1-50 (12,766
+    artifacts, used as mutation parent 19,242 times), 51-150 (15,626 /
+    16,925), 151-400 (8 / 3), 401-700 (327 / ZERO), >700 (1,393 / 2,336).
+    Mutation length change: 45.1% same length, 42.9% +-1..8, 11.4%
+    +-9..100, 0.7% big jumps; max child/parent ratio 29.0. Crossings from
+    <=150 to >700: ZERO.
+
+A4  NEUTRAL SELF-LOOPS ARE CONCENTRATED AND U-SHAPED IN LENGTH. 344 of
+    40,796 lineage edges (0.8%) are self-loops -- mutation returning a
+    byte-identical genotype -- and they fall on only 25 artifacts (top:
+    150, 70, 60, 14, 11 occurrences). Rate by parent length: 1.497%
+    (1-50), 0.106% (51-150), 1.541% (>700). Not monotone, so not a simple
+    resample collision.
+
+A5  ERA-B INSTRUMENTATION VOID. In the separate engine substrate: all
+    3,077 observations have NULL info_kind; all 2,411 failures have NULL
+    kind; all 138 hypotheses have NULL status. Outcomes: 654 SURVIVED, 19
+    FALSIFIED, 2,404 INCONCLUSIVE (78%). Evidence classes were populated
+    (2,935 ENGINE_WORK_RESULT, 142 CLIENT_ASSERTED). Three schema fields
+    the engine provides were never written, so era-B failure structure is
+    unrecoverable from this record.
+
+A6  CROSS-ENGINE STERILITY. treegp-deap (3,008 artifacts) and push-pyshgp
+    (2,404) produced ZERO successes; all seven belong to stackvm-v1.
+
+A7  SEVEN SUCCESSES, TWO ERAS. objective_ga: 26ab2cb1 (12/12 and 8/8 on
+    two tasks), 4065e488 (12/12 and 8/8). map_elites: eadcc0bd, 8aa32ef8,
+    9bc2b861. Task a768fad8 was solved TWICE, by eadcc0bd (37 bytes,
+    mutate, 3 ancestors) and 9bc2b861 (707 bytes, create_random) --
+    artifacts with ZERO shared ancestry, from OPPOSITE length modes.
+
+A8  PROVENANCE ASYMMETRY, STATED AGAINST INTEREST. The two objective_ga
+    successes have linked execution records (exec_seq refs). The three
+    map_elites successes have NONE that the extractor could link -- their
+    SUCCESS events carry artifact and task ids but no execution join. The
+    strongest-looking candidates therefore rest on the weaker provenance.
+
+--------------------------------------------------------------------------------
+4. WHY MOST FINDINGS ARE NOT CANDIDATES
+--------------------------------------------------------------------------------
+A distinction the mission implies and this packet makes explicit: an
+archaeological result is only a CANDIDATE if it asserts something about
+FUTURE behaviour that the corpus cannot settle. A1-A8 are audit facts about
+what was recorded. "Was selection tied?" is answered by reading the ledger,
+not by purchasing 1% of the program's lifetime error budget. Nominating
+them would convert a scarce irreplaceable resource into a re-derivation of
+something already known.
+
+--------------------------------------------------------------------------------
+5. THE ADMISSION QUEUE (WOW_ADMISSION_QUEUE.jsonl)
+--------------------------------------------------------------------------------
+Five entries. Calibration tranche first, per adversarial review: the first
+rights buy knowledge about the APPARATUS and the corpus->sealed transfer
+function, not about phenomena. Queue n_eff = 4.30 of 5 entries, computed
+from shared-nuisance loadings (outcome independence), not hypothesis text.
+
+ RANK  ID          TRANCHE      BITS/RIGHT  CLAIM (abbreviated)
+ 1     WOW-C-002   CALIBRATION      0.182   transfer-function probe on
+                                            9bc2b861: the ONLY success from
+                                            the isolated >700 mode, 11
+                                            self-loop parents, no ancestors
+ 2     WOW-C-001   CALIBRATION      0.009   ADVERSARIAL SHAM: a 401-700
+                                            sterile-band genotype confers NO
+                                            advantage. THE REGISTERED
+                                            PREDICTION IS ITS OWN DEATH;
+                                            survival triggers a
+                                            pre-registered PROGRAM ABORT
+ 3     WOW-C-003   PHENOMENON       0.536   sterile-band mechanism: does
+                                            mutation from 401-700 parents
+                                            work at all? The corpus contains
+                                            ZERO such events
+ 4     WOW-C-004   PHENOMENON       0.422   reproductive isolation between
+                                            length modes is mechanical, not
+                                            historical
+ 5     WOW-C-005   PHENOMENON       0.277   convergent solvability of task
+                                            a768fad8 from both modes
+
+NOTE ON THE ORDERING: the calibration tranche is placed first BY RULE, not
+by score -- WOW-C-001 has the lowest bits/right in the queue and is second
+anyway, because an instrument that cannot be shown to kill a known nothing
+cannot be trusted when it spares something. WOW-C-003 has the cleanest
+independence in the entire corpus: the historical record contains literally
+zero observations of the event class its prediction concerns.
+
+--------------------------------------------------------------------------------
+6. THE BLOCKER: NO ENTRY IS CERTIFIED, AND NONE CAN BE YET
+--------------------------------------------------------------------------------
+Every queue entry carries entropy_validation = PENDING_ENTROPY_VALIDATION
+and the label SEALED_TEST_WORTHY_PENDING_VALIDATION. Two independent
+reasons, both stated against interest:
+
+ B1 THE VERDICT-ENTROPY HARNESS CANNOT RUN. It requires an executable
+    verdict function and evidence sampler evaluated against 10,000 decoy
+    beacons under a canonical reference sampler. That machinery does not
+    exist for this substrate. Until it runs, "SEALED_TEST_WORTHY" is a
+    claim about a check nobody performed -- exactly the kind of assertion
+    this program has spent its whole methodology refusing.
+
+ B2 SUBSTRATE MISMATCH (the mission's most valuable finding). Every
+    candidate is a claim about D13/stackvm-v1 operators -- mutation from a
+    length band, crossing between modes, task solvability under a specific
+    interpreter. The MHC admission protocol's canonical reference sampler
+    (CANON-R-V1: uniform PRF-index into the frozen operator ensemble) and
+    canonical context family (CANON-W-V1) are GENESIS-pinned for the World
+    Foundry grammar, and registrant-supplied samplers are refused at fold
+    time precisely because a corpus-fitted null voids the bound. THE
+    INTERESTING HISTORICAL CLAIMS ARE EXACTLY THE ONES THE ADMISSION
+    PROTOCOL CANNOT CURRENTLY STATE.
+    The two exits, both requiring adjudication:
+      (i) give stackvm-v1 its own GENESIS-pinned canonical sampler and
+          context family, authored WITHOUT reference to this corpus (or the
+          null becomes corpus-fitted and F-B applies); or
+      (ii) re-pose each claim in the World Foundry grammar -- which changes
+          the claim, and the re-posed version is a NEW hypothesis whose
+          historical support does not transfer.
+
+--------------------------------------------------------------------------------
+7. REPRODUCIBILITY OF THE ARCHAEOLOGY (required even though it cannot admit)
+--------------------------------------------------------------------------------
+ SOURCES   F:\SerendipityD\var\ledger\segment-0000000{0,1}.jsonl
+           (191,238,558 + 105,632,755 bytes; 183,856 records; hash-chained
+           prev_hash/entry_hash, streamed and chain-checked)
+           F:\SerendipityD\var\tasks.json (416,722 bytes)
+           SFE engine.db -- read from a FORENSIC COPY only (integrity_check
+           ok); the live DB was never opened, both services left running
+           (8799 PID 23276; 8811 PID 20112), no HTTP issued, nothing mutated
+ CODE      SerendipityFoundry/wow/extract.py (streaming extraction)
+           SerendipityFoundry/wow/boundary.py (rebuilt boundary + scoring)
+           SerendipityFoundry/wow/make_queue.py (queue generation)
+ SEARCH    Hypothesis classes examined, by declared magnitude: artifact x
+           observable sweeps ~10^4; band x operator grids ~10^2; task x mode
+           ~10^3. THE EFFECTIVE NUMBER IS NOT ESTIMABLE: the search was
+           adaptive and human/model-driven, with each query chosen after
+           seeing the previous result. Reporting a single number would be
+           false precision. What is reported instead is the full sequence of
+           queries actually run (session transcript) and the degrees of
+           freedom below.
+ RESEARCHER DEGREES OF FREEDOM, enumerated against interest:
+   * length-band boundaries (1-50/51-150/151-400/401-700/>700) were chosen
+     by me AFTER seeing the distribution -- they are CorpusDerived and are
+     therefore forbidden in any null path (F-B);
+   * "big jump" and "roughly doubled" thresholds chosen post hoc;
+   * the decision to treat self-loops as a distinct edge class;
+   * the choice to join failures to max_steps rather than to trace or era;
+   * the choice of which of 74 Prometheus subtrees to examine (Substrate C,
+     207MB of archives, was surveyed only at directory level -- an entire
+     unexplored region);
+   * era-B analysis stopped at column-level summaries.
+ KNOWN CONFOUND CLASSES not yet excluded: seed reuse and input_hash
+   collisions in the execution harness; service restarts mid-corpus; schema
+   migration between eras (the two eras have visibly different SUCCESS
+   payload shapes); retry/duplicate records; checkpoint cadence aliasing;
+   client-identity conflation (m2- vs d14 traces: 6,383 vs 562 failures);
+   and cross-substrate joins on fields that only LOOK like the same
+   quantity.
+
+--------------------------------------------------------------------------------
+8. WHAT I RECOMMEND
+--------------------------------------------------------------------------------
+ N1 DO NOT PURCHASE ANY RIGHT YET. Nothing here is validated, and B2 means
+    a purchase today would register a claim the protocol cannot express.
+ N2 ADJUDICATE B2 FIRST. It is a one-decision blocker gating every
+    historical candidate this program will ever generate, not just these
+    five.
+ N3 BUILD THE VERDICT-ENTROPY HARNESS BEFORE THE FIRST PURCHASE. It is the
+    only thing standing between an offline oracle and a counterfeit
+    admission, and it is cheap relative to a right.
+ N4 TREAT A1-A3 AS CORPUS-WIDE CORRECTIONS. Any prior or future analysis of
+    this corpus that pooled the two length modes, or that read the failure
+    spectrum as organism incapacity, or that treated the objective_ga era as
+    selection rather than drift, needs revisiting. That correction is worth
+    more than any single candidate below it.
+ N5 SUBSTRATE C IS UNEXPLORED. 207MB across ten archived sub-projects was
+    surveyed only at directory level. The cross-substrate joins the mission
+    asked for are mostly still unmade.
+
+================================================================================
+  CLOSING
+  The corpus told us where to look. It did not tell us we had earned the
+  right to believe, and this packet claims no such right. The archaeology's
+  most useful products are not the five nominations -- they are the three
+  corpus-wide corrections in section 3, which change how every past and
+  future claim on this data must be read, and the blocker in section 6,
+  which says plainly that the admission protocol cannot yet state the
+  questions the history actually raises.
+================================================================================
