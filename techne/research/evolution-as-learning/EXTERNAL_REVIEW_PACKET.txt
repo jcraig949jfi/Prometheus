@@ -1,0 +1,189 @@
+================================================================================
+EXTERNAL REVIEW PACKET
+EVOLUTION-AS-LEARNING / DEVELOPMENTAL MEMORY -- MECHANISM RECOVERY
+TECHNE, PROMETHEUS
+================================================================================
+Prepared:      2026-09-03
+Location:      techne/research/evolution-as-learning/
+Sources:       sources/watson2014_devmem.txt        78,008 chars   RECOVERED
+               sources/watson2016_howlearn.txt      62,856 chars   RECOVERED
+               sources/kouvaris2017_generalise.txt  79,871 chars   RECOVERED
+NOT recovered: Kashtan/Alon; Toussaint; Pavlicev/Cheverud/Wagner; Valiant
+Headline:      The mechanism is REAL and the equivalence is FORMAL BUT
+               CONDITIONAL. History does modify the generator -- by construction
+               in the equations, and NEVER MEASURED by a same-probe
+               counterfactual.
+
+--------------------------------------------------------------------------------
+1. THE RECOVERED MATHEMATICS
+--------------------------------------------------------------------------------
+Watson et al. 2014, Equation 1, verbatim:
+
+    P(t+1) = P(t) + tau_1 * sigma( B . P(t) ) - tau_2 * P(t)
+    P(0) = G ,  tau_1 = 1 ,  tau_2 = 0.2 ,  sigma(x) = tanh(x) elementwise
+
+Degenerate case the paper explicitly contrasts itself against (T=1, sigma=id):
+
+    P = G + tau_1 (B.G) - tau_2 G      ==>   P = B . G
+    identified in-source as Lipson/Pollack/Suh 2002 and Kashtan et al. 2009
+
+The selection result:
+
+    selection coefficient = (dP* . S) / (1 + P* . S)
+    delta b_ij = r * s_i * s_j        (r > 0)      == Hebb rule
+
+--------------------------------------------------------------------------------
+2. THE THIRTEEN QUESTIONS, ANSWERED
+--------------------------------------------------------------------------------
+ 1  IS "EVOLUTION LEARNS" MATHEMATICALLY LITERAL?
+    PARTLY, and the qualifier is load-bearing. The Hebbian result is DERIVED in
+    the source, not asserted -- but it is derived under a stated condition
+    ("selection sufficiently efficacious that phenotypic characters at least
+    have the same sign as the direction of selection") and it is derived in the
+    SINGLE-STEP LINEAR case, where one mutation touches one trait. In the
+    recurrent non-linear regime the source itself states a mutation "may affect
+    many phenotypic characters", so the outer-product form is an approximation
+    whose error is never characterised.
+    THE EQUIVALENCE IS CLEANEST WHERE THE INTERESTING BEHAVIOUR IS ABSENT AND
+    APPROXIMATE WHERE IT LIVES. Everything beyond that is framing.
+
+ 2  WHAT OBJECT STORES THE HISTORICAL INFORMATION?
+    The interaction matrix B. Not the genotype G.
+
+ 3  WHAT MECHANISM CHANGES IT?
+    Selection on interaction coefficients, following delta b_ij = r s_i s_j.
+
+ 4  DOES THAT CHANGE ALTER FUTURE VARIATION?
+    YES BY CONSTRUCTION. Adult phenotype is a deterministic function of (G,B);
+    mutation perturbs G; so the reachable phenotype distribution is a function
+    of B. This is a property of the equations, not an experimental finding.
+
+ 5  DOES ALTERED VARIATION IMPROVE SUBSEQUENT ACQUISITION?
+    YES within the trained structural family (S1), and in unseen environments
+    of the SAME regularity (S3). UNTESTED for orthogonal regularities.
+
+ 6  IS IT DEMONSTRATED LONGITUDINALLY?
+    Partially -- B is shown changing over evolutionary time in simulation.
+
+ 7  IS IT CAUSAL?
+    NOT ESTABLISHED. No recovered source runs the same-probe counterfactual:
+    match adult phenotype across histories, apply an identical mutation
+    operator, compare offspring distributions. This is the central gap.
+
+ 8  DOES IT GENERALISE OUTSIDE THE HISTORICAL STRUCTURAL DISTRIBUTION?
+    NO EVIDENCE. Strongest demonstrated level is G3 -- novel states within the
+    learned family. The source calls its own result "extrapolative" for
+    producing 0, 2 and 4 loops after training on 1 and 3, but that is unseen
+    VALUES on a SEEN axis. G4 is neither demonstrated nor claimed.
+
+ 9  SMALLEST MOTIF REPRODUCING THE EFFECT?
+    A recurrent saturating map whose parameters accumulate the outer product of
+    externally selected states. Four ingredients: recurrence, saturation,
+    correlational parameter accumulation, timescale separation. Only the
+    non-linearity is RECOVERED as necessary; the other three are DERIVED and
+    are the subject of experiment E3.
+
+10  DOES TOUSSAINT OPERATE ON THE SAME ABSTRACT OBJECT?
+    UNVERIFIED -- source not recovered. Stated as a well-posed candidate with a
+    named failure condition, not as a result.
+
+11  DO KASHTAN/ALON AND KOUVARIS REPRESENT OTHER ROUTES?
+    KOUVARIS: yes, and RECOVERED -- it adds the CONTROLS (noise, connection
+    cost) rather than a new mechanism.
+    KASHTAN/ALON: UNVERIFIED, two live branches, one discriminating test named.
+
+12  SECOND-ORDER MECHANISM?
+    NO. Recursion depth in the recovered lineage is ONE. The Hebbian update is a
+    fixed law, not an evolved object. Any meta-evolvability claim drawn from
+    this lineage is unsupported.
+
+13  HIGHEST-VALUE UNRESOLVED EXPERIMENT?
+    E1, the same-probe counterfactual. Section 5.
+
+--------------------------------------------------------------------------------
+3. FALSIFIERS -- STATUS
+--------------------------------------------------------------------------------
+    K1  equivalence purely metaphorical ........ SURVIVES, WOUNDED
+                                                 formal but conditional, and
+                                                 approximate in the operative
+                                                 regime
+    K2  changes only current phenotype ......... NOT KILLED, NOT CONFIRMED
+                                                 true by construction, unmeasured
+    K3  generalisation is mere interpolation ... PARTLY FIRES
+                                                 G3 reached, G4 absent, and the
+                                                 "extrapolation" is on a trained
+                                                 axis
+    K4  no acquisition benefit ................. DOES NOT FIRE within family;
+                                                 UNTESTED outside it
+    K5  depends on continuous recurrent dynamics UNRESOLVED -- discretisation
+                                                 never tested; this is E3
+    K6  a simpler mechanism explains it ........ UNRESOLVED -- the linear arm is
+                                                 weaker, but three of the four
+                                                 motif ingredients are untested
+    K7  common abstraction fails ............... UNTESTABLE HERE -- two of the
+                                                 three comparators unrecovered
+
+--------------------------------------------------------------------------------
+4. WHAT WAS ALREADY SOLVED
+--------------------------------------------------------------------------------
+    problem                                   theory  sim  causal  longitudinal
+    ---------------------------------------   ------  ---  ------  ------------
+    selection alters the G-P map                YES   YES     no       partial
+    past structure stored in development        YES   YES     no       partial
+    stored structure changes future variation   YES   YES     NO          no
+    future variation generalises              partial YES     no          no
+    future adaptation accelerates             partial YES     no          no
+    works outside the trained family             no    no     no          no
+    evolvability compounds                       no    no     no          no
+    variation machinery modifies itself          no    no     no          no
+    open-ended dimensions emerge                 no    no     no          no
+
+    The bottom four rows are empty in every column. That is where Prometheus
+    would be doing new work rather than rediscovering.
+
+--------------------------------------------------------------------------------
+5. MINIMUM JUSTIFIED NEXT EXPERIMENT
+--------------------------------------------------------------------------------
+E1 -- SAME-PROBE COUNTERFACTUAL
+
+    Evolve two lineages under different historical target sets. Select genotypes
+    whose ADULT PHENOTYPE is matched across lineages. Apply the IDENTICAL
+    mutation operator. Compare the offspring phenotype DISTRIBUTIONS.
+
+    Pre-register: same mean, different shape.
+    If the distributions are indistinguishable, K2 fires and developmental
+    memory is a current-phenotype effect only.
+
+    Why this and nothing else first: every claim in this lineage rests on
+    "history modifies the generator". In the equations that is true BY
+    CONSTRUCTION. A construction is not a result, and no recovered source has
+    measured it.
+
+--------------------------------------------------------------------------------
+6. WHAT THIS PACKET DOES NOT CLAIM
+--------------------------------------------------------------------------------
+    - No claim that evolution is intelligent, reasons, or learns in any sense
+      beyond the specific conditional Hebbian result above.
+    - No claim about Toussaint or Kashtan/Alon. Both sources unrecovered, both
+      comparisons marked UNVERIFIED throughout.
+    - No adoption of "future cone" into Prometheus vocabulary. One lineage is
+      not a unification, and a term adopted before its unification is
+      demonstrated becomes vocabulary that argues for its own thesis.
+    - No cognition labels on any registered part.
+    - The associative-memory reading is marked ANALOGICAL_ONLY. No symmetry
+      constraint on B was recovered, so Hopfield storage guarantees are not
+      licensed however suggestive the language is.
+
+--------------------------------------------------------------------------------
+7. REVIEWER BOTTOM LINE
+--------------------------------------------------------------------------------
+    The source derives delta b_ij = r s_i s_j cleanly for a single-step LINEAR
+    map, and then studies a recurrent NON-LINEAR map in which it states that one
+    mutation may affect many characters.
+
+    Is the Hebbian equivalence load-bearing for the demonstrated memory and
+    generalisation behaviour -- or is it an exact result about a degenerate case
+    being used to interpret a regime where it only approximately holds?
+================================================================================
+END OF PACKET
+================================================================================
