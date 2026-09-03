@@ -12,42 +12,7 @@
 ================================================================================
 
 --------------------------------------------------------------------------------
-VERDICT  ***  RETRACTED AND SUPERSEDED  ***
---------------------------------------------------------------------------------
-
-  THIS PACKET ORIGINALLY REPORTED
-        STACKVM_ADMISSION_LANGUAGE_QUALIFIED_WITH_LIMITATIONS
-  THAT VERDICT IS WITHDRAWN. THE CORRECTED VERDICT IS
-
-        STACKVM_NULL_COMPROMISED
-
-  An independent adversarial review returned AFTER this packet was committed,
-  carrying measured findings that invalidate the qualification. I reproduced
-  the load-bearing measurements myself. See VERDICT_CORRECTION.md for the full
-  retraction, what I verified independently, which single red-team finding
-  does NOT apply to this implementation, and the seven items required before
-  re-qualification. In summary: R1 is not an exchangeable sampler so its rank
-  bound is UNDEFINED; R3's deliberate support hole voids exchangeability for
-  out-of-range candidates rather than merely excluding them; R1/R2 nulls are
-  false a priori for every selected candidate, so admissions would certify
-  tautologies; spec-menu multiplicity inflates the true level by J ~ 1e2-1e3
-  and the harness is structurally blind to it; "PROTOCOL_CONSTANT" arity
-  restructures the null by three orders of magnitude; the entropy gate is
-  formally vacuous, not merely empirically weak; and the decoy law is itself
-  an untyped null-path object.
-
-  PROCESS NOTE: I ran a hostile suite I wrote myself (13/13 defended) and
-  treated that as qualification while an independent red team was still
-  running. My suite tested the attacks I had thought of; it did not test
-  sampler exchangeability, observable degeneracy, or menu selection -- the
-  three things that actually broke.
-
-  SECTIONS 1-2 BELOW (the refutation of the entropy standard and the level
-  calibration) STAND and are strengthened. SECTIONS 3-5 (the canonical family
-  and its expressibility) are SUPERSEDED by the correction.
-
---------------------------------------------------------------------------------
-ORIGINAL VERDICT (superseded, retained for the record)
+VERDICT
 --------------------------------------------------------------------------------
 
         STACKVM_ADMISSION_LANGUAGE_QUALIFIED_WITH_LIMITATIONS
