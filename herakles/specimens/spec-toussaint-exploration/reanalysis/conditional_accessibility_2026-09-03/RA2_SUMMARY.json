@@ -1,0 +1,200 @@
+{
+ "alpha=0.03_beta=0.1": {
+  "A_spearman_md_vs_nops": 0.8597799564825327,
+  "A_n": 750,
+  "A_spearman_excl_gen0": 0.843130922308235,
+  "C_monotonicity": [
+   {
+    "nops_bin": 0,
+    "n": 284,
+    "mean_md": 0.34078907042253526,
+    "min_md": 0.0,
+    "max_md": 3.200177
+   },
+   {
+    "nops_bin": 1,
+    "n": 185,
+    "mean_md": 2.729740318918919,
+    "min_md": 0.033436,
+    "max_md": 3.259854
+   },
+   {
+    "nops_bin": 2,
+    "n": 123,
+    "mean_md": 3.091902739837398,
+    "min_md": 1.963246,
+    "max_md": 3.412832
+   },
+   {
+    "nops_bin": 3,
+    "n": 90,
+    "mean_md": 3.1718387333333333,
+    "min_md": 2.492791,
+    "max_md": 3.445972
+   },
+   {
+    "nops_bin": 4,
+    "n": 43,
+    "mean_md": 3.1612961162790696,
+    "min_md": 2.881231,
+    "max_md": 3.344519
+   },
+   {
+    "nops_bin": 5,
+    "n": 14,
+    "mean_md": 3.1670918571428572,
+    "min_md": 2.95396,
+    "max_md": 3.378234
+   }
+  ],
+  "C_is_monotone_increasing": false,
+  "B_generation_trend_within_nops_strata": [
+   {
+    "nops_bin": 0,
+    "n": 284,
+    "spearman_gen_vs_md_within_stratum": 0.647779262230448,
+    "mean_md": 0.34078907042253526
+   },
+   {
+    "nops_bin": 1,
+    "n": 185,
+    "spearman_gen_vs_md_within_stratum": 0.47980509996578197,
+    "mean_md": 2.729740318918919
+   },
+   {
+    "nops_bin": 2,
+    "n": 123,
+    "spearman_gen_vs_md_within_stratum": 0.1176844501357383,
+    "mean_md": 3.091902739837398
+   },
+   {
+    "nops_bin": 3,
+    "n": 90,
+    "spearman_gen_vs_md_within_stratum": -0.2383206971355036,
+    "mean_md": 3.1718387333333333
+   },
+   {
+    "nops_bin": 4,
+    "n": 43,
+    "spearman_gen_vs_md_within_stratum": -0.17570946472574547,
+    "mean_md": 3.1612961162790696
+   },
+   {
+    "nops_bin": 5,
+    "n": 14,
+    "spearman_gen_vs_md_within_stratum": -0.08849752448922245,
+    "mean_md": 3.1670918571428572
+   }
+  ],
+  "B_generation_trend_unconditional": 0.786069136786605,
+  "D_rank_R2_nops_alone": 0.7392215735691058,
+  "D_mean_abs_within_stratum_gen_effect": 0.2912994164470733,
+  "D_max_abs_within_stratum_gen_effect": 0.647779262230448,
+  "verdict": "RA2_MACHINERY_COUNT_EXPLAINS_EFFECT",
+  "verdict_inputs": {
+   "spearman_md_nops": 0.8597799564825327,
+   "uncond_gen_trend": 0.786069136786605,
+   "mean_within_stratum_gen_trend": 0.2912994164470733,
+   "collapses_by_half": true
+  }
+ },
+ "alpha=0.06_beta=0.1": {
+  "A_spearman_md_vs_nops": 0.7330636910021953,
+  "A_n": 750,
+  "A_spearman_excl_gen0": 0.6990085157104526,
+  "C_monotonicity": [
+   {
+    "nops_bin": 0,
+    "n": 220,
+    "mean_md": 0.3426427409090909,
+    "min_md": 0.0,
+    "max_md": 3.216876
+   },
+   {
+    "nops_bin": 1,
+    "n": 278,
+    "mean_md": 2.826466010791367,
+    "min_md": 0.049747,
+    "max_md": 3.228964
+   },
+   {
+    "nops_bin": 2,
+    "n": 149,
+    "mean_md": 3.071624758389262,
+    "min_md": 2.083876,
+    "max_md": 3.242152
+   },
+   {
+    "nops_bin": 3,
+    "n": 58,
+    "mean_md": 3.0880426379310344,
+    "min_md": 2.772051,
+    "max_md": 3.235494
+   },
+   {
+    "nops_bin": 4,
+    "n": 22,
+    "mean_md": 3.1160637272727274,
+    "min_md": 2.895385,
+    "max_md": 3.216081
+   },
+   {
+    "nops_bin": 5,
+    "n": 17,
+    "mean_md": 3.128726352941176,
+    "min_md": 3.060782,
+    "max_md": 3.19814
+   }
+  ],
+  "C_is_monotone_increasing": true,
+  "B_generation_trend_within_nops_strata": [
+   {
+    "nops_bin": 0,
+    "n": 220,
+    "spearman_gen_vs_md_within_stratum": 0.7641646428812939,
+    "mean_md": 0.3426427409090909
+   },
+   {
+    "nops_bin": 1,
+    "n": 278,
+    "spearman_gen_vs_md_within_stratum": 0.27017483372929596,
+    "mean_md": 2.826466010791367
+   },
+   {
+    "nops_bin": 2,
+    "n": 149,
+    "spearman_gen_vs_md_within_stratum": 0.06797347067808307,
+    "mean_md": 3.071624758389262
+   },
+   {
+    "nops_bin": 3,
+    "n": 58,
+    "spearman_gen_vs_md_within_stratum": 0.010788853795724538,
+    "mean_md": 3.0880426379310344
+   },
+   {
+    "nops_bin": 4,
+    "n": 22,
+    "spearman_gen_vs_md_within_stratum": 0.18148850216015694,
+    "mean_md": 3.1160637272727274
+   },
+   {
+    "nops_bin": 5,
+    "n": 17,
+    "spearman_gen_vs_md_within_stratum": 0.25458907331786323,
+    "mean_md": 3.128726352941176
+   }
+  ],
+  "B_generation_trend_unconditional": 0.7124079385370503,
+  "D_rank_R2_nops_alone": 0.537382375065762,
+  "D_mean_abs_within_stratum_gen_effect": 0.258196562760403,
+  "D_max_abs_within_stratum_gen_effect": 0.7641646428812939,
+  "verdict": "RA2_MACHINERY_COUNT_EXPLAINS_EFFECT",
+  "verdict_inputs": {
+   "spearman_md_nops": 0.7330636910021953,
+   "uncond_gen_trend": 0.7124079385370503,
+   "mean_within_stratum_gen_trend": 0.258196562760403,
+   "collapses_by_half": true
+  }
+ }
+}

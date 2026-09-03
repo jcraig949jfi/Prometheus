@@ -1,0 +1,108 @@
+{
+ "alpha=0.03_beta=0.0": {
+  "h=150": {
+   "n_eligible_points": 1,
+   "points": [
+    50
+   ],
+   "values": [
+    0.2832234640282107
+   ],
+   "verdict_note": "fewer than two eligible points; INDETERMINATE by preregistration",
+   "verdict": "RA1_INDETERMINATE",
+   "verdict_reason": "fewer than two eligible points after the preregistered eligibility rule and stability guard; 1 of the candidate points survived"
+  },
+  "h=400": {
+   "n_eligible_points": 0,
+   "points": [],
+   "values": [],
+   "verdict_note": "fewer than two eligible points; INDETERMINATE by preregistration",
+   "verdict": "RA1_INDETERMINATE",
+   "verdict_reason": "fewer than two eligible points after the preregistered eligibility rule and stability guard; 0 of the candidate points survived"
+  }
+ },
+ "alpha=0.03_beta=0.1": {
+  "h=150": {
+   "n_eligible_points": 0,
+   "points": [],
+   "values": [],
+   "verdict_note": "fewer than two eligible points; INDETERMINATE by preregistration",
+   "verdict": "RA1_INDETERMINATE",
+   "verdict_reason": "fewer than two eligible points after the preregistered eligibility rule and stability guard; 0 of the candidate points survived"
+  },
+  "h=400": {
+   "n_eligible_points": 0,
+   "points": [],
+   "values": [],
+   "verdict_note": "fewer than two eligible points; INDETERMINATE by preregistration",
+   "verdict": "RA1_INDETERMINATE",
+   "verdict_reason": "fewer than two eligible points after the preregistered eligibility rule and stability guard; 0 of the candidate points survived"
+  }
+ },
+ "alpha=0.06_beta=0.0": {
+  "h=150": {
+   "n_eligible_points": 2,
+   "points": [
+    150,
+    350
+   ],
+   "values": [
+    0.13694688919682688,
+    0.17639078184894966
+   ],
+   "mean_partial": 0.15666883552288827,
+   "sign_consistent": true,
+   "perm_p_two_sided": 0.2748625687156422,
+   "verdict": "RA1_NO_INCREMENTAL_SIGNAL",
+   "verdict_reason": "|mean partial| 0.157 below the 0.30 nontrivial threshold; permutation p 0.275 not below 0.05"
+  },
+  "h=400": {
+   "n_eligible_points": 2,
+   "points": [
+    300,
+    400
+   ],
+   "values": [
+    -0.10917423832988589,
+    -0.1487483037890276
+   ],
+   "mean_partial": -0.12896127105945673,
+   "sign_consistent": true,
+   "perm_p_two_sided": 0.3683158420789605,
+   "verdict": "RA1_NO_INCREMENTAL_SIGNAL",
+   "verdict_reason": "|mean partial| 0.129 below the 0.30 nontrivial threshold; permutation p 0.368 not below 0.05"
+  }
+ },
+ "alpha=0.06_beta=0.1": {
+  "h=150": {
+   "n_eligible_points": 0,
+   "points": [],
+   "values": [],
+   "verdict_note": "fewer than two eligible points; INDETERMINATE by preregistration",
+   "verdict": "RA1_INDETERMINATE",
+   "verdict_reason": "fewer than two eligible points after the preregistered eligibility rule and stability guard; 0 of the candidate points survived"
+  },
+  "h=400": {
+   "n_eligible_points": 0,
+   "points": [],
+   "values": [],
+   "verdict_note": "fewer than two eligible points; INDETERMINATE by preregistration",
+   "verdict": "RA1_INDETERMINATE",
+   "verdict_reason": "fewer than two eligible points after the preregistered eligibility rule and stability guard; 0 of the candidate points survived"
+  }
+ },
+ "_VERDICT": {
+  "treated_cells": [
+   "alpha=0.03_beta=0.1",
+   "alpha=0.06_beta=0.1"
+  ],
+  "ablated_cells": [
+   "alpha=0.03_beta=0.0",
+   "alpha=0.06_beta=0.0"
+  ],
+  "overall_RA1_verdict_for_HC_T01": "RA1_INDETERMINATE",
+  "basis": "The treated arm decides the HC-T01 K7 question. Both treated cells have ZERO eligible points at both preregistered horizons: every candidate point fails either the headroom rule, the distinct-value rule, or the stability guard. The conditional question cannot be asked of these rows.",
+  "ablated_note": "The ablated cells are reported separately and are not evidence about the treated arm. alpha=0.06 beta=0.0 has two eligible points per horizon and returns RA1_NO_INCREMENTAL_SIGNAL; alpha=0.03 beta=0.0 is INDETERMINATE.",
+  "explicit_warning": "INDETERMINATE IS NOT NO_SIGNAL. The preregistration forbids collapsing them and this verdict does not."
+ }
+}
