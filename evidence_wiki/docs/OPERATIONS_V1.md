@@ -47,3 +47,27 @@ Test/demo objects are never deleted; they are classified append-only in
 (`ew.claims_prod` / `evidence_prod` / `relations_prod`) exclude them, and
 search/coordinates/telemetry read only those views. To inspect fixtures,
 query the raw tables explicitly.
+
+## Pooled-write requalification trigger (binding, 2026-09-03)
+`ew/db.py` hands out pooled connections (ThreadedConnectionPool(2,16) behind
+a proxy whose `close()` returns the connection). Any change to connection-pool
+ownership, transaction lifecycle, retry behavior, or `connect()`/`close()`
+semantics AUTOMATICALLY REOPENS the pooled-write qualification subset BEFORE
+deployment:
+
+    python tests/test_distributed_v3.py    # concurrent ingest, duplicate/retry
+                                           # injection, crash + full replay,
+                                           # reads during writes
+    python tests/test_firewall_v3.py       # native surface stays clean
+    idempotent replay                      # re-POST an identical batch; rows
+                                           # must not increase, stored==DISTINCT
+
+Score G21 by the invariant (stored == DISTINCT; no duplicate logical records),
+not by the frozen harness's absolute 600-row expectation -- the substrate is
+append-only, so that count grows legitimately across runs.
+
+History: the first pooled deployment failed here. Lazy pool init raced under
+4-way concurrency, producing two pools and putconn-against-the-wrong-pool
+errors (overt 500s, no partial rows, provenance_failures 0). Fixed with a
+double-checked lock plus a double-close guard. This is the seam that broke;
+it is why the trigger exists.
