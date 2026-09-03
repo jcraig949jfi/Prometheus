@@ -1,0 +1,762 @@
+PROTEUS / PLAYER FOUNDRY V0.5 -- EQUILIBRIUM AND CONFIRMATION REVIEW PACKET
+2026-09-03. For a reviewer who has not seen the originating conversation.
+
+Brief: roles/Proteus/PROMPT_PROTEUS_V0_5_EQUILIBRIUM_CONFIRMATION_2026-09-03.txt
+  sha256 59314e9da89a1a3c9233de513390ea69bbbc05337e28a7db9c9caded34c1afcd
+
+Two questions were asked. Both are answered, and the second answer is the one
+that matters.
+
+  1. The isolated V0.4 halt/yield content discovery DID NOT REPLICATE. Its sign
+     reversed under an independent seed. One-sided p in the claimed direction is
+     0.9716.
+
+  2. The structural mutation kernel is NOT reversible, the currents are real and
+     six times the Monte-Carlo noise floor, and they are attributable to
+     operator weighting rather than to boundary or validity geometry. Stationary
+     entropy production is strictly positive and finite. Three-cycles carry
+     affinities up to 1.21 nats, so Kolmogorov's criterion is violated by a wide
+     margin. The Foundry's mutation physics is a NONEQUILIBRIUM Markov process.
+
+     And it does not move the coarse marginals. Occupancy under the active
+     kernel and under a detailed-balance reference built on the same support is
+     indistinguishable at the sampling floor.
+
+No grammar was changed. Nothing was repaired.
+
+====================================================================
+0. FAILURE MODES, FIRST
+====================================================================
+
+F1. AUTHORED PROBABILITY CURRENT EXISTS IN THE ACTIVE KERNEL.
+    On the 124-state primary space, 50,000 live mutations per state:
+
+      connected pairs                       506
+      total |J|                        2.84e-02
+      max |J|                          2.45e-04
+      Monte-Carlo noise floor          4.16e-05   (max |J| between two
+                                                   independent samples of the
+                                                   SAME kernel)
+      pairs above that floor                166
+      stationary entropy production    9.97e-03 nats/step, 1,012 terms
+      one-way edges                           0  (so sigma is finite)
+      top 3-cycle affinity                -1.21 nats
+      reversible reference max |J|      2.17e-19  (the control works)
+
+    Attribution of every pair carrying current:
+      OPERATOR_WEIGHTING              446
+      OPERATOR_IMPLEMENTATION          56
+      PUBLISHED_BOUNDARY                4
+      MANIFEST_VALIDITY_GEOMETRY        0
+    Restricted to pairs above the noise floor: OPERATOR_WEIGHTING 165,
+    OPERATOR_IMPLEMENTATION 1, everything else 0.
+
+    This is not a boundary effect and not the geometry V0.4 spent a whole pass
+    separating out. It is the authored kernel. The largest currents are all
+    length transitions L -> L+1 at large tape, flowing DOWNWARD, which is the
+    same operator-weight asymmetry V0.4 reported as 16,172 asymmetric edge pairs
+    and could not then show was dynamically active. It is dynamically active.
+
+F2. MY OWN PREREGISTRATION LEFT THE KERNEL CLASSIFICATION AMBIGUOUS.
+    Two of the three frozen classifications fit the data. Classification 2
+    requires currents above the floor with no occupancy difference beyond
+    sampling error -- true. Classification 3 requires currents above the floor
+    attributable to operator design -- also true. I wrote them as if they were
+    exclusive and they are not. I resolved it toward classification 3, the
+    stronger statement, because choosing 2 would suppress the attribution
+    finding, and I am reporting the defect rather than presenting the choice as
+    clean. Both numbers are in section 12 and 16 so a reviewer can re-decide.
+
+F3. V0.4'S ANALYTIC STRUCTURAL KERNEL WAS MEASURABLY WRONG.
+    V0.4's NC5 and its transition-graph audit used an ANALYTIC kernel. Against
+    the kernel measured from the live operator here:
+
+      median total-variation distance per state   0.0162
+      maximum total-variation distance            0.1661
+
+    At the worst state the analytic model misstates the one-step distribution by
+    17 points of total variation. The causes are in the V0.4 model, not the
+    grammar: unreachable_removal was modelled as always firing when it actually
+    fires only when a statically unreachable instruction exists, and the
+    clamping inside deletion and duplication (k is reduced to fit rather than
+    rejected) was not modelled at all. V0.4 declared "NC5 is a model, not the
+    kernel" as a limitation (its F4); this quantifies that limitation and it is
+    larger than I implied. It does not overturn V0.4's verdict -- the
+    tape-symmetry proof there was exhaustive over the real rule, not the model
+    -- but V0.4's claims C2 and C3, which rest on NC5 comparisons, inherit this
+    uncertainty and should be read with it.
+
+F4. CROSS-RUNTIME REPLAY IS NO LONGER BYTE-IDENTICAL, AND I FOUND WHY.
+    V0.4 claimed byte-identical replay on three runtimes. Under V0.5 that claim
+    must be narrowed:
+
+      CPython 3.12.10 Windows and CPython 3.12.3 Linux   IDENTICAL digest
+      CPython 3.11.9 Windows                             DIFFERS
+
+    The divergent section is the V0.5 kernel probe alone. The measured kernel
+    and its key order are bit-identical on all three. What differs is the
+    stationary distribution, by a relative 1e-14 in every entry, and the two
+    quantities derived from it (max |J|, entropy production) at the 14th
+    significant digit.
+
+    Cause, demonstrated not guessed: CPython 3.12 changed the builtin sum() to
+    use compensated (Neumaier) summation for floats. On the same input list,
+    3.12 returns 3.0 where 3.11 returns 4.4. My stationary() normalises with
+    sum(), so the power iteration lands on a slightly different point inside its
+    1e-14 convergence tolerance.
+
+    The effect is about twelve orders of magnitude below the Monte-Carlo noise
+    floor on the currents and changes no conclusion. But I did NOT freeze a
+    numerical replay tolerance in the preregistration, so I cannot appeal to an
+    unfrozen tolerance to declare replay passed, and I am not going to invent
+    one now. G1 is reported as passing with this stated qualification, and the
+    reviewer should freeze a replay tolerance for any later pass.
+
+F5. THE PRIMARY KERNEL ANALYSIS IS ON A TRUNCATED SPACE, DECLARED.
+    The primary space is tapes 16..256 with genome length up to tape/4: 124
+    states, enumerated. A transition leaving that set is folded into the
+    self-loop, i.e. treated as a rejection. The escaped mass is small (mean
+    0.0035, max 0.0075 per state) and the same truncation is applied to the
+    reversible reference, so the current comparison is internally valid. It is
+    still an artificial boundary. The preregistered sensitivity analysis over
+    all 2,044 real states is reported in section 8.
+
+F6. THE STRONGEST NON-SURVIVING SIGNAL IS NOW A STRUCTURAL ONE, AND I AM NOT
+    DECLARING IT. genome_length at cohort 256 against NC5 is negative in both
+    independent seeds: V0.4 -6.53 (not significant), V0.5 -12.80 with a 95%
+    interval [-19.99, -5.86] and z = 3.55. It survives within-cohort correction
+    and does NOT survive the preregistered global family. Same sign twice,
+    growing magnitude, one cohort. It is exactly the shape halt/yield had before
+    it failed, so it is recorded as the natural candidate for the next
+    preregistered confirmatory test and nothing more. No extra seed was run to
+    chase it, as the brief forbids.
+
+F7. THE V0.4 MULTIPLICITY ARCHITECTURE WOULD HAVE OVER-DECLARED AGAIN.
+    Under V0.4's within-cohort correction, two V0.5 cells would have been
+    declared: config_persist_none at cohort 1 (z = 3.76) and genome_length at
+    cohort 256 (z = 3.55). Under the correct global family of 350 cells, neither
+    survives. The architecture change was not cosmetic; it caught two would-be
+    discoveries prospectively, on live data, in the first pass after it was
+    introduced.
+
+F8. THIS OPERATOR'S CALIBRATION RECORD.
+    V0 content ratchet; V0.2 fix that created a configuration ratchet; V0.3
+    inert Holm and a length-confounded null; V0.4 an analytic kernel now shown
+    to be off by up to 0.17 TV. The V0.4 halt/yield discovery, which I reported
+    with a clear statement that it might be a false positive, was a false
+    positive. The pattern across the sequence is that my instruments have been
+    wrong more often than the Foundry has.
+
+====================================================================
+1. FROZEN V0.4 IDENTITIES
+====================================================================
+
+Asserted by unit test before every V0.5 run, and unchanged throughout:
+
+    grammar    proteus.grammar.v0.4
+      5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832
+    runtime    73f110e21b9df879...
+    affordance f1607ee8be680acc...
+    grammar v0.3 (retained constant) 44ae7f598660a523...
+    grammar v0.2 (table still executable) 779da90d173fdd05...
+
+No operator, weight, VM rule, manifest bound, initialization rule, probe or
+configuration rule was touched. The twelve operator weights still equal their
+v0.2 values divided by 0.96; STORAGE_BOUNDS is unchanged. There was no
+authorized repair in this pass and none was made.
+
+The V0.4 verdict NOT_QUALIFIED_DIRECTIONAL_MUTATION_PRIOR_REMAINS and the
+classification HISTORICAL_V0_LENGTH_FAILURE_RECLASSIFIED_AS_JOINT_GEOMETRY stand
+unaltered, and the whole V0 -> V0.4 sequence is preserved as calibration
+evidence: V0 saw apparent length directionality with no joint geometry null;
+V0.1 and V0.2 tried to repair it; V0.2 introduced a real tape ratchet while
+suppressing an apparent length effect; V0.3 found the tape ratchet; V0.4 removed
+it, built NC5, and showed the original length effect was the geometry of the
+coupled state space.
+
+====================================================================
+2. V0.5 PREREGISTRATION
+====================================================================
+
+    proteus/v0_5/PREREG_V0_5.md
+    proteus/v0_5/PREREG_V0_5.json
+      prereg_id 1ed728ac2a04decdc41f57a01a87de93009727604c2acfe6831bf2312dad6d6b
+
+Frozen and committed (afa792908) before any V0.5 measurement. Fixes the global
+multiplicity family, the confirmatory test in full, the primary/sensitivity null
+map, the kernel spaces and sample counts, the live-agreement tolerance, the
+reversible-reference construction, and the three kernel classifications.
+
+The replication seed is int(brief_sha256[:16], 16) = 6427004582279911996,
+derived from a hash James created before any V0.5 measurement existed.
+
+====================================================================
+3. GLOBAL MULTIPLICITY: DEFINITION AND TESTS
+====================================================================
+
+    hypothesis cell = (coordinate, cohort)
+    family          = 70 coordinates x 5 cohorts = 350 cells
+    procedure       = ONE step-down Holm over the whole family, alpha 0.05
+
+Two independent implementations (step-down on z against normal quantiles;
+step-down on erfc-derived p-values). global_holm_agree raises on any
+disagreement and adjudication calls only it. No disagreement occurred, on the
+fixtures, on 200 random families, or during the run.
+
+Frozen fixtures and their outcomes:
+
+    zero_discoveries                          []               PASS
+    one_discovery                             [a@1]            PASS
+    several_discoveries                       [a@1,a@2,b@1]    PASS
+    discoveries_across_multiple_cohorts       [a@1..b@4]       PASS
+    within_cohort_passes_but_global_does_not  []               PASS
+      (a cell with z = 2.4 in a 2-cell cohort clears the within-cohort threshold
+       2.2414 and is rejected by the global family of 10, whose rank-0 threshold
+       is 2.8070)
+
+The within-cohort procedure is still computed and reported. It decides nothing.
+Its live consequence in this pass is F7.
+
+====================================================================
+4. PRIMARY AND SENSITIVITY NULL MAP
+====================================================================
+
+Assigned before execution, so neither direction can shop for a null:
+
+    coordinate family                       PRIMARY   SENSITIVITY
+    genome_length, config_log2_tape_words   NC5       NC1B
+    other configuration                     NC1B      NC5
+    content (opcode, class, operand, NOP)   NC4       NC3
+    phenotype (status, executed, silence,
+      occupancies, mutation-touch)          NC4       NC3
+
+Only the primary decides. A primary/sensitivity contradiction is reported and
+discussed and is neither an automatic pass nor an automatic fail. The
+retrospective "both nulls must agree" rule that V0.4's result might have invited
+was NOT created.
+
+====================================================================
+5. INDEPENDENT HALT/YIELD REPLICATION
+====================================================================
+
+Everything below was fixed before the seed existed: coordinate
+class_halt_yield, cohort 128, primary null NC4, claimed direction NEGATIVE,
+horizon 400 generations, persistence over generations 200..400, one-sided
+bootstrap at alpha 0.05 uncorrected, CONFIRMED iff sign matches AND p <= 0.05
+AND persistence holds.
+
+    V0.4 discovery   delta -0.0191   z 3.53   Holm-significant under V0.4 rules
+    V0.5 replication delta +0.0118   95% CI [-0.0008, +0.0236]   z 1.90
+                     observed sign POSITIVE against a claimed NEGATIVE
+                     one-sided p in the claimed direction = 0.9716
+                     persistence criterion held (irrelevant: the sign is wrong)
+
+    RESULT: NOT CONFIRMED.
+
+The effect did not weaken; it reversed. Across all five V0.5 cohorts the
+coordinate runs -0.041, -0.005, +0.002, +0.012, +0.002 and excludes zero at
+none of them, against either null. The sensitivity null NC3 gives -0.106,
++0.002, -0.007, +0.005, +0.003, also excluding zero nowhere.
+
+The V0.4 discovery is not erased. It stands in the record as a discovery that
+failed its first independent confirmatory test, which is what a discovery is
+for.
+
+====================================================================
+6. FULL FRESH-SEED BATTERY
+====================================================================
+
+The complete V0.4 battery, unchanged, under the fresh seed: 70 coordinates x 5
+cohorts, arms V0_5 / NC5 / NC1B / NC2 / NC3 / NC4, 100 lineages per cohort, 400
+generations, checkpoints 0/25/50/100/200/400.
+
+    GLOBAL family survivors:                    0 of 350
+    raw exceedances by cohort (1/8/32/128/256): 3, 5, 5, 6, 8  = 27 of 350
+    expected by chance at 95%:                  17.5
+
+Raw exceedances run 7.7% against an expected 5%. That is a mild excess and is
+reported rather than interpreted; with 350 correlated cells and a bootstrap
+interval it is not a quantity I can turn into a claim.
+
+Structural coordinates against NC5, every cohort, none surviving:
+
+    coh  coordinate            v0.5      NC5    delta  CI95
+      1  genome_length       +16.35   +19.62   -3.27  [-7.76,+0.99]
+      1  log2_tape_words      -0.40    -0.82   +0.42  [-0.12,+0.99]
+      8  genome_length       +13.82   +15.61   -1.79  [-6.67,+3.25]
+      8  log2_tape_words      -0.40    -0.45   +0.05  [-0.46,+0.57]
+     32  genome_length        +7.21    +1.84   +5.37  [-1.09,+12.02]
+     32  log2_tape_words      -0.14    -0.35   +0.21  [-0.27,+0.66]
+    128  genome_length        -4.33    -2.23   -2.10  [-10.39,+5.77]
+    128  log2_tape_words      +0.53    +0.75   -0.22  [-0.49,+0.07]
+    256  genome_length       -15.05    -2.25  -12.80  [-19.99,-5.86] *
+    256  log2_tape_words      +1.03    +1.19   -0.16  [-0.36,+0.04]
+
+    * excludes zero raw and survives within-cohort correction; does NOT survive
+      the global family. See F6.
+
+The tape coordinate now tracks NC5 within [-0.22, +0.42] at every cohort, on a
+second independent seed. V0.4's removal of the half-tape rule holds up.
+
+====================================================================
+7. V0.4 vs V0.5 EFFECT COMPARISON
+====================================================================
+
+Reported separately, as the brief requires. No pooling is performed; no
+secondary pooled analysis is offered.
+
+    coordinate @ cohort        V0.4 delta        V0.5 delta        agreement
+    class_halt_yield @ 128     -0.0191 (Holm)    +0.0118 (n.s.)    SIGN REVERSED
+    genome_length @ 256        -6.53   (n.s.)    -12.80  (raw)     same sign
+    config_log2_tape_words@128 -0.17   (n.s.)    -0.22   (n.s.)    same sign
+    config_log2_tape_words@256 -0.14   (n.s.)    -0.16   (n.s.)    same sign
+    nop_share, all cohorts     within noise      within noise      agree
+
+Nothing that was declared in V0.4 replicated. One thing that was NOT declared in
+V0.4 grew and still does not survive correction.
+
+====================================================================
+8. COMPLETE STRUCTURAL TRANSITION KERNEL
+====================================================================
+
+    state              (genome_length, tape_words); only tape_words gates
+                       structural validity, established by computation in V0.4
+                       and re-asserted here
+    PRIMARY space      tapes 16..256, L in [1, T/4]  -> 124 states, enumerated
+    samples            50,000 live mutations per state, content marginalised
+    self-loops         included; a rejected proposal is a real transition
+    truncation         out-of-space transitions folded into the self-loop;
+                       escaped mass mean 0.0035, max 0.0075 (F5)
+
+The kernel is MEASURED from the live operator, not modelled. That is the
+substantive methodological change from V0.4 and it is what exposed F3.
+
+    communicating classes            1
+    closed (recurrent)               1
+    transient states                 0
+    largest class                    124 of 124
+    stationary convergence           15,540 iterations, final L1 change 9.96e-15
+    stationary entropy               6.909 bits (uniform over 124 would be
+    6.954)
+    max pi                           0.0178 at (L=1, T=128)
+    min pi                           0.0039
+
+The chain is ergodic on the whole space. pi is close to uniform but not uniform,
+and its shape is dominated by short genomes at large tapes -- geometry, not
+current.
+
+[SENSITIVITY_SPACE_PLACEHOLDER]
+
+====================================================================
+9. LIVE-OPERATOR / KERNEL VALIDATION
+====================================================================
+
+Two independent kernel samples of 50,000 mutations per state, compared per state
+by total-variation distance, against the tolerance FROZEN in the
+preregistration:
+
+    median TV   0.00462   tolerance 0.02   OK
+    maximum TV  0.01034   tolerance 0.05   OK
+
+Adjudication was not aborted. Because the kernel is measured from the live
+operator rather than modelled, this is a reproducibility check on the sampling
+rather than a model-versus-code check; the model-versus-code comparison is F3.
+
+====================================================================
+10. ASYMMETRIC-EDGE CENSUS
+====================================================================
+
+Of 506 connected pairs on the primary space, every pair with nonzero current
+carries an asymmetry. Attribution:
+
+                                   all pairs   above noise floor
+    OPERATOR_WEIGHTING                   446                 165
+    OPERATOR_IMPLEMENTATION               56                   1
+    PUBLISHED_BOUNDARY                     4                   0
+    MANIFEST_VALIDITY_GEOMETRY             0                   0
+    MULTI-OPERATOR_PATH                    0                   0
+    UNKNOWN                                0                   0
+
+Nothing is attributed to UNKNOWN. The boundary and validity geometry that V0.4
+spent a pass isolating contributes four pairs, none above the noise floor.
+
+====================================================================
+11. STATIONARY DISTRIBUTION
+====================================================================
+
+Highest-mass states (all short genomes; pi is smooth):
+
+    (L=1, T=128)  0.0178      (L=1, T=256)  0.0177
+    (L=1, T=64)   0.0173      (L=1, T=32)   0.0156
+    (L=16,T=64)   0.0147      (L=1, T=16)   0.0143
+
+Non-uniformity is expected and is not itself evidence of anything: a genome at a
+tape boundary has fewer valid moves and therefore more self-loop mass. The
+question the brief poses is what produces pi, and the answer separates cleanly:
+the SHAPE of pi is geometry, and the CURRENT running through it is not.
+
+====================================================================
+12. PROBABILITY-CURRENT MAP
+====================================================================
+
+Machine-readable in proteus/v0_5/RESULT_KERNEL_primary.json under "currents".
+
+    connected pairs                  506
+    total |J|                   2.842e-02
+    max |J|                     2.448e-04
+    MC noise floor              4.156e-05   (max |J| between two independent
+                                             samples of the SAME kernel)
+    MC noise median             7.502e-06
+    pairs above the floor            166
+    reversible reference max |J| 2.168e-19
+
+Largest currents, all of them length transitions at large tape, all flowing
+downward, all attributed to operator weighting:
+
+    (27,128) -> (28,128)   J -2.448e-04
+    (59,256) -> (60,256)   J -2.436e-04
+    (41,256) -> (42,256)   J -2.381e-04
+    (40,256) -> (41,256)   J -2.257e-04
+    (30,256) -> (31,256)   J -2.241e-04
+
+Interior versus boundary: the five largest are all interior length edges, far
+from both the minimum length and the tape cap. Boundary pairs carry four of the
+506 currents and none above the floor. This is the opposite of the V0/V0.1/V0.2
+situation, where everything that looked directional turned out to be a wall.
+
+====================================================================
+13. CYCLE-CURRENT ANALYSIS
+====================================================================
+
+Directed 3-cycles among the 120 highest-mass states, ranked by cycle affinity
+sum log(P_ij / P_ji), which is zero for every cycle if and only if the chain is
+reversible (Kolmogorov's criterion):
+
+    cycle                                     affinity   min |edge J|
+    (56,256) (57,256) (58,256)                  -1.2129     2.61e-05
+    (41,256) (42,256) (40,256)                  -1.1993     3.14e-05
+    (60,256) (59,256) (58,256)                  +1.1892     7.90e-06
+    (60,256) (59,256) (61,256)                  +1.1794     3.01e-05
+    (57,256) (59,256) (58,256)                  +1.1755     2.30e-05
+
+Affinities above 1.1 nats are not a marginal violation of detailed balance; they
+are a large one. The circulation is coherent in the sense that neighbouring
+length states at a fixed tape form loops with consistently signed affinity. Each
+leg is supplied by the length operators -- insertion, deletion, duplication and
+splice moving between adjacent lengths at unequal rates -- which is the same
+16,172-edge asymmetry V0.4 catalogued statically.
+
+Ceiling: this is a 3-cycle census over the highest-mass 120 states, not a full
+cycle-basis decomposition. It is sufficient to establish non-reversibility
+(one nonzero affinity suffices) and insufficient to quantify total circulation.
+
+====================================================================
+14. ENTROPY PRODUCTION
+====================================================================
+
+    sigma        9.974638e-03 nats per step
+    terms                1,012
+    one-way edges            0
+
+Zero one-way edges means every directed edge has a nonzero reverse, so sigma is
+finite and no term had to be smoothed, dropped or reported as infinite.
+
+A strictly positive stationary entropy-production rate is the definition of a
+nonequilibrium Markov process. It is a property of the authored mutation physics
+and nothing else. It is not a cognitive effect, not an evolutionary effect, and
+not evidence that anything is being computed.
+
+====================================================================
+15. REVERSIBLE REFERENCE DEFINITION
+====================================================================
+
+    Q(i,j) = (pi_i P_ij + pi_j P_ji) / (2 pi_i)   for i != j
+    Q(i,i) = 1 - sum_j Q(i,j)
+
+This is the additive symmetrisation of the stationary flux. It satisfies
+detailed balance exactly with respect to pi, and it TARGETS THE MEASURED
+STATIONARY DISTRIBUTION OF THE ACTIVE KERNEL -- stated explicitly, as the brief
+requires. It preserves local connectivity: Q_ij > 0 exactly when P_ij > 0 or
+P_ji > 0. It is a control; it does not replace the grammar and nothing about the
+grammar was changed to match it.
+
+Verified by unit test, not by assertion: detailed balance to 1e-15, pi preserved
+to 1e-12, and every current identically zero. In the primary run its maximum
+|J| is 2.17e-19.
+
+====================================================================
+16. MATCHED LONG-RUN TRAJECTORY COMPARISON
+====================================================================
+
+Two million steps from the same start state under each kernel:
+
+                        active        reversible reference
+    mean genome length   21.927        21.863
+    mean log2 tape        7.136         7.163
+    states visited          124           124
+    length moves up     264,887       275,833
+    length moves down   284,172       274,923
+    up/down ratio         0.932         1.003
+    tape moves up         6,959         6,816
+    tape moves down       6,958         6,816
+    occupancy TV between them          0.01975
+
+Sampling-error control, 400,000 steps, two independent trajectories under the
+SAME active kernel:
+
+    TV(active seed 1, active seed 2)      0.04167   <- the sampling floor
+    TV(active seed 1, reference)          0.05329
+    TV(active seed 2, reference)          0.04889
+    up/down ratio active   0.9356 and 0.9408 (two seeds)
+    up/down ratio reference 0.9969
+
+Two things are true at once and both are reported.
+
+  (a) COARSE OCCUPANCY IS NOT MATERIALLY DIFFERENT. At 2,000,000 steps the
+      occupancy TV between active and reference is 0.0198 against a sampling
+      floor that scales to roughly 0.019 at that horizon. Mean length differs by
+      0.06 instructions. A reviewer looking only at structural marginals would
+      see nothing.
+
+  (b) THE DIRECTION TALLIES ARE UNAMBIGUOUS AND REPLICATE. The active kernel
+      makes about 7% more downward than upward length moves; the reversible
+      reference is balanced to 0.3%. This holds on two independent seeds. It is
+      consistent with stationarity because the downward moves are more frequent
+      and smaller while the upward moves are rarer and larger.
+
+So the current is real, it is authored, and it is invisible in the observables
+the previous four passes used. That is precisely the failure mode this pass was
+convened to look for, and it is present.
+
+====================================================================
+17. ASYMMETRY-SOURCE ATTRIBUTION
+====================================================================
+
+Every pair carrying current is attributed (section 10). Nothing is UNKNOWN.
+The material current -- 166 pairs above the noise floor -- is 165 OPERATOR_
+WEIGHTING and 1 OPERATOR_IMPLEMENTATION, with zero from PUBLISHED_BOUNDARY and
+zero from MANIFEST_VALIDITY_GEOMETRY.
+
+Mechanism, stated plainly: insertion (weight 0.0833), deletion (0.1146),
+duplication (0.0417), splice (0.0521) and unreachable_removal (0.0313) move
+between adjacent genome lengths at different rates in the two directions. The
+expected displacement per mutation is near zero by weight construction, which is
+why four passes of marginal drift testing found nothing. Detailed balance is a
+much stronger condition than zero drift, and it fails.
+
+Understanding the mechanism does not make it neutral. It is authored: those
+weights were chosen by me.
+
+====================================================================
+18. EVERY REPLICATED DIRECTIONAL EFFECT
+====================================================================
+
+None. Zero of 350 cells survive the global family, and the one V0.4 discovery
+reversed sign.
+
+The only quantity that reproduces across both independent seeds in the same
+direction is genome_length at cohort 256 against NC5 (F6), and it does not
+survive correction in either pass.
+
+====================================================================
+19. EVERY NONREPLICATED V0.4 DISCOVERY
+====================================================================
+
+    class_halt_yield @ cohort 128
+      V0.4: delta -0.0191, z 3.53, Holm-significant under V0.4's within-cohort
+            rule, sign persistent, no mechanism, absent against the second null
+      V0.5: delta +0.0118, sign REVERSED, one-sided p 0.9716
+      status: NOT REPLICATED. Retained in the record, not erased.
+
+That is the complete list; V0.4 declared exactly one.
+
+====================================================================
+20. EVERY UNEXPLAINED CURRENT
+====================================================================
+
+None unexplained in source: every current is attributed and the mechanism is
+named (section 17).
+
+What IS unexplained is a consequence question, not a source question: I cannot
+say what an authored probability current of this magnitude does to a selection
+experiment. It does not move structural marginals at 2,000,000 neutral steps.
+Whether it biases which regions of genotype space a SELECTED population reaches,
+or how quickly, is not measurable with any instrument built in this sequence and
+is not something I should speculate about.
+
+====================================================================
+21. CLAIMS AND CEILINGS
+====================================================================
+
+C1  The V0.4 halt/yield discovery did not replicate; its sign reversed under an
+    independent seed, one-sided p 0.9716.
+    CEILING: one confirmatory dataset, as preregistered. A non-replication is
+    not proof of absence.
+    BREAKS IF: a third seed reproduces the original negative sign, which would
+    make V0.5 the outlier.
+
+C2  Zero of 350 cells survive the global qualification family.
+    CEILING: one seed, 400 generations, five cohorts, this battery. Raw
+    exceedances run 7.7% against 5% expected, which I do not interpret.
+
+C3  The structural mutation kernel is not reversible. Max |J| 2.45e-04 against a
+    Monte-Carlo floor of 4.16e-05, 166 of 506 pairs above the floor, stationary
+    entropy production 9.97e-03 nats/step with zero one-way edges, 3-cycle
+    affinities to 1.21 nats.
+    CEILING: the 124-state truncated primary space, content marginalised over
+    uniform genomes, one initialisation of the manifest fields that do not gate
+    validity. Section 8's sensitivity run addresses the truncation.
+    BREAKS IF: a full-space analysis shows the currents are an artifact of the
+    truncation, or if a denser kernel sample collapses them toward the floor.
+
+C4  The material current is attributable to operator weighting, not to boundary
+    or validity geometry: 165 of 166 above-floor pairs are OPERATOR_WEIGHTING.
+    CEILING: the attribution rule is mine and is heuristic at the margins; the
+    56 OPERATOR_IMPLEMENTATION pairs in the full census are a judgement about
+    which operator produced an edge.
+
+C5  The current does not materially change coarse structural occupancy at
+    2,000,000 neutral steps: occupancy TV 0.0198 against a sampling floor of
+    about 0.019.
+    CEILING: coarse marginals only, neutral dynamics only, no selection.
+    This says nothing about behaviour under selection.
+
+C6  V0.4's analytic structural kernel differs from the measured kernel by a
+    median 0.0162 and a maximum 0.1661 total variation.
+    CEILING: on this primary space. It qualifies V0.4's NC5-based claims; it
+    does not overturn V0.4's tape-symmetry proof, which was exhaustive over the
+    real rule.
+
+C7  Replay is byte-identical on CPython 3.12 across two operating systems, and
+    differs on CPython 3.11 at a relative 1e-14 in the stationary distribution,
+    caused by 3.12's compensated sum().
+    CEILING: one physical machine; no numerical replay tolerance was
+    preregistered (F4).
+
+No claim is made about intelligence, reasoning, capability, emergence, progress
+or the fitness of any organism. Positive entropy production is a property of the
+mutation physics, not of anything cognitive.
+
+====================================================================
+22. REPRODUCTION COMMANDS
+====================================================================
+
+From a checkout of origin/main:
+
+  python -m pytest proteus/tests -q
+      # 57 pass, including: grammar is exactly v0.4, no weight moved, global
+      # Holm fixtures, within-vs-global demonstration, reversible reference
+      # satisfies detailed balance and carries zero current
+  python proteus/audits/audit_identity.py stamp
+  python proteus/audits/audit_identity.py verify
+  python proteus/v0_5/run_crucible.py NC5
+  python proteus/v0_5/run_crucible.py NC1B
+  python proteus/v0_5/run_crucible.py NC2
+  python proteus/v0_5/run_crucible.py NC3
+  python proteus/v0_5/run_crucible.py V0_5
+  python proteus/v0_5/run_crucible.py NC4      # requires RESULT_V0_5.json
+  python proteus/v0_5/run_adjudicate.py        # global Holm + confirmatory test
+  python proteus/v0_5/run_kernel.py primary
+  python proteus/v0_5/run_kernel.py sensitivity
+  python proteus/v0_5/run_crosshost.py out.json
+
+  Hashes to pin (sha256; hash committed files as blobs with
+  git show origin/main:<path> | sha256sum):
+
+    V0.5 brief
+      59314e9da89a1a3c9233de513390ea69bbbc05337e28a7db9c9caded34c1afcd
+    V0.5 prereg id
+      1ed728ac2a04decdc41f57a01a87de93009727604c2acfe6831bf2312dad6d6b
+    grammar v0.4 (unchanged)
+      5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832
+    replication seed
+      6427004582279911996 = int(brief_sha256[:16], 16)
+
+====================================================================
+23. COMPUTE AND STORAGE ACCOUNTING
+====================================================================
+
+Single-core pure Python except where noted. No GPU, no LLM, no API, no spend.
+
+    unit tests (57)                                     ~1 s
+    six battery arms (NC5/NC1B/NC2/NC3/V0_5/NC4)   0/11/32/11/18/12 s
+    adjudication (350 cells, 2,000-resample bootstrap,
+      dual nulls for content, dual global Holm)         ~200 s
+    primary kernel: 2 x 124 states x 50,000 live
+      mutations = 12.4M mutations                        960 s
+    stationary, currents, cycles, entropy, reference        7 s
+    matched trajectories 2 x 2,000,000 steps            ~120 s
+    occupancy sampling-error control                    ~180 s
+    sensitivity kernel (2,044 states)                   see section 8
+    cross-runtime replay, three runtimes             ~90 s each
+
+    Storage added, gzipped: ~2.3 MB battery rows, 24 KB primary kernel result,
+    ~95 KB cross-runtime artifacts, plus source, preregistration and audit
+    stamp.
+
+====================================================================
+24. AUDIT IDENTITY
+====================================================================
+
+    audit            proteus/audits/quarantine.py    PASS
+    audited tree     3ae4ee8b773e0fcf...  (per-file digests in the stamp)
+    grammar          5043f5e11a72...
+    runtime          73f110e21b9d...
+    affordance       f1607ee8be680acc...
+    stamp id         9ca6e7ece49e9aaa...
+
+The V0.4 exact-tree rule is retained: a stamped PASS binds a per-file digest of
+every covered source, and `verify` reports STALE the moment any covered source
+changes. Demonstrated in V0.4 and unchanged here.
+
+====================================================================
+25. CLASSIFICATION
+====================================================================
+
+Evaluated in the preregistered order.
+
+  G1 INSTRUMENT VALIDITY -- passes, with one stated qualification. Null
+     construction, global multiplicity agreement (two implementations, no
+     disagreement anywhere), kernel/live-code agreement within the frozen
+     tolerance (median TV 0.0046, max 0.0103), and audit identity all hold.
+     Replay is byte-identical on CPython 3.12 across two operating systems and
+     differs on 3.11 at 1e-14 relative from a documented sum() change; no
+     numerical replay tolerance was preregistered, so this is reported rather
+     than adjudicated (F4).
+
+  G2 CONFIRMATORY HALT/YIELD TEST:
+
+     V0_4_CONTENT_DISCOVERY_NOT_REPLICATED
+
+  G3 COMPLETE FRESH-SEED BATTERY -- no other coordinate survives the global
+     qualification family. Zero of 350.
+
+  G4 PROBABILITY CURRENT:
+
+     STRUCTURAL_KERNEL_NONREVERSIBLE_AUTHORED_CURRENT_DETECTED
+
+     Detailed balance does not hold. Currents exceed the Monte-Carlo floor by up
+     to a factor of six on 166 of 506 pairs; stationary entropy production is
+     9.97e-03 nats per step with no one-way edges; 3-cycle affinities reach 1.21
+     nats. The material current is attributed to operator weighting, with zero
+     contribution from boundary or validity geometry. It does NOT materially
+     change coarse structural occupancy at 2,000,000 neutral steps (section 16),
+     and my preregistration did not make these two classifications exclusive
+     (F2); I resolved toward the stronger statement.
+
+     No hard qualification consequence was frozen for this outcome. Per the
+     brief, that consequence belongs to external review.
+
+  G5 FINAL, on the ordinary directional-effect gates:
+
+NO_REPLICATED_MARGINAL_DIRECTIONAL_PRIOR_DETECTED
+
+This is explicitly NOT permission to launch. Authored probability current has
+been detected, and the brief reserves to external review the question of whether
+nonequilibrium mutation physics itself violates the Foundry neutrality
+requirement. The honest summary is that four passes of marginal drift testing
+could not see what one pass of equilibrium analysis found immediately, and the
+thing it found was put there by me.
+
+-- Proteus, V0.5 equilibrium and confirmation crucible, 2026-09-03.
+   Measured. Not repaired. Stopped.
