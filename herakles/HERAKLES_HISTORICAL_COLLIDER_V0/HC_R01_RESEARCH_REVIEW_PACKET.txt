@@ -1,26 +1,28 @@
 ================================================================================
-RESEARCH REVIEW PACKET HC-R01 / CROSS-SPECIMEN ACCESSIBILITY RECURRENCE
+RESEARCH REVIEW PACKET
+HC-R01 / CROSS-SPECIMEN ACCESSIBILITY RECURRENCE
 ================================================================================
-Prepared: 2026-09-03 first pass, no compute run Seat: Herakles / Historical
-Collider Location: herakles/HERAKLES_HISTORICAL_COLLIDER_V0/ Deliverables: Q
-HISTORY_CONDITIONED_ACCESSIBILITY_REGISTRY.jsonl 16 rows
+Prepared:        2026-09-03   first pass, no compute run
+Seat:            Herakles / Historical Collider
+Location:        herakles/HERAKLES_HISTORICAL_COLLIDER_V0/
+Deliverables:    Q HISTORY_CONDITIONED_ACCESSIBILITY_REGISTRY.jsonl   16 rows
                  R ACCESSIBILITY_WITHOUT_ACQUISITION_NEGATIVES.jsonl   8 rows
                  S HCA_DETECTOR_COMPARISON.jsonl                      14 rows
                  T HCA_MECHANISM_RECURRENCE_GRAPH.jsonl                2 rows
                  U ACCESSIBILITY_CONTROLLER_CANDIDATES.jsonl           9 rows
                  V EVCA_HCA1_HCA2_DESIGN_NOTE.md
                  W this packet
-Directive: DIRECTIVE_HC_R01_ACCESSIBILITY_RECURRENCE_2026-09-03.txt
+Directive:       DIRECTIVE_HC_R01_ACCESSIBILITY_RECURRENCE_2026-09-03.txt
                  sha256 6c21f6cd85c197a1d0963bf54ea7f887fca1ed9d07ba4613cb5e
                         db1c76820d60
-Correction: HC-T01 verdict downgraded to HC_T01_WEAK_SIGNAL_ONLY and its
+Correction:      HC-T01 verdict downgraded to HC_T01_WEAK_SIGNAL_ONLY and its
                  wider-literature claim withdrawn. See
                  spec-toussaint-exploration/HC_T01_CORRECTION_2026-09-03.md
-Headline: S3 AND S4 BOTH FIRE. HCA-1 has been settled in RNA since 2008
-                 by exact enumeration. HCA-2 is cleared once, thinly, by Petak
-                 2025. An H4-shaped causal result exists (Zheng 2019). And the
-                 conditioning method HC-T01 lacked is published, with code
-                 (Wagner 2023). PART C DOES NOT EXIST. Recover, do not rebuild.
+Headline:        S3 AND S4 BOTH FIRE. HCA-1 was settled in RNA in 2008 by exact
+                 enumeration. HCA-2 is cleared once, thinly, by Petak 2025. An
+                 H4-shaped causal result exists, Zheng 2019. And the
+                 conditioning method HC-T01 lacked is published with code,
+                 Wagner 2023. PART C DOES NOT EXIST. Recover, do not rebuild.
 
 --------------------------------------------------------------------------------
 1. WHAT WAS SEARCHED
@@ -66,8 +68,8 @@ directly. See section 4.
                                                             case INVERTS the
                                                             sign of history
  9 Has anyone evolved an accessibility controller? ........ NO
-10 Does shaper + detector + controller exist? ............. NO 11 How must EvCA
-change? ................................. see section 11 and
+10 Does shaper + detector + controller exist? ............. NO
+11 How must EvCA change? ................................. see section 11 and
                                                             the design note
 12 Promote CP-REPRESENTATION-REWRITE? .................... NO
 
@@ -186,8 +188,7 @@ a run, with NO estimate computed or consulted anywhere:
 
   Baeck self-adaptive GA ......... mutation rate in the genome, pure hitchhiking
   Altenberg 1994 ................. constructional selection in GP
-  Spector 2001 Pushpop ........... reproduction strategy drifts sexual to
-  asexual
+  Spector 2001 Pushpop ........... reproduction drifts sexual to asexual
   mutator alleles ................ in Avida and in biology
 
 Altenberg states it himself: "the constructional fitness is never evaluated by
@@ -456,10 +457,11 @@ HC-T01 and may need separate authorisation.
                                                           qualified: n=15, two
                                                           outliers dropped,
                                                           preprint read
-    S4 a historical experiment reaches H4 .............. NO. The one H4 claim
-                                                          did not survive this
-                                                          seat reading the
-                                                          paper.
+    S4 a historical experiment reaches H4 .............. FIRES, on Zheng 2019.
+                                                          A separate H4 claim
+                                                          about Kounios 2016 did
+                                                          NOT survive this seat
+                                                          reading that paper.
 
 S3 AND S4 BOTH FIRE, and each carries its own instruction.
 
@@ -536,12 +538,15 @@ Ancel and Fontana 2000 could not be read; expired certificate and 403 mirrors.
 
 Petak's numbers come from the preprint, not the PNAS version.
 
-Nine of roughly twenty screened works are abstract-only. Every such row is
-tagged and none of them carries a positive claim.
+Roughly a third of the twenty-five screened works are abstract-only. Every such
+row is tagged and none of them carries a positive claim.
 
-Directive question 3, whether matched-state different-future is common or rare,
-is UNANSWERABLE from this pass and would need a survey nobody has run, because
-almost nobody measures the distribution at all.
+Directive question 3 is answered only for the RNA and genotype-phenotype-map
+lineage, where Greenbury et al. show the effect is systematic across maps. It
+remains unanswered for computational substrates generally, and the answer that
+does exist carries a warning: outside RNA the effect is modest, 1.025 to 1.063.
+A programme betting on this phenomenon elsewhere should size for a small effect
+and compute the standard error before choosing any gate.
 
 --------------------------------------------------------------------------------
 14. RECOMMENDATION
