@@ -327,6 +327,9 @@ is never varied, discovered or tested.
     redefinition over the same samples.
 
 12. Is there an untested composition between Toussaint, MVG and Kouvaris?
+    *** SUPERSEDED. SEE SECTION 15. A systematic citation-intersection sweep found
+    27 papers citing both lines, and at least two that compose them in experiment.
+    The answer below overstated the emptiness and is corrected there. ***
     YES, and it is better than untested -- it is ASSERTED IN PRINT AND NEVER RUN.
     Fernando, Szathmary & Husbands 2012 (Front Comput Neurosci 6:24) state the
     composition directly: the Parter/Kashtan/Alon effect "occurs if there is
@@ -397,8 +400,11 @@ compounding.
   reversed the sign. The NAND circuit arm, which carries every accessibility
   result quoted in this packet, has never been independently replicated OR
   refuted. Third-party reimplementations of the circuit arm exist and report
-  supporting results, but none is peer-reviewed. Treat every quantitative figure
-  in section 6 as SINGLE-LABORATORY.
+  supporting results, but none is peer-reviewed AND both are materially incomplete
+  in ways established in section 15: one omitted the random-varying-goals control,
+  which is the arm separating shared substructure from variation as such, and the
+  other computes no modularity metric at all. Treat every quantitative figure in
+  section 6 as SINGLE-LABORATORY.
 - CONSEQUENCE FOR CALIBRATION: house calibration particle cal-08 (Kashtan-Alon,
   fam-161) cannot be used to pass or fail a Prometheus detector as things stand.
   A calibration particle requires a known treatment effect; this one has a
@@ -408,12 +414,16 @@ compounding.
   physics specs side by side. Direct citation confirmation was attempted: Kouvaris
   2017 cites Toussaint only inside a bulk background bracket with zero body-prose
   mentions. The MVG-to-Kouvaris link remains structural rather than cited.
-- A full forward-citation sweep of Toussaint's thesis was blocked by HTTP 429, so
-  the "composition never run" finding carries residual uncertainty.
-- Still unverified after the search: Hoverstad 2011 (publisher 403/418), any PNAS
-  Letter responding to the 2007 paper, the five TREE comments on Watson &
-  Szathmary 2016, and Kashtan's PhD thesis (the Weizmann repository returns empty
-  shells for all queries including controls, so its absence is not evidence).
+- RESOLVED IN SECTION 15, and listed here only so the earlier limitation is not
+  quoted as still standing: the blocked forward-citation sweep, Hoverstad 2011, the
+  PNAS Letters question, and the TREE comments. Three of the four came back with
+  findings that changed this packet. The composition claim was overturned.
+- STILL UNDETERMINED: Kashtan's PhD thesis. Absent from DBLP and from his Google
+  Scholar profile, but the two catalogues that would settle it were unreachable
+  without credentials. Not evidence of absence.
+- Hoverstad 2011 was identified but its full text is genuinely paywalled with zero
+  open-access copies, so only its abstract was read. Whether it internally
+  benchmarks against Kashtan & Alon is unknown.
 - Text S1's typeset algebra did not survive OLE2 text extraction, so the exact
   facilitated-variation formula and the mutational-modularity measure are
   reconstructed from prose and tagged INFERRED.
@@ -579,6 +589,105 @@ control. Section 5 of this packet states that D5 is unoccupied "in this lineage
 and in Toussaint's and in Kouvaris's alike". That scoping remains correct as
 written, and readers should not extend it to the Avida literature, which this
 deep-dive did not survey and which may contain a stronger perturbation design.
+--------------------------------------------------------------------------------
+15. SECOND CORRECTION: THE COMPOSITION WAS NOT UNTESTED
+--------------------------------------------------------------------------------
+Filed after a retry of the searches that HTTP 429 and 403 had blocked. This is the
+fifth correction against this deep-dive and the second against a published claim.
+
+WHAT SECTION 9 ANSWER 12 SAID: the Toussaint-by-MVG composition is asserted in
+print and never run, supported by a report that Toussaint's name appears nowhere in
+the body prose of Kouvaris 2017 or Watson & Szathmary 2016.
+
+WHAT A PROPER SWEEP FOUND: the earlier search looked for the composition by NAME IN
+PROSE. The right method is a citation intersection. Building the set of everything
+citing Toussaint's evolutionary line against everything citing the three MVG papers
+gives 906 + 328 + 189 citing records, 1187 unique, and an intersection of
+TWENTY-SEVEN PAPERS. Two of them compose the lines in experiment, not just in
+citation:
+
+  Kouvaris, Clune, Kounios, Brede & Watson 2017 (PLoS Comput Biol 13:e1005358)
+    cites Toussaint 2002 (FOGA, exploration distributions) as ref 14 and Toussaint
+    & von Seelen 2007 as ref 17, AND all four Kashtan/Alon papers as refs 34-36 and
+    64, AND runs temporally varying modular-goal experiments. Verbatim: "in simple
+    modularly varying environments with independent modules, sparse connectivity
+    enhances the generalisation of phenotypic distributions better than weak
+    connectivity."
+  Mills R 2010, PhD thesis, Southampton, "How micro-evolution can guide
+    macro-evolution: multi-scale search via evolved modular variation" -- cites
+    Toussaint 2002 and 2007 and all three Kashtan/Alon papers. The title is the
+    composition.
+  Also in the intersection: Watson, Wagner, Pavlicev, Weinreich & Mills 2014
+    (Evolution, doi 10.1111/evo.12337).
+
+WHAT SURVIVES OF THE ORIGINAL CLAIM, stated narrowly enough to be true: what these
+compose is ENVIRONMENTAL REGULARITY with an EVOLVABLE GENOTYPE-PHENOTYPE MAP. What
+none of them composes is environmental regularity with a SELF-ADAPTING VARIATION
+OPERATOR in Toussaint's second-type-mutation sense, where the operator that
+generates offspring is itself heritable and under selection. In Kouvaris the
+mutation operator is fixed and development evolves. That narrower cell is still
+open, and it is the one COMPOSITION-CANDIDATE-01 was actually about.
+
+But the claim as published in this packet was too strong, and the method that
+produced it was wrong. Searching for a name in prose is not a citation sweep.
+
+WHAT ELSE THE RETRY SETTLED
+
+  NO FORMAL CRITICISM EXISTS. PubMed records zero comment linkages for all three
+  papers. This negative is VALIDATED rather than assumed: the identical query shape
+  returns populated CommentOn / CommentIn blocks for Watson & Szathmary 2016, so
+  the index does record such links when they exist. The MVG result has never been
+  formally contested in the correspondence literature.
+
+  THE TREE EXCHANGE IS FOUR COMMENTS, NOT FIVE, and it is irrelevant to this claim.
+  Blute; Zliobaite & Stenseth; Jordan; Livnat & Papadimitriou; plus the authors'
+  reply. Checked against complete Crossref reference lists: zero hits for Kashtan,
+  Alon, Parter or facilitated variation across all five lists, 51 references in
+  total. Citing that exchange as adjudication of the MVG evidence would be a
+  misread. The fifth adjacent item, Laland's "Life's Intimate Dance", is a book
+  review that does not cite Watson & Szathmary at all.
+
+  ANOTHER SUFFICIENT CAUSE FOR MODULARITY. Hoverstad 2011, Artificial Life
+  17(1):33-50, "Noise and the evolution of neural network modularity", verbatim:
+  "When noise is added to the edge weights of the networks, modular network
+  topologies evolve, even without representational support." Noise on a FIXED goal
+  suffices. MVG is not necessary for the modularity outcome. The same abstract
+  records the field's background condition: experimental evidence for the selective
+  advantage of modularity "has been elusive unless it has been supported or
+  mandated by the genetic representation". Full text is genuinely paywalled with
+  zero open-access copies, so it was not read beyond the abstract.
+
+  THE THIRD-PARTY CIRCUIT REIMPLEMENTATIONS ARE WEAKER THAN THIS PACKET IMPLIED,
+  and section 11 should be read with this. JBQuim/Boolean-Circuit-Evolution does
+  reproduce MVG against a fixed goal, reporting Q_m = 0.42 +- 0.10 against the
+  original 0.54 +- 0.02, and reproduces the modularity decay. But its README states
+  it did NOT implement "evolution under time-varying random goals", and names that
+  omission precisely: those experiments "were used to show that evolution under
+  varying goals leads to shorter generation times and more modular solutions only
+  if the goals share subgoals". So the one arm that separates shared substructure
+  from variation as such was skipped. freedmand/combinational is weaker still: it
+  cites the original parameters exactly and implements the 20-generation switch,
+  but grepping its source shows NO MODULARITY METRIC IS COMPUTED ANYWHERE. Its
+  claim to "comparable results" covers time-to-solution only and is not a
+  replication of the modularity result at all.
+
+  NO ORIGINAL CODE SURVIVES. The Alon lab download page was fetched and enumerated:
+  six items, none evolutionary, zero occurrences of evolution, modular or Kashtan
+  across the download and data indexes. The only named tool remains mfinder, a
+  motif detector.
+
+  KASHTAN'S THESIS: STILL UNDETERMINED, with the routes named. Not in DBLP, which
+  does surface theses for other authors, and absent from his Google Scholar profile.
+  The two decisive catalogues were not reachable without credentials: the Israeli
+  National Library API returns API_KEY_MISSING, and ProQuest needs a subscription.
+  Absence on the routes exercised is not evidence of absence.
+
+NET EFFECT ON THE VERDICT: none. MVG_EFFECT_IS_AUTHORED_CURRICULUM rests on Figure
+6E and the NBVG control. The Kouvaris quotes recovered here strengthen it, adding
+that no rate of environmental variation produced coverage of the whole authored
+class, and that "both high and low time-scales can lead to inflexible developmental
+structures". The corrections above bear on novelty claims and on how safely this
+specimen can be used, not on what it showed.
 ================================================================================
 END OF PACKET
 ================================================================================

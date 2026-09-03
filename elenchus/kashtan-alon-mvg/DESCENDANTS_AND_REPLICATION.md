@@ -186,6 +186,83 @@ illustrated by Parter et al. [8], also facilitate faster adaptation to new targe
 own figure runs the alternating-goal protocol directly.
 
 ================================================================================
+5b. RETRY PASS -- what the blocked searches returned, and what it overturned
+================================================================================
+
+Added 2026-09-03 after re-running the items that HTTP 429 and 403 had blocked.
+
+R1. THE COMPOSITION CLAIM IN SECTION 5 IS OVERTURNED AS STATED. Section 5 above
+    concluded the Toussaint-by-MVG composition was asserted and never run. That
+    conclusion came from searching for Toussaint's NAME IN BODY PROSE. A citation
+    intersection instead - everything citing Toussaint's evolutionary line against
+    everything citing the three MVG papers, 1187 unique citing records - returns
+    27 papers. Kouvaris et al 2017 cites Toussaint 2002 (FOGA) and Toussaint & von
+    Seelen 2007 alongside all four Kashtan/Alon papers AND runs temporally varying
+    modular-goal experiments. Mills R 2010 (PhD thesis, Southampton) is titled
+    "How micro-evolution can guide macro-evolution: multi-scale search via evolved
+    modular variation" and cites both lines.
+    What remains genuinely open is narrower: none composes environmental
+    regularity with a SELF-ADAPTING VARIATION OPERATOR. In Kouvaris the mutation
+    operator is fixed and development evolves.
+    Method lesson, recorded because it caused the error: a composition search is a
+    citation-set intersection, not a name grep.
+
+R2. NO FORMAL CRITICISM OF THIS LINEAGE EXISTS ANYWHERE, and the negative is
+    validated rather than assumed. PubMed records zero comment linkages for all
+    three papers; the identical query returns populated CommentOn/CommentIn blocks
+    for Watson & Szathmary 2016, proving the index carries such links when they
+    exist. In eighteen years nobody has published a Letter or Reply against any of
+    the three papers.
+
+R3. THE TREE 31(12) EXCHANGE IS FOUR COMMENTS, NOT FIVE, AND IS IRRELEVANT HERE.
+    Blute; Zliobaite & Stenseth; Jordan; Livnat & Papadimitriou; plus the authors'
+    reply. Complete Crossref reference lists were checked: zero hits for Kashtan,
+    Alon, Parter or facilitated variation across all five lists, 51 references
+    total. The debate was about the evolution-learning analogy; the MVG
+    experimental base was never contested in it. The fifth adjacent item, Laland's
+    "Life's Intimate Dance", is a book review that does not cite Watson & Szathmary.
+
+R4. A FURTHER SUFFICIENT CAUSE FOR MODULARITY, ON A FIXED GOAL. Hoverstad 2011,
+    Artificial Life 17(1):33-50, "Noise and the evolution of neural network
+    modularity": "When noise is added to the edge weights of the networks, modular
+    network topologies evolve, even without representational support." Noise alone
+    suffices with no goal variation at all. The same abstract states the field's
+    background condition plainly: evidence for a selective advantage of modularity
+    "has been elusive unless it has been supported or mandated by the genetic
+    representation". Full text genuinely paywalled, zero OA copies; abstract only.
+
+R5. THE THIRD-PARTY CIRCUIT REIMPLEMENTATIONS ARE MATERIALLY INCOMPLETE. This
+    matters because section 1 identifies the circuit arm as the untested one.
+      JBQuim/Boolean-Circuit-Evolution reproduces MVG against a fixed goal at
+      Q_m = 0.42 +- 0.10 against the original 0.54 +- 0.02, and reproduces the
+      modularity decay. Its README states it did NOT implement "evolution under
+      time-varying random goals", and identifies exactly what that costs: those
+      experiments "were used to show that evolution under varying goals leads to
+      shorter generation times and more modular solutions only if the goals share
+      subgoals". The arm separating shared substructure from variation as such was
+      skipped.
+      freedmand/combinational implements the original parameters and the
+      20-generation switch, but computes NO MODULARITY METRIC ANYWHERE in its
+      source. Its "comparable results" claim covers time-to-solution only. It is
+      not a replication of the modularity result.
+    So the circuit arm now has a partial, unpublished, control-incomplete
+    reproduction of the MVG-versus-fixed comparison, and no reproduction at all of
+    the comparison that carries the causal claim.
+
+R6. NO ORIGINAL CODE SURVIVES, confirmed by enumeration rather than by failure to
+    find. The Alon lab download index and data index were fetched and listed: six
+    download items, none evolutionary, and zero occurrences of evolution, modular
+    or Kashtan across both indexes. The only named tool remains mfinder, a motif
+    detector.
+
+R7. KASHTAN'S THESIS REMAINS UNDETERMINED, with routes named. Absent from DBLP,
+    which does surface theses for other authors in the same query shape, and absent
+    from his Google Scholar profile. The two decisive catalogues were unreachable
+    without credentials: the Israeli National Library API returns API_KEY_MISSING
+    and ProQuest requires a subscription. Absence on the routes exercised is not
+    evidence of absence, and this is recorded as undetermined rather than negative.
+
+================================================================================
 6. CONSEQUENCES FOR THIS DEEP-DIVE
 ================================================================================
 

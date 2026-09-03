@@ -234,10 +234,25 @@ as part of this proposal.
           scale: B=104, N_pop=5000 is affordable; the arms are FG, MVG, NBVG. Target the
           three verified anchors -- Q_m separation, the FV ordering MVG > FG > NBVG, and
           the out-of-family null.
-          THIS IS NO LONGER ONLY AN INTERNAL CALIBRATION STEP. It would be the first
-          independent test of the NAND circuit arm by anyone, eighteen years on. Whichever
-          way it comes out it is a result, and it settles whether the rest of this
-          deep-dive describes a real phenomenon or one laboratory's encoding.
+          THIS IS NO LONGER ONLY AN INTERNAL CALIBRATION STEP. Amended 2026-09-03 with
+          what the retry search found: a partial reproduction of the circuit arm DOES
+          exist, unpublished, at JBQuim/Boolean-Circuit-Evolution. It reproduces
+          MVG-versus-fixed at Q_m = 0.42 +- 0.10 against the original 0.54 +- 0.02, and
+          reproduces the modularity decay. It explicitly did NOT run the
+          time-varying-random-goals arm, and its own README names what that omission
+          costs: those experiments "were used to show that evolution under varying goals
+          leads to shorter generation times and more modular solutions only if the goals
+          share subgoals". The other reimplementation, freedmand/combinational, computes
+          no modularity metric at all and is a time-to-solution reproduction only.
+          THE CONSEQUENCE IS FAVOURABLE AND NARROWS THE JOB. The MVG-versus-fixed
+          comparison has been reproduced once outside the original lab, informally, with
+          a somewhat lower effect. What has NEVER been reproduced by anyone is the
+          comparison that carries the causal claim: MVG against RANDOMLY VARYING goals.
+          Prometheus should aim at that arm specifically rather than rebuilding the whole
+          specimen, and may be able to start from the existing Python rather than from
+          scratch. That is a far cheaper step 2 than this proposal originally assumed.
+          Whichever way it comes out it is a result, and it settles whether the rest of
+          this deep-dive describes a real phenomenon or one laboratory's encoding.
           Design requirement inherited from the failed replication: Clune et al. attribute
           the reversal to DISCRETENESS -- few discrete weights and thresholds, so that a
           single mutation can switch between goal solutions. Any reproduction must record
