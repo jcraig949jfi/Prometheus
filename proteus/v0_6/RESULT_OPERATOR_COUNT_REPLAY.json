@@ -1,0 +1,56 @@
+{
+ "identities": {
+  "affordance_hash": "f1607ee8be680acc33288a95c1a25c09ad4c799a47b0975381be8ca02d7638ce",
+  "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+  "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0"
+ },
+ "is_replay_of_production": true,
+ "kernels": {
+  "K_A": {
+   "escapes": 0,
+   "file": "OPCOUNTS_K_A_n20000.json",
+   "noop_states": 1826,
+   "replay_matches_production_exactly": true,
+   "seed": 15671939473150014554
+  },
+  "K_B": {
+   "escapes": 0,
+   "file": "OPCOUNTS_K_B_n20000.json",
+   "noop_states": 1834,
+   "replay_matches_production_exactly": true,
+   "seed": 3897376518631596881
+  }
+ },
+ "operator_names": [
+  "insertion",
+  "deletion",
+  "duplication",
+  "movement",
+  "replacement",
+  "operand_perturbation",
+  "reference_redirection",
+  "region_swap",
+  "splice",
+  "randomization",
+  "unreachable_removal",
+  "config_perturbation"
+ ],
+ "operator_weights": [
+  0.08333333333333334,
+  0.11458333333333334,
+  0.04166666666666667,
+  0.08333333333333334,
+  0.125,
+  0.19791666666666669,
+  0.08333333333333334,
+  0.0625,
+  0.052083333333333336,
+  0.04166666666666667,
+  0.03125,
+  0.08333333333333334
+ ],
+ "samples_per_state": 20000,
+ "schema_version": "proteus.v0_6_operator_counts.v1",
+ "wall_s": 13588.11087179184,
+ "workers": 12
+}

@@ -1,0 +1,4 @@
+operator-count replay | 2044 states | n=20,000 | grammar 5043f5e11a72 | workers 12
+  K_A: replay vs persisted production counts -> EXACT MATCH | escapes 0 | 7279s
+  K_B: replay vs persisted production counts -> EXACT MATCH | escapes 0 | 13588s
+both kernels captured and verified bit-identical to production (13588s)

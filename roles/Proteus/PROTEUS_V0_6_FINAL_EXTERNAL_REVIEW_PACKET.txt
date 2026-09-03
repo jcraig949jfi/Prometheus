@@ -1,0 +1,1189 @@
+====================================================================
+PROTEUS / PLAYER FOUNDRY V0.6
+FULL-SPACE NONEQUILIBRIUM CRUCIBLE -- FINAL EXTERNAL REVIEW PACKET
+2026-09-03
+====================================================================
+
+Self-contained. A reviewer who has read none of V0 through V0.5 and neither
+interim packet should be able to adjudicate from this document alone.
+
+WHAT PROTEUS IS. A deterministic factory for small, semantically sterile
+computational organisms. A "player" is a data object -- a bounded tape machine
+manifest whose genome is a list of 32-bit words, interpreted 4 words to an
+instruction with opcode = word mod 25. Every word sequence is a valid program,
+so there is no parse failure and no authored notion of a well-formed organism.
+Players contain no natural language, no LLM, and no knowledge of any world.
+Proteus does not run worlds, does not select, and is not its own neutral
+operator.
+
+WHAT V0.6 ASKED. Whether the MUTATION MACHINERY is dynamically neutral over the
+complete space of valid structural states -- not whether it drifts on average,
+but whether it satisfies detailed balance. V0.5 had found circulation on a
+truncated 124-state kernel; V0.6 asks whether that survives on the full space
+with a properly powered live measurement.
+
+--------------------------------------------------------------------
+A. FINAL V0.6 VERDICT
+--------------------------------------------------------------------
+
+    NOT_QUALIFIED_AUTHORED_NONEQUILIBRIUM_CURRENT
+
+The full-space structural mutation kernel is reproducibly NOT reversible, and
+the dominant part of the violation is caused by authored operator mechanics
+rather than by published geometry.
+
+The separate engineering question posed by the completion directive -- does this
+MATERIALLY compromise Proteus as a neutral player source -- is answered:
+
+    OPERATIONAL_SIGNIFICANCE_NOT_YET_ADJUDICATED
+
+Section M explains why no existing V0-V0.6 evidence settles it and why no
+post-hoc test was manufactured to pretend otherwise.
+
+Both strings are preregistered. The first comes from the prospective rule
+written by external review in brief section 19, BEFORE any V0.6 measurement
+existed: a reproducible stationary current caused by authored mutation
+mechanics rather than published geometry constitutes a directional mutation
+prior even with no marginal drift.
+
+--------------------------------------------------------------------
+B. G1-G3 EVIDENCE
+--------------------------------------------------------------------
+
+G1 SOURCE AND AUDIT IDENTITY -- PASS
+
+    grammar     proteus.grammar.v0.4
+                5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832
+    runtime     73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0
+    affordance  f1607ee8be680acc33288a95c1a25c09ad4c799a47b0975381be8ca02d7638ce
+    manifest    dacb3c7a149af89fc4dc248a663c95dbfa2a9e1e153f15aa363b8ccc9aadd967
+    audit stamp 5de328849043c86f...  binding tree 3ae4ee8b773e0fcf...
+
+    67 tests pass. Semantic quarantine audit PASS. Audit stamp reads FRESH.
+
+    Asserted by unit test and re-asserted by every runner, which REFUSES to
+    execute on a mismatch. No operator, weight, VM rule, manifest bound,
+    initialization rule, probe or configuration rule changed anywhere in this
+    pass. No repair was authorized and none was made.
+
+    Scope note, stated so the FRESH reading is not over-read: the audit stamp
+    binds proteus/foundry/*.py plus the auditor and the affordance table -- the
+    player-facing runtime. V0.6 added analysis code under proteus/v0_6/, which
+    is not player-facing and never executes inside a player, so it is correctly
+    outside the stamp. Adding a file to proteus/foundry/ WOULD read STALE; that
+    is how the V0.4 export.py gap was caught.
+
+G2 COMPLETE-SPACE CLOSURE -- PASS
+
+    The state set was REGENERATED from the published manifest rules (committed
+    JSON schema plus the affordance table's storage bounds) by walking the tape
+    ladder from the published minimum -- a different construction from the
+    hard-coded tape tuple V0.4/V0.5 used -- then compared rather than assumed
+    equal.
+
+    regenerated states     2,044
+    space hash             64e55c9d31b39b6bc37f6e8a5c1d92c5209ae085711116c18...
+    prior enumeration      2,044, EXACT SET EQUALITY, identical hash
+    tapes                  16, 32, 64, 128, 256, 512, 1024, 2048, 4096
+    support per state      min 5, median 10, mean 9.8, max 11
+
+    closure probe          400 x 2,044 = 817,600 live proposals
+    ESCAPED_VALID_STRUCTURAL_STATE_COUNT = 0
+    production run         escapes 0 on BOTH kernels
+
+    A single valid escape would have been an instrument failure. There were
+    none, so escape folding is a proven no-op on this space.
+
+G3 KERNEL PRECISION -- PASS at n = 20,000 per state per kernel
+
+    Two independent kernels, each estimated by EXECUTING grammar.mutate 20,000
+    times per state, marginalising over uniformly random genome content, with
+    self-loops from rejected proposals included.
+
+                      predicted   observed   limit
+    median row TV       0.0080     0.00800   0.010   PASS
+    p95    row TV       0.0127     0.01265   0.020   PASS
+    mean                   --      0.00824
+    p90                    --      0.01135
+    p99                    --      0.01505
+    max                    --      0.01860   reported only, never a criterion
+    edge-presence disagreements     0
+
+    The predictions come from the constant re-estimated off the FAILED n=12,000
+    attempt (1.1320/sqrt(n), 1.7892/sqrt(n)). Both landed on forecast to three
+    decimals, which checks the corrected model and not merely the larger n.
+
+    THE ANALYTIC KERNEL IS RETIRED FROM ADJUDICATION. V0.5 showed it differs
+    from the live operator by median TV 0.0162 and maximum 0.1661. Everything
+    in this packet is live execution.
+
+    PARALLELISM IS EXACT, and this is now demonstrated on the full production
+    space rather than argued. Each state's stream is root.derive(L, T), and
+    derive does not advance the parent, so a state's samples depend only on
+    (seed, tag, L, T). An independent replay at 12 workers reproduced the
+    15-worker production integer counts EXACTLY, every state and every
+    destination, over 40.9 million mutations per kernel.
+
+--------------------------------------------------------------------
+C. STATIONARY-SOLVER GATE (G4) -- PASS
+--------------------------------------------------------------------
+
+    power iteration      1,197,600 iters, residual ||pi P - pi||_1 = 1.0120e-14
+    Gauss-Seidel           200,000 iters, residual                 = 7.0239e-15
+    agreement power vs GS  L1 1.7937e-10   (gate 1e-8)      PASS
+                           max abs 3.5913e-13, max rel 7.0675e-09
+    residual gate          1.0120e-14      (gate 1e-10)     PASS
+    empirical occupancy    5,000,000 steps, L1 0.08492 vs pi
+
+    The adjudicated solution is the power-iteration one, fixed in the
+    preregistration so no solver could be chosen after the fact for giving a
+    cleaner current.
+
+    THE EMPIRICAL ARM IS NOT A FAILURE, AND ITS SIZE IS EXPECTED. It is an
+    external check carrying its own sampling error, never a gate. The chain's
+    spectral gap is 6.9836e-04 (SLEM 0.99930), a relaxation time near 1,432
+    steps, so 5 million steps give few effective independent samples across
+    2,044 states and an L1 near 0.08 is what that predicts. This same fact is
+    what disqualifies the trajectory arm in section M, and it is stated here
+    rather than only where it is convenient.
+
+    chain structure   1 communicating class containing all 2,044 states,
+                      closed, ZERO transient states
+
+    V0.5's full-space stationary solve hit its iteration cap without
+    converging. This is that step, completed.
+
+--------------------------------------------------------------------
+D. REVERSIBLE-CONTROL GATE (G5) -- PASS
+--------------------------------------------------------------------
+
+Two references on the same support. Both must read zero or the instrument is
+invalid and nothing else in this packet may be believed.
+
+    ADDITIVE SYMMETRISATION  Q(i,j) = (pi_i P_ij + pi_j P_ji) / (2 pi_i),
+    which satisfies detailed balance exactly and targets THE MEASURED
+    stationary distribution of the active kernel.
+        max |J|              2.7105e-20     (threshold 5.5460e-06)
+        total |J|            3.4927e-18
+        sigma                1.7531e-18     (gate 1e-12)
+        max cycle affinity   2.2760e-15
+
+    METROPOLIS-HASTINGS targeting the DECLARED UNIFORM measure over the 2,044
+    valid states -- independent of anything measured from the active process.
+        max |J|              2.7105e-20
+        total |J|            4.7773e-18
+        sigma                3.4316e-18
+        max deviation of its solved pi from uniform   1.0842e-19
+
+    The instrument reads zero when zero is true, by roughly fourteen orders of
+    magnitude of headroom against the material threshold. This control caught a
+    real defect before production: an earlier version used plain Metropolis
+    acceptance with a uniform-neighbour proposal, which is ASYMMETRIC on an
+    irregular graph, and converged to 0.0625 where uniform is 0.0833. See N5.
+
+--------------------------------------------------------------------
+E. K_A VERSUS K_B REPRODUCIBILITY
+--------------------------------------------------------------------
+
+Every quantity below is computed separately on the two independently seeded
+kernels and on the pooled n=40,000 kernel. Pooling never replaces the separate
+kernels.
+
+                            K_A          K_B          pooled      |A-B|
+    total |J|            3.4945e-02   3.5181e-02   3.4805e-02   2.36e-04
+    max |J|              3.7432e-05   3.8854e-05   3.6945e-05   1.42e-06
+    entropy production   1.40098e-02  1.40863e-02  1.38655e-02  7.65e-05
+    rel. flux imbalance  0.11266      0.11319      0.11208      5.4e-04
+    one-way edges              0            0            0          0
+    sigma, interior      9.7903e-03   9.7633e-03   9.6466e-03   2.70e-05
+    sigma, tape_max      4.0159e-03   4.1170e-03   4.0166e-03   1.01e-04
+    stationary entropy   10.3694 b    10.3975 b    10.3835 b    0.0281 b
+    max pi               2.8330e-03   2.8289e-03   2.8114e-03   4.1e-06
+    solver iterations    1,197,600    1,265,623    1,229,008
+
+    MATERIAL EDGES        1,494        1,469        1,400
+      shared by both      1,341        Jaccard 0.8268
+      SIGN AGREEMENT ON THE SHARED SET   1.0000
+
+    Every edge that both kernels call material carries the same direction of
+    current in both. Set membership disagrees only near the threshold, which is
+    what a threshold does to edges sitting on it.
+
+    A BIAS NOTE, REPORTED AGAINST INTEREST. Pooled sigma and pooled total |J|
+    are BELOW both individual kernels. That is the expected direction: both
+    statistics are positively biased by sampling noise, because noise creates
+    apparent asymmetry, and pooling halves the variance. The implied bias at
+    n=20,000 is about 1.3% of sigma. A bias-corrected sigma would be near
+    1.37e-02 instead of 1.40e-02 -- immaterial against a reversible reference
+    of 1.75e-18, but the reader should not have to notice it unaided.
+
+--------------------------------------------------------------------
+F. MATERIAL-CURRENT DEFINITION AND THRESHOLD
+--------------------------------------------------------------------
+
+Fixed in the preregistration BEFORE the active current map was inspected, and
+derived from replicated estimation rather than from a single same-kernel
+maximum:
+
+    noise distribution  = { |J_A(e) - J_B(e)| : e in connected pairs }
+        median   4.4263e-07
+        p95      3.4800e-06
+        p99      5.5460e-06
+        max      1.1436e-05
+
+    MATERIAL THRESHOLD  = 1.0 x p99  =  5.54595e-06
+
+An edge is material only if |J| exceeds the 99th percentile of the disagreement
+between two independent measurements of the same object. Aggregate statistics
+carry the argument; per-edge declarations are counted, not individually
+adjudicated.
+
+--------------------------------------------------------------------
+G. CURRENT RESULTS
+--------------------------------------------------------------------
+
+    connected pairs                       9,106
+    material edges                        1,494 (K_A), 16.4% of pairs
+    max |J| / threshold                   6.75x
+    one-way (zero-reverse) pairs          0
+
+    material edges by region
+        interior              1,037
+        tape_max                418
+        length_min               35
+        tape_min                  2
+        length_at_tape_cap        2
+
+    largest edges, all NEGATIVE J, all length transitions at fixed tape:
+        [47,4096] - [48,4096]   -3.7432e-05   tape_max
+        [25,1024] - [26,1024]   -3.7256e-05   interior
+        [30,1024] - [31,1024]   -3.7018e-05   interior
+        [ 1,4096] - [ 3,4096]   -3.6999e-05   length_min
+        [53,1024] - [54,1024]   -3.6846e-05   interior
+        [41,2048] - [42,2048]   -3.6098e-05   interior
+
+The current is a systematic circulation along the GENOME-LENGTH axis at fixed
+tape size. It is not concentrated at storage boundaries: 69% of material edges
+and 70% of entropy production are interior.
+
+--------------------------------------------------------------------
+H. DETAILED-BALANCE RESULT
+--------------------------------------------------------------------
+
+    global absolute flux imbalance   3.4945e-02 (K_A)  3.5181e-02 (K_B)
+    RELATIVE IMBALANCE               0.11266    (K_A)  0.11319    (K_B)
+
+11.3% of all two-way probability flux is net imbalance. This is not a
+microscopic residue. Detailed balance is violated at a scale that is a fair
+fraction of the traffic itself, while the marginal battery of V0.3-V0.5 reads
+no replicated directional drift at all. That contrast is the central scientific
+content of this pass: zero marginal drift is not neutrality.
+
+--------------------------------------------------------------------
+I. ENTROPY-PRODUCTION RESULT
+--------------------------------------------------------------------
+
+    sigma            1.40098e-02 nats/step (K_A), 1.40863e-02 (K_B), 0.5% apart
+    reversible ref   1.7531e-18            -- sixteen orders of magnitude below
+    terms                  18,212
+    ZERO-REVERSE EDGES          0, on both kernels
+
+    by structural region (K_A / K_B)
+        interior             9.7903e-03 / 9.7633e-03    70%
+        tape_max             4.0159e-03 / 4.1170e-03    29%
+        length_min           1.2602e-04 / 1.2860e-04
+        length_at_tape_cap   6.5039e-05 / 6.8703e-05
+        tape_min             1.2464e-05 / 8.7293e-06
+
+    operator share of outflux (not of sigma)
+        deletion              0.3604      insertion        0.2654
+        duplication           0.1323      splice           0.1210
+        unreachable_removal   0.0883      config_perturb   0.0326
+
+ZERO-REVERSE TRANSITIONS DO NOT DOMINATE. There are none. Every material edge
+is bidirectional, so the circulation is built from RATE ASYMMETRY on
+two-way edges, not from irreversible moves. This matters for attribution:
+boundary and manifest-validity rejection produce SELF-LOOPS, and a self-loop
+cannot carry current between distinct states, so rejection mechanics cannot be
+the source.
+
+--------------------------------------------------------------------
+J. CYCLE-AFFINITY RESULT, AND A STATISTIC I AM WITHDRAWING
+--------------------------------------------------------------------
+
+Computed on a spanning-tree fundamental cycle basis, as the brief requires, NOT
+as a three-cycle census.
+
+    fundamental cycles      7,063        tree edges  2,043
+    cycle length            mean 162, min 3, max 513
+
+THE MAXIMUM IS NOT A USABLE STATISTIC AND I AM NOT REPORTING IT AS A FINDING.
+The largest affinity on K_A is +3.0007. The SAME cycle on K_B reads +0.3178.
+Selecting extremes on one kernel and reading them on the other:
+
+        top   1 by |A|:  mean|A| 3.0007 -> mean|B| 0.3178   shrinkage 89.4%
+        top  10 by |A|:  mean|A| 2.9438 -> mean|B| 0.6858   shrinkage 76.7%
+        top 100 by |A|:  mean|A| 2.6695 -> mean|B| 1.7449   shrinkage 34.6%
+        top 500 by |A|:  mean|A| 2.3863 -> mean|B| 1.8514   shrinkage 22.4%
+
+That is a winner's curse, and it is structural rather than a defect: a
+spanning-tree basis on 2,044 nodes yields cycles averaging 162 edges, each
+contributing an independently noisy log-ratio, so per-cycle error accumulates
+as a random walk. Had this packet led with "maximum cycle affinity 3.00 nats,
+up from V0.5's 1.21," it would have been wrong twice over -- an unreproducible
+extreme, and a comparison between a 231-edge cycle and a 3-cycle, which are
+different objects.
+
+THE DISTRIBUTION IS REAL, and the error model is CHECKED rather than asserted.
+Writing each kernel's estimate as A = T + e with independent equal-scale noise:
+
+        noise sd per cycle          0.4845   (implied per edge 0.03806)
+        true affinity sd            1.1234
+        signal-to-noise             2.32
+        correlation    PREDICTED    0.8432   OBSERVED  0.8455   err 0.0023
+        sign agreement PREDICTED    0.8193   OBSERVED  0.7914   err 0.0279
+
+A model that predicts the observed inter-kernel correlation to 0.0023 is doing
+real work. The conclusion is that genuine cycle affinity exists, with a
+distribution of standard deviation about 1.12 nats, while any individual cycle
+is unreliable. The basis-independent statistic is entropy production, which
+reproduces to 0.5%, and that is what this pass leans on.
+
+--------------------------------------------------------------------
+K. ATTRIBUTION -- THE MECHANISM, NOT ONLY THE OPERATOR
+--------------------------------------------------------------------
+
+The single most important thing in this section is a distinction that the
+counterfactual table alone would have hidden, and that I got wrong in my own
+first reading of it.
+
+THERE ARE TWO DIFFERENT QUESTIONS, AND THEY HAVE DIFFERENT ANSWERS.
+
+  (a) HOW MUCH CURRENT FLOWS?  Measured by entropy production and total |J|,
+      both of which are FLUX-WEIGHTED -- they weight each edge's rate asymmetry
+      by how much probability actually crosses it.
+
+  (b) IS THE CHAIN REVERSIBLE AT ALL?  Measured by cycle affinity, which is
+      pi-free and unweighted. Kolmogorov's criterion: a chain is reversible if
+      and only if every cycle affinity vanishes.
+
+Reweighting the authored operators moves (a) enormously and (b) barely at all:
+
+    zeroing unreachable_removal     entropy production      -89.7%
+                                    cycle-affinity spread    -2.5%
+
+    THEREFORE: authored operator weighting controls the MAGNITUDE of the
+    current. It does NOT control its EXISTENCE. Under every weight vector
+    tested the chain remains non-reversible.
+
+WHICH OPERATORS CONTRIBUTE THE MAGNITUDE. Exact offline reweighting from
+recorded per-operator destination counts, with state space, published bounds
+and validity rules IDENTICAL in every variant (full table in section L).
+unreachable_removal dominates the flux-weighted current: zeroing it removes
+75.5% of total |J| and 89.7% of entropy production while that operator carries
+only 8.8% of outflux -- grossly disproportionate to its traffic.
+
+WHY NO OPERATOR CAN BE BLAMED FOR THE EXISTENCE OF IRREVERSIBILITY. A
+per-operator test was run and came back VACUOUS, which is itself the finding
+and is reported rather than deleted. Restricting the kernel to any single
+operator yields ZERO evaluable cycles out of 7,063, because a cycle affinity
+requires both directions of every edge and THE OPERATORS ARE STRICTLY
+DIRECTIONAL: insertion only lengthens, deletion only shortens. No single
+operator can close a cycle. Irreversibility is therefore a property of the
+MIXTURE of complementary directional operators, not a defect localisable to one
+of them -- which is exactly why reweighting moves magnitude without removing
+the phenomenon.
+
+WHICH REGIONS CARRY IT. Interior 70% of sigma and 1,037 of 1,494 material
+edges; tape_max 29% and 418 edges; the three remaining boundary regions
+together under 1.5% and 39 edges.
+
+WHICH TRANSITIONS DOMINATE ENTROPY PRODUCTION. Genome-length transitions at
+fixed tape size. The largest material edges are all single- or
+few-instruction length changes.
+
+WHETHER ZERO-REVERSE TRANSITIONS DOMINATE. No. THERE ARE NONE, on either
+kernel. The circulation is rate asymmetry on bidirectional edges.
+
+IS IT VALIDITY/REJECTION MECHANICS OR STORAGE BOUNDARIES? LARGELY NOT.
+Rejections under this grammar return the state unchanged with a recorded reason
+(published_boundary, manifest_validity), which is a SELF-LOOP. Self-loops alter
+the stationary distribution but cannot carry current between distinct states,
+and a cycle affinity never traverses one. Consistently: zero one-way edges, and
+70% of sigma in the interior. The tape_max region carrying 29% is the one place
+a storage boundary plausibly participates.
+
+IS IT AUTHORED, OR IS IT PUBLISHED GEOMETRY? THE MAGNITUDE IS DEMONSTRABLY
+AUTHORED. Holding geometry exactly fixed and varying only the authored weight
+vector moves sigma by an order of magnitude (1.4010e-02 down to 1.4418e-03, or
+up to 1.5853e-02). Geometry is constant across those variants, so geometry
+cannot explain a swing of that size. This is what rules out
+FULL_SPACE_CURRENT_ATTRIBUTED_TO_GEOMETRY and licenses the headline.
+
+WHERE THE EVIDENCE RUNS OUT, AND I AM NOT CLOSING IT. The underlying rate-ratio
+asymmetry -- the part that survives every reweighting -- is NOT attributed. With
+the dominant operator zeroed, sigma is still 1.4418e-03: roughly 8e14 times the
+reversible reference, and 19 times the K_A/K_B measurement disagreement in sigma
+(7.65e-05), so it is not a noise floor. Whether that residue is authored
+proposal asymmetry common to the directional operators, or a consequence of the
+published bounds interacting with those operators, CANNOT be separated by the
+four preregistered variants.
+
+    THEREFORE, EXPLICITLY:
+    The MAGNITUDE of the current is ATTRIBUTED to authored operator mechanics,
+    by direct causal demonstration with geometry held fixed. This licenses the
+    headline on its own.
+    The EXISTENCE of the irreversibility -- the residue no reweighting removes
+    -- is recorded as
+        FULL_SPACE_CURRENT_SOURCE_UNRESOLVED
+    as a scoped sub-finding, and is not resolved by a plausible story.
+
+No mechanism was repaired. The specimen is intact.
+
+--------------------------------------------------------------------
+L. OPERATOR-REWEIGHTING COUNTERFACTUAL
+--------------------------------------------------------------------
+
+Exact offline recomposition from per-operator destination counts:
+
+    P'(i -> j) = sum_op w'_op * ( count_op(i -> j) / count_op(i -> .) )
+
+No grammar was changed and no variant was ever made active. Each variant gets
+its own stationary solve to residual ~1e-13.
+
+FLUX-WEIGHTED (K_A, with stationary solves)
+
+    variant                     total |J|     vs base       sigma      vs base
+    BASELINE frozen weights    3.4945e-02        --      1.4010e-02       --
+    no_unreachable_removal     8.5667e-03     -75.5%     1.4418e-03    -89.7%
+    length_balanced            1.9970e-02     -42.9%     5.9125e-03    -57.8%
+    insertion_deletion_equal   3.3280e-02      -4.8%     1.2458e-02    -11.1%
+    no_config_perturbation     3.8631e-02     +10.5%     1.5853e-02    +13.2%
+
+    reversible reference sigma  1.7531e-18   -- no variant approaches this
+
+PI-FREE, BOTH KERNELS (cycle-affinity spread; Kolmogorov criterion)
+    Cycle affinity is pi-free, so it needs no stationary solve and BOTH kernels
+    can be evaluated. Spread of the affinity distribution, and the
+    noise-corrected true spread from the two-kernel decomposition:
+
+    variant                   sd K_A  vs base  sd K_B  vs base true sd vs base
+    BASELINE frozen weights   1.1413     --    1.0414     --    1.0317    --
+    no_unreachable_removal    1.1131   -2.5%   1.0114   -2.9%   1.0008  -3.0%
+    length_balanced           1.0441   -8.5%   0.9465   -9.1%   0.9292  -9.9%
+    insertion_deletion_equal  1.0676   -6.5%   0.9716   -6.7%   0.9552  -7.4%
+    no_config_perturbation *  1.2119   +6.2%   1.1095   +6.5%   1.1075  +7.3%
+
+    * SUPPORT LOST: 1,012 of 7,063 cycles stop being evaluable on BOTH kernels,
+      because some edges exist only through config_perturbation. Not a
+      like-for-like comparison, and marked rather than tabulated silently.
+
+    baseline cross-kernel diagnostics on the recomposed kernel:
+        noise sd 0.3593   true sd 1.0317   S/N 2.87
+        correlation 0.8956   sign agreement 0.8328
+
+    The relative effects agree closely across the two independently seeded
+    kernels -- -2.5% vs -2.9%, -8.5% vs -9.1%, -6.5% vs -6.7%, +6.2% vs +6.5%.
+    THE CONCLUSION IS THEREFORE PRESENT IN BOTH KERNELS, NOT IN THEIR AVERAGE.
+
+    NOTE ON TWO DIFFERENT NOISE SCALES, so the reader is not tripped by them.
+    The cycle-error analysis of the DIRECTLY measured kernel gives noise sd
+    0.4845, true sd 1.1234, S/N 2.32, correlation 0.8455. The table above, built
+    on the kernel RECOMPOSED from per-operator counts, gives noise sd 0.3593,
+    true sd 1.0317, S/N 2.87, correlation 0.8956. The recomposed estimator
+    conditions on the operator draw and so carries less variance -- the same
+    reason its reconstruction sits at median row TV 0.0033 against the direct
+    kernel's 0.0080 self-disagreement. Lower noise, higher S/N, same conclusion.
+
+    CONTRAST THIS TABLE WITH THE ONE ABOVE IT. Flux-weighted entropy production
+    moves by up to -89.7%. The pi-free reversibility criterion moves by at most
+    -9.9%, and by only -3.0% for the variant that dominates the flux-weighted
+    result. Reweighting changes how much current flows. It does not make the
+    chain reversible.
+
+READ FOUR THINGS FROM THIS.
+
+1. config_perturbation is a DILUTER, not a source. Removing it RAISES the
+   current by 10.5%. It adds close-to-reversible moves that wash circulation
+   out, so an intuition that every operator contributes current is wrong. Note
+   also that removing it DESTROYS SUPPORT: 1,012 of 7,063 cycles stop being
+   evaluable because some edges exist only through that operator, so its row is
+   not a like-for-like comparison and is marked accordingly.
+
+2. A LABEL CAVEAT THAT CHANGES THE READING. The variant named
+   "length_balanced" ALSO sets unreachable_removal to zero. It is therefore NOT
+   a clean insertion/deletion contrast and must not be read as one. That is
+   precisely why it reduces the current LESS (-42.9%) than zeroing
+   unreachable_removal alone (-75.5%): its equalised insertion and deletion
+   weights give back some of the circulation that the base weight imbalance
+   (deletion 0.118 vs insertion 0.086) had been cancelling. Read together with
+   insertion_deletion_equal (-4.8% alone), the honest summary is that
+   insertion/deletion balance is a second-order lever whose sign depends on
+   what else is present.
+
+3. NO REWEIGHTING ON THE SAME SUPPORT ELIMINATES THE CURRENT. This is the
+   preregistered question of brief section 6, and the answer is NO for all four
+   variants, on both the flux-weighted and the pi-free statistic.
+
+4. THE TWO STATISTICS DISAGREE ABOUT WHAT REWEIGHTING ACHIEVES, and that
+   disagreement is the finding, not an inconsistency. Section K.
+
+RECONSTRUCTION CHECK, reported honestly. Recomposing at the FROZEN weights
+gives median row TV 0.0033 against the measured kernel (max 0.0137). This is
+agreement within sampling error, NOT an exact identity, and the direction is
+expected: the reconstruction conditions on the operator draw and so removes a
+variance term the direct estimate carries. For scale, the K_A/K_B row TV is
+0.0080, so the reconstruction sits comfortably inside the measurement's own
+disagreement with itself.
+
+--------------------------------------------------------------------
+M. OPERATIONAL SIGNIFICANCE -- NOT YET ADJUDICATED
+--------------------------------------------------------------------
+
+The directive asks whether the measured structure MATERIALLY compromises
+Proteus as a neutral player source, forbids inventing an acceptance threshold
+for it, and forbids manufacturing a post-hoc test. Here is the evidence and
+the honest limit.
+
+WHAT IS ESTABLISHED.
+  * The violation is large in its own units: 11.3% of two-way flux is net
+    imbalance, and sigma is 1.40e-02 nats per mutation step.
+  * It is reproducible: 0.5% agreement in sigma across independent kernels, and
+    PERFECT sign agreement on the 1,341 shared material edges.
+  * It is systematic, not diffuse: it runs along the genome-length axis.
+  * It survives every authored reweighting tested.
+  * It coexists with NO replicated marginal directional drift (V0.3-V0.5, 350
+    coordinate-cohort hypotheses under global step-down Holm, zero global
+    survivors).
+
+WHY THE ONE ARM THAT COULD SPEAK TO CONSEQUENCE CANNOT.
+The matched long-run trajectory comparison ran 2,000,000 steps of the active
+kernel against the additive reversible reference:
+
+    active                mean genome length 137.662, mean log2 tape 10.324
+    reversible reference  mean genome length 125.783, mean log2 tape 10.199
+
+An 11.9-instruction gap looks like exactly the structural preference the
+question is about. IT CANNOT BE READ THAT WAY, FOR TWO INDEPENDENT REASONS.
+
+  (i) BY CONSTRUCTION THE TWO CHAINS SHARE A STATIONARY DISTRIBUTION. The
+      additive reference is built to satisfy detailed balance with respect to
+      the ACTIVE kernel's own pi. Its stationary mean length is therefore
+      identical to the active kernel's, exactly. Any observed difference is a
+      finite-time effect, not a preference. A reference that shares pi can
+      never exhibit a stationary structural difference no matter how large the
+      circulation -- so this arm was incapable of answering the question as
+      built, and that is a design limitation I am reporting, not excusing.
+
+  (ii) NEITHER TRAJECTORY IS CONVERGED. Both sit 0.085-0.092 total variation
+      from pi after 2 million steps, against a relaxation time near 1,432 steps
+      implied by the spectral gap of 6.9836e-04. With one trajectory per arm
+      and no replicate seeds, the 11.9-instruction gap cannot be separated from
+      trajectory-to-trajectory variability.
+
+WHAT WOULD BE REQUIRED, AND WHY IT WAS NOT DONE. Answering the question needs a
+reference that is neutral in the RIGHT sense -- one whose stationary
+distribution is NOT inherited from the active kernel -- run over horizons
+matched to an actual campaign, with replicate seeds. That is a new
+preregistered experiment. Building it now would mean choosing a reference and a
+horizon AFTER seeing the current map, which is the precise failure mode this
+programme exists to avoid. Replicate trajectory seeds are also outside the
+frozen surface the completion directive imposes.
+
+    THEREFORE: OPERATIONAL_SIGNIFICANCE_NOT_YET_ADJUDICATED
+
+STATED PLAINLY FOR THE ENGINEERING DECISION. V0.6 establishes that the mutation
+kernel carries a real, reproducible, authored circulation that no reweighting
+removes. It does NOT establish whether that circulation would bias the
+structural composition of a population over a realistic campaign. Both of the
+following remain live and this packet deliberately does not choose between them:
+
+    microscopic circulation with negligible observable consequence
+    circulation capable of producing meaningful structural preference
+
+Detailed-balance violation does not automatically make a player generator
+unusable. Zero marginal drift does not make it neutral. The decision is
+external, and V0.6's job was to make it an informed one.
+
+====================================================================
+N. COMPLETE FAILURE CHRONOLOGY
+====================================================================
+
+Required to stay visible. V0.6 did not work on the first attempt and this
+section is part of the result, not an apology attached to it.
+
+N1. THE n=12,000 PRECISION GATE FAILED, BY 0.0003.
+    Frozen criterion: median row TV <= 0.010 and p95 <= 0.020 between two
+    independent full-space kernel estimates. At the frozen n = 12,000:
+
+        median row TV   0.010333   limit 0.010   FAIL
+        p95    row TV   0.016333   limit 0.020   PASS
+        max    row TV   0.023250   (reported, never a criterion)
+        edge-presence disagreements   0
+        escaped valid structural states   0
+
+    The run stopped there by design, BEFORE computing any current, stationary
+    distribution, entropy production, cycle affinity or attribution. Preserved
+    under its own identity as RESULT_FULL_n12000_GATE_FAIL.json with
+    classification_note FULL_SPACE_KERNEL_UNDERPOWERED. Cost: about 100 minutes.
+
+N2. THE CAUSE WAS THE MARGIN I CHOSE, NOT THE FIT.
+    The pilot fitted median TV = 1.0775/sqrt(n) on a 103-state positional subset
+    (every 20th state). The full space gives 1.1320/sqrt(n): the pilot constant
+    was 5.1% LOW, because a stride-20 positional subset under-represents rows
+    with larger support. I then sized n = 12,000 against a predicted median of
+    0.00984, leaving 1.7% margin, so a 5% error in the constant was fatal. A
+    positional subset is unbiased in position and NOT unbiased in support size.
+    That is the lesson and it is mine.
+
+N3. THE THRESHOLD WAS NOT LOWERED. EFFORT WAS RAISED.
+    Median <= 0.010 and p95 <= 0.020 stand exactly as committed. What changed
+    was n, 12,000 -> 20,000. This cannot be outcome-motivated by construction,
+    not by promise: the precision gate is evaluated BEFORE any substantive
+    quantity is computed, and the process exited at exactly that point, so the
+    only thing ever observed from the full space at that moment was a precision
+    statistic. Recorded in PREREG_ADDENDUM_2026-09-03.md and committed BEFORE
+    the second attempt started, in aafce2bd2. (Interim Packet No. 2 cited
+    d5185d092 for this; that SHA was rebased away and is NOT reachable from
+    origin/main. See F3 in the verdict ledger.)
+
+N4. COUNTS WERE PERSISTED AFTER THE GATE, SO THE FAILURE DESTROYED THE COMPUTE.
+    The first attempt's transition counts were written only after the gate
+    block, so the gate failure discarded ~100 minutes that could have been
+    pooled with a second batch. Counts are now written immediately after each
+    kernel is measured. An engineering defect that cost time, not correctness,
+    and reported because it changed what the second attempt had to do.
+
+N5. THE METROPOLIS CONTROL MISSED ITS OWN TARGET (found before production).
+    I used plain acceptance min(1, tgt_j/tgt_i) with a uniform-neighbour
+    proposal. On an irregular graph that proposal is ASYMMETRIC, so detailed
+    balance fails and the chain converges somewhere other than its declared
+    measure: caught converging to 0.0625 where uniform is 0.0833. Corrected to
+    the Hastings ratio min(1, tgt_j*k_i/(tgt_i*k_j)). A control whose only job
+    is to read zero, silently missing its own target, would have produced a
+    confident wrong answer about the instrument itself. In production it now
+    hits its declared uniform target to 1.08e-19.
+
+N6. THE ANALYSIS TOOLS ASSUMED A CLOSED STATE SET (found before production).
+    On a truncated subset a leaking row is not a stochastic matrix, which made
+    the two stationary solvers disagree by L1 0.026 and made the Metropolis
+    control raise. Escape folding is now explicit, and is a NO-OP on the
+    production space, which is proved closed. The defect was in how I exercised
+    the tools and would have stayed invisible had I only ever run them on the
+    full space.
+
+N7. A KEY-PARSING DEFECT THAT WOULD HAVE CRASHED THE REPLAY AFTER 90 MINUTES.
+    Both count loaders parsed persisted keys with eval(), which returns a list;
+    a list is unhashable and cannot be a dict key. The operator-count replay
+    would have measured for ~90 minutes and then died at its verification step.
+    Caught by testing the parse standalone BEFORE launching, and replaced with
+    json.loads() plus tuple().
+
+N8. I RE-COMMITTED MY OWN DOCUMENTED WINDOWS SPAWN MISTAKE.
+    A sensitivity script was written without an `if __name__ == "__main__":`
+    guard. Under Windows spawn the child re-imports __main__, so the script
+    re-executed itself. This exact failure mode is documented in the V0.6
+    record from an earlier pass; I repeated it anyway. Fixed by writing a real
+    runner file with the guard.
+
+N9. A DUPLICATE PRODUCTION JOB RAN FOR 45 MINUTES BECAUSE I MISREAD AN ERROR.
+    My first launch of the operator-count replay DID start. Only my subsequent
+    `cat` of its log ran in the wrong working directory, because a `cd X && cmd
+    &` construction put the cd inside a background subshell. I read "no such
+    file" as "nothing started" and relaunched. Two identical 12-worker replays
+    then competed for 16 cores and were on course to race on the same output
+    files. Found by grouping processes by parent process id and checking parent
+    liveness; the duplicate and its twelve workers were killed. NO OUTPUT WAS
+    CORRUPTED: neither instance had reached its write step. Killing a parent
+    also orphans its spawned workers, which keep running, so those were killed
+    explicitly by pid on both occasions rather than left to compete.
+
+N10. EVIDENCE THAT SUBSTANTIVE QUANTITIES WERE UNAVAILABLE BEFORE G3 PASSED.
+    The runner's control flow makes this checkable rather than assertable. In
+    run_full.py the precision gate block ends with an early return that writes
+    the failed artifact and exits before the stationary solve; the failed
+    artifact RESULT_FULL_n12000_GATE_FAIL.json contains identities, the escape
+    count and the precision report, and NO stationary distribution, NO current,
+    NO entropy production, NO cycle affinity and NO attribution. The file is in
+    the repository and can be inspected.
+
+====================================================================
+O. WHAT V0 THROUGH V0.6 TAUGHT US ABOUT THE WRONG MICROSCOPES
+====================================================================
+
+Not "the tests improved". What each inadequate instrument would have made us
+BELIEVE, and which direction the error ran.
+
+O1. FALSE POSITIVE, and the repair did the damage.
+    V0 through V0.2 measured a marginal length slope with no geometry control.
+    It failed three times and we believed the grammar had a length ratchet.
+    Acting on that belief I revised the grammar twice. THE BELIEF WAS FALSE: a
+    symmetric-by-construction joint walk reproduces the same slope, so the
+    signal was joint geometry, not authored direction. Worse, the second
+    revision INTRODUCED a real tape ratchet that cost another whole pass to
+    find and remove. Cost of a missing null: two grammar versions and two
+    passes.
+
+O2. FALSE NEGATIVE, hidden behind flat marginals.
+    V0.3 and V0.4 then tested marginal drift against proper geometry nulls and
+    found nothing surviving multiplicity correction. Had the sequence stopped
+    there we would have believed the Foundry was dynamically neutral and shipped
+    it. THE BELIEF WOULD HAVE BEEN FALSE: V0.5 found authored circulation with
+    almost no marginal displacement. Detailed balance is a far stronger
+    condition than zero drift, and V0.6 confirms the gap is not subtle --
+    11.3% of two-way flux is net imbalance while the marginal battery reads
+    nothing.
+
+O3. A CONFIRMATORY TEST KILLING A DISCOVERY.
+    The V0.4 halt/yield finding did not replicate under V0.5's confirmatory
+    design: v0_4 delta -0.0191 against v0_5 delta +0.0118, opposite sign,
+    one-sided p 0.9716. Recorded as V0_4_CONTENT_DISCOVERY_NOT_REPLICATED. The
+    lesson is that a discovery found in the same pass that generated it is a
+    hypothesis, and the confirmatory arm is what tells you which.
+
+O4. AN INSTRUMENT THAT STOPPED ITSELF, for the first time in this sequence.
+    An underpowered full-space kernel would have let us believe the truncated
+    V0.5 finding did not generalise. At n = 12,000 the measurement was not good
+    enough to tell, and the design refused to let it answer. This is the first
+    time in the programme that a gate prevented a believable wrong number from
+    existing rather than catching one after it had been written down.
+
+O5. THE ANALYTIC SHORTCUT THAT WAS SIMPLY WRONG.
+    The V0.4/V0.5 analytic kernel differs from the live operator by median TV
+    0.0162 and maximum 0.1661. It is retired from adjudication in V0.6 and
+    appears only as historical evidence. A closed-form model of your own
+    sampler is a hypothesis about your code, not a description of it.
+
+O6. THE COMPARISON THAT ONLY LOOKS LIKE ONE.
+    Cycle affinity magnitudes are NOT comparable across bases. V0.5 reported a
+    top three-cycle affinity of -1.21 nats; V0.6 reports a maximum of 3.0007
+    nats over a spanning-tree fundamental cycle of roughly 230 edges. These are
+    different objects and the larger number is not a larger effect. The
+    basis-independent comparison is entropy production per step. This packet
+    reports both and leans on the second.
+
+====================================================================
+P. CURRENT QUALIFICATION STATE
+====================================================================
+
+    PROTEUS IS NOT QUALIFIED.
+    CAMPAIGN 1 REMAINS BLOCKED.
+    NO WORLD WAS TOUCHED. NO ADAPTER EXISTS. NO SELECTION WAS RUN.
+    PROTEUS DID NOT ACT AS ITS OWN NEUTRAL OPERATOR.
+    NO GRAMMAR, OPERATOR, WEIGHT, MANIFEST OR THRESHOLD CHANGED IN V0.6.
+    NO REPAIR WAS ATTEMPTED. THE SPECIMEN IS INTACT.
+
+V0.6 was a measurement pass. It measured. It does not qualify anything, and
+this packet contains no self-qualification.
+
+====================================================================
+Q. EXACT BLOCKERS REMAINING BEFORE CAMPAIGN 1
+====================================================================
+
+Q1. The authored nonequilibrium current itself. An external decision is owed on
+    whether a mutation process that violates detailed balance by 11.3% of
+    two-way flux is admissible as a neutral player source. Proteus must not
+    make that call and does not.
+
+Q2. OPERATIONAL_SIGNIFICANCE_NOT_YET_ADJUDICATED (section M). Whether the
+    circulation produces meaningful structural preference over realistic
+    campaign horizons is NOT established by any V0-V0.6 evidence. Deciding Q1
+    well probably requires answering this, and answering it requires a
+    preregistered experiment that does not exist yet.
+
+Q3. The residual current that no tested reweighting removes. Zeroing the
+    dominant operator leaves entropy production ~8e14 times the reversible
+    reference. Whether the remainder is authored proposal asymmetry or
+    published geometry is UNRESOLVED, and the four preregistered variants
+    cannot separate them.
+
+Q4. No behavioral coupling evidence exists. Under the active grammar a single
+    operator draw produces the structural and content change as one event, so
+    the structural kernel cannot be substituted while holding content treatment
+    fixed. The arm was declared omitted BEFORE the run rather than after a
+    failure, and remains unmeasured.
+
+Q5. No consumer surface decisions. No registry exists (section R), and building
+    one is an external integration decision, not a Proteus one.
+
+Q6. Repair, if any, is V0.7 under a separately authored brief. Nothing in this
+    packet proposes none; no repair may be inferred from the attribution.
+
+--------------------------------------------------------------------
+R. CONSUMER-FACING PLAYER FOUNDRY SURFACE (DOCUMENTATION ONLY)
+--------------------------------------------------------------------
+
+Documented, not designed. Nothing in this section was built, changed or added
+for it. Full version: roles/Proteus/CONSUMER_SURFACE_V0_6.md.
+
+IS THERE A CANONICAL PLAYER REGISTRY OR DICTIONARY?
+
+    NO. IT DOES NOT EXIST.
+
+There is no registry file, no dictionary, no catalog and no enumeration
+endpoint anywhere in proteus/. A search of the whole package for
+registry/dictionary/catalog/family returns nothing. There are also no player
+families and no player types: a consumer does not choose a KIND of player. One
+was NOT built during V0.6, because the directive makes that an external
+integration decision after this experiment closes. If one is ever built, note
+that it would be a semantic surface aimed at a deliberately semantics-free
+population, and the A1 firewall reasoning should be applied before writing it.
+
+GENERATORS. Exactly one:
+    proteus.foundry.generate.generate(foundry_manifest) -> [organism_record]
+
+STABLE IDENTIFIERS.
+    organism_id     sha256(canonical_json(player_manifest)), content-addressed
+    lineage_id      the founder's organism_id
+    generation      integer, 0 at generation
+    runtime_hash    sha256 over LF-normalised affordances.py + vm.py
+    foundry_identity(fm)  sha256({foundry_manifest, runtime_hash})
+    GRAMMAR_HASH, AFFORDANCE_HASH as in section B
+  Canonical JSON is sort_keys=True, separators=(",",":"), ensure_ascii=True.
+  Identity is over those bytes, not over a file, so CRLF checkout settings
+  cannot change an id.
+
+SCHEMA VERSIONS.
+    player manifest   proteus.player_manifest.v0
+                      proteus/contracts/player_manifest.schema.v0.json
+                      $id prometheus/proteus/player_manifest/v0
+    foundry manifest  proteus.foundry_manifest.v0
+    lineage record    proteus/contracts/lineage_record.schema.v0.json
+  The schema document is descriptive; proteus.foundry.vm.validate_manifest is
+  the AUTHORITY when document and code disagree, and it fails closed.
+
+DETERMINISTIC SEED CONTRACT.
+    SplitMix64 only, pure 64-bit integer arithmetic. Python's random module is
+    used nowhere in proteus/foundry, deliberately.
+    root = SplitMix64(seed_from("proteus.generate.v0", fm.seed, RUNTIME_HASH))
+    organism i drawn from root.derive("organism", i); derive does NOT advance
+    the parent, so organism i depends only on (seed, "organism", i) and is
+    independent of population size or parallel decomposition.
+    The runtime hash is INSIDE the seed, so the same numeric seed under a
+    changed interpreter is a different population by construction.
+    GUARANTEE: same foundry manifest + same runtime => identical population.
+    The player never seeds its own randomness; the operator supplies the rng.
+
+CONFIGURATION PARAMETERS (the entire request surface, defaults as committed).
+    seed 0 | n 0 | n_regs_range [2,16]
+    tape_words_choices [16,32,64,128,256,512,1024]
+    genome_instr_range [1,64]   (4 words each, capped at tape_words/4)
+    code_writable_weights [1,1] | persist_weights [1,1,1,1]
+    tick_budget_choices [16,64,256,1024] | out_cap_choices [1,4,16]
+  Rejected before sampling if outside the published STORAGE_BOUNDS, which are
+  wider than these defaults (tape to 4096, genome to 4096 words, tick budget to
+  65536, out_cap to 256).
+
+ARTIFACT RECEIVED.
+    {organism_id, lineage_id, generation, runtime_hash, manifest}
+    manifest = {schema_version, n_regs, tape_words, genome[uint32],
+                code_writable, persist, tick_budget, out_cap}
+  A player IS this object -- data, not code. No field carries a string a player
+  can read.
+
+RUNTIME REQUIREMENTS. CPython 3.11 or 3.12, standard library only. No
+third-party dependency, no GPU, no network, no model, no API key. Verified
+byte-identical on 3.11.9 and 3.12.10 (Windows); the claim is bounded to hosts
+actually tested.
+
+VALIDATION AND AUDIT ENTRY POINTS.
+    python -m pytest proteus/tests -q
+    python proteus/audits/audit_identity.py verify
+    python proteus/audits/quarantine.py
+    proteus.foundry.vm.validate_manifest(m)
+    proteus.foundry.qualify.qualify(...)
+  qualify is NOT selection and NOT a world. An organism that emits nothing,
+  halts immediately or spins its whole budget PASSES; those are phenotypes.
+
+EXPECTED FAILURE RESPONSES.
+    invalid manifest       ManifestError (a ValueError), fail-closed
+    invalid foundry mfst   ValueError before sampling
+    qualification death    appended to a hash-chained FailureLedger with cost
+    tick outcome           status "halt" | "yield" | "budget", not an exception
+    output overflow        appends beyond out_cap dropped AND counted
+    stale audit            "STALE:" plus the offending paths
+
+THE PLAYER ABI (proteus/contracts/WORLD_INTERFACE.md), generic and
+semantics-free:
+    Player(manifest); player.fresh_state(); lineage.restore(checkpoint)
+    player.run_tick(state, inputs, n_out, rng, meter=None, budget=None)
+        -> (outputs, status)
+    lineage.checkpoint(organism_id, state, encounter_id, tick)
+  Channel counts may vary per tick, encounter and world; the player addresses
+  channels by register value mod channel count. PROTEUS IMPLEMENTS THE PLAYER
+  SIDE ONLY -- no World-0 adapter, no binding of any kind, because a binding
+  written by Proteus would be a firewall breach by construction.
+
+REPLAY PROCEDURE. Pin runtime/affordance/grammar hashes and schema version;
+re-run generate(fm) on a listed runtime; check organism_id equals
+sha256(canonical_json(manifest)); run audit_identity.py verify and confirm
+FRESH.
+
+STILL MISSING BEFORE ANY CONSUMER COULD USE THIS: no registry, no packaging or
+dependency pin file, no adapter by design, and Proteus is not qualified.
+
+--------------------------------------------------------------------
+S. ARTIFACTS, COMMITS, HASHES, REPRODUCTION
+--------------------------------------------------------------------
+
+IDENTITIES
+    brief
+      d97de9ead687745a3616434b64fc2351246064295b13c4ed1cddd658d602fa96
+    completion directive
+      abadaf4d690c70979ba97356ac03d67238bcd7021f5a2d01e7e982218f13fcbc
+    prereg_id
+      9ced9136d25e4bba4b29f14fa7a44a1162b70df0e8b118f40c70fbb92041a1a6
+    grammar v0.4
+      5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832
+    runtime
+      73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0
+    affordance
+      f1607ee8be680acc33288a95c1a25c09ad4c799a47b0975381be8ca02d7638ce
+    manifest schema
+      dacb3c7a149af89fc4dc248a663c95dbfa2a9e1e153f15aa363b8ccc9aadd967
+    space
+      64e55c9d31b39b6bc37f6e8a5c1d92c5209ae085711116c18dfdcefc93266459
+    seed_a         15671939473150014554   = int(brief[:16], 16)
+    seed_b          3897376518631596881   = int(brief[16:32], 16)
+
+COMMITS, all verified reachable from origin/main at the time of writing
+    b02d97e4b  brief committed verbatim and hashed
+    d22df6480  preregistration FROZEN before the production run
+    2e4a82ed8  interim preregistration packet (design published before numbers)
+    aafce2bd2  n=12,000 gate FAILURE + ADDENDUM (effort raised, not target)
+    3eaacd158  interim packet No. 2 (G1-G3 cleared)
+    47a9d201f  cross-runtime replay + fsum negative control
+    1a9292902  dual-kernel tooling, operator-count replay, consumer surface
+    b46dbd9c6  completion directive committed verbatim and hashed
+    97980b6e1  PRODUCTION RESULT_FULL.json + kernel counts + logs
+    228749c55  dual-kernel analysis + cycle-affinity error decomposition
+    43a5c48f5  per-operator attribution: magnitude vs existence
+
+    CORRECTION TO INTERIM PACKET No. 2. That packet cited d5185d092 as the
+    commit recording the preregistration addendum. THAT SHA IS NOT REACHABLE
+    FROM origin/main: the commit was rebased and its content now lives in
+    aafce2bd2. The object still exists locally, which is exactly why the error
+    was invisible until checked. Cite aafce2bd2. Every SHA in this packet was
+    verified with `git merge-base --is-ancestor <sha> origin/main` before
+    publication; d5185d092 is the one that failed, and it is listed here rather
+    than quietly replaced.
+
+ARTIFACTS (all under proteus/v0_6/ unless noted)
+    PREREG_V0_6.md / .json               frozen design, gates, seeds
+    PREREG_ADDENDUM_2026-09-03.md        the gate failure and the response
+    RESULT_SPACE_AUDIT.json              regeneration, closure proof
+    RESULT_PILOT.json                    power calibration ladder and fit
+    RESULT_FULL_n12000_GATE_FAIL.json    the FAILED attempt, preserved
+    RESULT_FULL.json                     the adjudicated production result
+    RESULT_DUAL_ANALYSIS.json            K_A / K_B / pooled, all quantities
+    RESULT_CYCLE_ERROR.json              cycle-affinity error decomposition
+    COUNTS_K_A_n20000.json               integer transition counts
+    COUNTS_K_B_n20000.json               integer transition counts
+    KERNEL_K_A.json                      adjudicated kernel
+    OPCOUNTS_K_A_n20000.json             per-operator destination counts
+    OPCOUNTS_K_B_n20000.json             per-operator destination counts
+    RESULT_OPERATOR_COUNT_REPLAY.json    bit-identity verification of the above
+    REPLAY_py312.json / REPLAY_py311.json          two-layer replay artifacts
+    REPLAY_COMPARISON.json                         contract adjudication
+    SENSITIVITY_py312.json / _py311.json           fsum negative control
+    REPLAY_SENSITIVITY_COMPARISON.json             its adjudication
+    run_full_n20000.log, run_dual.log, run_opcounts.log, run_full.log
+    roles/Proteus/PROMPT_PROTEUS_V0_6_*.txt        brief and directive, verbatim
+    roles/Proteus/CONSUMER_SURFACE_V0_6.md         section R in full
+
+REPRODUCTION
+    python -m pytest proteus/tests -q                 67 pass
+    python proteus/audits/audit_identity.py verify
+    python proteus/audits/quarantine.py
+    python proteus/v0_6/run_space_audit.py            closure, escapes = 0
+    python proteus/v0_6/run_pilot.py                  precision only
+    python proteus/v0_6/run_full.py                   n=20,000 production
+    python proteus/v0_6/run_dual_analysis.py          K_A / K_B / pooled
+    python proteus/v0_6/run_operator_counts.py        per-operator replay
+    python proteus/v0_6/run_cycle_error.py            cycle error model
+    python proteus/v0_6/run_replay.py out.json        per-runtime replay
+    python proteus/v0_6/run_replay_compare.py A B     contract adjudication
+    python proteus/v0_6/run_replay_sensitivity.py o   the negative control
+
+NUMERICAL REPLAY CONTRACT -- EXECUTED, NOT MERELY DECLARED
+    EXACT layer      byte-identical on CPython 3.11.9 and 3.12.10, compared by
+                     digest AND field by field: state enumeration and hash,
+                     state ids, seeds, per-state transition counts, escape
+                     ledger, noop reasons, identity hashes.
+    NUMERICAL layer  ALSO byte-identical -- stronger than the frozen tolerances
+                     required (pi 1e-9, currents 1e-12, entropy production
+                     1e-9, residuals 1e-10).
+    This is the runtime pair whose builtin sum() disagreement destroyed V0.5's
+    byte-identity: 3.12 uses compensated (Neumaier) summation, 3.11 does not.
+    Every adjudicated sum in V0.6 goes through math.fsum, which is exactly
+    rounded.
+
+    NEGATIVE CONTROL, because a passing control proves nothing unless it could
+    have failed. Re-running the identical replay with fsum swapped for the
+    builtin sum makes the two runtimes DISAGREE: digests differ and sigma
+    differs by 5.2e-18. STATED AGAINST MY OWN INTEREST: at this scale the
+    frozen NUMERICAL tolerances would have PASSED even without fsum, since
+    5.2e-18 is far inside 1e-9. The control therefore demonstrates that the
+    byte-identity claim is runtime-sensitive; it does NOT demonstrate that the
+    tolerance gate would have failed.
+
+====================================================================
+T. COMPUTE AND TIME ACCOUNTING
+====================================================================
+
+Single machine, 16 cores, no GPU, no LLM, no API, no network, no spend.
+CPython 3.12.10 for production; 3.11.9 additionally for replay.
+
+    space audit and closure proof            108 s      817,600 mutations
+    sampling-power pilot                     927 s    3,090,000 mutations
+    FAILED n=12,000 attempt                6,109 s   49,056,000 mutations
+    n=20,000 production run (total)       19,967 s   81,760,000 mutations
+      of which K_A measurement              5,514 s
+      of which K_B measurement              5,587 s
+      of which stationary power             2,533 s   1,197,600 iterations
+      of which Gauss-Seidel                   776 s     200,000 iterations
+      remainder: empirical occupancy, currents, entropy production, cycle
+      basis, reversible references, four counterfactual solves, trajectories
+    cross-runtime replay, 3.12 + 3.11         ~40 s
+    fsum negative control, 3.12 + 3.11        ~80 s
+    dual-kernel analysis                   7,557 s   (3 stationary solves)
+    operator-count replay (both kernels)  13,588 s   81,760,000 mutations
+    cycle-affinity error decomposition       ~90 s
+    dual-kernel attribution                 ~230 s
+
+    TOTAL LIVE MUTATIONS EXECUTED        216,483,600
+
+The failed attempt's 49 million mutations are counted. They are part of what
+this pass cost and deleting them from the ledger would misrepresent the work.
+
+====================================================================
+VERDICT LEDGER -- EVERY HISTORICAL PROTEUS CLAIM, DISPOSED
+====================================================================
+
+ACCEPTED
+  A1  Semantic quarantine holds. No natural language, no LLM, no world
+      knowledge reaches a player. STRING LAYER PASS, audit FRESH, 67 tests.
+  A2  The V0.2 half-tape rule introduced a REAL tape ratchet. Found by
+      exhaustive proof in V0.4 and removed. The defect was mine and the
+      finding stands.
+  A3  NO_REPLICATED_MARGINAL_DIRECTIONAL_PRIOR_DETECTED. 350 coordinate-cohort
+      hypotheses under global step-down Holm, ZERO global survivors, two
+      within-cohort-only survivors (config_persist_none@1, genome_length@256).
+      Still true -- and V0.6 shows it was never sufficient.
+  A4  The V0.3 Holm implementation was INERT: it compared a z-equivalent
+      against a ratio of normal quantiles with no step-down stop, and would
+      have published 20 coordinates instead of 1. Fixed, fixtured, and given a
+      second independent implementation that aborts on disagreement.
+  A5  The V0 quarantine audit PASS predated export.py entering the tree. Real
+      gap, closed in V0.4 by an atomic audit identity binding per-file digests.
+  A6  Exact parallelism: kernel measurement is independent of worker count.
+      Now DEMONSTRATED on the full production space, not argued -- 12-worker
+      replay reproduced 15-worker production counts exactly.
+  A7  NEW IN V0.6. The mutation operators are STRICTLY DIRECTIONAL -- insertion
+      only lengthens, deletion only shortens -- so no single operator can close
+      a cycle and irreversibility cannot be localised to one operator. It is a
+      property of the MIXTURE of complementary directional operators. Evidence:
+      a per-operator cycle-affinity test returned ZERO evaluable cycles out of
+      7,063 for every one of the twelve operators.
+  A8  NEW IN V0.6. Authored operator weighting controls the MAGNITUDE of the
+      current but not its EXISTENCE: zeroing the dominant operator moves
+      entropy production -89.7% while moving the pi-free cycle-affinity spread
+      only -2.5%. The chain is non-reversible under every weight vector tested.
+
+RECLASSIFIED
+  R1  "Subtraction mass exceeds addition mass" (V0). True of operator WEIGHTS
+      (0.13 vs 0.12), FALSE of expected INSTRUCTIONS (0.25 removed vs 0.30
+      added). A units error, caught by my own neutrality gate.
+  R2  The V0-V0.2 length failure. Was read as an authored length ratchet;
+      is HISTORICAL_V0_LENGTH_FAILURE_RECLASSIFIED_AS_JOINT_GEOMETRY, because a
+      symmetric-by-construction joint walk reproduces the same slope. Two
+      grammar revisions were made on the false reading, and the second caused
+      A2.
+  R3  V0.5's STRUCTURAL_KERNEL_NONREVERSIBLE_AUTHORED_CURRENT_DETECTED on the
+      truncated 124-state kernel. Not overturned -- SUPERSEDED in scope by the
+      full 2,044-state measurement, which confirms the phenomenon at
+      comparable magnitude (total |J| 2.84e-02 truncated vs 3.4945e-02 full).
+
+FALSIFIED
+  F1  The V0.4 halt/yield content discovery. V0_4_CONTENT_DISCOVERY_NOT_
+      REPLICATED: v0_4 delta -0.0191 against v0_5 delta +0.0118, OPPOSITE
+      SIGN, one-sided p 0.9716, confirmed = false.
+  F2  The analytic kernel as an admissible model of the live operator. It
+      differs by median TV 0.0162 and maximum 0.1661. Retired from
+      adjudication; historical evidence only.
+  F3  The commit citation d5185d092 in Interim Packet No. 2. NOT reachable from
+      origin/main -- rebased away. Correct carrier: aafce2bd2. Listed here
+      rather than quietly corrected.
+
+WITHDRAWN BEFORE BEING CLAIMED
+  W1  "Maximum cycle affinity 3.0007 nats." Withdrawn as a finding. The same
+      cycle reads 0.3178 on the second kernel; top-1 shrinkage is 89.4%. The
+      cycle-affinity DISTRIBUTION is real (true sd 1.1234, S/N 2.32, error
+      model predicting inter-kernel correlation to 0.0023); the maximum is not.
+  W2  Any comparison of V0.6's cycle affinities to V0.5's -1.21 nats. Different
+      bases, different objects, and the larger number is not a larger effect.
+
+SUPERSEDED
+  S1  The V0.5 truncated-kernel current map, by the full-space map.
+  S2  The V0.5 cross-host byte-identity claim, by the V0.6 two-layer contract
+      executed on 3.11.9 and 3.12.10 with math.fsum.
+
+STILL UNRESOLVED
+  U1  OPERATIONAL_SIGNIFICANCE_NOT_YET_ADJUDICATED. Whether the circulation
+      produces meaningful structural preference over realistic campaign
+      horizons. Section M.
+  U2  FULL_SPACE_CURRENT_SOURCE_UNRESOLVED, scoped to the EXISTENCE of the
+      irreversibility rather than its magnitude. The magnitude IS attributed
+      (A8, section K). What is not attributed is the rate-ratio asymmetry that
+      survives every tested reweighting: sigma 1.4418e-03 with the dominant
+      operator zeroed, roughly 8e14 times the reversible reference and 19x the
+      K_A/K_B measurement disagreement, so not a noise floor. Whether that
+      residue is authored proposal asymmetry common to the directional
+      operators, or the published bounds interacting with them, cannot be
+      separated by the four preregistered variants.
+  U3  Behavioral coupling. Unmeasured, and unmeasurable under this grammar
+      without changing more than the structural kernel. Declared omitted BEFORE
+      the run.
+  U4  The cohort-256 genome-length cell. Recorded, unchased, no new seed.
+
+====================================================================
+STANDING PROHIBITIONS, ALL OBSERVED
+====================================================================
+
+    No grammar, operator, weight, manifest, bound or threshold changed.
+    No repair attempted. The specimen is intact.
+    No new hypothesis, targeted cell, or unpreregistered seed.
+    No behavioral-coupling substitute. No marginal-battery rerun.
+    No Campaign 1 activity. No world, no adapter, no selection.
+    No SFE or Harmonia integration. No registry built.
+    No self-qualification. No V0.7 begun.
+    No threshold lowered after a run.
+    Failed and inconclusive results kept under their own identity.
+
+====================================================================
+WHAT EXTERNAL REVIEW IS BEING ASKED TO DECIDE
+====================================================================
+
+1. Whether NOT_QUALIFIED_AUTHORED_NONEQUILIBRIUM_CURRENT is accepted as the
+   V0.6 headline on this evidence.
+
+2. Whether the scoped FULL_SPACE_CURRENT_SOURCE_UNRESOLVED sub-finding (U2) is
+   an acceptable disposition of the residual, or whether it must block the
+   headline.
+
+3. Whether OPERATIONAL_SIGNIFICANCE_NOT_YET_ADJUDICATED should be answered
+   before any integration decision, and if so, whether a V0.7 brief should
+   commission that experiment -- which requires a reference NOT inheriting the
+   active kernel's stationary distribution, campaign-matched horizons, and
+   replicate seeds.
+
+4. Whether repair is authorized at all, and if so under what brief. This packet
+   proposes none and no repair may be inferred from the attribution.
+
+Proteus stops here and waits for adjudication.
+
+-- Proteus, V0.6 final external review packet, 2026-09-03.
+   The kernel is not reversible. Authored mechanics set how much current
+   flows; what makes it irreversible at all is not yet attributed. The
+   consequence for a population is not yet known, and I did not invent a test
+   to pretend it was.
