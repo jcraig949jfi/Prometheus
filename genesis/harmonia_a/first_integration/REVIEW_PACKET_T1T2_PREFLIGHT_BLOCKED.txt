@@ -1,0 +1,255 @@
+=====================================================================
+PROMETHEUS -- HARMONIA T1/T2 PRE-FLIGHT + BLOCKER PRESERVATION
+EXTERNAL REVIEW PACKET -- Harmonia A (M2) -- 2026-09-04
+=====================================================================
+
+FINAL STATE (headline, details below)
+
+    PREFLIGHT ............................. PASS
+    EXISTING_FOSSIL_READBACK .............. PASS
+    MAINTENANCE_PROVENANCE_DURABILITY ..... OBSERVED
+    T1/T2 DIRECTIVE AVAILABLE ............. NO
+    T1/T2 EXECUTED ........................ NO
+    T1/T2 ADJUDICATED ..................... NO
+    BLOCKER ............................... MISSING_FROZEN_DIRECTIVE
+    IMPROVISED SUBSTITUTE ................. NO
+
+    T1/T2 status: BLOCKED_PENDING_FROZEN_DIRECTIVE. Harmonia remains
+    blocked until the original frozen directive is recovered or the
+    operator explicitly issues and freezes a replacement.
+
+---------------------------------------------------------------------
+1. REPOSITORY COMMIT AND BRANCH STATE
+---------------------------------------------------------------------
+    working branch        main
+    origin/main at work   df72acb51 (fetched + pulled before any claim)
+    pre-flight commit     130ca7fcb "Harmonia T1/T2 pre-flight: all
+                          three surfaces match addendum; seam read-back
+                          9/9 UNCHANGED across engine rebuild (fossil
+                          durability); BLOCKED on missing frozen T1/T2
+                          directive text" (pushed)
+    this packet           committed on top of 130ca7fcb (see git log,
+                          genesis/harmonia_a/first_integration/)
+    sibling branches      origin/mnemosyne/evidence-wiki-v0 @ 81b7aa2d4
+                          origin/herakles/historical-collider-v0 @ bbc3710bd
+                          (both fetched fresh this session)
+
+---------------------------------------------------------------------
+2. EXACT PRE-FLIGHT IDENTITIES (all matched the addendum)
+---------------------------------------------------------------------
+    SFE Engine (GET /v2/version, TLS via pinned m1.crt, by IP):
+      api                 v2
+      schema_version      3
+      runtime             serendipity-foundry-sfe
+      engine_source_hash  sha256:c358a53b9899fa16acb70c69747c8ec4ca494
+                          cdc62bd10fa9a550d574eef8c39
+      source_commit       ce79401b1524fe20eba9c051cb8c0d9bf18fc0d9
+      note                REBUILT since the first integration (was
+                          sha256:5274ddbe...; declared maintenance per
+                          addendum and commit c3b921e76 "Live engine
+                          moved onto the fixed build")
+    PEW (GET /api/v1/health):
+      service             mnemosyne-evidence-wiki, status ok
+      schema_version      4
+      ontology_version    2
+      fossil_contract     pew.fossil.v2
+    Proteus (registry.load_default(), fail-closed validation):
+      registry_id         b15e0a7f5f2dcb99b8b28c73a99441d8d53e82b1bae
+                          42fddd5e274eeef396917
+      entries             64
+      first specimen      7743b3527ea44fb5eb2bc80076cb1d2ea4dca209497
+                          5c8621962152d419364a0  (unchanged)
+      entry_id            88c8818853ccfd46771fa4aa572bfb8a61546916fe7
+                          74320e7254be9ef4aff6b  (unchanged)
+      phenotype           UNKNOWN (unchanged)
+      consistent with roles/Proteus MAINTENANCE_COMPLETE_SURFACE_
+      UNCHANGED_GATES_ARMED (commit 2372c8c2b).
+
+---------------------------------------------------------------------
+3. EXACT VERIFICATION PERFORMED, AND THE 9/9 RESULT
+---------------------------------------------------------------------
+Per the addendum: the minimum existing seam/read-back verification was
+run UNCHANGED -- the frozen first-integration read-back script,
+byte-identical to its committed form, against the live rebuilt engine:
+
+    cd D:\Prometheus\genesis\harmonia_a\first_integration
+    python readback.py E-dbe8c504b8cc
+
+Result -- CHAIN_FULLY_RECONSTRUCTED_AND_VERIFIED, 9/9:
+
+    proteus_registry_contains_player ............ true
+    proteus_manifest_rehashes_to_organism_id .... true
+    sfe_world_exists ............................ true
+    sfe_event_exists ............................ true
+    sfe_entry_hash_matches ...................... true
+    sfe_event_seq_matches ....................... true
+    sfe_artifact_recovered_from_ledger .......... true
+    sfe_artifact_bytes_hash_to_organism_id ...... true
+    sfe_artifact_bytes_equal_registry_manifest .. true
+
+NO HARMONIA CODE WAS PATCHED. Not for the engine rebuild, not for the
+verification, not for anything in this pass. The addendum's "do not
+adapt merely because maintenance occurred" was obeyed literally.
+
+---------------------------------------------------------------------
+4. RECONSTRUCTED FOSSIL IDENTITY CHAIN (as read back live)
+---------------------------------------------------------------------
+    evidence     E-dbe8c504b8cc
+      -> fossil encounter 8a95020171cc2c30abe5b38b2886d1cfc85ca4da0e6
+                          f233861f81cffe3313276
+         run_id           exp_87d78f42e4382fa6cf7d4cf6:wrk_3184f39d76
+                          4511e794556932
+         world_id         wld_c3cba823e868d0ed339e95fa
+         players          [7743b3527ea44fb5eb2bc80076cb1d2ea4dca20949
+                           75c8621962152d419364a0]
+         sfe_event_id     evt_af204ba67d4ffe36d6a63d77
+         sfe_entry_hash   sha256:ced132e9ee7b117f06b9da998db5f3e03cc8
+                          b7e99559cb5e60bb2e12ddf505fc
+         sfe_event_seq    31523
+      -> organism 7743b352... verified against the canonical frozen
+         registry AND against the artifact bytes held by the rebuilt
+         engine (re-hash equal, byte-equal to registry manifest).
+
+---------------------------------------------------------------------
+5. THE MAINTENANCE-SURVIVAL OBSERVATION -- SCOPE FROZEN
+---------------------------------------------------------------------
+WHAT IT PROVES. The fossil chain above was originally written under
+SFE engine sha256:5274ddbe... and remains fully reconstructable and
+byte/verifier-consistent against the rebuilt authoritative service
+(sha256:c358a53b...). World identity, event identity, entry_hash,
+sequence/order evidence, and artifact bytes all survived the engine
+replacement. This establishes provenance/read-back durability across
+THIS SPECIFIC maintenance event.
+
+WHAT IT DOES NOT PROVE. It does NOT establish general durability
+across arbitrary future engine changes; it does NOT qualify the
+rebuilt engine (c358a53b has had no Harmonia qualification pass); it
+says nothing about the organism, about T1/T2, or about any scientific
+claim. One maintenance event, one surviving chain, exactly that.
+
+---------------------------------------------------------------------
+6. THE BLOCKER -- EXACTLY
+---------------------------------------------------------------------
+The addendum requires execution of "the previously frozen 15-minute
+T1/T2 boundary-probe directive exactly as written." The directive text
+is not available to Harmonia and was not found on:
+
+    origin/main
+    origin/mnemosyne/evidence-wiki-v0
+    origin/herakles/historical-collider-v0
+
+Neighboring readiness artifacts establish that T1/T2 was ANTICIPATED
+and ARMED, but they do not contain the frozen experiment definition.
+The operator has confirmed the directive is unavailable to the
+operator as well. Execution from reconstructed intent would violate
+freeze discipline. Therefore:
+
+    T1/T2 = BLOCKED_PENDING_FROZEN_DIRECTIVE
+    No improvised substitute was created. No readiness artifact was
+    converted into experimental evidence. No component was modified
+    to work around the missing document.
+
+---------------------------------------------------------------------
+7. EXACT SEARCH PERFORMED FOR THE MISSING DIRECTIVE
+---------------------------------------------------------------------
+    git fetch origin (all branches) + git pull on main, BEFORE any
+      absence claim (stale-main trap avoided).
+    content greps on the working tree (main): "T1/T2", "T1_T2",
+      "boundary probe"/"boundary.probe" (case-insensitive),
+      "ONE consequence", "fifteen minute"/"15 minute" -- across
+      integration/, roles/, genesis/harmonia_a/ and repo-wide.
+    directory listings: integration/directives/ (contains only the
+      2026-09-03 SFE seam freeze), roles/Harmonia/, genesis/harmonia_a/.
+    git grep on sibling branches (tracked refs, not worktrees):
+      origin/mnemosyne/evidence-wiki-v0 and
+      origin/herakles/historical-collider-v0 for "boundary.probe" and
+      "T1/T2" -- only unrelated aporia/lot files matched.
+    commit-log scan since 2026-09-03 for T1/boundary/probe titles.
+    RESULT: readiness references only; no directive text anywhere.
+
+---------------------------------------------------------------------
+8. REFERENCES THAT MENTION / ANTICIPATE T1/T2 (not the directive)
+---------------------------------------------------------------------
+    roles/Proteus/PROTEUS_PRE_T1_HARDENING_REVIEW_PACKET.txt
+      (commit 2372c8c2b): "PROTEUS_READY_FOR_HARMONIA_T1_T2 = YES";
+      surface unchanged; gates armed; plus one consumer note (see 9).
+    roles/Proteus/MAINTENANCE_RECORD_2026-09-04.md.
+    roles/Mnemosyne/prompts/CHARTER_DURABILITY_DIAGNOSTICS_2026-09-04
+      .txt: carries the verdict slot PEW_READY_FOR_HARMONIA_T1_T2.
+    integration/directives/2026-09-03_SFE_SEAM_FREEZE.txt: the seam
+      freeze that preceded the first integration (not T1/T2).
+    commit c3b921e76: live engine moved onto the fixed build
+      (explains the engine_source_hash change).
+
+---------------------------------------------------------------------
+9. OPERATIONAL NOTES RECOVERED (armed; NOT a substitute directive)
+---------------------------------------------------------------------
+    - every SFE idempotency key unique per (world, step)
+    - SFE event_seq / world_index are ordering truth, never wall-clock
+    - blob_hash (content identity) is distinct from artifact_id
+      (world-scoped envelope identity)
+    - PEW namespace chosen explicitly BEFORE execution: test for
+      practice/instrumentation, prod only for deliberately admitted
+      scientific evidence
+    - PEW 409 conflicts now report stored/submitted values; no client
+      adaptation required (and none made)
+    - do not infer active-world lifetime from TERMINATED; artifact
+      writes may legally postdate termination
+    - known archaeology gap: PEW source packets are not independently
+      readable over HTTP; record if encountered, never work around it
+      with undocumented host-local joins
+    - preserve engine_source_hash in every provenance artifact (done
+      here and in the first-integration fossil producer field)
+    - Proteus restore() boundary: ValueError on runtime mismatch,
+      KeyError on structurally malformed snapshots -- both fail
+      closed, type is not uniform, catch both
+      (source: PRE_T1 packet section 8)
+
+---------------------------------------------------------------------
+10. ARTIFACTS CREATED / MODIFIED THIS PASS (all in repo)
+---------------------------------------------------------------------
+    genesis/harmonia_a/first_integration/JOURNAL.jsonl
+      (+2 entries: T1T2_PREFLIGHT_COMPLETE_DIRECTIVE_MISSING at commit
+       130ca7fcb; packet-issuance entry with this file's sha256)
+    genesis/harmonia_a/first_integration/readback_result.json
+      (refreshed by the unchanged read-back run; 9/9 against c358a53b)
+    genesis/harmonia_a/first_integration/
+      REVIEW_PACKET_T1T2_PREFLIGHT_BLOCKED.txt  (this packet)
+    NOTHING ELSE. adapter.py, run_integration.py, pew_write.py,
+    readback.py: untouched this pass (verifiable via git diff
+    130ca7fcb^..HEAD -- only the three files above).
+    File hashes: recorded in JOURNAL.jsonl at issuance.
+
+---------------------------------------------------------------------
+11. REPRODUCTION COMMANDS
+---------------------------------------------------------------------
+    curl --cacert SerendipityFoundry/SerendipityFoundryClient/config/m1.crt \
+         https://192.168.1.202:8811/v2/version
+    curl http://192.168.1.202:8377/api/v1/health
+    set PYTHONPATH=D:\Prometheus && python -c "from proteus.integration
+         import registry as R; r=R.load_default();
+         print(r['registry_id'], R.enumerate_ids(r)[0])"
+    cd D:\Prometheus\genesis\harmonia_a\first_integration
+    python readback.py E-dbe8c504b8cc      # expect 9/9, verdict
+                                           # CHAIN_FULLY_RECONSTRUCTED_
+                                           # AND_VERIFIED
+
+---------------------------------------------------------------------
+12. FINAL STATE (restated)
+---------------------------------------------------------------------
+    PREFLIGHT ............................. PASS
+    EXISTING_FOSSIL_READBACK .............. PASS
+    MAINTENANCE_PROVENANCE_DURABILITY ..... OBSERVED
+    T1/T2 DIRECTIVE AVAILABLE ............. NO
+    T1/T2 EXECUTED ........................ NO
+    T1/T2 ADJUDICATED ..................... NO
+    BLOCKER ............................... MISSING_FROZEN_DIRECTIVE
+    IMPROVISED SUBSTITUTE ................. NO
+
+Harmonia remains blocked on T1/T2 until the original frozen directive
+is recovered or the operator explicitly issues and freezes a
+replacement experiment. Nothing in this packet is experimental
+evidence about T1/T2; it is the preserved state of an honest stop.
+=====================================================================
+END PACKET
+=====================================================================
