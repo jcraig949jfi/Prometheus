@@ -1,0 +1,521 @@
+======================================================================
+HARMONIA M2 QUALIFICATION -- ROUND 1 STOP PACKET
+Author : Harmonia (systems integrator), executing on M2 / SPECTREX5
+Date   : 2026-09-04T19:29:19-04:00
+Repo   : D:\Prometheus  HEAD 54dd499eb660ee6fc29bbf72cfb0798080c66f31
+For    : James (HITL), Daedalus (SFE), Mnemosyne (PEW), Proteus, reviewers
+======================================================================
+
+----------------------------------------------------------------------
+1. VERDICT
+----------------------------------------------------------------------
+
+ROUND_1 = STOP.  ROUND 2 WAS NOT ENTERED.
+
+Two SIGNIFICANT defects. The first is the one the whole directive was
+built to catch, and it is still true at the moment of this packet:
+
+  THE M2 SFE SERVICE IS STILL THE STALE DAEMON.
+
+The repaired engine exists in git and is not running. The process that
+owns port 8811 was started 2026-09-04 12:43:09 and serves
+source_commit 71e4e80e8, schema_version 3, without the D-REPLAY-1 read
+routes. Daedalus predicted exactly this and could not clear it: the
+operator step D0-1 has not been performed.
+
+The second defect is mine to have found and is not in anyone's packet:
+
+  THE PEW QUALIFICATION BATTERY CANNOT TELL M1 FROM M2.
+
+It is the instrument that certifies PEW. Every gate it uses to establish
+identity returns byte-identical values on both machines, every token
+authenticates against both machines, and --machine is an unverified
+caller-supplied label. It would report "M2: all_pass, 15/15" while
+measuring M1.
+
+The state of the three components, in the four-state vocabulary:
+
+  SFE   CODE_FIXED yes | SERVICE_DEPLOYED NO  | LIVE_VERIFIED no | QUALIFIED no
+  PEW   CODE_FIXED yes | SERVICE_DEPLOYED yes | LIVE_VERIFIED YES| QUALIFIED partial
+  PROTEUS  not exercised -- Round 2 was not entered
+
+PEW closure V0 is genuinely live on M2 and I verified it independently
+of Mnemosyne's own instrument. That result stands on its own evidence and
+survives defect S-2, because I did not obtain it from the battery.
+
+----------------------------------------------------------------------
+2. LIVE ENDPOINT MATRIX
+----------------------------------------------------------------------
+
+SFE
+  target                          result
+  ------------------------------  --------------------------------------
+  https://192.168.1.191:8811      200  correct M2 cert, service alive
+  https://localhost:8811          REFUSED  WinError 10061
+  https://127.0.0.1:8811          REFUSED  WinError 10061
+  https://192.168.1.191:8811      CERTIFICATE_VERIFY_FAILED  (m1.crt)
+  http://192.168.1.191:8811       RemoteDisconnected  (TLS-only port)
+
+  T17 CONFIRMED. netstat shows the listener bound to 192.168.1.191:8811,
+  not 0.0.0.0. localhost is not merely discouraged, it is refused.
+  T18 CONFIRMED and, importantly, DISTINGUISHABLE: the wrong cert yields
+  CERTIFICATE_VERIFY_FAILED, connection refusal yields WinError 10061.
+  A reader can tell "wrong trust material" from "dead service".
+
+  cert identity: CN=192.168.1.191 SAN=['192.168.1.191']
+                 expires Sep 1 16:33:18 2036 GMT
+
+PEW
+  http://192.168.1.191:8377/api/v1/identity   200
+  http://localhost:8377/api/v1/identity       200  (binds 0.0.0.0)
+  Both return the identical attested body. LAN and localhost are the
+  same service on M2; no trap here.
+
+----------------------------------------------------------------------
+3. LIVE BUILD / SCHEMA / CONTRACT IDENTITIES
+----------------------------------------------------------------------
+
+SFE M2, measured via integration/sfe_preflight.py (CT-SFE-1):
+
+  live source_commit      71e4e80e8783270585f635cbf239468213c8d988
+  live engine_source_hash sha256:c358a53b9899fa16acb70c697...
+  live schema_version     3          REQUIRED >= 4
+  openapi                 31 paths / 33 routes
+
+  [PASS] reachable
+  [PASS] source_commit_present
+  [FAIL] T20_deploy_lag      71e4e80e8 does NOT contain 67c28acee
+  [FAIL] schema_version      live=3 required>=4
+  [FAIL] GET /v2/worlds/{wid}/experiments/{eid}   NOT SERVED
+  [FAIL] GET /v2/worlds/{wid}/observations        NOT SERVED
+
+  ATTESTATION FAIL -- 4 of 7. This reproduces Daedalus's
+  preflight_m2_before.json verdict-for-verdict, six and a half hours
+  later. Nothing has moved.
+
+  Process evidence (independent of the API self-report):
+    PID 14372  parent 964  created 2026-09-04 12:43:09
+    serve.py --db D:\Prometheus\SerendipityFoundry\SerendipityFoundryEngine\var\engine.db
+             --host 192.168.1.191 --port 8811
+             --tls-cert deploy\m2.crt --tls-key deploy\m2.key
+
+SFE M1, for contrast (192.168.1.202:8811):
+  source_commit      ce79401b1524fe20eba9c051cb8c0d9bf18fc0d9
+  engine_source_hash sha256:c358a53b9899fa16acb70c697...   <-- IDENTICAL
+  schema_version     3
+
+  Note this. The two machines run DIFFERENT commits with the SAME
+  engine_source_hash. engine_source_hash is content-addressed and does
+  not distinguish M1 from M2. See NB-1.
+
+PEW M2, server-attested via GET /api/v1/identity:
+  service_name     mnemosyne-evidence-wiki
+  db_system_id     7681719240261676752
+  db_name          prometheus_fire
+  db_host          localhost
+  source_commit    7cbe43ecff5728490df4e9fde8c5765b7f20591d
+  schema_version   4
+  ontology_version 2
+  fossil_contract  pew.fossil.v2
+  closure_version  pew.closure.v0
+
+  Every value matches the closure packet claim exactly. LIVE_VERIFIED.
+
+PEW M1 (192.168.1.202:8377):
+  /health           200, schema 4, ontology 2, pew.fossil.v2
+  /identity         404
+  /constraints      404
+  M1 is LIVE_NOT_QUALIFIED, consistent with Mnemosyne A1.
+
+----------------------------------------------------------------------
+4. DATASTORE ISOLATION RESULTS
+----------------------------------------------------------------------
+
+PEW -- PROVEN, with the credential held constant.
+
+  (i) Filesystem-level, not config-reading:
+      pg_controldata -D "C:/Program Files/PostgreSQL/17/data"
+        Database system identifier: 7681719240261676752
+        Database cluster state:     in production
+      This is the same value the M2 service attests. The service is
+      talking to the PostgreSQL cluster physically on this machine.
+
+  (ii) Namespaced probe object, written once, read twice:
+      wrote  encounter HARMONIA-R1-DSISO-20260904T192737
+             namespace "test", producer harmonia.round1.dsiso
+        -> M2 POST /fossil/encounters        200 inserted
+        -> M2 GET  /fossil/encounters/{id}   200
+        -> M1 GET  /fossil/encounters/{id}   404 encounter_not_found
+
+      The control that makes this load-bearing: the SAME bearer token
+      was used for both reads. The 404 is therefore a property of the
+      STORE, not of the credential. The stores are separate.
+
+      The returned row carried per-fossil attestation:
+        db_system_id 7681719240261676752, closure pew.closure.v0,
+        sfe_anchor_verified false
+      -- the pinned-and-honest state Mnemosyne describes, live.
+
+SFE -- PROVEN.
+
+  (i) Live process argv (above) points at M2-local var/engine.db.
+      This is observable from the process table, not from a config file.
+  (ii) A world I created on M2, wld_97a6070acc5b57557146cb77:
+        -> M2, owning client   200
+        -> M1, fresh client    404 "unknown world"
+      404 not 403: the id is unknown to M1 entirely, not merely
+      forbidden. Different databases.
+
+  var/ contains engine.db (1003520 b) and Daedalus's pre-migration
+  backup engine.db.pre-schema4-20260904T180254.bak, same size --
+  consistent with the backup having been taken and the migration NOT
+  having run.
+
+----------------------------------------------------------------------
+5. CREDENTIAL / CLIENT ISOLATION RESULTS
+----------------------------------------------------------------------
+
+SFE machine isolation -- VERIFIED, by construction rather than by
+reading any credential file. I registered a fresh client against M1 and
+carried its token to M2:
+
+  M1-minted token vs M1 /v2/worlds        200
+  M1-minted token vs M2 /v2/worlds        401   <-- separation holds
+  no token                                401
+  bogus token                             401
+  m2.crt against M1 endpoint              CERTIFICATE_VERIFY_FAILED
+
+  Trust material is separated as well as tokens.
+
+SFE client isolation -- VERIFIED on the surfaces this build serves.
+Two fresh M2 clients, A=cli_7561768c3206d6e6e12d40d5,
+B=cli_fea632bb6f2e42fa39488425:
+
+  B GET /worlds/{A world}/status          403
+  B GET /worlds                           200, n=0
+  A GET /worlds                           200, n=6  (its own only)
+
+  This is consistent with Daedalus's refutation of
+  I-WORLD-ENUM-UNSCOPED: there is no scoping hole, and there was not
+  one. I could NOT test isolation on the NEW read/filter surfaces,
+  because the running build does not serve them.
+
+PEW credential seam -- CLASSIFIED AS KNOWN, NOT REDISCOVERED.
+
+  Per the directive I did not file this as a new isolation bug. I
+  verified its exact shape instead. config.json defines five distinct
+  tokens (default auth_token plus machine_tokens M1..M4 -- four distinct
+  fingerprints, so they are NOT one shared string). Every one of them
+  authenticates against BOTH machines:
+
+    token             vs M2   vs M1
+    default           200     200
+    M1                200     200
+    M2                200     200
+    M3                200     200
+    no token          401     401
+    bogus             401     401
+
+  So the tokens are per-machine by NAME and not by EFFECT. The
+  conclusion the directive asked me to confirm holds:
+
+    authenticated identity != server identity
+
+  and the server-attested identity remains correct regardless of which
+  accepted token reached it: /identity on M2 returned db_system_id
+  7681719240261676752 under every token tried, and M1 404s the route
+  entirely. Server attestation is doing its job.
+
+  Owner: Mnemosyne B1 (operator-gated rotation). Unchanged by me.
+
+----------------------------------------------------------------------
+6. ORCHESTRATION SAFETY PROBES
+----------------------------------------------------------------------
+
+SCOPE NOTE, and it is the whole point of this section: these were run
+against the STALE build, because that is the only build running. They
+are NOT evidence about the repaired engine. They are the PRE-STATE that
+the post-deployment run must FLIP. I ran them so that the flip, when it
+happens, is measured against a baseline taken by the verifier rather
+than by the author of the fix.
+
+  probe                          expected after repair  observed NOW
+  -----------------------------  ---------------------  --------------
+  1a create-world blind retry x3 1 world                3 DISTINCT
+                                                        wld_8cb4dd06...
+                                                        wld_edec0df9...
+                                                        wld_820bf3fb...
+  1b same Idempotency-Key,       same world             2 DIFFERENT
+     same body                                          (header IGNORED)
+  1c same key, CONFLICTING body  explicit 409           200 + a THIRD
+                                                        world, silently
+  2  world with require_attest.  world created          422 extra_forbidden
+                                                        -- the world cannot
+                                                        be ASKED to require it
+  3  artifact + expected_blob_   accept/refuse on       422 extra_forbidden
+     hash                        comparison             -- the engine cannot
+                                                        be ASKED to check
+  4  causal anchor from write    exact event_id +       not reachable; the
+                                 entry_hash             observation write
+                                                        path is pre-D-REPLAY-1
+  5  terminated-world write gate refused                not tested; blocked
+                                                        by the same build gap
+  6  replay read surface         200 + sealed hash      GET .../observations 405
+                                                        GET .../experiments/{eid} 404
+
+  Probe 1c is the sharpest quiet-success in the set: a retried
+  create-world with a MUTATED body and the same idempotency key returns
+  200 and a new world. A caller cannot distinguish "your retry was
+  absorbed" from "you just forked your experiment".
+
+  Probe 3 reproduces Daedalus's reframe precisely, including its shape:
+  the failure is not that the engine trusts a client-asserted hash --
+  it is that there is no field in which to state what the bytes were
+  supposed to be. extra="forbid" refuses the question rather than
+  answering it wrongly. That is a better failure than the original
+  report supposed, and it is still a failure for our purposes.
+
+----------------------------------------------------------------------
+7. SIGNIFICANT DEFECTS
+----------------------------------------------------------------------
+
+S-1  M2 SFE SERVICE IS STALE
+  severity     SIGNIFICANT
+  owner        OPERATOR (James) -- Daedalus D0-1, procedure in
+               roles/Daedalus/sprint_20260904/CLOSURE_PACKET_SFE_2026-09-04.txt sec.4
+  expected     live source_commit contains 67c28acee, schema_version >= 4,
+               D-REPLAY-1 read routes served
+  observed     71e4e80e8 / schema 3 / routes absent; process up since
+               2026-09-04 12:43:09, predating every repair
+  pos control  the same script PASSES its reachable and
+               source_commit_present checks -- the detector is not
+               simply failing everything
+  neg control  M1 probed with the same script shows a DIFFERENT commit,
+               so the check reads the live service, not a local constant
+  reproducer   MSYS_NO_PATHCONV=1 python integration/sfe_preflight.py \
+                 --base-url https://192.168.1.191:8811 \
+                 --cacert SerendipityFoundry/SerendipityFoundryEngine/deploy/m2.crt \
+                 --require-commit-contains 67c28acee --require-schema 4 \
+                 --require-endpoint '/v2/worlds/{wid}/experiments/{eid}' \
+                 --require-endpoint '/v2/worlds/{wid}/observations'
+  quiet-success YES, and it is the load-bearing one. The service is
+               HEALTHY. The watchdog relaunches on health-probe failure
+               only, and a stale-but-healthy engine never fails one.
+               Every downstream statement of the form "the fix is in"
+               is true about the tree and false about the service.
+  effect       any Round-2 result would be evidence about the OLD engine
+               while being recorded, filed and cited as evidence about
+               the new one.
+
+S-2  PEW QUALIFICATION BATTERY CANNOT DISTINGUISH M1 FROM M2
+  severity     SIGNIFICANT
+  owner        Mnemosyne
+  expected     an instrument that certifies "PEW on M2" fails, loudly,
+               when pointed at a different machine
+  observed     it would report all_pass. Three independent legs, all
+               measured or code-verified, not inferred:
+                 (a) --machine is sent only as the header
+                     X-Prometheus-Machine and is never checked against
+                     the server (pew_battery.py:46-49, 125-134)
+                 (b) gates E0/E1 read /health, /version, /schema,
+                     /fossil/contract. MEASURED on both machines:
+                       /health          byte-identical
+                       /schema          byte-identical
+                       /fossil/contract byte-identical
+                       /version         differs only in
+                                        canonical_revision (17196 vs
+                                        17122), a moving counter that
+                                        E1 PRINTS and does not ASSERT
+                     The E1 pass condition is literally
+                     all(status_code == 200)
+                 (c) every token authenticates against both machines
+                     (section 5), so auth cannot catch the mistake
+                     either
+  pos control  the battery on M2 returns 15/15 all_pass, so it is a
+               working instrument -- this is a blind spot, not a
+               broken script
+  neg control  /identity DOES discriminate today: 200 with
+               db_system_id on M2, 404 on M1. The discriminator exists
+               and is simply not wired into the gate.
+  reproducer   read pew_battery.py E0/E1; compare the four endpoints
+               across 192.168.1.191:8377 and 192.168.1.202:8377
+  quiet-success YES. This is the gate-blind-spot shape: the predicate
+               tested is "did the service answer", the predicate
+               believed is "did the RIGHT service answer".
+  effect       "PEW M2 qualified" could be an artifact of a --host
+               typo. Note this defect does NOT retract the PEW result
+               in this packet: I established M2 identity from
+               /identity, pg_controldata and a cross-machine probe
+               object, none of which route through the battery.
+  fix          one assertion: GET /api/v1/identity, require
+               db_system_id == the expected value for --machine, HARD.
+               Mnemosyne already ships the endpoint.
+
+----------------------------------------------------------------------
+8. NON-BLOCKING FINDINGS
+----------------------------------------------------------------------
+
+NB-1  engine_source_hash COLLIDES ACROSS MACHINES.
+  M1 and M2 report the same engine_source_hash
+  sha256:c358a53b9899fa16acb70c697... under DIFFERENT source_commits
+  (ce79401b1 vs 71e4e80e8). The hash is content-addressed over the
+  engine source, so identical trees on two hosts collide by design.
+  Consequence: engine_source_hash alone cannot answer "which of two
+  engines produced this". That is exactly Mnemosyne C2 / R-SFE-2, and
+  this is a measured instance of why it is needed rather than an
+  argument that it might be. Owner: Daedalus.
+  Severity NON_BLOCKING today only because M1 and M2 are not both
+  feeding one corpus yet.
+
+NB-2  PEW /constraints RETURNS REFUTED CONSTRAINTS BY DEFAULT.
+  The two live constraints are:
+    K-60724e7c13ff  ADVISORY  NARROWED  successor D-WORLDCFG-1
+    K-f694d315650a  ADVISORY  REFUTED   no successor
+  Both are returned by an unfiltered GET /api/v1/constraints.
+  I initially recorded this as a defect and then withdrew it: the
+  endpoint docstring states the intent explicitly -- "A
+  REFUTED/SUPERSEDED constraint is reported WITH that status -- it is
+  never silently active" -- and a ?status= filter exists. The errata
+  path has demonstrably been exercised; both statuses were set
+  2026-09-04T18:59. Reclassified DOCUMENTATION: consumers must filter
+  on current_status, and nothing currently tells a first-time consumer
+  that the default response is unfiltered.
+
+NB-3  SFE /v2 HAS NO HEALTH ROUTE.
+  /healthz, /health and /v2/health all 404. /v2/version is the liveness
+  probe. Minor, but it cost a round trip and belongs in the client
+  guide. Owner: Daedalus. Severity DOCUMENTATION.
+
+NB-4  PEW FOSSIL CONTRACT REFUSES NON-HEX evt_ IDS.
+  sfe_event_id "evt_harmonia_r1_dsiso_20260904T192737" was refused 422
+  despite carrying the evt_ prefix; "evt_" + 24 hex was accepted. The
+  refusal message describes the prefix rule but not the format rule.
+  This is correct strictness with an incomplete error string. Owner:
+  Mnemosyne. Severity DOCUMENTATION.
+
+----------------------------------------------------------------------
+9. HARNESS ERRATA
+----------------------------------------------------------------------
+
+H-1  MY FIRST PREFLIGHT RUN PRODUCED TWO FALSE CHECK NAMES.
+  The preliminary result is preserved here rather than deleted, per the
+  directive.
+  observed     two checks printed as
+                 [FAIL] C:/PROGRAM {eid}
+                 [FAIL] C:/PROGRAM observations
+  cause        MSYS2 path conversion in Git Bash rewrote my
+               leading-slash --require-endpoint arguments into Windows
+               paths BEFORE python saw them. Instrument error, mine,
+               not a component defect.
+  correction   re-ran with MSYS_NO_PATHCONV=1 MSYS2_ARG_CONV_EXCL='*'
+  after        the same two checks FAIL with correct names,
+                 GET /v2/worlds/{wid}/experiments/{eid}  NOT SERVED
+                 GET /v2/worlds/{wid}/observations       NOT SERVED
+  net effect   the VERDICT was unchanged (4 of 7 failed either way) but
+               the evidence was uninterpretable until corrected. Had
+               the mangling flipped a PASS instead, I would have filed
+               a component defect that did not exist. Recorded because
+               the near-miss is the lesson, not the outcome.
+
+H-2  TWO DISCARDED PEW WRITE ATTEMPTS.
+  A 422 on producer (string supplied where the contract requires an
+  object) and a 422 on sfe_event_id format. Both were MY malformed
+  requests. Neither is a PEW defect; PEW refused overtly and named the
+  field, which is the behaviour we want. Recorded so the two 422s in
+  the raw logs are not later mistaken for service faults.
+
+----------------------------------------------------------------------
+10. EXACT STOP REASON
+----------------------------------------------------------------------
+
+Directive section 2B, verbatim: "If the daemon is still stale:
+SIGNIFICANT DEFECT. STOP ROUND 1. Do not treat 'source tree is current'
+as a workaround."
+
+The daemon is still stale. Measured twice, by two instruments (the API
+self-report and the OS process table), 6h46m after Daedalus filed the
+same observation.
+
+I did not deploy it myself. I could have -- process termination is not
+blocked in my session as it was in Daedalus's. I did not, for the reason
+the directive gives in rule 6: deploying and then continuing would
+collapse discovery, repair and validation into one agent unwitnessed
+pass, and the deployment is precisely the step whose effects Round 2
+exists to check. The verifier should not be the deployer of the thing
+under verification.
+
+Round 2 was not entered. No science surface was touched. No specimen,
+composition, ablation, meter or transcript appears in this packet.
+
+----------------------------------------------------------------------
+11. WHAT MUST CHANGE BEFORE ROUND 2
+----------------------------------------------------------------------
+
+R2-GATE-1  OPERATOR: deploy the repaired SFE engine to M2.
+  Procedure: CLOSURE_PACKET_SFE_2026-09-04.txt section 4. Kill BOTH the
+  python child (currently PID 14372) and its cmd launcher parent
+  (PPID 964) -- killing one leaves the other holding 8811. The watchdog
+  relaunches the on-disk build within 5 minutes.
+  Re-check freshness of Daedalus pre-conditions before firing; they
+  were taken at 18:02 and my run confirms the backup file is still in
+  place and the migration has not run.
+  ROLLBACK TRAP, unchanged: a v3 engine REFUSES to open a v4 database.
+  Reverting code without restoring
+  engine.db.pre-schema4-20260904T180254.bak leaves the service dead.
+
+R2-GATE-2  sfe_preflight.py must exit 0 with the strict flags in S-1.
+  This is the gate, not a formality. If it does not exit 0, Round 2
+  does not start.
+
+R2-GATE-3  MNEMOSYNE: wire /identity into pew_battery E1 as a HARD gate
+  asserting db_system_id for the named --machine. Until then no battery
+  output should be quoted as machine-scoped evidence, including the
+  15/15 in this packet -- which is why I did not rely on it.
+
+R2-GATE-4  Daedalus pre-registered live bar L-1..L-6 should run
+  BEFORE I re-enter, not as part of Round 2. In particular L-5: the six
+  REPRODUCED rows must FLIP, events-shape must stay NOT_REPRODUCED, and
+  the two REFINED rows must stay REFINED. My section 6 baseline is an
+  independent second copy of that pre-state and should agree.
+
+Not required, and deliberately left alone: PEW credential rotation,
+5432 firewalling, git history purge. All operator-coordinated, none
+newly implicated by anything measured here.
+
+----------------------------------------------------------------------
+12. ARTIFACTS / COMMITS / RAW RESULTS
+----------------------------------------------------------------------
+
+  repo HEAD            54dd499eb660ee6fc29bbf72cfb0798080c66f31
+  this packet          roles/Harmonia/M2_QUALIFICATION_ROUND1_STOP_2026-09-04.txt
+
+  instruments used, none modified:
+    integration/sfe_preflight.py                (Daedalus, CT-SFE-1)
+    evidence_wiki/integration/pew_battery.py    (Mnemosyne)  15/15 all_pass
+    evidence_wiki/integration/seam_battery.py   (Mnemosyne)  12/12 all_pass
+    pg_controldata 17                           (PostgreSQL)
+
+  cited pre-state, independently reproduced by me:
+    roles/Daedalus/sprint_20260904/preflight_m2_before.json
+    roles/Daedalus/sprint_20260904/repro_results.json
+
+  objects created on M2 during Round 1 (all disposable, none in a
+  scientific namespace):
+    SFE clients   cli_7561768c3206d6e6e12d40d5  harmonia-r1-A
+                  cli_fea632bb6f2e42fa39488425  harmonia-r1-B
+                  (+ harmonia-r1-C)
+    SFE worlds    9, incl. wld_97a6070acc5b57557146cb77
+    PEW encounter HARMONIA-R1-DSISO-20260904T192737  namespace "test"
+
+  objects created on M1 during Round 1:
+    SFE clients   cli_eee470aa8823f8597e8f5b09  harmonia-r1-credtest-from-M2
+                  (+ harmonia-r1-crosscheck)
+    No M1 writes outside client registration. No PEW writes to M1.
+
+  probe scripts (scratchpad, reproduced verbatim in sections 6 and 7):
+    r1_sfe.py  r1_m1cred.py  r1_pewcred.py  r1_pewcred2.py
+    r1_dsiso.py  r1_rest.py  r1_pewclosure.py
+
+======================================================================
+END ROUND 1 STOP PACKET -- no Round-2 claims appear above
+======================================================================
