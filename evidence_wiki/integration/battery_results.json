@@ -1,5 +1,5 @@
 {
- "ran_at": "2026-09-03T16:09:34",
+ "ran_at": "2026-09-03T21:36:42",
  "n_gates": 15,
  "n_scored": 15,
  "n_pass": 15,
@@ -11,13 +11,13 @@
    "gate": "E0_service_reachable",
    "pass": true,
    "skipped": false,
-   "detail": "200 {'service': 'mnemosyne-evidence-wiki', 'status': 'ok', 'schema_version': 3, 'ontology_version': 2, 'fossil_contract': 'pew.fossil.v1'} in 593ms"
+   "detail": "200 {'service': 'mnemosyne-evidence-wiki', 'status': 'ok', 'schema_version': 4, 'ontology_version': 2, 'fossil_contract': 'pew.fossil.v2'} in 3ms"
   },
   {
    "gate": "E1_version_schema_identity",
    "pass": true,
    "skipped": false,
-   "detail": "schema_version=3 ontology_version=2 fossil_contract=pew.fossil.v1 canonical_revision=16515"
+   "detail": "schema_version=4 ontology_version=2 fossil_contract=pew.fossil.v2 canonical_revision=16921"
   },
   {
    "gate": "E2a_anchor_writes_accepted",
@@ -29,13 +29,13 @@
    "gate": "E2_known_good_write_accepted",
    "pass": true,
    "skipped": false,
-   "detail": "200 {\"encounter_id\":\"TESTFIX-HARMONIA-ENC-0001\",\"run_id\":\"TESTFIX-RUN-0001\",\"inserted\":false,\"status\":\"duplicate_identical\",\"read_back\":\"/api/v1/fossil/encounters/T"
+   "detail": "200 {\"encounter_id\":\"TESTFIX-HARMONIA-ENC-0002\",\"run_id\":\"TESTFIX-RUN-0002\",\"inserted\":false,\"status\":\"duplicate_identical\",\"read_back\":\"/api/v1/fossil/encounters/T"
   },
   {
    "gate": "E3_stable_evidence_identity",
    "pass": true,
    "skipped": false,
-   "detail": "identity=(TESTFIX-HARMONIA-ENC-0001,TESTFIX-RUN-0001) read_back=/api/v1/fossil/encounters/TESTFIX-HARMONIA-ENC-0001"
+   "detail": "identity=(TESTFIX-HARMONIA-ENC-0002,TESTFIX-RUN-0002) read_back=/api/v1/fossil/encounters/TESTFIX-HARMONIA-ENC-0002"
   },
   {
    "gate": "E4_independent_read_back",
@@ -53,7 +53,7 @@
    "gate": "E6_query_by_run_world_player",
    "pass": true,
    "skipped": false,
-   "detail": "run=1 world=1 player=1 unfiltered=400"
+   "detail": "run=1 world=1 player=2 unfiltered=400"
   },
   {
    "gate": "E7_duplicate_and_conflict_semantics",
@@ -77,7 +77,7 @@
    "gate": "E10_no_silent_success",
    "pass": true,
    "skipped": false,
-   "detail": "rejected writes that left rows: none; row count across conflict attempt 1->1; refusals recorded in write_log: 5 kinds"
+   "detail": "rejected writes that left rows: none; row count across conflict attempt 1->1; refusals recorded in write_log: 11 kinds"
   },
   {
    "gate": "E13_batch_idempotent_and_atomic",
@@ -89,15 +89,15 @@
    "gate": "E11_real_run_recorded",
    "pass": true,
    "skipped": false,
-   "detail": "200 inserted encounter=SFEREAL-exp_d282adf71fb12bb0e142cbe9 run=exp_d282adf71fb12bb0e142cbe9:wrk_d28d031c9f09469fe405e225"
+   "detail": "200 duplicate_identical encounter=SFEREAL-exp_13de562fa25031800895a914 run=exp_13de562fa25031800895a914:wrk_01a09683e627a7d05b85932a"
   },
   {
    "gate": "E12_real_run_reconstructable",
    "pass": true,
    "skipped": false,
-   "detail": "world=wld_e49532b4823bfbdb1de7577b player=sfe-work:wrk_d28d031c9f09469fe405e225 run=exp_d282adf71fb12bb0e142cbe9:wrk_d28d031c9f09469fe405e225 outcome=SURVIVED anchor=sha256:b8aff42c2f52b9ed0..."
+   "detail": "world=wld_2ecc6125d01a9fbe0b40d3df player=sfe-work:wrk_01a09683e627a7d05b85932a run=exp_13de562fa25031800895a914:wrk_01a09683e627a7d05b85932a outcome=SURVIVED anchor=sha256:012abffa7f2421a66..."
   }
  ],
- "real_id": "SFEREAL-exp_d282adf71fb12bb0e142cbe9",
- "real_run": "exp_d282adf71fb12bb0e142cbe9:wrk_d28d031c9f09469fe405e225"
+ "real_id": "SFEREAL-exp_13de562fa25031800895a914",
+ "real_run": "exp_13de562fa25031800895a914:wrk_01a09683e627a7d05b85932a"
 }

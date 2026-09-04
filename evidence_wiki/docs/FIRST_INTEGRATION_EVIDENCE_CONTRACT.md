@@ -1,4 +1,40 @@
-# First-Integration Evidence Contract (`pew.fossil.v1`)
+# First-Integration Evidence Contract (`pew.fossil.v2`)
+
+> SUPERSEDED IN PART, 2026-09-03 (world-provenance seam closure). The contract
+> is now `pew.fossil.v2` / schema_version 4. Three changes: `sfe_event_id` is
+> REQUIRED and `sfe_entry_hash` is shape-validated (s3a below); ordinary
+> evidence binds to a fossil encounter through typed FK-enforced columns
+> (s3b); unsupported fields on the five ordinary ingress models are refused.
+> The Harmonia-facing write procedure is `HARMONIA_PEW_WRITE_CONTRACT.md`.
+
+## 3a. `sfe_entry_hash`, frozen
+
+`sfe_entry_hash` IS **SFE `events.entry_hash`** -- the hash-chain integrity
+anchor of ONE row in the SFE EVENT LEDGER, namely the event named by the
+required `sfe_event_id`. Established empirically: all 5,452 historical prod
+rows match the SFE `events.entry_hash` universe and their
+`(sfe_event_id, sfe_entry_hash)` pairs verify 5452/5452 against the live
+ledger, while `artifacts.blob_hash` and `artifacts.artifact_id` overlap it by
+ZERO (`seam/q1_hash_semantics_probe.txt`, `seam/q1_pair_verification.txt`).
+
+It is NOT `blob_hash` (artifact BYTES), NOT `artifact_id` (world-scoped
+envelope, also sha256-shaped), NOT `worlds.head_hash`, and NOT a Proteus
+`organism_id`. `head_hash` cannot be excluded structurally -- every one of the
+283 live head_hash values IS some event's entry_hash -- so the class is pinned
+by requiring the `evt_`-prefixed event id, which exists only in the ledger.
+
+## 3b. Evidence -> fossil encounter binding, frozen
+
+Typed columns on the evidence row: `encounter_id` + `encounter_run_id`,
+enforced by `FOREIGN KEY (encounter_id, encounter_run_key) REFERENCES
+ew.fossil_encounters(encounter_id, run_key)`. Forward traversal:
+`GET /api/v1/provenance/evidence/{evidence_id}`. Reverse:
+`GET /api/v1/fossil/encounters/{encounter_id}/evidence`. This is the only
+sanctioned binding; no relation type or string convention carries it.
+
+---
+
+# First-Integration Evidence Contract (v1 text, retained)
 
 Normative description of what PEW accepts, what it preserves, and how the
 evidence joins back to the exact world and player that produced it. The
@@ -84,14 +120,21 @@ NULL means "not asserted", never "zero" or "unknown-but-probably".
                                              checkpoint_ids)
     run_id           exp_id + work_id        (not minted)
     seed             worlds.seed_root        encounter seed argument
-    sfe_entry_hash   events.entry_hash       --
+    sfe_entry_hash   events.entry_hash       --   [FROZEN: of the event
+                                                  named by sfe_event_id]
+    sfe_event_id     events.event_id         --   [NOW REQUIRED]
     sfe_event_seq    events.event_seq        --
     outcome          observations.outcome    NEVER (Proteus records no outcome;
                                              a Proteus file asserting one is a
                                              defect per its own contract)
     genome_hash      artifacts.blob_hash     manifest hash (same bytes; equal
                                              by construction -- a free
-                                             cross-check at ingest time)
+                                             cross-check, NOT an anchor)
+    (no PEW field)   artifacts.artifact_id   -- world-scoped envelope id;
+                                             sha256-shaped but never an anchor
+    (world anchor)   worlds.head_hash        -- world ledger head; always some
+                                             event's entry_hash, so never
+                                             substitute it for the anchor
 
 PEW stores each producer's own identifier under its own name. It does not
 normalize `organism_id` into `player_id` inside the payload, it maps the

@@ -1,0 +1,28 @@
+PRE-CHANGE PROBE 2026-09-03T21:26:56
+service: {'service': 'mnemosyne-evidence-wiki', 'status': 'ok', 'schema_version': 3, 'ontology_version': 2, 'fossil_contract': 'pew.fossil.v1'}
+
+PacketIn   + world_id/sfe_entry_hash -> HTTP 200 {"packet_id":"SP-2bb2eafc6192"}
+ExperimentIn + world_id               -> HTTP 200 {"experiment_id":"X-fb9c4d287980"}
+ClaimIn    + world_id/run_id          -> HTTP 200 {"claim_id":"C-ece6242e2fc9","write_stage":"SOURCE_BOUND"}
+EvidenceIn + world_id/encounter_id    -> HTTP 422 {"detail":"unknown_evidence_type:documented"}
+RelationIn + world_id                 -> HTTP 200 {"relation_id":"R-82b517a68352"}
+  ew.claims: provenance columns present = NONE
+  ew.evidence: provenance columns present = NONE
+  ew.source_packets: provenance columns present = NONE
+  ew.relations: provenance columns present = NONE
+  ew.experiments: provenance columns present = NONE
+  stored claim row: {'claim_id': 'C-ece6242e2fc9', 'text_canonical': 'PRE-CHANGE silent-loss probe claim.'}
+
+CONCLUSION: any 200 above with the field absent from the stored row is
+the reported defect -- accepted, acknowledged, silently discarded.
+  File "<stdin>", line 2
+    === ADDENDUM: EvidenceIn retested with a VALID evidence_type ===
+    ^^
+SyntaxError: invalid syntax
+EvidenceIn + world_id/encounter_id -> HTTP 200 {"evidence_id":"E-4d83b1abbf06"}
+stored evidence row keys: ['agent_id', 'claim_id', 'created_at', 'creation_method', 'evidence_id', 'evidence_type', 'experiment_id', 'gate', 'machine', 'metric_text', 'negative', 'ontology_version', 'outcome_canonical', 'packet_id', 'revision', 'source_quote', 'source_span', 'submitted_by', 'substrate', 'verdict_source', 'write_stage']
+world_id present in stored row? False
+encounter_id present in stored row? False
+
+RESULT: 5/5 ordinary ingress models accept unsupported provenance
+fields with HTTP 200 and discard them. DEFECT REPRODUCED.

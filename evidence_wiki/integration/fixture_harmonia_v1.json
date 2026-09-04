@@ -1,46 +1,74 @@
 {
-  "fixture_id": "pew.integration.fixture.harmonia.v1",
-  "frozen": "2026-09-03",
+  "fixture_id": "pew.integration.fixture.harmonia.v2",
+  "frozen": "2026-09-03 (v2: anchors made contract-conforming)",
   "namespace": "test",
-  "note": "Unmistakably synthetic. Namespace 'test' is excluded from every scientific query in ew/fossil.py (all default namespace='prod'). Append-only substrate: these rows are never deleted, they are quarantined by namespace.",
+  "note": "Unmistakably synthetic (TESTFIX- ids) but CONTRACT-CONFORMING: under pew.fossil.v2 sfe_entry_hash must match ^sha256:[0-9a-f]{64}$ and be paired with an evt_-prefixed sfe_event_id, so the fixture exercises the real validation path. Namespace 'test' is excluded from every scientific query in ew/fossil.py (all default namespace='prod').",
   "world": {
-    "world_id": "TESTFIX-WORLD-0001",
-    "manifest_hash": "sha256:TESTFIXTURE-WORLD-MANIFEST-0001",
+    "world_id": "TESTFIX-WORLD-0002",
+    "manifest_hash": "sha256:20935e02871294757966bde80eca8c2eb7341d0f29189bb4975f3d36ee2104b8",
     "world_binding_id": "TESTFIX-BINDING-0001",
     "seed_root": "0",
     "family": "TESTFIX-FAMILY",
-    "producer": {"component": "pew.integration.fixture", "version": "1"},
-    "namespace": "test"
+    "producer": {
+      "component": "pew.integration.fixture",
+      "version": "1"
+    },
+    "namespace": "test",
+    "sfe_head_hash": "sha256:5ce453a8d9d46577d9f244f62de656b47de88c593a36117b3927bf52dbfc96b3"
   },
   "player": {
-    "player_id": "TESTFIX-PLAYER-0001",
-    "genome_hash": "sha256:TESTFIXTURE-MANIFEST-0001",
-    "runtime_hash": "sha256:TESTFIXTURE-RUNTIME-0001",
-    "lineage_id": "TESTFIX-LINEAGE-0001",
+    "player_id": "TESTFIX-PLAYER-0002",
+    "genome_hash": "sha256:b738db98a6235541c6665cbe9e491230b00283d66f91abd040ab3ea8e5b9e5dd",
+    "runtime_hash": "sha256:0e0ead8255d829b54d4a6de8a4e0e634dce058936873e007080ee51108cd4f77",
+    "lineage_id": "TESTFIX-LINEAGE-0002",
     "generation": 0,
-    "producer": {"component": "pew.integration.fixture", "version": "1"},
+    "producer": {
+      "component": "pew.integration.fixture",
+      "version": "1"
+    },
     "namespace": "test"
   },
   "encounter": {
-    "encounter_id": "TESTFIX-HARMONIA-ENC-0001",
-    "run_id": "TESTFIX-RUN-0001",
-    "sfe_entry_hash": "sha256:TESTFIXTURE-ENTRY-HASH-0001",
+    "encounter_id": "TESTFIX-HARMONIA-ENC-0002",
+    "run_id": "TESTFIX-RUN-0002",
+    "sfe_entry_hash": "sha256:7c44ef40bee6775773ea1c365f238e056dadb864747f03ab692b831a73067d60",
     "sfe_world_id": "TESTFIX-SFE-WORLD-0001",
-    "sfe_event_id": "TESTFIX-EVENT-0001",
+    "sfe_event_id": "evt_d1c585e3133da4f58554cf24",
     "sfe_event_seq": 1,
-    "world_id": "TESTFIX-WORLD-0001",
-    "players": ["TESTFIX-PLAYER-0001"],
+    "world_id": "TESTFIX-WORLD-0002",
+    "players": [
+      "TESTFIX-PLAYER-0002"
+    ],
     "seed": "0",
     "outcome": "committed",
     "failure_class": null,
-    "resources_used": {"ticks": 1},
+    "resources_used": {
+      "ticks": 1
+    },
     "occurred_ts": "2026-09-03T00:00:00+00:00",
-    "producer": {"component": "pew.integration.fixture", "version": "1"},
+    "producer": {
+      "component": "pew.integration.fixture",
+      "version": "1"
+    },
     "namespace": "test"
   },
-  "expected_response_first_write": {"status": "inserted", "inserted": true},
-  "expected_response_replay": {"status": "duplicate_identical", "inserted": false},
-  "expected_response_differing": {"http": 409, "detail_prefix": "conflict_existing_row_differs:"},
+  "expected_response_first_write": {
+    "status": "inserted",
+    "inserted": true
+  },
+  "expected_response_replay": {
+    "status": "duplicate_identical",
+    "inserted": false
+  },
+  "expected_response_differing": {
+    "http": 409,
+    "detail_prefix": "conflict_existing_row_differs:"
+  },
   "expected_persisted_fields": "every field of .encounter above, byte-equal on read-back, plus server-assigned revision and created_at",
-  "retention": "permanent, namespace='test'; never migrated to 'prod'; never counted in fossil analyses"
+  "retention": "permanent, namespace='test'; never migrated to 'prod'; never counted in fossil analyses",
+  "anchor_semantics": {
+    "sfe_entry_hash": "stands in for SFE events.entry_hash",
+    "sfe_event_id": "stands in for SFE events.event_id; REQUIRED under v2 so the hash class cannot be confused with blob_hash/artifact_id/head_hash"
+  },
+  "supersedes": "pew.integration.fixture.harmonia.v1 (TESTFIX-*-0001). Those rows remain in the substrate: content changed, so identity changed. Re-registering 0001 with new anchors would correctly 409 -- PEW never overwrites."
 }

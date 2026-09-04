@@ -1,0 +1,94 @@
+{
+ "ran_at": "2026-09-03T21:34:17",
+ "host": "127.0.0.1",
+ "machine": "M1",
+ "service": {
+  "service": "mnemosyne-evidence-wiki",
+  "status": "ok",
+  "schema_version": 4,
+  "ontology_version": 2,
+  "fossil_contract": "pew.fossil.v2"
+ },
+ "n_scored": 12,
+ "n_pass": 12,
+ "skipped": [],
+ "all_pass": true,
+ "bound_evidence_id": "E-87a3eb776a36",
+ "fixture_encounter": "TESTFIX-HARMONIA-ENC-0002",
+ "fixture_run": "TESTFIX-RUN-0002",
+ "real_sfe_encounter": "SEAM-evt_3de2c28540a956b6bd29b4e3",
+ "gates": [
+  {
+   "gate": "I_live_migration_state",
+   "pass": true,
+   "skipped": false,
+   "detail": "health.schema_version=4 contract=pew.fossil.v2 | {'fossil_pk': 'PRIMARY KEY (encounter_id, run_key)', 'evidence_fk': 'FOREIGN KEY (encounter_id, encounter_run_key) REFERENCES ew.fossil_encounters(encounter_id, run_key)', 'evidence_cols': ['encounter_id', 'encounter_run_id', 'encounter_run_key']}"
+  },
+  {
+   "gate": "A_hash_semantics",
+   "pass": true,
+   "skipped": false,
+   "detail": "sanctioned event entry_hash+event_id -> 200; wrong-class unpaired {'blob_hash': 422, 'artifact_id': 422, 'world_head_hash': 422}; bad hash shape -> 422; non-evt event_id -> 422"
+  },
+  {
+   "gate": "B_evidence_to_fossil_traversal",
+   "pass": true,
+   "skipped": false,
+   "detail": "evidence=E-87a3eb776a36 -> {\"encounter_id\": \"TESTFIX-HARMONIA-ENC-0002\", \"run_id\": \"TESTFIX-RUN-0002\", \"world_id\": \"TESTFIX-WORLD-0002\", \"players\": [\"TESTFIX-PLAYER-0002\"], \"sfe_entry_hash\": \"sha256:7c44ef40bee6775773ea1c365f238e056dadb864747f03ab692b831a73067d60\", \"sfe_event_id\": \"evt_d1c585e3133da4f58554cf24\", \"sfe_event_seq\": 1}"
+  },
+  {
+   "gate": "C_reverse_query",
+   "pass": true,
+   "skipped": false,
+   "detail": "encounter -> 2 evidence row(s); contains E-87a3eb776a36: True"
+  },
+  {
+   "gate": "D_unsupported_field_fails_closed",
+   "pass": true,
+   "skipped": false,
+   "detail": "{\"PacketIn\": 422, \"ExperimentIn\": 422, \"ClaimIn\": 422, \"EvidenceIn\": 422, \"RelationIn\": 422}"
+  },
+  {
+   "gate": "D2_unknown_encounter_binding_refused",
+   "pass": true,
+   "skipped": false,
+   "detail": "HTTP 422 {\"detail\":\"unknown_fossil_encounter:NO-SUCH-ENCOUNTER@nope\"}; rows left behind: 0"
+  },
+  {
+   "gate": "E_duplicate_replay",
+   "pass": true,
+   "skipped": false,
+   "detail": "encounter replay=duplicate_identical; evidence replay returns same content-addressed id=True; stored copies=1"
+  },
+  {
+   "gate": "F_conflict_fails_overtly",
+   "pass": true,
+   "skipped": false,
+   "detail": "encounter differing -> 409 {\"detail\":\"conflict_existing_row_differs:outcome\"}; world anchor differing -> 409"
+  },
+  {
+   "gate": "G_namespace_firewall",
+   "pass": true,
+   "skipped": false,
+   "detail": "test/seam rows in prod fossil namespace: 0; prod encounters still 5452; seam evidence rows visible in ew.evidence_prod: 0 (must be 0); classification=['test']"
+  },
+  {
+   "gate": "G2_unknown_namespace_refused",
+   "pass": true,
+   "skipped": false,
+   "detail": "namespace='tset' -> HTTP 422 {\"detail\":\"unknown_namespace:tset (allowed ('prod', 'test', 'fixture'))\"}"
+  },
+  {
+   "gate": "H_independent_read_back",
+   "pass": true,
+   "skipped": false,
+   "detail": "direct SQL (never through the writing function): [{'evidence_id': 'E-87a3eb776a36', 'encounter_id': 'TESTFIX-HARMONIA-ENC-0002', 'encounter_run_id': 'TESTFIX-RUN-0002', 'encounter_run_key': 'TESTFIX-RUN-0002'}]"
+  },
+  {
+   "gate": "J_contract_is_self_describing",
+   "pass": true,
+   "skipped": false,
+   "detail": "contract keys present=True; defines entry_hash as events.entry_hash=True; documents the binding=True"
+  }
+ ]
+}

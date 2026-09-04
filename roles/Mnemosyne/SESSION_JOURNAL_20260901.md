@@ -280,3 +280,34 @@ requirement); scope held to integration defects.
   claiming M1 = 401, anonymous = 401. Traffic still originated on M1.
 - Schema 3, fossil contract pew.fossil.v1. Runbook:
   docs/HARMONIA_FIRST_INTEGRATION_PEW.md.
+
+## ADDENDUM 8 — 2026-09-03 — WORLD-PROVENANCE SEAM CLOSURE
+Charter committed verbatim, sha 18615e89a8aa386faf258e54ee59d44cf9e468731f56
+0194735d2cc1d4b0e012.
+- Q1 sfe_entry_hash = SFE events.entry_hash, decided from DATA not names:
+  5452/5452 prod anchors are in the events.entry_hash universe; blob_hash and
+  artifact_id overlap by ZERO; (event_id, entry_hash) pairs verify 5452/5452
+  against the live ledger. head_hash is NOT structurally separable (all 283
+  live head_hash values ARE some event's entry_hash), so the class is pinned
+  by REQUIRING the evt_-prefixed sfe_event_id, which 100% of historical rows
+  already carry. Shape ^sha256:[0-9a-f]{64}$ enforced.
+- Q2 binding = typed FK columns on ew.evidence (encounter_id,
+  encounter_run_id -> fossil_encounters(encounter_id, run_key)). Relations
+  were REJECTED as the mechanism: a relation carries one dst_id but encounter
+  identity is a PAIR, so it would need an invented composite-string
+  convention, and a new relation_type would broaden the ontology.
+- Q3 migration 006 IS live (PK (encounter_id, run_key) present; service was
+  already serving schema 3). 007 applied this pass; 124 evidence / 11,754
+  encounter rows preserved exactly.
+- DEFECT REPRODUCED FIRST (seam/D_silent_loss_BEFORE.txt): all 5 ordinary
+  ingress models accepted world_id/run_id/encounter_id with HTTP 200 and
+  discarded them. Fixed with extra=forbid; regression test added.
+- MY OWN DEFECT, caught by gate G: the seam battery's ordinary evidence landed
+  in ew.evidence_prod, because ew.object_namespace had NO API path — it had
+  only ever been written by hand. Added validated namespace on
+  Claim/Evidence/RelationIn; unknown namespace is 422 so a typo cannot leave a
+  practice object in science. Probe artifacts classified 'test', NOT deleted.
+- Seam battery A-J 12/12; integration battery 15/15; fail-closed regression
+  8/8; pooled-write requalification G17 30/30, G19, G21 160/160, firewall PASS.
+- Contract now pew.fossil.v2 / schema_version 4. Harmonia handoff:
+  docs/HARMONIA_PEW_WRITE_CONTRACT.md.

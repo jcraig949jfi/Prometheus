@@ -1,0 +1,16 @@
+SFE universes: events.entry_hash=31507 worlds.head_hash=283 artifacts.blob_hash=2124 artifacts.artifact_id=6122 foundry_events=182
+head_hash values that ARE also event entry_hash: 283 / 283
+blob_hash values that ARE also event entry_hash: 0 / 2124
+
+PEW prod fossil_encounters rows: 5452
+  match events.entry_hash           :  5452 / 5452  (100.0%)
+  match worlds.head_hash            :     9 / 5452  (0.2%)
+  match artifacts.blob_hash         :     0 / 5452  (0.0%)
+  match artifacts.artifact_id       :     0 / 5452  (0.0%)
+  match foundry_events.entry_hash   :     0 / 5452  (0.0%)
+
+Sample PEW prod anchors: ['sha256:e5db6dce9c12177573a86730ee3d90f4804dc737fb07660d6f722eb75a8ef3bc', 'sha256:d75e9fbad4ed182780a6501748a16950286e9a14506691427fd3440e7b91e2e1', 'sha256:9db64ba183878b20f07dc60815cc3535cb5428cd0fa623d74ded19d7a1655caf']
+Sample SFE event entry_hash: ['sha256:522091ff74923dd190420c6aa4c4a41112f61d387ed6ab2c0fc8ca2ad326c3bd', 'sha256:e8c13f6b4dcfa950f80f43d01281af61bf04a6dbb96b057acc159fdd98d738b1']
+Sample SFE blob_hash: ['sha256:21e2ca09d2f22e4b79dea75bfbf5752dd4b675b5f8abfa15ff02fdcf29a013b1', 'sha256:d4bdb76fff8f17564a810e2b6732ef28de4cda4d3805be75e326e94eb6bd1600']
+Sample SFE artifact_id: ['sha256:1b83a93c95a5ac30afe91347e3e693e01015aeb5ac97efc5ff08f1efa2140d8e', 'sha256:b604acba0f19cc3428cc242205c024747656b6c3dfa39704775815d4244de24e']
+Sample SFE world head_hash: ['sha256:40cf05028653a3b05cefb2089cc40f34cc2fd5770f706dc255ff1ee3688f4cba', 'sha256:98734dd1055c0027545808d6591522421207c6dac5c526b394885ed1472b9378']

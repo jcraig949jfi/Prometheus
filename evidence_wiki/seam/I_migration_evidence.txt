@@ -1,0 +1,6 @@
+PRE-007  {'ev': 124, 'cl': 124, 'fe': 11754, 'evp': 119}
+POST-007 {'ev': 124, 'cl': 124, 'fe': 11754, 'evp': 119}
+new columns: [{'column_name': 'encounter_id', 'data_type': 'text', 'is_generated': 'NEVER'}, {'column_name': 'encounter_run_id', 'data_type': 'text', 'is_generated': 'NEVER'}, {'column_name': 'encounter_run_key', 'data_type': 'text', 'is_generated': 'ALWAYS'}]
+foreign keys: [{'conname': 'evidence_packet_id_fkey', 'd': 'FOREIGN KEY (packet_id) REFERENCES ew.source_packets(packet_id)'}, {'conname': 'evidence_fossil_encounter_fk', 'd': 'FOREIGN KEY (encounter_id, encounter_run_key) REFERENCES ew.fossil_encounters(encounter_id, run_key)'}]
+indexes: ['evidence_pkey', 'fossil_encounters_pkey', 'idx_evidence_encounter', 'idx_fossil_enc_anchor', 'idx_fossil_enc_ep', 'idx_fossil_enc_ns', 'idx_fossil_enc_players', 'idx_fossil_enc_run', 'idx_fossil_enc_world']
+fossil PK (006): [{'conname': 'fossil_encounters_pkey', 'd': 'PRIMARY KEY (encounter_id, run_key)'}]

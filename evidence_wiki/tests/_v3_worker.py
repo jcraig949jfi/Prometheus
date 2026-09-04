@@ -18,7 +18,8 @@ for i in range(start, start + count):
     row = {
         "encounter_id": eid,
         "run_id": run_tag,          # fresh execution identity per battery run
-        "sfe_entry_hash": f"sha256:synthetic{i:056d}",
+        "sfe_entry_hash": "sha256:" + hashlib.sha256(f"syn|{i}".encode()).hexdigest(),
+        "sfe_event_id": "evt_" + hashlib.sha256(f"syn|{i}".encode()).hexdigest()[:24],
         "world_id": f"synw_{i % 40:03d}",
         "outcome": rng.choice(["committed", "low_score", "timeout", "crash"]),
         "failure_class": rng.choice([None, "low_score", "timeout"]),
