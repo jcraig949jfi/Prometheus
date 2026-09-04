@@ -311,3 +311,29 @@ Charter committed verbatim, sha 18615e89a8aa386faf258e54ee59d44cf9e468731f56
   8/8; pooled-write requalification G17 30/30, G19, G21 160/160, firewall PASS.
 - Contract now pew.fossil.v2 / schema_version 4. Harmonia handoff:
   docs/HARMONIA_PEW_WRITE_CONTRACT.md.
+
+## ADDENDUM 9 — 2026-09-04 — DURABILITY + DIAGNOSTICS
+Charter sha d34d5b1b1f42d2dfa25d6c82aa73ce93634d3630ef067ba030714d7c33a46b90. Priority order honoured: backup first.
+- BACKUP: ops/pew_backup.py + ops/pew_restore_verify.py. First dump
+  prometheus_fire_20260904T061043.dump, 1,066,849,384 B, sha256 5a53beaf...,
+  161s. Restored into scratch pew_restore_check_20260904061415:
+  RESTORE_VERIFIED — 27/27 tables, 23,140/23,140 rows, E-dbe8c504b8cc chain
+  byte-identical (evidence->claim->packet->encounter->world->player->SFE
+  anchor), samples identical, scratch DROPPED. Tasks PEWBackupDaily (03:30)
+  and PEWRestoreVerifyWeekly (Sun 04:30) registered and the daily one was
+  TRIGGERED to prove the scheduled path: second dump + manifest written
+  unattended. --verify-only re-hash intact. Policy in docs/BACKUP_AND_RESTORE.md
+  incl. the 14-day unproven rule and the honest single-host limit.
+- 409 DIAGNOSTICS: _fmt_diff() adds stored/submitted values to conflict
+  details on encounters, batch and world/player anchors. Status code, prefix,
+  fail-closed behaviour and no-overwrite all unchanged; values truncated at 60
+  chars. tests/test_conflict_diagnostics.py 11/11 (incl. identical-replay
+  still 200, no overwrite after conflict, truncation, write_log recording).
+  Seam 12/12, integration 15/15, fail-closed 8/8 all still green.
+- DEFERRED (documented, NOT hardened): docs/DEFERRED_ISSUES.md D1-D5. D2
+  (cross-namespace binding) is a CONTRACT decision and must not land during
+  Harmonia's active integration.
+- ARCHAEOLOGY: docs/ARCHAEOLOGY_MAP.md, walked live over HTTP. ONE real gap:
+  A1 — no GET /api/v1/packets/{id} and provenance/{id} 404s for SP- ids, so
+  the SOURCE of a quote is SQL-only/host-local. A2: claim text is at
+  current.text_canonical (I misread it myself while testing; corrected).
