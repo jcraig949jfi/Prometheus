@@ -6,6 +6,11 @@
 
 ## Seat installed: 2026-09-02. Authoritative directive: `roles/Herakles/prompts/DIRECTIVE_HISTORICAL_COLLIDER_V0_2026-09-02.txt` (sha256 `c1301d794950a66d52b3d47e2b1779e5c05b6f7c17fed24c624c9d8c4187df17` at issuance). Where any summary here disagrees with that file, the file wins.
 
+## BOOTSTRAP: read `roles/Herakles/BOOTSTRAP.md` FIRST on any restart.
+It carries the read order and the seat's capability inventory. In particular
+this seat HAS Gemini Deep Research, verified executable 2026-09-04 -- see
+`roles/Herakles/CAPABILITY_DEEP_RESEARCH.md`. Do not rediscover it.
+
 ---
 
 ## What I Own
