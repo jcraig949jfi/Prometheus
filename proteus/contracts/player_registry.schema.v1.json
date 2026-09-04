@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "prometheus/proteus/player_registry/v1",
+  "title": "Proteus Player Registry (v1)",
+  "description": "A canonical inventory of frozen player specimens. THE REGISTRY DESCRIBES SPECIMENS; IT DOES NOT DEFINE PLAYER TYPES. There are no families, classes, tags, taxonomy or quality scores, and introducing any would be a contract violation. This document is DESCRIPTIVE: proteus.integration.registry.validate_registry is the AUTHORITY when the two disagree, and player-manifest validity is delegated to proteus.foundry.vm.validate_manifest so there is exactly one source of truth for it. A test asserts the field lists here match the code.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "registry_id",
+    "source_qualification",
+    "build",
+    "entries"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "proteus.player_registry.v1"
+    },
+    "registry_id": {
+      "type": "string",
+      "description": "sha256 over {schema_version, build, [entry_id...]}. Recomputed and checked on load."
+    },
+    "source_qualification": {
+      "type": "object",
+      "description": "What the specimens' source is and is NOT qualified for. Travels with every registry so a consumer never needs archaeological knowledge of V0.6."
+    },
+    "build": {
+      "type": "object",
+      "description": "How the population was produced: directive and its sha256, foundry manifest, seed, counts, and the selection rule in words."
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/entry"
+      }
+    }
+  },
+  "$defs": {
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "organism_id",
+        "lineage_id",
+        "generation",
+        "manifest",
+        "identity",
+        "provenance",
+        "resource_envelope",
+        "validation",
+        "extrinsic",
+        "entry_id"
+      ],
+      "description": "One specimen. INTRINSIC fields determine identity; the single OPEN namespace 'extrinsic' does not. entry_id = sha256 of the entry minus extrinsic and entry_id, so a consumer may write observations into extrinsic without altering any identity.",
+      "properties": {
+        "schema_version": {
+          "const": "proteus.player_registry_entry.v1"
+        },
+        "organism_id": {
+          "type": "string",
+          "description": "sha256 of the canonical player manifest. The authoritative organism identity."
+        },
+        "lineage_id": {
+          "type": "string"
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "manifest": {
+          "type": "object",
+          "description": "The immutable player itself, schema prometheus/proteus/player_manifest/v0."
+        },
+        "identity": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "manifest_schema_version",
+            "runtime_hash",
+            "grammar_hash",
+            "affordance_hash",
+            "grammar_version"
+          ]
+        },
+        "provenance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source",
+            "foundry_identity",
+            "population_seed",
+            "index_in_population",
+            "derivation",
+            "generation_manifest_id"
+          ]
+        },
+        "resource_envelope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "n_regs",
+            "tape_words",
+            "genome_words",
+            "genome_instructions",
+            "code_writable",
+            "persist",
+            "tick_budget",
+            "out_cap",
+            "max_state_footprint_words",
+            "persistent_state_words",
+            "max_ops_per_tick",
+            "max_output_values_per_channel_per_tick"
+          ],
+          "description": "Hard bounds for scheduling. Never a score or ranking."
+        },
+        "validation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "manifest_valid",
+            "validator",
+            "error"
+          ],
+          "description": "The authoritative validator's verdict, recorded not recomputed."
+        },
+        "extrinsic": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "THE ONE OPEN NAMESPACE. Consumer-owned observations: behaviour, encounters, phenotype, scores, novelty. Defaults to phenotype=UNKNOWN, a permanent legitimate state. Never an input to organism_id or entry_id."
+        },
+        "entry_id": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
