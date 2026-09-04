@@ -32,6 +32,11 @@ EXEMPTIONS = {
         "LEGITIMATE. The auditor shells out to git to record repository identity alongside the "
         "audit stamp. It is tooling that inspects the tree; it is not player-facing, is never "
         "imported by vm.py, generate.py or any runtime path, and cannot execute inside a player."),
+    ("proteus/tests/test_pre_t1_gates.py", "subprocess"): (
+        "LEGITIMATE, same class as the auditor above. Gate G4 must distinguish TRACKED files from "
+        "files merely present on disk, which only git can answer, and .pyc files regenerate "
+        "constantly so a filesystem check would be meaningless. Test-only, never imported by any "
+        "runtime or consumer path."),
     ("proteus/v0_6/equilibrium.py", "random"): (
         "RECORDED DEFECT, not an endorsement. equilibrium.py imports the stdlib `random` and uses "
         "random.Random(seed) in stationary_empirical() only. Proteus policy is that `random` is "

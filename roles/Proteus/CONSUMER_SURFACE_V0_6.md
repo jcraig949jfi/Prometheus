@@ -8,7 +8,14 @@ offer to be consumed.
 
 ## 0. The one-line answer to "what players can I ask Proteus for?"
 
-**There are no player families, no player types, and no registry.** Proteus exposes a single
+**AMENDED 2026-09-04:** there are no player families and no player types -- but a canonical
+REGISTRY now EXISTS at `proteus/integration/PLAYER_REGISTRY.json` (64 frozen specimens, schema
+`proteus.player_registry.v1`). Start at
+[`roles/Proteus/HARMONIA_HANDOFF.md`](HARMONIA_HANDOFF.md). The original sentence read "there are
+no player families, no player types, and no registry", which was true on 2026-09-03 and false
+about seven hours later.
+
+Proteus exposes a single
 deterministic generator that samples organisms uniformly from the bounds declared in a Foundry
 manifest. A consumer does not choose a *kind* of player; it chooses *bounds* and a *seed*, and
 receives a population sampled from those bounds.
@@ -177,7 +184,7 @@ tick number, a score, a budget remaining, the existence of other players, or any
 
 ## 12. What is missing before any consumer could actually use this
 
-- No registry or enumeration surface (section 0), deliberately not built.
+- ~~No registry or enumeration surface, deliberately not built.~~ **SUPERSEDED 2026-09-04:** the registry exists (section 0). Enumeration is `registry.enumerate_ids(registry.load_default())`.
 - No packaging, no version pin file, no published dependency contract beyond "standard library".
 - No adapter or binding of any kind, by design.
 - **Proteus is not qualified.** V0.6 measures whether the mutation machinery is dynamically
