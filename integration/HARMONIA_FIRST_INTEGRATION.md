@@ -652,8 +652,39 @@ for oid in registry.enumerate_ids(reg):
 
 Note what this does **not** do: no `name` field, no classification, no
 phenotype, no score, no mutation, and no world id written back into Proteus.
-Verify it with `blob_hash == sha256(body)` — if that holds, the specimen
-crossed the seam unaltered.
+
+### The seam has a free integrity check — use it
+
+**`organism_id` IS the SHA-256 of the canonical manifest.** Verified against all
+64 specimens in the registry: `sha256(json.dumps(manifest, sort_keys=True,
+separators=(",", ":")))` equals `organism_id`, 64/64.
+
+So if you post exactly that canonical serialization as the artifact bytes, the
+Engine's content address and Proteus's identity are the same number:
+
+```python
+assert resp["blob_hash"] == "sha256:" + organism_id
+```
+
+**That one line catches nearly everything that can go wrong in transport** — a
+re-serialized manifest, a different key order, an added field, and (most
+importantly) the URL-safe base64 corruption in §10, which would otherwise pass
+silently with HTTP 200. If the assertion holds, the specimen crossed unaltered.
+No mapping table is required in either direction.
+
+Verified end to end on 2026-09-03 with real specimen
+`7743b3527ea44fb5…` posted into two live worlds:
+
+```
+blob_hash == sha256(canonical manifest)   -> True
+blob_hash identical across the two worlds -> True    (intrinsic identity)
+artifact_id DIFFERS across the two worlds -> True    (extrinsic binding)
+```
+
+That is the extrinsic-association rule, demonstrated rather than asserted.
+Note `organism_id == lineage_id` at generation 0, while `entry_id` is a
+different hash (computed over the whole intrinsic bundle, not the manifest
+alone) — do not use them interchangeably.
 
 **The adapter must NOT:**
 
@@ -896,11 +927,28 @@ on a service handling thousands of requests. Use:
 Select-String "192\.168\.1\.191" deploy\sfengine.log | Measure-Object
 ```
 
-**Known residual (not fixed here):** there is no singleton guard — no lockfile
-or pidfile — and uvicorn sets `SO_REUSEADDR`, which on Windows permits binding
-an address already in use. A stray manual `python serve.py` would bind
+**Known residual R1 (not fixed here):** there is no singleton guard — no
+lockfile or pidfile — and uvicorn sets `SO_REUSEADDR`, which on Windows permits
+binding an address already in use. A stray manual `python serve.py` would bind
 alongside the service and split traffic rather than failing loudly. Worth a
 `var/engine.lock` exclusive-open guard in `serve.py` before `uvicorn.run`.
+
+**Known residual R7 — artifact body decoding does not fail closed.** Found
+2026-09-03, deliberately **not** fixed in this pass (a live shared service is
+not the place for a quiet change the day before first integration). Two
+behaviours, both on `POST /v2/worlds/{wid}/artifacts`:
+
+- URL-safe base64 (`-`/`_`) is **accepted with HTTP 200 and silently
+  corrupted** — measured 24 bytes in, 15 bytes stored, no error. Out-of-alphabet
+  characters are discarded rather than rejected.
+- Invalid base64 returns **500 `internal_error`**, not a 422.
+
+Both contradict the Engine's own fail-closed posture, which holds everywhere
+else (`extra="forbid"`, 422 with a field path). The fix is one argument —
+`base64.b64decode(..., validate=True)` — plus mapping the resulting error to a
+422. Until then, `blob_hash` is the client-side guard, and the documented
+adapter check (§9) catches it. Whoever picks this up: add a regression test
+asserting a 422 for both inputs before changing the decode.
 
 **Open registration** means any host on `192.168.1.0/24` can mint an identity.
 That is intentional for bootstrap; close it with `serve.py --registration
