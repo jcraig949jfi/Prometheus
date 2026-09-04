@@ -1,8 +1,11 @@
 # SFE integration contract (V0). Amendment A9; brief §12 ("SFE remains authoritative for what happened").
 
 **Status:** a contract and a payload shaper (`foundry/export.py`), not a client. Proteus holds no
-SFE token, opens no connection, and the quarantine audit forbids any network import in
-`proteus/`. Everything below is what the neutral operator / SFE-side binding layer does with
+SFE token and opens no connection. **Correction (2026-09-04):** this line previously claimed
+the quarantine audit forbids any network import in `proteus/`. It does not -- `quarantine.py`
+scopes its import allowlist to `proteus/foundry` only. The no-network property does hold across
+the package, but until now it was enforced only inside `foundry`; it is now checked package-wide
+by `proteus/tests/test_package_import_hygiene.py`, which carries the two recorded exemptions. Everything below is what the neutral operator / SFE-side binding layer does with
 Proteus's identities. Read against `SerendipityFoundry/SerendipityFoundryClient/docs/API.md`
 (the only SFE document Proteus has read; see `roles/Proteus/READ_LEDGER.md`).
 

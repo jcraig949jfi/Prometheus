@@ -15,8 +15,19 @@ receives a population sampled from those bounds.
 
 ### Is there a canonical player registry or dictionary?
 
-**NO. It does not exist.** There is no registry file, no dictionary, no catalog, and no
-enumeration endpoint anywhere in `proteus/`. A search of the entire package for
+> **AMENDED 2026-09-04 -- THE ANSWER BELOW IS NO LONGER TRUE.**
+> A canonical registry now EXISTS at `proteus/integration/PLAYER_REGISTRY.json`
+> (schema `proteus.player_registry.v1`, 64 frozen specimens), built under the
+> Harmonia integration-readiness directive about seven hours after this document
+> was written. Consumers should read
+> [`roles/Proteus/HARMONIA_HANDOFF.md`](HARMONIA_HANDOFF.md), not this section.
+> The original text is preserved below because it was true when written and
+> because deleting it would hide that this document sat beside the registry it
+> denies for a day. Flagged by a sibling seat, not by me -- I built the registry
+> and failed to come back and amend the document that says it does not exist.
+
+**NO. It does not exist.** (Historical, as of 2026-09-03.) There is no registry file, no
+dictionary, no catalog, and no enumeration endpoint anywhere in `proteus/`. A search of the entire package for
 registry/dictionary/catalog/family returns nothing. The only "family"-like word in the tree is a
 docstring line in `proteus/foundry/generate.py` stating that the generator holds no opinion about
 which opcodes are common.
