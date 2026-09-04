@@ -1,0 +1,105 @@
+{
+ "world_anchor": [
+  200,
+  {
+   "world_id": "wld_c3cba823e868d0ed339e95fa",
+   "status": "inserted"
+  }
+ ],
+ "player_anchor": [
+  200,
+  {
+   "player_id": "7743b3527ea44fb5eb2bc80076cb1d2ea4dca2094975c8621962152d419364a0",
+   "status": "inserted"
+  }
+ ],
+ "fossil_encounter": [
+  200,
+  {
+   "encounter_id": "8a95020171cc2c30abe5b38b2886d1cfc85ca4da0e6f233861f81cffe3313276",
+   "run_id": "exp_87d78f42e4382fa6cf7d4cf6:wrk_3184f39d764511e794556932",
+   "inserted": true,
+   "status": "inserted",
+   "read_back": "/api/v1/fossil/encounters/8a95020171cc2c30abe5b38b2886d1cfc85ca4da0e6f233861f81cffe3313276"
+  }
+ ],
+ "packet": [
+  422,
+  {
+   "detail": [
+    {
+     "type": "extra_forbidden",
+     "loc": [
+      "body",
+      "namespace"
+     ],
+     "msg": "Extra inputs are not permitted",
+     "input": "test"
+    }
+   ]
+  }
+ ],
+ "claim": [
+  422,
+  {
+   "detail": "claim_requires_packet_or_experiment"
+  }
+ ],
+ "evidence": [
+  422,
+  {
+   "detail": [
+    {
+     "type": "string_type",
+     "loc": [
+      "body",
+      "packet_id"
+     ],
+     "msg": "Input should be a valid string",
+     "input": null
+    }
+   ]
+  }
+ ],
+ "neg_C_extra_field": [
+  422,
+  "{'detail': [{'type': 'extra_forbidden', 'loc': ['body', 'frobnicate'], 'msg': 'Extra inputs are not permitted', 'input':"
+ ],
+ "neg_D_unknown_encounter": [
+  422,
+  "{'detail': [{'type': 'string_type', 'loc': ['body', 'packet_id'], 'msg': 'Input should be a valid string', 'input': None"
+ ],
+ "neg_E_conflict": [
+  409,
+  "{'detail': 'conflict_existing_row_differs:outcome'}"
+ ],
+ "idempotent_retry": [
+  200,
+  "duplicate_identical"
+ ],
+ "evidence_id": "E-dbe8c504b8cc",
+ "packet_retry": [
+  200,
+  {
+   "packet_id": "SP-c49bf366d3a2"
+  }
+ ],
+ "claim_retry": [
+  200,
+  {
+   "claim_id": "C-2f770424aa9a",
+   "write_stage": "SOURCE_BOUND",
+   "namespace": "test"
+  }
+ ],
+ "evidence_retry": [
+  200,
+  {
+   "evidence_id": "E-dbe8c504b8cc",
+   "namespace": "test",
+   "encounter_id": "8a95020171cc2c30abe5b38b2886d1cfc85ca4da0e6f233861f81cffe3313276",
+   "encounter_run_id": "exp_87d78f42e4382fa6cf7d4cf6:wrk_3184f39d764511e794556932",
+   "provenance": "/api/v1/provenance/evidence/E-dbe8c504b8cc"
+  }
+ ]
+}

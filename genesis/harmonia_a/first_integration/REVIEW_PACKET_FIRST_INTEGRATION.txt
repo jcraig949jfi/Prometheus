@@ -1,0 +1,358 @@
+=====================================================================
+PROMETHEUS -- FIRST REAL END-TO-END INTEGRATION
+ONE UNKNOWN ADVENTURER ENTERS THE ARENA AND LEAVES A FOSSIL
+EXTERNAL REVIEW PACKET -- Harmonia A (M2) -- 2026-09-04
+=====================================================================
+
+1. HEADLINE VERDICT
+
+    FIRST_PROMETHEUS_END_TO_END_SPECIMEN_TRACE_VERIFIED -- ACCEPTED.
+
+    One previously UNKNOWN frozen Proteus organism entered one real
+    SFE world, executed one bounded encounter, produced one real SFE
+    event anchor, which became one PEW fossil encounter bound to one
+    ordinary PEW evidence object -- and, starting ONLY from that
+    evidence_id, the entire identity chain was mechanically
+    reconstructed and independently verified: 9/9 read-back checks
+    true, 21-row identity ledger, 0 failed identities.
+
+    The first adventurer entered the arena and left a fossil behind.
+
+2. COMPONENT VERSIONS / COMMITS / SERVICES
+
+    repo branch (work)     main @ b491711b1 (origin/main, fetched fresh)
+    Proteus readiness      c45aca26b REACHABLE from origin/main; packet
+                           blob sha256 5059f44ca83ca91f... verified at
+                           that commit (working-copy delta = CRLF only)
+    SFE client repair      cd8648fb1 REACHABLE from origin/main
+    PEW branch             origin/mnemosyne/evidence-wiki-v0 @ c68071eac
+                           (seam-closure 4cb02c733 is an ancestor);
+                           evidence_wiki/ absent from origin/main --
+                           consumed via a separate git WORKTREE at
+                           D:\Prometheus-pew (my main checkout untouched)
+    SFE Engine             https://192.168.1.202:8811/v2 -- api v2,
+                           schema_version 3, API 2.2.0, engine_source_hash
+                           sha256:5274ddbe9120ddbb... (source_commit
+                           a2898d19...), UNCHANGED across the whole run
+    PEW                    http://192.168.1.202:8377/api/v1 --
+                           mnemosyne-evidence-wiki, schema_version 4,
+                           ontology_version 2, fossil_contract pew.fossil.v2
+    Origin host            M2 = SPECTREX5, 192.168.1.191 (all requests in
+                           this pass originated here)
+
+3. SPECIMEN + DETERMINISTIC SELECTION RULE
+
+    Rule (declared before looking): FIRST organism_id in
+    proteus.integration.registry.enumerate_ids(load_default()) --
+    canonical registry order, zero behavioral inspection.
+
+    organism_id  7743b3527ea44fb5eb2bc80076cb1d2ea4dca2094975c8621962152d419364a0
+    registry_id  b15e0a7f5f2dcb99b8b28c73a99441d8d53e82b1bae42fddd5e274eeef396917
+    entry_id     88c8818853ccfd46771fa4aa572bfb8a61546916fe774320e7254be9ef4aff6b
+    lineage_id   == organism_id (generation 0 self-lineage)
+    envelope     n_regs 15, tape 16 words, 4 instructions, persist none,
+                 tick_budget 64, out_cap 16, code_writable true
+    phenotype    UNKNOWN before, UNKNOWN after. Unchanged.
+
+4. PROTEUS SOURCE QUALIFICATION (inherited, not re-litigated)
+
+    deterministic_generation QUALIFIED | semantic_quarantine QUALIFIED
+    mutation_neutrality NOT_QUALIFIED_AUTHORED_NONEQUILIBRIUM_CURRENT
+    operational_significance NOT_YET_ADJUDICATED
+    permitted USE_A_FROZEN_SPECIMEN_SOURCE only; USE B prohibited;
+    Campaign 1 BLOCKED. This run used USE A exclusively.
+
+5. CANONICAL MANIFEST IDENTITY (pre-upload gate)
+
+    manifest validated by proteus.foundry.vm.validate_manifest
+    (authoritative); canonical bytes via proteus.foundry.identity.
+    canonical_json; sha256(canonical bytes) INDEPENDENTLY computed ==
+    organism_id CONFIRMED before any network call. Exact bytes
+    preserved: adventurer_manifest.bytes (in repo). The manifest was
+    not modified in any way; transport metadata rode ONLY in the SFE
+    artifact envelope meta.
+
+6. SFE WORLD
+
+    world_id wld_c3cba823e868d0ed339e95fa -- fresh, real Engine world.
+    session "first-prometheus-integration"; sharing_policy ISOLATED
+    (default, untouched); seed_root 424242 (standard); budget
+    experiments limit 4 ENFORCEABLE (a smaller-than-default, lawful
+    config); started to RUNNING. No damage, twists, fitness, rewards,
+    competition, ecology, or second player.
+
+7. HARMONIA ADAPTER (ownership boundary)
+
+    genesis/harmonia_a/first_integration/adapter.py -- Harmonia-owned,
+    TRANSPORT/BINDING ONLY: load one registry entry -> exact canonical
+    bytes -> STANDARD base64 -> POST artifact -> verify -> preserve
+    organism_id -> blob_hash -> artifact_id -> world_id mapping.
+    It does not classify, mutate, score, select arenas, write world
+    identity into Proteus state, or touch proteus/foundry/export.py
+    (the historical payload stays frozen as a regression fixture).
+
+8. ARTIFACT PLACEMENT (request/response contract)
+
+    POST /v2/worlds/{wid}/artifacts with EXACTLY {kind, data_b64, meta}:
+    kind "proteus_player_manifest"; data_b64 = STANDARD base64 of the
+    canonical bytes (client uses base64.b64encode -- verified in source
+    before use); meta carried proteus_organism_id + adapter version.
+
+9. THE IDENTITY GATE -- PROOF
+
+    returned blob_hash  = sha256:7743b3527ea44fb5eb2bc80076cb1d2ea4d
+                          ca2094975c8621962152d419364a0
+    "sha256:" + organism_id -- EQUAL. Byte read-back via
+    GET /v2/worlds/{wid}/artifacts/{aid}/content returned bytes EQUAL
+    to the canonical manifest bytes. HTTP 200 was never treated as
+    success on its own. artifact_id (world-scoped envelope):
+    sha256:eec1cf9ad3b14cb64e3ccbac7f85c77f377eb8b2536241bcce4eca3f4edd5f9d
+
+10. ENCOUNTER SPECIFICATION (frozen in code BEFORE execution)
+
+    seed 20260904; external RNG SplitMix64(20260904) -- Harmonia-owned;
+    TICKS_MAX 16; inputs per tick = one channel [[tick_index]];
+    n_out 1; checkpoint at tick 8; encounter_id minted by Proteus's
+    authoritative encounter_identity([organism_id],
+    world_binding_id=world_id, seed, checkpoint_ids=[]):
+    8a95020171cc2c30abe5b38b2886d1cfc85ca4da0e6f233861f81cffe3313276
+    EXECUTION: 16 ticks, every status "budget", outputs empty (a
+    silent budget-burner). That is a VALID outcome and no claim about
+    the organism is made from it.
+
+11. CHECKPOINT / RESTORE / REPLAY EVIDENCE
+
+    checkpoint at tick 8 (lineage.checkpoint; player state ONLY);
+    Harmonia preserved the external RNG position separately (SplitMix64
+    .state u64).
+      full-run replay (same manifest/world inputs/seed/runtime):
+        outputs, statuses, op counts, final state -- ALL IDENTICAL.
+      restore + continuation (state + RNG position at tick 8):
+        ticks 8..15 IDENTICAL to the unbroken run.
+      checkpoint binds the expected organism_id -- TRUE (restore
+        refuses foreign runtime_hash by contract).
+    Timing fields excluded per the determinism contract.
+
+12. SFE RUN IDENTITIES
+
+    hyp_id / pred_id: prospective prediction registered BEFORE the
+    experiment commit (foresight window respected).
+    exp_id  exp_87d78f42e4382fa6cf7d4cf6
+    work_id wrk_3184f39d764511e794556932
+    run_id  exp_87d78f42e4382fa6cf7d4cf6:wrk_3184f39d764511e794556932
+    claim -> heartbeat-free bounded run -> complete(claim_id, result)
+    -> observation with work_id => evidence_class ENGINE_WORK_RESULT
+    (observations_engine_attested = 1). Outcome SURVIVED (the
+    prediction was about identity + determinism, NOT organism quality).
+
+13. THE EVENT ANCHOR (exact meanings)
+
+    sfe_event_id   evt_af204ba67d4ffe36d6a63d77  -- SFE events.event_id
+                   of the OBSERVATION_RECORDED event whose refs.exp_id
+                   == exp_id (strict single match; an earlier draft of
+                   the matcher accepted any observation event and was
+                   fixed BEFORE execution)
+    sfe_entry_hash sha256:ced132e9ee7b117f06b9da998db5f3e03cc8b7e99559
+                   cb5e60bb2e12ddf505fc -- events.entry_hash of THAT
+                   event (the hash-chain row anchor; NOT blob_hash, NOT
+                   artifact_id, NOT head_hash)
+    sfe_event_seq  31523 -- global ledger order of that event
+
+14. PEW FOSSIL WRITES (namespace=test throughout)
+
+    POST /api/v1/fossil/worlds     200 inserted (world anchor: world_id,
+        sfe_world_id, seed_root, sfe_head_hash, producer incl.
+        engine_source_hash)
+    POST /api/v1/fossil/players    200 inserted (player_id ==
+        organism_id; genome_hash sha256:organism_id; runtime_hash;
+        lineage_id; generation 0)
+    POST /api/v1/fossil/encounters 200 inserted (encounter_id, run_id,
+        sfe_event_id, sfe_entry_hash, sfe_event_seq, world_id,
+        players=[organism_id], seed "20260904", outcome SURVIVED,
+        resources_used {ticks 16, ops_total}, producer hashes)
+
+15. PEW ORDINARY EVIDENCE + BINDING
+
+    packet   SP-c49bf366d3a2 (uri = repo-relative
+             FIRST_INTEGRATION_OBSERVATION.md, kind doc)
+    claim    C-2f770424aa9a (status OBSERVED, SOURCE_BOUND,
+             namespace test)
+    evidence E-dbe8c504b8cc (verbatim source_quote; evidence_type
+             OBSERVATIONAL_ANALYSIS; namespace test) BOUND via the two
+             typed fields encounter_id + encounter_run_id -- the only
+             sanctioned evidence->fossil binding. DB-enforced FK.
+
+16. THE INDEPENDENT READ-BACK (the heart)
+
+    Fresh process (readback.py), input = "E-dbe8c504b8cc" ONLY.
+    GET /api/v1/provenance/evidence/E-dbe8c504b8cc returned the whole
+    chain in one call: fossil encounter -> encounter_id, run_id,
+    world_id, players[], sfe_event_id, sfe_entry_hash, sfe_event_seq
+    -> organism_id. Then verified against SOURCE systems (not write
+    echoes):
+      PROTEUS  player present in canonical frozen registry  TRUE
+               manifest re-hashes to organism_id            TRUE
+               phenotype still UNKNOWN                      TRUE
+      SFE      world exists                                 TRUE
+               event evt_af204ba6... exists                 TRUE
+               events.entry_hash == recovered entry_hash    TRUE
+               event_seq == 31523                           TRUE
+               artifact RECOVERED FROM THE LEDGER (typed
+               join: ARTIFACT_CREATED event carrying
+               "sha256:"+organism_id in artifacts[])        TRUE
+               artifact bytes re-hash to organism_id AND
+               equal the registry manifest bytes            TRUE
+    VERDICT: CHAIN_FULLY_RECONSTRUCTED_AND_VERIFIED (9/9).
+
+17. IDENTITY CONSERVATION LEDGER (identity_ledger.json, 21 rows)
+
+    PRESERVED EXACTLY (13): registry_id, organism_id, entry_id,
+      lineage_id, generation, runtime_hash, manifest sha256, event_id,
+      entry_hash, event_seq, fossil world id, fossil player id,
+      evidence_id.
+    TRANSFORMED BY DECLARED CONTRACT (4): blob_hash ("sha256:"+oid),
+      run_id (exp:work), encounter_id (encounter_identity()), fossil
+      encounter key (encounter_id, run_id).
+    WORLD-SCOPED (2): world_id, artifact_id.
+    RUN-SCOPED (2): exp_id, work_id.
+    FAILED / MISMATCHED: NONE. Every transformation explicit, every
+    join typed, intrinsic identity never rewritten.
+
+18. NAMESPACE ISOLATION
+
+    Every PEW row this run created carries namespace "test" (fossil)
+    -- excluded from ew.*_prod views by service design. The ordinary
+    packet row has no namespace field BY SCHEMA (see failure log);
+    claim + evidence carry namespace test.
+
+19. NEGATIVE CONTROLS / FAIL-CLOSED (all live, none poisoned prod)
+
+    A historical Proteus payload {name,data_b64} -> 422 missing kind +
+      extra_forbidden name (live re-proof; also frozen in
+      integration/seam_fixture.py)
+    B urlsafe-base64 corruption: NOT re-run on the real specimen (by
+      directive); the standing seam fixture documents it; this run
+      used standard base64 + the hash gate, which would have caught it
+    C fossil encounter with extra field "frobnicate" -> 422
+    D evidence bound to nonexistent encounter -> 422
+      unknown_fossil_encounter, no row written
+    E same (encounter_id, run_id) with differing outcome -> 409
+      conflict_existing_row_differs; NOTHING overwritten
+    + idempotent identical retry -> 200 duplicate_identical (no 2nd row)
+
+20. M2-ORIGIN QUALIFICATION (both residual questions closed)
+
+    All requests originated on M2 (SPECTREX5, 192.168.1.191).
+    SFE: TLS VERIFIED via pinned m1.crt against the IP SAN -- no
+      --insecure anywhere.
+    PEW: documented off-host batteries run FROM M2 with the M2 machine
+      token + X-Prometheus-Machine: M2:
+        pew_battery  12/14 PASS; E10 SKIP (M1-only SQL);
+                     E11/E12 NOT EXECUTABLE from M2 (they read the
+                     M1-local SFE sqlite file) -- their SUBSTANCE (a
+                     real run recorded + reconstructed) is exactly
+                     what this integration itself demonstrated, with
+                     stronger verification
+        seam_battery 9/9 scored PASS, all_pass true (3 SQL legs SKIP)
+
+21. EVERY FAILURE ENCOUNTERED (chronological, none erased)
+
+    F1 stale local main: Proteus readiness commit "not a valid object"
+       until git fetch -- absence claims from stale main are the known
+       trap; fetched before concluding anything.
+    F2 readiness-packet hash mismatch on working copy (0bf104bb... vs
+       5059f44c...) -- resolved: CRLF checkout conversion; the blob at
+       the pinned commit hashes exactly 5059f44c....
+    F3 anchor matcher draft contained "or True" (would accept ANY
+       observation event = the exact ambiguity section 9 forbids) --
+       caught in review and fixed to strict refs.exp_id match BEFORE
+       execution.
+    F4 PEW packet write 422: I sent namespace on PacketIn; the schema
+       forbids it there (claims/evidence only). My bug; retried
+       correctly. Positive side-finding: the ordinary path now fails
+       CLOSED (extra_forbidden) -- the historical fail-open defect
+       (silent field drop) is confirmed FIXED in v2.
+    F5 read-back v1 reported CHAIN_BROKEN: my reader expected artifact
+       dicts; the ledger carries the blob hash as a bare string in
+       artifacts[] with the envelope id in refs.artifact_id. Reader
+       fixed; the chain itself was never broken. Preserved as the
+       failure the read-back exists to catch: NOT a silent loss -- the
+       identity was present and typed all along.
+    F6 pew_battery E11/E12 environmental fail from M2 (see 20).
+
+22. CHANGES INSIDE HARMONIA CODE
+
+    New, all under genesis/harmonia_a/first_integration/: adapter.py,
+    run_integration.py, pew_write.py, readback.py, plus evidence files.
+    One post-commit fix to readback.py (F5) and the pre-execution
+    anchor-matcher fix (F3), both journaled.
+
+23. CHANGES OUTSIDE HARMONIA CODE
+
+    NONE. No Proteus file touched, no SFE code touched, no PEW code
+    touched, no other seat's checkout modified. PEW consumed via a
+    separate worktree (D:\Prometheus-pew). proteus/foundry/export.py
+    left broken-as-fixture per directive.
+
+24. ARTIFACTS / LOGS / IDS (genesis/harmonia_a/first_integration/)
+
+    adventurer_selection.json, adventurer_manifest.bytes (exact upload
+    bytes), integration_record.json, encounter_checkpoint.json,
+    pew_write_results.json, readback_result.json, identity_ledger.json,
+    neg_A_result.json, FIRST_INTEGRATION_OBSERVATION.md (the PEW
+    source packet), JOURNAL.jsonl (hashes of everything), this packet.
+    Live objects: SFE world wld_c3cba823e868d0ed339e95fa (preserved,
+    not cleaned up), PEW rows in namespace test, evidence
+    E-dbe8c504b8cc.
+
+25. COMMITS / ANCESTRY
+
+    Work executed at origin/main b491711b1; adapter+runner committed
+    BEFORE execution; evidence committed after; PEW consumed at
+    origin/mnemosyne/evidence-wiki-v0 c68071eac (ancestor check for
+    4cb02c733 PASS). Final commit hash: see git log for
+    genesis/harmonia_a/first_integration (pushed to origin/main).
+
+26. REPRODUCTION COMMANDS
+
+    cd D:\Prometheus\genesis\harmonia_a\first_integration
+    python run_integration.py          # new world + encounter + anchor
+    python pew_write.py                # fossil chain (namespace=test)
+    python readback.py <evidence_id>   # independent read-back
+    (a re-run mints a NEW run identity; PEW will correctly refuse a
+    conflicting reuse of the frozen one -- that is control E)
+
+27. REMAINING UNRESOLVED SEAMS
+
+    - measurement definition/version gap: outcome is a token; no
+      metric is joinable (SFE measurements table empty). Unchanged.
+    - episode_id: minted by nobody; left NULL per contract.
+    - E10/E11/E12 battery legs are M1-local by design; a service-host
+      run would close them.
+    - evidence_wiki still absent from origin/main; branch promotion is
+      Mnemosyne's call.
+    - Proteus USE B / Campaign 1: BLOCKED, untouched by this pass.
+
+28. EXPLICIT NON-CLAIMS
+
+    NO SCORE WAS PRODUCED. NO SELECTION OCCURRED. NO MUTATION
+    OCCURRED. NO EVOLUTIONARY CAMPAIGN OCCURRED. PHENOTYPE REMAINS
+    UNKNOWN. The organism's 16 silent budget-statuses carry no
+    interpretation. SURVIVED refers to the SEAM prediction (identity +
+    determinism), not to organism quality.
+
+29. VERDICT ACCEPTANCE
+
+    FIRST_PROMETHEUS_END_TO_END_SPECIMEN_TRACE_VERIFIED -- ACCEPTED,
+    meaning ONLY: the integrated plumbing preserved one specimen's
+    identity and provenance through one real world encounter into
+    durable evidence. Nothing about validation, breeding, neutrality,
+    truth of evidence, intelligence, emergence, novelty, or Campaign 1.
+
+30. ONE SENTENCE
+
+    The first adventurer entered the arena and left a fossil behind.
+
+=====================================================================
+END PACKET
+=====================================================================

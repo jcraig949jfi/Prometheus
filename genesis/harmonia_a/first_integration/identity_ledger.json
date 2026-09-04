@@ -1,0 +1,132 @@
+{
+ "ledger": [
+  {
+   "identity": "proteus.registry_id",
+   "value": "b15e0a7f5f2dcb99b8b28c73a99441d8d53e82b1bae42fddd5e274eeef396917",
+   "classification": "PRESERVED EXACTLY",
+   "note": "registry build identity"
+  },
+  {
+   "identity": "proteus.organism_id",
+   "value": "7743b3527ea44fb5eb2bc80076cb1d2ea4dca2094975c8621962152d419364a0",
+   "classification": "PRESERVED EXACTLY",
+   "note": "intrinsic; appears verbatim in players[], blob_hash suffix, artifact bytes hash, read-back"
+  },
+  {
+   "identity": "proteus.entry_id",
+   "value": "88c8818853ccfd46771fa4aa572bfb8a61546916fe774320e7254be9ef4aff6b",
+   "classification": "PRESERVED EXACTLY",
+   "note": "intrinsic-view hash"
+  },
+  {
+   "identity": "proteus.lineage_id",
+   "value": "7743b3527ea44fb5eb2bc80076cb1d2ea4dca2094975c8621962152d419364a0",
+   "classification": "PRESERVED EXACTLY",
+   "note": "gen-0 self-lineage == organism_id"
+  },
+  {
+   "identity": "proteus.generation",
+   "value": "0",
+   "classification": "PRESERVED EXACTLY",
+   "note": ""
+  },
+  {
+   "identity": "proteus.runtime_hash",
+   "value": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+   "classification": "PRESERVED EXACTLY",
+   "note": "checkpoint restore refuses foreign runtime"
+  },
+  {
+   "identity": "manifest.sha256",
+   "value": "7743b3527ea44fb5eb2bc80076cb1d2ea4dca2094975c8621962152d419364a0",
+   "classification": "PRESERVED EXACTLY",
+   "note": "== organism_id, verified pre-upload AND at read-back"
+  },
+  {
+   "identity": "sfe.world_id",
+   "value": "wld_c3cba823e868d0ed339e95fa",
+   "classification": "WORLD-SCOPED",
+   "note": "extrinsic; SFE-minted; never written into Proteus identity"
+  },
+  {
+   "identity": "sfe.blob_hash",
+   "value": "sha256:7743b3527ea44fb5eb2bc80076cb1d2ea4dca2094975c8621962152d419364a0",
+   "classification": "TRANSFORMED BY DECLARED CONTRACT",
+   "note": "'sha256:'+organism_id; the free cross-check held"
+  },
+  {
+   "identity": "sfe.artifact_id",
+   "value": "sha256:eec1cf9ad3b14cb64e3ccbac7f85c77f377eb8b2536241bcce4eca3f4edd5f9d",
+   "classification": "WORLD-SCOPED",
+   "note": "envelope identity; recovered from ledger at read-back"
+  },
+  {
+   "identity": "sfe.exp_id",
+   "value": "exp_87d78f42e4382fa6cf7d4cf6",
+   "classification": "RUN-SCOPED",
+   "note": ""
+  },
+  {
+   "identity": "sfe.work_id",
+   "value": "wrk_3184f39d764511e794556932",
+   "classification": "RUN-SCOPED",
+   "note": ""
+  },
+  {
+   "identity": "sfe.run_id",
+   "value": "exp_87d78f42e4382fa6cf7d4cf6:wrk_3184f39d764511e794556932",
+   "classification": "TRANSFORMED BY DECLARED CONTRACT",
+   "note": "exp_id+':'+work_id per PEW contract"
+  },
+  {
+   "identity": "sfe.event_id",
+   "value": "evt_af204ba67d4ffe36d6a63d77",
+   "classification": "PRESERVED EXACTLY",
+   "note": "the anchor event (OBSERVATION_RECORDED)"
+  },
+  {
+   "identity": "sfe.entry_hash",
+   "value": "sha256:ced132e9ee7b117f06b9da998db5f3e03cc8b7e99559cb5e60bb2e12ddf505fc",
+   "classification": "PRESERVED EXACTLY",
+   "note": "events.entry_hash of THAT event; matched at read-back"
+  },
+  {
+   "identity": "sfe.event_seq",
+   "value": "31523",
+   "classification": "PRESERVED EXACTLY",
+   "note": "31523; matched at read-back"
+  },
+  {
+   "identity": "proteus.encounter_id",
+   "value": "8a95020171cc2c30abe5b38b2886d1cfc85ca4da0e6f233861f81cffe3313276",
+   "classification": "TRANSFORMED BY DECLARED CONTRACT",
+   "note": "encounter_identity(organisms, world_binding=wld, seed, checkpoints=[])"
+  },
+  {
+   "identity": "pew.fossil_world_id",
+   "value": "wld_c3cba823e868d0ed339e95fa",
+   "classification": "PRESERVED EXACTLY",
+   "note": "world anchor row"
+  },
+  {
+   "identity": "pew.fossil_player_id",
+   "value": "7743b3527ea44fb5eb2bc80076cb1d2ea4dca2094975c8621962152d419364a0",
+   "classification": "PRESERVED EXACTLY",
+   "note": "player_id == organism_id"
+  },
+  {
+   "identity": "pew.fossil_encounter_key",
+   "value": "(8a95020171cc2c30abe5b38b2886d1cfc85ca4da0e6f233861f81cffe3313276,exp_87d78f42e4382fa6cf7d4cf6:wrk_3184f39d764511e794556932)",
+   "classification": "TRANSFORMED BY DECLARED CONTRACT",
+   "note": "row key (encounter_id, run_id)"
+  },
+  {
+   "identity": "pew.evidence_id",
+   "value": "E-dbe8c504b8cc",
+   "classification": "PRESERVED EXACTLY",
+   "note": "start of the read-back"
+  }
+ ],
+ "failed": 0,
+ "verdict": "FIRST_PROMETHEUS_END_TO_END_SPECIMEN_TRACE_VERIFIED"
+}
