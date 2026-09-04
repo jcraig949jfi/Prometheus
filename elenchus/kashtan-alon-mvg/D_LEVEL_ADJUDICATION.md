@@ -45,6 +45,14 @@ PARTER, KASHTAN & ALON 2008 ............................................ D4 (wea
       runs per condition, not a single wild type.
   D3 satisfied: the FV measure is plotted AS A FUNCTION OF GENERATIONS under both FG and
       MVG, with the MVG trajectory rising significantly faster.
+      QUALIFIED 2026-09-04 after a challenge from the Kouvaris seat (commit c98598f47),
+      adjudicated in full in LONGITUDINALITY_ADJUDICATION.md. The scalar summary is
+      longitudinal; the CONTENT-LEVEL characterisation of the neighbourhood is ENDPOINT
+      ("end of the last G1-epoch population"), and that includes the entire NBVG
+      comparison and the memory-in-the-neighbourhood result. So this specimen has a
+      trajectory of HOW MUCH and a snapshot of WHAT, never both at once. D3 stands on
+      Figure 9C. The finding this deep-dive calls its most consequential recovery, the
+      NBVG dissociation, is an endpoint comparison and is now labelled as one.
   D4 satisfied in weak form: the same paper measures subsequent acquisition (adaptation
       to new-comb and novel-module goals, Figure 6) and finds MVG faster, plus competition
       experiments where MVG genomes take over in ~70% of runs on novel-module goals.

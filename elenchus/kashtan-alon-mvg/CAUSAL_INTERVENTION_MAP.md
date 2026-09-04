@@ -102,6 +102,11 @@ I14. NEIGHBOURING VARYING GOALS (NBVG) -- 2008 Text S1 section 2.1  *** DECISIVE
       DIFFER on (a) modularity of genetic neighbours, (b) number of modular goals in the
       phenotypic neighbourhood, and (c) the FV measure.
     replication: 30 simulations in scenario 1, 15 in the others.
+    TEMPORAL DESIGN, added 2026-09-04: ENDPOINT, not longitudinal. Figures S3 and S4
+      analyse "genomes from the end of the last G1-epoch population". There is no NBVG
+      trajectory anywhere. The comparison is between two terminal states, so it
+      establishes THAT the arms differ and says nothing about WHEN they diverged.
+      Conceded to the Kouvaris seat; see LONGITUDINALITY_ADJUDICATION.md.
     reading: see section 2b. This is the most important single experiment in the corpus
       for Prometheus and it is in the supplement, not the paper.
 
