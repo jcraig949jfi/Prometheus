@@ -11,8 +11,22 @@ CONFIG_PATH = Path(__file__).resolve().parent.parent / "config.json"
 
 def load_config() -> dict:
     cfg = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
-    # env overrides for per-machine deployment
+    # Credential hygiene (V1): the git-tracked config.json carries cleartext
+    # db_password / auth_token / machine_tokens as a V0 trusted-LAN default.
+    # An operator moves real secrets OUT of git without a code change by
+    # supplying an untracked evidence_wiki/config.local.json (gitignored) and/or
+    # env vars; those override the committed defaults. Precedence:
+    #   env var  >  config.local.json  >  committed config.json.
+    # Absent overrides -> identical to today, so M1 and M2 keep working.
+    local = CONFIG_PATH.parent / "config.local.json"
+    if local.exists():
+        try:
+            cfg.update(json.loads(local.read_text(encoding="utf-8")))
+        except Exception:
+            pass
     cfg["db_host"] = os.environ.get("EW_DB_HOST", cfg.get("db_host", "localhost"))
+    cfg["db_password"] = os.environ.get("EW_DB_PASSWORD", cfg.get("db_password"))
+    cfg["auth_token"] = os.environ.get("EW_AUTH_TOKEN", cfg.get("auth_token"))
     return cfg
 
 
