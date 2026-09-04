@@ -118,6 +118,28 @@ def extract_text_from_interaction(interaction: Any) -> str:
             elif hasattr(val, "text"):
                 parts.append(getattr(val, "text") or "")
 
+    # SDK >= 2.x returns the report inside `steps`, a list of step objects each
+    # carrying `type` and `content`. The answer is in the step of type
+    # "model_output". Added 2026-09-04 (Herakles): without this the extractor
+    # found nothing and silently wrote a raw JSON dump to the report file, which
+    # still parses as a report but is not one.
+    if not any(parts) and hasattr(interaction, "steps"):
+        for step in getattr(interaction, "steps") or []:
+            if isinstance(step, dict):
+                stype, content = step.get("type"), step.get("content")
+            else:
+                stype = getattr(step, "type", None)
+                content = getattr(step, "content", None)
+            if stype != "model_output" or not isinstance(content, list):
+                continue
+            for item in content:
+                if isinstance(item, str):
+                    parts.append(item)
+                elif isinstance(item, dict) and item.get("text"):
+                    parts.append(item["text"])
+                elif hasattr(item, "text"):
+                    parts.append(getattr(item, "text") or "")
+
     text = "\n".join(p for p in parts if p)
     if not text:
         # Fall back to model_dump and try to dig out outputs[].text

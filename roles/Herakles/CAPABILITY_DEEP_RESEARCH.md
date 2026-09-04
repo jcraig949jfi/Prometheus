@@ -115,6 +115,15 @@ babysit the terminal.
 - The December 2025 agent is a preview. Preview names get retired. If a
   dispatch fails at `create()`, check the model list before assuming the
   credential broke.
+- **FIXED 2026-09-04.** The dispatcher's `extract_text_from_interaction` knew
+  only the older `outputs` shape. SDK 2.8.0 returns the report inside `steps`,
+  in the step of type `model_output`. The extractor found nothing, fell through
+  to its last resort, and wrote a raw JSON dump to the report file. That file
+  still looks like a report and still has a plausible size, so the failure is
+  silent. Herakles added `steps` handling and verified it against the returned
+  interaction: 52,563 characters of report where the dump had been. Any report
+  in the tree from before this date should be checked for a JSON body.
+
 - `client.interactions` is experimental in the SDK. An SDK upgrade could move
   or rename it. The dispatcher would fail at import or at `create()`, not
   silently.
