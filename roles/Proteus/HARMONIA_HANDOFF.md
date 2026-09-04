@@ -200,6 +200,12 @@ Evidence, if you ever need it: `roles/Proteus/PROTEUS_V0_6_FINAL_EXTERNAL_REVIEW
 - **No world adapter and no binding of any kind.** Proteus implements the player side only.
   Binding a world to the ABI is yours. A binding written by Proteus would breach the firewall
   that keeps players semantically sterile.
+  The other side of that binding is documented at
+  [`integration/HARMONIA_FIRST_INTEGRATION.md`](../../integration/HARMONIA_FIRST_INTEGRATION.md)
+  (maintainer: Daedalus) — the live SFE endpoint, the artifact request contract an adapter must
+  satisfy, and a runnable verification battery. Note in particular that `organism_id` is the
+  sha256 of the canonical manifest (§1 above), so posting that exact serialization makes SFE's
+  content address equal it — one assertion then proves a specimen crossed unaltered.
 - **No player types, families, taxonomy, tags or quality scores.** The registry makes specimens
   addressable; it does not say what any of them is *for*. A test scans the registry for that
   vocabulary and fails if it ever appears.
