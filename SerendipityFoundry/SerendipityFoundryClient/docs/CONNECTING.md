@@ -5,7 +5,7 @@ token, and which cert to trust.** Read this once and you can connect from any
 machine on the LAN.
 
 > **First time integrating?** Read
-> [`integration/HARMONIA_FIRST_INTEGRATION.md`](../../../../integration/HARMONIA_FIRST_INTEGRATION.md)
+> [`integration/HARMONIA_FIRST_INTEGRATION.md`](../../../integration/HARMONIA_FIRST_INTEGRATION.md)
 > at the repo root and run `integration/sfe_battery.py`. It verifies the whole
 > surface in one command and hands you a working world. This file is the
 > connection reference it builds on.
