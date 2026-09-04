@@ -1,0 +1,605 @@
+================================================================================
+PROMPT TO PROTEUS
+PLAYER FOUNDRY -> HARMONIA INTEGRATION READINESS
+"READY THE ADVENTURERS FOR THE ARENA"
+2026-09-03
+
+Proteus,
+
+V0.6 is accepted for its bounded scientific result.
+
+Accepted headline:
+
+NOT_QUALIFIED_AUTHORED_NONEQUILIBRIUM_CURRENT
+
+Accepted scoped residual:
+
+FULL_SPACE_CURRENT_SOURCE_UNRESOLVED
+
+Accepted engineering state:
+
+OPERATIONAL_SIGNIFICANCE_NOT_YET_ADJUDICATED
+
+These findings DO NOT authorize calling the mutation process neutral.
+
+They also DO NOT require repairing the Foundry before the first Prometheus
+integration exercise.
+
+The immediate mission is different.
+
+Harmonia needs to be able to obtain, identify, validate, instantiate, execute,
+checkpoint, restore and replay Proteus players through a stable consumer
+surface.
+
+Ready the adventurers for the arena.
+
+Do NOT evolve them toward a task.
+Do NOT phenotype them yourself.
+Do NOT classify them semantically.
+Do NOT repair V0.6.
+Do NOT resolve the current question post hoc.
+Do NOT run Campaign 1.
+
+This is an INTEGRATION-READINESS pass.
+
+The scientific specimen stays intact.
+
+===============================================================================
+
+1. OPERATING DECISION
+   ===============================================================================
+
+For the coming integration test, distinguish two completely different uses of
+Proteus.
+
+USE A - ALLOWED NOW
+
+Proteus as a deterministic source of frozen, semantics-free player
+specimens.
+
+USE B - STILL NOT QUALIFIED
+
+Proteus mutation machinery as a neutral evolutionary operator from which
+population-level evolutionary conclusions may be drawn.
+
+The first integration uses USE A.
+
+Nothing in this directive adjudicates USE B.
+
+The V0.6 circulation must remain visible anywhere a consumer could otherwise
+infer that the Foundry is neutral.
+
+Specifically:
+
+* generated organisms may be exported and run;
+* immutable manifests may be selected by ID;
+* fixed specimen populations may be supplied to Harmonia;
+* players may be executed in worlds through the established player ABI;
+* lineage/replay machinery may be exercised;
+
+but:
+
+* no claim may say the Foundry samples structural states neutrally;
+* no population comparison may silently rely upon that assumption;
+* no mutation campaign may be interpreted as unbiased evolution;
+* no V0.6 repair is authorized.
+
+===============================================================================
+2. PRIMARY DELIVERABLE - THE PLAYER INVENTORY
+
+Harmonia previously had no canonical registry/dictionary/catalog.
+
+Create the smallest consumer-facing surface necessary to fix that.
+
+Call it a registry, inventory, dictionary, index, or another
+repository-consistent name, but preserve this semantic rule:
+
+THE REGISTRY DESCRIBES SPECIMENS.
+IT DOES NOT DEFINE PLAYER "TYPES."
+
+Do NOT introduce authored semantic families such as:
+
+explorer
+predator
+learner
+cooperator
+strategist
+memory-player
+random-player
+arithmetic-player
+
+unless such a label is purely an externally supplied experimental annotation
+and clearly outside Proteus identity.
+
+Proteus players are semantically sterile organisms.
+
+The registry should make them ADDRESSABLE, not explain what they "are."
+
+At minimum, Harmonia must be able to discover for each registered specimen:
+
+organism_id
+lineage_id
+generation
+schema_version
+runtime_hash
+grammar_hash
+affordance_hash
+foundry identity / source identity
+immutable player manifest or canonical location of it
+provenance / generation manifest
+deterministic replay information
+structural fields needed for scheduling/resources
+    n_regs
+    tape_words
+    genome instruction count
+    code_writable
+    persist
+    tick_budget
+    out_cap
+
+If useful, include clearly non-semantic operational descriptors such as:
+
+estimated execution cost
+maximum state footprint
+manifest validation status
+audit identity
+checkpoint compatibility
+
+Do not turn those into a quality score.
+
+===============================================================================
+3. BUILD A SMALL FROZEN STARTER MENAGERIE
+
+Harmonia should not have to understand Foundry internals just to obtain players
+for the first integration test.
+
+Produce a deterministic, frozen starter population suitable for plumbing and
+arena execution.
+
+Requirements:
+
+* generated only through the existing frozen V0.6 Foundry;
+* no hand-edited genomes;
+* no world-informed generation;
+* no SFE-informed generation;
+* no behavioral selection;
+* no phenotype screening except what is strictly required to prove the ABI
+  functions;
+* identities content-addressed exactly under the existing contract;
+* generation manifest and seed preserved;
+* reproducible byte-for-byte where the existing replay contract promises it.
+
+Choose a modest population large enough to exercise variation in structural
+manifests and consumer plumbing without pretending it is an evolutionary
+campaign.
+
+The population should intentionally contain ordinary awkward organisms:
+
+halters
+yielders
+budget exhausters
+silent emitters
+noisy emitters
+
+if they arise naturally.
+
+Do NOT remove them because they appear useless.
+
+That would introduce precisely the semantic selection pressure Proteus was
+designed to avoid.
+
+If a specimen is invalid under the authoritative manifest validator, reject it
+normally.
+
+If it is valid but behaviorally boring, preserve it.
+
+===============================================================================
+4. THE PLAYER DICTIONARY MUST SUPPORT FUTURE "UNKNOWN" AS A FIRST-CLASS STATE
+
+We have an explicit architectural reason for this.
+
+Prometheus must not equate:
+
+NO PRESENTLY DEMONSTRATED USE
+
+with:
+
+GARBAGE
+
+Do not build a registry whose natural lifecycle is:
+
+generate -> score -> classify -> delete
+
+The inventory must be compatible with a future ecology in which an organism can
+remain:
+
+phenotype: UNKNOWN
+
+while accumulating evidence about interactions later.
+
+Proteus need not implement that evidence system - Mnemosyne/Harmonia may own
+it - but Proteus must not make the future state impossible by forcing semantic
+classification into player identity.
+
+Keep intrinsic specimen identity separate from all extrinsic observations.
+
+Intrinsic:
+
+genome
+manifest
+runtime identity
+lineage
+immutable provenance
+
+Extrinsic:
+
+world behavior
+encounters
+phenotype descriptions
+scores
+failures
+novelty observations
+discovered capabilities
+
+No extrinsic observation may alter organism_id.
+
+===============================================================================
+5. HARMONIA CONSUMER SURFACE
+
+Turn CONSUMER_SURFACE_V0_6.md from documentation of what exists into a verified
+integration contract.
+
+Harmonia should have one obvious documented path for each of these operations:
+
+A. enumerate/discover available frozen specimens
+B. obtain a manifest by organism_id
+C. validate the manifest
+D. instantiate Player(manifest)
+E. create fresh state
+F. run one tick
+G. checkpoint
+H. restore
+I. replay the same encounter deterministically given the same external RNG
+   contract and world inputs
+J. inspect provenance and identity
+K. determine resource limits before scheduling the player
+
+Do not create a world adapter.
+
+Proteus owns the player side.
+
+Harmonia/arena integration owns binding worlds to the generic ABI.
+
+If a tiny neutral transport/helper layer is necessary for import/export, keep it
+strictly at the data/ABI boundary and explain why it does not encode world
+semantics.
+
+===============================================================================
+6. MACHINE-READABLE CONTRACT
+
+Where reasonable, provide a machine-readable consumer artifact rather than
+requiring Harmonia to scrape markdown.
+
+For example, a registry/index entry could conceptually expose:
+
+{
+  "organism_id": ...,
+  "manifest": ...,
+  "provenance": ...,
+  "runtime_identity": ...,
+  "resource_envelope": ...
+}
+
+Exact schema and filename are yours to engineer.
+
+Requirements:
+
+* versioned;
+* validated;
+* deterministic serialization;
+* content identity rules explicit;
+* no duplicated source of truth for authoritative player validation;
+* fail closed;
+* old unknown fields handled deliberately rather than accidentally.
+
+If you introduce a registry schema, test it.
+
+===============================================================================
+7. DO NOT HIDE V0.6 NONNEUTRALITY
+
+The registry or accompanying integration metadata must expose enough provenance
+that Harmonia cannot accidentally treat players as if they came from a proven
+neutral source.
+
+A concise machine/human-readable qualification field is appropriate, e.g. the
+equivalent of:
+
+source_qualification:
+    deterministic_generation: qualified
+    semantic_quarantine: qualified
+    mutation_neutrality: NOT_QUALIFIED_AUTHORED_NONEQUILIBRIUM_CURRENT
+    operational_significance: NOT_YET_ADJUDICATED
+
+Do not use this exact representation if a better repository-native contract
+exists.
+
+The requirement is semantic, not textual.
+
+A downstream consumer must not need archaeological knowledge of V0.6 to know
+the limitation.
+
+===============================================================================
+8. INTEGRATION SMOKE HARNESS
+
+Create a bounded consumer-side smoke test using the generic ABI only.
+
+It should demonstrate that an external orchestrator could:
+
+inventory -> choose specimen -> validate -> instantiate -> fresh_state
+-> run deterministic synthetic ticks -> checkpoint -> restore -> replay
+-> verify identity/provenance
+
+The synthetic input source MUST NOT become "World 0."
+
+It is an ABI fixture only.
+
+Do not interpret behavior.
+
+Do not rank players.
+
+Do not select winners.
+
+The smoke harness should answer:
+
+"Can Harmonia reliably operate these organisms?"
+
+not:
+
+"Which organisms are good?"
+
+Exercise at least several structurally different starter specimens.
+
+Include error-path tests:
+
+malformed manifest
+unknown organism_id
+stale/incompatible runtime identity
+invalid checkpoint
+resource-bound violation if applicable
+
+===============================================================================
+9. PACKAGING / INVOCATION
+
+Section R identifies packaging/dependency invocation as unfinished.
+
+Make the integration path boring.
+
+Harmonia should not have to reverse-engineer:
+
+PYTHONPATH
+cwd assumptions
+import tricks
+local-only hidden files
+test-only fixtures
+
+Document the supported import/invocation path and minimum runtime requirements.
+
+Do not introduce unnecessary dependencies.
+
+The current standard-library-only property is valuable; preserve it unless an
+external requirement makes that impossible, and record any deviation.
+
+===============================================================================
+10. PRESERVE THE SCIENCE
+
+V0.6 is closed.
+
+Do not alter or rewrite its evidence.
+
+Preserve:
+
+preregistration
+failed n=12,000 run
+final production evidence
+current maps
+operator counts
+counterfactuals
+review packet
+directives
+hashes
+chronology
+
+If integration work touches any file included in the existing audit identity,
+the audit MUST become STALE until deliberately re-established under a new
+integration version.
+
+Do not silently refresh identity.
+
+Do not mutate V0.6 in place.
+
+Use a new bounded integration-readiness version/commit surface.
+
+===============================================================================
+11. NO V0.7 NEUTRALITY EXPERIMENT IN THIS PASS
+
+Do NOT answer U1/U2/U3 during this directive.
+
+In particular, do not launch the tempting operational-significance experiment.
+
+That question deserves a separately authored preregistration because we now know
+the result that motivates it.
+
+For the integration test, frozen specimen use is sufficient.
+
+Record U1/U2/U3 as inherited limitations.
+
+No repair.
+
+No reweighting.
+
+No alternative mutation kernel.
+
+No campaign-scale trajectory experiment.
+
+===============================================================================
+12. DOCUMENT FOR HARMONIA, NOT FOR PROTEUS
+
+Produce one concise handoff document written from the consumer's point of view.
+
+It should tell Harmonia:
+
+"Here is how to get players."
+"Here is what a player is."
+"Here is how to enumerate the starter population."
+"Here is how to instantiate one."
+"Here is how to run it."
+"Here is how to checkpoint/replay it."
+"Here are the deterministic guarantees."
+"Here are the resource limits."
+"Here are the qualification caveats."
+"Here is what Proteus deliberately does NOT provide."
+
+Avoid requiring Harmonia to read the V0-V0.6 archaeology to operate the API.
+
+Link back to evidence for auditability, but keep the normal path short.
+
+===============================================================================
+13. FUTURE-PROOF ONE THING: WORLDS MAY BECOME VERY STRANGE
+
+Do not optimize the ABI around a simple grid world or current arena assumptions.
+
+The generic player contract already has a good property:
+
+variable input/output channel counts
+register-addressed channels
+externally supplied RNG
+no world semantics in the organism
+
+Preserve that.
+
+We explicitly anticipate future worlds that may be:
+
+high-dimensional
+partially observable
+dynamically warped
+temporally changing
+structurally damaged
+adversarially transformed
+difficult or impossible for a human to visualize
+
+Proteus must not need to understand these worlds.
+
+A player should simply receive bounded channel values through the generic ABI.
+
+Do not expand scope to implement any such world now.
+
+This requirement exists only to prevent the integration surface from becoming
+accidentally specialized to today's first arena.
+
+===============================================================================
+14. SUCCESS CRITERIA
+
+This pass succeeds if an external reviewer can demonstrate, from a clean
+consumer path, that:
+
+[ ] V0.6 remains intact and auditable.
+[ ] Proteus's nonneutral mutation finding remains visible.
+[ ] No repair or Campaign 1 activity occurred.
+[ ] A canonical machine-readable specimen inventory exists.
+[ ] A deterministic frozen starter population exists.
+[ ] Organism identity remains intrinsic and semantic-free.
+[ ] Harmonia can enumerate players without reading Proteus internals.
+[ ] Harmonia can retrieve and validate a manifest by ID.
+[ ] Harmonia can instantiate and tick a player.
+[ ] Harmonia can checkpoint/restore it.
+[ ] deterministic replay works under the stated contract.
+[ ] structurally different valid organisms are retained even when boring.
+[ ] no behavioral ranking or semantic player taxonomy was introduced.
+[ ] the consumer API is not specialized to any particular world.
+[ ] failure paths fail closed.
+[ ] packaging/import instructions work from the documented environment.
+[ ] tests cover the new integration surface.
+[ ] all new artifacts are committed and reachable from the relevant branch.
+
+===============================================================================
+15. PRESERVE THE RESEARCH RECORD
+
+As with every Proteus pass:
+
+* preserve this prompt verbatim in the repository;
+* record its path and SHA-256;
+* preserve implementation notes;
+* preserve failures and abandoned approaches;
+* preserve tests and raw integration evidence;
+* preserve exact commands needed for reproduction;
+* commit the resulting work;
+* verify cited commits are reachable before publication.
+
+Do not clean the story by deleting mistakes.
+
+===============================================================================
+16. FINAL EXTERNAL REVIEW PACKET
+
+At completion, create a self-contained external review packet.
+
+PUT THE COMPLETE PACKET IN CHAT AS A SINGLE ASCII BLOCK OF TEXT SO JAMES CAN
+CUT AND PASTE IT DIRECTLY.
+
+Also preserve the same packet in the repository.
+
+The packet must include at minimum:
+
+1. headline integration-readiness verdict
+2. exact scope and explicit non-scope
+3. V0.6 qualification state inherited unchanged
+4. files/schema/API added
+5. canonical registry/dictionary design
+6. starter population size, generation manifest and identities
+7. explicit proof that no semantic selection produced that population
+8. exact Harmonia consumer workflow
+9. smoke-test results
+
+10. replay/determinism results
+11. checkpoint/restore results
+12. validation/error-path results
+13. packaging/runtime requirements
+14. audit/quarantine results
+15. any files that caused an identity/audit version transition
+16. every failure encountered during this pass
+17. all commits/hashes/artifact paths
+18. reproduction commands
+19. remaining blockers before a REAL evolutionary Campaign 1
+20. anything Harmonia must know before the first integration test
+
+End with a short explicit statement of the form:
+
+THE ADVENTURERS ARE / ARE NOT READY FOR HARMONIA.
+
+Do not self-authorize Campaign 1.
+
+===============================================================================
+FINAL DIRECTION
+
+Proteus has spent V0 through V0.6 proving that these tiny organisms are not
+secretly being steered in ways we failed to measure.
+
+That work uncovered something real: zero marginal drift did not imply dynamic
+neutrality.
+
+Keep that lesson.
+
+For this pass, however, stop studying the adventurers and get their equipment
+packed.
+
+Give Harmonia a boring, deterministic, well-documented way to open the stable,
+identify every creature, lead one into the arena, return it to exactly the same
+state afterward, and know precisely where it came from.
+
+Do not tell Harmonia what any creature is good for.
+
+That is for the arena to discover.
+
+May the digital gods of the arena favor them.
+
+- External review / operator directive
+2026-09-03
