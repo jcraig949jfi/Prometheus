@@ -269,24 +269,47 @@ run. The seam between them does not.**
   number, no score, no budget, no strings. Proteus assigns no semantics to any
   channel. This is a firewall, not a preference; do not "helpfully" pass a
   world_id into a player.
-- **Is NOT QUALIFIED.** Five successive crucibles (V0 → V0.6) returned
-  NOT_QUALIFIED. `roles/Proteus/CONSUMER_SURFACE_V0_6.md` states it describes
-  what a future consumer *would* find, "not an offer to be consumed."
-  **Integration with Proteus is not currently authorized.**
+**Authorization state — corrected 2026-09-03 by external adjudication.** Read
+this carefully; the two halves differ:
 
-**Known defect, measured live 2026-09-03.** `proteus/foundry/export.py`'s
-`sfe_artifact_payload()` emits `{"name", "data_b64", "meta"}`. The live endpoint
-requires `kind` and forbids extras, so this payload is rejected:
+> **Frozen Proteus specimens are authorized for integration.
+> Proteus breeding/mutation is not qualified for evolutionary claims.**
+
+| | |
+|---|---|
+| **USE A — AUTHORIZED** | Frozen, semantics-free specimens may be enumerated, fetched, validated, instantiated, ticked, checkpointed, restored, replayed, and **supplied to worlds**. |
+| **USE B — NOT QUALIFIED** | The mutation machinery remains `NOT_QUALIFIED_AUTHORED_NONEQUILIBRIUM_CURRENT`. Operational significance is `NOT_YET_ADJUDICATED`. **Campaign 1 remains BLOCKED.** |
+
+In practice: you may take an existing frozen specimen and run it in a world.
+You may **not** breed specimens and make evolutionary claims from the results.
+If a question requires the mutation operator to be sound, it is out of scope.
+
+### The historical Proteus payload is NOT the seam — and is deliberately not being fixed
+
+`proteus/foundry/export.py`'s `sfe_artifact_payload()` emits
+`{"name", "data_b64", "meta"}`. Measured live against the endpoint:
 
 ```
 POST /v2/worlds/{wid}/artifacts   ->  HTTP 422
-  missing        body.kind
+  missing         body.kind
   extra_forbidden body.name
 ```
 
-Dropping `name` and supplying `kind` returns **200**. The fix belongs on the
-Proteus side (or in an agreed `kind` vocabulary); it is one field either way.
-Until it lands, no Proteus artifact can enter a world.
+**Do not import that helper, and do not wait for it to be repaired.** It stays
+as it is: Proteus's foundry tree remains bound to its V0.6 audit identity, and
+reshaping it to fit SFE would drag world semantics into organism identity —
+exactly the coupling this boundary exists to prevent.
+
+That 422 is frozen as a regression fixture (`integration/seam_fixture.py`, §11).
+It is a **boundary marker, not a bug report**.
+
+### Who owns what
+
+| Owner | Owns |
+|---|---|
+| **Proteus** | organism identity, manifests, intrinsic provenance, the player ABI |
+| **SFE** | world lifecycle, artifacts, events, the work queue, engine-attested observations |
+| **Harmonia** | **the binding between them** |
 
 ### PEW (Prometheus Evidence Wiki)
 
@@ -297,33 +320,59 @@ Until it lands, no Proteus artifact can enter a world.
   |---|---|---|
   | URL | `https://192.168.1.202:8811/v2` | `http://192.168.1.202:8377` |
   | Transport | HTTPS, pinned cert `m1.crt` | **plain HTTP, no TLS** |
-  | Auth | bearer token | none |
+  | Auth | bearer token | bearer token (a **different** one — an SFE `gen2_` token is not a PEW credential) |
+  | Identity | `Serendipity Foundry Gen-2` 2.2.0 | `Mnemosyne Evidence Wiki` 0.1, 37 paths |
 
   From M1 the PEW service is at `localhost:8377`; from M2 set
   `EW_SERVICE_URL=http://192.168.1.202:8377`. Never query its database
   directly — the API is the contract.
 
-- The Proteus→PEW *client* (`evidence_wiki/ew/client.py`) is on branch
-  `mnemosyne/evidence-wiki-v0`, **not on `main`**, and the export contract says
-  plainly it "has not been exercised against the service."
-- The export is **one-way** (Proteus → PEW) and its rows are **identity-keyed,
-  not world-keyed**: `proteus.organism`, `proteus.descent`, `proteus.signature`,
-  `proteus.transcript_class`, each carrying a `provenance` block.
-- **No parameter of `register_packet` / `register_experiment` / `submit_claim` /
-  `submit_evidence` accepts a world identifier.** A conventional PEW claim or
-  evidence row cannot carry an SFE `world_id`. (Only the separate V3 fossil
-  tables have `world_id`/`sfe_world_id` columns, reached by a different
-  endpoint.)
-- Evidence additionally requires a **registered source packet plus a verbatim
-  quote**; a derived view is refused as provenance. You cannot post an SFE
-  result to PEW as evidence without first registering a packet file and quoting
-  it.
+**PEW has TWO write surfaces, and the difference is the whole story.**
 
-So: the Engine gives you durable citation keys (`world_id`, `event_seq`,
-`artifact_id`, `engine_source_hash`) — S8 verifies they are present and
-well-formed — but **the ordinary PEW write path has nowhere to put a
-`world_id` today.** If you need SFE provenance to survive into PEW, that field
-has to be added first. Do not assume the link exists.
+*Verified 2026-09-03 by reading the live `GET /api/v1/openapi.json` and
+`GET /api/v1/fossil/contract`.*
+
+**(a) The ordinary evidence path — carries NO world identity.**
+
+| Endpoint | Required fields | Any world field? |
+|---|---|---|
+| `POST /api/v1/packets` | `uri`, `kind` | **none** |
+| `POST /api/v1/experiments` | `agent`, `project`, `title` | **none** |
+| `POST /api/v1/claims` | `text_canonical`, `status` | **none** |
+| `POST /api/v1/evidence` | `packet_id`, `source_quote`, `evidence_type` | **none** |
+| `POST /api/v1/relations` | `src_type`,`src_id`,`relation_type`,`dst_type`,`dst_id`,`epistemic_class`,`creation_method` | **none** (but the type fields are unconstrained strings) |
+
+Evidence also requires a **registered source packet plus a verbatim quote**;
+a derived view is refused as provenance. You cannot post an SFE result as
+evidence without first registering a packet file and quoting it.
+
+**(b) The fossil path — carries the SFE chain in full, and already exists.**
+
+`GET /api/v1/fossil/contract` returns `pew.fossil.v1`, `schema_version 3`,
+`extra=forbid`, with this identifier mapping — quoted verbatim from the live
+service:
+
+```
+world_id       ->  SFE world_id
+players[]      ->  Proteus organism_id (a player IS its manifest)
+encounter_id   ->  Proteus encounter_identity() -- the SPECIFICATION
+run_id         ->  the EXECUTION: SFE 'exp_id:work_id'
+seed           ->  encounter seed (SFE world-level seed_root is on the world row)
+sfe_event_seq  ->  SFE ledger order; PEW revision is NOT producer order
+```
+
+`FossilEncounterIn` accepts `sfe_world_id`, `sfe_event_id`, `sfe_event_seq`,
+`sfe_entry_hash` (**required**), `world_id`, `players`, `run_id`, `outcome`,
+`seed`, `budget`. `FossilWorldIn` accepts `sfe_world_id`, `sfe_head_hash`,
+`seed_root`, `world_binding_id`, `parent_world`. `FossilPlayerIn` accepts
+`sfe_world_id`, `sfe_entry_hash`, `genome_hash`, `runtime_hash`, `lineage_id`.
+
+**So the SFE→PEW provenance surface is NOT missing — it is built, versioned,
+and it already anticipates both SFE and Proteus identifiers.** An earlier
+version of this document said PEW "has nowhere to put a `world_id`." That was
+wrong; it was written from the ordinary path alone. Corrected here.
+
+What is genuinely still open is narrower, and it is stated precisely in §8b.
 
 ### Honest summary of the seam
 
@@ -331,9 +380,11 @@ has to be added first. Do not assume the link exists.
 |---|---|
 | You → SFE Engine | **Working.** Verified live, in daily production use. |
 | SFE → durable citation keys | **Working.** `world_id` + `event_seq` + `artifact_id` + build hash. |
-| Proteus → SFE artifacts | **Broken** (422, measured) **and unauthorized** (NOT_QUALIFIED). |
-| Proteus → PEW | **Specified, never exercised**; client not on `main`. |
-| SFE → PEW | **Does not exist.** No world identifier on the ordinary PEW write path. |
+| Proteus specimens → SFE artifacts | **Authorized, and the SFE side is open** — but **the adapter does not exist yet**. It is Harmonia's to build (§9). |
+| Proteus *breeding* → evolutionary claims | **NOT QUALIFIED.** Use B is blocked; Campaign 1 remains blocked. |
+| Proteus → PEW | **Specified, never exercised**; the `ew` client is on branch `mnemosyne/evidence-wiki-v0`, not `main`. |
+| SFE → PEW **fossil** surface | **Built and ready** (`pew.fossil.v1`), with SFE and Proteus identifiers already mapped. No producer is known to write to it yet. |
+| SFE → PEW **claim/evidence** surface | **Open seam.** A scientific claim still cannot carry world provenance directly. See §8b. |
 
 ### A caution about this repository
 
@@ -379,7 +430,401 @@ Engine implements neither. Do not present them as one pipeline.
 
 ---
 
-## 9. Troubleshooting
+## 8b. The SFE → PEW world-provenance seam — filed for Mnemosyne
+
+**Owner: Mnemosyne / PEW. Not Harmonia's to solve, and not SFE's.** It is
+recorded here so you know exactly where the chain currently stops.
+
+**Filed as: `PEW_WORLD_PROVENANCE_SEAM_BUILT_BUT_UNBOUND`.**
+
+That label is a deliberate correction. This seam was previously going to be
+filed as `..._UNIMPLEMENTED`, on my earlier finding that PEW had nowhere to put
+a `world_id`. Reading the live service disproved that: `pew.fossil.v1` is built,
+versioned, and already maps SFE and Proteus identifiers (§8). Filing it as
+unimplemented would have sent Mnemosyne to build something that exists.
+
+**What was inspected** (live, 2026-09-03, read-only):
+`GET /api/v1/openapi.json` (37 paths), `GET /api/v1/fossil/contract`,
+`GET /api/v1/schema`, `GET /api/v1/version`.
+
+**What is actually missing — three specific things:**
+
+1. **The claim/evidence path cannot carry world provenance.** `ClaimIn` and
+   `EvidenceIn` have no world field of any kind (full field lists in §8). So the
+   objects that constitute a *scientific claim* in PEW cannot, by themselves,
+   say which world produced the result.
+
+2. **No documented convention binds an evidence row to a fossil row.**
+   `RelationIn` could express it — `src_type`/`dst_type` are unconstrained
+   strings and the spec already contains the tokens `fossil_encounter`,
+   `fossil_world`, `fossil_player` — but no contract states which
+   `relation_type`, `epistemic_class` or type names to use. Until that
+   convention is written down, two producers will invent two different ones and
+   the graph will not join.
+
+3. **No producer is known to write fossil rows.** The read endpoints require a
+   PEW bearer token, which I do not hold and did not seek, so I cannot state
+   whether the tables contain anything. **This is unverified, not verified
+   empty.** The `ew` client that would write them is on branch
+   `mnemosyne/evidence-wiki-v0`, not `main`, and its own contract says it "has
+   not been exercised against the service."
+
+**Why the chain breaks today.** Hold a complete SFE result —
+`world_id`, `event_seq`, `artifact_id`/`blob_hash`, `engine_source_hash` — and
+try to land it as PEW evidence:
+
+```
+world_id           -> no home on EvidenceIn/ClaimIn.  Has a home on the fossil
+                      surface (sfe_world_id), which is not the evidence path.
+event_seq          -> same: fossil only (sfe_event_seq).
+artifact_id        -> no field on either surface. Nearest is sfe_entry_hash,
+                      which the fossil contract REQUIRES but does not define as
+                      the SFE artifact_id.
+engine_source_hash -> no home anywhere. PEW records git_commit for a packet,
+                      which identifies the ANALYSIS, not the ENGINE BUILD that
+                      produced the result.
+```
+
+Evidence additionally demands a registered packet and a verbatim quote, and
+refuses a derived view as provenance — so the world→event→artifact→evidence
+chain currently terminates at a prose packet, with the machine-readable world
+identity parked on a separate surface that nothing links to it.
+
+**Per the directive, nothing was worked around:** no PEW fields added, no side
+channel invented, no `world_id` smuggled into free text, no citation key
+overloaded, no provenance requirement weakened.
+
+**Two questions for Mnemosyne**, which only PEW can answer:
+(i) Is `sfe_entry_hash` intended to be the SFE `artifact_id`, the `blob_hash`,
+or the world `head_hash`? The contract requires it but does not define it, and
+three different producers will guess three different things.
+(ii) What is the sanctioned relation binding an evidence row to a
+`fossil_encounter`?
+
+---
+
+## 9. The first adapter is yours
+
+**THERE IS STILL NO WORLD ADAPTER.**
+
+**THE FIRST PROTEUS → SFE ADAPTER BELONGS TO HARMONIA'S INTEGRATION LAYER.**
+
+Nothing in Proteus and nothing in SFE will grow one on its own, and neither
+should: Proteus must not learn about worlds, and SFE must not learn about
+organisms. The binding is a third thing, and it is yours.
+
+```
+PROTEUS
+  |
+  | frozen specimen + manifest + qualification provenance
+  v
+HARMONIA ADAPTER                  <-- DOES NOT EXIST YET
+  |
+  | valid SFE artifact contract  (§10)
+  v
+SFE WORLD
+  |
+  | world_id / event_seq / artifact_id / build identity
+  v
+HARMONIA EXECUTION
+  |
+  | observations / outcomes / checkpoints
+  v
+SFE EVIDENCE SURFACE
+  |
+  X
+PEW / MNEMOSYNE                   <-- WORLD-PROVENANCE SEAM STILL OPEN (§8)
+```
+
+Its whole job is transport:
+
+```
+Proteus registry entry  +  immutable player manifest  +  Proteus provenance
+                              |
+                              v
+                    Harmonia transport binding
+                              |
+                              v
+                     valid SFE artifact request
+                              |
+                              v
+                       SFE world artifact
+```
+
+### The Proteus side already exists — bind to this, not to `foundry/export.py`
+
+`proteus/integration/` on `main` is the consumer surface (deliberately outside
+`proteus/foundry/`, which stays pinned to its V0.6 audit identity):
+
+| | |
+|---|---|
+| `proteus/integration/registry.py` | the API below |
+| `proteus/integration/PLAYER_REGISTRY.json` | **64 frozen specimens**, selection rule: *"NONE beyond manifest validity"* |
+| `proteus/contracts/player_registry.schema.v1.json` | the schema |
+| `roles/Proteus/HARMONIA_HANDOFF.md` | Proteus's own note to you |
+
+```python
+from proteus.integration import registry
+
+reg   = registry.load_default()                     # the frozen inventory
+ids   = registry.enumerate_ids(reg)                 # -> [organism_id, ...]  (64)
+entry = registry.get_entry(reg, ids[0])
+man   = registry.get_manifest(reg, ids[0])          # the immutable player manifest
+env   = registry.get_resource_envelope(reg, ids[0]) # bounds a scheduler needs
+qual  = registry.source_qualification()             # travels with every registry
+```
+
+A registry entry carries exactly:
+`entry_id`, `organism_id`, `lineage_id`, `generation`, `identity`
+(`runtime_hash`, `grammar_hash`, `affordance_hash`, versions), `manifest`
+(the genome), `provenance`, `resource_envelope`, `validation`, and `extrinsic`.
+
+**`source_qualification()` is the Use A / Use B statement in machine-readable
+form**, so you never need to read the V0.6 archaeology to know the limit:
+
+```
+permitted_use          : USE_A_FROZEN_SPECIMEN_SOURCE
+prohibited_use         : USE_B_NEUTRAL_EVOLUTIONARY_OPERATOR
+mutation_neutrality    : NOT_QUALIFIED_AUTHORED_NONEQUILIBRIUM_CURRENT
+operational_significance : NOT_YET_ADJUDICATED
+```
+
+Carry that block into whatever you record. It is the difference between a
+defensible result and an overclaim.
+
+### The `extrinsic` block is yours — and it is the whole intrinsic/extrinsic rule in one field
+
+Every entry has:
+
+```json
+"extrinsic": {
+  "phenotype": "UNKNOWN",
+  "owner": "not Proteus; Harmonia/Mnemosyne may attach observations here",
+  "note": "UNKNOWN is a permanent, legitimate state. It records that no
+           observation has been made, and must not be read as a negative
+           judgement. Nothing written into this object changes organism_id
+           or entry_id."
+}
+```
+
+`entry_id` is computed over the **intrinsic part only**, and Proteus has a test
+asserting exactly that — so an extrinsic observation cannot alter identity even
+if a consumer writes one in. This is the mechanical guarantee behind "world
+association is EXTRINSIC." Respect it: world behaviour, encounters, phenotype,
+scores, failures and novelty are yours to record; none of them may flow back
+into identity.
+
+`phenotype` is `"UNKNOWN"` on all 64 specimens because nothing has been
+observed yet. **That is the point of the first integration** — not a gap to be
+filled in before you start.
+
+### Minimal adapter sketch
+
+```python
+import base64, json
+from proteus.integration import registry
+
+reg = registry.load_default()
+qual = registry.source_qualification()
+
+for oid in registry.enumerate_ids(reg):
+    man = registry.get_manifest(reg, oid)
+    entry = registry.get_entry(reg, oid)
+
+    body = json.dumps(man, sort_keys=True, separators=(",", ":")).encode()
+    req = {
+        "kind": "artifact",                                   # SFE's field (§10)
+        "data_b64": base64.b64encode(body).decode(),          # STANDARD base64
+        "meta": {
+            "info_kind": "artifact",
+            "proteus": {
+                "organism_id": oid,
+                "entry_id":    entry["entry_id"],
+                "lineage_id":  entry["lineage_id"],
+                "generation":  entry["generation"],
+                "identity":    entry["identity"],
+                "source_qualification": qual,                 # travels with it
+            },
+        },
+    }
+    # POST to /v2/worlds/{world_id}/artifacts; record blob_hash <-> organism_id
+```
+
+Note what this does **not** do: no `name` field, no classification, no
+phenotype, no score, no mutation, and no world id written back into Proteus.
+Verify it with `blob_hash == sha256(body)` — if that holds, the specimen
+crossed the seam unaltered.
+
+**The adapter must NOT:**
+
+- classify the player
+- phenotype the player
+- score it
+- mutate it
+- rewrite organism identity
+- claim the mutation source is neutral
+- add world semantics to Proteus identity
+
+**World association is EXTRINSIC.** The same `organism_id` must be able to enter
+many different worlds without its intrinsic identity changing. The Engine
+already supports this and it is verified: posting identical specimen bytes into
+two different worlds yields **the same `blob_hash`** and **different
+`artifact_id`s** (§10). The content identity is invariant; the world binding is
+derived. Keep it that way — if you find yourself writing a world id into a
+manifest, stop.
+
+---
+
+## 10. FROZEN CONTRACT — `POST /v2/worlds/{world_id}/artifacts`
+
+Everything here was measured against the live Engine on 2026-09-03 (build
+`sha256:5274ddbe…`). It is sufficient to construct a request with no other
+reference and no Proteus import.
+
+**Single source of truth:** the Engine's own request model,
+`SerendipityFoundryEngine/sfe/api.py` → `class ArtifactCreate(_Body)`, published
+at `GET /v2/openapi.json` under `components.schemas.ArtifactCreate`. This
+section describes that model; **it does not replace it.** If the two ever
+disagree, the Engine is right and this section is stale.
+
+### Request
+
+```http
+POST /v2/worlds/{world_id}/artifacts
+Authorization: Bearer gen2_...
+Content-Type: application/json
+
+{
+  "kind":     "artifact",        // REQUIRED, string
+  "data_b64": "<standard base64>", // REQUIRED, string
+  "meta":     { }                // optional, object, default {}
+}
+```
+
+| Field | Req | Type | Notes |
+|---|---|---|---|
+| `kind` | **yes** | string | **NOT validated against any vocabulary at this endpoint.** Any string is accepted, including `""`. Measured: `artifact`, `success`, `failure`, `hypothesis`, `observation`, `totally-made-up-kind`, `""` → all HTTP 200. |
+| `data_b64` | **yes** | string | Standard base64. See the encoding warning below — this is the one that will silently hurt you. |
+| `meta` | no | object | Free-form. Carry organism identity and Proteus provenance here. |
+
+**Closed model.** Any field other than these three is a **422** with a field
+path (`extra_forbidden`). Inherited from `_Body`'s
+`model_config = ConfigDict(extra="forbid")` — "scientific requests fail closed."
+This is why the historical Proteus payload's `name` is rejected.
+
+**`kind` vs `info_kind` — do not confuse these.** The closed ontology
+(`INFO_KINDS = {artifact, failure, hypothesis, observation, success}`) governs
+**`meta.info_kind`**, which is what the sharing/visibility machinery reads. The
+top-level `kind` field is *not* checked against it. Convention: set both, and
+keep them consistent.
+
+### Response
+
+```json
+{ "artifact_id": "sha256:…", "blob_hash": "sha256:…", "origin": "NATIVE" }
+```
+
+### Identity — measured, and the part that matters for extrinsic world association
+
+| | |
+|---|---|
+| `blob_hash` | **Exactly `sha256(raw bytes)`.** World-independent. Verified: equals the locally computed digest of the posted bytes. |
+| `artifact_id` | **World-scoped.** Deterministic over (world, `kind`, `meta`, content). |
+
+Measured behaviour:
+
+| Repost | Same `artifact_id`? | Same `blob_hash`? |
+|---|---|---|
+| identical bytes, same world, same kind+meta | **yes** (idempotent — no duplicate) | yes |
+| identical bytes, **different world** | **no** | **yes** |
+| identical bytes, different `meta` | no | yes |
+| identical bytes, different `kind` | no | yes |
+
+**Use `blob_hash` to prove "the same specimen entered these N worlds."** Use
+`artifact_id` as the world-scoped citation key. This is exactly what makes world
+association extrinsic rather than intrinsic.
+
+### Byte preservation
+
+Bytes are stored and returned **byte-identical**. Verified by round-trip via
+`GET /v2/worlds/{wid}/artifacts/{aid}/content` → `content_b64`, and again in the
+seam fixture (§11). No normalization, no re-encoding.
+
+### Encoding — READ THIS ONE
+
+- **Use STANDARD base64 (`+` and `/`), with padding.**
+- **URL-SAFE base64 (`-` and `_`) IS SILENTLY CORRUPTED.** It returns **HTTP
+  200** and stores **different, shorter bytes**. Measured: 24 bytes in → 15
+  bytes stored, no error, no warning. The decoder discards out-of-alphabet
+  characters instead of rejecting them.
+- Invalid base64 that breaks padding returns **HTTP 500
+  `{"error":"internal_error"}`** — not a 422. If you get a 500 from this
+  endpoint, suspect your encoding before you suspect the Engine.
+
+In Python: `base64.b64encode(...)`. **Never** `base64.urlsafe_b64encode(...)`.
+
+### Bounds
+
+**No size limit exists in the code path, and none was reached.** Measured
+accepted: 1 KB, 64 KB, 1 MB, 8 MB, and **32 MB** (a 44 MB base64 body) in 0.94 s.
+Treat large artifacts as a courtesy question to the operator, not a guarded one —
+the Engine will not stop you, and it is a shared service.
+
+### Authorization — measured
+
+| Caller | Result |
+|---|---|
+| owner of the world | `200` |
+| authenticated **non-owner**, post | `403 access_denied` "world is not owned by this client" |
+| authenticated **non-owner**, read content | `403 access_denied` |
+| no `Authorization` header | `401` "bearer token required" |
+| unknown token | `401` "unknown token" |
+| owner, non-existent world | `404 not_found` "unknown world" |
+
+### The identifier chain a consumer needs
+
+```
+world_id            you supply it in the path; it scopes everything
+   |
+   +-- artifact_id  returned; world-scoped; the citation key
+   +-- blob_hash    returned; = sha256(bytes); world-INDEPENDENT specimen identity
+   |
+event_seq           assigned in the world's ledger; read via GET .../events
+   |
+engine_source_hash  which build accepted it; on every response as
+                    x-sfe-engine-source-hash, and in GET /v2/version
+```
+
+Record all four with anything you intend to keep. `event_seq` and `world_id`
+are what order and locate the act; `blob_hash` is what identifies the specimen
+across worlds; `engine_source_hash` is what makes it attributable to a build.
+
+---
+
+## 11. The seam regression fixture
+
+```bash
+python integration/seam_fixture.py \
+    --cacert SerendipityFoundry/SerendipityFoundryClient/config/m1.crt
+```
+
+Three assertions, and **both directions matter**:
+
+| | |
+|---|---|
+| **F1** | The historical Proteus payload (`name`, no `kind`) **MUST fail closed with 422**, naming both faults. |
+| **F2** | A Harmonia-shaped payload satisfying §10 **MUST succeed with 200**. |
+| **F3** | Bytes round-trip exactly and `organism_id` in `meta` is unchanged — world association stayed extrinsic. |
+
+**If F1 ever starts passing, that is a regression in the Engine, not progress.**
+It would mean the artifact endpoint stopped failing closed on unknown fields.
+The fixture exists to make that loud.
+
+Last run 2026-09-03: **F1 PASS, F2 PASS, F3 PASS** — boundary intact.
+
+---
+
+## 12. Troubleshooting
 
 **`GET /v2/version` times out or refuses.** In order:
 1. Are you on `192.168.1.0/24`? The Engine admits only that subnet.
@@ -405,6 +850,16 @@ common: a required field omitted, or an extra field sent (bodies are
 `extra="forbid"`). `budget.enforcement` must be one of `enforceable`,
 `measured`, `estimated`, `unavailable` — `"hard"` is not legal.
 
+**500 `internal_error` from the artifact endpoint.** Almost certainly your
+base64, not the Engine. Malformed base64 is not caught as a validation error —
+it surfaces as a 500. Check you used **standard** base64 with padding (§10).
+
+**An artifact came back shorter than you sent, with no error.** You used
+URL-safe base64 (`-`/`_`). It is accepted with HTTP 200 and **silently
+corrupted** — out-of-alphabet characters are discarded before decoding.
+`base64.b64encode`, never `base64.urlsafe_b64encode`. Verify with `blob_hash`:
+it must equal your own `sha256(bytes)`. If it doesn't, your encoding is wrong.
+
 **`POST /v2/clients` returns 403.** Registration was closed after bootstrap.
 Check `registration_open` in `GET /v2/version` and ask the operator for a token.
 
@@ -415,11 +870,11 @@ under request load. It recovers on its own. If it persists, tell Daedalus —
 do not restart the service yourself.
 
 **Never restart the Engine to "fix" something.** It is a shared always-on
-service with other users on it. See §10.
+service with other users on it. See §13.
 
 ---
 
-## 10. Operator notes (M1 only)
+## 13. Operator notes (M1 only)
 
 The Engine runs as the always-on scheduled task **`SFEngine`**, launched by
 `deploy/sfengine.cmd`, bound to `192.168.1.202:8811`, logging to

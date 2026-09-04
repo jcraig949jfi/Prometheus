@@ -1,0 +1,365 @@
+================================================================================
+PROMPT TO DAEDALUS
+SFE / WORLD SERVER – FINAL SEAM FREEZE BEFORE FIRST INTEGRATION
+2026-09-03
+
+Daedalus,
+
+Your packet is ACCEPTED:
+
+SFE_WORLD_SERVER_READY_FOR_FIRST_INTEGRATION
+
+The SFE / World Server surface is ready for the first Prometheus integration.
+
+Do not begin another SFE research pass.
+
+This is a narrow closure directive to update the handoff for facts that changed
+while you were finishing and to freeze the exact seam Harmonia must implement.
+
+===============================================================================
+
+1. CORRECTION: PROTEUS USE A HAS NOW BEEN AUTHORIZED
+    ===============================================================================
+
+Your section 7 correctly reported the state you observed at the time, but
+external review has subsequently adjudicated Proteus’s integration-readiness
+packet.
+
+The current Proteus state is:
+
+USE A -- AUTHORIZED FOR FIRST INTEGRATION
+    frozen, semantics-free specimens may be:
+        enumerated
+        fetched
+        validated
+        instantiated
+        ticked
+        checkpointed
+        restored
+        replayed
+        supplied to worlds
+USE B -- NOT QUALIFIED
+    the mutation machinery remains:
+        NOT_QUALIFIED_AUTHORED_NONEQUILIBRIUM_CURRENT
+    operational significance remains:
+        NOT_YET_ADJUDICATED
+    Campaign 1 remains BLOCKED.
+
+Therefore replace any current handoff language equivalent to:
+
+"Proteus integration is not authorized"
+
+with the precise statement:
+
+"Frozen Proteus specimens are authorized for integration.
+ Proteus breeding/mutation is not qualified for evolutionary claims."
+
+Do NOT rewrite the historical packet. Preserve it as the record of what was
+true when written.
+
+Update only the live integration/runbook documentation.
+
+===============================================================================
+2. DO NOT PATCH PROTEUS TO FIT SFE
+
+You measured:
+
+proteus/foundry/export.py::sfe_artifact_payload()
+
+against the live SFE artifact endpoint and received:
+
+HTTP 422
+    missing          body.kind
+    extra_forbidden  body.name
+
+That is excellent seam evidence.
+
+Do NOT repair proteus/foundry/export.py.
+
+Do NOT ask Proteus to repair it in this pass.
+
+Proteus has now established a clean consumer registry and frozen specimen
+surface outside proteus/foundry/, and its foundry tree remains bound to the
+V0.6 audit identity.
+
+The first integration must preserve this separation:
+
+Proteus owns:
+    organism identity
+    manifests
+    intrinsic provenance
+    player ABI
+SFE owns:
+    world lifecycle
+    artifacts
+    events
+    work queue
+    engine-attested observations
+Harmonia owns:
+    THE BINDING BETWEEN THEM.
+
+The incompatible historical Proteus SFE payload is therefore NOT the API Harmonia
+should use as the new seam.
+
+===============================================================================
+3. FREEZE THE SFE ARTIFACT CONTRACT HARMONIA ACTUALLY NEEDS
+
+Add a concise machine/human-readable section to the canonical Harmonia runbook
+showing the exact currently accepted request contract for:
+
+POST /v2/worlds/{world_id}/artifacts
+
+Do this from the live schema/source that the running Engine exposes.
+
+Document at minimum:
+
+required fields
+forbidden/closed fields
+artifact identity returned
+byte-preservation guarantees, if any
+size/resource bounds, if any
+authorization requirements
+content/media encoding rules
+relationship between:
+    world_id
+    artifact_id
+    event_seq
+    engine/source/build identity
+
+The documentation must be sufficient for Harmonia to construct a request
+WITHOUT importing or depending upon Proteus’s historical export helper.
+
+If there is an official request model/schema already in the Engine, point to
+that rather than creating a second source of truth.
+
+===============================================================================
+4. DEFINE THE OWNERSHIP OF THE FIRST ADAPTER
+
+Record explicitly:
+
+THERE IS STILL NO WORLD ADAPTER.
+
+And:
+
+THE FIRST PROTEUS -> SFE ADAPTER BELONGS TO HARMONIA'S INTEGRATION LAYER.
+
+Its conceptual operation is:
+
+Proteus registry entry
+    +
+immutable player manifest
+    +
+Proteus provenance / source qualification
+    |
+    v
+Harmonia transport binding
+    |
+    v
+valid SFE artifact request
+    |
+    v
+SFE world artifact
+
+The adapter must not:
+
+classify the player
+phenotype the player
+score it
+mutate it
+rewrite organism identity
+claim the mutation source is neutral
+add world semantics to Proteus identity
+
+World association is EXTRINSIC.
+
+The same organism_id must be capable of entering many different worlds without
+its intrinsic identity changing.
+
+===============================================================================
+5. PRESERVE THE 422 AS A CONTRACT FIXTURE
+
+Do not erase the failed Proteus payload test now that we know the correct
+ownership boundary.
+
+Preserve it as a seam regression fixture:
+
+historical payload with `name` and without `kind`
+    -> MUST FAIL CLOSED 422
+Harmonia-shaped payload satisfying the live contract
+    -> MUST SUCCEED
+
+This is exactly the kind of seam failure the first integration is meant to
+surface.
+
+===============================================================================
+6. PEW REMAINS A REAL BLOCKER – DO NOT WORK AROUND IT HERE
+
+Your finding stands:
+
+the ordinary PEW evidence path has nowhere to carry world_id.
+
+Do not add PEW fields.
+Do not invent a side channel.
+Do not encode world_id in free text.
+Do not overload citation keys.
+Do not weaken provenance requirements.
+
+Freeze the finding cleanly for Mnemosyne/PEW:
+
+PEW_WORLD_PROVENANCE_SEAM_UNIMPLEMENTED
+
+Provide the exact live evidence showing:
+
+which PEW calls were inspected
+which request surfaces lack world identity
+what provenance PEW currently requires
+why an SFE-derived observation cannot presently preserve the complete
+world -> event -> artifact -> evidence chain through the ordinary path
+
+Mnemosyne/PEW owns resolution of that seam.
+
+===============================================================================
+7. S0 – CLOSE THE ONE CHEAP TLS UNCERTAINTY IF POSSIBLE
+
+Your only unverified network fact is off-host trust-anchor validation.
+
+If the operator-accessible machine needed for the documented one-command S0
+probe is available in the current environment, execute that bounded probe and
+record the result.
+
+The test must use:
+
+the pinned m1.crt
+verification ENABLED
+the IP address present in the certificate SAN
+the real running Engine
+
+If that machine is not accessible, leave the state exactly:
+
+OFF_HOST_TLS_TRUST_ANCHOR_NOT_YET_VERIFIED
+
+Do not broaden this into networking work.
+
+This item does NOT block the first integration if Harmonia’s actual host has the
+pinned certificate and verifies it successfully during her integration run.
+
+===============================================================================
+8. DO NOT CHANGE THE ENGINE FOR R1-R6
+
+Do not implement the singleton lock in this closure pass.
+
+Do not change authentication.
+Do not clean the ~250 worlds.
+Do not redesign token issuance.
+Do not chase intermittent host latency.
+Do not change Windows long-path behavior.
+
+Those are real operational findings and should remain visible.
+
+The first integration needs the specimen unchanged more than it needs cosmetic
+perfection.
+
+If a transient write stalls during integration, the battery’s current behavior
+must make the failure explicit rather than silently reinterpret it.
+
+===============================================================================
+9. UPDATE THE HARMONIA HANDOFF TO MATCH THE NOW-KNOWN PIPELINE
+
+The canonical runbook should leave Harmonia with this picture:
+
+PROTEUS
+  |
+  | frozen specimen + manifest + qualification provenance
+  v
+HARMONIA ADAPTER                  <-- DOES NOT EXIST YET
+  |
+  | valid SFE artifact contract
+  v
+SFE WORLD
+  |
+  | world_id / event_seq / artifact_id / build identity
+  v
+HARMONIA EXECUTION
+  |
+  | observations / outcomes / checkpoints
+  v
+SFE EVIDENCE SURFACE
+  |
+  X
+PEW / MNEMOSYNE                   <-- WORLD-PROVENANCE SEAM STILL OPEN
+
+Do not imply that SFE itself sends players to PEW.
+
+Do not imply Proteus knows world_id.
+
+Do not imply world association belongs in organism identity.
+
+===============================================================================
+10. PRESERVE EVERYTHING
+
+Preserve:
+
+this directive verbatim
+its SHA-256
+your original review packet
+all red-team findings B1-B6
+the failed 422 payload evidence
+current live battery results
+corrected runbook
+exact API identity/build hashes
+any S0 result
+all commits and reproduction commands
+
+Commit and verify reachability from origin/main.
+
+===============================================================================
+11. RETURN A SMALL DELTA REVIEW PACKET
+
+Do NOT produce another giant SFE qualification packet.
+
+Return a bounded external-review delta packet in chat as one ASCII block that
+James can cut and paste.
+
+It should contain:
+
+1. confirmation that the original SFE readiness verdict remains unchanged
+2. correction of the Proteus authorization state
+3. exact frozen SFE artifact request contract for Harmonia
+4. statement that Harmonia owns the first adapter
+5. preservation/result of the historical 422 regression fixture
+6. exact PEW world-provenance blocker handoff
+7. S0 TLS result or explicit remaining uncertainty
+8. files/commits/hashes changed
+9. remaining operational risks, unchanged
+
+10. a final one-line readiness statement
+
+The final readiness statement should distinguish the component from the seam:
+
+SFE IS READY.
+THE PROTEUS -> HARMONIA -> SFE BINDING IS READY TO BE BUILT.
+THE SFE -> PEW/MNEMOSYNE PROVENANCE SEAM REMAINS OPEN.
+
+Then stop.
+
+===============================================================================
+FINAL DIRECTION
+
+You have done enough archaeology.
+
+The World Server is alive.
+Its battery is real.
+Its failures fail loudly.
+Its runbook works from a clean checkout.
+
+Do not improve the arena.
+
+Put a clear doorway on it and tell Harmonia exactly what shape of adventurer
+may pass through.
+
+The adventurers are now authorized to approach the gate.
+
+Do not teach them what the arena is for.
+
+– External review / operator directive
+2026-09-03
