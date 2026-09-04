@@ -1,0 +1,182 @@
+"""PEW closure V0 battery (Mnemosyne, 2026-09-04). Gates C0-C9.
+
+Proves the closure lane end to end against a LIVE service, every write checked
+by an independent read-back. Namespace 'test' throughout (excluded from every
+scientific query). Exit 0 = all_pass.
+
+    python integration/closure_battery.py --host 127.0.0.1 --port 8378 \
+        --machine M2 --agent closure-test
+"""
+import argparse
+import json
+import sys
+import time
+import uuid
+
+import requests
+
+R = []
+_ZERO = "sha256:" + "0" * 64
+_H1 = "sha256:" + "a" * 64
+_H2 = "sha256:" + "b" * 64
+
+
+def gate(name, ok, detail):
+    R.append({"gate": name, "pass": bool(ok), "detail": detail})
+    print(f"[{'PASS' if ok else 'FAIL'}] {name}: {detail}")
+    return bool(ok)
+
+
+class C:
+    def __init__(self, host, port, machine, agent):
+        self.base = f"http://{host}:{port}/api/v1"
+        self.h = {"Authorization": "Bearer prometheus-ew-v0-shared-token",
+                  "X-Prometheus-Machine": machine, "X-Prometheus-Agent": agent}
+
+    def get(self, p, **q):
+        return requests.get(f"{self.base}/{p}", headers=self.h, params=q, timeout=30)
+
+    def post(self, p, b):
+        b = dict(b); b.setdefault("idempotency_key", str(uuid.uuid4()))
+        return requests.post(f"{self.base}/{p}", headers=self.h, json=b, timeout=30)
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--host", default="127.0.0.1")
+    ap.add_argument("--port", type=int, default=8377)
+    ap.add_argument("--machine", default="M2")
+    ap.add_argument("--agent", default="closure-test")
+    a = ap.parse_args()
+    c = C(a.host, a.port, a.machine, a.agent)
+    tag = uuid.uuid4().hex[:8]
+
+    # C0 --- server-attested identity, independent of the token -------------
+    idj = c.get("identity").json()
+    gate("C0_identity_attested",
+         bool(idj.get("db_system_id")) and idj.get("closure_version") == "pew.closure.v0",
+         f"db_system_id={idj.get('db_system_id')} source_commit="
+         f"{str(idj.get('source_commit'))[:12]} dirty={idj.get('source_dirty')}")
+
+    # C1 --- packet read-back (I-NO-PACKET-READ) ----------------------------
+    pk = c.post("packets", {"uri": "evidence_wiki/README.md", "kind": "doc"})
+    pid = pk.json().get("packet_id") if pk.status_code == 200 else None
+    if pid:
+        rp = c.get(f"packets/{pid}")
+        miss = c.get("packets/SP-nonexistentxx")
+        gate("C1_packet_read", rp.status_code == 200 and rp.json().get("packet_id") == pid
+             and miss.status_code == 404,
+             f"GET packets/{pid}={rp.status_code} (was 405), unknown={miss.status_code}")
+    else:
+        gate("C1_packet_read", False, f"packet register failed: {pk.status_code} {pk.text[:80]}")
+
+    # C2 --- fossil carries server attestation ------------------------------
+    enc = f"CLOSURE-{tag}-ENC"
+    c.post("fossil/worlds", {"world_id": f"CLOSURE-{tag}-W", "sfe_world_id": "wld_x",
+                             "namespace": "test"})
+    w = c.post("fossil/encounters", {
+        "encounter_id": enc, "run_id": "r1", "sfe_event_id": "evt_" + "a" * 16,
+        "sfe_entry_hash": _H1, "namespace": "test", "outcome": "SURVIVED"})
+    rb = c.get(f"fossil/encounters/{enc}").json()
+    att = (rb.get("runs") or [{}])[0].get("attestation") or {}
+    gate("C2_fossil_attested",
+         w.status_code == 200 and att.get("db_system_id") == idj.get("db_system_id")
+         and att.get("sfe_anchor_verified") is False,
+         f"write={w.status_code} attest.db_system_id={att.get('db_system_id')} "
+         f"sfe_anchor_verified={att.get('sfe_anchor_verified')}")
+
+    # C3 --- anchor: valid shape accepted, wrong CLASS rejected -------------
+    good = c.post("fossil/encounters", {
+        "encounter_id": f"CLOSURE-{tag}-GOOD", "run_id": "r", "namespace": "test",
+        "sfe_event_id": "evt_" + "c" * 16, "sfe_entry_hash": _H2})
+    badhash = c.post("fossil/encounters", {
+        "encounter_id": f"CLOSURE-{tag}-BADH", "run_id": "r", "namespace": "test",
+        "sfe_event_id": "evt_" + "c" * 16, "sfe_entry_hash": "not-a-sha"})
+    badev = c.post("fossil/encounters", {
+        "encounter_id": f"CLOSURE-{tag}-BADE", "run_id": "r", "namespace": "test",
+        "sfe_event_id": "world_created", "sfe_entry_hash": _H2})
+    gate("C3_anchor_shape_enforced",
+         good.status_code == 200 and badhash.status_code == 422 and badev.status_code == 422,
+         f"good={good.status_code} bad_hash={badhash.status_code} bad_evid={badev.status_code}")
+
+    # C4 --- KNOWN GAP, pinned: a well-formed-but-WRONG (real) event/hash pair
+    #        is ACCEPTED, because PEW validates shape/class only and holds no
+    #        SFE client. This is I-CAUSAL-CLIENT / probe D1. The regression
+    #        LOCKS the gap and the fossil records sfe_anchor_verified=false so
+    #        provenance stays honest. Closing it requires SFE attestation
+    #        (cross-component request to Daedalus), not a PEW-only change.
+    wrong = c.post("fossil/encounters", {
+        "encounter_id": f"CLOSURE-{tag}-WRONG", "run_id": "r", "namespace": "test",
+        "sfe_event_id": "evt_" + "f" * 16,           # a real-looking but wrong event
+        "sfe_entry_hash": _H1})                        # not that event's hash
+    wrb = c.get(f"fossil/encounters/CLOSURE-{tag}-WRONG").json()
+    watt = (wrb.get("runs") or [{}])[0].get("attestation") or {}
+    gate("C4_wrong_real_anchor_gap_pinned",
+         wrong.status_code == 200 and watt.get("sfe_anchor_verified") is False,
+         f"wrong-but-real accepted={wrong.status_code} (KNOWN GAP), "
+         f"recorded sfe_anchor_verified={watt.get('sfe_anchor_verified')} -> "
+         "needs SFE attestation to reject")
+
+    # C5 --- create a HARD and an ADVISORY constraint -----------------------
+    hard = c.post("constraints", {
+        "kind": "HARD", "namespace": "test",
+        "title": "content-identity mismatch invalidates envelope",
+        "statement": "A fossil whose stored output digest != submitted digest is void.",
+        "scope": {"experiment_class": "any"}, "severity": "BLOCKER",
+        "native_payload": {"check": "stored.output_digest == submitted.output_digest"}})
+    adv = c.post("constraints", {
+        "kind": "ADVISORY", "namespace": "test",
+        "title": "primitive P shows no marginal incrementality in world family W",
+        "statement": "R~=0 for P in family W under seed replication; scoped, not a ban.",
+        "scope": {"primitive": "P", "world_family": "W"}, "severity": "INFO"})
+    hid = hard.json().get("constraint_id"); aid = adv.json().get("constraint_id")
+    gate("C5_constraint_kinds",
+         hard.status_code == 200 and adv.status_code == 200
+         and hard.json().get("kind") == "HARD" and adv.json().get("kind") == "ADVISORY",
+         f"HARD={hid} ADVISORY={aid}")
+
+    # C6 --- scope is mandatory (rejects a scopeless empirical ban) ---------
+    noscope = c.post("constraints", {"kind": "ADVISORY", "scope": {},
+                                     "statement": "never test P", "namespace": "test"})
+    gate("C6_scope_mandatory", noscope.status_code == 422,
+         f"scopeless constraint rejected={noscope.status_code} "
+         "(prevents 'R~=0 here' -> 'never test this')")
+
+    # C7 --- errata: PROPOSED -> REFUTED with adjudicating evidence ---------
+    ev = c.post("constraints/%s/events" % aid, {
+        "to_status": "REFUTED",
+        "rationale": "effect explained by fitness in experiment E; scope was too broad",
+        "reproducer": "replay under fresh seeds shows R recovers"})
+    cur = c.get(f"constraints/{aid}").json()
+    hist = cur.get("events") or []
+    gate("C7_errata_transition",
+         ev.status_code == 200 and cur.get("current_status") == "REFUTED"
+         and len(hist) == 2 and hist[0]["to_status"] == "PROPOSED"
+         and hist[-1]["to_status"] == "REFUTED",
+         f"current_status={cur.get('current_status')} history="
+         f"{[h['to_status'] for h in hist]}")
+
+    # C8 --- a REFUTED constraint is not returned as active -----------------
+    active = c.get("constraints", kind="ADVISORY", status="PROPOSED",
+                   namespace="test").json()
+    ids_active = [x["constraint_id"] for x in active.get("constraints", [])]
+    gate("C8_refuted_not_active", aid not in ids_active,
+         f"REFUTED {aid} absent from status=PROPOSED listing "
+         f"(n_proposed={active.get('n')})")
+
+    # C9 --- history is append-only (original PROPOSED row still present) ----
+    still = [h for h in hist if h["to_status"] == "PROPOSED"]
+    gate("C9_history_recoverable", len(still) == 1 and still[0].get("rationale") == "initial",
+         "original PROPOSED event preserved after REFUTED (never mutated)")
+
+    all_pass = all(r["pass"] for r in R)
+    out = {"all_pass": all_pass, "n": len(R), "passed": sum(r["pass"] for r in R),
+           "gates": R}
+    print(json.dumps({"all_pass": all_pass, "passed": out["passed"], "n": out["n"]}))
+    with open("integration/closure_results.json", "w") as f:
+        json.dump(out, f, indent=1)
+    return 0 if all_pass else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

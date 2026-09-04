@@ -14,7 +14,7 @@ from pydantic import BaseModel
 
 from . import FOSSIL_CONTRACT_VERSION, ONTOLOGY_VERSION, SCHEMA_VERSION
 from . import db as ewdb
-from . import compiler, coords, store, wiki
+from . import closure, compiler, coords, store, wiki
 
 app = FastAPI(title="Mnemosyne Evidence Wiki", version="0.1")
 CFG = ewdb.load_config()
@@ -919,7 +919,7 @@ def _reject(conn, endpoint, ident, reason, key=None, obj=None, code=422):
     raise HTTPException(code, reason)
 
 
-def _enc_values(e, rev):
+def _enc_values(e, rev, attest=None):
     return (e.encounter_id, e.run_id, e.sfe_world_id, e.sfe_event_id,
             e.sfe_entry_hash, e.sfe_event_seq, e.world_id, e.players,
             json.dumps(e.ecology) if e.ecology else None, e.seed,
@@ -927,14 +927,16 @@ def _enc_values(e, rev):
             e.failure_class,
             json.dumps(e.resources_used) if e.resources_used else None,
             e.occurred_ts, e.episode_id,
-            json.dumps(e.producer) if e.producer else None, e.namespace, rev)
+            json.dumps(e.producer) if e.producer else None, e.namespace, rev,
+            attest)
 
 
 _ENC_INSERT = (
     "INSERT INTO ew.fossil_encounters(encounter_id, run_id, sfe_world_id, "
     "sfe_event_id, sfe_entry_hash, sfe_event_seq, world_id, players, ecology, "
     "seed, budget, outcome, failure_class, resources_used, occurred_ts, "
-    "episode_id, producer, namespace, revision) VALUES ")
+    "episode_id, producer, namespace, revision, attestation) VALUES ")
+_ENC_NCOLS = 20   # keep in lockstep with _ENC_INSERT and _enc_values
 
 
 def _as_instant(v):
@@ -1023,8 +1025,9 @@ def post_fossil_encounter(body: FossilEncounterIn, request: Request,
         if status == "inserted":
             cur.execute("SELECT nextval('ew.canonical_revision_seq')")
             rev = cur.fetchone()["nextval"]
-            cur.execute(_ENC_INSERT + "(" + ",".join(["%s"] * 19) + ")",
-                        _enc_values(body, rev))
+            attest = closure.fossil_attestation_json(conn)
+            cur.execute(_ENC_INSERT + "(" + ",".join(["%s"] * _ENC_NCOLS) + ")",
+                        _enc_values(body, rev, attest))
         cur.execute(
             "INSERT INTO ew.write_log(idempotency_key, endpoint, machine, "
             "agent, payload_sha256, accepted, result_object_id) "
@@ -1085,8 +1088,9 @@ def post_fossil_batch(body: FossilBatchIn, request: Request,
         rev = cur.fetchone()["nextval"]
         if fresh:
             from psycopg2.extras import execute_values
+            attest = closure.fossil_attestation_json(conn)
             execute_values(cur, _ENC_INSERT + "%s",
-                           [_enc_values(e, rev) for e in fresh])
+                           [_enc_values(e, rev, attest) for e in fresh])
         cur.execute(
             "INSERT INTO ew.write_log(idempotency_key, endpoint, machine, "
             "agent, payload_sha256, accepted, result_object_id) "
@@ -1106,7 +1110,7 @@ def _enc_rows(conn, where, args, limit):
                     "players, seed, outcome, failure_class, sfe_world_id, "
                     "sfe_event_id, sfe_entry_hash, sfe_event_seq, ecology, "
                     "budget, resources_used, occurred_ts, producer, namespace, "
-                    "revision, created_at FROM ew.fossil_encounters WHERE "
+                    "attestation, revision, created_at FROM ew.fossil_encounters WHERE "
                     + where + " ORDER BY sfe_event_seq NULLS LAST, revision "
                     "LIMIT %s", args + [limit])
         # Wire format is UTC ISO-8601 regardless of the server's timezone, so
@@ -1295,6 +1299,127 @@ def native_fossil_anomalies(request: Request, top: int = 5,
                       "n": r["n_encounters"], "kl": r["kl_vs_family"],
                       "h": r["sfe_anchor"]} for r in rows],
             "rev": revisions(conn)["canonical_revision"]}
+
+
+# ------------------------------------------- closure V0 (migration 008)
+@app.get("/api/v1/identity")
+def identity_endpoint(conn=Depends(get_conn)):
+    """Server-ATTESTED identity of this PEW instance and the store it is
+    connected to. db_system_id is the Postgres system_identifier -- the
+    non-spoofable answer to 'which PEW am I talking to', independent of the
+    bearer token (every host shares it) and the self-declared X-Prometheus-
+    Machine header. Verify host identity from THIS, never from authentication."""
+    return closure.service_attestation(conn)
+
+
+@app.get("/api/v1/packets/{packet_id}")
+def get_packet_endpoint(packet_id: str, request: Request,
+                        conn=Depends(get_conn)):
+    """Read a registered source packet by id (closes I-NO-PACKET-READ): uri,
+    content_sha256, git_commit, kind, provenance -- no host-local SQL."""
+    identity(request)
+    p = closure.get_packet(conn, packet_id)
+    if not p:
+        raise HTTPException(404, f"unknown packet {packet_id}")
+    return p
+
+
+class ConstraintIn(BaseModel):
+    model_config = {"extra": "forbid"}
+    kind: str                       # HARD | ADVISORY
+    scope: dict                     # mandatory: scope is part of the evidence
+    title: str | None = None
+    statement: str | None = None
+    native_payload: dict | None = None
+    severity: str | None = None
+    applicability: dict | None = None
+    source_evidence_ids: list[str] | None = None
+    source_claim_id: str | None = None
+    packet_id: str | None = None
+    reproducer: str | None = None
+    origin_ref: str | None = None
+    supersedes: str | None = None
+    status: str | None = None       # initial status; default PROPOSED
+    namespace: str = "prod"
+    idempotency_key: str | None = None
+
+
+class ConstraintEventIn(BaseModel):
+    model_config = {"extra": "forbid"}
+    to_status: str
+    adjudicating_evidence_id: str | None = None
+    adjudicating_packet_id: str | None = None
+    successor_constraint_id: str | None = None
+    reproducer: str | None = None
+    rationale: str | None = None
+    idempotency_key: str | None = None
+
+
+@app.post("/api/v1/constraints")
+def post_constraint(body: ConstraintIn, request: Request,
+                    conn=Depends(get_conn)):
+    """Record a durable lesson: HARD (a violation invalidates the experimental
+    envelope) or ADVISORY (a scoped empirical finding that must NOT prohibit
+    exploration). Scope is mandatory -- 'R~=0 here' is scoped evidence, never
+    'never test this'. Creates the constraint plus its initial lifecycle event."""
+    ident = identity(request, write=True)
+    if body.kind not in closure.CONSTRAINT_KINDS:
+        raise HTTPException(422, "kind must be HARD or ADVISORY")
+    if body.status and body.status not in closure.CONSTRAINT_STATUS:
+        raise HTTPException(422, f"status must be one of "
+                            f"{sorted(closure.CONSTRAINT_STATUS)}")
+    if not body.scope:
+        raise HTTPException(422, "scope is mandatory: scope is part of the evidence")
+    cid, status = closure.create_constraint(conn, body, ident)
+    return {"constraint_id": cid, "kind": body.kind, "status": status,
+            "read_back": f"/api/v1/constraints/{cid}"}
+
+
+@app.get("/api/v1/constraints")
+def list_constraints_endpoint(request: Request, kind: str | None = None,
+                              status: str | None = None,
+                              scope_key: str | None = None,
+                              scope_val: str | None = None,
+                              namespace: str = "prod",
+                              conn=Depends(get_conn)):
+    """Retrieve constraints (closes 'no constraint retrieval'). Filter by kind,
+    current_status, or a scope key/value. A REFUTED/SUPERSEDED constraint is
+    reported WITH that status -- it is never silently active."""
+    identity(request)
+    rows = closure.list_constraints(conn, kind, status, scope_key, scope_val,
+                                    namespace)
+    return {"n": len(rows), "constraints": rows}
+
+
+@app.get("/api/v1/constraints/{constraint_id}")
+def get_constraint_endpoint(constraint_id: str, request: Request,
+                            conn=Depends(get_conn)):
+    """A constraint, its current status, and its FULL errata trail (every
+    PROPOSED->...->REFUTED/SUPERSEDED transition with adjudicating evidence).
+    History is append-only and never mutated."""
+    identity(request)
+    c = closure.get_constraint(conn, constraint_id)
+    if not c:
+        raise HTTPException(404, f"unknown constraint {constraint_id}")
+    return c
+
+
+@app.post("/api/v1/constraints/{constraint_id}/events")
+def post_constraint_event(constraint_id: str, body: ConstraintEventIn,
+                          request: Request, conn=Depends(get_conn)):
+    """Append a lifecycle transition (the errata mechanism). Records the
+    adjudicating evidence and an optional successor. Never mutates the original
+    claim; a REFUTED constraint stops being active but stays fully recoverable."""
+    ident = identity(request, write=True)
+    if body.to_status not in closure.CONSTRAINT_STATUS:
+        raise HTTPException(422, f"to_status must be one of "
+                            f"{sorted(closure.CONSTRAINT_STATUS)}")
+    res = closure.append_event(conn, constraint_id, body, ident)
+    if res is None:
+        raise HTTPException(404, f"unknown constraint {constraint_id}")
+    eid, frm = res
+    return {"event_id": eid, "constraint_id": constraint_id,
+            "from_status": frm, "to_status": body.to_status}
 
 
 # ---------------------------------------------------------------- wiki
