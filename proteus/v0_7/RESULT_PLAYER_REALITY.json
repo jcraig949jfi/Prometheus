@@ -1,0 +1,168 @@
+{
+ "affordance_classes": [
+  "arithmetic",
+  "comparison",
+  "control",
+  "halt_yield",
+  "indirection",
+  "logical",
+  "opaque_io",
+  "randomness",
+  "read_write"
+ ],
+ "code_writable_counts": {
+  "False": 30,
+  "True": 34
+ },
+ "distinct_primitive_classes_per_organism": {
+  "max": 9,
+  "median": 5,
+  "min": 1,
+  "total": 343
+ },
+ "genome_instructions": {
+  "max": 64,
+  "median": 11,
+  "min": 1,
+  "total": 1013
+ },
+ "genome_words": {
+  "max": 256,
+  "median": 44,
+  "min": 4,
+  "total": 4052
+ },
+ "manifest_fields": [
+  "code_writable",
+  "genome",
+  "n_regs",
+  "out_cap",
+  "persist",
+  "schema_version",
+  "tape_words",
+  "tick_budget"
+ ],
+ "n_entries": 64,
+ "n_regs": {
+  "max": 16,
+  "median": 9,
+  "min": 2,
+  "total": 581
+ },
+ "opcode_histogram": {
+  "ADD": 55,
+  "AND": 44,
+  "EQ": 32,
+  "HALT": 42,
+  "IN": 45,
+  "INQ": 42,
+  "JMP": 39,
+  "JNZ": 39,
+  "JZ": 29,
+  "LD": 46,
+  "LDC": 42,
+  "LT": 42,
+  "MOV": 42,
+  "MUL": 40,
+  "NOP": 35,
+  "NOT": 41,
+  "OR": 30,
+  "OUT": 41,
+  "RND": 38,
+  "SHL": 42,
+  "SHR": 46,
+  "ST": 41,
+  "SUB": 41,
+  "XOR": 37,
+  "YIELD": 42
+ },
+ "opcode_instances_total": 1013,
+ "opcodes_per_class": {
+  "arithmetic": [
+   "ADD",
+   "SUB",
+   "MUL"
+  ],
+  "comparison": [
+   "EQ",
+   "LT"
+  ],
+  "control": [
+   "JMP",
+   "JZ",
+   "JNZ"
+  ],
+  "halt_yield": [
+   "NOP",
+   "HALT",
+   "YIELD"
+  ],
+  "indirection": [
+   "LD",
+   "ST"
+  ],
+  "logical": [
+   "AND",
+   "OR",
+   "XOR",
+   "NOT",
+   "SHL",
+   "SHR"
+  ],
+  "opaque_io": [
+   "IN",
+   "INQ",
+   "OUT"
+  ],
+  "randomness": [
+   "RND"
+  ],
+  "read_write": [
+   "LDC",
+   "MOV"
+  ]
+ },
+ "organism_id_recomputes": "64/64",
+ "organisms_containing_class": {
+  "arithmetic": 51,
+  "comparison": 34,
+  "control": 39,
+  "halt_yield": 38,
+  "indirection": 37,
+  "logical": 49,
+  "opaque_io": 35,
+  "randomness": 25,
+  "read_write": 35
+ },
+ "out_cap": {
+  "max": 16,
+  "median": 4,
+  "min": 1,
+  "total": 454
+ },
+ "persist_policy_counts": {
+  "all": 20,
+  "none": 15,
+  "regs": 8,
+  "tape": 21
+ },
+ "registry_id": "b15e0a7f5f2dcb99b8b28c73a99441d8d53e82b1bae42fddd5e274eeef396917",
+ "serialization_bytes": {
+  "max": 2891,
+  "median": 622,
+  "min": 196,
+  "total": 53354
+ },
+ "tape_words": {
+  "max": 1024,
+  "median": 128,
+  "min": 16,
+  "total": 16640
+ },
+ "tick_budget": {
+  "max": 1024,
+  "median": 64,
+  "min": 16,
+  "total": 20416
+ }
+}

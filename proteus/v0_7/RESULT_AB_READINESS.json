@@ -1,0 +1,91 @@
+{
+ "ablation_verdicts": {
+  "EXACT": 200
+ },
+ "activation_verdicts": {
+  "ACTIVATED": 200
+ },
+ "counts": {
+  "AB_differs_from_A": 24,
+  "AB_differs_from_B": 30,
+  "A_activated_but_no_marginal_effect": 170,
+  "ablating_A_changed_transcript": 30,
+  "ablation_structurally_exact": 200,
+  "composed": 200,
+  "decompose_exact": 200
+ },
+ "ensemble_identity": "4bba8716b364f9fff1975210a9e1a4027b70963a81fbe108d44a59360978f0bc",
+ "envelope": {
+  "code_writable": false,
+  "n_regs": 8,
+  "out_cap": 4,
+  "persist": "none",
+  "tape_words": 256,
+  "tick_budget": 256
+ },
+ "example_rows": [
+  {
+   "AB_differs_from_A": true,
+   "A_activation": "ACTIVATED",
+   "A_from": "ed237074fbd2",
+   "B_from": "28ee7e04d68f",
+   "ablate_A_verdict": "EXACT",
+   "composition_id_AB": "3c3d1a73bd20a30e",
+   "organism_id_AB": "13aa8e5f40271b25"
+  },
+  {
+   "AB_differs_from_A": false,
+   "A_activation": "ACTIVATED",
+   "A_from": "ed237074fbd2",
+   "B_from": "9aa06d6eb4af",
+   "ablate_A_verdict": "EXACT",
+   "composition_id_AB": "31e1542080be0001",
+   "organism_id_AB": "f0380133696f0321"
+  },
+  {
+   "AB_differs_from_A": false,
+   "A_activation": "ACTIVATED",
+   "A_from": "250f1cdc4a7f",
+   "B_from": "366066c0e6fc",
+   "ablate_A_verdict": "EXACT",
+   "composition_id_AB": "2ced123c988a646b",
+   "organism_id_AB": "264d9d088304895f"
+  }
+ ],
+ "pairs_attempted": 200,
+ "rates": {
+  "AB_differs_from_both_A_and_B": {
+   "k": 0,
+   "n": 200,
+   "rate": 0.0
+  },
+  "A_activated_but_no_marginal_effect": {
+   "k": 170,
+   "n": 200,
+   "rate": 0.85
+  },
+  "ablating_A_changed_transcript": {
+   "k": 30,
+   "n": 200,
+   "rate": 0.15
+  },
+  "ablation_certified_EXACT": {
+   "k": 200,
+   "n": 200,
+   "rate": 1.0
+  },
+  "ablation_structurally_exact": {
+   "k": 200,
+   "n": 200,
+   "rate": 1.0
+  },
+  "decompose_exact": {
+   "k": 200,
+   "n": 200,
+   "rate": 1.0
+  }
+ },
+ "registry_id": "b15e0a7f5f2dcb99b8b28c73a99441d8d53e82b1bae42fddd5e274eeef396917",
+ "segment_definition": "first 2 instructions of each committed specimen",
+ "what_this_is_not": "No specimen was selected, scored or interpreted. 'A+B differs from A' is a transcript inequality on a noise ensemble, not a capability claim, and 'ACTIVATED' means instructions executed, nothing more."
+}

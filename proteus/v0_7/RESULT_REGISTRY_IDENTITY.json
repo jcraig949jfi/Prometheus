@@ -1,0 +1,54 @@
+{
+ "affordance_change_probe": {
+  "fraction_redecoding_overall": 0.9487,
+  "instructions_that_redecode": 961,
+  "instructions_total": 1013,
+  "organism_id_changes": false,
+  "organisms_completely_unaffected": 1,
+  "organisms_total": 64,
+  "per_organism_fraction_max": 1.0,
+  "per_organism_fraction_median": 1.0,
+  "per_organism_fraction_min": 0.0,
+  "probe": "N_OPCODES 25 -> 26 (one opcode appended to the table)"
+ },
+ "entry_id": {
+  "covers_affordance_hash": true,
+  "covers_runtime_hash": true,
+  "identity_block": [
+   "affordance_hash",
+   "grammar_hash",
+   "grammar_version",
+   "manifest_schema_version",
+   "runtime_hash"
+  ],
+  "intrinsic_view_keys": [
+   "generation",
+   "identity",
+   "lineage_id",
+   "manifest",
+   "organism_id",
+   "provenance",
+   "resource_envelope",
+   "schema_version",
+   "validation"
+  ],
+  "recomputed_matches": true
+ },
+ "organism_id": {
+  "hashed_bytes": "canonical_json(manifest)",
+  "includes_affordance_hash": false,
+  "includes_runtime_hash": false,
+  "manifest_keys": [
+   "code_writable",
+   "genome",
+   "n_regs",
+   "out_cap",
+   "persist",
+   "schema_version",
+   "tape_words",
+   "tick_budget"
+  ],
+  "recomputed_matches": true
+ },
+ "verdict": "organism_id pins BYTES, not EXECUTION. The registry entry_id pins execution because it covers runtime_hash and affordance_hash. Therefore a specimen quoted by organism_id alone is under-specified for replay; quoted by (organism_id, entry_id) or (organism_id, runtime_hash, affordance_hash) it is exact."
+}

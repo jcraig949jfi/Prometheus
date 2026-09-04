@@ -1,0 +1,462 @@
+{
+ "canonical_serialisation": {
+  "digest": "sha256, lowercase hex, no prefix",
+  "encoding": "utf-8",
+  "rule": "json.dumps(obj, sort_keys=True, separators=(\",\", \":\"), ensure_ascii=True)",
+  "sfe_blob_hash": "literal \"sha256:\" + the hex digest, nothing else"
+ },
+ "composition_documents": {
+  "A": {
+   "components": [
+    {
+     "component": "A",
+     "n_instructions": 2,
+     "offset_instructions": 0,
+     "segment_id": "f692679fd349a1e864ce3d1a02346c7e1540538f317a25f15871c78bf64eaa10"
+    }
+   ],
+   "composition_id": "7057a1a40dd92d231ac08f73f275169dd323654fd7913184470b6d5efb390726",
+   "envelope": {
+    "code_writable": false,
+    "n_regs": 4,
+    "out_cap": 4,
+    "persist": "none",
+    "tape_words": 64,
+    "tick_budget": 64
+   },
+   "glue": "concat.v0",
+   "manifest": {
+    "code_writable": false,
+    "genome": [
+     7,
+     1,
+     2,
+     3,
+     16,
+     0,
+     1,
+     2
+    ],
+    "n_regs": 4,
+    "out_cap": 4,
+    "persist": "none",
+    "schema_version": "proteus.player_manifest.v0",
+    "tape_words": 64,
+    "tick_budget": 64
+   },
+   "schema_version": "proteus.composition.v0"
+  },
+  "AB": {
+   "components": [
+    {
+     "component": "A",
+     "n_instructions": 2,
+     "offset_instructions": 0,
+     "segment_id": "f692679fd349a1e864ce3d1a02346c7e1540538f317a25f15871c78bf64eaa10"
+    },
+    {
+     "component": "B",
+     "n_instructions": 2,
+     "offset_instructions": 2,
+     "segment_id": "1fe31be75f2a6095deb7536c643616a0691b53dfcef8b58233b63455507fe4a4"
+    }
+   ],
+   "composition_id": "a0b997fee35a109340cae5ef833509281ca4ba5f8bf8dd05ef8c41547a8e9958",
+   "envelope": {
+    "code_writable": false,
+    "n_regs": 4,
+    "out_cap": 4,
+    "persist": "none",
+    "tape_words": 64,
+    "tick_budget": 64
+   },
+   "glue": "concat.v0",
+   "manifest": {
+    "code_writable": false,
+    "genome": [
+     7,
+     1,
+     2,
+     3,
+     16,
+     0,
+     1,
+     2,
+     23,
+     0,
+     1,
+     0,
+     1,
+     0,
+     0,
+     0
+    ],
+    "n_regs": 4,
+    "out_cap": 4,
+    "persist": "none",
+    "schema_version": "proteus.player_manifest.v0",
+    "tape_words": 64,
+    "tick_budget": 64
+   },
+   "schema_version": "proteus.composition.v0"
+  },
+  "B": {
+   "components": [
+    {
+     "component": "B",
+     "n_instructions": 2,
+     "offset_instructions": 0,
+     "segment_id": "1fe31be75f2a6095deb7536c643616a0691b53dfcef8b58233b63455507fe4a4"
+    }
+   ],
+   "composition_id": "cef5e8574a819e2c3bcb9a944a84c2e57065c5937764707b226f0d788951128a",
+   "envelope": {
+    "code_writable": false,
+    "n_regs": 4,
+    "out_cap": 4,
+    "persist": "none",
+    "tape_words": 64,
+    "tick_budget": 64
+   },
+   "glue": "concat.v0",
+   "manifest": {
+    "code_writable": false,
+    "genome": [
+     23,
+     0,
+     1,
+     0,
+     1,
+     0,
+     0,
+     0
+    ],
+    "n_regs": 4,
+    "out_cap": 4,
+    "persist": "none",
+    "schema_version": "proteus.player_manifest.v0",
+    "tape_words": 64,
+    "tick_budget": 64
+   },
+   "schema_version": "proteus.composition.v0"
+  },
+  "BA": {
+   "components": [
+    {
+     "component": "B",
+     "n_instructions": 2,
+     "offset_instructions": 0,
+     "segment_id": "1fe31be75f2a6095deb7536c643616a0691b53dfcef8b58233b63455507fe4a4"
+    },
+    {
+     "component": "A",
+     "n_instructions": 2,
+     "offset_instructions": 2,
+     "segment_id": "f692679fd349a1e864ce3d1a02346c7e1540538f317a25f15871c78bf64eaa10"
+    }
+   ],
+   "composition_id": "81620797c46bb6b5cc25b41e782a000fce9ab549cc88f84f39c88864fe618228",
+   "envelope": {
+    "code_writable": false,
+    "n_regs": 4,
+    "out_cap": 4,
+    "persist": "none",
+    "tape_words": 64,
+    "tick_budget": 64
+   },
+   "glue": "concat.v0",
+   "manifest": {
+    "code_writable": false,
+    "genome": [
+     23,
+     0,
+     1,
+     0,
+     1,
+     0,
+     0,
+     0,
+     7,
+     1,
+     2,
+     3,
+     16,
+     0,
+     1,
+     2
+    ],
+    "n_regs": 4,
+    "out_cap": 4,
+    "persist": "none",
+    "schema_version": "proteus.player_manifest.v0",
+    "tape_words": 64,
+    "tick_budget": 64
+   },
+   "schema_version": "proteus.composition.v0"
+  }
+ },
+ "identities": {
+  "composition_id_A": "7057a1a40dd92d231ac08f73f275169dd323654fd7913184470b6d5efb390726",
+  "composition_id_AB": "a0b997fee35a109340cae5ef833509281ca4ba5f8bf8dd05ef8c41547a8e9958",
+  "composition_id_B": "cef5e8574a819e2c3bcb9a944a84c2e57065c5937764707b226f0d788951128a",
+  "composition_id_BA": "81620797c46bb6b5cc25b41e782a000fce9ab549cc88f84f39c88864fe618228",
+  "organism_id_A": "53e5cd56a010206f04689dffc9b9e6fc420b5bae16f44dc7e6286d0ef37fcca1",
+  "organism_id_AB": "ca33d0c7b7a0d152a5949bc9dea87a9ef741475d220d474f0d8dde03920b1777",
+  "organism_id_B": "dec3cfae42887823e619da55fca305429ddb053c8f9d52a2aaaa48f06b87fa24",
+  "organism_id_BA": "9f29ddd572c35f071a93e7e5e998cba6702f5afd74e286ed4faab5d328d7d2ca",
+  "segment_id_A": "f692679fd349a1e864ce3d1a02346c7e1540538f317a25f15871c78bf64eaa10",
+  "segment_id_B": "1fe31be75f2a6095deb7536c643616a0691b53dfcef8b58233b63455507fe4a4"
+ },
+ "interpretation_identity": {
+  "affordance_hash": "f1607ee8be680acc33288a95c1a25c09ad4c799a47b0975381be8ca02d7638ce",
+  "manifest_schema_version": "proteus.player_manifest.v0",
+  "note": "organism_id hashes the manifest ONLY. It does NOT cover the runtime or the affordance table, and the affordance table decides what every word MEANS (op = word mod N_OPCODES). A specimen is fully specified only as the triple below. See REGISTRY_IDENTITY in the closure packet.",
+  "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0"
+ },
+ "invariants_a_consumer_may_assert": [
+  "sha256_hex of every vector equals sha256(canonical_bytes_utf8.encode('utf-8'))",
+  "organism_id_AB != organism_id_BA  (concatenation is order sensitive)",
+  "decompose(AB) returns segments whose ids are segment_id_A and segment_id_B",
+  "ablating A changes exactly n_instructions(A) words, all at index mod 4 == 0",
+  "ablating A leaves B's word range byte-identical"
+ ],
+ "schema_version": "proteus.golden_vectors.v0",
+ "vectors": [
+  {
+   "canonical_byte_length": 66,
+   "canonical_bytes_utf8": "{\"schema_version\":\"proteus.segment.v0\",\"words\":[7,1,2,3,16,0,1,2]}",
+   "description": "segment content identity; the label is NOT hashed",
+   "digest_kind": "segment_id",
+   "document": {
+    "schema_version": "proteus.segment.v0",
+    "words": [
+     7,
+     1,
+     2,
+     3,
+     16,
+     0,
+     1,
+     2
+    ]
+   },
+   "name": "segment_A",
+   "sha256_hex": "f692679fd349a1e864ce3d1a02346c7e1540538f317a25f15871c78bf64eaa10"
+  },
+  {
+   "canonical_byte_length": 66,
+   "canonical_bytes_utf8": "{\"schema_version\":\"proteus.segment.v0\",\"words\":[23,0,1,0,1,0,0,0]}",
+   "description": "segment content identity",
+   "digest_kind": "segment_id",
+   "document": {
+    "schema_version": "proteus.segment.v0",
+    "words": [
+     23,
+     0,
+     1,
+     0,
+     1,
+     0,
+     0,
+     0
+    ]
+   },
+   "name": "segment_B",
+   "sha256_hex": "1fe31be75f2a6095deb7536c643616a0691b53dfcef8b58233b63455507fe4a4"
+  },
+  {
+   "canonical_byte_length": 170,
+   "canonical_bytes_utf8": "{\"code_writable\":false,\"genome\":[7,1,2,3,16,0,1,2],\"n_regs\":4,\"out_cap\":4,\"persist\":\"none\",\"schema_version\":\"proteus.player_manifest.v0\",\"tape_words\":64,\"tick_budget\":64}",
+   "description": "player content identity of the single-component composition A",
+   "digest_kind": "organism_id",
+   "document": {
+    "code_writable": false,
+    "genome": [
+     7,
+     1,
+     2,
+     3,
+     16,
+     0,
+     1,
+     2
+    ],
+    "n_regs": 4,
+    "out_cap": 4,
+    "persist": "none",
+    "schema_version": "proteus.player_manifest.v0",
+    "tape_words": 64,
+    "tick_budget": 64
+   },
+   "name": "manifest_A",
+   "sha256_hex": "53e5cd56a010206f04689dffc9b9e6fc420b5bae16f44dc7e6286d0ef37fcca1"
+  },
+  {
+   "canonical_byte_length": 170,
+   "canonical_bytes_utf8": "{\"code_writable\":false,\"genome\":[23,0,1,0,1,0,0,0],\"n_regs\":4,\"out_cap\":4,\"persist\":\"none\",\"schema_version\":\"proteus.player_manifest.v0\",\"tape_words\":64,\"tick_budget\":64}",
+   "description": "player content identity of B",
+   "digest_kind": "organism_id",
+   "document": {
+    "code_writable": false,
+    "genome": [
+     23,
+     0,
+     1,
+     0,
+     1,
+     0,
+     0,
+     0
+    ],
+    "n_regs": 4,
+    "out_cap": 4,
+    "persist": "none",
+    "schema_version": "proteus.player_manifest.v0",
+    "tape_words": 64,
+    "tick_budget": 64
+   },
+   "name": "manifest_B",
+   "sha256_hex": "dec3cfae42887823e619da55fca305429ddb053c8f9d52a2aaaa48f06b87fa24"
+  },
+  {
+   "canonical_byte_length": 187,
+   "canonical_bytes_utf8": "{\"code_writable\":false,\"genome\":[7,1,2,3,16,0,1,2,23,0,1,0,1,0,0,0],\"n_regs\":4,\"out_cap\":4,\"persist\":\"none\",\"schema_version\":\"proteus.player_manifest.v0\",\"tape_words\":64,\"tick_budget\":64}",
+   "description": "player content identity of A+B",
+   "digest_kind": "organism_id",
+   "document": {
+    "code_writable": false,
+    "genome": [
+     7,
+     1,
+     2,
+     3,
+     16,
+     0,
+     1,
+     2,
+     23,
+     0,
+     1,
+     0,
+     1,
+     0,
+     0,
+     0
+    ],
+    "n_regs": 4,
+    "out_cap": 4,
+    "persist": "none",
+    "schema_version": "proteus.player_manifest.v0",
+    "tape_words": 64,
+    "tick_budget": 64
+   },
+   "name": "manifest_AB",
+   "sha256_hex": "ca33d0c7b7a0d152a5949bc9dea87a9ef741475d220d474f0d8dde03920b1777"
+  },
+  {
+   "canonical_byte_length": 187,
+   "canonical_bytes_utf8": "{\"code_writable\":false,\"genome\":[23,0,1,0,1,0,0,0,7,1,2,3,16,0,1,2],\"n_regs\":4,\"out_cap\":4,\"persist\":\"none\",\"schema_version\":\"proteus.player_manifest.v0\",\"tape_words\":64,\"tick_budget\":64}",
+   "description": "order matters: B+A is a different player from A+B",
+   "digest_kind": "organism_id",
+   "document": {
+    "code_writable": false,
+    "genome": [
+     23,
+     0,
+     1,
+     0,
+     1,
+     0,
+     0,
+     0,
+     7,
+     1,
+     2,
+     3,
+     16,
+     0,
+     1,
+     2
+    ],
+    "n_regs": 4,
+    "out_cap": 4,
+    "persist": "none",
+    "schema_version": "proteus.player_manifest.v0",
+    "tape_words": 64,
+    "tick_budget": 64
+   },
+   "name": "manifest_BA",
+   "sha256_hex": "9f29ddd572c35f071a93e7e5e998cba6702f5afd74e286ed4faab5d328d7d2ca"
+  },
+  {
+   "canonical_byte_length": 186,
+   "canonical_bytes_utf8": "{\"code_writable\":false,\"genome\":[0,1,2,3,0,0,1,2,23,0,1,0,1,0,0,0],\"n_regs\":4,\"out_cap\":4,\"persist\":\"none\",\"schema_version\":\"proteus.player_manifest.v0\",\"tape_words\":64,\"tick_budget\":64}",
+   "description": "A+B with A NOP-substituted in place",
+   "digest_kind": "organism_id",
+   "document": {
+    "code_writable": false,
+    "genome": [
+     0,
+     1,
+     2,
+     3,
+     0,
+     0,
+     1,
+     2,
+     23,
+     0,
+     1,
+     0,
+     1,
+     0,
+     0,
+     0
+    ],
+    "n_regs": 4,
+    "out_cap": 4,
+    "persist": "none",
+    "schema_version": "proteus.player_manifest.v0",
+    "tape_words": 64,
+    "tick_budget": 64
+   },
+   "name": "manifest_AB_ablate_A",
+   "sha256_hex": "12d4ca01711018d3fe44472d444369a0614d941b29fefea7534c6573b9648892"
+  },
+  {
+   "canonical_byte_length": 186,
+   "canonical_bytes_utf8": "{\"code_writable\":false,\"genome\":[7,1,2,3,16,0,1,2,0,0,1,0,0,0,0,0],\"n_regs\":4,\"out_cap\":4,\"persist\":\"none\",\"schema_version\":\"proteus.player_manifest.v0\",\"tape_words\":64,\"tick_budget\":64}",
+   "description": "A+B with B NOP-substituted in place",
+   "digest_kind": "organism_id",
+   "document": {
+    "code_writable": false,
+    "genome": [
+     7,
+     1,
+     2,
+     3,
+     16,
+     0,
+     1,
+     2,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "n_regs": 4,
+    "out_cap": 4,
+    "persist": "none",
+    "schema_version": "proteus.player_manifest.v0",
+    "tape_words": 64,
+    "tick_budget": 64
+   },
+   "name": "manifest_AB_ablate_B",
+   "sha256_hex": "491ce31c3b5bbf4f02fbbb95f20f9bd0b71bba1dd8a62f4dacdb56d91baa6be5"
+  }
+ ]
+}

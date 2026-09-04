@@ -1,0 +1,65 @@
+{
+ "CONFOUNDED_transcript_depends_on_null_word_value": 1,
+ "aliases_are_instruction_identical": "all decode to NOP under op = word mod 25",
+ "confounded_fraction": 0.0029,
+ "exact_same_transcript_under_all_aliases": 342,
+ "examples": [
+  {
+   "alias_hashes": [
+    "041b458dcc40",
+    "e4aea247e7cf",
+    "041b458dcc40"
+   ],
+   "class": "halt_yield",
+   "distinct_transcripts": 2,
+   "organism_id": "e49b735ddcf52a3a"
+  }
+ ],
+ "null_word_aliases_used": [
+  0,
+  25,
+  50
+ ],
+ "organism_class_pairs_tested": 343,
+ "organisms_total": 64,
+ "organisms_with_at_least_one_confounded_class": 1,
+ "per_class": {
+  "arithmetic": {
+   "confounded": 0,
+   "tested": 51
+  },
+  "comparison": {
+   "confounded": 0,
+   "tested": 34
+  },
+  "control": {
+   "confounded": 0,
+   "tested": 39
+  },
+  "halt_yield": {
+   "confounded": 1,
+   "tested": 38
+  },
+  "indirection": {
+   "confounded": 0,
+   "tested": 37
+  },
+  "logical": {
+   "confounded": 0,
+   "tested": 49
+  },
+  "opaque_io": {
+   "confounded": 0,
+   "tested": 35
+  },
+  "randomness": {
+   "confounded": 0,
+   "tested": 25
+  },
+  "read_write": {
+   "confounded": 0,
+   "tested": 35
+  }
+ },
+ "what_this_measures": "whether class knockout is an instruction-level operation only, or also perturbs the tape as data"
+}
